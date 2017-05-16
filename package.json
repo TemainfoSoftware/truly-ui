@@ -1,0 +1,18 @@
+{
+  "name": "truly-components",
+  "description": "An Angular 2 money input that is useful for entering in money values. Atm is just adds commas",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "lerna": "2.0.0-beta.38"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TemainfoSistemas/truly.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/TemainfoSistemas/truly/issues"
+  }
+}

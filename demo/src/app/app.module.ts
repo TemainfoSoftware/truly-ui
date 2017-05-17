@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { AutocompleteModule } from '../../../packages/autocomplete/';
-import { ButtonModule } from '../../../packages/button/';
+import { AutocompleteModule } from 'truly-ui';
 
 @NgModule({
   declarations: [
@@ -15,9 +14,7 @@ import { ButtonModule } from '../../../packages/button/';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AutocompleteModule,
-    ButtonModule
-
+    AutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

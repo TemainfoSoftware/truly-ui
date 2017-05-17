@@ -1,27 +1,72 @@
+# truly-ui
+
+## Installation
+
+To install this library, run:
 
 ```bash
-$ git clone https://maiconw@bitbucket.org/TemaInformatica/temainfo-coresystem-angular.git
+$ npm install truly-ui --save
 ```
 
-## Comandos
+## Consuming your library
 
-Depois de ter clonado o projeto você pode realizar alterações nos modulos existentes e logo apos utilizar os seguintes comandos:
+Once you have published your library to npm, you can import your library in any Angular application by running:
 
-###bootstrap
 ```bash
-$ lerna bootstrap
+$ npm install truly-ui
 ```
-Inicializa os pacotes do projeto. Instala todas as suas dependencias e liga quaisquer dependencias cruzadas.
 
-###publish
+and then from your Angular `AppModule`:
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+// Import your library
+import { SampleModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+
+    // Specify your library as an import
+    LibraryModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+Once your library is imported, you can use its components, directives and pipes in your Angular application:
+
+```xml
+<!-- You can now use your library component in app.component.html -->
+<h1>
+  {{title}}
+</h1>
+<sampleComponent></sampleComponent>
+```
+
+## Development
+
+To generate all `*.js`, `*.d.ts` and `*.metadata.json` files:
+
 ```bash
-$ lerna publish
+$ npm run build
 ```
-Publica uma nova versão dos pacotes que foram alterados para o NPM, porem para realizar este comando você deve estar logado e com permissão ao pacote no NPM atraves do comando `npm login`
 
-**Nota:** Utilize o comando `lerna publish -- --access=public` ou `lerna publish -- --access publish
-` para enviar pacote publico ao NPM
+To lint all `*.ts` files:
 
-##Ajuda
-Visite o repositorio do [Lerna](https://github.com/lerna/lerna) para mais detalhe destes comandos.
+```bash
+$ npm run lint
+```
 
+## License
+
+MIT © [Maicon Wagner dos Santos](mailto:mister-x59@hotmail.com.br)

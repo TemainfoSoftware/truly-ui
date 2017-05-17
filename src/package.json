@@ -1,0 +1,26 @@
+{
+  "name": "truly-ui",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TemainfoSistemas/truly.git"
+  },
+  "author": {
+    "name": "Maicon Wagner dos Santos",
+    "email": "mister-x59@hotmail.com.br"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TemainfoSistemas/truly.git/issues"
+  },
+  "module": "truly-ui.js",
+  "typings": "truly-ui.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  }
+}

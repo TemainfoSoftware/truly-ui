@@ -1,4 +1,7 @@
 language: node_js
-sudo: false
 node_js:
-- '4.2.1'
+- '6.0.0'
+sudo: false
+dist: dist
+script:
+  - npm run build

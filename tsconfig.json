@@ -10,5 +10,10 @@
     ],
     "skipLibCheck": true,
     "types": []
-  }
+  },
+  "exclude": [
+    "demo",
+    "tools",
+    "dist"
+  ]
 }

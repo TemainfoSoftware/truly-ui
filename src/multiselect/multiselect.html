@@ -1,0 +1,32 @@
+<div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
+     class="input-form truly-select"
+     (click)="toogleOpen('block')">
+
+  <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
+        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag" class="tags-detail"><{{tag?.source[detail]}}></small><i
+          (click)="removeTag(i, tag)">x</i></span>
+
+    <input [attr.autocomplete]="'off'" [attr.id]="inputID" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
+           #input width="300" (blur)="close($event)"
+           (focus)="receiveFocus()"
+           [attr.placeholder]="placeholder"
+           (keydown)="inputKeyDown($event.key);searchItem($event.target.value, $event)"
+           type="text">
+</div>
+
+<div [ngStyle]="{'display': isOpen}">
+
+    <ul [attr.id]="listID" #ul class="select-options"
+        [ngStyle]="calcHeightItem()">
+
+        <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
+            (keydown)="inputKeyDown($event.key, i, item)"
+            *ngFor="let item of filtredItens; let i = index"
+            class="itens" (click)="addTag(i, item, li)"><i *ngIf="showIcon" style="padding: 10px"
+                                                           ngClass="{{item?.effect[icon]}}"></i>
+            {{item?.source[label]}}
+            <small>{{item?.source[detail]}}</small>
+        </li>
+
+    </ul>
+</div>

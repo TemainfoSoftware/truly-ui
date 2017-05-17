@@ -27,7 +27,7 @@ gulp.task('clean:dist', function () {
  *    when copying to /.tmp.
  */
 gulp.task('copy:source', function () {
-  return gulp.src([`${srcFolder}/**/*`, `!${srcFolder}/node_modules`])
+  return gulp.src(['${srcFolder}/**/*', '!${srcFolder}/node_modules'])
     .pipe(gulp.dest(tmpFolder));
 });
 
@@ -47,7 +47,7 @@ gulp.task('inline-resources', function () {
  */
 gulp.task('ngc', function () {
   return ngc({
-    project: `${tmpFolder}/tsconfig.es5.json`
+    project: '${tmpFolder}/tsconfig.es5.json'
   })
     .then((exitCode) => {
       if (exitCode === 1) {
@@ -63,13 +63,13 @@ gulp.task('ngc', function () {
  *    generated file into the /dist folder
  */
 gulp.task('rollup:fesm', function () {
-  return gulp.src(`${buildFolder}/**/*.js`)
+  return gulp.src('${buildFolder}/**/*.js')
   // transform the files here.
     .pipe(rollup({
 
       // Bundle's entry point
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
-      entry: `${buildFolder}/index.js`,
+      entry: '${buildFolder}/index.js',
 
       // A list of IDs of modules that should remain external to the bundle
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#external
@@ -90,13 +90,13 @@ gulp.task('rollup:fesm', function () {
  *    generated file into the /dist folder
  */
 gulp.task('rollup:umd', function () {
-  return gulp.src(`${buildFolder}/**/*.js`)
+  return gulp.src('${buildFolder}/**/*.js')
   // transform the files here.
     .pipe(rollup({
 
       // Bundle's entry point
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
-      entry: `${buildFolder}/index.js`,
+      entry: '${buildFolder}/index.js',
 
       // A list of IDs of modules that should remain external to the bundle
       // See https://github.com/rollup/rollup/wiki/JavaScript-API#external
@@ -134,7 +134,7 @@ gulp.task('rollup:umd', function () {
  *    on step 5.
  */
 gulp.task('copy:build', function () {
-  return gulp.src([`${buildFolder}/**/*`, `!${buildFolder}/**/*.js`])
+  return gulp.src(['${buildFolder}/**/*', '!${buildFolder}/**/*.js'])
     .pipe(gulp.dest(distFolder));
 });
 
@@ -142,7 +142,7 @@ gulp.task('copy:build', function () {
  * 8. Copy package.json from /src to /dist
  */
 gulp.task('copy:manifest', function () {
-  return gulp.src([`${srcFolder}/package.json`])
+  return gulp.src(['${srcFolder}/package.json'])
     .pipe(gulp.dest(distFolder));
 });
 
@@ -195,7 +195,7 @@ gulp.task('compile', function () {
  * Watch for any change in the /src folder and compile files
  */
 gulp.task('watch', function () {
-  gulp.watch(`${srcFolder}/**/*`, ['compile']);
+  gulp.watch('${srcFolder}/**/*', ['compile']);
 });
 
 gulp.task('clean', ['clean:dist', 'clean:tmp', 'clean:build']);

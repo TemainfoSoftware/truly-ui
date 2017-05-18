@@ -1,7 +1,7 @@
 /**
  * Created by William on 18/05/2017.
  */
-import {Component, OnInit} from '@angular/core'
+import {Component, OnInit, Input} from '@angular/core'
 
 @Component({
     selector: 'tl-input',
@@ -9,6 +9,7 @@ import {Component, OnInit} from '@angular/core'
     styleUrls: ['./input.scss'],
 })
 export class TlInput implements OnInit {
+    @Input() value: string;
 
     constructor() {
     }

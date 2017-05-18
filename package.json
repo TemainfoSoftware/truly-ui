@@ -27,11 +27,11 @@
     "url": "https://github.com/TemainfoSistemas/truly.git/issues"
   },
   "devDependencies": {
-    "@angular/common": "^4.0.0",
+    "@angular/common": "^4.1.2",
     "@angular/compiler": "^4.0.0",
     "@angular/compiler-cli": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
+    "@angular/core": "^4.1.2",
+    "@angular/platform-browser": "^4.1.2",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",
     "@types/jasmine": "2.5.38",
@@ -63,5 +63,8 @@
   },
   "engines": {
     "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "@angular/forms": "^4.1.3"
   }
 }

@@ -18,12 +18,21 @@ let nextListUniqueId = 0;
     styleUrls: ['./multiselect.css']
 })
 export class TlMultiselect implements OnInit {
+    @Input() color: string;
+
+    /**
+     * Array de Objetos que é utilizado na listagem dos dados
+     */
     @Input() data: any[] = [];
+
+    /**
+     * Chave a qual ira ser realizada a pesquisa
+     */
     @Input() query: string;
+
     @Input() label: string;
     @Input() detail: string;
     @Input() placeholder: string;
-    @Input() color: string;
     @Input() icon: string;
     @Input() showIcon = true;
     @Input() openFocus = false;
@@ -96,23 +105,32 @@ export class TlMultiselect implements OnInit {
     searchItem(inputed, $event) {
         const self = this;
         this.closeFilterOnEscape($event);
-        this.removeTagOnBackspace($event);
         if (inputed.length >= this.minLengthSearch) {
             this.toogleOpen('block');
             if (!(this.tags.length > 0)) {
                 this.filtredItens = this.data.filter(function (valor) {
-                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase());
+                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase().trim());
                 });
             } else {
                 this.filtredItens = this.filtredItens.filter(function (valor) {
-                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase());
+                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase().trim());
                 });
             }
         }
     }
 
+    /**
+     * Remove uma TAG do input ao precionar BACKSPACE
+     *
+     * @param {KeyboardEvent} $event The target to process see
+     * @param {KeyboardEvent} $event2 The target2 to process see
+     *
+     * @example
+     * This is a good example
+     * processTarget('yo')
+     */
     removeTagOnBackspace($event) {
-        if ($event.code === 'Backspace' && $event.target.value === '' && this.tags.length > 0) {
+        if ($event === 'Backspace' && this.input.nativeElement.value === '' && this.tags.length > 0) {
             this.removeTag(this.tags.length - 1);
             this.receiveFocus();
         } else {
@@ -197,6 +215,10 @@ export class TlMultiselect implements OnInit {
         }
         if (event === 'Delete') {
             this.deleteTagSelected();
+        }
+        if (event === 'Backspace') {
+            this.removeTagOnBackspace(event);
+            this.receiveFocus();
         }
         if (event === 'Tab') {
             this.toogleOpen('none');

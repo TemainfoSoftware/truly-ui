@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { AutocompleteModule } from 'truly-ui';
 import { MultiselectModule } from 'truly-ui';
+import { InputModule } from 'truly-ui';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MultiselectModule } from 'truly-ui';
     FormsModule,
     HttpModule,
     AutocompleteModule,
-    MultiselectModule
+    MultiselectModule,
+    InputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

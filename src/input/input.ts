@@ -9,7 +9,8 @@ import {Component, OnInit, Input} from '@angular/core'
     styleUrls: ['./input.scss'],
 })
 export class TlInput implements OnInit {
-    @Input() value: string;
+    @Input() value: string = '';
+    @Input() placeholder: string = '';
 
     constructor() {
     }

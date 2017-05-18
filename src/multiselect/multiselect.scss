@@ -1,8 +1,4 @@
-.truly-select {
-    margin: 0 auto;
-    height: auto;
-
-}
+$background-color: #FAFAFA;
 
 small {
     opacity: 0.7;
@@ -10,8 +6,33 @@ small {
 
 .input-form {
     border: 1px solid #e3e5e6;
-    padding: 10px;
+    padding: 2.5px;
+    background: $background-color;
 }
+
+.input-form input::placeholder{
+    font-size: 0.8em;
+    color: #565752;
+
+}
+
+.input {
+    border: 0 !important;
+    outline: none;
+    width: 50%;
+    height: auto;
+    background: $background-color;
+}
+
+.input-empty {
+    border: 0 !important;
+    outline: none;
+    width: 100%;
+    height: 22px;
+    background: $background-color;
+}
+
+
 
 .inputFormOpenFilter {
     border-top: 1px solid #e3e5e6 !important;
@@ -45,16 +66,16 @@ small {
 
 .tags {
     position: relative;
-    margin: 0 5px 5px 0 !important;
     display: inline-block;
     cursor: pointer;
+    margin: 2.5px;
     padding: 5px 0 5px 5px;
     color: #fff;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    font-size: 0.8em;
-    font-family: Arial;
+    font-size: 0.7em;
+    font-family: Verdana;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -67,22 +88,10 @@ small {
     padding: 5px;
 }
 
-.tags i {
+.tags b {
     padding: 5px;
     margin-left: 7px;
     border-left: 1px solid #fff;
-}
-
-.input {
-    border: 0 !important;
-    outline: none;
-    width: 50%;
-}
-
-.input-empty {
-    border: 0 !important;
-    outline: none;
-    width: 100%;
 }
 
 .select-options .itens {

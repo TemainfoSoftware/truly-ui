@@ -1,4 +1,26 @@
-<h1>
-  {{title}}
-</h1>
-<tl-autocomplete></tl-autocomplete>
+<div class="group">
+  <h3>Funcionarios</h3>
+  <div style="width: 90%">
+    <tl-multiselect [data]="source"
+                    [query]="'nome'" [label]="'nome'"
+                    [detail]="'email'"
+                    [itemAmount]="5"
+                    [placeholder]="'Lista de Funcionarios'"></tl-multiselect>
+  </div>
+  <h3>Funcionarios Financeiro</h3>
+  <div style="width: 90%">
+    <tl-multiselect [data]="source"
+                    [query]="'nome'" [label]="'nome'"
+                    [detail]="'email'"
+                    [itemAmount]="5"
+                    [placeholder]="'Lista de Funcionarios'"></tl-multiselect>
+  </div>
+  <h3>Funcionarios TI</h3>
+  <div style="width: 90%">
+    <tl-multiselect [data]="source"
+                    [query]="'nome'" [label]="'nome'"
+                    [detail]="'email'"
+                    [itemAmount]="5"
+                    [placeholder]="'Lista de Funcionarios'"></tl-multiselect>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-# truly-ui
+# Truly-UI  [![Build Status](https://travis-ci.org/TemainfoSistemas/truly-ui.svg?branch=master)](https://travis-ci.org/TemainfoSistemas/truly-ui)
 
 ## Installation
 

@@ -268,9 +268,9 @@ export class TlMultiselect implements OnInit {
             return {'background': tag.effect.color, 'opacity': 0.8}
         } else {
             if (tag.selected) {
-                return {'background': '#55A373', 'opacity': 0.8};
+                return {'background': '#66CC99', 'opacity': 0.8};
             }
-            return {'background': '#55A373'};
+            return {'background': '#66CC99'};
         }
     }
 

@@ -10,7 +10,8 @@
            #input width="300" (blur)="close($event)"
            (focus)="receiveFocus()"
            [attr.placeholder]="placeholder"
-           (keydown)="inputKeyDown($event.key);searchItem($event.target.value, $event)"
+           (keyup)="searchItem($event.target.value, $event)"
+           (keydown)="inputKeyDown($event.key)"
            type="text">
 </div>
 

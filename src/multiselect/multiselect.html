@@ -1,10 +1,12 @@
 <div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
-     class="input-form truly-select"
+     class="input-form"
      (click)="toogleOpen('block')">
 
   <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
-        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag" class="tags-detail"><{{tag?.source[detail]}}></small><i
-          (click)="removeTag(i, tag)">x</i></span>
+        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag"
+         class="tags-detail"><{{tag?.source[detail]}}></small><b
+         (click)="removeTag(i, tag)">x</b>
+  </span>
 
     <input [attr.autocomplete]="'off'" [attr.id]="inputID" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
            #input width="300" (blur)="close($event)"

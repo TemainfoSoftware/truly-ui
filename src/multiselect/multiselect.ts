@@ -15,7 +15,7 @@ let nextListUniqueId = 0;
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
-    styleUrls: ['./multiselect.css']
+    styleUrls: ['./multiselect.scss']
 })
 export class TlMultiselect implements OnInit {
     @Input() color: string;
@@ -156,7 +156,7 @@ export class TlMultiselect implements OnInit {
         this.inputSetFocus();
     }
 
-    selectTagClick(event, i, item?) {
+    selectTagClick(event, index, item?) {
         if (item.selected === true) {
             item.selected = false;
         } else if (event.ctrlKey) {

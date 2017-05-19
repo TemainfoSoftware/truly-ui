@@ -55,6 +55,19 @@ $background: #FFFFFF;
   vertical-align: middle;
 }
 
+.clear-button {
+  font-family: 'Lato', sans-serif;
+  background: #fff;
+  font-size: 0.7em;
+  border-right: 1px solid #CACACA;
+  cursor: pointer;
+  color: #99a1a4;
+}
+
+.clear-button:hover {
+  background: #EEEEEE;
+}
+
 .border-right {
   border-right: 1px solid #CACACA;
   border-radius: 0 2px 2px 0;

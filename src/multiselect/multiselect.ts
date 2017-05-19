@@ -36,7 +36,7 @@ export class TlMultiselect implements OnInit {
     @Input() icon: string;
     @Input() showIcon = true;
     @Input() openFocus = false;
-    @Input() detailTag = false;
+    @Input() detailOnTag = null;
     @Input() selectTag: number;
     @Input() itemHeight = 10;
     @Input() itemAmount = 5;
@@ -64,7 +64,6 @@ export class TlMultiselect implements OnInit {
         this.placeholderMessage = this.placeholder;
         this.setFiltredItens();
         this.validationProperty();
-        this.label = this.query;
     }
 
     validationProperty() {
@@ -74,6 +73,12 @@ export class TlMultiselect implements OnInit {
         if (this.data === undefined || this.query === undefined) {
             throw new Error('The property [data] and property [query] are Required ' + '' +
                 'Example : ' + '<tl-multiselect [data]="source" [query]="name"');
+        }
+        if (!this.label) {
+            this.label = this.query;
+        }
+        if (this.detail == undefined && this.detailOnTag !== null) {
+            throw new Error('You have to declare the [detail] property');
         }
     }
 

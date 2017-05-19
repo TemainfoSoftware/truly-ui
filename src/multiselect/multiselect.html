@@ -3,7 +3,7 @@
      (click)="toogleOpen('block')">
 
   <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
-        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag"
+        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag && detail !== undefined"
          class="tags-detail"><{{tag?.source[detail]}}></small><b
          (click)="removeTag(i, tag)">x</b>
   </span>
@@ -27,7 +27,7 @@
             *ngFor="let item of filtredItens; let i = index"
             class="itens" (click)="addTag(i, item, li)"><i *ngIf="showIcon" style="padding: 10px"
                                                            ngClass="{{item?.effect[icon]}}"></i>
-            {{item?.source[label]}}
+            {{item?.source[query]}}
             <small>{{item?.source[detail]}}</small>
         </li>
 

@@ -1,1 +1,5 @@
-<input [(ngModel)]="value" type="text" [attr.placeholder]="placeholder">
+<div class="input-group">
+    <span *ngIf="iconLeft" class="input-group-addon border-left"><i [ngClass]="iconLeft"></i></span>
+    <input class="input-group-form" [(ngModel)]="value" type="text" [attr.placeholder]="placeholder">
+    <span *ngIf="iconRight" class="input-group-addon border-right"><i [ngClass]="iconRight"></i></span>
+</div>

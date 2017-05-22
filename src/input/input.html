@@ -5,8 +5,9 @@
            [(ngModel)]="value" type="text"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
-           [ngClass]="{'read-only' : readonly}"
+           [ngClass]="{'cursor-blocked' : readonly || disabled}"
            [attr.readonly]="readonly ? true : null"
+           [attr.disabled]="disabled ? true : null"
            [attr.placeholder]="placeholder">
 
     <span (click)="clearInput()" class="input-group-addon clear-button" *ngIf="clearButton && value">X</span>

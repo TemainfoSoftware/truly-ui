@@ -1,7 +1,8 @@
 import {Component, Input, ViewEncapsulation, ViewChild, forwardRef} from '@angular/core'
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
-const noop = () => {};
+const noop = () => {
+};
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -18,6 +19,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class TlInput implements ControlValueAccessor {
     @Input() ngValue: string = '';
+
     get value(): any {
         return this.ngValue;
     }
@@ -34,7 +36,8 @@ export class TlInput implements ControlValueAccessor {
     @Input() placeholder: string = '';
     @Input() clearButton: boolean;
     @Input() toUpperCase: boolean;
-    @Input() readonly : boolean = null;
+    @Input() readonly: boolean = null;
+    @Input() disabled: boolean = null;
 
     @ViewChild('input') input;
 

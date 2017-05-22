@@ -1,6 +1,6 @@
 <div class="input-group">
     <span *ngIf="iconLeft" class="input-group-addon border-left"><i [ngClass]="iconLeft"></i></span>
-    <input #input class="input-group-form" [(ngModel)]="value" type="text" [attr.placeholder]="placeholder">
+    <input #input class="input-group-form" [(ngModel)]="value" type="text" (blur)="onBlur()" [attr.placeholder]="placeholder">
     <span (click)="clearInput()" class="input-group-addon clear-button" *ngIf="clearButton && value">X</span>
     <span *ngIf="iconRight" class="input-group-addon border-right"><i [ngClass]="iconRight"></i></span>
 </div>

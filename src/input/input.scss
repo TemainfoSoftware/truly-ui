@@ -1,5 +1,7 @@
 $background-addon: #DEDEDE;
-$background: #FFFFFF;
+$background-disabled: #EEE;
+$background-white: #FFFFFF;
+$background-border: #CACACA;
 
 * {
   -webkit-box-sizing: border-box;
@@ -7,8 +9,8 @@ $background: #FFFFFF;
 }
 
 @mixin borderAddon {
-  border-top: 1px solid #CACACA;
-  border-bottom: 1px solid #CACACA;
+  border-top: 1px solid $background-border;
+  border-bottom: 1px solid $background-border;
 }
 
 .input-group {
@@ -19,19 +21,19 @@ $background: #FFFFFF;
 
 .input-group-form {
   display: table-cell;
-  border: 1px solid #CACACA;
+  border: 1px solid $background-border;
   height: 30px;
   padding: 4px 12px;
-  background: $background;
+  background: $background-white;
   font-size: 0.9em;
   outline: none;
   width: 100%;
   float: left;
   color: #737373;
   font-family: 'Lato', sans-serif;
-  -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0,0,0,0.10);
-  -moz-box-shadow: inset 0px 5px 7px -5px rgba(0,0,0,0.10);
-  box-shadow: inset 0px 5px 7px -5px rgba(0,0,0,0.10);
+  -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+  -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+  box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
 }
 
 .input-group-form::placeholder {
@@ -49,7 +51,7 @@ $background: #FFFFFF;
   line-height: 1;
   color: #CACACA;
   text-align: center;
-  background-color: #eee;
+  background-color: $background-disabled;
   width: 1%;
   white-space: nowrap;
   vertical-align: middle;
@@ -59,7 +61,7 @@ $background: #FFFFFF;
   font-family: 'Lato', sans-serif;
   background: #fff;
   font-size: 0.7em;
-  border-right: 1px solid #CACACA;
+  border-right: 1px solid $background-border;
   cursor: pointer;
   color: #99a1a4;
 }
@@ -69,17 +71,30 @@ $background: #FFFFFF;
 }
 
 .border-right {
-  border-right: 1px solid #CACACA;
+  border-right: 1px solid $background-border;
   border-radius: 0 2px 2px 0;
 }
 
 .border-left {
-  border-left: 1px solid #CACACA;
+  border-left: 1px solid $background-border;
   border-radius: 2px 0 0 2px;
 }
 
 .cursor-blocked {
   cursor: not-allowed;
+}
+
+.disabled {
+  background-color: $background-disabled;
+  color: #9d9d9d;
+}
+
+.readonly {
+  background-color: $background-disabled;
+}
+
+.readonly:active {
+  background-color: $background-white;
 }
 
 .input-group-addon i {

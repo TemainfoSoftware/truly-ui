@@ -33,6 +33,7 @@ export class TlInput implements ControlValueAccessor {
     @Input() iconRight: string = '';
     @Input() placeholder: string = '';
     @Input() clearButton: boolean;
+    @Input() toUpperCase: boolean;
 
     @ViewChild('input') input;
 
@@ -50,6 +51,9 @@ export class TlInput implements ControlValueAccessor {
     writeValue(value: any) {
         if (value !== this.ngValue) {
             this.ngValue = value;
+            if (this.toUpperCase) {
+                this.onChangeCallback(this.ngValue)
+            }
         }
     }
 
@@ -64,5 +68,9 @@ export class TlInput implements ControlValueAccessor {
     clearInput() {
         this.input.nativeElement.value = '';
         this.ngValue = '';
+    }
+
+    onInputChange($event) {
+        return this.toUpperCase ? (this.writeValue($event.toUpperCase())) : this.writeValue($event);
     }
 }

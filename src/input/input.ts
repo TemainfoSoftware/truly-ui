@@ -44,9 +44,7 @@ export class TlInput implements ControlValueAccessor {
     private onTouchedCallback: () => void = noop;
     private onChangeCallback: (_: any) => void = noop;
 
-    constructor() {
-
-    }
+    constructor() {}
 
     onBlur() {
         this.onTouchedCallback();
@@ -61,12 +59,12 @@ export class TlInput implements ControlValueAccessor {
         }
     }
 
-    registerOnChange(fn: any) {
-        this.onChangeCallback = fn;
+    registerOnChange(callback: any) {
+        this.onChangeCallback = callback;
     }
 
-    registerOnTouched(fn: any) {
-        this.onTouchedCallback = fn;
+    registerOnTouched(callback: any) {
+        this.onTouchedCallback = callback;
     }
 
     clearInput() {

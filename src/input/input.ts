@@ -34,6 +34,7 @@ export class TlInput implements ControlValueAccessor {
     @Input() placeholder: string = '';
     @Input() clearButton: boolean;
     @Input() toUpperCase: boolean;
+    @Input() readonly : boolean = null;
 
     @ViewChild('input') input;
 

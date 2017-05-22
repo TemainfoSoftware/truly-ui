@@ -78,6 +78,10 @@ $background: #FFFFFF;
   border-radius: 2px 0 0 2px;
 }
 
+.read-only {
+  cursor: not-allowed;
+}
+
 .input-group-addon i {
   color: #6E6E6E;
 }

@@ -5,7 +5,7 @@
            [(ngModel)]="value" type="text"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
-           [ngClass]="{'cursor-blocked' : readonly || disabled}"
+           [ngClass]="{'cursor-blocked' : readonly || disabled, 'disabled': disabled, 'readonly': readonly}"
            [attr.readonly]="readonly ? true : null"
            [attr.disabled]="disabled ? true : null"
            [attr.placeholder]="placeholder">

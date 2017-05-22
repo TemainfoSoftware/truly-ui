@@ -31,8 +31,10 @@ export class TlInput implements ControlValueAccessor {
         }
     }
 
-    @Input() iconLeft: string = '';
-    @Input() iconRight: string = '';
+    @Input() textBefore: string = '';
+    @Input() textAfter: string = '';
+    @Input() iconBefore: string = '';
+    @Input() iconAfter: string = '';
     @Input() placeholder: string = '';
     @Input() clearButton: boolean;
     @Input() toUpperCase: boolean;

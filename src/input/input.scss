@@ -8,9 +8,23 @@ $background-border: #CACACA;
   box-sizing: border-box;
 }
 
+@mixin textInput {
+  color: #CACACA;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9em;
+}
+
 @mixin borderAddon {
   border-top: 1px solid $background-border;
   border-bottom: 1px solid $background-border;
+}
+
+@mixin actionButtons {
+  font-family: 'Lato', sans-serif;
+  background: #fff;
+  border-right: 1px solid $background-border;
+  cursor: pointer;
+  color: #99a1a4;
 }
 
 .input-group {
@@ -37,9 +51,7 @@ $background-border: #CACACA;
 }
 
 .input-group-form::placeholder {
-  color: #CACACA;
-  font-family: 'Lato', sans-serif;
-  font-size: 0.9em;
+  @include textInput;
 }
 
 .input-group-addon {
@@ -58,16 +70,26 @@ $background-border: #CACACA;
 }
 
 .clear-button {
-  font-family: 'Lato', sans-serif;
-  background: #fff;
+  @include actionButtons;
   font-size: 0.7em;
-  border-right: 1px solid $background-border;
-  cursor: pointer;
-  color: #99a1a4;
 }
 
 .clear-button:hover {
   background: #EEEEEE;
+}
+
+.copy-button {
+  @include actionButtons;
+  font-size: 0.8em;
+}
+
+.title-hint:after {
+  content: attr(title);
+  padding: 5px;
+  border: 1px solid #ccc;
+  top: 5px;
+  right: 10%;
+  background: #bada55;
 }
 
 .border-right {
@@ -82,6 +104,11 @@ $background-border: #CACACA;
 
 .cursor-blocked {
   cursor: not-allowed;
+}
+
+.predefined {
+  font-family: 'Lato', sans-serif;
+  color: #484848;
 }
 
 .disabled {

@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { AutocompleteModule } from 'truly-ui';
-import { MultiselectModule } from 'truly-ui';
-import { InputModule } from 'truly-ui';
+import { AutocompleteModule } from '../../../src/autocomplete';
+import { MultiselectModule } from '../../../src/multiselect';
+import { InputModule } from '../../../src/input';
 
 @NgModule({
   declarations: [

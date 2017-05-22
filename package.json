@@ -1,6 +1,6 @@
 {
   "name": "truly-ui",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
@@ -9,11 +9,12 @@
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
     "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
-    "test": "tsc && karma start"
+    "test": "tsc && karma start",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TemainfoSistemas/truly.git"
+    "url": "https://github.com/TemainfoSistemas/truly-ui.git"
   },
   "author": {
     "name": "Maicon Wagner dos Santos",
@@ -24,7 +25,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TemainfoSistemas/truly.git/issues"
+    "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
   "devDependencies": {
     "@angular/common": "^4.1.2",
@@ -59,7 +60,8 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "semantic-release": "^6.3.6"
   },
   "engines": {
     "node": ">=6.0.0"

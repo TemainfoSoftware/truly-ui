@@ -14,7 +14,6 @@
            [attr.disabled]="disabled ? true : null"
            [attr.placeholder]="placeholder">
 
-
     <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && value">X</span>
     <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
     <span *ngIf="textAfter"

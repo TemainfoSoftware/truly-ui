@@ -9,7 +9,6 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     useExisting: forwardRef(() => TlInput),
     multi: true
 };
-
 @Component({
     selector: 'tl-input',
     templateUrl: './input.html',

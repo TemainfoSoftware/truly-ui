@@ -2,7 +2,7 @@
 
 //Colors Default
 $background-addon: #DEDEDE;
-$background-disabled: #EEE;
+$background-gray: #EEE;
 $background-white: #FFFFFF;
 $background-border: #CACACA;
 
@@ -41,7 +41,7 @@ $background-border: #CACACA;
     line-height: 1;
     color: #6E6E6E;
     text-align: center;
-    background-color: $background-disabled;
+    background-color: $background-gray;
     width: 1%;
     white-space: nowrap;
     vertical-align: middle;
@@ -89,16 +89,11 @@ $background-border: #CACACA;
   > .field.-cursorblocked {
     cursor: not-allowed;
   }
-
-  //Variantes
-  & .-disabled {
-    background-color: $background-disabled;
+  > .field.-disabled {
+    background-color: $background-gray;
     color: #9d9d9d;
   }
-  & .-readonly {
-    background-color: $background-disabled;
-  }
-  & .-readonly:active{
-    background-color: $background-white;
+  > .field.-readonly {
+    background-color: $background-gray;
   }
 }

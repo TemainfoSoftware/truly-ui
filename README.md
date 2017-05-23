@@ -24,12 +24,13 @@ and then from your Angular `AppModule`:
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// Import your library
-import { SampleModule } from 'truly-ui';
+// Import your library, for example the InputComponent:
+import { InputModule } from 'truly-ui';
 
 @NgModule({
   declarations: [
@@ -37,8 +38,8 @@ import { SampleModule } from 'truly-ui';
   ],
   imports: [
     BrowserModule,
-
     // Specify your library as an import
+    InputModule
     LibraryModule
   ],
   providers: [],
@@ -54,23 +55,12 @@ Once your library is imported, you can use its components, directives and pipes 
 <h1>
   {{title}}
 </h1>
-<sampleComponent></sampleComponent>
-```
-
-## Development
-
-To generate all `*.js`, `*.d.ts` and `*.metadata.json` files:
-
-```bash
-$ npm run build
-```
-
-To lint all `*.ts` files:
-
-```bash
-$ npm run lint
+<tl-input [toUpperCase]="true"
+          [(ngModel)]="title"
+          [placeholder]="'My Input Placeholder'">
+</tl-input>
 ```
 
 ## License
 
-MIT © [Maicon Wagner dos Santos](mailto:mister-x59@hotmail.com.br)
+MIT © [Temainfo Sistemas](mailto:suporte@temainfo.com.br)

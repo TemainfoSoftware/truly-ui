@@ -10,7 +10,12 @@
     "email": "mister-x59@hotmail.com.br"
   },
   "keywords": [
-    "angular"
+    "angular",
+    "ui",
+    "desktop",
+    "ng",
+    "electron",
+    "angular2"
   ],
   "license": "MIT",
   "bugs": {

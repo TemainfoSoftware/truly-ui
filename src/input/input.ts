@@ -13,7 +13,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
     selector: 'tl-input',
     templateUrl: './input.html',
-    styleUrls: ['./input.scss', '../assets/reset.css'],
+    styleUrls: ['./input.scss'],
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })

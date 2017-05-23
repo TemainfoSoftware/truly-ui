@@ -1,21 +1,24 @@
-<div class="input-group">
-    <span *ngIf="iconBefore" class="input-group-addon border-left"><i [ngClass]="iconBefore"></i></span>
-    <span *ngIf="textBefore" class="input-group-addon border-left"
+<div class="tl-input-box">
+    <span *ngIf="iconBefore" class="addon -borderleft">
+        <i [ngClass]="iconBefore"></i>
+    </span>
+    <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
-
-    <input #input class="input-group-form"
+    <input #input class="field"
            [(ngModel)]="value" type="text"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
-           [ngClass]="{'cursor-blocked' : readonly || disabled, 'disabled': disabled, 'readonly': readonly}"
+           [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
            [attr.readonly]="readonly ? true : null"
            [attr.disabled]="disabled ? true : null"
            [attr.placeholder]="placeholder">
 
-    <span (click)="clearInput()" class="input-group-addon clear-button" *ngIf="clearButton && value">X</span>
 
-    <span *ngIf="iconAfter" class="input-group-addon border-right"><i [ngClass]="iconAfter"></i></span>
-    <span *ngIf="textAfter" class="input-group-addon border-right"
-          [ngClass]="{'predefined' : textAfter}">{{textAfter}}</span>
+    <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && value">X</span>
+    <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
+    <span *ngIf="textAfter"
+          class="addon -borderright"
+          [ngClass]="{'-predefined' : textAfter}">{{textAfter}}
+    </span>
 </div>

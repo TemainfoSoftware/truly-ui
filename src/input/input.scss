@@ -14,11 +14,6 @@ $background-border: #CACACA;
   font-size: 0.9em;
 }
 
-@mixin borderAddon {
-  border-top: 1px solid $background-border;
-  border-bottom: 1px solid $background-border;
-}
-
 @mixin actionButtons {
   font-family: 'Lato', sans-serif;
   background: #fff;
@@ -27,104 +22,80 @@ $background-border: #CACACA;
   color: #99a1a4;
 }
 
-.input-group {
+.tl-input-box {
   width: 100%;
   display: table;
   border-collapse: separate;
-}
 
-.input-group-form {
-  display: table-cell;
-  border: 1px solid $background-border;
-  height: 30px;
-  padding: 4px 12px;
-  background: $background-white;
-  font-size: 0.9em;
-  outline: none;
-  width: 100%;
-  float: left;
-  color: #737373;
-  font-family: 'Lato', sans-serif;
-  -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-  -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-  box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-}
+  // Addon Element
+  > .addon {
+    border-top: 1px solid $background-border;
+    border-bottom: 1px solid $background-border;
+    display: table-cell;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #6E6E6E;
+    text-align: center;
+    background-color: $background-disabled;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  > .addon.-borderleft {
+    border-left: 1px solid $background-border;
+    border-radius: 2px 0 0 2px;
+  }
+  > .addon.-borderright {
+    border-right: 1px solid $background-border;
+    border-radius: 0 2px 2px 0;
+  }
+  > .addon.-clearbutton {
+    @include actionButtons;
+    font-size: 0.7em;
+  }
+  > .addon.-clearbutton:hover {
+    background: #EEEEEE;
+  }
+  > .addon.-predefined {
+    font-family: 'Lato', sans-serif;
+    color: #484848;
+  }
 
-.input-group-form::placeholder {
-  @include textInput;
-}
+  // Field Element
+  > .field {
+    display: table-cell;
+    border: 1px solid $background-border;
+    height: 30px;
+    padding: 4px 12px;
+    background: $background-white;
+    font-size: 0.9em;
+    outline: none;
+    width: 100%;
+    float: left;
+    color: #737373;
+    font-family: 'Lato', sans-serif;
+    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+  }
+  > .field::placeholder {
+    @include textInput;
+  }
+  > .field.-cursorblocked {
+    cursor: not-allowed;
+  }
 
-.input-group-addon {
-  @include borderAddon;
-  display: table-cell;
-  padding: 4px 12px;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1;
-  color: #CACACA;
-  text-align: center;
-  background-color: $background-disabled;
-  width: 1%;
-  white-space: nowrap;
-  vertical-align: middle;
+  //Variantes
+  & .-disabled {
+    background-color: $background-disabled;
+    color: #9d9d9d;
+  }
+  & .-readonly {
+    background-color: $background-disabled;
+  }
+  & .-readonly:active{
+    background-color: $background-white;
+  }
 }
-
-.clear-button {
-  @include actionButtons;
-  font-size: 0.7em;
-}
-
-.clear-button:hover {
-  background: #EEEEEE;
-}
-
-.copy-button {
-  @include actionButtons;
-  font-size: 0.8em;
-}
-
-.title-hint:after {
-  content: attr(title);
-  padding: 5px;
-  border: 1px solid #ccc;
-  top: 5px;
-  right: 10%;
-  background: #bada55;
-}
-
-.border-right {
-  border-right: 1px solid $background-border;
-  border-radius: 0 2px 2px 0;
-}
-
-.border-left {
-  border-left: 1px solid $background-border;
-  border-radius: 2px 0 0 2px;
-}
-
-.cursor-blocked {
-  cursor: not-allowed;
-}
-
-.predefined {
-  font-family: 'Lato', sans-serif;
-  color: #484848;
-}
-
-.disabled {
-  background-color: $background-disabled;
-  color: #9d9d9d;
-}
-
-.readonly {
-  background-color: $background-disabled;
-}
-
-.readonly:active {
-  background-color: $background-white;
-}
-
-.input-group-addon i {
-  color: #6E6E6E;
-}
-

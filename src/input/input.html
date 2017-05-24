@@ -11,9 +11,11 @@
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
-           [id]="id"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
+           [ngModelOptions]="{standalone: true}"
+
+
            [tabIndex]="tabIndex"
            [placeholder]="placeholder">
 

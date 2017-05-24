@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, ViewChild, forwardRef} from '@angular/core'
+import {Component, Input, ViewEncapsulation, ViewChild, forwardRef, ElementRef, OnInit} from '@angular/core'
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 
 /**
@@ -6,6 +6,8 @@ import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
  */
 const noop = () => {
 };
+
+let nextInputUniqueId = 0;
 
 /**
  * Constant provider Control Value Accessor.
@@ -46,7 +48,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class TlInput implements ControlValueAccessor {
+export class TlInput implements ControlValueAccessor, OnInit {
+
     /**
      * Value of ngModel returned to user.
      */
@@ -140,6 +143,18 @@ export class TlInput implements ControlValueAccessor {
     @Input() disabled: boolean = null;
 
     /**
+     * Controller to define if the tabulation is with key Enter or key Tab.
+     * @type {boolean}
+     */
+    @Input() enterAsTab: boolean = true;
+
+    /**
+     * Controller for TabIndex
+     * @type {boolean}
+     */
+    @Input() tabIndex: number;
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild('input') input;
@@ -153,6 +168,19 @@ export class TlInput implements ControlValueAccessor {
      * Callback of control value accessor to register changes
      */
     private onChangeCallback: (_: any) => void = noop;
+
+    private id: string;
+    private nextElement: string;
+
+    constructor() {
+        this.tabIndex = nextInputUniqueId;
+        this.id = `tl-input-${nextInputUniqueId++}`;
+        this.nextElement = `tl-input-${nextInputUniqueId}`;
+    }
+
+    ngOnInit() {
+
+    }
 
     /**
      * Function that writes value on ngModel.
@@ -206,4 +234,6 @@ export class TlInput implements ControlValueAccessor {
     onBlur() {
         this.onTouchedCallback();
     }
+
+    onInputKeyDown($event) {}
 }

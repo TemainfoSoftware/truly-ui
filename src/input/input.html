@@ -7,12 +7,15 @@
 
     <input #input class="field"
            [(ngModel)]="value" type="text"
+           (keydown)="onInputKeyDown($event)"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
-           [attr.readonly]="readonly ? true : null"
-           [attr.disabled]="disabled ? true : null"
-           [attr.placeholder]="placeholder">
+           [id]="id"
+           [readonly]="readonly ? true : null"
+           [disabled]="disabled ? true : null"
+           [tabIndex]="tabIndex"
+           [placeholder]="placeholder">
 
     <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && value">X</span>
     <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>

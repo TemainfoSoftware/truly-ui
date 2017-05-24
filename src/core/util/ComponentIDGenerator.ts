@@ -8,6 +8,5 @@ export class ComponentIDGenerator {
 
     constructor(element: ElementRef) {
         element.nativeElement.id = 'tl-' + element.nativeElement.localName + '-' + nexUniqueId++;
-        console.log('gen', element);
     }
 }

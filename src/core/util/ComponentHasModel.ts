@@ -1,5 +1,7 @@
 import { ControlValueAccessor } from '@angular/forms';
 import { ComponentCustom } from "./ComponentCustom";
+import {ComponentTabIndexGenerator} from "./ComponentTabIndexGenerator";
+import {ElementRef} from "@angular/core";
 
 /**
  * A constant to be used in a function that performs no operations.
@@ -8,6 +10,7 @@ const noop = () => {};
 
 export class ComponentHasModel extends ComponentCustom implements ControlValueAccessor {
 
+    public tabIndex: ComponentTabIndexGenerator;
     /**
      * Value of ngModel returned to user.
      */
@@ -33,6 +36,9 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         }
     }
 
+    public setTabIndex(element: ElementRef) {
+        this.tabIndex = new ComponentTabIndexGenerator(element);
+    }
     /**
      * Callback of control value accessor to register touched changes
      */

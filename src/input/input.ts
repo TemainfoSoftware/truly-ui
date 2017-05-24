@@ -120,6 +120,7 @@ export class TlInput extends ComponentHasModel implements OnInit {
 
     ngOnInit() {
         this.setElement(this.input);
+        this.setTabIndex(this.input);
     }
 
     /**

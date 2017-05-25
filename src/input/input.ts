@@ -28,7 +28,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 @Component({
     selector: 'tl-input',
     templateUrl: './input.html',
-    styleUrls: ['./input.scss', '../core/reset.scss'],
+    styleUrls: ['./input.scss'],
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TlInput), multi: true}
     ]

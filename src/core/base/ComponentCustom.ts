@@ -1,21 +1,29 @@
 import { ElementRef } from '@angular/core';
 import { UniqueIDGenerator } from '../helper/uniqueid-generator';
+import { UniqueNameGenerator } from '../helper/uniquename-generator';
 
 export class ComponentCustom {
     public element : ElementRef;
     public nextTabIndex : number;
     public previousTabIndex : number;
-    private _generator : UniqueIDGenerator;
+
+    private _generatorID : UniqueIDGenerator;
+    private _generatorName : UniqueNameGenerator;
 
     constructor() { }
 
     set generator( value : UniqueIDGenerator ) {
-        this._generator = value;
+        this._generatorID = value;
     }
 
-    public setElement(value : ElementRef) {
+    set generatorName(value: UniqueNameGenerator) {
+        this._generatorName = value;
+    }
+
+    public setElement(value : ElementRef, name) {
         this.element = value;
-        this._generator = new UniqueIDGenerator( value );
+        this._generatorID = new UniqueIDGenerator( value, name );
+        this._generatorName = new UniqueNameGenerator ( value, name );
     }
 
 

@@ -12,6 +12,7 @@
            (blur)="onBlur()"
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
            [readonly]="readonly ? true : null"
+           [name]="name"
            [disabled]="disabled ? true : null"
            [ngModelOptions]="{standalone: true}"
            [placeholder]="placeholder">

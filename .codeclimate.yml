@@ -1,0 +1,6 @@
+exclude_paths:
+- "demo/"
+- "dist/"
+- "docs/"
+- "node_modules/"
+- "tools/"

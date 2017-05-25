@@ -1,33 +1,29 @@
-/**
- * Created by William on 24/05/2017.
- */
-import { ComponentIDGenerator } from './ComponentIDGenerator';
+import { UniqueIDGenerator } from '../helper/uniqueid-generator';
 import { ElementRef } from "@angular/core";
 
 export class ComponentCustom {
-    private _generator: ComponentIDGenerator;
+    private _generator: UniqueIDGenerator;
     public element: ElementRef;
     public nextTabIndex: number;
     public previousTabIndex: number;
 
-    public constructor() {
-    }
+    constructor() { }
 
-    set generator(value: ComponentIDGenerator) {
+    set generator( value: UniqueIDGenerator ) {
         this._generator = value;
     }
 
     public setElement(value: ElementRef) {
         this.element = value;
-        this._generator = new ComponentIDGenerator(value);
+        this._generator = new UniqueIDGenerator( value );
     }
 
 
-    public setNextTabIndex(value: number){
+    public setNextTabIndex( value: number ){
         this.nextTabIndex = value;
     }
 
-    public setPreviousTabIndex(value: number) {
+    public setPreviousTabIndex( value: number ) {
         this.previousTabIndex = value;
     }
 

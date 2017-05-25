@@ -1,6 +1,6 @@
-import {Component, Input, ViewChild, OnInit, forwardRef} from '@angular/core'
-import {ComponentHasModel} from "../core/util/ComponentHasModel";
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import { Component, Input, ViewChild, OnInit, forwardRef } from '@angular/core'
+import { ComponentHasModel } from "../core/base/ComponentHasModel";
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
  * Input Component personalized with few features.
@@ -114,8 +114,8 @@ export class TlInput extends ComponentHasModel implements OnInit {
     }
 
     ngOnInit() {
-        this.setElement(this.input);
-        this.setTabIndex(this.input);
+        this.setElement( this.input );
+        this.setTabIndex( this.input );
     }
 
     /**
@@ -132,7 +132,7 @@ export class TlInput extends ComponentHasModel implements OnInit {
      * @returns An value text uppercase or not, defined by toUppercase property.
      */
     onInputChange($event) {
-        return this.toUpperCase ? (this.writeValue($event.toUpperCase())) : this.writeValue($event);
+        return this.toUpperCase ? ( this.writeValue( $event.toUpperCase() ) ) : this.writeValue( $event );
     }
 
     /**

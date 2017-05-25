@@ -1,7 +1,7 @@
-import {ElementRef, Input} from "@angular/core";
-import {ControlValueAccessor,} from '@angular/forms';
-import {ComponentCustom} from "./ComponentCustom";
-import {ComponentTabIndexGenerator} from "./ComponentTabIndexGenerator";
+import { ElementRef, Input } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import { ComponentCustom } from './ComponentCustom';
+import { TabIndexGenerator } from '../helper/tabindex-generator';
 
 /**
  * A constant to be used in a function that performs no operations.
@@ -16,7 +16,7 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() enterAsTab: boolean = true;
 
-    public tabIndex: ComponentTabIndexGenerator;
+    public tabIndex: TabIndexGenerator;
     /**
      * Value of ngModel returned to user.
      */
@@ -42,10 +42,10 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         }
     }
 
-    public setTabIndex(element: ElementRef) {
-        this.tabIndex = new ComponentTabIndexGenerator(element);
-        this.setNextTabIndex(this.element.nativeElement.tabIndex + 1);
-        this.setPreviousTabIndex(this.element.nativeElement.tabIndex - 1);
+    public setTabIndex( element: ElementRef ) {
+        this.tabIndex = new TabIndexGenerator( element );
+        this.setNextTabIndex( this.element.nativeElement.tabIndex + 1 );
+        this.setPreviousTabIndex( this.element.nativeElement.tabIndex - 1 );
     }
 
     /**

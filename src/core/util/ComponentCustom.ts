@@ -6,6 +6,9 @@ import { ElementRef } from "@angular/core";
 
 export class ComponentCustom {
     private _generator: ComponentIDGenerator;
+    public element: ElementRef;
+    public nextTabIndex: number;
+    public previousTabIndex: number;
 
     public constructor() {
     }
@@ -15,6 +18,18 @@ export class ComponentCustom {
     }
 
     public setElement(value: ElementRef) {
+        this.element = value;
         this._generator = new ComponentIDGenerator(value);
     }
+
+
+    public setNextTabIndex(value: number){
+        this.nextTabIndex = value;
+    }
+
+    public setPreviousTabIndex(value: number) {
+        this.previousTabIndex = value;
+    }
+
+
 }

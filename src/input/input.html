@@ -4,10 +4,9 @@
     </span>
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
-
     <input #input class="field"
            [(ngModel)]="value" type="text"
-           (keydown)="onInputKeyDown($event)"
+           (keydown)="onKeyInput($event)"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"

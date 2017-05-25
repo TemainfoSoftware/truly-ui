@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild, OnInit, forwardRef} from '@angular/core'
 import {ComponentHasModel} from "../core/util/ComponentHasModel";
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 /**
  * Input Component personalized with few features.
@@ -103,11 +103,6 @@ export class TlInput extends ComponentHasModel implements OnInit {
      */
     @Input() disabled: boolean = null;
 
-    /**
-     * Controller to define if the tabulation is with key Enter or key Tab.
-     * @type {boolean}
-     */
-    @Input() enterAsTab: boolean = true;
 
     /**
      * The element itself to be manipulated
@@ -147,7 +142,4 @@ export class TlInput extends ComponentHasModel implements OnInit {
         this.onTouchedCallback();
     }
 
-    onInputKeyDown($event) {
-        console.log(this.input);
-    }
 }

@@ -16,11 +16,11 @@ export class ComponentCustom {
         this._generatorID = value;
     }
 
-    set generatorName(value: UniqueNameGenerator) {
+    set generatorName( value : UniqueNameGenerator ) {
         this._generatorName = value;
     }
 
-    public setElement(value : ElementRef, name) {
+    public setElement( value : ElementRef, name ) {
         this.element = value;
         this._generatorID = new UniqueIDGenerator( value, name );
         this._generatorName = new UniqueNameGenerator ( value, name );

@@ -7,7 +7,7 @@ let nextUniqueName = 0;
 
 export class UniqueNameGenerator {
 
-    constructor(element: ElementRef, name) {
+    constructor( element : ElementRef, name ) {
         element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
     }
 }

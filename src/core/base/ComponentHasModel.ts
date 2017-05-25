@@ -96,11 +96,19 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
     }
 
     previousFocus() {
-        document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex).focus();
+        if (this.previousTabIndex !== -1) {
+            document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex).focus();
+        }
     }
 
     nextFocus() {
-        document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
+        let existElement = this.existsElement(this.element.nativeElement.tabIndex);
+        if (existElement) {
+            document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
+        }
     }
 
+    existsElement(currentTabIndex) {
+        return document.getElementById('tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1));
+    }
 }

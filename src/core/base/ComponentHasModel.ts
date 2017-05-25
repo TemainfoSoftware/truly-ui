@@ -14,19 +14,19 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      * Controller to define if the tabulation is with key Enter or key Tab.
      * @type {boolean}
      */
-    @Input() enterAsTab: boolean = true;
+    @Input() enterAsTab = true;
 
-    public tabIndex: TabIndexGenerator;
+    public tabIndex : TabIndexGenerator;
     /**
      * Value of ngModel returned to user.
      */
-    public ngValue: string = '';
+    public ngValue = '';
 
     /**
      * Function that returns value of ngModel
      * @returns {string}
      */
-    public get value(): any {
+    public get value() : any {
         return this.ngValue;
     }
 
@@ -34,7 +34,7 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      * Function that receive value to set in ngModel
      * @param v
      */
-    public set value(v: any) {
+    public set value( v : any) {
         if (v !== this.ngValue) {
             this.ngValue = v;
 
@@ -42,30 +42,31 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         }
     }
 
-    public setTabIndex( element: ElementRef ) {
+
+    /**
+     * Callback of control value accessor to register touched changes
+     */
+    onTouchedCallback : () => void = noop;
+
+    /**
+     * Callback of control value accessor to register changes
+     */
+    onChangeCallback : ( _ : any) => void = noop;
+
+    setTabIndex( element : ElementRef ) {
         this.tabIndex = new TabIndexGenerator( element );
         this.setNextTabIndex( this.element.nativeElement.tabIndex + 1 );
         this.setPreviousTabIndex( this.element.nativeElement.tabIndex - 1 );
     }
 
     /**
-     * Callback of control value accessor to register touched changes
-     */
-    public onTouchedCallback: () => void = noop;
-
-    /**
-     * Callback of control value accessor to register changes
-     */
-    public onChangeCallback: (_: any) => void = noop;
-
-    /**
      * Function that writes value on ngModel.
      * @param value Value received to write value on ngModel
      */
-    writeValue(value: any) {
-        if (value !== this.ngValue) {
+    writeValue( value : any ) {
+        if ( value !== this.ngValue ) {
             this.ngValue = value;
-            this.onChangeCallback(this.ngValue)
+            this.onChangeCallback( this.ngValue );
         }
     }
 
@@ -73,7 +74,7 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      * Function that register change event on input.
      * @param callback Value received to write value on ngModel
      */
-    registerOnChange(callback: any) {
+    registerOnChange(callback : any) {
         this.onChangeCallback = callback;
     }
 
@@ -81,11 +82,11 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      * Function that register touched change event on input.
      * @param callback Value received to write value on ngModel
      */
-    registerOnTouched(callback: any) {
+    registerOnTouched(callback : any) {
         this.onTouchedCallback = callback;
     }
 
-    onKeyInput(event: KeyboardEvent) {
+    onKeyInput(event : KeyboardEvent) {
         if (this.enterAsTab) {
             if (event.keyCode === 13 || event.keyCode === 40) {
                 this.nextFocus();
@@ -102,5 +103,6 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
     nextFocus() {
         document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
     }
+
 
 }

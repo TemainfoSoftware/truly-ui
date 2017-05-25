@@ -18,42 +18,42 @@ let nextListUniqueId = 0;
     styleUrls: ['./multiselect.scss']
 })
 export class TlMultiselect implements OnInit {
-    @Input() color: string;
+    @Input() color : string;
 
     /**
      * Array de Objetos que é utilizado na listagem dos dados
      */
-    @Input() data: any[] = [];
+    @Input() data : any[] = [];
 
     /**
      * Chave a qual ira ser realizada a pesquisa
      */
-    @Input() query: string;
+    @Input() query : string;
 
-    @Input() label: string;
-    @Input() detail: string;
-    @Input() placeholder: string;
-    @Input() icon: string;
+    @Input() label : string;
+    @Input() detail : string;
+    @Input() placeholder : string;
+    @Input() icon : string;
     @Input() showIcon = true;
     @Input() openFocus = false;
     @Input() detailOnTag = null;
-    @Input() selectTag: number;
+    @Input() selectTag : number;
     @Input() itemHeight = 10;
     @Input() itemAmount = 5;
     @Input() minLengthSearch = 2;
     @Input() inputID = `input-truly-select-${nextInputUniqueId++}`;
     @Input() listID = `list-truly-select-${nextListUniqueId++}`;
 
-    @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
+    @Output() getSelecteds : EventEmitter<any> = new EventEmitter();
 
     @ViewChild('input') input;
     @ViewChild('ul') ul;
 
     private isOpen = 'none';
     private children = -1;
-    private placeholderMessage: string;
-    private tags: any[] = [];
-    private filtredItens: any[] = [];
+    private placeholderMessage : string;
+    private tags : any[] = [];
+    private filtredItens : any[] = [];
 
 
     constructor() {
@@ -77,7 +77,7 @@ export class TlMultiselect implements OnInit {
         if (!this.label) {
             this.label = this.query;
         }
-        if (this.detail == undefined && this.detailOnTag !== null) {
+        if (this.detail === undefined && this.detailOnTag !== null) {
             throw new Error('You have to declare the [detail] property');
         }
     }
@@ -88,7 +88,7 @@ export class TlMultiselect implements OnInit {
         }
     }
 
-    toogleOpen(opened: string) {
+    toogleOpen( opened : string ) {
         this.isOpen = opened;
     }
 
@@ -270,7 +270,7 @@ export class TlMultiselect implements OnInit {
             if (!tag.selected) {
                 return {'background': tag.effect.color};
             }
-            return {'background': tag.effect.color, 'opacity': 0.8}
+            return {'background': tag.effect.color, 'opacity': 0.8};
         } else {
             if (tag.selected) {
                 return {'background': '#66CC99', 'opacity': 0.8};

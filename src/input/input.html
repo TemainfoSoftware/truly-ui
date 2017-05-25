@@ -2,6 +2,7 @@
     <span *ngIf="iconBefore" class="addon -borderleft">
         <i [ngClass]="iconBefore"></i>
     </span>
+
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
     <input #input class="field"
@@ -23,3 +24,4 @@
           [ngClass]="{'-predefined' : textAfter}">{{textAfter}}
     </span>
 </div>
+

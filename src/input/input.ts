@@ -1,5 +1,5 @@
-import { Component, Input, ViewChild, OnInit, forwardRef } from '@angular/core'
-import { ComponentHasModel } from "../core/base/ComponentHasModel";
+import { Component, Input, ViewChild, OnInit, forwardRef } from '@angular/core';
+import { ComponentHasModel } from '../core/base/ComponentHasModel';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -39,13 +39,13 @@ export class TlInput extends ComponentHasModel implements OnInit {
      * Text placed before Input.
      * @type {string}
      */
-    @Input() textBefore: string = '';
+    @Input() textBefore = '';
 
     /**
      * Text placed before Input.
      * @type {string}
      */
-    @Input() textAfter: string = '';
+    @Input() textAfter = '';
 
     /**
      * Class of an Icon placed Before Input. Example usage:
@@ -58,7 +58,7 @@ export class TlInput extends ComponentHasModel implements OnInit {
      * <tl-input [iconBefore]="'fa fa-user'"></tl-input>
      * ```
      */
-    @Input() iconBefore: string = '';
+    @Input() iconBefore = '';
 
     /**
      * Class of an Icon placed After Input.
@@ -71,37 +71,37 @@ export class TlInput extends ComponentHasModel implements OnInit {
      * <tl-input [iconAfter]="'fa fa-address-card'"></tl-input>
      * ```
      */
-    @Input() iconAfter: string = '';
+    @Input() iconAfter = '';
 
     /**
      * Text to display in Input Placeholder.
      * @type {string}
      */
-    @Input() placeholder: string = '';
+    @Input() placeholder = '';
 
     /**
      * Controller to display clear button after type something [default] = false.
      * @type {boolean}
      */
-    @Input() clearButton: boolean;
+    @Input() clearButton : boolean;
 
     /**
      * Controller to change value to UpperCase.
      * @type {boolean}
      */
-    @Input() toUpperCase: boolean;
+    @Input() toUpperCase : boolean;
 
     /**
      * Controller to make an input readonly.
      * @type {boolean}
      */
-    @Input() readonly: boolean = null;
+    @Input() readonly : boolean = null;
 
     /**
      * Controller to make an input disabled.
      * @type {boolean}
      */
-    @Input() disabled: boolean = null;
+    @Input() disabled : boolean = null;
 
 
     /**
@@ -131,7 +131,7 @@ export class TlInput extends ComponentHasModel implements OnInit {
      * @param $event Value received to be uppercased.
      * @returns An value text uppercase or not, defined by toUppercase property.
      */
-    onInputChange($event) {
+    onInputChange( $event ) {
         return this.toUpperCase ? ( this.writeValue( $event.toUpperCase() ) ) : this.writeValue( $event );
     }
 

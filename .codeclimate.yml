@@ -8,9 +8,9 @@ engines:
   csslint:
     enabled: true
   duplication:
-  	enabled: true
-    config:
-    	languages:
+    enabled: true
+  config:
+      languages:
       - typescript
 exclude_paths:
 - "demo/"

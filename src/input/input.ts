@@ -47,6 +47,16 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() textAfter = '';
 
+    @Input() labelPlacement = 'left';
+
+    @Input() labelSize = '';
+
+    /**
+     * Label of Input
+     * @type {string}
+     */
+    @Input() label = '';
+
     /**
      * Class of an Icon placed Before Input. Example usage:
      *

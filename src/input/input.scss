@@ -66,17 +66,38 @@ $background-border: #CACACA;
     color: #484848;
   }
 
+  //Label
+  > .label {
+    line-height: 1;
+    width: 100px;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #737373;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9em;
+  }
+  > .label.-labeltop {
+    text-align: left;
+    padding: 0 0 5px 0;
+    display: table-caption;
+  }
+  > .label.-labelleft {
+    text-align: right;
+    padding: 5px 5px 5px 0;
+    display: table-cell;
+  }
+
   // Field Element
   > .field {
     display: table-cell;
     border: 1px solid $background-border;
-    height: 30px;
+    height: 25px;
     padding: 4px 12px;
     background: $background-white;
     font-size: 0.9em;
     outline: none;
     width: 100%;
-    float: left;
+    float: right;
     color: #737373;
     font-family: 'Lato', sans-serif;
     -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);

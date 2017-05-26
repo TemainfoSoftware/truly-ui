@@ -6,13 +6,13 @@
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
     <input #input class="field"
+           attr.name="{{name}}"
            [(ngModel)]="value" type="text"
            (keydown)="onKeyInput($event)"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
            [readonly]="readonly ? true : null"
-           [name]="name"
            [disabled]="disabled ? true : null"
            [ngModelOptions]="{standalone: true}"
            [placeholder]="placeholder">

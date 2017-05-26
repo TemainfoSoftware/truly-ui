@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, OnInit, forwardRef } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, AfterViewInit } from '@angular/core';
 import { ComponentHasModel } from '../core/base/ComponentHasModel';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -25,15 +25,15 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
  *  '
  * })
  */
-@Component({
+@Component( {
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: ['./input.scss'],
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TlInput), multi: true}
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
     ]
 })
-export class TlInput extends ComponentHasModel implements OnInit {
+export class TlInput extends ComponentHasModel implements AfterViewInit {
 
     /**
      * Text placed before Input.
@@ -107,13 +107,13 @@ export class TlInput extends ComponentHasModel implements OnInit {
     /**
      * The element itself to be manipulated
      */
-    @ViewChild('input') public input;
+    @ViewChild( 'input' ) public input;
 
     constructor() {
         super();
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         this.setElement( this.input, 'input' );
         this.setTabIndex( this.input );
     }

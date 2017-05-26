@@ -47,8 +47,17 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() textAfter = '';
 
+    /**
+     * Property to label placement [default]='left'
+     * 'left' | 'top'
+     * @type {string}
+     */
     @Input() labelPlacement = 'left';
 
+    /**
+     * Property to labelSize
+     * @type {string}
+     */
     @Input() labelSize = '';
 
     /**

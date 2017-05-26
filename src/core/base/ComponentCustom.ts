@@ -12,6 +12,7 @@ export class ComponentCustom {
 
     constructor() { }
 
+
     set generator( value : UniqueIDGenerator ) {
         this._generatorID = value;
     }

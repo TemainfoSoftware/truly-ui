@@ -16,11 +16,14 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() enterAsTab = true;
 
+    @Input() name = '';
+
     public tabIndex : TabIndexGenerator;
     /**
      * Value of ngModel returned to user.
      */
     public ngValue = '';
+
 
     /**
      * Function that returns value of ngModel
@@ -86,6 +89,7 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         this.onTouchedCallback = callback;
     }
 
+
     onKeyInput( event : KeyboardEvent ) {
         if (this.enterAsTab) {
             if (event.keyCode === 13 || event.keyCode === 40) {
@@ -107,6 +111,7 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         if (existElement) {
             document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
         }
+        console.log( this.element );
     }
 
     existsElement(currentTabIndex) {

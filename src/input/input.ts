@@ -122,6 +122,13 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() disabled : boolean = null;
 
+    @Input() minLength: string;
+
+    @Input() maxLength: string;
+
+    @Input() required: number = null;
+
+    @Input() autocomplete: boolean;
 
     /**
      * The element itself to be manipulated

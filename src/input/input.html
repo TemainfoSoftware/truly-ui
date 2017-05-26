@@ -10,6 +10,8 @@
 
     <input #input class="field"
            attr.name="{{name}}"
+           attr.maxLength="{{maxLength}}"
+           attr.minLenght="{{minLength}}"
            [(ngModel)]="value" type="text"
            (keydown)="onKeyInput($event)"
            (ngModelChange)="onInputChange($event)"
@@ -17,6 +19,8 @@
            [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
+           [autocomplete]="autocomplete"
+           [required]="required"
            [ngModelOptions]="{standalone: true}"
            [placeholder]="placeholder">
 

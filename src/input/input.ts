@@ -109,10 +109,16 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @ViewChild( 'input' ) public input;
 
+    /**
+     * Constructor
+     */
     constructor() {
         super();
     }
 
+    /**
+     * LifeHook Angular
+     */
     ngAfterViewInit() {
         this.setElement( this.input, 'input' );
         this.setTabIndex( this.input );

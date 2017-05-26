@@ -9,6 +9,9 @@ import { TabIndexGenerator } from '../helper/tabindex-generator';
 const noop = () => {
 };
 
+/**
+ * Class that controls all Components that have Models.
+ */
 export class ComponentHasModel extends ComponentCustom implements ControlValueAccessor {
     /**
      * Controller to define if the tabulation is with key Enter or key Tab.
@@ -16,9 +19,17 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() enterAsTab = true;
 
+    /**
+     * Input that receive name attribute.
+     * @type {string}
+     */
     @Input() name = '';
 
+    /**
+     * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
+     */
     public tabIndex : TabIndexGenerator;
+
     /**
      * Value of ngModel returned to user.
      */
@@ -45,7 +56,6 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         }
     }
 
-
     /**
      * Callback of control value accessor to register touched changes
      */
@@ -56,6 +66,10 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     onChangeCallback : ( _ : any) => void = noop;
 
+    /**
+     * Function to set tabIndex of Elements received.
+     * @param element
+     */
     setTabIndex( element : ElementRef ) {
         this.tabIndex = new TabIndexGenerator(element);
         this.setNextTabIndex(this.element.nativeElement.tabIndex + 1);
@@ -89,7 +103,10 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         this.onTouchedCallback = callback;
     }
 
-
+    /**
+     * Function that trigger a keyinput in element.
+     * @param event
+     */
     onKeyInput( event : KeyboardEvent ) {
         if (this.enterAsTab) {
             if (event.keyCode === 13 || event.keyCode === 40) {
@@ -100,20 +117,29 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         }
     }
 
+    /**
+     * Function to set focus on previous element
+     */
     previousFocus() {
         if (this.previousTabIndex !== -1) {
             document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex).focus();
         }
     }
 
+    /**
+     * Function to set focus on next element
+     */
     nextFocus() {
         const existElement = this.existsElement(this.element.nativeElement.tabIndex);
         if (existElement) {
             document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
         }
-        console.log( this.element );
     }
 
+    /**
+     * Function that verify if next element exists.
+     * @param currentTabIndex
+     */
     existsElement(currentTabIndex) {
         return document.getElementById('tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1));
     }

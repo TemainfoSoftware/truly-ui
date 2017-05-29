@@ -5,6 +5,8 @@ $background-addon: #DEDEDE;
 $background-gray: #EEE;
 $background-white: #FFFFFF;
 $background-border: #CACACA;
+$error-field: #FF6666;
+$success-field: #66CC99;
 
 * {
   -webkit-box-sizing: border-box;
@@ -87,6 +89,10 @@ $background-border: #CACACA;
     display: table-cell;
   }
 
+  > .label.-validation {
+    color: $error-field;
+  }
+
   // Field Element
   > .field {
     display: table-cell;
@@ -107,6 +113,10 @@ $background-border: #CACACA;
   > .field::placeholder {
     @include textInput;
   }
+  > .field.-error::placeholder {
+    color: $error-field;
+  }
+
   > .field.-cursorblocked {
     cursor: not-allowed;
   }
@@ -117,4 +127,13 @@ $background-border: #CACACA;
   > .field.-readonly {
     background-color: $background-gray;
   }
+
+  > .field.-error {
+    border: 1px solid $error-field;
+  }
+
+  > .field.-success {
+    border: 1px solid $success-field;
+  }
+
 }

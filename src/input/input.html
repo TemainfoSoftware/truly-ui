@@ -1,5 +1,7 @@
 <div class="tl-input-box">
-    <label class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}</label>
+    <label class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
+        <b *ngIf="required" style="color: #FF6666">*</b>
+    </label>
     <span *ngIf="iconBefore" class="addon -borderleft">
         <i [ngClass]="iconBefore"></i>
     </span>
@@ -8,7 +10,7 @@
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
-    <input #input class="field"
+    <input #input #inputModel="ngModel"  class="field"
            attr.name="{{name}}"
            attr.maxLength="{{maxLength}}"
            attr.minLenght="{{minLength}}"
@@ -16,7 +18,12 @@
            (keydown)="onKeyInput($event)"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
-           [ngClass]="{'-cursorblocked' : readonly || disabled, '-disabled': disabled, '-readonly': readonly}"
+           [ngClass]="{
+           '-cursorblocked' : readonly || disabled,
+           '-disabled': disabled,
+           '-readonly': readonly,
+           '-error': !inputModel.valid && inputModel.touched,
+           '-success' : inputModel.valid && inputModel.touched}"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"

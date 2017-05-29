@@ -114,12 +114,6 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
     @Input() iconAfter = '';
 
     /**
-     * Text to display in Input Placeholder.
-     * @type {string}
-     */
-    @Input() placeholder = '';
-
-    /**
      * Controller to display clear button after type something [default] = false.
      * @type {boolean}
      */
@@ -205,6 +199,7 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     onBlur() {
         this.onTouchedCallback();
+        this.requiredValidation();
     }
 
 }

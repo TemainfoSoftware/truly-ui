@@ -19,7 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef, Input } from '@angular/core';
+
+import { ElementRef, Input, ViewChild } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ComponentCustom } from './ComponentCustom';
 import { TabIndexGenerator } from '../helper/tabindex-generator';
@@ -46,6 +47,8 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() name = '';
 
+    @ViewChild( 'inputModel' ) public inputModel;
+
     /**
      * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
      */
@@ -56,6 +59,11 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     public ngValue = '';
 
+    /**
+     * Text to display in Input Placeholder.
+     * @type {string}
+     */
+    @Input() placeholder = '';
 
     /**
      * Function that returns value of ngModel
@@ -105,6 +113,14 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         if (value !== this.ngValue) {
             this.ngValue = value;
             this.onChangeCallback(this.ngValue);
+            this.requiredValidation();
+        }
+        
+    }
+
+    requiredValidation() {
+        if (!this.inputModel.valid && this.inputModel.touched) {
+            this.placeholder = 'Campo Obrigatório';
         }
     }
 

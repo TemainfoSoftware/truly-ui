@@ -68,8 +68,17 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() textAfter = '';
 
+    /**
+     * Property to label placement [default]='left'
+     * 'left' | 'top'
+     * @type {string}
+     */
     @Input() labelPlacement = 'left';
 
+    /**
+     * Property to labelSize
+     * @type {string}
+     */
     @Input() labelSize = '';
 
     /**
@@ -134,6 +143,25 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() disabled : boolean = null;
 
+    /**
+     * Property for minLength value
+     */
+    @Input() minLength: string;
+
+    /**
+     * Property for maxLength value
+     */
+    @Input() maxLength: string;
+
+    /**
+     * Property to control if input is required or not.
+     */
+    @Input() required: number = null;
+
+    /**
+     * Property to control autocomplete input
+     */
+    @Input() autocomplete: boolean;
 
     /**
      * The element itself to be manipulated

@@ -19,7 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import { Component, Input, ViewChild, forwardRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, AfterViewInit,ChangeDetectionStrategy } from '@angular/core';
 import { ComponentHasModel } from '../core/base/ComponentHasModel';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -50,6 +50,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: ['./input.scss'],
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
     ]
@@ -138,21 +139,6 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
     @Input() disabled : boolean = null;
 
     /**
-     * Property for minLength value
-     */
-    @Input() minLength: string;
-
-    /**
-     * Property for maxLength value
-     */
-    @Input() maxLength: string;
-
-    /**
-     * Property to control if input is required or not.
-     */
-    @Input() required: number = null;
-
-    /**
      * Property to control autocomplete input
      */
     @Input() autocomplete: boolean;
@@ -198,8 +184,7 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      * Function called when input lost it focus.
      */
     onBlur() {
+        console.log('Blur',);
         this.onTouchedCallback();
-        this.requiredValidation();
     }
-
 }

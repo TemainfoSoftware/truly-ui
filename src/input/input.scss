@@ -6,7 +6,10 @@ $background-gray: #EEE;
 $background-white: #FFFFFF;
 $background-border: #CACACA;
 $error-field: #FF6666;
+$error-placeholder: #FFB9B9;
+$error-background-color: #FFF1F1;
 $success-field: #66CC99;
+$success-background-color: #E3F5EC;
 
 * {
   -webkit-box-sizing: border-box;
@@ -91,6 +94,7 @@ $success-field: #66CC99;
 
   > .label.-validation {
     color: $error-field;
+    font-size: 0.7em;
   }
 
   // Field Element
@@ -101,7 +105,6 @@ $success-field: #66CC99;
     padding: 4px 12px;
     background: $background-white;
     font-size: 0.9em;
-    outline: none;
     width: 100%;
     float: right;
     color: #737373;
@@ -113,10 +116,6 @@ $success-field: #66CC99;
   > .field::placeholder {
     @include textInput;
   }
-  > .field.-error::placeholder {
-    color: $error-field;
-  }
-
   > .field.-cursorblocked {
     cursor: not-allowed;
   }
@@ -127,13 +126,18 @@ $success-field: #66CC99;
   > .field.-readonly {
     background-color: $background-gray;
   }
-
-  > .field.-error {
-    border: 1px solid $error-field;
+  > .field.-hasValidation.ng-invalid::placeholder {
+    color: $error-placeholder;
   }
-
-  > .field.-success {
+  > .field.-hasValidation.ng-invalid {
+    border: 1px solid $error-field;
+    background-color: $error-background-color;
+    outline: none;
+  }
+  > .field.-hasValidation.ng-valid.ng-touched {
     border: 1px solid $success-field;
+    background-color: $success-background-color;
+    outline: none;
   }
 
 }

@@ -10,24 +10,26 @@
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
-    <input #input #inputModel="ngModel"  class="field"
+    <input #input #model="ngModel"
+           class="field"
            attr.name="{{name}}"
-           attr.maxLength="{{maxLength}}"
-           attr.minLenght="{{minLength}}"
-           [(ngModel)]="value" type="text"
+           maxlength="{{validations?.maxLength}}"
+           minlength="{{validations?.minLength}}"
+           required="{{validations?.required}}"
+           [(ngModel)]="value"
+           type="text"
            (keydown)="onKeyInput($event)"
            (ngModelChange)="onInputChange($event)"
            (blur)="onBlur()"
            [ngClass]="{
-           '-cursorblocked' : readonly || disabled,
-           '-disabled': disabled,
-           '-readonly': readonly,
-           '-error': !inputModel.valid && inputModel.touched,
-           '-success' : inputModel.valid && inputModel.touched}"
+               '-cursorblocked' : readonly || disabled,
+               '-disabled': disabled,
+               '-readonly': readonly,
+               '-hasValidation': hasValidation()
+           }"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"
-           [required]="required"
            [ngModelOptions]="{standalone: true}"
            [placeholder]="placeholder">
 

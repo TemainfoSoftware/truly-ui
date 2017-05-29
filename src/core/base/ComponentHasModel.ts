@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { ElementRef, Input, ViewChild } from '@angular/core';
+import { ElementRef, Input, ViewChild, OnInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { ComponentCustom } from './ComponentCustom';
 import { TabIndexGenerator } from '../helper/tabindex-generator';
@@ -34,7 +34,8 @@ const noop = () => {
 /**
  * Class that controls all Components that have Models.
  */
-export class ComponentHasModel extends ComponentCustom implements ControlValueAccessor {
+export class ComponentHasModel extends ComponentCustom implements ControlValueAccessor, OnInit {
+
     /**
      * Controller to define if the tabulation is with key Enter or key Tab.
      * @type {boolean}
@@ -47,23 +48,25 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() name = '';
 
-    @ViewChild( 'inputModel' ) public inputModel;
-
-    /**
-     * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
-     */
-    public tabIndex : TabIndexGenerator;
-
-    /**
-     * Value of ngModel returned to user.
-     */
-    public ngValue = '';
+    @Input() validations = {};
 
     /**
      * Text to display in Input Placeholder.
      * @type {string}
      */
     @Input() placeholder = '';
+
+    @ViewChild( 'model' ) public inputModel;
+
+    /**
+     * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
+     */
+    tabIndex : TabIndexGenerator;
+
+    /**
+     * Value of ngModel returned to user.
+     */
+    ngValue = '';
 
     /**
      * Function that returns value of ngModel
@@ -95,6 +98,14 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     onChangeCallback : ( _ : any) => void = noop;
 
+
+    ngOnInit () {
+        let self = this;
+        Object.keys( this.validations ).forEach(function ( key ) {
+            self[key] = self.validations[key];
+        })
+    }
+
     /**
      * Function to set tabIndex of Elements received.
      * @param element
@@ -113,15 +124,8 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         if (value !== this.ngValue) {
             this.ngValue = value;
             this.onChangeCallback(this.ngValue);
-            this.requiredValidation();
         }
-        
-    }
 
-    requiredValidation() {
-        if (!this.inputModel.valid && this.inputModel.touched) {
-            this.placeholder = 'Campo Obrigatório';
-        }
     }
 
     /**
@@ -179,6 +183,11 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     existsElement(currentTabIndex) {
         return document.getElementById('tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1));
+    }
+
+
+    hasValidation() {
+        return Object.keys( this.validations ).length > 0;
     }
 
 }

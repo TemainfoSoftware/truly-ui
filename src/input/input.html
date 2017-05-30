@@ -11,16 +11,6 @@
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
     <input #input #model="ngModel"
-           class="field"
-           attr.name="{{name}}"
-           maxlength="{{validations?.maxLength}}"
-           minlength="{{validations?.minLength}}"
-           required="{{validations?.required}}"
-           [(ngModel)]="value"
-           type="text"
-           (keydown)="onKeyInput($event)"
-           (ngModelChange)="onInputChange($event)"
-           (blur)="onBlur()"
            [ngClass]="{
                '-cursorblocked' : readonly || disabled,
                '-disabled': disabled,
@@ -31,7 +21,18 @@
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"
            [ngModelOptions]="{standalone: true}"
-           [placeholder]="placeholder">
+           [placeholder]="placeholder"
+           [(ngModel)]="value"
+           class="field"
+           type="text"
+           attr.name="{{name}}"
+           maxlength="{{validations?.maxLength}}"
+           minlength="{{validations?.minLength}}"
+           required="{{validations?.required}}"
+           (ngModelChange)="onInputChange($event)"
+           (blur)="onBlur()"
+           (keydown)="onKeyInput($event)"
+    >
 
     <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && value">X</span>
     <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>

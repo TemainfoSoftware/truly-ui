@@ -19,7 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import { Component, Input, ViewChild, forwardRef, AfterViewInit,ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentHasModel } from '../core/base/ComponentHasModel';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -141,7 +141,7 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
     /**
      * Property to control autocomplete input
      */
-    @Input() autocomplete: boolean;
+    @Input() autocomplete : boolean;
 
     /**
      * The element itself to be manipulated
@@ -184,7 +184,6 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      * Function called when input lost it focus.
      */
     onBlur() {
-        console.log('Blur',);
         this.onTouchedCallback();
     }
 }

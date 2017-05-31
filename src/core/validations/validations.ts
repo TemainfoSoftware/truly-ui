@@ -36,9 +36,4 @@ export class Validations {
      * Property for maxLength value
      */
      @Input() maxLength: string;
-
-
-    hasValidation() {
-        return Object.keys( this.validations ).length > 0;
-    }
 }

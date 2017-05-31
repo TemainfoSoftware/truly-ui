@@ -13,6 +13,7 @@ script:
   - npm run build
 before_script:
   - npm prune
+  - npm run lint
 after_success:
   - npm run semantic-release
 branches:

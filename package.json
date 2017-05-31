@@ -17,14 +17,8 @@
     "test-jest:ci": "jest --runInBand",
     "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TemainfoSistemas/truly-ui.git"
-  },
-  "author": {
-    "name": "Maicon Wagner dos Santos",
-    "email": "mister-x59@hotmail.com.br"
-  },
+  "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
+  "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
   "keywords": [
     "angular",
     "ui",

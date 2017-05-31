@@ -1,6 +1,18 @@
 {
   "preset": "jest-preset-angular",
   "setupTestFrameworkScriptFile": "<rootDir>/tools/jest/jest-setup.ts",
+  "collectCoverage": true,
+  "mapCoverage": true,
+  "collectCoverageFrom" : [
+    "src/**/*.ts"
+  ],
+  "coveragePathIgnorePatterns":[
+    "<rootDir>/node_modules/",
+    "<rootDir>/demo/",
+    "<rootDir>/dist/"
+  ],
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["json", "lcov","text-summary"],
   "modulePathIgnorePatterns":[
     "<rootDir>/demo/",
     "<rootDir>/docs/",

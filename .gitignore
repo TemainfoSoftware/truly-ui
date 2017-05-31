@@ -32,3 +32,4 @@ Desktop.ini
 # Build files
 dist/*
 docs
+coverage

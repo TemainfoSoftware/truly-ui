@@ -1,7 +1,7 @@
 {
   "name": "truly-ui",
-  "title":"Truly-UI",
-  "description":"Web Components for Desktop Applications.",
+  "title": "Truly-UI",
+  "description": "Web Components for Desktop Applications.",
   "version": "0.0.0-development",
   "scripts": {
     "build": "gulp build",
@@ -12,6 +12,9 @@
     "docs:watch": "npm run docs:build -- -s -w",
     "lint": "tslint --type-check --force --project tsconfig.json ",
     "test": "tsc && karma start",
+    "test-jest": "jest --config=jest.conf.json",
+    "test-jest:watch": "jest --watch",
+    "test-jest:ci": "jest --runInBand",
     "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
   },
   "repository": {
@@ -48,7 +51,7 @@
     "@angular/platform-browser": "^4.1.2",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",
-    "@types/jasmine": "2.5.38",
+    "@types/jest": "^19.2.3",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
     "cz-conventional-changelog": "^2.0.0",
@@ -58,6 +61,8 @@
     "gulp-rollup": "^2.11.0",
     "jasmine-core": "~2.5.2",
     "jasmine-spec-reporter": "~3.2.0",
+    "jest": "^20.0.4",
+    "jest-preset-angular": "^2.0.2",
     "karma": "~1.4.1",
     "karma-chrome-launcher": "~2.0.0",
     "karma-cli": "~1.0.1",

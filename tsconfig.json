@@ -10,7 +10,7 @@
       "dom"
     ],
     "skipLibCheck": true,
-    "types": []
+    "types": ["jest"]
   },
   "exclude": [
     "demo",

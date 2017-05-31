@@ -1,0 +1,11 @@
+{
+  "preset": "jest-preset-angular",
+  "setupTestFrameworkScriptFile": "<rootDir>/tools/jest/jest-setup.ts",
+  "modulePathIgnorePatterns":[
+    "<rootDir>/demo/",
+    "<rootDir>/docs/",
+    "<rootDir>/dist/",
+    "<rootDir>/node_modules/",
+    "<rootDir>/tools/"
+  ]
+}

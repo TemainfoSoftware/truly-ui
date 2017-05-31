@@ -100,10 +100,10 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
 
 
     ngOnInit () {
-        let self = this;
+        const self = this;
         Object.keys( this.validations ).forEach(function ( key ) {
             self[key] = self.validations[key];
-        })
+        });
     }
 
     /**

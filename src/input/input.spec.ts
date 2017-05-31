@@ -7,8 +7,6 @@ import { InputModule } from './index';
 describe('TLInput Component', () => {
     let comp :    TlInput;
     let fixture : ComponentFixture<TlInput>;
-    let de :      DebugElement;
-    let el :      HTMLElement;
 
     beforeEach(() => {
         TestBed.configureTestingModule({

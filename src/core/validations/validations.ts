@@ -30,10 +30,10 @@ export class Validations {
      /**
      * Property for minLength value
      */
-     @Input() minLength: string;
+     @Input() minLength : string;
 
      /**
      * Property for maxLength value
      */
-     @Input() maxLength: string;
+     @Input() maxLength : string;
 }

@@ -1,11 +1,10 @@
 <div class="tl-input-box">
-    <label class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
+    <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
         <b *ngIf="required" style="color: #FF6666">*</b>
     </label>
     <span *ngIf="iconBefore" class="addon -borderleft">
         <i [ngClass]="iconBefore"></i>
     </span>
-
 
     <span *ngIf="textBefore" class="addon -borderleft"
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>

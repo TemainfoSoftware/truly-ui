@@ -14,6 +14,7 @@ script:
 before_script:
   - npm prune
   - npm run lint
+  - npm run test-jest:ci
 after_success:
   - npm run semantic-release
 branches:

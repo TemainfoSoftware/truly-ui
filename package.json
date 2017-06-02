@@ -10,11 +10,11 @@
     "docs:build": "compodoc -p tsconfig.json -n Truly-UI -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
-    "lint": "tslint --type-check --force --project tsconfig.json ",
+    "lint": "tslint --type-check --project tsconfig.json ",
     "test": "tsc && karma start",
     "test-jest": "jest --config=jest.conf.json",
     "test-jest:watch": "jest --watch",
-    "test-jest:ci": "jest --runInBand",
+    "test-jest:ci": "jest --config=jest.conf.json --runInBand",
     "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
   },
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",

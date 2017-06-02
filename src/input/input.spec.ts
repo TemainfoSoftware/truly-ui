@@ -77,7 +77,7 @@ describe('TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
         expect( elementoHTMLLabel.className ).toContain('labeltop');
     }));
 
-    test('deve exibir o texto "Eu sou um Texto do Input" no label ', async(() => {
+    test('deve exibir o texto no elementoHtml label ', async(() => {
          fixture.detectChanges();
          expect( elementoHTMLLabel.textContent ).toContain(textMock);
     }));
@@ -88,7 +88,7 @@ describe('TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
         expect( elementoHTMLLabel.style.width ).toEqual('350px');
     }));
 
-    test('não deve existir elemento label propriedade "label" for vazio',  async(() => {
+    test('não deve existir elemento label quando propriedade "label" for vazio',  async(() => {
         componentInputInstance.label = '';
         fixture.detectChanges();
         debugElment = fixture.debugElement.query(By.css('label'));

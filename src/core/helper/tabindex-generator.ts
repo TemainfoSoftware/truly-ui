@@ -23,8 +23,15 @@ import { ElementRef } from '@angular/core';
 
 let nextUniqueIndex = 0;
 
+/**
+ * Class responsable to generate tab index.
+ */
 export class TabIndexGenerator {
 
+    /**
+     * Constructor
+     * @param element
+     */
     constructor(element : ElementRef) {
         element.nativeElement.tabIndex = nextUniqueIndex++;
     }

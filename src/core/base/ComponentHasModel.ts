@@ -28,8 +28,7 @@ import { TabIndexGenerator } from '../helper/tabindex-generator';
 /**
  * A constant to be used in a function that performs no operations.
  */
-const noop = () => {
-};
+const noop = () => {};
 
 /**
  * Class that controls all Components that have Models.
@@ -48,6 +47,9 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() name = '';
 
+    /**
+     * Object of validations (receive a bunch of validations).
+     */
     @Input() validations = {};
 
     /**
@@ -56,6 +58,15 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
      */
     @Input() placeholder = '';
 
+    /**
+     * Attribute for Regex Pattern
+     * @type {string}
+     */
+    @Input() pattern = '';
+
+    /**
+     * ViewChild of ngModel input.
+     */
     @ViewChild( 'model' ) public inputModel;
 
     /**
@@ -185,7 +196,10 @@ export class ComponentHasModel extends ComponentCustom implements ControlValueAc
         return document.getElementById('tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1));
     }
 
-
+    /**
+     * Method that validate if has Validations;
+     * @returns {boolean}
+     */
     hasValidation() {
         return Object.keys( this.validations ).length > 0;
     }

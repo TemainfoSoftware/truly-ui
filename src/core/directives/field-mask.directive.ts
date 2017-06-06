@@ -1,11 +1,8 @@
 import {
-    AfterContentInit,
-    ContentChildren,
     Directive,
     HostListener,
     Input,
-    QueryList,
-    AfterViewChecked,
+    AfterViewChecked, AfterViewInit, Inject, ComponentRef
 } from '@angular/core';
 
 import { TlInput } from '../../input/input';
@@ -13,28 +10,34 @@ import { TlInput } from '../../input/input';
 @Directive( {
     selector: '[mask]',
 } )
-export class FieldMaskDirective implements AfterContentInit, AfterViewChecked {
+export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
 
-    @ContentChildren( TlInput ) element : QueryList<TlInput>;
+    @Input( 'guides' ) guides;
+
     private tlInput;
     private input;
 
     private maskExpression : string;
-    private maskSpecialCharacters : string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+' ];
+    private maskSpecialCharacters : string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+', '_' ];
     private maskAwaliablePatterns : { [key : string] : RegExp } = {
         '0': /\d/,
         '9': /\d/,
         'A': /[a-zA-Z]/,
     };
 
-    public ngAfterContentInit() {
-        this.tlInput = this.element.toArray()[ 0 ];
-        this.input = this.element.toArray()[ 0 ].input;
-        this.defineValidation();
+    constructor( @Inject( TlInput ) private tlinput : ComponentRef<TlInput> ) {
+        this.tlInput = tlinput;
+    }
+
+    public ngAfterViewInit() {
+        this.input = this.tlInput.input;
+        this.input.nativeElement.placeholder = this.maskExpression;
+        this.applyValidation();
     }
 
     public ngAfterViewChecked() {
         this.applyValueChanges();
+        this.applyGuides();
     }
 
     @Input( 'mask' )
@@ -45,10 +48,15 @@ export class FieldMaskDirective implements AfterContentInit, AfterViewChecked {
         this.maskExpression = value;
     }
 
-    @HostListener( 'input' )
-    public onInput() : void {
+    @HostListener( 'input', [ '$event' ] )
+    public onInput( $event ) : void {
         this.applyValueChanges();
         this.callBackForInput();
+    }
+
+    @HostListener( 'change' )
+    public onChange() : void {
+        this.setValidation();
     }
 
     private applyMask( inputValue : string, maskExpression : string ) : string {
@@ -89,8 +97,7 @@ export class FieldMaskDirective implements AfterContentInit, AfterViewChecked {
 
     private applyValueChanges() : void {
         const value : string = this.input.nativeElement.value;
-        const masked = this.applyMask( value, this.maskExpression );
-        this.input.nativeElement.value = masked;
+        this.input.nativeElement.value = this.applyMask( value, this.maskExpression );
     }
 
     private callBackForInput() : void {
@@ -101,8 +108,27 @@ export class FieldMaskDirective implements AfterContentInit, AfterViewChecked {
         return value.replace( /(\/|\.|-|\(|\)|:| |\+)/gi, '' );
     }
 
-    private defineValidation() {
+    private applyValidation() {
+        const model = this.input.nativeElement.value;
+        if ( model ) {
+            this.setValidation();
+            this.tlInput.onChangeCallback( this.input.nativeElement.value );
+        }
+    }
+
+    private setValidation() {
         this.tlInput.validations[ 'minLength' ] = this.maskExpression.length;
         this.tlInput.validations[ 'maxLength' ] = this.maskExpression.length;
+    }
+
+    private applyGuides() {
+        const value = this.maskExpression;
+        const model = this.tlInput.ngValue;
+        if ( model === '' ) {
+            if ( this.guides ) {
+                this.input.nativeElement.value = value.replace( /9/gi, '_' );
+                this.input.nativeElement.value = value.replace( /0/gi, '_' );
+            }
+        }
     }
 }

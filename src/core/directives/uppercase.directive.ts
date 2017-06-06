@@ -41,6 +41,5 @@ export class UppercaseDirective implements AfterContentInit {
 
 
     @HostListener( 'keypress', [ '$event' ] ) onKeyPress( event ) {
-        console.log(this.input)
     }
 }

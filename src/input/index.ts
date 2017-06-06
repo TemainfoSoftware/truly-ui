@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlInput } from './input';
-import { FieldMask } from '../core/directives/field-mask';
+import { FieldMaskDirective } from '../core/directives/field-mask.directive';
+import { UppercaseDirective } from '../core/directives/uppercase.directive';
 
 export * from './input';
 
@@ -13,11 +14,13 @@ export * from './input';
     ],
     declarations: [
         TlInput,
-        FieldMask
+        FieldMaskDirective,
+        UppercaseDirective
     ],
     exports: [
         TlInput,
-        FieldMask
+        FieldMaskDirective,
+        UppercaseDirective
     ]
 })
 export class InputModule {}

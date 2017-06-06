@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 import { Component, Input, ViewChild, forwardRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
-import { ComponentHasModel } from '../core/base/ComponentHasModel';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 /**
@@ -55,7 +55,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
     ]
 })
-export class TlInput extends ComponentHasModel implements AfterViewInit {
+export class TlInput extends ComponentHasModelBase implements AfterViewInit {
 
     /**
      * Text placed before Input.
@@ -120,11 +120,6 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
      */
     @Input() clearButton : boolean;
 
-    /**
-     * Controller to change value to UpperCase.
-     * @type {boolean}
-     */
-    @Input() toUpperCase : boolean;
 
     /**
      * Controller to make an input readonly.
@@ -169,21 +164,5 @@ export class TlInput extends ComponentHasModel implements AfterViewInit {
     clearInput() {
         this.input.nativeElement.value = '';
         this.ngValue = '';
-    }
-
-    /**
-     * Function to receive input change.
-     * @param $event Value received to be uppercased.
-     * @returns An value text uppercase or not, defined by toUppercase property.
-     */
-    onInputChange( $event ) {
-        return this.toUpperCase ? ( this.writeValue( $event.toUpperCase() ) ) : this.writeValue( $event );
-    }
-
-    /**
-     * Function called when input lost it focus.
-     */
-    onBlur() {
-        this.onTouchedCallback();
     }
 }

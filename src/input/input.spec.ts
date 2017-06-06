@@ -95,3 +95,16 @@ describe('TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
         expect( debugElment ).toBeNull();
     }));
 });
+describe('TlInput Pripriedade [ TOUPPERCASE ]', () => {
+    beforeEach( () => {
+        componentInputInstance.toUpperCase = true;
+        fixture.detectChanges();
+        inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+    });
+
+    test('deve exibir o do input em maisculo', async( () => {
+        inputElement.value = textMock;
+        inputElement.dispatchEvent(new Event('input'));
+        expect( componentInputInstance.value).toEqual( textMock.toUpperCase() );
+    }));
+});

@@ -3,7 +3,7 @@
      (click)="toogleOpen('block')">
 
   <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
-        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailTag && detail !== undefined"
+        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailOnTag && detail !== undefined"
          class="tags-detail"><{{tag?.source[detail]}}></small><b
          (click)="removeTag(i, tag)">x</b>
   </span>

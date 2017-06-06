@@ -70,11 +70,11 @@ export class TlMultiselect implements OnInit {
     @ViewChild('input') input;
     @ViewChild('ul') ul;
 
-    private isOpen = 'none';
+    public isOpen = 'none';
+    public filtredItens : any[] = [];
     private children = -1;
     private placeholderMessage : string;
     private tags : any[] = [];
-    private filtredItens : any[] = [];
 
 
     constructor() {

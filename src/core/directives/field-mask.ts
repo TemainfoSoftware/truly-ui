@@ -1,9 +1,14 @@
 import {
-    AfterContentInit, ContentChildren, Directive, HostListener, Input, QueryList, AfterViewChecked,
-}
-    from '@angular/core';
+    AfterContentInit,
+    ContentChildren,
+    Directive,
+    HostListener,
+    Input,
+    QueryList,
+    AfterViewChecked,
+} from '@angular/core';
 
-import { TlInput } from "../../input/input";
+import { TlInput } from '../../input/input';
 
 @Directive( {
     selector: '[mask]',
@@ -47,12 +52,12 @@ export class FieldMask implements AfterContentInit, AfterViewChecked {
     }
 
     private applyMask( inputValue : string, maskExpression : string ) : string {
-        let cursor : number = 0;
-        let result : string = '';
+        let cursor = 0;
+        let result = '';
 
         const inputArray : string[] = inputValue.split( '' );
 
-        for ( let i : number = 0, inputSymbol : string = inputArray[ 0 ]; i
+        for ( let i = 0, inputSymbol : string = inputArray[ 0 ]; i
         < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
             if ( result.length === maskExpression.length ) {
                 break;

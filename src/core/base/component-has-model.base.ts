@@ -42,12 +42,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
     @Input() enterAsTab = true;
 
     /**
-     * Controller to change value to UpperCase.
-     * @type {boolean}
-     */
-    @Input() toUpperCase : boolean;
-
-    /**
      * Input that receive name attribute.
      * @type {string}
      */
@@ -216,7 +210,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
      * @returns An value text uppercase or not, defined by toUppercase property.
      */
     onInputChange( $event ) {
-        this.toUpperCase ? ( this.writeValue( $event.toUpperCase() ) ) : this.writeValue( $event );
+        this.writeValue( $event );
     }
 
 

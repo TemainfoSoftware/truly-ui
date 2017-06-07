@@ -41,6 +41,7 @@ export class CharcaseDirective{
             return value.toUpperCase();
         }
 
+
         if ( this.charcase === 'LOWERCASE' ) {
             return value.toLowerCase();
         }

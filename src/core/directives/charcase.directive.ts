@@ -27,7 +27,7 @@ import { NgModel } from '@angular/forms';
     selector: '[charcase]',
     providers: [NgModel]
 } )
-export class CharcaseDirective{
+export class CharcaseDirective {
 
     @Input() charcase : string;
     @Output() ngModelChange : EventEmitter<any> = new EventEmitter();

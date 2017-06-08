@@ -2,7 +2,7 @@ import {
     Directive,
     HostListener,
     Input,
-    AfterViewChecked, AfterViewInit, Inject, ComponentRef
+    AfterViewInit, Inject, ComponentRef, OnInit
 } from '@angular/core';
 
 import { TlInput } from '../../input/input';
@@ -10,11 +10,10 @@ import { TlInput } from '../../input/input';
 @Directive( {
     selector: '[mask]',
 } )
-export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
-
-    @Input( 'guides' ) guides;
+export class FieldMaskDirective implements AfterViewInit, OnInit {
 
     private tlInput;
+    private maskGuides;
     private input;
 
     private maskExpression : string;
@@ -29,23 +28,27 @@ export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
         this.tlInput = tlinput;
     }
 
-    public ngAfterViewInit() {
+    public ngOnInit() {
         this.input = this.tlInput.input;
         this.input.nativeElement.placeholder = this.maskExpression;
-        this.applyValidation();
     }
 
-    public ngAfterViewChecked() {
+    public ngAfterViewInit() {
+        this.applyValidation();
         this.applyValueChanges();
-        this.applyGuides();
     }
 
     @Input( 'mask' )
-    public set _maskExpression( value : string ) {
+    public set _maskExpression( value : any ) {
         if ( !value ) {
             return;
         }
-        this.maskExpression = value;
+        if ( typeof value === 'string' ) {
+            this.maskExpression = value;
+            return;
+        }
+        this.maskGuides = value[ 'guides' ];
+        this.maskExpression = value[ 'mask' ];
     }
 
     @HostListener( 'input', [ '$event' ] )
@@ -65,8 +68,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
 
         const inputArray : string[] = inputValue.split( '' );
 
-        for ( let i = 0, inputSymbol : string = inputArray[ 0 ]; i
-        < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
+        for ( let i = 0, inputSymbol = inputArray[ 0 ]; i < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
             if ( result.length === maskExpression.length ) {
                 break;
             }
@@ -82,10 +84,6 @@ export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
                 i--;
             }
         }
-        if ( result.length + 1 === maskExpression.length
-            && this.maskSpecialCharacters.indexOf( maskExpression[ maskExpression.length - 1 ] ) !== -1 ) {
-            result += maskExpression[ maskExpression.length - 1 ];
-        }
         return result;
     }
 
@@ -96,8 +94,9 @@ export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
     }
 
     private applyValueChanges() : void {
-        const value : string = this.input.nativeElement.value;
-        this.input.nativeElement.value = this.applyMask( value, this.maskExpression );
+        setTimeout( () => {
+            this.input.nativeElement.value = this.applyMask( this.input.nativeElement.value, this.maskExpression );
+        }, 1 );
     }
 
     private callBackForInput() : void {
@@ -121,14 +120,4 @@ export class FieldMaskDirective implements AfterViewInit, AfterViewChecked {
         this.tlInput.validations[ 'maxLength' ] = this.maskExpression.length;
     }
 
-    private applyGuides() {
-        const value = this.maskExpression;
-        const model = this.tlInput.ngValue;
-        if ( model === '' ) {
-            if ( this.guides ) {
-                this.input.nativeElement.value = value.replace( /9/gi, '_' );
-                this.input.nativeElement.value = value.replace( /0/gi, '_' );
-            }
-        }
-    }
 }

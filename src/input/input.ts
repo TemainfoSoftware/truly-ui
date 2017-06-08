@@ -21,7 +21,7 @@
 */
 import { Component, Input, ViewChild, forwardRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
 /**
  * Input Component personalized with few features.
@@ -120,7 +120,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Input() clearButton : boolean;
 
-
     /**
      * Controller to make an input readonly.
      * @type {boolean}
@@ -162,7 +161,8 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Function to clear input value.
      */
     clearInput() {
-        this.input.nativeElement.value = '';
         this.ngValue = '';
+        this.input.nativeElement.value = '';
     }
+
 }

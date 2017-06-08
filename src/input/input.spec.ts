@@ -94,4 +94,5 @@ describe('TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
         debugElment = fixture.debugElement.query(By.css('label'));
         expect( debugElment ).toBeNull();
     }));
+
 });

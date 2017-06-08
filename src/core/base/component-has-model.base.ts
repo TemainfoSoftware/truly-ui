@@ -21,19 +21,15 @@
  */
 
 import { ElementRef, Input, ViewChild, OnInit } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
 import { ComponentDefaultBase } from './component-default.base';
 import { TabIndexGenerator } from '../helper/tabindex-generator';
+import { ControlValueAccessor } from "@angular/forms/src/forms";
 
-/**
- * A constant to be used in a function that performs no operations.
- */
-const noop = () => {};
 
 /**
  * Class that controls all Components that have Models.
  */
-export class ComponentHasModelBase extends ComponentDefaultBase implements ControlValueAccessor, OnInit {
+export class ComponentHasModelBase extends ComponentDefaultBase implements OnInit, ControlValueAccessor {
 
     /**
      * Controller to define if the tabulation is with key Enter or key Tab.
@@ -59,12 +55,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
     @Input() placeholder = '';
 
     /**
-     * Attribute for Regex Pattern
-     * @type {string}
-     */
-    @Input() pattern = '';
-
-    /**
      * ViewChild of ngModel input.
      */
     @ViewChild( 'model' ) public inputModel;
@@ -74,40 +64,17 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
      */
     tabIndex : TabIndexGenerator;
 
-    /**
-     * Value of ngModel returned to user.
-     */
     ngValue = '';
-
-    /**
-     * Function that returns value of ngModel
-     * @returns {string}
-     */
-    public get value() : any {
-        return this.ngValue;
-    }
-
-    /**
-     * Function that receive value to set in ngModel
-     * @param v
-     */
-    public set value( v : any) {
-        if (v !== this.ngValue) {
-            this.ngValue = v;
-
-            this.onChangeCallback(v);
-        }
-    }
 
     /**
      * Callback of control value accessor to register touched changes
      */
-    onTouchedCallback : () => void = noop;
+    onTouchedCallback : Function = () => {};
 
     /**
      * Callback of control value accessor to register changes
      */
-    onChangeCallback : ( _ : any) => void = noop;
+    onChangeCallback : Function = () => {};
 
 
     ngOnInit () {
@@ -125,34 +92,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
         this.tabIndex = new TabIndexGenerator(element);
         this.setNextTabIndex(this.element.nativeElement.tabIndex + 1);
         this.setPreviousTabIndex(this.element.nativeElement.tabIndex - 1);
-    }
-
-    /**
-     * Function that writes value on ngModel.
-     * @param value Value received to write value on ngModel
-     */
-    writeValue( value : any ) {
-        if (value !== this.ngValue) {
-            this.ngValue = value;
-            this.onChangeCallback(this.ngValue);
-        }
-
-    }
-
-    /**
-     * Function that register change event on input.
-     * @param callback Value received to write value on ngModel
-     */
-    registerOnChange( callback : any ) {
-        this.onChangeCallback = callback;
-    }
-
-    /**
-     * Function that register touched change event on input.
-     * @param callback Value received to write value on ngModel
-     */
-    registerOnTouched( callback : any ) {
-        this.onTouchedCallback = callback;
     }
 
     /**
@@ -204,21 +143,39 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements Contr
         return Object.keys( this.validations ).length > 0;
     }
 
-    /**
-     * Function to receive input change.
-     * @param $event Value received to be uppercased.
-     * @returns An value text uppercase or not, defined by toUppercase property.
-     */
-    onInputChange( $event ) {
-        this.writeValue( $event );
-    }
-
 
     /**
      * Function called when input lost it focus.
      */
     onBlur() {
         this.onTouchedCallback();
+    }
+
+    /**
+     * Function that writes value on ngModel.
+     * @param value Value received to write value on ngModel
+     */
+    writeValue( value : any ) {
+        if ( value ) {
+            this.ngValue = value;
+            this.element.nativeElement.value = value;
+        }
+    }
+
+    /**
+     * Function that register change event on input.
+     * @param callback Value received to write value on ngModel
+     */
+    registerOnChange( callback : any ) {
+        this.onChangeCallback = callback;
+    }
+
+    /**
+     * Function that register touched change event on input.
+     * @param callback Value received to write value on ngModel
+     */
+    registerOnTouched( callback : any ) {
+        this.onTouchedCallback = callback;
     }
 
 }

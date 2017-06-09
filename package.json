@@ -50,7 +50,7 @@
     "@types/node": "~7.0.27",
     "codelyzer": "~3.0.1",
     "cz-conventional-changelog": "^2.0.0",
-    "del": "^2.2.2",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
     "gulp-rollup": "^2.11.0",

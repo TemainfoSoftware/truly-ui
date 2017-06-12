@@ -23,7 +23,7 @@
 import { ElementRef, Input, ViewChild, OnInit } from '@angular/core';
 import { ComponentDefaultBase } from './component-default.base';
 import { TabIndexGenerator } from '../helper/tabindex-generator';
-import { ControlValueAccessor } from "@angular/forms/src/forms";
+import { ControlValueAccessor } from '@angular/forms/src/forms';
 
 
 /**

@@ -2,9 +2,9 @@ import {
     Directive,
     HostListener,
     Input,
-    AfterViewInit, OnInit, ViewChild, ElementRef, ContentChildren, QueryList, AfterContentInit, EventEmitter, Output
+    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit, EventEmitter, Output
 } from '@angular/core';
-import { TlInput } from "../../input/input";
+import { TlInput } from '../../input/input';
 
 
 @Directive( {
@@ -12,10 +12,9 @@ import { TlInput } from "../../input/input";
 } )
 export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentInit {
 
-    private maskGuides;
-
     @ContentChildren( TlInput ) tlinput : QueryList<TlInput>;
 
+    private maskGuides;
     private value;
     private input;
 
@@ -54,25 +53,25 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
             const value = this.input.nativeElement.value;
             const start = this.input.nativeElement.selectionStart;
             const end = this.input.nativeElement.selectionEnd;
-            
+
             if ( this.maskGuides ) {
-                if ( value[ end - 1 ] == this.maskGuideExpression[ end - 1 ] ) {
+                if ( value[ end - 1 ] === this.maskGuideExpression[ end - 1 ] ) {
                     event.preventDefault();
                     if ( start > 0 ) {
                         this.input.nativeElement.setSelectionRange( start - 1, end - 1 );
                     }
                 }
 
-                if ( value[ end - 1 ] != this.maskGuideExpression[ end - 1 ] ) {
-                    let valueArray = value.split( '' );
+                if ( value[ end - 1 ] !== this.maskGuideExpression[ end - 1 ] ) {
+                    const valueArray = value.split( '' );
                     event.preventDefault();
                     let valueResult = '';
-                    let self = this;
-                    valueArray.forEach( function ( value, index, array ) {
+                    const self = this;
+                    valueArray.forEach( function ( myValue, index, array ) {
                         if ( index === end - 1 ) {
                             valueResult = valueResult + self.maskGuideExpression[ end - 1 ];
                         } else {
-                            valueResult = valueResult + value;
+                            valueResult = valueResult + myValue;
                         }
                     } );
 
@@ -86,10 +85,10 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
         const cursor = this.input.nativeElement.selectionEnd;
         if ( event.code === 'Delete' ) {
             event.preventDefault();
-            let valueArray = this.input.nativeElement.value.split( '' );
-            let self = this;
+            const valueArray = this.input.nativeElement.value.split( '' );
+            const self = this;
             valueArray.forEach(function ( value, index, array ) {
-               if (index == cursor) {
+               if (index === cursor) {
                     array[index] = self.maskGuideExpression[cursor];
                }
             });
@@ -127,7 +126,7 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
                 this.setValueOnInicialize();
                 this.applyGuides();
                 this.applyMask();
-            }, 0 )
+            }, 0 );
         }
     }
 
@@ -173,16 +172,16 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
 
     private handleKeypress( event ) {
 
-        let charInputed = event.key;
+        const charInputed = event.key;
         if ( charInputed !== 'Enter' && charInputed.length > 0 ) {
 
-            let start = this.input.nativeElement.selectionStart;
-            let end = this.input.nativeElement.selectionEnd;
-            let inputArray = this.input.nativeElement.value.split( '' );
+            const start = this.input.nativeElement.selectionStart;
+            const end = this.input.nativeElement.selectionEnd;
+            const inputArray = this.input.nativeElement.value.split( '' );
 
-            if ( this.isValidSymbolMask( charInputed, this.maskExpression[ end ] ) == false ) {
+            if ( this.isValidSymbolMask( charInputed, this.maskExpression[ end ] ) === false ) {
                 event.preventDefault();
-                return
+                return;
             }
 
             if ( this.maskGuides ) {
@@ -190,7 +189,7 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
                 this.input.nativeElement.value = this.replaceUndescoreForChar( inputArray, charInputed, end );
                 event.preventDefault();
 
-                if ( this.input.nativeElement.value.split( '' )[ end + 1 ] == this.maskExpression[ end + 1 ]
+                if ( this.input.nativeElement.value.split( '' )[ end + 1 ] === this.maskExpression[ end + 1 ]
                     || this.maskSpecialCharacters.indexOf( this.maskExpression[ end ] ) >= 0 ) {
                     this.input.nativeElement.setSelectionRange( start + 2, end + 2 );
                 } else {
@@ -207,7 +206,7 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
     }
 
     private onComplete() {
-        if ( this.clearMask( this.maskExpression ).length == this.clearMask( this.input.nativeElement.value ).length ) {
+        if ( this.clearMask( this.maskExpression ).length === this.clearMask( this.input.nativeElement.value ).length ) {
             this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = true;
         } else {
             this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = false;
@@ -236,7 +235,7 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
         const self = this;
         if ( this.maskGuides ) {
             setTimeout( function () {
-                if ( self.input.nativeElement.value.length == 0 ) {
+                if ( self.input.nativeElement.value.length === 0 ) {
                     self.input.nativeElement.value = self.maskGuideExpression;
                 }
             }, 1 );

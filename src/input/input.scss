@@ -126,14 +126,27 @@ $success-background-color: #E3F5EC;
   > .field.-readonly {
     background-color: $background-gray;
   }
-  > .field.-hasValidation.ng-invalid::placeholder {
+  > .field.-hasValidation.ng-touched.ng-invalid::placeholder {
     color: $error-placeholder;
   }
-  > .field.-hasValidation.ng-invalid {
+  > .field.-hasValidation.ng-touched.ng-invalid {
     border: 1px solid $error-field;
     background-color: $error-background-color;
     outline: none;
   }
+
+  >.field.-hasValidation.ng-touched.-maskInvalid {
+    border: 1px solid $error-field !important;
+    background-color: $error-background-color !important;
+    outline: none !important;
+  }
+
+  >.field.-hasValidation.ng-touched.-maskValid {
+    border: 1px solid $success-field !important;
+    background-color: $success-background-color !important;
+    outline: none !important;
+  }
+
   > .field.-hasValidation.ng-valid.ng-touched {
     border: 1px solid $success-field;
     background-color: $success-background-color;

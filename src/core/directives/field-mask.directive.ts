@@ -194,12 +194,16 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         const charInputed = event.key;
         let inputArray = this.value.split( '' );
 
+        if ( event.key === 'Enter' ) {
+            return;
+        }
         if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
             this.deleteTextOnKeyPress( inputArray, this.startPosition, this.endPosition );
             this.setPosition( this.startPosition );
             inputArray = this.value.split( '' );
         }
         if ( this.maskGuides ) {
+            this.getPosition();
             this.replaceValidChar( charInputed, this.getCursorPosition( this.endPosition ), inputArray );
         } else {
             this.applyMask( charInputed );
@@ -225,10 +229,12 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         if ( event.shiftKey ) {
             this.setShiftKey('Left');
             event.preventDefault();
-            if (this.shiftStart === 'Right') {
-                this.setPosition( this.startPosition, this.endPosition - 1 );
-            }else {
-                this.setPosition( this.startPosition - 1, this.endPosition );
+            if ( this.startPosition !== 0 ) {
+                if ( this.shiftStart === 'Right' ) {
+                    this.setPosition( this.startPosition, this.endPosition - 1 );
+                } else {
+                    this.setPosition( this.startPosition - 1, this.endPosition );
+                }
             }
         }
     }

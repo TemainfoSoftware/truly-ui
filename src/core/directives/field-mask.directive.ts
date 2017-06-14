@@ -2,7 +2,7 @@ import {
     Directive,
     HostListener,
     Input,
-    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit
+    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit, Renderer2
 } from '@angular/core';
 import { TlInput } from '../../input/input';
 
@@ -33,6 +33,9 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         '9': /\d/,
         'A': /[a-zA-Z]/,
     };
+
+    constructor( private renderer : Renderer2 ) {
+    }
 
     @Input( 'mask' )
     public set _maskExpression( value : any ) {
@@ -88,11 +91,11 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
                 this.handleArrowLeft( event );
                 break;
         }
-
     }
 
     ngAfterContentInit() {
         this.input = this.tlinput.toArray()[ 0 ].input;
+        this.inicializeOnFocus();
     }
 
     public ngAfterViewInit() {
@@ -105,9 +108,11 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private applyMaskOnInit() {
         if ( this.value !== this.maskGuideExpression ) {
             setTimeout( () => {
-                this.setValueOnInicialize();
-                this.applyGuides();
-                this.applyMask();
+                if ( this.value.length > 0 ) {
+                    this.setValueOnInicialize();
+                    this.applyGuides();
+                    this.applyMask();
+                }
             }, 0 );
         }
     }
@@ -115,6 +120,34 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private getPosition() {
         this.startPosition = this.input.nativeElement.selectionStart;
         this.endPosition = this.input.nativeElement.selectionEnd;
+    }
+
+    private inicializeOnFocus() {
+        this.renderer.listen( this.input.nativeElement, 'focus', () => {
+            this.onFocus();
+        } );
+        this.renderer.listen( this.input.nativeElement, 'focusout', () => {
+            this.onFocusOut();
+        } );
+    }
+
+    private onFocus() {
+        this.applyGuides();
+        setTimeout( () => {
+            if ( !this.isTextLengthMatchWithExpressionLength() ) {
+                this.setPosition( 0 );
+            } else {
+                this.setPosition( 0, this.value.length );
+            }
+        }, 0 );
+    }
+
+    private onFocusOut() {
+        if ( !this.isTextLengthMatchWithExpressionLength() ) {
+            this.value = '';
+            this.updateModel();
+            this.onComplete();
+        }
     }
 
     private handleBackspace() {

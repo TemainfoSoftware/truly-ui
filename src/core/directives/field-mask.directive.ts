@@ -2,7 +2,7 @@ import {
     Directive,
     HostListener,
     Input,
-    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit, EventEmitter, Output
+    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit
 } from '@angular/core';
 import { TlInput } from '../../input/input';
 
@@ -10,13 +10,18 @@ import { TlInput } from '../../input/input';
 @Directive( {
     selector: '[mask]',
 } )
-export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentInit {
+export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
 
     @ContentChildren( TlInput ) tlinput : QueryList<TlInput>;
 
-    private maskGuides;
-    private value;
+    private maskGuides = true;
+    private valueUppercase;
+    private literalChar;
+    private _value;
     private input;
+
+    private startPosition : number;
+    private endPosition : number;
 
     private maskExpression : string;
     private maskGuideExpression : string;
@@ -36,68 +41,52 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
             this.maskExpression = value;
             return;
         }
-        this.maskGuides = value[ 'guides' ];
+        if ( value[ 'guides' ] === false ) {
+            this.maskGuides = value[ 'guides' ];
+        }
+        this.literalChar = value[ 'withLiteralChar' ];
+        this.valueUppercase = value[ 'uppercase' ];
         this.maskExpression = value[ 'mask' ];
+    }
+
+    get value() {
+        return this.input.nativeElement.value;
+    }
+
+    set value( value ) {
+        this.input.nativeElement.value = value;
     }
 
     @HostListener( 'keypress', [ '$event' ] )
     public onKeyPress( $event ) : void {
         this.handleKeypress( $event );
         this.updateModel();
+        this.onComplete();
+    }
+
+    @HostListener( 'mouseup', [ '$event' ] )
+    public onMouseUp( $event ) : void {
+        this.getPosition();
     }
 
 
     @HostListener( 'keydown', [ '$event' ] )
     onKeyDown( event ) : void {
-        if ( event.code === 'Backspace' ) {
-            const value = this.input.nativeElement.value;
-            const start = this.input.nativeElement.selectionStart;
-            const end = this.input.nativeElement.selectionEnd;
-
-            if ( this.maskGuides ) {
-                if ( value[ end - 1 ] === this.maskGuideExpression[ end - 1 ] ) {
-                    event.preventDefault();
-                    if ( start > 0 ) {
-                        this.input.nativeElement.setSelectionRange( start - 1, end - 1 );
-                    }
-                }
-
-                if ( value[ end - 1 ] !== this.maskGuideExpression[ end - 1 ] ) {
-                    const valueArray = value.split( '' );
-                    event.preventDefault();
-                    let valueResult = '';
-                    const self = this;
-                    valueArray.forEach( function ( myValue, index, array ) {
-                        if ( index === end - 1 ) {
-                            valueResult = valueResult + self.maskGuideExpression[ end - 1 ];
-                        } else {
-                            valueResult = valueResult + myValue;
-                        }
-                    } );
-
-                    this.input.nativeElement.value = valueResult;
-                    this.input.nativeElement.setSelectionRange( start - 1, end - 1 );
-                }
-            }
-            this.updateModel();
-            this.onComplete();
+        switch ( event.code ) {
+            case 'Backspace':
+                this.handleBackspace();
+                break;
+            case 'Delete':
+                this.handleDelete();
+                break;
+            case 'ArrowRight':
+                this.handleArrowRight( event );
+                break;
+            case 'ArrowLeft':
+                this.handleArrowLeft( event );
+                break;
         }
-        const cursor = this.input.nativeElement.selectionEnd;
-        if ( event.code === 'Delete' ) {
-            event.preventDefault();
-            const valueArray = this.input.nativeElement.value.split( '' );
-            const self = this;
-            valueArray.forEach(function ( value, index, array ) {
-               if (index === cursor) {
-                    array[index] = self.maskGuideExpression[cursor];
-               }
-            });
-            this.input.nativeElement.value = String(valueArray).replace(/,/gi, '');
-        }
-        this.input.nativeElement.setSelectionRange( cursor, cursor );
-    }
 
-    public ngOnInit() {
     }
 
     ngAfterContentInit() {
@@ -111,17 +100,8 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
         this.setValidation();
     }
 
-
-    private setPlaceholder() {
-        this.input.nativeElement.placeholder = this.maskExpression;
-    }
-
-    private setValueOnInicialize() {
-        this.value = this.input.nativeElement.value;
-    }
-
     private applyMaskOnInit() {
-        if ( this.input.nativeElement.value !== this.maskGuideExpression ) {
+        if ( this.value !== this.maskGuideExpression ) {
             setTimeout( () => {
                 this.setValueOnInicialize();
                 this.applyGuides();
@@ -130,12 +110,85 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
         }
     }
 
+    private getPosition() {
+        this.startPosition = this.input.nativeElement.selectionStart;
+        this.endPosition = this.input.nativeElement.selectionEnd;
+        console.log(this.startPosition, this.endPosition);
+    }
 
-    private applyMask() {
+    private handleBackspace() {
+        const value = this.value;
+        const start = this.input.nativeElement.selectionStart;
+        const endPosition = this.input.nativeElement.selectionEnd;
+        const valueArray = value.split( '' );
+
+        if ( this.maskGuides ) {
+            event.preventDefault();
+            if ( this.isCharBeforeEqualMaskGuide( value, endPosition ) ) {
+                this.jumpCharMask( start, endPosition );
+            } else {
+                this.deleteTextOnBackspace( valueArray, start, endPosition );
+            }
+        }
+        this.updateModel();
+        this.onComplete();
+    }
+
+    private handleDelete() {
+        event.preventDefault();
+        const cursor = this.input.nativeElement.selectionEnd;
+        const valueArray = this.value.split( '' );
+        const self = this;
+        valueArray.forEach( function ( value, index, array ) {
+            if ( index === cursor ) {
+                array[ index ] = self.maskGuideExpression[ cursor ];
+            }
+        } );
+        this.value = String( valueArray ).replace( /,/gi, '' );
+        this.setPosition( cursor );
+        this.updateModel();
+        this.onComplete();
+    }
+
+    private handleKeypress( event ) {
+        const charInputed = event.key;
+        let inputArray = this.value.split( '' );
+
+        if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
+            this.deleteTextOnBackspace( inputArray, this.startPosition, this.endPosition );
+            this.setPosition( this.startPosition );
+            inputArray = this.value.split( '' );
+        }
+        if ( this.maskGuides ) {
+            this.replaceValidChar( charInputed, this.getCursorPosition( this.endPosition ), inputArray );
+        } else {
+            this.applyMask( charInputed );
+            event.preventDefault();
+        }
+    }
+
+    private handleArrowRight( event ) {
+        if (event.shiftKey) {
+            this.getPosition();
+        }
+    }
+
+
+    private handleArrowLeft( event ) {
+        if (event.shiftKey) {
+            this.getPosition();
+        }
+    }
+
+    private applyMask( charInputed? ) {
         let cursor = 0;
         let result = '';
 
-        const inputArray : string[] = this.input.nativeElement.value.split( '' );
+        if ( charInputed !== undefined ) {
+            this.value += charInputed;
+        }
+
+        const inputArray : string[] = this.value.split( '' );
 
         for ( let i = 0, inputSymbol = inputArray[ 0 ]; i < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
             if ( result.length === this.maskExpression.length ) {
@@ -153,78 +206,103 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
                 i--;
             }
         }
-        this.input.nativeElement.value = result;
+        this.value = result;
         this.onComplete();
     }
 
+    private deleteTextOnBackspace( valueArray, startPosisition, endPosition ) {
+        if ( this.hasTextSelected( startPosisition, endPosition ) ) {
+            this.value = this.deleteTextSelected( valueArray, startPosisition, endPosition );
+            this.setPosition( startPosisition, startPosisition );
+        } else {
+            this.value = this.deleteChar( valueArray, endPosition );
+            this.setPosition( startPosisition - 1, endPosition - 1 );
+        }
+    }
+
+    private deleteTextSelected( valueArray, startPosition, endPosition ) {
+        const self = this;
+        let valueResult = '';
+        valueArray.forEach( function ( myValue, index ) {
+            if ( index >= startPosition && index < endPosition ) {
+                valueResult = valueResult + self.maskGuideExpression[ index ];
+            } else {
+                valueResult = valueResult + myValue;
+            }
+        } );
+        return valueResult;
+    }
+
+    private deleteChar( valueArray, endPosition ) {
+        const self = this;
+        let valueResult = '';
+        valueArray.forEach( function ( myValue, index ) {
+            if ( index === endPosition - 1 ) {
+                valueResult = valueResult + self.maskGuideExpression[ endPosition - 1 ];
+            } else {
+                valueResult = valueResult + myValue;
+            }
+        } );
+        return valueResult;
+    }
 
     private replaceUndescoreForChar( valueArray, charInputed, cursorEnd ) {
         if ( this.maskSpecialCharacters.indexOf( this.maskExpression[ cursorEnd ] ) >= 0 ) {
             cursorEnd++;
         }
-        for ( let index = 0; index < valueArray.length; index++ ) {
+        valueArray.forEach( function ( value, index, array ) {
             if ( index === cursorEnd ) {
-                valueArray[ index ] = charInputed;
+                array[ index ] = charInputed;
             }
-        }
+        } );
         return valueArray.toString().replace( /,/gi, '' );
     }
 
-    private handleKeypress( event ) {
-
-        const charInputed = event.key;
-        if ( charInputed !== 'Enter' && charInputed.length > 0 ) {
-
-            const start = this.input.nativeElement.selectionStart;
-            const end = this.input.nativeElement.selectionEnd;
-            const inputArray = this.input.nativeElement.value.split( '' );
-
-            if ( this.isValidSymbolMask( charInputed, this.maskExpression[ end ] ) === false ) {
-                event.preventDefault();
-                return;
-            }
-
-            if ( this.maskGuides ) {
-
-                this.input.nativeElement.value = this.replaceUndescoreForChar( inputArray, charInputed, end );
-                event.preventDefault();
-
-                if ( this.input.nativeElement.value.split( '' )[ end + 1 ] === this.maskExpression[ end + 1 ]
-                    || this.maskSpecialCharacters.indexOf( this.maskExpression[ end ] ) >= 0 ) {
-                    this.input.nativeElement.setSelectionRange( start + 2, end + 2 );
-                } else {
-                    this.input.nativeElement.setSelectionRange( start + 1, end + 1 );
-                }
-
+    private getCursorPosition( endPosition ) {
+        let cursor = endPosition;
+        while ( this.maskExpression.length - 1 > cursor ) {
+            if ( this.maskSpecialCharacters.indexOf( this.maskExpression[ cursor ] ) >= 0 ) {
+                cursor++;
+                this.setPosition( cursor );
             } else {
-                this.input.nativeElement.value += charInputed;
-                this.applyMask();
-                event.preventDefault();
+                break;
             }
         }
-        this.onComplete();
+        return cursor;
+    }
+
+
+    private replaceValidChar( charInputed, cursor, inputArray ) {
+        if ( this.isValidSymbolMask( charInputed, this.maskExpression[ cursor ] ) ) {
+            this.value = this.replaceUndescoreForChar( inputArray, charInputed, cursor );
+            this.setPosition( cursor + 1 );
+        }
     }
 
     private onComplete() {
-        if ( this.clearMask( this.maskExpression ).length === this.clearMask( this.input.nativeElement.value ).length ) {
-            this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = true;
-        } else {
-            this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = false;
-        }
+        this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = this.isTextLengthMatchWithExpressionLength();
+    }
+
+    private isTextLengthMatchWithExpressionLength() {
+        return ( this.clearMask( this.maskExpression ).length === this.clearMask( this.value ).length)
+            && ( ( this.cleanValue( this.maskExpression ).length === this.cleanValue( this.value ).length))
+            && ( ( this.removeUndescore( this.maskExpression ).length === this.removeUndescore( this.value ).length));
     }
 
     private isValidSymbolMask( inputSymbol : string, maskSymbolChar : string ) : boolean {
-        return inputSymbol === maskSymbolChar || this.maskAwaliablePatterns[ maskSymbolChar ]
-            && this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol );
+        return ( inputSymbol === maskSymbolChar || this.maskAwaliablePatterns[ maskSymbolChar ] )
+            && (this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol ));
     }
 
     private updateModel() : void {
-        this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.input.nativeElement.value ) );
+        const endPosition = this.input.nativeElement.selectionEnd;
+        if ( this.valueUppercase ) {
+            this.value = this.value.toUpperCase();
+        }
+        this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
+        this.setPosition( endPosition );
     }
 
-    private clearMask( value : string ) : string {
-        return value.replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-    }
 
     private setValidation() {
         this.input.nativeElement.maxLength = this.maskExpression.length;
@@ -250,4 +328,52 @@ export class FieldMaskDirective implements AfterViewInit, OnInit, AfterContentIn
         return this.maskGuideExpression = mask;
     }
 
+    private clearMask( value : string ) : string {
+        if ( !(this.literalChar) ) {
+            return this.cleanValue( value );
+        }
+        return this.removeUndescore( value );
+    }
+
+    private jumpCharMask( startPosition, endPosition ) {
+        if ( this.isFirstPosition( startPosition ) ) {
+            this.setPosition( startPosition - 1, endPosition - 1 );
+        }
+    }
+
+    private setPosition( startPosition, endPosition? ) {
+        if ( endPosition === undefined ) {
+            endPosition = startPosition;
+        }
+        this.input.nativeElement.setSelectionRange( startPosition, endPosition );
+        this.getPosition();
+    }
+
+    private isCharBeforeEqualMaskGuide( value, position ) {
+        return value[ position - 1 ] === this.maskGuideExpression[ position - 1 ];
+    }
+
+    private isFirstPosition( startPosition ) {
+        return startPosition > 0;
+    }
+
+    private hasTextSelected( startPosition, endPosition ) {
+        return startPosition !== endPosition;
+    }
+
+    private removeUndescore( value ) {
+        return value.replace( /_/gi, '' );
+    }
+
+    private setPlaceholder() {
+        this.input.nativeElement.placeholder = this.maskExpression;
+    }
+
+    private setValueOnInicialize() {
+        this._value = this.value;
+    }
+
+    private cleanValue( value ) {
+        return value.replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+    }
 }

@@ -2,7 +2,7 @@ import {
     Directive,
     HostListener,
     Input,
-    AfterViewInit, OnInit, ContentChildren, QueryList, AfterContentInit, Renderer2
+    AfterViewInit, ContentChildren, QueryList, AfterContentInit, Renderer2
 } from '@angular/core';
 import { TlInput } from '../../input/input';
 
@@ -79,7 +79,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     onKeyDown( event ) : void {
         switch ( event.code ) {
             case 'Backspace':
-                this.handleBackspace();
+                this.handleBackspace( event );
                 break;
             case 'Delete':
                 this.handleDelete( event );
@@ -89,6 +89,15 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
                 break;
             case 'ArrowLeft':
                 this.handleArrowLeft( event );
+                break;
+            case 'Home':
+                this.handleHome( event );
+                break;
+            case 'End':
+                this.handleEnd( event );
+                break;
+            case 'KeyA':
+                this.handleSelectAll( event );
                 break;
         }
     }
@@ -150,12 +159,18 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         }
     }
 
-    private handleBackspace() {
+    private handleBackspace( event ) {
         const value = this.value;
         const start = this.input.nativeElement.selectionStart;
         const endPosition = this.input.nativeElement.selectionEnd;
         const valueArray = value.split( '' );
+        this.getPosition();
 
+        if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
+            event.preventDefault();
+            this.deleteTextOnKeyPress( valueArray, this.startPosition, this.endPosition );
+            return;
+        }
         if ( this.maskGuides ) {
             event.preventDefault();
             if ( this.isCharBeforeEqualMaskGuide( value, endPosition ) ) {
@@ -169,23 +184,18 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     private handleDelete( event ) {
-        event.preventDefault();
-        const cursor = this.input.nativeElement.selectionEnd;
         const valueArray = this.value.split( '' );
         const self = this;
-
-        if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
-            this.deleteTextOnKeyPress( valueArray, this.startPosition, this.endPosition );
-            return;
-        }
-
-        valueArray.forEach( function ( value, index, array ) {
-            if ( index === cursor ) {
-                array[ index ] = self.maskGuideExpression[ cursor ];
+        this.getPosition();
+        event.preventDefault();
+        if ( this.maskGuides ) {
+            if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
+                this.deleteTextOnKeyPress( valueArray, this.startPosition, this.endPosition );
+            } else {
+                this.value = this.deleteCharOnDeleteKey(valueArray);
+                this.setPosition( self.endPosition );
             }
-        } );
-        this.value = String( valueArray ).replace( /,/gi, '' );
-        this.setPosition( cursor );
+        }
         this.updateModel();
         this.onComplete();
     }
@@ -216,11 +226,12 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         if (event.shiftKey) {
             this.setShiftKey('Right');
             event.preventDefault();
-            if (this.shiftStart === 'Left') {
+            if ( this.shiftStart === 'Left' ) {
                 this.setPosition( this.startPosition + 1, this.endPosition );
-            }else {
+            } else {
                 this.setPosition( this.startPosition, this.endPosition + 1 );
             }
+
         }
     }
 
@@ -229,16 +240,46 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         if ( event.shiftKey ) {
             this.setShiftKey('Left');
             event.preventDefault();
-            if ( this.startPosition !== 0 ) {
-                if ( this.shiftStart === 'Right' ) {
-                    this.setPosition( this.startPosition, this.endPosition - 1 );
-                } else {
+            if ( this.shiftStart === 'Right' ) {
+                this.setPosition( this.startPosition, this.endPosition - 1 );
+            } else {
+                if ( this.startPosition !== 0 ) {
                     this.setPosition( this.startPosition - 1, this.endPosition );
                 }
             }
         }
     }
 
+    private handleHome( event ) {
+        event.preventDefault();
+        this.getPosition();
+        if ( event.shiftKey ) {
+            this.setShiftKey( 'Left' );
+            this.setPosition( 0, this.endPosition );
+        } else {
+            this.setPosition( 0 );
+        }
+
+    }
+
+    private handleEnd( event ) {
+        event.preventDefault();
+        this.getPosition();
+        if ( event.shiftKey ) {
+            this.setShiftKey( 'Right' );
+            this.setPosition( this.startPosition, this.value.length );
+        } else {
+            this.setPosition( this.value.length );
+        }
+
+    }
+
+
+    private handleSelectAll( event ) {
+        if ( event.ctrlKey ) {
+            this.setPosition(0, this.value.length);
+        }
+    }
 
     private setShiftKey(value) {
         if (this.startPosition === this.endPosition) {
@@ -276,16 +317,17 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
             }
         }
         this.value = result;
+        this.updateModel();
         this.onComplete();
     }
 
-    private deleteTextOnKeyPress( valueArray, startPosisition, endPosition ) {
-        if ( this.hasTextSelected( startPosisition, endPosition ) ) {
-            this.value = this.deleteTextSelected( valueArray, startPosisition, endPosition );
-            this.setPosition( startPosisition, startPosisition );
+    private deleteTextOnKeyPress( valueArray, startPosition, endPosition ) {
+        if ( this.hasTextSelected( startPosition, endPosition ) ) {
+            this.value = this.deleteTextSelected( valueArray, startPosition, endPosition );
+            this.setPosition( startPosition, startPosition );
         } else {
-            this.value = this.deleteChar( valueArray, endPosition );
-            this.setPosition( startPosisition - 1, endPosition - 1 );
+            this.value = this.deleteCharOnBackspaceKey( valueArray, endPosition );
+            this.setPosition( startPosition - 1, endPosition - 1 );
         }
     }
 
@@ -293,16 +335,21 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         const self = this;
         let valueResult = '';
         valueArray.forEach( function ( myValue, index ) {
-            if ( index >= startPosition && index < endPosition ) {
+            if ( index >= startPosition && index < endPosition && self.maskGuides
+                && self.maskSpecialCharacters.indexOf( index ) < 0 ) {
                 valueResult = valueResult + self.maskGuideExpression[ index ];
+            } else if ( index >= startPosition && index < endPosition && self.maskSpecialCharacters.indexOf( index ) < 0 ) {
+                valueResult = valueResult + '';
             } else {
                 valueResult = valueResult + myValue;
             }
         } );
+
         return valueResult;
     }
 
-    private deleteChar( valueArray, endPosition ) {
+
+    private deleteCharOnBackspaceKey( valueArray, endPosition ) {
         const self = this;
         let valueResult = '';
         valueArray.forEach( function ( myValue, index ) {
@@ -313,6 +360,16 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
             }
         } );
         return valueResult;
+    }
+
+    private deleteCharOnDeleteKey(valueArray) {
+        const self = this;
+        valueArray.forEach( function ( value, index, array ) {
+            if ( index === self.endPosition ) {
+                array[ index ] = self.maskGuideExpression[ self.endPosition ];
+            }
+        } );
+        return String(valueArray).replace(/,/gi, '');
     }
 
     private replaceUndescoreForChar( valueArray, charInputed, cursorEnd ) {
@@ -358,8 +415,12 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     private isValidSymbolMask( inputSymbol : string, maskSymbolChar : string ) : boolean {
+        if ( this.maskSpecialCharacters.indexOf( inputSymbol ) >= 0 ) {
+            return false;
+        }
         return ( inputSymbol === maskSymbolChar || this.maskAwaliablePatterns[ maskSymbolChar ] )
             && (this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol ));
+
     }
 
     private updateModel() : void {
@@ -367,7 +428,9 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         if ( this.valueUppercase ) {
             this.value = this.value.toUpperCase();
         }
-        this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
+        setTimeout( () => {
+            this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
+        }, 0 );
         this.setPosition( endPosition );
     }
 

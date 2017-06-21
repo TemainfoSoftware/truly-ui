@@ -20,7 +20,7 @@ export * from './tooltip';
     exports: [
         TooltipDirective,
     ],
-    entryComponents:[
+    entryComponents: [
         TlToolTip
     ]
 } )

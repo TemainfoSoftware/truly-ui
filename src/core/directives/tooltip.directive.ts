@@ -1,21 +1,17 @@
-/**
- * Created by William on 16/06/2017.
- */
 import {
     ComponentFactoryResolver,
-    Directive, ElementRef, HostListener, Input, ViewChild,
+    Directive, HostListener, Input,
     ViewContainerRef
 } from '@angular/core';
-import { TlToolTip } from "../../tooltip/tooltip";
-import { TooltipOptions } from "../../tooltip/tooltipOptions";
+import { TlToolTip } from '../../tooltip/tooltip';
+import { TooltipOptions } from '../../tooltip/tooltipOptions';
 
 @Directive( {
     selector: '[tooltip]'
 } )
 export class TooltipDirective {
-    @Input( 'tooltip' ) tooltipOptions : TooltipOptions;
 
-    private tooltip;
+    @Input() tooltip : TooltipOptions;
 
     constructor( private view : ViewContainerRef, private compiler : ComponentFactoryResolver ) {}
 
@@ -28,12 +24,11 @@ export class TooltipDirective {
     show() {
         const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );
         const componentRef = this.view.createComponent( componentFactory );
-        (<TlToolTip>componentRef.instance).setOptions( this.tooltipOptions );
+        (<TlToolTip>componentRef.instance).setOptions( this.tooltip );
         (<TlToolTip>componentRef.instance).setPosition( this.view.element );
     }
 
     hide() {
         this.view.clear();
     }
-
 }

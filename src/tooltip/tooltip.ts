@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { TooltipOptions } from "./tooltipOptions";
+import { TooltipOptions } from './tooltipOptions';
 import { transition, trigger, style, animate } from '@angular/animations';
 
 @Component( {
@@ -30,21 +30,21 @@ export class TlToolTip implements TooltipOptions {
 
     public text : string;
 
-    public color : string = '#000';
+    public color = '#000';
 
-    public placement : string = 'top';
+    public placement = 'top';
 
-    public fontColor : string = '#FFF';
+    public fontColor = '#FFF';
 
-    public show : boolean = true;
+    public show = true;
 
-    private tooltipWidth : number = 0;
+    private tooltipWidth = 0;
 
-    private elementWidth : number = 0;
+    private elementWidth = 0;
 
-    private elementHeight : number = 0;
+    private elementHeight = 0;
 
-    private tooltipPadding : number = 10;
+    private tooltipPadding = 10;
 
     private element;
 
@@ -162,8 +162,10 @@ export class TlToolTip implements TooltipOptions {
     }
 
     private getTopMeasureForTopTooltip() {
-        this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top = this.getElementTop() - this.elementHeight - this.tooltipPadding + 'px'
-            : this.tooltip.nativeElement.style.top = this.getElementTop() - this.tooltip.nativeElement.offsetHeight - this.tooltipPadding + 'px';
+        this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top =
+            this.getElementTop() - this.elementHeight - this.tooltipPadding + 'px' :
+            this.tooltip.nativeElement.style.top = this.getElementTop() -
+            this.tooltip.nativeElement.offsetHeight - this.tooltipPadding + 'px';
     }
 
     private getTopMeasureForLeftAndRight() {
@@ -181,19 +183,21 @@ export class TlToolTip implements TooltipOptions {
     }
 
     private setAlignCenter() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft + (this.elementWidth / 2) - this.tooltipWidth + 'px';
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft +
+            (this.elementWidth / 2) - this.tooltipWidth + 'px';
     }
 
     private setAlignRight() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft + this.elementWidth + this.tooltipPadding + 'px';
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft +
+            this.elementWidth + this.tooltipPadding + 'px';
     }
 
     private setAlignLeft() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft - this.tooltip.nativeElement.offsetWidth - this.tooltipPadding + 'px';
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft -
+            this.tooltip.nativeElement.offsetWidth - this.tooltipPadding + 'px';
     }
 
     private getElementTop() {
         return this.element.nativeElement.offsetTop;
     }
-
 }

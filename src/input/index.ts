@@ -29,7 +29,7 @@ export * from './input';
         CharcaseDirective,
         TooltipDirective
     ],
-    entryComponents:[
+    entryComponents: [
         TlToolTip
     ]
 })

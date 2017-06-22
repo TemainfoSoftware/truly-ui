@@ -20,13 +20,11 @@
  SOFTWARE.
  */
 import { NgModule } from '@angular/core';
-import { AutocompleteModule } from './autocomplete/index';
 import { MultiselectModule } from './multiselect/index';
 import { InputModule } from './input/index';
 import { TooltipModule } from './tooltip/index';
 import { DirectiveModule } from './core/directives/index';
 
-export * from './autocomplete/index';
 export * from './multiselect/index';
 export * from './input/index';
 export * from './tooltip/index';
@@ -34,7 +32,6 @@ export * from './core/directives/index';
 
 @NgModule({
   imports: [
-      AutocompleteModule,
       MultiselectModule,
       InputModule,
       DirectiveModule,

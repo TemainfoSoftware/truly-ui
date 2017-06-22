@@ -5,7 +5,6 @@ import { TlInput } from './input';
 import { FieldMaskDirective } from '../core/directives/field-mask.directive';
 import { CharcaseDirective } from '../core/directives/charcase.directive';
 import { TooltipDirective } from '../core/directives/tooltip.directive';
-import { DirectiveModule } from '../core/directives/index';
 import { TlToolTip } from '../tooltip/tooltip';
 
 export * from './input';
@@ -14,7 +13,6 @@ export * from './input';
     imports: [
         CommonModule,
         FormsModule,
-
     ],
     declarations: [
         TlInput,

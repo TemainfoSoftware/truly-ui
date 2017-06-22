@@ -1,0 +1,65 @@
+@mixin getMarginAndBorderLeftAndRight {
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+}
+
+@mixin getMarginAndBorderTopAndBottom {
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+}
+
+@mixin getPositionArrowRightLeft {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+}
+
+.tooltip-text {
+  padding: 5px;
+  background-color: #818383;
+  color: #FFF;
+  font-size: 12px;
+  font-family: Verdana;
+  position: absolute;
+  z-index: 1000;
+  display: inline-block;
+  border-radius: 3px;
+  width: 120px;
+  height: initial;
+  text-align: center;
+  word-wrap: break-word;
+
+  > .-right {
+    @include getPositionArrowRightLeft;
+    @include getMarginAndBorderLeftAndRight;
+  }
+
+  > .-left {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    @include getMarginAndBorderLeftAndRight;
+  }
+
+  > .-top {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    @include getMarginAndBorderTopAndBottom;
+  }
+
+  > .-bottom {
+    content: " ";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    @include getMarginAndBorderTopAndBottom;
+  }
+
+}
+

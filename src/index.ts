@@ -20,21 +20,22 @@
  SOFTWARE.
  */
 import { NgModule } from '@angular/core';
-import { MultiselectModule } from './multiselect/index';
-import { InputModule } from './input/index';
-import { TooltipModule } from './tooltip/index';
-import { DirectiveModule } from './core/directives/index';
 
-export * from './multiselect/index';
+import { DatatableModule } from './datatable/index';
+import { InputModule } from './input/index';
+import { MultiselectModule } from './multiselect/index';
+import { TooltipModule } from './tooltip/index';
+
+export * from './datatable/index';
 export * from './input/index';
+export * from './multiselect/index';
 export * from './tooltip/index';
-export * from './core/directives/index';
 
 @NgModule({
   imports: [
-      MultiselectModule,
+      DatatableModule,
       InputModule,
-      DirectiveModule,
+      MultiselectModule,
       TooltipModule
   ]
 })

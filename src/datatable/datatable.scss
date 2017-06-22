@@ -1,0 +1,68 @@
+@import "../core/core";
+
+
+.datatable{
+  border: 1px #E5E5E5 solid;
+  border-spacing: 0;
+  width: 100%;
+  font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
+  text-align: center;
+}
+
+.datatableHeader{
+  color: #656565;
+  font-size: 13px;
+
+  > .row{
+    height: 30px;
+    background: #F6F6F6;
+    border: 1px #6E6E6E solid;
+  }
+  > .row .cel{
+    border-right: 1px #E5E5E5 solid;
+    border-bottom: 1px #E5E5E5 solid;
+  }
+  >.row .cel.-textleft{
+    text-align: left;
+  }
+  >.row .cel.-textright{
+    text-align: right;
+  }
+  >.row .cel.-textcenter{
+    text-align: center;
+  }
+  > .row .cel:last-child{
+    border-right: none
+  }
+}
+
+.datatableBody{
+
+  > .row{
+    height: 25px;
+    font-size: 13px;
+    outline: none;
+  }
+  > .row .cel{
+    border-right: 1px #E5E5E5 solid;
+  }
+  >.row .cel.-textleft{
+    text-align: left;
+  }
+  >.row .cel.-textright{
+    text-align: right;
+  }
+  >.row .cel.-textcenter{
+    text-align: center;
+  }
+  > .row .cel:last-child{
+    border-right: none
+  }
+  > .row:nth-child(odd){
+   background: #F6F6F6;
+  }
+  > .row:focus{
+    background: #66CC99 !important;
+    color: #FFF;
+  }
+}

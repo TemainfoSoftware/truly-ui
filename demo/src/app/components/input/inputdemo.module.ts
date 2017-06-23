@@ -5,6 +5,8 @@ import { InputDemo } from "./inputdemo.component";
 import { InputModule } from '../../../../../src/input';
 import { InputDemoRoutingModule } from "./inputdemo-routing.module";
 import { CommonModule  } from '@angular/common';
+import { HighlightJsModule } from 'ngx-highlight-js';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { CommonModule  } from '@angular/common';
     InputDemoRoutingModule,
     InputModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    HighlightJsModule
   ],
   exports: [
     InputDemo

@@ -7,8 +7,10 @@
         </thead>
         <tbody #tbody class="datatableBody">
             <tr #tbody class="row" [tabindex]="i" *ngFor="let row of data; let i = index"
-                (click)="rowClick(data[i],i)"
-                (focus)="rowSelect(data[i])">
+                (click)="onRowClick(data[i],i)"
+                (focus)="onRowSelect(data[i],i)"
+                (dblclick)="onRowDblclick(data[i],i)"
+            >
                 <td  class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{row[column.field]}}</td>
             </tr>
         </tbody>

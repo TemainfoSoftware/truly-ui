@@ -33,7 +33,11 @@ export class TlDatatable implements AfterContentInit {
 
     @Input('selectable') selectable : boolean;
 
-    @Output() onRowSelect : EventEmitter<any> = new EventEmitter();
+    @Output() rowSelect : EventEmitter<any> = new EventEmitter();
+
+    @Output() rowClick : EventEmitter<any> = new EventEmitter();
+
+    @Output() rowDblclick : EventEmitter<any> = new EventEmitter();
 
     @ContentChildren(TlDatatableColumn) datatableColumns : QueryList<TlDatatableColumn>;
 
@@ -60,6 +64,10 @@ export class TlDatatable implements AfterContentInit {
         return '-text' + alignment;
     }
 
+    getObjectRow( row , index ) {
+        return { row : row, index: index };
+    }
+
     setTabIndex( value : number ) {
         this.tabindex = value
     }
@@ -67,7 +75,6 @@ export class TlDatatable implements AfterContentInit {
     generateTabindex() {
         return this.tabindex++;
     }
-
 
     onKeydown( $event ) {
         $event.preventDefault();
@@ -84,13 +91,16 @@ export class TlDatatable implements AfterContentInit {
 
     }
 
-    rowClick( row, index ) {
-        console.log(row, index);
+    onRowClick( row, index ) {
         this.setTabIndex( index );
+        this.rowClick.emit( this.getObjectRow( row , index ) );
     }
 
-    rowSelect( row ) {
-        this.onRowSelect.emit(row);
+    onRowSelect( row, index ) {
+        this.rowSelect.emit( this.getObjectRow( row , index ) );
     }
 
+    onRowDblclick( row , index ) {
+        this.rowDblclick.emit( this.getObjectRow( row , index ) );
+    }
 }

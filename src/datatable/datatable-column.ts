@@ -19,11 +19,12 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
- import {  Directive, Input } from '@angular/core';
+ import { Component, Input } from '@angular/core';
 
 
- @Directive({
-     selector : 'tl-datatable-column'
+ @Component({
+     selector : 'tl-datatable-column',
+     template : ''
  })
  export class TlDatatableColumn {
 
@@ -32,5 +33,4 @@
      @Input('title') title : string;
 
      @Input('alignment') alignment : string;
-
  }

@@ -19,7 +19,16 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import { Component, Input, ViewChild, forwardRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+    Component,
+    Input,
+    ViewChild,
+    forwardRef,
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
@@ -56,6 +65,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms
     ]
 })
 export class TlInput extends ComponentHasModelBase implements AfterViewInit {
+
 
     /**
      * Text placed before Input.
@@ -143,6 +153,12 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @ViewChild( 'input' ) public input;
 
     /**
+     * Output event for clear button
+     * @type {EventEmitter}
+     */
+    @Output() clear : EventEmitter<any> = new EventEmitter();
+
+    /**
      * Constructor
      */
     constructor() {
@@ -163,6 +179,8 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     clearInput() {
         this.ngValue = '';
         this.input.nativeElement.value = '';
+        this.input.nativeElement.focus();
+        this.clear.emit();
     }
 
 }

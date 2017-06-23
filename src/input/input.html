@@ -24,12 +24,13 @@
            [placeholder]="placeholder"
            class="field"
            type="text"
-           [(ngModel)]="ngValue"
            attr.name="{{name}}"
            maxlength="{{validations?.maxLength}}"
            minlength="{{validations?.minLength}}"
            required="{{validations?.required}}"
+           [(ngModel)]="ngValue"
            (blur)="onBlur()"
+           (focus)="onFocus()"
            (keydown)="onKeyInput($event)">
 
     <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>

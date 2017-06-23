@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { ElementRef, Input, ViewChild, OnInit } from '@angular/core';
+import { ElementRef, Input, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
 import { ComponentDefaultBase } from './component-default.base';
 import { TabIndexGenerator } from '../helper/tabindex-generator';
 import { ControlValueAccessor } from '@angular/forms/src/forms';
@@ -65,6 +65,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     tabIndex : TabIndexGenerator;
 
     ngValue = '';
+
+    @Output() blur : EventEmitter<any> = new EventEmitter();
+    @Output() focus : EventEmitter<any> = new EventEmitter();
 
     /**
      * Callback of control value accessor to register touched changes
@@ -149,6 +152,14 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     onBlur() {
         this.onTouchedCallback();
+        this.blur.emit();
+    }
+
+    /**
+     * Function called when input receive focus;
+     */
+    onFocus() {
+        this.focus.emit();
     }
 
     /**

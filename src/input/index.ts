@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { TlInput } from './input';
 import { FieldMaskDirective } from '../core/directives/field-mask.directive';
 import { CharcaseDirective } from '../core/directives/charcase.directive';
-import { TooltipDirective } from '../core/directives/tooltip.directive';
-import { TlToolTip } from '../tooltip/tooltip';
+import { TooltipModule } from '../tooltip/index';
 
 export * from './input';
 
@@ -13,22 +12,17 @@ export * from './input';
     imports: [
         CommonModule,
         FormsModule,
+        TooltipModule,
     ],
     declarations: [
         TlInput,
-        TlToolTip,
         FieldMaskDirective,
         CharcaseDirective,
-        TooltipDirective
     ],
     exports: [
         TlInput,
         FieldMaskDirective,
         CharcaseDirective,
-        TooltipDirective
-    ],
-    entryComponents: [
-        TlToolTip
     ]
 })
 export class InputModule {}

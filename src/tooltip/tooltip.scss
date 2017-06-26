@@ -19,18 +19,18 @@
 
 .tooltip-text {
   padding: 5px;
-  background-color: #818383;
   color: #FFF;
-  font-size: 12px;
-  font-family: Verdana;
   position: absolute;
-  z-index: 1000;
   display: inline-block;
+  z-index: 10000;
   border-radius: 3px;
   width: 120px;
   height: initial;
   text-align: center;
   word-wrap: break-word;
+  background-color: #818383;
+  font-size: 12px !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 
   > .-right {
     @include getPositionArrowRightLeft;

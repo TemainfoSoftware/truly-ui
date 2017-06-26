@@ -10,9 +10,11 @@ export * from './tooltip';
         CommonModule,
     ],
     declarations: [
+        TlToolTip,
         TooltipDirective,
     ],
     exports: [
+        TlToolTip,
         TooltipDirective,
     ],
     entryComponents: [

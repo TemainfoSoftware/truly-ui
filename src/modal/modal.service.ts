@@ -2,7 +2,7 @@
  * Created by William on 26/06/2017.
  */
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
-import { TlModal } from "./modal";
+import { TlModal } from './modal';
 
 @Injectable()
 export class ModalService {

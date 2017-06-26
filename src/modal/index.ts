@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalService } from "./modal.service";
+import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 
 export * from './modal';

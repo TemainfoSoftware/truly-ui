@@ -36,6 +36,8 @@ export class TlToolTip implements TooltipOptions {
 
     public fontColor = '#FFF';
 
+    public width = '';
+
     public show = true;
 
     private tooltipWidth = 0;
@@ -59,7 +61,6 @@ export class TlToolTip implements TooltipOptions {
         const self = this;
         this.getElementWidth();
         this.getElementHeight();
-        this.setMiddleMeasureTooltip();
         setTimeout( function () {
             self.getTopMeasureForTopTooltip();
             self.setAlignCenter();
@@ -69,7 +70,6 @@ export class TlToolTip implements TooltipOptions {
 
     setPlacementLeft() {
         const self = this;
-        this.setMiddleMeasureTooltip();
         setTimeout( function () {
             self.getTopMeasureForLeftAndRight();
             self.setAlignLeft();
@@ -79,7 +79,6 @@ export class TlToolTip implements TooltipOptions {
     setPlacementRight() {
         const self = this;
         this.getElementWidth();
-        this.setMiddleMeasureTooltip();
         setTimeout( function () {
             self.getTopMeasureForLeftAndRight();
             self.setAlignRight();
@@ -90,7 +89,6 @@ export class TlToolTip implements TooltipOptions {
         const self = this;
         this.getElementWidth();
         this.getElementHeight();
-        this.setMiddleMeasureTooltip();
         setTimeout( function () {
             self.setTopMeasureForBottom();
             self.setAlignCenter();
@@ -98,7 +96,7 @@ export class TlToolTip implements TooltipOptions {
     }
 
     getStyleTooltip() {
-        return { 'background-color': this.color, 'color': this.fontColor }
+        return { 'background-color': this.color, 'color': this.fontColor, 'width': this.width }
     }
 
     getStyleTooltipArrow() {
@@ -149,11 +147,7 @@ export class TlToolTip implements TooltipOptions {
     }
 
     private isLessOrEqualThanNormalWidth() : boolean {
-        return this.tooltip.nativeElement.offsetHeight <= 25;
-    }
-
-    private setMiddleMeasureTooltip() {
-        this.tooltipWidth = this.tooltip.nativeElement.offsetWidth / 2;
+        return this.tooltip.nativeElement.offsetHeight <= 27;
     }
 
     private getElementWidth() {
@@ -170,8 +164,10 @@ export class TlToolTip implements TooltipOptions {
 
     private getTopMeasureForLeftAndRight() {
         this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top = this.getElementTop() - 2.5 + 'px'
-            : this.tooltip.nativeElement.style.top = this.getElementTop() - (this.tooltipWidth / 2) + 'px';
+            : this.tooltip.nativeElement.style.top =
+            this.getElementTop() - this.tooltip.nativeElement.offsetHeight / 2 + this.tooltipPadding + 'px';
     }
+
 
     private getElementHeight() {
         this.existsMeasureOnNativeElement() ? this.elementHeight = this.element.nativeElement.offsetHeight :
@@ -184,7 +180,7 @@ export class TlToolTip implements TooltipOptions {
 
     private setAlignCenter() {
         this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft +
-            (this.elementWidth / 2) - this.tooltipWidth + 'px';
+            (this.elementWidth / 2) - this.tooltip.nativeElement.offsetWidth / 2 + 'px';
     }
 
     private setAlignRight() {

@@ -6,5 +6,5 @@ export interface TooltipOptions {
     color? : string;
     placement? : string;
     fontColor? : string;
-
+    width? : string;
 }

@@ -23,18 +23,21 @@ import { NgModule } from '@angular/core';
 
 import { DatatableModule } from './datatable/index';
 import { InputModule } from './input/index';
+import { ButtonModule } from './button/index';
 import { MultiselectModule } from './multiselect/index';
 import { TooltipModule } from './tooltip/index';
 import { ModalModule } from './modal/index';
 
 export * from './datatable/index';
 export * from './input/index';
+export * from './button/index';
 export * from './multiselect/index';
 export * from './tooltip/index';
 export * from './modal/index';
 
 @NgModule({
   imports: [
+      ButtonModule,
       DatatableModule,
       InputModule,
       MultiselectModule,

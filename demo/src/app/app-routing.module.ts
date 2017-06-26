@@ -7,6 +7,7 @@ import { HomeComponent } from "app/home/home.component";
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
       {path: 'input', loadChildren: './components/input/inputdemo.module#InputDemoModule'},
+      {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
     ])
   ],
   exports: [RouterModule]

@@ -19,29 +19,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+    ChangeDetectionStrategy,
+} from '@angular/core';
 
-import { DatatableModule } from './datatable/index';
-import { InputModule } from './input/index';
-import { MultiselectModule } from './multiselect/index';
-import { TooltipModule } from './tooltip/index';
-import { ModalModule } from './modal/index';
-
-export * from './datatable/index';
-export * from './input/index';
-export * from './multiselect/index';
-export * from './tooltip/index';
-export * from './modal/index';
-
-@NgModule({
-  imports: [
-      DatatableModule,
-      InputModule,
-      MultiselectModule,
-      TooltipModule,
-      ModalModule
-  ]
+@Component({
+    selector: 'tl-modal',
+    templateUrl: './modal.html',
+    styleUrls: ['./modal.scss']
 })
-export class TrulyModule {}
+export class TlModal implements OnInit {
 
+    constructor() {}
+
+    ngOnInit() {}
+
+}
 

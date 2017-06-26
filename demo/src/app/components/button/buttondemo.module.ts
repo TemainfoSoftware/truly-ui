@@ -2,25 +2,25 @@ import { CommonModule  } from '@angular/common';
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
-import { InputDemo } from "./inputdemo.component";
-import { InputModule } from '../../../../../src/input';
-import { InputDemoRoutingModule } from "./inputdemo-routing.module";
+import { ButtonDemo } from "./buttondemo.component";
+import { ButtonModule } from '../../../../../src/button';
+import { ButtonDemoRoutingModule } from "./buttondemo-routing.module";
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 
 @NgModule({
   declarations: [
-    InputDemo
+    ButtonDemo
   ],
   imports:[
-    InputDemoRoutingModule,
-    InputModule,
+    ButtonDemoRoutingModule,
+    ButtonModule,
     CommonModule,
     FormsModule,
     HighlightJsModule
   ],
   exports: [
-    InputDemo
+    ButtonDemo
   ]
 })
-export class InputDemoModule {}
+export class ButtonDemoModule {}

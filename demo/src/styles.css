@@ -86,7 +86,6 @@ i {
   color: #fff;
 }
 
-
 .group-component {
   padding: 15px;
 }
@@ -108,4 +107,14 @@ i {
 
 .git-logo:hover {
   cursor: pointer;
+}
+
+.menu li ul {
+  padding-left: 10px;
+  display: none;
+  list-style: none;
+}
+
+.menu li:hover ul {
+  display: block;
 }

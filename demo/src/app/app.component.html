@@ -16,10 +16,19 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 menu-container">
       <ul class="menu">
-        <li routerLink="input" routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Input</li>
+        <li routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Input
+          <ul>
+            <li routerLink="input" routerLinkActive="active"><i
+              class="ion-android-arrow-dropright"></i>InputText
+            </li>
+            <li routerLink="inputmask" routerLinkActive="active"><i
+              class="ion-android-arrow-dropright"></i>InputMask
+            </li>
+          </ul>
+        </li>
         <li routerLink="button" routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Button</li>
-        <li routerLink="modal"><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>Modal</li>
-        <li routerLink="tooltip"><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>Tooltip</li>
+        <li routerLinkActive="active" routerLink="modal"><i class="ion-android-arrow-dropright" ></i>Modal</li>
+        <li routerLinkActive="active" routerLink="tooltip"><i class="ion-android-arrow-dropright" ></i>Tooltip</li>
         <li><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>MultiSelect</li>
         <li><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>DataGrid</li>
       </ul>

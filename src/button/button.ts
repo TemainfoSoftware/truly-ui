@@ -38,14 +38,14 @@ export class TlButton {
     @Input() width;
     @Input() iconLeftTextButton = '';
     @Input() iconRightTextButton = '';
-    @Input() disabled : boolean = null;
+    @Input() disabled: boolean = null;
 
-    @ViewChild('buttonBox') buttonBox: ElementRef ;
+    @ViewChild('buttonBox') buttonBox: ElementRef;
 
 
     @HostListener('mouseenter') onMouseEnter() {
-        if(this.disabled != true){
-            this.hoverButton(this.borderColor(this.styleOptions.backgroundColor, -0.07));
+        if (this.disabled != true) {
+            this.hoverButton(this.borderColor(this.styleOptions.backgroundColor, -0.05));
         }
     }
 
@@ -53,8 +53,17 @@ export class TlButton {
         this.hoverButton(this.styleOptions.backgroundColor);
     }
 
+    @HostListener('mousedown') onMouseDown() {
+        this.hoverButton(this.borderColor(this.styleOptions.backgroundColor, -0.09));
+    }
+
+    @HostListener('mouseup') onMouseUp() {
+        this.onMouseEnter();
+    }
+
+
     private hoverButton(color: string) {
-        if(this.disabled != true) {
+        if (this.disabled != true) {
             this.buttonBox.nativeElement.style.backgroundColor = color;
         }
     }

@@ -1,1 +1,56 @@
 @import "../core/core";
+
+//Colors Default
+
+.tl-button-box {
+  height: 39px;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  > .addon {
+    font-weight: 400;
+    height: 37px;
+    display: inline-block;
+  }
+  > .addon.-iconleft {
+    float: left;
+    padding: 0 15px;
+  }
+  > .addon.-iconleft > i {
+    margin: 0;
+    padding: 0;
+    line-height: 39px;
+  }
+  > .addon.-iconright {
+    float: right;
+    padding: 0 15px;
+  }
+  > .addon.-iconright > i {
+    margin: 0;
+    padding: 0;
+    line-height: 39px;
+  }
+}
+.disabled{
+  opacity: 0.35;
+  filter: Alpha(Opacity=35);
+  background-image: none;
+  cursor: default !important;
+}
+
+
+.tlBtn-default {
+  border: 0;
+  margin: 0 auto;
+  display: inline-block;
+  background: transparent;
+  height: 39px;
+  min-width: 100px;
+  text-align: center;
+}
+.tlBtn-default:active, .tlBtn-default:focus, .tlBtn-default:any-link {
+  outline: none;
+}

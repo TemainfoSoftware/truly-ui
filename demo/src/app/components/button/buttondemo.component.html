@@ -2,140 +2,185 @@
   <h1 class="title">Button</h1>
   <p class="text-content">There's a lot of ways to create a button using Truly UI. Below, are some of those.</p>
 </div>
+
 <hr>
+
 <div class="showcase">
   <div class="row">
     <div class="col-md-3">
       <div class="group-component">
         <h5>Basic</h5>
-        <tl-button [textButton]="'Button 1'"></tl-button>
+        <tl-button [textButton]="'Button'"></tl-button>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Type: submit</h5>
-        <tl-button [type]="'submit'" [textButton]="'Button 2'"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Type: reset</h5>
-        <tl-button [type]="'reset'" [textButton]="'Button 3'"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Custom Style</h5>
-        <tl-button [textButton]="'PRONTUÁRIO'"
-                   [styleOptions]="{'backgroundColor': '#62BEC8', 'fontColor': '#FFF', 'fontSize': '11px' }"></tl-button>
-      </div>
-    </div>
-  </div>
-  <div class="row">
     <div class="col-md-3">
       <div class="group-component">
         <h5>Icon Before</h5>
-        <tl-button [textButton]="'Imprimir'"
-                   [styleOptions]="{'backgroundColor': '#F1F1F1', 'fontColor': '#616161'}"
-                   [iconBefore]="{'icon': 'ion-android-print', 'backgroundColor': '#DEDEDE' , 'fontColor': '#6E6E6E'}"></tl-button>
+        <tl-button [textButton]="'Button'"
+                   [iconBefore]="{'icon': 'ion-printer'}"></tl-button>
       </div>
     </div>
     <div class="col-md-3">
       <div class="group-component">
         <h5>Icon After</h5>
-        <tl-button [textButton]="'Atender'"
-                   [styleOptions]="{'backgroundColor': '#46B5B3', 'fontColor': '#FFF'}"
-                   [iconAfter]="{'icon': 'ion-play', 'fontColor': '#FFF'}"></tl-button>
+        <tl-button [textButton]="'Button'"
+                   [iconAfter]="{'icon': 'fa fa-home'}"></tl-button>
       </div>
     </div>
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Type: reset</h5>
-        <tl-button [textButton]="'Pré-Atendimento'"
-                   [styleOptions]="{'backgroundColor': '#46B599', 'fontColor': '#FFF'}"
-                   [iconBefore]="{'icon': 'ion-clipboard', 'fontColor': '#FFF'}"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Custom Style</h5>
-        <tl-button [textButton]="'FINALIZA'"
-                   [styleOptions]="{'backgroundColor': '#FF6666', 'fontColor': '#FFF'  }"
-                   [iconLeftTextButton]="'ion-stop'"></tl-button>
+        <h5>Icon Before and After</h5>
+        <tl-button [textButton]="'Button'"
+                   [iconBefore]="{'icon': 'ion-printer'}"
+                   [iconAfter]="{'icon': 'fa fa-home'}"></tl-button>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Disabled</h5>
-        <tl-button [textButton]="'Desabilitado'"
-                   [styleOptions]="{'backgroundColor': '#F1F1F1', 'fontColor': '#616161'}"
-                   [iconBefore]="{'icon': 'ion-android-print'}"
-                   [disabled]="true"></tl-button>
+        <h5>Custom Style</h5>
+        <tl-button [textButton]="'Button'"
+                   [styleOptions]="{'backgroundColor': '#81D5AB', 'fontColor': '#FFF', 'fontSize': '12px'}"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Icon Left</h5>
+        <tl-button [textButton]="'Button'"
+                   [iconLeftTextButton]="'ion-printer'"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Icon Right</h5>
+        <tl-button [textButton]="'Button'"
+                   [iconRightTextButton]="'fa fa-home'"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Icon Left and Right</h5>
+        <tl-button [textButton]="'Button'"
+                   [iconLeftTextButton]="'ion-printer'"
+                   [iconRightTextButton]="'fa fa-home'"></tl-button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Many Properties</h5>
+        <tl-button [textButton]="'Button'"
+                   [styleOptions]="{'backgroundColor': '#1B95E0', 'fontColor': '#FFF','fontSize': '16px'}"
+                   [iconBefore]="{'icon': 'ion-printer', 'fontColor': '#1B95E0', 'backgroundColor': '#FFF'}"
+                   [iconRightTextButton]="'fa fa-home'"></tl-button>
       </div>
     </div>
     <div class="col-md-3">
       <div class="group-component">
         <h5>Disabled</h5>
-        <tl-button [textButton]="'Pré-Atendimento'"
-                   [styleOptions]="{'backgroundColor': '#46B599', 'fontColor': '#FFF'}"
-                   [iconBefore]="{'icon': 'ion-clipboard', 'fontColor': '#FFF'}"
-                   [disabled]="true"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Disabled</h5>
-        <tl-button [textButton]="'FINALIZA'"
-                   [styleOptions]="{'backgroundColor': '#FF6666', 'fontColor': '#FFF'  }"
-                   [iconLeftTextButton]="'ion-stop'"
-                   [disabled]="true"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Disabled</h5>
-        <tl-button [textButton]="'Atender'"
-                   [styleOptions]="{'backgroundColor': '#46B5B3', 'fontColor': '#FFF'}"
-                   [iconAfter]="{'icon': 'ion-play', 'fontColor': '#FFF'}"
+        <tl-button [textButton]="'Button'"
                    [disabled]="true"></tl-button>
       </div>
     </div>
   </div>
   <hr>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
-        <!--<tr>-->
-        <!--<td><b>{{ item.name }}</b></td>-->
-        <!--<td><span class="badge">{{ item.type }}</span></td>-->
-        <!--<td><code>{{ item.default }}</code></td>-->
-        <!--<td>{{ item.description }}</td>-->
-        <!--<td><code> {{ item.options }} </code></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
+</div>
 
-      </table>
-    </div>
-    <hr>
-    <!--<h3 class="title">Events</h3>-->
-  </div>
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Basic</h5>
+<div class="setup">
+  <h3 class="title">Properties</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of dataTableProperties; let i = index">
+      <tr>
+        <td><b>{{ item.name }}</b></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
 
-    </div>
+    </table>
   </div>
+  <hr>
+</div>
+
+<div class="examples">
+  <h3 class="title">Examples</h3>
+  <div class="group-component">
+    <h5 class="title">Basic</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon Before</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconBefore]="{'icon': 'ion-printer'}"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon After</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconAfter]="{'icon': 'fa fa-home'}"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon Before and After</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconBefore]="{'icon': 'ion-printer'}" [iconAfter]="{'icon': 'fa fa-home'}"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Custom Style</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [styleOptions]="{'backgroundColor': '#81D5AB', 'fontColor': '#FFF', 'fontSize': '12px'}"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon Left</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconLeftTextButton]="'ion-printer'"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon Right</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconRightTextButton]="'fa fa-home'"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Icon Left and Right</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [iconLeftTextButton]="'ion-printer'" [iconRightTextButton]="'fa fa-home'"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Many Properties</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   &nbsp;&nbsp;&nbsp;<tl-button
+      [textButton]="'Button'"
+      [styleOptions]="{'backgroundColor': '#1B95E0', 'fontColor': '#FFF','fontSize': '16px'}"
+      [iconBefore]="{'icon': 'ion-printer', 'fontColor': '#1B95E0', 'backgroundColor': '#FFF'}"
+      [iconRightTextButton]="'fa fa-home'">
+   </tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Disabled</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'" [disabled]="true"></tl-button>
+  </textarea>
+  </div>
+</div>

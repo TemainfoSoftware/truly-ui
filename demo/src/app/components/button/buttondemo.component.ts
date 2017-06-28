@@ -1,5 +1,7 @@
 import {Component } from '@angular/core';
 
+import * as json from './buttondemo-dataproperties.json';
+
 
 @Component( {
   selector: 'app-button',
@@ -7,9 +9,10 @@ import {Component } from '@angular/core';
   styleUrls: [ './buttondemo.component.scss' ]
 } )
 export class ButtonDemo {
-
+  private dataTableProperties;
 
   constructor() {
+    this.dataTableProperties = json.dataProperties;
   }
 
 }

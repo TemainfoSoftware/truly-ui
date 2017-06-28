@@ -1,42 +1,141 @@
 <div class="header-title-demo">
   <h1 class="title">Button</h1>
-  <p class="text-content">There's a lot of ways to create an input using Truly UI. Below, are some of those.</p>
+  <p class="text-content">There's a lot of ways to create a button using Truly UI. Below, are some of those.</p>
 </div>
 <hr>
 <div class="showcase">
-</div>
-<hr>
-<div class="setup">
-  <h3 class="title">Properties</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-        <th>Options</th>
-      </tr>
-      </thead>
-      <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
-      <!--<tr>-->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Basic</h5>
+        <tl-button [textButton]="'Button 1'"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Type: submit</h5>
+        <tl-button [type]="'submit'" [textButton]="'Button 2'"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Type: reset</h5>
+        <tl-button [type]="'reset'" [textButton]="'Button 3'"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Custom Style</h5>
+        <tl-button [textButton]="'PRONTUÁRIO'"
+                   [styleOptions]="{'backgroundColor': '#62BEC8', 'fontColor': '#FFF', 'fontSize': '11px' }"></tl-button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Icon Before</h5>
+        <tl-button [textButton]="'Imprimir'"
+                   [styleOptions]="{'backgroundColor': '#F1F1F1', 'fontColor': '#616161'}"
+                   [iconBefore]="{'icon': 'ion-android-print', 'backgroundColor': '#DEDEDE' , 'fontColor': '#6E6E6E'}"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Icon After</h5>
+        <tl-button [textButton]="'Atender'"
+                   [styleOptions]="{'backgroundColor': '#46B5B3', 'fontColor': '#FFF'}"
+                   [iconAfter]="{'icon': 'ion-play', 'fontColor': '#FFF'}"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Type: reset</h5>
+        <tl-button [textButton]="'Pré-Atendimento'"
+                   [styleOptions]="{'backgroundColor': '#46B599', 'fontColor': '#FFF'}"
+                   [iconBefore]="{'icon': 'ion-clipboard', 'fontColor': '#FFF'}"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Custom Style</h5>
+        <tl-button [textButton]="'FINALIZA'"
+                   [styleOptions]="{'backgroundColor': '#FF6666', 'fontColor': '#FFF'  }"
+                   [iconLeftTextButton]="'ion-stop'"></tl-button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Disabled</h5>
+        <tl-button [textButton]="'Desabilitado'"
+                   [styleOptions]="{'backgroundColor': '#F1F1F1', 'fontColor': '#616161'}"
+                   [iconBefore]="{'icon': 'ion-android-print'}"
+                   [disabled]="true"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Disabled</h5>
+        <tl-button [textButton]="'Pré-Atendimento'"
+                   [styleOptions]="{'backgroundColor': '#46B599', 'fontColor': '#FFF'}"
+                   [iconBefore]="{'icon': 'ion-clipboard', 'fontColor': '#FFF'}"
+                   [disabled]="true"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Disabled</h5>
+        <tl-button [textButton]="'FINALIZA'"
+                   [styleOptions]="{'backgroundColor': '#FF6666', 'fontColor': '#FFF'  }"
+                   [iconLeftTextButton]="'ion-stop'"
+                   [disabled]="true"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Disabled</h5>
+        <tl-button [textButton]="'Atender'"
+                   [styleOptions]="{'backgroundColor': '#46B5B3', 'fontColor': '#FFF'}"
+                   [iconAfter]="{'icon': 'ion-play', 'fontColor': '#FFF'}"
+                   [disabled]="true"></tl-button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="setup">
+    <h3 class="title">Properties</h3>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
+        <!--<tr>-->
         <!--<td><b>{{ item.name }}</b></td>-->
         <!--<td><span class="badge">{{ item.type }}</span></td>-->
         <!--<td><code>{{ item.default }}</code></td>-->
         <!--<td>{{ item.description }}</td>-->
         <!--<td><code> {{ item.options }} </code></td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    </table>
-  </div>
-  <hr>
-  <!--<h3 class="title">Events</h3>-->
-</div>
-<div class="examples">
-  <h3 class="title">Examples</h3>
-  <div class="group-component">
-    <h5 class="title">Basic</h5>
+        <!--</tr>-->
+        <!--</tbody>-->
 
+      </table>
+    </div>
+    <hr>
+    <!--<h3 class="title">Events</h3>-->
   </div>
-</div>
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <h5 class="title">Basic</h5>
+
+    </div>
+  </div>

@@ -51,9 +51,7 @@ export class TlButton {
 
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor( private _tonecolor: ToneColorGenerator ) {
-
-    }
+    constructor( private _tonecolor: ToneColorGenerator ) { }
 
     @HostListener( 'mouseenter' ) onMouseEnter() {
         if ( this.disabled !== true ) {
@@ -73,8 +71,6 @@ export class TlButton {
         this.onMouseEnter();
     }
 
-    // ComponentDefaultBase
-
     public getStyle() {
         return {
             'background-color': this.styleOptions.backgroundColor,
@@ -83,7 +79,6 @@ export class TlButton {
             'font-size': this.styleOptions.fontSize
         };
     }
-
 
     public getAddonStyle( addonPosition ) {
         if ( addonPosition === 'left' ) {

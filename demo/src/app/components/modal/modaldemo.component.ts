@@ -10,12 +10,34 @@ import { routerTransition } from "../../router.animations";
 } )
 export class ModalDemo {
 
+  public index: number;
+  public modals;
+
   constructor(private viewContainerRef:ViewContainerRef, private modal: ModalService) {
     this.modal.setView(viewContainerRef);
   }
 
-  showModal() {
-    this.modal.createModal();
+  modal1() {
+    this.modal.createModal('MODAL 1');
+    this.modals = this.modal.getMinModals();
+  }
+
+  modal2() {
+    this.modal.createModal('MODAL 2');
+    this.modals = this.modal.getMinModals();
+  }
+  modal3() {
+    this.modal.createModal('MODAL 3');
+    this.modals = this.modal.getMinModals();
+  }
+  modal4() {
+    this.modal.createModal('MODAL 4');
+    this.modals = this.modal.getMinModals();
+  }
+
+  show(item, index) {
+    this.modal.removeMinModals(index);
+    item.instance.element.nativeElement.style.display = 'block';
   }
 
 }

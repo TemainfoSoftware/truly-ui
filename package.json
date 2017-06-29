@@ -13,7 +13,7 @@
     "lint": "tslint --type-check --project tsconfig.json ",
     "test": "tsc && karma start",
     "test-jest": "jest --config=jest.conf.json",
-    "test-jest:watch": "jest --watch",
+    "test-jest:watch": "jest --watch --config=jest.conf.json",
     "test-jest:ci": "jest --config=jest.conf.json --runInBand",
     "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
   },

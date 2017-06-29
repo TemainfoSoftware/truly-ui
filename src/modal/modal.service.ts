@@ -4,19 +4,54 @@
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
 import { TlModal } from './modal';
 
+let index = -1;
+
 @Injectable()
 export class ModalService {
     private view: ViewContainerRef;
 
-    constructor( private compiler: ComponentFactoryResolver ) {
-    }
+    private minModals: any[] = [];
+
+    private component;
+
+    constructor( private compiler: ComponentFactoryResolver ) {}
 
     setView( view ) {
         this.view = view;
     }
 
-    createModal() {
+    createModal( label ) {
+        index++;
         const componentFactory = this.compiler.resolveComponentFactory( TlModal );
-        this.view.createComponent( componentFactory );
+        this.component = this.view.createComponent( componentFactory );
+        (<TlModal>this.component.instance).setServiceControl( this );
+        (<TlModal>this.component.instance).setComponentRef( this.component );
+        (<TlModal>this.component.instance).label = label;
+        (<TlModal>this.component.instance).status = 'MAX';
+        this.setZIndex();
     }
+
+    setZIndex( indexModal? ) {
+        this.component.instance.element.nativeElement.style.zIndex = indexModal + 1;
+    }
+
+    removeMinModals( indexModal ) {
+        this.minModals.splice( indexModal, 1 );
+    }
+
+    minimize( component ) {
+        console.log(component);
+        component.instance.status = 'MIN';
+        component.instance.element.nativeElement.style.display = 'none';
+        this.minModals.push( component );
+    }
+
+    close( component ) {
+        this.view.remove( this.view.indexOf(component));
+    }
+
+    getMinModals() {
+        return this.minModals;
+    }
+
 }

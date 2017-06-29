@@ -1,4 +1,4 @@
-<div #buttonBox class="tl-button-box" [ngStyle]="getStyle()" [ngClass]="{'disabled': disabled}">
+<div #buttonBox class="tl-button-box" [ngStyle]="getStyle()" [ngClass]="{'-disabled': disabled}">
 
     <div *ngIf="iconBefore.icon" class="addon -iconbefore" [ngStyle]="getAddonStyle('left')">
         <i [ngClass]="iconBefore.icon" [ngStyle]="{'color': iconBefore.fontColor}" id="iconLeft"></i>
@@ -7,7 +7,7 @@
     <button #button
             [type]="type"
             [ngStyle]="{'width': width}"
-            class="tlBtn-default"
+            class="button"
             [disabled]="disabled ? true : null">
 
         <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton" ></span>

@@ -22,6 +22,7 @@
 import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { ButtonStyleOptions } from './button-style-options';
 import { ButtonAddonStyleOptions } from './button-addon-style-options';
+import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 
 @Component( {
     selector: 'tl-button',
@@ -31,21 +32,32 @@ import { ButtonAddonStyleOptions } from './button-addon-style-options';
 export class TlButton {
 
     @Input() type = 'button';
+
     @Input() textButton = '';
+
     @Input() styleOptions: ButtonStyleOptions = new ButtonStyleOptions();
+
     @Input() iconBefore: ButtonAddonStyleOptions = new ButtonAddonStyleOptions();
+
     @Input() iconAfter: ButtonAddonStyleOptions = new ButtonAddonStyleOptions();
+
     @Input() width;
+
     @Input() iconLeftTextButton = '';
+
     @Input() iconRightTextButton = '';
+
     @Input() disabled: boolean = null;
 
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
+    constructor( private _tonecolor: ToneColorGenerator ) {
+
+    }
 
     @HostListener( 'mouseenter' ) onMouseEnter() {
         if ( this.disabled !== true ) {
-            this.hoverButton( this.borderColor( this.styleOptions.backgroundColor, -0.05 ) );
+            this.hoverButton( this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.05 ) );
         }
     }
 
@@ -54,20 +66,19 @@ export class TlButton {
     }
 
     @HostListener( 'mousedown' ) onMouseDown() {
-        this.hoverButton( this.borderColor( this.styleOptions.backgroundColor, -0.09 ) );
+        this.hoverButton( this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.09 ) );
     }
 
     @HostListener( 'mouseup' ) onMouseUp() {
         this.onMouseEnter();
     }
 
-
     // ComponentDefaultBase
 
     public getStyle() {
         return {
             'background-color': this.styleOptions.backgroundColor,
-            'border': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 ),
+            'border': '1px solid ' + this._tonecolor.calculate(this.styleOptions.backgroundColor, -0.14),
             'color': this.styleOptions.fontColor,
             'font-size': this.styleOptions.fontSize
         };
@@ -79,34 +90,15 @@ export class TlButton {
             return {
                 'background-color': this.iconBefore.backgroundColor,
                 'font-size': this.iconBefore.fontSize,
-                'border-right': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 )
+                'border-right': '1px solid ' + this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.14 )
             };
         } else {
             return {
                 'background-color': this.iconAfter.backgroundColor,
                 'font-size': this.iconAfter.fontSize,
-                'border-left': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 )
+                'border-left': '1px solid ' + this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.14 )
             };
         }
-    }
-
-    borderColor( hex, lum ) {
-
-        // Validar string HEXADECIMAL
-        hex = String( hex ).replace( /[^0-9a-f]/gi, '' );
-        if ( hex.length < 6 ) {
-            hex = hex[ 0 ] + hex[ 0 ] + hex[ 1 ] + hex[ 1 ] + hex[ 2 ] + hex[ 2 ];
-        }
-        lum = lum || 0;
-
-        // Converter para decimal e mudar a luminosidade
-        let rgb = '#', c, i;
-        for ( i = 0; i < 3; i++ ) {
-            c = parseInt( hex.substr( i * 2, 2 ), 16 );
-            c = Math.round( Math.min( Math.max( 0, c + (c * lum) ), 255 ) ).toString( 16 );
-            rgb += ('00' + c).substr( c.length );
-        }
-        return rgb;
     }
 
     private hoverButton( color: string ) {

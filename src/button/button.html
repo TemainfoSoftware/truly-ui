@@ -1,6 +1,6 @@
-<div #buttonBox class="tl-button-box" (click)="onClick($event)" [ngStyle]="getStyle()" [ngClass]="{'disabled': disabled}">
+<div #buttonBox class="tl-button-box" [ngStyle]="getStyle()" [ngClass]="{'disabled': disabled}">
 
-    <div *ngIf="iconBefore.icon" class="addon -iconleft" [ngStyle]="getAddonStyle('left')">
+    <div *ngIf="iconBefore.icon" class="addon -iconbefore" [ngStyle]="getAddonStyle('left')">
         <i [ngClass]="iconBefore.icon" [ngStyle]="{'color': iconBefore.fontColor}" id="iconLeft"></i>
     </div>
 
@@ -10,15 +10,15 @@
             class="tlBtn-default"
             [disabled]="disabled ? true : null">
 
-        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" ></span>
+        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton" ></span>
 
         {{textButton}}
 
-        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" ></span>
+        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton" ></span>
 
     </button>
 
-    <div *ngIf="iconAfter.icon" class="addon -iconright" [ngStyle]="getAddonStyle('right')">
+    <div *ngIf="iconAfter.icon" class="addon -iconafter" [ngStyle]="getAddonStyle('right')">
         <i [ngClass]="iconAfter.icon" [ngStyle]="{'color': iconAfter.fontColor}" id="iconRight"></i>
     </div>
 

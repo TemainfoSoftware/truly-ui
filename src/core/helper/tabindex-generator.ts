@@ -32,7 +32,7 @@ export class TabIndexGenerator {
      * Constructor
      * @param element
      */
-    constructor(element : ElementRef) {
+    constructor(element: ElementRef) {
         element.nativeElement.tabIndex = nextUniqueIndex++;
     }
 }

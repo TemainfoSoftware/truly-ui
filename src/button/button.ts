@@ -19,18 +19,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {Component, ElementRef, HostListener, Input, ViewChild} from '@angular/core';
-import {ButtonStyleOptions} from "./button-style-options";
-import {ButtonAddonStyleOptions} from "./button-addon-style-options";
+import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { ButtonStyleOptions } from './button-style-options';
+import { ButtonAddonStyleOptions } from './button-addon-style-options';
 
-@Component({
+@Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
-    styleUrls: ['./button.scss']
-})
+    styleUrls: [ './button.scss' ]
+} )
 export class TlButton {
 
-    @Input() type = "button";
+    @Input() type = 'button';
     @Input() textButton = '';
     @Input() styleOptions: ButtonStyleOptions = new ButtonStyleOptions();
     @Input() iconBefore: ButtonAddonStyleOptions = new ButtonAddonStyleOptions();
@@ -40,32 +40,25 @@ export class TlButton {
     @Input() iconRightTextButton = '';
     @Input() disabled: boolean = null;
 
-    @ViewChild('buttonBox') buttonBox: ElementRef;
+    @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
 
-    @HostListener('mouseenter') onMouseEnter() {
-        if (this.disabled != true) {
-            this.hoverButton(this.borderColor(this.styleOptions.backgroundColor, -0.05));
+    @HostListener( 'mouseenter' ) onMouseEnter() {
+        if ( this.disabled !== true ) {
+            this.hoverButton( this.borderColor( this.styleOptions.backgroundColor, -0.05 ) );
         }
     }
 
-    @HostListener('mouseleave') onMouseLeave() {
-        this.hoverButton(this.styleOptions.backgroundColor);
+    @HostListener( 'mouseleave' ) onMouseLeave() {
+        this.hoverButton( this.styleOptions.backgroundColor );
     }
 
-    @HostListener('mousedown') onMouseDown() {
-        this.hoverButton(this.borderColor(this.styleOptions.backgroundColor, -0.09));
+    @HostListener( 'mousedown' ) onMouseDown() {
+        this.hoverButton( this.borderColor( this.styleOptions.backgroundColor, -0.09 ) );
     }
 
-    @HostListener('mouseup') onMouseUp() {
+    @HostListener( 'mouseup' ) onMouseUp() {
         this.onMouseEnter();
-    }
-
-
-    private hoverButton(color: string) {
-        if (this.disabled != true) {
-            this.buttonBox.nativeElement.style.backgroundColor = color;
-        }
     }
 
 
@@ -74,53 +67,52 @@ export class TlButton {
     public getStyle() {
         return {
             'background-color': this.styleOptions.backgroundColor,
-            'border': '1px solid ' + this.borderColor(this.styleOptions.backgroundColor, -0.14),
+            'border': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 ),
             'color': this.styleOptions.fontColor,
             'font-size': this.styleOptions.fontSize
-        }
+        };
     }
 
 
-    public getAddonStyle(addonPosition) {
-        if (addonPosition == "left") {
+    public getAddonStyle( addonPosition ) {
+        if ( addonPosition === 'left' ) {
             return {
                 'background-color': this.iconBefore.backgroundColor,
                 'font-size': this.iconBefore.fontSize,
-                'border-right': '1px solid ' + this.borderColor(this.styleOptions.backgroundColor, -0.14)
-            }
+                'border-right': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 )
+            };
         } else {
             return {
                 'background-color': this.iconAfter.backgroundColor,
                 'font-size': this.iconAfter.fontSize,
-                'border-left': '1px solid ' + this.borderColor(this.styleOptions.backgroundColor, -0.14)
-            }
+                'border-left': '1px solid ' + this.borderColor( this.styleOptions.backgroundColor, -0.14 )
+            };
         }
     }
 
-    borderColor(hex, lum) {
+    borderColor( hex, lum ) {
 
         // Validar string HEXADECIMAL
-        hex = String(hex).replace(/[^0-9a-f]/gi, '');
-        if (hex.length < 6) {
-            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        hex = String( hex ).replace( /[^0-9a-f]/gi, '' );
+        if ( hex.length < 6 ) {
+            hex = hex[ 0 ] + hex[ 0 ] + hex[ 1 ] + hex[ 1 ] + hex[ 2 ] + hex[ 2 ];
         }
         lum = lum || 0;
 
         // Converter para decimal e mudar a luminosidade
-        let rgb = "#", c, i;
-        for (i = 0; i < 3; i++) {
-            c = parseInt(hex.substr(i * 2, 2), 16);
-            c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
-            rgb += ("00" + c).substr(c.length);
+        let rgb = '#', c, i;
+        for ( i = 0; i < 3; i++ ) {
+            c = parseInt( hex.substr( i * 2, 2 ), 16 );
+            c = Math.round( Math.min( Math.max( 0, c + (c * lum) ), 255 ) ).toString( 16 );
+            rgb += ('00' + c).substr( c.length );
         }
         return rgb;
     }
 
-
-    onClick($event) {
-
+    private hoverButton( color: string ) {
+        if ( this.disabled !== true ) {
+            this.buttonBox.nativeElement.style.backgroundColor = color;
+        }
     }
-
-
 }
 

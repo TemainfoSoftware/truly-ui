@@ -28,7 +28,7 @@ export class TlToolTip implements TooltipOptions {
 
     @ViewChild( 'tooltip' ) tooltip;
 
-    public text : string;
+    public text: string;
 
     public color = '#000';
 
@@ -50,7 +50,7 @@ export class TlToolTip implements TooltipOptions {
 
     private element;
 
-    setOptions( options : TooltipOptions ) {
+    setOptions( options: TooltipOptions ) {
         const self = this;
         Object.keys( options ).forEach( function ( key ) {
             self[ key ] = options[ key ];
@@ -96,7 +96,7 @@ export class TlToolTip implements TooltipOptions {
     }
 
     getStyleTooltip() {
-        return { 'background-color': this.color, 'color': this.fontColor, 'width': this.width }
+        return { 'background-color': this.color, 'color': this.fontColor, 'width': this.width };
     }
 
     getStyleTooltipArrow() {
@@ -120,7 +120,7 @@ export class TlToolTip implements TooltipOptions {
         }
     }
 
-    setPosition( element : ElementRef ) {
+    setPosition( element: ElementRef ) {
         this.getElement( element );
         switch ( this.placement ) {
             case 'top':
@@ -142,11 +142,11 @@ export class TlToolTip implements TooltipOptions {
         this.element = element;
     }
 
-    private existsMeasureOnNativeElement() : boolean {
+    private existsMeasureOnNativeElement(): boolean {
         return this.element.nativeElement.offsetWidth > 0 && this.element.nativeElement.offsetHeight > 0;
     }
 
-    private isLessOrEqualThanNormalWidth() : boolean {
+    private isLessOrEqualThanNormalWidth(): boolean {
         return this.tooltip.nativeElement.offsetHeight <= 27;
     }
 
@@ -159,7 +159,7 @@ export class TlToolTip implements TooltipOptions {
         this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top =
             this.getElementTop() - this.elementHeight - this.tooltipPadding + 'px' :
             this.tooltip.nativeElement.style.top = this.getElementTop() -
-            this.tooltip.nativeElement.offsetHeight - this.tooltipPadding + 'px';
+                this.tooltip.nativeElement.offsetHeight - this.tooltipPadding + 'px';
     }
 
     private getTopMeasureForLeftAndRight() {

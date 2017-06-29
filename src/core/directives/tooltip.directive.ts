@@ -11,15 +11,20 @@ import { TooltipOptions } from '../../tooltip/tooltipOptions';
 } )
 export class TooltipDirective {
 
-    @Input() tooltip : TooltipOptions;
+    @Input() tooltip: TooltipOptions;
 
-    constructor( private view : ViewContainerRef, private compiler : ComponentFactoryResolver ) {}
+    constructor( private view: ViewContainerRef, private compiler: ComponentFactoryResolver ) {
+    }
 
     @HostListener( 'mouseenter' )
-    onMouseEnter() { this.show() }
+    onMouseEnter() {
+        this.show();
+    }
 
     @HostListener( 'mouseleave' )
-    onMouseLeave() { this.hide() }
+    onMouseLeave() {
+        this.hide();
+    }
 
     show() {
         const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );

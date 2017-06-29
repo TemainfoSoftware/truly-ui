@@ -6,11 +6,12 @@ import { TlModal } from './modal';
 
 @Injectable()
 export class ModalService {
-    private view : ViewContainerRef;
+    private view: ViewContainerRef;
 
-    constructor( private compiler : ComponentFactoryResolver ) {}
+    constructor( private compiler: ComponentFactoryResolver ) {
+    }
 
-    setView(view) {
+    setView( view ) {
         this.view = view;
     }
 

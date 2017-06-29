@@ -22,18 +22,18 @@
 import { Input } from '@angular/core';
 export class Validations {
 
-     /**
+    /**
      * Property to control if input is required or not.
      */
-     @Input() required : number = null;
+    @Input() required: number = null;
 
-     /**
+    /**
      * Property for minLength value
      */
-     @Input() minLength : string;
+    @Input() minLength: string;
 
-     /**
+    /**
      * Property for maxLength value
      */
-     @Input() maxLength : string;
+    @Input() maxLength: string;
 }

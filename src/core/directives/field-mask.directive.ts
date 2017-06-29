@@ -12,7 +12,7 @@ import { TlInput } from '../../input/input';
 } )
 export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
 
-    @ContentChildren( TlInput ) tlinput : QueryList<TlInput>;
+    @ContentChildren( TlInput ) tlinput: QueryList<TlInput>;
 
     private maskGuides = true;
     private valueUppercase;
@@ -20,25 +20,25 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private _value;
     private input;
 
-    private startPosition : number;
-    private endPosition : number;
+    private startPosition: number;
+    private endPosition: number;
 
     private shiftStart = '';
 
-    private maskExpression : string;
-    private maskGuideExpression : string;
-    private maskSpecialCharacters : string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+' ];
-    private maskAwaliablePatterns : { [key : string] : RegExp } = {
+    private maskExpression: string;
+    private maskGuideExpression: string;
+    private maskSpecialCharacters: string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+' ];
+    private maskAwaliablePatterns: { [key: string] : RegExp } = {
         '0': /\d/,
         '9': /\d/,
         'A': /[a-zA-Z]/,
     };
 
-    constructor( private renderer : Renderer2 ) {
+    constructor( private renderer: Renderer2 ) {
     }
 
     @Input( 'mask' )
-    public set _maskExpression( value : any ) {
+    public set _maskExpression( value: any ) {
         if ( !value ) {
             return;
         }
@@ -63,20 +63,20 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     @HostListener( 'keypress', [ '$event' ] )
-    public onKeyPress( $event ) : void {
+    public onKeyPress( $event ): void {
         this.handleKeypress( $event );
         this.updateModel();
         this.onComplete();
     }
 
     @HostListener( 'mouseup', [ '$event' ] )
-    public onMouseUp( $event ) : void {
+    public onMouseUp( $event ): void {
         this.getPosition();
     }
 
 
     @HostListener( 'keydown', [ '$event' ] )
-    onKeyDown( event ) : void {
+    onKeyDown( event ): void {
         switch ( event.code ) {
             case 'Backspace':
                 this.handleBackspace( event );
@@ -298,7 +298,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
             this.value += charInputed;
         }
 
-        const inputArray : string[] = this.value.split( '' );
+        const inputArray: string[] = this.value.split( '' );
 
         for ( let i = 0, inputSymbol = inputArray[ 0 ]; i < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
             if ( result.length === this.maskExpression.length ) {
@@ -414,7 +414,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
             && ( ( this.removeUndescore( this.maskExpression ).length === this.removeUndescore( this.value ).length));
     }
 
-    private isValidSymbolMask( inputSymbol : string, maskSymbolChar : string ) : boolean {
+    private isValidSymbolMask( inputSymbol: string, maskSymbolChar: string ): boolean {
         if ( this.maskSpecialCharacters.indexOf( inputSymbol ) >= 0 ) {
             return false;
         }
@@ -423,7 +423,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
 
     }
 
-    private updateModel() : void {
+    private updateModel(): void {
         const endPosition = this.input.nativeElement.selectionEnd;
         if ( this.valueUppercase ) {
             this.value = this.value.toUpperCase();
@@ -451,7 +451,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         }
     }
 
-    private generateMaskGuideExpression() : string {
+    private generateMaskGuideExpression(): string {
         let mask = this.maskExpression;
         mask = mask.replace( /9/gi, '_' );
         mask = mask.replace( /0/gi, '_' );
@@ -459,7 +459,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         return this.maskGuideExpression = mask;
     }
 
-    private clearMask( value : string ) : string {
+    private clearMask( value: string ): string {
         if ( !(this.literalChar) ) {
             return this.cleanValue( value );
         }

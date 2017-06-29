@@ -62,50 +62,52 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
      */
-    tabIndex : TabIndexGenerator;
+    tabIndex: TabIndexGenerator;
 
     ngValue = '';
 
-    @Output() blur : EventEmitter<any> = new EventEmitter();
-    @Output() focus : EventEmitter<any> = new EventEmitter();
+    @Output() blur: EventEmitter<any> = new EventEmitter();
+    @Output() focus: EventEmitter<any> = new EventEmitter();
 
     /**
      * Callback of control value accessor to register touched changes
      */
-    onTouchedCallback : Function = () => {};
+    onTouchedCallback: Function = () => {
+    };
 
     /**
      * Callback of control value accessor to register changes
      */
-    onChangeCallback : Function = () => {};
+    onChangeCallback: Function = () => {
+    };
 
 
-    ngOnInit () {
+    ngOnInit() {
         const self = this;
-        Object.keys( this.validations ).forEach(function ( key ) {
-            self[key] = self.validations[key];
-        });
+        Object.keys( this.validations ).forEach( function ( key ) {
+            self[ key ] = self.validations[ key ];
+        } );
     }
 
     /**
      * Function to set tabIndex of Elements received.
      * @param element
      */
-    setTabIndex( element : ElementRef ) {
-        this.tabIndex = new TabIndexGenerator(element);
-        this.setNextTabIndex(this.element.nativeElement.tabIndex + 1);
-        this.setPreviousTabIndex(this.element.nativeElement.tabIndex - 1);
+    setTabIndex( element: ElementRef ) {
+        this.tabIndex = new TabIndexGenerator( element );
+        this.setNextTabIndex( this.element.nativeElement.tabIndex + 1 );
+        this.setPreviousTabIndex( this.element.nativeElement.tabIndex - 1 );
     }
 
     /**
      * Function that trigger a keyinput in element.
      * @param event
      */
-    onKeyInput( event : KeyboardEvent ) {
-        if (this.enterAsTab) {
-            if (event.keyCode === 13 || event.keyCode === 40) {
+    onKeyInput( event: KeyboardEvent ) {
+        if ( this.enterAsTab ) {
+            if ( event.keyCode === 13 || event.keyCode === 40 ) {
                 this.nextFocus();
-            } else if (event.keyCode === 38) {
+            } else if ( event.keyCode === 38 ) {
                 this.previousFocus();
             }
         }
@@ -115,8 +117,8 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function to set focus on previous element
      */
     previousFocus() {
-        if (this.previousTabIndex !== -1) {
-            document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex).focus();
+        if ( this.previousTabIndex !== -1 ) {
+            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex ).focus();
         }
     }
 
@@ -124,9 +126,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function to set focus on next element
      */
     nextFocus() {
-        const existElement = this.existsElement(this.element.nativeElement.tabIndex);
-        if (existElement) {
-            document.getElementById('tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex).focus();
+        const existElement = this.existsElement( this.element.nativeElement.tabIndex );
+        if ( existElement ) {
+            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex ).focus();
         }
     }
 
@@ -134,8 +136,8 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function that verify if next element exists.
      * @param currentTabIndex
      */
-    existsElement(currentTabIndex) {
-        return document.getElementById('tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1));
+    existsElement( currentTabIndex ) {
+        return document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1) );
     }
 
     /**
@@ -166,7 +168,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function that writes value on ngModel.
      * @param value Value received to write value on ngModel
      */
-    writeValue( value : any ) {
+    writeValue( value: any ) {
         if ( value ) {
             this.ngValue = value;
             this.element.nativeElement.value = value;
@@ -177,7 +179,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function that register change event on input.
      * @param callback Value received to write value on ngModel
      */
-    registerOnChange( callback : any ) {
+    registerOnChange( callback: any ) {
         this.onChangeCallback = callback;
     }
 
@@ -185,7 +187,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function that register touched change event on input.
      * @param callback Value received to write value on ngModel
      */
-    registerOnTouched( callback : any ) {
+    registerOnTouched( callback: any ) {
         this.onTouchedCallback = callback;
     }
 

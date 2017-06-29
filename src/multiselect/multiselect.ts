@@ -32,49 +32,49 @@ import {
 let nextInputUniqueId = 0;
 let nextListUniqueId = 0;
 
-@Component({
+@Component( {
     changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
-    styleUrls: ['./multiselect.scss']
-})
+    styleUrls: [ './multiselect.scss' ]
+} )
 export class TlMultiselect implements OnInit {
-    @Input() color : string;
+    @Input() color: string;
 
     /**
      * Array de Objetos que é utilizado na listagem dos dados
      */
-    @Input() data : any[] = [];
+    @Input() data: any[] = [];
 
     /**
      * Chave a qual ira ser realizada a pesquisa
      */
-    @Input() query : string;
+    @Input() query: string;
 
-    @Input() label : string;
-    @Input() detail : string;
-    @Input() placeholder : string;
-    @Input() icon : string;
+    @Input() label: string;
+    @Input() detail: string;
+    @Input() placeholder: string;
+    @Input() icon: string;
     @Input() showIcon = true;
     @Input() openFocus = false;
     @Input() detailOnTag = null;
-    @Input() selectTag : number;
+    @Input() selectTag: number;
     @Input() itemHeight = 10;
     @Input() itemAmount = 5;
     @Input() minLengthSearch = 2;
     @Input() inputID = `input-truly-select-${nextInputUniqueId++}`;
     @Input() listID = `list-truly-select-${nextListUniqueId++}`;
 
-    @Output() getSelecteds : EventEmitter<any> = new EventEmitter();
+    @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('input') input;
-    @ViewChild('ul') ul;
+    @ViewChild( 'input' ) input;
+    @ViewChild( 'ul' ) ul;
 
     public isOpen = 'none';
-    public filtredItens : any[] = [];
+    public filtredItens: any[] = [];
     private children = -1;
-    private placeholderMessage : string;
-    private tags : any[] = [];
+    private placeholderMessage: string;
+    private tags: any[] = [];
 
 
     constructor() {
@@ -88,59 +88,59 @@ export class TlMultiselect implements OnInit {
     }
 
     validationProperty() {
-        if (!this.icon) {
+        if ( !this.icon ) {
             this.showIcon = false;
         }
-        if (this.data === undefined || this.query === undefined) {
-            throw new Error('The property [data] and property [query] are Required ' + '' +
-                'Example : ' + '<tl-multiselect [data]="source" [query]="name"');
+        if ( this.data === undefined || this.query === undefined ) {
+            throw new Error( 'The property [data] and property [query] are Required ' + '' +
+                'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
         }
-        if (!this.label) {
+        if ( !this.label ) {
             this.label = this.query;
         }
-        if (this.detail === undefined && this.detailOnTag !== null) {
-            throw new Error('You have to declare the [detail] property');
+        if ( this.detail === undefined && this.detailOnTag !== null ) {
+            throw new Error( 'You have to declare the [detail] property' );
         }
     }
 
     setFiltredItens() {
-        if (!(this.tags.length > 0)) {
+        if ( !(this.tags.length > 0) ) {
             this.filtredItens = this.data;
         }
     }
 
-    toogleOpen( opened : string ) {
+    toogleOpen( opened: string ) {
         this.isOpen = opened;
     }
 
     receiveFocus() {
         const self = this;
         this.children = -1;
-        if (this.tags.length > 0) {
-            this.tags.forEach(function (tag) {
-                self.filtredItens = self.data.filter(function (value) {
-                    return ((value.source !== tag.source) && ( self.tags.indexOf(value) < 0 ));
-                });
-            });
+        if ( this.tags.length > 0 ) {
+            this.tags.forEach( function ( tag ) {
+                self.filtredItens = self.data.filter( function ( value ) {
+                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
+                } );
+            } );
         }
-        if (this.openFocus) {
-            this.toogleOpen('block');
+        if ( this.openFocus ) {
+            this.toogleOpen( 'block' );
         }
     }
 
-    searchItem(inputed, $event) {
+    searchItem( inputed, $event ) {
         const self = this;
-        this.closeFilterOnEscape($event);
-        if (inputed.length >= this.minLengthSearch) {
-            this.toogleOpen('block');
-            if (!(this.tags.length > 0)) {
-                this.filtredItens = this.data.filter(function (valor) {
-                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase().trim());
-                });
+        this.closeFilterOnEscape( $event );
+        if ( inputed.length >= this.minLengthSearch ) {
+            this.toogleOpen( 'block' );
+            if ( !(this.tags.length > 0) ) {
+                this.filtredItens = this.data.filter( function ( valor ) {
+                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+                } );
             } else {
-                this.filtredItens = this.filtredItens.filter(function (valor) {
-                    return valor.source[self.query].toString().toUpperCase().includes(inputed.toUpperCase().trim());
-                });
+                this.filtredItens = this.filtredItens.filter( function ( valor ) {
+                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+                } );
             }
         }
     }
@@ -155,72 +155,72 @@ export class TlMultiselect implements OnInit {
      * This is a good example
      * processTarget('yo')
      */
-    removeTagOnBackspace($event) {
-        if ($event === 'Backspace' && this.input.nativeElement.value === '' && this.tags.length > 0) {
-            this.removeTag(this.tags.length - 1);
+    removeTagOnBackspace( $event ) {
+        if ( $event === 'Backspace' && this.input.nativeElement.value === '' && this.tags.length > 0 ) {
+            this.removeTag( this.tags.length - 1 );
             this.receiveFocus();
         } else {
             this.setFiltredItens();
         }
     }
 
-    closeFilterOnEscape($event) {
-        if ($event.code === 'Escape') {
-            this.toogleOpen('none');
+    closeFilterOnEscape( $event ) {
+        if ( $event.code === 'Escape' ) {
+            this.toogleOpen( 'none' );
         }
     }
 
-    removeTag(index, item?) {
-        if (item) {
-            this.filtredItens.push(item);
+    removeTag( index, item? ) {
+        if ( item ) {
+            this.filtredItens.push( item );
         } else {
-            this.filtredItens.push(this.tags[index]);
+            this.filtredItens.push( this.tags[ index ] );
         }
-        this.tags.splice(index, 1);
-        this.getSelecteds.emit(this.tags);
+        this.tags.splice( index, 1 );
+        this.getSelecteds.emit( this.tags );
         this.changePlaceholder();
         this.inputSetFocus();
     }
 
-    selectTagClick(event, index, item?) {
-        if (item.selected === true) {
+    selectTagClick( event, index, item? ) {
+        if ( item.selected === true ) {
             item.selected = false;
-        } else if (event.ctrlKey) {
-            this.selectTagCtrlBindClick(item);
+        } else if ( event.ctrlKey ) {
+            this.selectTagCtrlBindClick( item );
         } else {
             this.cleanTagSelected();
-            item['selected'] = true;
+            item[ 'selected' ] = true;
         }
     }
 
-    selectTagCtrlBindClick(item) {
-        item['selected'] = true;
+    selectTagCtrlBindClick( item ) {
+        item[ 'selected' ] = true;
         this.inputSetFocus();
     }
 
-    selectTagNavitation(keycode) {
+    selectTagNavitation( keycode ) {
         this.cleanTagSelected();
-        if (keycode === 'ArrowRight' && this.selectTag !== this.tags.length - 1) {
+        if ( keycode === 'ArrowRight' && this.selectTag !== this.tags.length - 1 ) {
             this.selectTag++;
-            this.tags[this.selectTag]['selected'] = true;
-        } else if (keycode === 'ArrowLeft' && this.selectTag !== 0 && this.tags.length !== 0) {
+            this.tags[ this.selectTag ][ 'selected' ] = true;
+        } else if ( keycode === 'ArrowLeft' && this.selectTag !== 0 && this.tags.length !== 0 ) {
             this.selectTag--;
-            this.tags[this.selectTag]['selected'] = true;
+            this.tags[ this.selectTag ][ 'selected' ] = true;
         }
     }
 
 
     changePlaceholder() {
-        if (this.tags.length === 0) {
+        if ( this.tags.length === 0 ) {
             this.placeholder = this.placeholderMessage;
         }
     }
 
-    addTag(index, item) {
-        this.tags.push(item);
+    addTag( index, item ) {
+        this.tags.push( item );
         this.placeholder = '';
         this.children = -1;
-        this.getSelecteds.emit(this.tags);
+        this.getSelecteds.emit( this.tags );
         this.selectTag = this.tags.length;
         this.cleanTagSelected();
         this.inputSetFocus();
@@ -228,50 +228,50 @@ export class TlMultiselect implements OnInit {
         this.receiveFocus();
     }
 
-    inputKeyDown(event, index, item) {
-        if (event === 'Enter' && item !== undefined) {
-            this.addTag(index, item);
+    inputKeyDown( event, index, item ) {
+        if ( event === 'Enter' && item !== undefined ) {
+            this.addTag( index, item );
         }
-        if (event === 'ArrowDown') {
-            this.toogleOpen('block');
+        if ( event === 'ArrowDown' ) {
+            this.toogleOpen( 'block' );
             this.arrowDown();
         }
-        if (event === 'ArrowUp' && this.ul.nativeElement.children.length !== 0) {
+        if ( event === 'ArrowUp' && this.ul.nativeElement.children.length !== 0 ) {
             this.arrowUp();
         }
-        if (event === 'Delete') {
+        if ( event === 'Delete' ) {
             this.deleteTagSelected();
         }
-        if (event === 'Backspace') {
-            this.removeTagOnBackspace(event);
+        if ( event === 'Backspace' ) {
+            this.removeTagOnBackspace( event );
             this.receiveFocus();
         }
-        if (event === 'Tab') {
-            this.toogleOpen('none');
+        if ( event === 'Tab' ) {
+            this.toogleOpen( 'none' );
         }
-        if (event === 'ArrowLeft' || event === 'ArrowRight' && this.tags.length !== 0) {
-            this.selectTagNavitation(event);
+        if ( event === 'ArrowLeft' || event === 'ArrowRight' && this.tags.length !== 0 ) {
+            this.selectTagNavitation( event );
         }
     }
 
     deleteTagSelected() {
-        this.tags = this.tags.filter(function (value) {
+        this.tags = this.tags.filter( function ( value ) {
             return !value.selected;
-        });
+        } );
         this.selectTag = this.tags.length - 1;
         this.receiveFocus();
     }
 
     arrowDown() {
-        if (this.children < this.ul.nativeElement.children.length - 1) {
-            this.ul.nativeElement.children[this.children + 1].focus();
+        if ( this.children < this.ul.nativeElement.children.length - 1 ) {
+            this.ul.nativeElement.children[ this.children + 1 ].focus();
             this.children = this.children + 1;
         }
     }
 
     arrowUp() {
-        if (this.children !== 0 && this.children !== -1) {
-            this.ul.nativeElement.children[this.children - 1].focus();
+        if ( this.children !== 0 && this.children !== -1 ) {
+            this.ul.nativeElement.children[ this.children - 1 ].focus();
             this.children = this.children - 1;
         } else {
             this.inputSetFocus();
@@ -279,24 +279,24 @@ export class TlMultiselect implements OnInit {
     }
 
     calcHeightItem() {
-        if (this.itemAmount >= this.filtredItens.length) {
-            return {'height': 'auto'};
+        if ( this.itemAmount >= this.filtredItens.length ) {
+            return { 'height': 'auto' };
         } else {
-            return {'height': (this.itemHeight * 3.6) * this.itemAmount + 'px'};
+            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px' };
         }
     }
 
-    changeColorTag(tag) {
-        if (this.color !== undefined) {
-            if (!tag.selected) {
-                return {'background': tag.effect.color};
+    changeColorTag( tag ) {
+        if ( this.color !== undefined ) {
+            if ( !tag.selected ) {
+                return { 'background': tag.effect.color };
             }
-            return {'background': tag.effect.color, 'opacity': 0.8};
+            return { 'background': tag.effect.color, 'opacity': 0.8 };
         } else {
-            if (tag.selected) {
-                return {'background': '#66CC99', 'opacity': 0.8};
+            if ( tag.selected ) {
+                return { 'background': '#66CC99', 'opacity': 0.8 };
             }
-            return {'background': '#66CC99'};
+            return { 'background': '#66CC99' };
         }
     }
 
@@ -309,18 +309,18 @@ export class TlMultiselect implements OnInit {
     }
 
     cleanTagSelected() {
-        this.tags.forEach(function (value) {
+        this.tags.forEach( function ( value ) {
             value.selected = false;
-        });
+        } );
     }
 
     hasTag() {
         return this.tags.length === 0;
     }
 
-    close(event) {
-        if (event.relatedTarget === null) {
-            this.toogleOpen('none');
+    close( event ) {
+        if ( event.relatedTarget === null ) {
+            this.toogleOpen( 'none' );
         }
     }
 }

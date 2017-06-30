@@ -10,7 +10,8 @@ import { HomeComponent } from "app/home/home.component";
       {path: 'inputmask', loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'},
       {path: 'button', loadChildren: './components/button/buttondemo.module#ButtonDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
-      {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'}
+      {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
+      {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'}
     ])
   ],
   exports: [RouterModule]

@@ -1,4 +1,5 @@
 /*
+<<<<<<< Updated upstream
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -26,28 +27,36 @@ import {
     ElementRef,
     EventEmitter,
     Input,
+    OnInit,
     Output,
     QueryList,
+    Renderer2,
     ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
+import { DatabaseFilterOptions } from './database-filter-options';
 
 @Component( {
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
-    styleUrls: [ './datatable.scss' ],
+    styleUrls: [ './datatable.scss' ]
 } )
-export class TlDatatable implements AfterContentInit {
+export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input( 'data' ) data: any[];
 
     @Input( 'selectable' ) selectable: boolean;
 
-    @Output() rowSelect: EventEmitter<any> = new EventEmitter();
+    @Input('globalFilter') globalFilter: any;
 
-    @Output() rowClick: EventEmitter<any> = new EventEmitter();
+    @Input('globalFilterOptions') globalFilterOptions: DatabaseFilterOptions;
 
-    @Output() rowDblclick: EventEmitter<any> = new EventEmitter();
+    @Output('rowSelect') rowSelect: EventEmitter<any> = new EventEmitter();
+
+    @Output('rowClick') rowClick: EventEmitter<any> = new EventEmitter();
+
+    @Output('rowDblclick') rowDblclick: EventEmitter<any> = new EventEmitter();
+
 
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
@@ -57,8 +66,21 @@ export class TlDatatable implements AfterContentInit {
 
     public tabindex = 0;
 
+    private globalFilterTimeout: any;
+
+    private filtredData: any[];
+
+    private datasource: any[];
+
+    constructor( private render: Renderer2 ) {}
+
+    ngOnInit() {
+        this.updateDataSource( this.data );
+    }
+
     ngAfterContentInit() {
         this.setColumns();
+        this.inicializeGlobalFilter();
     }
 
     setColumns() {
@@ -69,21 +91,18 @@ export class TlDatatable implements AfterContentInit {
 
     getClassAlignment( alignment: string ) {
         if ( !alignment ) {
-            return '';
+            return '-text' + alignment;
         }
-        return '-text' + alignment;
     }
 
-    getObjectRow( row, index ) {
-        return { row: row, index: index };
-    }
 
     setTabIndex( value: number ) {
         this.tabindex = value;
     }
 
-    generateTabindex() {
-        return this.tabindex++;
+    getObjectRow( row , index ) {
+        return { data : row, index: index };
+
     }
 
     onKeydown( $event ) {
@@ -112,5 +131,61 @@ export class TlDatatable implements AfterContentInit {
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
+    }
+
+    inicializeGlobalFilter() {
+        if ( this.globalFilter ) {
+           this.globalFilterTimeout = setTimeout( () => {
+                this.render.listen(this.globalFilter.element.nativeElement, 'input', ( event ) => {
+                    this.filter( event.target.value ) ;
+                    this.globalFilterTimeout = null;
+                })
+            }, 0);
+        }
+    }
+
+    filter( value: any ) {
+        this.filtredData = [];
+
+        if ( !value ) {
+            this.updateDataSource( this.data );
+            return ;
+        }
+
+        this.data.filter( ( row ) => {
+            this.columns.forEach( (columnValue ) => {
+                if ( this.isValidMatch( String(value), String(row[columnValue.field]) ) ) {
+                  this.filtredData.push(row);
+                }
+            });
+        });
+        console.log(this.filtredData.length);
+        this.updateDataSource( this.filtredData );
+    }
+
+
+    isValidMatch( searchValue: string, valueMatch: string ) {
+        if (!this.globalFilterOptions.caseSensitive) {
+            valueMatch = valueMatch.toLowerCase();
+            searchValue = searchValue.toLowerCase();
+        }
+        return this.matchWith( searchValue, valueMatch );
+    }
+
+    matchWith(searchValue, valueMatch) {
+        switch (this.globalFilterOptions.mode) {
+            case 'startsWith' : return (valueMatch).startsWith(searchValue);
+            case 'endsWith' : return String(valueMatch).endsWith(searchValue);
+            case 'contains' : return String(valueMatch).includes(searchValue);
+            default: return String(valueMatch).includes(searchValue);
+        }
+    }
+
+    updateDataSource( data ) {
+        this.datasource = data;
+    }
+
+    generateTabindex() {
+        return this.tabindex++;
     }
 }

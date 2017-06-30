@@ -1,4 +1,4 @@
-<div class="tl-datatable-box">
+<div class="tl-datatable-box" *ngIf="datasource">
     <table class="datatable" (keydown)="onKeydown($event)">
         <thead class="datatableHeader">
             <tr class="row">
@@ -6,10 +6,10 @@
             </tr>
         </thead>
         <tbody #tbody class="datatableBody">
-            <tr #tbody class="row" [tabindex]="i" *ngFor="let row of data; let i = index"
-                (click)="onRowClick(data[i],i)"
-                (focus)="onRowSelect(data[i],i)"
-                (dblclick)="onRowDblclick(data[i],i)"
+            <tr #tbody class="row" [tabindex]="i" *ngFor="let row of datasource; let i = index"
+                (click)="onRowClick(datasource[i],i)"
+                (focus)="onRowSelect(datasource[i],i)"
+                (dblclick)="onRowDblclick(datasource[i],i)"
             >
                 <td  class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{row[column.field]}}</td>
             </tr>

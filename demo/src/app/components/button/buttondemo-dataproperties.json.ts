@@ -10,109 +10,60 @@ export const dataProperties = [
     options: "button | submit | reset"
   },
   {
-    name: "textButton",
+    name: "text",
     type: "string",
     default: "null",
     description: "Displays a text button.",
     options: "any text"
   },
   {
-    name: "iconBefore",
-    type: "Object | string",
-    default: "null",
-    description: "Creates an icon on the left side of the button.",
-    options: "icon | backgroundColor | fontColor | fontSize"
+    name: "size",
+    type: "string",
+    default: "100px (min)",
+    description: "Button size.",
+    options: "string | ex: 150px"
   },
   {
-    name: "iconBefore.icon",
+    name: "disabled",
+    type: "boolean",
+    default: "false",
+    description: "Disables the button if set to true.",
+    options: "true | false"
+  },
+  {
+    name: "buttonClass",
     type: "string",
     default: "null",
-    description: "Defines a name of an existing icon.",
+    description: "Style class of the button.",
+    options: "Class CSS"
+  },
+  {
+    name: "iconAddonBefore",
+    type: "string",
+    default: "null",
+    description: "Creates an icon in the addon before the button.",
     options: "ion-printer | fa fa-home | any"
   },
   {
-    name: "iconBefore.backgroundColor",
-    type: "string",
-    default: "#E8E8E8",
-    description: "Hex Color for background color.",
-    options: "Hex color"
-  },
-  {
-    name: "iconBefore.fontColor",
-    type: "string",
-    default: "#616161",
-    description: "Hex color for font color.",
-    options: "Hex color"
-  },
-  {
-    name: "iconBefore.fontSize",
-    type: "string",
-    default: "16px",
-    description: "Icon font size.",
-    options: "Example: 16px"
-  },
-  {
-    name: "iconAfter",
-    type: "Object | string",
-    default: "null",
-    description: "Creates an icon on the right side of the button.",
-    options: "icon | backgroundColor | fontColor | fontSize"
-  },
-  {
-    name: "iconAfter.icon",
+    name: "buttonAddonBeforeClass",
     type: "string",
     default: "null",
-    description: "Defines a name of an existing icon.",
+    description: "Style class of the addon before.",
+    options: "Class CSS"
+  },
+  {
+    name: "iconAddonAfter",
+    type: "string",
+    default: "null",
+    description: "Creates an icon in the addon after the button.",
     options: "ion-printer | fa fa-home | any"
   },
   {
-    name: "iconAfter.backgroundColor",
+    name: "buttonAddonAfterClass",
     type: "string",
-    default: "#E8E8E8",
-    description: "Hex Color for background color.",
-    options: "Hex color"
-  },
-  {
-    name: "iconAfter.fontColor",
-    type: "string",
-    default: "#616161",
-    description: "Hex color for font color.",
-    options: "Hex color"
-  },
-  {
-    name: "iconAfter.fontSize",
-    type: "string",
-    default: "16px",
-    description: "Icon font size.",
-    options: "string | ex: 16px"
-  },
-  {
-    name: "styleOptions",
-    type: "Object | string",
     default: "null",
-    description: "Sets a style for the button.",
-    options: "backgroundColor | fontColor | fontSize"
-  },
-  {
-    name: "styleOptions.backgroundColor",
-    type: "string",
-    default: "#E8E8E8",
-    description: "Hex Color for background color.",
-    options: "Hex color"
-  },
-  {
-    name: "styleOptions.fontColor",
-    type: "string",
-    default: "#616161",
-    description: "Hex color for font color.",
-    options: "Hex color"
-  },
-  {
-    name: "styleOptions.fontSize",
-    type: "string",
-    default: "15px",
-    description: "Text button font size.",
-    options: "string | ex: 15px"
+    description: "Style class of the addon after.",
+    options: "Class CSS"
   },
   {
     name: "iconLeftTextButton",
@@ -127,12 +78,5 @@ export const dataProperties = [
     default: "null",
     description: "Creates an icon on the right side of the text button.",
     options: "ion-printer | fa fa-home | any"
-  },
-  {
-    name: "disabled",
-    type: "boolean",
-    default: "false",
-    description: "Disables the button if set to true.",
-    options: "true | false"
   }
   ];

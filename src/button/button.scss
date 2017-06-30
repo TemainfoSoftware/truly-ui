@@ -18,6 +18,9 @@ $button-text-align: center;
   cursor: pointer;
   text-align: $button-text-align;
   display: $button-display;
+  background-color:#E8E8E8;
+  border: 1px solid #C8C8C8;
+  color: #616161;
 
   &.-disabled{
     opacity: 0.35;
@@ -35,6 +38,7 @@ $button-text-align: center;
   > .addon.-iconbefore {
     float: left;
     padding: $button-addon-padding;
+    border-right: 1px solid #C8C8C8;
   }
 
   > .addon.-iconbefore > i {
@@ -46,6 +50,7 @@ $button-text-align: center;
   > .addon.-iconafter {
     float: right;
     padding: $button-addon-padding;
+    border-left: 1px solid #C8C8C8;
   }
 
   > .addon.-iconafter > i {
@@ -53,6 +58,14 @@ $button-text-align: center;
     padding: 0;
     line-height: $button-height;
   }
+}
+
+.tl-button-box:hover{
+  background-color: #dedede;
+}
+
+.tl-button-box:active{
+  background-color: #d8d8d8;
 }
 
 .button {

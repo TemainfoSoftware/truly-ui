@@ -19,10 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
-import { ButtonStyleOptions } from './button-style-options';
-import { ButtonAddonStyleOptions } from './button-addon-style-options';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component( {
     selector: 'tl-button',
@@ -33,15 +30,17 @@ export class TlButton {
 
     @Input() type = 'button';
 
-    @Input() textButton = '';
+    @Input() text = '';
 
-    @Input() styleOptions: ButtonStyleOptions = new ButtonStyleOptions();
+    @Input() iconAddonBefore = '';
 
-    @Input() iconBefore: ButtonAddonStyleOptions = new ButtonAddonStyleOptions();
+    @Input() buttonAddonBeforeClass;
 
-    @Input() iconAfter: ButtonAddonStyleOptions = new ButtonAddonStyleOptions();
+    @Input() iconAddonAfter = '';
 
-    @Input() width;
+    @Input() buttonAddonAfterClass;
+
+    @Input() size;
 
     @Input() iconLeftTextButton = '';
 
@@ -49,57 +48,11 @@ export class TlButton {
 
     @Input() disabled: boolean = null;
 
+    @Input() buttonClass;
+
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor( private _tonecolor: ToneColorGenerator ) { }
+    constructor( ) { }
 
-    @HostListener( 'mouseenter' ) onMouseEnter() {
-        if ( this.disabled !== true ) {
-            this.hoverButton( this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.05 ) );
-        }
-    }
-
-    @HostListener( 'mouseleave' ) onMouseLeave() {
-        this.hoverButton( this.styleOptions.backgroundColor );
-    }
-
-    @HostListener( 'mousedown' ) onMouseDown() {
-        this.hoverButton( this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.09 ) );
-    }
-
-    @HostListener( 'mouseup' ) onMouseUp() {
-        this.onMouseEnter();
-    }
-
-    public getStyle() {
-        return {
-            'background-color': this.styleOptions.backgroundColor,
-            'border': '1px solid ' + this._tonecolor.calculate(this.styleOptions.backgroundColor, -0.14),
-            'color': this.styleOptions.fontColor,
-            'font-size': this.styleOptions.fontSize
-        };
-    }
-
-    public getAddonStyle( addonPosition ) {
-        if ( addonPosition === 'left' ) {
-            return {
-                'background-color': this.iconBefore.backgroundColor,
-                'font-size': this.iconBefore.fontSize,
-                'border-right': '1px solid ' + this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.14 )
-            };
-        } else {
-            return {
-                'background-color': this.iconAfter.backgroundColor,
-                'font-size': this.iconAfter.fontSize,
-                'border-left': '1px solid ' + this._tonecolor.calculate( this.styleOptions.backgroundColor, -0.14 )
-            };
-        }
-    }
-
-    private hoverButton( color: string ) {
-        if ( this.disabled !== true ) {
-            this.buttonBox.nativeElement.style.backgroundColor = color;
-        }
-    }
 }
 

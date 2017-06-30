@@ -35,7 +35,7 @@ export const dataProperties = [
     type: "string",
     default: "null",
     description: "Style class of the button.",
-    options: "Class CSS"
+    options: "CSS class"
   },
   {
     name: "iconAddonBefore",
@@ -49,7 +49,7 @@ export const dataProperties = [
     type: "string",
     default: "null",
     description: "Style class of the addon before.",
-    options: "Class CSS"
+    options: "CSS class"
   },
   {
     name: "iconAddonAfter",
@@ -63,7 +63,7 @@ export const dataProperties = [
     type: "string",
     default: "null",
     description: "Style class of the addon after.",
-    options: "Class CSS"
+    options: "CSS class"
   },
   {
     name: "iconLeftTextButton",

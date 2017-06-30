@@ -1,0 +1,55 @@
+<div class="header-title-demo">
+  <h1 class="title">Button</h1>
+  <p class="text-content">There's a lot of ways to create a button using Truly UI. Below, are some of those.</p>
+</div>
+
+<hr>
+<div class="showcase">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Basic</h5>
+        <tl-datatable [data]="data"></tl-datatable>
+      </div>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<div class="setup">
+  <h3 class="title">Properties</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of dataTableProperties; let i = index">
+      <tr>
+        <td><b>{{ item.name }}</b></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
+
+    </table>
+  </div>
+  <hr>
+</div>
+
+<div class="examples">
+  <h3 class="title">Examples</h3>
+  <div class="group-component">
+    <h5 class="title">Basic</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [textButton]="'Button'"></tl-button>
+  </textarea>
+  </div>
+</div>

@@ -21,24 +21,22 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    QueryList,
-    Renderer2,
-    ViewChild
+    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
 import { DatabaseFilterOptions } from './database-filter-options';
 
+enum KeyEvent {
+    ARROWUP = 38 ,
+    ARROWDOWN = 40,
+}
+
+
 @Component( {
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
+    encapsulation: ViewEncapsulation.Native,
     styleUrls: [ './datatable.scss' ]
 } )
 export class TlDatatable implements AfterContentInit, OnInit {
@@ -56,7 +54,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
     @Output('rowClick') rowClick: EventEmitter<any> = new EventEmitter();
 
     @Output('rowDblclick') rowDblclick: EventEmitter<any> = new EventEmitter();
-
 
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
@@ -84,6 +81,28 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     setColumns() {
+        console.log(this.datatableColumns);
+        if ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) ) {
+            this.getColumnsFromContentChield();
+        }else {
+            this.getColumnsFromDataSource();
+        }
+    }
+
+    getColumnsFromDataSource() {
+        Object.keys( this.datasource[0] ).forEach( ( columnField ) => {
+            this.columns.push( this.buildNewDataTableColumn( columnField ) );
+        })
+    }
+
+    buildNewDataTableColumn(field) {
+        const column = new TlDatatableColumn();
+        column.title = field.toUpperCase();
+        column.field = field;
+        return column;
+    }
+
+    getColumnsFromContentChield() {
         this.datatableColumns.map( column => {
             this.columns.push( column );
         } );
@@ -91,8 +110,9 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     getClassAlignment( alignment: string ) {
         if ( !alignment ) {
-            return '-text' + alignment;
+            return '';
         }
+        return '-text' + alignment;
     }
 
 
@@ -107,17 +127,34 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     onKeydown( $event ) {
         $event.preventDefault();
-
-        if ( $event.keyCode === 40 ) {
-            this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
-            this.tabindex = this.tabindex + 1;
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWDOWN: this.handleArrowDown(); break;
+            case KeyEvent.ARROWUP: this.handleArrowUp(); break;
         }
+    }
 
-        if ( $event.keyCode === 38 ) {
-            this.tbody.nativeElement.children[ this.tabindex - 1 ].focus();
-            this.tabindex = this.tabindex - 1;
+    handleArrowDown() {
+        if ( this.isLastRow() )  {
+            return ;
         }
+        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
+        this.tabindex = this.tabindex + 1;
+    }
 
+    isLastRow() {
+        return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
+    }
+
+    isFirstRow() {
+        return this.tabindex === 0;
+    }
+
+    handleArrowUp() {
+        if ( this.isFirstRow() ) {
+            return ;
+        }
+        this.tbody.nativeElement.children[ this.tabindex - 1 ].focus();
+        this.tabindex = this.tabindex - 1;
     }
 
     onRowClick( row, index ) {
@@ -159,26 +196,30 @@ export class TlDatatable implements AfterContentInit, OnInit {
                 }
             });
         });
-        console.log(this.filtredData.length);
         this.updateDataSource( this.filtredData );
     }
 
 
     isValidMatch( searchValue: string, valueMatch: string ) {
-        if (!this.globalFilterOptions.caseSensitive) {
-            valueMatch = valueMatch.toLowerCase();
-            searchValue = searchValue.toLowerCase();
+        if ( this.globalFilterOptions ) {
+            if (!this.globalFilterOptions.caseSensitive )  {
+                valueMatch = valueMatch.toLowerCase();
+                searchValue = searchValue.toLowerCase();
+            }
         }
         return this.matchWith( searchValue, valueMatch );
     }
 
     matchWith(searchValue, valueMatch) {
-        switch (this.globalFilterOptions.mode) {
-            case 'startsWith' : return (valueMatch).startsWith(searchValue);
-            case 'endsWith' : return String(valueMatch).endsWith(searchValue);
-            case 'contains' : return String(valueMatch).includes(searchValue);
-            default: return String(valueMatch).includes(searchValue);
+        if (this.globalFilterOptions) {
+            switch (this.globalFilterOptions.mode) {
+                case 'startsWith' : return (valueMatch).startsWith(searchValue);
+                case 'endsWith' : return String(valueMatch).endsWith(searchValue);
+                case 'contains' : return String(valueMatch).includes(searchValue);
+                default: return String(valueMatch).includes(searchValue);
+            }
         }
+        return String(valueMatch).includes(searchValue);
     }
 
     updateDataSource( data ) {

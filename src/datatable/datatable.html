@@ -2,7 +2,7 @@
     <table class="datatable" (keydown)="onKeydown($event)">
         <thead class="datatableHeader">
             <tr class="row">
-                <th class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{column.title}}</th>
+                <th *ngFor="let column of columns;" [class]="' cel ' + getClassAlignment(column.alignment)">{{column.title}}</th>
             </tr>
         </thead>
         <tbody #tbody class="datatableBody">
@@ -11,18 +11,18 @@
                 (focus)="onRowSelect(datasource[i],i)"
                 (dblclick)="onRowDblclick(datasource[i],i)"
             >
-                <td  class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+                <td *ngFor="let column of columns;" [class]="'cel ' + getClassAlignment(column.alignment)">{{row[column.field]}}</td>
             </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <td>Sum</td>
-                <td>$180</td>
-                <td>$180</td>
-                <td>$180</td>
-                <td>$180</td>
-            </tr>
-        </tfoot>
+        <!--<tfoot>-->
+            <!--<tr>-->
+                <!--<td>Sum</td>-->
+                <!--<td>$180</td>-->
+                <!--<td>$180</td>-->
+                <!--<td>$180</td>-->
+                <!--<td>$180</td>-->
+            <!--</tr>-->
+        <!--</tfoot>-->
     </table>
 </div>
 

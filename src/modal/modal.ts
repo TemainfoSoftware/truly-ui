@@ -59,7 +59,7 @@ export class TlModal implements OnInit {
 
     @Input() icon = 'ion-android-person-add';
 
-    @Input() color = '#FF6978';
+    @Input() color = '#53C68C';
 
     @ViewChild( 'modal' ) modal: ElementRef;
 

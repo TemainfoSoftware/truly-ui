@@ -8,9 +8,9 @@
     height: 500px;
     border-radius: 3px;
     border: 1px solid #ccc;
+    border-top: 0;
 
     > .header {
-    background-color: #53C68C;
     user-select: none;
     height: 34px;
     }

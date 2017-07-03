@@ -42,9 +42,13 @@ enum KeyEvent {
 } )
 export class TlDatatable implements AfterContentInit, OnInit {
 
-    @Input( 'data' ) data: any[];
+    @Input('data') data: any[];
 
-    @Input( 'selectable' ) selectable: boolean;
+    @Input('scrollable') scrollable = 'none';
+
+    @Input('height') height = '300px';
+
+    @Input('selectable') selectable: boolean;
 
     @Input('globalFilter') globalFilter: any;
 
@@ -82,7 +86,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     setColumns() {
-        console.log(this.datatableColumns);
         if ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) ) {
             this.getColumnsFromContentChield();
         }else {
@@ -211,6 +214,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
                 }
             });
         });
+
         this.updateDataSource( this.filtredData );
     }
 

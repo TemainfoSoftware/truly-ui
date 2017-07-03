@@ -1,28 +1,63 @@
-<div class="tl-datatable-box">
-    <table class="datatable" (keydown)="onKeydown($event)">
-        <thead class="datatableHeader">
+<div class="tl-datatable-box" *ngIf="datasource">
+    <div *ngIf="scrollable === 'none'">
+        <table class="datatable" (keydown)="onKeydown($event)" sortable>
+            <thead class="datatableHeader">
+                <tr class="row">
+                    <th *ngFor="let column of columns;" [class]="' cel ' + getClassAlignment(column.alignment)">{{column.title}}</th>
+                </tr>
+            </thead>
+
+               <tbody #tbody class="datatableBody">
+               <tr #tbody class="row" [tabindex]="i" *ngFor="let row of datasource; let i = index"
+                   (click)="onRowClick(datasource[i],i)"
+                   (focus)="onRowSelect(datasource[i],i)"
+                   (dblclick)="onRowDblclick(datasource[i],i)"
+               >
+                   <td *ngFor="let column of columns;" [class]="'cel ' + getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+               </tr>
+               </tbody>
+
+            <!--<tfoot>-->
+                <!--<tr>-->
+                    <!--<td>Sum</td>-->
+                    <!--<td>$180</td>-->
+                    <!--<td>$180</td>-->
+                    <!--<td>$180</td>-->
+                    <!--<td>$180</td>-->
+                <!--</tr>-->
+            <!--</tfoot>-->
+        </table>
+    </div>
+
+    <div class="dataTableScrollable" *ngIf="scrollable === 'scrollable'" [ngStyle]="{'height': height, 'overflow' : 'scroll', 'min-height':'300px'}" >
+        <table class="datatable" (keydown)="onKeydown($event)" sortable>
+            <thead class="datatableHeader">
             <tr class="row">
-                <th class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{column.title}}</th>
+                <th *ngFor="let column of columns;" [class]="' cel ' + getClassAlignment(column.alignment)">{{column.title}}</th>
             </tr>
-        </thead>
-        <tbody #tbody class="datatableBody">
-            <tr #tbody class="row" [tabindex]="i" *ngFor="let row of data; let i = index"
-                (click)="onRowClick(data[i],i)"
-                (focus)="onRowSelect(data[i],i)"
-                (dblclick)="onRowDblclick(data[i],i)"
+            </thead>
+
+            <tbody #tbody class="datatableBody">
+            <tr #tbody class="row" [tabindex]="i" *ngFor="let row of datasource; let i = index"
+                (click)="onRowClick(datasource[i],i)"
+                (focus)="onRowSelect(datasource[i],i)"
+                (dblclick)="onRowDblclick(datasource[i],i)"
             >
-                <td  class="cel" *ngFor="let column of columns;" [ngClass]="getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+                <td *ngFor="let column of columns;" [class]="'cel ' + getClassAlignment(column.alignment)">{{row[column.field]}}</td>
             </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td>Sum</td>
-                <td>$180</td>
-                <td>$180</td>
-                <td>$180</td>
-                <td>$180</td>
-            </tr>
-        </tfoot>
-    </table>
+            </tbody>
+
+            <!--<tfoot>-->
+            <!--<tr>-->
+            <!--<td>Sum</td>-->
+            <!--<td>$180</td>-->
+            <!--<td>$180</td>-->
+            <!--<td>$180</td>-->
+            <!--<td>$180</td>-->
+            <!--</tr>-->
+            <!--</tfoot>-->
+        </table>
+    </div>
+
 </div>
 

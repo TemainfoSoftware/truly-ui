@@ -120,3 +120,36 @@ i {
 .menu li:hover ul {
   display: block;
 }
+
+.buttonClass1{
+  background-color: #81D5AB !important;
+  color: #FFF !important;
+  font-size: 12px !important;
+  border: 1px solid #6FB793 !important;
+}
+.buttonClass1:hover{
+  background-color: #7acda3 !important;
+}
+.buttonClass1:active{
+  background-color: #74c79d !important;
+}
+.buttonClass2{
+  background-color: #1B95E0 !important;
+  color: #FFF !important;
+  font-size: 16px !important;
+  border: 1px solid #1778b9 !important;
+}
+.buttonClass2:hover{
+  background-color: #1b8ad6 !important;
+}
+.buttonClass2:active{
+  background-color: #1b86d0 !important;
+}
+.buttonAddonBeforeClass2{
+  background-color: #FFF !important;
+  border-right: 1px solid #1778b9 !important;
+}
+.buttonAddonBeforeClass2 i{
+  color: #1B95E0 !important;
+}
+

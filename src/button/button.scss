@@ -1,60 +1,91 @@
 @import "../core/core";
 
-//Colors Default
+//Default
+$button-height: 39px;
+$button-min-width: 100px;
+$button-icon-padding: 0.2em;
+$button-addon-padding: 0 15px;
+$button-display: inline-block;
+$button-font-size: 15px;
+$button-font-family: 'Segoe UI', sans-serif;
+$button-text-align: center;
 
 .tl-button-box {
-  height: 39px;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 15px;
+  height: $button-height;
+  font-family: $button-font-family;
+  font-size: $button-font-size;
   outline: none;
   cursor: pointer;
-  text-align: center;
-  display: inline-block;
+  text-align: $button-text-align;
+  display: $button-display;
+  background-color:#E8E8E8;
+  border: 1px solid #C8C8C8;
+  color: #616161;
+
+  &.-disabled{
+    opacity: 0.35;
+    filter: Alpha(Opacity=35);
+    background-image: none;
+    cursor: default !important;
+  }
+
   > .addon {
     font-weight: 400;
-    height: 37px;
-    display: inline-block;
+    height: $button-height - 2;
+    display: $button-display;
   }
+
   > .addon.-iconbefore {
     float: left;
-    padding: 0 15px;
+    padding: $button-addon-padding;
+    border-right: 1px solid #C8C8C8;
   }
+
   > .addon.-iconbefore > i {
     margin: 0;
     padding: 0;
-    line-height: 39px;
+    line-height: $button-height;
   }
+
   > .addon.-iconafter {
     float: right;
-    padding: 0 15px;
+    padding: $button-addon-padding;
+    border-left: 1px solid #C8C8C8;
   }
+
   > .addon.-iconafter > i {
     margin: 0;
     padding: 0;
-    line-height: 39px;
-  }
-  > button > .iconLeftTextButton{
-    padding-right: 0.2em;
-  }
-  > button > .iconRightTextButton{
-    padding-left: 0.2em;
+    line-height: $button-height;
   }
 }
-.disabled{
-  opacity: 0.35;
-  filter: Alpha(Opacity=35);
-  background-image: none;
-  cursor: default !important;
+
+.tl-button-box:hover{
+  background-color: #dedede;
 }
-.tlBtn-default {
+
+.tl-button-box:active{
+  background-color: #d8d8d8;
+}
+
+.button {
   border: 0;
   margin: 0 auto;
-  display: inline-block;
+  display: $button-display;
   background: transparent;
-  height: 39px;
-  min-width: 100px;
-  text-align: center;
+  height: $button-height;
+  min-width: $button-min-width;
+  text-align: $button-text-align;
+
+  > .iconLeftTextButton{
+    padding-right: $button-icon-padding;
+  }
+
+  > .iconRightTextButton{
+    padding-left: $button-icon-padding;
+  }
 }
-.tlBtn-default:active, .tlBtn-default:focus, .tlBtn-default:any-link {
+
+.button:active, .button:focus, .button:any-link {
   outline: none;
 }

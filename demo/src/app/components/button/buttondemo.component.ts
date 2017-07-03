@@ -14,5 +14,4 @@ export class ButtonDemo {
   constructor() {
     this.dataTableProperties = json.dataProperties;
   }
-
 }

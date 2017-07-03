@@ -1,4 +1,5 @@
 /*
+<<<<<<< Updated upstream
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -20,34 +21,44 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    Output,
-    QueryList,
-    ViewChild
+    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild,
+    ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
+import { DatabaseFilterOptions } from './database-filter-options';
+
+enum KeyEvent {
+    ARROWUP = 38 ,
+    ARROWDOWN = 40,
+    END = 35,
+    HOME = 36,
+}
 
 @Component( {
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
-    styleUrls: [ './datatable.scss' ],
+    encapsulation: ViewEncapsulation.Native,
+    styleUrls: [ './datatable.scss' ]
 } )
-export class TlDatatable implements AfterContentInit {
+export class TlDatatable implements AfterContentInit, OnInit {
 
-    @Input( 'data' ) data: any[];
+    @Input('data') data: any[];
 
-    @Input( 'selectable' ) selectable: boolean;
+    @Input('scrollable') scrollable = 'none';
 
-    @Output() rowSelect: EventEmitter<any> = new EventEmitter();
+    @Input('height') height = '300px';
 
-    @Output() rowClick: EventEmitter<any> = new EventEmitter();
+    @Input('selectable') selectable: boolean;
 
-    @Output() rowDblclick: EventEmitter<any> = new EventEmitter();
+    @Input('globalFilter') globalFilter: any;
+
+    @Input('globalFilterOptions') globalFilterOptions: DatabaseFilterOptions;
+
+    @Output('rowSelect') rowSelect: EventEmitter<any> = new EventEmitter();
+
+    @Output('rowClick') rowClick: EventEmitter<any> = new EventEmitter();
+
+    @Output('rowDblclick') rowDblclick: EventEmitter<any> = new EventEmitter();
 
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
@@ -57,11 +68,45 @@ export class TlDatatable implements AfterContentInit {
 
     public tabindex = 0;
 
+    private globalFilterTimeout: any;
+
+    private filtredData: any[];
+
+    private datasource: any[];
+
+    constructor( private render: Renderer2 ) {}
+
+    ngOnInit() {
+        this.updateDataSource( this.data );
+    }
+
     ngAfterContentInit() {
         this.setColumns();
+        this.inicializeGlobalFilter();
     }
 
     setColumns() {
+        if ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) ) {
+            this.getColumnsFromContentChield();
+        }else {
+            this.getColumnsFromDataSource();
+        }
+    }
+
+    getColumnsFromDataSource() {
+        Object.keys( this.datasource[0] ).forEach( ( columnField ) => {
+            this.columns.push( this.buildNewDataTableColumn( columnField ) );
+        })
+    }
+
+    buildNewDataTableColumn(field) {
+        const column = new TlDatatableColumn();
+        column.title = field.toUpperCase();
+        column.field = field;
+        return column;
+    }
+
+    getColumnsFromContentChield() {
         this.datatableColumns.map( column => {
             this.columns.push( column );
         } );
@@ -74,31 +119,60 @@ export class TlDatatable implements AfterContentInit {
         return '-text' + alignment;
     }
 
-    getObjectRow( row, index ) {
-        return { row: row, index: index };
-    }
 
     setTabIndex( value: number ) {
         this.tabindex = value;
     }
 
-    generateTabindex() {
-        return this.tabindex++;
+    getObjectRow( row , index ) {
+        return { data : row, index: index };
+
     }
 
     onKeydown( $event ) {
         $event.preventDefault();
-
-        if ( $event.keyCode === 40 ) {
-            this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
-            this.tabindex = this.tabindex + 1;
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWDOWN: this.handleKeyArrowDown(); break;
+            case KeyEvent.ARROWUP: this.handleKeyArrowUp(); break;
+            case KeyEvent.HOME: this.handleKeyHome(); break;
+            case KeyEvent.END: this.handleKeyEnd(); break;
         }
+    }
 
-        if ( $event.keyCode === 38 ) {
-            this.tbody.nativeElement.children[ this.tabindex - 1 ].focus();
-            this.tabindex = this.tabindex - 1;
+    handleKeyHome() {
+        this.tbody.nativeElement.children[ 0 ].focus();
+        this.tabindex = 0 ;
+    }
+
+    handleKeyEnd() {
+        const lenghtChildren = this.tbody.nativeElement.children.length;
+        this.tbody.nativeElement.children[ lenghtChildren - 1 ].focus();
+        this.tabindex = lenghtChildren - 1 ;
+    }
+
+
+    isLastRow() {
+        return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
+    }
+
+    isFirstRow() {
+        return this.tabindex === 0;
+    }
+
+    handleKeyArrowDown() {
+        if ( this.isLastRow() )  {
+            return ;
         }
+        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
+        this.tabindex = this.tabindex + 1;
+    }
 
+    handleKeyArrowUp() {
+        if ( this.isFirstRow() ) {
+            return ;
+        }
+        this.tbody.nativeElement.children[ this.tabindex - 1 ].focus();
+        this.tabindex = this.tabindex - 1;
     }
 
     onRowClick( row, index ) {
@@ -112,5 +186,66 @@ export class TlDatatable implements AfterContentInit {
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
+    }
+
+    inicializeGlobalFilter() {
+        if ( this.globalFilter ) {
+           this.globalFilterTimeout = setTimeout( () => {
+                this.render.listen(this.globalFilter.element.nativeElement, 'input', ( event ) => {
+                    this.filter( event.target.value ) ;
+                    this.globalFilterTimeout = null;
+                })
+            }, 0);
+        }
+    }
+
+    filter( value: any ) {
+        this.filtredData = [];
+
+        if ( !value ) {
+            this.updateDataSource( this.data );
+            return ;
+        }
+
+        this.data.filter( ( row ) => {
+            this.columns.forEach( (columnValue ) => {
+                if ( this.isValidMatch( String(value), String(row[columnValue.field]) ) ) {
+                  this.filtredData.push(row);
+                }
+            });
+        });
+
+        this.updateDataSource( this.filtredData );
+    }
+
+
+    isValidMatch( searchValue: string, valueMatch: string ) {
+        if ( this.globalFilterOptions ) {
+            if (!this.globalFilterOptions.caseSensitive )  {
+                valueMatch = valueMatch.toLowerCase();
+                searchValue = searchValue.toLowerCase();
+            }
+        }
+        return this.matchWith( searchValue, valueMatch );
+    }
+
+    matchWith(searchValue, valueMatch) {
+        if (this.globalFilterOptions) {
+            switch (this.globalFilterOptions.mode) {
+                case 'startsWith' : return (valueMatch).startsWith(searchValue);
+                case 'endsWith' : return String(valueMatch).endsWith(searchValue);
+                case 'contains' : return String(valueMatch).includes(searchValue);
+                default: return String(valueMatch).includes(searchValue);
+            }
+        }
+        return String(valueMatch).includes(searchValue);
+    }
+
+    updateDataSource( data ) {
+        this.datasource = data;
+    }
+
+    generateTabindex() {
+        return this.tabindex++;
     }
 }

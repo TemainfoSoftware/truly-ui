@@ -19,17 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component( {
     selector: 'tl-datatable-column',
     template: ''
 } )
-export class TlDatatableColumn {
+export class TlDatatableColumn implements OnInit {
 
-    @Input( 'field' ) field: string;
+    @Input( 'field' ) field = '';
 
-    @Input( 'title' ) title: string;
+    @Input( 'title' ) title = '';
 
-    @Input( 'alignment' ) alignment: string;
+    @Input( 'alignment' ) alignment = 'center';
+
+    constructor() {
+
+    }
+
+    ngOnInit() {
+        this.getTitle();
+    }
+
+    getTitle() {
+        if (!this.title) {
+            if (this.field) {
+                this.title = this.field.toUpperCase();
+            }
+        }
+    }
+
 }

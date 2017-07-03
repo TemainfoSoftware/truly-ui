@@ -19,9 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit, ViewChild, ElementRef, Renderer2, ComponentRef, HostBinding, } from '@angular/core';
+import {
+    Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, Renderer2,
+    ViewChild
+} from '@angular/core';
 import { ModalService } from './modal.service';
-import { trigger, style, animate, transition } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 let globalZindex = 0;
 
@@ -52,9 +55,17 @@ export class TlModal implements OnInit {
 
     @Input() index;
 
+    @Input() draggable = true;
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @HostBinding( '@enterAnimation' ) public animation;
+
+    @Output() show: EventEmitter<any> = new EventEmitter();
+
+    @Output() hide: EventEmitter<any> = new EventEmitter();
+
+    @Output() maximize: EventEmitter<any> = new EventEmitter();
 
     public componentRef: ComponentRef<TlModal>;
 
@@ -62,102 +73,232 @@ export class TlModal implements OnInit {
 
     private serviceControl: ModalService;
 
-    private initOffsetLeft;
-
     private maximized: boolean;
-
-    private initOffsetTop;
 
     private mousePressX;
 
     private mousePressY;
 
-    private clientX;
+    private positionMouseMoveX;
 
-    private clientY;
+    private positionMouseMoveY;
 
     private moving = false;
 
     private offsetLeftContent;
+
     private offsetTopContent;
 
-
     private offsetLeftModal;
+
     private offsetTopModal;
+
+    private parent;
+
+    private modalLeft;
+
+    private modalTop;
+
+    private positionX;
+
+    private positionY;
 
     constructor( private element: ElementRef, private renderer: Renderer2 ) {
     }
 
     ngOnInit() {
         this.setZIndex();
-        const outlet = document.getElementById( 'content' );
-        this.offsetLeftContent = outlet.offsetLeft;
-        this.offsetTopContent = outlet.offsetTop;
+        this.getBoundingContent();
+        this.resizeListener();
+        this.mousemoveListener();
+        this.mouseupListener();
+        this.setModalCenterParent();
+        this.show.emit();
+    }
 
-        this.renderer.listen( window, 'resize', ( event ) => {
+    resizeListener() {
+        this.renderer.listen( window, 'resize', () => {
+            this.getBoundingContent();
             this.maximizeModal();
         } );
+    }
 
+    mousemoveListener() {
         this.renderer.listen( window, 'mousemove', ( event ) => {
-            if ( this.moving ) {
-                this.clientX = event.clientX;
-                this.clientY = event.clientY;
-                this.offsetLeftModal = this.modal.nativeElement.offsetLeft;
-                this.offsetTopModal = this.modal.nativeElement.offsetTop;
-                this.setPosition();
+            event.preventDefault();
+
+            if ( !( this.moving && this.draggable) ) {
+                return;
             }
+            if ( this.isMouseOutOfTheWindowRight( event ) ) {
+                this.setOffsetLeftModal( window.innerWidth - this.modal.nativeElement.offsetWidth );
+                this.setMousePressX( window.innerWidth );
+            }
+            if ( this.isMouseOutOfTheWindowLeft( event ) ) {
+                this.setOffsetLeftModal( this.getBoundingParentElement().left );
+                this.setMousePressX( this.getBoundingParentElement().left );
+            }
+            this.positionMouseMoveX = event.clientX;
+            this.positionMouseMoveY = event.clientY;
+            this.setPosition();
+
         } );
+    }
 
-
-        this.renderer.listen(window, 'mouseup', (event) => {
+    mouseupListener() {
+        this.renderer.listen( window, 'mouseup', () => {
             this.moving = false;
-            if ( this.offsetLeftModal < this.offsetLeftContent ) {
-                this.modal.nativeElement.style.left = this.offsetLeftContent + 'px';
-            }
-            if (this.offsetTopModal < this.offsetTopContent) {
-                this.modal.nativeElement.style.top = this.offsetTopContent + 'px';
-            }
-        });
-
-
+        } );
     }
 
     mouseDown( $event ) {
         if ( !this.maximized ) {
-            this.initOffsetLeft = $event.target.offsetParent.offsetLeft;
-            this.initOffsetTop = $event.target.offsetParent.offsetTop;
-            this.mousePressX = $event.clientX;
-            this.mousePressY = $event.clientY;
+            this.setOffsetLeftModal( this.modal.nativeElement.offsetLeft );
+            this.setOffsetTopModal( this.modal.nativeElement.offsetTop );
+            this.setMousePressX( $event.clientX );
+            this.setMousePressY( $event.clientY );
             this.moving = true;
         }
+    }
+
+    getModalPosition() {
+        this.modalLeft = this.modal.nativeElement.offsetLeft;
+        this.modalTop = this.modal.nativeElement.offsetTop;
+    }
+
+    setModalCenterParent() {
+        this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
+        this.modal.nativeElement.style.top = window.innerHeight -
+            this.modal.nativeElement.offsetHeight - this.modal.nativeElement.offsetTop + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {
         this.componentRef = component;
     }
 
+
+    setMousePressX( position ) {
+        this.mousePressX = position;
+    }
+
+    setMousePressY( position ) {
+        this.mousePressY = position;
+    }
+
     setPosition() {
-        this.modal.nativeElement.style.opacity = 1;
-        this.modal.nativeElement.style.left = this.initOffsetLeft + this.clientX - this.mousePressX + 'px';
-        this.modal.nativeElement.style.top = this.initOffsetTop + this.clientY - this.mousePressY + 'px';
-        this.modal.nativeElement.style.width = '500px';
-        this.modal.nativeElement.style.height = '500px';
-        this.modal.nativeElement.style.cursor = 'pointer';
+        this.setLeftPosition();
+        this.setTopPosition();
+        this.setDefaultDimensions();
+    }
+
+    setLeftPosition() {
+        if ( this.isOutOfWindowX() ) {
+            return this.setLeftLimitOfArea();
+        }
+
+        if ( this.isOutOfWindowOnLeft() ) {
+            return this.setContentLeftPosition();
+        }
+
+        this.setNewLeftPosition();
+    }
+
+    setTopPosition() {
+        if ( this.isOutOfWindowY() ) {
+            return this.setTopLimitOfArea();
+        }
+
+        if ( this.isOutOfWindowOnTop() ) {
+            return this.setContentTopPositon();
+        }
+
+        this.setNewTopPosition();
+    }
+
+    setLeftLimitOfArea() {
+        return this.modal.nativeElement.style.left = window.innerWidth - this.modal.nativeElement.offsetWidth + 'px';
+    }
+
+    setTopLimitOfArea() {
+        return this.modal.nativeElement.style.top = window.innerHeight - this.modal.nativeElement.offsetHeight + 'px';
+    }
+
+    setOffsetLeftModal( offset ) {
+        this.offsetLeftModal = offset;
+    }
+
+    setOffsetTopModal( offset ) {
+        this.offsetTopModal = offset;
+    }
+
+    setContentTopPositon() {
+        this.modal.nativeElement.style.top = this.offsetTopContent + 'px';
+    }
+
+    setContentLeftPosition() {
+        this.modal.nativeElement.style.left = this.offsetLeftContent + 'px';
+    }
+
+    setNewTopPosition() {
+        this.modal.nativeElement.style.top = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY + 'px';
+    }
+
+    setNewLeftPosition() {
+        this.modal.nativeElement.style.left = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX + 'px'
     }
 
     setServiceControl( service ) {
         this.serviceControl = service;
     }
 
+    setDefaultDimensions() {
+        this.modal.nativeElement.style.width = '500px';
+        this.modal.nativeElement.style.height = '500px';
+    }
+
+    setCurrentPosition() {
+        this.modal.nativeElement.style.left = this.modalLeft + 'px';
+        this.modal.nativeElement.style.top = this.modalTop + 'px';
+    }
+
+    isMouseOutOfTheWindowLeft( event ) {
+        return event.clientX < this.offsetLeftContent
+    }
+
+    isMouseOutOfTheWindowRight( event ) {
+        return event.clientX >= window.innerWidth - 1;
+    }
+
+    isOutOfWindowOnLeft() {
+        return this.positionX < this.offsetLeftContent;
+    }
+
+    isOutOfWindowOnTop() {
+        return this.positionY < this.offsetTopContent;
+    }
+
+    isOutOfWindowX() {
+        this.positionX = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX;
+        return this.positionX >= (window.innerWidth - this.modal.nativeElement.offsetWidth);
+    }
+
+    isOutOfWindowY() {
+        this.positionY = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY;
+        return this.positionY >= (window.innerHeight - this.modal.nativeElement.offsetHeight);
+    }
+
     minimizeModal() {
         this.serviceControl.minimize( this.componentRef );
+        this.hide.emit();
     }
 
     closeModal() {
         this.serviceControl.close( this.componentRef );
+        this.hide.emit();
     }
 
     maximizeModal() {
+        this.getModalPosition();
         if ( !this.maximized ) {
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
             this.modal.nativeElement.style.top = this.getBoundingParentElement().top + 'px';
@@ -165,18 +306,26 @@ export class TlModal implements OnInit {
             this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
             this.maximized = true;
             this.moving = false;
+            this.maximize.emit();
         } else {
             this.restoreMaximize();
         }
     }
 
     restoreMaximize() {
+        this.setDefaultDimensions();
+        this.setCurrentPosition();
         this.maximized = false;
-        this.setPosition();
     }
 
     getBoundingParentElement() {
         return this.element.nativeElement.parentElement.getBoundingClientRect();
+    }
+
+    getBoundingContent() {
+        this.parent = this.componentRef.instance.element.nativeElement.parentElement;
+        this.offsetLeftContent = this.parent.offsetLeft;
+        this.offsetTopContent = this.parent.offsetTop;
     }
 
     setZIndex() {
@@ -187,6 +336,5 @@ export class TlModal implements OnInit {
         this.ZIndex = globalZindex++;
         return this.ZIndex;
     }
-
 }
 

@@ -57,6 +57,10 @@ export class TlModal implements OnInit {
 
     @Input() draggable = true;
 
+    @Input() icon = 'ion-android-person-add';
+
+    @Input() color = '#FF6978';
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @HostBinding( '@enterAnimation' ) public animation;
@@ -126,7 +130,6 @@ export class TlModal implements OnInit {
     mousemoveListener() {
         this.renderer.listen( window, 'mousemove', ( event ) => {
             event.preventDefault();
-
             if ( !( this.moving && this.draggable) ) {
                 return;
             }
@@ -265,6 +268,10 @@ export class TlModal implements OnInit {
         return event.clientX < this.offsetLeftContent
     }
 
+    setZIndex() {
+        this.serviceControl.setZIndex( this.getZIndex() );
+    }
+
     isMouseOutOfTheWindowRight( event ) {
         return event.clientX >= window.innerWidth - 1;
     }
@@ -288,8 +295,8 @@ export class TlModal implements OnInit {
     }
 
     minimizeModal() {
-        this.serviceControl.minimize( this.componentRef );
-        this.hide.emit();
+     this.serviceControl.minimize( this.componentRef );
+     this.hide.emit();
     }
 
     closeModal() {
@@ -298,8 +305,8 @@ export class TlModal implements OnInit {
     }
 
     maximizeModal() {
-        this.getModalPosition();
         if ( !this.maximized ) {
+            this.getModalPosition();
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
             this.modal.nativeElement.style.top = this.getBoundingParentElement().top + 'px';
             this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
@@ -326,10 +333,6 @@ export class TlModal implements OnInit {
         this.parent = this.componentRef.instance.element.nativeElement.parentElement;
         this.offsetLeftContent = this.parent.offsetLeft;
         this.offsetTopContent = this.parent.offsetTop;
-    }
-
-    setZIndex() {
-        this.serviceControl.setZIndex( this.getZIndex() );
     }
 
     getZIndex() {

@@ -1,6 +1,6 @@
 <div class="header-title-demo">
   <h1 class="title">DataTable</h1>
-  <p class="text-content">There's a lot of ways to create a button using Truly UI. Below, are some of those.</p>
+  <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
 </div>
 
 <hr>
@@ -10,7 +10,14 @@
       <div class="group-component">
         <h5>Basic</h5>
         <tl-input #tlInput [placeholder]="'Pesquise por um registro...'"></tl-input>
-        <tl-datatable [data]="data" [globalFilter]="tlInput"></tl-datatable>
+        <tl-datatable
+          [data]="data"
+          [globalFilter]="tlInput"
+          [globalFilterOptions]="{caseSensitive: false}"
+          [scrollable]="'scrollable'"
+          (rowSelect)="onRowSelect($event, index )">
+        </tl-datatable>
+        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
       </div>
     </div>
   </div>

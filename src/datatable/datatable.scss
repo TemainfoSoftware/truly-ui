@@ -60,10 +60,25 @@
     border-right: none
   }
   > .row:nth-child(odd){
-   background: #F6F6F6;
+   background: #FFFFFF;
   }
   > .row:focus{
     background: #66CC99 !important;
     color: #FFF;
   }
+}
+
+.dataTableScrollable::-webkit-scrollbar{
+  background: #F1F1F1;
+  width: 10px;
+}
+.dataTableScrollable::-webkit-scrollbar-corner{
+  background: #F1F1F1;
+}
+
+.dataTableScrollable::-webkit-scrollbar-track{
+  background: #F6F6F6;
+}
+.dataTableScrollable::-webkit-scrollbar-thumb{
+  background: #66CC99;
 }

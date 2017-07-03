@@ -21,5 +21,5 @@
 */
  export class DatabaseFilterOptions {
      mode = 'contains';
-     caseSensitive : false;
+     caseSensitive: false;
  }

@@ -20,9 +20,6 @@
  SOFTWARE.
  */
 import { Component, Input, OnInit } from '@angular/core';
-import { until } from 'selenium-webdriver';
-import titleContains = until.titleContains;
-import { ngControlStatusHost } from '@angular/forms/src/directives/ng_control_status';
 
 @Component( {
     selector: 'tl-datatable-column',

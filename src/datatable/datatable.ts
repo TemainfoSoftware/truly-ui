@@ -30,8 +30,9 @@ import { DatabaseFilterOptions } from './database-filter-options';
 enum KeyEvent {
     ARROWUP = 38 ,
     ARROWDOWN = 40,
+    END = 35,
+    HOME = 36,
 }
-
 
 @Component( {
     selector: 'tl-datatable',
@@ -128,18 +129,24 @@ export class TlDatatable implements AfterContentInit, OnInit {
     onKeydown( $event ) {
         $event.preventDefault();
         switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN: this.handleArrowDown(); break;
-            case KeyEvent.ARROWUP: this.handleArrowUp(); break;
+            case KeyEvent.ARROWDOWN: this.handleKeyArrowDown(); break;
+            case KeyEvent.ARROWUP: this.handleKeyArrowUp(); break;
+            case KeyEvent.HOME: this.handleKeyHome(); break;
+            case KeyEvent.END: this.handleKeyEnd(); break;
         }
     }
 
-    handleArrowDown() {
-        if ( this.isLastRow() )  {
-            return ;
-        }
-        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
-        this.tabindex = this.tabindex + 1;
+    handleKeyHome() {
+        this.tbody.nativeElement.children[ 0 ].focus();
+        this.tabindex = 0 ;
     }
+
+    handleKeyEnd() {
+        const lenghtChildren = this.tbody.nativeElement.children.length;
+        this.tbody.nativeElement.children[ lenghtChildren - 1 ].focus();
+        this.tabindex = lenghtChildren - 1 ;
+    }
+
 
     isLastRow() {
         return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
@@ -149,7 +156,15 @@ export class TlDatatable implements AfterContentInit, OnInit {
         return this.tabindex === 0;
     }
 
-    handleArrowUp() {
+    handleKeyArrowDown() {
+        if ( this.isLastRow() )  {
+            return ;
+        }
+        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
+        this.tabindex = this.tabindex + 1;
+    }
+
+    handleKeyArrowUp() {
         if ( this.isFirstRow() ) {
             return ;
         }

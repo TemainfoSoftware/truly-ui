@@ -19,31 +19,48 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2 } from '@angular/core';
+
+import { TlSplitButtonAction } from './splitbutton-action';
 
 @Component( {
-    selector: 'tl-datatable-column',
-    template: ''
+    selector : 'tl-split-button',
+    templateUrl : './splitbutton.html',
+    styleUrls : [ './splitbutton.scss' ]
 } )
-export class TlDatatableColumn implements OnInit {
+export class TlSplitButton implements AfterContentInit {
 
-    @Input( 'field' ) field = '';
+    @Input() text = '';
 
-    @Input( 'title' ) title = '';
+    @Input() separator: boolean = null;
 
-    @Input( 'alignment' ) alignment = 'center';
+    actions: any;
 
-    constructor() {}
+    showHide: boolean;
 
-    ngOnInit() {
-        this.getTitle();
+    @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
+
+    constructor(private _renderer: Renderer2) {
+        this.showHide = false;
     }
 
-    getTitle() {
-        if (!this.title) {
-            if (this.field) {
-                this.title = this.field.toUpperCase();
+    ngAfterContentInit() {
+        this._renderer.listen( document, 'click', (event) => {
+            if (!(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i')) {
+                this.showHide = false;
             }
+        } );
+        this.setActions();
+    }
+
+    setActions() {
+        if ( (this.splitButtonActions.length) && (this.splitButtonActions.first) ) {
+            this.actions = this.splitButtonActions;
         }
     }
+
+    changeShowStatus() {
+        this.showHide = !this.showHide;
+    }
+
 }

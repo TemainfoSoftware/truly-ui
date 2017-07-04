@@ -1,17 +1,28 @@
 @import "../core/core";
 
+.tl-datatable-box{
+  border-left: 1px #E5E5E5 solid;
+  border-top: 1px #E5E5E5 solid;
+  border-bottom: 1px #E5E5E5 solid;
+  &.-borderleft{
+    border-right: 1px #E5E5E5 solid;
+  }
+
+}
 
 .datatable{
-  border: 1px #E5E5E5 solid;
   border-spacing: 0;
+  border-right: 1px #E5E5E5 solid;
   width: 100%;
   font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
   text-align: center;
+  table-layout: fixed;
 }
 
 .datatableHeader{
   color: #656565;
   font-size: 13px;
+  table-layout: fixed;
 
   > .row{
     height: 30px;
@@ -38,10 +49,12 @@
 }
 
 .datatableBody{
+  table-layout: fixed;
 
   > .row{
     height: 25px;
     font-size: 13px;
+    background: #F5F5F5;
     outline: none;
   }
   > .row .cel{
@@ -67,18 +80,22 @@
     color: #FFF;
   }
 }
+.datatableScrollableTHeader{
+  margin-right: 10px;
+}
 
-.dataTableScrollable::-webkit-scrollbar{
+
+.datatableScrollableTBody::-webkit-scrollbar{
   background: #F1F1F1;
   width: 10px;
 }
-.dataTableScrollable::-webkit-scrollbar-corner{
+.datatableScrollableTBody::-webkit-scrollbar-corner{
   background: #F1F1F1;
 }
 
-.dataTableScrollable::-webkit-scrollbar-track{
+.datatableScrollableTBody::-webkit-scrollbar-track{
   background: #F6F6F6;
 }
-.dataTableScrollable::-webkit-scrollbar-thumb{
+.datatableScrollableTBody::-webkit-scrollbar-thumb{
   background: #66CC99;
 }

@@ -19,31 +19,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component( {
-    selector: 'tl-datatable-column',
+    selector: 'tl-split-button-action',
     template: ''
 } )
-export class TlDatatableColumn implements OnInit {
+export class TlSplitButtonAction {
 
-    @Input( 'field' ) field = '';
+    @Input() label = '';
 
-    @Input( 'title' ) title = '';
+    @Input() icon = '';
 
-    @Input( 'alignment' ) alignment = 'center';
+    @Input() separator = false;
 
-    constructor() {}
+    constructor() { }
 
-    ngOnInit() {
-        this.getTitle();
-    }
-
-    getTitle() {
-        if (!this.title) {
-            if (this.field) {
-                this.title = this.field.toUpperCase();
-            }
-        }
-    }
 }

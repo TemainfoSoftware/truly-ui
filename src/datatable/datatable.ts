@@ -1,5 +1,4 @@
 /*
-<<<<<<< Updated upstream
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -21,25 +20,29 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild,
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
-import { DatabaseFilterOptions } from './database-filter-options';
+import { DatatableFilterOptions } from './datatable-filter-options';
+import { KeyEvent } from '../core/enums/key-events';
 
-enum KeyEvent {
-    ARROWUP = 38 ,
-    ARROWDOWN = 40,
-    END = 35,
-    HOME = 36,
-}
-
-@Component( {
+@Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     encapsulation: ViewEncapsulation.Native,
     styleUrls: [ './datatable.scss' ]
-} )
+})
 export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input('data') data: any[];
@@ -52,7 +55,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input('globalFilter') globalFilter: any;
 
-    @Input('globalFilterOptions') globalFilterOptions: DatabaseFilterOptions;
+    @Input('globalFilterOptions') globalFilterOptions: DatatableFilterOptions;
 
     @Output('rowSelect') rowSelect: EventEmitter<any> = new EventEmitter();
 
@@ -86,24 +89,17 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     setColumns() {
-        if ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) ) {
-            this.getColumnsFromContentChield();
-        }else {
-            this.getColumnsFromDataSource();
-        }
+        this.exitsColumns() ? this.getColumnsFromContentChield() : this.getColumnsFromDataSource();
+    }
+
+    setTabIndex( value: number ) {
+        this.tabindex = value;
     }
 
     getColumnsFromDataSource() {
         Object.keys( this.datasource[0] ).forEach( ( columnField ) => {
             this.columns.push( this.buildNewDataTableColumn( columnField ) );
         })
-    }
-
-    buildNewDataTableColumn(field) {
-        const column = new TlDatatableColumn();
-        column.title = field.toUpperCase();
-        column.field = field;
-        return column;
     }
 
     getColumnsFromContentChield() {
@@ -113,20 +109,34 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     getClassAlignment( alignment: string ) {
-        if ( !alignment ) {
-            return '';
-        }
-        return '-text' + alignment;
-    }
-
-
-    setTabIndex( value: number ) {
-        this.tabindex = value;
+        return alignment ? '-text' + alignment : '';
     }
 
     getObjectRow( row , index ) {
         return { data : row, index: index };
+    }
 
+    isLastRow() {
+        return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
+    }
+
+    isFirstRow() {
+        return this.tabindex === 0;
+    }
+
+    exitsColumns() {
+        return ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) );
+    }
+
+    updateDataSource( data ) {
+        this.datasource = data;
+    }
+
+    buildNewDataTableColumn(field) {
+        const column = new TlDatatableColumn();
+        column.title = field.toUpperCase();
+        column.field = field;
+        return column;
     }
 
     onKeydown( $event ) {
@@ -148,15 +158,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
         const lenghtChildren = this.tbody.nativeElement.children.length;
         this.tbody.nativeElement.children[ lenghtChildren - 1 ].focus();
         this.tabindex = lenghtChildren - 1 ;
-    }
-
-
-    isLastRow() {
-        return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
-    }
-
-    isFirstRow() {
-        return this.tabindex === 0;
     }
 
     handleKeyArrowDown() {
@@ -218,7 +219,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
         this.updateDataSource( this.filtredData );
     }
 
-
     isValidMatch( searchValue: string, valueMatch: string ) {
         if ( this.globalFilterOptions ) {
             if (!this.globalFilterOptions.caseSensitive )  {
@@ -239,13 +239,5 @@ export class TlDatatable implements AfterContentInit, OnInit {
             }
         }
         return String(valueMatch).includes(searchValue);
-    }
-
-    updateDataSource( data ) {
-        this.datasource = data;
-    }
-
-    generateTabindex() {
-        return this.tabindex++;
     }
 }

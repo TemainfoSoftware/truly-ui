@@ -44,8 +44,8 @@ i {
   padding: 0 0 0 0 ;
   background: #FFF;
   height: 100vw;
-  -webkit-box-shadow: 0 0 5px 0 #7f7f7f;
-  -moz-box-shadow: 0 0 5px 0 #7f7f7f;
+  -webkit-box-shadow: 1px 1px 10px 1px #D6D6D6;
+  box-shadow: 1px 1px 10px 1px #D6D6D6;
   margin: 0;
 }
 

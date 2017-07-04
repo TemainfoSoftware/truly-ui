@@ -9,12 +9,20 @@ import * as json from './datatabledemo-dataproperties.json';
   styleUrls: [ './datatabledemo.component.scss' ]
 } )
 export class DataTableDemo {
-  private dataTableProperties;
+
   public data: any[] = [];
+
+  public rowSelected: any;
+
+  private dataTableProperties;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.data = this.createRandomData(100);
+  }
+
+  onRowSelect( row ) {
+    this.rowSelected = row;
   }
 
   private createRandomData(count: number) {

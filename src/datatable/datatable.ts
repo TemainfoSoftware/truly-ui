@@ -1,5 +1,4 @@
 /*
-<<<<<<< Updated upstream
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -21,33 +20,42 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, Renderer2, ViewChild,
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
-import { DatabaseFilterOptions } from './database-filter-options';
+import { DatatableFilterOptions } from './datatable-filter-options';
+import { KeyEvent } from '../core/enums/key-events';
 
-enum KeyEvent {
-    ARROWUP = 38 ,
-    ARROWDOWN = 40,
-}
-
-
-@Component( {
+@Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     encapsulation: ViewEncapsulation.Native,
     styleUrls: [ './datatable.scss' ]
-} )
+})
 export class TlDatatable implements AfterContentInit, OnInit {
 
-    @Input( 'data' ) data: any[];
+    @Input('data') data: any[];
 
-    @Input( 'selectable' ) selectable: boolean;
+    @Input('scrollable') scrollable = 'none';
+
+    @Input('height') height = '300px';
+
+    @Input('selectable') selectable: boolean;
 
     @Input('globalFilter') globalFilter: any;
 
-    @Input('globalFilterOptions') globalFilterOptions: DatabaseFilterOptions;
+    @Input('globalFilterOptions') globalFilterOptions: DatatableFilterOptions;
 
     @Output('rowSelect') rowSelect: EventEmitter<any> = new EventEmitter();
 
@@ -81,25 +89,17 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     setColumns() {
-        console.log(this.datatableColumns);
-        if ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) ) {
-            this.getColumnsFromContentChield();
-        }else {
-            this.getColumnsFromDataSource();
-        }
+        this.exitsColumns() ? this.getColumnsFromContentChield() : this.getColumnsFromDataSource();
+    }
+
+    setTabIndex( value: number ) {
+        this.tabindex = value;
     }
 
     getColumnsFromDataSource() {
         Object.keys( this.datasource[0] ).forEach( ( columnField ) => {
             this.columns.push( this.buildNewDataTableColumn( columnField ) );
         })
-    }
-
-    buildNewDataTableColumn(field) {
-        const column = new TlDatatableColumn();
-        column.title = field.toUpperCase();
-        column.field = field;
-        return column;
     }
 
     getColumnsFromContentChield() {
@@ -109,36 +109,11 @@ export class TlDatatable implements AfterContentInit, OnInit {
     }
 
     getClassAlignment( alignment: string ) {
-        if ( !alignment ) {
-            return '';
-        }
-        return '-text' + alignment;
-    }
-
-
-    setTabIndex( value: number ) {
-        this.tabindex = value;
+        return alignment ? '-text' + alignment : '';
     }
 
     getObjectRow( row , index ) {
         return { data : row, index: index };
-
-    }
-
-    onKeydown( $event ) {
-        $event.preventDefault();
-        switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN: this.handleArrowDown(); break;
-            case KeyEvent.ARROWUP: this.handleArrowUp(); break;
-        }
-    }
-
-    handleArrowDown() {
-        if ( this.isLastRow() )  {
-            return ;
-        }
-        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
-        this.tabindex = this.tabindex + 1;
     }
 
     isLastRow() {
@@ -149,7 +124,51 @@ export class TlDatatable implements AfterContentInit, OnInit {
         return this.tabindex === 0;
     }
 
-    handleArrowUp() {
+    exitsColumns() {
+        return ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) );
+    }
+
+    updateDataSource( data ) {
+        this.datasource = data;
+    }
+
+    buildNewDataTableColumn(field) {
+        const column = new TlDatatableColumn();
+        column.title = field.toUpperCase();
+        column.field = field;
+        return column;
+    }
+
+    onKeydown( $event ) {
+        $event.preventDefault();
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWDOWN: this.handleKeyArrowDown(); break;
+            case KeyEvent.ARROWUP: this.handleKeyArrowUp(); break;
+            case KeyEvent.HOME: this.handleKeyHome(); break;
+            case KeyEvent.END: this.handleKeyEnd(); break;
+        }
+    }
+
+    handleKeyHome() {
+        this.tbody.nativeElement.children[ 0 ].focus();
+        this.tabindex = 0 ;
+    }
+
+    handleKeyEnd() {
+        const lenghtChildren = this.tbody.nativeElement.children.length;
+        this.tbody.nativeElement.children[ lenghtChildren - 1 ].focus();
+        this.tabindex = lenghtChildren - 1 ;
+    }
+
+    handleKeyArrowDown() {
+        if ( this.isLastRow() )  {
+            return ;
+        }
+        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
+        this.tabindex = this.tabindex + 1;
+    }
+
+    handleKeyArrowUp() {
         if ( this.isFirstRow() ) {
             return ;
         }
@@ -196,9 +215,9 @@ export class TlDatatable implements AfterContentInit, OnInit {
                 }
             });
         });
+
         this.updateDataSource( this.filtredData );
     }
-
 
     isValidMatch( searchValue: string, valueMatch: string ) {
         if ( this.globalFilterOptions ) {
@@ -220,13 +239,5 @@ export class TlDatatable implements AfterContentInit, OnInit {
             }
         }
         return String(valueMatch).includes(searchValue);
-    }
-
-    updateDataSource( data ) {
-        this.datasource = data;
-    }
-
-    generateTabindex() {
-        return this.tabindex++;
     }
 }

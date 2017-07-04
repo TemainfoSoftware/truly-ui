@@ -1,15 +1,26 @@
-<div #modal (click)="getZIndex();" [ngStyle]="{'z-index': ZIndex}"
-     class="tl-modal-container">
+<div #modal (click)="getZIndex();" [ngStyle]="{'z-index': ZIndex}" class="tl-modal-container">
 
-    <div class="header">
+    <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
+            <span class="icon"><i [ngClass]="icon"></i></span>
             <span class="title">{{label}}</span>
         </div>
         <div class="controls">
-            <span (mouseup)="minimizeModal()"><i class="ion-android-remove"></i></span>
-            <span *ngIf="!maximized" (mouseup)="maximizeModal()"><i ngClass="ion-android-expand"></i></span>
-            <span *ngIf="maximized" (mouseup)="restoreMaximize()"><i ngClass="ion-android-contract"></i></span>
-            <span (mouseup)="closeModal()"><i class="ion-close" style="padding-right: 10px"></i></span>
+            <span class="control-item" (mouseup)="minimizeModal()">
+                <i class="ion-android-remove"></i>
+            </span>
+
+            <span class="control-item" *ngIf="!maximized" (mouseup)="maximizeModal()">
+                <i ngClass="ion-android-expand"></i>
+            </span>
+
+            <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximize()">
+                <i ngClass="ion-android-contract"></i>
+            </span>
+
+            <span class="control-item" (mouseup)="closeModal()">
+                <i class="ion-close" style="padding-right: 10px"></i>
+            </span>
         </div>
     </div>
 </div>

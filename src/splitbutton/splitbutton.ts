@@ -1,0 +1,69 @@
+/*
+ MIT License
+
+ Copyright (c) 2017 Temainfo Sistemas
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+import {
+    Component, ContentChildren, Input, QueryList, AfterContentInit, ElementRef, HostListener
+} from '@angular/core';
+
+import { TlSplitButtonAction } from './splitbutton-action';
+
+@Component( {
+    selector : 'tl-split-button',
+    templateUrl : './splitbutton.html',
+    styleUrls : [ './splitbutton.scss' ]
+} )
+export class TlSplitButton implements AfterContentInit {
+
+    @Input() text = '';
+
+    @Input() separator: boolean = null;
+
+    actions: any;
+
+    showHide: boolean;
+
+    @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
+
+    constructor() {
+        this.showHide = false;
+    }
+
+    @HostListener( 'click' ) onClick( event ) {
+        // this.el.nativeElement.attributes[..] // using this you handle handle the entity clicked
+        console.log( event );
+
+    }
+
+    ngAfterContentInit() {
+        this.setActions();
+    }
+
+    setActions() {
+        if ( (this.splitButtonActions.length) && (this.splitButtonActions.first) ) {
+            this.actions = this.splitButtonActions;
+        }
+    }
+
+    changeShowStatus() {
+        this.showHide = !this.showHide;
+    }
+
+}

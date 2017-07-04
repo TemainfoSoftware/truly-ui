@@ -1,0 +1,16 @@
+<div #splitButtonBox class="tl-split-button-box">
+
+    <tl-button [text]="text" (click)="onClick($event)"></tl-button>
+
+    <div *ngIf="splitButtonActions" class="split-button-actions" (clicked)="onClick($event)" [ngClass]="{'ativo': showHide === true }" (click)="changeShowStatus()">
+        <i class="ion-chevron-down"></i>
+        <ul class="actions-menu" *ngIf="showHide">
+            <li *ngFor="let action of actions" (click)="onClick($event)" [class]="action.separator ? 'separator' : null">
+                <i *ngIf="action.icon" [ngClass]="action.icon" class="icon-action"></i>
+                {{ action.label }}
+            </li>
+        </ul>
+    </div>
+
+
+</div>

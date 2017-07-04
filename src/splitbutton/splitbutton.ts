@@ -19,9 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-    Component, ContentChildren, Input, QueryList, AfterContentInit, ElementRef, HostListener
-} from '@angular/core';
+import { Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2 } from '@angular/core';
 
 import { TlSplitButtonAction } from './splitbutton-action';
 
@@ -42,17 +40,16 @@ export class TlSplitButton implements AfterContentInit {
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
 
-    constructor() {
+    constructor(private _renderer: Renderer2) {
         this.showHide = false;
     }
 
-    @HostListener( 'click' ) onClick( event ) {
-        // this.el.nativeElement.attributes[..] // using this you handle handle the entity clicked
-        console.log( event );
-
-    }
-
     ngAfterContentInit() {
+        this._renderer.listen( document, 'click', (event) => {
+            if (!(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i')) {
+                this.showHide = false;
+            }
+        } );
         this.setActions();
     }
 

@@ -1,6 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
+import { CadPessoa } from "./cadastro2/cadPessoa.component";
 
 @Component( {
   selector: 'app-modal',
@@ -18,20 +19,7 @@ export class ModalDemo {
   }
 
   modal1() {
-    this.modal.createModal('MODAL 1');
-    this.modals = this.modal.getMinModals();
-  }
-
-  modal2() {
-    this.modal.createModal('MODAL 2');
-    this.modals = this.modal.getMinModals();
-  }
-  modal3() {
-    this.modal.createModal('MODAL 3');
-    this.modals = this.modal.getMinModals();
-  }
-  modal4() {
-    this.modal.createModal('MODAL 4');
+    this.modal.createModal(CadPessoa, 'Cadastro de Usuarios', 'ion-person-add');
     this.modals = this.modal.getMinModals();
   }
 

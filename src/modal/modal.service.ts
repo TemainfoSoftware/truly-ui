@@ -20,15 +20,27 @@ export class ModalService {
         this.view = view;
     }
 
-    createModal( label ) {
+    createModal( component, title, icon ) {
         index++;
         const componentFactory = this.compiler.resolveComponentFactory( TlModal );
-        this.component = this.view.createComponent( componentFactory );
+        const factoryInject = this.compiler.resolveComponentFactory(component);
+        this.setComponentInjected(componentFactory, factoryInject);
+        this.setGlobalSettings(title, icon);
+
+    }
+
+    setGlobalSettings(title, icon) {
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
-        (<TlModal>this.component.instance).label = label;
         (<TlModal>this.component.instance).status = 'MAX';
+        (<TlModal>this.component.instance).title = title;
+        (<TlModal>this.component.instance).icon = icon;
         this.setZIndex();
+    }
+
+    setComponentInjected(componentFactory, factoryInject) {
+        this.component = this.view.createComponent( componentFactory );
+        (<TlModal>this.component.instance).body.createComponent(factoryInject);
     }
 
     setZIndex( indexModal? ) {
@@ -40,7 +52,6 @@ export class ModalService {
     }
 
     minimize( component ) {
-        console.log(component);
         component.instance.status = 'MIN';
         component.instance.element.nativeElement.style.display = 'none';
         this.minModals.push( component );

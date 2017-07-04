@@ -33,9 +33,7 @@ export class TlDatatableColumn implements OnInit {
 
     @Input( 'alignment' ) alignment = 'center';
 
-    constructor() {
-
-    }
+    constructor() {}
 
     ngOnInit() {
         this.getTitle();
@@ -48,5 +46,4 @@ export class TlDatatableColumn implements OnInit {
             }
         }
     }
-
 }

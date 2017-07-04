@@ -34,7 +34,7 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
-import { DatabaseFilterOptions } from './database-filter-options';
+import { DatatableFilterOptions } from './datatable-filter-options';
 import { KeyEvent } from '../core/enums/key-events';
 
 @Component({
@@ -55,7 +55,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input('globalFilter') globalFilter: any;
 
-    @Input('globalFilterOptions') globalFilterOptions: DatabaseFilterOptions;
+    @Input('globalFilterOptions') globalFilterOptions: DatatableFilterOptions;
 
     @Output('rowSelect') rowSelect: EventEmitter<any> = new EventEmitter();
 

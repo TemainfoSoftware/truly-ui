@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import { Component } from '@angular/core';
 
 import * as json from './splitbuttondemo-dataproperties.json';
 
@@ -15,7 +15,5 @@ export class SplitButtonDemo {
   constructor() {
     this.dataTableProperties = json.dataProperties;
   }
-
-  onClick() { }
 
 }

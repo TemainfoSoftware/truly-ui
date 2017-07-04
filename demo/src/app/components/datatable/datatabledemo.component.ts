@@ -18,7 +18,7 @@ export class DataTableDemo {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
-    this.data = this.createRandomData(100);
+    this.data = this.createRandomData(50);
   }
 
   onRowSelect( row ) {

@@ -8,7 +8,35 @@
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
+        <h5>Scrollable Virtual</h5>
+        <tl-datatable [data]="data" [scrollable]="'virtual'" [height]="'310px'"> </tl-datatable>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Scrollable Normal</h5>
+        <tl-datatable [data]="data" [scrollable]="'normal'" [height]="'310px'"> </tl-datatable>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
         <h5>Basic</h5>
+        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
+        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Filter Data</h5>
 
         <tl-input #tlInput [placeholder]="'Pesquise por um registro...'"></tl-input>
         <br/>
@@ -16,12 +44,9 @@
           [data]="data"
           [globalFilter]="tlInput"
           [globalFilterOptions]="{caseSensitive: false}"
-          [scrollable]="'scrollable'"
           (rowSelect)="onRowSelect($event, index )">
-
         </tl-datatable>
         <div>Row Selected:<span> {{rowSelected | json}} </span></div>
-
       </div>
     </div>
   </div>

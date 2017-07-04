@@ -1,4 +1,6 @@
-<div class="tl-datatable-box" *ngIf="datasource" [ngClass]="{'-borderleft':scrollable === 'scrollable'}">
+<div class="tl-datatable-box" *ngIf="datasource" [ngClass]="{'-borderleft':scrollable === 'normal'}">
+
+    <!-- Scrollable None -->
     <div *ngIf="scrollable === 'none'">
         <table class="datatable" (keydown)="onKeydown($event)">
             <thead class="datatableHeader">
@@ -29,7 +31,8 @@
         </table>
     </div>
 
-    <div class="dataTableScrollable" *ngIf="scrollable === 'scrollable'"  >
+    <!-- Scrollable Normal -->
+    <div class="dataTableScrollable" *ngIf="scrollable === 'normal'"  >
         <div class="datatableScrollableTHeader">
             <table class="datatable" (keydown)="onKeydown($event)">
                 <thead class="datatableHeader">
@@ -50,6 +53,33 @@
                     >
                         <td *ngFor="let column of columns;" [class]="'cel ' + getClassAlignment(column.alignment)">{{row[column.field]}}</td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Scrollable Virtual -->
+    <div class="dataTableScrollable" *ngIf="scrollable === 'virtual'"  >
+        <div class="datatableScrollableTHeader">
+            <table class="datatable" (keydown)="onKeydown($event)">
+                <thead class="datatableHeader">
+                <tr class="row">
+                    <th *ngFor="let column of columns;" [class]="' cel ' + getClassAlignment(column.alignment)">{{column.title}}</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="datatableScrollableTBody"  [ngStyle]="{'height': height, 'overflow' : 'scroll', 'min-height':'300px'}">
+            <table class="datatable"  (keydown)="onKeydown($event)">
+                <tbody #tbody class="datatableBody">
+                <tr #tbody class="row" [tabindex]="i" *ngFor="let row of datasource; let i = index"
+                    (click)="onRowClick(datasource[i],i)"
+                    (focus)="onRowSelect(datasource[i],i)"
+                    (dblclick)="onRowDblclick(datasource[i],i)"
+                >
+                    <td *ngFor="let column of columns;" [class]="'cel ' + getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+                </tr>
                 </tbody>
             </table>
         </div>

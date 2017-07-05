@@ -1,7 +1,7 @@
 <div class="tl-datatable-box" *ngIf="datasource" [ngClass]="{'-borderleft':scrollable === 'normal'}">
 
-    <!-- Scrollable None -->
-    <div *ngIf="scrollable === 'none'">
+    <!-- Mode Normal -->
+    <div *ngIf="mode === 'normal'">
         <table class="datatable" (keydown)="onKeydown($event)">
             <thead class="datatableHeader">
                 <tr class="row">
@@ -31,8 +31,8 @@
         </table>
     </div>
 
-    <!-- Scrollable Normal -->
-    <div class="dataTableScrollable" *ngIf="scrollable === 'normal'"  >
+    <!-- Mode Scrollable -->
+    <div class="dataTableScrollable" *ngIf="mode === 'scrollable'"  >
         <div class="datatableScrollableTHeader">
             <table class="datatable" (keydown)="onKeydown($event)">
                 <thead class="datatableHeader">
@@ -58,8 +58,8 @@
         </div>
     </div>
 
-    <!-- Scrollable Virtual -->
-    <div class="dataTableScrollable" *ngIf="scrollable === 'virtual'"  >
+    <!-- Mode Paginator -->
+    <div class="dataTableScrollable" *ngIf="mode === 'paginator'"  >
         <div class="datatableScrollableTHeader">
             <table class="datatable" (keydown)="onKeydown($event)">
                 <thead class="datatableHeader">

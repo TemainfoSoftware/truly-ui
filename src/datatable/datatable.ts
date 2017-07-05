@@ -40,14 +40,16 @@ import { KeyEvent } from '../core/enums/key-events';
 @Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
-    encapsulation: ViewEncapsulation.Native,
-    styleUrls: [ './datatable.scss' ]
+    styleUrls: [ './datatable.scss' ],
+    encapsulation: ViewEncapsulation.Native
 })
 export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input('data') data: any[];
 
-    @Input('scrollable') scrollable = 'none';
+    @Input('mode') mode = 'normal';
+
+    @Input('lazy') lazy = false;
 
     @Input('height') height = '300px';
 

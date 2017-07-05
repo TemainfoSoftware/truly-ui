@@ -20,9 +20,9 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2, ViewChild,
-    ElementRef, HostListener, Output, EventEmitter
-} from '@angular/core';
+    Component, ContentChildren, Input, QueryList, AfterContentInit,
+    Renderer2, ViewChild, ElementRef, HostListener
+    } from '@angular/core';
 
 import { TlSplitButtonAction } from './splitbutton-action';
 
@@ -35,6 +35,28 @@ import { TlSplitButtonAction } from './splitbutton-action';
 export class TlSplitButton implements AfterContentInit {
 
     @Input() text = '';
+
+    @Input() type = '';
+
+    @Input() size;
+
+    @Input() disabled: boolean = null;
+
+    @Input() buttonClass;
+
+    @Input() iconAddonBefore = '';
+
+    @Input() buttonAddonBeforeClass;
+
+    @Input() iconAddonAfter = '';
+
+    @Input() buttonAddonAfterClass;
+
+    @Input() iconLeftTextButton = '';
+
+    @Input() iconRightTextButton = '';
+
+    @Input() splitbuttonClass;
 
     @ViewChild( 'lista' ) lista: ElementRef;
 

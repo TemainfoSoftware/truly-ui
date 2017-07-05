@@ -38,6 +38,28 @@
         </tl-split-button>
       </div>
     </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>With CallBack Action</h5>
+        <tl-split-button [text]="'Button'" (click)="callBackOne($event)">
+          <tl-split-button-action [label]="'Action 1'" (click)="callBackTwo($event)"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 2'" (click)="callBackTwo($event)"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 3'" (click)="callBackTwo($event)"></tl-split-button-action>
+        </tl-split-button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Custom Style</h5>
+        <tl-split-button [text]="'Button'">
+          <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+        </tl-split-button>
+      </div>
+    </div>
   </div>
   <hr>
 </div>
@@ -55,15 +77,15 @@
         <th>Options</th>
       </tr>
       </thead>
-      <tbody *ngFor="let item of dataTableProperties; let i = index">
-      <tr>
-        <td><b>{{ item.name }}</b></td>
-        <td><span class="badge">{{ item.type }}</span></td>
-        <td><code>{{ item.default }}</code></td>
-        <td>{{ item.description }}</td>
-        <td><code> {{ item.options }} </code></td>
-      </tr>
-      </tbody>
+      <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
+      <!--<tr>-->
+        <!--<td><b>{{ item.name }}</b></td>-->
+        <!--<td><span class="badge">{{ item.type }}</span></td>-->
+        <!--<td><code>{{ item.default }}</code></td>-->
+        <!--<td>{{ item.description }}</td>-->
+        <!--<td><code> {{ item.options }} </code></td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
     </table>
   </div>
   <hr>
@@ -74,7 +96,11 @@
   <div class="group-component">
     <h5 class="title">Basic</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   <tl-button [text]="'Button'"></tl-button>
+   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'">
+          <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+   </tl-split-button>
   </textarea>
   </div>
 </div>

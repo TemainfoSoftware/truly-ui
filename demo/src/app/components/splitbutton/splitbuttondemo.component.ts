@@ -16,4 +16,11 @@ export class SplitButtonDemo {
     this.dataTableProperties = json.dataProperties;
   }
 
+  callBackOne($event) {
+    console.log($event.srcElement.innerText);
+  }
+
+  callBackTwo($event) {
+    console.log($event.srcElement.innerText);
+  }
 }

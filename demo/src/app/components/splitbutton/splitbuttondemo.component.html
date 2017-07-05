@@ -53,7 +53,11 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>Custom Style</h5>
-        <tl-split-button [text]="'Button'">
+        <tl-split-button [text]="'Button'"
+                         [buttonClass]="'buttonClass3'"
+                         [iconAddonBefore]="'ion-printer'"
+                         [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
+                         [splitbuttonClass]="'splitbuttonClass3'">
           <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
           <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
           <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>

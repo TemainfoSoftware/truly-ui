@@ -168,18 +168,20 @@ i {
 .buttonAddonBeforeClass3{
   border-right: 1px solid #b9b900 !important;
 }
-.splitbuttonClass3{
+.splitbuttonClass3, .menuActionClass3{
   background-color:#e0e000 !important;
   border-top: 1px solid #b9b900 !important;
   border-right: 1px solid #b9b900 !important;
   border-bottom: 1px solid #b9b900 !important;
-  color: #616161 !important;
 }
-.splitbuttonClass3:hover, .splitbuttonClass3.ativo{
+.splitbuttonClass3:hover, .splitbuttonClass3.ativo, .menuActionClass3 li:hover{
   background-color: #d6d600 !important;
 }
-.splitbuttonClass3:active{
+.splitbuttonClass3:active, .menuActionClass3 li:active{
   background-color: #d0d000 !important;
+}
+.splitbuttonClass3 i{
+  color: #222 !important;
 }
 /** MODAL - CUSTOM STYLE **/
 .botao {

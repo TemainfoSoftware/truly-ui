@@ -58,6 +58,8 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() splitbuttonClass;
 
+    @Input() menuActionClass;
+
     @ViewChild( 'lista' ) lista: ElementRef;
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;

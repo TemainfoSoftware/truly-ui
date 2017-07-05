@@ -19,9 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2 } from '@angular/core';
+import {
+    Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2, ViewChild,
+    ElementRef, HostListener, Output, EventEmitter
+} from '@angular/core';
 
 import { TlSplitButtonAction } from './splitbutton-action';
+
 
 @Component( {
     selector : 'tl-split-button',
@@ -32,35 +36,43 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() text = '';
 
-    @Input() separator: boolean = null;
-
-    actions: any;
-
-    showHide: boolean;
+    @ViewChild( 'lista' ) lista: ElementRef;
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
 
-    constructor(private _renderer: Renderer2) {
+    showHide: boolean;
+
+    constructor( private _renderer: Renderer2 ) {
+        this.showHide = false;
+    }
+
+    @HostListener( 'click', [ '$event' ] )
+    onClickListener2( $event ) {
+        $event.stopPropagation();
         this.showHide = false;
     }
 
     ngAfterContentInit() {
-        this._renderer.listen( document, 'click', (event) => {
-            if (!(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i')) {
+        this._renderer.listen( document, 'click', ( event ) => {
+            if ( !(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i') ) {
                 this.showHide = false;
             }
         } );
-        this.setActions();
-    }
-
-    setActions() {
-        if ( (this.splitButtonActions.length) && (this.splitButtonActions.first) ) {
-            this.actions = this.splitButtonActions;
-        }
     }
 
     changeShowStatus() {
         this.showHide = !this.showHide;
+        if ( this.showHide ) {
+            setTimeout( () => {
+                this.createLi();
+            }, 0 );
+        }
+    }
+
+    createLi() {
+        for ( let i = 0; i < this.splitButtonActions.toArray().length; i++ ) {
+            this.lista.nativeElement.appendChild( this.splitButtonActions.toArray()[i].element.nativeElement );
+        }
     }
 
 }

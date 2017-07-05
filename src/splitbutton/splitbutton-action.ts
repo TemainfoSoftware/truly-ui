@@ -19,11 +19,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 @Component( {
-    selector: 'tl-split-button-action',
-    template: ''
+    selector : 'tl-split-button-action',
+    template : `
+        <li [class]="separator ? 'separator' : null">
+            <i *ngIf="icon" class="icon-action {{ icon }}"></i>
+            {{ label }}
+        </li>
+    `,
+    styleUrls : [ './splitbutton-action.scss' ]
 } )
 export class TlSplitButtonAction {
 
@@ -33,6 +39,9 @@ export class TlSplitButtonAction {
 
     @Input() separator = false;
 
-    constructor() { }
+    constructor( public element: ElementRef ) { }
+
+    @HostListener( 'click', [ '$event' ] )
+    onClickListener( $event ) { }
 
 }

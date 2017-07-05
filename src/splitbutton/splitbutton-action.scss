@@ -1,0 +1,19 @@
+@import "../core/core";
+
+//Default
+:host li{
+  padding: 0 10px;
+  color: black;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+:host li:hover{
+  background-color: #dedede;
+}
+:host li.separator{
+  border-bottom:1px solid #C8C8C8 !important;
+}
+:host li .icon-action{
+  padding: 0 5px 0 0;
+}

@@ -15,6 +15,7 @@
     line-height: 39px;
     cursor: pointer;
     float: right;
+    user-select: none;
   }
   > .split-button-actions:hover, .split-button-actions.ativo{
     background-color: #dedede !important;

@@ -21,7 +21,7 @@
  */
 import {
     Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, Renderer2,
-    ViewChild
+    ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
@@ -49,19 +49,21 @@ let globalZindex = 0;
 })
 export class TlModal implements OnInit {
 
-    @Input() label = '';
-
     @Input() status = '';
 
     @Input() index;
 
     @Input() draggable = true;
 
-    @Input() icon = 'ion-android-person-add';
+    @Input() icon = '';
+
+    @Input() title = '';
 
     @Input() color = '#53C68C';
 
     @ViewChild( 'modal' ) modal: ElementRef;
+
+    @ViewChild('body', {read: ViewContainerRef}) body;
 
     @HostBinding( '@enterAnimation' ) public animation;
 

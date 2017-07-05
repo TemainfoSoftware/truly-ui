@@ -1,7 +1,4 @@
-<button (click)="modal1()">Modal 1</button>
-<button (click)="modal2()">Modal 2</button>
-<button (click)="modal3()">Modal 3</button>
-<button (click)="modal4()">Modal 4</button>
+<button (click)="modal1()">Show Modal</button>
 
 <footer class="minimize-box">
   <span *ngFor="let item of modals; let i = index" (click)="show(item, i)" >{{item.instance.label}}</span>

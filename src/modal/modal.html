@@ -3,7 +3,7 @@
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
             <span class="icon"><i [ngClass]="icon"></i></span>
-            <span class="title">{{label}}</span>
+            <span class="title">{{title}}</span>
         </div>
         <div class="controls">
             <span class="control-item" (mouseup)="minimizeModal()">
@@ -23,4 +23,5 @@
             </span>
         </div>
     </div>
+    <div class="body" #body></div>
 </div>

@@ -168,6 +168,9 @@ i {
 .buttonAddonBeforeClass3{
   border-right: 1px solid #b9b900 !important;
 }
+.buttonAddonBeforeClass3 i{
+  color: #222 !important;
+}
 .splitbuttonClass3, .menuActionClass3{
   background-color:#e0e000 !important;
   border-top: 1px solid #b9b900 !important;
@@ -182,6 +185,9 @@ i {
 }
 .splitbuttonClass3 i{
   color: #222 !important;
+}
+.menuActionClass3 li.separator{
+  border-bottom: 1px solid #b9b900 !important;
 }
 /** MODAL - CUSTOM STYLE **/
 .botao {

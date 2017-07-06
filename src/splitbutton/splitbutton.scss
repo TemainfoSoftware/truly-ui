@@ -23,8 +23,10 @@
   > .split-button-actions:active{
     background-color: #d8d8d8;
   }
+  > .split-button-actions i{
+    color: #6A6A6A;
+  }
 }
-
 .actions-menu{
   display:inline;
   list-style: none;

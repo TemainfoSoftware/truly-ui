@@ -56,9 +56,9 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() iconRightTextButton = '';
 
-    @Input() splitbuttonClass;
+    @Input() splitButtonClass;
 
-    @Input() menuActionClass;
+    @Input() actionMenuClass;
 
     @ViewChild( 'lista' ) lista: ElementRef;
 

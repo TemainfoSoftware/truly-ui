@@ -15,10 +15,10 @@
 
     <div
             [ngClass]="{'ativo': showHide === true }"
-            [class]="splitbuttonClass + ' split-button-actions ' "
+            [class]="splitButtonClass + ' split-button-actions ' "
             (click)="changeShowStatus($event.stopPropagation())">
         <i class="ion-chevron-down"></i>
-        <ul #lista [class]="menuActionClass + ' actions-menu ' " *ngIf="showHide"></ul>
+        <ul #lista [class]="actionMenuClass + ' actions-menu ' " *ngIf="showHide"></ul>
     </div>
 
 </div>

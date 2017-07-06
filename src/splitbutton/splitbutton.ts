@@ -26,6 +26,7 @@ import {
 
 import { TlSplitButtonAction } from './splitbutton-action';
 
+let globalZindex = 1;
 
 @Component( {
     selector : 'tl-split-button',
@@ -66,6 +67,8 @@ export class TlSplitButton implements AfterContentInit {
 
     showHide: boolean;
 
+    public zIndex = 0;
+
     constructor( private _renderer: Renderer2 ) {
         this.showHide = false;
     }
@@ -88,6 +91,7 @@ export class TlSplitButton implements AfterContentInit {
         this.showHide = !this.showHide;
         if ( this.showHide ) {
             setTimeout( () => {
+                this.getAndSetZIndex();
                 this.createLi();
             }, 0 );
         }
@@ -97,6 +101,11 @@ export class TlSplitButton implements AfterContentInit {
         for ( let i = 0; i < this.splitButtonActions.toArray().length; i++ ) {
             this.lista.nativeElement.appendChild( this.splitButtonActions.toArray()[i].element.nativeElement );
         }
+    }
+
+    getAndSetZIndex() {
+        this.zIndex = globalZindex++;
+        return this.zIndex;
     }
 
 }

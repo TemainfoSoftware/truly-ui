@@ -18,7 +18,7 @@
             [class]="splitButtonClass + ' split-button-actions ' "
             (click)="changeShowStatus($event.stopPropagation())">
         <i class="ion-chevron-down"></i>
-        <ul #lista [class]="actionMenuClass + ' actions-menu ' " *ngIf="showHide"></ul>
+        <ul #lista [class]="actionMenuClass + ' actions-menu ' " [ngStyle]="{'z-index': zIndex}" *ngIf="showHide"></ul>
     </div>
 
 </div>

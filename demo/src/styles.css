@@ -171,22 +171,22 @@ i {
 .buttonAddonBeforeClass3 i{
   color: #222 !important;
 }
-.splitbuttonClass3, .menuActionClass3{
+.splitButtonClass3, .actionMenuClass3{
   background-color:#e0e000 !important;
   border-top: 1px solid #b9b900 !important;
   border-right: 1px solid #b9b900 !important;
   border-bottom: 1px solid #b9b900 !important;
 }
-.splitbuttonClass3:hover, .splitbuttonClass3.ativo, .menuActionClass3 li:hover{
+.splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
   background-color: #d6d600 !important;
 }
-.splitbuttonClass3:active, .menuActionClass3 li:active{
+.splitbusplitButtonClass3ttonClass3:active, .actionMenuClass3 li:active{
   background-color: #d0d000 !important;
 }
-.splitbuttonClass3 i{
+.splitButtonClass3 i, .actionMenuClass3 li{
   color: #222 !important;
 }
-.menuActionClass3 li.separator{
+.actionMenuClass3 li.separator{
   border-bottom: 1px solid #b9b900 !important;
 }
 /** MODAL - CUSTOM STYLE **/

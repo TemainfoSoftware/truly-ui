@@ -1,24 +1,30 @@
 <div class="tl-split-button-box">
 
-    <tl-button
-            [text]="text"
-            [type]="type"
-            [size]="size"
-            [disabled]="disabled"
-            [buttonClass]="buttonClass"
-            [iconAddonBefore]="iconAddonBefore"
-            [buttonAddonBeforeClass]="buttonAddonBeforeClass"
-            [iconAddonAfter]="iconAddonAfter"
-            [buttonAddonAfterClass]="buttonAddonAfterClass"
-            [iconLeftTextButton]="iconLeftTextButton"
-            [iconRightTextButton]="iconRightTextButton"></tl-button>
+    <tl-button [text]="text"
+               [type]="type"
+               [size]="size"
+               [disabled]="disabled"
+               [buttonClass]="buttonClass"
+               [iconAddonBefore]="iconAddonBefore"
+               [buttonAddonBeforeClass]="buttonAddonBeforeClass"
+               [iconAddonAfter]="iconAddonAfter"
+               [buttonAddonAfterClass]="buttonAddonAfterClass"
+               [iconLeftTextButton]="iconLeftTextButton"
+               [iconRightTextButton]="iconRightTextButton">
+    </tl-button>
 
-    <div
-            [ngClass]="{'ativo': showHide === true }"
-            [class]="splitButtonClass + ' split-button-actions ' "
-            (click)="changeShowStatus($event.stopPropagation())">
+    <div [ngClass]="{'ativo': showHide === true }"
+         [class]="splitButtonClass + ' split-button-actions ' "
+         (click)="changeShowStatus($event.stopPropagation())">
+
         <i class="ion-chevron-down"></i>
-        <ul #lista [class]="actionMenuClass + ' actions-menu ' " [ngStyle]="{'z-index': zIndex}" *ngIf="showHide"></ul>
+
+        <ul #lista
+            *ngIf="showHide"
+            [class]="actionMenuClass + ' actions-menu ' "
+            [ngStyle]="{'z-index': zIndex}"
+            [@enterAnimation]></ul>
+
     </div>
 
 </div>

@@ -25,19 +25,34 @@ import {
     } from '@angular/core';
 
 import { TlSplitButtonAction } from './splitbutton-action';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 let globalZindex = 1;
 
 @Component( {
     selector : 'tl-split-button',
     templateUrl : './splitbutton.html',
-    styleUrls : [ './splitbutton.scss' ]
+    styleUrls : [ './splitbutton.scss' ],
+    animations: [
+        trigger(
+            'enterAnimation', [
+                transition( ':enter', [
+                    style( { opacity: 0, transform: 'translate(0%,-5%)', flex: '0' } ),
+                    animate( '200ms', style( { opacity: 1, transform: 'translate(0%,0%)' } ) )
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1, transform: 'translate(0%,0%)' } ),
+                    animate( '200ms', style( { opacity: 0, transform: 'translate(0%,-5%)' } ) )
+                ] )
+            ]
+        )
+    ]
 } )
 export class TlSplitButton implements AfterContentInit {
 
     @Input() text = '';
 
-    @Input() type = '';
+    @Input() type = 'button';
 
     @Input() size;
 
@@ -65,7 +80,7 @@ export class TlSplitButton implements AfterContentInit {
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
 
-    showHide: boolean;
+    private showHide: boolean;
 
     public zIndex = 0;
 
@@ -74,7 +89,7 @@ export class TlSplitButton implements AfterContentInit {
     }
 
     @HostListener( 'click', [ '$event' ] )
-    onClickListener2( $event ) {
+    onClickListener( $event ) {
         $event.stopPropagation();
         this.showHide = false;
     }
@@ -92,12 +107,12 @@ export class TlSplitButton implements AfterContentInit {
         if ( this.showHide ) {
             setTimeout( () => {
                 this.getAndSetZIndex();
-                this.createLi();
+                this.createActionItem();
             }, 0 );
         }
     }
 
-    createLi() {
+    createActionItem() {
         for ( let i = 0; i < this.splitButtonActions.toArray().length; i++ ) {
             this.lista.nativeElement.appendChild( this.splitButtonActions.toArray()[i].element.nativeElement );
         }

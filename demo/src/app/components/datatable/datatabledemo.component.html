@@ -18,7 +18,7 @@
     <div class="col-md-12">
       <div class="group-component">
         <h5>Mode Scrollable + LazyLoad</h5>
-        <tl-datatable [data]="data" [mode]="'scrollable'" [height]="'310px'" [lazy]="true"></tl-datatable>
+        <tl-datatable [data]="dataLazy" [mode]="'scrollable'" [height]="'310px'" (pageChange)="onPageChange($event)" [lazy]="true"></tl-datatable>
       </div>
     </div>
   </div>

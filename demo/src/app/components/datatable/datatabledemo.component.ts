@@ -10,15 +10,27 @@ import * as json from './datatabledemo-dataproperties.json';
 } )
 export class DataTableDemo {
 
-  public data: any[] = [];
+  public data: Array<any>;
+
+  public dataLazy: any;
 
   public rowSelected: any;
+
+
 
   private dataTableProperties;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.data = this.createRandomData(50);
+    this.dataLazy = {
+      "data" : this.data,
+      "total" : 1000
+    }
+  }
+
+  onPageChange(event){
+    console.log(event);
   }
 
   onRowSelect( row ) {

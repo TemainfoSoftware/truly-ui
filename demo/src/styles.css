@@ -142,7 +142,7 @@ i {
 .buttonClass2:hover{
   background-color: #1b8ad6 !important;
 }
-.buttonClass2:active{
+.buttonClass2:active, .toggleClass2{
   background-color: #1b86d0 !important;
 }
 .buttonAddonBeforeClass2{
@@ -180,7 +180,7 @@ i {
 .splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
   background-color: #d6d600 !important;
 }
-.splitButtonClass3:active, .actionMenuClass3 li:active{
+.splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3{
   background-color: #d0d000 !important;
 }
 .splitButtonClass3 i, .actionMenuClass3 li{

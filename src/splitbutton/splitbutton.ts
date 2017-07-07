@@ -58,6 +58,10 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() disabled: boolean = null;
 
+    @Input() toggle: boolean;
+
+    @Input() toggleClass;
+
     @Input() buttonClass;
 
     @Input() iconAddonBefore = '';
@@ -86,6 +90,7 @@ export class TlSplitButton implements AfterContentInit {
 
     constructor( private _renderer: Renderer2 ) {
         this.showHide = false;
+        this.toggle = false;
     }
 
     @HostListener( 'click', [ '$event' ] )

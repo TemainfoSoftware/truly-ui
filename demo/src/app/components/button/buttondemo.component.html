@@ -34,7 +34,8 @@
         <h5>Addon - Icon Before and After</h5>
         <tl-button [text]="'Button'"
                    [iconAddonBefore]="'ion-printer'"
-                   [iconAddonAfter]="'fa fa-home'">
+                   [iconAddonAfter]="'fa fa-home'"
+        [toggle]="true">
         </tl-button>
       </div>
     </div>
@@ -77,12 +78,21 @@
   <div class="row">
     <div class="col-md-3">
       <div class="group-component">
+        <h5>Toggle</h5>
+        <tl-button [text]="'Button'"
+                   [toggle]="true"></tl-button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
         <h5>Many Properties</h5>
         <tl-button [text]="'Button'"
                    [buttonClass]="'buttonClass2'"
                    [iconAddonBefore]="'ion-printer'"
                    [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
-                   [iconRightTextButton]="'fa fa-home'">
+                   [iconRightTextButton]="'fa fa-home'"
+                   [toggleClass]="'toggleClass2'"
+                   [toggle]="true">
         </tl-button>
       </div>
     </div>
@@ -204,6 +214,12 @@
   </textarea>
   </div>
   <div class="group-component">
+    <h5 class="title">Toggle</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+   <tl-button [text]="'Button'" [toggle]="true"></tl-button>
+  </textarea>
+  </div>
+  <div class="group-component">
     <h5 class="title">Many Properties</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button
@@ -211,7 +227,9 @@
           [buttonClass]="'buttonClass2'"
           [iconAddonBefore]="'ion-printer'"
           [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
-          [iconRightTextButton]="'fa fa-home'">
+          [iconRightTextButton]="'fa fa-home'"
+          [toggleClass]="'toggleClass2'"
+          [toggle]="true">
       </tl-button>
 
       <!--
@@ -230,7 +248,7 @@
       .buttonClass2:hover{
         background-color: #1b8ad6 !important;
       }
-      .buttonClass2:active{
+      .buttonClass2:active, .toggleClass2{
         background-color: #1b86d0 !important;
       }
       .buttonAddonBeforeClass2{

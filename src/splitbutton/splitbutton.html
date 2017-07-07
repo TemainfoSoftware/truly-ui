@@ -1,12 +1,30 @@
 <div class="tl-split-button-box">
 
-    <tl-button [text]="text"></tl-button>
+    <tl-button [text]="text"
+               [type]="type"
+               [size]="size"
+               [disabled]="disabled"
+               [buttonClass]="buttonClass"
+               [iconAddonBefore]="iconAddonBefore"
+               [buttonAddonBeforeClass]="buttonAddonBeforeClass"
+               [iconAddonAfter]="iconAddonAfter"
+               [buttonAddonAfterClass]="buttonAddonAfterClass"
+               [iconLeftTextButton]="iconLeftTextButton"
+               [iconRightTextButton]="iconRightTextButton">
+    </tl-button>
 
-    <div class="split-button-actions"
-         [ngClass]="{'ativo': showHide === true }"
+    <div [ngClass]="{'ativo': showHide === true }"
+         [class]="splitButtonClass + ' split-button-actions ' "
          (click)="changeShowStatus($event.stopPropagation())">
+
         <i class="ion-chevron-down"></i>
-        <ul #lista class="actions-menu" *ngIf="showHide"></ul>
+
+        <ul #lista
+            *ngIf="showHide"
+            [class]="actionMenuClass + ' actions-menu ' "
+            [ngStyle]="{'z-index': zIndex}"
+            [@enterAnimation]></ul>
+
     </div>
 
 </div>

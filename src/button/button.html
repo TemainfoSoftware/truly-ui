@@ -6,17 +6,16 @@
 
     </div>
 
-    <button #button
-            [type]="type"
+    <button [type]="type"
             [ngStyle]="{'width': size}"
             class="button"
             [disabled]="disabled ? true : null">
 
-        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton" ></span>
+        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton"></span>
 
         {{text}}
 
-        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton" ></span>
+        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton"></span>
 
     </button>
 

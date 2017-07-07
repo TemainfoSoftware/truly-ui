@@ -4,6 +4,7 @@
 $button-height: 39px;
 $button-min-width: 100px;
 $button-icon-padding: 0.2em;
+$button-icon-color: #6A6A6A;
 $button-addon-padding: 0 15px;
 $button-display: inline-block;
 $button-font-size: 15px;
@@ -45,6 +46,7 @@ $button-text-align: center;
     margin: 0;
     padding: 0;
     line-height: $button-height;
+    color: $button-icon-color;
   }
 
   > .addon.-iconafter {
@@ -57,6 +59,7 @@ $button-text-align: center;
     margin: 0;
     padding: 0;
     line-height: $button-height;
+    color: $button-icon-color;
   }
 }
 

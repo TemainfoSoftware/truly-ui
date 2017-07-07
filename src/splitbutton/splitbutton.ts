@@ -19,48 +19,108 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ContentChildren, Input, QueryList, AfterContentInit, Renderer2 } from '@angular/core';
+import {
+    Component, ContentChildren, Input, QueryList, AfterContentInit,
+    Renderer2, ViewChild, ElementRef, HostListener
+    } from '@angular/core';
 
 import { TlSplitButtonAction } from './splitbutton-action';
+import { animate, style, transition, trigger } from '@angular/animations';
+
+let globalZindex = 1;
 
 @Component( {
     selector : 'tl-split-button',
     templateUrl : './splitbutton.html',
-    styleUrls : [ './splitbutton.scss' ]
+    styleUrls : [ './splitbutton.scss' ],
+    animations: [
+        trigger(
+            'enterAnimation', [
+                transition( ':enter', [
+                    style( { opacity: 0, transform: 'translate(0%,-5%)', flex: '0' } ),
+                    animate( '200ms', style( { opacity: 1, transform: 'translate(0%,0%)' } ) )
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1, transform: 'translate(0%,0%)' } ),
+                    animate( '200ms', style( { opacity: 0, transform: 'translate(0%,-5%)' } ) )
+                ] )
+            ]
+        )
+    ]
 } )
 export class TlSplitButton implements AfterContentInit {
 
     @Input() text = '';
 
-    @Input() separator: boolean = null;
+    @Input() type = 'button';
 
-    actions: any;
+    @Input() size;
 
-    showHide: boolean;
+    @Input() disabled: boolean = null;
+
+    @Input() buttonClass;
+
+    @Input() iconAddonBefore = '';
+
+    @Input() buttonAddonBeforeClass;
+
+    @Input() iconAddonAfter = '';
+
+    @Input() buttonAddonAfterClass;
+
+    @Input() iconLeftTextButton = '';
+
+    @Input() iconRightTextButton = '';
+
+    @Input() splitButtonClass;
+
+    @Input() actionMenuClass;
+
+    @ViewChild( 'lista' ) lista: ElementRef;
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
 
-    constructor(private _renderer: Renderer2) {
+    private showHide: boolean;
+
+    public zIndex = 0;
+
+    constructor( private _renderer: Renderer2 ) {
+        this.showHide = false;
+    }
+
+    @HostListener( 'click', [ '$event' ] )
+    onClickListener( $event ) {
+        $event.stopPropagation();
         this.showHide = false;
     }
 
     ngAfterContentInit() {
-        this._renderer.listen( document, 'click', (event) => {
-            if (!(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i')) {
+        this._renderer.listen( document, 'click', ( event ) => {
+            if ( !(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i') ) {
                 this.showHide = false;
             }
         } );
-        this.setActions();
-    }
-
-    setActions() {
-        if ( (this.splitButtonActions.length) && (this.splitButtonActions.first) ) {
-            this.actions = this.splitButtonActions;
-        }
     }
 
     changeShowStatus() {
         this.showHide = !this.showHide;
+        if ( this.showHide ) {
+            setTimeout( () => {
+                this.getAndSetZIndex();
+                this.createActionItem();
+            }, 0 );
+        }
+    }
+
+    createActionItem() {
+        for ( let i = 0; i < this.splitButtonActions.toArray().length; i++ ) {
+            this.lista.nativeElement.appendChild( this.splitButtonActions.toArray()[i].element.nativeElement );
+        }
+    }
+
+    getAndSetZIndex() {
+        this.zIndex = globalZindex++;
+        return this.zIndex;
     }
 
 }

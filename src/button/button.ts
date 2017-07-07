@@ -22,9 +22,9 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 @Component( {
-    selector: 'tl-button',
-    templateUrl: './button.html',
-    styleUrls: [ './button.scss' ]
+    selector : 'tl-button',
+    templateUrl : './button.html',
+    styleUrls : [ './button.scss' ]
 } )
 export class TlButton {
 
@@ -48,11 +48,33 @@ export class TlButton {
 
     @Input() disabled: boolean = null;
 
+    @Input() toggle: boolean;
+
+    @Input() buttonSelected: boolean;
+
+    @Input() toggleClass: string;
+
+    @Input() toggleClassName: string;
+
     @Input() buttonClass;
 
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor( ) { }
+    constructor() {
+        this.toggle = false;
+        this.buttonSelected = false;
+    }
+
+    clickToggle() {
+        if (this.toggle) {
+            if (this.buttonSelected) {
+                this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
+            } else {
+                this.toggleClassName = '';
+            }
+        }
+    }
+
 
 }
 

@@ -1,4 +1,7 @@
-<div #buttonBox [class]="buttonClass + ' tl-button-box'" [ngClass]="{'-disabled': disabled}">
+<div #buttonBox
+     [class]="buttonClass + ' tl-button-box ' + toggleClassName"
+     [ngClass]="{'-disabled ': disabled}"
+     (click)="clickToggle(buttonSelected = !buttonSelected)">
 
     <div *ngIf="iconAddonBefore" [class]="buttonAddonBeforeClass + ' addon -iconbefore'">
 

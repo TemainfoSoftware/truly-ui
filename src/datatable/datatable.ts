@@ -36,6 +36,7 @@ import {
 import { TlDatatableColumn } from './datatable-column';
 import { DatatableFilterOptions } from './datatable-filter-options';
 import { KeyEvent } from '../core/enums/key-events';
+import { DataMetadata } from '../core/types/datametadata';
 
 @Component({
     selector: 'tl-datatable',
@@ -45,11 +46,15 @@ import { KeyEvent } from '../core/enums/key-events';
 })
 export class TlDatatable implements AfterContentInit, OnInit {
 
-    @Input('data') data: any[];
+    @Input('data') data: DataMetadata | Array<any>;
 
     @Input('mode') mode = 'normal';
 
     @Input('lazy') lazy = false;
+
+    @Input('rows') rows = 20;
+
+    @Input('rowHeight') rowHeight = 25;
 
     @Input('height') height = '300px';
 
@@ -65,13 +70,23 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     @Output('rowDblclick') rowDblclick: EventEmitter<any> = new EventEmitter();
 
+    @Output('pageChange') pageChange: EventEmitter<any> = new EventEmitter();
+
+    @Output('endRow') endRow: EventEmitter<any> = new EventEmitter();
+
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
+    @ViewChild('scrollBox') scrollBoxViewChild: ElementRef;
+
     public columns: any[] = [];
 
     public tabindex = 0;
+
+    public pageNumber = 1;
+
+    public page = 1;
 
     private globalFilterTimeout: any;
 
@@ -79,10 +94,23 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     private datasource: any[];
 
+    private _rowHeight: number;
+
+    private scrollPosition : number;
+
     constructor( private render: Renderer2 ) {}
 
     ngOnInit() {
-        this.updateDataSource( this.data );
+       this.updateDataSource( this.getData() );
+       this._rowHeight = this.rowHeight;
+
+       this.render.listen(window,'load', () =>{
+            this.calcHeightRowTable();
+       })
+
+        this.render.listen(window,'resize', () =>{
+            this.calcHeightRowTable();
+        })
     }
 
     ngAfterContentInit() {
@@ -96,6 +124,13 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     setTabIndex( value: number ) {
         this.tabindex = value;
+    }
+
+    getData() {
+        if ( ( typeof this.data === 'object') && ( this.data[0] === undefined )) {
+           return ( this.data as DataMetadata ).data
+        }
+        return this.data;
     }
 
     getColumnsFromDataSource() {
@@ -191,6 +226,64 @@ export class TlDatatable implements AfterContentInit, OnInit {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
     }
 
+
+
+    onScroll($event) {
+        let clientHeight = this.scrollBoxViewChild.nativeElement.clientHeight;
+        let scrollTop = this.scrollBoxViewChild.nativeElement.scrollTop;
+        let scrollHeight = this.scrollBoxViewChild.nativeElement.scrollHeight;
+        let pageHeight = this.rows * this._rowHeight;
+        let endRow = Math.round( ( clientHeight + scrollTop  ) / this._rowHeight   );
+
+        this.emitChangePage({
+            clientHeight: clientHeight,
+            scrollTop: scrollTop,
+            scrollHeight: scrollHeight,
+            pageHeight: pageHeight,
+            endRow: endRow,
+        });
+
+        this.emitEndRow({
+            clientHeight: clientHeight,
+            scrollTop: scrollTop,
+            scrollHeight: scrollHeight,
+            endRow: endRow,
+        });
+
+    }
+
+    emitEndRow( dimensions ) {
+         if ( dimensions.scrollTop >= (dimensions.scrollHeight - (dimensions.clientHeight)) ) {
+             this.endRow.emit({endRow:dimensions.endRow})
+         }
+    }
+
+    emitChangePage( dimensions ) {
+
+        if ( this.scrollPosition < dimensions.scrollTop ){
+            if ( (dimensions.scrollTop+dimensions.clientHeight) > (dimensions.pageHeight* this.pageNumber) ) {
+                this.pageNumber ++;
+                if (this.page < this.pageNumber){
+                    this.page = this.pageNumber;
+                    this.pageChange.emit({page:this.page});
+                }
+            }
+        }
+
+        if ( this.scrollPosition > dimensions.scrollTop ){
+            if ( (dimensions.scrollTop+dimensions.clientHeight) < (dimensions.pageHeight* ( this.pageNumber - 1)) ) {
+                this.pageNumber --;
+                if (this.page > this.pageNumber){
+                    this.page = this.pageNumber;
+                    this.pageChange.emit({page:this.page});
+                }
+
+            }
+        }
+
+        this.scrollPosition = dimensions.scrollTop;
+    }
+
     inicializeGlobalFilter() {
         if ( this.globalFilter ) {
            this.globalFilterTimeout = setTimeout( () => {
@@ -210,7 +303,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
             return ;
         }
 
-        this.data.filter( ( row ) => {
+        ( this.data as Array<any> ).filter( ( row ) => {
             this.columns.forEach( (columnValue ) => {
                 if ( this.isValidMatch( String(value), String(row[columnValue.field]) ) ) {
                   this.filtredData.push(row);
@@ -229,6 +322,21 @@ export class TlDatatable implements AfterContentInit, OnInit {
             }
         }
         return this.matchWith( searchValue, valueMatch );
+    }
+
+    calcHeightRowTable(){
+        if ( this.tbody !== undefined) {
+
+            this._rowHeight = this.rowHeight;
+            let heightMax = this.rowHeight;
+
+            for ( let i = 0; i < this.tbody.nativeElement.children.length; i++){
+                if ( this.tbody.nativeElement.children[i].clientHeight > heightMax ){
+                    heightMax = this.tbody.nativeElement.children[i].clientHeight;
+                }
+            }
+            this._rowHeight = heightMax;
+        }
     }
 
     matchWith(searchValue, valueMatch) {

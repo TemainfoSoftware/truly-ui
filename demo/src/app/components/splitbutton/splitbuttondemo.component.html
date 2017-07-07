@@ -41,10 +41,10 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>With Click Event</h5>
-        <tl-split-button [text]="'Button'" (click)="callBackOne($event)">
-          <tl-split-button-action [label]="'Action 1'" (click)="callBackTwo($event)"></tl-split-button-action>
-          <tl-split-button-action [label]="'Action 2'" (click)="callBackTwo($event)"></tl-split-button-action>
-          <tl-split-button-action [label]="'Action 3'" (click)="callBackTwo($event)"></tl-split-button-action>
+        <tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
+          <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
+          <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
         </tl-split-button>
       </div>
     </div>
@@ -154,23 +154,19 @@
   <div class="group-component">
     <h5 class="title">With Click Event</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'" (click)="callBackOne($event)">
-      <tl-split-button-action [label]="'Action 1'" (click)="callBackTwo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'" (click)="callBackTwo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" (click)="callBackTwo($event)"></tl-split-button-action>
+   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
+      <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
+      <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
+      <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
    </tl-split-button>
 
    <!--
-   * Click Event - Demo Component.
+   * Click Event - Demo.
    -->
 
    <script type="text/javascript">
-   callBackOne($event) {
-      console.log($event.srcElement.innerText);
-   }
-
-   callBackTwo($event) {
-      console.log($event.srcElement.innerText);
+   callBackDemo(...) {
+      console.log(...);
    }
    </script>
   </textarea>
@@ -224,7 +220,7 @@
    .splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
      background-color: #d6d600 !important;
    }
-   .splitbusplitButtonClass3ttonClass3:active, .actionMenuClass3 li:active{
+   .splitButtonClass3:active, .actionMenuClass3 li:active{
      background-color: #d0d000 !important;
    }
    .splitButtonClass3 i, .actionMenuClass3 li{

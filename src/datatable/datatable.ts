@@ -96,7 +96,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     private _rowHeight: number;
 
-    private scrollPosition : number;
+    private scrollPosition: number;
 
     constructor( private render: Renderer2 ) {}
 
@@ -104,11 +104,11 @@ export class TlDatatable implements AfterContentInit, OnInit {
        this.updateDataSource( this.getData() );
        this._rowHeight = this.rowHeight;
 
-       this.render.listen(window,'load', () =>{
+       this.render.listen(window, 'load', () => {
             this.calcHeightRowTable();
        })
 
-        this.render.listen(window,'resize', () =>{
+        this.render.listen(window, 'resize', () => {
             this.calcHeightRowTable();
         })
     }
@@ -229,11 +229,11 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
 
     onScroll($event) {
-        let clientHeight = this.scrollBoxViewChild.nativeElement.clientHeight;
-        let scrollTop = this.scrollBoxViewChild.nativeElement.scrollTop;
-        let scrollHeight = this.scrollBoxViewChild.nativeElement.scrollHeight;
-        let pageHeight = this.rows * this._rowHeight;
-        let endRow = Math.round( ( clientHeight + scrollTop  ) / this._rowHeight   );
+        const clientHeight = this.scrollBoxViewChild.nativeElement.clientHeight;
+        const scrollTop = this.scrollBoxViewChild.nativeElement.scrollTop;
+        const scrollHeight = this.scrollBoxViewChild.nativeElement.scrollHeight;
+        const pageHeight = this.rows * this._rowHeight;
+        const endRow = Math.round( ( clientHeight + scrollTop  ) / this._rowHeight   );
 
         this.emitChangePage({
             clientHeight: clientHeight,
@@ -254,28 +254,28 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     emitEndRow( dimensions ) {
          if ( dimensions.scrollTop >= (dimensions.scrollHeight - (dimensions.clientHeight)) ) {
-             this.endRow.emit({endRow:dimensions.endRow})
+             this.endRow.emit( {endRow: dimensions.endRow} )
          }
     }
 
     emitChangePage( dimensions ) {
 
-        if ( this.scrollPosition < dimensions.scrollTop ){
-            if ( (dimensions.scrollTop+dimensions.clientHeight) > (dimensions.pageHeight* this.pageNumber) ) {
+        if ( this.scrollPosition < dimensions.scrollTop ) {
+            if ( (dimensions.scrollTop + dimensions.clientHeight) > (dimensions.pageHeight * this.pageNumber) ) {
                 this.pageNumber ++;
-                if (this.page < this.pageNumber){
+                if (this.page < this.pageNumber) {
                     this.page = this.pageNumber;
-                    this.pageChange.emit({page:this.page});
+                    this.pageChange.emit( {page: this.page} );
                 }
             }
         }
 
-        if ( this.scrollPosition > dimensions.scrollTop ){
-            if ( (dimensions.scrollTop+dimensions.clientHeight) < (dimensions.pageHeight* ( this.pageNumber - 1)) ) {
+        if ( this.scrollPosition > dimensions.scrollTop ) {
+            if ( (dimensions.scrollTop + dimensions.clientHeight) < (dimensions.pageHeight * ( this.pageNumber - 1)) ) {
                 this.pageNumber --;
-                if (this.page > this.pageNumber){
+                if (this.page > this.pageNumber) {
                     this.page = this.pageNumber;
-                    this.pageChange.emit({page:this.page});
+                    this.pageChange.emit( {page: this.page} );
                 }
 
             }
@@ -324,14 +324,14 @@ export class TlDatatable implements AfterContentInit, OnInit {
         return this.matchWith( searchValue, valueMatch );
     }
 
-    calcHeightRowTable(){
+    calcHeightRowTable() {
         if ( this.tbody !== undefined) {
 
             this._rowHeight = this.rowHeight;
             let heightMax = this.rowHeight;
 
-            for ( let i = 0; i < this.tbody.nativeElement.children.length; i++){
-                if ( this.tbody.nativeElement.children[i].clientHeight > heightMax ){
+            for ( let i = 0; i < this.tbody.nativeElement.children.length; i++) {
+                if ( this.tbody.nativeElement.children[i].clientHeight > heightMax ) {
                     heightMax = this.tbody.nativeElement.children[i].clientHeight;
                 }
             }

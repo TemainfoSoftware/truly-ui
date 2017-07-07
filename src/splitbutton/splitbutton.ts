@@ -80,9 +80,9 @@ export class TlSplitButton implements AfterContentInit {
 
     @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
 
-    private showHide: boolean;
-
     public zIndex = 0;
+
+    private showHide: boolean;
 
     constructor( private _renderer: Renderer2 ) {
         this.showHide = false;

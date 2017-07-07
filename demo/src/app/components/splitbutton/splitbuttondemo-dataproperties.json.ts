@@ -80,6 +80,20 @@ export const dataProperties = [
     options : "ion-printer | fa fa-home | any"
   },
   {
+    name: "toggle",
+    type: "boolean",
+    default: "false",
+    description: "Change the button to toggle button if set to true.",
+    options: "true | false"
+  },
+  {
+    name: "toggleClass",
+    type: "string",
+    default: "null",
+    description: "Style class of the toggle button.",
+    options: "CSS class"
+  },
+  {
     name : "splitButtonClass",
     type: "string",
     default: "null",

@@ -58,7 +58,9 @@
                          [iconAddonBefore]="'ion-printer'"
                          [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
                          [splitButtonClass]="'splitButtonClass3'"
-                         [actionMenuClass]="'actionMenuClass3'">
+                         [actionMenuClass]="'actionMenuClass3'"
+                         [toggle]="true"
+                         [toggleClass]="'toggleClass3'">
           <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
           <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
           <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
@@ -180,7 +182,9 @@
             [iconAddonBefore]="'ion-printer'"
             [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
             [splitButtonClass]="'splitButtonClass3'"
-            [actionMenuClass]="'actionMenuClass3'">
+            [actionMenuClass]="'actionMenuClass3'"
+            [toggle]="true"
+            [toggleClass]="'toggleClass3'">
       <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
       <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
       <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
@@ -220,7 +224,7 @@
    .splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
      background-color: #d6d600 !important;
    }
-   .splitButtonClass3:active, .actionMenuClass3 li:active{
+   .splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3{
      background-color: #d0d000 !important;
    }
    .splitButtonClass3 i, .actionMenuClass3 li{

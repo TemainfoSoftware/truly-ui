@@ -1,4 +1,4 @@
-<div #buttonBox [class]="buttonClass + ' tl-button-box'" [ngClass]="{'-disabled': disabled}">
+<div #buttonBox [class]="buttonClass + ' tl-button-box'" [ngClass]="{'-disabled': disabled}" (click)="clickButton($event.stopPropagation())">
 
     <div *ngIf="iconAddonBefore" [class]="buttonAddonBeforeClass + ' addon -iconbefore'">
 

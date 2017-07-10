@@ -19,14 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ModalService } from '../modal/modal.service';
+import { ModalResult } from '../core/enums/modal-result';
 
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
     styleUrls: [ './button.scss' ]
 } )
-export class TlButton {
+export class TlButton implements AfterContentInit {
 
     @Input() type = 'button';
 
@@ -50,9 +52,21 @@ export class TlButton {
 
     @Input() buttonClass;
 
+    @Input() mdResult: ModalResult;
+
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor( ) { }
+    constructor(private modalService: ModalService) { }
+
+    ngAfterContentInit() {
+        if ( ! ModalResult.propertyIsEnumerable( this.mdResult ) ) {
+            throw new EvalError( this.mdResult + ' is not valid ModalResult value');
+        }
+    }
+
+    clickButton() {
+        this.modalService.execCallBack(ModalResult[ this.mdResult ]);
+    }
 
 }
 

@@ -10,6 +10,7 @@ import { HomeComponent } from "app/home/home.component";
       {path: 'inputmask', loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'},
       {path: 'button', loadChildren: './components/button/buttondemo.module#ButtonDemoModule'},
       {path: 'splitbutton', loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'},
+      {path: 'buttongroup', loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'}

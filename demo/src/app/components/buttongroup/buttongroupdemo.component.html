@@ -10,7 +10,7 @@
     <div class="col-md-6">
       <div class="group-component">
         <h5>Basic</h5>
-        <tl-button-group [multiSelect]="true">
+        <tl-button-group>
           <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
@@ -20,7 +20,25 @@
     <div class="col-md-6">
       <div class="group-component">
         <h5>Selected:</h5>
-        <div><span> {{ itemSelected | json}} </span></div>
+        <div><span></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="group-component">
+        <h5>Multiselect</h5>
+        <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
+        </tl-button-group>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="group-component">
+        <h5>Selected:</h5>
+        <div><span>{{ itemSelected | json }}</span></div>
       </div>
     </div>
   </div>

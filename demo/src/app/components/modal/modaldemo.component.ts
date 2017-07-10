@@ -16,10 +16,13 @@ export class ModalDemo {
 
   constructor(private viewContainerRef:ViewContainerRef, private modal: ModalService) {
     this.modal.setView(viewContainerRef);
+
   }
 
   modal1() {
-    this.modal.createModal(CadPessoa, 'Cadastro de Usuarios', 'ion-person-add');
+    this.modal.createModal(CadPessoa, 'Cadastro de Usuarios', 'ion-person-add', (modalResult) => {
+      console.log('Return',modalResult);
+    });
     this.modals = this.modal.getMinModals();
   }
 

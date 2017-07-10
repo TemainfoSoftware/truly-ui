@@ -1,10 +1,18 @@
 <div class="content">
   <div class="header-controls" style="float: left; padding: 5px; background-color: #F2F2F2; width: 100%">
-    <tl-button [text]="'Save'"
+    <tl-button [text]="'Close'"
+               mdResult="MRCLOSE"
                [buttonAddonBeforeClass]="'icon'"
                [iconAddonBefore]="'ion-checkmark'">
     </tl-button>
-    <tl-button [text]="'Save'"
+    <tl-button [text]="'Ok'"
+               mdResult="MROK"
+               [buttonClass]="'botao'"
+               [buttonAddonBeforeClass]="'iconCadUsuario'"
+               [iconAddonBefore]="'fa fa-home'">
+    </tl-button>
+    <tl-button [text]="'None'"
+               mdResult="MRCUSTOM"
                [buttonClass]="'botao'"
                [buttonAddonBeforeClass]="'iconCadUsuario'"
                [iconAddonBefore]="'fa fa-home'">

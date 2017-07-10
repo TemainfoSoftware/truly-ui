@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { Injector, NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
 import { ModalDemo } from "./modaldemo.component";
@@ -9,6 +9,7 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from '../../../../../src/input';
 import { ButtonModule } from '../../../../../src/button';
 import { CadPessoa } from "./cadastro2/cadPessoa.component";
+import { DatatableModule } from '../../../../../src/datatable';
 
 
 @NgModule({
@@ -23,12 +24,15 @@ import { CadPessoa } from "./cadastro2/cadPessoa.component";
     CommonModule,
     FormsModule,
     ButtonModule,
-    HighlightJsModule
+    HighlightJsModule,
+    DatatableModule
   ],
   exports: [
     ModalDemo,
-    CadPessoa
+    CadPessoa,
   ],
   entryComponents: [ CadPessoa ]
 })
-export class ModalDemoModule {}
+export class ModalDemoModule {
+
+}

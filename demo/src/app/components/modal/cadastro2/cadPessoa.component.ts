@@ -4,8 +4,11 @@ import { Component } from '@angular/core';
   selector: 'cad-pessoa',
   templateUrl: './cadPessoa.html',
   styleUrls: [ './cadPessoa.component.scss' ]
-
 } )
 export class CadPessoa {
+  public myTitle = 'Cadastro de Pessoa';
+  public myIcon = 'ion-home';
+
+  constructor() {}
 
 }

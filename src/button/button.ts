@@ -24,9 +24,9 @@ import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
 
 @Component( {
-    selector: 'tl-button',
-    templateUrl: './button.html',
-    styleUrls: [ './button.scss' ]
+    selector : 'tl-button',
+    templateUrl : './button.html',
+    styleUrls : [ './button.scss' ]
 } )
 export class TlButton implements AfterContentInit {
 
@@ -50,22 +50,46 @@ export class TlButton implements AfterContentInit {
 
     @Input() disabled: boolean = null;
 
+    @Input() toggle: boolean;
+
+    @Input() buttonSelected: boolean;
+
+    @Input() toggleClass: string;
+
+    @Input() toggleClassName: string;
+
     @Input() buttonClass;
 
     @Input() mdResult: ModalResult;
 
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor(private modalService: ModalService) { }
+    constructor(private modalService: ModalService) {
+        this.toggle = false;
+        this.buttonSelected = false;
+    }
 
     ngAfterContentInit() {
-        if ( ! ModalResult.propertyIsEnumerable( this.mdResult ) ) {
+        if ( ! ModalResult.propertyIsEnumerable( this.mdResult ) && this.mdResult !== undefined) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value');
         }
     }
 
-    clickButton() {
-        this.modalService.execCallBack(ModalResult[ this.mdResult ]);
+    clickToggle() {
+        if (this.toggle) {
+            if (this.buttonSelected) {
+                this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
+            } else {
+                this.toggleClassName = '';
+            }
+        }
+        this.isButtonOnModal();
+    }
+
+    isButtonOnModal() {
+        if (this.buttonBox.nativeElement.offsetParent.parentElement.localName === 'tl-modal') {
+            this.modalService.execCallBack(ModalResult[ this.mdResult ]);
+        }
     }
 
 }

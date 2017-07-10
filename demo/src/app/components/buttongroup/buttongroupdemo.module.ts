@@ -2,27 +2,27 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
-import { SplitButtonDemo } from "./splitbuttondemo.component";
-import { SplitButtonModule } from '../../../../../src/splitbutton';
-import { SplitButtonDemoRoutingModule } from "./splitbuttondemo-routing.module";
+import { ButtonGroupDemo } from "./buttongroupdemo.component";
+import { ButtonGroupModule } from '../../../../../src/buttongroup';
+import { ButtonGroupDemoRoutingModule } from "./buttongroupdemo-routing.module";
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { ModalService } from "../../../../../src/modal/modal.service";
 
 
 @NgModule( {
   declarations: [
-    SplitButtonDemo
+    ButtonGroupDemo
   ],
   imports: [
-    SplitButtonDemoRoutingModule,
-    SplitButtonModule,
+    ButtonGroupDemoRoutingModule,
+    ButtonGroupModule,
     CommonModule,
     FormsModule,
     HighlightJsModule
   ],
   exports: [
-    SplitButtonDemo
+    ButtonGroupDemo
   ],
   providers: [ModalService]
 } )
-export class SplitButtonDemoModule { }
+export class ButtonGroupDemoModule { }

@@ -87,6 +87,7 @@ export class ModalService {
 
     isResultUndefined() {
         return this.componentInjected.instance.modalResult === undefined;
+
     }
 
     setMdResult( mdResult: ModalResult ) {

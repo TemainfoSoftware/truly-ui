@@ -22,26 +22,49 @@
 import { Component, ElementRef, HostListener, Input } from '@angular/core';
 
 @Component( {
-    selector : 'tl-split-button-action',
-    template : `
-        <li [class]="separator ? 'separator' : null">
-            <i *ngIf="icon" class="icon-action {{ icon }}"></i>
-            {{ label }}
-        </li>
-    `,
-    styleUrls : [ './splitbutton-action.scss' ]
+    selector : 'tl-button-group-item',
+    templateUrl : './buttongroup-item.html',
+    styleUrls : [ './buttongroup-item.scss' ]
 } )
-export class TlSplitButtonAction {
+export class TlButtonGroupItem {
 
-    @Input() label = '';
+    @Input() text = '';
 
-    @Input() icon = '';
+    @Input() type = 'button';
 
-    @Input() separator = false;
+    @Input() size;
 
-    constructor( public element: ElementRef ) { }
+    @Input() disabled: boolean = null;
+
+    @Input() toggle: boolean;
+
+    @Input() toggleClass;
+
+    @Input() buttonClass;
+
+    @Input() iconAddonBefore = '';
+
+    @Input() buttonAddonBeforeClass;
+
+    @Input() iconAddonAfter = '';
+
+    @Input() buttonAddonAfterClass;
+
+    @Input() iconLeftTextButton = '';
+
+    @Input() iconRightTextButton = '';
+
+    @Input() itemSelected: boolean;
+
+    constructor( public element: ElementRef ) {
+        this.toggle = false;
+        this.itemSelected = false;
+    }
 
     @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) { }
+    onClickListener( $event ) {
+        this.itemSelected = !this.itemSelected;
+    }
+
 
 }

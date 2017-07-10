@@ -19,29 +19,40 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { Component, ContentChildren, QueryList, ViewChild, ElementRef, AfterContentInit, Input } from '@angular/core';
+
+import { TlButtonGroupItem } from './buttongroup-item';
+
+
 
 @Component( {
-    selector : 'tl-split-button-action',
-    template : `
-        <li [class]="separator ? 'separator' : null">
-            <i *ngIf="icon" class="icon-action {{ icon }}"></i>
-            {{ label }}
-        </li>
-    `,
-    styleUrls : [ './splitbutton-action.scss' ]
+    selector : 'tl-button-group',
+    templateUrl : './buttongroup.html',
+    styleUrls : [ './buttongroup.scss' ]
 } )
-export class TlSplitButtonAction {
+export class TlButtonGroup implements AfterContentInit {
 
-    @Input() label = '';
+    @Input() multiSelect;
 
-    @Input() icon = '';
+    @ViewChild( 'lista' ) lista: ElementRef;
 
-    @Input() separator = false;
+    @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor( public element: ElementRef ) { }
+    ngAfterContentInit() {
+        this.createItem();
+    }
 
-    @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) { }
+    createItem() {
+        this.buttonGroupItem.toArray().forEach( (item) => {
+            this.lista.nativeElement.appendChild( item.element.nativeElement );
+        });
+    }
+
+    onClickItem() {
+        let itemsSelected;
+        itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+            return itemValue.itemSelected === true;
+        });
+    }
 
 }

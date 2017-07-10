@@ -120,7 +120,7 @@ i {
 .menu li:hover ul {
   display: block;
 }
-
+/** BUTTON - CUSTOM STYLE **/
 .buttonClass1{
   background-color: #81D5AB !important;
   color: #FFF !important;
@@ -142,7 +142,7 @@ i {
 .buttonClass2:hover{
   background-color: #1b8ad6 !important;
 }
-.buttonClass2:active{
+.buttonClass2:active, .toggleClass2{
   background-color: #1b86d0 !important;
 }
 .buttonAddonBeforeClass2{
@@ -152,11 +152,47 @@ i {
 .buttonAddonBeforeClass2 i{
   color: #1B95E0 !important;
 }
-
+/** SPLIT BUTTON - CUSTOM STYLE **/
+.buttonClass3{
+  background-color: #e0e000 !important;
+  color: #222 !important;
+  font-size: 16px !important;
+  border: 1px solid #b9b900 !important;
+}
+.buttonClass3:hover{
+  background-color: #d6d600 !important;
+}
+.buttonClass3:active{
+  background-color: #d0d000 !important;
+}
+.buttonAddonBeforeClass3{
+  border-right: 1px solid #b9b900 !important;
+}
+.buttonAddonBeforeClass3 i{
+  color: #222 !important;
+}
+.splitButtonClass3, .actionMenuClass3{
+  background-color:#e0e000 !important;
+  border-top: 1px solid #b9b900 !important;
+  border-right: 1px solid #b9b900 !important;
+  border-bottom: 1px solid #b9b900 !important;
+}
+.splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
+  background-color: #d6d600 !important;
+}
+.splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3{
+  background-color: #d0d000 !important;
+}
+.splitButtonClass3 i, .actionMenuClass3 li{
+  color: #222 !important;
+}
+.actionMenuClass3 li.separator{
+  border-bottom: 1px solid #b9b900 !important;
+}
+/** MODAL - CUSTOM STYLE **/
 .botao {
   color: #616161;
 }
-
 .iconCadUsuario i {
   color: #616161 !important;
 }

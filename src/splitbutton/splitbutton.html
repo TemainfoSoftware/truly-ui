@@ -1,19 +1,32 @@
-<div #splitButtonBox class="tl-split-button-box">
+<div class="tl-split-button-box">
 
-    <tl-button [text]="text"></tl-button>
+    <tl-button [text]="text"
+               [type]="type"
+               [size]="size"
+               [disabled]="disabled"
+               [buttonClass]="buttonClass"
+               [iconAddonBefore]="iconAddonBefore"
+               [buttonAddonBeforeClass]="buttonAddonBeforeClass"
+               [iconAddonAfter]="iconAddonAfter"
+               [buttonAddonAfterClass]="buttonAddonAfterClass"
+               [iconLeftTextButton]="iconLeftTextButton"
+               [iconRightTextButton]="iconRightTextButton"
+               [toggle]="toggle"
+               [toggleClass]="toggleClass">
+    </tl-button>
 
-    <div *ngIf="splitButtonActions" #menuaction class="split-button-actions" [ngClass]="{'ativo': showHide === true }" (click)="changeShowStatus()">
+    <div [ngClass]="{'ativo': showHide === true }"
+         [class]="splitButtonClass + ' split-button-actions ' "
+         (click)="changeShowStatus($event.stopPropagation())">
 
-        <i class="ion-chevron-down"></i>
+        <i class="ion-chevron-up" *ngIf="showHide"></i>
+        <i class="ion-chevron-down" *ngIf="!showHide"></i>
 
-        <ul class="actions-menu" *ngIf="showHide">
-
-            <li *ngFor="let action of actions" [class]="action.separator ? 'separator' : null">
-                <i *ngIf="action.icon" [ngClass]="action.icon" class="icon-action"></i>
-                {{ action.label }}
-            </li>
-
-        </ul>
+        <ul #lista
+            *ngIf="showHide"
+            [class]="actionMenuClass + ' actions-menu ' "
+            [ngStyle]="{'z-index': zIndex}"
+            [@enterAnimation]></ul>
 
     </div>
 

@@ -1,29 +1,20 @@
-<div #buttonBox [class]="buttonClass + ' tl-button-box'" [ngClass]="{'-disabled': disabled}" (click)="clickButton($event.stopPropagation())">
+<div #buttonBox
+     [class]="buttonClass + ' tl-button-box ' + toggleClassName"
+     [ngClass]="{'-disabled ': disabled}"
+     (click)="clickToggle(buttonSelected = !buttonSelected)">
 
     <div *ngIf="iconAddonBefore" [class]="buttonAddonBeforeClass + ' addon -iconbefore'">
-
         <i [ngClass]="iconAddonBefore" ></i>
-
     </div>
-
-    <button #button
-            [type]="type"
+    <button [type]="type"
             [ngStyle]="{'width': size}"
             class="button"
             [disabled]="disabled ? true : null">
-
-        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton" ></span>
-
-        {{text}}
-
-        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton" ></span>
-
+        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton"></span>{{text}}
+        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton"></span>
     </button>
 
     <div *ngIf="iconAddonAfter" [class]="buttonAddonAfterClass + ' addon -iconafter'">
-
         <i [ngClass]="iconAddonAfter"></i>
-
     </div>
-
 </div>

@@ -5,10 +5,47 @@
 
 <hr>
 <div class="showcase">
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <!--<div class="group-component">-->
+        <!--<h5>Mode Paginator</h5>-->
+        <!--<tl-datatable [data]="data" [mode]="'paginator'" [height]="'310px'"> </tl-datatable>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
-        <h5>Basic</h5>
+        <h5>Mode Scrollable + LazyLoad</h5>
+        <tl-datatable [data]="dataLazy" [mode]="'scrollable'" [height]="'310px'" (pageChange)="onPageChange($event)" [lazy]="true"></tl-datatable>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Mode Scrollable</h5>
+        <tl-datatable [data]="data" [mode]="'scrollable'" [height]="'310px'"> </tl-datatable>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Mode Normal</h5>
+        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
+        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Filter Data</h5>
 
         <tl-input #tlInput [placeholder]="'Pesquise por um registro...'"></tl-input>
         <br/>
@@ -16,16 +53,14 @@
           [data]="data"
           [globalFilter]="tlInput"
           [globalFilterOptions]="{caseSensitive: false}"
-          [scrollable]="'scrollable'"
           (rowSelect)="onRowSelect($event, index )">
-
         </tl-datatable>
         <div>Row Selected:<span> {{rowSelected | json}} </span></div>
-
       </div>
     </div>
   </div>
   <hr>
+
 </div>
 <div class="setup">
   <h3 class="title">Properties</h3>

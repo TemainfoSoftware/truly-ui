@@ -6,6 +6,7 @@ import {ButtonDemo} from "./buttondemo.component";
 import {ButtonModule} from '../../../../../src/button';
 import {ButtonDemoRoutingModule} from "./buttondemo-routing.module";
 import {HighlightJsModule} from 'ngx-highlight-js';
+import { ModalService } from "../../../../../src/modal/modal.service";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {HighlightJsModule} from 'ngx-highlight-js';
   ],
   exports: [
     ButtonDemo
-  ]
+  ],
+  providers: [ModalService]
 })
 export class ButtonDemoModule {
 }

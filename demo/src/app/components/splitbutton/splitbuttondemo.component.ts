@@ -11,9 +11,14 @@ import * as json from './splitbuttondemo-dataproperties.json';
 export class SplitButtonDemo {
 
   private dataTableProperties;
+  private dataTableProperties2;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataTableProperties2 = json.dataProperties2;
   }
 
+  callBackDemo($event) {
+    console.log($event.srcElement.innerText);
+  }
 }

@@ -1,5 +1,5 @@
 /**
- * Created by Silvio on 30/06/2017.
+ * Created by Silvio on 07/07/2017.
  */
 export const dataProperties = [
   {

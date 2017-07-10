@@ -3,6 +3,7 @@
  */
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
 import { TlModal } from './modal';
+import { ModalResult } from '../core/enums/modal-result';
 
 let index = -1;
 
@@ -14,19 +15,23 @@ export class ModalService {
 
     private component;
 
+    private componentInjected;
+
+    private callBack = Function();
+
     constructor( private compiler: ComponentFactoryResolver ) {}
 
     setView( view ) {
         this.view = view;
     }
 
-    createModal( component, title, icon ) {
+    createModal( component, title, icon, callback ) {
         index++;
         const componentFactory = this.compiler.resolveComponentFactory( TlModal );
         const factoryInject = this.compiler.resolveComponentFactory(component);
         this.setComponentInjected(componentFactory, factoryInject);
         this.setGlobalSettings(title, icon);
-
+        this.callBack = callback;
     }
 
     setGlobalSettings(title, icon) {
@@ -40,7 +45,7 @@ export class ModalService {
 
     setComponentInjected(componentFactory, factoryInject) {
         this.component = this.view.createComponent( componentFactory );
-        (<TlModal>this.component.instance).body.createComponent(factoryInject);
+        this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
     }
 
     setZIndex( indexModal? ) {
@@ -65,4 +70,30 @@ export class ModalService {
         return this.minModals;
     }
 
+    execCallBack( mdResult: any ) {
+        this.setMdResult( mdResult );
+        if ( this.isResultUndefined() ) {
+            return;
+        }
+        if ( !(this.isMdResultEqualsNone( mdResult )) ) {
+            this.close( this.component );
+        }
+        this.resultCallback();
+    }
+
+    isMdResultEqualsNone( mdResult: ModalResult ) {
+        return Number( mdResult ) === Number( ModalResult.MRCUSTOM );
+    }
+
+    isResultUndefined() {
+        return this.componentInjected.instance.modalResult === undefined;
+    }
+
+    setMdResult( mdResult: ModalResult ) {
+        this.componentInjected.instance.modalResult = mdResult;
+    }
+
+    resultCallback() {
+        this.callBack( this.componentInjected.instance.modalResult );
+    }
 }

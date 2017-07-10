@@ -20,11 +20,13 @@
  SOFTWARE.
  */
 import {
-    Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, Renderer2,
+    Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output,
+    Renderer2,
     ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ModalResult } from '../core/enums/modal-result';
 
 let globalZindex = 0;
 
@@ -76,6 +78,8 @@ export class TlModal implements OnInit {
     public componentRef: ComponentRef<TlModal>;
 
     public ZIndex = 0;
+
+    public modalResult;
 
     private serviceControl: ModalService;
 
@@ -303,6 +307,7 @@ export class TlModal implements OnInit {
 
     closeModal() {
         this.serviceControl.close( this.componentRef );
+        this.serviceControl.execCallBack(ModalResult.MRCLOSE);
         this.hide.emit();
     }
 

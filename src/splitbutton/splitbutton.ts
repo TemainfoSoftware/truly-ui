@@ -118,9 +118,9 @@ export class TlSplitButton implements AfterContentInit {
     }
 
     createActionItem() {
-        for ( let i = 0; i < this.splitButtonActions.toArray().length; i++ ) {
-            this.lista.nativeElement.appendChild( this.splitButtonActions.toArray()[i].element.nativeElement );
-        }
+        this.splitButtonActions.toArray().forEach( (item) => {
+            this.lista.nativeElement.appendChild( item.element.nativeElement );
+        });
     }
 
     getAndSetZIndex() {

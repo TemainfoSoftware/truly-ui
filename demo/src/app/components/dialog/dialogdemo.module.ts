@@ -1,37 +1,36 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
-import { ModalDemo } from "./modaldemo.component";
+import { DialogDemo } from "./dialogdemo.component";
 import { ModalModule } from '../../../../../src/modal';
-import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
+import { DialogDemoRoutingModule } from "./dialogdemo-routing.module";
 import { CommonModule  } from '@angular/common';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from '../../../../../src/input';
 import { ButtonModule } from '../../../../../src/button';
-import { CadPessoa } from "./cadastro2/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
+import { DialogModule } from "../../../../../src/dialog/index";
+
 
 @NgModule({
   declarations: [
-    ModalDemo,
-    CadPessoa,
+    DialogDemo,
   ],
   imports:[
-    ModalDemoRoutingModule,
+    DialogDemoRoutingModule,
     ModalModule,
     InputModule,
     CommonModule,
     FormsModule,
     ButtonModule,
     HighlightJsModule,
-    DatatableModule
+    DatatableModule,
+    DialogModule
   ],
   exports: [
-    ModalDemo,
-    CadPessoa,
+    DialogDemo,
   ],
-  entryComponents: [ CadPessoa ]
 })
-export class ModalDemoModule {
+export class DialogDemoModule {
 
 }

@@ -27,6 +27,7 @@ import { ButtonModule } from './button/index';
 import { MultiselectModule } from './multiselect/index';
 import { TooltipModule } from './tooltip/index';
 import { ModalModule } from './modal/index';
+import { DialogModule } from './dialog/index';
 
 export * from './datatable/index';
 export * from './input/index';
@@ -34,6 +35,7 @@ export * from './button/index';
 export * from './multiselect/index';
 export * from './tooltip/index';
 export * from './modal/index';
+export * from './dialog/index';
 
 @NgModule({
   imports: [
@@ -42,7 +44,8 @@ export * from './modal/index';
       InputModule,
       MultiselectModule,
       TooltipModule,
-      ModalModule
+      ModalModule,
+      DialogModule
   ]
 })
 export class TrulyModule {}

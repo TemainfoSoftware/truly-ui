@@ -1,0 +1,5 @@
+<button (click)="modal1()">Show Dialog</button>
+
+<footer class="minimize-box">
+  <span *ngFor="let item of modals; let i = index" (click)="show(item, i)" >{{item.instance.label}}</span>
+</footer>

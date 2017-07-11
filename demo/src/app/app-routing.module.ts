@@ -12,6 +12,7 @@ import { HomeComponent } from "app/home/home.component";
       {path: 'splitbutton', loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'},
       {path: 'buttongroup', loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
+      {path: 'dialog', loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'}
     ])

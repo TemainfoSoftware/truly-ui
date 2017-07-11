@@ -10,25 +10,7 @@
     <div class="col-md-6">
       <div class="group-component">
         <h5>Basic</h5>
-        <tl-button-group>
-          <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
-        </tl-button-group>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="group-component">
-        <h5>Selected:</h5>
-        <div><span></span></div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="group-component">
-        <h5>Multiselect</h5>
-        <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected($event)">
+        <tl-button-group (itemSelect)="showItemSelected($event)">
           <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
@@ -42,13 +24,30 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="group-component">
+        <h5>Multiselect</h5>
+        <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected2($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
+        </tl-button-group>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="group-component">
+        <h5>Selected:</h5>
+        <div><span>{{ itemSelected2 | json }}</span></div>
+      </div>
+    </div>
+  </div>
   <hr>
 </div>
 
 <div class="setup">
   <h3 class="title">Properties</h3>
   <div class="table-responsive">
-    <h5 class="title">tl-split-button</h5>
     <table class="table table-bordered">
       <thead>
       <tr>
@@ -78,115 +77,7 @@
   <div class="group-component">
     <h5 class="title">Basic</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
-   </tl-split-button>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">With Action Icons</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
-   </tl-split-button>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">With Action Sepator</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 4'"></tl-split-button-action>
-   </tl-split-button>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">With Click Event</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
-      <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
-   </tl-split-button>
-
-   <!--
-   * Click Event - Demo.
-   -->
-
-   <script type="text/javascript">
-   callBackDemo(...) {
-      console.log(...);
-   }
-   </script>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Custom Style</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;<tl-split-button
-            [text]="'Button'"
-            [buttonClass]="'buttonClass3'"
-            [iconAddonBefore]="'ion-printer'"
-            [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
-            [splitButtonClass]="'splitButtonClass3'"
-            [actionMenuClass]="'actionMenuClass3'"
-            [toggle]="true"
-            [toggleClass]="'toggleClass3'">
-      <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
-   </tl-split-button>
-
-   <!--
-   * Required: !important;
-   *
-   * Custom Style Example - Global CSS.
-   -->
-
-   <style type="text/css">
-   .buttonClass3{
-     background-color: #e0e000 !important;
-     color: #222 !important;
-     font-size: 16px !important;
-     border: 1px solid #b9b900 !important;
-   }
-   .buttonClass3:hover{
-     background-color: #d6d600 !important;
-   }
-   .buttonClass3:active{
-     background-color: #d0d000 !important;
-   }
-   .buttonAddonBeforeClass3{
-     border-right: 1px solid #b9b900 !important;
-   }
-   .buttonAddonBeforeClass3 i{
-     color: #222 !important;
-   }
-   .splitButtonClass3, .actionMenuClass3{
-     background-color:#e0e000 !important;
-     border-top: 1px solid #b9b900 !important;
-     border-right: 1px solid #b9b900 !important;
-     border-bottom: 1px solid #b9b900 !important;
-   }
-   .splitButtonClass3:hover, .splitButtonClass3.ativo, .actionMenuClass3 li:hover{
-     background-color: #d6d600 !important;
-   }
-   .splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3{
-     background-color: #d0d000 !important;
-   }
-   .splitButtonClass3 i, .actionMenuClass3 li{
-     color: #222 !important;
-   }
-   .actionMenuClass3 li.separator{
-     border-bottom: 1px solid #b9b900 !important;
-   }
-   </style>
+   &nbsp;&nbsp;&nbsp;code here
   </textarea>
   </div>
 </div>

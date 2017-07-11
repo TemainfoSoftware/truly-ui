@@ -12,16 +12,22 @@ export class ButtonGroupDemo {
 
   private dataTableProperties;
 
-  public itemSelected: any[] = [];
+  public itemSelected: any;
+
+  public itemSelected2: any[] = [];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
   }
 
   showItemSelected(event){
-    this.itemSelected = [];
+    // this.itemSelected = '';
+    // console.log('View');
+  }
+  showItemSelected2(event){
+    this.itemSelected2 = [];
     event.forEach( (item) => {
-      this.itemSelected.push( item.text );
+      this.itemSelected2.push( item.text );
     });
   }
 

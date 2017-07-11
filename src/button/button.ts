@@ -76,6 +76,7 @@ export class TlButton implements AfterContentInit {
     }
 
     clickToggle() {
+        this.buttonSelected = !this.buttonSelected;
         if (this.toggle) {
             if (this.buttonSelected) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';

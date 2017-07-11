@@ -19,7 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ContentChildren, QueryList, ViewChild, ElementRef, AfterContentInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component, ContentChildren, QueryList, ViewChild, ElementRef,
+    AfterContentInit, Input, Output, EventEmitter
+} from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
 
@@ -30,32 +33,35 @@ import { TlButtonGroupItem } from './buttongroup-item';
 } )
 export class TlButtonGroup implements AfterContentInit {
 
-    @Input() multiSelect;
+    @Input() multiSelect: boolean;
 
-    @Output('itemSelect') itemSelect: EventEmitter<any> = new EventEmitter();
+    @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('lista') lista: ElementRef;
+    @ViewChild( 'lista' ) lista: ElementRef;
 
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor() { }
+    constructor() {
+        this.multiSelect = false;
+    }
 
     ngAfterContentInit() {
         this.createItem();
     }
 
     createItem() {
-        this.buttonGroupItem.toArray().forEach( (item) => {
+        this.buttonGroupItem.toArray().forEach( ( item ) => {
+            item.multiSelect = this.multiSelect;
             this.lista.nativeElement.appendChild( item.element.nativeElement );
-        });
+        } );
     }
 
-    onClickItem() {
+    onClickItem(event) {
         let itemsSelected;
         itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
-                return itemValue.itemSelected === true;
-        });
-        this.itemSelect.emit(itemsSelected);
+            return itemValue.itemSelected === true;
+        } );
+        this.itemSelect.emit( itemsSelected );
     }
 
 }

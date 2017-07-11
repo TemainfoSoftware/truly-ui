@@ -23,8 +23,8 @@ export class ModalDemo {
       title: 'Confirm',
       icon: 'ion-close-circled',
       draggable: true,
-      width: 500,
-      height: 500,
+      width: 'auto',
+      height: 'auto',
       maximizable: false,
       minimizable: false
     };

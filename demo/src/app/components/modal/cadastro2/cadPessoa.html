@@ -1,26 +1,18 @@
 <div class="content">
-  <div class="header-controls" style="float: left; padding: 5px; background-color: #F2F2F2; width: 100%">
-    <tl-button [text]="'Close'"
-               mdResult="MRCLOSE"
+  <div class="header-controls" style="text-align: left;float: left; padding: 5px; width: 100%">
+    <tl-button [text]="'Sim'"
+               mdResult="MRYES"
                [buttonAddonBeforeClass]="'icon'"
                [iconAddonBefore]="'ion-checkmark'">
     </tl-button>
-    <tl-button [text]="'Ok'"
-               mdResult="MROK"
+    <tl-button [text]="'Cancelar'"
+               mdResult="MRCANCEL"
                [buttonClass]="'botao'"
                [buttonAddonBeforeClass]="'iconCadUsuario'"
-               [iconAddonBefore]="'fa fa-home'">
-    </tl-button>
-    <tl-button [text]="'None'"
-               mdResult="MRCUSTOM"
-               [buttonClass]="'botao'"
-               [buttonAddonBeforeClass]="'iconCadUsuario'"
-               [iconAddonBefore]="'fa fa-home'">
+               [iconAddonBefore]="'ion-close-circled'">
     </tl-button>
   </div>
-  <div class="form" style="padding-top: 60px; padding-right: 20px">
-    <div class="form-group">
-      <tl-input [label]="'Name'" [labelPlacement]="'left'"></tl-input>
-    </div>
+  <div class="form" style="padding: 30px; text-align: center">
+    <tl-input [label]="'Nome'"></tl-input>
   </div>
 </div>

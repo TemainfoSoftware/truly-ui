@@ -19,29 +19,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
+import { Component } from '@angular/core'
 
-export * from './modal';
+@Component({
+    selector: 'tl-dialog',
+    templateUrl: './dialog.html',
+    styleUrls: ['./dialog.scss']
+})
+export class TlDialog {
 
-@NgModule( {
-    imports: [
-        CommonModule,
-    ],
-    declarations: [
-        TlModal,
-    ],
-    exports: [
-        TlModal,
-    ],
-    entryComponents: [
-        TlModal
-    ],
-    providers: [
-        ModalService
-    ]
-} )
-export class ModalModule {
+
+
 }

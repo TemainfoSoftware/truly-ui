@@ -2,15 +2,15 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
-import { CadPessoa } from "./cadastro2/cadPessoa.component";
+import { TlDialog } from "../../../../../src/dialog/dialog";
 
 @Component( {
   selector: 'app-modal',
-  templateUrl: './modaldemo.component.html',
+  templateUrl: './dialogdemo.component.html',
   animations: [ routerTransition() ],
-  styleUrls: [ './modaldemo.component.scss' ]
+  styleUrls: [ './dialogdemo.component.scss' ]
 } )
-export class ModalDemo {
+export class DialogDemo {
 
   public index: number;
   public modals;
@@ -22,16 +22,17 @@ export class ModalDemo {
     this.modalOptions = {
       title: 'Confirm',
       icon: 'ion-close-circled',
+      color: '#F25757',
       draggable: true,
-      width: 500,
-      height: 500,
+      width: 400,
+      height: 200,
       maximizable: false,
       minimizable: false
     };
   }
 
   modal1() {
-    this.modal.createModal(CadPessoa, this.modalOptions, (modalResult) => {
+    this.modal.createModal(TlDialog, this.modalOptions, (modalResult) => {
       console.log('Return',modalResult);
     });
     this.modals = this.modal.getMinModals();

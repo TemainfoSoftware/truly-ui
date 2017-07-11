@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import {
+    AfterViewInit,
     Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output,
     Renderer2,
     ViewChild, ViewContainerRef
@@ -27,8 +28,9 @@ import {
 import { ModalService } from './modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
+import { ModalOptions } from './modal-options';
 
-let globalZindex = 0;
+let globalZindex = 1;
 
 @Component({
     selector: 'tl-modal',
@@ -49,7 +51,7 @@ let globalZindex = 0;
         )
     ]
 })
-export class TlModal implements OnInit {
+export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() status = '';
 
@@ -57,11 +59,19 @@ export class TlModal implements OnInit {
 
     @Input() draggable = true;
 
+    @Input() minimizable = true;
+
+    @Input() maximizable = true;
+
     @Input() icon = '';
 
-    @Input() title = '';
+    @Input() title = 'My Modal';
 
     @Input() color = '#53C68C';
+
+    @Input() height = 500;
+
+    @Input() width = 500;
 
     @ViewChild( 'modal' ) modal: ElementRef;
 
@@ -77,7 +87,7 @@ export class TlModal implements OnInit {
 
     public componentRef: ComponentRef<TlModal>;
 
-    public ZIndex = 0;
+    public ZIndex = 1;
 
     public modalResult;
 
@@ -113,17 +123,16 @@ export class TlModal implements OnInit {
 
     private positionY;
 
-    constructor( private element: ElementRef, private renderer: Renderer2 ) {
-    }
+    constructor( private element: ElementRef, private renderer: Renderer2 ) {}
 
     ngOnInit() {
         this.setZIndex();
         this.getBoundingContent();
+        this.setModalCenterParent();
         this.resizeListener();
         this.mousemoveListener();
         this.mouseupListener();
-        this.setModalCenterParent();
-        this.show.emit();
+        this.setDefaultDimensions();
     }
 
     resizeListener() {
@@ -224,6 +233,20 @@ export class TlModal implements OnInit {
         this.setNewTopPosition();
     }
 
+    setOverlay() {
+        const app = document.getElementsByTagName('app-root');
+        const overlay = document.createElement('div');
+        overlay.setAttribute('class', 'overlay-modal');
+        app[0].appendChild(overlay);
+    }
+
+    setOptions( options: Array<ModalOptions> ) {
+        const self = this;
+        Object.keys( options ).forEach( function ( key ) {
+            self[ key ] = options[ key ];
+        } );
+    }
+
     setLeftLimitOfArea() {
         return this.modal.nativeElement.style.left = window.innerWidth - this.modal.nativeElement.offsetWidth + 'px';
     }
@@ -261,8 +284,13 @@ export class TlModal implements OnInit {
     }
 
     setDefaultDimensions() {
-        this.modal.nativeElement.style.width = '500px';
-        this.modal.nativeElement.style.height = '500px';
+        if ( this.height && this.width ) {
+            this.modal.nativeElement.style.height = this.height + 'px';
+            this.modal.nativeElement.style.width = this.width + 'px';
+        } else {
+            this.modal.nativeElement.style.height = '500px';
+            this.modal.nativeElement.style.width = '500px';
+        }
     }
 
     setCurrentPosition() {
@@ -301,6 +329,9 @@ export class TlModal implements OnInit {
     }
 
     minimizeModal() {
+        if ( !(this.minimizable) ) {
+            return;
+        }
      this.serviceControl.minimize( this.componentRef );
      this.hide.emit();
     }
@@ -312,6 +343,9 @@ export class TlModal implements OnInit {
     }
 
     maximizeModal() {
+        if ( !(this.maximizable) ) {
+            return;
+        }
         if ( !this.maximized ) {
             this.getModalPosition();
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
@@ -346,5 +380,10 @@ export class TlModal implements OnInit {
         this.ZIndex = globalZindex++;
         return this.ZIndex;
     }
+
+    ngOnDestroy() {
+        // document.getElementsByClassName('overlay-modal')[0].remove();
+    }
+
 }
 

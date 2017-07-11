@@ -19,7 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterContentInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
 
@@ -28,7 +29,7 @@ import { ModalResult } from '../core/enums/modal-result';
     templateUrl : './button.html',
     styleUrls : [ './button.scss' ]
 } )
-export class TlButton implements AfterContentInit {
+export class TlButton implements AfterContentInit, OnChanges {
 
     @Input() type = 'button';
 
@@ -52,21 +53,26 @@ export class TlButton implements AfterContentInit {
 
     @Input() toggle: boolean;
 
-    @Input() buttonSelected: boolean;
-
     @Input() toggleClass: string;
 
-    @Input() toggleClassName: string;
+    @Input() toggleClassName: string = '';
 
-    @Input() buttonClass;
+    @Input() buttonClass = '';
 
     @Input() mdResult: ModalResult;
 
+    private _buttonSelected = false;
+
+    @Input() set buttonSelected( value: boolean ) {
+        this._buttonSelected = value;
+        this.executeToggle();
+    }
+
     @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    constructor(private modalService: ModalService) {
+    constructor(public modalService: ModalService) {
         this.toggle = false;
-        this.buttonSelected = false;
+        this._buttonSelected = this.toggle;
     }
 
     ngAfterContentInit() {
@@ -75,16 +81,25 @@ export class TlButton implements AfterContentInit {
         }
     }
 
+    ngOnChanges(changes: SimpleChanges) {
+
+    }
+
     clickToggle() {
-        this.buttonSelected = !this.buttonSelected;
+        this.executeToggle();
+        this.isButtonOnModal();
+    }
+
+    executeToggle(){
         if (this.toggle) {
-            if (this.buttonSelected) {
+            if ( this._buttonSelected === false ) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
+                this._buttonSelected = true;
             } else {
                 this.toggleClassName = '';
+                this._buttonSelected = false;
             }
         }
-        this.isButtonOnModal();
     }
 
     isButtonOnModal() {

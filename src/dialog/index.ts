@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from '../modal/modal.service';
-import { TlDialog } from './dialog';
 import { ButtonModule } from '../button/index';
+import { DialogService } from './dialog.service';
+import { TlDialogInfo } from './dialog-info/dialog-info';
+import { TlDialogAlert } from './dialog-alert/dialog-alert';
+import { TlDialogError } from './dialog-error/dialog-error';
+import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
 
-export * from './dialog';
+export * from '../dialog';
 
 @NgModule( {
     imports: [
@@ -12,16 +16,26 @@ export * from './dialog';
         ButtonModule,
     ],
     declarations: [
-        TlDialog,
+        TlDialogInfo,
+        TlDialogAlert,
+        TlDialogError,
+        TlDialogConfirmation
     ],
     exports: [
-        TlDialog,
+        TlDialogInfo,
+        TlDialogAlert,
+        TlDialogError,
+        TlDialogConfirmation
     ],
     entryComponents: [
-        TlDialog
+        TlDialogInfo,
+        TlDialogAlert,
+        TlDialogError,
+        TlDialogConfirmation
     ],
     providers: [
-        ModalService
+        ModalService,
+        DialogService
     ]
 } )
 export class DialogModule {

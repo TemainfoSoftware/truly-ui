@@ -29,7 +29,7 @@ import { ModalService } from '../modal/modal.service';
     styleUrls : [ './buttongroup-item.scss' ],
     providers: [{provide: TlButton, useExisting: forwardRef(() => TlButtonGroupItem) }]
 } )
-export class TlButtonGroupItem  implements AfterContentInit{
+export class TlButtonGroupItem  implements AfterContentInit {
 
     @Input() itemSelected: boolean;
 
@@ -55,9 +55,11 @@ export class TlButtonGroupItem  implements AfterContentInit{
 
     @Input() toggle: boolean;
 
-    @Input() toggleClass: string = '';
+    @Input() toggleClass: string;
 
     @Input() buttonClass = '';
+
+    public index = -1;
 
     @Input() private _buttonSelected = false;
     set buttonSelected( value: boolean ) {
@@ -67,14 +69,12 @@ export class TlButtonGroupItem  implements AfterContentInit{
         return this._buttonSelected
     }
 
-    public index = -1;
-
-    constructor( public element: ElementRef) {}
+    constructor(public element: ElementRef) {}
 
     ngAfterContentInit() {
-       setTimeout(()=>{
+       setTimeout( () => {
            this.buttonSelected = this.index === 0;
-       })
+       });
     }
 
     @HostListener( 'click', [ '$event' ] )

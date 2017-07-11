@@ -48,7 +48,7 @@ export class TlButtonGroup implements AfterContentInit {
     }
 
     createItem() {
-        this.buttonGroupItem.toArray().forEach( ( item,index ) => {
+        this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
             this.lista.nativeElement.appendChild( item.element.nativeElement );
         } );
@@ -56,7 +56,7 @@ export class TlButtonGroup implements AfterContentInit {
 
     onClickItem(event) {
 
-        if(this.multiSelect){
+        if (this.multiSelect) {
             let itemsSelected;
             itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
                 return itemValue.itemSelected === true;

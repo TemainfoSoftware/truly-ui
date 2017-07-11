@@ -1,5 +1,4 @@
 <div #modal (click)="getZIndex();" [ngStyle]="{'z-index': ZIndex}" class="tl-modal-container">
-
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
             <span class="icon"><i [ngClass]="icon"></i></span>
@@ -7,11 +6,11 @@
         </div>
         <div class="controls">
             <span class="control-item" (mouseup)="minimizeModal()">
-                <i class="ion-android-remove"></i>
+                <i class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </span>
 
-            <span class="control-item" *ngIf="!maximized" (mouseup)="maximizeModal()">
-                <i ngClass="ion-android-expand"></i>
+            <span class="control-item"  *ngIf="!maximized && !minimizable" (mouseup)="maximizeModal()">
+                <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </span>
 
             <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximize()">

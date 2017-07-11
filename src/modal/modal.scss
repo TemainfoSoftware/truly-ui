@@ -2,7 +2,6 @@
     margin: 0 auto;
     padding: 0 auto;
     position: fixed;
-    z-index: 10;
     background-color: #fff;
     width: 500px;
     height: 500px;
@@ -41,6 +40,10 @@
     margin: 0;
     }
 
+    > .header .controls .control-item .disabled {
+        opacity: 0.4;
+    }
+
     > .header .controls .control-item:hover {
     cursor: pointer;
     }
@@ -55,5 +58,6 @@
     > .header .icon i {
     color: #fff;
     }
+
 }
 

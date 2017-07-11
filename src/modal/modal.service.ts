@@ -1,9 +1,28 @@
-/**
- * Created by William on 26/06/2017.
+/*
+ MIT License
+
+ Copyright (c) 2017 Temainfo Sistemas
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
  */
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
+import { ModalOptions } from './modal-options';
 
 let index = -1;
 
@@ -25,21 +44,20 @@ export class ModalService {
         this.view = view;
     }
 
-    createModal( component, title, icon, callback ) {
+    createModal( component, modalOptions, callback ) {
         index++;
         const componentFactory = this.compiler.resolveComponentFactory( TlModal );
         const factoryInject = this.compiler.resolveComponentFactory(component);
         this.setComponentInjected(componentFactory, factoryInject);
-        this.setGlobalSettings(title, icon);
+        this.setGlobalSettings( modalOptions );
         this.callBack = callback;
     }
 
-    setGlobalSettings(title, icon) {
+    setGlobalSettings( modalOptions: Array<ModalOptions> ) {
+        (<TlModal>this.component.instance).status = 'MAX';
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
-        (<TlModal>this.component.instance).status = 'MAX';
-        (<TlModal>this.component.instance).title = title;
-        (<TlModal>this.component.instance).icon = icon;
+        (<TlModal>this.component.instance).setOptions( modalOptions );
         this.setZIndex();
     }
 
@@ -49,7 +67,7 @@ export class ModalService {
     }
 
     setZIndex( indexModal? ) {
-        this.component.instance.element.nativeElement.style.zIndex = indexModal + 1;
+        this.component.instance.element.nativeElement.style.zIndex = index + 1;
     }
 
     removeMinModals( indexModal ) {

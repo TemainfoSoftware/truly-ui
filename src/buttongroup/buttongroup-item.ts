@@ -19,32 +19,67 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ContentChildren, ElementRef, HostListener, Input, QueryList } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, ViewChild } from '@angular/core';
 import { TlButton } from '../button/button';
 import { ModalService } from '../modal/modal.service';
 
 @Component( {
     selector : 'tl-button-group-item',
     templateUrl : './buttongroup-item.html',
-    styleUrls : [ './buttongroup-item.scss' ]
+    styleUrls : [ './buttongroup-item.scss' ],
+    providers: [{provide: TlButton, useExisting: forwardRef(() => TlButtonGroupItem) }]
 } )
-export class TlButtonGroupItem extends TlButton {
+export class TlButtonGroupItem  implements AfterContentInit{
 
     @Input() itemSelected: boolean;
 
-    @ContentChildren( TlButton ) button: QueryList<TlButton>;
+    @Input() type = 'button';
 
-    public multiSelect = false;
+    @Input() text = '';
 
-    constructor( public element: ElementRef, modalService: ModalService ) {
-        super( modalService );
-        this.toggle = false;
-        this.itemSelected = false;
+    @Input() iconAddonBefore = '';
+
+    @Input() buttonAddonBeforeClass;
+
+    @Input() iconAddonAfter = '';
+
+    @Input() buttonAddonAfterClass;
+
+    @Input() size;
+
+    @Input() iconLeftTextButton = '';
+
+    @Input() iconRightTextButton = '';
+
+    @Input() disabled: boolean = null;
+
+    @Input() toggle: boolean;
+
+    @Input() toggleClass: string = '';
+
+    @Input() buttonClass = '';
+
+    @Input() private _buttonSelected = false;
+    set buttonSelected( value: boolean ) {
+        this._buttonSelected = !value;
+    }
+    get buttonSelected () {
+        return this._buttonSelected
+    }
+
+    public index = -1;
+
+    constructor( public element: ElementRef) {}
+
+    ngAfterContentInit() {
+       setTimeout(()=>{
+           this.buttonSelected = this.index === 0;
+       })
     }
 
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
-        this.itemSelected = !this.itemSelected;
+        console.log($event);
     }
 
 }

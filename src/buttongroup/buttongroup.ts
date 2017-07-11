@@ -33,7 +33,7 @@ import { TlButtonGroupItem } from './buttongroup-item';
 } )
 export class TlButtonGroup implements AfterContentInit {
 
-    @Input() multiSelect: boolean;
+    @Input() multiSelect = false;
 
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
@@ -41,27 +41,30 @@ export class TlButtonGroup implements AfterContentInit {
 
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor() {
-        this.multiSelect = false;
-    }
+    constructor() {}
 
     ngAfterContentInit() {
         this.createItem();
     }
 
     createItem() {
-        this.buttonGroupItem.toArray().forEach( ( item ) => {
-            item.multiSelect = this.multiSelect;
+        this.buttonGroupItem.toArray().forEach( ( item,index ) => {
+            item.index = index;
             this.lista.nativeElement.appendChild( item.element.nativeElement );
         } );
     }
 
     onClickItem(event) {
-        let itemsSelected;
-        itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
-            return itemValue.itemSelected === true;
-        } );
-        this.itemSelect.emit( itemsSelected );
+
+        if(this.multiSelect){
+            let itemsSelected;
+            itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+                return itemValue.itemSelected === true;
+            } );
+            this.itemSelect.emit( itemsSelected );
+        } else {
+            console.log('falso');
+        }
     }
 
 }

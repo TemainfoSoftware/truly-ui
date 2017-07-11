@@ -55,11 +55,13 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     @Input() toggleClass: string;
 
-    @Input() toggleClassName: string = '';
+    @Input() toggleClassName: string;
 
     @Input() buttonClass = '';
 
     @Input() mdResult: ModalResult;
+
+    @ViewChild('buttonBox') buttonBox: ElementRef;
 
     private _buttonSelected = false;
 
@@ -68,16 +70,15 @@ export class TlButton implements AfterContentInit, OnChanges {
         this.executeToggle();
     }
 
-    @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
-
     constructor(public modalService: ModalService) {
+        this.toggleClassName = '';
         this.toggle = false;
         this._buttonSelected = this.toggle;
     }
 
     ngAfterContentInit() {
-        if ( ! ModalResult.propertyIsEnumerable( this.mdResult ) && this.mdResult !== undefined) {
-            throw new EvalError( this.mdResult + ' is not valid ModalResult value');
+        if (!ModalResult.propertyIsEnumerable(this.mdResult) && this.mdResult !== undefined) {
+            throw new EvalError(this.mdResult + ' is not valid ModalResult value');
         }
     }
 
@@ -90,7 +91,7 @@ export class TlButton implements AfterContentInit, OnChanges {
         this.isButtonOnModal();
     }
 
-    executeToggle(){
+    executeToggle() {
         if (this.toggle) {
             if ( this._buttonSelected === false ) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';

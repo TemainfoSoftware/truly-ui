@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, HostListener, Input, QueryList } from '@angular/core';
 import { TlButton } from '../button/button';
 import { ModalService } from '../modal/modal.service';
 
@@ -32,8 +32,12 @@ export class TlButtonGroupItem extends TlButton {
 
     @Input() itemSelected: boolean;
 
+    @ContentChildren( TlButton ) button: QueryList<TlButton>;
+
+    public multiSelect = false;
+
     constructor( public element: ElementRef, modalService: ModalService ) {
-        super(modalService);
+        super( modalService );
         this.toggle = false;
         this.itemSelected = false;
     }

@@ -20,43 +20,20 @@
  SOFTWARE.
  */
 import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { TlButton } from '../button/button';
+import { ModalService } from '../modal/modal.service';
 
 @Component( {
     selector : 'tl-button-group-item',
     templateUrl : './buttongroup-item.html',
     styleUrls : [ './buttongroup-item.scss' ]
 } )
-export class TlButtonGroupItem {
-
-    @Input() text = '';
-
-    @Input() type = 'button';
-
-    @Input() size;
-
-    @Input() disabled: boolean = null;
-
-    @Input() toggle: boolean;
-
-    @Input() toggleClass;
-
-    @Input() buttonClass;
-
-    @Input() iconAddonBefore = '';
-
-    @Input() buttonAddonBeforeClass;
-
-    @Input() iconAddonAfter = '';
-
-    @Input() buttonAddonAfterClass;
-
-    @Input() iconLeftTextButton = '';
-
-    @Input() iconRightTextButton = '';
+export class TlButtonGroupItem extends TlButton {
 
     @Input() itemSelected: boolean;
 
-    constructor( public element: ElementRef ) {
+    constructor( public element: ElementRef, modalService: ModalService ) {
+        super(modalService);
         this.toggle = false;
         this.itemSelected = false;
     }
@@ -65,6 +42,5 @@ export class TlButtonGroupItem {
     onClickListener( $event ) {
         this.itemSelected = !this.itemSelected;
     }
-
 
 }

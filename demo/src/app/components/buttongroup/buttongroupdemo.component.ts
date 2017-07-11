@@ -12,7 +12,7 @@ export class ButtonGroupDemo {
 
   private dataTableProperties;
 
-  public itemSelected: any;
+  public itemSelected: any[] = [];
 
   public itemSelected2: any[] = [];
 
@@ -21,8 +21,10 @@ export class ButtonGroupDemo {
   }
 
   showItemSelected(event){
-    // this.itemSelected = '';
-    // console.log('View');
+    this.itemSelected = [];
+    event.forEach( (item) => {
+      this.itemSelected.push( item.text );
+    });
   }
   showItemSelected2(event){
     this.itemSelected2 = [];

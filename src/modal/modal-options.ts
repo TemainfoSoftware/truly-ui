@@ -5,9 +5,11 @@ export interface ModalOptions {
     icon: string;
     title: string;
     color?: string;
-    height?: number;
-    width?: number;
+    height?: string;
+    width?: string;
     draggable?: boolean;
     maximizable?: boolean;
     minimizable?: boolean;
 }
+
+

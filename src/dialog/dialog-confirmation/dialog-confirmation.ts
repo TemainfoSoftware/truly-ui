@@ -19,15 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 
 @Component({
-    selector: 'tl-dialog',
-    templateUrl: './dialog.html',
-    styleUrls: ['./dialog.scss']
+    selector: 'tl-dialog-confirmation',
+    templateUrl: './dialog-confirmation.html',
+    styleUrls: ['../dialog.scss']
 })
-export class TlDialog {
+export class TlDialogConfirmation {
 
-
-
+    @Input() private message = '';
+    @Input() private textOk = 'OK';
+    @Input() private textCancel = 'Cancel';
 }

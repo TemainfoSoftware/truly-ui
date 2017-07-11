@@ -9,7 +9,7 @@
                 <i class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </span>
 
-            <span class="control-item"  *ngIf="!maximized && !minimizable" (mouseup)="maximizeModal()">
+            <span class="control-item"  *ngIf="!maximized" (mouseup)="maximizeModal()">
                 <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </span>
 

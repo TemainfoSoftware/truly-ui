@@ -1,8 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
-import { ModalOptions } from "../../../../../src/modal/modal-options";
-import { TlDialog } from "../../../../../src/dialog/dialog";
+import { DialogService } from "../../../../../src/dialog/dialog.service";
 
 @Component( {
   selector: 'app-modal',
@@ -14,33 +12,33 @@ export class DialogDemo {
 
   public index: number;
   public modals;
-  public modalOptions: ModalOptions;
 
-  constructor(private viewContainerRef:ViewContainerRef, private modal: ModalService) {
-    this.modal.setView(viewContainerRef);
-
-    this.modalOptions = {
-      title: 'Confirm',
-      icon: 'ion-close-circled',
-      color: '#F25757',
-      draggable: true,
-      width: 400,
-      height: 200,
-      maximizable: false,
-      minimizable: false
-    };
+  constructor( private viewContainerRef : ViewContainerRef, private dialogService : DialogService ) {
+    this.dialogService.modalService.setView( viewContainerRef );
   }
 
-  modal1() {
-    this.modal.createModal(TlDialog, this.modalOptions, (modalResult) => {
+  info() {
+    this.dialogService.info( 'This is an Info Dialog', ( modalResult ) => {
       console.log('Return',modalResult);
-    });
-    this.modals = this.modal.getMinModals();
+    } )
   }
 
-  show(item, index) {
-    this.modal.removeMinModals(index);
-    item.instance.element.nativeElement.style.display = 'block';
+  confirmation() {
+    this.dialogService.confirmation( 'This is an Confirmation Dialog', ( modalResult ) => {
+      console.log( 'Return', modalResult );
+    }, )
+  }
+
+  alert() {
+    this.dialogService.alert( 'This is an Alert Dialog', ( modalResult ) => {
+      console.log( 'Return', modalResult );
+    } )
+  }
+
+  error() {
+    this.dialogService.error( 'This is an Error Dialog', ( modalResult ) => {
+      console.log( 'Return', modalResult );
+    }, {textClose: 'Fechar'} )
   }
 
 }

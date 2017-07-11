@@ -207,5 +207,39 @@ i {
   background-color: rgba(0,0,0,0.5); /*dim the background*/
 }
 
+.infoDialog {
+  background-color: #0090D9 !important;
+  color: #fff !important;
+}
 
+.infoDialog i {
+  color: #fff !important;
+}
+
+.errorDialog {
+  background-color: #F25757 !important;
+  color: #fff !important;
+}
+
+.errorDialog i {
+  color: #fff !important;
+}
+
+.alertDialog {
+  background-color: #FFC284 !important;
+  color: #fff !important;
+}
+
+.alertDialog i {
+  color: #fff !important;
+}
+
+.successDialog {
+  background-color: #A8DBA8 !important;
+  color: #fff !important;
+}
+
+.successDialog i {
+  color: #fff !important;
+}
 

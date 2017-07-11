@@ -68,9 +68,9 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() color = '#53C68C';
 
-    @Input() height = 500;
+    @Input() height = '500px';
 
-    @Input() width = 500;
+    @Input() width = '500px';
 
     @ViewChild( 'modal' ) modal: ElementRef;
 
@@ -284,8 +284,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     setDefaultDimensions() {
         if ( this.height && this.width ) {
-            this.modal.nativeElement.style.height = this.height + 'px';
-            this.modal.nativeElement.style.width = this.width + 'px';
+            this.modal.nativeElement.style.height = this.height;
+            this.modal.nativeElement.style.width = this.width;
         } else {
             this.modal.nativeElement.style.height = '500px';
             this.modal.nativeElement.style.width = '500px';

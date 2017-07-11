@@ -28,15 +28,15 @@ let index = -1;
 
 @Injectable()
 export class ModalService {
+    public component;
+
+    public componentInjected;
+
+    private callBack = Function();
+
     private view: ViewContainerRef;
 
     private minModals: any[] = [];
-
-    private component;
-
-    private componentInjected;
-
-    private callBack = Function();
 
     constructor( private compiler: ComponentFactoryResolver ) {}
 

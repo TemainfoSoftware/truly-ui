@@ -11,3 +11,5 @@ export interface ModalOptions {
     maximizable?: boolean;
     minimizable?: boolean;
 }
+
+

@@ -20,7 +20,6 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit,
     Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output,
     Renderer2,
     ViewChild, ViewContainerRef
@@ -242,7 +241,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     setOptions( options: Array<ModalOptions> ) {
         const self = this;
-        Object.keys( options ).forEach( function ( key ) {
+        Object.keys( options ).forEach(function (key) {
             self[ key ] = options[ key ];
         } );
     }
@@ -382,7 +381,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     ngOnDestroy() {
-        // document.getElementsByClassName('overlay-modal')[0].remove();
+
     }
 
 }

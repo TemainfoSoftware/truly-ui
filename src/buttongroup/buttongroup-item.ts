@@ -20,13 +20,17 @@
  SOFTWARE.
  */
 import { AfterContentInit, Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
+
 import { TlButton } from '../button/button';
+
+import { ButtonGroupService } from './buttongroup.service';
+import { element } from 'protractor';
 
 @Component( {
     selector : 'tl-button-group-item',
     templateUrl : './buttongroup-item.html',
     styleUrls : [ './buttongroup-item.scss' ],
-    providers: [{provide: TlButton, useExisting: forwardRef(() => TlButtonGroupItem) }]
+    providers: [{provide: {TlButton, ButtonGroupService}, useExisting: forwardRef(() => TlButtonGroupItem) }]
 } )
 export class TlButtonGroupItem  implements AfterContentInit {
 
@@ -60,6 +64,8 @@ export class TlButtonGroupItem  implements AfterContentInit {
 
     public index = -1;
 
+    public indexSelected: boolean;
+
     @Input() private _buttonSelected = true;
     set buttonSelected( value: boolean ) {
         this._buttonSelected = !value;
@@ -68,19 +74,32 @@ export class TlButtonGroupItem  implements AfterContentInit {
         return this._buttonSelected
     }
 
-    constructor(public element: ElementRef) {}
+    constructor(public element: ElementRef, private buttonGroupService: ButtonGroupService) {
+        this.indexSelected = false;
+    }
 
     ngAfterContentInit() {
        setTimeout( () => {
+            // element seguir...
            // this.buttonSelected = this.index === 0;
+           // this.indexSelected = false;
        });
     }
 
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
         this.itemSelected = !this.itemSelected;
+        this.buttonGroupService.setIndexSelected(this.index);
+        // setTimeout( () => {
+        //     this.clearNotSelectedItem(this.buttonGroupService.getNotSelectedItems());
+        // });
+
     }
 
+    clearNotSelectedItem(item){
 
+        // console.log(item);
+        // this.buttonSelected = this.index === 0;
+    }
 
 }

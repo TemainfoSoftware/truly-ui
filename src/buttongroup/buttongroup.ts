@@ -21,15 +21,18 @@
  */
 import {
     Component, ContentChildren, QueryList, ViewChild, ElementRef,
-    AfterContentInit, Input, Output, EventEmitter
+    AfterContentInit, Input, Output, EventEmitter, Renderer2, HostListener
 } from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
 
+import { ButtonGroupService } from './buttongroup.service';
+
 @Component( {
     selector : 'tl-button-group',
     templateUrl : './buttongroup.html',
-    styleUrls : [ './buttongroup.scss' ]
+    styleUrls : [ './buttongroup.scss' ],
+    providers : [ ButtonGroupService ]
 } )
 export class TlButtonGroup implements AfterContentInit {
 
@@ -41,9 +44,11 @@ export class TlButtonGroup implements AfterContentInit {
 
     @ViewChild( 'lista' ) lista: ElementRef;
 
+    indexItemSelected: number;
+
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor() {}
+    constructor(private buttonGroupService: ButtonGroupService) { }
 
     ngAfterContentInit() {
         this.createItem();
@@ -56,23 +61,30 @@ export class TlButtonGroup implements AfterContentInit {
         } );
     }
 
-    onClickItem(event) {
-        if (this.multiSelect) {
+    onClickItem( event ) {
+
+        if ( this.multiSelect ) {
             let itemsSelected;
             itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
                 return itemValue.itemSelected === true;
             } );
             this.itemSelect.emit( itemsSelected );
         } else {
-            console.log();
-            this.buttonGroupItem.toArray().forEach( ( item ) => {
-                console.log(item.index, item.itemSelected);
+            this.indexItemSelected = this.buttonGroupService.getIndexSelected();
+            let itemsSelected;
+            itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
+                if ( item.itemSelected === true && item.index === this.indexItemSelected ) {
+                    item.indexSelected = true;
+                    return item;
+                } else {
+                    item.indexSelected = false;
+                }
+                this.buttonGroupService.setNotSelectedItems(item);
             } );
-            let itemSelected;
-            itemSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
-                return item.itemSelected === true;
-            } );
-            this.itemSelect.emit( itemSelected );
+
+            // console.log(itemsSelected);
+
+            this.itemSelect.emit( itemsSelected );
         }
     }
 

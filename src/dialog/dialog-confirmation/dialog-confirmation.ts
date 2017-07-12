@@ -29,6 +29,6 @@ import { Component, Input } from '@angular/core'
 export class TlDialogConfirmation {
 
     @Input() private message = '';
-    @Input() private textOk = 'OK';
-    @Input() private textCancel = 'Cancel';
+    @Input() private textOk = 'Yes';
+    @Input() private textCancel = 'No';
 }

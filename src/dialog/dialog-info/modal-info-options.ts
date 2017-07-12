@@ -25,7 +25,7 @@
     color: '#0090D9',
     width: '400px',
     height: '200px',
-    draggable: false,
+    draggable: true,
     maximizable: false,
     minimizable: false,
 };

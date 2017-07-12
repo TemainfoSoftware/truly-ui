@@ -22,10 +22,10 @@
  export const ModalConfirmationOptions = {
     icon: 'ion-information-circled',
     title: 'Confirmation',
-    color: '#A8DBA8',
+    color: '#719CC9',
     width: '400px',
     height: '200px',
-    draggable: false,
+    draggable: true,
     maximizable: false,
     minimizable: false,
 };

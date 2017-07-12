@@ -27,7 +27,7 @@ import { TlDialogAlert } from './dialog-alert/dialog-alert';
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
 
-import { infoOptions } from './dialog-info/dialog-info-options';
+import { infoOptions } from './dialog-info/modal-info-options';
 
 import { ModalAlertOptions } from './dialog-alert/modal-alert-options';
 import { ModalErrorOptions } from './dialog-error/modal-error-options';

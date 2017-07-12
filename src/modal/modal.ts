@@ -136,7 +136,6 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     resizeListener() {
         this.renderer.listen( window, 'resize', () => {
-            this.getBoundingContent();
             this.maximizeModal();
         } );
     }
@@ -186,7 +185,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     setModalCenterParent() {
         this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
         this.modal.nativeElement.style.top = window.innerHeight -
-            this.modal.nativeElement.offsetHeight - this.modal.nativeElement.offsetTop + 'px';
+            this.modal.nativeElement.offsetHeight + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {

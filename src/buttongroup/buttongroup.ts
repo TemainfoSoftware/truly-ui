@@ -35,6 +35,8 @@ export class TlButtonGroup implements AfterContentInit {
 
     @Input() multiSelect = false;
 
+    @Input() index: number;
+
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'lista' ) lista: ElementRef;
@@ -55,7 +57,6 @@ export class TlButtonGroup implements AfterContentInit {
     }
 
     onClickItem(event) {
-
         if (this.multiSelect) {
             let itemsSelected;
             itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
@@ -63,7 +64,15 @@ export class TlButtonGroup implements AfterContentInit {
             } );
             this.itemSelect.emit( itemsSelected );
         } else {
-            console.log('falso');
+            console.log();
+            this.buttonGroupItem.toArray().forEach( ( item ) => {
+                console.log(item.index, item.itemSelected);
+            } );
+            let itemSelected;
+            itemSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
+                return item.itemSelected === true;
+            } );
+            this.itemSelect.emit( itemSelected );
         }
     }
 

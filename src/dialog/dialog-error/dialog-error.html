@@ -1,12 +1,23 @@
 <div class="content">
-    <div class="form" style="padding: 30px; text-align: center">
+    <div class="form">
         <h5>{{message}}</h5>
     </div>
-    <div class="header-controls" style="text-align: center;float: left; padding: 5px; width: 100%">
-        <tl-button [text]="textClose"
-                   mdResult="MRCLOSE"
+    <div class="controls">
+        <tl-button [text]="textOk"
+                   mdResult="MROK"
                    [buttonAddonBeforeClass]="'icon'"
                    [iconAddonBefore]="'ion-close'">
         </tl-button>
+    </div>
+    <div title="Show More" class="arrow-log-error" (click)="open(errorlog)" >
+        <i [ngClass]="{'ion-chevron-down': !errorlog, 'ion-chevron-up': errorlog}" class="ion-chevron-down"></i>
+    </div>
+    <div [@enterAnimation]="errorlog" *ngIf="errorlog" class="error-log">
+        <pre>Error Code: 158</pre>
+        <code>
+            ERROR Error: Uncaught (in promise): Error: Template parse errors:
+            'tl-dialog2' is not a known element:
+            1. If 'tl-dialog2' is an Angular component, then verify that it is part of this module
+        </code>
     </div>
 </div>

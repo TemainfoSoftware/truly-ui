@@ -21,5 +21,5 @@
  */
  export interface ErrorOptions {
      title?: string;
-     textClose?: string;
+     textOk?: string;
  }

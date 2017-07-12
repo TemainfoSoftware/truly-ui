@@ -74,7 +74,7 @@ export class TlButtonGroupItem  implements AfterContentInit {
         return this._buttonSelected
     }
 
-    constructor(public element: ElementRef, private buttonGroupService: ButtonGroupService) {
+    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {
         this.indexSelected = false;
     }
 
@@ -96,7 +96,7 @@ export class TlButtonGroupItem  implements AfterContentInit {
 
     }
 
-    clearNotSelectedItem(item){
+    clearNotSelectedItem( item ) {
 
         // console.log(item);
         // this.buttonSelected = this.index === 0;

@@ -57,7 +57,7 @@ export class TlButtonGroup implements AfterContentInit {
     createItem() {
         this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
-            this.lista.nativeElement.appendChild( item.element.nativeElement );
+            this.lista.nativeElement.appendChild( item._element.nativeElement );
         } );
     }
 

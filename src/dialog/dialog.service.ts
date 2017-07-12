@@ -44,7 +44,10 @@ export class DialogService {
 
     public modalResult;
 
-    constructor( public modalService: ModalService ) {}
+    constructor( public modalService: ModalService ) {
+        console.log('dialogInstance', this);
+
+    }
 
     info( message, callback, options?: InfoOptions ) {
         this.modalService.createModal( TlDialogInfo, infoOptions, callback );
@@ -79,7 +82,7 @@ export class DialogService {
         this.modalService.componentInjected.instance.message = message;
         if (options) {
             ModalErrorOptions.title = options.title ? options.title : ModalErrorOptions.title;
-            this.modalService.componentInjected.instance.textClose = options.textClose;
+            this.modalService.componentInjected.instance.textOk = options.textOk;
         }
     }
 }

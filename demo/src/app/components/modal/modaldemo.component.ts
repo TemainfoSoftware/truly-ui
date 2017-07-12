@@ -16,29 +16,29 @@ export class ModalDemo {
   public modals;
   public modalOptions: ModalOptions;
 
-  constructor(private viewContainerRef:ViewContainerRef, private modal: ModalService) {
-    this.modal.setView(viewContainerRef);
+  constructor(private view: ViewContainerRef, private modalService: ModalService) {
+    this.modalService.setView(this.view);
 
     this.modalOptions = {
-      title: 'Confirm',
+      title: 'New Form',
       icon: 'ion-close-circled',
       draggable: true,
-      width: 'auto',
+      width: '500px',
       height: 'auto',
-      maximizable: false,
-      minimizable: false
+      maximizable: true,
+      minimizable: true
     };
   }
 
   modal1() {
-    this.modal.createModal(CadPessoa, this.modalOptions, (modalResult) => {
+    this.modalService.createModal(CadPessoa, this.modalOptions, (modalResult) => {
       console.log('Return',modalResult);
     });
-    this.modals = this.modal.getMinModals();
+    this.modals = this.modalService.getMinModals();
   }
 
   show(item, index) {
-    this.modal.removeMinModals(index);
+    this.modalService.removeMinModals(index);
     item.instance.element.nativeElement.style.display = 'block';
   }
 

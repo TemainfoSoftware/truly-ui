@@ -1,20 +1,22 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 import { DialogService } from "../../../../../src/dialog/dialog.service";
+import { ModalResult } from "../../../../../src/core/enums/modal-result";
 
 @Component( {
   selector: 'app-modal',
   templateUrl: './dialogdemo.component.html',
   animations: [ routerTransition() ],
-  styleUrls: [ './dialogdemo.component.scss' ]
+  styleUrls: [ './dialogdemo.component.scss' ],
+  providers: [DialogService]
 } )
 export class DialogDemo {
 
   public index: number;
   public modals;
 
-  constructor( private viewContainerRef : ViewContainerRef, private dialogService : DialogService ) {
-    this.dialogService.modalService.setView( viewContainerRef );
+  constructor( private view: ViewContainerRef, private dialogService : DialogService ) {
+    this.dialogService.modalService.setView(this.view);
   }
 
   info() {
@@ -24,9 +26,11 @@ export class DialogDemo {
   }
 
   confirmation() {
-    this.dialogService.confirmation( 'This is an Confirmation Dialog', ( modalResult ) => {
-      console.log( 'Return', modalResult );
-    }, )
+    this.dialogService.confirmation( 'Deseja realmente executar essa ação ?', ( modalResult ) => {
+      if (modalResult === ModalResult.MRYES) {
+        alert('clicou YES')
+      }
+    },)
   }
 
   alert() {
@@ -38,7 +42,7 @@ export class DialogDemo {
   error() {
     this.dialogService.error( 'This is an Error Dialog', ( modalResult ) => {
       console.log( 'Return', modalResult );
-    }, {textClose: 'Fechar'} )
+    }, )
   }
 
 }

@@ -19,15 +19,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input } from '@angular/core'
+import { Component, HostBinding, Input } from '@angular/core'
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
     selector: 'tl-dialog-error',
     templateUrl: './dialog-error.html',
-    styleUrls: ['../dialog.scss']
+    styleUrls: ['../dialog.scss', './dialog-error.scss'],
+    animations: [
+        trigger(
+            'enterAnimation', [
+                transition( ':enter', [
+                    style( { opacity: 0 } ),
+                    animate( '200ms', style( { opacity: 1 } ) )
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1 } ),
+                    animate( '200ms', style( { opacity: 0 } ) )
+                ] )
+            ]
+        )
+    ]
 })
 export class TlDialogError {
+    @HostBinding( '@enterAnimation' ) public animation;
 
     @Input() private message = '';
-    @Input() private textClose = 'Close';
+    @Input() private textOk = 'Ok';
+
+    private errorlog: boolean;
+
+    open(value) {
+        this.errorlog = !value;
+    }
+
 }

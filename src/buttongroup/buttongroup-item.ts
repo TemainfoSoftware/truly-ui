@@ -19,9 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, HostListener, Input, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
 import { TlButton } from '../button/button';
-import { ModalService } from '../modal/modal.service';
 
 @Component( {
     selector : 'tl-button-group-item',
@@ -31,7 +30,7 @@ import { ModalService } from '../modal/modal.service';
 } )
 export class TlButtonGroupItem  implements AfterContentInit {
 
-    @Input() itemSelected: boolean;
+    @Input() itemSelected = false;
 
     @Input() type = 'button';
 
@@ -61,7 +60,7 @@ export class TlButtonGroupItem  implements AfterContentInit {
 
     public index = -1;
 
-    @Input() private _buttonSelected = false;
+    @Input() private _buttonSelected = true;
     set buttonSelected( value: boolean ) {
         this._buttonSelected = !value;
     }
@@ -73,13 +72,15 @@ export class TlButtonGroupItem  implements AfterContentInit {
 
     ngAfterContentInit() {
        setTimeout( () => {
-           this.buttonSelected = this.index === 0;
+           // this.buttonSelected = this.index === 0;
        });
     }
 
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
-        console.log($event);
+        this.itemSelected = !this.itemSelected;
     }
+
+
 
 }

@@ -29,7 +29,7 @@ export class ButtonGroupDemo {
   showItemSelected2(event){
     this.itemSelected2 = [];
     event.forEach( (item) => {
-      this.itemSelected2.push( item.text );
+      this.itemSelected2.push( 'text: ' + item.text, 'index: ' + item.index );
     });
   }
 

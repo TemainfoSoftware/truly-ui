@@ -22,9 +22,9 @@ export class ButtonGroupDemo {
 
   showItemSelected(event){
     this.itemSelected = [];
-    event.forEach( (item) => {
-      this.itemSelected.push( item.text );
-    });
+    if(event.length > 0 && (event[0].indexSelected === true)){
+      this.itemSelected.push( 'text: ' + event[0].text, 'index: ' + event[0].index );
+    }
   }
   showItemSelected2(event){
     this.itemSelected2 = [];

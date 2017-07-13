@@ -21,7 +21,7 @@
  */
 import {
     Component, ContentChildren, QueryList, ViewChild, ElementRef,
-    AfterContentInit, Input, Output, EventEmitter, Renderer2, HostListener
+    AfterContentInit, Input, Output, EventEmitter
 } from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
@@ -62,28 +62,23 @@ export class TlButtonGroup implements AfterContentInit {
     }
 
     onClickItem( event ) {
-
+        let itemsSelected;
         if ( this.multiSelect ) {
-            let itemsSelected;
             itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
                 return itemValue.itemSelected === true;
             } );
             this.itemSelect.emit( itemsSelected );
         } else {
             this.indexItemSelected = this.buttonGroupService.getIndexSelected();
-            let itemsSelected;
             itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
-                if ( item.itemSelected === true && item.index === this.indexItemSelected ) {
+                if ( item.itemSelected === true && (item.buttonSelected = item.index === this.indexItemSelected) ) {
                     item.indexSelected = true;
                     return item;
                 } else {
+                    item.itemSelected = false;
                     item.indexSelected = false;
                 }
-                this.buttonGroupService.setNotSelectedItems(item);
             } );
-
-            // console.log(itemsSelected);
-
             this.itemSelect.emit( itemsSelected );
         }
     }

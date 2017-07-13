@@ -19,20 +19,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterContentInit, Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
 
 import { TlButton } from '../button/button';
 
 import { ButtonGroupService } from './buttongroup.service';
-import { element } from 'protractor';
 
 @Component( {
     selector : 'tl-button-group-item',
     templateUrl : './buttongroup-item.html',
     styleUrls : [ './buttongroup-item.scss' ],
-    providers: [{provide: {TlButton, ButtonGroupService}, useExisting: forwardRef(() => TlButtonGroupItem) }]
+    providers: [{
+        provide: { TlButton, ButtonGroupService },
+        useExisting: forwardRef( () => TlButtonGroupItem )
+    }]
 } )
-export class TlButtonGroupItem  implements AfterContentInit {
+export class TlButtonGroupItem {
 
     @Input() itemSelected = false;
 
@@ -66,7 +68,7 @@ export class TlButtonGroupItem  implements AfterContentInit {
 
     public indexSelected: boolean;
 
-    @Input() private _buttonSelected = true;
+    @Input() public _buttonSelected = true;
     set buttonSelected( value: boolean ) {
         this._buttonSelected = !value;
     }
@@ -78,28 +80,10 @@ export class TlButtonGroupItem  implements AfterContentInit {
         this.indexSelected = false;
     }
 
-    ngAfterContentInit() {
-       setTimeout( () => {
-            // element seguir...
-           // this.buttonSelected = this.index === 0;
-           // this.indexSelected = false;
-       });
-    }
-
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
         this.itemSelected = !this.itemSelected;
         this.buttonGroupService.setIndexSelected(this.index);
-        // setTimeout( () => {
-        //     this.clearNotSelectedItem(this.buttonGroupService.getNotSelectedItems());
-        // });
-
-    }
-
-    clearNotSelectedItem( item ) {
-
-        // console.log(item);
-        // this.buttonSelected = this.index === 0;
     }
 
 }

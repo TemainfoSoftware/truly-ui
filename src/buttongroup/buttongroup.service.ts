@@ -26,8 +26,6 @@ export class ButtonGroupService {
 
     private indexSelected: number;
 
-    private itemsNotSelected: any[] = [];
-
     constructor() {
         this.indexSelected = null;
     }
@@ -38,15 +36,6 @@ export class ButtonGroupService {
 
     public getIndexSelected(): number {
         return this.indexSelected;
-    }
-
-    public setNotSelectedItems(items): void {
-        this.itemsNotSelected = items;
-    }
-
-    public getNotSelectedItems(): any {
-        console.log(this.itemsNotSelected);
-        return this.itemsNotSelected;
     }
 
 }

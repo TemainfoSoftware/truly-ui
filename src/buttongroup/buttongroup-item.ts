@@ -83,7 +83,7 @@ export class TlButtonGroupItem implements AfterContentInit {
     }
 
     ngAfterContentInit() {
-        if(this.checkItem){
+        if ( this.checkItem ) {
             this.buttonSelected = true;
             this.itemSelected = true;
             this.indexSelected = true;

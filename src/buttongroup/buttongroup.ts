@@ -61,12 +61,12 @@ export class TlButtonGroup implements AfterContentInit {
             this.lista.nativeElement.appendChild( item._element.nativeElement );
         } );
         if ( this.multiSelect ) {
-            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
                 return itemValue.itemSelected === true;
             } );
             this.itemSelect.emit( itemsSelected );
         } else {
-            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
                 return itemValue.itemSelected === true;
             } );
             this.itemSelect.emit( itemsSelected );

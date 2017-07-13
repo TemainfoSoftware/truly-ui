@@ -48,7 +48,8 @@ export class TlButtonGroup implements AfterContentInit {
 
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor(private buttonGroupService: ButtonGroupService) { }
+    constructor( private buttonGroupService: ButtonGroupService ) {
+    }
 
     ngAfterContentInit() {
         this.createItem();
@@ -59,6 +60,19 @@ export class TlButtonGroup implements AfterContentInit {
             item.index = index;
             this.lista.nativeElement.appendChild( item._element.nativeElement );
         } );
+        if ( this.multiSelect ) {
+            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+                return itemValue.itemSelected === true;
+            } );
+            this.itemSelect.emit( itemsSelected );
+        } else {
+            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+                return itemValue.itemSelected === true;
+            } );
+            this.itemSelect.emit( itemsSelected );
+        }
+
+
     }
 
     onClickItem( event ) {

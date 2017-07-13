@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, forwardRef, HostListener, Input } from '@angular/core';
+import { Component, ElementRef, forwardRef, HostListener, Input, AfterContentInit } from '@angular/core';
 
 import { TlButton } from '../button/button';
 
@@ -30,11 +30,11 @@ import { ButtonGroupService } from './buttongroup.service';
     templateUrl : './buttongroup-item.html',
     styleUrls : [ './buttongroup-item.scss' ],
     providers: [{
-        provide: { TlButton, ButtonGroupService },
+        provide: { TlButton,  },
         useExisting: forwardRef( () => TlButtonGroupItem )
     }]
 } )
-export class TlButtonGroupItem {
+export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() itemSelected = false;
 
@@ -64,6 +64,8 @@ export class TlButtonGroupItem {
 
     @Input() buttonClass = '';
 
+    @Input() checkItem: boolean = null;
+
     public index = -1;
 
     public indexSelected: boolean;
@@ -73,11 +75,19 @@ export class TlButtonGroupItem {
         this._buttonSelected = !value;
     }
     get buttonSelected () {
-        return this._buttonSelected
+        return this._buttonSelected;
     }
 
     constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {
         this.indexSelected = false;
+    }
+
+    ngAfterContentInit() {
+        if(this.checkItem){
+            this.buttonSelected = true;
+            this.itemSelected = true;
+            this.indexSelected = true;
+        }
     }
 
     @HostListener( 'click', [ '$event' ] )

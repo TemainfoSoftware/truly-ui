@@ -1,4 +1,6 @@
 <div #buttonBox
+     tabindex="-1"
+     (keydown)="keydown($event)"
      [class]="buttonClass + ' tl-button-box ' + toggleClassName"
      [ngClass]="{'-disabled ': disabled}"
      (click)="clickToggle()">

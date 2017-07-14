@@ -3,6 +3,8 @@ import { routerTransition } from "../../router.animations";
 import { DialogService } from "../../../../../src/dialog/dialog.service";
 import { ModalResult } from "../../../../../src/core/enums/modal-result";
 
+import * as json from './dialog-dataproperties.json';
+
 @Component( {
   selector: 'app-modal',
   templateUrl: './dialogdemo.component.html',
@@ -15,13 +17,20 @@ export class DialogDemo {
   public index: number;
   public modals;
 
+  private dialogProp;
+
   constructor( private view: ViewContainerRef, private dialogService : DialogService ) {
     this.dialogService.modalService.setView(this.view);
+    this.dialogProp = json.dataProperties;
   }
 
   info() {
     this.dialogService.info( 'This is an Info Dialog', ( modalResult ) => {
       console.log('Return',modalResult);
+    }, {
+      title: 'MY CUSTOM DIALOG Silvao',
+      textOk: 'Maicao',
+      draggable: true,
     } )
   }
 

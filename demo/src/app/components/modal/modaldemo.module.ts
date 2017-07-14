@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
 import { ModalDemo } from "./modaldemo.component";
-import { ModalModule } from '../../../../../src/modal';
 import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
 import { CommonModule  } from '@angular/common';
 import { HighlightJsModule } from 'ngx-highlight-js';
@@ -10,18 +9,21 @@ import { InputModule } from '../../../../../src/input';
 import { ButtonModule } from '../../../../../src/button';
 import { CadPessoa } from "./cadastro2/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
+import { NewPessoa } from "./novo/newPessoa.component";
+import { ModalModule } from "../../../../../src/modal/index";
 
 @NgModule({
   declarations: [
     ModalDemo,
     CadPessoa,
+    NewPessoa,
   ],
   imports:[
     ModalDemoRoutingModule,
-    ModalModule,
     InputModule,
     CommonModule,
     FormsModule,
+    ModalModule,
     ButtonModule,
     HighlightJsModule,
     DatatableModule
@@ -29,8 +31,9 @@ import { DatatableModule } from '../../../../../src/datatable';
   exports: [
     ModalDemo,
     CadPessoa,
+    NewPessoa
   ],
-  entryComponents: [ CadPessoa ]
+  entryComponents: [ CadPessoa, NewPessoa ]
 })
 export class ModalDemoModule {
 

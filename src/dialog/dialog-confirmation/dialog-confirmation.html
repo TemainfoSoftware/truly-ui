@@ -3,13 +3,13 @@
         <h5>{{message}}</h5>
     </div>
     <div class="header-controls" style="text-align: center;float: left; padding: 5px; width: 100%">
-        <tl-button [text]="textOk"
+        <tl-button #buttonOk [text]="textOk"
                    mdResult="MRYES"
                    [buttonAddonBeforeClass]="'icon'"
                    [iconAddonBefore]="'ion-checkmark'">
         </tl-button>
         &nbsp;&nbsp;&nbsp;
-        <tl-button [text]="textCancel"
+        <tl-button #buttonCancel [text]="textCancel"
                    mdResult="MRNO"
                    [buttonAddonBeforeClass]="'icon'"
                    [iconAddonBefore]="'ion-close-round'">

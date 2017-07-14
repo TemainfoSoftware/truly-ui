@@ -19,10 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import {
+    AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges,
+} from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
+
+let uniqueIndex = 0;
 
 @Component( {
     selector : 'tl-button',
@@ -45,6 +49,8 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     @Input() size;
 
+    @Input() defaultFocus: boolean;
+
     @Input() iconLeftTextButton = '';
 
     @Input() iconRightTextButton = '';
@@ -65,26 +71,38 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     private _buttonSelected = false;
 
+    private tabindex;
+
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
         this.executeToggle();
     }
 
-    constructor(public modalService: ModalService) {
+    constructor(public button: ElementRef, public modalService: ModalService) {
         this.toggleClassName = '';
         this.toggle = false;
         this._buttonSelected = this.toggle;
+        this.tabindex = uniqueIndex++;
+    }
+
+    keydown($event) {
+        if ($event.key === 'Enter') {
+            this.clickToggle();
+        }
+        if ($event.key === 'Escape') {
+            this.modalService.execCallBack(ModalResult.MRCLOSE, this.buttonBox.nativeElement.offsetParent.parentElement);
+        }
     }
 
     ngAfterContentInit() {
+        if (this.defaultFocus) {
+            this.buttonBox.nativeElement.focus();
+        }
         if (!ModalResult.propertyIsEnumerable(this.mdResult) && this.mdResult !== undefined) {
             throw new EvalError(this.mdResult + ' is not valid ModalResult value');
         }
     }
-
-    ngOnChanges(changes: SimpleChanges) {
-
-    }
+    ngOnChanges(changes: SimpleChanges) {}
 
     clickToggle() {
         this.executeToggle();
@@ -105,7 +123,7 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     isButtonOnModal() {
         if (this.buttonBox.nativeElement.offsetParent.parentElement.localName === 'tl-modal') {
-            this.modalService.execCallBack(ModalResult[ this.mdResult ]);
+            this.modalService.execCallBack(ModalResult[ this.mdResult ], this.buttonBox.nativeElement.offsetParent.parentElement);
         }
     }
 

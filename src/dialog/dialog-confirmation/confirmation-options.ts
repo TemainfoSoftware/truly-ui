@@ -23,4 +23,5 @@
      title?: string;
      textOk?: string;
      textCancel?: string;
+     defaultOK?: boolean;
  }

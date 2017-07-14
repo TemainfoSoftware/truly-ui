@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalService } from "../../../../../../src/modal/modal.service";
+import { NewPessoa } from "../novo/newPessoa.component";
 
 @Component( {
   selector: 'cad-pessoa',
@@ -6,9 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: [ './cadPessoa.component.scss' ]
 } )
 export class CadPessoa {
-  public myTitle = 'Cadastro de Pessoa';
-  public myIcon = 'ion-home';
 
-  constructor() {}
+  constructor(private modalService: ModalService) {}
+
+  newCad() {
+    this.modalService.createModal(NewPessoa, {title: 'Incluir Novo', icon: 'ion-plus', draggable: false, height: 'auto'}, (modalResult) => {
+      console.log('Return',modalResult);
+    });
+  }
 
 }

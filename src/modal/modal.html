@@ -1,4 +1,4 @@
-<div #modal (click)="getZIndex();" [ngStyle]="{'z-index': ZIndex}" class="tl-modal-container">
+<div #modal (click)="setZIndex()" class="tl-modal-container">
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
             <span class="icon"><i [ngClass]="icon"></i></span>

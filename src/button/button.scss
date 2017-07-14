@@ -15,7 +15,6 @@ $button-text-align: center;
   height: $button-height;
   font-family: $button-font-family;
   font-size: $button-font-size;
-  outline: none;
   cursor: pointer;
   text-align: $button-text-align;
   display: $button-display;
@@ -69,6 +68,12 @@ $button-text-align: center;
 
 .tl-button-box:active, .-toggle{
   background-color: #d8d8d8;
+}
+
+.tl-button-box:focus {
+  outline: dashed;
+  outline-color: #a8bfc3;
+  outline-width: 1px;
 }
 
 .button {

@@ -66,8 +66,8 @@ export class TlSplitButton extends TlButton implements AfterContentInit {
 
     private showHide: boolean;
 
-    constructor( private _renderer: Renderer2, modalService: ModalService ) {
-        super(modalService);
+    constructor( public button: ElementRef, private _renderer: Renderer2, modalService: ModalService ) {
+        super(button, modalService);
         this.showHide = false;
         this.toggle = false;
     }

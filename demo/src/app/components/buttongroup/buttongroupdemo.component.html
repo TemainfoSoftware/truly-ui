@@ -19,8 +19,8 @@
     </div>
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Selected:</h5>
-        <div><span>{{ itemSelected | json }}</span></div>
+        <h5>Selected Types</h5>
+        <div><span>{{ itemSelected }}</span></div>
       </div>
     </div>
   </div>
@@ -37,15 +37,15 @@
     </div>
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Selected:</h5>
-        <div><span>{{ itemSelected2 | json }}</span></div>
+        <h5>Selected Types</h5>
+        <div><span>{{ itemSelected2 }}</span></div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Basic With Item Selected</h5>
+        <h5>Basic With Preselection</h5>
         <tl-button-group (itemSelect)="showItemSelected3($event)">
           <tl-button-group-item [text]="'Button 1'" [toggle]="true" ></tl-button-group-item>
           <tl-button-group-item [text]="'Button 2'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
@@ -55,26 +55,26 @@
     </div>
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Selected:</h5>
-        <div><span>{{ itemSelected3 | json }}</span></div>
+        <h5>Selected Types</h5>
+        <div><span>{{ itemSelected3 }}</span></div>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Multiselect With Item Selected</h5>
+        <h5>Multiselect With Preselection</h5>
         <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-          <tl-button-group-item [text]="'Button 1'" [toggle]="true" ></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true" ></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
         </tl-button-group>
       </div>
     </div>
     <div class="col-md-6">
       <div class="group-component">
-        <h5>Selected:</h5>
-        <div><span>{{ itemSelected4 | json }}</span></div>
+        <h5>Selected Types</h5>
+        <div><span>{{ itemSelected4 }}</span></div>
       </div>
     </div>
   </div>
@@ -84,6 +84,7 @@
 <div class="setup">
   <h3 class="title">Properties</h3>
   <div class="table-responsive">
+    <h5 class="title">tl-button-group</h5>
     <table class="table table-bordered">
       <thead>
       <tr>
@@ -94,15 +95,36 @@
         <th>Options</th>
       </tr>
       </thead>
-      <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
-      <!--<tr>-->
-        <!--<td><b>{{ item.name }}</b></td>-->
-        <!--<td><span class="badge">{{ item.type }}</span></td>-->
-        <!--<td><code>{{ item.default }}</code></td>-->
-        <!--<td>{{ item.description }}</td>-->
-        <!--<td><code> {{ item.options }} </code></td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
+      <tbody *ngFor="let item of dataTableProperties; let i = index">
+      <tr>
+        <td><b>{{ item.name }}</b></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
+    </table>
+    <h5 class="title">tl-button-group-item</h5>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of dataTableProperties2; let i = index">
+      <tr>
+        <td><b>{{ item.name }}</b></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
     </table>
   </div>
   <hr>
@@ -113,7 +135,81 @@
   <div class="group-component">
     <h5 class="title">Basic</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   &nbsp;&nbsp;&nbsp;code here
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group (itemSelect)="showItemSelected($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
+      </tl-button-group>
+
+      <!--
+      * Click Event - Demo.
+      -->
+
+      <script type="text/javascript">
+      showItemSelected(...) {
+          ...
+      }
+      </script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Multiselect</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected2($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true"></tl-button-group-item>
+      </tl-button-group>
+
+      <!--
+      * Click Event - Demo.
+      -->
+
+      <script type="text/javascript">
+      showItemSelected2(...) {
+          ...
+      }
+      </script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Basic With Preselection</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group (itemSelect)="showItemSelected3($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true" ></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true" ></tl-button-group-item>
+      </tl-button-group>
+
+      <!--
+      * Click Event - Demo.
+      -->
+
+      <script type="text/javascript">
+      showItemSelected3(...) {
+          ...
+      }
+      </script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Multiselect With Preselection</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
+          <tl-button-group-item [text]="'Button 1'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [toggle]="true" ></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [toggle]="true" [checkItem]="true"></tl-button-group-item>
+      </tl-button-group>
+
+      <!--
+      * Click Event - Demo.
+      -->
+
+      <script type="text/javascript">
+      showItemSelected4(...) {
+          ...
+      }
+      </script>
   </textarea>
   </div>
 </div>

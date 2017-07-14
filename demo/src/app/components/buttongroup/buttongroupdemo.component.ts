@@ -12,43 +12,46 @@ export class ButtonGroupDemo {
 
   private dataTableProperties;
 
-  public itemSelected: any[] = [];
+  private dataTableProperties2;
 
-  public itemSelected2: any[] = [];
+  public itemSelected: any[];
 
-  public itemSelected3: any[] = [];
+  public itemSelected2: any[];
 
-  public itemSelected4: any[] = [];
+  public itemSelected3: any[];
+
+  public itemSelected4: any[];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataTableProperties2 = json.dataProperties2;
   }
 
   showItemSelected(event) {
     this.itemSelected = [];
     event.forEach( (item) => {
-      this.itemSelected.push( 'text: ' + item.text, 'index: ' + item.index );
+      this.itemSelected.push( ' ' + item.text );
     });
   }
 
   showItemSelected2(event){
     this.itemSelected2 = [];
     event.forEach( (item) => {
-      this.itemSelected2.push( 'text: ' + item.text, 'index: ' + item.index );
+      this.itemSelected2.push( ' ' + item.text );
     });
   }
 
   showItemSelected3(event){
     this.itemSelected3 = [];
     event.forEach( (item) => {
-      this.itemSelected3.push( 'text: ' + item.text, 'index: ' + item.index );
+      this.itemSelected3.push( ' ' + item.text );
     });
   }
 
   showItemSelected4(event){
     this.itemSelected4 = [];
     event.forEach( (item) => {
-      this.itemSelected4.push( 'text: ' + item.text, 'index: ' + item.index );
+      this.itemSelected4.push( ' ' + item.text );
     });
   }
 

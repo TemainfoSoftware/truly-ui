@@ -3,6 +3,15 @@
  */
 export const dataProperties = [
   {
+    name: "multiSelect",
+    type: "boolean",
+    default: "false",
+    description: "Enables selection of multiple buttons if set to true.",
+    options: "true | false"
+  }
+  ];
+export const dataProperties2 = [
+  {
     name: "type",
     type: "string",
     default: "button",
@@ -94,40 +103,10 @@ export const dataProperties = [
     options: "CSS class"
   },
   {
-    name : "splitButtonClass",
-    type: "string",
-    default: "null",
-    description: "Style class of the splitbutton.",
-    options: "CSS class"
-  },
-  {
-    name : "actionMenuClass",
-    type: "string",
-    default: "null",
-    description: "Style class of the action menu.",
-    options: "CSS class"
-  }
-  ];
-export const dataProperties2 = [
-  {
-    name: "label",
-    type: "string",
-    default: "null",
-    description: "Displays an action text.",
-    options: "any text"
-  },
-  {
-    name: "icon",
-    type: "string",
-    default: "null",
-    description: "Creates an icon before the action text.",
-    options: "ion-printer | fa fa-home | any"
-  },
-  {
-    name: "separator",
+    name: "checkItem",
     type: "boolean",
     default: "false",
-    description: "Creates a separator below action label if set to true.",
+    description: "Mark button as preselected if set to true.",
     options: "true | false"
   }
 ];

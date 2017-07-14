@@ -27,11 +27,10 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core'
     styleUrls: ['../dialog.scss']
 })
 export class TlDialogConfirmation implements AfterViewInit {
-
-    public message = '';
-    public textOk = 'Yes';
-    public textCancel = 'No';
-    public defaultOK = true;
+    message = '';
+    textOk = 'Yes';
+    textCancel = 'No';
+    defaultOK = true;
 
     @ViewChild( 'buttonOk' ) buttonOk;
     @ViewChild( 'buttonCancel' ) buttonCancel;

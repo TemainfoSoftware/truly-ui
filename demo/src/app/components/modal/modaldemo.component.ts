@@ -3,6 +3,7 @@ import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { CadPessoa } from "./cadastro2/cadPessoa.component";
+import { NewPessoa } from "./novo/newPessoa.component";
 
 @Component( {
   selector: 'app-modal',
@@ -32,6 +33,13 @@ export class ModalDemo {
 
   modal1() {
     this.modalService.createModal(CadPessoa, this.modalOptions, (modalResult) => {
+      console.log('Return',modalResult);
+    });
+    this.modals = this.modalService.getMinModals();
+  }
+
+  modal2() {
+    this.modalService.createModal(NewPessoa, this.modalOptions, (modalResult) => {
       console.log('Return',modalResult);
     });
     this.modals = this.modalService.getMinModals();

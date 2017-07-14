@@ -27,8 +27,7 @@ import { TlDialogAlert } from './dialog-alert/dialog-alert';
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
 
-import { infoOptions } from './dialog-info/modal-info-options';
-
+import { ModalInfoOptions } from './dialog-info/modal-info-options';
 import { ModalAlertOptions } from './dialog-alert/modal-alert-options';
 import { ModalErrorOptions } from './dialog-error/modal-error-options';
 import { ModalConfirmationOptions } from './dialog-confirmation/modal-confirmation-options';
@@ -46,40 +45,61 @@ export class DialogService {
     constructor( public modalService: ModalService ) {}
 
     info( message, callback, options?: InfoOptions ) {
-        this.modalService.createModal( TlDialogInfo, infoOptions, callback );
+        this.setModalOptions( ModalInfoOptions, options );
+        this.modalService.createModal( TlDialogInfo, ModalInfoOptions, callback );
         this.modalService.componentInjected.instance.message = message;
-        if (options) {
-            ModalConfirmationOptions.title = options.title ? options.title : ModalConfirmationOptions.title;
-            this.modalService.componentInjected.instance.textOk = options.textOk;
-        }
+        this.setDialogOptions( options );
     }
 
     confirmation( message, callback, options?: ConfirmationOptions) {
+        this.setModalOptions( ModalConfirmationOptions, options );
         this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
         this.modalService.componentInjected.instance.message = message;
-        if (options) {
-            ModalConfirmationOptions.title = options.title ? options.title : ModalConfirmationOptions.title;
-            this.modalService.componentInjected.instance.textOk = options.textOk;
-            this.modalService.componentInjected.instance.textCancel = options.textCancel;
-            this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
-        }
+        this.setDialogOptions( options );
     }
 
     alert( message, callback, options?: AlertOptions ) {
+        this.setModalOptions( ModalAlertOptions, options );
         this.modalService.createModal( TlDialogAlert, ModalAlertOptions, callback );
         this.modalService.componentInjected.instance.message = message;
-        if (options) {
-            ModalAlertOptions.title = options.title ? options.title : ModalAlertOptions.title;
-            this.modalService.componentInjected.instance.textClose = options.textClose;
-        }
+        this.setDialogOptions( options );
     }
 
     error( message, callback, options?: ErrorOptions ) {
+        this.setModalOptions( ModalErrorOptions, options );
         this.modalService.createModal( TlDialogError, ModalErrorOptions, callback );
         this.modalService.componentInjected.instance.message = message;
-        if (options) {
-            ModalErrorOptions.title = options.title ? options.title : ModalErrorOptions.title;
-            this.modalService.componentInjected.instance.textOk = options.textOk;
+        this.setDialogOptions( options );
+    }
+
+    setModalOptions( typeModal, options ) {
+        if ( !this.existOptions( options ) ) {
+            return;
         }
+        Object.keys( options ).forEach( ( value ) => {
+            if ( value ) {
+                typeModal[ value ] = options[ value ];
+            }
+        } );
+
+    }
+
+    setDialogOptions( options ) {
+        if ( !this.existOptions( options ) ) {
+            return;
+        }
+        Object.keys( options ).forEach( ( value ) => {
+            if ( value ) {
+                this.modalService.componentInjected.instance[ value ] = options[ value ];
+            }
+        } );
+
+    }
+
+    existOptions( options ) {
+        if (options === undefined) {
+            return false;
+        }
+        return Object.keys(options).length > 0;
     }
 }

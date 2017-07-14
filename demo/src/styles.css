@@ -234,12 +234,12 @@ i {
   color: #fff !important;
 }
 
-.successDialog {
-  background-color: #A8DBA8 !important;
+.confirmDialog {
+  background-color: #719CC9 !important;
   color: #fff !important;
 }
 
-.successDialog i {
+.confirmDialog i {
   color: #fff !important;
 }
 

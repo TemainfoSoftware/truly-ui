@@ -1,6 +1,6 @@
 <div class="header-title-demo">
   <h1 class="title">Dialog</h1>
-  <p class="text-content">Window Dialog</p>
+  <p class="text-content">There's a lot of ways to create a Dialog using Truly UI. Below, are some of those.</p>
 </div>
 
 <hr>
@@ -18,7 +18,7 @@
       <div class="group-component">
         <h5>Show Dialog Confirmation</h5>
         <tl-button [text]="'Show Dialog Confirmation'" [iconAddonBefore]="'ion-checkmark'"
-                   [buttonClass]="'successDialog'" (click)="confirmation()"></tl-button>
+                   [buttonClass]="'confirmDialog'" (click)="confirmation()"></tl-button>
       </div>
     </div>
     <div class="col-md-3">
@@ -69,19 +69,14 @@
     <div class="group-component">
       <h5 class="title">Info</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-        &nbsp;&nbsp;&nbsp;&nbsp;this.modalOptions = {
-        title: 'New Form',
-        icon: 'ion-close-circled',
-        draggable: true,
-        width: '500px',
-        height: 'auto',
-        maximizable: true,
-        minimizable: true
-        };
-
         &nbsp;&nbsp;this.dialogService.info( 'This is an Info Dialog', ( modalResult ) => {
           console.log('Return',modalResult);
-        }, this.modalOptions )
+        },{
+          title: 'My custom dialog',
+          textOk: 'Ok',
+          draggable: true,
+          }
+        )
       </textarea>
     </div>
     <div class="group-component">

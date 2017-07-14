@@ -18,15 +18,17 @@ export class ButtonGroupDemo {
 
   public itemSelected3: any[] = [];
 
+  public itemSelected4: any[] = [];
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
   }
 
   showItemSelected(event) {
     this.itemSelected = [];
-    if(event.length > 0 && (event[0].indexSelected === true)){
-      this.itemSelected.push( 'text: ' + event[0].text, 'index: ' + event[0].index );
-    }
+    event.forEach( (item) => {
+      this.itemSelected.push( 'text: ' + item.text, 'index: ' + item.index );
+    });
   }
 
   showItemSelected2(event){
@@ -40,6 +42,13 @@ export class ButtonGroupDemo {
     this.itemSelected3 = [];
     event.forEach( (item) => {
       this.itemSelected3.push( 'text: ' + item.text, 'index: ' + item.index );
+    });
+  }
+
+  showItemSelected4(event){
+    this.itemSelected4 = [];
+    event.forEach( (item) => {
+      this.itemSelected4.push( 'text: ' + item.text, 'index: ' + item.index );
     });
   }
 

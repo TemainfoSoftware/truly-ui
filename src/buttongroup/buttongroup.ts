@@ -62,18 +62,18 @@ export class TlButtonGroup implements AfterContentInit {
             this.emitItems( this.getSelectedItems() );
         } else {
             this.itemsSelected = this.getSelectedItems();
-            let itemsSelectedEmit;
+            let emitSelectedItems;
             if ( this.itemsSelected.length > 1 ) {
-                itemsSelectedEmit = this.itemsSelected.splice( this.itemsSelected.length - 1, 1 );
+                emitSelectedItems = this.itemsSelected.splice( this.itemsSelected.length - 1, 1 );
                 this.itemsSelected.forEach( ( itemValue ) => {
                     itemValue.buttonSelected = false;
                     itemValue.itemSelected = false;
                     itemValue.indexSelected = false;
                 } );
             } else {
-                itemsSelectedEmit = this.itemsSelected;
+                emitSelectedItems = this.itemsSelected;
             }
-            this.emitItems( itemsSelectedEmit );
+            this.emitItems( emitSelectedItems );
         }
     }
 

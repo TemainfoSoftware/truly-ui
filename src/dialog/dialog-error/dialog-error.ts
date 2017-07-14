@@ -44,8 +44,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class TlDialogError {
     @HostBinding( '@enterAnimation' ) public animation;
 
-    @Input() private message = '';
-    @Input() private textOk = 'Ok';
+    message = '';
+    textOk = 'Ok';
 
     private errorlog: boolean;
 

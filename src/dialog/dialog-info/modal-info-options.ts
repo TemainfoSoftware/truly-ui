@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export const infoOptions = {
+ export const ModalInfoOptions = {
     icon: 'ion-information-circled',
     title: 'Information',
     color: '#0090D9',

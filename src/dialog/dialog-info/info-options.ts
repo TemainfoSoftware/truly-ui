@@ -22,4 +22,5 @@
  export interface InfoOptions {
      title?: string;
      textOk?: string;
+     draggable?: boolean;
  }

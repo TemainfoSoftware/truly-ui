@@ -22,4 +22,5 @@
  export interface ErrorOptions {
      title?: string;
      textOk?: string;
+     draggable?: boolean;
  }

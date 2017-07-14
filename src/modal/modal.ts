@@ -335,8 +335,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     closeModal() {
-        this.serviceControl.close( this.componentRef );
-        this.serviceControl.execCallBack(ModalResult.MRCLOSE);
+        this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
         this.hide.emit();
     }
 

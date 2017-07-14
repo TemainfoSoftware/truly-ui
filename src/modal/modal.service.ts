@@ -28,7 +28,10 @@ let index = -1;
 
 @Injectable()
 export class ModalService {
+
     public component;
+
+    public componentList: any[] = [];
 
     public componentInjected;
 
@@ -46,28 +49,33 @@ export class ModalService {
 
     createModal( component, modalOptions, callback ) {
         index++;
-        const componentFactory = this.compiler.resolveComponentFactory( TlModal );
-        const factoryInject = this.compiler.resolveComponentFactory(component);
-        this.setComponentInjected(componentFactory, factoryInject);
+        this.setComponentModal();
+        this.setComponentInjected( component );
         this.setGlobalSettings( modalOptions );
         this.callBack = callback;
     }
 
-    setGlobalSettings( modalOptions: Array<ModalOptions> ) {
-        (<TlModal>this.component.instance).status = 'MAX';
+    setComponentModal() {
+        const componentFactory = this.compiler.resolveComponentFactory( TlModal );
+        this.component = this.view.createComponent( componentFactory );
+        this.componentList.push(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
+    }
+
+    setComponentInjected( component ) {
+        const factoryInject = this.compiler.resolveComponentFactory( component );
+        this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
+    }
+
+    setGlobalSettings( modalOptions: Array<ModalOptions> ) {
+        (<TlModal>this.component.instance).status = 'MAX';
         (<TlModal>this.component.instance).setOptions( modalOptions );
         this.setZIndex();
     }
 
-    setComponentInjected(componentFactory, factoryInject) {
-        this.component = this.view.createComponent( componentFactory );
-        this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
-    }
-
     setZIndex( indexModal? ) {
-        this.component.instance.element.nativeElement.style.zIndex = index + 1;
+        this.component.instance.element.nativeElement.style.zIndex = indexModal + 1;
     }
 
     removeMinModals( indexModal ) {
@@ -81,20 +89,27 @@ export class ModalService {
     }
 
     close( component ) {
-        this.view.remove( this.view.indexOf(component));
+        let comp = component;
+        this.componentList.forEach((value) => {
+           if (value.location.nativeElement === component) {
+               comp = value;
+           }
+        });
+        this.componentList.splice(1, comp);
+        this.view.remove( this.view.indexOf(comp));
     }
 
     getMinModals() {
         return this.minModals;
     }
 
-    execCallBack( mdResult: any ) {
+    execCallBack( mdResult: any, component? ) {
         this.setMdResult( mdResult );
         if ( this.isResultUndefined() ) {
             return;
         }
         if ( !(this.isMdResultEqualsNone( mdResult )) ) {
-            this.close( this.component );
+            this.close(component);
         }
         this.resultCallback();
     }

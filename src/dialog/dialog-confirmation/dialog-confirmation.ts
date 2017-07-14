@@ -19,16 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input } from '@angular/core'
+import { AfterViewInit, Component, ViewChild } from '@angular/core'
 
 @Component({
     selector: 'tl-dialog-confirmation',
     templateUrl: './dialog-confirmation.html',
     styleUrls: ['../dialog.scss']
 })
-export class TlDialogConfirmation {
+export class TlDialogConfirmation implements AfterViewInit {
 
-    @Input() private message = '';
-    @Input() private textOk = 'Yes';
-    @Input() private textCancel = 'No';
+    public message = '';
+    public textOk = 'Yes';
+    public textCancel = 'No';
+    public defaultOK = true;
+
+    @ViewChild( 'buttonOk' ) buttonOk;
+    @ViewChild( 'buttonCancel' ) buttonCancel;
+
+    ngAfterViewInit() {
+        this.defaultOK ? this.buttonOk.buttonBox.nativeElement.focus() : this.buttonCancel.buttonBox.nativeElement.focus();
+    }
 }

@@ -38,16 +38,12 @@ import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
 
-
 @Injectable()
 export class DialogService {
 
     public modalResult;
 
-    constructor( public modalService: ModalService ) {
-        console.log('dialogInstance', this);
-
-    }
+    constructor( public modalService: ModalService ) {}
 
     info( message, callback, options?: InfoOptions ) {
         this.modalService.createModal( TlDialogInfo, infoOptions, callback );
@@ -58,13 +54,14 @@ export class DialogService {
         }
     }
 
-    confirmation( message, callback, options?: ConfirmationOptions ) {
+    confirmation( message, callback, options?: ConfirmationOptions) {
         this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         if (options) {
             ModalConfirmationOptions.title = options.title ? options.title : ModalConfirmationOptions.title;
             this.modalService.componentInjected.instance.textOk = options.textOk;
             this.modalService.componentInjected.instance.textCancel = options.textCancel;
+            this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
         }
     }
 

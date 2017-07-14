@@ -78,7 +78,7 @@ export class TlButtonGroup implements AfterContentInit {
 
             let itemsSelectedEmit;
 
-            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
 
                 return itemValue.itemSelected === true;
 

@@ -48,53 +48,103 @@ export class TlButtonGroup implements AfterContentInit {
 
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor( private buttonGroupService: ButtonGroupService ) {
-    }
+    constructor( private buttonGroupService: ButtonGroupService ) {}
 
     ngAfterContentInit() {
+
         this.createItem();
+
     }
 
     createItem() {
-        this.buttonGroupItem.toArray().forEach( ( item, index ) => {
-            item.index = index;
-            this.lista.nativeElement.appendChild( item._element.nativeElement );
-        } );
-        if ( this.multiSelect ) {
-            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
-                return itemValue.itemSelected === true;
-            } );
-            this.itemSelect.emit( itemsSelected );
-        } else {
-            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
-                return itemValue.itemSelected === true;
-            } );
-            this.itemSelect.emit( itemsSelected );
-        }
 
+        this.buttonGroupItem.toArray().forEach( ( item, index ) => {
+
+            item.index = index;
+
+            this.lista.nativeElement.appendChild( item._element.nativeElement );
+
+        } );
+
+        if ( this.multiSelect ) {
+
+            const itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+                return itemValue.itemSelected === true;
+            } );
+
+            this.itemSelect.emit( itemsSelected );
+
+        } else {
+
+            let itemsSelectedEmit;
+
+            let itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+
+                return itemValue.itemSelected === true;
+
+            } );
+
+            if ( itemsSelected.length > 1 ) {
+
+                itemsSelectedEmit = itemsSelected.splice( itemsSelected.length - 1, 1 );
+
+                itemsSelected.forEach( ( itemValue ) => {
+                    itemValue.buttonSelected = false;
+                    itemValue.itemSelected = false;
+                    itemValue.indexSelected = false;
+                } );
+
+            } else {
+
+                itemsSelectedEmit = itemsSelected;
+
+            }
+
+            this.itemSelect.emit( itemsSelectedEmit );
+        }
 
     }
 
     onClickItem( event ) {
+
         let itemsSelected;
+
         if ( this.multiSelect ) {
+
             itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+
                 return itemValue.itemSelected === true;
+
             } );
+
             this.itemSelect.emit( itemsSelected );
+
         } else {
+
             this.indexItemSelected = this.buttonGroupService.getIndexSelected();
+
             itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
+
                 if ( item.itemSelected === true && (item.buttonSelected = item.index === this.indexItemSelected) ) {
+
                     item.indexSelected = true;
+
                     return item;
+
                 } else {
+
                     item.itemSelected = false;
+
                     item.indexSelected = false;
+
                 }
+
             } );
+
             this.itemSelect.emit( itemsSelected );
+
         }
+
     }
 
 }

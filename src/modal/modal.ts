@@ -19,13 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-    Component, ComponentRef, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output,
-    Renderer2,
-    ViewChild, ViewContainerRef
-} from '@angular/core';
+import { Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
+    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ModalService } from './modal.service';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 
@@ -35,17 +32,14 @@ let globalZindex = 1;
     selector: 'tl-modal',
     templateUrl: './modal.html',
     styleUrls: [ './modal.scss' ],
+    encapsulation: ViewEncapsulation.None,
     animations: [
         trigger(
             'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity: 0 } ),
-                    animate( '200ms', style( { opacity: 1 } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity: 1 } ),
-                    animate( '200ms', style( { opacity: 0 } ) )
-                ] )
+                state('enter', style({ transform: 'none', opacity: 1 })),
+                state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
+                state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
+                transition('* => *', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
             ]
         )
     ]

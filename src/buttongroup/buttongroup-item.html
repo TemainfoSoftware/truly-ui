@@ -10,7 +10,8 @@
             [buttonAddonAfterClass]="buttonAddonAfterClass"
             [iconLeftTextButton]="iconLeftTextButton"
             [iconRightTextButton]="iconRightTextButton"
-            [toggle]="toggle"
+            [toggle]="true"
             [toggleClass]="toggleClass"
-            [buttonSelected]="buttonSelected">
+            [buttonSelected]="buttonSelected"
+            (isSelected)="onIsSelected($event)">
 </tl-button>

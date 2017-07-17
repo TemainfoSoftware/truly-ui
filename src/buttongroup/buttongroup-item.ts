@@ -19,24 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, forwardRef, HostListener, Input, AfterContentInit } from '@angular/core';
-
-import { TlButton } from '../button/button';
+import { Component, ElementRef, HostListener, Input, AfterContentInit } from '@angular/core';
 
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
     selector : 'tl-button-group-item',
     templateUrl : './buttongroup-item.html',
-    styleUrls : [ './buttongroup-item.scss' ],
-    providers: [{
-        provide: { TlButton,  },
-        useExisting: forwardRef( () => TlButtonGroupItem )
-    }]
+    styleUrls : [ './buttongroup-item.scss' ]
 } )
 export class TlButtonGroupItem implements AfterContentInit {
-
-    @Input() itemSelected = false;
 
     @Input() type = 'button';
 
@@ -58,8 +50,6 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() disabled: boolean = null;
 
-    @Input() toggle: boolean;
-
     @Input() toggleClass: string;
 
     @Input() buttonClass = '';
@@ -68,19 +58,15 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     public index = -1;
 
-    public indexSelected: boolean;
-
     @Input() public _buttonSelected = true;
     set buttonSelected( value: boolean ) {
-        this._buttonSelected = !value;
+        this._buttonSelected = value;
     }
     get buttonSelected () {
         return this._buttonSelected;
     }
 
-    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {
-        this.indexSelected = false;
-    }
+    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {}
 
     ngAfterContentInit() {
         this.checkPreselectedItem();
@@ -88,16 +74,16 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
-        this.itemSelected = !this.itemSelected;
         this.buttonGroupService.setIndexSelected(this.index);
     }
 
     checkPreselectedItem() {
-        if ( this.checkItem ) {
-            this.buttonSelected = true;
-            this.itemSelected = true;
-            this.indexSelected = true;
-        }
+        this.buttonSelected = this.checkItem === true;
+    }
+
+
+    onIsSelected($event) {
+        this._buttonSelected = $event.selected;
     }
 
 }

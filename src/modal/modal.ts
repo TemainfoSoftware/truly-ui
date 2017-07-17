@@ -19,17 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-    Component, ComponentRef, ContentChildren, ElementRef, EventEmitter, HostBinding, Input, OnDestroy, OnInit, Output,
-    QueryList,
-    Renderer2,
-    ViewChild, ViewChildren, ViewContainerRef, ViewEncapsulation
-} from '@angular/core';
+import { Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
+    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
-import { TlButton } from "../button/button";
 
 let globalZindex = 1;
 

@@ -38,4 +38,20 @@ export class TlDialogConfirmation implements AfterViewInit {
     ngAfterViewInit() {
         this.defaultOK ? this.buttonOk.buttonBox.nativeElement.focus() : this.buttonCancel.buttonBox.nativeElement.focus();
     }
+
+    onkeyup($event) {
+        switch ($event.code) {
+            case 'ArrowLeft': this.setPreviousButton();
+            break;
+            case 'ArrowRight': this.setNextButton();
+        }
+    }
+
+    private setPreviousButton() {
+        this.buttonOk.buttonBox.nativeElement.focus();
+    }
+
+    private setNextButton() {
+        this.buttonCancel.buttonBox.nativeElement.focus();
+    }
 }

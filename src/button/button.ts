@@ -69,9 +69,9 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     @Output() isSelected: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('buttonBox') buttonBox: ElementRef;
+    @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
 
-    private _buttonSelected = false;
+    private _buttonSelected = true;
 
     private tabindex;
 
@@ -80,31 +80,32 @@ export class TlButton implements AfterContentInit, OnChanges {
         this.executeToggle();
     }
 
-    constructor(public button: ElementRef, public modalService: ModalService) {
+    constructor( public button: ElementRef, public modalService: ModalService ) {
         this.toggleClassName = '';
         this.toggle = false;
-        this._buttonSelected = this.toggle;
         this.tabindex = uniqueIndex++;
     }
 
-    keydown($event) {
-        if ($event.key === 'Enter') {
+    keydown( $event ) {
+        if ( $event.key === 'Enter' ) {
             this.clickToggle();
         }
-        if ($event.key === 'Escape') {
-            this.modalService.execCallBack(ModalResult.MRCLOSE, this.buttonBox.nativeElement.offsetParent.parentElement);
+        if ( $event.key === 'Escape' ) {
+            this.modalService.execCallBack( ModalResult.MRCLOSE, this.buttonBox.nativeElement.offsetParent.parentElement );
         }
     }
 
     ngAfterContentInit() {
-        if (this.defaultFocus) {
+        if ( this.defaultFocus ) {
             this.buttonBox.nativeElement.focus();
         }
-        if (!ModalResult.propertyIsEnumerable(String(this.mdResult)) && this.mdResult !== undefined) {
-            throw new EvalError(this.mdResult + ' is not valid ModalResult value');
+        if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
+            throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
     }
-    ngOnChanges(changes: SimpleChanges) {}
+
+    ngOnChanges( changes: SimpleChanges ) {
+    }
 
     clickToggle() {
         this.executeToggle();
@@ -112,25 +113,22 @@ export class TlButton implements AfterContentInit, OnChanges {
     }
 
     executeToggle() {
-        if (this.toggle) {
-
-          //  console.log(this._buttonSelected);
-
-            if ( this._buttonSelected) {
+        if ( this.toggle ) {
+            if ( this._buttonSelected ) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
-                this.isSelected.emit({ selected: this._buttonSelected });
+                this.isSelected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = false;
             } else {
                 this.toggleClassName = '';
-                this.isSelected.emit({ selected: this._buttonSelected });
+                this.isSelected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = true;
             }
         }
     }
 
     isButtonOnModal() {
-        if (this.buttonBox.nativeElement.offsetParent.parentElement.localName === 'tl-modal') {
-            this.modalService.execCallBack(ModalResult[ this.mdResult ], this.buttonBox.nativeElement.offsetParent.parentElement);
+        if ( this.buttonBox.nativeElement.offsetParent.parentElement.localName === 'tl-modal' ) {
+            this.modalService.execCallBack( ModalResult[ this.mdResult ], this.buttonBox.nativeElement.offsetParent.parentElement );
         }
     }
 

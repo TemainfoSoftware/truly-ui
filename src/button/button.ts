@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges,
+    AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges, Output, EventEmitter,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -67,6 +67,8 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     @Input() mdResult: ModalResult;
 
+    @Output() isSelected: EventEmitter<any> = new EventEmitter<any>();
+
     @ViewChild('buttonBox') buttonBox: ElementRef;
 
     private _buttonSelected = false;
@@ -111,12 +113,17 @@ export class TlButton implements AfterContentInit, OnChanges {
 
     executeToggle() {
         if (this.toggle) {
-            if ( this._buttonSelected === false ) {
+
+          //  console.log(this._buttonSelected);
+
+            if ( this._buttonSelected) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
-                this._buttonSelected = true;
+                this.isSelected.emit({ selected: this._buttonSelected });
+                this._buttonSelected = false;
             } else {
                 this.toggleClassName = '';
-                this._buttonSelected = false;
+                this.isSelected.emit({ selected: this._buttonSelected });
+                this._buttonSelected = true;
             }
         }
     }

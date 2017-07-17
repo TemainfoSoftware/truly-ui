@@ -25,7 +25,6 @@ import {
 } from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
-
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
@@ -44,13 +43,12 @@ export class TlButtonGroup implements AfterContentInit {
 
     @ViewChild( 'lista' ) lista: ElementRef;
 
-    indexItemSelected: number;
-
-    itemsSelected: any;
-
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
-    constructor( private buttonGroupService: ButtonGroupService ) {}
+    private itemsSelected: Array<any> = [];
+
+    constructor( private buttonGroupService: ButtonGroupService ) {
+    }
 
     ngAfterContentInit() {
         this.createItems();
@@ -58,41 +56,41 @@ export class TlButtonGroup implements AfterContentInit {
 
     createItems() {
         this.setInitialItems();
-        if ( this.multiSelect ) {
-            this.emitItems( this.getSelectedItems() );
-        } else {
-            this.itemsSelected = this.getSelectedItems();
-            let emitSelectedItems;
-            if ( this.itemsSelected.length > 1 ) {
-                emitSelectedItems = this.itemsSelected.splice( this.itemsSelected.length - 1, 1 );
-                this.itemsSelected.forEach( ( itemValue ) => {
-                    itemValue.buttonSelected = false;
-                    itemValue.itemSelected = false;
-                    itemValue.indexSelected = false;
-                } );
-            } else {
-                emitSelectedItems = this.itemsSelected;
-            }
-            this.emitItems( emitSelectedItems );
+        this.isMultiSelectMode() ? this.initializeMultiSelectMode() : this.initializeSingleMode();
+    }
+
+    initializeMultiSelectMode() {
+        this.handleMultiSelectMode();
+    }
+
+    initializeSingleMode() {
+        this.getItemsSelectedOnInit();
+        this.selectLastButton();
+    }
+
+    selectLastButton() {
+        if ( !( this.itemsSelected.length > 1) ) {
+            return this.emitItems( this.itemsSelected );
         }
+
+        const emitSelectedItems = this.itemsSelected.splice( this.itemsSelected.length - 1, 1 );
+        this.itemsSelected.forEach( ( itemValue ) => {
+            itemValue.buttonSelected = false;
+        } );
+
+        this.emitItems( emitSelectedItems );
+    }
+
+    getItemsSelectedOnInit() {
+        this.itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
+            if ( item.buttonSelected ) {
+                return item;
+            }
+        } );
     }
 
     onClickItem( event ) {
-        if ( this.multiSelect ) {
-            this.emitItems( this.getSelectedItems() );
-        } else {
-            this.indexItemSelected = this.buttonGroupService.getIndexSelected();
-            this.itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
-                if ( item.itemSelected === true && (item.buttonSelected = item.index === this.indexItemSelected) ) {
-                    item.indexSelected = true;
-                    return item;
-                } else {
-                    item.itemSelected = false;
-                    item.indexSelected = false;
-                }
-            } );
-            this.emitItems( this.itemsSelected );
-        }
+        this.isMultiSelectMode() ? this.handleMultiSelectMode() : this.handleSingleSelectMode();
     }
 
     setInitialItems() {
@@ -102,14 +100,34 @@ export class TlButtonGroup implements AfterContentInit {
         } );
     }
 
-    getSelectedItems() {
-        return this.buttonGroupItem.toArray().filter( ( itemValue ) => {
-            return itemValue.itemSelected === true;
+
+    handleSingleSelectMode() {
+        this.itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
+            const previousIndex = this.itemsSelected.length ? this.itemsSelected[ 0 ].index : -1;
+            const buttonSelected = (item.index === this.buttonGroupService.getIndexSelected());
+            if ( (buttonSelected ) && ( item.index !== previousIndex ) ) {
+                item.buttonSelected = true;
+                return item;
+            } else {
+                item.buttonSelected = false;
+            }
         } );
+        this.emitItems( this.itemsSelected );
     }
 
-    emitItems(items) {
+    handleMultiSelectMode() {
+        this.itemsSelected = this.buttonGroupItem.toArray().filter( ( itemValue ) => {
+            return itemValue.buttonSelected === true;
+        } );
+        this.emitItems( this.itemsSelected );
+    }
+
+    emitItems( items ) {
         this.itemSelect.emit( items );
+    }
+
+    isMultiSelectMode() {
+        return this.multiSelect;
     }
 
 }

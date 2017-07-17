@@ -100,7 +100,7 @@ export class TlButton implements AfterContentInit, OnChanges {
         if (this.defaultFocus) {
             this.buttonBox.nativeElement.focus();
         }
-        if (!ModalResult.propertyIsEnumerable(this.mdResult) && this.mdResult !== undefined) {
+        if (!ModalResult.propertyIsEnumerable(String(this.mdResult)) && this.mdResult !== undefined) {
             throw new EvalError(this.mdResult + ' is not valid ModalResult value');
         }
     }

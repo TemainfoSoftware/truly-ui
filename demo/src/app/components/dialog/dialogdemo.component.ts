@@ -28,16 +28,16 @@ export class DialogDemo {
     this.dialogService.info( 'This is an Info Dialog', ( modalResult ) => {
       console.log('Return',modalResult);
     }, {
-      title: 'MY CUSTOM DIALOG Silvao',
-      textOk: 'Maicao',
+      title: 'My custom dialog',
+      textOk: 'Ok',
       draggable: true,
     } )
   }
 
   confirmation() {
-    this.dialogService.confirmation( 'Deseja realmente executar essa ação ?', ( modalResult ) => {
+    this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
       if (modalResult === ModalResult.MRYES) {
-        alert('clicou YES')
+        alert('clicked YES')
       }
     },)
   }

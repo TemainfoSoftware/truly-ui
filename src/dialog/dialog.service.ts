@@ -77,9 +77,7 @@ export class DialogService {
             return;
         }
         Object.keys( options ).forEach( ( value ) => {
-            if ( value ) {
-                typeModal[ value ] = options[ value ];
-            }
+            typeModal[ value ] = options[ value ];
         } );
 
     }
@@ -89,11 +87,8 @@ export class DialogService {
             return;
         }
         Object.keys( options ).forEach( ( value ) => {
-            if ( value ) {
-                this.modalService.componentInjected.instance[ value ] = options[ value ];
-            }
+            this.modalService.componentInjected.instance[ value ] = options[ value ];
         } );
-
     }
 
     existOptions( options ) {

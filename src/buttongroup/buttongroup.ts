@@ -78,7 +78,7 @@ export class TlButtonGroup implements AfterContentInit {
     }
 
     hasMoreThanOnePreselectedItem() {
-        if( this.itemsSelected.length > 1) {
+        if ( this.itemsSelected.length > 1) {
             throw new EvalError( 'Can not preselect more than one item when property multiselect is false.' );
         }
     }

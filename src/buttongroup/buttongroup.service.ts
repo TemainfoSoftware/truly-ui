@@ -30,11 +30,11 @@ export class ButtonGroupService {
         this.indexSelected = null;
     }
 
-    public setIndexSelected(index: number): void {
+    public setIndexItemSelected(index: number): void {
         this.indexSelected = index;
     }
 
-    public getIndexSelected(): number {
+    public getIndexItemSelected(): number {
         return this.indexSelected;
     }
 

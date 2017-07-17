@@ -58,7 +58,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     public index = -1;
 
-    @Input() public _buttonSelected = true;
+    @Input() public _buttonSelected = false;
     set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
     }
@@ -74,7 +74,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @HostListener( 'click', [ '$event' ] )
     onClickListener( $event ) {
-        this.buttonGroupService.setIndexSelected(this.index);
+        this.buttonGroupService.setIndexItemSelected(this.index);
     }
 
     checkPreselectedItem() {

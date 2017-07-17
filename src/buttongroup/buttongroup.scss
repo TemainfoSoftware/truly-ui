@@ -1,49 +1,7 @@
 @import "../core/core";
 
 //Default
-$button-height: 39px;
-$border-default: 1px solid #C8C8C8;
 
-.tl-split-button-box{
-  display: inline-block;
-  position: relative;
-  height: $button-height;
-  > .split-button-actions{
-    background-color:#E8E8E8;
-    border-top: $border-default;
-    border-right: $border-default;
-    border-bottom: $border-default;
-    color: #616161;
-    height: $button-height;
-    line-height: $button-height;
-    cursor: pointer;
-    float: right;
-    user-select: none;
-    >.actions-menu{
-      position: absolute;
-      overflow: hidden;
-      top: $button-height;
-      left:0;
-      height:auto;
-      display:inline;
-      list-style: none;
-      background-color: #E8E8E8;
-      padding: 5px;
-      min-width: 102px;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
-      border: $border-default;
-      z-index: 1;
-      cursor: auto;
-    }
-  }
-  > .split-button-actions:hover, .split-button-actions.ativo{
-    background-color: #dedede;
-  }
-  > .split-button-actions:active{
-    background-color: #d8d8d8;
-  }
-  > .split-button-actions i{
-    color: #6A6A6A;
-  }
+.tl-button-group-box {
+  display:inline-block
 }
-

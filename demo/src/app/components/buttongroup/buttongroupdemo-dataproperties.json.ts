@@ -89,13 +89,6 @@ export const dataProperties2 = [
     options : "ion-printer | fa fa-home | any"
   },
   {
-    name: "toggle",
-    type: "boolean",
-    default: "false",
-    description: "Change the button to toggle button if set to true.",
-    options: "true | false"
-  },
-  {
     name: "toggleClass",
     type: "string",
     default: "null",

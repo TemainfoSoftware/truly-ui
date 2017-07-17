@@ -22,6 +22,8 @@ export class ButtonGroupDemo {
 
   public itemSelected4: any[];
 
+  public itemSelected5: any[];
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataTableProperties2 = json.dataProperties2;
@@ -52,6 +54,13 @@ export class ButtonGroupDemo {
     this.itemSelected4 = [];
     event.forEach( (item) => {
       this.itemSelected4.push( ' ' + item.text );
+    });
+  }
+
+  showItemSelected5(event){
+    this.itemSelected5 = [];
+    event.forEach( (item) => {
+      this.itemSelected5.push( ' ' + item.text );
     });
   }
 

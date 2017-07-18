@@ -107,7 +107,7 @@ export class TlButton implements AfterContentInit {
 
     clickToggle() {
         this.executeToggle();
-        this.isButtonOnModal();
+        this.dispatchCallback();
     }
 
     executeToggle() {
@@ -123,17 +123,30 @@ export class TlButton implements AfterContentInit {
             }
         }
     }
+
     hasText() {
         if ( !this.text ) {
             throw new EvalError( 'You must pass some value to the text property of the button element.' );
         }
     }
 
-    isButtonOnModal() {
-        if ( this.buttonBox.nativeElement.offsetParent.parentElement.localName === 'tl-modal' ) {
-            this.modalService.execCallBack( ModalResult[ this.mdResult ], this.buttonBox.nativeElement.offsetParent.parentElement );
+    dispatchCallback() {
+        const listModals = document.querySelectorAll( 'tl-modal' );
+        if ( listModals.length > 0 ) {
+            this.modalService.execCallBack( ModalResult[ this.mdResult ], this.findParentOfChildren( listModals ) );
         }
     }
 
+    findParentOfChildren( listModals ) {
+        let parent;
+        for ( let child = 0; child < listModals.length; child++ ) {
+            const listElements = listModals[ child ].querySelectorAll( '*' );
+            for ( let child2 = 0; child2 < listElements.length; child2++ ) {
+                if ( listElements[ child2 ] === this.button.nativeElement ) {
+                    return parent = listModals[ child ];
+                }
+            }
+        }
+    }
 }
 

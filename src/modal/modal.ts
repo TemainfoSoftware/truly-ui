@@ -66,6 +66,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() width = '500px';
 
+    @Input() fullscreen = false;
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
@@ -126,6 +128,9 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.mousemoveListener();
         this.mouseupListener();
         this.setDefaultDimensions();
+        if (this.fullscreen) {
+            this.maximizeModal();
+        }
     }
 
     resizeListener() {

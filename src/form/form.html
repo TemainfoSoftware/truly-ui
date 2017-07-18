@@ -1,0 +1,21 @@
+<div class="formBox">
+    <div class="formContent">
+        <ng-content></ng-content>
+    </div>
+    <div class="clearfix"></div>
+    <div class="forFooter">
+        <div class="controls">
+            <tl-button [text]="'Ok'"
+                       mdResult="MROK"
+                       [buttonAddonBeforeClass]="'icon'"
+                       [iconAddonBefore]="'ion-checkmark'">
+            </tl-button>
+            <tl-button [text]="'Cancel'"
+                       mdResult="MRCANCEL"
+                       [buttonClass]="'botao'"
+                       [buttonAddonBeforeClass]="'iconCadUsuario'"
+                       [iconAddonBefore]="'ion-close-circled'">
+            </tl-button>
+        </div>
+    </div>
+</div>

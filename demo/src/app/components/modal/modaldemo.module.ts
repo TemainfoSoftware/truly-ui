@@ -11,6 +11,7 @@ import { CadPessoa } from "./cadastro2/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
 import { NewPessoa } from "./novo/newPessoa.component";
 import { ModalModule } from "../../../../../src/modal/index";
+import { FormModule } from "../../../../../src/form/index";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ModalModule } from "../../../../../src/modal/index";
     CommonModule,
     FormsModule,
     ModalModule,
+    FormModule,
     ButtonModule,
     HighlightJsModule,
     DatatableModule

@@ -4,6 +4,7 @@ import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { CadPessoa } from "./cadastro2/cadPessoa.component";
 import { NewPessoa } from "./novo/newPessoa.component";
+import { FormService } from "../../../../../src/form/form.service";
 
 @Component( {
   selector: 'app-modal',
@@ -17,7 +18,7 @@ export class ModalDemo {
   public modals;
   public modalOptions: ModalOptions;
 
-  constructor(private view: ViewContainerRef, private modalService: ModalService) {
+  constructor(private view: ViewContainerRef, private modalService: ModalService, private formService: FormService) {
     this.modalService.setView(this.view);
 
     this.modalOptions = {
@@ -44,6 +45,13 @@ export class ModalDemo {
     });
     this.modals = this.modalService.getMinModals();
   }
+
+  modal3() {
+    this.formService.createForm(CadPessoa, this.modalOptions, (modalResult) => {
+      console.log('return', modalResult);
+    });
+  }
+
 
   show(item, index) {
     this.modalService.removeMinModals(index);

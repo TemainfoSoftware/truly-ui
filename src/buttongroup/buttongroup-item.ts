@@ -54,7 +54,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() buttonClass = '';
 
-    @Input() checkItem: boolean = null;
+    @Input() checkedItem: boolean = null;
 
     public index = -1;
 
@@ -69,7 +69,7 @@ export class TlButtonGroupItem implements AfterContentInit {
     constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {}
 
     ngAfterContentInit() {
-        this.checkPreselectedItem();
+        this.isPreselectedItem();
     }
 
     @HostListener( 'click', [ '$event' ] )
@@ -77,13 +77,12 @@ export class TlButtonGroupItem implements AfterContentInit {
         this.buttonGroupService.setIndexItemSelected(this.index);
     }
 
-    checkPreselectedItem() {
-        this.buttonSelected = this.checkItem === true;
-    }
-
-
     onIsSelected($event) {
         this._buttonSelected = $event.selected;
+    }
+
+    isPreselectedItem() {
+        this.buttonSelected = this.checkedItem === true;
     }
 
 }

@@ -66,6 +66,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() width = '500px';
 
+    @Input() fullscreen = false;
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
@@ -116,6 +118,12 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     private positionY;
 
+    private subscribeResize;
+
+    private subscribeMouseMove;
+
+    private subscribeMouseUp;
+
     constructor( private element: ElementRef, private renderer: Renderer2 ) {}
 
     ngOnInit() {
@@ -126,16 +134,19 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.mousemoveListener();
         this.mouseupListener();
         this.setDefaultDimensions();
+        if (this.fullscreen) {
+            this.maximizeModal();
+        }
     }
 
     resizeListener() {
-        this.renderer.listen( window, 'resize', () => {
+        this.subscribeResize = this.renderer.listen( window, 'resize', () => {
             this.maximizeModal();
         } );
     }
 
     mousemoveListener() {
-        this.renderer.listen( window, 'mousemove', ( event ) => {
+        this.subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
             event.preventDefault();
             if ( !( this.moving && this.draggable) ) {
                 return;
@@ -156,7 +167,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     mouseupListener() {
-        this.renderer.listen( window, 'mouseup', () => {
+        this.subscribeMouseUp = this.renderer.listen( window, 'mouseup', () => {
             this.moving = false;
         } );
     }
@@ -295,7 +306,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     setZIndex() {
-        this.serviceControl.setZIndex( this.getZIndex() );
+        this.serviceControl.setZIndex( this.modal, this.getZIndex() );
     }
 
     isMouseOutOfTheWindowRight( event ) {
@@ -373,7 +384,9 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     ngOnDestroy() {
-
+        this.subscribeResize();
+        this.subscribeMouseMove();
+        this.subscribeMouseUp();
     }
 
 }

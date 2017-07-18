@@ -96,7 +96,7 @@ export const dataProperties2 = [
     options: "CSS class"
   },
   {
-    name: "checkItem",
+    name: "checkedItem",
     type: "boolean",
     default: "false",
     description: "Mark button as preselected if set to true.",

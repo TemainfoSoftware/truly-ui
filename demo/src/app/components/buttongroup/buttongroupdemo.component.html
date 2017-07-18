@@ -48,7 +48,7 @@
         <h5>Basic With Preselection</h5>
         <tl-button-group (itemSelect)="showItemSelected3($event)">
           <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [checkedItem]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
         </tl-button-group>
       </div>
@@ -65,9 +65,9 @@
       <div class="group-component">
         <h5>Multiselect With Preselection</h5>
         <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-          <tl-button-group-item [text]="'Button 1'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 1'" [checkedItem]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 3'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [checkedItem]="true"></tl-button-group-item>
         </tl-button-group>
       </div>
     </div>
@@ -84,7 +84,7 @@
         <h5>Custom Multiselect With Many Properties</h5>
         <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected5($event)">
           <tl-button-group-item [text]="'Button 1'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [checkItem]="true" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [checkedItem]="true" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
         </tl-button-group>
       </div>
@@ -158,16 +158,6 @@
           <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
       </tl-button-group>
-
-      <!--
-      * Click Event - Demo.
-      -->
-
-      <script type="text/javascript">
-      showItemSelected(...) {
-          ...
-      }
-      </script>
   </textarea>
   </div>
   <div class="group-component">
@@ -178,16 +168,6 @@
           <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
       </tl-button-group>
-
-      <!--
-      * Click Event - Demo.
-      -->
-
-      <script type="text/javascript">
-      showItemSelected2(...) {
-          ...
-      }
-      </script>
   </textarea>
   </div>
   <div class="group-component">
@@ -195,59 +175,56 @@
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group (itemSelect)="showItemSelected3($event)">
           <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [checkedItem]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
       </tl-button-group>
-
-      <!--
-      * Click Event - Demo.
-      -->
-
-      <script type="text/javascript">
-      showItemSelected3(...) {
-          ...
-      }
-      </script>
   </textarea>
   </div>
   <div class="group-component">
     <h5 class="title">Multiselect With Preselection</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-          <tl-button-group-item [text]="'Button 1'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 1'" [checkedItem]="true"></tl-button-group-item>
           <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 3'" [checkItem]="true"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [checkedItem]="true"></tl-button-group-item>
       </tl-button-group>
-
-      <!--
-      * Click Event - Demo.
-      -->
-
-      <script type="text/javascript">
-      showItemSelected4(...) {
-          ...
-      }
-      </script>
   </textarea>
   </div>
   <div class="group-component">
     <h5 class="title">Custom Multiselect With Many Properties</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected5($event)">
-          <tl-button-group-item [text]="'Button 1'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 2'" [checkItem]="true" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
-          <tl-button-group-item [text]="'Button 3'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'"></tl-button-group-item>
+          <tl-button-group-item [text]="'Button 1'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'">
+          </tl-button-group-item>
+          <tl-button-group-item [text]="'Button 2'" [checkedItem]="true" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'">
+          </tl-button-group-item>
+          <tl-button-group-item [text]="'Button 3'" [buttonClass]="'buttonClass3'" [toggleClass]="'toggleClass3'">
+          </tl-button-group-item>
       </tl-button-group>
 
       <!--
-      * Click Event - Demo.
+      * Required: !important;
+      *
+      * Custom Style Example - Global CSS.
       -->
 
-      <script type="text/javascript">
-      showItemSelected5(...) {
-          ...
+      <style type="text/css">
+      .buttonClass3{
+        background-color: #e0e000 !important;
+        color: #222 !important;
+        font-size: 16px !important;
+        border: 1px solid #b9b900 !important;
       }
-      </script>
+      .buttonClass3:hover{
+        background-color: #d6d600 !important;
+      }
+      .buttonClass3:active{
+        background-color: #d0d000 !important;
+      }
+      .toggleClass3{
+        background-color: #d0d000 !important;
+      }
+      </style>
   </textarea>
   </div>
 </div>

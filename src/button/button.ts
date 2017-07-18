@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ElementRef, Input, ViewChild, OnChanges, SimpleChanges, Output, EventEmitter,
+    AfterContentInit, Component, ElementRef, Input, ViewChild, Output, EventEmitter,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -33,7 +33,7 @@ let uniqueIndex = 0;
     templateUrl : './button.html',
     styleUrls : [ './button.scss' ]
 } )
-export class TlButton implements AfterContentInit, OnChanges {
+export class TlButton implements AfterContentInit {
 
     @Input() type = 'button';
 
@@ -102,9 +102,7 @@ export class TlButton implements AfterContentInit, OnChanges {
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
-    }
-
-    ngOnChanges( changes: SimpleChanges ) {
+        this.hasText();
     }
 
     clickToggle() {
@@ -123,6 +121,11 @@ export class TlButton implements AfterContentInit, OnChanges {
                 this.isSelected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = true;
             }
+        }
+    }
+    hasText() {
+        if ( !this.text ) {
+            throw new EvalError( 'You must pass some value to the text property of the button element.' );
         }
     }
 

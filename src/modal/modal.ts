@@ -300,7 +300,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     setZIndex() {
-        this.serviceControl.setZIndex( this.getZIndex() );
+        this.serviceControl.setZIndex( this.modal, this.getZIndex() );
     }
 
     isMouseOutOfTheWindowRight( event ) {

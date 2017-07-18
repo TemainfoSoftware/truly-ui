@@ -74,8 +74,9 @@ export class ModalService {
         this.setZIndex();
     }
 
-    setZIndex( indexModal? ) {
-        this.component.instance.element.nativeElement.style.zIndex = indexModal + 1;
+    setZIndex( element?, indexModal? ) {
+        !element ? this.component.instance.element.nativeElement.style.zIndex = indexModal + 1 :
+            element.nativeElement.style.zIndex = indexModal + 1;
     }
 
     removeMinModals( indexModal ) {

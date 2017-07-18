@@ -27,7 +27,6 @@ import {
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { TlSplitButtonAction } from './splitbutton-action';
-import { TlButton } from '../button/button';
 import { ModalService } from '../modal/modal.service';
 
 
@@ -52,7 +51,31 @@ let globalZindex = 1;
         )
     ]
 } )
-export class TlSplitButton extends TlButton implements AfterContentInit {
+export class TlSplitButton implements AfterContentInit {
+
+    @Input() type = 'button';
+
+    @Input() text = '';
+
+    @Input() iconAddonBefore = '';
+
+    @Input() buttonAddonBeforeClass;
+
+    @Input() iconAddonAfter = '';
+
+    @Input() buttonAddonAfterClass;
+
+    @Input() size;
+
+    @Input() iconLeftTextButton = '';
+
+    @Input() iconRightTextButton = '';
+
+    @Input() disabled: boolean = null;
+
+    @Input() toggleClass: string;
+
+    @Input() buttonClass = '';
 
     @Input() splitButtonClass;
 
@@ -66,10 +89,8 @@ export class TlSplitButton extends TlButton implements AfterContentInit {
 
     private showHide: boolean;
 
-    constructor( public button: ElementRef, private _renderer: Renderer2, modalService: ModalService ) {
-        super(button, modalService);
+    constructor( public button: ElementRef, private _renderer: Renderer2 ) {
         this.showHide = false;
-        this.toggle = false;
     }
 
     @HostListener( 'click', [ '$event' ] )

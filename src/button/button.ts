@@ -106,6 +106,7 @@ export class TlButton implements AfterContentInit {
     }
 
     clickToggle() {
+        this.buttonBox.nativeElement.style.outline = 'none';
         this.executeToggle();
         this.dispatchCallback();
     }

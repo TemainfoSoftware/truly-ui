@@ -27,8 +27,6 @@ import {
 import { animate, style, transition, trigger } from '@angular/animations';
 
 import { TlSplitButtonAction } from './splitbutton-action';
-import { ModalService } from '../modal/modal.service';
-
 
 let globalZindex = 1;
 

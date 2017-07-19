@@ -20,16 +20,80 @@
  SOFTWARE.
  */
 import {
-    Component
+        Component, HostListener
 } from '@angular/core';
+
+import { style, transition, trigger, animate } from '@angular/animations';
+
+import { ComponentDefaultBase } from '../core/base/component-default.base';
+
+let globalZindex = 1;
 
 @Component( {
     selector : 'tl-drop-down-list',
     templateUrl : './dropdownlist.html',
-    styleUrls : [ './dropdownlist.scss' ]
+    styleUrls : [ './dropdownlist.scss' ],
+    animations: [
+        trigger(
+            'enterAnimation', [
+                transition( ':enter', [
+                    style( { opacity: 0, transform: 'translate(0%,-5%)', flex: '0' } ),
+                    animate( '200ms', style( { opacity: 1, transform: 'translate(0%,0%)' } ) )
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1, transform: 'translate(0%,0%)' } ),
+                    animate( '200ms', style( { opacity: 0, transform: 'translate(0%,-5%)' } ) )
+                ] )
+            ]
+        )
+    ]
 } )
-export class TlDropDownList {
+export class TlDropDownList extends ComponentDefaultBase {
 
-    constructor() { }
+    public zIndex = 0;
+
+    private showHide: boolean;
+
+    private itemList: any[];
+
+    constructor() {
+        super();
+        this.itemList = [
+            {
+                textItem: 'Item 1 a s 2 3 4 5 6 1 2 ',
+                valueItem: '1'
+            },
+            {
+                textItem: 'Item 2',
+                valueItem: '2'
+            },
+            {
+                textItem: 'Item 3',
+                valueItem: '3'
+            }
+        ];
+        this.showHide = false;
+    }
+
+    @HostListener( 'click', [ '$event' ] )
+    onClickListener( $event ) {
+        $event.stopPropagation();
+        this.showHide = false;
+    }
+
+    changeShowStatus() {
+        console.log(this.showHide);
+        this.showHide = !this.showHide;
+        if ( this.showHide ) {
+            setTimeout( () => {
+                this.getAndSetZIndex();
+            }, 0 );
+        }
+    }
+
+    getAndSetZIndex() {
+        this.zIndex = globalZindex++;
+        return this.zIndex;
+    }
 
 }

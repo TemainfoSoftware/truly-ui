@@ -65,10 +65,6 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() size;
 
-    @Input() iconLeftTextButton = '';
-
-    @Input() iconRightTextButton = '';
-
     @Input() disabled: boolean = null;
 
     @Input() toggleClass: string;

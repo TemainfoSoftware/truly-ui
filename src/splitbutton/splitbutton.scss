@@ -1,35 +1,42 @@
 @import "../core/core";
 
 //Default
-$button-height: 39px;
+$button-height: 37px;
 $border-default: 1px solid #C8C8C8;
+$button-font-family: 'Segoe UI', sans-serif;
+$button-font-size: 15px;
 
 .tl-split-button-box{
+  font-family: $button-font-family;
+  font-size: $button-font-size;
   display: inline-block;
   position: relative;
   height: $button-height;
   > .split-button-actions{
+    margin: 0;
+    padding: 0;
     background-color:#E8E8E8;
     border-top: $border-default;
     border-right: $border-default;
     border-bottom: $border-default;
-    color: #616161;
-    height: $button-height;
+    color: #6A6A6A;
     line-height: $button-height;
     cursor: pointer;
     float: right;
     user-select: none;
+
     >.actions-menu{
       position: absolute;
       overflow: hidden;
-      top: $button-height;
+      top: 39px;
       left:0;
+      margin: 0;
       height:auto;
       display:inline;
+      padding: 0;
       list-style: none;
       background-color: #E8E8E8;
-      padding: 5px;
-      min-width: 102px;
+      min-width: 123px;
       box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
       border: $border-default;
       z-index: 1;

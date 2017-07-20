@@ -20,8 +20,9 @@
     SOFTWARE.
 */
 export enum KeyEvent {
-    ARROWUP = 38 ,
+    ARROWUP = 38,
     ARROWDOWN = 40,
     END = 35,
     HOME = 36,
+    ENTER = 13
 }

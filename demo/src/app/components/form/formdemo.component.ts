@@ -2,18 +2,18 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
-import { NewModal } from "./newmodal/newModal.component";
 import { FormService } from "../../../../../src/form/form.service";
-import * as json from './modal-dataproperties.json';
+import * as json from './form-dataproperties.json';
+import { CadPessoa } from "./newpessoa/cadPessoa.component";
 
 
 @Component( {
   selector: 'app-modal',
-  templateUrl: './modaldemo.component.html',
+  templateUrl: './formdemo.component.html',
   animations: [ routerTransition() ],
-  styleUrls: [ './modaldemo.component.scss' ]
+  styleUrls: [ './formdemo.component.scss' ]
 } )
-export class ModalDemo {
+export class FormDemo {
 
   public index: number;
   public modals;
@@ -25,7 +25,7 @@ export class ModalDemo {
     this.modalprop = json.dataProperties;
 
     this.modalOptions = {
-      title: 'New Modal',
+      title: 'New Form',
       icon: 'ion-monitor',
       draggable: true,
       width: '500px',
@@ -36,7 +36,7 @@ export class ModalDemo {
   }
 
   modal1() {
-    this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
+    this.formService.createForm(CadPessoa, this.modalOptions, (modalResult) => {
       console.log('Return',modalResult);
     });
   }

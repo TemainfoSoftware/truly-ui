@@ -27,7 +27,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Output,
-    EventEmitter
+    EventEmitter, ViewEncapsulation
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
@@ -59,6 +59,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: [ './input.scss' ],
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }

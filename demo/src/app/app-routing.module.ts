@@ -13,6 +13,7 @@ import { HomeComponent } from "app/home/home.component";
       {path: 'buttongroup', loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'},
       {path: 'dropdownlist', loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
+      {path: 'form', loadChildren: './components/form/formdemo.module#FormDemoModule'},
       {path: 'dialog', loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'}

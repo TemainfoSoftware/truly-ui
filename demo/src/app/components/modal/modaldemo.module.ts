@@ -7,9 +7,9 @@ import { CommonModule  } from '@angular/common';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from '../../../../../src/input';
 import { ButtonModule } from '../../../../../src/button';
-import { CadPessoa } from "./cadastro2/cadPessoa.component";
+import { CadPessoa } from "./newpessoa/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
-import { NewPessoa } from "./novo/newPessoa.component";
+import { NewModal } from "./newmodal/newModal.component";
 import { ModalModule } from "../../../../../src/modal/index";
 import { FormModule } from "../../../../../src/form/index";
 
@@ -17,7 +17,7 @@ import { FormModule } from "../../../../../src/form/index";
   declarations: [
     ModalDemo,
     CadPessoa,
-    NewPessoa,
+    NewModal,
   ],
   imports:[
     ModalDemoRoutingModule,
@@ -33,9 +33,9 @@ import { FormModule } from "../../../../../src/form/index";
   exports: [
     ModalDemo,
     CadPessoa,
-    NewPessoa
+    NewModal
   ],
-  entryComponents: [ CadPessoa, NewPessoa ]
+  entryComponents: [ CadPessoa, NewModal ]
 })
 export class ModalDemoModule {
 

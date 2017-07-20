@@ -22,7 +22,7 @@
 import {
     AfterViewInit, Component, Input, Renderer2, ViewChild,
 } from '@angular/core';
-import { KeyEvent } from "../core/enums/key-events";
+import { KeyEvent } from '../core/enums/key-events';
 
 
 @Component( {
@@ -42,7 +42,7 @@ export class TlForm implements AfterViewInit {
     private listenDown;
     private listenEnter;
 
-    constructor( private renderer : Renderer2 ) {
+    constructor( private renderer: Renderer2 ) {
 
     }
 

@@ -1,7 +1,7 @@
 @import "../core/core";
 
 //Default
-$button-height: 39px;
+$button-height: 37px;
 $button-min-width: 100px;
 $button-icon-padding: 15px;
 $button-icon-color: #6A6A6A;
@@ -11,68 +11,53 @@ $button-font-size: 15px;
 $button-font-family: 'Segoe UI', sans-serif;
 $button-text-align: center;
 
-.tl-button-box {
+.tl-button{
   font-family: $button-font-family;
+  line-height: $button-height;
   font-size: $button-font-size;
   background-color:#E8E8E8;
-  display: table;
+  min-width: $button-min-width;
+  padding: 0;
+  outline: none;
+  display: inline-block;
   cursor: pointer;
   border: 1px solid #C8C8C8;
+  color: #616161;
 
-  >.tl-button{
+  > .iconAddonBefore{
+    float: left;
     line-height: $button-height;
-    min-width: $button-min-width;
-    padding: 0 15px;
-    text-align: $button-text-align;
-    outline: none;
-    margin: 0;
-    border: 0;
-    background-color:transparent;
-    color: #616161;
-    cursor: pointer;
-    > .iconLeftTextButton{
-      padding-right: 7px;
-    }
-    > .iconRightTextButton{
-      padding-left: 7px;
-    }
-  }
-  >.addon {
-    font-size: $button-font-size;
     font-weight: 400;
-    color: #616161;
-    margin: 0;
-    padding: 0;
-  }
-  >.addon.-iconbefore{
-    display: table-cell;
-    padding: $button-addon-padding;
+    padding: 0 15px;
     border-right: 1px solid #C8C8C8;
   }
-  > .addon.-iconbefore > i {
-    color: #616161;
-  }
-  >.addon.-iconafter{
-    display: table-cell;
-    padding: $button-addon-padding;
+  > .iconAddonAfter{
+    float: right;
+    line-height: $button-height;
+    font-weight: 400;
+    padding: 0 15px;
     border-left: 1px solid #C8C8C8;
   }
-  > .addon.-iconafter > i {
-    color: #616161;
+  > .textButton{
+    padding: 0 15px;
+    width: 500px !important;
+    line-height: $button-height;
   }
 }
-.tl-button-box:focus {
+.tl-button:focus {
   outline: 1px solid #a8bfc3;
 }
-.tl-button-box:hover{
+.tl-button:hover{
+  outline: none;
   background-color: #dedede;
 }
-.tl-button-box:active, .-toggle{
+.tl-button:active, .-toggle{
+  outline: none;
   background-color: #d8d8d8;
 }
-//.disabled{
-//  opacity: 0.35;
-//  filter: Alpha(Opacity=35);
-//  background-image: none;
-//  cursor: default !important;
-//}
+.disabled{
+  opacity: 0.35;
+  filter: Alpha(Opacity=35);
+  background-image: none;
+  cursor: default;
+}

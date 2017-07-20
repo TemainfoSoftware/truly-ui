@@ -123,9 +123,9 @@ i {
 /** BUTTON - CUSTOM STYLE **/
 .buttonClass1{
   background-color: #81D5AB !important;
+  border: 1px solid #6FB793 !important;
   color: #FFF !important;
   font-size: 12px !important;
-  border: 1px solid #6FB793 !important;
 }
 .buttonClass1:hover{
   background-color: #7acda3 !important;
@@ -147,10 +147,8 @@ i {
 }
 .buttonAddonBeforeClass2{
   background-color: #FFF !important;
-  border-right: 1px solid #1778b9 !important;
-}
-.buttonAddonBeforeClass2 i{
   color: #1B95E0 !important;
+  border-right: 1px solid #1778b9 !important;
 }
 /** SPLIT BUTTON - CUSTOM STYLE **/
 .buttonClass3{

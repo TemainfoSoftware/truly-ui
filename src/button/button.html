@@ -1,27 +1,15 @@
-<div #buttonBox
-     tabindex="-1"
-     (keydown)="keydown($event)"
-     [class]="buttonClass + ' tl-button-box ' + toggleClassName"
-     (click)="clickToggle()">
+<button #tlbutton
+        [type]="type"
+        [ngStyle]="{'width': size}"
+        [ngClass]="{' disabled ': disabled}"
+        [class]="buttonClass + ' tl-button ' + toggleClassName"
+        [disabled]="disabled ? true : null"
+        (click)="clickToggle()"
+        (keydown)="keydown($event)"
+        tabindex="-1">
 
-    <div *ngIf="iconAddonBefore" [class]="buttonAddonBeforeClass + ' addon -iconbefore'">
-        <i [ngClass]="iconAddonBefore" ></i>
-    </div>
+    <span *ngIf="iconAddonBefore" [ngClass]="iconAddonBefore" [class]="'iconAddonBefore ' + buttonAddonBeforeClass"></span>
+    <span class="textButton"> {{ text }} </span>
+    <span *ngIf="iconAddonAfter" [ngClass]="iconAddonAfter" [class]="'iconAddonAfter ' + buttonAddonAfterClass"></span>
 
-    <button [type]="type"
-            [ngStyle]="{'width': size}"
-            [ngClass]="{' disabled ': disabled}"
-            class="tl-button"
-            [disabled]="disabled ? true : null">
-
-        <span *ngIf="iconLeftTextButton" [ngClass]="iconLeftTextButton" class="iconLeftTextButton"></span>
-            {{text}}
-        <span *ngIf="iconRightTextButton" [ngClass]="iconRightTextButton" class="iconRightTextButton"></span>
-
-    </button>
-
-    <div *ngIf="iconAddonAfter" [class]="buttonAddonAfterClass + ' addon -iconafter'">
-        <i [ngClass]="iconAddonAfter"></i>
-    </div>
-
-</div>
+</button>

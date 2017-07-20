@@ -35,27 +35,23 @@ let uniqueIndex = 0;
 } )
 export class TlButton implements AfterContentInit {
 
-    @Input() type = 'button';
+    @Input() type: string;
 
-    @Input() text = '';
+    @Input() text: string;
 
-    @Input() iconAddonBefore = '';
+    @Input() iconAddonBefore: string;
 
-    @Input() buttonAddonBeforeClass;
+    @Input() buttonAddonBeforeClass: string;
 
-    @Input() iconAddonAfter = '';
+    @Input() iconAddonAfter: string;
 
-    @Input() buttonAddonAfterClass;
+    @Input() buttonAddonAfterClass: string;
 
-    @Input() size;
+    @Input() size: string;
 
     @Input() defaultFocus: boolean;
 
-    @Input() iconLeftTextButton = '';
-
-    @Input() iconRightTextButton = '';
-
-    @Input() disabled: boolean = null;
+    @Input() disabled: boolean;
 
     @Input() toggle: boolean;
 
@@ -63,15 +59,15 @@ export class TlButton implements AfterContentInit {
 
     @Input() toggleClassName: string;
 
-    @Input() buttonClass = '';
+    @Input() buttonClass: string;
 
     @Input() mdResult: ModalResult;
 
     @Output() isSelected: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild( 'buttonBox' ) buttonBox: ElementRef;
+    @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
-    private _buttonSelected = true;
+    private _buttonSelected: boolean;
 
     private tabindex;
 
@@ -81,9 +77,22 @@ export class TlButton implements AfterContentInit {
     }
 
     constructor( public button: ElementRef, public modalService: ModalService ) {
-        this.toggleClassName = '';
-        this.toggle = false;
+        this.initializeDefaultInputValues();
         this.tabindex = uniqueIndex++;
+    }
+
+    initializeDefaultInputValues() {
+        this.type = 'button';
+        this.text = '';
+        this.toggleClass = '';
+        this.buttonAddonAfterClass = '';
+        this.buttonAddonBeforeClass = '';
+        this.buttonClass = '';
+        this.iconAddonBefore = '';
+        this.iconAddonBefore = '';
+        this.disabled = null;
+        this.toggle = false;
+        this._buttonSelected = true;
     }
 
     keydown( $event ) {
@@ -91,13 +100,13 @@ export class TlButton implements AfterContentInit {
             this.clickToggle();
         }
         if ( $event.key === 'Escape' ) {
-            this.modalService.execCallBack( ModalResult.MRCLOSE, this.buttonBox.nativeElement.offsetParent.parentElement );
+            this.modalService.execCallBack( ModalResult.MRCLOSE, this.buttonElement.nativeElement.offsetParent.parentElement );
         }
     }
 
     ngAfterContentInit() {
         if ( this.defaultFocus ) {
-            this.buttonBox.nativeElement.focus();
+            this.buttonElement.nativeElement.focus();
         }
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
@@ -106,7 +115,7 @@ export class TlButton implements AfterContentInit {
     }
 
     clickToggle() {
-        this.buttonBox.nativeElement.style.outline = 'none';
+        this.buttonElement.nativeElement.style.outline = 'none';
         this.executeToggle();
         this.dispatchCallback();
     }

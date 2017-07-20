@@ -75,20 +75,6 @@ export const dataProperties2 = [
     options: "CSS class"
   },
   {
-    name: "iconLeftTextButton",
-    type: "string",
-    default: "null",
-    description: "Creates an icon on the left side of the text button.",
-    options: "ion-printer | fa fa-home | any"
-  },
-  {
-    name : "iconRightTextButton",
-    type : "string",
-    default : "null",
-    description : "Creates an icon on the right side of the text button.",
-    options : "ion-printer | fa fa-home | any"
-  },
-  {
     name: "toggleClass",
     type: "string",
     default: "null",

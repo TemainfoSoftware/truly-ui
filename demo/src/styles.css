@@ -153,7 +153,7 @@ i {
 /** SPLIT BUTTON - CUSTOM STYLE **/
 .buttonClass3{
   background-color: #e0e000 !important;
-  color: #222 !important;
+  color: #5d1b00 !important;
   font-size: 16px !important;
   border: 1px solid #b9b900 !important;
 }
@@ -166,11 +166,8 @@ i {
 .buttonAddonBeforeClass3{
   border-right: 1px solid #b9b900 !important;
 }
-.buttonAddonBeforeClass3 i{
-  color: #222 !important;
-}
 .splitButtonClass3, .actionMenuClass3{
-  background-color:#e0e000 !important;
+  background-color: #e0e000 !important;
   border-top: 1px solid #b9b900 !important;
   border-right: 1px solid #b9b900 !important;
   border-bottom: 1px solid #b9b900 !important;
@@ -182,7 +179,7 @@ i {
   background-color: #d0d000 !important;
 }
 .splitButtonClass3 i, .actionMenuClass3 li{
-  color: #222 !important;
+  color: #5d1b00 !important;
 }
 .actionMenuClass3 li.separator{
   border-bottom: 1px solid #b9b900 !important;

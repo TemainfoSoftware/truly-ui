@@ -19,7 +19,7 @@ export const dataProperties = [
   {
     name: "size",
     type: "string",
-    default: "100px (min)",
+    default: "125px (min)",
     description: "Button size.",
     options: "string | ex: 150px"
   },
@@ -41,7 +41,7 @@ export const dataProperties = [
     name: "iconAddonBefore",
     type: "string",
     default: "null",
-    description: "Creates an icon in the addon before the button.",
+    description: "Creates an icon in the addon before the text button.",
     options: "ion-printer | fa fa-home | any"
   },
   {
@@ -55,7 +55,7 @@ export const dataProperties = [
     name: "iconAddonAfter",
     type: "string",
     default: "null",
-    description: "Creates an icon in the addon after the button.",
+    description: "Creates an icon in the addon after the text button.",
     options: "ion-printer | fa fa-home | any"
   },
   {

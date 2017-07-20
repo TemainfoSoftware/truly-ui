@@ -20,20 +20,19 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, Input, QueryList, AfterContentInit,
-    Renderer2, ViewChild, ElementRef, HostListener
-    } from '@angular/core';
+        Component, HostListener
+} from '@angular/core';
 
-import { animate, style, transition, trigger } from '@angular/animations';
+import { style, transition, trigger, animate } from '@angular/animations';
 
-import { TlSplitButtonAction } from './splitbutton-action';
+import { ComponentDefaultBase } from '../core/base/component-default.base';
 
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-split-button',
-    templateUrl : './splitbutton.html',
-    styleUrls : [ './splitbutton.scss' ],
+    selector : 'tl-drop-down-list',
+    templateUrl : './dropdownlist.html',
+    styleUrls : [ './dropdownlist.scss' ],
     animations: [
         trigger(
             'enterAnimation', [
@@ -49,45 +48,30 @@ let globalZindex = 1;
         )
     ]
 } )
-export class TlSplitButton implements AfterContentInit {
-
-    @Input() type = 'button';
-
-    @Input() text = '';
-
-    @Input() iconAddonBefore = '';
-
-    @Input() buttonAddonBeforeClass;
-
-    @Input() iconAddonAfter = '';
-
-    @Input() buttonAddonAfterClass;
-
-    @Input() size;
-
-    @Input() iconLeftTextButton = '';
-
-    @Input() iconRightTextButton = '';
-
-    @Input() disabled: boolean = null;
-
-    @Input() toggleClass: string;
-
-    @Input() buttonClass = '';
-
-    @Input() splitButtonClass;
-
-    @Input() actionMenuClass;
-
-    @ViewChild( 'lista' ) lista: ElementRef;
-
-    @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
+export class TlDropDownList extends ComponentDefaultBase {
 
     public zIndex = 0;
 
     private showHide: boolean;
 
-    constructor( public button: ElementRef, private _renderer: Renderer2 ) {
+    private itemList: any[];
+
+    constructor() {
+        super();
+        this.itemList = [
+            {
+                textItem: 'Item 1 a s 2 3 4 5 6 1 2 ',
+                valueItem: '1'
+            },
+            {
+                textItem: 'Item 2',
+                valueItem: '2'
+            },
+            {
+                textItem: 'Item 3',
+                valueItem: '3'
+            }
+        ];
         this.showHide = false;
     }
 
@@ -97,28 +81,14 @@ export class TlSplitButton implements AfterContentInit {
         this.showHide = false;
     }
 
-    ngAfterContentInit() {
-        this._renderer.listen( document, 'click', ( event ) => {
-            if ( !(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i') ) {
-                this.showHide = false;
-            }
-        } );
-    }
-
     changeShowStatus() {
+        console.log(this.showHide);
         this.showHide = !this.showHide;
         if ( this.showHide ) {
             setTimeout( () => {
                 this.getAndSetZIndex();
-                this.createActionItem();
             }, 0 );
         }
-    }
-
-    createActionItem() {
-        this.splitButtonActions.toArray().forEach( (item) => {
-            this.lista.nativeElement.appendChild( item.element.nativeElement );
-        });
     }
 
     getAndSetZIndex() {

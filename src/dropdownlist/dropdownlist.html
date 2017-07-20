@@ -1,0 +1,34 @@
+<div class="tl-drop-down-list-box">
+
+    <div class="drop-down-list-wrap" (click)="changeShowStatus($event.stopPropagation())">
+
+        <div class="drop-down-list-input">
+            Item 1
+        </div>
+
+        <div class="drop-down-list-select">
+            <i class="ion-chevron-down"></i>
+        </div>
+
+        <ul class="drop-down-list-select-options"
+            *ngIf="showHide"
+            [ngStyle]="{'z-index': zIndex}"
+            [@enterAnimation]>
+            <li *ngFor="let item of itemList">{{ item.textItem }}</li>
+        </ul>
+
+    </div>
+
+</div>
+
+<!--<kendo-dropdownlist [data]="data"-->
+<!--[filterable]="true"-->
+<!--(valueChange)="valueChange($event)"-->
+<!--(selectionChange)="selectionChange($event)"-->
+<!--(filterChange)="filterChange($event)"-->
+<!--(open)="open()"-->
+<!--(close)="close()"-->
+<!--(focus)="focus()"-->
+<!--(blur)="blur()"-->
+<!--&gt;-->
+<!--</kendo-dropdownlist>-->

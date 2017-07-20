@@ -19,13 +19,71 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import {
+    AfterViewInit, Component, Input, Renderer2, ViewChild,
+} from '@angular/core';
+import { KeyEvent } from "../core/enums/key-events";
+
 
 @Component( {
     selector: 'tl-form',
     templateUrl: '../form/form.html',
     styleUrls: ['../form/form.scss']
 } )
-export class TlForm {
+export class TlForm implements AfterViewInit {
+
+    @Input() lastElement;
+    @Input() initialFocus;
+
+    @ViewChild( 'buttonOk' ) buttonOk;
+    @ViewChild( 'buttonCancel' ) buttonCancel;
+
+    private listenFocusOut;
+    private listenDown;
+    private listenEnter;
+
+    constructor( private renderer : Renderer2 ) {
+
+    }
+
+    ngAfterViewInit() {
+        if ( this.initialFocus ) {
+            this.initialFocus.element.nativeElement.focus();
+        }
+    }
+
+    handleKeysForm( $event ) {
+        this.returnListen();
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWUP :
+                this.backTabIndex();
+                break;
+            case KeyEvent.ARROWDOWN :
+                break;
+            case KeyEvent.ENTER :
+                break;
+        }
+    }
+
+    returnListen() {
+        if ( document.activeElement === this.lastElement.element.nativeElement ) {
+            this.listenFocusOut = this.renderer.listen( this.lastElement.element.nativeElement, 'focusout', () => {
+                this.buttonOk.buttonBox.nativeElement.focus();
+            } );
+        }
+    }
+
+
+    backTabIndex() {
+        this.listenFocusOut();
+        if ( this.getActiveElement() === this.buttonOk.buttonBox.nativeElement ) {
+            this.lastElement.element.nativeElement.focus();
+        }
+    }
+
+
+    getActiveElement() {
+        return document.activeElement;
+    }
 
 }

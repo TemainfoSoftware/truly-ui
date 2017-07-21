@@ -22,7 +22,10 @@
 export enum KeyEvent {
     ARROWUP = 38,
     ARROWDOWN = 40,
+    ARROWLEFT = 37,
+    ARROWRIGHT = 39,
     END = 35,
     HOME = 36,
-    ENTER = 13
+    ENTER = 13,
+    ESCAPE = 27,
 }

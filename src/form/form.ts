@@ -19,7 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ContentChildren, Input, QueryList, Renderer2, ViewChild } from '@angular/core';
+import {
+    AfterViewInit, Component, ContentChildren, Input, OnDestroy, QueryList, Renderer2,
+    ViewChild
+} from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
@@ -30,7 +33,7 @@ import { ModalResult } from '../core/enums/modal-result';
     templateUrl: '../form/form.html',
     styleUrls: ['../form/form.scss']
 } )
-export class TlForm implements AfterViewInit {
+export class TlForm implements AfterViewInit, OnDestroy {
 
     @Input() lastElement;
     @Input() initialFocus;
@@ -42,16 +45,18 @@ export class TlForm implements AfterViewInit {
     @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
     private input;
+    private listenLastElement;
     private dialogOpen = false;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService ) {}
 
     ngAfterViewInit() {
         this.setInitialFocus();
-        this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
-            this.resetEventKeyDown( $event );
+        this.listenLastElement = this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
             if ( this.isKeyDownEnterOrArrowDown( $event ) ) {
-                this.buttonFormOk.buttonElement.nativeElement.focus();
+                setTimeout( () => {
+                    this.buttonFormOk.buttonElement.nativeElement.focus();
+                }, 1 );
             }
         } );
     }
@@ -71,11 +76,6 @@ export class TlForm implements AfterViewInit {
             case KeyEvent.ARROWRIGHT:
                 this.setFocusCancel();
         }
-    }
-
-    resetEventKeyDown( $event: KeyboardEvent ) {
-        $event.stopPropagation();
-        $event.preventDefault();
     }
 
     setInitialFocus() {
@@ -169,6 +169,10 @@ export class TlForm implements AfterViewInit {
             }
         } );
         return model;
+    }
+
+    ngOnDestroy() {
+        this.listenLastElement();
     }
 }
 

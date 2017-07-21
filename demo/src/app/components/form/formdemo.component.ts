@@ -20,10 +20,10 @@ export class FormDemo {
   public modalOptions: ModalOptions;
   private modalprop;
 
-  constructor(private view: ViewContainerRef, private modalService: ModalService, private formService: FormService) {
-    this.modalService.setView(this.view);
-    this.modalprop = json.dataProperties;
+  constructor(private view: ViewContainerRef, private formService: FormService) {
+    this.formService.setViewForm(view);
 
+    this.modalprop = json.dataProperties;
     this.modalOptions = {
       title: 'New Form',
       icon: 'ion-monitor',
@@ -31,9 +31,11 @@ export class FormDemo {
       width: '500px',
       height: 'auto',
       maximizable: true,
-      minimizable: true
+      minimizable: true,
+      fullscreen: true
     };
   }
+
 
   modal1() {
     this.formService.createForm(CadPessoa, this.modalOptions, (modalResult) => {

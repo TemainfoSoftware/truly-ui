@@ -46,7 +46,9 @@ $button-text-align: center;
   }
 }
 .tl-button:focus {
-  outline: 1px solid #a8bfc3;
+  outline: -webkit-focus-ring-color auto 5px;
+  outline-color: -webkit-focus-ring-color;
+  outline-style: auto;
 }
 .tl-button:hover{
   outline: none;

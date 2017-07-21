@@ -7,16 +7,15 @@ import { CommonModule  } from '@angular/common';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from '../../../../../src/input';
 import { ButtonModule } from '../../../../../src/button';
-import { CadPessoa } from "../form/newpessoa/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
 import { NewModal } from "./newmodal/newModal.component";
 import { ModalModule } from "../../../../../src/modal/index";
 import { FormModule } from "../../../../../src/form/index";
+import { DialogService } from "../../../../../src/dialog/dialog.service";
 
 @NgModule({
   declarations: [
     ModalDemo,
-    CadPessoa,
     NewModal,
   ],
   imports:[
@@ -32,10 +31,10 @@ import { FormModule } from "../../../../../src/form/index";
   ],
   exports: [
     ModalDemo,
-    CadPessoa,
     NewModal
   ],
-  entryComponents: [ CadPessoa, NewModal ]
+  providers: [DialogService],
+  entryComponents: [ NewModal ]
 })
 export class ModalDemoModule {
 

@@ -19,11 +19,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-    AfterViewInit, Component, Input, Renderer2, ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, Input, QueryList, Renderer2, ViewChild } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
-
+import { TlInput } from '../input/input';
+import { DialogService } from '../dialog/dialog.service';
+import { ModalResult } from '../core/enums/modal-result';
 
 @Component( {
     selector: 'tl-form',
@@ -34,56 +34,141 @@ export class TlForm implements AfterViewInit {
 
     @Input() lastElement;
     @Input() initialFocus;
+    @Input() showConfirmOnChange = false;
 
-    @ViewChild( 'buttonOk' ) buttonOk;
-    @ViewChild( 'buttonCancel' ) buttonCancel;
+    @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
-    private listenFocusOut;
-    private listenDown;
-    private listenEnter;
+    @ViewChild( 'buttonFormOk' ) buttonFormOk;
+    @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
-    constructor( private renderer: Renderer2 ) {
+    private input;
+    private dialogOpen = false;
 
-    }
+    constructor( private renderer: Renderer2, private dialogService: DialogService ) {}
 
     ngAfterViewInit() {
-        if ( this.initialFocus ) {
-            this.initialFocus.element.nativeElement.focus();
-        }
+        this.setInitialFocus();
+        this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
+            this.resetEventKeyDown( $event );
+            if ( this.isKeyDownEnterOrArrowDown( $event ) ) {
+                this.buttonFormOk.buttonElement.nativeElement.focus();
+            }
+        } );
     }
 
-    handleKeysForm( $event ) {
-        this.returnListen();
+    handleKeysForm( $event: KeyboardEvent ) {
+        this.inputHasChanged();
         switch ( $event.keyCode ) {
+            case KeyEvent.ESCAPE :
+                this.closeForm();
+                break;
             case KeyEvent.ARROWUP :
-                this.backTabIndex();
+                this.backFocusToForm();
                 break;
-            case KeyEvent.ARROWDOWN :
+            case KeyEvent.ARROWLEFT :
+                this.setFocusOK();
                 break;
-            case KeyEvent.ENTER :
-                break;
+            case KeyEvent.ARROWRIGHT:
+                this.setFocusCancel();
         }
     }
 
-    returnListen() {
-        if ( document.activeElement === this.lastElement.element.nativeElement ) {
-            this.listenFocusOut = this.renderer.listen( this.lastElement.element.nativeElement, 'focusout', () => {
-                this.buttonOk.buttonBox.nativeElement.focus();
-            } );
+    resetEventKeyDown( $event: KeyboardEvent ) {
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+
+    setInitialFocus() {
+        this.initialFocus ? this.initialFocus.element.nativeElement.focus()
+            : this.setFocusOnFirstInput();
+    }
+
+    setFocusOK() {
+        if ( this.isActiveElementButtonCancel() ) {
+            this.buttonFormOk.buttonElement.nativeElement.focus();
         }
     }
 
+    setFocusCancel() {
+        if ( this.isActiveElementButtonOk() ) {
+            this.buttonFormCancel.buttonElement.nativeElement.focus();
+        }
+    }
 
-    backTabIndex() {
-        this.listenFocusOut();
-        if ( this.getActiveElement() === this.buttonOk.buttonBox.nativeElement ) {
+    backFocusToForm() {
+        if ( this.isActiveElementButtonOk() ||
+            this.isActiveElementButtonCancel() ) {
             this.lastElement.element.nativeElement.focus();
         }
     }
 
-
-    getActiveElement() {
-        return document.activeElement;
+    setFocusOnFirstInput() {
+        this.inputList.toArray().length > 0 ?
+            this.inputList.toArray()[ 0 ].element.nativeElement.focus() : this.input = false;
     }
 
+    isKeyDownEnterOrArrowDown( $event: KeyboardEvent ) {
+        return this.isKeyDownEqualsEnter( $event ) || this.isKeyDownEqualsArrowDown( $event );
+    }
+
+    isKeyDownEqualsEnter( $event: KeyboardEvent ) {
+        return $event.keyCode === KeyEvent.ENTER;
+    }
+
+    isKeyDownEqualsArrowDown( $event: KeyboardEvent ) {
+        return $event.keyCode === KeyEvent.ARROWDOWN;
+    }
+
+    isActiveElementButtonOk() {
+        return document.activeElement === this.buttonFormOk.buttonElement.nativeElement;
+    }
+
+    isActiveElementButtonCancel() {
+        return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
+    }
+
+    inputHasChanged() {
+        let inputDirty = false;
+        this.inputList.toArray().forEach( ( value ) => {
+            if ( value.inputModel.dirty ) {
+                inputDirty = true;
+            }
+        } );
+        return inputDirty;
+    }
+
+    closeForm() {
+        this.dialogOpen = false;
+        if ( this.showConfirmOnChange && this.inputHasChanged() ) {
+            this.showConfirmation();
+            return;
+        }
+        this.buttonFormCancel.dispatchCallback();
+        if ( !this.hasValueOnForm() ) {
+            this.buttonFormCancel.dispatchCallback();
+            return;
+        }
+    }
+
+    showConfirmation() {
+        if ( !this.dialogOpen ) {
+            this.dialogOpen = true;
+            this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
+                if ( callback === ModalResult.MRYES ) {
+                    this.buttonFormCancel.dispatchCallback();
+                }
+            }, { draggable: false } );
+        }
+    }
+
+    hasValueOnForm() {
+        let model;
+        this.inputList.toArray().forEach( ( value ) => {
+            if ( value.ngValue ) {
+                model = value.ngValue;
+            }
+        } );
+        return model;
+    }
 }
+

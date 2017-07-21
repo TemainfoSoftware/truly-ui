@@ -1,34 +1,33 @@
-<tl-form [lastElement]="UltimoElemento" [initialFocus]="input">
+<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true">
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input  #input [labelSize]="'50'" [label]="'Nome'"></tl-input>
+        <tl-input [labelSize]="'80'" [(ngModel)]="people.name" [label]="'Nome'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'50'" [label]="'Sobrenome'"></tl-input>
+        <tl-input [labelSize]="'80'" [(ngModel)]="people.lastname" [label]="'Sobrenome'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'50'" [label]="'Idade'"></tl-input >
+        <tl-input [labelSize]="'80'" [(ngModel)]="people.age" [label]="'Idade'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
-      <tl-input [labelSize]="'50'" [label]="'Cidade'"></tl-input>
+      <div class="form-group">
+        <tl-input [labelSize]="'80'" [(ngModel)]="people.city" [label]="'Cidade'"></tl-input>
+      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4">
-      <tl-input [labelSize]="'50'" [label]="'Profissão'"></tl-input>
-    </div>
-    <div class="col-md-8">
-      <tl-input #UltimoElemento [labelSize]="'50'" [label]="'Paciente'"></tl-input>
+      <tl-input #lastElement [labelSize]="'80'" [(ngModel)]="people.job" [label]="'Profissão'"></tl-input>
     </div>
   </div>
 </tl-form>

@@ -24,4 +24,5 @@
      textOk?: string;
      textCancel?: string;
      defaultOK?: boolean;
+     draggable?: boolean;
  }

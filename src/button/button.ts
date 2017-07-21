@@ -96,6 +96,8 @@ export class TlButton implements AfterContentInit {
     }
 
     keydown( $event ) {
+        $event.stopPropagation();
+        $event.preventDefault();
         if ( $event.key === 'Enter' ) {
             this.clickToggle();
         }

@@ -1,17 +1,17 @@
-<div class="formBox" (keydown)="handleKeysForm($event)">
+<div class="formBox" (keyup)="handleKeysForm($event)">
     <div class="formContent">
         <ng-content></ng-content>
     </div>
     <div class="clearfix"></div>
     <div class="forFooter">
         <div class="controls">
-            <tl-button #buttonOk
+            <tl-button #buttonFormOk
                        [text]="'Ok'"
                        mdResult="MROK"
                        [buttonAddonBeforeClass]="'icon'"
                        [iconAddonBefore]="'ion-checkmark'">
             </tl-button>
-            <tl-button #buttonCancel
+            <tl-button #buttonFormCancel
                        [text]="'Cancel'"
                        mdResult="MRCANCEL"
                        [buttonClass]="'botao'"

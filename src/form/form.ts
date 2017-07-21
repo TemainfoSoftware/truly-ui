@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ContentChildren, Input, OnDestroy, QueryList, Renderer2,
+    AfterViewInit, Component, ContentChildren, ElementRef, Input, OnDestroy, QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
@@ -45,8 +45,12 @@ export class TlForm implements AfterViewInit, OnDestroy {
     @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
     private input;
+
     private listenLastElement;
+
     private dialogOpen = false;
+
+    private lastActiveElement;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService ) {}
 
@@ -127,6 +131,10 @@ export class TlForm implements AfterViewInit, OnDestroy {
         return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
     }
 
+    getLastActiveElement() {
+        this.lastActiveElement = document.activeElement;
+    }
+
     inputHasChanged() {
         let inputDirty = false;
         this.inputList.toArray().forEach( ( value ) => {
@@ -139,6 +147,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
 
     closeForm() {
         this.dialogOpen = false;
+        this.getLastActiveElement();
         if ( this.showConfirmOnChange && this.inputHasChanged() ) {
             this.showConfirmation();
             return;
@@ -157,6 +166,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
                 if ( callback === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
+                this.lastActiveElement.focus();
             }, { draggable: false } );
         }
     }

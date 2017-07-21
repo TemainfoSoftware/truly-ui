@@ -27,7 +27,7 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <tl-input #lastElement [labelSize]="'80'" [(ngModel)]="people.job" [label]="'Profissão'"></tl-input>
+        <tl-input #lastElement [mask]="{mask: '00/00/0000'}" [(ngModel)]="text"></tl-input>
     </div>
   </div>
 </tl-form>

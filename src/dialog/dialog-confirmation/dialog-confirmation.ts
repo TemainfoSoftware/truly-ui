@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AfterViewInit, Component, ViewChild } from '@angular/core'
+import { KeyEvent } from '../../core/enums/key-events';
 
 @Component({
     selector: 'tl-dialog-confirmation',
@@ -30,28 +31,32 @@ export class TlDialogConfirmation implements AfterViewInit {
     message = '';
     textOk = 'Yes';
     textCancel = 'No';
-    defaultOK = true;
 
-    @ViewChild( 'buttonOk' ) buttonOk;
-    @ViewChild( 'buttonCancel' ) buttonCancel;
+    @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
+    @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
 
     ngAfterViewInit() {
-        this.defaultOK ? this.buttonOk.buttonBox.nativeElement.focus() : this.buttonCancel.buttonBox.nativeElement.focus();
+        // this.buttonDialogOk.buttonElement.nativeElement.focus();
+        // this.defaultOK ?  : this.buttonCancel.buttonElement.nativeElement.focus();
     }
 
-    onkeyup($event) {
-        switch ($event.code) {
-            case 'ArrowLeft': this.setPreviousButton();
+    onkeyup( $event: KeyboardEvent ) {
+        $event.stopPropagation();
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWLEFT:
+                this.setPreviousButton();
             break;
-            case 'ArrowRight': this.setNextButton();
+            case KeyEvent.ARROWRIGHT:
+                this.setNextButton();
+                break;
         }
     }
 
     private setPreviousButton() {
-        this.buttonOk.buttonBox.nativeElement.focus();
+        this.buttonDialogOk.buttonElement.nativeElement.focus();
     }
 
     private setNextButton() {
-        this.buttonCancel.buttonBox.nativeElement.focus();
+        this.buttonDialogCancel.buttonElement.nativeElement.focus();
     }
 }

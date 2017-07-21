@@ -41,7 +41,7 @@ export class TlButtonGroup implements AfterContentInit {
 
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild( 'lista' ) lista: ElementRef;
+    @ViewChild( 'list' ) list: ElementRef;
 
     @ContentChildren( TlButtonGroupItem ) buttonGroupItem: QueryList<TlButtonGroupItem>;
 
@@ -127,7 +127,7 @@ export class TlButtonGroup implements AfterContentInit {
     setItems() {
         this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
-            this.lista.nativeElement.appendChild( item._element.nativeElement );
+            this.list.nativeElement.appendChild( item._element.nativeElement );
         } );
     }
 

@@ -30,27 +30,27 @@ import { ButtonGroupService } from './buttongroup.service';
 } )
 export class TlButtonGroupItem implements AfterContentInit {
 
-    @Input() type = 'button';
+    @Input() type;
 
-    @Input() text = '';
+    @Input() text;
 
-    @Input() iconAddonBefore = '';
+    @Input() iconAddonBefore;
 
     @Input() buttonAddonBeforeClass;
 
-    @Input() iconAddonAfter = '';
+    @Input() iconAddonAfter;
 
     @Input() buttonAddonAfterClass;
 
     @Input() size;
 
-    @Input() disabled: boolean = null;
+    @Input() disabled;
 
-    @Input() toggleClass: string;
+    @Input() toggleClass;
 
-    @Input() buttonClass = '';
+    @Input() buttonClass;
 
-    @Input() checkedItem: boolean = null;
+    @Input() checkedItem = null;
 
     public index = -1;
 

@@ -26,6 +26,7 @@ import { FormService } from './form.service';
 import { ModalService } from '../modal/modal.service';
 import { ModalModule } from '../modal/index';
 import { ButtonModule } from '../button/index';
+import { DialogService } from '../dialog/dialog.service';
 
 @NgModule( {
     imports: [
@@ -41,7 +42,8 @@ import { ButtonModule } from '../button/index';
     ],
     providers: [
         ModalService,
-        FormService
+        FormService,
+        DialogService
     ]
 } )
 export class FormModule {}

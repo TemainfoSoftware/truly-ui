@@ -25,7 +25,14 @@ import { ModalService } from '../modal/modal.service';
 @Injectable()
 export class FormService {
 
-    constructor(private modalService: ModalService) {}
+    public viewForm;
+
+    constructor(public modalService: ModalService) {}
+
+    setViewForm(view) {
+        this.viewForm = view;
+        this.modalService.setView(view);
+    }
 
     createForm(component, options, callback) {
         this.modalService.createModal( component, options, callback );

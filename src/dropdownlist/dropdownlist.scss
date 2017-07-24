@@ -3,70 +3,69 @@
 //Default
 $button-height: 39px;
 $border-default: 1px solid #C8C8C8;
+$background-color: #E8E8E8;
+$color: #616161;
+$icon-color: #6A6A6A;
+$hover-background-color: #dedede;
+$active-background-color: #d8d8d8;
 
-
-.tl-drop-down-list-box{
+.tl-drop-down-list-box {
   position: relative;
   display: inline-block;
-  height: $button-height;
-  border: $border-default;
-  background-color:#E8E8E8;
   cursor: pointer;
-  user-select: none;
-  vertical-align: middle;
-
-  >.drop-down-list-wrap{
-    height: $button-height;
-    background-clip: padding-box;
-
-    >.drop-down-list-input {
-      display: inline-block;
-      height: $button-height;
+  > .tl-drop-down-list-wrapper {
+    position: relative;
+    min-width: 125px;
+    > .tl-drop-down-list-container {
+      background-color: $background-color;
       line-height: $button-height;
-      padding: 0 10px;
-      color: #616161;
-    }
-    >.drop-down-list-select {
-      display: inline-block;
       height: $button-height;
-      line-height: $button-height;
-      float: right;
-      user-select: none;
-    }
-    >.drop-down-list-select i{
-      color: #6A6A6A;
-    }
-    >.drop-down-list-select-options{
-      position: absolute;
-      overflow: auto;
-      display: block;
-      height:auto;
-      list-style: none;
-      background-color: #E8E8E8;
-      padding: 0;
-      box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
       border: $border-default;
-      z-index: 1;
-      cursor: auto;
+      > .drop-down-list-input {
+        height: $button-height;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        width: auto;
+        padding: 0 10px;
+      }
+      > .drop-down-list-icon {
+        float: right;
+        line-height: $button-height;
+        position: relative;
+      }
+      > .drop-down-list-icon i {
+        color: $icon-color;
+      }
     }
-    >.drop-down-list-select-options li{
-      position: relative;
+    > .tl-drop-down-list-container:hover {
+      background-color: $hover-background-color;
+    }
+    > .tl-drop-down-list-container:active {
+      background-color: $active-background-color;
+    }
+    > .drop-down-list-select {
+      position: absolute;
+      top: $button-height;
+      left: 0;
+      width: 100%;
+      background-color: $background-color;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
+      border: $border-default;
+      list-style: none;
+      padding: 0;
       margin: 0;
-      padding: 0 10px;
-      color: #616161;
-      line-height: $button-height;
-      display: block;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    >.drop-down-list-select-options li:hover{
-      background-color: #dedede;
+      > li {
+        padding: 0 10px;
+        line-height: $button-height;
+      }
+      > li:hover {
+        background-color: $hover-background-color;
+      }
+      > li:active {
+        background-color: $active-background-color;
+      }
     }
   }
 }
-.tl-drop-down-list-box:hover{
-  background-color: #dedede;
-}
-.tl-drop-down-list-box:active{
-  background-color: #d8d8d8;
-}
+

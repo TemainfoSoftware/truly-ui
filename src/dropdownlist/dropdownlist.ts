@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-        Component, HostListener
+    Component, HostListener
 } from '@angular/core';
 
 import { style, transition, trigger, animate } from '@angular/animations';
@@ -33,16 +33,16 @@ let globalZindex = 1;
     selector : 'tl-drop-down-list',
     templateUrl : './dropdownlist.html',
     styleUrls : [ './dropdownlist.scss' ],
-    animations: [
+    animations : [
         trigger(
             'enterAnimation', [
                 transition( ':enter', [
-                    style( { opacity: 0, transform: 'translate(0%,-5%)', flex: '0' } ),
-                    animate( '200ms', style( { opacity: 1, transform: 'translate(0%,0%)' } ) )
+                    style( { opacity : 0, transform : 'translate(0%,-5%)', flex : '0' } ),
+                    animate( '200ms', style( { opacity : 1, transform : 'translate(0%,0%)' } ) )
                 ] ),
                 transition( ':leave', [
-                    style( { opacity: 1, transform: 'translate(0%,0%)' } ),
-                    animate( '200ms', style( { opacity: 0, transform: 'translate(0%,-5%)' } ) )
+                    style( { opacity : 1, transform : 'translate(0%,0%)' } ),
+                    animate( '200ms', style( { opacity : 0, transform : 'translate(0%,-5%)' } ) )
                 ] )
             ]
         )
@@ -56,20 +56,22 @@ export class TlDropDownList extends ComponentDefaultBase {
 
     private itemList: any[];
 
+    private itemSelected: any[];
+
     constructor() {
         super();
         this.itemList = [
             {
-                textItem: 'Item 1 a s 2 3 4 5 6 1 2 ',
-                valueItem: '1'
+                textItem : 'Item 1',
+                valueItem : '1'
             },
             {
-                textItem: 'Item 2',
-                valueItem: '2'
+                textItem : 'Item 2',
+                valueItem : '2'
             },
             {
-                textItem: 'Item 3',
-                valueItem: '3'
+                textItem : 'Item 3',
+                valueItem : '3'
             }
         ];
         this.showHide = false;
@@ -82,7 +84,6 @@ export class TlDropDownList extends ComponentDefaultBase {
     }
 
     changeShowStatus() {
-        console.log(this.showHide);
         this.showHide = !this.showHide;
         if ( this.showHide ) {
             setTimeout( () => {
@@ -94,6 +95,11 @@ export class TlDropDownList extends ComponentDefaultBase {
     getAndSetZIndex() {
         this.zIndex = globalZindex++;
         return this.zIndex;
+    }
+
+    selectOption( item ) {
+        console.log( item );
+        this.itemSelected = item;
     }
 
 }

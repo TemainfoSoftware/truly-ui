@@ -80,22 +80,3 @@
     color: #FFF;
   }
 }
-.datatableScrollableTHeader{
-  margin-right: 10px;
-}
-
-
-.datatableScrollableTBody::-webkit-scrollbar{
-  background: #F1F1F1;
-  width: 10px;
-}
-.datatableScrollableTBody::-webkit-scrollbar-corner{
-  background: #F1F1F1;
-}
-
-.datatableScrollableTBody::-webkit-scrollbar-track{
-  background: #F6F6F6;
-}
-.datatableScrollableTBody::-webkit-scrollbar-thumb{
-  background: #66CC99;
-}

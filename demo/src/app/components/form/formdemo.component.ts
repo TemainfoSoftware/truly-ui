@@ -26,7 +26,7 @@ export class FormDemo {
     this.modalprop = json.dataProperties;
     this.modalOptions = {
       title: 'New Form',
-      icon: 'ion-monitor',
+      icon: 'ion-ios-list-outline',
       draggable: true,
       width: '500px',
       height: 'auto',

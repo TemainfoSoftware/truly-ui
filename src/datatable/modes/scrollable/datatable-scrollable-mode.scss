@@ -1,0 +1,18 @@
+.scrollBoxHeader{
+  margin-right: 10px;
+}
+
+.scrollBoxContainer::-webkit-scrollbar{
+  background: #F1F1F1;
+  width: 10px;
+}
+.scrollBoxContainer::-webkit-scrollbar-corner{
+  background: #F1F1F1;
+}
+
+.scrollBoxContainer::-webkit-scrollbar-track{
+  background: #F6F6F6;
+}
+.scrollBoxContainer::-webkit-scrollbar-thumb{
+  background: #66CC99;
+}

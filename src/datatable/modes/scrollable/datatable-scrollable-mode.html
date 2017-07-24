@@ -1,0 +1,32 @@
+<div class="dataTableScrollable"  >
+    <div class="scrollBoxHeader">
+        <table class="datatable">
+            <thead class="datatableHeader">
+            <tr class="row">
+                <th *ngFor="let column of datatable.columns;" [class]="' cel ' + datatable.getClassAlignment(column.alignment)">{{column.title}}</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div #scrollBox class="scrollBoxContainer"
+         [ngStyle]="{'height': datatable.height, 'overflow' : 'scroll', 'min-height':'300px'}"
+         (scroll)="onScroll($event)"
+    >
+        <div [ngStyle]="{'height': containerHeight+'px'}">
+            <table class="datatable" (keydown)="onKeydown($event)"  [ngStyle]="{transform:getScrollOfTop()}" >
+
+                <tbody #scrollBoxTableBody class="datatableBody">
+                    <tr class="row" [tabindex]="i" *ngFor="let row of datatable.datasource ; let i = index" [ngStyle]="{'height':  datatable._rowHeight+'px'}"
+                        (click)="datatable.onRowClick( datatable.datasource[i],i)"
+                        (focus)="datatable.onRowSelect( datatable.datasource[i],i)"
+                        (dblclick)="datatable.onRowDblclick( datatable.datasource[i],i)"
+
+                    >
+                        <td *ngFor="let column of datatable.columns;" [class]="'cel ' + datatable.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

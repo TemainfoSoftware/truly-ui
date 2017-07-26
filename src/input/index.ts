@@ -5,7 +5,7 @@ import { TlInput } from './input';
 import { DirectiveModule } from '../core/directives/index';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { TabIndexService } from "../form/tabIndex.service";
+import { TabIndexService } from '../form/tabIndex.service';
 
 export * from './input';
 

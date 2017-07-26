@@ -20,16 +20,18 @@
  SOFTWARE.
  */
 
-import { ElementRef, Input, ViewChild, OnInit, Output, EventEmitter } from '@angular/core';
+import { ElementRef, Input, ViewChild, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ComponentDefaultBase } from './component-default.base';
-import { TabIndexGenerator } from '../helper/tabindex-generator';
 import { ControlValueAccessor } from '@angular/forms/src/forms';
+import { TabIndexService } from '../../form/tabIndex.service';
+import { IdGeneratorService } from '../helper/idgenerator.service';
+import { NameGeneratorService } from '../helper/namegenerator.service';
 
 
 /**
  * Class that controls all Components that have Models.
  */
-export class ComponentHasModelBase extends ComponentDefaultBase implements OnInit, ControlValueAccessor {
+export class ComponentHasModelBase extends ComponentDefaultBase implements OnInit, ControlValueAccessor, OnDestroy {
 
     /**
      * Controller to define if the tabulation is with key Enter or key Tab.
@@ -59,27 +61,30 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     @ViewChild( 'model' ) public inputModel;
 
+    @Output() blur: EventEmitter<any> = new EventEmitter();
+
+    @Output() focus: EventEmitter<any> = new EventEmitter();
+
     /**
      * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
      */
-    tabIndex: TabIndexGenerator;
+    public ngValue = '';
 
-    ngValue = '';
 
-    @Output() blur: EventEmitter<any> = new EventEmitter();
-    @Output() focus: EventEmitter<any> = new EventEmitter();
+    constructor(private tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+        super(idService, nameService);
+    }
 
     /**
      * Callback of control value accessor to register touched changes
      */
-    onTouchedCallback: Function = () => {
-    };
+    onTouchedCallback: Function = () => {};
 
     /**
      * Callback of control value accessor to register changes
      */
-    onChangeCallback: Function = () => {
-    };
+    onChangeCallback: Function = () => {};
+
 
 
     ngOnInit() {
@@ -94,9 +99,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param element
      */
     setTabIndex( element: ElementRef ) {
-        this.tabIndex = new TabIndexGenerator( element );
-        this.setNextTabIndex( this.element.nativeElement.tabIndex + 1 );
-        this.setPreviousTabIndex( this.element.nativeElement.tabIndex - 1 );
+        this.tabIndexService.setTabIndex(element);
+        this.setNextTabIndex( this.element.nativeElement.tabindex + 1 );
+        this.setPreviousTabIndex( this.element.nativeElement.tabindex - 1 );
     }
 
     /**
@@ -126,7 +131,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function to set focus on next element
      */
     nextFocus() {
-        const existElement = this.existsElement( this.element.nativeElement.tabIndex );
+        const existElement = this.existsElement( this.element.nativeElement.tabindex );
         if ( existElement ) {
             document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex ).focus();
         }
@@ -189,6 +194,12 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     registerOnTouched( callback: any ) {
         this.onTouchedCallback = callback;
+    }
+
+    ngOnDestroy() {
+        this.idService.clearId();
+        this.nameService.clearName();
+        this.tabIndexService.clearTabIndex();
     }
 
 }

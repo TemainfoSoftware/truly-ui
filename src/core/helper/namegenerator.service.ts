@@ -19,23 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef } from '@angular/core';
 
-/**
- * Variable number to increment every time.
- * @type {number}
- */
-let nextUniqueId = 0;
+ import { Injectable } from '@angular/core';
 
-/**
- * Class responsable to Generate Elements ID.
- */
-export class UniqueIDGenerator {
-    /**
-     * @param element Element received when instantiate in CustomComponent.
-     * @param name Name passed in Components where have been used.
-     */
-    constructor( element: ElementRef, name ) {
-        element.nativeElement.id = 'tl-' + name + '-' + nextUniqueId++;
-    }
-}
+let nextUniqueName = 0;
+
+ @Injectable()
+ export class NameGeneratorService {
+
+     constructor() {}
+
+     createName(element, name) {
+         if ( element.nativeElement.name === '' ) {
+             element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
+         }
+     }
+
+     clearName() {
+         nextUniqueName = 0;
+     }
+
+ }

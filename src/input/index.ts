@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlInput } from './input';
 import { DirectiveModule } from '../core/directives/index';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { TabIndexService } from '../form/tabIndex.service';
 
 export * from './input';
 
@@ -18,6 +21,11 @@ export * from './input';
     exports: [
         TlInput,
         DirectiveModule,
+    ],
+    providers: [
+        IdGeneratorService,
+        NameGeneratorService,
+        TabIndexService
     ]
 })
 export class InputModule {}

@@ -21,11 +21,13 @@
  */
 import {
     AfterContentInit,
+    AfterViewInit,
     Component,
     ContentChildren,
     ElementRef,
     EventEmitter,
     Input,
+    OnChanges,
     OnInit,
     Output,
     QueryList,
@@ -37,6 +39,9 @@ import { TlDatatableColumn } from './datatable-column';
 import { DatatableFilterOptions } from './datatable-filter-options';
 import { KeyEvent } from '../core/enums/key-events';
 import { DataMetadata } from '../core/types/datametadata';
+import { noUndefined } from '@angular/compiler/src/util';
+
+
 
 @Component({
     selector: 'tl-datatable',
@@ -44,7 +49,7 @@ import { DataMetadata } from '../core/types/datametadata';
     styleUrls: [ './datatable.scss' ],
     encapsulation: ViewEncapsulation.Native
 })
-export class TlDatatable implements AfterContentInit, OnInit {
+export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
@@ -52,13 +57,11 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     @Input('lazy') lazy = false;
 
-    @Input('rows') rows = 20;
+    @Input('rowsPage') rowsPage = 20;
 
     @Input('rowHeight') rowHeight = 25;
 
     @Input('height') height = '300px';
-
-    @Input('selectable') selectable: boolean;
 
     @Input('globalFilter') globalFilter: any;
 
@@ -72,41 +75,40 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     @Output('pageChange') pageChange: EventEmitter<any> = new EventEmitter();
 
+    @Output('lazyLoad') lazyLoad: EventEmitter<any> = new EventEmitter();
+
     @Output('endRow') endRow: EventEmitter<any> = new EventEmitter();
 
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
-    @ViewChild('scrollBox') scrollBoxViewChild: ElementRef;
+
+    public datasource: any[];
+
+    public totalRow: number;
 
     public columns: any[] = [];
 
     public tabindex = 0;
 
-    public pageNumber = 1;
+    public filtredData: any[];
 
-    public page = 1;
+    public globalFilterTimeout: any;
 
-    private globalFilterTimeout: any;
-
-    private filtredData: any[];
-
-    private datasource: any[];
-
-    private _rowHeight: number;
-
-    private scrollPosition: number;
+    public rowHeightCalculated: number;
 
     constructor( private render: Renderer2 ) {}
 
     ngOnInit() {
-       this.updateDataSource( this.getData() );
-       this._rowHeight = this.rowHeight;
+        this.updateDataSource( this.getData() );
+        this.setTotalRow();
 
-       this.render.listen(window, 'load', () => {
+        this.rowHeightCalculated = this.rowHeight;
+
+        this.render.listen(window, 'load', () => {
             this.calcHeightRowTable();
-       })
+        });
 
         this.render.listen(window, 'resize', () => {
             this.calcHeightRowTable();
@@ -116,6 +118,12 @@ export class TlDatatable implements AfterContentInit, OnInit {
     ngAfterContentInit() {
         this.setColumns();
         this.inicializeGlobalFilter();
+
+    }
+
+    ngOnChanges($event) {
+        this.updateDataSource( this.getData($event) );
+        this.setTotalRow();
     }
 
     setColumns() {
@@ -126,11 +134,27 @@ export class TlDatatable implements AfterContentInit, OnInit {
         this.tabindex = value;
     }
 
-    getData() {
+    getData($event?) {
+
+        setTimeout( () => {
+            if ($event !== undefined) {
+                if (!$event.data.firstChange) {
+                    const dataArray = [];
+                    Array.prototype.push.apply( dataArray, $event.data.currentValue);
+                    this.data = dataArray;
+                    return this.data;
+                }
+            }
+
+        });
         if ( ( typeof this.data === 'object') && ( this.data[0] === undefined )) {
            return ( this.data as DataMetadata ).data
         }
         return this.data;
+    }
+
+    setTotalRow() {
+        this.totalRow = ( this.data as DataMetadata ).total !== undefined ? ( this.data as DataMetadata ).total : Array(this.data).length;
     }
 
     getColumnsFromDataSource() {
@@ -153,14 +177,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
         return { data : row, index: index };
     }
 
-    isLastRow() {
-        return this.tabindex + 1 > this.tbody.nativeElement.children.length - 1;
-    }
-
-    isFirstRow() {
-        return this.tabindex === 0;
-    }
-
     exitsColumns() {
         return ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) );
     }
@@ -176,43 +192,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
         return column;
     }
 
-    onKeydown( $event ) {
-        $event.preventDefault();
-        switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN: this.handleKeyArrowDown(); break;
-            case KeyEvent.ARROWUP: this.handleKeyArrowUp(); break;
-            case KeyEvent.HOME: this.handleKeyHome(); break;
-            case KeyEvent.END: this.handleKeyEnd(); break;
-        }
-    }
-
-    handleKeyHome() {
-        this.tbody.nativeElement.children[ 0 ].focus();
-        this.tabindex = 0 ;
-    }
-
-    handleKeyEnd() {
-        const lenghtChildren = this.tbody.nativeElement.children.length;
-        this.tbody.nativeElement.children[ lenghtChildren - 1 ].focus();
-        this.tabindex = lenghtChildren - 1 ;
-    }
-
-    handleKeyArrowDown() {
-        if ( this.isLastRow() )  {
-            return ;
-        }
-        this.tbody.nativeElement.children[ this.tabindex + 1 ].focus();
-        this.tabindex = this.tabindex + 1;
-    }
-
-    handleKeyArrowUp() {
-        if ( this.isFirstRow() ) {
-            return ;
-        }
-        this.tbody.nativeElement.children[ this.tabindex - 1 ].focus();
-        this.tabindex = this.tabindex - 1;
-    }
-
     onRowClick( row, index ) {
         this.setTabIndex( index );
         this.rowClick.emit( this.getObjectRow( row, index ) );
@@ -224,64 +203,6 @@ export class TlDatatable implements AfterContentInit, OnInit {
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
-    }
-
-
-
-    onScroll($event) {
-        const clientHeight = this.scrollBoxViewChild.nativeElement.clientHeight;
-        const scrollTop = this.scrollBoxViewChild.nativeElement.scrollTop;
-        const scrollHeight = this.scrollBoxViewChild.nativeElement.scrollHeight;
-        const pageHeight = this.rows * this._rowHeight;
-        const endRow = Math.round( ( clientHeight + scrollTop  ) / this._rowHeight   );
-
-        this.emitChangePage({
-            clientHeight: clientHeight,
-            scrollTop: scrollTop,
-            scrollHeight: scrollHeight,
-            pageHeight: pageHeight,
-            endRow: endRow,
-        });
-
-        this.emitEndRow({
-            clientHeight: clientHeight,
-            scrollTop: scrollTop,
-            scrollHeight: scrollHeight,
-            endRow: endRow,
-        });
-
-    }
-
-    emitEndRow( dimensions ) {
-         if ( dimensions.scrollTop >= (dimensions.scrollHeight - (dimensions.clientHeight)) ) {
-             this.endRow.emit( {endRow: dimensions.endRow} )
-         }
-    }
-
-    emitChangePage( dimensions ) {
-
-        if ( this.scrollPosition < dimensions.scrollTop ) {
-            if ( (dimensions.scrollTop + dimensions.clientHeight) > (dimensions.pageHeight * this.pageNumber) ) {
-                this.pageNumber ++;
-                if (this.page < this.pageNumber) {
-                    this.page = this.pageNumber;
-                    this.pageChange.emit( {page: this.page} );
-                }
-            }
-        }
-
-        if ( this.scrollPosition > dimensions.scrollTop ) {
-            if ( (dimensions.scrollTop + dimensions.clientHeight) < (dimensions.pageHeight * ( this.pageNumber - 1)) ) {
-                this.pageNumber --;
-                if (this.page > this.pageNumber) {
-                    this.page = this.pageNumber;
-                    this.pageChange.emit( {page: this.page} );
-                }
-
-            }
-        }
-
-        this.scrollPosition = dimensions.scrollTop;
     }
 
     inicializeGlobalFilter() {
@@ -327,7 +248,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
     calcHeightRowTable() {
         if ( this.tbody !== undefined) {
 
-            this._rowHeight = this.rowHeight;
+            this.rowHeightCalculated = this.rowHeight;
             let heightMax = this.rowHeight;
 
             for ( let i = 0; i < this.tbody.nativeElement.children.length; i++) {
@@ -335,7 +256,7 @@ export class TlDatatable implements AfterContentInit, OnInit {
                     heightMax = this.tbody.nativeElement.children[i].clientHeight;
                 }
             }
-            this._rowHeight = heightMax;
+            this.rowHeightCalculated = heightMax;
         }
     }
 

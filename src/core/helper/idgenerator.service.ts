@@ -19,20 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef } from '@angular/core';
 
-let nextUniqueIndex = 0;
+import { Injectable } from '@angular/core';
 
-/**
- * Class responsable to generate tab index.
- */
-export class TabIndexGenerator {
+let nextUniqueId = 0;
 
-    /**
-     * Constructor
-     * @param element
-     */
-    constructor(element: ElementRef) {
-        element.nativeElement.tabIndex = nextUniqueIndex++;
+@Injectable()
+export class IdGeneratorService {
+
+
+    constructor() {}
+
+
+    createId(element, name) {
+        return element.nativeElement.id = 'tl-' + name + '-' + nextUniqueId++;
     }
+
+    clearId() {
+        nextUniqueId = 0;
+    }
+
 }

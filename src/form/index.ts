@@ -27,6 +27,9 @@ import { ModalService } from '../modal/modal.service';
 import { ModalModule } from '../modal/index';
 import { ButtonModule } from '../button/index';
 import { DialogService } from '../dialog/dialog.service';
+import { TabIndexService } from './tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 @NgModule( {
     imports: [
@@ -43,7 +46,10 @@ import { DialogService } from '../dialog/dialog.service';
     providers: [
         ModalService,
         FormService,
-        DialogService
+        DialogService,
+        TabIndexService,
+        IdGeneratorService,
+        NameGeneratorService
     ]
 } )
 export class FormModule {}

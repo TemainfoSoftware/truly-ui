@@ -19,26 +19,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef } from '@angular/core';
 
-/**
- * Variable number to increment every time.
- * @type {number}
- */
-let nextUniqueName = 0;
+import { Injectable } from '@angular/core';
 
-/**
- * Class responsable to Generate Elements Name.
- */
-export
-    class UniqueNameGenerator {
-    /**
-     * @param element Element received when instantiate in CustomComponent.
-     * @param name Name passed in Components where have been used.
-     */
-    constructor( element: ElementRef, name ) {
-        if ( element.nativeElement.name === '' ) {
-            element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
-        }
+let nextUniqueIndex = 0;
+
+@Injectable()
+export class TabIndexService {
+
+    public uniqueIndex;
+    private element;
+
+    constructor() {}
+
+    setTabIndex(element) {
+        this.element = element;
+        this.element.nativeElement.tabindex = nextUniqueIndex++;
+        this.uniqueIndex = nextUniqueIndex;
     }
+
+    clearTabIndex() {
+        nextUniqueIndex = 0;
+    }
+
 }

@@ -2,7 +2,6 @@
   <h1 class="title">DataTable</h1>
   <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
 </div>
-
 <hr>
 <div class="showcase">
   <!--<div class="row">-->
@@ -17,24 +16,6 @@
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
-        <h5>Mode Scrollable + LazyLoad</h5>
-        <tl-datatable [data]="dataLazy" [mode]="'scrollable'" [height]="'310px'" (pageChange)="onPageChange($event)" [lazy]="true"></tl-datatable>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="group-component">
-        <h5>Mode Scrollable</h5>
-        <tl-datatable [data]="data" [mode]="'scrollable'" [height]="'310px'"> </tl-datatable>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-12">
-      <div class="group-component">
         <h5>Mode Normal</h5>
         <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
         <div>Row Selected:<span> {{rowSelected | json}} </span></div>
@@ -42,10 +23,11 @@
     </div>
   </div>
 
+
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
-        <h5>Filter Data</h5>
+        <h5>Mode Normal + Filter Data</h5>
 
         <tl-input #tlInput [placeholder]="'Pesquise por um registro...'"></tl-input>
         <br/>
@@ -59,8 +41,41 @@
       </div>
     </div>
   </div>
-  <hr>
 
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Mode Scrollable</h5>
+        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'" [height]="'310px'"> </tl-datatable>
+        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h5>Mode Scrollable + LazyLoad</h5>
+        <tl-datatable
+          [data]="dataLazy"
+          [mode]="'scrollable'"
+          [height]="'310px'"
+          [rowsPage]="take"
+          [lazy]="true"
+          (pageChange)="onPageChange($event)"
+          (lazyLoad)="onLazyLoad($event)"
+          (rowSelect)="onRowSelect($event, index )"
+        >
+        </tl-datatable>
+        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <hr>
 </div>
 <div class="setup">
   <h3 class="title">Properties</h3>
@@ -87,14 +102,75 @@
 
     </table>
   </div>
+
+  <h3 class="title">Events</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Parameters</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody *ngFor="let item of dataTableEvents; let i = index">
+      <tr >
+        <td style=" vertical-align: middle;"><b>{{ item.name }}</b></td>
+        <td style=" vertical-align: middle;">
+            <div *ngFor="let param of item.parameters; let i = index">
+              <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
+            </div>
+        </td>
+        <td style=" vertical-align: middle;">{{ item.description }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
   <hr>
 </div>
+
 <div class="examples">
   <h3 class="title">Examples</h3>
   <div class="group-component">
-    <h5 class="title">Basic</h5>
+    <h5 class="title">Mode Normal</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-   <tl-button [textButton]="'Button'"></tl-button>
-  </textarea>
+      <tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
+    </textarea>
+  </div>
+
+  <div class="group-component">
+    <h5 class="title">Mode Normal - Global Filter</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+         <tl-datatable
+               [data]="data"
+               [globalFilter]="tlInput"
+               [globalFilterOptions]="{caseSensitive: false}"
+               (rowSelect)="onRowSelect($event, index )">
+        </tl-datatable>
+    </textarea>
+  </div>
+
+  <div class="group-component">
+    <h5 class="title">Mode Scrollable</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>
+    </textarea>
+  </div>
+
+  <div class="group-component">
+    <h5 class="title">Mode Scrollable + LazyLoad</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+     <tl-datatable
+       [data]="dataLazy"
+       [mode]="'scrollable'"
+       [height]="'310px'"
+       [rowsPage]="take"
+       [lazy]="true"
+       (pageChange)="onPageChange($event)"
+       (lazyLoad)="onLazyLoad($event)"
+       (rowSelect)="onRowSelect($event, index )"
+     >
+     </tl-datatable>
+    </textarea>
   </div>
 </div>

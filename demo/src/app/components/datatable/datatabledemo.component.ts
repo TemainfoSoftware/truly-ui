@@ -2,6 +2,8 @@ import {Component } from '@angular/core';
 
 import * as json from './datatabledemo-dataproperties.json';
 
+import * as jsonEvents from './datatabledemo-dataevents.json';
+
 
 @Component( {
   selector: 'app-datatable',
@@ -16,21 +18,39 @@ export class DataTableDemo {
 
   public rowSelected: any;
 
-
+  private take = 40;
 
   private dataTableProperties;
 
+  private dataTableEvents;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
-    this.data = this.createRandomData(50);
+    this.dataTableEvents = jsonEvents.dataProperties;
+
+    this.data = this.createRandomData(100);
+
     this.dataLazy = {
-      "data" : this.data,
-      "total" : 1000
+      "data" : this.getDataFromService(0,this.take),
+      "total" : this.data.length
     }
   }
 
+  getDataFromService(skip, take) {
+    return this.data.slice(skip, take);
+  }
+
+  onLazyLoad(event){
+
+      this.dataLazy = {
+        "data" : this.getDataFromService(event.skip,event.skip + event.take),
+        "total" : this.data.length
+      }
+
+  }
+
   onPageChange(event){
-    console.log(event);
+   // console.log(event);
   }
 
   onRowSelect( row ) {

@@ -29,6 +29,8 @@ import { style, transition, trigger, animate } from '@angular/animations';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 import { DataMetadata } from '../core/types/datametadata';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 let globalZindex = 1;
 
@@ -71,8 +73,8 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     private datasource: any[];
 
-    constructor( private _renderer: Renderer2 ) {
-        super();
+    constructor( private _renderer: Renderer2, public idService: IdGeneratorService, public nameService: NameGeneratorService) {
+        super(idService, nameService);
         this.showHide = false;
     }
 

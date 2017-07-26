@@ -5,8 +5,7 @@
         [class]="buttonClass + ' tl-button ' + toggleClassName"
         [disabled]="disabled ? true : null"
         (click)="clickToggle()"
-        (keydown)="keydown($event)"
-        tabindex="-1">
+        (keydown)="keydown($event)">
 
     <span *ngIf="iconAddonBefore" [ngClass]="iconAddonBefore" [class]="'iconAddonBefore ' + buttonAddonBeforeClass"></span>
     <span class="textButton"> {{ text }} </span>

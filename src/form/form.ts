@@ -27,6 +27,7 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
+import { TabIndexService } from "./tabIndex.service";
 
 @Component( {
     selector: 'tl-form',
@@ -52,10 +53,11 @@ export class TlForm implements AfterViewInit, OnDestroy {
 
     private lastActiveElement;
 
-    constructor( private renderer: Renderer2, private dialogService: DialogService ) {}
+    constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
 
     ngAfterViewInit() {
         this.setInitialFocus();
+        this.setTabIndexButtons();
         this.listenLastElement = this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
             if ( this.isKeyDownEnterOrArrowDown( $event ) ) {
                 setTimeout( () => {
@@ -80,6 +82,11 @@ export class TlForm implements AfterViewInit, OnDestroy {
             case KeyEvent.ARROWRIGHT:
                 this.setFocusCancel();
         }
+    }
+
+    setTabIndexButtons() {
+        this.buttonFormOk.buttonElement.nativeElement.tabindex = this.tabService.uniqueIndex;
+        this.buttonFormCancel.buttonElement.nativeElement.tabindex = this.tabService.uniqueIndex + 1;
     }
 
     setInitialFocus() {

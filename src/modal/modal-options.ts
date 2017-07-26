@@ -11,6 +11,7 @@ export interface ModalOptions {
     maximizable?: boolean;
     minimizable?: boolean;
     fullscreen?: boolean;
+    restoreMaximize?: boolean;
 }
 
 

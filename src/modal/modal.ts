@@ -68,6 +68,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() fullscreen = false;
 
+    @Input() restoreMaximize = true;
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
@@ -134,9 +136,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.mousemoveListener();
         this.mouseupListener();
         this.setDefaultDimensions();
-        if (this.fullscreen) {
-            this.maximizeModal();
-        }
+        this.validateProperty();
     }
 
     resizeListener() {
@@ -178,6 +178,15 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             this.setMousePressX( $event.clientX );
             this.setMousePressY( $event.clientY );
             this.moving = true;
+        }
+    }
+
+    validateProperty () {
+        if (!this.restoreMaximize && !this.fullscreen) {
+            throw new EvalError( 'The [restoreMaximize] property require [fullscreen] property as TRUE.' );
+        }
+        if (this.fullscreen) {
+            this.maximizeModal();
         }
     }
 
@@ -357,14 +366,16 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             this.moving = false;
             this.maximize.emit();
         } else {
-            this.restoreMaximize();
+            this.restoreMaximizeModal();
         }
     }
 
-    restoreMaximize() {
-        this.setDefaultDimensions();
-        this.setCurrentPosition();
-        this.maximized = false;
+    restoreMaximizeModal() {
+        if (this.restoreMaximize) {
+            this.setDefaultDimensions();
+            this.setCurrentPosition();
+            this.maximized = false;
+        }
     }
 
     getBoundingParentElement() {

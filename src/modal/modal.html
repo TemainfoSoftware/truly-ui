@@ -13,8 +13,8 @@
                 <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </span>
 
-            <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximize()">
-                <i ngClass="ion-android-contract"></i>
+            <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximizeModal()">
+                <i ngClass="ion-android-contract" [class.disabled]="!restoreMaximize"></i>
             </span>
 
             <span class="control-item" (mouseup)="closeModal()">

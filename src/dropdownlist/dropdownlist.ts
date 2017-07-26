@@ -59,6 +59,8 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
+    @ViewChild( 'list' ) list;
+
     public zIndex = 0;
 
     private showHide: boolean;
@@ -68,8 +70,6 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
     private itemSelected: any[];
 
     private datasource: any[];
-
-    @ViewChild( 'list' ) list;
 
     constructor( private _renderer: Renderer2 ) {
         super();

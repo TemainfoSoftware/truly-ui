@@ -23,9 +23,9 @@
 import { ElementRef, Input, ViewChild, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ComponentDefaultBase } from './component-default.base';
 import { ControlValueAccessor } from '@angular/forms/src/forms';
-import { TabIndexService } from "../../form/tabIndex.service";
-import { IdGeneratorService } from "../helper/idgenerator.service";
-import { NameGeneratorService } from "../helper/namegenerator.service";
+import { TabIndexService } from '../../form/tabIndex.service';
+import { IdGeneratorService } from '../helper/idgenerator.service';
+import { NameGeneratorService } from '../helper/namegenerator.service';
 
 
 /**
@@ -70,6 +70,11 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     public ngValue = '';
 
+
+    constructor(private tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+        super(idService, nameService);
+    }
+
     /**
      * Callback of control value accessor to register touched changes
      */
@@ -80,10 +85,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     onChangeCallback: Function = () => {};
 
-
-    constructor(private tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
-        super(idService, nameService);
-    }
 
 
     ngOnInit() {

@@ -30,10 +30,10 @@ import {
     EventEmitter, ViewEncapsulation
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
-import { TabIndexService } from "../form/tabIndex.service";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TabIndexService } from '../form/tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 /**
  * Input Component personalized with few features.

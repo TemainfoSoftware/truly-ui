@@ -27,9 +27,9 @@ import { ModalService } from '../modal/modal.service';
 import { ModalModule } from '../modal/index';
 import { ButtonModule } from '../button/index';
 import { DialogService } from '../dialog/dialog.service';
-import { TabIndexService } from "./tabIndex.service";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
+import { TabIndexService } from './tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 @NgModule( {
     imports: [

@@ -26,6 +26,8 @@ import {
 import { style, transition, trigger, animate } from '@angular/animations';
 
 import { ComponentDefaultBase } from '../core/base/component-default.base';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 let globalZindex = 1;
 
@@ -58,8 +60,8 @@ export class TlDropDownList extends ComponentDefaultBase {
 
     private itemSelected: any[];
 
-    constructor() {
-        super();
+    constructor(public idService: IdGeneratorService, public nameService: NameGeneratorService) {
+        super(idService, nameService);
         this.itemList = [
             {
                 textItem : 'Item 1',

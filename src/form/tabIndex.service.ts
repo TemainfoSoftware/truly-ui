@@ -20,15 +20,15 @@
  SOFTWARE.
  */
 
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 let nextUniqueIndex = 0;
 
 @Injectable()
 export class TabIndexService {
 
-    private element;
     public uniqueIndex;
+    private element;
 
     constructor() {}
 

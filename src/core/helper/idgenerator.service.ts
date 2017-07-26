@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 let nextUniqueId = 0;
 

@@ -27,7 +27,7 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
-import { TabIndexService } from "./tabIndex.service";
+import { TabIndexService } from './tabIndex.service';
 
 @Component( {
     selector: 'tl-form',

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import { ElementRef } from '@angular/core';
-import { IdGeneratorService } from "../helper/idgenerator.service";
-import { NameGeneratorService } from "../helper/namegenerator.service";
+import { IdGeneratorService } from '../helper/idgenerator.service';
+import { NameGeneratorService } from '../helper/namegenerator.service';
 
 /**
  * Class extended of others components, in charge of generate ID and TabIndex.

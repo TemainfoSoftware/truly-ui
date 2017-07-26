@@ -9,22 +9,22 @@ $icon-color: #6A6A6A;
 $hover-background-color: #dedede;
 $active-background-color: #d8d8d8;
 
-.tl-drop-down-list-box {
+.tl-dropdown-list {
   position: relative;
   display: inline-block;
   cursor: pointer;
   outline: none;
   min-width: 125px;
-  > .tl-drop-down-list-wrapper {
+  > .dropdown-list-wrapper {
     position: relative;
-    > .tl-drop-down-list-container {
+    > .dropdown-list-container {
       background-color: $background-color;
       line-height: $button-height;
       height: $button-height;
       outline: none;
 
       border: $border-default;
-      > .drop-down-list-input {
+      > .dropdown-list-input {
         height: $button-height - 2;
         float: left;
         position: relative;
@@ -33,22 +33,23 @@ $active-background-color: #d8d8d8;
         padding: 0 10px;
         color: $color;
       }
-      > .drop-down-list-icon {
+      > .dropdown-list-icon {
         height: $button-height - 2;
         float: right;
         position: relative;
       }
-      > .drop-down-list-icon i {
+      > .dropdown-list-icon i {
         color: $icon-color;
       }
     }
-    > .tl-drop-down-list-container:hover {
+    > .dropdown-list-container:hover {
       background-color: $hover-background-color;
     }
-    > .tl-drop-down-list-container:active {
+    > .dropdown-list-container:active {
       background-color: $active-background-color;
     }
-    > .drop-down-list-select {
+    > .dropdown-list-select {
+      display: none;
       color: $color;
       position: absolute;
       outline: none;
@@ -72,6 +73,12 @@ $active-background-color: #d8d8d8;
       > li:active {
         background-color: $active-background-color;
       }
+    }
+    .dropdown-list-select::-webkit-scrollbar {
+      width: 0.4em;
+    }
+    .dropdown-list-select::-webkit-scrollbar-thumb {
+      background-color: #cccccc;
     }
   }
 }

@@ -1,27 +1,21 @@
-<div class="tl-drop-down-list-box" (valueChange)="valueChange($event)"
-     (click)="changeShowStatus($event.stopPropagation())">
-
+<div class="tl-drop-down-list-box" *ngIf="datasource" (valueChange)="valueChange($event)">
     <div class="tl-drop-down-list-wrapper">
-
-        <div class="tl-drop-down-list-container">
-
+        <div class="tl-drop-down-list-container" tabindex="1" (click)="changeShowStatus($event.stopPropagation())">
             <div class="drop-down-list-input">
+                <span *ngIf="placeholder">{{ placeholder }}</span>
                 {{ itemSelected?.textItem }}
             </div>
-
             <div class="drop-down-list-icon">
                 <i class="ion-chevron-down"></i>
             </div>
-
         </div>
-
         <ul class="drop-down-list-select"
             *ngIf="showHide"
+            (keydown)="onKeyDownList($event)"
+            #list
             [ngStyle]="{'z-index': zIndex}"
             [@enterAnimation]>
-            <li *ngFor="let item of itemList" (click)="selectOption(item)">{{ item.textItem }}</li>
+            <li *ngFor="let item of datasource; let i = index" (click)="selectOption(item)" tabindex="{{i}}">{{ item.textItem }}</li>
         </ul>
-
     </div>
-
 </div>

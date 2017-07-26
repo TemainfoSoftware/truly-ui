@@ -20,12 +20,15 @@
  SOFTWARE.
  */
 import {
-    Component, HostListener
+    AfterViewInit,
+    Component, EventEmitter, HostListener, Input, OnInit, Output, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate } from '@angular/animations';
 
 import { ComponentDefaultBase } from '../core/base/component-default.base';
+import { KeyEvent } from '../core/enums/key-events';
+import { DataMetadata } from '../core/types/datametadata';
 
 let globalZindex = 1;
 
@@ -48,33 +51,41 @@ let globalZindex = 1;
         )
     ]
 } )
-export class TlDropDownList extends ComponentDefaultBase {
+export class TlDropDownList extends ComponentDefaultBase implements AfterViewInit, OnInit {
+
+    @Input( 'data' ) data: DataMetadata | Array<any>;
+
+    @Input( 'placeholder' ) placeholder: string;
+
+    @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
     public zIndex = 0;
 
     private showHide: boolean;
 
-    private itemList: any[];
+    private children = 0;
 
     private itemSelected: any[];
 
-    constructor() {
+    private datasource: any[];
+
+    @ViewChild( 'list' ) list;
+
+    constructor( private _renderer: Renderer2 ) {
         super();
-        this.itemList = [
-            {
-                textItem : 'Item 1',
-                valueItem : '1'
-            },
-            {
-                textItem : 'Item 2',
-                valueItem : '2'
-            },
-            {
-                textItem : 'Item 3',
-                valueItem : '3'
-            }
-        ];
         this.showHide = false;
+    }
+
+    ngOnInit() {
+        this.updateDataSource( this.getData() );
+    }
+
+    ngAfterViewInit() {
+        this._renderer.listen( document, 'click', ( event ) => {
+            if ( !(event.target.className === 'tl-drop-down-list-box') ) {
+                this.showHide = false;
+            }
+        } );
     }
 
     @HostListener( 'click', [ '$event' ] )
@@ -83,11 +94,62 @@ export class TlDropDownList extends ComponentDefaultBase {
         this.showHide = false;
     }
 
+    updateDataSource( data ) {
+        this.datasource = data;
+    }
+
+    onKeyDownList( $event ) {
+        $event.preventDefault();
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWDOWN:
+                this.arrowDown();
+                break;
+            case KeyEvent.ARROWUP:
+                this.arrowUp();
+                break;
+            case KeyEvent.ENTER:
+                this.onChangeItem();
+                this.showHide = false;
+                break;
+            case KeyEvent.ESCAPE:
+                this.onChangeItem();
+                this.showHide = false;
+                break;
+        }
+    }
+
+    onChangeItem() {
+        this.datasource.forEach( ( value, index, array ) => {
+            if ( value.textItem === document.activeElement.innerHTML ) {
+                this.placeholder = '';
+                this.itemSelected = value;
+                this.itemSelect.emit( this.itemSelected );
+            }
+        } );
+    }
+
+    arrowDown() {
+        if ( this.children < this.list.nativeElement.children.length - 1 ) {
+            this.list.nativeElement.children[ this.children + 1 ].focus();
+            this.children = this.children + 1;
+            this.onChangeItem();
+        }
+    }
+
+    arrowUp() {
+        if ( this.children !== 0 && this.children !== -1 ) {
+            this.list.nativeElement.children[ this.children - 1 ].focus();
+            this.children = this.children - 1;
+            this.onChangeItem();
+        }
+    }
+
     changeShowStatus() {
         this.showHide = !this.showHide;
         if ( this.showHide ) {
             setTimeout( () => {
                 this.getAndSetZIndex();
+                this.list.nativeElement.children[ this.children ].focus();
             }, 0 );
         }
     }
@@ -98,8 +160,16 @@ export class TlDropDownList extends ComponentDefaultBase {
     }
 
     selectOption( item ) {
-        console.log( item );
         this.itemSelected = item;
+        this.placeholder = '';
+        this.itemSelect.emit( this.itemSelected );
+    }
+
+    getData() {
+        if ( ( typeof this.data === 'object') && ( this.data[ 0 ] === undefined ) ) {
+            return ( this.data as DataMetadata ).data;
+        }
+        return this.data;
     }
 
 }

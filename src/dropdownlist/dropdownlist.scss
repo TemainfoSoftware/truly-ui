@@ -13,25 +13,29 @@ $active-background-color: #d8d8d8;
   position: relative;
   display: inline-block;
   cursor: pointer;
+  outline: none;
+  min-width: 125px;
   > .tl-drop-down-list-wrapper {
     position: relative;
-    min-width: 125px;
     > .tl-drop-down-list-container {
       background-color: $background-color;
       line-height: $button-height;
       height: $button-height;
+      outline: none;
+
       border: $border-default;
       > .drop-down-list-input {
-        height: $button-height;
+        height: $button-height - 2;
         float: left;
         position: relative;
         overflow: hidden;
         width: auto;
         padding: 0 10px;
+        color: $color;
       }
       > .drop-down-list-icon {
+        height: $button-height - 2;
         float: right;
-        line-height: $button-height;
         position: relative;
       }
       > .drop-down-list-icon i {
@@ -45,21 +49,24 @@ $active-background-color: #d8d8d8;
       background-color: $active-background-color;
     }
     > .drop-down-list-select {
+      color: $color;
       position: absolute;
+      outline: none;
       top: $button-height;
       left: 0;
       width: 100%;
       background-color: $background-color;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .3);
       border: $border-default;
+      border-top: 0;
       list-style: none;
       padding: 0;
       margin: 0;
       > li {
+        outline: none;
         padding: 0 10px;
         line-height: $button-height;
       }
-      > li:hover {
+      > li:hover, li:focus {
         background-color: $hover-background-color;
       }
       > li:active {

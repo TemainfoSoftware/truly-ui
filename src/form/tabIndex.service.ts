@@ -19,37 +19,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TlForm } from './form';
-import { FormService } from './form.service';
-import { ModalService } from '../modal/modal.service';
-import { ModalModule } from '../modal/index';
-import { ButtonModule } from '../button/index';
-import { DialogService } from '../dialog/dialog.service';
-import { TabIndexService } from "./tabIndex.service";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
 
-@NgModule( {
-    imports: [
-        CommonModule,
-        ModalModule,
-        ButtonModule
-    ],
-    declarations: [
-        TlForm
-    ],
-    exports: [
-        TlForm
-    ],
-    providers: [
-        ModalService,
-        FormService,
-        DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService
-    ]
-} )
-export class FormModule {}
+import { Injectable } from "@angular/core";
+
+let nextUniqueIndex = 0;
+
+@Injectable()
+export class TabIndexService {
+
+    private element;
+    public uniqueIndex;
+
+    constructor() {}
+
+    setTabIndex(element) {
+        this.element = element;
+        this.element.nativeElement.tabindex = nextUniqueIndex++;
+        this.uniqueIndex = nextUniqueIndex;
+    }
+
+    clearTabIndex() {
+        nextUniqueIndex = 0;
+    }
+
+}

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import { ElementRef } from '@angular/core';
-import { UniqueIDGenerator } from '../helper/uniqueid-generator';
-import { UniqueNameGenerator } from '../helper/uniquename-generator';
+import { IdGeneratorService } from "../helper/idgenerator.service";
+import { NameGeneratorService } from "../helper/namegenerator.service";
 
 /**
  * Class extended of others components, in charge of generate ID and TabIndex.
@@ -42,31 +42,7 @@ export class ComponentDefaultBase {
      */
     public previousTabIndex: number;
 
-    /**
-     * Variable type of UniqueIDGenerator
-     */
-    private _generatorID: UniqueIDGenerator;
-
-    /**
-     * Variable type of UniqueNameGenerator;
-     */
-    private _generatorName: UniqueNameGenerator;
-
-    /**
-     * Function set generator of ID.
-     * @param value
-     */
-    set generator( value: UniqueIDGenerator ) {
-        this._generatorID = value;
-    }
-
-    /**
-     * Function set generator of Name.
-     * @param value
-     */
-    set generatorName( value: UniqueNameGenerator ) {
-        this._generatorName = value;
-    }
+    constructor(public idService: IdGeneratorService, public nameService: NameGeneratorService) {}
 
     /**
      * @param value The element received of the components.
@@ -74,8 +50,8 @@ export class ComponentDefaultBase {
      */
     public setElement( value: ElementRef, name ) {
         this.element = value;
-        this._generatorID = new UniqueIDGenerator( value, name );
-        this._generatorName = new UniqueNameGenerator( value, name );
+        this.idService.createId( value, name );
+        this.nameService.createName( value, name );
     }
 
     /**

@@ -19,37 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TlForm } from './form';
-import { FormService } from './form.service';
-import { ModalService } from '../modal/modal.service';
-import { ModalModule } from '../modal/index';
-import { ButtonModule } from '../button/index';
-import { DialogService } from '../dialog/dialog.service';
-import { TabIndexService } from "./tabIndex.service";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
 
-@NgModule( {
-    imports: [
-        CommonModule,
-        ModalModule,
-        ButtonModule
-    ],
-    declarations: [
-        TlForm
-    ],
-    exports: [
-        TlForm
-    ],
-    providers: [
-        ModalService,
-        FormService,
-        DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService
-    ]
-} )
-export class FormModule {}
+ import { Injectable } from "@angular/core";
+
+let nextUniqueName = 0;
+
+ @Injectable()
+ export class NameGeneratorService {
+
+     constructor() {}
+
+     createName(element, name) {
+         if ( element.nativeElement.name === '' ) {
+             element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
+         }
+     }
+
+     clearName() {
+         nextUniqueName = 0;
+     }
+
+ }

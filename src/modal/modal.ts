@@ -25,6 +25,7 @@ import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
+import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 
 let globalZindex = 1;
 
@@ -126,7 +127,15 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     private subscribeMouseUp;
 
-    constructor( private element: ElementRef, private renderer: Renderer2 ) {}
+    private colorHoverMinimize;
+
+    private colorHoverMaximize;
+
+    private colorHoverRestore;
+
+    private colorHoverClose;
+
+    constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator ) {}
 
     ngOnInit() {
         this.setZIndex();
@@ -242,13 +251,6 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         }
 
         this.setNewTopPosition();
-    }
-
-    setOverlay() {
-        const app = document.getElementsByTagName('app-root');
-        const overlay = document.createElement('div');
-        overlay.setAttribute('class', 'overlay-modal');
-        app[0].appendChild(overlay);
     }
 
     setOptions( options: Array<ModalOptions> ) {
@@ -391,6 +393,42 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     getZIndex() {
         this.ZIndex = globalZindex++;
         return this.ZIndex;
+    }
+
+    getColorHover() {
+        return this.colorService.calculate(this.color, -0.05);
+    }
+
+    hoverMinimize() {
+        this.colorHoverMinimize = this.getColorHover();
+    }
+
+    leaveMinimize() {
+        this.colorHoverMinimize = this.color;
+    }
+
+    hoverMaximize() {
+        this.colorHoverMaximize = this.getColorHover();
+    }
+
+    leaveMaximize() {
+        this.colorHoverMaximize = this.color;
+    }
+
+    hoverRestore() {
+        this.colorHoverRestore = this.getColorHover();
+    }
+
+    leaveRestore() {
+        this.colorHoverRestore = this.color;
+    }
+
+    hoverClose() {
+        this.colorHoverClose = this.getColorHover();
+    }
+
+    leaveClose() {
+        this.colorHoverClose = this.color;
     }
 
     ngOnDestroy() {

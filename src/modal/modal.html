@@ -5,21 +5,37 @@
             <span class="title">{{title}}</span>
         </div>
         <div class="controls">
-            <span class="control-item" (mouseup)="minimizeModal()">
+            <div class="control-item"
+                 [ngStyle]="{'background-color': colorHoverMinimize}"
+                 (mouseover)="hoverMinimize()"
+                 (mouseleave)="leaveMinimize()"
+                 (mouseup)="minimizeModal()">
                 <i class="ion-android-remove" [class.disabled]="!minimizable"></i>
-            </span>
+            </div>
 
-            <span class="control-item"  *ngIf="!maximized" (mouseup)="maximizeModal()">
+            <div class="control-item" *ngIf="!maximized"
+                 [ngStyle]="{'background-color': colorHoverMaximize}"
+                 (mouseover)="hoverMaximize()"
+                 (mouseleave)="leaveMaximize()"
+                 (mouseup)="maximizeModal()">
                 <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
-            </span>
+            </div>
 
-            <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximizeModal()">
-                <i ngClass="ion-android-contract" [class.disabled]="!restoreMaximize"></i>
-            </span>
+            <div class="control-item" *ngIf="maximized"
+                 [ngStyle]="{'background-color': colorHoverRestore}"
+                 (mouseover)="hoverRestore()"
+                 (mouseleave)="leaveRestore()"
+                 (mouseup)="restoreMaximizeModal()">
+                <i ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
+            </div>
 
-            <span class="control-item" (mouseup)="closeModal()">
-                <i class="ion-close" style="padding-right: 10px"></i>
-            </span>
+            <div class="control-item"
+                 [ngStyle]="{'background-color': colorHoverClose}"
+                 (mouseover)="hoverClose()"
+                 (mouseleave)="leaveClose()"
+                 (mouseup)="closeModal()">
+                <i class="ion-close"></i>
+            </div>
         </div>
     </div>
     <div class="body" #body></div>

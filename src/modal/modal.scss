@@ -29,13 +29,17 @@
     > .header .controls {
     position: absolute;
     right: 0.1px;
-    width: 85px;
+    width: 90px;
     user-select: none;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+        align-items: center;
     }
 
     > .header .controls .control-item {
-    padding: 7px;
     text-align: center;
+    width: 30px;
     left: 5px;
     margin: 0;
     }

@@ -23,6 +23,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
+import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 
 export * from './modal';
 
@@ -40,7 +41,8 @@ export * from './modal';
         TlModal
     ],
     providers: [
-        ModalService
+        ModalService,
+        ToneColorGenerator
     ]
 } )
 export class ModalModule {

@@ -1,25 +1,41 @@
 <div #modal (mousedown)="setZIndex()" class="tl-modal-container">
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
-            <span class="icon"><i [ngClass]="icon"></i></span>
-            <span class="title">{{title}}</span>
+            <span class="icon"><i [style.color]="fontColor" [ngClass]="icon"></i></span>
+            <span class="title" [style.color]="fontColor">{{title}}</span>
         </div>
         <div class="controls">
-            <span class="control-item" (mouseup)="minimizeModal()">
-                <i class="ion-android-remove" [class.disabled]="!minimizable"></i>
-            </span>
+            <div class="control-item"
+                 [ngStyle]="{'background-color': colorHoverMinimize}"
+                 (mouseover)="hoverMinimize()"
+                 (mouseleave)="leaveMinimize()"
+                 (mouseup)="minimizeModal()">
+                <i [style.color]="fontColor" class="ion-android-remove" [class.disabled]="!minimizable"></i>
+            </div>
 
-            <span class="control-item"  *ngIf="!maximized" (mouseup)="maximizeModal()">
-                <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
-            </span>
+            <div class="control-item" *ngIf="!maximized"
+                 [ngStyle]="{'background-color': colorHoverMaximize}"
+                 (mouseover)="hoverMaximize()"
+                 (mouseleave)="leaveMaximize()"
+                 (mouseup)="maximizeModal()">
+                <i [style.color]="fontColor" ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
+            </div>
 
-            <span class="control-item" *ngIf="maximized" (mouseup)="restoreMaximize()">
-                <i ngClass="ion-android-contract"></i>
-            </span>
+            <div class="control-item" *ngIf="maximized"
+                 [ngStyle]="{'background-color': colorHoverRestore}"
+                 (mouseover)="hoverRestore()"
+                 (mouseleave)="leaveRestore()"
+                 (mouseup)="restoreMaximizeModal()">
+                <i [style.color]="fontColor" ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
+            </div>
 
-            <span class="control-item" (mouseup)="closeModal()">
-                <i class="ion-close" style="padding-right: 10px"></i>
-            </span>
+            <div class="control-item"
+                 [ngStyle]="{'background-color': colorHoverClose}"
+                 (mouseover)="hoverClose()"
+                 (mouseleave)="leaveClose()"
+                 (mouseup)="closeModal()">
+                <i [style.color]="fontColor" class="ion-close"></i>
+            </div>
         </div>
     </div>
     <div class="body" #body></div>

@@ -63,6 +63,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() color = '#53C68C';
 
+    @Input() fontColor = '#fff';
+
     @Input() height = '500px';
 
     @Input() width = '500px';

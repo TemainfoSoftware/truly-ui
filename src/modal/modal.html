@@ -1,8 +1,8 @@
 <div #modal (mousedown)="setZIndex()" class="tl-modal-container">
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" (mousedown)="mouseDown($event)" (dblclick)="maximizeModal()">
-            <span class="icon"><i [ngClass]="icon"></i></span>
-            <span class="title">{{title}}</span>
+            <span class="icon"><i [style.color]="fontColor" [ngClass]="icon"></i></span>
+            <span class="title" [style.color]="fontColor">{{title}}</span>
         </div>
         <div class="controls">
             <div class="control-item"
@@ -10,7 +10,7 @@
                  (mouseover)="hoverMinimize()"
                  (mouseleave)="leaveMinimize()"
                  (mouseup)="minimizeModal()">
-                <i class="ion-android-remove" [class.disabled]="!minimizable"></i>
+                <i [style.color]="fontColor" class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </div>
 
             <div class="control-item" *ngIf="!maximized"
@@ -18,7 +18,7 @@
                  (mouseover)="hoverMaximize()"
                  (mouseleave)="leaveMaximize()"
                  (mouseup)="maximizeModal()">
-                <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
+                <i [style.color]="fontColor" ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </div>
 
             <div class="control-item" *ngIf="maximized"
@@ -26,7 +26,7 @@
                  (mouseover)="hoverRestore()"
                  (mouseleave)="leaveRestore()"
                  (mouseup)="restoreMaximizeModal()">
-                <i ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
+                <i [style.color]="fontColor" ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
             </div>
 
             <div class="control-item"
@@ -34,7 +34,7 @@
                  (mouseover)="hoverClose()"
                  (mouseleave)="leaveClose()"
                  (mouseup)="closeModal()">
-                <i class="ion-close"></i>
+                <i [style.color]="fontColor" class="ion-close"></i>
             </div>
         </div>
     </div>

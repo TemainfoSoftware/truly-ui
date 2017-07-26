@@ -26,8 +26,6 @@ import {
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
 
-let uniqueIndex = 0;
-
 @Component( {
     selector : 'tl-button',
     templateUrl : './button.html',
@@ -69,8 +67,6 @@ export class TlButton implements AfterContentInit {
 
     private _buttonSelected: boolean;
 
-    private tabindex;
-
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
         this.executeToggle();
@@ -78,7 +74,6 @@ export class TlButton implements AfterContentInit {
 
     constructor( public button: ElementRef, public modalService: ModalService ) {
         this.initializeDefaultInputValues();
-        this.tabindex = uniqueIndex++;
     }
 
     initializeDefaultInputValues() {
@@ -96,8 +91,6 @@ export class TlButton implements AfterContentInit {
     }
 
     keydown( $event ) {
-        $event.stopPropagation();
-        $event.preventDefault();
         if ( $event.key === 'Enter' ) {
             this.clickToggle();
         }

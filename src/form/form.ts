@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ContentChildren, ElementRef, Input, OnDestroy, QueryList, Renderer2,
+    AfterViewInit, Component, ContentChildren, Input, OnDestroy,
+    QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
@@ -37,21 +38,24 @@ import { TabIndexService } from './tabIndex.service';
 export class TlForm implements AfterViewInit, OnDestroy {
 
     @Input() lastElement;
+
     @Input() initialFocus;
+
     @Input() showConfirmOnChange = false;
 
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
-    @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
-    private input;
+    @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
     private listenLastElement;
 
     private dialogOpen = false;
 
     private lastActiveElement;
+
+    private formResult = {};
 
     constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
 
@@ -64,6 +68,12 @@ export class TlForm implements AfterViewInit, OnDestroy {
                     this.buttonFormOk.buttonElement.nativeElement.focus();
                 }, 1 );
             }
+        } );
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( event ) => {
+            this.getInputValues();
+        } );
+        this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click', ( event ) => {
+            this.getInputValues();
         } );
     }
 
@@ -114,8 +124,9 @@ export class TlForm implements AfterViewInit, OnDestroy {
     }
 
     setFocusOnFirstInput() {
-        this.inputList.toArray().length > 0 ?
-            this.inputList.toArray()[ 0 ].element.nativeElement.focus() : this.input = false;
+        if ( this.inputList.toArray().length > 0 ) {
+            this.inputList.toArray()[ 0 ].element.nativeElement.focus();
+        }
     }
 
     isKeyDownEnterOrArrowDown( $event: KeyboardEvent ) {
@@ -176,6 +187,12 @@ export class TlForm implements AfterViewInit, OnDestroy {
                 this.lastActiveElement.focus();
             }, { draggable: false } );
         }
+    }
+
+    getInputValues() {
+        this.inputList.forEach( ( item, index, array ) => {
+            this.formResult[ item.label.toLowerCase() ] = item.inputModel.model;
+        } );
     }
 
     hasValueOnForm() {

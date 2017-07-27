@@ -10,8 +10,8 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>Basic</h5>
-        <tl-drop-down-list [data]="data" [label]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected($event)"></tl-drop-down-list>
+        <tl-dropdown-list [data]="data" [label]="'textItem'" [value]="'valueItem'"
+                           (itemSelect)="showItemSelected($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -23,8 +23,8 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>Placeholder</h5>
-        <tl-drop-down-list [data]="data" [label]="'textItem'" [value]="'valueItem'" [placeholder]="'Select item'"
-                           (itemSelect)="showItemSelected2($event)"></tl-drop-down-list>
+        <tl-dropdown-list [data]="data" [label]="'textItem'" [value]="'valueItem'" [placeholder]="'Select item'"
+                           (itemSelect)="showItemSelected2($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -38,8 +38,8 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>Scroll</h5>
-        <tl-drop-down-list [data]="data" [label]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected4($event)" [scroll]="'2'"></tl-drop-down-list>
+        <tl-dropdown-list [data]="data" [label]="'textItem'" [value]="'valueItem'"
+                           (itemSelect)="showItemSelected4($event)" [scroll]="'3'"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -51,8 +51,8 @@
     <div class="col-md-3">
       <div class="group-component">
         <h5>Auto Scroll With Many Items</h5>
-        <tl-drop-down-list [data]="data2" [label]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected3($event)"></tl-drop-down-list>
+        <tl-dropdown-list [data]="data2" [label]="'textItem'" [value]="'valueItem'"
+                           (itemSelect)="showItemSelected3($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -99,7 +99,11 @@
   <div class="group-component">
     <h5 class="title">Basic</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-drop-down-list></tl-drop-down-list>
+<tl-dropdown-list [data]="data"
+                  [label]="'textItem'"
+                  [value]="'valueItem'"
+                  (itemSelect)="showItemSelected($event)">
+</tl-dropdown-list>
   </textarea>
   </div>
 </div>

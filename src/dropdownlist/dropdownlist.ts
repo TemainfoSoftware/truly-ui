@@ -87,7 +87,7 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
     }
 
     ngAfterViewInit() {
-        if ( this.placeholder && this.placeholder != undefined ) {
+        if ( this.placeholder && this.placeholder !== undefined ) {
             this.datasource[ 0 ] = { [this.label] : this.placeholder, [this.value] : '' };
             setTimeout( () => {
                 this.itemSelected = this.datasource[ 0 ];
@@ -149,7 +149,7 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
         this.datasource.forEach( ( value, index, array ) => {
             if ( value[ this.label ] === document.activeElement.innerHTML.trim() ) {
                 this.itemSelected = value;
-                if(this.itemSelected[this.value] != null && this.itemSelected[this.value] != ''){
+                if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
                     this.itemSelect.emit( this.itemSelected );
                 } else {
                     this.itemSelect.emit( '' );
@@ -164,7 +164,7 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
         }
         this.itemSelected = this.datasource[ this.children ];
         this.placeholder = '';
-        if(this.itemSelected[this.value] != null && this.itemSelected[this.value] != ''){
+        if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
             this.itemSelect.emit( this.itemSelected );
         } else {
             this.itemSelect.emit( '' );
@@ -209,7 +209,7 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
     selectOption( item, index ) {
         this.itemSelected = item;
         this.children = index;
-        if(this.itemSelected[this.value] != null && this.itemSelected[this.value] != ''){
+        if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
             this.itemSelect.emit( this.itemSelected );
         } else {
             this.itemSelect.emit( '' );

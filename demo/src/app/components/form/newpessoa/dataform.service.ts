@@ -33,13 +33,13 @@ export class DataFormService {
         city: '',
         country: '',
         state: '',
+        genero: ''
       };
 
   constructor() {}
 
   saveDataForm(result) {
     this.dataForm = result;
-    console.log(this.dataForm);
   }
 
   getDataForm() {

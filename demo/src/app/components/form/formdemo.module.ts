@@ -12,6 +12,8 @@ import { DatatableModule } from '../../../../../src/datatable';
 import { ModalModule } from "../../../../../src/modal/index";
 import { FormModule } from "../../../../../src/form/index";
 import { DataFormService } from "./newpessoa/dataform.service";
+import { DropDownListModule } from "../../../../../src/dropdownlist/index";
+import { TooltipModule } from "../../../../../src/tooltip/index";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { DataFormService } from "./newpessoa/dataform.service";
     FormModule,
     ButtonModule,
     HighlightJsModule,
-    DatatableModule
+    DropDownListModule,
+    DatatableModule,
+    TooltipModule
   ],
   exports: [
     FormDemo,

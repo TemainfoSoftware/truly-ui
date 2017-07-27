@@ -11,11 +11,16 @@ export class CadPessoa implements OnInit {
 
 
   private pessoa;
+  private data;
 
   constructor(private modalService: ModalService, public formDataService: DataFormService) {
   }
 
   ngOnInit() {
+    this.data = [
+      { textItem : 'Masculino', valueItem : 'M' },
+      { textItem : 'Feminino', valueItem : 'F' },
+    ];
     this.pessoa = this.formDataService.getDataForm();
   }
 

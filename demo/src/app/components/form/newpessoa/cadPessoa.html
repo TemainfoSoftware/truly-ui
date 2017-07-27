@@ -20,6 +20,12 @@
       </div>
     </div>
     <div class="col-md-6">
+      <tl-dropdown-list [data]="data" [ngModel]="pessoa?.genero" [label]="'textItem'" [value]="'valueItem'"
+                        [placeholder]="'Select item'"></tl-dropdown-list>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
       <div class="form-group">
         <tl-input [labelSize]="'80'" [ngModel]="pessoa?.country" [label]="'Country'"></tl-input>
       </div>

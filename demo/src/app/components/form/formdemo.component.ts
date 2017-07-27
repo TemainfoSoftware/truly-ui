@@ -42,7 +42,6 @@ export class FormDemo {
 
   modal1() {
     this.formService.createForm(CadPessoa, this.modalOptions, (modalResult) => {
-      console.log('modalResult', modalResult);
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });

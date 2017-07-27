@@ -35,7 +35,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-drop-down-list',
+    selector : 'tl-dropdown-list',
     templateUrl : './dropdownlist.html',
     styleUrls : [ './dropdownlist.scss' ],
     animations : [
@@ -70,6 +70,8 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
     @ViewChild( 'list' ) list;
 
     @ViewChild( 'dropbox' ) dropbox;
+
+    @ViewChild( 'dropdownModel' ) dropdownModel;
 
     public zIndex = 0;
 
@@ -108,12 +110,12 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
     calcHeightItem() {
         if ( (!this.scroll) ) {
             if ( (this.datasource.length > 10) ) {
-                return { 'height' : (10 * 39) + 'px', 'overflow-y' : 'scroll' };
+                return { 'height' : (10 * 25) + 'px', 'overflow-y' : 'scroll' };
             } else {
                 return { 'height' : 'auto', 'overflow-y' : 'visible' };
             }
         } else {
-            return { 'height' : (this.scroll * 39) + 'px', 'overflow-y' : 'scroll' };
+            return { 'height' : (this.scroll * 25) + 'px', 'overflow-y' : 'scroll' };
         }
     }
 

@@ -1,44 +1,56 @@
 @import "../core/core";
 
 //Default
-$button-height: 39px;
+$button-height: 25px;
 $border-default: 1px solid #C8C8C8;
 $background-color: #E8E8E8;
 $color: #616161;
 $icon-color: #6A6A6A;
 $hover-background-color: #dedede;
 $active-background-color: #d8d8d8;
+$font-size: 0.9em;
+$button-font-family: 'Segoe UI', sans-serif;
 
 .tl-dropdown-list {
   position: relative;
   display: inline-block;
   cursor: pointer;
   outline: none;
-  min-width: 125px;
+  width: 125px;
   > .dropdown-list-wrapper {
     position: relative;
     > .dropdown-list-container {
       background-color: $background-color;
-      line-height: $button-height;
-      height: $button-height;
       outline: none;
-
+      height: $button-height;
       border: $border-default;
-      > .dropdown-list-input {
+      > input{
+        font-family: $button-font-family;
+        font-size: $font-size;
         height: $button-height - 2;
-        float: left;
+        line-height: $button-height - 2;
+        background-color: transparent;
+        border: 0;
+        margin: 0;
+        width: 100%;
         position: relative;
         overflow: hidden;
-        width: auto;
-        padding: 0 10px;
+        padding: 0;
+        padding-left: 10px;
+        padding-right: 30px;
         color: $color;
+        user-select: none;
+        cursor: pointer;
       }
       > .dropdown-list-icon {
-        height: $button-height - 2;
-        float: right;
-        position: relative;
+        height: $button-height;
+        line-height: $button-height;
+        position: absolute;
+        top: 0;
+        right: 0;
       }
       > .dropdown-list-icon i {
+        font-size: .9em;
         color: $icon-color;
       }
     }
@@ -63,6 +75,7 @@ $active-background-color: #d8d8d8;
       padding: 0;
       margin: 0;
       > li {
+        font-family: $button-font-family;
         outline: none;
         padding: 0 10px;
         line-height: $button-height;

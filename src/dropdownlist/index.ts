@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { TlDropDownList } from './dropdownlist';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
@@ -9,7 +10,8 @@ export * from './dropdownlist';
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        FormsModule
     ],
     declarations: [
         TlDropDownList

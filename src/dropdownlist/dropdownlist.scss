@@ -67,10 +67,18 @@ $active-background-color: #d8d8d8;
         padding: 0 10px;
         line-height: $button-height;
       }
-      > li:hover, li:focus {
+      > li.-placeholder{
+        cursor: default;
+      }
+      > li:hover {
         background-color: $hover-background-color;
       }
+      > li:focus {
+        background-color: #53C68C;
+        color: #FFF;
+      }
       > li:active {
+        color: $color;
         background-color: $active-background-color;
       }
     }
@@ -80,6 +88,11 @@ $active-background-color: #d8d8d8;
     .dropdown-list-select::-webkit-scrollbar-thumb {
       background-color: #cccccc;
     }
+  }
+  >.dropdown-list-wrapper:focus{
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
   }
 }
 

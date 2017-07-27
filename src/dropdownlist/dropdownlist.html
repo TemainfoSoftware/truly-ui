@@ -3,9 +3,8 @@
     <div class="dropdown-list-wrapper" #dropbox tabindex="-1" (keydown)="onKeyDownList($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())">
-            <div class="dropdown-list-input" >
-                <span *ngIf="placeholder">{{ placeholder }}</span>
-                {{ itemSelected?.textItem }}
+            <div *ngIf="itemSelected" class="dropdown-list-input" >
+                {{ itemSelected[label] }}
             </div>
             <div class="dropdown-list-icon">
                 <i class="ion-chevron-down"></i>
@@ -19,8 +18,8 @@
             [style.zIndex] = "zIndex"
             [style.display] = "showHide === true ? 'block' : 'none'"
             [@enterAnimation]>
-            <li *ngFor="let item of datasource; let i = index" (click)="selectOption(item, i)" tabindex="{{i}}">
-                {{ item.textItem }}
+            <li *ngFor="let item of datasource; let i = index" (click)="selectOption(item, i)" tabindex="{{i}}" [ngClass]="{ '-placeholder': placeholder === item[label] }">
+                {{ item[label] }}
             </li>
         </ul>
 

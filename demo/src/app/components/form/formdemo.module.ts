@@ -11,6 +11,7 @@ import { CadPessoa } from "./newpessoa/cadPessoa.component";
 import { DatatableModule } from '../../../../../src/datatable';
 import { ModalModule } from "../../../../../src/modal/index";
 import { FormModule } from "../../../../../src/form/index";
+import { DataFormService } from "./newpessoa/dataform.service";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { FormModule } from "../../../../../src/form/index";
     FormDemo,
     CadPessoa,
   ],
+  providers: [DataFormService],
   entryComponents: [ CadPessoa ]
 })
 export class FormDemoModule {

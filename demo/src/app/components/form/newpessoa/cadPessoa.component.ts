@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from "../../../../../../src/modal/modal.service";
+import { DataFormService } from "./dataform.service";
 
 @Component( {
   selector: 'cad-pessoa',
@@ -8,22 +9,14 @@ import { ModalService } from "../../../../../../src/modal/modal.service";
 } )
 export class CadPessoa implements OnInit {
 
-  private people;
-  private text;
 
-  constructor(private modalService: ModalService) {}
+  private pessoa;
+
+  constructor(private modalService: ModalService, public formDataService: DataFormService) {
+  }
 
   ngOnInit() {
-    this.text = '24051994';
-    this.people =
-      {
-        name: 'William',
-        lastname: 'Aguera',
-        age: 23,
-        city: 'Palotina-PR',
-        job: 'Programador'
-      }
-    ;
+    this.pessoa = this.formDataService.getDataForm();
   }
 
 }

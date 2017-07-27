@@ -2,32 +2,37 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [(ngModel)]="people.name" [label]="'Nome'"></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.name" [label]="'Name'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [(ngModel)]="people.lastname" [label]="'Sobrenome'"></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.lastname" [label]="'LastName'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [(ngModel)]="people.age" [label]="'Idade'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'City'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [(ngModel)]="people.city" [label]="'Cidade'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.country" [label]="'Country'"></tl-input>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4">
-        <tl-input #lastElement [mask]="{mask: '00/00/0000'}" [(ngModel)]="text"></tl-input>
+        <tl-input #lastElement [ngModel]="pessoa?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: true }" ></tl-input>
     </div>
   </div>
 </tl-form>

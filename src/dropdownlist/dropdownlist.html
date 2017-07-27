@@ -3,7 +3,7 @@
     <div class="dropdown-list-wrapper" #dropbox tabindex="-1" (keydown)="onKeyDownList($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())">
-            <input *ngIf="itemSelected" #dropdownModel="ngModel" disabled class="dropdown-list-input" [(ngModel)]="itemSelected[label]" />
+            <input #inputDropdown placeholder="Select Item" #dropdownModel="ngModel" disabled class="dropdown-list-input" [(ngModel)]="ngValue" />
             <div class="dropdown-list-icon">
                 <i class="ion-chevron-down"></i>
             </div>

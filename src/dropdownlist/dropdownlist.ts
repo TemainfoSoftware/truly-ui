@@ -21,16 +21,18 @@
  */
 import {
     AfterViewInit,
-    Component, EventEmitter, Input, Output, Renderer2, ViewChild
+    Component, EventEmitter, forwardRef, Input, Output, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate } from '@angular/animations';
 
-import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 import { DataMetadata } from '../core/types/datametadata';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { TabIndexService } from '../form/tabIndex.service';
 
 let globalZindex = 1;
 
@@ -51,9 +53,12 @@ let globalZindex = 1;
                 ] )
             ]
         )
+    ],
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlDropDownList ), multi: true }
     ]
 } )
-export class TlDropDownList extends ComponentDefaultBase implements AfterViewInit {
+export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
 
     @Input( 'data' ) data: DataMetadata | Array<any>;
 
@@ -69,6 +74,8 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     @ViewChild( 'list' ) list;
 
+    @ViewChild( 'inputDropdown' ) inputDropdown;
+
     @ViewChild( 'dropbox' ) dropbox;
 
     @ViewChild( 'dropdownModel' ) dropdownModel;
@@ -83,12 +90,14 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     private datasource: any[] = [];
 
-    constructor( private _renderer: Renderer2, public idService: IdGeneratorService, public nameService: NameGeneratorService ) {
-        super( idService, nameService );
+    constructor( private _renderer: Renderer2, tabIndexService: TabIndexService, public idService:
+        IdGeneratorService, public nameService: NameGeneratorService ) {
+        super( tabIndexService, idService, nameService );
         this.showHide = false;
     }
 
     ngAfterViewInit() {
+        this.setElement( this.inputDropdown, 'dropdownlist' );
         if ( this.placeholder && this.placeholder !== undefined ) {
             this.datasource[ 0 ] = { [this.label] : this.placeholder, [this.value] : '' };
             setTimeout( () => {
@@ -216,6 +225,9 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
         } else {
             this.itemSelect.emit( '' );
         }
+        this.inputDropdown.nativeElement.value = item[this.label];
+        this.dropdownModel.model = item[this.value];
+
         this.showHide = false;
         this.dropbox.nativeElement.focus();
     }

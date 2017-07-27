@@ -61,6 +61,8 @@ export class TlButton implements AfterContentInit {
 
     @Input() mdResult: ModalResult;
 
+    @Input() formResult;
+
     @Output() isSelected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
@@ -93,9 +95,6 @@ export class TlButton implements AfterContentInit {
     keydown( $event ) {
         if ( $event.key === 'Enter' ) {
             this.clickToggle();
-        }
-        if ( $event.key === 'Escape' ) {
-            this.modalService.execCallBack( ModalResult.MRCLOSE, this.buttonElement.nativeElement.offsetParent.parentElement );
         }
     }
 
@@ -138,7 +137,10 @@ export class TlButton implements AfterContentInit {
     dispatchCallback() {
         const listModals = document.querySelectorAll( 'tl-modal' );
         if ( listModals.length > 0 ) {
-            this.modalService.execCallBack( ModalResult[ this.mdResult ], this.findParentOfChildren( listModals ) );
+            this.modalService.execCallBack( {
+                'mdResult': ModalResult[ this.mdResult ],
+                'formResult': this.formResult
+            }, this.findParentOfChildren( listModals ) );
         }
     }
 

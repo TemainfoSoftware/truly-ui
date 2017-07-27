@@ -104,12 +104,12 @@ export class ModalService {
         return this.minModals;
     }
 
-    execCallBack( mdResult: any, component? ) {
-        this.setMdResult( mdResult );
+    execCallBack( result: any, component? ) {
+        this.setMdResult( result );
         if ( this.isResultUndefined() ) {
             return;
         }
-        if ( !(this.isMdResultEqualsNone( mdResult )) ) {
+        if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
             this.close(component);
         }
         this.resultCallback();

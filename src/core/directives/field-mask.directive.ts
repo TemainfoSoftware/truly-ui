@@ -430,6 +430,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         }
         setTimeout( () => {
             this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
+            this.tlinput.toArray()[ 0 ].inputModel.model = this.clearMask( this.value );
         }, 0 );
         this.setPosition( endPosition );
     }

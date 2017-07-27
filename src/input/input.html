@@ -14,7 +14,7 @@
                '-cursorblocked' : readonly || disabled,
                '-disabled': disabled,
                '-readonly': readonly,
-               '-maskInvalid': !validations?.validMask,
+               '-maskInvalid': validations?.validMask === false,
                '-maskValid': validations?.validMask,
                '-hasValidation': hasValidation()
            }"

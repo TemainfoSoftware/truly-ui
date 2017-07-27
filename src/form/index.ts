@@ -30,12 +30,14 @@ import { DialogService } from '../dialog/dialog.service';
 import { TabIndexService } from './tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { DropDownListModule } from '../dropdownlist/index';
 
 @NgModule( {
     imports: [
         CommonModule,
         ModalModule,
-        ButtonModule
+        ButtonModule,
+        DropDownListModule
     ],
     declarations: [
         TlForm

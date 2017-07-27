@@ -29,6 +29,7 @@ import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
 import { TabIndexService } from './tabIndex.service';
+import { TlDropDownList } from '../dropdownlist/dropdownlist';
 
 @Component( {
     selector: 'tl-form',
@@ -44,6 +45,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
     @Input() showConfirmOnChange = false;
 
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
+    @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -71,6 +73,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
         } );
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( event ) => {
             this.getInputValues();
+            this.getDropdownListValues();
         } );
         this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click', ( event ) => {
             this.getInputValues();
@@ -181,7 +184,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
         if ( !this.dialogOpen ) {
             this.dialogOpen = true;
             this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
-                if ( callback === ModalResult.MRYES ) {
+                if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
                 this.lastActiveElement.focus();
@@ -192,6 +195,13 @@ export class TlForm implements AfterViewInit, OnDestroy {
     getInputValues() {
         this.inputList.forEach( ( item, index, array ) => {
             this.formResult[ item.label.toLowerCase() ] = item.inputModel.model;
+        } );
+    }
+
+
+    getDropdownListValues() {
+        this.dropdownList.forEach( ( item, index, array ) => {
+            this.formResult[ 'genero' ] = item.dropdownModel.model;
         } );
     }
 

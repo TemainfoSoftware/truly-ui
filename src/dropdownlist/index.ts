@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TlDropDownList } from './dropdownlist';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { TabIndexService } from '../form/tabIndex.service';
 
 export * from './dropdownlist';
 
@@ -19,6 +20,6 @@ export * from './dropdownlist';
     exports: [
         TlDropDownList
     ],
-    providers: [IdGeneratorService, NameGeneratorService]
+    providers: [IdGeneratorService, NameGeneratorService, TabIndexService]
 })
 export class DropDownListModule {}

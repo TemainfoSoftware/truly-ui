@@ -21,7 +21,7 @@
     </div>
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Basic With Placeholder</h5>
+        <h5>Placeholder</h5>
         <tl-drop-down-list [data]="data" [placeholder]="'Select item'" (itemSelect)="showItemSelected2($event)"></tl-drop-down-list>
       </div>
     </div>
@@ -29,6 +29,32 @@
       <div class="group-component">
         <h5>Selected Item</h5>
         <div><span>{{ itemSelected2 }}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Default Scroll</h5>
+        <tl-drop-down-list [data]="data2" (itemSelect)="showItemSelected3($event)"></tl-drop-down-list>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Selected Item</h5>
+        <div><span>{{ itemSelected3 }}</span></div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Scroll</h5>
+        <tl-drop-down-list [data]="data" (itemSelect)="showItemSelected4($event)" [scroll]="'2'"></tl-drop-down-list>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Selected Item</h5>
+        <div><span>{{ itemSelected4 }}</span></div>
       </div>
     </div>
   </div>

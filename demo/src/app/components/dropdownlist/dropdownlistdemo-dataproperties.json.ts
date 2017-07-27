@@ -3,9 +3,9 @@
  */
 export const dataProperties = [
   {
-    name: "multiSelect",
-    type: "boolean",
-    default: "false",
+    name: "placeholder",
+    type: "string",
+    default: "null",
     description: "Enables selection of multiple buttons if set to true.",
     options: "true | false"
   }

@@ -59,23 +59,28 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     @Input( 'placeholder' ) placeholder: string;
 
+    @Input( 'scroll' ) scroll: number;
+
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'list' ) list;
+
+    @ViewChild( 'dropbox' ) dropbox;
 
     public zIndex = 0;
 
     private showHide: boolean;
 
-    private children = 0;
+    private children = -1;
 
     private itemSelected: any[];
 
     private datasource: any[];
 
-    constructor( private _renderer: Renderer2, public idService: IdGeneratorService, public nameService: NameGeneratorService) {
-        super(idService, nameService);
+    constructor( private _renderer: Renderer2, public idService: IdGeneratorService, public nameService: NameGeneratorService ) {
+        super( idService, nameService );
         this.showHide = false;
+        this.placeholder = null;
     }
 
     ngOnInit() {
@@ -84,24 +89,29 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
 
     ngAfterViewInit() {
         this._renderer.listen( document, 'click', ( event ) => {
-            if ( !(event.target.className === 'tl-drop-down-list-box') ) {
-                this.showHide = false;
-            }
+           this.showHide = false;
         } );
-    }
-
-    @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) {
-        $event.stopPropagation();
-        this.showHide = false;
     }
 
     updateDataSource( data ) {
         this.datasource = data;
     }
 
+    calcHeightItem() {
+        if ( (!this.scroll) ) {
+            if ( (this.datasource.length > 10) ) {
+                return { 'height': (10 * 39) + 'px', 'overflow-y': 'scroll' };
+            } else {
+                return { 'height': 'auto', 'overflow-y': 'visible' };
+            }
+        } else {
+            return { 'height': (this.scroll * 39) + 'px', 'overflow-y': 'scroll' };
+        }
+    }
+
     onKeyDownList( $event ) {
         $event.preventDefault();
+        $event.stopPropagation();
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
                 this.arrowDown();
@@ -112,22 +122,39 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
             case KeyEvent.ENTER:
                 this.onChangeItem();
                 this.showHide = false;
+                this.dropbox.nativeElement.focus();
                 break;
             case KeyEvent.ESCAPE:
                 this.onChangeItem();
                 this.showHide = false;
+                this.dropbox.nativeElement.focus();
                 break;
         }
     }
 
     onChangeItem() {
+        if ( !this.showHide ) {
+
+            this.onShowHideFalse();
+            return;
+        }
+
         this.datasource.forEach( ( value, index, array ) => {
-            if ( value.textItem === document.activeElement.innerHTML ) {
+            if ( value.textItem === document.activeElement.innerHTML.trim() ) {
                 this.placeholder = '';
                 this.itemSelected = value;
                 this.itemSelect.emit( this.itemSelected );
             }
         } );
+    }
+
+    onShowHideFalse() {
+        if (this.children === -1) {
+            this.children = 0;
+        }
+        this.itemSelected = this.datasource[ this.children ];
+        this.placeholder = '';
+        this.itemSelect.emit( this.itemSelected );
     }
 
     arrowDown() {
@@ -151,7 +178,11 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
         if ( this.showHide ) {
             setTimeout( () => {
                 this.getAndSetZIndex();
-                this.list.nativeElement.children[ this.children ].focus();
+                if (this.children === -1) {
+                    this.list.nativeElement.children[ 0 ].focus();
+                }else {
+                    this.list.nativeElement.children[ this.children ].focus();
+                }
             }, 0 );
         }
     }
@@ -161,10 +192,12 @@ export class TlDropDownList extends ComponentDefaultBase implements AfterViewIni
         return this.zIndex;
     }
 
-    selectOption( item ) {
+    selectOption( item, index ) {
         this.itemSelected = item;
         this.placeholder = '';
+        this.children = index;
         this.itemSelect.emit( this.itemSelected );
+        this.showHide = false;
     }
 
     getData() {

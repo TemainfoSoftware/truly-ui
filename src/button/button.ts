@@ -25,17 +25,17 @@ import {
 
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { ComponentDefaultBase } from "../core/base/component-default.base";
 
 @Component( {
     selector : 'tl-button',
     templateUrl : './button.html',
     styleUrls : [ './button.scss' ]
 } )
-export class TlButton extends ComponentHasModelBase implements AfterViewInit {
+export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @Input() type: string;
 
@@ -107,7 +107,6 @@ export class TlButton extends ComponentHasModelBase implements AfterViewInit {
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
         this.setTabIndex( this.buttonElement );
-
         if ( this.defaultFocus ) {
             this.buttonElement.nativeElement.focus();
         }
@@ -118,7 +117,6 @@ export class TlButton extends ComponentHasModelBase implements AfterViewInit {
     }
 
     clickToggle() {
-        this.buttonElement.nativeElement.style.outline = 'none';
         this.executeToggle();
         this.dispatchCallback();
     }
@@ -145,6 +143,9 @@ export class TlButton extends ComponentHasModelBase implements AfterViewInit {
 
     dispatchCallback() {
         const listModals = document.querySelectorAll( 'tl-modal' );
+        if (!this.mdResult || ModalResult.MRCUSTOM) {
+            return;
+        }
         if ( listModals.length > 0 ) {
             this.modalService.execCallBack( {
                 'mdResult': ModalResult[ this.mdResult ],

@@ -22,6 +22,8 @@ export class DropDownListDemo {
 
   public itemSelected5: any[];
 
+  public itemSelected6: any[];
+
   public data: any[];
 
   public data2: any[];
@@ -77,6 +79,11 @@ export class DropDownListDemo {
   showItemSelected5( event ) {
     this.itemSelected5 = [];
     this.itemSelected5.push( event.textItem );
+  }
+
+  showItemSelected6( event ) {
+    this.itemSelected6 = [];
+    this.itemSelected6.push( event.textItem );
   }
 
 }

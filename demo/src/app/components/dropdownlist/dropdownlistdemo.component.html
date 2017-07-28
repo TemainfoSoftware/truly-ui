@@ -50,7 +50,7 @@
     </div>
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Auto Scroll With Many Items</h5>
+        <h5>Auto Scroll - Many Items</h5>
         <tl-dropdown-list [data]="data2" [text]="'textItem'" [value]="'valueItem'"
                            (itemSelect)="showItemSelected3($event)"></tl-dropdown-list>
       </div>
@@ -63,11 +63,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-6">
       <div class="group-component">
         <h5>Label</h5>
         <tl-dropdown-list [data]="data"
-                          [label]="'Label'"
+                          [label]="'Label Text'"
                           [labelSize]="80"
                           [text]="'textItem'"
                           [value]="'valueItem'"
@@ -75,10 +75,30 @@
         </tl-dropdown-list>
       </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
       <div class="group-component">
         <h5>Selected Item</h5>
         <div><span>{{ itemSelected5 }}</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Select Heigth</h5>
+        <tl-dropdown-list [data]="data2"
+                          [selectHeight]="25"
+                          [scroll]="6"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          (itemSelect)="showItemSelected6($event)">
+        </tl-dropdown-list>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Selected Item</h5>
+        <div><span>{{ itemSelected6 }}</span></div>
       </div>
     </div>
   </div>

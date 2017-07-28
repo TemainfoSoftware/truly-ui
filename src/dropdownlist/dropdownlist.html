@@ -1,6 +1,6 @@
 <div  class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
 
-    <div class="dropdown-list-wrapper" #dropbox tabindex="-1" (keydown)="onKeyDownList($event)">
+    <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{tabindex}}" (keydown)="onKeyDownList($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())">
             <input #inputDropdown placeholder="Select Item" #dropdownModel="ngModel" disabled class="dropdown-list-input" [(ngModel)]="ngValue" />

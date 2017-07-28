@@ -130,6 +130,10 @@ $button-font-family: 'Segoe UI', sans-serif;
       padding: 0 10px;
       color: $color;
     }
+    .-placeholder:focus {
+      color: #FFF;
+      background-color: #53C68C;
+    }
   }
   >.dropdown-list-wrapper:focus{
     outline: -webkit-focus-ring-color auto 5px;

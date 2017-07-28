@@ -82,6 +82,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @ViewChild( 'list' ) list;
 
+    @ViewChild( 'defaultPlaceholder' ) placeholderDiv;
+
     @ViewChild( 'inputDropdown' ) inputDropdown;
 
     @ViewChild( 'dropbox' ) dropbox;
@@ -240,8 +242,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     arrowUp() {
-        if(this.placeholder && this.children === 0){
-            this.list.nativeElement.children[ - 1 ].focus();
+        if ( this.placeholder && this.children === 0 ) {
+            this.placeholderDiv.nativeElement.focus();
+            this.inputDropdown.nativeElement.value = this.placeholderDiv.nativeElement.innerHTML.trim();
+            this.children = -1;
         }
         if ( this.children !== 0 && this.children !== -1 ) {
             this.list.nativeElement.children[ this.children - 1 ].focus();
@@ -253,10 +257,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     changeShowStatus() {
         this.showHide = !this.showHide;
         if ( this.showHide ) {
-            this.list.nativeElement.children[0].style.cursor = 'default';
+            this.list.nativeElement.children[ 0 ].style.cursor = 'default';
             setTimeout( () => {
                 this.getAndSetZIndex();
-                if ( this.children === -1 ) {
+                if ( this.children === -1 && this.placeholder ) {
+                    this.placeholderDiv.nativeElement.focus();
+                } else if ( this.children === -1 ) {
                     this.list.nativeElement.children[ 0 ].focus();
                 } else {
                     this.list.nativeElement.children[ this.children ].focus();

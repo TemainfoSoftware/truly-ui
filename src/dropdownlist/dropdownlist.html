@@ -19,6 +19,7 @@
 
         <div class="-placeholder"
              *ngIf="placeholder && showHide"
+             #defaultPlaceholder
              [ngStyle]="{'line-height' : selectHeight + 'px'}"
              (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}</div>
 

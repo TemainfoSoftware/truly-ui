@@ -54,8 +54,8 @@ let globalZindex = 1;
             ]
         )
     ],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlDropDownList ), multi: true }
+    providers : [
+        { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlDropDownList ), multi : true }
     ]
 } )
 export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
@@ -64,7 +64,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'value' ) value: string;
 
+    @Input( 'text' ) text: string;
+
     @Input( 'label' ) label: string;
+
+    @Input('labelPlacement') labelPlacement = 'left';
+
+    @Input('labelSize') labelSize: string;
 
     @Input( 'placeholder' ) placeholder = null;
 
@@ -90,8 +96,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     private datasource: any[] = [];
 
-    constructor( private _renderer: Renderer2, tabIndexService: TabIndexService, public idService:
-        IdGeneratorService, public nameService: NameGeneratorService ) {
+    constructor( private _renderer: Renderer2,
+                 tabIndexService: TabIndexService,
+                 public idService: IdGeneratorService,
+                 public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
         this.showHide = false;
     }
@@ -101,7 +109,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.setTabIndex( this.dropbox );
 
         if ( this.placeholder && this.placeholder !== undefined ) {
-            this.datasource[ 0 ] = { [this.label] : this.placeholder, [this.value] : '' };
+            this.datasource[ 0 ] = { [this.text] : this.placeholder, [this.value] : '' };
             setTimeout( () => {
                 this.itemSelected = this.datasource[ 0 ];
             }, 0 );
@@ -121,34 +129,51 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     calcHeightItem() {
         if ( (!this.scroll) ) {
             if ( (this.datasource.length > 10) ) {
-                return { 'height' : (10 * 25) + 'px', 'overflow-y' : 'scroll' };
+                return { 'height' : (10 * 39) + 'px', 'overflow-y' : 'scroll' };
             } else {
                 return { 'height' : 'auto', 'overflow-y' : 'visible' };
             }
         } else {
-            return { 'height' : (this.scroll * 25) + 'px', 'overflow-y' : 'scroll' };
+            return { 'height' : (this.scroll * 39) + 'px', 'overflow-y' : 'scroll' };
         }
     }
 
     onKeyDownList( $event ) {
-        $event.preventDefault();
-        $event.stopPropagation();
+        // $event.preventDefault();
+        // $event.stopPropagation();
+        // console.log($event.keyCode);
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
                 this.arrowDown();
+                $event.stopPropagation();
+                $event.preventDefault();
                 break;
             case KeyEvent.ARROWUP:
                 this.arrowUp();
+                $event.stopPropagation();
+                $event.preventDefault();
                 break;
             case KeyEvent.ENTER:
+                $event.stopPropagation();
                 this.onChangeItem();
-                this.showHide = false;
+                if ( this.showHide ) {
+                    this.showHide = false;
+                } else {
+                    this.showHide = true;
+                }
                 this.dropbox.nativeElement.focus();
                 break;
             case KeyEvent.ESCAPE:
-                this.onChangeItem();
                 this.showHide = false;
                 this.dropbox.nativeElement.focus();
+                break;
+            case $event.keyCode === 32:
+                $event.stopPropagation();
+                $event.preventDefault();
+                if ( !this.showHide ) {
+                    this.showHide = true;
+                    this.dropbox.nativeElement.focus();
+                }
                 break;
         }
     }
@@ -160,9 +185,11 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
 
         this.datasource.forEach( ( value, index, array ) => {
-            if ( value[ this.label ] === document.activeElement.innerHTML.trim() ) {
+            if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
                 this.itemSelected = value;
                 if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
+                    this.inputDropdown.nativeElement.value = value[ this.text ];
+                    this.dropdownModel.model = value[ this.value ];
                     this.itemSelect.emit( this.itemSelected );
                 } else {
                     this.itemSelect.emit( '' );
@@ -178,6 +205,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.itemSelected = this.datasource[ this.children ];
         this.placeholder = '';
         if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
+            this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
+            this.dropdownModel.model = this.itemSelected[ this.value ];
             this.itemSelect.emit( this.itemSelected );
         } else {
             this.itemSelect.emit( '' );
@@ -227,8 +256,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         } else {
             this.itemSelect.emit( '' );
         }
-        this.inputDropdown.nativeElement.value = item[this.label];
-        this.dropdownModel.model = item[this.value];
+        this.inputDropdown.nativeElement.value = item[ this.text ];
+        this.dropdownModel.model = item[ this.value ];
 
         this.showHide = false;
         this.dropbox.nativeElement.focus();

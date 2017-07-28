@@ -1,7 +1,7 @@
 @import "../core/core";
 
 //Default
-$button-height: 25px;
+$button-height: 39px;
 $border-default: 1px solid #C8C8C8;
 $background-color: #E8E8E8;
 $color: #616161;
@@ -12,13 +12,35 @@ $font-size: 0.9em;
 $button-font-family: 'Segoe UI', sans-serif;
 
 .tl-dropdown-list {
-  position: relative;
-  display: inline-block;
+  display: table;
+  border-collapse: separate;
   cursor: pointer;
   outline: none;
-  width: 125px;
+  //Label
+  > .labeltext {
+    line-height: 1;
+    width: 100px;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #737373;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    font-size: $font-size;
+  }
+  > .labeltext.-labeltop {
+    text-align: left;
+    padding: 0 0 5px 0;
+    display: table-caption;
+  }
+  > .labeltext.-labelleft {
+    text-align: right;
+    padding: 5px 5px 5px 0;
+    display: table-cell;
+  }
   > .dropdown-list-wrapper {
+    width: 125px;
     position: relative;
+    float: right;
     > .dropdown-list-container {
       background-color: $background-color;
       outline: none;

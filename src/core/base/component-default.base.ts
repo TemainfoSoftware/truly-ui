@@ -119,36 +119,24 @@ export class ComponentDefaultBase {
     }
 
     getNextElementOnForm() {
-        const form = document.querySelectorAll( 'tl-form' );
-        for ( let child = 0; child < form.length; child++ ) {
-            const doc = form[ child ].querySelectorAll( '*' );
-            for ( let child2 = 0; child2 < doc.length; child2++ ) {
-                if ( this.isNextTabIndex( doc, child2 ) ) {
-                    return doc[ child2 ];
-                }
-            }
-        }
+        return this.getElementsOnForm(this.tabindex + 1);
     }
 
     getPreviousElementOnForm() {
-        const form = document.querySelectorAll( 'tl-form' );
-        for ( let child = 0; child < form.length; child++ ) {
-            const doc = form[ child ].querySelectorAll( '*' );
-            for ( let child2 = 0; child2 < doc.length; child2++ ) {
-                if ( this.isPreviousTabIndex( doc, child2 ) ) {
-                    return doc[ child2 ];
+        return this.getElementsOnForm(this.tabindex - 1);
+    }
+
+
+    getElementsOnForm(direction) {
+        const formElements = document.querySelectorAll( 'tl-form' );
+        for ( let formComponents = 0; formComponents < formElements.length; formComponents++ ) {
+            const listFormComponents = formElements[ formComponents ].querySelectorAll( '*' );
+            for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
+                if ((listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === direction) {
+                    return listFormComponents[ childFormComponents ];
                 }
             }
         }
     }
-
-    isNextTabIndex( doc, child2 ) {
-        return doc[ child2 ].tabindex === this.tabindex + 1;
-    }
-
-    isPreviousTabIndex( doc, child2 ) {
-        return doc[ child2 ].tabindex === this.tabindex - 1;
-    }
-
 
 }

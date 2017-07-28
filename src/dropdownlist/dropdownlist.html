@@ -1,23 +1,34 @@
-<div  class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
+<div class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
+
+    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
+        <b *ngIf="required" style="color: #FF6666">*</b>
+    </label>
 
     <div class="dropdown-list-wrapper" #dropbox tabindex="-1" (keydown)="onKeyDownList($event)">
 
-        <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())">
-            <input #inputDropdown placeholder="Select Item" #dropdownModel="ngModel" disabled class="dropdown-list-input" [(ngModel)]="ngValue" />
+        <div class="dropdown-list-container"  (click)="changeShowStatus($event.stopPropagation())">
+            <input #inputDropdown
+                   placeholder="{{placeholder?.valueOf()}}"
+                   #dropdownModel="ngModel"
+                   disabled
+                   class="dropdown-list-input"
+                   [(ngModel)]="ngValue"/>
             <div class="dropdown-list-icon">
                 <i class="ion-chevron-down"></i>
             </div>
         </div>
 
+
         <ul class="dropdown-list-select"
             (keydown)="onKeyDownList($event)"
             #list
             [ngStyle]="calcHeightItem()"
-            [style.zIndex] = "zIndex"
-            [style.display] = "showHide === true ? 'block' : 'none'"
+            [style.zIndex]="zIndex"
+            [style.display]="showHide === true ? 'block' : 'none'"
             [@enterAnimation]>
-            <li *ngFor="let item of datasource; let i = index" (click)="selectOption(item, i)" tabindex="{{i}}" [ngClass]="{ '-placeholder': placeholder === item[label] }">
-                {{ item[label] }}
+            <li *ngFor="let item of datasource; let i = index" (click)="selectOption(item, i)" tabindex="{{i}}"
+                [ngClass]="{ '-placeholder': placeholder === item[text] }">
+                {{ item[text] }}
             </li>
         </ul>
 

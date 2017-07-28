@@ -28,7 +28,7 @@ import { ModalResult } from '../core/enums/modal-result';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { ComponentDefaultBase } from "../core/base/component-default.base";
+import { ComponentDefaultBase } from '../core/base/component-default.base';
 
 @Component( {
     selector : 'tl-button',
@@ -84,6 +84,18 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         this.initializeDefaultInputValues();
     }
 
+    ngAfterViewInit() {
+        this.setElement( this.buttonElement, 'button' );
+        this.setTabIndex( this.buttonElement );
+        if ( this.defaultFocus ) {
+            this.buttonElement.nativeElement.focus();
+        }
+        if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
+            throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
+        }
+        this.hasText();
+    }
+
     initializeDefaultInputValues() {
         this.type = 'button';
         this.text = '';
@@ -102,18 +114,6 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         if ( $event.key === 'Enter' ) {
             this.clickToggle();
         }
-    }
-
-    ngAfterViewInit() {
-        this.setElement( this.buttonElement, 'button' );
-        this.setTabIndex( this.buttonElement );
-        if ( this.defaultFocus ) {
-            this.buttonElement.nativeElement.focus();
-        }
-        if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
-            throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
-        }
-        this.hasText();
     }
 
     clickToggle() {

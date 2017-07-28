@@ -87,7 +87,6 @@ $button-font-family: 'Segoe UI', sans-serif;
       color: $color;
       position: absolute;
       outline: none;
-      top: $button-height;
       left: 0;
       width: 100%;
       background-color: $background-color;
@@ -100,10 +99,6 @@ $button-font-family: 'Segoe UI', sans-serif;
         font-family: $button-font-family;
         outline: none;
         padding: 0 10px;
-        line-height: $button-height;
-      }
-      > li.-placeholder{
-        cursor: default;
       }
       > li:hover {
         background-color: $hover-background-color;
@@ -122,6 +117,18 @@ $button-font-family: 'Segoe UI', sans-serif;
     }
     .dropdown-list-select::-webkit-scrollbar-thumb {
       background-color: #cccccc;
+    }
+    >.-placeholder {
+      font-family: $button-font-family;
+      font-size: $font-size;
+      cursor: default;
+      background-color: $background-color;
+      border: $border-default;
+      border-bottom: 0;
+      border-top: 0;
+      outline: none;
+      padding: 0 10px;
+      color: $color;
     }
   }
   >.dropdown-list-wrapper:focus{

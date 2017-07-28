@@ -4,7 +4,7 @@
         <b *ngIf="required" style="color: #FF6666">*</b>
     </label>
 
-    <div class="dropdown-list-wrapper" #dropbox tabindex="-1" (keydown)="onKeyDownList($event)">
+    <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{tabindex}}" (keydown)="onKeyDownList($event)">
 
         <div class="dropdown-list-container"  (click)="changeShowStatus($event.stopPropagation())">
             <input #inputDropdown

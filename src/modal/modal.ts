@@ -154,6 +154,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.subscribeResize = this.renderer.listen( window, 'resize', () => {
             this.maximizeModal();
             this.getBoundingContent();
+            this.setModalCenterParent();
         } );
     }
 

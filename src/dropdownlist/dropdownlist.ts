@@ -105,7 +105,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     ngAfterViewInit() {
-        this.setElement( this.inputDropdown, 'dropdownlist' );
+        this.setElement( this.dropbox, 'dropdown' );
+        this.setTabIndex( this.dropbox );
+
         if ( this.placeholder && this.placeholder !== undefined ) {
             this.datasource[ 0 ] = { [this.text] : this.placeholder, [this.value] : '' };
             setTimeout( () => {

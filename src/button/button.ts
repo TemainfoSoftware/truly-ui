@@ -20,18 +20,22 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ElementRef, Input, ViewChild, Output, EventEmitter,
+    Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { TabIndexService } from '../form/tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 @Component( {
     selector : 'tl-button',
     templateUrl : './button.html',
     styleUrls : [ './button.scss' ]
 } )
-export class TlButton implements AfterContentInit {
+export class TlButton extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() type: string;
 
@@ -74,7 +78,9 @@ export class TlButton implements AfterContentInit {
         this.executeToggle();
     }
 
-    constructor( public button: ElementRef, public modalService: ModalService ) {
+    constructor( public button: ElementRef, public modalService: ModalService,
+                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+        super(tabIndexService, idService, nameService);
         this.initializeDefaultInputValues();
     }
 
@@ -98,7 +104,10 @@ export class TlButton implements AfterContentInit {
         }
     }
 
-    ngAfterContentInit() {
+    ngAfterViewInit() {
+        this.setElement( this.buttonElement, 'button' );
+        this.setTabIndex( this.buttonElement );
+
         if ( this.defaultFocus ) {
             this.buttonElement.nativeElement.focus();
         }

@@ -26,6 +26,7 @@ import { ControlValueAccessor } from '@angular/forms/src/forms';
 import { TabIndexService } from '../../form/tabIndex.service';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
+import { KeyEvent } from '../enums/key-events';
 
 
 /**
@@ -70,6 +71,11 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     public ngValue = '';
 
+    private tabindex: number;
+
+    private nextTab: number;
+
+    private previousTab: number;
 
     constructor(private tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
         super(idService, nameService);
@@ -99,9 +105,11 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param element
      */
     setTabIndex( element: ElementRef ) {
-        this.tabIndexService.setTabIndex(element);
-        this.setNextTabIndex( this.element.nativeElement.tabindex + 1 );
-        this.setPreviousTabIndex( this.element.nativeElement.tabindex - 1 );
+        setTimeout( () => {
+            this.tabindex = this.tabIndexService.setTabIndex( element );
+        }, 1 );
+        /*        this.setNextTabIndex( this.element.nativeElement.tabindex + 1 );
+         this.setPreviousTabIndex( this.element.nativeElement.tabindex - 1 );*/
     }
 
     /**
@@ -110,10 +118,25 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     onKeyInput( event: KeyboardEvent ) {
         if ( this.enterAsTab ) {
-            if ( event.keyCode === 13 || event.keyCode === 40 ) {
-                this.nextFocus();
-            } else if ( event.keyCode === 38 ) {
+            if (event.keyCode === KeyEvent.TAB && event.shiftKey) {
+                event.preventDefault();
                 this.previousFocus();
+                return;
+            }
+            switch ( event.keyCode ) {
+                case KeyEvent.ENTER:
+                    this.nextFocus();
+                    break;
+                case KeyEvent.ARROWDOWN:
+                    this.nextFocus();
+                    break;
+                case KeyEvent.ARROWUP:
+                    this.previousFocus();
+                    break;
+                case KeyEvent.TAB:
+                    event.preventDefault();
+                    this.nextFocus();
+                    break;
             }
         }
     }
@@ -122,8 +145,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function to set focus on previous element
      */
     previousFocus() {
-        if ( this.previousTabIndex !== -1 ) {
-            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex ).focus();
+        const previousElement = this.getPreviousElementOnForm();
+        if ( previousElement !== undefined ) {
+            (previousElement as HTMLElement).focus();
         }
     }
 
@@ -131,18 +155,43 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Function to set focus on next element
      */
     nextFocus() {
-        const existElement = this.existsElement( this.element.nativeElement.tabindex );
-        if ( existElement ) {
-            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex ).focus();
+        const nextElement = this.getNextElementOnForm();
+        if ( nextElement !== undefined ) {
+            (nextElement as HTMLElement).focus();
         }
     }
 
-    /**
-     * Function that verify if next element exists.
-     * @param currentTabIndex
-     */
-    existsElement( currentTabIndex ) {
-        return document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1) );
+
+    getNextElementOnForm() {
+        const form = document.querySelectorAll( 'tl-form' );
+        for ( let child = 0; child < form.length; child++ ) {
+            const doc = form[ child ].querySelectorAll( '*' );
+            for ( let child2 = 0; child2 < doc.length; child2++ ) {
+                if ( this.isNextTabIndex( doc, child2 ) ) {
+                    return doc[ child2 ];
+                }
+            }
+        }
+    }
+
+    getPreviousElementOnForm() {
+        const form = document.querySelectorAll( 'tl-form' );
+        for ( let child = 0; child < form.length; child++ ) {
+            const doc = form[ child ].querySelectorAll( '*' );
+            for ( let child2 = 0; child2 < doc.length; child2++ ) {
+                if ( this.isPreviousTabIndex( doc, child2 ) ) {
+                    return doc[ child2 ];
+                }
+            }
+        }
+    }
+
+    isNextTabIndex( doc, child2 ) {
+        return doc[ child2 ].tabindex === this.tabindex + 1;
+    }
+
+    isPreviousTabIndex( doc, child2 ) {
+        return doc[ child2 ].tabindex === this.tabindex - 1;
     }
 
     /**

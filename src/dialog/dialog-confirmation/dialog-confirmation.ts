@@ -28,16 +28,24 @@ import { KeyEvent } from '../../core/enums/key-events';
     styleUrls: ['../dialog.scss']
 })
 export class TlDialogConfirmation implements AfterViewInit {
+
     message = '';
+
     textOk = 'Yes';
+
     textCancel = 'No';
 
     @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
+
     @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
 
+    private defaultOK;
+
     ngAfterViewInit() {
-        // this.buttonDialogOk.buttonElement.nativeElement.focus();
-        // this.defaultOK ?  : this.buttonCancel.buttonElement.nativeElement.focus();
+        setTimeout( () => {
+            this.defaultOK === true || this.defaultOK === undefined ? this.buttonDialogOk.buttonElement.nativeElement.focus() :
+                this.buttonDialogCancel.buttonElement.nativeElement.focus();
+        }, 1 );
     }
 
     onkeyup( $event: KeyboardEvent ) {

@@ -182,7 +182,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     closeForm() {
-        this.dialogOpen = false;
         this.getLastActiveElement();
         if ( this.showConfirmOnChange && this.inputHasChanged() ) {
             this.showConfirmation();
@@ -203,6 +202,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
                 if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
+                this.dialogOpen = false;
                 this.lastActiveElement.focus();
             }, { draggable: false } );
         }
@@ -218,7 +218,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     verifyInputValidation() {
         this.validForm = true;
         this.inputList.forEach( ( item, index, array ) => {
-            console.log(item);
             setTimeout( () => {
                 if ( item.inputModel.valid === false ) {
                     this.validForm = false;
@@ -230,9 +229,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     getDropdownListValues() {
-        /* this.dropdownList.forEach( ( item, index, array ) => {
+         this.dropdownList.forEach( ( item, index, array ) => {
             this.formResult[ 'genero' ] = item.componentModel.model;
-        } ); */
+        } );
     }
 
     hasValueOnForm() {

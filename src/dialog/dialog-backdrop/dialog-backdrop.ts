@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, ViewChild } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
@@ -40,6 +40,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     ]
 } )
 export class TlDialogBackdrop {
+
+    @ViewChild('backdrop') backdrop;
 
     @HostBinding( '@enterAnimation' ) public animation;
 

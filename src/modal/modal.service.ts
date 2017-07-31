@@ -86,6 +86,21 @@ export class ModalService {
         this.backdrop = this.view.createComponent( backdropFactory );
     }
 
+    setBackdropModalOverModal() {
+        setTimeout( () => {
+            this.backdrop.instance.backdrop.nativeElement.style.display = 'none';
+            this.setBackdropzIndex();
+        }, 1 )
+    }
+
+    setBackdropzIndex() {
+        this.backdrop.instance.backdrop.nativeElement.style.zIndex =
+            this.component.instance.element.nativeElement.firstChild.style.zIndex - 1;
+        setTimeout( () => {
+            this.backdrop.instance.backdrop.nativeElement.style.display = 'block';
+        }, 280 );
+    }
+
     removeMinModals( indexModal ) {
         this.minModals.splice( indexModal, 1 );
     }

@@ -19,30 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef } from '@angular/core';
+import { ElementRef, Input } from '@angular/core';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
+import { TabIndexService } from '../../form/tabIndex.service';
+import { KeyEvent } from '../enums/key-events';
 
 /**
  * Class extended of others components, in charge of generate ID and TabIndex.
  */
 export class ComponentDefaultBase {
     /**
+     * Controller to define if the tabulation is with key Enter or key Tab.
+     * @type {boolean}
+     */
+    @Input() enterAsTab = true;
+
+    /**
      * The element itself.
      */
     public element: ElementRef;
 
     /**
-     * Variable to calculate what's the next tab index.
+     * TabIndex of Element;
      */
-    public nextTabIndex: number;
+    public tabindex: number;
 
-    /**
-     * Variable to calculate what's the previous tab index.
-     */
-    public previousTabIndex: number;
 
-    constructor(public idService: IdGeneratorService, public nameService: NameGeneratorService) {}
+    constructor(public tabIndexService: TabIndexService, public idService: IdGeneratorService, public nameService: NameGeneratorService) {}
 
     /**
      * @param value The element received of the components.
@@ -54,19 +58,85 @@ export class ComponentDefaultBase {
         this.nameService.createName( value, name );
     }
 
+
     /**
-     * Function that nextabIndex receive the value;
-     * @param value
+     * Function to set tabIndex of Elements received.
+     * @param element
      */
-    public setNextTabIndex( value: number ) {
-        this.nextTabIndex = value;
+    setTabIndex( element: ElementRef ) {
+        setTimeout( () => {
+            this.tabindex = this.tabIndexService.setTabIndex( element );
+        }, 1 );
     }
 
     /**
-     * Function that previousTabIndx receive the value;
-     * @param value
+     * Function that trigger a keyinput in element.
+     * @param event
      */
-    public setPreviousTabIndex( value: number ) {
-        this.previousTabIndex = value;
+    onKeyInput( event: KeyboardEvent ) {
+        if ( this.enterAsTab ) {
+            if (event.keyCode === KeyEvent.TAB && event.shiftKey) {
+                event.preventDefault();
+                this.previousFocus();
+                return;
+            }
+            switch ( event.keyCode ) {
+                case KeyEvent.ENTER:
+                    this.nextFocus();
+                    break;
+                case KeyEvent.ARROWDOWN:
+                    this.nextFocus();
+                    break;
+                case KeyEvent.ARROWUP:
+                    this.previousFocus();
+                    break;
+                case KeyEvent.TAB:
+                    event.preventDefault();
+                    this.nextFocus();
+                    break;
+            }
+        }
     }
+
+    /**
+     * Function to set focus on previous element
+     */
+    previousFocus() {
+        const previousElement = this.getPreviousElementOnForm();
+        if ( previousElement !== undefined ) {
+            (previousElement as HTMLElement).focus();
+        }
+    }
+
+    /**
+     * Function to set focus on next element
+     */
+    nextFocus() {
+        const nextElement = this.getNextElementOnForm();
+        if ( nextElement !== undefined ) {
+            (nextElement as HTMLElement).focus();
+        }
+    }
+
+    getNextElementOnForm() {
+        return this.getElementsOnForm(this.tabindex + 1);
+    }
+
+    getPreviousElementOnForm() {
+        return this.getElementsOnForm(this.tabindex - 1);
+    }
+
+
+    getElementsOnForm(direction) {
+        const formElements = document.querySelectorAll( 'tl-form' );
+        for ( let formComponents = 0; formComponents < formElements.length; formComponents++ ) {
+            const listFormComponents = formElements[ formComponents ].querySelectorAll( '*' );
+            for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
+                if ((listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === direction) {
+                    return listFormComponents[ childFormComponents ];
+                }
+            }
+        }
+    }
+
 }

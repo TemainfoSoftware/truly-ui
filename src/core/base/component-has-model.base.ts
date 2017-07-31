@@ -20,25 +20,17 @@
  SOFTWARE.
  */
 
-import { ElementRef, Input, ViewChild, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Input, ViewChild, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { ComponentDefaultBase } from './component-default.base';
 import { ControlValueAccessor } from '@angular/forms/src/forms';
 import { TabIndexService } from '../../form/tabIndex.service';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
 
-
 /**
  * Class that controls all Components that have Models.
  */
 export class ComponentHasModelBase extends ComponentDefaultBase implements OnInit, ControlValueAccessor, OnDestroy {
-
-    /**
-     * Controller to define if the tabulation is with key Enter or key Tab.
-     * @type {boolean}
-     */
-    @Input() enterAsTab = true;
-
     /**
      * Input that receive name attribute.
      * @type {string}
@@ -61,18 +53,27 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     @ViewChild( 'model' ) public inputModel;
 
+
+    /**
+     * Output of Event on Blur element.
+     * @type {EventEmitter}
+     */
     @Output() blur: EventEmitter<any> = new EventEmitter();
 
+
+    /**
+     * Output of Event on Focus element.
+     * @type {EventEmitter}
+     */
     @Output() focus: EventEmitter<any> = new EventEmitter();
 
     /**
-     * Variable type of TabIndexGenerator in charge of instantiate a new Generator.
+     * Variable of ngModel value.
      */
     public ngValue = '';
 
-
-    constructor(private tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
-        super(idService, nameService);
+    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+        super(tabIndexService, idService, nameService);
     }
 
     /**
@@ -85,88 +86,14 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     onChangeCallback: Function = () => {};
 
-
-
+    /**
+     * Lifehook of OnInit Angular.
+     */
     ngOnInit() {
         const self = this;
         Object.keys( this.validations ).forEach( function ( key ) {
             self[ key ] = self.validations[ key ];
         } );
-    }
-
-    /**
-     * Function to set tabIndex of Elements received.
-     * @param element
-     */
-    setTabIndex( element: ElementRef ) {
-        this.tabIndexService.setTabIndex(element);
-        this.setNextTabIndex( this.element.nativeElement.tabindex + 1 );
-        this.setPreviousTabIndex( this.element.nativeElement.tabindex - 1 );
-    }
-
-    /**
-     * Function that trigger a keyinput in element.
-     * @param event
-     */
-    onKeyInput( event: KeyboardEvent ) {
-        if ( this.enterAsTab ) {
-            if ( event.keyCode === 13 || event.keyCode === 40 ) {
-                this.nextFocus();
-            } else if ( event.keyCode === 38 ) {
-                this.previousFocus();
-            }
-        }
-    }
-
-    /**
-     * Function to set focus on previous element
-     */
-    previousFocus() {
-        if ( this.previousTabIndex !== -1 ) {
-            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.previousTabIndex ).focus();
-        }
-    }
-
-    /**
-     * Function to set focus on next element
-     */
-    nextFocus() {
-        const existElement = this.existsElement( this.element.nativeElement.tabindex );
-        if ( existElement ) {
-            document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + this.nextTabIndex ).focus();
-        }
-    }
-
-    /**
-     * Function that verify if next element exists.
-     * @param currentTabIndex
-     */
-    existsElement( currentTabIndex ) {
-        return document.getElementById( 'tl-' + this.element.nativeElement.localName + '-' + (currentTabIndex + 1) );
-    }
-
-    /**
-     * Method that validate if has Validations;
-     * @returns {boolean}
-     */
-    hasValidation() {
-        return Object.keys( this.validations ).length > 0;
-    }
-
-
-    /**
-     * Function called when input lost it focus.
-     */
-    onBlur() {
-        this.onTouchedCallback();
-        this.blur.emit();
-    }
-
-    /**
-     * Function called when input receive focus;
-     */
-    onFocus() {
-        this.focus.emit();
     }
 
     /**
@@ -196,6 +123,33 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
         this.onTouchedCallback = callback;
     }
 
+    /**
+     * Method that validate if has Validations;
+     * @returns {boolean}
+     */
+    hasValidation() {
+        return Object.keys( this.validations ).length > 0;
+    }
+
+
+    /**
+     * Function called when input lost it focus.
+     */
+    onBlur() {
+        this.onTouchedCallback();
+        this.blur.emit();
+    }
+
+    /**
+     * Function called when input receive focus;
+     */
+    onFocus() {
+        this.focus.emit();
+    }
+
+    /**
+     * Lifehook called when Angular destroy the class.
+     */
     ngOnDestroy() {
         this.idService.clearId();
         this.nameService.clearName();

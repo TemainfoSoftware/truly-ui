@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ContentChildren, Input, OnDestroy,
+    AfterViewInit, Component, ContentChildren, Input, OnDestroy, OnInit,
     QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
@@ -36,7 +36,7 @@ import { TlDropDownList } from '../dropdownlist/dropdownlist';
     templateUrl: '../form/form.html',
     styleUrls: ['../form/form.scss']
 } )
-export class TlForm implements AfterViewInit, OnDestroy {
+export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @Input() lastElement;
 
@@ -45,6 +45,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
     @Input() showConfirmOnChange = false;
 
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
+
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
@@ -59,13 +60,20 @@ export class TlForm implements AfterViewInit, OnDestroy {
 
     private formResult = {};
 
+    private validForm = true;
+
     constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
+
+    ngOnInit() {
+
+    }
 
     ngAfterViewInit() {
         this.setInitialFocus();
         this.setTabIndexButtons();
+        this.verifyInputValidation();
         this.listenLastElement = this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
-            if ( this.isKeyDownEnterOrArrowDown( $event ) ) {
+            if ( this.isKeyDownEnterOrArrowDownOrTab( $event ) ) {
                 setTimeout( () => {
                     this.buttonFormOk.buttonElement.nativeElement.focus();
                 }, 1 );
@@ -82,6 +90,7 @@ export class TlForm implements AfterViewInit, OnDestroy {
 
     handleKeysForm( $event: KeyboardEvent ) {
         this.inputHasChanged();
+        this.verifyInputValidation();
         switch ( $event.keyCode ) {
             case KeyEvent.ESCAPE :
                 this.closeForm();
@@ -98,8 +107,10 @@ export class TlForm implements AfterViewInit, OnDestroy {
     }
 
     setTabIndexButtons() {
-        this.buttonFormOk.buttonElement.nativeElement.tabindex = this.tabService.uniqueIndex;
-        this.buttonFormCancel.buttonElement.nativeElement.tabindex = this.tabService.uniqueIndex + 1;
+        setTimeout( () => {
+            this.buttonFormOk.tabindex = this.tabService.uniqueIndex;
+            this.buttonFormCancel.tabindex = this.tabService.uniqueIndex + 1;
+        }, 1 );
     }
 
     setInitialFocus() {
@@ -132,8 +143,8 @@ export class TlForm implements AfterViewInit, OnDestroy {
         }
     }
 
-    isKeyDownEnterOrArrowDown( $event: KeyboardEvent ) {
-        return this.isKeyDownEqualsEnter( $event ) || this.isKeyDownEqualsArrowDown( $event );
+    isKeyDownEnterOrArrowDownOrTab( $event: KeyboardEvent ) {
+        return this.isKeyDownEqualsEnter( $event ) || this.isKeyDownEqualsArrowDown( $event ) || this.isKeyDownEqualsTab($event);
     }
 
     isKeyDownEqualsEnter( $event: KeyboardEvent ) {
@@ -142,6 +153,10 @@ export class TlForm implements AfterViewInit, OnDestroy {
 
     isKeyDownEqualsArrowDown( $event: KeyboardEvent ) {
         return $event.keyCode === KeyEvent.ARROWDOWN;
+    }
+
+    isKeyDownEqualsTab( $event: KeyboardEvent) {
+        return $event.keyCode === KeyEvent.TAB && !$event.shiftKey;
     }
 
     isActiveElementButtonOk() {
@@ -167,7 +182,6 @@ export class TlForm implements AfterViewInit, OnDestroy {
     }
 
     closeForm() {
-        this.dialogOpen = false;
         this.getLastActiveElement();
         if ( this.showConfirmOnChange && this.inputHasChanged() ) {
             this.showConfirmation();
@@ -183,10 +197,12 @@ export class TlForm implements AfterViewInit, OnDestroy {
     showConfirmation() {
         if ( !this.dialogOpen ) {
             this.dialogOpen = true;
+            this.dialogService.modalService.setBackdropModalOverModal();
             this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
                 if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
+                this.dialogOpen = false;
                 this.lastActiveElement.focus();
             }, { draggable: false } );
         }
@@ -196,12 +212,25 @@ export class TlForm implements AfterViewInit, OnDestroy {
         this.inputList.forEach( ( item, index, array ) => {
             this.formResult[ item.label.toLowerCase() ] = item.inputModel.model;
         } );
+
+    }
+
+    verifyInputValidation() {
+        this.validForm = true;
+        this.inputList.forEach( ( item, index, array ) => {
+            setTimeout( () => {
+                if ( item.inputModel.valid === false ) {
+                    this.validForm = false;
+                }
+            }, 0 );
+        } );
+        return this.validForm;
     }
 
 
     getDropdownListValues() {
-        this.dropdownList.forEach( ( item, index, array ) => {
-            this.formResult[ 'genero' ] = item.dropdownModel.model;
+         this.dropdownList.forEach( ( item, index, array ) => {
+            this.formResult[ 'genero' ] = item.componentModel.model;
         } );
     }
 

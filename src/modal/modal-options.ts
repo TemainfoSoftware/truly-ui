@@ -13,6 +13,7 @@ export interface ModalOptions {
     minimizable?: boolean;
     fullscreen?: boolean;
     restoreMaximize?: boolean;
+    backdrop?: boolean;
 }
 
 

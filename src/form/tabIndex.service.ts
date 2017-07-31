@@ -36,6 +36,7 @@ export class TabIndexService {
         this.element = element;
         this.element.nativeElement.tabindex = nextUniqueIndex++;
         this.uniqueIndex = nextUniqueIndex;
+        return this.element.nativeElement.tabindex;
     }
 
     clearTabIndex() {

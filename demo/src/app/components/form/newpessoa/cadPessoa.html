@@ -20,8 +20,19 @@
       </div>
     </div>
     <div class="col-md-6">
-      <tl-dropdown-list [data]="data" [ngModel]="pessoa?.genero" [label]="'textItem'" [value]="'valueItem'"
-                        [placeholder]="'Select item'"></tl-dropdown-list>
+      <div class="form-group">
+        <tl-dropdown-list
+                          [labelSize]="'80'"
+                          [selectHeight]="25"
+                          [validations]="{required: true}"
+                          [labelPlacement]="'left'"
+                          [ngModel]="pessoa?.genero"
+                          [data]="data"
+                          [label]="'Gender'"
+                          [text]="'textItem'"
+                          [value]="'valueItem'">
+        </tl-dropdown-list>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -32,13 +43,13 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: true }" ></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
-        <tl-input #lastElement [ngModel]="pessoa?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: true }" ></tl-input>
+    <div class="col-md-6">
+      <tl-input #lastElement [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
     </div>
   </div>
 </tl-form>

@@ -71,6 +71,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     ngAfterViewInit() {
         this.setInitialFocus();
         this.setTabIndexButtons();
+        this.verifyInputValidation();
         this.listenLastElement = this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
             if ( this.isKeyDownEnterOrArrowDownOrTab( $event ) ) {
                 setTimeout( () => {
@@ -81,7 +82,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( event ) => {
             this.getInputValues();
             this.getDropdownListValues();
-            this.verifyInputValidation();
         } );
         this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click', ( event ) => {
             this.getInputValues();
@@ -217,20 +217,21 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     verifyInputValidation() {
         this.validForm = true;
         this.inputList.forEach( ( item, index, array ) => {
+            console.log(item);
             setTimeout( () => {
-                if ( item.inputModel.valid === false && Object.keys( item.validations ).length > 0 ) {
+                if ( item.inputModel.valid === false ) {
                     this.validForm = false;
                 }
-            }, 1 );
+            }, 0 );
         } );
         return this.validForm;
     }
 
 
     getDropdownListValues() {
-        this.dropdownList.forEach( ( item, index, array ) => {
-            this.formResult[ 'genero' ] = item.dropdownModel.model;
-        } );
+        /* this.dropdownList.forEach( ( item, index, array ) => {
+            this.formResult[ 'genero' ] = item.componentModel.model;
+        } ); */
     }
 
     hasValueOnForm() {

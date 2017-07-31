@@ -32,7 +32,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
-import { noUndefined } from '@angular/compiler/src/util';
 
 let globalZindex = 1;
 
@@ -44,7 +43,7 @@ let globalZindex = 1;
         trigger(
             'enterAnimation', [
                 transition( ':enter', [
-                    style( { opacity : 0, transform : 'translate(0%,-5%)', flex : '0' } ),
+                    style( { opacity : 0, transform : 'translate(0%,-5%)'} ),
                     animate( '200ms', style( { opacity : 1, transform : 'translate(0%,0%)' } ) )
                 ] ),
                 transition( ':leave', [
@@ -138,80 +137,116 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    onKeyDownList( $event ) {
+    onListOpened( $event ) {
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
-                this.arrowDown();
-                $event.stopPropagation();
-                $event.preventDefault();
+                this.onArrowDown();
+                this.stopPropagationAndPreventDefault( $event );
                 break;
             case KeyEvent.ARROWUP:
-                this.arrowUp();
-                $event.stopPropagation();
-                $event.preventDefault();
+                this.onArrowUp();
+                this.stopPropagationAndPreventDefault( $event );
                 break;
             case KeyEvent.ENTER:
-                if ( this.itemSelected && !this.showHide && this.itemSelected.length !== 0 ) {
-                    $event.preventDefault();
-                    this.onKeyInput( $event );
-                    return;
-                }
-                if ( this.showHide ) {
-                    if ( !this.componentModel.model ) {
-                        this.onChangeItem();
-                    }
-                    this.showHide = false;
-                    this.setFocus();
-                    return;
-                }
-                if ( !this.itemSelected || this.placeholder ) {
-                    this.showHide = true;
-                }
-                setTimeout( () => {
-                    if ( this.children === -1 && this.placeholder ) {
-                        this.placeholderDiv.nativeElement.focus();
-                    } else if ( this.children === -1 ) {
-                        this.children = 0;
-                        this.list.nativeElement.children[ this.children ].focus();
-                    } else {
-                        this.list.nativeElement.children[ this.children ].focus();
-                    }
-                }, 0 );
-                this.showHide = true;
-                this.getAndSetZIndex();
-
+                $event.stopPropagation();
+                this.onEnter( $event );
                 break;
             case KeyEvent.ESCAPE:
-                if ( this.showHide ) {
-                    $event.stopPropagation();
-                    if ( !this.componentModel.model && !this.placeholder ) {
-                        this.onChangeItem();
-                    }
-                }
-
-                this.showHide = false;
-                this.setFocus();
+                this.onEscape( $event );
                 break;
             case KeyEvent.SPACE:
-                $event.stopPropagation();
-                $event.preventDefault();
-                if ( !this.showHide ) {
-                    this.getAndSetZIndex();
-                    this.showHide = true;
-                }
-                setTimeout( () => {
-                    this.getAndSetZIndex();
-                    if ( this.children === -1 && this.placeholder ) {
-                        this.placeholderDiv.nativeElement.focus();
-                    } else if ( this.children === -1 ) {
-                        this.children = 0;
-                        this.list.nativeElement.children[ this.children ].focus();
-                    } else {
-                        this.list.nativeElement.children[ this.children ].focus();
-                    }
-                }, 0 );
+                this.stopPropagationAndPreventDefault( $event );
                 break;
         }
+    }
+
+    onListClosed( $event ) {
+        switch ( $event.keyCode ) {
+            case KeyEvent.ARROWDOWN:
+                this.onArrowDown();
+                this.stopPropagationAndPreventDefault( $event );
+                break;
+            case KeyEvent.ARROWUP:
+                this.onArrowUp();
+                this.stopPropagationAndPreventDefault( $event );
+                break;
+            case KeyEvent.ENTER:
+                if ( !this.itemSelected ) {
+                    this.changeShowStatus();
+                } else {
+                    this.onKeyInput( $event );
+                    this.onEnter( $event );
+                }
+                break;
+            case KeyEvent.SPACE:
+                this.onSpace();
+                this.stopPropagationAndPreventDefault( $event );
+                break;
+            case KeyEvent.ESCAPE:
+                this.onEscape( $event );
+                break;
+        }
+    }
+
+    stopPropagationAndPreventDefault( $event ) {
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+
+    onSpace() {
+        if ( !this.showHide ) {
+            this.showHide = true;
+            this.setTimeoutWithZIndexAndFocusOnElement();
+        }
+    }
+
+    setFocusOnElement() {
+        if ( this.placeholder && this.children === -1 ) {
+            this.placeholderDiv.nativeElement.focus();
+            return;
+        }
+        if ( this.children === -1 ) {
+            this.children = 0;
+        }
+        this.list.nativeElement.children[ this.children ].focus();
+    }
+
+    onEscape( $event ) {
+        $event.stopPropagation();
+        if ( !this.componentModel.model && !this.placeholder ) {
+            this.onChangeItem();
+        }
+        this.showHide = false;
+        this.setFocus();
+    }
+
+    onEnter( $event ) {
+        if ( !this.showHide ) {
+            if ( this.itemSelected ) {
+                $event.preventDefault();
+                return;
+            }
+
+            if ( !this.itemSelected || this.placeholder || this.itemSelected === null || this.itemSelected === undefined ) {
+                this.setTimeoutWithZIndexAndFocusOnElement();
+                this.showHide = true;
+                return;
+            }
+        }
+        if ( !this.componentModel.model ) {
+            this.onChangeItem();
+        }
+        this.showHide = false;
+        this.setFocus();
+
+
+    }
+
+    setTimeoutWithZIndexAndFocusOnElement() {
+        setTimeout( () => {
+            this.getAndSetZIndex();
+            this.setFocusOnElement();
+        }, 0 );
     }
 
     onChangeItem() {
@@ -237,6 +272,18 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         } );
     }
 
+    placeholderEnter( $event ) {
+        switch ( $event.keyCode ) {
+            case KeyEvent.ENTER:
+                $event.preventDefault();
+                $event.stopPropagation();
+                this.itemSelected = null;
+                this.setFocus();
+                this.showHide = false;
+                break;
+        }
+    }
+
     onShowHideFalse() {
         if ( this.children === -1 ) {
             this.children = 0;
@@ -252,7 +299,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    arrowDown() {
+    onArrowDown() {
         if ( this.children < this.list.nativeElement.children.length - 1 ) {
             this.list.nativeElement.children[ this.children + 1 ].focus();
             this.children = this.children + 1;
@@ -260,11 +307,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    arrowUp() {
-        if ( this.placeholder && (this.children < 1) ) {
+    onArrowUp() {
+        if ( this.placeholder && this.children < 1 ) {
             this.children = -1;
             this.componentModel.model = '';
-            this.itemSelected = [];
+            this.itemSelected = null;
+            // this.itemSelected = this.itemSelected.shift();
             if ( this.showHide ) {
                 this.placeholderDiv.nativeElement.focus();
             }
@@ -317,7 +365,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.inputDropdown.nativeElement.value = this.placeholder;
         this.componentModel.model = '';
         this.placeholderDiv.nativeElement.focus();
-        this.itemSelected = [];
+        this.itemSelected = null;
+        // this.itemSelected = this.itemSelected.shift();
         this.itemSelect.emit( this.componentModel.model );
         this.children = -1;
         this.setFocus();

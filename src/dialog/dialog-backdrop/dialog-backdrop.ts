@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 
-import { Component, HostBinding } from "@angular/core";
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { Component, HostBinding } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
 @Component( {
@@ -34,7 +34,7 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
                 state('enter', style({ transform: 'none', opacity: 1 })),
                 state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
                 state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
-                transition('* => *', animate('500ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+                transition('* => *', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
             ]
         )
     ]
@@ -42,7 +42,5 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 export class TlDialogBackdrop {
 
     @HostBinding( '@enterAnimation' ) public animation;
-
-    constructor() {}
 
 }

@@ -36,7 +36,7 @@ import { ConfirmationOptions } from './dialog-confirmation/confirmation-options'
 import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
-import { TlDialogBackdrop } from "./dialog-backdrop/dialog-backdrop";
+import { TlDialogBackdrop } from './dialog-backdrop/dialog-backdrop';
 
 @Injectable()
 export class DialogService {

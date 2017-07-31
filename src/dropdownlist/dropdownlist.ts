@@ -27,7 +27,6 @@ import {
 import { style, transition, trigger, animate } from '@angular/animations';
 
 import { KeyEvent } from '../core/enums/key-events';
-import { DataMetadata } from '../core/types/datametadata';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -60,7 +59,7 @@ let globalZindex = 1;
 } )
 export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
 
-    @Input( 'data' ) data: DataMetadata | Array<any>;
+    @Input( 'data' ) data: Array<any>;
 
     @Input( 'value' ) value: string;
 
@@ -151,28 +150,39 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 $event.preventDefault();
                 break;
             case KeyEvent.ENTER:
+                if ( this.itemSelected && this.showHide === false ) {
+                    return;
+                }
                 $event.stopPropagation();
                 if ( this.showHide ) {
+                    if ( !this.componentModel.model ) {
+                        this.onChangeItem();
+                    }
                     this.showHide = false;
                     this.setFocus();
                 } else {
-                    this.showHide = true;
                     setTimeout( () => {
-                        this.getAndSetZIndex();
                         if ( this.children === -1 && this.placeholder ) {
                             this.placeholderDiv.nativeElement.focus();
                         } else if ( this.children === -1 ) {
                             this.children = 0;
+                            this.list.nativeElement.children[ this.children ].focus();
                         } else {
                             this.list.nativeElement.children[ this.children ].focus();
                         }
                     }, 0 );
+                    this.showHide = true;
                 }
+                this.getAndSetZIndex();
                 break;
             case KeyEvent.ESCAPE:
                 if ( this.showHide ) {
                     $event.stopPropagation();
+                    if ( !this.componentModel.model && !this.placeholder ) {
+                        this.onChangeItem();
+                    }
                 }
+
                 this.showHide = false;
                 this.setFocus();
                 break;
@@ -189,6 +199,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                         this.placeholderDiv.nativeElement.focus();
                     } else if ( this.children === -1 ) {
                         this.children = 0;
+                        this.list.nativeElement.children[ this.children ].focus();
                     } else {
                         this.list.nativeElement.children[ this.children ].focus();
                     }
@@ -212,7 +223,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                     this.componentModel.model = value[ this.value ];
                     this.itemSelect.emit( this.itemSelected );
                 } else {
-                    this.itemSelect.emit( '' );
+                    this.componentModel.model = '';
+                    this.itemSelect.emit( this.componentModel.model );
                 }
             }
 
@@ -232,7 +244,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         } else {
             this.itemSelect.emit( '' );
         }
-
     }
 
     arrowDown() {
@@ -244,14 +255,19 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     arrowUp() {
-        if ( this.placeholder && this.children === 0 ) {
-            this.placeholderDiv.nativeElement.focus();
-            this.inputDropdown.nativeElement.value = this.placeholderDiv.nativeElement.innerHTML.trim();
+        if ( this.placeholder && (this.children < 1) ) {
             this.children = -1;
+            this.componentModel.model = '';
+            this.itemSelected = [];
+            if ( this.showHide ) {
+                this.placeholderDiv.nativeElement.focus();
+            }
+            this.inputDropdown.nativeElement.value = this.placeholder;
+            this.itemSelect.emit( this.componentModel.model );
         }
-        if ( this.children !== 0 && this.children !== -1 ) {
-            this.list.nativeElement.children[ this.children - 1 ].focus();
+        if ( this.children > 0 && this.children !== -1 ) {
             this.children = this.children - 1;
+            this.list.nativeElement.children[ this.children ].focus();
             this.onChangeItem();
         }
     }
@@ -295,7 +311,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.inputDropdown.nativeElement.value = this.placeholder;
         this.componentModel.model = '';
         this.placeholderDiv.nativeElement.focus();
+        this.itemSelected = [];
         this.itemSelect.emit( this.componentModel.model );
+        this.children = -1;
     }
 
     getData() {

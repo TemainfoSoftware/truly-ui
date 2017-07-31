@@ -35,6 +35,8 @@ export class ModalService {
 
     public componentInjected;
 
+    public backdrop;
+
     private callBack = Function();
 
     private view: ViewContainerRef;
@@ -75,8 +77,13 @@ export class ModalService {
     }
 
     setZIndex( element?, indexModal? ) {
-        !element ? this.component.instance.element.nativeElement.style.zIndex = indexModal + 1 :
+        !element ? this.component.instance.element.nativeElement.firstChild.style.zIndex = (indexModal = 0) + 1 :
             element.nativeElement.style.zIndex = indexModal + 1;
+    }
+
+    createBackdrop( backdrop ) {
+        const backdropFactory = this.compiler.resolveComponentFactory( backdrop );
+        this.backdrop = this.view.createComponent( backdropFactory );
     }
 
     removeMinModals( indexModal ) {
@@ -97,7 +104,14 @@ export class ModalService {
            }
         });
         this.componentList.splice(1, comp);
+        this.removeBackdrop();
         this.view.remove( this.view.indexOf(comp));
+    }
+
+    removeBackdrop() {
+        if (this.backdrop) {
+            this.view.remove( this.view.indexOf(this.backdrop) );
+        }
     }
 
     getMinModals() {

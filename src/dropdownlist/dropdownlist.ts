@@ -32,6 +32,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
+import { noUndefined } from '@angular/compiler/src/util';
 
 let globalZindex = 1;
 
@@ -150,30 +151,35 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 $event.preventDefault();
                 break;
             case KeyEvent.ENTER:
-                if ( this.itemSelected && this.showHide === false ) {
+                if ( this.itemSelected && !this.showHide && this.itemSelected.length !== 0 ) {
+                    $event.preventDefault();
+                    this.onKeyInput( $event );
                     return;
                 }
-                $event.stopPropagation();
                 if ( this.showHide ) {
                     if ( !this.componentModel.model ) {
                         this.onChangeItem();
                     }
                     this.showHide = false;
                     this.setFocus();
-                } else {
-                    setTimeout( () => {
-                        if ( this.children === -1 && this.placeholder ) {
-                            this.placeholderDiv.nativeElement.focus();
-                        } else if ( this.children === -1 ) {
-                            this.children = 0;
-                            this.list.nativeElement.children[ this.children ].focus();
-                        } else {
-                            this.list.nativeElement.children[ this.children ].focus();
-                        }
-                    }, 0 );
+                    return;
+                }
+                if ( !this.itemSelected || this.placeholder ) {
                     this.showHide = true;
                 }
+                setTimeout( () => {
+                    if ( this.children === -1 && this.placeholder ) {
+                        this.placeholderDiv.nativeElement.focus();
+                    } else if ( this.children === -1 ) {
+                        this.children = 0;
+                        this.list.nativeElement.children[ this.children ].focus();
+                    } else {
+                        this.list.nativeElement.children[ this.children ].focus();
+                    }
+                }, 0 );
+                this.showHide = true;
                 this.getAndSetZIndex();
+
                 break;
             case KeyEvent.ESCAPE:
                 if ( this.showHide ) {
@@ -314,6 +320,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.itemSelected = [];
         this.itemSelect.emit( this.componentModel.model );
         this.children = -1;
+        this.setFocus();
     }
 
     getData() {

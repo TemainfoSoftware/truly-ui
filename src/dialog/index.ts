@@ -8,6 +8,10 @@ import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
 import { ModalService } from '../modal/modal.service';
 import { ModalModule } from '../modal/index';
+import { TabIndexService } from "../form/tabIndex.service";
+import { IdGeneratorService } from "../core/helper/idgenerator.service";
+import { NameGeneratorService } from "../core/helper/namegenerator.service";
+import { TlDialogBackdrop } from "./dialog-backdrop/dialog-backdrop";
 
 export * from '../dialog';
 
@@ -19,6 +23,7 @@ export * from '../dialog';
     ],
     declarations: [
         TlDialogInfo,
+        TlDialogBackdrop,
         TlDialogAlert,
         TlDialogError,
         TlDialogConfirmation
@@ -26,16 +31,24 @@ export * from '../dialog';
     exports: [
         TlDialogInfo,
         TlDialogAlert,
+        TlDialogBackdrop,
         TlDialogError,
         TlDialogConfirmation
     ],
     entryComponents: [
         TlDialogInfo,
+        TlDialogBackdrop,
         TlDialogAlert,
         TlDialogError,
         TlDialogConfirmation
     ],
-    providers: [ModalService, DialogService]
+    providers: [
+        ModalService,
+        DialogService,
+        TabIndexService,
+        IdGeneratorService,
+        NameGeneratorService
+    ]
 } )
 export class DialogModule {
 

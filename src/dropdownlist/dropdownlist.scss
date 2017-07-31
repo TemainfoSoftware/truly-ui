@@ -82,57 +82,61 @@ $button-font-family: 'Segoe UI', sans-serif;
     > .dropdown-list-container:active {
       background-color: $active-background-color;
     }
-    > .dropdown-list-select {
-      display: none;
-      color: $color;
+    > .dropdown-list-wrapper-select{
       position: absolute;
-      outline: none;
       left: 0;
       width: 100%;
-      background-color: $background-color;
-      border: $border-default;
-      border-top: 0;
-      list-style: none;
+      outline: none;
       padding: 0;
       margin: 0;
-      > li {
+      > .dropdown-list-select {
+        color: $color;
+        background-color: $background-color;
+        border: $border-default;
+        border-top: 0;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        > li {
+          font-family: $button-font-family;
+          outline: none;
+          padding: 0 10px;
+        }
+        > li:hover {
+          background-color: $hover-background-color;
+        }
+        > li:focus {
+          background-color: #53C68C;
+          color: #FFF;
+        }
+        > li:active {
+          color: $color;
+          background-color: $active-background-color;
+        }
+      }
+      >.dropdown-list-select::-webkit-scrollbar {
+        width: 0.4em;
+      }
+      >.dropdown-list-select::-webkit-scrollbar-thumb {
+        background-color: #cccccc;
+      }
+      >.-placeholder {
+        z-index: 123123;
         font-family: $button-font-family;
+        font-size: $font-size;
+        cursor: default;
+        background-color: $background-color;
+        border: $border-default;
+        border-bottom: 0;
+        border-top: 0;
         outline: none;
         padding: 0 10px;
-      }
-      > li:hover {
-        background-color: $hover-background-color;
-      }
-      > li:focus {
-        background-color: #53C68C;
-        color: #FFF;
-      }
-      > li:active {
         color: $color;
-        background-color: $active-background-color;
       }
-    }
-    .dropdown-list-select::-webkit-scrollbar {
-      width: 0.4em;
-    }
-    .dropdown-list-select::-webkit-scrollbar-thumb {
-      background-color: #cccccc;
-    }
-    >.-placeholder {
-      font-family: $button-font-family;
-      font-size: $font-size;
-      cursor: default;
-      background-color: $background-color;
-      border: $border-default;
-      border-bottom: 0;
-      border-top: 0;
-      outline: none;
-      padding: 0 10px;
-      color: $color;
-    }
-    .-placeholder:focus {
-      color: #FFF;
-      background-color: #53C68C;
+      .-placeholder:focus {
+        color: #FFF;
+        background-color: #53C68C;
+      }
     }
   }
   >.dropdown-list-wrapper:focus{

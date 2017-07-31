@@ -1,43 +1,50 @@
 <div class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
 
-    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}</label>
+    <label *ngIf="label" class="labeltext -label{{labelPlacement}}"
+           [ngStyle]="{'width' : labelSize + 'px'}">{{label}}</label>
 
     <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{tabindex}}" (keydown)="onKeyDownList($event)">
 
-        <div class="dropdown-list-container"  (click)="changeShowStatus($event.stopPropagation())" [ngStyle]="{'height' : selectHeight + 'px'}">
+        <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())"
+             [ngStyle]="{'height' : selectHeight + 'px'}">
             <input #inputDropdown
                    placeholder="{{placeholder?.valueOf()}}"
-                   #dropdownModel="ngModel"
+                   #model="ngModel"
                    disabled
                    class="dropdown-list-input"
                    [ngStyle]="{'height' : selectHeight - 2 + 'px', 'line-height' : selectHeight - 2 +  'px'}"
                    [(ngModel)]="ngValue"/>
-            <div class="dropdown-list-icon" [ngStyle]="{'height' : selectHeight + 'px', 'line-height' : selectHeight +  'px'}">
+            <div class="dropdown-list-icon"
+                 [ngStyle]="{'height' : selectHeight + 'px', 'line-height' : selectHeight +  'px'}">
                 <i class="ion-chevron-down"></i>
             </div>
         </div>
 
-        <div class="-placeholder"
-             *ngIf="placeholder && showHide"
-             #defaultPlaceholder
-             [ngStyle]="{'line-height' : selectHeight + 'px'}"
-             (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}</div>
+        <div class="dropdown-list-wrapper-select" [style.zIndex]="zIndex">
+
+            <div class="-placeholder"
+                 *ngIf="placeholder && showHide"
+                 #defaultPlaceholder
+                 [ngStyle]="{'line-height' : selectHeight + 'px'}"
+                 (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}
+            </div>
 
 
-        <ul class="dropdown-list-select"
-            (keydown)="onKeyDownList($event)"
-            #list
-            [ngStyle]="calcHeightItem()"
-            [style.zIndex]="zIndex"
-            [style.display]="showHide === true ? 'block' : 'none'"
-            [@enterAnimation]>
-            <li *ngFor="let item of datasource; let i = index"
-                (click)="selectOption(item, i)"
-                tabindex="{{i}}"
-                [ngStyle]="{'line-height' : selectHeight + 'px'}">
-                {{ item[text] }}
-            </li>
-        </ul>
+            <ul class="dropdown-list-select"
+                (keydown)="onKeyDownList($event)"
+                #list
+                [ngStyle]="calcHeightItem()"
+                [style.display]="showHide === true ? 'block' : 'none'"
+                [@enterAnimation]>
+                <li *ngFor="let item of datasource; let i = index"
+                    (click)="selectOption(item, i)"
+                    tabindex="{{i}}"
+                    [ngStyle]="{'line-height' : selectHeight + 'px'}">
+                    {{ item[text] }}
+                </li>
+            </ul>
+
+        </div>
 
     </div>
 </div>

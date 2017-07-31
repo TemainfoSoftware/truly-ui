@@ -20,16 +20,17 @@
     SOFTWARE.
 */
 
- import { AfterViewInit, Component, ElementRef, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
+ import { AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
+ import { TlDatatableDataSource } from '../../datatable-datasource.service';
 
  @Component({
      selector: 'tl-datatable-scrollable-mode',
      templateUrl: './datatable-scrollable-mode.html',
      styleUrls: ['./datatable-scrollable-mode.scss', '../../datatable.scss']
  })
- export class TlDatatableScrollableMode implements AfterViewInit, OnInit {
+ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterContentInit {
 
      @ViewChild( 'scrollBoxTableBody' ) scrollBoxTableBodyElementRef: ElementRef;
 
@@ -57,17 +58,28 @@
 
      private pageNumber = 1;
 
-     constructor(  @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable  ) {}
+     constructor(  @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,  public dataSourceService: TlDatatableDataSource  ) {}
 
      ngOnInit() {
          this.take = this.datatable.rowsPage;
-         this.containerHeight = this.datatable.rowHeight * this.datatable.totalRow;
+
+
+
      }
 
      ngAfterViewInit() {
          this.clientHeight = this.scrollBoxElementRef.nativeElement.clientHeight;
          this.scrollHeight = this.scrollBoxElementRef.nativeElement.scrollHeight;
          this.pageHeight = this.datatable.rowsPage * this.datatable.rowHeightCalculated;
+     }
+
+     ngAfterContentInit(){
+         console.log(this.datatable.columns);
+        setTimeout(()=>{
+            this.containerHeight = this.datatable.rowHeight *  this.datatable.totalRows;
+        })
+
+
      }
 
      onScroll($event) {
@@ -92,33 +104,35 @@
      }
 
      emitLazyLoad() {
-         if ( this.isLazy() ) {
+       //  if ( this.isLazy() ) {
 
              const qtdRowClient =  Math.round(this.clientHeight / this.datatable.rowHeightCalculated);
 
+
              if ( this.scrollPosition > this.scrollTop  ) {
-                 if ( this.currentRow  <= this.datatable.totalRow   ) {
+                 if ( this.currentRow  <= this.datatable.totalRows  ) {
                      if ( ( this.currentRow - qtdRowClient ) <=  this.skip ) {
                          this.skip = ( this.skip >= qtdRowClient ) && (  this.currentRow > qtdRowClient  ) ?
                              this.currentRow - (qtdRowClient * 2) : 0;
                          this.take = this.datatable.rowsPage;
                          this.scrollOfTop = (this.scrollTop - qtdRowClient * this.datatable.rowHeightCalculated) > 0 ?
                              this.scrollTop - qtdRowClient * this.datatable.rowHeightCalculated : 0;
-                         this.datatable.lazyLoad.emit({ skip: this.skip,  take: this.take });
+
+                         this.dataSourceService.loadMoreData(this.skip, this.take);
                      }
                  }
              } else if ( this.scrollPosition < this.scrollTop) {
-                 if ( this.currentRow  <= this.datatable.totalRow   ) {
+                 if ( this.currentRow  <= this.datatable.totalRows  ) {
 
                      if ( ( this.take  + this.skip ) <=  this.currentRow ) {
                          this.skip = this.currentRow - qtdRowClient;
                          this.take = this.datatable.rowsPage;
                          this.scrollOfTop = this.scrollTop;
-                         this.datatable.lazyLoad.emit({ skip: this.skip,  take: this.take });
+                         this.dataSourceService.loadMoreData(this.skip, this.take);
                      }
                  }
              }
-         }
+       //  }
      }
 
      emitEndRow( ) {

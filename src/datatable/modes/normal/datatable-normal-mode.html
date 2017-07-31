@@ -6,10 +6,10 @@
     </thead>
 
     <tbody #datatableTbody class="datatableBody">
-        <tr #tbody class="row" [tabindex]="i" *ngFor="let row of  datatable.datasource; let i = index" [ngStyle]="{'height': datatable._rowHeight+'px'}"
-            (click)="datatable.onRowClick(datatable.datasource[i],i)"
-            (focus)="datatable.onRowSelect(datatable.datasource[i],i)"
-            (dblclick)="datatable.onRowDblclick(datatable.datasource[i],i)"
+        <tr #tbody class="row" [tabindex]="i" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable._rowHeight+'px'}"
+            (click)="datatable.onRowClick(dataSourceService.datasource[i],i)"
+            (focus)="datatable.onRowSelect(dataSourceService.datasource[i],i)"
+            (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)"
         >
             <td *ngFor="let column of datatable.columns;" [class]="'cel ' + datatable.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
         </tr>

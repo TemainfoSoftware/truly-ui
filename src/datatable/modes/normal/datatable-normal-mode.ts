@@ -23,6 +23,7 @@
  import { Component, ElementRef, forwardRef, Inject, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
+ import { TlDatatableDataSource } from '../../datatable-datasource.service';
 
  @Component({
      selector: 'tl-datatable-normal-mode',
@@ -33,7 +34,7 @@
 
      @ViewChild( 'datatableTbody' ) datatableTbodyRef: ElementRef;
 
-     constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable  ) {}
+     constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable, public dataSourceService: TlDatatableDataSource  ) {}
 
      onKeydown( $event ) {
          $event.preventDefault();

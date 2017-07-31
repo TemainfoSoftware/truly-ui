@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export const ModalErrorOptions = {
+export const ModalErrorOptions = {
     icon: 'ion-close-circled',
     title: 'Error',
     color: '#F25757',
@@ -28,4 +28,5 @@
     draggable: true,
     maximizable: false,
     minimizable: false,
+    backdrop: false
 };

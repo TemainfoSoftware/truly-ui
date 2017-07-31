@@ -73,6 +73,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() restoreMaximize = true;
 
+    @Input() backdrop = false;
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
@@ -436,6 +438,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     ngOnDestroy() {
+        this.ZIndex = 1;
         this.subscribeResize();
         this.subscribeMouseMove();
         this.subscribeMouseUp();

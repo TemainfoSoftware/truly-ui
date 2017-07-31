@@ -198,6 +198,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     showConfirmation() {
         if ( !this.dialogOpen ) {
             this.dialogOpen = true;
+            this.dialogService.modalService.setBackdropModalOverModal();
             this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
                 if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();

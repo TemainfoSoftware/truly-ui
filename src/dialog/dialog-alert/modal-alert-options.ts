@@ -28,4 +28,5 @@
     draggable: true,
     maximizable: false,
     minimizable: false,
-};
+    backdrop: false
+ };

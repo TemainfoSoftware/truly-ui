@@ -36,6 +36,7 @@ import { ConfirmationOptions } from './dialog-confirmation/confirmation-options'
 import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
+import { TlDialogBackdrop } from './dialog-backdrop/dialog-backdrop';
 
 @Injectable()
 export class DialogService {
@@ -46,13 +47,15 @@ export class DialogService {
 
     info( message, callback, options?: InfoOptions ) {
         this.setModalOptions( ModalInfoOptions, options );
-        this.modalService.createModal( TlDialogInfo, ModalInfoOptions, callback );
+        this.modalService.createBackdrop( TlDialogBackdrop );
+        this.modalService.createModal( TlDialogInfo, ModalInfoOptions,  callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
     confirmation( message, callback, options?: ConfirmationOptions) {
         this.setModalOptions( ModalConfirmationOptions, options );
+        this.modalService.createBackdrop( TlDialogBackdrop );
         this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
@@ -60,6 +63,7 @@ export class DialogService {
 
     alert( message, callback, options?: AlertOptions ) {
         this.setModalOptions( ModalAlertOptions, options );
+        this.modalService.createBackdrop( TlDialogBackdrop );
         this.modalService.createModal( TlDialogAlert, ModalAlertOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
@@ -67,6 +71,7 @@ export class DialogService {
 
     error( message, callback, options?: ErrorOptions ) {
         this.setModalOptions( ModalErrorOptions, options );
+        this.modalService.createBackdrop( TlDialogBackdrop );
         this.modalService.createModal( TlDialogError, ModalErrorOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );

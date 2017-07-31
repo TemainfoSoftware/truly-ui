@@ -57,6 +57,7 @@ export class DialogService {
         this.setModalOptions( ModalConfirmationOptions, options );
         this.modalService.createBackdrop( TlDialogBackdrop );
         this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
+        this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }

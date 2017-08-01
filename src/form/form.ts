@@ -64,11 +64,12 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
 
-    ngOnInit() {
-
-    }
+    ngOnInit() {}
 
     ngAfterViewInit() {
+        if (!this.lastElement) {
+            throw new EvalError( 'You must define the [lastElement] property !' );
+        }
         this.setInitialFocus();
         this.setTabIndexButtons();
         this.verifyInputValidation();

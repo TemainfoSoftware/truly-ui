@@ -1,4 +1,7 @@
-<div class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
+<div class="tl-dropdown-list"
+     *ngIf="datasource"
+     (valueChange)="valueChange($event)"
+     [attr.disabled]="disabled ? true : false">
 
     <label *ngIf="label" class="labeltext -label{{ labelPlacement }}"
            [ngStyle]="{'width' : labelSize + 'px'}">{{label}}</label>
@@ -6,11 +9,13 @@
     <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{ tabindex }}" (keydown)="onListClosed($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())"
-             [ngStyle]="{'height' : selectHeight + 'px'}">
+             [ngStyle]="{'height' : selectHeight + 'px'}"
+             [ngClass]="{' disabled ': disabled}">
             <input #inputDropdown
                    placeholder="{{placeholder?.valueOf()}}"
                    #model="ngModel"
                    disabled
+                   [ngClass]="{' disabled ': disabled}"
                    class="dropdown-list-input"
                    [ngStyle]="{'height' : selectHeight - 2 + 'px', 'line-height' : selectHeight - 2 +  'px'}"
                    [(ngModel)]="ngValue"/>
@@ -20,7 +25,7 @@
             </div>
         </div>
 
-        <div class="dropdown-list-wrapper-select" [style.zIndex]="zIndex" [@enterAnimation]>
+        <div class="dropdown-list-wrapper-select" *ngIf="!disabled" [style.zIndex]="zIndex" [@enterAnimation]>
 
             <div class="-placeholder"
                  *ngIf="placeholder && showHide"

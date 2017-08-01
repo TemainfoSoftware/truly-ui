@@ -9,24 +9,25 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.lastname" [label]="'LastName'"></tl-input>
+        <tl-input [disabled]="true" [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.lastname" [label]="'LastName'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'City'"></tl-input>
+        <tl-input [disabled]="true" [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'City'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <tl-dropdown-list
                           [labelSize]="'80'"
-                          [selectHeight]="25"
+                          [height]="25"
                           [validations]="{required: true}"
                           [labelPlacement]="'left'"
-                          [ngModel]="pessoa?.genero"
+                          [placeholder]="'Select Item'"
+                          [ngModel]="pessoa.genero"
                           [data]="data"
                           [label]="'Gender'"
                           [text]="'textItem'"

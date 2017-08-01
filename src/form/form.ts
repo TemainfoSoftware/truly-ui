@@ -64,7 +64,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private buttonFormCancelListener;
 
-    constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
+    constructor( private renderer: Renderer2, private dialogService: DialogService,
+                 private tabService: TabIndexService ) {}
 
     ngOnInit() {}
 
@@ -75,11 +76,13 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.setInitialFocus();
         this.setTabIndexButtons();
         this.verifyInputValidation();
-        this.buttonFormOkListener = this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event : KeyboardEvent ) => {
+        this.buttonFormOkListener = this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click',
+            ( $event: KeyboardEvent ) => {
             this.getInputValues();
             this.getDropdownListValues();
         } );
-        this.buttonFormCancelListener = this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click', ( $event : KeyboardEvent ) => {
+        this.buttonFormCancelListener = this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click',
+            ( $event: KeyboardEvent ) => {
             this.getInputValues();
         } );
     }

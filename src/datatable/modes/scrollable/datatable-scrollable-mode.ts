@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
- import { AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
+ import { AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
  import { TlDatatableDataSource } from '../../datatable-datasource.service';
@@ -58,13 +58,10 @@
 
      private pageNumber = 1;
 
-     constructor(  @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,  public dataSourceService: TlDatatableDataSource  ) {}
+     constructor( @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,  public dataSourceService: TlDatatableDataSource ) {}
 
      ngOnInit() {
          this.take = this.datatable.rowsPage;
-
-
-
      }
 
      ngAfterViewInit() {
@@ -74,12 +71,7 @@
      }
 
      ngAfterContentInit(){
-         console.log(this.datatable.columns);
-        setTimeout(()=>{
-            this.containerHeight = this.datatable.rowHeight *  this.datatable.totalRows;
-        })
-
-
+        this.containerHeight = this.datatable.rowHeight *  this.datatable.totalRows;
      }
 
      onScroll($event) {
@@ -103,12 +95,11 @@
          }
      }
 
+
      emitLazyLoad() {
        //  if ( this.isLazy() ) {
 
              const qtdRowClient =  Math.round(this.clientHeight / this.datatable.rowHeightCalculated);
-
-
              if ( this.scrollPosition > this.scrollTop  ) {
                  if ( this.currentRow  <= this.datatable.totalRows  ) {
                      if ( ( this.currentRow - qtdRowClient ) <=  this.skip ) {
@@ -117,13 +108,11 @@
                          this.take = this.datatable.rowsPage;
                          this.scrollOfTop = (this.scrollTop - qtdRowClient * this.datatable.rowHeightCalculated) > 0 ?
                              this.scrollTop - qtdRowClient * this.datatable.rowHeightCalculated : 0;
-
                          this.dataSourceService.loadMoreData(this.skip, this.take);
                      }
                  }
              } else if ( this.scrollPosition < this.scrollTop) {
                  if ( this.currentRow  <= this.datatable.totalRows  ) {
-
                      if ( ( this.take  + this.skip ) <=  this.currentRow ) {
                          this.skip = this.currentRow - qtdRowClient;
                          this.take = this.datatable.rowsPage;

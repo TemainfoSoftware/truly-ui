@@ -28,7 +28,6 @@ import { DatatableFilterOptions } from './datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
 import { TlDatatableFilterService } from './datatable-filter.service';
 import { TlDatatableDataSource } from './datatable-datasource.service';
-import { TlDatatablePropertiesService } from './datatable-properties.service';
 
 @Component({
     selector: 'tl-datatable',
@@ -74,8 +73,6 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
-    public datasource: DataMetadata;
-
     public columns: any[] = [];
 
     public tabindex = 0;
@@ -93,12 +90,10 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
 
     ngOnInit() {
 
-        this.dataObjectBuilder();
-        this.dataSourceService.onInitDataSource();
+        this.dataSourceService.onInitDataSource(this);
 
 
-        this.rowHeightCalculated = this.rowHeight;
-
+        this.setHeightRowTable();
         this.render.listen(window, 'load', () => {
             this.calcHeightRowTable();
         });
@@ -108,15 +103,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
         })
     }
 
+
     ngAfterContentInit() {
         this.setColumns();
         this.inicializeGlobalFilter();
     }
 
     ngOnChanges($event) {
-        setTimeout(()=>{
-           this.dataSourceService.onChangeDataSource($event)
-        });
+        this.dataSourceService.onChangeDataSource($event)
     }
 
     setColumns() {
@@ -128,8 +122,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
     }
 
     getColumnsFromDataSource() {
-        Object.keys( this.datasource.data[0] ).forEach( ( columnField ) => {
-            this.columns.push( this.buildNewDataTableColumn( columnField ) );
+        Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
+          this.columns.push( this.buildNewDataTableColumn( columnField ) );
         })
     }
 
@@ -171,30 +165,6 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
     }
 
-    public isDataArray( data: any ){
-        return data instanceof Array;
-    }
-
-    private refreshTotalRows( data: any ){
-        if( this.isDataArray( data ) ) {
-            this.totalRows =  data.length;
-            return;
-        }
-        this.totalRows = data.total;
-    }
-
-    dataObjectBuilder(){
-        let data = this.isDataArray( this.data ) ?  this.data : ( this.data as DataMetadata ).data;
-        this.refreshTotalRows( this.data );
-
-        this.datasource = {
-            data: ( data as Array<any> ),
-            total: this.totalRows
-        }
-    }
-
-
-
     inicializeGlobalFilter() {
         if ( this.globalFilter ) {
             this.globalFilterTimeout = setTimeout( () => {
@@ -225,7 +195,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
         }
     }
 
-
-
+    setHeightRowTable(){
+        this.rowHeightCalculated = this.rowHeight;
+    }
 
 }

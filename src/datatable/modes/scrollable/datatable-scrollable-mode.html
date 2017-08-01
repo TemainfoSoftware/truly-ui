@@ -22,6 +22,7 @@
                         (focus)="datatable.onRowSelect( dataSourceService.datasource[i],i)"
                         (dblclick)="datatable.onRowDblclick( dataSourceService.datasource[i],i)"
 
+
                     >
                         <td *ngFor="let column of datatable.columns;" [class]="'cel ' + datatable.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
                     </tr>

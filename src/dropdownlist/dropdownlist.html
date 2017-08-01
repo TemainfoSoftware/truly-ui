@@ -1,6 +1,5 @@
 <div class="tl-dropdown-list"
      *ngIf="datasource"
-     (valueChange)="valueChange($event)"
      [attr.disabled]="disabled ? true : false">
 
     <label *ngIf="label" class="labeltext -label{{ labelPlacement }}"
@@ -9,18 +8,18 @@
     <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{ tabindex }}" (keydown)="onListClosed($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())"
-             [ngStyle]="{'height' : selectHeight + 'px'}"
+             [ngStyle]="{'height' : height + 'px'}"
              [ngClass]="{' disabled ': disabled}">
             <input #inputDropdown
-                   placeholder="{{placeholder?.valueOf()}}"
+                   placeholder="{{ placeholder?.valueOf() }}"
                    #model="ngModel"
                    disabled
                    [ngClass]="{' disabled ': disabled}"
                    class="dropdown-list-input"
-                   [ngStyle]="{'height' : selectHeight - 2 + 'px', 'line-height' : selectHeight - 2 +  'px'}"
+                   [ngStyle]="{'height' : height - 2 + 'px', 'line-height' : height - 2 +  'px'}"
                    [(ngModel)]="ngValue"/>
             <div class="dropdown-list-icon"
-                 [ngStyle]="{'height' : selectHeight + 'px', 'line-height' : selectHeight +  'px'}">
+                 [ngStyle]="{'height' : height + 'px', 'line-height' : height +  'px'}">
                 <i class="ion-chevron-down"></i>
             </div>
         </div>
@@ -30,11 +29,10 @@
             <div class="-placeholder"
                  *ngIf="placeholder && showHide"
                  #defaultPlaceholder
-                 [ngStyle]="{'line-height' : selectHeight + 'px'}"
+                 [ngStyle]="{'line-height' : height + 'px'}"
                  (keydown)="placeholderEnter($event)"
                  (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}
             </div>
-
 
             <ul class="dropdown-list-select"
                 (keydown)="onListOpened($event)"
@@ -44,7 +42,7 @@
                 <li *ngFor="let item of datasource; let i = index"
                     (click)="selectOption(item, i)"
                     tabindex="{{i}}"
-                    [ngStyle]="{'line-height' : selectHeight + 'px'}">
+                    [ngStyle]="{'line-height' : height + 'px'}">
                     {{ item[text] }}
                 </li>
             </ul>

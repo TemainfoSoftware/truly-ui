@@ -36,6 +36,8 @@ export class TlDatatableDataSource {
 
     private lastRow: number;
 
+    constructor(){}
+
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
         this.datasource = this.getRowsInMemory( 0, this.datatable.rowsPage );
@@ -49,6 +51,10 @@ export class TlDatatableDataSource {
             this.datasource = dataChange.data;
         }
         return this;
+    }
+
+    updateDataSource( data ) {
+        this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
     }
 
     getRowsInMemory(skip: number, take: number) {

@@ -20,59 +20,63 @@
     SOFTWARE.
 */
 
- import { Injectable, Injector } from '@angular/core';
+ import { forwardRef, Inject, Injectable, Injector } from '@angular/core';
  import { TlDatatable } from './datatable';
+ import { TlDatatableDataSource } from './datatable-datasource.service';
 
  @Injectable()
  export class TlDatatableFilterService {
 
      private filtredData: any[];
 
-     private datatable: TlDatatable;
+     private datatable : TlDatatable;
 
-     constructor( injector: Injector ) {
-        setTimeout( () => { this.datatable = injector.get(TlDatatable) })
+
+     constructor( public dataSourceService: TlDatatableDataSource, injectable: Injector  ) {
+      setTimeout(()=>{
+          this.datatable = injectable.get(TlDatatable)
+      })
      }
 
      public filter( dataToFilter: any ) {
-         // this.filtredData = [];
-         //
-         // if ( !dataToFilter ) {
-         //     this.datatable.updateDataSource( this.datatable.data );
-         //     return ;
-         // }
-         //
-         // ( this.datatable.data as Array<any> ).filter( ( row ) => {
-         //     this.datatable.columns.forEach( (columnValue ) => {
-         //         if ( this.isValidMatch( String(dataToFilter), String(row[columnValue.field]) ) ) {
-         //             this.filtredData.push(row);
-         //         }
-         //     });
-         // });
-         //
-         // this.datatable.updateDataSource( this.filtredData );
+         this.filtredData = [];
+
+         if ( !dataToFilter ) {
+             this.dataSourceService.updateDataSource( this.datatable.data );
+             return ;
+         }
+
+         ( this.datatable.data as Array<any> ).filter( ( row ) => {
+             this.datatable.columns.forEach( (columnValue ) => {
+                 if ( this.isValidMatch( String(dataToFilter), String(row[columnValue.field]) ) ) {
+                     this.filtredData.push(row);
+                 }
+             });
+         });
+
+         this.dataSourceService.updateDataSource( this.filtredData );
     }
 
-     //
-     // private isValidMatch( searchValue: string, valueMatch: string ) {
-     //     if ( this.datatable.globalFilterOptions ) {
-     //         if (!this.datatable.globalFilterOptions.caseSensitive )  {
-     //             valueMatch = valueMatch.toLowerCase();
-     //             searchValue = searchValue.toLowerCase();
-     //         }
-     //     }
-     //     return this.matchWith( searchValue, valueMatch );
-     // }
-     //
-     // matchWith(searchValue, valueMatch) {
-     //     if (this.datatable.globalFilterOptions) {
-     //         switch (this.datatable.globalFilterOptions.mode) {
-     //             case 'startsWith' : return (valueMatch).startsWith(searchValue);
-     //             case 'endsWith' : return String(valueMatch).endsWith(searchValue);
-     //             case 'contains' : return String(valueMatch).includes(searchValue);
-     //             default: return String(valueMatch).includes(searchValue);
-     //         }
-     //     }
-     //     return String(valueMatch).includes(searchValue);
-     // }
+
+     private isValidMatch( searchValue: string, valueMatch: string ) {
+         if ( this.datatable.globalFilterOptions ) {
+             if (!this.datatable.globalFilterOptions.caseSensitive )  {
+                 valueMatch = valueMatch.toLowerCase();
+                 searchValue = searchValue.toLowerCase();
+             }
+         }
+         return this.matchWith( searchValue, valueMatch );
+     }
+
+     matchWith(searchValue, valueMatch) {
+         if (this.datatable.globalFilterOptions) {
+             switch (this.datatable.globalFilterOptions.mode) {
+                 case 'startsWith' : return (valueMatch).startsWith(searchValue);
+                 case 'endsWith' : return String(valueMatch).endsWith(searchValue);
+                 case 'contains' : return String(valueMatch).includes(searchValue);
+                 default: return String(valueMatch).includes(searchValue);
+             }
+         }
+         return String(valueMatch).includes(searchValue);
+     }
  }

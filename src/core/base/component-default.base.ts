@@ -46,6 +46,12 @@ export class ComponentDefaultBase {
     public tabindex: number;
 
 
+    private form;
+
+
+    private direction = '';
+
+
     constructor(public tabIndexService: TabIndexService, public idService: IdGeneratorService, public nameService: NameGeneratorService) {}
 
     /**
@@ -74,15 +80,21 @@ export class ComponentDefaultBase {
      * @param event
      */
     onKeyInput( event: KeyboardEvent ) {
+        this.existForm();
         if ( this.enterAsTab ) {
             if (event.keyCode === KeyEvent.TAB && event.shiftKey) {
-                event.preventDefault();
+                if ( this.form.length > 0 ) {
+                    event.preventDefault();
+                }
                 this.previousFocus();
                 return;
             }
             switch ( event.keyCode ) {
                 case KeyEvent.ENTER:
-                    this.nextFocus();
+                    setTimeout( () => {
+                        event.stopPropagation();
+                        this.nextFocus();
+                    }, 2 );
                     break;
                 case KeyEvent.ARROWDOWN:
                     this.nextFocus();
@@ -91,7 +103,9 @@ export class ComponentDefaultBase {
                     this.previousFocus();
                     break;
                 case KeyEvent.TAB:
-                    event.preventDefault();
+                    if ( this.form.length > 0 ) {
+                        event.preventDefault();
+                    }
                     this.nextFocus();
                     break;
             }
@@ -119,24 +133,52 @@ export class ComponentDefaultBase {
     }
 
     getNextElementOnForm() {
-        return this.getElementsOnForm(this.tabindex + 1);
+        this.direction = 'next';
+        return this.getElementsOnForm();
     }
 
     getPreviousElementOnForm() {
-        return this.getElementsOnForm(this.tabindex - 1);
+        this.direction = 'previous';
+        return this.getElementsOnForm();
     }
 
+    existForm() {
+        this.form = document.querySelectorAll( 'tl-form' );
+    }
 
-    getElementsOnForm(direction) {
-        const formElements = document.querySelectorAll( 'tl-form' );
-        for ( let formComponents = 0; formComponents < formElements.length; formComponents++ ) {
-            const listFormComponents = formElements[ formComponents ].querySelectorAll( '*' );
+    getElementsOnForm() {
+        for ( let formComponents = 0; formComponents < this.form.length; formComponents++ ) {
+            const listFormComponents = this.form[ formComponents ].querySelectorAll( '*' );
             for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
-                if ((listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === direction) {
-                    return listFormComponents[ childFormComponents ];
+
+                if ( this.isPreviousTabIndex( listFormComponents, childFormComponents ) ) {
+                    if ( !this.isElementDisabled( listFormComponents, childFormComponents ) ) {
+                        return listFormComponents[ childFormComponents ];
+                    }
+                    this.tabindex--;
+                }
+
+                if ( this.isNextTabIndex( listFormComponents, childFormComponents ) ) {
+                    if ( !this.isElementDisabled( listFormComponents, childFormComponents ) ) {
+                        return listFormComponents[ childFormComponents ];
+                    }
+                    this.tabindex++;
                 }
             }
         }
+    }
+
+
+    isPreviousTabIndex( listFormComponents, childFormComponents ) {
+        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === this.tabindex - 1 && this.direction === 'previous';
+    }
+
+    isNextTabIndex( listFormComponents, childFormComponents ) {
+        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === this.tabindex + 1 && this.direction === 'next';
+    }
+
+    isElementDisabled( listFormComponents, childFormComponents ) {
+        return listFormComponents[ childFormComponents ].disabled
     }
 
 }

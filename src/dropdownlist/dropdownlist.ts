@@ -43,7 +43,7 @@ let globalZindex = 1;
         trigger(
             'enterAnimation', [
                 transition( ':enter', [
-                    style( { opacity : 0, transform : 'translate(0%,-5%)'} ),
+                    style( { opacity : 0, transform : 'translate(0%,-5%)' } ),
                     animate( '200ms', style( { opacity : 1, transform : 'translate(0%,0%)' } ) )
                 ] ),
                 transition( ':leave', [
@@ -67,11 +67,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'label' ) label: string;
 
+    @Input( 'disabled' ) disabled: boolean;
+
     @Input( 'labelPlacement' ) labelPlacement = 'left';
 
     @Input( 'labelSize' ) labelSize: string;
 
-    @Input( 'selectHeight' ) selectHeight: number;
+    @Input( 'height' ) height: number;
 
     @Input( 'placeholder' ) placeholder = null;
 
@@ -99,15 +101,17 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     private datasource: any[] = [];
 
-    private elementoAtivo;
-
     constructor( private _renderer: Renderer2,
                  tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
         this.showHide = false;
-        this.selectHeight = 39;
+        this.height = 39;
+        this.text = 'text';
+        this.value = 'value';
+        this.disabled = false;
+        this.scroll = null;
     }
 
     ngAfterViewInit() {
@@ -120,20 +124,20 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     updateDataSource( data ) {
-        data.forEach( ( value2, index, array ) => {
-            this.datasource.push( value2 );
+        data.forEach( ( value, index, array ) => {
+            this.datasource.push( value );
         } );
     }
 
     calcHeightItem() {
         if ( (!this.scroll) ) {
             if ( (this.datasource.length > 10) ) {
-                return { 'height' : (10 * this.selectHeight) + 'px', 'overflow-y' : 'scroll' };
+                return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
             } else {
                 return { 'height' : 'auto', 'overflow-y' : 'visible' };
             }
         } else {
-            return { 'height' : (this.scroll * this.selectHeight) + 'px', 'overflow-y' : 'scroll' };
+            return { 'height' : (this.scroll * this.height) + 'px', 'overflow-y' : 'scroll' };
         }
     }
 
@@ -161,30 +165,32 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     onListClosed( $event ) {
-        switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN:
-                this.onArrowDown();
-                this.stopPropagationAndPreventDefault( $event );
-                break;
-            case KeyEvent.ARROWUP:
-                this.onArrowUp();
-                this.stopPropagationAndPreventDefault( $event );
-                break;
-            case KeyEvent.ENTER:
-                if ( !this.itemSelected ) {
-                    this.changeShowStatus();
-                } else {
-                    this.onKeyInput( $event );
-                    this.onEnter( $event );
-                }
-                break;
-            case KeyEvent.SPACE:
-                this.onSpace();
-                this.stopPropagationAndPreventDefault( $event );
-                break;
-            case KeyEvent.ESCAPE:
-                this.onEscape( $event );
-                break;
+        if ( !this.disabled ) {
+            switch ( $event.keyCode ) {
+                case KeyEvent.ARROWDOWN:
+                    this.onArrowDown();
+                    this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ARROWUP:
+                    this.onArrowUp();
+                    this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ENTER:
+                    if ( !this.itemSelected ) {
+                        this.changeShowStatus();
+                    } else {
+                        this.onKeyInput( $event );
+                        this.onEnter( $event );
+                    }
+                    break;
+                case KeyEvent.SPACE:
+                    this.onSpace();
+                    this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ESCAPE:
+                    this.onEscape( $event );
+                    break;
+            }
         }
     }
 
@@ -217,7 +223,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onChangeItem();
         }
         this.showHide = false;
-        this.setFocus();
+        this.setFocusOnDropbox();
     }
 
     onEnter( $event ) {
@@ -226,7 +232,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 $event.preventDefault();
                 return;
             }
-
             if ( !this.itemSelected || this.placeholder || this.itemSelected === null || this.itemSelected === undefined ) {
                 this.setTimeoutWithZIndexAndFocusOnElement();
                 this.showHide = true;
@@ -237,9 +242,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onChangeItem();
         }
         this.showHide = false;
-        this.setFocus();
-
-
+        this.setFocusOnDropbox();
     }
 
     setTimeoutWithZIndexAndFocusOnElement() {
@@ -254,19 +257,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onShowHideFalse();
             return;
         }
-
         this.datasource.forEach( ( value, index, array ) => {
             if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
                 this.itemSelected = value;
-                this.elementoAtivo = document.activeElement;
-                if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
-                    this.inputDropdown.nativeElement.value = value[ this.text ];
-                    this.componentModel.model = value[ this.value ];
-                    this.itemSelect.emit( this.itemSelected );
-                } else {
-                    this.componentModel.model = '';
-                    this.itemSelect.emit( this.componentModel.model );
+                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
+                    this.onChangeCallback( '' );
                 }
+                this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
+                this.onChangeCallback( this.itemSelected[ this.value ] );
             }
 
         } );
@@ -278,7 +276,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 $event.preventDefault();
                 $event.stopPropagation();
                 this.itemSelected = null;
-                this.setFocus();
+                this.setFocusOnDropbox();
                 this.showHide = false;
                 break;
         }
@@ -289,14 +287,11 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.children = 0;
         }
         this.itemSelected = this.datasource[ this.children ];
-
-        if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
-            this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
-            this.componentModel.model = this.itemSelected[ this.value ];
-            this.itemSelect.emit( this.itemSelected );
-        } else {
-            this.itemSelect.emit( '' );
+        if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
+            this.onChangeCallback( '' );
         }
+        this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
+        this.onChangeCallback( this.itemSelected[ this.value ] );
     }
 
     onArrowDown() {
@@ -310,14 +305,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     onArrowUp() {
         if ( this.placeholder && this.children < 1 ) {
             this.children = -1;
-            this.componentModel.model = '';
+            this.onChangeCallback( '' );
             this.itemSelected = null;
-            // this.itemSelected = this.itemSelected.shift();
             if ( this.showHide ) {
                 this.placeholderDiv.nativeElement.focus();
             }
             this.inputDropdown.nativeElement.value = this.placeholder;
-            this.itemSelect.emit( this.componentModel.model );
         }
         if ( this.children > 0 && this.children !== -1 ) {
             this.children = this.children - 1;
@@ -327,18 +320,20 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     changeShowStatus() {
-        this.showHide = !this.showHide;
-        if ( this.showHide ) {
-            setTimeout( () => {
-                this.getAndSetZIndex();
-                if ( this.children === -1 && this.placeholder ) {
-                    this.placeholderDiv.nativeElement.focus();
-                } else if ( this.children === -1 ) {
-                    this.list.nativeElement.children[ 0 ].focus();
-                } else {
-                    this.list.nativeElement.children[ this.children ].focus();
-                }
-            }, 0 );
+        if ( !this.disabled ) {
+            this.showHide = !this.showHide;
+            if ( this.showHide ) {
+                setTimeout( () => {
+                    this.getAndSetZIndex();
+                    if ( this.children === -1 && this.placeholder ) {
+                        this.placeholderDiv.nativeElement.focus();
+                    } else if ( this.children === -1 ) {
+                        this.list.nativeElement.children[ 0 ].focus();
+                    } else {
+                        this.list.nativeElement.children[ this.children ].focus();
+                    }
+                }, 0 );
+            }
         }
     }
 
@@ -350,36 +345,37 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     selectOption( item, index ) {
         this.itemSelected = item;
         this.children = index;
-        if ( this.itemSelected[ this.value ] !== null && this.itemSelected[ this.value ] !== '' ) {
-            this.itemSelect.emit( this.itemSelected );
-        } else {
-            this.itemSelect.emit( '' );
-        }
         this.inputDropdown.nativeElement.value = item[ this.text ];
-        this.componentModel.model = item[ this.value ];
+        this.onChangeCallback(item[ this.value ]);
         this.showHide = false;
         this.dropbox.nativeElement.focus();
     }
 
     selectPlaceholder() {
         this.inputDropdown.nativeElement.value = this.placeholder;
-        this.componentModel.model = '';
+        this.onChangeCallback( '' );
         this.placeholderDiv.nativeElement.focus();
         this.itemSelected = null;
-        // this.itemSelected = this.itemSelected.shift();
-        this.itemSelect.emit( this.componentModel.model );
         this.children = -1;
-        this.setFocus();
+        this.setFocusOnDropbox();
     }
 
     getData() {
-        if ( ( typeof this.data === 'object') && ( this.data[ 0 ] === undefined ) ) {
-            throw new EvalError( 'DataSource - Problem!' );
+        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined )
+            || (typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) ) {
+            throw new EvalError( 'You must pass some data to the data property of the dropdownlist element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'string' ) {
+            const simpleData = [];
+            this.data.forEach( ( value, index, array ) => {
+                simpleData.push( { text : value, value : value } );
+            } );
+            return simpleData;
         }
         return this.data;
     }
 
-    setFocus() {
+    setFocusOnDropbox() {
         this.dropbox.nativeElement.focus();
     }
 

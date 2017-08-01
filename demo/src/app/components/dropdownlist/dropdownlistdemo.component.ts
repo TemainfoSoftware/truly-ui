@@ -12,21 +12,25 @@ export class DropDownListDemo {
 
   private dataTableProperties;
 
-  public itemSelected: any[];
+  public itemSelected: any;
 
-  public itemSelected2: any[];
+  public itemSelected2: any;
 
-  public itemSelected3: any[];
+  public itemSelected3: any;
 
-  public itemSelected4: any[];
+  public itemSelected4: any;
 
-  public itemSelected5: any[];
+  public itemSelected5: any;
 
-  public itemSelected6: any[];
+  public itemSelected6: any;
+
+  public itemSelected7: any;
 
   public data: any[];
 
-  public data2: any[];
+  public bigData: any[];
+
+  public simpleData: any[];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
@@ -37,7 +41,7 @@ export class DropDownListDemo {
       { textItem : 'Item 4', valueItem : '4' },
       { textItem : 'Item 5', valueItem : '5' }
     ];
-    this.data2 = [
+    this.bigData = [
       { textItem : 'Item 1', valueItem : '1' },
       { textItem : 'Item 2', valueItem : '2' },
       { textItem : 'Item 3', valueItem : '3' },
@@ -54,36 +58,7 @@ export class DropDownListDemo {
       { textItem : 'Item 15', valueItem : '15' },
       { textItem : 'Item 16', valueItem : '16' }
     ];
-  }
-
-  showItemSelected( event ) {
-    this.itemSelected = [];
-    this.itemSelected.push( event.textItem );
-  }
-
-  showItemSelected2( event ) {
-    this.itemSelected2 = [];
-    this.itemSelected2.push( event.textItem );
-  }
-
-  showItemSelected3( event ) {
-    this.itemSelected3 = [];
-    this.itemSelected3.push( event.textItem );
-  }
-
-  showItemSelected4( event ) {
-    this.itemSelected4 = [];
-    this.itemSelected4.push( event.textItem );
-  }
-
-  showItemSelected5( event ) {
-    this.itemSelected5 = [];
-    this.itemSelected5.push( event.textItem );
-  }
-
-  showItemSelected6( event ) {
-    this.itemSelected6 = [];
-    this.itemSelected6.push( event.textItem );
+    this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   }
 
 }

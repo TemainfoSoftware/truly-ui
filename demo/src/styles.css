@@ -4,6 +4,11 @@ i {
   padding: 10px;
 }
 
+.returned-value{
+  font-size: 12px;
+  color: #9d9d9d;
+}
+
 .title {
   font-family: 'Lato', sans-serif;
   color: #686a6a;

@@ -29,7 +29,7 @@
            maxlength="{{validations?.maxLength}}"
            minlength="{{validations?.minLength}}"
            required="{{validations?.required}}"
-           [(ngModel)]="ngValue"
+           [(ngModel)]="modelValue"
            (blur)="onBlur()"
            (focus)="onFocus()"
            (keydown)="onKeyInput($event)">

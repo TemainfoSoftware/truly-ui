@@ -29,6 +29,7 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
     selector : 'tl-button',
@@ -110,8 +111,8 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         this._buttonSelected = true;
     }
 
-    keydown( $event ) {
-        if ( $event.key === 'Enter' ) {
+    keydown( $event: KeyboardEvent ) {
+        if ( $event.keyCode === KeyEvent.ENTER ) {
             this.clickToggle();
         }
     }

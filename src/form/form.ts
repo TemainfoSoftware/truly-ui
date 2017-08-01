@@ -52,8 +52,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
-    private listenLastElement;
-
     private dialogOpen = false;
 
     private lastActiveElement;
@@ -62,7 +60,12 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private validForm = true;
 
-    constructor( private renderer: Renderer2, private dialogService: DialogService, private tabService: TabIndexService ) {}
+    private buttonFormOkListener;
+
+    private buttonFormCancelListener;
+
+    constructor( private renderer: Renderer2, private dialogService: DialogService,
+                 private tabService: TabIndexService ) {}
 
     ngOnInit() {}
 
@@ -73,18 +76,13 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.setInitialFocus();
         this.setTabIndexButtons();
         this.verifyInputValidation();
-        this.listenLastElement = this.renderer.listen( this.lastElement.element.nativeElement, 'keydown', ( $event: KeyboardEvent ) => {
-            if ( this.isKeyDownEnterOrArrowDownOrTab( $event ) ) {
-                setTimeout( () => {
-                    this.buttonFormOk.buttonElement.nativeElement.focus();
-                }, 1 );
-            }
-        } );
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( event ) => {
+        this.buttonFormOkListener = this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click',
+            ( $event: KeyboardEvent ) => {
             this.getInputValues();
             this.getDropdownListValues();
         } );
-        this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click', ( event ) => {
+        this.buttonFormCancelListener = this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click',
+            ( $event: KeyboardEvent ) => {
             this.getInputValues();
         } );
     }
@@ -142,22 +140,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         if ( this.inputList.toArray().length > 0 ) {
             this.inputList.toArray()[ 0 ].element.nativeElement.focus();
         }
-    }
-
-    isKeyDownEnterOrArrowDownOrTab( $event: KeyboardEvent ) {
-        return this.isKeyDownEqualsEnter( $event ) || this.isKeyDownEqualsArrowDown( $event ) || this.isKeyDownEqualsTab($event);
-    }
-
-    isKeyDownEqualsEnter( $event: KeyboardEvent ) {
-        return $event.keyCode === KeyEvent.ENTER;
-    }
-
-    isKeyDownEqualsArrowDown( $event: KeyboardEvent ) {
-        return $event.keyCode === KeyEvent.ARROWDOWN;
-    }
-
-    isKeyDownEqualsTab( $event: KeyboardEvent) {
-        return $event.keyCode === KeyEvent.TAB && !$event.shiftKey;
     }
 
     isActiveElementButtonOk() {
@@ -246,7 +228,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        this.listenLastElement();
+        this.buttonFormOkListener();
+        this.buttonFormCancelListener();
     }
 }
 

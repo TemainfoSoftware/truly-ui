@@ -96,6 +96,15 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
         } );
     }
 
+    get modelValue(): any { return this.ngValue; };
+
+    set modelValue(value: any) {
+        if (value !== this.ngValue) {
+            this.ngValue = value;
+            this.onChangeCallback(value);
+        }
+    }
+
     /**
      * Function that writes value on ngModel.
      * @param value Value received to write value on ngModel

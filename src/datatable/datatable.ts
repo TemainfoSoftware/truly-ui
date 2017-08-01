@@ -34,12 +34,12 @@ import { TlDatatableDataSource } from './datatable-datasource.service';
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
     encapsulation: ViewEncapsulation.Native,
-    providers:[
+    providers: [
         TlDatatableFilterService,
         TlDatatableDataSource,
     ]
 })
-export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
+export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
@@ -91,8 +91,6 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
     ngOnInit() {
 
         this.dataSourceService.onInitDataSource(this);
-
-
         this.setHeightRowTable();
         this.render.listen(window, 'load', () => {
             this.calcHeightRowTable();
@@ -195,7 +193,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges{
         }
     }
 
-    setHeightRowTable(){
+    setHeightRowTable() {
         this.rowHeightCalculated = this.rowHeight;
     }
 

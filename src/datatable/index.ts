@@ -6,8 +6,6 @@ import { TlDatatableColumn } from './datatable-column';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
-import { TlDatatableDataSource } from './datatable-datasource.service';
-import { TlDatatablePropertiesService } from './datatable-properties.service';
 
 export * from './datatable';
 
@@ -29,11 +27,6 @@ export * from './datatable';
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,
         TlDatatableScrollableMode,
-    ],
-    providers:[
-
-
     ]
-
 })
 export class DatatableModule {}

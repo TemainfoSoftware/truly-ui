@@ -34,7 +34,8 @@
 
      @ViewChild( 'datatableTbody' ) datatableTbodyRef: ElementRef;
 
-     constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable, public dataSourceService: TlDatatableDataSource  ) {}
+     constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable,
+                   public dataSourceService: TlDatatableDataSource  ) {}
 
      onKeydown( $event ) {
          $event.preventDefault();

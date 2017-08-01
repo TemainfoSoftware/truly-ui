@@ -58,7 +58,8 @@
 
      private pageNumber = 1;
 
-     constructor( @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,  public dataSourceService: TlDatatableDataSource ) {}
+     constructor( @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
+                  public dataSourceService: TlDatatableDataSource ) {}
 
      ngOnInit() {
          this.take = this.datatable.rowsPage;
@@ -70,7 +71,7 @@
          this.pageHeight = this.datatable.rowsPage * this.datatable.rowHeightCalculated;
      }
 
-     ngAfterContentInit(){
+     ngAfterContentInit() {
         this.containerHeight = this.datatable.rowHeight *  this.datatable.totalRows;
      }
 

@@ -30,11 +30,11 @@
 
      private datatable: TlDatatable;
 
-     constructor( injector: Injector ){
-         setTimeout(()=>{ this.datatable = injector.get(TlDatatable) })
+     constructor( injector: Injector ) {
+        setTimeout( () => { this.datatable = injector.get(TlDatatable) })
      }
 
-     public filter( dataToFilter: any ){
+     public filter( dataToFilter: any ) {
          // this.filtredData = [];
          //
          // if ( !dataToFilter ) {

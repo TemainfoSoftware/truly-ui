@@ -20,13 +20,13 @@
     SOFTWARE.
 */
 
-import { Injectable, Injector,forwardRef,Inject, SimpleChanges } from '@angular/core';
+import { Injectable, SimpleChanges } from '@angular/core';
 import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
 
 
 @Injectable()
-export class TlDatatableDataSource{
+export class TlDatatableDataSource {
 
     public datasource: DataMetadata;
 
@@ -36,14 +36,14 @@ export class TlDatatableDataSource{
 
     private lastRow: number;
 
-    onInitDataSource(datatableInstance){
+    onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
-        this.datasource =  this.getRowsInMemory(0,this.datatable.rowsPage);
+        this.datasource = this.getRowsInMemory( 0, this.datatable.rowsPage );
         this.refreshTotalRows(this.datatable.data);
     }
 
-    onChangeDataSource( data : SimpleChanges ) {
-        let dataChange = data['data'].currentValue;
+    onChangeDataSource( data: SimpleChanges ) {
+        const dataChange = data['data'].currentValue;
 
         if ( ( !data['data'].firstChange ) && dataChange ) {
             this.datasource = dataChange.data;
@@ -51,13 +51,13 @@ export class TlDatatableDataSource{
         return this;
     }
 
-    getRowsInMemory(skip: number, take: number){
-        let data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
+    getRowsInMemory(skip: number, take: number) {
+        const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
         return (data as  Array<any>).slice(skip, skip + take);
     }
 
-    loadMoreData(skip: number, take: number){
-        if (  this.datatable.lazy ){
+    loadMoreData(skip: number, take: number) {
+        if (  this.datatable.lazy ) {
               this.datatable.lazyLoad.emit({ skip: skip,  take: take });
               return this;
         }
@@ -66,13 +66,13 @@ export class TlDatatableDataSource{
     }
 
 
-    public isDataArray( data: any ){
+    public isDataArray( data: any ) {
         return data instanceof Array;
     }
 
 
-    private refreshTotalRows( data: any ){
-        if( this.isDataArray( data ) ) {
+    private refreshTotalRows( data: any ) {
+        if ( this.isDataArray( data ) ) {
             this.datatable.totalRows =  data.length;
             return;
         }

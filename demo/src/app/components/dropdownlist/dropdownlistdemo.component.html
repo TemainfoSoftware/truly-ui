@@ -11,7 +11,7 @@
       <div class="group-component">
         <h5>Basic</h5>
         <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected($event)"></tl-dropdown-list>
+                          (itemSelect)="showItemSelected($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -24,7 +24,7 @@
       <div class="group-component">
         <h5>Placeholder</h5>
         <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'" [placeholder]="'Select item'"
-                           (itemSelect)="showItemSelected2($event)"></tl-dropdown-list>
+                          (itemSelect)="showItemSelected2($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -39,7 +39,7 @@
       <div class="group-component">
         <h5>Scroll</h5>
         <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected4($event)" [scroll]="'3'"></tl-dropdown-list>
+                          (itemSelect)="showItemSelected4($event)" [scroll]="'3'"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -50,9 +50,9 @@
     </div>
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Auto Scroll - Many Items</h5>
+        <h5>Auto Scroll</h5>
         <tl-dropdown-list [data]="data2" [text]="'textItem'" [value]="'valueItem'"
-                           (itemSelect)="showItemSelected3($event)"></tl-dropdown-list>
+                          (itemSelect)="showItemSelected3($event)"></tl-dropdown-list>
       </div>
     </div>
     <div class="col-md-3">
@@ -99,6 +99,20 @@
       <div class="group-component">
         <h5>Selected Item</h5>
         <div><span>{{ itemSelected6 }}</span></div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Simple Data</h5>
+        <tl-dropdown-list [data]="simpleData"
+                          (itemSelect)="showItemSelected7($event)">
+        </tl-dropdown-list>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Selected Item</h5>
+        <div><span>{{ itemSelected7 }}</span></div>
       </div>
     </div>
   </div>

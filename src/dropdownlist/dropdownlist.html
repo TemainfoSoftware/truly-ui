@@ -1,9 +1,9 @@
 <div class="tl-dropdown-list" *ngIf="datasource" (valueChange)="valueChange($event)">
 
-    <label *ngIf="label" class="labeltext -label{{labelPlacement}}"
+    <label *ngIf="label" class="labeltext -label{{ labelPlacement }}"
            [ngStyle]="{'width' : labelSize + 'px'}">{{label}}</label>
 
-    <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{tabindex}}" (keydown)="onListClosed($event)">
+    <div class="dropdown-list-wrapper" #dropbox attr.tabindex="{{ tabindex }}" (keydown)="onListClosed($event)">
 
         <div class="dropdown-list-container" (click)="changeShowStatus($event.stopPropagation())"
              [ngStyle]="{'height' : selectHeight + 'px'}">

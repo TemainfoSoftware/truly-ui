@@ -24,9 +24,13 @@ export class DropDownListDemo {
 
   public itemSelected6: any[];
 
+  public itemSelected7: any[];
+
   public data: any[];
 
   public data2: any[];
+
+  public simpleData: any[];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
@@ -54,6 +58,7 @@ export class DropDownListDemo {
       { textItem : 'Item 15', valueItem : '15' },
       { textItem : 'Item 16', valueItem : '16' }
     ];
+    this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
   }
 
   showItemSelected( event ) {
@@ -84,6 +89,11 @@ export class DropDownListDemo {
   showItemSelected6( event ) {
     this.itemSelected6 = [];
     this.itemSelected6.push( event.textItem );
+  }
+
+  showItemSelected7( event ) {
+    this.itemSelected7 = [];
+    this.itemSelected7.push( event.textItem );
   }
 
 }

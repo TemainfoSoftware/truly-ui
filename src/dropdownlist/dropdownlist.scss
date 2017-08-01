@@ -145,4 +145,11 @@ $button-font-family: 'Segoe UI', sans-serif;
     outline-style: auto;
   }
 }
+.disabled{
+  opacity: 0.35;
+  filter: Alpha(Opacity=35);
+  background-image: none;
+  color: #000;
+  cursor: default !important;
+}
 

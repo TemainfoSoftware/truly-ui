@@ -7,63 +7,55 @@
 
 <div class="showcase">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="group-component">
         <h5>Basic</h5>
-        <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'"
-                          (itemSelect)="showItemSelected($event)"></tl-dropdown-list>
+        <tl-dropdown-list [data]="data"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [(ngModel)]="itemSelected">
+        </tl-dropdown-list>
+        <span class="returned-value"> Returned Value: {{ itemSelected }}</span>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected }}</span></div>
-      </div>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="group-component">
         <h5>Placeholder</h5>
-        <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'" [placeholder]="'Select item'"
-                          (itemSelect)="showItemSelected2($event)"></tl-dropdown-list>
+        <tl-dropdown-list [data]="data"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [placeholder]="'Select item'"
+                          [(ngModel)]="itemSelected2">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected2 }}</span>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected2 }}</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="group-component">
         <h5>Scroll</h5>
-        <tl-dropdown-list [data]="data" [text]="'textItem'" [value]="'valueItem'"
-                          (itemSelect)="showItemSelected4($event)" [scroll]="'3'"></tl-dropdown-list>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected4 }}</span></div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Auto Scroll</h5>
-        <tl-dropdown-list [data]="data2" [text]="'textItem'" [value]="'valueItem'"
-                          (itemSelect)="showItemSelected3($event)"></tl-dropdown-list>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected3 }}</span></div>
+        <tl-dropdown-list [data]="data"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [(ngModel)]="itemSelected3"
+                          [scroll]="'3'">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected3 }}</span>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <div class="group-component">
+        <h5>Auto Scroll</h5>
+        <tl-dropdown-list [data]="bigData"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [(ngModel)]="itemSelected4">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected4 }}</span>
+      </div>
+    </div>
+    <div class="col-md-4">
       <div class="group-component">
         <h5>Label</h5>
         <tl-dropdown-list [data]="data"
@@ -71,67 +63,43 @@
                           [labelSize]="80"
                           [text]="'textItem'"
                           [value]="'valueItem'"
-                          (itemSelect)="showItemSelected5($event)">
+                          [(ngModel)]="itemSelected5">
         </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected5 }}</span>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected5 }}</span></div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Select Heigth</h5>
-        <tl-dropdown-list [data]="data2"
-                          [selectHeight]="25"
+        <h5>Height</h5>
+        <tl-dropdown-list [data]="data"
+                          [height]="25"
                           [scroll]="6"
                           [text]="'textItem'"
                           [value]="'valueItem'"
-                          (itemSelect)="showItemSelected6($event)">
+                          [(ngModel)]="itemSelected6">
         </tl-dropdown-list>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected6 }}</span></div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Simple Data</h5>
-        <tl-dropdown-list [data]="simpleData"
-                          (itemSelect)="showItemSelected7($event)">
-        </tl-dropdown-list>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected7 }}</span></div>
+        <span class="returned-value">Returned Value: {{ itemSelected6 }}</span>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-4">
+      <div class="group-component">
+        <h5>Simple Data</h5>
+        <tl-dropdown-list [data]="simpleData"
+                          [(ngModel)]="itemSelected7">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected7 }}</span>
+      </div>
+    </div>
+    <div class="col-md-4">
       <div class="group-component">
         <h5>Disabled</h5>
         <tl-dropdown-list [data]="data"
                           [text]="'textItem'"
                           [value]="'valueItem'"
-                          [disabled]="true"
-                          (itemSelect)="showItemSelected8($event)">
+                          [disabled]="true">
         </tl-dropdown-list>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Selected Item</h5>
-        <div><span>{{ itemSelected8 }}</span></div>
       </div>
     </div>
   </div>
@@ -153,15 +121,15 @@
         <th>Options</th>
       </tr>
       </thead>
-      <!--<tbody *ngFor="let item of dataTableProperties; let i = index">-->
-      <!--<tr>-->
-      <!--<td><b>{{ item.name }}</b></td>-->
-      <!--<td><span class="badge">{{ item.type }}</span></td>-->
-      <!--<td><code>{{ item.default }}</code></td>-->
-      <!--<td>{{ item.description }}</td>-->
-      <!--<td><code> {{ item.options }} </code></td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
+      <tbody *ngFor="let item of dataTableProperties; let i = index">
+      <tr>
+      <td><b>{{ item.name }}</b></td>
+      <td><span class="badge">{{ item.type }}</span></td>
+      <td><code>{{ item.default }}</code></td>
+      <td>{{ item.description }}</td>
+      <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
     </table>
   </div>
   <hr>
@@ -173,10 +141,86 @@
     <h5 class="title">Basic</h5>
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list [data]="data"
-                  [label]="'textItem'"
+                  [text]="'textItem'"
                   [value]="'valueItem'"
-                  (itemSelect)="showItemSelected($event)">
+                  [(ngModel)]="itemSelected">
 </tl-dropdown-list>
+
+<script type="text/javascript">
+  this.data = [ { textItem : 'Item 1', valueItem : '1' } , ... ];
+</script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Placeholder</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="data"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [placeholder]="'Select item'"
+                  [(ngModel)]="itemSelected2">
+</tl-dropdown-list>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Scroll</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="data"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [(ngModel)]="itemSelected3"
+                  [scroll]="'3'">
+</tl-dropdown-list>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Auto Scroll</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="bigData"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [(ngModel)]="itemSelected4">
+</tl-dropdown-list>
+
+<script type="text/javascript">
+  this.bigData = [ { textItem : 'Item 1', valueItem : '1' } , ... ];
+</script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Label</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="data"
+                  [label]="'Label Text'"
+                  [labelSize]="80"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [(ngModel)]="itemSelected5">
+</tl-dropdown-list>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Height</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="data"
+                  [height]="25"
+                  [scroll]="6"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [(ngModel)]="itemSelected6">
+</tl-dropdown-list>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Simple Data</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="simpleData"
+                  [(ngModel)]="itemSelected7">
+</tl-dropdown-list>
+
+<script type="text/javascript">
+  this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+</script>
   </textarea>
   </div>
 </div>

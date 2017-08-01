@@ -116,6 +116,25 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Disabled</h5>
+        <tl-dropdown-list [data]="data"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [disabled]="true"
+                          (itemSelect)="showItemSelected8($event)">
+        </tl-dropdown-list>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="group-component">
+        <h5>Selected Item</h5>
+        <div><span>{{ itemSelected8 }}</span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <hr>

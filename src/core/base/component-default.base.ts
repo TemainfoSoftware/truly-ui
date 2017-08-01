@@ -91,7 +91,10 @@ export class ComponentDefaultBase {
             }
             switch ( event.keyCode ) {
                 case KeyEvent.ENTER:
-                    this.nextFocus();
+                    setTimeout( () => {
+                        event.stopPropagation();
+                        this.nextFocus();
+                    }, 2 );
                     break;
                 case KeyEvent.ARROWDOWN:
                     this.nextFocus();

@@ -73,7 +73,6 @@
         <h5>Height</h5>
         <tl-dropdown-list [data]="data"
                           [height]="25"
-                          [scroll]="6"
                           [text]="'textItem'"
                           [value]="'valueItem'"
                           [(ngModel)]="itemSelected6">
@@ -110,7 +109,7 @@
 <div class="setup">
   <h3 class="title">Properties</h3>
   <div class="table-responsive">
-    <h5 class="title">tl-drop-down-list</h5>
+    <h5 class="title">tl-dropdown-list</h5>
     <table class="table table-bordered">
       <thead>
       <tr>
@@ -204,7 +203,6 @@
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list [data]="data"
                   [height]="25"
-                  [scroll]="6"
                   [text]="'textItem'"
                   [value]="'valueItem'"
                   [(ngModel)]="itemSelected6">
@@ -221,6 +219,16 @@
 <script type="text/javascript">
   this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
 </script>
+  </textarea>
+  </div>
+  <div class="group-component">
+    <h5 class="title">Disabled</h5>
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list [data]="data"
+                  [text]="'textItem'"
+                  [value]="'valueItem'"
+                  [disabled]="true">
+</tl-dropdown-list>
   </textarea>
   </div>
 </div>

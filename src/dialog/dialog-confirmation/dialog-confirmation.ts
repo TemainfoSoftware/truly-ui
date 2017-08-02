@@ -49,13 +49,20 @@ export class TlDialogConfirmation implements AfterViewInit {
     }
 
     onkeyup( $event: KeyboardEvent ) {
-        $event.stopPropagation();
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWLEFT:
                 this.setPreviousButton();
             break;
             case KeyEvent.ARROWRIGHT:
                 this.setNextButton();
+                break;
+            case KeyEvent.TAB:
+                $event.preventDefault();
+                document.activeElement === this.buttonDialogOk.buttonElement.nativeElement
+                    ? this.setNextButton() : this.setPreviousButton();
+                break;
+            case KeyEvent.ESCAPE:
+                this.buttonDialogCancel.dispatchCallback();
                 break;
         }
     }

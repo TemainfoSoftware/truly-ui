@@ -19,27 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ViewChild } from '@angular/core'
-import { DialogDefaultBehavior } from '../dialog-default-behavior';
 
-@Component({
-    selector: 'tl-dialog-info',
-    templateUrl: './dialog-info.html',
-    styleUrls: ['../dialog.scss']
-})
-export class TlDialogInfo extends DialogDefaultBehavior implements AfterViewInit {
-    title = '';
-    message = '';
-    textOk = 'OK';
+import { KeyEvent } from '../core/enums/key-events';
 
-    @ViewChild('button') button;
+export class DialogDefaultBehavior {
 
-    constructor() {
-        super();
-    }
+    public buttonAction;
 
-    ngAfterViewInit() {
-        this.buttonAction = this.button;
+    constructor() {}
+
+    onKeyDown( $event: KeyboardEvent ) {
+        $event.stopPropagation();
+        switch ( $event.keyCode ) {
+            case KeyEvent.TAB:
+                $event.preventDefault();
+                break;
+            case KeyEvent.ESCAPE:
+                this.buttonAction.dispatchCallback();
+                break;
+        }
     }
 }
-

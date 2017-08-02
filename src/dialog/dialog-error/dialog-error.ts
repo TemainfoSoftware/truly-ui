@@ -19,8 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, HostBinding, Input } from '@angular/core'
+import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core'
 import { animate, style, transition, trigger } from '@angular/animations';
+import { DialogDefaultBehavior } from '../dialog-default-behavior';
 
 @Component({
     selector: 'tl-dialog-error',
@@ -41,16 +42,27 @@ import { animate, style, transition, trigger } from '@angular/animations';
         )
     ]
 })
-export class TlDialogError {
-    @HostBinding( '@enterAnimation' ) public animation;
+export class TlDialogError extends DialogDefaultBehavior implements AfterViewInit {
 
     message = '';
+
     textOk = 'Ok';
 
+    @ViewChild('button') button;
+
+    @HostBinding( '@enterAnimation' ) public animation;
+
     private errorlog: boolean;
+
+    constructor() {
+        super();
+    }
+
+    ngAfterViewInit() {
+        this.buttonAction = this.button;
+    }
 
     open(value) {
         this.errorlog = !value;
     }
-
 }

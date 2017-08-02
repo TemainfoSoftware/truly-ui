@@ -19,15 +19,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input } from '@angular/core'
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core'
+import { DialogDefaultBehavior } from '../dialog-default-behavior';
 
 @Component({
     selector: 'tl-dialog-alert',
     templateUrl: './dialog-alert.html',
     styleUrls: ['../dialog.scss']
 })
-export class TlDialogAlert {
+export class TlDialogAlert extends DialogDefaultBehavior implements AfterViewInit {
 
-    @Input() private message = '';
-    @Input() private textClose = 'Close';
+    @ViewChild('button') button;
+
+    message = '';
+
+    textClose = 'Close';
+
+    constructor() {
+        super();
+    }
+
+    ngAfterViewInit() {
+        this.buttonAction = this.button;
+    }
 }

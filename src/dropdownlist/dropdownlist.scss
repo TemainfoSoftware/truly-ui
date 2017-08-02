@@ -11,12 +11,9 @@ $active-background-color: #d8d8d8;
 $font-size: 0.9em;
 $button-font-family: 'Segoe UI', sans-serif;
 
-.tl-dropdown-list {
+.tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
-  cursor: pointer;
-  outline: none;
-  //Label
   > .labeltext {
     line-height: 1;
     width: 100px;
@@ -25,7 +22,10 @@ $button-font-family: 'Segoe UI', sans-serif;
     color: #737373;
     font-weight: normal;
     font-family: 'Lato', sans-serif;
-    font-size: $font-size;
+    font-size: 0.9em;
+    > b.required {
+      color: #FF6666;
+    }
   }
   > .labeltext.-labeltop {
     text-align: left;
@@ -37,58 +37,60 @@ $button-font-family: 'Segoe UI', sans-serif;
     padding: 5px 5px 5px 0;
     display: table-cell;
   }
-  > .dropdown-list-wrapper {
+  > .wrapper {
     width: 125px;
     position: relative;
-    float: right;
-    > .dropdown-list-container {
-      background-color: $background-color;
-      outline: none;
-      height: $button-height;
+    > .select {
+      cursor: pointer;
+      display: table-cell;
       border: $border-default;
-      > input{
-        font-family: $button-font-family;
-        font-size: $font-size;
-        height: $button-height - 2;
-        line-height: $button-height - 2;
-        background-color: transparent;
-        border: 0;
-        margin: 0;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        padding: 0;
-        padding-left: 10px;
-        padding-right: 30px;
-        color: $color;
-        user-select: none;
-        cursor: pointer;
-      }
-      > .dropdown-list-icon {
-        height: $button-height;
-        line-height: $button-height;
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      > .dropdown-list-icon i {
-        font-size: .9em;
-        color: $icon-color;
-      }
+      height: $button-height;
+      background: $background-color;
+      font-size: $font-size;
+      width: 100%;
+      color: transparent;
+      text-shadow: 0 0 0 $color;
+      font-family: $button-font-family;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+      padding: 0;
+      padding-left: 10px;
+      padding-right: 30px;
+      height: $button-height - 2;
+      line-height: $button-height - 2;
     }
-    > .dropdown-list-container:hover {
+    > .select:hover {
       background-color: $hover-background-color;
     }
-    > .dropdown-list-container:active {
+    > .select:active {
       background-color: $active-background-color;
     }
-    > .dropdown-list-wrapper-select{
+    > .select:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+      outline-color: -webkit-focus-ring-color;
+      outline-style: auto;
+    }
+    > .dropdown-list-icon {
+      height: $button-height;
+      line-height: $button-height;
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+    > .dropdown-list-icon i {
+      font-size: .9em;
+      color: $icon-color;
+    }
+    > .dropdown-list-wrapper-select {
       position: absolute;
       left: 0;
       width: 100%;
       outline: none;
       padding: 0;
       margin: 0;
+      cursor: pointer;
       > .dropdown-list-select {
         color: $color;
         background-color: $background-color;
@@ -114,13 +116,13 @@ $button-font-family: 'Segoe UI', sans-serif;
           background-color: $active-background-color;
         }
       }
-      >.dropdown-list-select::-webkit-scrollbar {
+      > .dropdown-list-select::-webkit-scrollbar {
         width: 0.4em;
       }
-      >.dropdown-list-select::-webkit-scrollbar-thumb {
+      > .dropdown-list-select::-webkit-scrollbar-thumb {
         background-color: #cccccc;
       }
-      >.-placeholder {
+      > .-placeholder {
         z-index: 123123;
         font-family: $button-font-family;
         font-size: $font-size;
@@ -138,18 +140,15 @@ $button-font-family: 'Segoe UI', sans-serif;
         background-color: #53C68C;
       }
     }
+    > .disabled {
+      opacity: 0.35;
+      filter: Alpha(Opacity=35);
+      background-image: none;
+      cursor: default !important;
+    }
   }
-  >.dropdown-list-wrapper:focus{
-    outline: -webkit-focus-ring-color auto 5px;
-    outline-color: -webkit-focus-ring-color;
-    outline-style: auto;
-  }
+
 }
-.disabled{
-  opacity: 0.35;
-  filter: Alpha(Opacity=35);
-  background-image: none;
-  color: #000;
-  cursor: default !important;
-}
+
+
 

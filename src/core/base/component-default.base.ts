@@ -169,11 +169,13 @@ export class ComponentDefaultBase {
 
 
     isPreviousTabIndex( listFormComponents, childFormComponents ) {
-        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === this.tabindex - 1 && this.direction === 'previous';
+        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex ===
+            this.tabindex - 1 && this.direction === 'previous';
     }
 
     isNextTabIndex( listFormComponents, childFormComponents ) {
-        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex === this.tabindex + 1 && this.direction === 'next';
+        return (listFormComponents[ childFormComponents ] as HTMLElement).tabIndex ===
+            this.tabindex + 1 && this.direction === 'next';
     }
 
     isElementDisabled( listFormComponents, childFormComponents ) {

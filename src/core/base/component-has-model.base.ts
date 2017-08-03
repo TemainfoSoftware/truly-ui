@@ -51,8 +51,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * ViewChild of ngModel input.
      */
-    @ViewChild( 'model' ) public inputModel;
-
+    @ViewChild( 'model' ) public componentModel;
 
     /**
      * Output of Event on Blur element.

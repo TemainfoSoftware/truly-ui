@@ -24,7 +24,7 @@ import {
     Component, forwardRef, Input, Renderer2, ViewChild
 } from '@angular/core';
 
-import { style, transition, trigger, animate } from '@angular/animations';
+import { style, transition, trigger, animate, state } from '@angular/animations';
 
 import { KeyEvent } from '../core/enums/key-events';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
@@ -42,14 +42,10 @@ let globalZindex = 1;
     animations : [
         trigger(
             'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity : 0, transform : 'translate(0%,-5%)' } ),
-                    animate( '200ms', style( { opacity : 1, transform : 'translate(0%,0%)' } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity : 1, transform : 'translate(0%,0%)' } ),
-                    animate( '200ms', style( { opacity : 0, transform : 'translate(0%,-5%)' } ) )
-                ] )
+                state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
+                state( 'false', style( { opacity : 0, transform : 'translate(0%,-5%)', flex : '0' } ) ),
+                transition( '1 => 0', animate( '200ms' ) ),
+                transition( '0 => 1', animate( '200ms' ) ),
             ]
         )
     ],
@@ -57,6 +53,7 @@ let globalZindex = 1;
         { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlDropDownList ), multi : true }
     ]
 } )
+
 export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
 
     @Input( 'data' ) data: Array<any>;
@@ -117,7 +114,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         } );
         setTimeout( () => {
             if ( this.componentModel.model ) {
-               this.selectValueModelLoaded();
+                this.selectValueModelLoaded();
                 this.selectItemListLoaded();
             }
         }, 1 );
@@ -133,8 +130,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     selectItemListLoaded() {
-        for (let i = 0; i < this.list.nativeElement.children.length; i++) {
-            if ( this.dropdown.nativeElement.value === this.list.nativeElement.children[i].innerHTML.trim()) {
+        for ( let i = 0; i < this.list.nativeElement.children.length; i++ ) {
+            if ( this.dropdown.nativeElement.value === this.list.nativeElement.children[ i ].innerHTML.trim() ) {
                 this.children = i;
             }
         }
@@ -287,7 +284,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                     this.clearModelComponent();
                 }
                 this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
-                this.setModelComponent(this.itemSelected[ this.value ] );
+                this.setModelComponent( this.itemSelected[ this.value ] );
             }
 
         } );
@@ -324,7 +321,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
         this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
 
-        this.setModelComponent(this.itemSelected[ this.value ]);
+        this.setModelComponent( this.itemSelected[ this.value ] );
     }
 
     onArrowDown() {
@@ -380,7 +377,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.itemSelected = item;
         this.children = index;
         this.dropdown.nativeElement.value = item[ this.text ];
-        this.setModelComponent(item[ this.value ]);
+        this.setModelComponent( item[ this.value ] );
         this.dropdown.nativeElement.focus();
     }
 
@@ -395,7 +392,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.children = -1;
     }
 
-    setModelComponent(value) {
+    setModelComponent( value ) {
         this.onChangeCallback( value );
         this.componentModel.model = value;
     }

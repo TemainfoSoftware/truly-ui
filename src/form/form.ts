@@ -76,15 +76,16 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.setInitialFocus();
         this.setTabIndexButtons();
         this.verifyInputValidation();
-        this.buttonFormOkListener = this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click',
-            ( $event: KeyboardEvent ) => {
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
+            $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
         } );
-        this.buttonFormCancelListener = this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click',
-            ( $event: KeyboardEvent ) => {
+        this.renderer.listen(this.buttonFormOk.buttonElement.nativeElement, 'keyup', ($event: KeyboardEvent) => {
+            $event.stopPropagation();
             this.getInputValues();
-        } );
+            this.getDropdownListValues();
+        });
     }
 
     handleKeysForm( $event: KeyboardEvent ) {
@@ -157,7 +158,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     inputHasChanged() {
         let inputDirty = false;
         this.inputList.toArray().forEach( ( value ) => {
-            if ( value.inputModel.dirty ) {
+            if ( value.componentModel.dirty ) {
                 inputDirty = true;
             }
         } );
@@ -193,16 +194,15 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getInputValues() {
         this.inputList.forEach( ( item, index, array ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.inputModel.model;
+            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
-
     }
 
     verifyInputValidation() {
         this.validForm = true;
         this.inputList.forEach( ( item, index, array ) => {
             setTimeout( () => {
-                if ( item.inputModel.valid === false ) {
+                if ( item.componentModel.valid === false ) {
                     this.validForm = false;
                 }
             }, 0 );
@@ -228,8 +228,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        this.buttonFormOkListener();
-        this.buttonFormCancelListener();
+
     }
 }
 

@@ -1,70 +1,73 @@
 @import "../core/core";
 
 //Default
-$button-height: 39px;
-$border-default: 1px solid #C8C8C8;
-$background-color: #E8E8E8;
-$color: #616161;
-$icon-color: #6A6A6A;
-$hover-background-color: #dedede;
-$active-background-color: #d8d8d8;
-$font-size: 0.9em;
-$button-font-family: 'Segoe UI', sans-serif;
+$default-backgroundColor: #E8E8E8;
+$default-backgroundHoverColor: #dedede;
+$default-backgroundActiveColor: #d8d8d8;
+$default-backgroundFocusColor: #53C68C;
+$default-color: #616161;
+$default-focusColor: #FFFFFF;
+$default-fontSize: 0.9em;
+$default-fontFamily: 'Segoe UI', sans-serif;
+$default-height: 39px;
+$default-border: 1px solid #C8C8C8;
+$default-cursorHover: pointer;
+$default-cursor: default;
+$default-iconColor: #6A6A6A;
+$default-outline: none;
 
 .tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
   > .labeltext {
+    font-family: $default-fontFamily;
+    font-size: $default-fontSize;
+    color: #737373;
+    font-weight: normal;
     line-height: 1;
     width: 100px;
     white-space: nowrap;
     vertical-align: middle;
-    color: #737373;
-    font-weight: normal;
-    font-family: 'Lato', sans-serif;
-    font-size: 0.9em;
     > b.required {
       color: #FF6666;
     }
   }
   > .labeltext.-labeltop {
+    display: table-caption;
     text-align: left;
     padding: 0 0 5px 0;
-    display: table-caption;
   }
   > .labeltext.-labelleft {
+    display: table-cell;
     text-align: right;
     padding: 5px 5px 5px 0;
-    display: table-cell;
   }
   > .wrapper {
-    width: 125px;
     position: relative;
+    width: 125px;
     > .select {
-      cursor: pointer;
-      display: table-cell;
-      border: $border-default;
-      height: $button-height;
-      background: $background-color;
-      font-size: $font-size;
-      width: 100%;
-      color: transparent;
-      text-shadow: 0 0 0 $color;
-      font-family: $button-font-family;
-      margin: 0;
       position: relative;
+      display: table-cell;
       overflow: hidden;
+      background: $default-backgroundColor;
+      font-family: $default-fontFamily;
+      font-size: $default-fontSize;
+      color: $default-color;
+      line-height: $default-height - 2;
+      cursor: $default-cursorHover;
+      border: $default-border;
+      width: 100%;
+      margin: 0;
       padding: 0;
       padding-left: 10px;
-      padding-right: 30px;
-      height: $button-height - 2;
-      line-height: $button-height - 2;
+      padding-right: 28px;
+      user-select: none;
     }
     > .select:hover {
-      background-color: $hover-background-color;
+      background-color: $default-backgroundHoverColor;
     }
     > .select:active {
-      background-color: $active-background-color;
+      background-color: $default-backgroundActiveColor;
     }
     > .select:focus {
       outline: -webkit-focus-ring-color auto 5px;
@@ -72,82 +75,79 @@ $button-font-family: 'Segoe UI', sans-serif;
       outline-style: auto;
     }
     > .dropdown-list-icon {
-      height: $button-height;
-      line-height: $button-height;
       position: absolute;
+      height: $default-height;
+      line-height: $default-height;
+      cursor: $default-cursorHover;
       top: 0;
       right: 0;
-      cursor: pointer;
     }
     > .dropdown-list-icon i {
-      font-size: .9em;
-      color: $icon-color;
+      font-size: $default-fontSize;
+      color: $default-iconColor;
     }
     > .dropdown-list-wrapper-select {
       position: absolute;
+      outline: $default-outline;
+      cursor: $default-cursorHover;
       left: 0;
-      width: 100%;
-      outline: none;
       padding: 0;
       margin: 0;
-      cursor: pointer;
+      width: 100%;
       > .dropdown-list-select {
-        color: $color;
-        background-color: $background-color;
-        border: $border-default;
+        background-color: $default-backgroundColor;
+        border: $default-border;
+        color: $default-color;
         border-top: 0;
-        list-style: none;
         padding: 0;
         margin: 0;
+        list-style: none;
         > li {
-          font-family: $button-font-family;
-          outline: none;
+          font-family: $default-fontFamily;
+          outline: $default-outline;
           padding: 0 10px;
         }
         > li:hover {
-          background-color: $hover-background-color;
+          background-color: $default-backgroundHoverColor;
         }
         > li:focus {
-          background-color: #53C68C;
-          color: #FFF;
+          background-color: $default-backgroundFocusColor;
+          color: $default-focusColor;
         }
         > li:active {
-          color: $color;
-          background-color: $active-background-color;
+          background-color: $default-backgroundActiveColor;
+          color: $default-color;
         }
       }
       > .dropdown-list-select::-webkit-scrollbar {
         width: 0.4em;
       }
       > .dropdown-list-select::-webkit-scrollbar-thumb {
-        background-color: #cccccc;
+        background-color: #CCCCCC;
       }
       > .-placeholder {
-        z-index: 123123;
-        font-family: $button-font-family;
-        font-size: $font-size;
-        cursor: default;
-        background-color: $background-color;
-        border: $border-default;
+        font-family: $default-fontFamily;
+        font-size: $default-fontSize;
+        color: $default-color;
+        background-color: $default-backgroundColor;
+        cursor: $default-cursor;
+        outline: $default-outline;
+        border: $default-border;
         border-bottom: 0;
         border-top: 0;
-        outline: none;
         padding: 0 10px;
-        color: $color;
       }
       .-placeholder:focus {
-        color: #FFF;
-        background-color: #53C68C;
+        background-color: $default-backgroundFocusColor;
+        color: $default-focusColor;
       }
     }
-    > .disabled {
-      opacity: 0.35;
-      filter: Alpha(Opacity=35);
-      background-image: none;
-      cursor: default !important;
+    > .disabled::placeholder, .disabled {
+      opacity: 0.45;
+      color: #000000;
+      cursor: $default-cursor;
     }
   }
-
 }
 
 

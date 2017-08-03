@@ -1,11 +1,8 @@
 <div class="tl-dropdown-list-box">
-
     <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
         <b *ngIf="required" class="required">*</b>
     </label>
-
     <div class="wrapper">
-
         <input #dropdown
                class="select"
                attr.tabindex="{{ tabindex }}"
@@ -18,24 +15,21 @@
                (click)="changeShowStatus($event.stopPropagation())"
                [ngClass]="{' disabled ': disabled}"
                (keydown)="onListClosed($event)">
-
         <div class="dropdown-list-icon"
              (click)="changeShowStatus($event.stopPropagation())"
              [ngStyle]="{'height' : height + 'px', 'line-height' : height +  'px'}"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down"></i>
         </div>
-
-        <div class="dropdown-list-wrapper-select" *ngIf="!disabled" [style.zIndex]="zIndex" [@enterAnimation]>
-
+        <div class="dropdown-list-wrapper-select" *ngIf="!disabled && showHide" [style.zIndex]="zIndex" [@enterAnimation]>
             <div class="-placeholder"
                  *ngIf="placeholder && showHide"
                  #defaultPlaceholder
+                 [style.zIndex]="zIndex"
                  [ngStyle]="{'line-height' : height + 'px'}"
                  (keydown)="placeholderEnter($event)"
                  (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}
             </div>
-
             <ul class="dropdown-list-select"
                 (keydown)="onListOpened($event)"
                 #list
@@ -48,9 +42,6 @@
                     {{ item[text] }}
                 </li>
             </ul>
-
         </div>
-
     </div>
-
 </div>

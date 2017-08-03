@@ -85,8 +85,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @ViewChild( 'dropdown' ) dropdown;
 
-    @ViewChild( 'model' ) componentModel;
-
     public zIndex = 0;
 
     private showHide: boolean;
@@ -263,10 +261,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
                 this.itemSelected = value;
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-                    this.onChangeCallback( '' );
+                    this.clearModelComponent();
                 }
                 this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
-                this.onChangeCallback( this.itemSelected[ this.value ] );
+                this.setModelComponent(this.itemSelected[ this.value ] );
             }
 
         } );
@@ -299,10 +297,11 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
         this.itemSelected = this.datasource[ this.children ];
         if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-            this.onChangeCallback( '' );
+            this.clearModelComponent();
         }
         this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
-        this.onChangeCallback( this.itemSelected[ this.value ] );
+
+        this.setModelComponent(this.itemSelected[ this.value ]);
     }
 
     onArrowDown() {
@@ -316,7 +315,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     onArrowUp() {
         if ( this.placeholder && this.children <= 0 ) {
             this.children = -1;
-            this.onChangeCallback( '' );
+            this.clearModelComponent();
             this.itemSelected = null;
             if ( this.showHide ) {
                 this.placeholderDiv.nativeElement.focus();
@@ -358,18 +357,29 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.itemSelected = item;
         this.children = index;
         this.dropdown.nativeElement.value = item[ this.text ];
-        this.onChangeCallback( item[ this.value ] );
+        this.setModelComponent(item[ this.value ]);
         this.dropdown.nativeElement.focus();
     }
 
     selectPlaceholder() {
         this.showHide = false;
         this.dropdown.nativeElement.value = this.placeholder;
-        this.onChangeCallback( '' );
+        this.clearModelComponent();
+
         this.placeholderDiv.nativeElement.focus();
         this.itemSelected = null;
         this.setFocusOnDropdown();
         this.children = -1;
+    }
+
+    setModelComponent(value) {
+        this.onChangeCallback( value );
+        this.componentModel.model = value;
+    }
+
+    clearModelComponent() {
+        this.onChangeCallback( '' );
+        this.componentModel.model = '';
     }
 
     getData() {

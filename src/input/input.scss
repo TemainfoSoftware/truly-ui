@@ -121,8 +121,11 @@ $success-background-color: #E3F5EC;
     cursor: not-allowed;
   }
   > .field.-disabled {
-    background-color: $background-gray;
-    color: #9d9d9d;
+    opacity: 0.35;
+    filter: Alpha(Opacity=35);
+    cursor: default !important;
+    background-color: #E8E8E8;
+    color: #000000;
   }
   > .field.-readonly {
     background-color: $background-gray;

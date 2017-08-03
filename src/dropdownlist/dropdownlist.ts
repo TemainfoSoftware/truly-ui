@@ -115,6 +115,29 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this._renderer.listen( document, 'click', ( event ) => {
             this.showHide = false;
         } );
+        setTimeout( () => {
+            if ( this.componentModel.model ) {
+               this.selectValueModelLoaded();
+                this.selectItemListLoaded();
+            }
+        }, 1 );
+    }
+
+    selectValueModelLoaded() {
+        this.datasource.forEach( ( item, index, array ) => {
+            if ( this.componentModel.model === item[ this.value ] ) {
+                this.dropdown.nativeElement.value = item[ this.text ];
+                this.itemSelected = item;
+            }
+        } );
+    }
+
+    selectItemListLoaded() {
+        for (let i = 0; i < this.list.nativeElement.children.length; i++) {
+            if ( this.dropdown.nativeElement.value === this.list.nativeElement.children[i].innerHTML.trim()) {
+                this.children = i;
+            }
+        }
     }
 
     updateDataSource( data ) {

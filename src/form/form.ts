@@ -44,6 +44,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @Input() showConfirmOnChange = false;
 
+    @Input() messageDialogConfirmation = 'Are you sure ?';
+
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
@@ -59,10 +61,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     private formResult = {};
 
     private validForm = true;
-
-    private buttonFormOkListener;
-
-    private buttonFormCancelListener;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private tabService: TabIndexService ) {}
@@ -182,7 +180,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         if ( !this.dialogOpen ) {
             this.dialogOpen = true;
             this.dialogService.modalService.setBackdropModalOverModal();
-            this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
+            this.dialogService.confirmation( this.messageDialogConfirmation, ( callback ) => {
                 if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
@@ -193,14 +191,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     getInputValues() {
-        this.inputList.forEach( ( item, index, array ) => {
+        this.inputList.forEach( ( item ) => {
             this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
     }
 
     verifyInputValidation() {
         this.validForm = true;
-        this.inputList.forEach( ( item, index, array ) => {
+        this.inputList.forEach( ( item ) => {
             setTimeout( () => {
                 if ( item.componentModel.valid === false ) {
                     this.validForm = false;
@@ -212,8 +210,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     getDropdownListValues() {
-         this.dropdownList.forEach( ( item, index, array ) => {
-            this.formResult[ 'genero' ] = item.componentModel.model;
+        this.dropdownList.forEach( ( item ) => {
+            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
     }
 

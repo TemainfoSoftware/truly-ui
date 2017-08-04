@@ -72,6 +72,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'height' ) height: number;
 
+    @Input( 'width' ) width: number;
+
     @Input( 'placeholder' ) placeholder = null;
 
     @Input( 'scroll' ) scroll: number;
@@ -98,17 +100,20 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
         this.showHide = false;
-        this.height = 39;
+        this.width = 83;
+        this.height = 37;
         this.text = 'text';
         this.value = 'value';
         this.disabled = null;
         this.scroll = null;
     }
 
+
     ngAfterViewInit() {
         this.setElement( this.dropdown, 'dropdown' );
         this.setTabIndex( this.dropdown );
         this.updateDataSource( this.getData() );
+
         this._renderer.listen( document, 'click', ( event ) => {
             this.showHide = false;
         } );
@@ -118,6 +123,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 this.selectItemListLoaded();
             }
         }, 1 );
+    }
+
+    checkWidth( width ) {
+        if ( typeof width !== 'number' || width === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC VALUE to width property of the dropdownlist element.' );
+        }
     }
 
     selectValueModelLoaded() {
@@ -145,6 +156,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     calcHeightItem() {
         if ( this.showHide && !this.disabled ) {
+
             if ( (!this.scroll) ) {
                 if ( (this.datasource.length > 10) ) {
                     return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };

@@ -26,6 +26,8 @@ export class DropDownListDemo {
 
   public itemSelected7: any;
 
+  public itemSelected8: any;
+
   public data: any[];
 
   public bigData: any[];

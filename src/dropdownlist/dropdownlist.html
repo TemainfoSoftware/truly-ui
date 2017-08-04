@@ -10,14 +10,14 @@
                #model="ngModel"
                readonly
                [(ngModel)]="ngValue"
-               [ngStyle]="{'height' : height + 'px'}"
+               [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', 'width': width + 'px'}"
                [attr.disabled]="disabled ? true : null"
                (click)="changeShowStatus($event.stopPropagation())"
                [ngClass]="{' disabled ': disabled}"
                (keydown)="onListClosed($event)">
         <div class="dropdown-list-icon"
              (click)="changeShowStatus($event.stopPropagation())"
-             [ngStyle]="{'height' : height + 'px', 'line-height' : height +  'px'}"
+             [ngStyle]="{'height' : (height) + 'px', 'line-height' : (height) + 'px'}"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down"></i>
         </div>

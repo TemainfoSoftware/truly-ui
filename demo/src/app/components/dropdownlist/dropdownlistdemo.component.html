@@ -37,7 +37,7 @@
                           [text]="'textItem'"
                           [value]="'valueItem'"
                           [(ngModel)]="itemSelected3"
-                          [scroll]="'3'">
+                          [scroll]="3">
         </tl-dropdown-list>
         <span class="returned-value">Returned Value: {{ itemSelected3 }}</span>
       </div>
@@ -72,6 +72,7 @@
       <div class="group-component">
         <h5>Height</h5>
         <tl-dropdown-list [data]="data"
+                          [placeholder]="'Select item'"
                           [height]="25"
                           [text]="'textItem'"
                           [value]="'valueItem'"
@@ -84,11 +85,24 @@
   <div class="row">
     <div class="col-md-4">
       <div class="group-component">
-        <h5>Simple Data</h5>
-        <tl-dropdown-list [data]="simpleData"
+        <h5>Width</h5>
+        <tl-dropdown-list [data]="data"
+                          [placeholder]="'Select item'"
+                          [width]="120"
+                          [text]="'textItem'"
+                          [value]="'valueItem'"
                           [(ngModel)]="itemSelected7">
         </tl-dropdown-list>
         <span class="returned-value">Returned Value: {{ itemSelected7 }}</span>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="group-component">
+        <h5>Simple Data</h5>
+        <tl-dropdown-list [data]="simpleData"
+                          [(ngModel)]="itemSelected8">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected8 }}</span>
       </div>
     </div>
     <div class="col-md-4">

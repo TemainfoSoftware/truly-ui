@@ -19,6 +19,7 @@ $default-outline: none;
 .tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
+  box-sizing: unset;
   > .labeltext {
     font-family: $default-fontFamily;
     font-size: $default-fontSize;
@@ -43,24 +44,25 @@ $default-outline: none;
     padding: 5px 5px 5px 0;
   }
   > .wrapper {
+    box-sizing: unset;
     position: relative;
-    width: 125px;
+    display: table;
+    margin: 0;
+    padding: 0;
     > .select {
-      position: relative;
-      display: table-cell;
+      box-sizing: unset;
       overflow: hidden;
       background: $default-backgroundColor;
       font-family: $default-fontFamily;
       font-size: $default-fontSize;
       color: $default-color;
-      line-height: $default-height - 2;
       cursor: $default-cursorHover;
       border: $default-border;
-      width: 100%;
       margin: 0;
       padding: 0;
       padding-left: 10px;
-      padding-right: 28px;
+      padding-right: 30px;
+      vertical-align: middle;
       user-select: none;
     }
     > .select:hover {
@@ -75,10 +77,11 @@ $default-outline: none;
       outline-style: auto;
     }
     > .dropdown-list-icon {
+      box-sizing: unset;
       position: absolute;
-      height: $default-height;
-      line-height: $default-height;
+      display: table-cell;
       cursor: $default-cursorHover;
+      line-height: $default-height - 2;
       top: 0;
       right: 0;
     }
@@ -104,6 +107,8 @@ $default-outline: none;
         list-style: none;
         > li {
           font-family: $default-fontFamily;
+          font-size: $default-fontSize;
+          color: $default-color;
           outline: $default-outline;
           padding: 0 10px;
         }
@@ -126,6 +131,7 @@ $default-outline: none;
         background-color: #CCCCCC;
       }
       > .-placeholder {
+        box-sizing: unset;
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         color: $default-color;
@@ -149,6 +155,3 @@ $default-outline: none;
     }
   }
 }
-
-
-

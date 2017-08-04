@@ -154,6 +154,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private onFocusOut() {
         if ( !this.isTextLengthMatchWithExpressionLength() ) {
             this.value = '';
+            this.tlinput.toArray()[ 0 ].ngValue = '';
             this.updateModel();
             this.onComplete();
         }
@@ -405,7 +406,12 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     private onComplete() {
-        this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = this.isTextLengthMatchWithExpressionLength();
+        if (this.tlinput.toArray()[ 0 ].validations['required']) {
+            this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = !this.isTextLengthMatchWithExpressionLength();
+        }
+        if ( this.isTextLengthMatchWithExpressionLength() ) {
+            this.tlinput.toArray()[ 0 ].writeValue( this.value );
+        }
     }
 
     private isTextLengthMatchWithExpressionLength() {

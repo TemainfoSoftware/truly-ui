@@ -66,7 +66,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'disabled' ) disabled: boolean;
 
-    @Input( 'labelPlacement' ) labelPlacement = 'left';
+    @Input( 'labelPlacement' ) labelPlacement: string;
 
     @Input( 'labelSize' ) labelSize: string;
 
@@ -74,7 +74,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'width' ) width: number;
 
-    @Input( 'placeholder' ) placeholder = null;
+    @Input( 'placeholder' ) placeholder: string;
 
     @Input( 'scroll' ) scroll: number;
 
@@ -103,8 +103,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.width = 83;
         this.height = 37;
         this.text = 'text';
+        this.labelPlacement = 'left';
         this.value = 'value';
         this.disabled = null;
+        this.placeholder = null;
         this.scroll = null;
     }
 
@@ -113,7 +115,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.setElement( this.dropdown, 'dropdown' );
         this.setTabIndex( this.dropdown );
         this.updateDataSource( this.getData() );
-
+        this.isNumberWidth( this.width );
+        this.isNumberScroll( this.scroll );
+        this.isBooleanDisabled( this.disabled );
+        this.isStringPlaceholder( this.placeholder );
         this._renderer.listen( document, 'click', ( event ) => {
             this.showHide = false;
         } );
@@ -125,11 +130,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }, 1 );
     }
 
-    checkWidth( width ) {
-        if ( typeof width !== 'number' || width === undefined ) {
-            throw new EvalError( 'You must pass a NUMERIC VALUE to width property of the dropdownlist element.' );
-        }
-    }
 
     selectValueModelLoaded() {
         this.datasource.forEach( ( item, index, array ) => {
@@ -149,14 +149,20 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     updateDataSource( data ) {
+
         data.forEach( ( value, index, array ) => {
+            Object.keys( value ).forEach( ( value2, index2, array2 ) => {
+                if ( (value2 !== this.text) && (value2 !== this.value) ) {
+                    throw new EvalError( 'You must pass a valid value to TEXT/VALUE properties.' );
+                }
+            } );
             this.datasource.push( value );
         } );
     }
 
     calcHeightItem() {
+        this.isNumberHeight( this.height );
         if ( this.showHide && !this.disabled ) {
-
             if ( (!this.scroll) ) {
                 if ( (this.datasource.length > 10) ) {
                     return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
@@ -171,6 +177,37 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             }
         }
     }
+
+    isNumberHeight( value ) {
+        if ( typeof value !== 'number' || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC VALUE to HEIGHT property of the tl-dropdown-list element.' );
+        }
+        return value;
+    }
+
+    isNumberWidth( value ) {
+        if ( typeof value !== 'number' || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC value to WIDTH property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isNumberScroll( value ) {
+        if ( ( typeof value !== 'number' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC value to SCROLL property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isBooleanDisabled( value ) {
+        if ( ( typeof value !== 'boolean' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a BOOLEAN value to DISABLED property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isStringPlaceholder( value ) {
+        if ( ( typeof value !== 'string' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a STRING value to PLACEHOLDER property of the tl-dropdown-list element.' );
+        }
+    };
 
     onListOpened( $event ) {
         switch ( $event.keyCode ) {
@@ -415,9 +452,19 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     getData() {
-        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined )
-            || (typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) ) {
-            throw new EvalError( 'You must pass some data to the data property of the dropdownlist element.' );
+        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined ) ) {
+            throw new EvalError( 'You must pass some data to the DATA property of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && (this.text === 'text' || this.value === 'value') ) {
+            throw new EvalError( 'You must pass the TEXT and VALUE properties' +
+                ' when using the DATA property of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
+            throw new EvalError( 'You must pass the TEXT and VALUE values to STRING of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) {
+            throw new EvalError( 'You don`t need to enter the TEXT and VALUE' +
+                ' properties when using the SIMPLEDATA property of the tl-dropdown-list element.' );
         }
         if ( typeof this.data[ 0 ] === 'string' ) {
             const simpleData = [];

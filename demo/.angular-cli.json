@@ -26,7 +26,7 @@
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
-        "./assets/js/demo.min.js"
+        "./assets/js/demo.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

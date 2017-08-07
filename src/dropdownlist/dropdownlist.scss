@@ -15,6 +15,11 @@ $default-cursorHover: pointer;
 $default-cursor: default;
 $default-iconColor: #6A6A6A;
 $default-outline: none;
+$error-field: #FF6666;
+$error-placeholder: #FFB9B9;
+$error-background-color: #FFF1F1;
+$success-field: #66CC99;
+$success-background-color: #E3F5EC;
 
 .tl-dropdown-list-box {
   display: table;
@@ -76,6 +81,18 @@ $default-outline: none;
       outline-color: -webkit-focus-ring-color;
       outline-style: auto;
     }
+
+    > .select.-hasValidation.ng-touched.ng-invalid {
+      border: 1px solid $error-field;
+      background-color: $error-background-color;
+      //outline: none;
+    }
+
+    > .select.-hasValidation.ng-valid.ng-touched {
+      border: 1px solid $success-field;
+      background-color: $success-background-color;
+      //outline: none;
+    }
     > .dropdown-list-icon {
       box-sizing: unset;
       position: absolute;
@@ -88,6 +105,7 @@ $default-outline: none;
     > .dropdown-list-icon i {
       font-size: $default-fontSize;
       color: $default-iconColor;
+      padding: 0 9.3px;
     }
     > .dropdown-list-wrapper-select {
       position: absolute;

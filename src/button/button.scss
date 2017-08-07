@@ -7,7 +7,7 @@ $button-icon-padding: 15px;
 $button-icon-color: #6A6A6A;
 $button-addon-padding: 0 7px;
 $button-display: inline-block;
-$button-font-size: 15px;
+$button-font-size: 0.9em;
 $button-font-family: 'Segoe UI', sans-serif;
 $button-text-align: center;
 
@@ -59,8 +59,7 @@ $button-text-align: center;
   background-color: #d8d8d8;
 }
 .disabled{
-  opacity: 0.35;
-  filter: Alpha(Opacity=35);
-  background-image: none;
+  opacity: 0.45;
+  color: #000000;
   cursor: default;
 }

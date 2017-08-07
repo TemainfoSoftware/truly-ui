@@ -1,100 +1,15 @@
-i {
-  color: #454545;
-  font-size: 1em;
-  padding: 10px;
+/** BUTTON - CUSTOM STYLE **/
+.router-outlet {
+  padding: 20px;
+}
+
+.group-component {
+  padding: 15px;
 }
 
 .returned-value{
   font-size: 12px;
   color: #9d9d9d;
-}
-
-.title {
-  font-family: 'Lato', sans-serif;
-  color: #686a6a;
-  margin: 0;
-  padding-bottom: 10px;
-}
-
-.text-content {
-  font-family: 'Lato', sans-serif;
-  font-size: 1.2em;
-}
-
-.header-truly {
-  border: 0;
-  background: #66CC99;
-  z-index:  0!important;
-  -webkit-box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
-  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
-}
-
-.header-truly a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.container-truly {
-  margin-top: 50px;
-  background: #F9F9FA;
-}
-
-.container-truly .menu-container {
-  padding: 0 !important;
-  height: 100vw;
-}
-
-.container-truly .menu {
-  list-style: none;
-  padding: 0 0 0 0 ;
-  background: #FFF;
-  height: 100vw;
-  -webkit-box-shadow: 1px 1px 10px 1px #D6D6D6;
-  box-shadow: 1px 1px 10px 1px #D6D6D6;
-  margin: 0;
-}
-
-.container-truly .menu li {
-  padding: 10px 10px 10px 15px;
-  border-bottom: dashed 1px #ccc;
-  outline: none;
-  transition: background linear 500ms;
-}
-
-.container-truly .menu li a {
-  text-decoration: none;
-  padding-left: 10px;
-  color: #454545;
-  font-size: 1.1em;
-  font-family: 'Lato', sans-serif;
-}
-
-.container-truly .menu li:hover {
-  cursor: pointer;
-  color: #fff;
-  background: #81D5AB;
-}
-
-.container-truly .menu li:hover i {
-  color: #fff;
-}
-
-.router-outlet {
-  padding: 20px;
-  height: calc(100vh - 70px);
-}
-
-.active {
-  background: #81D5AB;
-  color: #fff;
-}
-
-.active i {
-  color: #fff;
-}
-
-.group-component {
-  padding: 15px;
 }
 
 .header-title-demo {
@@ -105,27 +20,6 @@ i {
   background: #fff;
 }
 
-.git-logo {
-  top: 90vh;
-  padding-left: 10px;
-  opacity: 0.8;
-  position: fixed;
-}
-
-.git-logo:hover {
-  cursor: pointer;
-}
-
-.menu li ul {
-  padding-left: 10px;
-  display: none;
-  list-style: none;
-}
-
-.menu li:hover ul {
-  display: block;
-}
-/** BUTTON - CUSTOM STYLE **/
 .buttonClass1{
   background-color: #81D5AB !important;
   border: 1px solid #6FB793 !important;

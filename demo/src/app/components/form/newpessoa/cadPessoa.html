@@ -1,22 +1,23 @@
-<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true">
+<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true" [messageDialogConfirmation]="'Deseja realmente fechar essa janela ?'">
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.name" [label]="'Name'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.name" [label]="'Name'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [disabled]="true" [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.lastname" [label]="'LastName'"></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="text" [label]="'LastName'"></tl-input>
+        LastName: {{text}}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [disabled]="true" [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'City'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'City'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
@@ -24,10 +25,9 @@
         <tl-dropdown-list
                           [labelSize]="'80'"
                           [height]="25"
-                          [validations]="{required: true}"
                           [labelPlacement]="'left'"
                           [placeholder]="'Select Item'"
-                          [ngModel]="pessoa.genero"
+                          [ngModel]="pessoa?.gender"
                           [data]="data"
                           [label]="'Gender'"
                           [text]="'textItem'"
@@ -44,7 +44,8 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: true }" ></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="bt" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
+        Birthday: {{bt}}
       </div>
     </div>
   </div>

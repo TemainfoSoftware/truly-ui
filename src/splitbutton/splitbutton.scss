@@ -4,7 +4,7 @@
 $button-height: 37px;
 $border-default: 1px solid #C8C8C8;
 $button-font-family: 'Segoe UI', sans-serif;
-$button-font-size: 15px;
+$button-font-size: 0.9em;
 
 .tl-split-button-box{
   font-family: $button-font-family;
@@ -36,9 +36,9 @@ $button-font-size: 15px;
       padding: 0;
       list-style: none;
       background-color: #E8E8E8;
-      min-width: 123px;
+      min-width: 125px;
       border: $border-default;
-      border-top: 0;
+      border-top: 0 !important;
       z-index: 1;
       cursor: auto;
     }
@@ -51,6 +51,7 @@ $button-font-size: 15px;
   }
   > .split-button-actions i{
     color: #6A6A6A;
+    padding: 0 15px;
   }
 }
 

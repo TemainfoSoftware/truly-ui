@@ -64,7 +64,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     private validForm = true;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
-                 private cdr : ChangeDetectorRef,
+                 private cdr: ChangeDetectorRef,
                  private tabService: TabIndexService ) {}
 
     ngOnInit() {}

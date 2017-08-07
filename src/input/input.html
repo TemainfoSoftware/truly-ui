@@ -10,6 +10,10 @@
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
     <input #input #model="ngModel"
+           attr.tabindex="{{tabindex}}"
+           attr.name="{{name}}"
+           class="field"
+           type="text"
            [ngClass]="{
                '-cursorblocked' : readonly || disabled,
                '-disabled': disabled,
@@ -20,13 +24,9 @@
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"
            [placeholder]="placeholder"
-           class="field"
-           type="text"
-           attr.tabindex="{{tabindex}}"
-           attr.name="{{name}}"
-           maxlength="{{validations?.maxLength}}"
-           minlength="{{validations?.minLength}}"
-           required="{{validations?.required}}"
+           [maxlength]="validations.maxLength"
+           [minlength]="validations.minLength"
+           [required]="validations.required"
            [(ngModel)]="modelValue"
            (blur)="onBlur()"
            (focus)="onFocus()"

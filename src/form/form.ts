@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ContentChildren, Input, OnDestroy, OnInit,
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, OnInit,
     QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
@@ -34,6 +34,7 @@ import { TlDropDownList } from '../dropdownlist/dropdownlist';
 @Component( {
     selector: 'tl-form',
     templateUrl: '../form/form.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['../form/form.scss']
 } )
 export class TlForm implements AfterViewInit, OnDestroy, OnInit {
@@ -63,6 +64,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     private validForm = true;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
+                 private cdr : ChangeDetectorRef,
                  private tabService: TabIndexService ) {}
 
     ngOnInit() {}
@@ -199,11 +201,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     verifyInputValidation() {
         this.validForm = true;
         this.inputList.forEach( ( item ) => {
-            setTimeout( () => {
                 if ( item.componentModel.valid === false ) {
                     this.validForm = false;
+                    this.cdr.detectChanges();
                 }
-            }, 0 );
         } );
         return this.validForm;
     }

@@ -142,6 +142,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator ) {}
 
     ngOnInit() {
+        this.backToTop();
         this.setZIndex();
         this.getBoundingContent();
         this.setModalCenterParent();
@@ -353,6 +354,10 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         }
      this.serviceControl.minimize( this.componentRef );
      this.hide.emit();
+    }
+
+    backToTop() {
+        document.body.scrollTop = 0;
     }
 
     closeModal() {

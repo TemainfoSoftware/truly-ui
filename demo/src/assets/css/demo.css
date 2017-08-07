@@ -477,7 +477,7 @@ body {
   padding: 0;
 }
 .sidebar-menu > li > a {
-  padding: 12px 5px 12px 15px;
+  padding: 12px 0 12px 20px;
   display: block;
 }
 .sidebar-menu > li > a > .fa,
@@ -591,7 +591,6 @@ body {
 }
 .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > span {
   top: 0;
-  margin-left: -3px;
   padding: 12px 5px 12px 20px;
   background-color: #5F5F5F;
 }
@@ -2534,12 +2533,13 @@ table.text-center th {
   list-style: none;
   padding: 0;
   margin: 0;
-  padding-left: 5px;
+  background-color: #737373;
 }
 .treeview-menu .treeview-menu {
   padding-left: 20px;
 }
 .treeview-menu > li {
+  padding: 0;
   margin: 0;
 }
 .treeview-menu > li > a {

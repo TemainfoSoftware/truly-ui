@@ -26,6 +26,7 @@ import { ControlValueAccessor } from '@angular/forms/src/forms';
 import { TabIndexService } from '../../form/tabIndex.service';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
+import { Validations } from '../validations/validations';
 
 /**
  * Class that controls all Components that have Models.
@@ -40,7 +41,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Object of validations (receive a bunch of validations).
      */
-    @Input() validations = {};
+    @Input() validations = Validations;
 
     /**
      * Text to display in Input Placeholder.

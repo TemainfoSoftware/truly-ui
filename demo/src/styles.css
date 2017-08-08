@@ -1,4 +1,26 @@
 /** BUTTON - CUSTOM STYLE **/
+
+.table-truly-body:nth-child(odd) {
+  background: #fff;
+}
+
+.table-truly-body:nth-child(even) {
+  background: #f7f9f9;
+}
+
+.table-box {
+  border: 1px solid #dbdddd;
+}
+
+.table-truly-head {
+  background-color: #fff;
+  color: #525252;
+}
+
+.table-truly {
+  margin: 0;
+}
+
 .router-outlet {
   padding: 20px;
 }
@@ -18,6 +40,10 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   background: #fff;
+}
+
+.link-copy {
+  color: #66CC99;  
 }
 
 .buttonClass1{

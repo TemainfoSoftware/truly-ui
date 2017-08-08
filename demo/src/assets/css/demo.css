@@ -228,7 +228,6 @@ body {
   content: "\f0c9";
 }
 .main-header .sidebar-toggle:hover {
-
   color: #fff;
 }
 .main-header .sidebar-toggle .icon-bar {
@@ -354,6 +353,7 @@ body {
   .main-header .navbar {
     width: 100%;
     float: none;
+    background-color: #5F5F5F;
   }
   .main-header .navbar {
     margin: 0;
@@ -1274,6 +1274,7 @@ body {
   .small-box p {
     font-size: 12px;
   }
+
 }
 /*
  * Component: Box
@@ -3111,12 +3112,12 @@ table.text-center th {
     float: left;
     width: 33.3333333%;
   }
-  .table-responsive {
+ /* .table-responsive {
     overflow: auto;
     background-color: #fff !important;
   }
   .table-responsive > .table tr th,
   .table-responsive > .table tr td {
     white-space: normal !important;
-  }
+  }*/
 }

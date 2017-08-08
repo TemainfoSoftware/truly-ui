@@ -118,9 +118,9 @@
 <hr>
 <div class="setup">
   <h3 class="title">Properties</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
+  <div class="table-box">
+    <table class="table table-truly">
+      <thead class="table-truly-head">
       <tr>
         <th>Name</th>
         <th>Type</th>
@@ -129,9 +129,9 @@
         <th>Options</th>
       </tr>
       </thead>
-      <tbody *ngFor="let item of dataTableProperties; let i = index">
+      <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
       <tr>
-        <td><b>{{ item.name }}</b></td>
+        <td><span>{{ item.name }}</span></td>
         <td><span class="badge">{{ item.type }}</span></td>
         <td><code>{{ item.default }}</code></td>
         <td>{{ item.description }}</td>

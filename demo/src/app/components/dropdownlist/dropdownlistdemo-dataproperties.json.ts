@@ -1,13 +1,66 @@
-/**
- * Created by Silvio on 07/07/2017.
- */
 export const dataProperties = [
+  {
+    name: "data",
+    type: "object | array",
+    default: "null",
+    description: "Sets the data of the Dropdown List",
+    options: "any object | any array"
+  },
+  {
+    name: "data.text",
+    type: "string",
+    default: "text",
+    description: "Sets the data item field that represents the item text.",
+    options: "any text"
+  },
+  {
+    name: "data.value",
+    type: "string",
+    default: "value",
+    description: "Sets the data item field that represents the item value.",
+    options: "any text"
+  },
+  {
+    name: "label",
+    type: "string",
+    default: "null",
+    description: "Create a label together with Dropdown List.",
+    options: "any text"
+  },
+  {
+    name: "label.labelPlacement",
+    type: "string",
+    default: "left",
+    description: "Sets the label position.",
+    options: "left | top"
+  },
+  {
+    name: "label.labelSize",
+    type: "number",
+    default: "100",
+    description: "Sets the label width.",
+    options: "any number"
+  },
   {
     name: "placeholder",
     type: "string",
     default: "null",
-    description: "Enables selection of multiple buttons if set to true.",
+    description: "Display a help text on dropdown list.",
+    options: "any text"
+  },
+  {
+    name: "disabled",
+    type: "boolean",
+    default: "false",
+    description: "Disables the dropdown list if set to true.",
     options: "true | false"
+  },
+  {
+    name: "scroll",
+    type: "number",
+    default: "null | 10 to auto scroll",
+    description: "Displays minimum amount of items to create the scroll.",
+    options: "any number"
   }
   ];
 export const dataProperties2 = [

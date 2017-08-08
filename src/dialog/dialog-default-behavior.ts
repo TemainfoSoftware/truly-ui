@@ -19,14 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-export const ModalErrorOptions = {
-    icon: 'ion-close-circled',
-    title: 'Error',
-    color: '#F25757',
-    width: '400px',
-    height: 'auto',
-    draggable: true,
-    maximizable: false,
-    minimizable: false,
-    backdrop: false
-};
+
+import { KeyEvent } from '../core/enums/key-events';
+
+export class DialogDefaultBehavior {
+
+    public buttonAction;
+
+    constructor() {}
+
+    onKeyDown( $event: KeyboardEvent ) {
+        $event.stopPropagation();
+        switch ( $event.keyCode ) {
+            case KeyEvent.TAB:
+                $event.preventDefault();
+                break;
+            case KeyEvent.ESCAPE:
+                this.buttonAction.dispatchCallback();
+                break;
+        }
+    }
+}

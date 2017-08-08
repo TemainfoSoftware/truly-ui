@@ -154,6 +154,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private onFocusOut() {
         if ( !this.isTextLengthMatchWithExpressionLength() ) {
             this.value = '';
+            this.tlinput.toArray()[ 0 ].ngValue = '';
             this.updateModel();
             this.onComplete();
         }
@@ -405,7 +406,12 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     private onComplete() {
-        this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = this.isTextLengthMatchWithExpressionLength();
+        if (this.tlinput.toArray()[ 0 ].validations['required']) {
+            this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = !this.isTextLengthMatchWithExpressionLength();
+        }
+        if ( this.isTextLengthMatchWithExpressionLength() ) {
+            this.tlinput.toArray()[ 0 ].writeValue( this.value );
+        }
     }
 
     private isTextLengthMatchWithExpressionLength() {
@@ -430,7 +436,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         }
         setTimeout( () => {
             this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
-            this.tlinput.toArray()[ 0 ].inputModel.model = this.clearMask( this.value );
+            this.tlinput.toArray()[ 0 ].componentModel.model = this.clearMask( this.value );
         }, 0 );
         this.setPosition( endPosition );
     }

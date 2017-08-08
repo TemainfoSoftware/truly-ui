@@ -20,18 +20,23 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ElementRef, Input, ViewChild, Output, EventEmitter,
+    Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
+import { TabIndexService } from '../form/tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { ComponentDefaultBase } from '../core/base/component-default.base';
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
     selector : 'tl-button',
     templateUrl : './button.html',
     styleUrls : [ './button.scss' ]
 } )
-export class TlButton implements AfterContentInit {
+export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @Input() type: string;
 
@@ -74,8 +79,22 @@ export class TlButton implements AfterContentInit {
         this.executeToggle();
     }
 
-    constructor( public button: ElementRef, public modalService: ModalService ) {
+    constructor( public button: ElementRef, public modalService: ModalService,
+                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+        super(tabIndexService, idService, nameService);
         this.initializeDefaultInputValues();
+    }
+
+    ngAfterViewInit() {
+        this.setElement( this.buttonElement, 'button' );
+        this.setTabIndex( this.buttonElement );
+        if ( this.defaultFocus ) {
+            this.buttonElement.nativeElement.focus();
+        }
+        if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
+            throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
+        }
+        this.hasText();
     }
 
     initializeDefaultInputValues() {
@@ -92,24 +111,13 @@ export class TlButton implements AfterContentInit {
         this._buttonSelected = true;
     }
 
-    keydown( $event ) {
-        if ( $event.key === 'Enter' ) {
+    keydown( $event: KeyboardEvent ) {
+        if ( $event.keyCode === KeyEvent.ENTER ) {
             this.clickToggle();
         }
     }
 
-    ngAfterContentInit() {
-        if ( this.defaultFocus ) {
-            this.buttonElement.nativeElement.focus();
-        }
-        if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
-            throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
-        }
-        this.hasText();
-    }
-
     clickToggle() {
-        this.buttonElement.nativeElement.style.outline = 'none';
         this.executeToggle();
         this.dispatchCallback();
     }
@@ -136,6 +144,9 @@ export class TlButton implements AfterContentInit {
 
     dispatchCallback() {
         const listModals = document.querySelectorAll( 'tl-modal' );
+        if (!this.mdResult || ModalResult.MRCUSTOM) {
+            return;
+        }
         if ( listModals.length > 0 ) {
             this.modalService.execCallBack( {
                 'mdResult': ModalResult[ this.mdResult ],

@@ -1,4 +1,4 @@
-<div class="formBox" (keyup)="handleKeysForm($event)">
+<div class="formBox" (keydown)="handleKeysForm($event)">
     <div class="formContent">
         <ng-content></ng-content>
     </div>
@@ -8,6 +8,7 @@
             <tl-button #buttonFormOk
                        [text]="'Ok'"
                        mdResult="MROK"
+                       [disabled]="!validForm"
                        [formResult]="formResult"
                        [buttonAddonBeforeClass]="'icon'"
                        [iconAddonBefore]="'ion-checkmark'">

@@ -24,6 +24,13 @@ export const dataProperties = [
     options: "Any Text"
   },
   {
+    name: "labelPlacement",
+    type: "string",
+    default: "left",
+    description: "Label Position",
+    options: "top | left"
+  },
+  {
     name: "clearButton",
     type: "boolean",
     default: "false",

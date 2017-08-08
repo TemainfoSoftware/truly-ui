@@ -19,50 +19,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core'
-import { animate, style, transition, trigger } from '@angular/animations';
-import { DialogDefaultBehavior } from '../dialog-default-behavior';
 
-@Component({
-    selector: 'tl-dialog-error',
-    templateUrl: './dialog-error.html',
-    styleUrls: ['../dialog.scss', './dialog-error.scss'],
+import { Component, HostBinding, ViewChild } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+
+@Component( {
+    selector: 'dialog-backdrop',
+    templateUrl: './dialog-backdrop.html',
+    styleUrls: [ './dialog-backdrop.scss' ],
     animations: [
         trigger(
             'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity: 0 } ),
-                    animate( '200ms', style( { opacity: 1 } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity: 1 } ),
-                    animate( '200ms', style( { opacity: 0 } ) )
-                ] )
+                state('enter', style({ transform: 'none', opacity: 1 })),
+                state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
+                state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
+                transition('* => *', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
             ]
         )
     ]
-})
-export class TlDialogError extends DialogDefaultBehavior implements AfterViewInit {
+} )
+export class TlDialogBackdrop {
 
-    message = '';
-
-    textOk = 'Ok';
-
-    @ViewChild('button') button;
+    @ViewChild('backdrop') backdrop;
 
     @HostBinding( '@enterAnimation' ) public animation;
 
-    private errorlog: boolean;
-
-    constructor() {
-        super();
-    }
-
-    ngAfterViewInit() {
-        this.buttonAction = this.button;
-    }
-
-    open(value) {
-        this.errorlog = !value;
-    }
 }

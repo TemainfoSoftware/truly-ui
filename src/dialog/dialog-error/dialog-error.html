@@ -1,10 +1,11 @@
-<div class="content">
+<div class="content-dialog" (keydown)="onKeyDown($event)">
     <div class="form">
         <h5>{{message}}</h5>
     </div>
     <div class="controls">
         <tl-button [text]="textOk"
                    mdResult="MROK"
+                   #button
                    [defaultFocus]="true"
                    [buttonAddonBeforeClass]="'icon'"
                    [iconAddonBefore]="'ion-close'">

@@ -28,4 +28,6 @@ export enum KeyEvent {
     HOME = 36,
     ENTER = 13,
     ESCAPE = 27,
+    TAB = 9,
+    SPACE= 32,
 }

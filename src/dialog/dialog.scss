@@ -1,69 +1,11 @@
-.tl-modal-container {
-  margin: 0 auto;
-  padding: 0 auto;
-  position: fixed;
-  background-color: #fff;
-  width: 500px;
-  height: 500px;
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  border-top: 0;
-
-  > .header {
-    user-select: none;
-    height: 34px;
-  }
-
-  > .header .title {
-    text-align: left;
-    line-height: 34px;
-    color: #fff;
-    user-select: none;
-  }
-
-  > .header .bar {
-    float: left;
-    width: 100%;
-  }
-
-  > .header .controls {
-    position: absolute;
-    right: 0.1px;
-    width: 85px;
-    user-select: none;
-  }
-
-  > .header .controls .control-item {
-    padding: 7px;
-    text-align: center;
-    left: 5px;
-    margin: 0;
-  }
-
-  > .header .controls .control-item .disabled {
-    opacity: 0.4;
-  }
-
-  > .header .controls .control-item:hover {
-    cursor: pointer;
-  }
-
-  > .header .controls i {
-    line-height: 34px;
-    color: #fff;
-    text-align: center;
-    padding: 0;
-  }
-
-  > .header .icon i {
-    color: #fff;
-  }
-}
-
 .form {
   padding: 25px;
   text-align: center;
 }
 
+.form h5 {
+  font-family: "Segoe UI";
+  font-weight: normal;
+}
 
 

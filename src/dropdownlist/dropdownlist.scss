@@ -1,111 +1,175 @@
 @import "../core/core";
 
 //Default
-$button-height: 25px;
-$border-default: 1px solid #C8C8C8;
-$background-color: #E8E8E8;
-$color: #616161;
-$icon-color: #6A6A6A;
-$hover-background-color: #dedede;
-$active-background-color: #d8d8d8;
-$font-size: 0.9em;
-$button-font-family: 'Segoe UI', sans-serif;
+$default-backgroundColor: #E8E8E8;
+$default-backgroundHoverColor: #dedede;
+$default-backgroundActiveColor: #d8d8d8;
+$default-backgroundFocusColor: #53C68C;
+$default-color: #616161;
+$default-focusColor: #FFFFFF;
+$default-fontSize: 0.9em;
+$default-fontFamily: 'Segoe UI', sans-serif;
+$default-height: 39px;
+$default-border: 1px solid #C8C8C8;
+$default-cursorHover: pointer;
+$default-cursor: default;
+$default-iconColor: #6A6A6A;
+$default-outline: none;
+$error-field: #FF6666;
+$error-placeholder: #FFB9B9;
+$error-background-color: #FFF1F1;
+$success-field: #66CC99;
+$success-background-color: #E3F5EC;
 
-.tl-dropdown-list {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  outline: none;
-  width: 125px;
-  > .dropdown-list-wrapper {
+.tl-dropdown-list-box {
+  display: table;
+  border-collapse: separate;
+  box-sizing: unset;
+  > .labeltext {
+    font-family: $default-fontFamily;
+    font-size: $default-fontSize;
+    color: #737373;
+    font-weight: normal;
+    line-height: 1;
+    width: 100px;
+    white-space: nowrap;
+    vertical-align: middle;
+    > b.required {
+      color: #FF6666;
+    }
+  }
+  > .labeltext.-labeltop {
+    display: table-caption;
+    text-align: left;
+    padding: 0 0 5px 0;
+  }
+  > .labeltext.-labelleft {
+    display: table-cell;
+    text-align: right;
+    padding: 5px 5px 5px 0;
+  }
+  > .wrapper {
+    box-sizing: unset;
     position: relative;
-    > .dropdown-list-container {
-      background-color: $background-color;
-      outline: none;
-      height: $button-height;
-      border: $border-default;
-      > input{
-        font-family: $button-font-family;
-        font-size: $font-size;
-        height: $button-height - 2;
-        line-height: $button-height - 2;
-        background-color: transparent;
-        border: 0;
-        margin: 0;
-        width: 100%;
-        position: relative;
-        overflow: hidden;
-        padding: 0;
-        padding-left: 10px;
-        padding-right: 30px;
-        color: $color;
-        user-select: none;
-        cursor: pointer;
-      }
-      > .dropdown-list-icon {
-        height: $button-height;
-        line-height: $button-height;
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      > .dropdown-list-icon i {
-        font-size: .9em;
-        color: $icon-color;
-      }
+    display: table;
+    margin: 0;
+    padding: 0;
+    > .select {
+      box-sizing: unset;
+      overflow: hidden;
+      background: $default-backgroundColor;
+      font-family: $default-fontFamily;
+      font-size: $default-fontSize;
+      color: $default-color;
+      cursor: $default-cursorHover;
+      border: $default-border;
+      margin: 0;
+      padding: 0;
+      padding-left: 10px;
+      padding-right: 30px;
+      vertical-align: middle;
+      user-select: none;
     }
-    > .dropdown-list-container:hover {
-      background-color: $hover-background-color;
+    > .select:hover {
+      background-color: $default-backgroundHoverColor;
     }
-    > .dropdown-list-container:active {
-      background-color: $active-background-color;
+    > .select:active {
+      background-color: $default-backgroundActiveColor;
     }
-    > .dropdown-list-select {
-      display: none;
-      color: $color;
+    > .select:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+      outline-color: -webkit-focus-ring-color;
+      outline-style: auto;
+    }
+
+    > .select.-hasValidation.ng-touched.ng-invalid {
+      border: 1px solid $error-field;
+      background-color: $error-background-color;
+      //outline: none;
+    }
+
+    > .select.-hasValidation.ng-valid.ng-touched {
+      border: 1px solid $success-field;
+      background-color: $success-background-color;
+      //outline: none;
+    }
+    > .dropdown-list-icon {
+      box-sizing: unset;
       position: absolute;
-      outline: none;
-      top: $button-height;
+      display: table-cell;
+      cursor: $default-cursorHover;
+      line-height: $default-height - 2;
+      top: 0;
+      right: 0;
+    }
+    > .dropdown-list-icon i {
+      font-size: $default-fontSize;
+      color: $default-iconColor;
+      padding: 0 9.3px;
+    }
+    > .dropdown-list-wrapper-select {
+      position: absolute;
+      outline: $default-outline;
+      cursor: $default-cursorHover;
       left: 0;
-      width: 100%;
-      background-color: $background-color;
-      border: $border-default;
-      border-top: 0;
-      list-style: none;
       padding: 0;
       margin: 0;
-      > li {
-        font-family: $button-font-family;
-        outline: none;
+      width: 100%;
+      > .dropdown-list-select {
+        background-color: $default-backgroundColor;
+        border: $default-border;
+        color: $default-color;
+        border-top: 0;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        > li {
+          font-family: $default-fontFamily;
+          font-size: $default-fontSize;
+          color: $default-color;
+          outline: $default-outline;
+          padding: 0 10px;
+        }
+        > li:hover {
+          background-color: $default-backgroundHoverColor;
+        }
+        > li:focus {
+          background-color: $default-backgroundFocusColor;
+          color: $default-focusColor;
+        }
+        > li:active {
+          background-color: $default-backgroundActiveColor;
+          color: $default-color;
+        }
+      }
+      > .dropdown-list-select::-webkit-scrollbar {
+        width: 0.4em;
+      }
+      > .dropdown-list-select::-webkit-scrollbar-thumb {
+        background-color: #CCCCCC;
+      }
+      > .-placeholder {
+        box-sizing: unset;
+        font-family: $default-fontFamily;
+        font-size: $default-fontSize;
+        color: $default-color;
+        background-color: $default-backgroundColor;
+        cursor: $default-cursor;
+        outline: $default-outline;
+        border: $default-border;
+        border-bottom: 0;
+        border-top: 0;
         padding: 0 10px;
-        line-height: $button-height;
       }
-      > li.-placeholder{
-        cursor: default;
-      }
-      > li:hover {
-        background-color: $hover-background-color;
-      }
-      > li:focus {
-        background-color: #53C68C;
-        color: #FFF;
-      }
-      > li:active {
-        color: $color;
-        background-color: $active-background-color;
+      .-placeholder:focus {
+        background-color: $default-backgroundFocusColor;
+        color: $default-focusColor;
       }
     }
-    .dropdown-list-select::-webkit-scrollbar {
-      width: 0.4em;
+    > .disabled::placeholder, .disabled {
+      opacity: 0.45;
+      color: #000000;
+      cursor: $default-cursor;
     }
-    .dropdown-list-select::-webkit-scrollbar-thumb {
-      background-color: #cccccc;
-    }
-  }
-  >.dropdown-list-wrapper:focus{
-    outline: -webkit-focus-ring-color auto 5px;
-    outline-color: -webkit-focus-ring-color;
-    outline-style: auto;
   }
 }
-

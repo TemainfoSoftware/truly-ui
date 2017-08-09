@@ -22,7 +22,7 @@
 }
 
 .router-outlet {
-  padding: 20px;
+  /*padding: 20px;*/
 }
 
 .group-component {
@@ -43,7 +43,7 @@
 }
 
 .link-copy {
-  color: #66CC99;  
+  color: #81D5AB;
 }
 
 .buttonClass1{

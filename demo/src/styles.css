@@ -19,6 +19,7 @@
 
 .table-truly {
   margin: 0;
+  border-collapse: inherit;
 }
 
 .router-outlet {

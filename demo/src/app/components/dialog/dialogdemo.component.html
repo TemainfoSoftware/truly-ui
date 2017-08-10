@@ -1,68 +1,71 @@
-<div class="header-title-demo">
-  <h1 class="title">Dialog</h1>
-  <p class="text-content">There's a lot of ways to create a Dialog using Truly UI. Below, are some of those.</p>
+<div class="router-outlet">
+
+  <div class="header-title-demo">
+    <h1 class="title">Dialog</h1>
+    <p class="text-content">There's a lot of ways to create a Dialog using Truly UI. Below, are some of those.</p>
 </div>
 
-<hr>
+  <hr>
 
-<div class="showcase">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Show Dialog Info</h5>
-        <tl-button [text]="'Show Dialog Info'" [iconAddonBefore]="'ion-information-circled'"
-                   [buttonClass]="'infoDialog'" (click)="info()"></tl-button>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Show Dialog Info</h5>
+          <tl-button [text]="'Show Dialog Info'" [iconAddonBefore]="'ion-information-circled'"
+                     [buttonClass]="'infoDialog'" (click)="info()"></tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Show Dialog Confirmation</h5>
+          <tl-button [text]="'Show Dialog Confirmation'" [iconAddonBefore]="'ion-checkmark'"
+                     [buttonClass]="'confirmDialog'" (click)="confirmation()"></tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Show Dialog Alert</h5>
+          <tl-button [text]="'Show Dialog Alert'" [iconAddonBefore]="'ion-alert-circled'" [buttonClass]="'alertDialog'"
+                     (click)="alert()"></tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Show Dialog Error</h5>
+          <tl-button [text]="'Show Dialog Error'" [iconAddonBefore]="'ion-close-circled'" [buttonClass]="'errorDialog'"
+                     (click)="error()"></tl-button>
+        </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Show Dialog Confirmation</h5>
-        <tl-button [text]="'Show Dialog Confirmation'" [iconAddonBefore]="'ion-checkmark'"
-                   [buttonClass]="'confirmDialog'" (click)="confirmation()"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Show Dialog Alert</h5>
-        <tl-button [text]="'Show Dialog Alert'" [iconAddonBefore]="'ion-alert-circled'" [buttonClass]="'alertDialog'"
-                   (click)="alert()"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Show Dialog Error</h5>
-        <tl-button [text]="'Show Dialog Error'" [iconAddonBefore]="'ion-close-circled'" [buttonClass]="'errorDialog'"
-                   (click)="error()"></tl-button>
-      </div>
-    </div>
-  </div>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody *ngFor="let item of dialogProp; let i = index">
-        <tr>
-          <td><b>{{ item.name }}</b></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
+</div>
+<div class="setup">
+  <h3 class="title">Properties</h3>
+  <div class="table-box">
+    <table class="table table-truly">
+      <thead class="table-truly-head">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Default</th>
+        <th>Description</th>
+        <th>Options</th>
+      </tr>
+      </thead>
+      <tbody class="table-truly-body" *ngFor="let item of dialogProp; let i = index">
+      <tr>
+        <td><span>{{ item.name }}</span></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+      </tr>
+      </tbody>
 
-      </table>
-    </div>
-    <hr>
+    </table>
   </div>
+  <hr>
+</div>
 
   <div class="examples">
     <h3 class="title">Examples</h3>
@@ -103,10 +106,11 @@
         })
       </textarea>
     </div>
-  </div>
+</div>
 
 
   <footer class="minimize-box">
     <span *ngFor="let item of modals; let i = index" (click)="show(item, i)">{{item.instance.label}}</span>
 </footer>
+
 </div>

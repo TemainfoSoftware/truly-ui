@@ -1,0 +1,242 @@
+@font-face {
+  font-family: "Dimitri Swank";
+  src: url("../../assets/fonts/dimitri.ttf");
+}
+
+.banner-home {
+  height: 350px;
+  width: 100%;
+  background-color: #444444;
+}
+
+.logo-typo {
+  font-family: "Dimitri Swank";
+  position: absolute;
+  color: #66CC99;
+  top: 50px;
+  left: 110px;
+  font-size: 7em;
+  user-select: none;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  white-space: nowrap; /* Keeps the content on a single line */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation:
+    typing 2.5s steps(20, end),
+    blink-caret .75s step-end;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 80% }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #ECF0F5; }
+}
+
+.logo-description {
+  position: absolute;
+  font-family: "Segoe UI";
+  color: #fff;
+  top: 175px;
+  left: 110px;
+  font-size: 1.5em;
+}
+
+.banner-separator {
+  background-color: #4c4c4c;
+  width: 55%;
+  height: inherit;
+  float: right;
+  -webkit-transform: skew(-20deg) translateX(10px);
+  -ms-transform: skew(-20deg) translateX(10px);
+  transform: skew(-20deg) translateX(100px);
+}
+
+.banner-footer {
+  position: absolute;
+  height: 70px;
+  background-color: #4c4c4c;
+  width: 100%;
+  bottom: 0;
+}
+
+.body-box-homepage {
+  margin-top: 100px;
+  margin-bottom: 60px;
+}
+
+.title-box {
+  font-family: "Segoe UI";
+}
+
+.title-box i {
+  padding: 10px;
+  color: #66CC99;
+}
+
+.box-description {
+  font-family: "Segoe UI";
+  line-height: 45px;
+  font-size: 1.5em;
+  color: #444444;
+  font-weight: 300;
+  text-align: justify;
+  word-break: normal;
+}
+
+.box-features {
+  padding-bottom: 60px;
+}
+
+.box-features-sub-header {
+  color: #fff;
+  opacity: 0.5;
+  margin-bottom: 50px;
+}
+
+.box-getting-footer {
+  margin-left: 20px;
+}
+
+.box-getting-footer h2:hover {
+  color: #66CC99;
+}
+
+.box-footer-buttons {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.feature-description {
+  font-family: "Segoe UI";
+  line-height: 25px;
+  font-size: 1.1em;
+  color: #817f7f;
+}
+
+.framework-description {
+  color: #fff;
+  font-size: 1.2em;
+}
+
+.box-framework {
+  position: relative;
+  z-index: 0;
+  background-color: #66CC99;
+}
+
+.box-framework::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: url("../../assets/img/overlay.jpg");
+  opacity: 0.05;
+  background-size: 320px auto;
+}
+
+.text-boxes-bottom{
+  color: #aeafb1;
+  font-size: 1.2em;
+}
+.title-boxes-bottom{
+  color: #8c8c8c;
+}
+.icon-boxes-bottom{
+  margin-top: 20px;
+  font-size: 6em;
+  color: #626060;
+}
+
+.separator {
+  margin: 0 auto;
+  position: absolute;
+  width: 5px;
+  height: 140px;
+  background: -webkit-linear-gradient(top, rgba(236, 240, 245, 0) 0%, rgba(255, 255, 255, 1) 49%, rgba(255, 255, 255, 0) 100%);
+}
+
+
+.box-framework h1 {
+  font-family: "Segoe UI";
+  font-weight: normal;
+  margin: 0 auto;
+
+  color: #fff;
+}
+
+.box-framework-features {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-framework-features i {
+  line-height: 100px;
+  margin-right: 20px;
+  font-size: 3em;
+  color: #626060;
+}
+
+.button-getStarted {
+  top: 15px;
+  left: 90px;
+  width: 180px;
+  background-color: #66CC99;
+  position: absolute;
+  border-radius: 5px;
+  height: 40px;
+  text-align: center;
+}
+
+.getstarted {
+  padding: 10px 20px;
+  line-height: 40px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "Segoe UI",sans-serif;
+  font-size: 1.1em;
+  text-wrap: none;
+  color: #fff;
+}
+
+.info-version {
+  line-height: 70px;
+  color: #8c8c8c;
+}
+
+.info-version a {
+  color: #8c8c8c;
+}
+
+.info-version a:hover {
+  color: #66CC99;
+}
+
+.button-getStarted:hover {
+  background-color: #5DBA8C;
+  color: #fff !important;
+  cursor: pointer;
+}
+
+.banner-image {
+  position: absolute;
+  width: 48%;
+  height: 230px;
+  right: 0;
+  top: 123.5px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  background: url("../../assets/img/desk.png") no-repeat;
+  background-size: 620px;
+}

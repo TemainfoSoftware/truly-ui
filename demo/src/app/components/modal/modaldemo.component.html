@@ -1,3 +1,4 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Modal</h1>
   <p class="text-content">Modals are pretty cool stuff, so truly ui have it.</p>
@@ -15,9 +16,9 @@
   <br>
   <div class="setup">
     <h3 class="title">Properties</h3>
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
         <tr>
           <th>Name</th>
           <th>Type</th>
@@ -26,9 +27,9 @@
           <th>Options</th>
         </tr>
         </thead>
-        <tbody *ngFor="let item of modalprop; let i = index">
+        <tbody class="table-truly-body" *ngFor="let item of modalprop; let i = index">
         <tr>
-          <td><b>{{ item.name }}</b></td>
+          <td><span>{{ item.name }}</span></td>
           <td><span class="badge">{{ item.type }}</span></td>
           <td><code>{{ item.default }}</code></td>
           <td>{{ item.description }}</td>
@@ -71,4 +72,5 @@
   <footer class="minimize-box">
     <span *ngFor="let item of modals; let i = index" (click)="show(item, i)">{{item.instance.label}}</span>
   </footer>
+</div>
 </div>

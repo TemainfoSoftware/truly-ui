@@ -1,6 +1,8 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Form</h1>
   <p class="text-content">The form component uses Modal, the difference between them is tabbing, and the default buttons that act as a submit form.</p>
+  <p class="text-content">The way of the form appears (fullscreen) on window is relative with the parent HTML element.</p>
 </div>
 <hr>
 <div class="showcase">
@@ -9,6 +11,19 @@
   <pre>
   <code>{{result | json}}</code>
   </pre>
+  <pre>
+  <code>{{result | json}}</code>
+  </pre>
+  <pre>
+  <code>{{result | json}}</code>
+  </pre>
+  <pre>
+  <code>{{result | json}}</code>
+  </pre>
+  <pre>
+  <code>{{result | json}}</code>
+  </pre>
+
   <!--  <div class="row">
       <div class="col-md-3">
         <div class="group-component">
@@ -76,4 +91,5 @@
     <footer class="minimize-box">
       <span *ngFor="let item of modals; let i = index" (click)="show(item, i)">{{item.instance.label}}</span>
     </footer>-->
+</div>
 </div>

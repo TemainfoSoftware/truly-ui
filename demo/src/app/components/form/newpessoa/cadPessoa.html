@@ -1,15 +1,16 @@
-<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true">
+<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true" [messageDialogConfirmation]="'Deseja realmente fechar essa janela ?'">
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.name" [label]="'Name'"></tl-input>
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.name" [label]="'Name'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="pessoa?.lastname" [label]="'LastName'"></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="text" [label]="'LastName'"></tl-input>
+        LastName: {{text}}
       </div>
     </div>
   </div>
@@ -23,10 +24,10 @@
       <div class="form-group">
         <tl-dropdown-list
                           [labelSize]="'80'"
-                          [selectHeight]="25"
-                          [validations]="{required: true}"
+                          [height]="25"
                           [labelPlacement]="'left'"
-                          [ngModel]="pessoa?.genero"
+                          [placeholder]="'Select Item'"
+                          [ngModel]="pessoa?.gender"
                           [data]="data"
                           [label]="'Gender'"
                           [text]="'textItem'"
@@ -43,7 +44,8 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: true }" ></tl-input>
+        <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="bt" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
+        Birthday: {{bt}}
       </div>
     </div>
   </div>

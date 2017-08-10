@@ -33,7 +33,7 @@ export class DataFormService {
         city: '',
         country: '',
         state: '',
-        genero: ''
+        gender: ''
       };
 
   constructor() {}

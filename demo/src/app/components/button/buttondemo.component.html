@@ -1,138 +1,139 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Button</h1>
   <p class="text-content">There's a lot of ways to create a button using Truly UI. Below, are some of those.</p>
 </div>
 
-<hr>
-
-<div class="showcase">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Basic</h5>
-        <tl-button [text]="'Button'"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Addon - Icon Before</h5>
-        <tl-button [text]="'Ok'"
-                   [iconAddonBefore]="'ion-printer'">
-        </tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Addon - Icon After</h5>
-        <tl-button [text]="'Button'"
-                   [iconAddonAfter]="'fa fa-home'">
-        </tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Addon - Icon Before and After</h5>
-        <tl-button [text]="'Button'"
-                   [iconAddonBefore]="'ion-printer'"
-                   [iconAddonAfter]="'fa fa-home'">
-        </tl-button>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Custom Style</h5>
-        <tl-button [text]="'Button'"
-                   [buttonClass]="'buttonClass1'">
-        </tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Toggle</h5>
-        <tl-button [text]="'Button'"
-                   [toggle]="true"></tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Many Properties</h5>
-        <tl-button [text]="'Button'"
-                   [buttonClass]="'buttonClass2'"
-                   [iconAddonBefore]="'ion-printer'"
-                   [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
-                   [toggleClass]="'toggleClass2'"
-                   [toggle]="true">
-        </tl-button>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Size Button</h5>
-        <tl-button [text]="'Button'"
-                   [size]="'150px'"></tl-button>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Disabled</h5>
-        <tl-button [text]="'Button'"
-                   [disabled]="true"></tl-button>
-      </div>
-    </div>
-  </div>
   <hr>
+
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Basic</h5>
+          <tl-button [text]="'Button'"></tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Addon - Icon Before</h5>
+          <tl-button [text]="'Ok'"
+                     [iconAddonBefore]="'ion-printer'">
+          </tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Addon - Icon After</h5>
+          <tl-button [text]="'Button'"
+                     [iconAddonAfter]="'fa fa-home'">
+          </tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Addon - Icon Before and After</h5>
+          <tl-button [text]="'Button'"
+                     [iconAddonBefore]="'ion-printer'"
+                     [iconAddonAfter]="'fa fa-home'">
+          </tl-button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Custom Style</h5>
+          <tl-button [text]="'Button'"
+                     [buttonClass]="'buttonClass1'">
+          </tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Toggle</h5>
+          <tl-button [text]="'Button'"
+                     [toggle]="true"></tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Many Properties</h5>
+          <tl-button [text]="'Button'"
+                     [buttonClass]="'buttonClass2'"
+                     [iconAddonBefore]="'ion-printer'"
+                     [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
+                     [toggleClass]="'toggleClass2'"
+                     [toggle]="true">
+          </tl-button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Size Button</h5>
+          <tl-button [text]="'Button'"
+                     [size]="'150px'"></tl-button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Disabled</h5>
+          <tl-button [text]="'Button'"
+                     [disabled]="true"></tl-button>
+        </div>
+      </div>
+    </div>
+    <hr>
 </div>
 
-<div class="setup">
-  <h3 class="title">Properties</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-        <th>Options</th>
-      </tr>
-      </thead>
-      <tbody *ngFor="let item of dataTableProperties; let i = index">
-      <tr>
-        <td><b>{{ item.name }}</b></td>
-        <td><span class="badge">{{ item.type }}</span></td>
-        <td><code>{{ item.default }}</code></td>
-        <td>{{ item.description }}</td>
-        <td><code> {{ item.options }} </code></td>
-      </tr>
-      </tbody>
+  <div class="setup">
+    <h3 class="title">Properties</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td><span class="badge">{{ item.type }}</span></td>
+          <td><code>{{ item.default }}</code></td>
+          <td>{{ item.description }}</td>
+          <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
 
-    </table>
-  </div>
-  <hr>
+      </table>
+    </div>
+    <hr>
 </div>
 
-<div class="examples">
-  <h3 class="title">Examples</h3>
-  <div class="group-component">
-    <h5 class="title">Basic</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <h5 class="title">Basic</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Custom Style</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Custom Style</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button [text]="'Button'" [buttonClass]="'buttonClass1'"></tl-button>
 
-      <!--
-      * Required: !important;
-      *
-      * Custom Style Example - Global CSS.
-      -->
+        <!--
+        * Required: !important;
+        *
+        * Custom Style Example - Global CSS.
+        -->
 
       <style type="text/css">
       .buttonClass1{
@@ -141,57 +142,59 @@
         color: #FFF !important;
         font-size: 12px !important;
       }
+
       .buttonClass1:hover{
         background-color: #7acda3 !important;
       }
+
       .buttonClass1:active{
         background-color: #74c79d !important;
       }
       </style>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Addon - Icon Before</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Addon - Icon Before</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [iconLeftTextButton]="'ion-printer'"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Addon - Icon After</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Addon - Icon After</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [iconRightTextButton]="'fa fa-home'"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Addon - Icon Before and After</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Addon - Icon Before and After</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [iconLeftTextButton]="'ion-printer'" [iconRightTextButton]="'fa fa-home'"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Toggle</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Toggle</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [toggle]="true"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Many Properties</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Many Properties</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<tl-button
-          [text]="'Button'"
-          [buttonClass]="'buttonClass2'"
-          [iconAddonBefore]="'ion-printer'"
-          [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
-          [iconRightTextButton]="'fa fa-home'"
-          [toggleClass]="'toggleClass2'"
-          [toggle]="true">
+        [text]="'Button'"
+        [buttonClass]="'buttonClass2'"
+        [iconAddonBefore]="'ion-printer'"
+        [buttonAddonBeforeClass]="'buttonAddonBeforeClass2'"
+        [iconRightTextButton]="'fa fa-home'"
+        [toggleClass]="'toggleClass2'"
+        [toggle]="true">
       </tl-button>
 
-      <!--
-      * Required: !important;
-      *
-      * Custom Style Example - Global CSS.
-      -->
+        <!--
+        * Required: !important;
+        *
+        * Custom Style Example - Global CSS.
+        -->
 
       <style type="text/css">
       .buttonClass2{
@@ -200,12 +203,15 @@
         font-size: 16px !important;
         border: 1px solid #1778b9 !important;
       }
+
       .buttonClass2:hover{
         background-color: #1b8ad6 !important;
       }
+
       .buttonClass2:active, .toggleClass2{
         background-color: #1b86d0 !important;
       }
+
       .buttonAddonBeforeClass2{
         background-color: #FFF !important;
         color: #1B95E0 !important;
@@ -213,18 +219,19 @@
       }
       </style>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Size Button</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Size Button</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [size]="'150px'"></tl-button>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Disabled</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Disabled</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
    <tl-button [text]="'Button'" [disabled]="true"></tl-button>
   </textarea>
-  </div>
+    </div>
 
+  </div>
 </div>

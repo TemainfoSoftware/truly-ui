@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ContentChildren, Input, OnDestroy, OnInit,
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, OnInit,
     QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
@@ -34,6 +34,7 @@ import { TlDropDownList } from '../dropdownlist/dropdownlist';
 @Component( {
     selector: 'tl-form',
     templateUrl: '../form/form.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: ['../form/form.scss']
 } )
 export class TlForm implements AfterViewInit, OnDestroy, OnInit {
@@ -43,6 +44,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @Input() initialFocus;
 
     @Input() showConfirmOnChange = false;
+
+    @Input() messageDialogConfirmation = 'Are you sure ?';
 
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
@@ -60,11 +63,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private validForm = true;
 
-    private buttonFormOkListener;
-
-    private buttonFormCancelListener;
-
     constructor( private renderer: Renderer2, private dialogService: DialogService,
+                 private cdr: ChangeDetectorRef,
                  private tabService: TabIndexService ) {}
 
     ngOnInit() {}
@@ -76,15 +76,16 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.setInitialFocus();
         this.setTabIndexButtons();
         this.verifyInputValidation();
-        this.buttonFormOkListener = this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click',
-            ( $event: KeyboardEvent ) => {
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
+            $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
         } );
-        this.buttonFormCancelListener = this.renderer.listen( this.buttonFormCancel.buttonElement.nativeElement, 'click',
-            ( $event: KeyboardEvent ) => {
+        this.renderer.listen(this.buttonFormOk.buttonElement.nativeElement, 'keyup', ($event: KeyboardEvent) => {
+            $event.stopPropagation();
             this.getInputValues();
-        } );
+            this.getDropdownListValues();
+        });
     }
 
     handleKeysForm( $event: KeyboardEvent ) {
@@ -157,7 +158,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     inputHasChanged() {
         let inputDirty = false;
         this.inputList.toArray().forEach( ( value ) => {
-            if ( value.inputModel.dirty ) {
+            if ( value.componentModel.dirty ) {
                 inputDirty = true;
             }
         } );
@@ -181,7 +182,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         if ( !this.dialogOpen ) {
             this.dialogOpen = true;
             this.dialogService.modalService.setBackdropModalOverModal();
-            this.dialogService.confirmation( 'Deseja Realmente fechar o formulario e perder todos os dados preenchidos ?', ( callback ) => {
+            this.dialogService.confirmation( this.messageDialogConfirmation, ( callback ) => {
                 if ( callback.mdResult === ModalResult.MRYES ) {
                     this.buttonFormCancel.dispatchCallback();
                 }
@@ -192,28 +193,26 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     getInputValues() {
-        this.inputList.forEach( ( item, index, array ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.inputModel.model;
+        this.inputList.forEach( ( item ) => {
+            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
-
     }
 
     verifyInputValidation() {
         this.validForm = true;
-        this.inputList.forEach( ( item, index, array ) => {
-            setTimeout( () => {
-                if ( item.inputModel.valid === false ) {
+        this.inputList.forEach( ( item ) => {
+                if ( item.componentModel.valid === false ) {
                     this.validForm = false;
+                    this.cdr.detectChanges();
                 }
-            }, 0 );
         } );
         return this.validForm;
     }
 
 
     getDropdownListValues() {
-         this.dropdownList.forEach( ( item, index, array ) => {
-            this.formResult[ 'genero' ] = item.componentModel.model;
+        this.dropdownList.forEach( ( item ) => {
+            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
     }
 
@@ -228,8 +227,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        this.buttonFormOkListener();
-        this.buttonFormCancelListener();
+
     }
 }
 

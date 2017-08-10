@@ -12,6 +12,8 @@ export class CadPessoa implements OnInit {
 
   private pessoa;
   private data;
+  private text = '';
+  private bt = '';
 
   constructor(private modalService: ModalService, public formDataService: DataFormService) {
   }
@@ -20,6 +22,10 @@ export class CadPessoa implements OnInit {
     this.data = [
       { textItem : 'Masculino', valueItem : 'M' },
       { textItem : 'Feminino', valueItem : 'F' },
+      { textItem : 'Indeciso', valueItem : 'I' },
+      { textItem : 'Transexual', valueItem : 'T' },
+      { textItem : 'São Paulino', valueItem : 'I' },
+      { textItem : 'Bixessual', valueItem : 'B' },
     ];
     this.pessoa = this.formDataService.getDataForm();
   }

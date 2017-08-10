@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from "../../../src/dialog/index";
+import { GettingStartedModule } from './getting-started/getting-started.module';
+import { GithubAPIService } from "./shared/services/githubapi";
 
 
 @NgModule({
@@ -21,9 +23,11 @@ import { DialogModule } from "../../../src/dialog/index";
     FormsModule,
     DialogModule,
     HttpModule,
+    GettingStartedModule,
     HomeModule
   ],
   exports: [],
+  providers: [GithubAPIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

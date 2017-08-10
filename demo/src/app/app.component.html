@@ -1,75 +1,131 @@
-<nav class="navbar navbar-fixed-top">
-  <div class="container-fluid header-truly" style="z-index: 0">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-              aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Truly UI</a>
-    </div>
-  </div>
-</nav>
-<div class="container-fluid container-truly">
-  <div class="row">
-    <div class="col-sm-3 col-md-2 menu-container">
-      <ul class="menu">
-        <li routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Input
-          <ul>
-            <li routerLink="input" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>InputText
-            </li>
-            <li routerLink="inputmask" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>InputMask
-            </li>
-          </ul>
-        </li>
-        <li routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Button
-          <ul>
-            <li routerLink="button" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>Button
-            </li>
-            <li routerLink="buttongroup" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>Button Group
-            </li>
-            <li routerLink="splitbutton" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>SplitButton
-            </li>
-          </ul>
-        </li>
-        <li routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Dropdown
-          <ul>
-            <li routerLink="dropdownlist" routerLinkActive="activegi"><i
-              class="ion-android-arrow-dropright"></i>Dropdown List
-            </li>
-          </ul>
-        </li>
+<div class="wrapper">
 
-        <li routerLinkActive="active"><i class="ion-android-arrow-dropright"></i>Overlay
-          <ul>
-            <li routerLink="modal" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>Modal
-            </li>
-            <li routerLink="form" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>Form
-            </li>
-            <li routerLink="dialog" routerLinkActive="active"><i
-              class="ion-android-arrow-dropright"></i>Dialog
-            </li>
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a routerLink="" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini">TL</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg" style="font-family: Dimitri Swank; font-size: 27px"><b>Truly</b> UI</span>
+    </a>
+
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <span href="#" style="color: #fff" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </span>
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!--The Menus!-->
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="header" style="color: #fff">WELCOME</li>
+        <li><a href="#" routerLink="home" routerLinkActive="active"><i class="fa ion-home"></i> <span>Home</span></a></li>
+        <li><a href="#" routerLink="gettingstarted" routerLinkActive="active"><i class="fa ion-play"></i> <span>Getting Started</span></a></li>
+        <!--<li class="treeview">
+          <a href="#">
+            <i class="fa ion-ios-list"></i>
+            <span>Tutorials</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> 1. Intruduction</a></li>
+            <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> 2. Utilizando Datatables</a></li>
+            <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> 3. Utilizando Modal Form</a></li>
+            <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> 4. Trabalhando com Tabulação</a></li>
+          </ul>
+        </li>-->
+        <li class="header" style="color: #fff">COMPONENTS</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-terminal"></i>
+            <span>Input</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> InputText</a></li>
+            <li><a href="#" routerLink="inputmask" routerLinkActive="active"><i class="fa fa-circle-o"></i> InputMask</a></li>
           </ul>
         </li>
-        <li routerLinkActive="active" routerLink="tooltip"><i class="ion-android-arrow-dropright" ></i>Tooltip</li>
-        <li><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>MultiSelect</li>
-        <li routerLinkActive="active" routerLink="datatable"><i class="ion-android-arrow-dropright" routerLinkActive="active"></i>DataTable</li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-minus-square"></i>
+            <span>Button</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="button" routerLinkActive="active"><i class="fa fa-circle-o"></i> Button</a></li>
+            <li><a href="#" routerLink="buttongroup" routerLinkActive="active"><i class="fa fa-circle-o"></i> Button Group</a></li>
+            <li><a href="#" routerLink="splitbutton" routerLinkActive="active"><i class="fa fa-circle-o"></i> SplitButton</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-window-maximize"></i>
+            <span>Overlay</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="modal" routerLinkActive="active"><i class="fa fa-circle-o"></i> Modal</a></li>
+            <li><a href="#" routerLink="form" routerLinkActive="active"><i class="fa fa-circle-o"></i> Form</a></li>
+            <li><a href="#" routerLink="dialog" routerLinkActive="active"><i class="fa fa-circle-o"></i> Dialog</a></li>
+            <li><a href="#" routerLink="tooltip" routerLinkActive="active"><i class="fa fa-circle-o"></i> Tooltip</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-caret-square-o-down"></i>
+            <span>Dropdown</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="dropdownlist" routerLinkActive="active"><i class="fa fa-circle-o"></i> Dropdown List</a></li>
+            <li><a href="#" routerLink="multiselect" routerLinkActive="active"><i class="fa fa-circle-o"></i> MultiSelect</a></li>
+          </ul>
+        </li>
+        <li><a href="#" routerLink="datatable" routerLinkActive="active"><i class="fa fa-list-alt"></i> <span>DataTable</span></a></li>
       </ul>
-      <!--<span class="git-logo"><img width="40" height="40" title="Fork me on GitHub" src="../assets/giticon.png"></span>-->
-    </div>
-    <div id="content" class="col-sm-9 col-md-10 router-outlet">
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Main content -->
+    <section class="content">
       <router-outlet></router-outlet>
-    </div>
+    </section>
+    <!-- /.content -->
   </div>
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <strong><a class="link-copy" href="http://temainfo.com.br">Temainfo Software</a>&nbsp;&nbsp;Copyright &copy; 2017</strong> All rights
+    reserved.
+  </footer>
 </div>
+
+
 
 

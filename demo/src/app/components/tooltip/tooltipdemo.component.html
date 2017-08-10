@@ -1,3 +1,4 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Tooltip</h1>
   <p class="text-content">The tooltip can be used in any HTML element.</p>
@@ -35,7 +36,7 @@
       <div class="group-component">
         <h5>Custom Background Color</h5>
         <tl-input type="text"
-               [tooltip]="{text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
+                  [tooltip]="{text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
       </div>
     </div>
     <div class="col-md-4">
@@ -49,9 +50,9 @@
 <hr>
 <div class="setup">
   <h3 class="title">Properties</h3>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
+  <div class="table-box">
+    <table class="table table-truly">
+      <thead class="table-truly-head">
       <tr>
         <th>Name</th>
         <th>Type</th>
@@ -60,9 +61,9 @@
         <th>Options</th>
       </tr>
       </thead>
-      <tbody *ngFor="let item of tooltipProperties; let i = index">
+      <tbody class="table-truly-body" *ngFor="let item of tooltipProperties; let i = index">
       <tr>
-        <td><b>{{ item.name }}</b></td>
+        <td><span>{{ item.name }}</span></td>
         <td><span class="badge">{{ item.type }}</span></td>
         <td><code>{{ item.default }}</code></td>
         <td>{{ item.description }}</td>
@@ -75,42 +76,43 @@
   <!--<h3 class="title">Events</h3>-->
 </div>
 
-<div class="examples">
-  <h3 class="title">Examples</h3>
-  <div class="group-component">
-    <h5 class="title">Placement Top</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <h5 class="title">Placement Top</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top'}"></tl-input>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Placement Right</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Placement Right</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right'}"></tl-input>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Placement Bottom</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Placement Bottom</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom'}"></tl-input>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Placement Left</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Placement Left</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'left'}"></tl-input>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Custom Background Color</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Custom Background Color</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
   </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Custom Font Color</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    </div>
+    <div class="group-component">
+      <h5 class="title">Custom Font Color</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
      <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right', color: '#167AC6', fontColor: '#000' }"></tl-input>
   </textarea>
-  </div>
+    </div>
+</div>
 </div>

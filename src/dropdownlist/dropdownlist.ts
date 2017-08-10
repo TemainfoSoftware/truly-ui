@@ -21,10 +21,10 @@
  */
 import {
     AfterViewInit,
-    Component, EventEmitter, forwardRef, Input, Output, Renderer2, ViewChild
+    Component, forwardRef, Input, Renderer2, ViewChild
 } from '@angular/core';
 
-import { style, transition, trigger, animate } from '@angular/animations';
+import { style, transition, trigger, animate, state } from '@angular/animations';
 
 import { KeyEvent } from '../core/enums/key-events';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
@@ -42,14 +42,10 @@ let globalZindex = 1;
     animations : [
         trigger(
             'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity : 0, transform : 'translate(0%,-5%)' } ),
-                    animate( '200ms', style( { opacity : 1, transform : 'translate(0%,0%)' } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity : 1, transform : 'translate(0%,0%)' } ),
-                    animate( '200ms', style( { opacity : 0, transform : 'translate(0%,-5%)' } ) )
-                ] )
+                state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
+                state( 'false', style( { opacity : 0, transform : 'translate(0%,-5%)', flex : '0' } ) ),
+                transition( '1 => 0', animate( '200ms' ) ),
+                transition( '0 => 1', animate( '200ms' ) ),
             ]
         )
     ],
@@ -57,6 +53,7 @@ let globalZindex = 1;
         { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlDropDownList ), multi : true }
     ]
 } )
+
 export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
 
     @Input( 'data' ) data: Array<any>;
@@ -69,27 +66,23 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'disabled' ) disabled: boolean;
 
-    @Input( 'labelPlacement' ) labelPlacement = 'left';
+    @Input( 'labelPlacement' ) labelPlacement: string;
 
     @Input( 'labelSize' ) labelSize: string;
 
     @Input( 'height' ) height: number;
 
-    @Input( 'placeholder' ) placeholder = null;
+    @Input( 'width' ) width: number;
+
+    @Input( 'placeholder' ) placeholder: string;
 
     @Input( 'scroll' ) scroll: number;
-
-    @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'list' ) list;
 
     @ViewChild( 'defaultPlaceholder' ) placeholderDiv;
 
-    @ViewChild( 'inputDropdown' ) inputDropdown;
-
-    @ViewChild( 'dropbox' ) dropbox;
-
-    @ViewChild( 'model' ) componentModel;
+    @ViewChild( 'dropdown' ) dropdown;
 
     public zIndex = 0;
 
@@ -107,39 +100,114 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
         this.showHide = false;
-        this.height = 39;
+        this.width = 83;
+        this.height = 37;
         this.text = 'text';
+        this.labelPlacement = 'left';
         this.value = 'value';
-        this.disabled = false;
+        this.disabled = null;
+        this.placeholder = null;
         this.scroll = null;
     }
 
+
     ngAfterViewInit() {
-        this.setElement( this.dropbox, 'dropdown' );
-        this.setTabIndex( this.dropbox );
+        this.setElement( this.dropdown, 'dropdown' );
+        this.setTabIndex( this.dropdown );
         this.updateDataSource( this.getData() );
+        this.isNumberWidth( this.width );
+        this.isNumberScroll( this.scroll );
+        this.isBooleanDisabled( this.disabled );
+        this.isStringPlaceholder( this.placeholder );
         this._renderer.listen( document, 'click', ( event ) => {
             this.showHide = false;
         } );
+        setTimeout( () => {
+            if ( this.componentModel.model ) {
+                this.selectValueModelLoaded();
+                this.selectItemListLoaded();
+            }
+        }, 1 );
+    }
+
+
+    selectValueModelLoaded() {
+        this.datasource.forEach( ( item, index, array ) => {
+            if ( this.componentModel.model === item[ this.value ] ) {
+                this.dropdown.nativeElement.value = item[ this.text ];
+                this.itemSelected = item;
+            }
+        } );
+    }
+
+    selectItemListLoaded() {
+        for ( let i = 0; i < this.list.nativeElement.children.length; i++ ) {
+            if ( this.dropdown.nativeElement.value === this.list.nativeElement.children[ i ].innerHTML.trim() ) {
+                this.children = i;
+            }
+        }
     }
 
     updateDataSource( data ) {
+
         data.forEach( ( value, index, array ) => {
+            Object.keys( value ).forEach( ( value2, index2, array2 ) => {
+                if ( (value2 !== this.text) && (value2 !== this.value) ) {
+                    throw new EvalError( 'You must pass a valid value to TEXT/VALUE properties.' );
+                }
+            } );
             this.datasource.push( value );
         } );
     }
 
     calcHeightItem() {
-        if ( (!this.scroll) ) {
-            if ( (this.datasource.length > 10) ) {
-                return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
+        this.isNumberHeight( this.height );
+        if ( this.showHide && !this.disabled ) {
+            if ( (!this.scroll) ) {
+                if ( (this.datasource.length > 10) ) {
+                    return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
+                } else {
+                    return { 'height' : 'auto', 'overflow-y' : 'visible' };
+                }
             } else {
-                return { 'height' : 'auto', 'overflow-y' : 'visible' };
+                if ( this.scroll > this.datasource.length ) {
+                    this.scroll = this.datasource.length;
+                }
+                return { 'height' : (this.scroll * this.height) + 'px', 'overflow-y' : 'scroll' };
             }
-        } else {
-            return { 'height' : (this.scroll * this.height) + 'px', 'overflow-y' : 'scroll' };
         }
     }
+
+    isNumberHeight( value ) {
+        if ( typeof value !== 'number' || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC VALUE to HEIGHT property of the tl-dropdown-list element.' );
+        }
+        return value;
+    }
+
+    isNumberWidth( value ) {
+        if ( typeof value !== 'number' || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC value to WIDTH property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isNumberScroll( value ) {
+        if ( ( typeof value !== 'number' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a NUMERIC value to SCROLL property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isBooleanDisabled( value ) {
+        if ( ( typeof value !== 'boolean' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a BOOLEAN value to DISABLED property of the tl-dropdown-list element.' );
+        }
+    }
+
+    isStringPlaceholder( value ) {
+        if ( ( typeof value !== 'string' && value !== null ) || value === undefined ) {
+            throw new EvalError( 'You must pass a STRING value to PLACEHOLDER property of the tl-dropdown-list element.' );
+        }
+    };
 
     onListOpened( $event ) {
         switch ( $event.keyCode ) {
@@ -160,6 +228,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 break;
             case KeyEvent.SPACE:
                 this.stopPropagationAndPreventDefault( $event );
+                break;
+            case KeyEvent.TAB:
+                $event.preventDefault();
+                this.onEscape( $event );
                 break;
         }
     }
@@ -186,9 +258,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 case KeyEvent.SPACE:
                     this.onSpace();
                     this.stopPropagationAndPreventDefault( $event );
-                    break;
-                case KeyEvent.ESCAPE:
-                    this.onEscape( $event );
                     break;
             }
         }
@@ -223,7 +292,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onChangeItem();
         }
         this.showHide = false;
-        this.setFocusOnDropbox();
+        this.setFocusOnDropdown();
     }
 
     onEnter( $event ) {
@@ -242,7 +311,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onChangeItem();
         }
         this.showHide = false;
-        this.setFocusOnDropbox();
+        this.setFocusOnDropdown();
     }
 
     setTimeoutWithZIndexAndFocusOnElement() {
@@ -261,23 +330,32 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
                 this.itemSelected = value;
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-                    this.onChangeCallback( '' );
+                    this.clearModelComponent();
                 }
-                this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
-                this.onChangeCallback( this.itemSelected[ this.value ] );
+                this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
+                this.setModelComponent( this.itemSelected[ this.value ] );
             }
 
         } );
     }
 
     placeholderEnter( $event ) {
+        $event.preventDefault();
         switch ( $event.keyCode ) {
             case KeyEvent.ENTER:
-                $event.preventDefault();
                 $event.stopPropagation();
                 this.itemSelected = null;
-                this.setFocusOnDropbox();
+                this.setFocusOnDropdown();
                 this.showHide = false;
+                break;
+            case KeyEvent.ARROWDOWN:
+                this.onArrowDown();
+                break;
+            case KeyEvent.TAB:
+                this.onEscape( $event );
+                break;
+            case KeyEvent.ESCAPE:
+                this.onEscape( $event );
                 break;
         }
     }
@@ -288,10 +366,11 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
         this.itemSelected = this.datasource[ this.children ];
         if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-            this.onChangeCallback( '' );
+            this.clearModelComponent();
         }
-        this.inputDropdown.nativeElement.value = this.itemSelected[ this.text ];
-        this.onChangeCallback( this.itemSelected[ this.value ] );
+        this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
+
+        this.setModelComponent( this.itemSelected[ this.value ] );
     }
 
     onArrowDown() {
@@ -303,14 +382,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     onArrowUp() {
-        if ( this.placeholder && this.children < 1 ) {
+        if ( this.placeholder && this.children <= 0 ) {
             this.children = -1;
-            this.onChangeCallback( '' );
+            this.clearModelComponent();
             this.itemSelected = null;
             if ( this.showHide ) {
                 this.placeholderDiv.nativeElement.focus();
             }
-            this.inputDropdown.nativeElement.value = this.placeholder;
+            this.dropdown.nativeElement.value = this.placeholder;
         }
         if ( this.children > 0 && this.children !== -1 ) {
             this.children = this.children - 1;
@@ -343,27 +422,49 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     selectOption( item, index ) {
+        this.showHide = false;
         this.itemSelected = item;
         this.children = index;
-        this.inputDropdown.nativeElement.value = item[ this.text ];
-        this.onChangeCallback(item[ this.value ]);
-        this.showHide = false;
-        this.dropbox.nativeElement.focus();
+        this.dropdown.nativeElement.value = item[ this.text ];
+        this.setModelComponent( item[ this.value ] );
+        this.dropdown.nativeElement.focus();
     }
 
     selectPlaceholder() {
-        this.inputDropdown.nativeElement.value = this.placeholder;
-        this.onChangeCallback( '' );
+        this.showHide = false;
+        this.dropdown.nativeElement.value = this.placeholder;
+        this.clearModelComponent();
+
         this.placeholderDiv.nativeElement.focus();
         this.itemSelected = null;
+        this.setFocusOnDropdown();
         this.children = -1;
-        this.setFocusOnDropbox();
+    }
+
+    setModelComponent( value ) {
+        this.onChangeCallback( value );
+        this.componentModel.model = value;
+    }
+
+    clearModelComponent() {
+        this.onChangeCallback( '' );
+        this.componentModel.model = '';
     }
 
     getData() {
-        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined )
-            || (typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) ) {
-            throw new EvalError( 'You must pass some data to the data property of the dropdownlist element.' );
+        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined ) ) {
+            throw new EvalError( 'You must pass some data to the DATA property of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && (this.text === 'text' || this.value === 'value') ) {
+            throw new EvalError( 'You must pass the TEXT and VALUE properties' +
+                ' when using the DATA property of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
+            throw new EvalError( 'You must pass the TEXT and VALUE values to STRING of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) {
+            throw new EvalError( 'You don`t need to enter the TEXT and VALUE' +
+                ' properties when using the SIMPLEDATA property of the tl-dropdown-list element.' );
         }
         if ( typeof this.data[ 0 ] === 'string' ) {
             const simpleData = [];
@@ -375,8 +476,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         return this.data;
     }
 
-    setFocusOnDropbox() {
-        this.dropbox.nativeElement.focus();
+    setFocusOnDropdown() {
+        this.dropdown.nativeElement.focus();
     }
 
 }

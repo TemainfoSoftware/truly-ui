@@ -1,3 +1,4 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Modal</h1>
   <p class="text-content">Modals are pretty cool stuff, so truly ui have it.</p>
@@ -71,4 +72,5 @@
   <footer class="minimize-box">
     <span *ngFor="let item of modals; let i = index" (click)="show(item, i)">{{item.instance.label}}</span>
   </footer>
+</div>
 </div>

@@ -124,18 +124,21 @@
 
 .box-framework {
   position: relative;
-  display: block;
+  z-index: 0;
   background-color: #66CC99;
 }
 
 .box-framework::after {
-  position: absolute;
   content: "";
-  background: url("../../assets/img/overlay.jpg");
-  top:0;
-  bottom:0;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
+  background: url("../../assets/img/overlay.jpg");
+  opacity: 0.05;
+  background-size: 320px auto;
 }
 
 .text-boxes-bottom{
@@ -207,6 +210,14 @@
 .info-version {
   line-height: 70px;
   color: #8c8c8c;
+}
+
+.info-version a {
+  color: #8c8c8c;
+}
+
+.info-version a:hover {
+  color: #66CC99;
 }
 
 .button-getStarted:hover {

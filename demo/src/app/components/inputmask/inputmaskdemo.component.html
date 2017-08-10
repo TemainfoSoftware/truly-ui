@@ -1,55 +1,56 @@
+<div class="router-outlet">
 <div class="header-title-demo">
   <h1 class="title">Input Mask</h1>
   <p class="text-content">Mask's are very common, that's why we bring it so easy to set up.</p>
 </div>
 <hr>
 
-<div class="showcase">
-  <div class="row">
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Basic</h5>
-        <tl-input [mask]="{mask: '00/00/0000'}"
-                  [(ngModel)]="basic"></tl-input>
-        <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{basic}}</span>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Basic</h5>
+          <tl-input [mask]="{mask: '00/00/0000'}"
+                    [(ngModel)]="basic"></tl-input>
+          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{basic}}</span>
 
+        </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Text + Number</h5>
-        <tl-input
-          [mask]="{mask: 'AAA-0000', uppercase: true}"
-          [(ngModel)]="textNumber"
-          [iconBefore]="'ion-printer'">
-        </tl-input>
-        <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{textNumber}}</span>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Text + Number</h5>
+          <tl-input
+            [mask]="{mask: 'AAA-0000', uppercase: true}"
+            [(ngModel)]="textNumber"
+            [iconBefore]="'ion-printer'">
+          </tl-input>
+          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{textNumber}}</span>
 
+        </div>
       </div>
-    </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>Without Guides</h5>
-        <tl-input
-          [mask]="{mask: 'AAA-0000', guides: false}"
-          [(ngModel)]="sGuides"
-          [iconAfter]="'ion-printer'">
-        </tl-input>
-        <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{sGuides}}</span>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Without Guides</h5>
+          <tl-input
+            [mask]="{mask: 'AAA-0000', guides: false}"
+            [(ngModel)]="sGuides"
+            [iconAfter]="'ion-printer'">
+          </tl-input>
+          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{sGuides}}</span>
 
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>With Literal Chars</h5>
+          <tl-input
+            [mask]="{mask: '0000/00/00', withLiteralChar: true}"
+            [(ngModel)]="literal"
+            [iconAfter]="'ion-social-usd'"></tl-input>
+          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{literal}}</span>
+        </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="group-component">
-        <h5>With Literal Chars</h5>
-        <tl-input
-          [mask]="{mask: '0000/00/00', withLiteralChar: true}"
-          [(ngModel)]="literal"
-          [iconAfter]="'ion-social-usd'"></tl-input>
-        <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{literal}}</span>
-      </div>
-    </div>
-  </div>
 </div>
 <hr>
 <h3 class="title">Mask Pattern</h3>
@@ -117,4 +118,5 @@
     <tl-input [mask]="'00/00/0000'"></tl-input>
   </textarea>
   </div>
+</div>
 </div>

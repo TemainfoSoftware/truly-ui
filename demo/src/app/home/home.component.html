@@ -10,10 +10,17 @@
         <div class="banner-footer">
           <div class="col-md-6">
             <div class="col-md-5">
-              <div class="button-getStarted"><a class="getstarted">Get Started</a></div>
+              <div class="button-getStarted"><a href="gettingstarted" class="getstarted">Get Started</a></div>
             </div>
             <div class="col-md-7">
-              <div class="info-version"><span>v3.6.0 / 2017-07-27 / MIT Licensed / Release Notes</span></div>
+              <div class="info-version">
+                <span>
+                  <a href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a> /
+                  {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
+                  <a href="#" target="_blank">GPL Licensed</a> /
+                  <a href="{{lastRelease?.html_url}}" target="_blank">Release Notes</a>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -155,7 +162,7 @@
           <i class="fa ion-play icon-boxes-bottom" aria-hidden="true"></i>
         </div>
         <div class="col-md-8 box-getting-footer">
-          <a href="#" target="_blank"><h2 class="title-boxes-bottom">Getting Started</h2></a>
+          <a href="/gettingstarted"><h2 class="title-boxes-bottom">Getting Started</h2></a>
           <p class="text-boxes-bottom">Learn more about how to install TrulyUI Framework. We'll cover the basics and get you started from the ground up.</p>
         </div>
       </div>

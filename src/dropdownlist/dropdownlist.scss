@@ -82,13 +82,13 @@ $success-background-color: #E3F5EC;
       outline-style: auto;
     }
 
-    > .select.-hasValidation.ng-touched.ng-invalid {
+    > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
       border: 1px solid $error-field;
       background-color: $error-background-color;
       //outline: none;
     }
 
-    > .select.-hasValidation.ng-valid.ng-touched {
+    > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
       border: 1px solid $success-field;
       background-color: $success-background-color;
       //outline: none;

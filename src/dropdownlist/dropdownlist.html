@@ -13,8 +13,10 @@
                [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', 'width': width + 'px'}"
                [attr.disabled]="disabled ? true : null"
                (click)="changeShowStatus($event.stopPropagation())"
+               name="teste"
                [ngClass]="{
-               'disabled': disabled}"
+               'disabled': disabled,
+               '-hasValidation': hasValidation()}"
                required="{{validations?.required}}"
                (keydown)="onListClosed($event)">
         <div class="dropdown-list-icon"

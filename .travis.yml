@@ -18,7 +18,6 @@ before_script:
   - npm run test-jest:ci
 after_success:
   - npm run semantic-release
-before_deploy:
   - cd demo
   - npm install
   - ng build

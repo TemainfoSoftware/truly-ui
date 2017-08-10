@@ -1,11 +1,14 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from "app/home/home.component";
+import { GettingStarted } from "./getting-started/getting-started.component";
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
+      {path: 'home', component: HomeComponent},
+      {path: 'gettingstarted', component: GettingStarted},
       {path: 'input', loadChildren: './components/input/inputdemo.module#InputDemoModule'},
       {path: 'inputmask', loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'},
       {path: 'button', loadChildren: './components/button/buttondemo.module#ButtonDemoModule'},

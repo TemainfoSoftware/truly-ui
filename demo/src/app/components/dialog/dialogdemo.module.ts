@@ -1,27 +1,27 @@
-import { NgModule } from "@angular/core";
+import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+
+import { HighlightJsModule } from 'ngx-highlight-js';
+import { InputModule } from 'truly-ui/input';
+import { ButtonModule } from 'truly-ui/button';
+import { DatatableModule } from 'truly-ui/datatable';
 
 import { DialogDemo } from "./dialogdemo.component";
-
 import { DialogDemoRoutingModule } from "./dialogdemo-routing.module";
-import { CommonModule  } from '@angular/common';
-import { HighlightJsModule } from 'ngx-highlight-js';
-import { InputModule } from '../../../../../src/input';
-import { ButtonModule } from '../../../../../src/button';
-import { DatatableModule } from '../../../../../src/datatable';
 
 @NgModule({
   declarations: [
     DialogDemo,
   ],
   imports:[
-    DialogDemoRoutingModule,
-    InputModule,
-    CommonModule,
-    FormsModule,
     ButtonModule,
-    HighlightJsModule,
+    CommonModule,
     DatatableModule,
+    DialogDemoRoutingModule,
+    FormsModule,
+    HighlightJsModule,
+    InputModule,
   ],
   exports: [
     DialogDemo,

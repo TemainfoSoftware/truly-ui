@@ -1,28 +1,32 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+
+import { HighlightJsModule } from 'ngx-highlight-js';
+
+import { ModalService } from "truly-ui/modal/modal.service";
+import { SplitButtonModule } from 'truly-ui/splitbutton';
 
 import { SplitButtonDemo } from "./splitbuttondemo.component";
-import { SplitButtonModule } from '../../../../../src/splitbutton';
 import { SplitButtonDemoRoutingModule } from "./splitbuttondemo-routing.module";
-import { HighlightJsModule } from 'ngx-highlight-js';
-import { ModalService } from "../../../../../src/modal/modal.service";
 
 
-@NgModule( {
+@NgModule({
   declarations: [
     SplitButtonDemo
   ],
   imports: [
-    SplitButtonDemoRoutingModule,
-    SplitButtonModule,
     CommonModule,
     FormsModule,
-    HighlightJsModule
+    HighlightJsModule,
+    SplitButtonDemoRoutingModule,
+    SplitButtonModule
   ],
   exports: [
     SplitButtonDemo
   ],
-  providers: [ModalService]
-} )
+  providers: [
+    ModalService
+  ]
+})
 export class SplitButtonDemoModule { }

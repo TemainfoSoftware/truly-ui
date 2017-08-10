@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlToolTip } from './tooltip';
 import { DirectiveModule } from '../core/directives/index';
+import { TlToolTip } from './tooltip';
 
 export * from './tooltip';
 

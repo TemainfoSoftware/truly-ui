@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogModule } from "../../../src/dialog/index";
 import { GettingStartedModule } from './getting-started/getting-started.module';
 import { GithubAPIService } from "./shared/services/githubapi";
 
@@ -21,7 +20,6 @@ import { GithubAPIService } from "./shared/services/githubapi";
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    DialogModule,
     HttpModule,
     GettingStartedModule,
     HomeModule

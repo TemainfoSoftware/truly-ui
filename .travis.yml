@@ -18,7 +18,9 @@ before_script:
   - npm run test-jest:ci
 after_success:
   - npm run semantic-release
+  - npm link src
   - cd demo
+  - npm link truly-ui
   - npm install
   - ng build
 branches:

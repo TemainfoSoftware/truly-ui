@@ -18,7 +18,10 @@ before_script:
   - npm run test-jest:ci
 after_success:
   - npm run semantic-release
-  - tools/bashes/demo-build.sh
+before_deploy:
+  - cd demo
+  - npm install
+  - ng build
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

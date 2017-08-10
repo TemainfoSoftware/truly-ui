@@ -3,152 +3,244 @@
   src: url("../../assets/fonts/dimitri.ttf");
 }
 
-.banner-home {
-  height: 350px;
-  width: 100%;
-  background-color: #444444;
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+  .home-page {
+    margin-bottom: 100px;
+    padding: 0;
+    margin: 0;
+  }
+  .banner {
+    .logo {
+      position: relative;
+      margin: 0;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      background-color: #444444;
+      color: #66CC99;
+      > .name {
+        margin-bottom: 15px;
+      }
+      > .description {
+        font-family: "Segoe UI";
+        color: #fff;
+        font-size: 26px;
+      }
+      > .description p {
+        line-height: 1.3em;
+        margin: 0;
+      }
+      > .description p:last-child {
+        font-size: 20px;
+        text-align: right;
+      }
+    }
+    .btn-get-started {
+      background-color: #66CC99;
+      margin-bottom: 20px;
+    }
+    .btn-get-started:hover {
+      background-color: #5DBA8C;
+      color: #fff;
+      cursor: pointer;
+    }
+    .desk {
+      padding-top: 35px;
+      background-color: #4c4c4c;
+      z-index: 1;
+      > img {
+        margin: 25px auto 0 auto;
+      }
+    }
+    .desk:before {
+      display: block;
+      position: absolute;
+      content: '';
+      top: 0;
+      right: -25%;
+      z-index: -1;
+      width: 150%;
+      height: 50%;
+      background: inherit;
+      transform: rotate(4deg);
+      transform-origin: 80% 0;
+    }
+    .info-version {
+      font-family: "Segoe UI";
+      text-align: center;
+      color: #8c8c8c;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+  }
+  .why-truly-ui {
+    padding-top: 50px;
+    padding-bottom: 35px;
+    .logo img {
+      width: 50%;
+      margin: 0 auto;
+    }
+    .why-tl {
+      text-align: center;
+      font-family: "Segoe UI";
+      h1 {
+        margin-bottom: 15px;
+      }
+      p {
+        font-size: 1.7em;
+        line-height: 1.7em;
+        color: #444;
+        font-weight: 300;
+        word-break: normal;
+      }
+    }
+    .feature-box {
+      font-family: "Segoe UI";
+      h3 {
+        font-weight: 500;
+        margin-top: 4px;
+        margin-bottom: 5px;
+        line-height: 1.1em;
+      }
+      h3 i {
+        color: #66CC99;
+        padding-right: 5px;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.7em;
+        font-weight: 400;
+        color: #817f7f;
+        letter-spacing: -.02em;
+        margin-bottom: 15px;
+      }
+    }
+  }
+  .web-components {
+    display: block;
+    background: #66CC99;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    h1 {
+      color: #FFF;
+      margin-bottom: 25px;
+    }
+    h3 {
+      color: #FFF;
+      opacity: 0.6;
+      margin-bottom: 25px;
+    }
+    .web-components-list {
+      margin-bottom: 25px;
+      i {
+        margin-left: -20px;
+        color: #626060;
+        font-size: 3em;
+      }
+      p {
+        font-family: 'Segoe UI';
+        color: #fff;
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.8em;
+      }
+    }
+  }
+  .git-and-getstarted {
+    padding-top: 50px;
+    padding-bottom: 25px;
+    .list {
+      margin-bottom: 25px;
+      h2 {
+        margin-top: 0;
+        color: #8c8c8c;
+      }
+      i {
+        margin-left: -20px;
+        color: #626060;
+        font-size: 3em;
+      }
+      p {
+        font-family: 'Segoe UI';
+        color: #aeafb1;
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.8em;
+      }
+    }
+  }
+  .fix-padding {
+    padding-right: 0;
+    padding-left: 0;
+  }
 }
 
-.logo-typo {
-  font-family: "Dimitri Swank";
-  position: absolute;
-  color: #66CC99;
-  top: 50px;
-  left: 110px;
-  font-size: 7em;
-  user-select: none;
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  white-space: nowrap; /* Keeps the content on a single line */
-  letter-spacing: .15em; /* Adjust as needed */
-  animation:
-    typing 2.5s steps(20, end),
-    blink-caret .75s step-end;
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+  .banner {
+    .info-version {
+      font-size: 13px;
+    }
+  }
+  .web-components {
+    .web-components-list {
+      i {
+        font-size: 5em;
+      }
+    }
+  }
+  .git-and-getstarted {
+    .list {
+      i {
+        font-size: 5em;
+      }
+
+    }
+  }
 }
 
-@keyframes typing {
-  from { width: 0 }
-  to { width: 80% }
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .home-page {
+    margin: 0;
+  }
+  .fix-padding {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  img {
+    border: 1px solid green;
+  }
 }
 
-/* The typewriter cursor effect */
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: #ECF0F5; }
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .home-page {
+    margin: 0;
+  }
+  .fix-padding {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  img {
+    border: 1px solid black;
+  }
 }
 
-.logo-description {
-  position: absolute;
-  font-family: "Segoe UI";
-  color: #fff;
-  top: 175px;
-  left: 110px;
-  font-size: 1.5em;
-}
-
-.banner-separator {
-  background-color: #4c4c4c;
-  width: 55%;
-  height: inherit;
-  float: right;
-  -webkit-transform: skew(-20deg) translateX(10px);
-  -ms-transform: skew(-20deg) translateX(10px);
-  transform: skew(-20deg) translateX(100px);
-}
-
-.banner-footer {
-  position: absolute;
-  height: 70px;
-  background-color: #4c4c4c;
-  width: 100%;
-  bottom: 0;
-}
-
-.body-box-homepage {
-  margin-top: 100px;
-  margin-bottom: 60px;
-}
-
-.title-box {
-  font-family: "Segoe UI";
-}
-
-.title-box i {
-  padding: 10px;
-  color: #66CC99;
-}
-
-.box-description {
-  font-family: "Segoe UI";
-  line-height: 45px;
-  font-size: 1.5em;
-  color: #444444;
-  font-weight: 300;
-  text-align: justify;
-  word-break: normal;
-}
-
-.box-features {
-  padding-bottom: 60px;
-}
-
-.box-features-sub-header {
-  color: #fff;
-  opacity: 0.5;
-  margin-bottom: 50px;
-}
-
-.box-getting-footer {
-  margin-left: 20px;
-}
-
-.box-getting-footer h2:hover {
-  color: #66CC99;
-}
-
-.box-footer-buttons {
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.feature-description {
-  font-family: "Segoe UI";
-  line-height: 25px;
-  font-size: 1.1em;
-  color: #817f7f;
-}
-
-.framework-description {
-  color: #fff;
-  font-size: 1.2em;
-}
-
-.box-framework {
-  position: relative;
-  display: block;
-  background-color: #66CC99;
-}
-
-.box-framework::after {
-  position: absolute;
-  content: "";
-  background: url("../../assets/img/overlay.jpg");
-  top:0;
-  bottom:0;
-  left: 0;
-  right: 0;
-}
-
-.text-boxes-bottom{
-  color: #aeafb1;
-  font-size: 1.2em;
-}
-.title-boxes-bottom{
-  color: #8c8c8c;
-}
-.icon-boxes-bottom{
-  margin-top: 20px;
-  font-size: 6em;
-  color: #626060;
+/* Large Devices, Wide Screens */
+@media only screen and (min-width: 1200px) {
+  .home-page {
+    margin: 0;
+  }
+  .fix-padding {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  img {
+    border: 1px solid orange;
+  }
 }
 
 .separator {
@@ -157,75 +249,4 @@
   width: 5px;
   height: 140px;
   background: -webkit-linear-gradient(top, rgba(236, 240, 245, 0) 0%, rgba(255, 255, 255, 1) 49%, rgba(255, 255, 255, 0) 100%);
-}
-
-
-.box-framework h1 {
-  font-family: "Segoe UI";
-  font-weight: normal;
-  margin: 0 auto;
-
-  color: #fff;
-}
-
-.box-framework-features {
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-}
-
-.box-framework-features i {
-  line-height: 100px;
-  margin-right: 20px;
-  font-size: 3em;
-  color: #626060;
-}
-
-.button-getStarted {
-  top: 15px;
-  left: 90px;
-  width: 180px;
-  background-color: #66CC99;
-  position: absolute;
-  border-radius: 5px;
-  height: 40px;
-  text-align: center;
-}
-
-.getstarted {
-  padding: 10px 20px;
-  line-height: 40px;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Segoe UI",sans-serif;
-  font-size: 1.1em;
-  text-wrap: none;
-  color: #fff;
-}
-
-.info-version {
-  line-height: 70px;
-  color: #8c8c8c;
-}
-
-.button-getStarted:hover {
-  background-color: #5DBA8C;
-  color: #fff !important;
-  cursor: pointer;
-}
-
-.banner-image {
-  position: absolute;
-  width: 48%;
-  height: 230px;
-  right: 0;
-  top: 123.5px;
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  background: url("../../assets/img/desk.png") no-repeat;
-  background-size: 620px;
 }

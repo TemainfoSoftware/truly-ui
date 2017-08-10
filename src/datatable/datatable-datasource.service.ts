@@ -28,7 +28,7 @@ import { DataMetadata } from '../core/types/datametadata';
 @Injectable()
 export class TlDatatableDataSource {
 
-    public datasource: DataMetadata;
+    public datasource: any;
 
     private datatable: TlDatatable;
 
@@ -36,7 +36,7 @@ export class TlDatatableDataSource {
 
     private lastRow: number;
 
-    constructor(){}
+    constructor() {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;

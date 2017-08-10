@@ -29,11 +29,11 @@
 
      private filtredData: any[];
 
-     private datatable : TlDatatable;
+     private datatable: TlDatatable;
 
 
      constructor( public dataSourceService: TlDatatableDataSource, injectable: Injector  ) {
-      setTimeout(()=>{
+      setTimeout(() => {
           this.datatable = injectable.get(TlDatatable)
       })
      }
@@ -58,15 +58,6 @@
     }
 
 
-     private isValidMatch( searchValue: string, valueMatch: string ) {
-         if ( this.datatable.globalFilterOptions ) {
-             if (!this.datatable.globalFilterOptions.caseSensitive )  {
-                 valueMatch = valueMatch.toLowerCase();
-                 searchValue = searchValue.toLowerCase();
-             }
-         }
-         return this.matchWith( searchValue, valueMatch );
-     }
 
      matchWith(searchValue, valueMatch) {
          if (this.datatable.globalFilterOptions) {
@@ -78,5 +69,16 @@
              }
          }
          return String(valueMatch).includes(searchValue);
+     }
+
+
+     private isValidMatch( searchValue: string, valueMatch: string ) {
+         if ( this.datatable.globalFilterOptions ) {
+             if (!this.datatable.globalFilterOptions.caseSensitive )  {
+                 valueMatch = valueMatch.toLowerCase();
+                 searchValue = searchValue.toLowerCase();
+             }
+         }
+         return this.matchWith( searchValue, valueMatch );
      }
  }

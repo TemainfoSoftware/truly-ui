@@ -136,7 +136,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     selectValueModelLoaded() {
         this.datasource.forEach( ( item, index, array ) => {
             if ( this.componentModel.model === item[ this.value ] ) {
-                this.dropdown.nativeElement.value = item[ this.text ];
+                this.setValueInputAsLabel( item );
                 this.itemSelected = item;
             }
         } );
@@ -324,8 +324,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
                     this.clearModelComponent();
                 }
-                this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
                 this.setModelComponent( this.itemSelected[ this.value ] );
+                this.setValueInputAsLabel( this.itemSelected );
             }
 
         } );
@@ -360,9 +360,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
             this.clearModelComponent();
         }
-        this.dropdown.nativeElement.value = this.itemSelected[ this.text ];
-
         this.setModelComponent( this.itemSelected[ this.value ] );
+        this.setValueInputAsLabel( this.itemSelected );
     }
 
     onArrowDown() {
@@ -376,8 +375,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     onArrowUp() {
         if ( this.placeholder && this.children <= 0 ) {
             this.children = -1;
-            this.clearModelComponent();
             this.itemSelected = null;
+            this.clearModelComponent();
             if ( this.showHide ) {
                 this.placeholderDiv.nativeElement.focus();
             }
@@ -417,8 +416,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.showHide = false;
         this.itemSelected = item;
         this.children = index;
-        this.dropdown.nativeElement.value = item[ this.text ];
         this.setModelComponent( item[ this.value ] );
+        this.setValueInputAsLabel( item );
         this.dropdown.nativeElement.focus();
     }
 
@@ -426,21 +425,24 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.showHide = false;
         this.dropdown.nativeElement.value = this.placeholder;
         this.clearModelComponent();
-
         this.placeholderDiv.nativeElement.focus();
         this.itemSelected = null;
         this.setFocusOnDropdown();
         this.children = -1;
     }
 
+    setValueInputAsLabel( item ) {
+        setTimeout( () => {
+            this.dropdown.nativeElement.value = item[ this.text ];
+        }, 1 );
+    }
+
     setModelComponent( value ) {
-        this.onChangeCallback( value );
-        this.componentModel.model = value;
+        this.writeValue( value );
     }
 
     clearModelComponent() {
-        this.onChangeCallback( '' );
-        this.componentModel.model = '';
+        this.writeValue( '' );
     }
 
     getData() {

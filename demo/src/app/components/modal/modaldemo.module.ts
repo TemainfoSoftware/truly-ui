@@ -1,17 +1,19 @@
-import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
+import { CommonModule  } from '@angular/common';
+import { NgModule } from "@angular/core";
 
+import { HighlightJsModule } from 'ngx-highlight-js';
+
+import { ButtonModule } from 'truly-ui/button';
+import { FormModule } from "truly-ui/form/index";
+import { DatatableModule } from 'truly-ui/datatable';
+import { DialogService } from "truly-ui/dialog/dialog.service";
+import { InputModule } from 'truly-ui/input';
+import { ModalModule } from "truly-ui/modal/index";
+
+import { NewModal } from "./newmodal/newModal.component";
 import { ModalDemo } from "./modaldemo.component";
 import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
-import { CommonModule  } from '@angular/common';
-import { HighlightJsModule } from 'ngx-highlight-js';
-import { InputModule } from '../../../../../src/input';
-import { ButtonModule } from '../../../../../src/button';
-import { DatatableModule } from '../../../../../src/datatable';
-import { NewModal } from "./newmodal/newModal.component";
-import { ModalModule } from "../../../../../src/modal/index";
-import { FormModule } from "../../../../../src/form/index";
-import { DialogService } from "../../../../../src/dialog/dialog.service";
 
 @NgModule({
   declarations: [
@@ -19,23 +21,25 @@ import { DialogService } from "../../../../../src/dialog/dialog.service";
     NewModal,
   ],
   imports:[
-    ModalDemoRoutingModule,
-    InputModule,
-    CommonModule,
-    FormsModule,
-    ModalModule,
-    FormModule,
     ButtonModule,
+    CommonModule,
+    DatatableModule,
+    FormsModule,
+    FormModule,
     HighlightJsModule,
-    DatatableModule
+    InputModule,
+    ModalModule,
+    ModalDemoRoutingModule
   ],
   exports: [
     ModalDemo,
     NewModal
   ],
-  providers: [DialogService],
-  entryComponents: [ NewModal ]
+  providers: [
+    DialogService
+  ],
+  entryComponents: [
+    NewModal
+  ]
 })
-export class ModalDemoModule {
-
-}
+export class ModalDemoModule {}

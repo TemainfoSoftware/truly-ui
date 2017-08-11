@@ -1,4 +1,15 @@
-/** BUTTON - CUSTOM STYLE **/
+@font-face {
+  font-family: "Dimitri Swank";
+  src: url("./assets/fonts/dimitri.ttf");
+}
+
+.title {
+  color: #626464;
+}
+
+.text-content {
+  font-size: 1.2em;
+}
 
 .table-truly-body:nth-child(odd) {
   background: #fff;
@@ -23,7 +34,7 @@
 }
 
 .router-outlet {
-  /*padding: 20px;*/
+  padding: 20px;
 }
 
 .group-component {

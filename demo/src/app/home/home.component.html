@@ -13,7 +13,11 @@
             <a class="btn btn-lg btn-block btn-get-started">Get Started</a>
           </div>
           <div class="col-xs-12 info-version">
-            <p>v3.6.0 / 2017-07-27 / MIT Licensed / Release Notes</p>
+            <p><a href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a> /
+              {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
+              <a href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
+                Licensed</a> /
+              <a href="{{lastRelease?.html_url}}" target="_blank">Release Notes</a></p>
           </div>
           <div class="col-xs-12">
             <img src="../../assets/img/desk.png" class="img-responsive">
@@ -128,7 +132,7 @@
             <i class="fa ion-play"></i>
           </div>
           <div class="col-xs-10">
-            <a href="#" target="_blank"><h2>Getting Started</h2></a>
+            <a href="/gettingstarted" target="_blank"><h2>Getting Started</h2></a>
             <p>Learn more about how to install TrulyUI Framework. We'll cover the basics and get
               you started from the ground up.</p>
           </div>
@@ -138,7 +142,8 @@
             <i class="fa fa-github"></i>
           </div>
           <div class="col-xs-10">
-            <a href="https://github.com/TemainfoSistemas/truly-ui" target="_blank"><h2 class="title-boxes-bottom">Fork us on Github</h2></a>
+            <a href="https://github.com/TemainfoSistemas/truly-ui" target="_blank"><h2 class="title-boxes-bottom">Fork
+              us on Github</h2></a>
             <p>Fork us on Github and Contribute with the project.</p>
           </div>
         </div>

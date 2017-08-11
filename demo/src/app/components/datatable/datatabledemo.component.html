@@ -1,16 +1,18 @@
-<div class="header-title-demo">
-  <h1 class="title">DataTable</h1>
-  <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
+<div class="router-outlet">
+
+  <div class="header-title-demo">
+    <h1 class="title">DataTable</h1>
+    <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
 </div>
 <hr>
 <div class="showcase">
   <!--<div class="row">-->
-    <!--<div class="col-md-12">-->
-      <!--<div class="group-component">-->
-        <!--<h5>Mode Paginator</h5>-->
-        <!--<tl-datatable [data]="data" [mode]="'paginator'" [height]="'310px'"> </tl-datatable>-->
-      <!--</div>-->
-    <!--</div>-->
+  <!--<div class="col-md-12">-->
+  <!--<div class="group-component">-->
+  <!--<h5>Mode Paginator</h5>-->
+  <!--<tl-datatable [data]="data" [mode]="'paginator'" [height]="'310px'"> </tl-datatable>-->
+  <!--</div>-->
+  <!--</div>-->
   <!--</div>-->
 
   <div class="row">
@@ -74,7 +76,6 @@
   </div>
 
 
-
   <hr>
 </div>
 <div class="setup">
@@ -117,9 +118,9 @@
       <tr >
         <td style=" vertical-align: middle;"><b>{{ item.name }}</b></td>
         <td style=" vertical-align: middle;">
-            <div *ngFor="let param of item.parameters; let i = index">
-              <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
-            </div>
+          <div *ngFor="let param of item.parameters; let i = index">
+            <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
+          </div>
         </td>
         <td style=" vertical-align: middle;">{{ item.description }}</td>
       </tr>
@@ -129,37 +130,37 @@
   <hr>
 </div>
 
-<div class="examples">
-  <h3 class="title">Examples</h3>
-  <div class="group-component">
-    <h5 class="title">Mode Normal</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <h5 class="title">Mode Normal</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
       <tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
     </textarea>
-  </div>
+    </div>
 
-  <div class="group-component">
-    <h5 class="title">Mode Normal - Global Filter</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    <div class="group-component">
+      <h5 class="title">Mode Normal - Global Filter</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
          <tl-datatable
-               [data]="data"
-               [globalFilter]="tlInput"
-               [globalFilterOptions]="{caseSensitive: false}"
-               (rowSelect)="onRowSelect($event, index )">
+           [data]="data"
+           [globalFilter]="tlInput"
+           [globalFilterOptions]="{caseSensitive: false}"
+           (rowSelect)="onRowSelect($event, index )">
         </tl-datatable>
     </textarea>
-  </div>
+    </div>
 
-  <div class="group-component">
-    <h5 class="title">Mode Scrollable</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    <div class="group-component">
+      <h5 class="title">Mode Scrollable</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
         <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>
     </textarea>
-  </div>
+    </div>
 
-  <div class="group-component">
-    <h5 class="title">Mode Scrollable + LazyLoad</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+    <div class="group-component">
+      <h5 class="title">Mode Scrollable + LazyLoad</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
      <tl-datatable
        [data]="dataLazy"
        [mode]="'scrollable'"
@@ -172,5 +173,6 @@
      >
      </tl-datatable>
     </textarea>
-  </div>
+    </div>
+</div>
 </div>

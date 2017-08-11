@@ -59,7 +59,9 @@
      private pageNumber = 1;
 
      constructor( @Inject(forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
-                  public dataSourceService: TlDatatableDataSource ) {}
+                  public dataSourceService: TlDatatableDataSource ) {
+
+     }
 
      ngOnInit() {
          this.take = this.datatable.rowsPage;

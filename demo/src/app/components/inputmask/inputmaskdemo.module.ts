@@ -1,25 +1,27 @@
 import { CommonModule  } from '@angular/common';
-import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+
+import { HighlightJsModule } from 'ngx-highlight-js';
+
+import { InputModule } from 'truly-ui/input';
+import { DirectiveModule } from 'truly-ui/core/directives/index';
+import { TooltipModule } from 'truly-ui/tooltip';
 
 import { InputMaskDemo } from "./inputmaskdemo.component";
-import { InputModule } from '../../../../../src/input';
 import { InputMaskDemoRoutingModule } from "./inputmaskdemo-routing.module";
-import { HighlightJsModule } from 'ngx-highlight-js';
-import { TooltipModule } from '../../../../../src/tooltip';
-import { DirectiveModule } from '../../../../../src/core/directives/index';
 
 @NgModule({
   declarations: [
     InputMaskDemo
   ],
   imports:[
-    InputMaskDemoRoutingModule,
-    InputModule,
     CommonModule,
+    DirectiveModule,
     FormsModule,
     HighlightJsModule,
-    DirectiveModule,
+    InputMaskDemoRoutingModule,
+    InputModule,
     TooltipModule
   ],
   exports: [

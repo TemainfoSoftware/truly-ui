@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { GithubAPIService } from "../shared/services/githubapi";
 
 
 @Component({
@@ -6,13 +7,13 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
-  title = 'app works!';
+export class HomeComponent {
 
-  ngOnInit() {
-  }
+  private lastRelease;
 
-
-  ngAfterViewInit() {
+  constructor( private githubService : GithubAPIService ) {
+    this.githubService.getReleases().subscribe( (releases => {
+      this.lastRelease = JSON.parse( releases[ '_body' ] )[ 0 ];
+    }) );
   }
 }

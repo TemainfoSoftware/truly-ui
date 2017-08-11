@@ -28,13 +28,15 @@ import { DataMetadata } from '../core/types/datametadata';
 @Injectable()
 export class TlDatatableDataSource {
 
-    public datasource: DataMetadata;
+    public datasource: any;
 
     private datatable: TlDatatable;
 
     private fistRow: number;
 
     private lastRow: number;
+
+    constructor() {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -49,6 +51,10 @@ export class TlDatatableDataSource {
             this.datasource = dataChange.data;
         }
         return this;
+    }
+
+    updateDataSource( data ) {
+        this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
     }
 
     getRowsInMemory(skip: number, take: number) {

@@ -1,0 +1,61 @@
+<div class="container-fluid" style="padding: 20px">
+  <div class="header-title-demo">
+    <h1 class="title">Getting Started</h1>
+    <p class="text-content">We'll cover the basics and get you started from the ground up.</p>
+  </div>
+  <hr>
+  <div class="header-title-demo">
+    <h3 class="title">Installation</h3>
+    <hr>
+    <span class="description">To install this library, run:</span>
+    <div class="code-area">
+    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
+  $ npm install truly-ui --save
+  </textarea>
+      <br>
+      <h3 class="title">Usage</h3>
+      <hr>
+      <span class="description">Import the TrulyUI module in your AppModule.</span>
+      <div class="code-area">
+
+      <textarea highlight-js [options]="{'tabReplace': ''}" lang="'typescript'">
+      import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+// Import your library, for example the InputComponent:
+import { InputModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    InputModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+    </textarea>
+      </div>
+    </div>
+    <span class="description">Once your library is imported, you can use its components, directives and pipes in your Angular application:</span>
+    <div class="code-area">
+    <textarea highlight-js [options]="{'tabReplace': ''}" lang="'html'">
+      <!-- You can now use your library component in app.component.html or other component what you want -->
+   <tl-input
+     ngModel="Many Properties"
+     [iconBefore]="'ion-printer'"
+     [placeholder]="'With Placeholder'"
+     [textAfter]="'US'"
+     [clearButton]="true"
+     [autocomplete]="'off'">
+    </tl-input>
+    </textarea>
+    </div>
+  </div>
+</div>

@@ -1,29 +1,29 @@
 import {CommonModule} from '@angular/common';
-import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {NgModule} from '@angular/core';
 
-import {DataTableDemo} from './datatabledemo.component';
-import {DatatableModule} from '../../../../../src/datatable';
-import {InputModule} from '../../../../../src/input';
-import { DataTableDemoRoutingModule } from './datatabledemo-routing.module';
 import {HighlightJsModule} from 'ngx-highlight-js';
 
+import {DatatableModule} from 'truly-ui/datatable';
+import {InputModule} from 'truly-ui/input';
+
+import {DataTableDemo} from './datatabledemo.component';
+import {DataTableDemoRoutingModule } from './datatabledemo-routing.module';
 
 @NgModule({
   declarations: [
     DataTableDemo
   ],
   imports: [
+    CommonModule,
     DataTableDemoRoutingModule,
     DatatableModule,
-    InputModule,
-    CommonModule,
     FormsModule,
-    HighlightJsModule
+    HighlightJsModule,
+    InputModule
   ],
   exports: [
     DataTableDemo
   ]
 })
-export class DatatableDemoModule {
-}
+export class DatatableDemoModule {}

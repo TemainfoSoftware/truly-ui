@@ -18,6 +18,19 @@ before_script:
   - npm run test-jest:ci
 after_success:
   - npm run semantic-release
+  - npm link src
+  - cd demo
+  - npm install
+  - npm link truly-ui
+  - ng build
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: 368ac3edf9e850d1c0ff9d6c526496f8237ddf91
+  local_dir: demo/dist
+  target_branch: docs
+  on:
+    branch: master
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

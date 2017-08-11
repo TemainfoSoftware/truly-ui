@@ -24,13 +24,12 @@ after_success:
   - npm link truly-ui
   - ng build
 deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: 368ac3edf9e850d1c0ff9d6c526496f8237ddf91
+  provider: s3
   local_dir: dist
-  target_branch: master
-  on:
-    branch: master
+  access_key_id: "AKIAJBWCIGWKZMHQ6YHA"
+  secret_access_key: "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"
+  bucket: "truly-ui"
+  upload-dir : docs
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

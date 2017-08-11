@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TlButton } from './button';
-
-export * from './button';
+import { TabIndexService } from "../form/tabIndex.service";
+import { IdGeneratorService } from "../core/helper/idgenerator.service";
+import { NameGeneratorService } from "../core/helper/namegenerator.service";
 
 @NgModule({
     imports: [
@@ -14,6 +15,11 @@ export * from './button';
     ],
     exports: [
         TlButton
+    ],
+    providers: [
+        TabIndexService,
+        IdGeneratorService,
+        NameGeneratorService
     ]
 })
 export class ButtonModule {}

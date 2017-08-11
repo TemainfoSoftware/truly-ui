@@ -29,8 +29,7 @@ deploy:
   skip_cleanup: true
   access_key_id: "AKIAJBWCIGWKZMHQ6YHA"
   secret_access_key: "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"
-  bucket: "truly-ui"
-  upload-dir : docs
+  bucket: "www.truly-ui.io"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

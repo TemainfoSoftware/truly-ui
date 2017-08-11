@@ -30,6 +30,7 @@ deploy:
   access_key_id: "AKIAJBWCIGWKZMHQ6YHA"
   secret_access_key: "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"
   bucket: "www.truly-ui.io"
+  region: sa-east-1
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

@@ -26,6 +26,7 @@ after_success:
 deploy:
   provider: s3
   local_dir: dist
+  skip_cleanup: true
   access_key_id: "AKIAJBWCIGWKZMHQ6YHA"
   secret_access_key: "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"
   bucket: "truly-ui"

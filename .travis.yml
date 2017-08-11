@@ -28,7 +28,6 @@ deploy:
   skip_cleanup: true
   github_token: 368ac3edf9e850d1c0ff9d6c526496f8237ddf91
   local_dir: ./demo/dist
-  target_branch: docs
   on:
     branch: master
 branches:

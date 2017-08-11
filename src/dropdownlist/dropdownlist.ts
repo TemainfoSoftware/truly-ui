@@ -181,20 +181,23 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     isNumber( value, propertyName ) {
         if ( ( typeof value !== 'number' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a numeric value to ' + propertyName.toUpperCase() + ' property of the tl-dropdown-list element.' );
+            throw new EvalError( 'You must pass a numeric value to ' + propertyName.toUpperCase() + '' +
+                ' property of the tl-dropdown-list element.' );
         }
         return value;
     }
 
     isBoolean( value, propertyName ) {
         if ( ( typeof value !== 'boolean' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a boolean value to ' + propertyName.toUpperCase() + ' property of the tl-dropdown-list element.' );
+            throw new EvalError( 'You must pass a boolean value to ' + propertyName.toUpperCase() + '' +
+                ' property of the tl-dropdown-list element.' );
         }
     }
 
     isString( value, propertyName ) {
         if ( ( typeof value !== 'string' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a string value to ' + propertyName.toUpperCase()+ ' property of the tl-dropdown-list element.' );
+            throw new EvalError( 'You must pass a string value to ' + propertyName.toUpperCase() + '' +
+                ' property of the tl-dropdown-list element.' );
         }
     };
 

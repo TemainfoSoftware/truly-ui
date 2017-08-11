@@ -27,7 +27,7 @@ deploy:
   provider: pages
   skip_cleanup: true
   github_token: 368ac3edf9e850d1c0ff9d6c526496f8237ddf91
-  local_dir: demo/dist
+  local_dir: dist
   on:
     branch: master
 branches:

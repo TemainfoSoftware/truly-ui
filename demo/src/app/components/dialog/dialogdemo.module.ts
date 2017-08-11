@@ -9,6 +9,7 @@ import { DatatableModule } from 'truly-ui/datatable';
 
 import { DialogDemo } from "./dialogdemo.component";
 import { DialogDemoRoutingModule } from "./dialogdemo-routing.module";
+import { DialogModule } from "../../../../../src/dialog/index";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DialogDemoRoutingModule } from "./dialogdemo-routing.module";
     FormsModule,
     HighlightJsModule,
     InputModule,
+    DialogModule
   ],
   exports: [
     DialogDemo,

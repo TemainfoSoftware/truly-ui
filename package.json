@@ -10,6 +10,7 @@
     "docs:build": "compodoc -p tsconfig.json -n Truly-UI -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
+    "docs:demo": "cd demo\\ && ng build",
     "lint": "tslint --type-check --project tsconfig.json ",
     "test": "tsc && karma start",
     "test-jest": "jest --config=jest.conf.json",

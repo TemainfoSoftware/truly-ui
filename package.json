@@ -33,7 +33,7 @@
   "bugs": {
     "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@angular/animations": "^4.2.3",
     "@angular/common": "^4.2.2",
     "@angular/core": "^4.2.2",

@@ -15,6 +15,7 @@
   <!--</div>-->
   <!--</div>-->
 
+
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
@@ -26,34 +27,33 @@
   </div>
 
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="group-component">
-        <h5>Mode Normal + Filter Data</h5>
-
-        <tl-input #tlInput [placeholder]="'Pesquise por um registro...'"></tl-input>
-        <br/>
-        <tl-datatable
-          [data]="data"
-          [globalFilter]="tlInput"
-          [globalFilterOptions]="{caseSensitive: false}"
-          (rowSelect)="onRowSelect($event, index )">
-        </tl-datatable>
-        <div>Row Selected:<span> {{rowSelected | json}} </span></div>
-      </div>
-    </div>
-  </div>
-
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <!--<div class="group-component">-->
+        <!--<h5>Mode Normal + Filter Data</h5>-->
+        <!--<tl-input #tlInput [placeholder]="'Pesquise por um registro...'" [autocomplete]="false"></tl-input>-->
+        <!--<br/>-->
+        <!--<tl-datatable-->
+          <!--[data]="data"-->
+          <!--[globalFilter]="tlInput"-->
+          <!--[globalFilterOptions]="{caseSensitive: false}"-->
+          <!--(rowSelect)="onRowSelect($event, index )">-->
+        <!--</tl-datatable>-->
+        <!--<div>Row Selected:<span> {{rowSelected | json}} </span></div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
 
   <div class="row">
     <div class="col-md-12">
       <div class="group-component">
         <h5>Mode Scrollable</h5>
-        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'" [height]="'310px'"> </tl-datatable>
+        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'" [rowsPage]="50" [height]="310"> </tl-datatable>
         <div>Row Selected:<span> {{rowSelected | json}} </span></div>
       </div>
     </div>
   </div>
+
 
   <div class="row">
     <div class="col-md-12">
@@ -62,19 +62,17 @@
         <tl-datatable
           [data]="dataLazy"
           [mode]="'scrollable'"
-          [height]="'310px'"
+          [height]="300"
+          [rowsClient]="12"
           [rowsPage]="take"
           [lazy]="true"
-          (pageChange)="onPageChange($event)"
           (lazyLoad)="onLazyLoad($event)"
-          (rowSelect)="onRowSelect($event, index )"
         >
         </tl-datatable>
         <div>Row Selected:<span> {{rowSelected | json}} </span></div>
       </div>
     </div>
   </div>
-
 
   <hr>
 </div>
@@ -157,7 +155,6 @@
         <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>
     </textarea>
     </div>
-
     <div class="group-component">
       <h5 class="title">Mode Scrollable + LazyLoad</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

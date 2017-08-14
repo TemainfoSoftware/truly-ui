@@ -24,6 +24,8 @@ export class DataTableDemo {
 
   private dataTableEvents;
 
+  private timeout = null;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
@@ -37,15 +39,20 @@ export class DataTableDemo {
   }
 
   getDataFromService(skip, take) {
-    return this.data.slice(skip, take);
+
+      return this.data.slice(skip, take);
+
   }
 
   onLazyLoad(event){
+      console.log(event);
+      setTimeout(()=>{
+        this.dataLazy = {
+          "data" : this.getDataFromService(event.skip,event.skip + event.take),
+          "total" : this.data.length
+        };
+      },250)
 
-      this.dataLazy = {
-        "data" : this.getDataFromService(event.skip,event.skip + event.take),
-        "total" : this.data.length
-      }
 
   }
 

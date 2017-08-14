@@ -31,6 +31,7 @@ deploy:
   secret_access_key: "UF2yGpcMUMt3eBP/imX3EkUnXdDxrFVXFPCygFbz"
   bucket: "www.truly-ui.io"
   region: sa-east-1
+  acl: public_read
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

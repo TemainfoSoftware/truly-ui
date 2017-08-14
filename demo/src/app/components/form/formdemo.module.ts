@@ -16,6 +16,7 @@ import { CadPessoa } from "./newpessoa/cadPessoa.component";
 import { DataFormService } from "./newpessoa/dataform.service";
 import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
+import { DialogModule } from "../../../../../src/dialog/index";
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FormDemoRoutingModule } from "./formdemo-routing.module";
     InputModule,
     FormDemoRoutingModule,
     FormModule,
+    DialogModule,
     FormsModule,
     ModalModule,
     HighlightJsModule,

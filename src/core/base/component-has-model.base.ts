@@ -110,7 +110,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param value Value received to write value on ngModel
      */
     writeValue( value: any ) {
-        if ( value ) {
+        if ( value || value === '' ) {
             this.ngValue = value;
             this.element.nativeElement.value = value;
         }

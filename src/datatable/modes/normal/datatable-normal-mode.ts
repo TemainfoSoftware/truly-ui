@@ -30,7 +30,7 @@
      selector: 'tl-datatable-normal-mode',
      templateUrl: './datatable-normal-mode.html',
      animations: [
-         trigger('enterAnimation',[
+         trigger('enterAnimation', [
              state('in', style({transform: 'translateY(0)', opacity: 1})),
              transition('void => *', [
                  style({transform: 'translateY(-10%)', opacity: 0}),

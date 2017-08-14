@@ -29,19 +29,19 @@ export class TlDatatableDataSource {
 
     public datasource: any;
 
+    public loadingSource = false;
+
     private datatable: TlDatatable;
 
     private fistRow: number;
 
     private lastRow: number;
 
-    public loadingSource: boolean = false;
-
-    constructor(){}
+    constructor() {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
-        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res)=>{
+        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
             this.datasource = res;
             this.datatable.setColumns();
         });
@@ -61,21 +61,21 @@ export class TlDatatableDataSource {
     }
 
     getRowsInMemory(skip: number, take: number): Promise<any> {
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
             resolve((data as  Array<any>).slice(skip, skip + take));
         })
     }
 
     loadMoreData(skip: number, take: number): Promise<any> {
-       return new Promise(( resolve )=>{
+       return new Promise(( resolve ) => {
            if (  this.datatable.lazy ) {
                this.loadingSource = true;
                this.datatable.lazyLoad.emit({ skip: skip,  take: take });
                resolve(false);
 
            }
-           this.getRowsInMemory( skip, take ).then((res)=>{
+           this.getRowsInMemory( skip, take ).then((res) => {
                this.datasource = res;
                resolve(res);
            });

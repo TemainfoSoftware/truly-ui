@@ -105,14 +105,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
 
     ngAfterContentInit() {
-        let height = this.height;
-        this.rowHeight =  height/this.rowsClient;
+        const height = this.height;
+        this.rowHeight =  height / this.rowsClient;
 
         this.inicializeGlobalFilter();
     }
 
     ngOnChanges(changes) {
-        if (changes['data'] !== undefined){
+        if (changes['data'] !== undefined) {
             this.dataSourceService.onChangeDataSource(changes)
         }
 
@@ -127,7 +127,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     }
 
     getColumnsFromDataSource() {
-        if (this.dataSourceService.datasource){
+        if (this.dataSourceService.datasource) {
             Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
                 this.columns.push( this.buildNewDataTableColumn( columnField ) );
             })

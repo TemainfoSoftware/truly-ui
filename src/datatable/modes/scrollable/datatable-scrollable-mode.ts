@@ -39,6 +39,9 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
 
     @ViewChild( 'scrollBox' ) scrollBoxElementRef: ElementRef;
 
+
+    public loadingSource = false;
+
     private scrollPosition: number;
 
     private containerHeight: number;
@@ -62,15 +65,11 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
     private pageNumber = 1;
 
     private Counter = 1;
-
     private qtdRowClient = 0;
-
-    public loadingSource: boolean = false;
 
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
                  public dataSourceService: TlDatatableDataSource,
-                 private zone :NgZone
     ) {
 
     }
@@ -124,7 +123,8 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
                 // setTimeout( () => {
-                //     this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
+                //  this.scrollBoxElementRef.nativeElement.scrollTop =
+                // ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
                 // }, 1 );
                 break;
         }
@@ -136,42 +136,46 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
         // let at: any = document.activeElement;
         //
         //
-        // this.Counter = Math.round( (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight ) / this.datatable.rowHeight );
+        // this.Counter = Math.round(
+        // (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
+        // / this.datatable.rowHeight
+        // );
 
         if ( this.scrollPosition > this.scrollTop ) {
             if ( this.currentRow <= this.datatable.totalRows ) {
                 if ( ( this.currentRow - this.qtdRowClient ) <= this.skip ) {
-                            this.loadingSource = true;
-                            this.skip = ( this.skip >= this.qtdRowClient ) && (  this.currentRow > this.qtdRowClient  ) ? this.currentRow - (this.qtdRowClient * 2) : 0;
-                            this.skip = this.skip < 0 ? 0 : this.skip;
+                    this.loadingSource = true;
+                    this.skip = ( this.skip >= this.qtdRowClient ) && (  this.currentRow > this.qtdRowClient  )
+                        ? this.currentRow - (this.qtdRowClient * 2)
+                        : 0;
+                    this.skip = this.skip < 0 ? 0 : this.skip;
 
-                            this.take = this.datatable.rowsPage;
-                            this.scrollOfTop = (this.scrollTop - this.qtdRowClient * this.datatable.rowHeight) > 0 ? this.scrollTop - this.qtdRowClient * this.datatable.rowHeight : 0;
+                    this.take = this.datatable.rowsPage;
+                    this.scrollOfTop = (this.scrollTop - this.qtdRowClient * this.datatable.rowHeight) > 0
+                                        ? this.scrollTop - this.qtdRowClient * this.datatable.rowHeight
+                                        : 0;
 
-                            this.dataSourceService.loadMoreData( this.skip, this.take ).then((loadingSource:boolean)=>{
-                                setTimeout(()=>{
-                                    this.loadingSource = loadingSource;
-                                },100)
-                            });
+                    this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
+                        setTimeout(() => {
+                            this.loadingSource = loadingSource;
+                        }, 100)
+                    });
 
                 }
             }
         } else if ( this.scrollPosition < this.scrollTop ) {
             if ( this.currentRow <= this.datatable.totalRows ) {
                 if ( ( this.take + this.skip ) <= this.currentRow ) {
-                             this.loadingSource = true;
-                             this.skip = this.currentRow - this.qtdRowClient;
-                             this.take = this.datatable.rowsPage;
-                             this.scrollOfTop = this.scrollTop;
+                     this.loadingSource = true;
+                     this.skip = this.currentRow - this.qtdRowClient;
+                     this.take = this.datatable.rowsPage;
+                     this.scrollOfTop = this.scrollTop;
 
-                             console.log(this.skip, this.take);
-
-                             this.dataSourceService.loadMoreData( this.skip, this.take ).then((loadingSource:boolean)=>{
-
-                               setTimeout(()=>{
-                                   this.loadingSource = loadingSource;
-                               },100)
-                             });
+                     this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
+                       setTimeout( () => {
+                           this.loadingSource = loadingSource;
+                       }, 100);
+                     });
                 }
             }
         }
@@ -197,15 +201,17 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
     }
 
     onRowClick( data, index ) {
-        let at: any = document.activeElement;
-        this.Counter = Math.round( (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight ) / this.datatable.rowHeight );
+        const at: any = document.activeElement;
+        this.Counter = Math.round(
+            (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
+            / this.datatable.rowHeight );
         this.datatable.onRowClick( data, index );
     }
 
 
     handleKeyArrowDown(event) {
-        if (this.dataSourceService.loadingSource===true){
-            console.info('Loading data...');
+        if ( this.dataSourceService.loadingSource === true ) {
+            console.log('Loading data...');
             return;
         }
         const at: any = document.activeElement;
@@ -218,7 +224,9 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
 
                 if ( this.Counter >= this.qtdRowClient ) {
 
-                    this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
+                    this.scrollBoxElementRef.nativeElement.scrollTop = (
+                        (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight
+                    );
 
                 } else {
                     this.Counter++
@@ -247,11 +255,11 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
 
 
     handleKeyArrowUp() {
-        if (this.loadingSource===true){
-            console.info('Loading data...');
+        if ( this.loadingSource === true ) {
+            console.log('Loading data...');
             return;
         }
-        let at: any = document.activeElement;
+        const at: any = document.activeElement;
         this.setCurrentRow();
         if ( this.isFirstRow() ) {
 
@@ -262,7 +270,9 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
                 if ( this.Counter > 1 ) {
                     this.Counter--
                 } else {
-                    this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight);
+                    this.scrollBoxElementRef.nativeElement.scrollTop = (
+                        (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight
+                    );
                 }
             }
             return;
@@ -292,8 +302,11 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
         this.scrollBoxElementRef.nativeElement.scrollTop = this.containerHeight;
         setTimeout( () => {
             this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ].focus();
-            let at: any = document.activeElement;
-            this.Counter = Math.round( (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight ) / this.datatable.rowHeight );
+            const at: any = document.activeElement;
+            this.Counter = Math.round(
+                (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
+                / this.datatable.rowHeight
+            );
         }, 300 );
     }
 

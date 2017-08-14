@@ -8,16 +8,13 @@
     margin: 0;
   }
   .banner {
+    background-color: #444444;
     .logo {
       position: relative;
       margin: 0;
       padding-top: 50px;
       padding-bottom: 50px;
-      background-color: #444444;
       color: #66CC99;
-      > .name {
-        margin-bottom: 15px;
-      }
       > .description {
         font-family: "Segoe UI";
         color: #fff;
@@ -28,6 +25,7 @@
         margin: 0;
       }
       > .description p:last-child {
+        margin-top: 10px;
         font-size: 20px;
         text-align: right;
       }
@@ -45,7 +43,7 @@
       padding-top: 35px;
       background-color: #4c4c4c;
       z-index: 1;
-      > img {
+      > .desk-table img {
         margin: 25px auto 0 auto;
       }
     }
@@ -62,13 +60,16 @@
       transform: rotate(4deg);
       transform-origin: 80% 0;
     }
-    .info-version {
-      font-family: "Segoe UI";
-      text-align: center;
-      color: #8c8c8c;
-      margin-bottom: 10px;
-      font-size: 11px;
-    }
+  }
+  .info-version {
+    font-family: "Segoe UI";
+    text-align: center;
+    color: #8c8c8c;
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+  .info-version a {
+    color: #8c8c8c;
   }
   .why-truly-ui {
     padding-top: 50px;
@@ -89,10 +90,12 @@
         color: #444;
         font-weight: 300;
         word-break: normal;
+        padding-bottom: 45px;
       }
     }
     .feature-box {
       font-family: "Segoe UI";
+      padding-bottom: 15px;
       h3 {
         font-weight: 500;
         margin-top: 4px;
@@ -175,8 +178,21 @@
 /* Extra Small Devices, Phones */
 @media only screen and (min-width: 480px) {
   .banner {
+    .logo {
+      > .description p {
+        text-align: center;
+      }
+      > .description p:last-child {
+        text-align: center;
+      }
+    }
     .info-version {
       font-size: 13px;
+    }
+  }
+  .why-truly-ui {
+    .logo img {
+      width: 40%;
     }
   }
   .web-components {
@@ -198,42 +214,142 @@
 
 /* Small Devices, Tablets */
 @media only screen and (min-width: 768px) {
-  .home-page {
-    margin: 0;
+  .banner {
+    .info-version {
+      font-size: 11px;
+      margin-bottom: 40px;
+    }
+    .btn-get-started {
+      padding: 15px 50px;
+    }
   }
-  .fix-padding {
-    padding-right: 0;
-    padding-left: 0;
+  .why-truly-ui {
+    padding-top: 15px;
+    .logo img {
+      width: 30%;
+    }
+    .why-tl {
+      h1 {
+        font-size: 28px;
+      }
+      p {
+        font-size: 20px;
+        padding-bottom: 25px;
+      }
+    }
+    .feature-box {
+      text-align: center;
+    }
   }
-  img {
-    border: 1px solid green;
+  .ss-style-triangles::after {
+    position: relative;
+    bottom: 50px;
+    z-index: 0;
+    background: inherit;
+    background-color: #4c4c4c;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    -webkit-transform: translateX(-50%) rotate(45deg);
+    transform: translateX(-50%) rotate(45deg);
   }
 }
 
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
-  .home-page {
-    margin: 0;
+  .banner {
+    .logo {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      min-height: 250px;
+    }
+    .logo:after {
+      border-right: 30px solid #4c4c4c;;
+      right: 0px;
+      content: '';
+      position: absolute;
+      display: block;
+      bottom: -50px;
+      width: 0px;
+      height: 0px;
+      border-top: 450px solid transparent;
+    }
+    .desk {
+      padding-right: 0;
+      > .desk-table {
+        min-height: 250px;
+        margin: 0;
+        padding: 0;
+        > img {
+          width: 100%;
+          position: absolute;
+          bottom: -70px;
+          right: 0;
+        }
+      }
+    }
+    .btn-get-started {
+      padding: 8px 16px;
+      margin: 0;
+    }
+    .desk:before {
+      display: none;
+    }
+    .banner-footer {
+      background-color: #4c4c4c;
+      margin: 0;
+      padding: 0;
+      height: 70px;
+      line-height: 70px;
+    }
   }
-  .fix-padding {
-    padding-right: 0;
-    padding-left: 0;
+  .info-version {
+    padding-top: 25px;
+    > p {
+      line-height: 20px;
+    }
   }
-  img {
-    border: 1px solid black;
+  .why-truly-ui {
+    padding-top: 50px;
+    .logo img {
+      width: 60%;
+    }
+    .why-tl {
+      p {
+        text-align: left;
+      }
+    }
+    .feature-box {
+      text-align: left;
+      h3 {
+        font-size: 17px;
+      }
+      p {
+        font-size: 16px;
+      }
+    }
   }
+  .web-components {
+    .web-components-list {
+      i {
+        font-size: 3em;
+      }
+    }
+  }
+  .ss-style-triangles:after {
+    display: none;
+  }
+
 }
 
 /* Large Devices, Wide Screens */
 @media only screen and (min-width: 1200px) {
-  .home-page {
-    margin: 0;
-  }
-  .fix-padding {
-    padding-right: 0;
-    padding-left: 0;
-  }
-  img {
-    border: 1px solid orange;
+  .banner {
+    .desk {
+      padding-right: 0;
+      > .desk-table {
+        min-height: 220px;
+      }
+    }
   }
 }

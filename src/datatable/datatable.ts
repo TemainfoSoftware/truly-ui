@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Inject, Input, OnChanges, OnInit,
-    Output, QueryList, Renderer2, ViewChild, ViewEncapsulation
+    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
+    ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
 import { DatatableFilterOptions } from './datatable-filter-options';
@@ -51,7 +51,9 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @Input('rowHeight') rowHeight = 25;
 
-    @Input('height') height = '300px';
+    @Input('rowsClient') rowsClient = 10;
+
+    @Input('height') height = 300;
 
     @Input('globalFilter') globalFilter: any;
 
@@ -93,22 +95,27 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         this.dataSourceService.onInitDataSource(this);
         this.setHeightRowTable();
         this.render.listen(window, 'load', () => {
-            this.calcHeightRowTable();
+           // this.calcHeightRowTable();
         });
 
         this.render.listen(window, 'resize', () => {
-            this.calcHeightRowTable();
+      //      this.calcHeightRowTable();
         })
     }
 
 
     ngAfterContentInit() {
-        this.setColumns();
+        let height = this.height;
+        this.rowHeight =  height/this.rowsClient;
+
         this.inicializeGlobalFilter();
     }
 
-    ngOnChanges($event) {
-        this.dataSourceService.onChangeDataSource($event)
+    ngOnChanges(changes) {
+        if (changes['data'] !== undefined){
+            this.dataSourceService.onChangeDataSource(changes)
+        }
+
     }
 
     setColumns() {
@@ -120,9 +127,12 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     }
 
     getColumnsFromDataSource() {
-        Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
-          this.columns.push( this.buildNewDataTableColumn( columnField ) );
-        })
+        if (this.dataSourceService.datasource){
+            Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
+                this.columns.push( this.buildNewDataTableColumn( columnField ) );
+            })
+        }
+
     }
 
     getColumnsFromContentChield() {
@@ -196,5 +206,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     setHeightRowTable() {
         this.rowHeightCalculated = this.rowHeight;
     }
+
+
 
 }

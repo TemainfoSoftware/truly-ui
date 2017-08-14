@@ -6,7 +6,7 @@
     </thead>
 
     <tbody #datatableTbody class="datatableBody">
-        <tr #tbody class="row" [tabindex]="i" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable._rowHeight+'px'}"
+        <tr #tbody class="row" [tabindex]="i"  [@enterAnimation]="'in'" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable._rowHeight+'px'}"
             (click)="datatable.onRowClick(dataSourceService.datasource[i],i)"
             (focus)="datatable.onRowSelect(dataSourceService.datasource[i],i)"
             (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)"

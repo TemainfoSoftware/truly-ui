@@ -20,10 +20,9 @@
     SOFTWARE.
 */
 
-import { Injectable, SimpleChanges } from '@angular/core';
+import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
-
 
 @Injectable()
 export class TlDatatableDataSource {
@@ -36,39 +35,52 @@ export class TlDatatableDataSource {
 
     private lastRow: number;
 
-    constructor() {}
+    public loadingSource: boolean = false;
+
+    constructor(){}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
-        this.datasource = this.getRowsInMemory( 0, this.datatable.rowsPage );
+        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res)=>{
+            this.datasource = res;
+            this.datatable.setColumns();
+        });
         this.refreshTotalRows(this.datatable.data);
     }
 
     onChangeDataSource( data: SimpleChanges ) {
         const dataChange = data['data'].currentValue;
-
         if ( ( !data['data'].firstChange ) && dataChange ) {
             this.datasource = dataChange.data;
+            this.loadingSource = false;
         }
-        return this;
     }
 
     updateDataSource( data ) {
         this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
     }
 
-    getRowsInMemory(skip: number, take: number) {
-        const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-        return (data as  Array<any>).slice(skip, skip + take);
+    getRowsInMemory(skip: number, take: number): Promise<any> {
+        return new Promise((resolve)=>{
+            const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
+            resolve((data as  Array<any>).slice(skip, skip + take));
+        })
     }
 
-    loadMoreData(skip: number, take: number) {
-        if (  this.datatable.lazy ) {
-              this.datatable.lazyLoad.emit({ skip: skip,  take: take });
-              return this;
-        }
-        this.datasource = this.getRowsInMemory(skip, take);
-        return this;
+    loadMoreData(skip: number, take: number): Promise<any> {
+       return new Promise(( resolve )=>{
+           if (  this.datatable.lazy ) {
+               this.loadingSource = true;
+               this.datatable.lazyLoad.emit({ skip: skip,  take: take });
+               resolve(false);
+
+           }
+           this.getRowsInMemory( skip, take ).then((res)=>{
+               this.datasource = res;
+               resolve(res);
+           });
+
+       });
     }
 
 

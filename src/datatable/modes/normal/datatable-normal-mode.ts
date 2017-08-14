@@ -24,10 +24,24 @@
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
  import { TlDatatableDataSource } from '../../datatable-datasource.service';
+ import { animate, state, style, transition, trigger } from '@angular/animations'
 
  @Component({
      selector: 'tl-datatable-normal-mode',
      templateUrl: './datatable-normal-mode.html',
+     animations: [
+         trigger('enterAnimation',[
+             state('in', style({transform: 'translateY(0)', opacity: 1})),
+             transition('void => *', [
+                 style({transform: 'translateY(-10%)', opacity: 0}),
+                 animate('180ms linear')
+             ]),
+             transition('* => void', [
+                 animate('100ms linear')
+             ]),
+
+         ])
+     ],
      styleUrls: ['../../datatable.scss']
  })
  export class TlDatatableNormalMode {

@@ -31,6 +31,7 @@
       }
     }
     .btn-get-started {
+      text-transform: uppercase;
       background-color: #66CC99;
       margin-bottom: 20px;
     }
@@ -192,7 +193,7 @@
   }
   .why-truly-ui {
     .logo img {
-      width: 40%;
+      width: 150px;
     }
   }
   .web-components {
@@ -226,7 +227,7 @@
   .why-truly-ui {
     padding-top: 15px;
     .logo img {
-      width: 30%;
+      width: 150px;
     }
     .why-tl {
       h1 {
@@ -311,13 +312,16 @@
   }
   .why-truly-ui {
     padding-top: 50px;
+    .row{
+      padding: 0;
+    }
     .logo img {
-      width: 60%;
+      margin: 0;
+      width: 150px;
     }
     .why-tl {
-      p {
-        text-align: left;
-      }
+      padding-left: 10%;
+      text-align: left;
     }
     .feature-box {
       text-align: left;
@@ -327,6 +331,9 @@
       p {
         font-size: 16px;
       }
+    }
+    .feature-box{
+      margin-top: 25px;
     }
   }
   .web-components {
@@ -339,7 +346,6 @@
   .ss-style-triangles:after {
     display: none;
   }
-
 }
 
 /* Large Devices, Wide Screens */

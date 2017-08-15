@@ -1,5 +1,9 @@
 @import "../core/core";
 
+table{
+  border-collapse: inherit;
+}
+
 .tl-datatable-box{
   border-left: 1px #E5E5E5 solid;
   border-top: 1px #E5E5E5 solid;
@@ -30,6 +34,7 @@
     border: 1px #6E6E6E solid;
   }
   > .row .cel{
+    width: 100%;
     border-right: 1px #E5E5E5 solid;
     border-bottom: 1px #E5E5E5 solid;
 
@@ -58,6 +63,7 @@
     outline: none;
   }
   > .row .cel{
+    width: 100%;
     border-right: 1px #E5E5E5 solid;
   }
   >.row .cel.-textleft{

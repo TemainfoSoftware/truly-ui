@@ -204,7 +204,8 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
         const at: any = document.activeElement;
         this.Counter = Math.round(
             (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-            / this.datatable.rowHeight );
+            / this.datatable.rowHeight
+        );
         this.datatable.onRowClick( data, index );
     }
 
@@ -217,7 +218,6 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
         const at: any = document.activeElement;
         this.setCurrentRow();
         if ( this.isLastRow() ) {
-
             if ( at !== this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ] ) {
                 this.scrollBoxTableBodyElementRef.nativeElement.children[ at.tabIndex + 1 ].focus();
                 this.datatable.tabindex = at.tabIndex + 1;
@@ -232,15 +232,11 @@ export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterCo
                     this.Counter++
                 }
             }
-
-
             return;
         }
 
-
         this.scrollBoxTableBodyElementRef.nativeElement.children[ this.datatable.tabindex + 1 ].focus();
         this.datatable.tabindex = this.datatable.tabindex + 1;
-
 
         if ( this.Counter >= this.qtdRowClient ) {
             this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );

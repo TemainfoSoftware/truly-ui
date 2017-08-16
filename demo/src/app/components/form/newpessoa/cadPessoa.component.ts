@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from "../../../../../../src/modal/modal.service";
 import { DataFormService } from "./dataform.service";
 
 @Component( {
@@ -9,23 +8,18 @@ import { DataFormService } from "./dataform.service";
 } )
 export class CadPessoa implements OnInit {
 
-
   private pessoa;
   private data;
   private text = '';
   private bt = '';
 
-  constructor(private modalService: ModalService, public formDataService: DataFormService) {
+  constructor(public formDataService: DataFormService) {
   }
 
   ngOnInit() {
     this.data = [
-      { textItem : 'Masculino', valueItem : 'M' },
-      { textItem : 'Feminino', valueItem : 'F' },
-      { textItem : 'Indeciso', valueItem : 'I' },
-      { textItem : 'Transexual', valueItem : 'T' },
-      { textItem : 'São Paulino', valueItem : 'I' },
-      { textItem : 'Bixessual', valueItem : 'B' },
+      { textItem : 'Male', valueItem : 'M' },
+      { textItem : 'Female', valueItem : 'F' },
     ];
     this.pessoa = this.formDataService.getDataForm();
   }

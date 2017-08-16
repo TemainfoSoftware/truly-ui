@@ -5,11 +5,11 @@ import { NgModule } from "@angular/core";
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { ButtonModule } from 'truly-ui/button';
-import { FormModule } from "truly-ui/form/index";
+import { FormModule } from "truly-ui/form";
 import { DatatableModule } from 'truly-ui/datatable';
 import { DialogService } from "truly-ui/dialog/dialog.service";
 import { InputModule } from 'truly-ui/input';
-import { ModalModule } from "truly-ui/modal/index";
+import { ModalModule } from "truly-ui/modal";
 
 import { NewModal } from "./newmodal/newModal.component";
 import { ModalDemo } from "./modaldemo.component";

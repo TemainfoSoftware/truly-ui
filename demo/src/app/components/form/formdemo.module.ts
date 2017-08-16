@@ -6,17 +6,17 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { ButtonModule } from 'truly-ui/button';
 import { DatatableModule } from 'truly-ui/datatable';
-import { DropDownListModule } from "truly-ui/dropdownlist/index";
-import { FormModule } from "truly-ui/form/index";
+import { DropDownListModule } from "truly-ui/dropdownlist";
+import { FormModule } from "truly-ui/form";
 import { InputModule } from 'truly-ui/input';
-import { ModalModule } from "truly-ui/modal/index";
-import { TooltipModule } from "truly-ui/tooltip/index";
+import { ModalModule } from "truly-ui/modal";
+import { TooltipModule } from "truly-ui/tooltip";
 
 import { CadPessoa } from "./newpessoa/cadPessoa.component";
 import { DataFormService } from "./newpessoa/dataform.service";
 import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
-import { DialogModule } from "../../../../../src/dialog/index";
+import { DialogModule } from "truly-ui/dialog";
 
 @NgModule({
   declarations: [

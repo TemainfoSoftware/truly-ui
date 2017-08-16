@@ -34,7 +34,6 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { FormService } from "../form/form.service";
 
 /**
  * Input Component personalized with few features.

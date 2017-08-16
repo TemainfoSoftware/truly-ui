@@ -27,7 +27,6 @@ import { TabIndexService } from '../../form/tabIndex.service';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
 import { Validations } from '../validations/validations';
-import { FormService } from "../../form/form.service";
 
 /**
  * Class that controls all Components that have Models.

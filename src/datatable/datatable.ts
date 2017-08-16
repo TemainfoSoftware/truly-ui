@@ -33,7 +33,7 @@ import { TlDatatableDataSource } from './datatable-datasource.service';
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
-    //encapsulation: ViewEncapsulation.Native,
+    // encapsulation: ViewEncapsulation.Native,
     providers: [
         TlDatatableFilterService,
         TlDatatableDataSource,

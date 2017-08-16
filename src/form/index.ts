@@ -48,7 +48,7 @@ import { DropDownListModule } from '../dropdownlist/index';
     ]
 } )
 export class FormModule {
-    static forRoot(): ModuleWithProviders{
+    static forRoot(): ModuleWithProviders {
         return {
             ngModule: FormModule,
             providers: [

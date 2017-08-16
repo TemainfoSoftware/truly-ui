@@ -28,7 +28,7 @@ import { MultiselectModule } from './multiselect';
 import { TooltipModule } from './tooltip';
 import { ModalModule } from './modal';
 import { DialogModule } from './dialog';
-import { FormModule } from "./form";
+import { FormModule } from './form';
 
 export * from './datatable';
 export * from './input';

@@ -45,7 +45,7 @@ export * from './modal';
     ]
 } )
 export class ModalModule {
-    static forRoot(): ModuleWithProviders{
+    static forRoot(): ModuleWithProviders {
         return {
             ngModule: ModalModule,
             providers: [

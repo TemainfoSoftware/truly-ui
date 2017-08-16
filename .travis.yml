@@ -18,7 +18,9 @@ before_script:
   - npm run test-jest:ci
 after_success:
   - npm run semantic-release
-  - npm link src
+  - cd src
+  - npm link
+  - cd ..
   - cd demo
   - npm install
   - npm link truly-ui

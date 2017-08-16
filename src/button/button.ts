@@ -87,7 +87,6 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
-        this.setTabIndex( this.buttonElement );
         if ( this.defaultFocus ) {
             this.buttonElement.nativeElement.focus();
         }

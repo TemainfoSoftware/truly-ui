@@ -27,6 +27,7 @@ import { TabIndexService } from '../../form/tabIndex.service';
 import { IdGeneratorService } from '../helper/idgenerator.service';
 import { NameGeneratorService } from '../helper/namegenerator.service';
 import { Validations } from '../validations/validations';
+import { FormService } from "../../form/form.service";
 
 /**
  * Class that controls all Components that have Models.
@@ -72,7 +73,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     public ngValue = '';
 
-    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+    constructor(tabIndexService: TabIndexService,
+                idService: IdGeneratorService,
+                nameService: NameGeneratorService) {
         super(tabIndexService, idService, nameService);
     }
 
@@ -110,7 +113,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param value Value received to write value on ngModel
      */
     writeValue( value: any ) {
-        if ( value || value === '' ) {
+        if (this.element) {
             this.ngValue = value;
             this.element.nativeElement.value = value;
         }

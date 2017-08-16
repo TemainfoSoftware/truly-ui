@@ -10,7 +10,6 @@
           [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
     <input #input #model="ngModel"
-           attr.tabindex="{{tabindex}}"
            attr.name="{{name}}"
            class="field"
            type="text"
@@ -20,6 +19,7 @@
                '-readonly': readonly,
                '-hasValidation': hasValidation()
            }"
+           [tabindex]="tabindex"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"
@@ -29,8 +29,7 @@
            [required]="validations.required"
            [(ngModel)]="modelValue"
            (blur)="onBlur()"
-           (focus)="onFocus()"
-           (keydown)="onKeyInput($event)">
+           (focus)="onFocus()">
 
     <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
     <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>

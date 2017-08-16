@@ -104,7 +104,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     ngAfterViewInit() {
         this.setElement( this.dropdown, 'dropdown' );
-        this.setTabIndex( this.dropdown );
         this.updateDataSource( this.getData() );
         this.isNumber( this.width, 'width' );
         this.isNumber( this.scroll, 'scroll' );
@@ -243,7 +242,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                     if ( !this.itemSelected ) {
                         this.changeShowStatus();
                     } else {
-                        this.onKeyInput( $event );
                         this.onEnter( $event );
                     }
                     break;
@@ -333,9 +331,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     placeholderEnter( $event ) {
         $event.preventDefault();
+        $event.stopPropagation();
         switch ( $event.keyCode ) {
             case KeyEvent.ENTER:
-                $event.stopPropagation();
                 this.itemSelected = null;
                 this.setFocusOnDropdown();
                 this.showHide = false;

@@ -34,6 +34,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { FormService } from "../form/form.service";
 
 /**
  * Input Component personalized with few features.
@@ -152,7 +153,16 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() autocomplete: boolean = null;
 
 
+    /**
+     * Property required.
+     * @type {boolean}
+     */
     @Input() required = false;
+
+    /**
+     * TabIndex of Element;
+     */
+    @Input() tabindex = 0;
 
     /**
      * The element itself to be manipulated
@@ -177,7 +187,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     ngAfterViewInit() {
         this.setElement( this.input, 'input' );
-        this.setTabIndex( this.input );
     }
 
     /**

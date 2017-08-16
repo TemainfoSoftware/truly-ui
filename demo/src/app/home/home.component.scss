@@ -15,6 +15,11 @@
       padding-top: 50px;
       padding-bottom: 50px;
       color: #66CC99;
+      > .logo-img {
+        img {
+          margin: 0 auto;
+        }
+      }
       > .description {
         font-family: "Segoe UI";
         color: #fff;
@@ -31,6 +36,7 @@
       }
     }
     .btn-get-started {
+      font-family: 'Segoe UI';
       text-transform: uppercase;
       background-color: #66CC99;
       margin-bottom: 20px;
@@ -61,6 +67,9 @@
       transform: rotate(4deg);
       transform-origin: 80% 0;
     }
+    .info-version-md {
+      display: none;
+    }
   }
   .info-version {
     font-family: "Segoe UI";
@@ -68,6 +77,9 @@
     color: #8c8c8c;
     margin-bottom: 10px;
     font-size: 11px;
+    a:hover {
+      color: #66CC99;
+    }
   }
   .info-version a {
     color: #8c8c8c;
@@ -156,6 +168,9 @@
         margin-top: 0;
         color: #8c8c8c;
       }
+      h2:hover {
+        color: #66CC99;
+      }
       i {
         margin-left: -20px;
         color: #626060;
@@ -173,6 +188,70 @@
   .fix-padding {
     padding-right: 0;
     padding-left: 0;
+  }
+  .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
+    padding-left: 90px;
+    padding-right: 10px;
+  }
+  .tl-input:before {
+    background: url('../../assets/img/icon-tl-input.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  .tl-form:before {
+    background: url('../../assets/img/icon-tl-form.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  .tl-dialog:before {
+    background: url('../../assets/img/icon-tl-dialog.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  .tl-datatable:before {
+    background: url('../../assets/img/icon-tl-datatable.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  .tl-schedule:before {
+    background: url('../../assets/img/icon-tl-schedule.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+  }
+  .tl-button:before {
+    background: url('../../assets/img/icon-tl-button.png') no-repeat 0 0;
+    background-size: 80px;
+    height: 80px;
+    width: 80px;
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
   }
 }
 
@@ -198,9 +277,7 @@
   }
   .web-components {
     .web-components-list {
-      i {
-        font-size: 5em;
-      }
+      min-height: 100px;
     }
   }
   .git-and-getstarted {
@@ -222,6 +299,7 @@
     }
     .btn-get-started {
       padding: 15px 50px;
+      font-size: 17px;
     }
   }
   .why-truly-ui {
@@ -259,103 +337,235 @@
 /* Medium Devices, Desktops */
 @media only screen and (min-width: 992px) {
   .banner {
-    .logo {
-      padding-top: 30px;
-      padding-bottom: 30px;
-      min-height: 250px;
-    }
-    .logo:after {
-      border-right: 30px solid #4c4c4c;;
-      right: 0px;
-      content: '';
+    height: 350px;
+    position: relative;
+    width: 100%;
+    .banner-separator {
       position: absolute;
-      display: block;
-      bottom: -50px;
-      width: 0px;
-      height: 0px;
-      border-top: 450px solid transparent;
+      top: 0;
+      right: 0;
+      height: 350px;
+      background-color: #4c4c4c;
+      width: 55%;
+      float: right;
+      -webkit-transform: skew(-20deg) translateX(10px);
+      -ms-transform: skew(-20deg) translateX(10px);
+      transform: skew(-20deg) translateX(100px);
     }
-    .desk {
-      padding-right: 0;
-      > .desk-table {
-        min-height: 250px;
-        margin: 0;
+    .logo {
+      .logo-img img {
+        position: absolute;
+        top: 50px;
+        left: 110px;
+        user-select: none;
+        overflow: hidden;
+      }
+      .description {
+        position: absolute;
+        font-family: "Segoe UI";
+        color: #fff;
+        top: 175px;
+        left: 110px;
+        font-size: 14px;
+      }
+      .description p {
+        text-align: inherit;
+        font-size: 1.5em;
+      }
+      .description p:last-child {
+        text-align: inherit;
+        font-size: 1.5em;
+      }
+    }
+    .banner-footer {
+      position: absolute;
+      height: 70px;
+      background-color: #4c4c4c;
+      width: 100%;
+      bottom: 0;
+      a.btn-get-started {
+        background-color: #66CC99;
+        border-radius: 5px;
+        height: 40px;
+        line-height: 37px;
+        vertical-align: middle;
+        text-align: center;
+        width: 180px;
+        margin-top: 15px;
         padding: 0;
-        > img {
-          width: 100%;
-          position: absolute;
-          bottom: -70px;
-          right: 0;
+        font-family: "Segoe UI", sans-serif;
+        font-size: 1.1em;
+        text-decoration: none;
+        text-transform: uppercase;
+        margin-left: 80px;
+      }
+      a.btn-get-started:hover {
+        background-color: #5DBA8C;
+        color: #FFF;
+      }
+      .info-version {
+        display: none;
+      }
+    }
+    .banner-image {
+      position: absolute;
+      width: 48%;
+      height: 230px;
+      right: 0;
+      top: 123.5px;
+      background: url("../../assets/img/desk.png") no-repeat;
+      background-size: 620px;
+    }
+    .info-version-md {
+      display: block;
+      position: absolute;
+      top: 50px;
+      width: 32%;
+      right: 50px;
+      text-align: center;
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      p {
+        color: #8c8c8c;
+        a {
+          color: #8c8c8c;
+        }
+        a:hover {
+          color: #66CC99;
         }
       }
     }
-    .btn-get-started {
-      padding: 8px 16px;
-      margin: 0;
-    }
-    .desk:before {
-      display: none;
-    }
-    .banner-footer {
-      background-color: #4c4c4c;
-      margin: 0;
-      padding: 0;
-      height: 70px;
-      line-height: 70px;
-    }
-  }
-  .info-version {
-    padding-top: 25px;
-    > p {
-      line-height: 20px;
-    }
   }
   .why-truly-ui {
-    padding-top: 50px;
-    .row{
-      padding: 0;
-    }
-    .logo img {
-      margin: 0;
-      width: 150px;
+    margin-top: 100px;
+    margin-bottom: 85px;
+    .logo {
+      img {
+        width: 200px;
+      }
     }
     .why-tl {
-      padding-left: 10%;
-      text-align: left;
+      padding-bottom: 100px;
+      h1 {
+        font-size: 36px;
+        text-align: left;
+      }
+      p {
+        font-weight: 300;
+        text-align: justify;
+        word-break: normal;
+        font-size: 1.5em;
+        line-height: 45px;
+      }
     }
     .feature-box {
       text-align: left;
       h3 {
-        font-size: 17px;
+        i {
+          margin-left: -5px;
+        }
       }
-      p {
-        font-size: 16px;
-      }
-    }
-    .feature-box{
-      margin-top: 25px;
     }
   }
   .web-components {
-    .web-components-list {
-      i {
-        font-size: 3em;
+    padding-top: 120px;
+    padding-bottom: 0;
+    .web-components-header {
+      padding-bottom: 100px;
+      h1 {
+        font-family: "Segoe UI";
+        font-weight: normal;
+        margin: 0 auto;
+        color: #fff;
       }
+    }
+    .web-components-row {
+      padding-bottom: 100px;
+    }
+    .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
+      padding-left: 90px;
+      padding-right: 10px;
+    }
+    .tl-input:before, .tl-datatable:before {
+      left: 51px;
+    }
+    .tl-form:before, .tl-schedule:before {
+      left: 27px;
+    }
+    .tl-dialog:before, .tl-button:before {
+      left: 5px;
     }
   }
   .ss-style-triangles:after {
     display: none;
   }
+  .git-and-getstarted {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .list {
+      margin-bottom: 0;
+      i {
+        margin-left: -35px;
+      }
+    }
+    .list:first-child {
+      .getting-started {
+        margin-left: -15px;
+      }
+      p {
+        padding-right: 30px;
+      }
+    }
+    .list:last-child {
+      margin-left: -20px;
+      padding-right: 50px;
+    }
+    .separator {
+      margin: 0 auto;
+      margin-left: -18px;
+      position: absolute;
+      width: 2px;
+      height: 140px;
+      background: -webkit-linear-gradient(top, rgba(236, 240, 245, 0) 0%, rgba(222, 223, 225, 1) 49%, rgba(255, 255, 255, 0) 100%);
+    }
+  }
+}
+
+/* Fix Version */
+@media only screen and (min-width: 1540px) {
+  .banner {
+    .banner-footer {
+      .info-version {
+        font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        display: block;
+        font-size: 14px;
+        padding-top: 25px;
+        p {
+          text-align: center;
+          a:hover {
+            color: #66CC99;
+          }
+        }
+      }
+    }
+    .info-version-md {
+      display: none;
+    }
+  }
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width: 1200px) {
-  .banner {
-    .desk {
-      padding-right: 0;
-      > .desk-table {
-        min-height: 220px;
-      }
+@media only screen and (min-width: 1200px) { }
+
+/* min 1840w to max 1920w */
+@media only screen and (min-width: 1840px) {
+  .git-and-getstarted {
+    .separator {
+      height: 100px;
     }
+  }
+  .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
+    padding-left: 90px;
+    padding-right: 83px;
   }
 }

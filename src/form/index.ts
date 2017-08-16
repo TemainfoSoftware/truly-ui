@@ -19,7 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlForm } from './form';
 import { FormService } from './form.service';
@@ -44,14 +45,20 @@ import { DropDownListModule } from '../dropdownlist/index';
     ],
     exports: [
         TlForm
-    ],
-    providers: [
-        ModalService,
-        FormService,
-        DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService
     ]
 } )
-export class FormModule {}
+export class FormModule {
+    static forRoot(): ModuleWithProviders{
+        return {
+            ngModule: FormModule,
+            providers: [
+                ModalService,
+                FormService,
+                DialogService,
+                TabIndexService,
+                IdGeneratorService,
+                NameGeneratorService
+            ]
+        }
+    }
+}

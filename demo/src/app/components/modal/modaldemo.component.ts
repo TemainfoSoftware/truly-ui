@@ -3,7 +3,6 @@ import { ModalService } from "../../../../../src/modal/modal.service";
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { NewModal } from "./newmodal/newModal.component";
-import { FormService } from "../../../../../src/form/form.service";
 import * as json from './modal-dataproperties.json';
 
 
@@ -20,7 +19,7 @@ export class ModalDemo {
   public modalOptions: ModalOptions;
   private modalprop;
 
-  constructor(private view: ViewContainerRef, private modalService: ModalService, private formService: FormService) {
+  constructor(private view: ViewContainerRef, private modalService: ModalService) {
     this.modalService.setView(this.view);
     this.modalprop = json.dataProperties;
 

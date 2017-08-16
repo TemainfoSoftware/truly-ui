@@ -21,21 +21,23 @@
  */
 import { NgModule } from '@angular/core';
 
-import { DatatableModule } from './datatable/index';
-import { InputModule } from './input/index';
-import { ButtonModule } from './button/index';
-import { MultiselectModule } from './multiselect/index';
-import { TooltipModule } from './tooltip/index';
-import { ModalModule } from './modal/index';
-import { DialogModule } from './dialog/index';
+import { DatatableModule } from './datatable';
+import { InputModule } from './input';
+import { ButtonModule } from './button';
+import { MultiselectModule } from './multiselect';
+import { TooltipModule } from './tooltip';
+import { ModalModule } from './modal';
+import { DialogModule } from './dialog';
+import { FormModule } from "./form";
 
-export * from './datatable/index';
-export * from './input/index';
-export * from './button/index';
-export * from './multiselect/index';
-export * from './tooltip/index';
-export * from './modal/index';
-export * from './dialog/index';
+export * from './datatable';
+export * from './input';
+export * from './button';
+export * from './multiselect';
+export * from './tooltip';
+export * from './modal';
+export * from './dialog';
+export * from './form';
 
 @NgModule({
   imports: [
@@ -45,6 +47,7 @@ export * from './dialog/index';
       MultiselectModule,
       TooltipModule,
       ModalModule,
+      FormModule,
       DialogModule
   ]
 })

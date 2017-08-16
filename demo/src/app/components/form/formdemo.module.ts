@@ -30,7 +30,7 @@ import { DialogModule } from "truly-ui/dialog";
     DropDownListModule,
     InputModule,
     FormDemoRoutingModule,
-    FormModule,
+    FormModule.forRoot(),
     DialogModule,
     FormsModule,
     ModalModule,

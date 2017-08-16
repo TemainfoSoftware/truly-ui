@@ -5,7 +5,6 @@ import { NgModule } from "@angular/core";
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { ButtonModule } from 'truly-ui/button';
-import { FormModule } from "truly-ui/form";
 import { DatatableModule } from 'truly-ui/datatable';
 import { DialogService } from "truly-ui/dialog/dialog.service";
 import { InputModule } from 'truly-ui/input';
@@ -25,10 +24,9 @@ import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
     CommonModule,
     DatatableModule,
     FormsModule,
-    FormModule,
     HighlightJsModule,
     InputModule,
-    ModalModule,
+    ModalModule.forRoot(),
     ModalDemoRoutingModule
   ],
   exports: [

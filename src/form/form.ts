@@ -20,16 +20,18 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, OnInit,
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy,
+    OnInit,
     QueryList, Renderer2,
-    ViewChild
+    ViewChild,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
-import { TabIndexService } from './tabIndex.service';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
+
+let componentFormIndex = 0;
 
 @Component( {
     selector: 'tl-form',
@@ -38,8 +40,6 @@ import { TlDropDownList } from '../dropdownlist/dropdownlist';
     styleUrls: ['../form/form.scss']
 } )
 export class TlForm implements AfterViewInit, OnDestroy, OnInit {
-
-    @Input() lastElement;
 
     @Input() initialFocus;
 
@@ -55,6 +55,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
+    @ViewChild( 'content' ) content;
+
     private dialogOpen = false;
 
     private lastActiveElement;
@@ -63,18 +65,23 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private validForm = true;
 
-    constructor( private renderer: Renderer2, private dialogService: DialogService,
-                 private cdr: ChangeDetectorRef,
-                 private tabService: TabIndexService ) {}
+    private focusElements = [];
 
-    ngOnInit() {}
+    private lastTabIndex;
+
+    private elementsWithTabIndex = [];
+
+    constructor( private renderer: Renderer2, private dialogService: DialogService,
+                 private cdr: ChangeDetectorRef ) {
+    }
+
+    ngOnInit() {
+        componentFormIndex = 0;
+    }
 
     ngAfterViewInit() {
-        if (!this.lastElement) {
-            throw new EvalError( 'You must define the [lastElement] property !' );
-        }
         this.setInitialFocus();
-        this.setTabIndexButtons();
+        this.getElementsOnForm();
         this.verifyInputValidation();
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
@@ -86,31 +93,127 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
             this.getInputValues();
             this.getDropdownListValues();
         });
+
+    }
+
+    getElementsOnForm() {
+        const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
+        for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
+            if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' ) {
+                this.focusElements.push( listFormComponents[ childFormComponents ] );
+            }
+        }
+        this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
+        this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
+        this.generateIndexComponentsOfForm();
+    }
+
+    generateIndexComponentsOfForm() {
+        setTimeout( () => {
+            this.focusElements.forEach( ( value, index, array ) => {
+                if ( value.tabIndex ) {
+                    if (this.elementsWithTabIndex.indexOf(value.tabIndex) >= 0) {
+                        throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + value.tabIndex );
+                    }
+                    this.elementsWithTabIndex.push( value.tabIndex );
+                }
+            } );
+            this.focusElements.forEach( ( value, index, array ) => {
+
+                    if ( !value.tabIndex ) {
+                        if ( this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0 ) {
+                            value.setAttribute( 'tabIndex', componentFormIndex++ );
+                        } else {
+                            value.setAttribute( 'tabIndex', ++componentFormIndex );
+                            componentFormIndex++;
+                        }
+                    }
+                    if ( index === array.length - 1 ) {
+                        this.lastTabIndex = value.tabIndex;
+                    }
+                }
+            );
+            this.orderElements();
+        }, 10 );
+    }
+
+    orderElements() {
+        let order;
+        order = this.focusElements.sort( function ( a, b ) {
+            return a.getAttribute('tabindex') - b.getAttribute('tabindex');
+        } );
+        this.focusElements = order;
     }
 
     handleKeysForm( $event: KeyboardEvent ) {
         this.inputHasChanged();
         this.verifyInputValidation();
+        if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
+            $event.preventDefault();
+            this.backwardTabbing();
+            return;
+        }
         switch ( $event.keyCode ) {
             case KeyEvent.ESCAPE :
                 this.closeForm();
                 break;
             case KeyEvent.ARROWUP :
-                this.backFocusToForm();
+                this.backwardTabbing();
+                break;
+            case KeyEvent.ARROWDOWN:
+                this.forwardTabbing();
                 break;
             case KeyEvent.ARROWLEFT :
                 this.setFocusOK();
                 break;
             case KeyEvent.ARROWRIGHT:
                 this.setFocusCancel();
+                break;
+            case KeyEvent.TAB:
+                $event.preventDefault();
+                this.forwardTabbing();
+                break;
+            case KeyEvent.ENTER:
+                $event.preventDefault();
+                this.forwardTabbing();
+                break;
         }
     }
 
-    setTabIndexButtons() {
-        setTimeout( () => {
-            this.buttonFormOk.tabindex = this.tabService.uniqueIndex;
-            this.buttonFormCancel.tabindex = this.tabService.uniqueIndex + 1;
-        }, 1 );
+    backwardTabbing() {
+        if ( this.isFirstTabIndexOfForm() ) {
+            return this.focusElements[ this.lastTabIndex ].focus();
+        }
+        const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
+        for ( let element = previousElement; element < this.focusElements.length; element-- ) {
+            if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
+                return this.focusElements[ element ].focus();
+            }
+        }
+    }
+
+    forwardTabbing() {
+        if ( this.isLastTabIndexOfForm() ) {
+            return this.focusElements[ 0 ].focus();
+        }
+        const nextElement = (document.activeElement as HTMLElement).tabIndex + 1;
+        for ( let element = nextElement; element < this.focusElements.length; element++ ) {
+            if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
+                return this.focusElements[ element ].focus();
+            }
+        }
+    }
+
+    isLastTabIndexOfForm() {
+        return (document.activeElement as HTMLElement).tabIndex === this.lastTabIndex;
+    }
+
+    isFirstTabIndexOfForm() {
+        return (document.activeElement as HTMLElement).tabIndex === 0;
+    }
+
+    isElementDisabled( element ) {
+        return element.disabled;
     }
 
     setInitialFocus() {
@@ -127,13 +230,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     setFocusCancel() {
         if ( this.isActiveElementButtonOk() ) {
             this.buttonFormCancel.buttonElement.nativeElement.focus();
-        }
-    }
-
-    backFocusToForm() {
-        if ( this.isActiveElementButtonOk() ||
-            this.isActiveElementButtonCancel() ) {
-            this.lastElement.element.nativeElement.focus();
         }
     }
 
@@ -206,6 +302,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
                     this.cdr.detectChanges();
                 }
         } );
+        this.cdr.detectChanges();
         return this.validForm;
     }
 

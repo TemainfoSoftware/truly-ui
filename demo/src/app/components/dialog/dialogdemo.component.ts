@@ -36,7 +36,7 @@ export class DialogDemo {
 
   confirmation() {
     this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
-      if (modalResult === ModalResult.MRYES) {
+      if (modalResult.modalResult === ModalResult.MRYES) {
         alert('clicked YES')
       }
     },)

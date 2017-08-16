@@ -1,4 +1,4 @@
-<tl-form [lastElement]="lastElement" [showConfirmOnChange]="true" [messageDialogConfirmation]="'Deseja realmente fechar essa janela ?'">
+<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Deseja realmente fechar essa janela ?'">
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
@@ -10,7 +10,6 @@
     <div class="col-md-12">
       <div class="form-group">
         <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="text" [label]="'LastName'"></tl-input>
-        LastName: {{text}}
       </div>
     </div>
   </div>
@@ -22,6 +21,7 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
+
         <tl-dropdown-list
                           [labelSize]="'80'"
                           [validations]="{required: true}"
@@ -35,6 +35,9 @@
                           [value]="'valueItem'">
         </tl-dropdown-list>
       </div>
+      <div class="form-group">
+        <tl-input [labelSize]="'80'" [ngModel]="pessoa?.city" [label]="'OTHER'"></tl-input>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -46,13 +49,12 @@
     <div class="col-md-6">
       <div class="form-group">
         <tl-input [labelSize]="'80'" [validations]="{required: true}" [(ngModel)]="bt" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
-        Birthday: {{bt}}
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <tl-input #lastElement [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
+      <tl-input [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
     </div>
   </div>
 </tl-form>

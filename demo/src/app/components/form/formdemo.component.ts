@@ -32,10 +32,10 @@ export class FormDemo {
       icon: 'ion-ios-list-outline',
       draggable: true,
       width: '500px',
-      height: 'auto',
+      height: '500px',
       maximizable: true,
       minimizable: true,
-      fullscreen: true
+      fullscreen: false
     };
   }
 

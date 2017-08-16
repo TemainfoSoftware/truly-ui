@@ -31,7 +31,7 @@ import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 
-let componentFormIndex = 0;
+let componentFormIndex;
 
 @Component( {
     selector: 'tl-form',
@@ -59,15 +59,15 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private dialogOpen = false;
 
+    private validForm = true;
+
+    private lastTabIndex;
+
     private lastActiveElement;
 
     private formResult = {};
 
-    private validForm = true;
-
     private focusElements = [];
-
-    private lastTabIndex;
 
     private elementsWithTabIndex = [];
 
@@ -76,7 +76,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnInit() {
-        componentFormIndex = 0;
+        componentFormIndex = -1;
     }
 
     ngAfterViewInit() {
@@ -103,38 +103,82 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
                 this.focusElements.push( listFormComponents[ childFormComponents ] );
             }
         }
-        this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
-        this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
-        this.generateIndexComponentsOfForm();
+        this.addButtonsOfFormToListElements();
+        this.handleTabIndexComponentsOfForm();
     }
 
-    generateIndexComponentsOfForm() {
-        setTimeout( () => {
-            this.focusElements.forEach( ( value, index, array ) => {
-                if ( value.tabIndex ) {
-                    if (this.elementsWithTabIndex.indexOf(value.tabIndex) >= 0) {
-                        throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + value.tabIndex );
-                    }
-                    this.elementsWithTabIndex.push( value.tabIndex );
-                }
-            } );
-            this.focusElements.forEach( ( value, index, array ) => {
+    addButtonsOfFormToListElements() {
+        this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
+        this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
+    }
 
-                    if ( !value.tabIndex ) {
-                        if ( this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0 ) {
-                            value.setAttribute( 'tabIndex', componentFormIndex++ );
-                        } else {
-                            value.setAttribute( 'tabIndex', ++componentFormIndex );
-                            componentFormIndex++;
-                        }
-                    }
-                    if ( index === array.length - 1 ) {
-                        this.lastTabIndex = value.tabIndex;
-                    }
-                }
-            );
+    handleTabIndexComponentsOfForm() {
+        setTimeout( () => {
+            this.getElementsWithTabIndex();
+            this.generateTabIndexOfElements();
             this.orderElements();
+            this.validateTabIndexByElements();
         }, 10 );
+    }
+
+
+    setTabIndex(element) {
+        if ( !element.tabIndex ) {
+            componentFormIndex++;
+            if ( this.notExistTabIndexInserted() ) {
+                element.setAttribute( 'tabIndex', componentFormIndex );
+            } else {
+                this.setTabIndex(element);
+            }
+        }
+    }
+
+
+    isLastTabIndexElement(element, index, array) {
+        if ( index === array.length - 1 ) {
+            this.lastTabIndex = element.tabIndex;
+        }
+    }
+
+
+    generateTabIndexOfElements() {
+        this.focusElements.forEach( ( element, index, array ) => {
+                this.setTabIndex(element);
+                this.isLastTabIndexElement(element, index, array);
+            }
+        );
+    }
+
+    getElementsWithTabIndex() {
+        this.focusElements.forEach( ( element ) => {
+            if ( element.tabIndex ) {
+                this.validateDuplicatedTabIndex(element);
+                this.elementsWithTabIndex.push( element.tabIndex );
+            }
+        } );
+    }
+
+    validateDuplicatedTabIndex(element) {
+        if (this.existTabIndexInserted(element)) {
+            throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + element.tabIndex );
+        }
+    }
+
+    validateTabIndexByElements() {
+        const formElementsDefault = 3;
+        if (Math.max(...this.elementsWithTabIndex) > this.focusElements.length - formElementsDefault) {
+            throw new EvalError( 'The form doesn\'t have the number' +
+                ' of elements enough according with TabIndex passed : ' + Math.max(...this.elementsWithTabIndex));
+        }
+    }
+
+
+    notExistTabIndexInserted() {
+        return this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0;
+    }
+
+    existTabIndexInserted(element) {
+        return this.elementsWithTabIndex.indexOf(element.tabIndex) >= 0;
     }
 
     orderElements() {

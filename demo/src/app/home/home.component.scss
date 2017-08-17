@@ -146,9 +146,8 @@
     .web-components-list {
       margin-bottom: 25px;
       i {
-        margin-left: -20px;
         color: #626060;
-        font-size: 3em;
+        font-size: 4em;
       }
       p {
         font-family: 'Segoe UI';
@@ -172,9 +171,10 @@
         color: #66CC99;
       }
       i {
-        margin-left: -20px;
+        margin-left: -10px;
         color: #626060;
-        font-size: 3em;
+        font-size: 4em;
+        margin-top: 4px;
       }
       p {
         font-family: 'Segoe UI';
@@ -192,66 +192,14 @@
   .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
     padding-left: 90px;
     padding-right: 10px;
+    i {
+      position: absolute;
+      top: 2px;
+      left: -75px;
+    }
   }
-  .tl-input:before {
-    background: url('../../assets/img/icon-tl-input.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-  }
-  .tl-form:before {
-    background: url('../../assets/img/icon-tl-form.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-  }
-  .tl-dialog:before {
-    background: url('../../assets/img/icon-tl-dialog.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-  }
-  .tl-datatable:before {
-    background: url('../../assets/img/icon-tl-datatable.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-  }
-  .tl-schedule:before {
-    background: url('../../assets/img/icon-tl-schedule.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
-  }
-  .tl-button:before {
-    background: url('../../assets/img/icon-tl-button.png') no-repeat 0 0;
-    background-size: 80px;
-    height: 80px;
-    width: 80px;
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 10px;
+  .tl-dialog i {
+    margin-top: -11px;
   }
 }
 
@@ -486,15 +434,6 @@
       padding-left: 90px;
       padding-right: 10px;
     }
-    .tl-input:before, .tl-datatable:before {
-      left: 51px;
-    }
-    .tl-form:before, .tl-schedule:before {
-      left: 27px;
-    }
-    .tl-dialog:before, .tl-button:before {
-      left: 5px;
-    }
   }
   .ss-style-triangles:after {
     display: none;
@@ -555,7 +494,8 @@
 }
 
 /* Large Devices, Wide Screens */
-@media only screen and (min-width: 1200px) { }
+@media only screen and (min-width: 1200px) {
+}
 
 /* min 1840w to max 1920w */
 @media only screen and (min-width: 1840px) {

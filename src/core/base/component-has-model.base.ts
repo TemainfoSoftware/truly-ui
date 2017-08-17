@@ -72,21 +72,23 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     public ngValue = '';
 
-    constructor(tabIndexService: TabIndexService,
-                idService: IdGeneratorService,
-                nameService: NameGeneratorService) {
-        super(tabIndexService, idService, nameService);
+    constructor( tabIndexService: TabIndexService,
+                 idService: IdGeneratorService,
+                 nameService: NameGeneratorService ) {
+        super( tabIndexService, idService, nameService );
     }
 
     /**
      * Callback of control value accessor to register touched changes
      */
-    onTouchedCallback: Function = () => {};
+    onTouchedCallback: Function = () => {
+    };
 
     /**
      * Callback of control value accessor to register changes
      */
-    onChangeCallback: Function = () => {};
+    onChangeCallback: Function = () => {
+    };
 
     /**
      * Lifehook of OnInit Angular.
@@ -98,12 +100,14 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
         } );
     }
 
-    get modelValue(): any { return this.ngValue; };
+    get modelValue(): any {
+        return this.ngValue;
+    };
 
-    set modelValue(value: any) {
-        if (value !== this.ngValue) {
+    set modelValue( value: any ) {
+        if ( value !== this.ngValue ) {
             this.ngValue = value;
-            this.onChangeCallback(value);
+            this.onChangeCallback( value );
         }
     }
 
@@ -112,9 +116,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param value Value received to write value on ngModel
      */
     writeValue( value: any ) {
-        if (this.element) {
+        if ( this.element ) {
             this.ngValue = value;
-            this.onChangeCallback(value);
+            this.onChangeCallback( value );
             this.element.nativeElement.value = value;
         }
     }

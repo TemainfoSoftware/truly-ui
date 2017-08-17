@@ -114,7 +114,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     writeValue( value: any ) {
         if (this.element) {
             this.ngValue = value;
-            this.onChangeCallback(value);
             this.element.nativeElement.value = value;
         }
     }

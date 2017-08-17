@@ -71,6 +71,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private elementsWithTabIndex = [];
 
+    private componentsWithValidations = [];
+
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private cdr: ChangeDetectorRef ) {
     }
@@ -81,22 +83,54 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     ngAfterViewInit() {
         this.setInitialFocus();
-        this.getElementsOnForm();
-        this.verifyInputValidation();
+        this.getElementsOfForm();
+        this.getComponentsWithValidations();
+        this.validateElements();
+        this.listenButtonFormCancel();
+        this.listenButtonFormOK();
+        this.listenComponentWithValidations()
+    }
+
+
+    listenButtonFormOK() {
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
+            $event.stopPropagation();
+            this.getInputValues();
+            this.getDropdownListValues();
+        } );
+    }
+
+
+    listenButtonFormCancel() {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
         } );
-        this.renderer.listen(this.buttonFormOk.buttonElement.nativeElement, 'keyup', ($event: KeyboardEvent) => {
-            $event.stopPropagation();
-            this.getInputValues();
-            this.getDropdownListValues();
-        });
-
     }
 
-    getElementsOnForm() {
+    listenComponentWithValidations() {
+        this.componentsWithValidations.forEach( ( item, index, array ) => {
+            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+                this.validateElements();
+            } );
+        } );
+    }
+
+    getComponentsWithValidations() {
+        this.inputList.toArray().forEach((item, index, array) => {
+            if (Object.keys( item.validations ).length > 0) {
+             this.componentsWithValidations.push(item);
+            }
+        });
+        this.dropdownList.toArray().forEach((item, index, array) => {
+            if (Object.keys( item.validations ).length > 0) {
+                this.componentsWithValidations.push(item);
+            }
+        });
+    }
+
+    getElementsOfForm() {
         const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
         for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
             if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' ) {
@@ -105,6 +139,20 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         }
         this.addButtonsOfFormToListElements();
         this.handleTabIndexComponentsOfForm();
+    }
+
+    validateElements() {
+        setTimeout( () => {
+            for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
+                this.validForm = true;
+                this.cdr.detectChanges();
+                if ( this.componentsWithValidations[ item ].componentModel.valid === false ) {
+                    this.validForm = false;
+                    this.cdr.detectChanges();
+                    return;
+                }
+            }
+        }, 100 );
     }
 
     addButtonsOfFormToListElements() {
@@ -191,7 +239,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     handleKeysForm( $event: KeyboardEvent ) {
         this.inputHasChanged();
-        this.verifyInputValidation();
         if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
             $event.preventDefault();
             this.backwardTabbing();
@@ -336,18 +383,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.inputList.forEach( ( item ) => {
             this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
         } );
-    }
-
-    verifyInputValidation() {
-        this.validForm = true;
-        this.inputList.forEach( ( item ) => {
-                if ( item.componentModel.valid === false ) {
-                    this.validForm = false;
-                    this.cdr.detectChanges();
-                }
-        } );
-        this.cdr.detectChanges();
-        return this.validForm;
     }
 
 

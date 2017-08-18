@@ -16,6 +16,7 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'buttongroup', loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'},
       {path: 'dropdownlist', loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
+      {path: 'radiobutton', loadChildren: './components/radiobutton/radiobuttondemo.module#RadioButtonDemoModule'},
       {path: 'form', loadChildren: './components/form/formdemo.module#FormDemoModule'},
       {path: 'dialog', loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},

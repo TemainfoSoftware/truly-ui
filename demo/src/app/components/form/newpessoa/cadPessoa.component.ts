@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DataFormService } from "./dataform.service";
 
 @Component( {
@@ -6,15 +6,15 @@ import { DataFormService } from "./dataform.service";
   templateUrl: './cadPessoa.html',
   styleUrls: [ './cadPessoa.component.scss' ]
 } )
-export class CadPessoa implements OnInit {
+export class CadPessoa implements OnInit, OnChanges {
 
   private pessoa;
   private data;
   private text = '';
   private bt = '';
+  @Input() input ='21122112';
 
-  constructor(public formDataService: DataFormService) {
-  }
+  constructor(public formDataService: DataFormService) {}
 
   ngOnInit() {
     this.data = [
@@ -24,4 +24,13 @@ export class CadPessoa implements OnInit {
     this.pessoa = this.formDataService.getDataForm();
   }
 
+
+  ngOnChanges(data: SimpleChanges) {
+    console.log(data);
+  }
+
+
+  changess() {
+    console.log('add');
+  }
 }

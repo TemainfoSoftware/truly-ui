@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, AfterViewInit, Input, forwardRef, ViewChild, ViewChildren, Query, QueryList, ContentChildren,
+    Component, AfterViewInit, Input, forwardRef, ViewChild
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -28,8 +28,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { KeyEvent } from "../core/enums/key-events";
-import { el } from "@angular/platform-browser/testing/src/browser_util";
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
     selector: 'tl-radiobutton',
@@ -49,8 +48,8 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     @ViewChild( 'radiobutton' ) radiobutton;
 
-    constructor( tabIndexService : TabIndexService, idService : IdGeneratorService,
-                 nameService : NameGeneratorService ) {
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
+                 nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -62,7 +61,7 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
         }
     }
 
-    onKeyDown( $event : KeyboardEvent ) {
+    onKeyDown( $event: KeyboardEvent ) {
         $event.preventDefault();
         $event.stopPropagation();
         switch ( $event.keyCode ) {

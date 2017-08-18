@@ -1,0 +1,11 @@
+<div class="radio-container" (keydown)="onKeyDown($event)">
+    <input attr.id="{{id}}"
+           #radiobutton
+           attr.name="{{name}}"
+           type="radio"
+           [tabindex]="tabindex"
+           [value]="value"
+           [(ngModel)]="modelValue">
+    <span [tabindex]="tabindex" class="check"></span>
+    <label (click)="modelValue = value" class="-label" attr.for="{{id}}">{{label}}</label>
+</div>

@@ -3,9 +3,10 @@
            #radiobutton
            attr.name="{{name}}"
            type="radio"
+           #model="ngModel"
+           (click)="clickRadio()"
            [tabindex]="tabindex"
            [value]="value"
            [(ngModel)]="modelValue">
-    <span [tabindex]="tabindex" class="check"></span>
-    <label (click)="modelValue = value" class="-label" attr.for="{{id}}">{{label}}</label>
+    <label (click)="clickRadio()" class="-label" attr.for="{{id}}">{{label}}</label>
 </div>

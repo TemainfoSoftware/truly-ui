@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, AfterViewInit, Input, forwardRef, ViewChild
+    Component, AfterViewInit, Input, forwardRef, ViewChild, ContentChildren, QueryList, OnDestroy
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -29,6 +29,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { KeyEvent } from '../core/enums/key-events';
+import { RadioButtonListService } from './radiobuttonlist.service';
 
 @Component( {
     selector: 'tl-radiobutton',
@@ -38,7 +39,7 @@ import { KeyEvent } from '../core/enums/key-events';
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioButton ), multi: true }
     ]
 } )
-export class TlRadioButton extends ComponentHasModelBase implements AfterViewInit {
+export class TlRadioButton extends ComponentHasModelBase implements AfterViewInit, OnDestroy {
 
     @Input() label = '';
 
@@ -48,8 +49,10 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     @ViewChild( 'radiobutton' ) radiobutton;
 
+    @ContentChildren(TlRadioButton) tlradiobutton: QueryList<TlRadioButton>;
+
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
-                 nameService: NameGeneratorService ) {
+                 nameService: NameGeneratorService, public radioService: RadioButtonListService ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -59,19 +62,28 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
         if ( !this.name ) {
             throw new EvalError( 'The name property is required!' );
         }
+        this.radioService.radioButtonList.push(this.tlradiobutton.toArray()[0]);
     }
 
     onKeyDown( $event: KeyboardEvent ) {
         $event.preventDefault();
-        $event.stopPropagation();
         switch ( $event.keyCode ) {
             case KeyEvent.ENTER:
-                this.modelValue = this.value;
+                this.clickRadio();
                 break;
             case KeyEvent.SPACE:
-                this.modelValue = this.value;
+                this.clickRadio();
                 break;
         }
+    }
+
+    clickRadio() {
+        this.radioService.clearModelValueRadioButton();
+        this.modelValue = this.value;
+    }
+
+    ngOnDestroy() {
+        this.radioService.radioButtonList = [];
     }
 
 }

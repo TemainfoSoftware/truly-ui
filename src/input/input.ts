@@ -193,6 +193,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     clearInput() {
         this.modelValue = '';
+        this.input.nativeElement.value = '';
         this.input.nativeElement.focus();
         this.clear.emit();
     }

@@ -15,6 +15,7 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'splitbutton', loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'},
       {path: 'buttongroup', loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'},
       {path: 'dropdownlist', loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'},
+      {path: 'autocomplete', loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'},
       {path: 'modal', loadChildren: './components/modal/modaldemo.module#ModalDemoModule'},
       {path: 'radiobutton', loadChildren: './components/radiobutton/radiobuttondemo.module#RadioButtonDemoModule'},
       {path: 'form', loadChildren: './components/form/formdemo.module#FormDemoModule'},

@@ -17,6 +17,7 @@ import { DataFormService } from "./newpessoa/dataform.service";
 import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
+import { RadioButtonModule } from "truly-ui/radiobutton";
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { DialogModule } from "truly-ui/dialog";
   imports:[
     CommonModule,
     ButtonModule,
+    RadioButtonModule,
     DatatableModule,
     DropDownListModule,
     InputModule,

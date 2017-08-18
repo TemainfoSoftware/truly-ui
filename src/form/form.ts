@@ -30,6 +30,7 @@ import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
+import { TlRadioButton } from '../radiobutton/radiobutton';
 
 let componentFormIndex;
 
@@ -50,6 +51,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
+
+    @ContentChildren( TlRadioButton ) radioButtonList: QueryList<TlRadioButton>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -97,6 +100,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
+            this.getRadioButtonValue();
         } );
     }
 
@@ -106,6 +110,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
+            this.getRadioButtonValue();
         } );
     }
 
@@ -387,9 +392,19 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     getDropdownListValues() {
-        this.dropdownList.forEach( ( item ) => {
+         this.dropdownList.forEach( ( item ) => {
             this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
-        } );
+         } );
+    }
+
+
+    getRadioButtonValue() {
+        for (let element = 0; element < this.radioButtonList.length; element++) {
+            if (this.radioButtonList.toArray()[element].componentModel.model) {
+                this.formResult[ 'gender' ] = this.radioButtonList.toArray()[element].componentModel.model;
+                return;
+            }
+        }
     }
 
     hasValueOnForm() {

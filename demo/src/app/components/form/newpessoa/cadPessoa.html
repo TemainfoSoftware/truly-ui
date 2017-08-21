@@ -21,18 +21,12 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-dropdown-list
-                          [labelSize]="'80'"
-                          [validations]="{required: true}"
-                          [height]="25"
-                          [labelPlacement]="'left'"
-                          [placeholder]="'Select Item'"
-                          [ngModel]="pessoa?.gender"
-                          [data]="data"
-                          [label]="'Gender'"
-                          [text]="'textItem'"
-                          [value]="'valueItem'">
-        </tl-dropdown-list>
+        <div class="col-md-6">
+          <tl-radio-group [nameGroup]="'Genero'" [ngModel]="pessoa?.gender">
+            <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+            <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
+          </tl-radio-group>
+        </div>
       </div>
     </div>
   </div>

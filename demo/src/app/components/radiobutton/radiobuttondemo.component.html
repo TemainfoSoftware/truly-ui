@@ -7,10 +7,10 @@
   <hr>
   <div class="showcase">
     <div class="form-group">
-      <tl-radiobutton [(ngModel)]="radio" [label]="'Male'" [name]="'group1'" [value]="'M'"></tl-radiobutton>
-    </div>
-    <div class="form-group">
-      <tl-radiobutton [(ngModel)]="radio" [label]="'Female'" [name]="'group1'" [value]="'F'"></tl-radiobutton>
+      <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio">
+        <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+        <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+      </tl-radio-group>
     </div>
     <span class="returned-value">Returned Value: {{ radio }}</span>
   </div>

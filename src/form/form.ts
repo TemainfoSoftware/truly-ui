@@ -30,7 +30,7 @@ import { TlInput } from '../input/input';
 import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
-import { TlRadioButton } from '../radiobutton/radiobutton';
+import { TlRadioGroup } from '../radiobutton/radiogroup';
 
 let componentFormIndex;
 
@@ -52,7 +52,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
 
-    @ContentChildren( TlRadioButton ) radioButtonList: QueryList<TlRadioButton>;
+    @ContentChildren( TlRadioGroup ) radioButtonList: QueryList<TlRadioGroup>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -65,8 +65,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     private validForm = true;
 
     private lastTabIndex;
-
-    private checked = null;
 
     private lastActiveElement;
 
@@ -100,29 +98,29 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     listenButtonFormOK() {
-        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
             this.getRadioButtonValue();
-        } ));
+        } );
     }
 
 
     listenButtonFormCancel() {
-        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
+        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
             this.getRadioButtonValue();
-        } ));
+        } );
     }
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.listeners.push(this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
-            } ));
+            } );
         } );
     }
 
@@ -403,12 +401,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     getRadioButtonValue() {
-        for (let element = 0; element < this.radioButtonList.length; element++) {
-            if (this.radioButtonList.toArray()[element].componentModel.model) {
-                this.formResult[ 'gender' ] = this.radioButtonList.toArray()[element].componentModel.model;
-                return;
-            }
-        }
+        this.radioButtonList.forEach( ( item, index, array ) => {
+            this.formResult[ 'gender' ] = item.itemSelected.value;
+        } );
     }
 
     hasValueOnForm() {
@@ -422,9 +417,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-        this.listeners.forEach((value, index, array) => {
-            value();
-        })
+
     }
 }
 

@@ -20,13 +20,15 @@
  SOFTWARE.
  */
 import {
-    Directive, Input
+    AfterViewInit,
+    Component, Input
 } from '@angular/core';
 
-@Directive( {
-    selector: 'tl-radiobutton'
+@Component( {
+    selector: 'tl-radiobutton',
+    template: '',
 } )
-export class TlRadioButton {
+export class TlRadioButton implements AfterViewInit {
 
     @Input() label = '';
 

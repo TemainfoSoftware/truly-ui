@@ -20,16 +20,15 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, QueryList, Input, AfterContentInit, forwardRef, ViewChild, AfterViewInit,
-    AfterViewChecked, Output, EventEmitter,
+    Component, ContentChildren, QueryList, Input, AfterContentInit, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter,
 } from '@angular/core';
 
-import { TlRadioButton } from "./radiobutton";
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
-import { ComponentHasModelBase } from "../core/base/component-has-model.base";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { TabIndexService } from "../form/tabIndex.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
+import { TlRadioButton } from './radiobutton';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { TabIndexService } from '../form/tabIndex.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 const Orientation = {
     VERTICAL: 'vertical',
@@ -46,6 +45,8 @@ const Orientation = {
 } )
 export class TlRadioGroup extends ComponentHasModelBase implements AfterContentInit, AfterViewInit {
 
+    public itemSelected;
+
     @Input() nameGroup = '';
 
     @Input() labelGroup = '';
@@ -60,16 +61,15 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     @ViewChild( 'radiobutton' ) radiobutton;
 
-    @ContentChildren( TlRadioButton ) listRadioButton : QueryList<TlRadioButton>;
+    @ContentChildren( TlRadioButton ) listRadioButton: QueryList<TlRadioButton>;
 
     @Output() private onCheckRadio: EventEmitter<any> = new EventEmitter();
 
     @Output() private onFocusRadio: EventEmitter<any> = new EventEmitter();
 
-    public itemSelected;
 
-    constructor( tabIndexService : TabIndexService, idService : IdGeneratorService,
-                 nameService : NameGeneratorService ) {
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
+                 nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
 

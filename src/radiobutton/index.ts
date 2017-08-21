@@ -6,7 +6,6 @@ import { TlRadioGroup } from './radiogroup';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { RadioButtonListService } from './radiobuttonlist.service';
 
 @NgModule({
     imports: [
@@ -25,7 +24,6 @@ import { RadioButtonListService } from './radiobuttonlist.service';
         TabIndexService,
         IdGeneratorService,
         NameGeneratorService,
-        RadioButtonListService
     ]
 })
 export class RadioButtonModule {}

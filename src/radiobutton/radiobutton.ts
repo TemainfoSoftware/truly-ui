@@ -20,26 +20,13 @@
  SOFTWARE.
  */
 import {
-    Component, AfterViewInit, Input, forwardRef, ViewChild, ContentChildren, QueryList, OnDestroy,
+    Directive, Input
 } from '@angular/core';
 
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { KeyEvent } from '../core/enums/key-events';
-import { RadioButtonListService } from './radiobuttonlist.service';
-
-@Component( {
-    selector: 'tl-radiobutton',
-    templateUrl: './radiobutton.html',
-    styleUrls: [ './radiobutton.scss' ],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioButton ), multi: true }
-    ]
+@Directive( {
+    selector: 'tl-radiobutton'
 } )
-export class TlRadioButton extends ComponentHasModelBase implements AfterViewInit, OnDestroy {
+export class TlRadioButton {
 
     @Input() label = '';
 
@@ -47,20 +34,11 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     @Input() tabindex = 0;
 
+    @Input() name = '';
+
     @Input() checked = false;
 
-    @ViewChild( 'radiobutton' ) radiobutton;
-
-    @ContentChildren(TlRadioButton) tlradiobutton: QueryList<TlRadioButton>;
-
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
-                 nameService: NameGeneratorService, public radioService: RadioButtonListService ) {
-        super( tabIndexService, idService, nameService );
-    }
-
-
     ngAfterViewInit() {
-        this.setElement( this.radiobutton, 'radiobutton' );
         if (!this.name) {
             throw new EvalError( 'The [name] property is required!' );
         }
@@ -70,35 +48,6 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
         if (!this.label) {
             throw new EvalError( 'The [label] property is required!' );
         }
-        this.validateChecked();
-        this.radioService.radioButtonList.push(this.tlradiobutton.toArray()[0]);
-        this.radioService.validateCheckedByGroup(this.tlradiobutton);
-    }
-
-    onKeyDown( $event: KeyboardEvent ) {
-        $event.preventDefault();
-        switch ( $event.keyCode ) {
-            case KeyEvent.SPACE:
-                this.clickRadio();
-                break;
-        }
-    }
-
-    validateChecked() {
-        if ( this.checked && !this.tlradiobutton.toArray()[0].componentModel.model ) {
-            setTimeout( () => {
-                this.clickRadio();
-            }, 10 );
-        }
-    }
-
-    clickRadio() {
-        this.radioService.clearModelValueRadioButton(this.tlradiobutton);
-        this.modelValue = this.value;
-    }
-
-    ngOnDestroy() {
-        this.radioService.radioButtonList = [];
     }
 
 }

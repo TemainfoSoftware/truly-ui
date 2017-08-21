@@ -1,0 +1,16 @@
+<ng-content></ng-content>
+<div class="group-radios" [style.display]="orientation === 'vertical' ? 'grid' : 'inline-flex'">
+    <div *ngFor="let item of listRadioButton.toArray()" class="radio-container" [style.padding-top]="orientation === 'vertical' ? '10px' : '0'">
+        <input attr.id="{{id}}"
+               #radiobutton
+               attr.name="{{name}}"
+               type="radio"
+               #model="ngModel"
+               (click)="checkRadio(item)"
+               [tabindex]="tabindex"
+               [value]="item.value"
+               (focus)="focusRadio(item)"
+               [(ngModel)]="modelValue">
+        <label (click)="checkRadio(item)" class="-label" attr.for="{{id}}">{{item.label}}</label>
+    </div>
+</div>

@@ -29,10 +29,23 @@ export class RadioButtonListService {
 
     constructor() {}
 
-    clearModelValueRadioButton() {
+    clearModelValueRadioButton(radiobutton) {
         this.radioButtonList.forEach((value, index, array) => {
-           value.modelValue = '';
+           if (value.name === radiobutton.toArray()[0].name) {
+               value.modelValue = '';
+           }
         });
+    }
+
+    validateCheckedByGroup(radiobutton) {
+        let radiochecked;
+        radiochecked = this.radioButtonList.filter((value, index, array) => {
+            return value.checked && radiobutton.toArray()[0].name === value.name;
+        });
+        console.log(radiochecked);
+        if (radiochecked.length > 1) {
+            throw new EvalError( 'The [checked] is only available in one component by group!' );
+        }
     }
 
     getListOfRadioButton() {

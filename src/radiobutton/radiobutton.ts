@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, AfterViewInit, Input, forwardRef, ViewChild, ContentChildren, QueryList, OnDestroy
+    Component, AfterViewInit, Input, forwardRef, ViewChild, ContentChildren, QueryList, OnDestroy,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -47,6 +47,8 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     @Input() tabindex = 0;
 
+    @Input() checked = false;
+
     @ViewChild( 'radiobutton' ) radiobutton;
 
     @ContentChildren(TlRadioButton) tlradiobutton: QueryList<TlRadioButton>;
@@ -59,26 +61,39 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     ngAfterViewInit() {
         this.setElement( this.radiobutton, 'radiobutton' );
-        if ( !this.name ) {
-            throw new EvalError( 'The name property is required!' );
+        if (!this.name) {
+            throw new EvalError( 'The [name] property is required!' );
         }
+        if (!this.value) {
+            throw new EvalError( 'The [value] property is required!' );
+        }
+        if (!this.label) {
+            throw new EvalError( 'The [label] property is required!' );
+        }
+        this.validateChecked();
         this.radioService.radioButtonList.push(this.tlradiobutton.toArray()[0]);
+        this.radioService.validateCheckedByGroup(this.tlradiobutton);
     }
 
     onKeyDown( $event: KeyboardEvent ) {
         $event.preventDefault();
         switch ( $event.keyCode ) {
-            case KeyEvent.ENTER:
-                this.clickRadio();
-                break;
             case KeyEvent.SPACE:
                 this.clickRadio();
                 break;
         }
     }
 
+    validateChecked() {
+        if ( this.checked && !this.tlradiobutton.toArray()[0].componentModel.model ) {
+            setTimeout( () => {
+                this.clickRadio();
+            }, 10 );
+        }
+    }
+
     clickRadio() {
-        this.radioService.clearModelValueRadioButton();
+        this.radioService.clearModelValueRadioButton(this.tlradiobutton);
         this.modelValue = this.value;
     }
 

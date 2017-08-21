@@ -66,6 +66,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private lastTabIndex;
 
+    private checked = null;
+
     private lastActiveElement;
 
     private formResult = {};
@@ -75,6 +77,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     private elementsWithTabIndex = [];
 
     private componentsWithValidations = [];
+
+    private listeners = [];
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private cdr: ChangeDetectorRef ) {
@@ -91,34 +95,34 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.validateElements();
         this.listenButtonFormCancel();
         this.listenButtonFormOK();
-        this.listenComponentWithValidations()
+        this.listenComponentWithValidations();
     }
 
 
     listenButtonFormOK() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
+        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
             this.getRadioButtonValue();
-        } );
+        } ));
     }
 
 
     listenButtonFormCancel() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
+        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
             this.getRadioButtonValue();
-        } );
+        } ));
     }
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            this.listeners.push(this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
-            } );
+            } ));
         } );
     }
 
@@ -418,7 +422,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-
+        this.listeners.forEach((value, index, array) => {
+            value();
+        })
     }
 }
 

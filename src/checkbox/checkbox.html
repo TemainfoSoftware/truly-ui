@@ -1,0 +1,16 @@
+<div class="check-container">
+    <input attr.id="{{id}}"
+           #checkbox
+           attr.name="{{name}}"
+           [checked]="toggle"
+           type="checkbox"
+           #model="ngModel"
+           (keydown)="check(checkbox.checked)"
+           (mousedown)="mousedown($event, checkbox.checked)"
+           (mouseup)="mouseup()"
+           [tabindex]="tabindex"
+           (mouseleave)="mouseenter()"
+           (focus)="focusCheckBox()"
+           [(ngModel)]="modelValue">
+    <label class="-label" (click)="check(checkbox.checked)" attr.for="{{id}}">{{label}}</label>
+</div>

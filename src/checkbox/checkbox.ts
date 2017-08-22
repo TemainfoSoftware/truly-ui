@@ -62,6 +62,9 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     ngAfterViewInit() {
         this.setElement( this.checkbox, 'checkbox' );
+        if (!this.label) {
+            throw new EvalError( 'The [label] property is required!' );
+        }
     }
 
     check( boolean ) {

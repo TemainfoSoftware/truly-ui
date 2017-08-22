@@ -39,10 +39,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 } )
 export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
-    @Input() nameGroup = '';
-
-    @Input() icon = '';
-
     @Input() label = '';
 
     @Input() tabindex = 0;

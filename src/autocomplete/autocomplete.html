@@ -1,5 +1,32 @@
 <div class="tl-autocomplete-box">
-    <input #autocomplete
-           #model="ngModel"
-           [(ngModel)]="modelValue">
+    <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
+        <b *ngIf="required" class="required">*</b>
+    </label>
+    <div class="tl-autocomplete-wrapper">
+        <input #autocomplete
+               autocomplete="off"
+               attr.name="{{name}}"
+               class="field"
+               #model="ngModel"
+               [placeholder]="placeholder"
+               (keyup)="searchItem($event.target.value, $event)"
+               (keydown)="onKeyDown($event)"
+               [(ngModel)]="modelValue"
+               [required]="validations.required"
+               (blur)="onBlur()"
+               (focus)="onFocus()"
+               type="text">
+        <span (click)="clearField()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
+
+        <div class="tl-autocomplete-list" [style.zIndex]="zIndex" [@enterAnimation]>
+            <ul #list class="tl-autocomplete-list-items"
+                [ngStyle]="calcHeightItem()"
+                [style.display]="showHide === true ? 'block' : 'none'">
+                <li *ngFor="let item of datasource; let i = index" tabindex="{{ i }}">
+                    <span>{{item[id]}}</span> - {{ item[text] }}
+                </li>
+            </ul>
+        </div>
+
+    </div>
 </div>

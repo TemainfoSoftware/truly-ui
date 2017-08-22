@@ -1,3 +1,144 @@
 @import "../core/core";
 
 //Default
+
+@mixin textInput {
+  color: #CACACA;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9em;
+}
+
+.tl-autocomplete-box {
+  width: 100%;
+  display: table;
+  border-collapse: separate;
+  > .label {
+    line-height: 1;
+    width: 100px;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #737373;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9em;
+    > b.required {
+      color: #FF6666;
+    }
+  }
+  > .label.-labeltop {
+    text-align: left;
+    padding: 0 0 5px 0;
+    display: table-caption;
+  }
+  > .label.-labelleft {
+    text-align: right;
+    padding: 5px 5px 5px 0;
+    display: table-cell;
+  }
+
+  > .label.-validation {
+    color: #FF6666;
+    font-size: 0.7em;
+  }
+  > .tl-autocomplete-wrapper {
+    box-sizing: unset;
+    position: relative;
+    display: table;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    > .tl-autocomplete-list {
+      position: absolute;
+      cursor: pointer;
+      left: 0;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      > .tl-autocomplete-list-items {
+        overflow: auto;
+        background: #FFF;
+        box-shadow: 0 1px 1px 0 #BABABA;
+        border-radius: 0 0 4px 4px;
+        //background-color: #E8E8E8;
+        border: 1px solid #C8C8C8;
+        color: #616161;
+        border-top: 0;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        > li {
+          vertical-align: middle;
+          cursor: pointer;
+          font-family: 'Segoe UI', sans-serif;
+          font-size: 0.9em;
+          color: #616161;
+          outline: none;
+          line-height: 25px;
+          //padding: 0 10px;
+          padding: 5px 0 5px 5px;
+          border-bottom: 1px solid #ece8f0;
+          > span {
+            //color: #616161;
+            font-weight: bold;
+          }
+        }
+        > li:last-child{
+          border-bottom: 0px solid #ece8f0;
+        }
+        > li:hover {
+          background-color: #f2f2f2;
+        }
+      }
+      > .tl-autocomplete-list-items::-webkit-scrollbar {
+        width: 0.4em;
+      }
+      > .tl-autocomplete-list-items::-webkit-scrollbar-thumb {
+        background-color: #66CC99;
+      }
+    }
+
+    > .field {
+      border: 1px solid #CACACA;
+      height: 25px;
+      padding: 4px 12px;
+      font-size: 0.9em;
+      width: 100%;
+      color: #737373;
+      font-family: 'Lato', sans-serif;
+      -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    }
+    > .field::placeholder {
+      @include textInput;
+    }
+    > .addon {
+      display: table-cell;
+      padding: 4px 12px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+      color: #6E6E6E;
+      text-align: center;
+      width: 1%;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    > .addon.-clearbutton {
+      border-right: 1px solid #CACACA;
+      border-top: 1px solid #CACACA;
+      border-bottom: 1px solid #CACACA;
+      font-size: 0.7em;
+      font-family: 'Lato', sans-serif;
+      background: #fff;
+      cursor: pointer;
+      color: #99a1a4;
+    }
+    > .addon.-clearbutton:hover {
+      background: #EEEEEE;
+    }
+  }
+}
+.activeItem{
+  background-color: #f2f2f2;
+}

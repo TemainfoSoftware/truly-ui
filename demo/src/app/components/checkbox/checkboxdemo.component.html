@@ -13,7 +13,6 @@
         <tl-checkbox [label]="'Select this option'"></tl-checkbox>
         <tl-checkbox [label]="'Select this option'"></tl-checkbox>
     </div>
-    <span class="returned-value">Returned Value: {{ radio }}</span>
   </div>
   <hr>
   <div class="setup">
@@ -41,21 +40,30 @@
       </table>
     </div>
     <hr>
-    <!--<h3 class="title">Events</h3>-->
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of events; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="examples">
     <h3 class="title">Examples</h3>
     <div class="group-component">
       <h5 class="title">Basic</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-input
-        ngModel="Many Properties"
-        [iconBefore]="'ion-printer'"
-        [placeholder]="'With Placeholder'"
-        [textAfter]="'US'"
-        [clearButton]="true"
-        [autocomplete]="'off'">
-      </tl-input>
+      &nbsp;&nbsp;&nbsp;<tl-checkbox [label]="'Select this option'"></tl-checkbox>
     </textarea>
     </div>
   </div>

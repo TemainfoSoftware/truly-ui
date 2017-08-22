@@ -46,5 +46,8 @@
     <div class="col-md-6">
       <tl-input [labelSize]="'80'" [ngModel]="pessoa?.state" [label]="'State'"></tl-input>
     </div>
+    <div class="col-md-5 col-md-offset-1">
+      <tl-checkbox [label]="'Notify ?'" [ngModel]="pessoa?.notify"></tl-checkbox>
+    </div>
   </div>
 </tl-form>

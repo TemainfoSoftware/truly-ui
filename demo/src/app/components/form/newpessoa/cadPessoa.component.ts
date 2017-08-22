@@ -10,8 +10,6 @@ export class CadPessoa implements OnInit, OnChanges {
 
   private pessoa;
   private data;
-  private text = '';
-  private bt = '';
   @Input() input ='21122112';
 
   constructor(public formDataService: DataFormService) {}

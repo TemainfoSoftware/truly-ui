@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 
-import * as json from './checkboxdemo-dataproperties.json';
+import * as jsonProp from './checkboxdemo-dataproperties.json';
+import * as jsonEvt from './checkboxdemo-events.json';
 
 @Component( {
   selector: 'app-checkbox',
@@ -12,15 +13,11 @@ import * as json from './checkboxdemo-dataproperties.json';
 export class CheckBoxDemo {
   private dataTableProperties;
 
-  private check;
-
-  private check2;
-
-  readonly = "I'm an Truly Ui Input (Selectable)";
-  disabled = "I'm an Truly Ui Input (Not Selectable)";
+  private events;
 
   constructor() {
-    this.dataTableProperties = json.dataProperties;
+    this.dataTableProperties = jsonProp.dataProperties;
+    this.events = jsonEvt.events;
   }
 
 }

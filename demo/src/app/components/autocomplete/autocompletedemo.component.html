@@ -11,8 +11,38 @@
       <div class="col-md-4">
         <div class="group-component">
           <h5>Basic</h5>
-          <tl-autocomplete [(ngModel)]="itemSelected"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ itemSelected }}</span>
+          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result"></tl-autocomplete>
+          <span class="returned-value"> Returned Value: {{ result }}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="group-component">
+          <h5>Label</h5>
+          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result2" [label]="'Label Text'"></tl-autocomplete>
+          <span class="returned-value"> Returned Value: {{ result2 }}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="group-component">
+          <h5>Clear Button</h5>
+          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result3" [clearButton]="true"></tl-autocomplete>
+          <span class="returned-value"> Returned Value: {{ result3 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="group-component">
+          <h5>Required</h5>
+          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result4" [label]="'Required'" [validations]="{required: true}"></tl-autocomplete>
+          <span class="returned-value"> Returned Value: {{ result4 }}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="group-component">
+          <h5>Placeholder</h5>
+          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result5" [placeholder]="'ex.: Item 1'"></tl-autocomplete>
+          <span class="returned-value"> Returned Value: {{ result5 }}</span>
         </div>
       </div>
     </div>
@@ -54,7 +84,7 @@
       <h5 class="title">Basic</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 
-<tl-autocomplete [(ngModel)]="itemSelected"></tl-autocomplete>
+<tl-autocomplete [(ngModel)]="result"></tl-autocomplete>
 
       </textarea>
     </div>

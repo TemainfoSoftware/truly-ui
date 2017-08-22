@@ -39,26 +39,24 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 } )
 export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
-    private toggle = false;
-
     @Input() nameGroup = '';
 
     @Input() icon = '';
 
     @Input() label = '';
 
-    @Input() values = [];
-
     @Input() tabindex = 0;
 
     @ViewChild( 'checkbox' ) checkbox;
 
-    @Output() private onCheckBox : EventEmitter<any> = new EventEmitter();
+    @Output() onCheckBox: EventEmitter<any> = new EventEmitter();
 
-    @Output() private onFocusBox : EventEmitter<any> = new EventEmitter();
+    @Output() onFocusBox: EventEmitter<any> = new EventEmitter();
 
-    constructor( tabIndexService : TabIndexService, idService : IdGeneratorService,
-                 nameService : NameGeneratorService ) {
+    private toggle = false;
+
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
+                 nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
 

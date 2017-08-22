@@ -7,23 +7,31 @@
 
 **Web Components for Desktop Applications.**
 
+-------
+<p align="center">
+    <a href="#installation">Installation</a> &bull;
+    <a href="#motivation">Motivation</a> &bull;
+    <a href="#usage">Usage</a> &bull;
+    <a href="#feedback">Feedback</a> &bull;
+    <a href="#license">License</a>
+</p>
+
+
+## Motivation
+TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
+TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
+TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
+
 ## Installation
 
-To install this library, run:
+Having NPM installation run the following command on your terminal to install it:
 
 ```bash
 $ npm install truly-ui --save
 ```
 
-## Consuming your library
-
-Once you have published your library to npm, you can import your library in any Angular application by running:
-
-```bash
-$ npm install truly-ui
-```
-
-and then from your Angular `AppModule`:
+## Usage
+The use of the components is basically the importation of the main module and the use of the directives in its application: Example is the import of the input module and its use
 
 ```typescript
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +51,7 @@ import { InputModule } from 'truly-ui';
     BrowserModule,
     // Specify your library as an import
     InputModule
-    LibraryModule
+    InputComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -55,13 +63,15 @@ Once your library is imported, you can use its components, directives and pipes 
 
 ```xml
 <!-- You can now use your library component in app.component.html -->
-<h1>
-  {{title}}
-</h1>
-<tl-input [toUpperCase]="true"
-          [(ngModel)]="title"
-          [placeholder]="'My Input Placeholder'">
-</tl-input>
+
+ <tl-input
+     [(ngModel)]="Many Properties"
+     [iconBefore]="'ion-printer'"
+     [placeholder]="'With Placeholder'"
+     [textAfter]="'US'"
+     [clearButton]="true"
+     [autocomplete]="'off'">
+ </tl-input>
 ```
 ### Feedback
 Feedback is always welcome.

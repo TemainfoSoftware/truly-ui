@@ -31,6 +31,7 @@ import { DialogService } from '../dialog/dialog.service';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
+import { TlCheckBox } from '../checkbox/checkbox';
 
 let componentFormIndex;
 
@@ -53,6 +54,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
 
     @ContentChildren( TlRadioGroup ) radioButtonList: QueryList<TlRadioGroup>;
+
+    @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -102,7 +105,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
-            this.getRadioButtonValue();
+            this.getRadioButtonValues();
+            this.getCheckBoxValues();
         } );
     }
 
@@ -112,7 +116,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
             $event.stopPropagation();
             this.getInputValues();
             this.getDropdownListValues();
-            this.getRadioButtonValue();
+            this.getRadioButtonValues();
+            this.getCheckBoxValues();
         } );
     }
 
@@ -400,9 +405,16 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
 
-    getRadioButtonValue() {
+    getRadioButtonValues() {
         this.radioButtonList.forEach( ( item, index, array ) => {
-            this.formResult[ 'gender' ] = item.itemSelected.value;
+            this.formResult[ 'gender' ] = item.componentModel.model;
+        } );
+    }
+
+
+    getCheckBoxValues() {
+        this.checkboxList.forEach( ( item, index, array ) => {
+            this.formResult[ 'notify' ] = item.componentModel.model;
         } );
     }
 

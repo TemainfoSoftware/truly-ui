@@ -18,6 +18,7 @@ import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
 import { RadioButtonModule } from "truly-ui/radiobutton";
+import { CheckBoxModule } from "truly-ui/checkbox";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { RadioButtonModule } from "truly-ui/radiobutton";
     DatatableModule,
     DropDownListModule,
     InputModule,
+    CheckBoxModule,
     FormDemoRoutingModule,
     FormModule.forRoot(),
     DialogModule,

@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter, Renderer2,
+    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter,
 } from '@angular/core';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -28,7 +28,6 @@ import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { KeyEvent } from "../core/enums/key-events";
 
 @Component( {
     selector: 'tl-checkbox',

@@ -188,7 +188,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     removeDuplicateItems( data ) {
         let newData = [];
         newData = data.filter( function ( item, index, inputArray ) {
-            return inputArray.indexOf( item ) == index;
+            return inputArray.indexOf( item ) === index;
         } );
         return newData;
     }

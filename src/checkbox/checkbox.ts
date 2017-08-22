@@ -28,6 +28,7 @@ import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { KeyEvent } from "../core/enums/key-events";
 
 @Component( {
     selector: 'tl-checkbox',
@@ -66,7 +67,7 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     check( boolean ) {
         this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
-        this.onCheckBox.emit(this.modelValue);
+        this.onCheckBox.emit( this.modelValue );
     }
 
     focusCheckBox() {

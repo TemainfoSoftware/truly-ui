@@ -16,6 +16,9 @@
     <a href="#license">License</a>
 </p>
 
+<p align="center">
+  <img src="assets/logo.png">
+</p>
 
 ## Motivation
 TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.

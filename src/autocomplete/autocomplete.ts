@@ -198,7 +198,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             } );
         } );
         this.datasource = this.removeDuplicateItems( filtredData );
-        if(this.datasource.length <= 0 && this.modelValue){
+        if ( this.datasource.length <= 0 && this.modelValue ) {
             this.showHide = true;
             this.noDataFound = true;
         }

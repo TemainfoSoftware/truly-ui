@@ -87,6 +87,16 @@
         }
         > li:hover {
           background-color: #f2f2f2;
+          cursor: default;
+        }
+        > li.no-data-found{
+          color: #b1b1b1;
+          i{
+            font-size: 1.3em;
+          }
+        }
+        > li.no-data-found:hover{
+          background-color: transparent;
         }
       }
       > .tl-autocomplete-list-items::-webkit-scrollbar {

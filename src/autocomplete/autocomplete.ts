@@ -89,6 +89,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private showHide: boolean;
 
+    private noDataFound: boolean;
+
     private lastValue: string;
 
     private topRow: number;
@@ -102,6 +104,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.labelPlacement = 'left';
         this.topRow = 0;
         this.lastRow = this.itemAmount - 1;
+        this.noDataFound = false;
     }
 
     ngAfterViewInit(): void {
@@ -180,6 +183,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         value = value.trim();
         if ( !value || value === '' || value === 'undefined' || value === null ) {
             this.showHide = false;
+            this.noDataFound = false;
             this.removeActive();
             return this.datasource = this.data;
         }
@@ -187,16 +191,22 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.data.forEach( ( value2, index ) => {
             this.query.forEach( ( value3 ) => {
                 if ( value2[ String( value3 ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
+                    this.noDataFound = false;
                     // console.log( this.list.nativeElement.children[ index ].innerHTML.trim().split( '' ) );
                     filtredData.push( value2 );
                 }
             } );
         } );
         this.datasource = this.removeDuplicateItems( filtredData );
+        if(this.datasource.length <= 0 && this.modelValue){
+            this.showHide = true;
+            this.noDataFound = true;
+        }
         if ( (this.lastValue !== value) && (this.datasource.length > 0) ) {
             setTimeout( () => {
                 this.list.nativeElement.scrollTop = 0;
                 this.topRow = 0;
+                this.noDataFound = false;
                 this.lastRow = this.itemAmount - 1;
                 this.removeActive();
                 this.setFirstActive();

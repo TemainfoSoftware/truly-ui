@@ -25,6 +25,7 @@
                 <li *ngFor="let item of datasource; let i = index" tabindex="{{ i }}">
                     {{item[id]}} - {{ item[text] }}
                 </li>
+                <li *ngIf="noDataFound" class="no-data-found"><i class="ion-sad-outline"></i> No Data Found</li>
             </ul>
         </div>
 

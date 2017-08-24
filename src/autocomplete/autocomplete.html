@@ -23,8 +23,9 @@
                 [ngStyle]="calcHeightItem()"
                 [style.display]="showHide === true ? 'block' : 'none'">
                 <li *ngFor="let item of datasource; let i = index" tabindex="{{ i }}">
-                    <span>{{item[id]}}</span> - {{ item[text] }}
+                    {{item[id]}} - {{ item[text] }}
                 </li>
+                <li *ngIf="noDataFound" class="no-data-found"><i class="ion-sad-outline"></i> No Data Found</li>
             </ul>
         </div>
 

@@ -39,7 +39,6 @@ export class AutoCompleteDemo {
   private result3: any;
 
   public data: any[];
-  public data2: any[];
 
   public bigData: any[];
 
@@ -48,10 +47,18 @@ export class AutoCompleteDemo {
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.data = [
-      { idItem: 'Animal', textItem : 'Animal', valueItem : '1' },
+      { idItem: '11', textItem : 'Animal', valueItem : '1' },
       { idItem: '21', textItem : 'Animal2', valueItem : '2' },
       { idItem: '31', textItem : 'Animal3', valueItem : '3' },
       { idItem: '41', textItem : 'Casa', valueItem : '4' },
+      { idItem: '51', textItem : 'Casa2', valueItem : '5' },
+      { idItem: '54', textItem : 'Casa3', valueItem : '6' },
+      { idItem: '53', textItem : 'Her', valueItem : '7' },
+      { idItem: '52', textItem : 'Fer', valueItem : '8' },
+      { idItem: '51', textItem : 'Casa2', valueItem : '5' },
+      { idItem: '54', textItem : 'Casa3', valueItem : '6' },
+      { idItem: '53', textItem : 'Her', valueItem : '7' },
+      { idItem: '52', textItem : 'Fer', valueItem : '8' },
       { idItem: '51', textItem : 'Casa2', valueItem : '5' },
       { idItem: '54', textItem : 'Casa3', valueItem : '6' },
       { idItem: '53', textItem : 'Her', valueItem : '7' },

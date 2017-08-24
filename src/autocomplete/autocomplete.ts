@@ -89,11 +89,22 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private showHide: boolean;
 
+    private noDataFound: boolean;
+
+    private lastValue: string;
+
+    private topRow: number;
+
+    private lastRow: number;
+
     constructor( tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
         this.labelPlacement = 'left';
+        this.topRow = 0;
+        this.lastRow = this.itemAmount - 1;
+        this.noDataFound = false;
     }
 
     ngAfterViewInit(): void {
@@ -122,7 +133,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     getCursor() {
         for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            if ( this.list.nativeElement.children[ item ].getAttribute( 'class' ) === 'activeItem' ) {
+            if ( this.list.nativeElement.children[ item ].classList[ 1 ] === 'activeItem' ) {
                 this.cursor = item;
             }
         }
@@ -137,7 +148,14 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 if ( this.cursor < this.list.nativeElement.children.length - 1 ) {
                     this.removeActive();
                     this.cursor = this.cursor + 1;
-                    this.list.nativeElement.children[ this.cursor ].setAttribute( 'class', 'activeItem' );
+                    if ( this.cursor > this.lastRow ) {
+                        this.topRow += 1;
+                        this.lastRow += 1;
+                        this.list.nativeElement.scrollTop += (
+                            36
+                        );
+                    }
+                    this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
                     return;
                 }
             }
@@ -145,12 +163,19 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 if ( this.cursor > 0 && this.cursor !== -1 ) {
                     this.removeActive();
                     this.cursor = this.cursor - 1;
-                    this.list.nativeElement.children[ this.cursor ].setAttribute( 'class', 'activeItem' );
+                    if ( this.cursor < this.topRow ) {
+                        this.topRow -= 1;
+                        this.lastRow -= 1;
+                        this.list.nativeElement.scrollTop -= (
+                            36
+                        );
+                    }
+                    this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
                     return;
                 }
             }
         }
-
+        this.lastValue = this.modelValue;
     }
 
     searchItem( value, $event ) {
@@ -158,35 +183,51 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         value = value.trim();
         if ( !value || value === '' || value === 'undefined' || value === null ) {
             this.showHide = false;
+            this.noDataFound = false;
             this.removeActive();
             return this.datasource = this.data;
         }
         const filtredData = [];
-        this.data.forEach( ( value2 ) => {
+        this.data.forEach( ( value2, index ) => {
             this.query.forEach( ( value3 ) => {
                 if ( value2[ String( value3 ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
+                    this.noDataFound = false;
+                    // console.log( this.list.nativeElement.children[ index ].innerHTML.trim().split( '' ) );
                     filtredData.push( value2 );
                 }
             } );
         } );
         this.datasource = this.removeDuplicateItems( filtredData );
-        if ( this.datasource.length !== this.list.nativeElement.children.length ) {
-            this.setFirstActive();
+        if ( this.datasource.length <= 0 && this.modelValue ) {
+            this.showHide = true;
+            this.noDataFound = true;
+        }
+        if ( (this.lastValue !== value) && (this.datasource.length > 0) ) {
+            setTimeout( () => {
+                this.list.nativeElement.scrollTop = 0;
+                this.topRow = 0;
+                this.noDataFound = false;
+                this.lastRow = this.itemAmount - 1;
+                this.removeActive();
+                this.setFirstActive();
+                this.lastValue = value;
+            }, 0 );
+
         }
     }
 
     removeActive() {
         for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            this.list.nativeElement.children[ item ].removeAttribute( 'class' );
+            this.list.nativeElement.children[ item ].classList.remove( 'activeItem' );
         }
     }
 
     setFirstActive() {
-        this.list.nativeElement.children[ 0 ].setAttribute( 'class', 'activeItem' );
+        this.list.nativeElement.children[ 0 ].classList.add( 'activeItem' );
     }
 
     removeDuplicateItems( data ) {
-        let newData = [];
+        let newData;
         newData = data.filter( function ( item, index, inputArray ) {
             return inputArray.indexOf( item ) === index;
         } );
@@ -197,7 +238,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         if ( this.itemAmount >= this.datasource.length ) {
             return { 'height' : 'auto' };
         } else {
-            return { 'height' : (10 * 3.6) * this.itemAmount + 'px' };
+            return { 'height' : (36) * this.itemAmount + 'px' };
         }
     }
 

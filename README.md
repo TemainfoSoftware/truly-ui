@@ -8,17 +8,22 @@
 **Web Components for Desktop Applications.**
 
 -------
+
 <p align="center">
-    <a href="#installation">Installation</a> &bull;
     <a href="#motivation">Motivation</a> &bull;
+    <a href="#installation">Installation</a> &bull;
     <a href="#usage">Usage</a> &bull;
     <a href="#feedback">Feedback</a> &bull;
     <a href="#license">License</a>
 </p>
 
+-------
+
 <p align="center">
-  <img src="assets/logo.png">
+  <img src="assets/logo.png" width="500">
 </p>
+
+
 
 ## Motivation
 TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.

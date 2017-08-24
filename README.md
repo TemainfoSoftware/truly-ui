@@ -59,7 +59,6 @@ import { InputModule } from 'truly-ui';
     BrowserModule,
     // Specify your library as an import
     InputModule
-    InputComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

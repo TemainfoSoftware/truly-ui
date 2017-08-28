@@ -97,6 +97,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private lastRow: number;
 
+    private itemSelected: any[];
+
     constructor( tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public nameService: NameGeneratorService ) {
@@ -105,16 +107,17 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.topRow = 0;
         this.lastRow = this.itemAmount - 1;
         this.noDataFound = false;
+        this.showHide = false;
     }
 
     ngAfterViewInit(): void {
         this.setElement( this.autocomplete, 'autocomplete' );
         this.updateDataSource( this.data );
-        this.showHide = false;
     }
 
     clearField() {
         this.modelValue = '';
+        this.showHide = false;
         this.autocomplete.nativeElement.value = '';
         this.autocomplete.nativeElement.focus();
         this.clear.emit();
@@ -139,70 +142,122 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    onKeyDown( $event ) {
-        this.getAndSetZIndex();
-        this.getCursor();
-        if ( ($event.keyCode === KeyEvent.ARROWUP) || ($event.keyCode === KeyEvent.ARROWDOWN) ) {
-            $event.preventDefault();
-            if ( $event.keyCode === KeyEvent.ARROWDOWN ) {
-                if ( this.cursor < this.list.nativeElement.children.length - 1 ) {
-                    this.removeActive();
-                    this.cursor = this.cursor + 1;
-                    if ( this.cursor > this.lastRow ) {
-                        this.topRow += 1;
-                        this.lastRow += 1;
-                        this.list.nativeElement.scrollTop += (
-                            36
-                        );
-                    }
-                    this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
-                    return;
+    onSelectItem( $event ) {
+        this.datasource.forEach( ( value, index, array ) => {
+            if ( value[ this.id ] + ' - ' + value[ this.text ] === $event.target.innerText.trim() ) {
+                this.itemSelected = value;
+                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
+                    this.writeValue( '' );
                 }
+                this.modelValue = this.itemSelected[ this.value ];
+                setTimeout( () => {
+                    this.autocomplete.nativeElement.value = this.itemSelected[ this.text ];
+                }, 0 );
             }
-            if ( $event.keyCode === KeyEvent.ARROWUP ) {
-                if ( this.cursor > 0 && this.cursor !== -1 ) {
-                    this.removeActive();
-                    this.cursor = this.cursor - 1;
-                    if ( this.cursor < this.topRow ) {
-                        this.topRow -= 1;
-                        this.lastRow -= 1;
-                        this.list.nativeElement.scrollTop -= (
-                            36
-                        );
-                    }
-                    this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
-                    return;
-                }
+
+        } );
+        this.showHide = false;
+    }
+
+    onListOpened( $event ) {
+        if ( this.showHide ) {
+            this.getAndSetZIndex();
+            this.getCursor();
+            switch ( $event.keyCode ) {
+                case KeyEvent.ARROWDOWN:
+                    this.onArrowDown();
+                    this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ARROWUP:
+                    this.onArrowUp();
+                    this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ENTER:
+                    this.onEnter( $event );
+                    $event.stopPropagation();
+                    break;
             }
         }
-        this.lastValue = this.modelValue;
+    }
+
+    stopPropagationAndPreventDefault( $event ) {
+        $event.stopPropagation();
+        $event.preventDefault();
+    }
+
+    onArrowDown() {
+        if ( this.cursor < this.list.nativeElement.children.length - 1 ) {
+            this.removeActive();
+            this.cursor = this.cursor + 1;
+            if ( this.cursor > this.lastRow ) {
+                this.topRow += 1;
+                this.lastRow += 1;
+                this.list.nativeElement.scrollTop += 36;
+            }
+            this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
+            return;
+        }
+    }
+
+    onArrowUp() {
+        if ( this.cursor > 0 && this.cursor !== -1 ) {
+            this.removeActive();
+            this.cursor = this.cursor - 1;
+            if ( this.cursor < this.topRow ) {
+                this.topRow -= 1;
+                this.lastRow -= 1;
+                this.list.nativeElement.scrollTop -= 36;
+            }
+            this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
+            return;
+        }
+    }
+
+    onEnter( $event ) {
+        this.datasource.forEach( ( value, index, array ) => {
+            if ( index === this.cursor ) {
+                this.itemSelected = value;
+                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
+                    this.writeValue( '' );
+                }
+                this.lastValue = this.itemSelected[ this.text ];
+                this.modelValue = this.itemSelected[ this.value ];
+                setTimeout( () => {
+                    this.autocomplete.nativeElement.value = this.itemSelected[ this.text ];
+                }, 0 );
+            }
+        } );
+        this.showHide = false;
     }
 
     searchItem( value, $event ) {
-        this.showHide = true;
-        value = value.trim();
-        if ( !value || value === '' || value === 'undefined' || value === null ) {
-            this.showHide = false;
-            this.noDataFound = false;
-            this.removeActive();
-            return this.datasource = this.data;
+        if ( this.itemSelected ) {
+            if ( this.itemSelected[ this.text ] === value ) {
+                this.showHide = false;
+                return;
+            }
         }
-        const filtredData = [];
-        this.data.forEach( ( value2, index ) => {
-            this.query.forEach( ( value3 ) => {
-                if ( value2[ String( value3 ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
-                    this.noDataFound = false;
-                    // console.log( this.list.nativeElement.children[ index ].innerHTML.trim().split( '' ) );
-                    filtredData.push( value2 );
-                }
-            } );
-        } );
-        this.datasource = this.removeDuplicateItems( filtredData );
+        const newValue = value.trim();
+        if ( !newValue || newValue.length <= 0 || newValue === '' || newValue === 'undefined' || newValue === null ) {
+            this.noDataFound = false;
+            this.lastValue = '';
+            this.itemSelected = [];
+            this.removeActive();
+            this.datasource = this.data;
+            return this.showHide = false;
+        }
+        this.showHide = true;
+        this.getAndSetZIndex();
+        this.searchInDatasource( value );
         if ( this.datasource.length <= 0 && this.modelValue ) {
             this.showHide = true;
+            this.itemSelected = [];
+            this.lastValue = value;
             this.noDataFound = true;
+            this.removeActive();
         }
         if ( (this.lastValue !== value) && (this.datasource.length > 0) ) {
+            this.itemSelected = [];
             setTimeout( () => {
                 this.list.nativeElement.scrollTop = 0;
                 this.topRow = 0;
@@ -212,8 +267,21 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 this.setFirstActive();
                 this.lastValue = value;
             }, 0 );
-
         }
+    }
+
+    searchInDatasource( value ) {
+        const filtredData = [];
+        this.data.forEach( ( value2 ) => {
+            this.query.forEach( ( value3 ) => {
+                if ( value2[ String( value3 ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
+                    this.noDataFound = false;
+                    filtredData.push( value2 );
+                }
+
+            } );
+        } );
+        this.datasource = this.removeDuplicateItems( filtredData );
     }
 
     removeActive() {

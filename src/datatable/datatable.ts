@@ -21,7 +21,7 @@
  */
 import {
     AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
-    ViewChild, ViewEncapsulation
+    ViewChild, ViewEncapsulation,ChangeDetectionStrategy
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
 import { DatatableFilterOptions } from './datatable-filter-options';
@@ -34,6 +34,7 @@ import { TlDatatableDataSource } from './datatable-datasource.service';
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
     // encapsulation: ViewEncapsulation.Native,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         TlDatatableFilterService,
         TlDatatableDataSource,
@@ -133,6 +134,10 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
             })
         }
 
+    }
+
+    changeTest() {
+        console.log('changes');
     }
 
     getColumnsFromContentChield() {

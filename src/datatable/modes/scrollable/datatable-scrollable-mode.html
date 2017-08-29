@@ -9,28 +9,10 @@
         </table>
     </div>
 
-    <div #scrollBox class="scrollBoxContainer"
-         [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'min-height':'300px'}"
-         (scroll)="onScroll($event)"
-    >
-
-        <div [ngStyle]="{height: containerHeight+'px'}">
-            <table class="datatable" (keydown)="onKeydown($event)" (keyup)="onKeyUp($event)" [ngStyle]="{transform:getScrollOfTop()}" >
-
-                <tbody  #scrollBoxTableBody class="datatableBody" *ngIf="dataSourceService.datasource">
-                <tr class="row"
-
-                    [tabindex]="i" *ngFor="let row of dataSourceService.datasource ; let i = index"
-                    [ngStyle]="{'height':   datatable.rowHeight+'px'}"
-                    (click)="onRowClick( dataSourceService.datasource[i],i)"
-                    (focus)="datatable.onRowSelect( dataSourceService.datasource[i],i)"
-                    (dblclick)="datatable.onRowDblclick( dataSourceService.datasource[i],i)"
-
-
-                >
-                    <td *ngFor="let column of datatable.columns;" [class]="'cel ' + datatable.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
-                </tr>
-                </tbody>
+    <div #listComponent id="id-component" [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
+        <div [ngStyle]="{height: bodyHeight+'px'}">
+            <table class="datatable" [ngStyle]="{position: 'relative'}">
+                <tbody #listBody class="datatableBody"></tbody>
             </table>
         </div>
     </div>

@@ -25,7 +25,7 @@ import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
 
 @Injectable()
-export class TlDatatableDataSource {
+export class TlDatatableDataSource implements OnChanges{
 
     public datasource: any;
 
@@ -33,11 +33,16 @@ export class TlDatatableDataSource {
 
     private datatable: TlDatatable;
 
+
     private fistRow: number;
 
     private lastRow: number;
 
     constructor() {}
+
+    ngOnChanges(changes){
+        console.log(changes, 'ServiceChanges')
+    }
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -63,7 +68,7 @@ export class TlDatatableDataSource {
     getRowsInMemory(skip: number, take: number): Promise<any> {
         return new Promise((resolve) => {
             const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-            resolve((data as  Array<any>).slice(skip, skip + take));
+            resolve((data as  Array<any>).slice(skip,take));
         })
     }
 

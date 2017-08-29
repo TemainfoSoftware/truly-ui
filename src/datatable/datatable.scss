@@ -30,6 +30,7 @@ table{
 
   > .row{
     height: 30px;
+    width: 100%;
     background: #F6F6F6;
     border: 1px #6E6E6E solid;
   }
@@ -63,7 +64,8 @@ table{
     outline: none;
   }
   > .row .cel{
-    width: 100%;
+    width: 200px;
+
     border-right: 1px #E5E5E5 solid;
   }
   >.row .cel.-textleft{

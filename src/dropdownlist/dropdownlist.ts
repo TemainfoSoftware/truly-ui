@@ -445,7 +445,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     getData() {
 
-        if ( ( typeof this.data !== 'object' ) || ( this.data[ 0 ] === undefined ) ) {
+        if ( ( this.data[ 0 ] === undefined ) ) {
             throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
         }
         if ( typeof this.data[ 0 ] === 'object' && (this.text === 'text' || this.value === 'value') ) {

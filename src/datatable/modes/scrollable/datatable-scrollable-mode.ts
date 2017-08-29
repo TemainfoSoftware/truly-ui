@@ -22,8 +22,7 @@
  */
 
 import {
-    AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Inject, NgZone,
-    Renderer2, ViewChild
+    AfterContentInit, Component, ElementRef, forwardRef, Inject, Renderer2, ViewChild
 } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
@@ -34,7 +33,6 @@ let rowPosition = 0;
 @Component( {
     selector : 'tl-datatable-scrollable-mode',
     templateUrl : './datatable-scrollable-mode.html',
-    changeDetection : ChangeDetectionStrategy.OnPush,
     styleUrls : [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
 } )
 export class TlDatatableScrollableMode implements AfterContentInit {
@@ -43,53 +41,24 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
-    public datasourceChanges : EventEmitter<any> =  new EventEmitter();
-
-    //*****//
     private bodyHeight: number;
+
     private quantityVisibleRows: number;
+
     private quantityInVisibleRows: number;
+
     private fixedHeightElemClientRect: number;
+
     private lastRowViewport = 0;
 
     private scrollTop = 0;
+
     private lastScrollTop = 0;
-
-    private tabindex = 0;
-
-    //*****//
-
-
-    public loadingSource = false;
-
-    private scrollPosition: number;
-
-    private skip = 0;
-
-    private take = 0;
-
-    private scrollOfTop = 0;
-
-    private clientHeight = 0;
-
-    private scrollHeight = 0;
-
-    private pageHeight = 0;
-
-    private pageNumber = 1;
-
-    private Counter = 1;
-
-    private qtdRowClient = 0;
-
-    private lastRow;
-
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
                  public dataSourceService: TlDatatableDataSource,
-                 private renderer: Renderer2, private zone: NgZone, private cd: ChangeDetectorRef ) {
+                 private renderer: Renderer2) {
     }
-
 
     ngAfterContentInit() {
         this.bodyHeight = this.datatable.rowHeight * this.datatable.totalRows;
@@ -97,16 +66,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.quantityInVisibleRows = Math.round( ( this.datatable.rowsPage - this.quantityVisibleRows ) / 2 );
         this.fixedHeightElemClientRect = this.listComponent.nativeElement.getBoundingClientRect();
         this.renderList( 0 );
-
-        this.zone.runOutsideAngular( () => {
-            this.listComponent.nativeElement.addEventListener( 'scroll', () => {
-                this.handleScrollEvent();
-                this.zone.run(()=>{
-                    this.cd.detectChanges()
-                })
-            } );
-        } );
-
     }
 
 
@@ -117,16 +76,15 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.setLastScrollTop()
     }
 
+    onScroll(){
+        this.handleScrollEvent()
+    }
+
     handleScrollDown() {
-
         let lastChildElem = this.listBody.nativeElement.rows[ this.listBody.nativeElement.rows.length - 1 ];
-
         if ( lastChildElem ) {
-
             let clientRect = lastChildElem.getBoundingClientRect();
             let parentClientRect = this.listComponent.nativeElement.getBoundingClientRect();
-
-
             if ( clientRect ) {
                 if ( clientRect.bottom < parentClientRect.bottom + (5 * this.datatable.rowHeight) ) {
                     let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
@@ -142,28 +100,22 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         } else {
             this.handleScrollFast();
         }
-
     }
 
     handleScrollFast() {
         let currentStartIndex = Math.floor( this.scrollTop / this.datatable.rowHeight );
-
         let skip = currentStartIndex - this.quantityInVisibleRows;
         let take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
-
         if ( skip < 0 ) {
             skip = 0;
             take = this.datatable.rowsPage;
         }
-
         this.renderPageData( skip, take );
     }
 
     handleScrollUp() {
         let firstElement = this.listBody.nativeElement.children[ 0 ];
-
         let parentClientRect = this.listComponent.nativeElement.getBoundingClientRect();
-
         if ( firstElement ) {
             if ( ( firstElement.offsetTop <= this.scrollTop ) && (  this.listBody.nativeElement.rows.length > 0 ) ) {
                 let clientRect = firstElement.getBoundingClientRect();
@@ -185,45 +137,25 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     renderPageData( skip, take ) {
-        this.dataSourceService.loadMoreData( skip, take ).then( ( loadindSource: boolean ) => {
+        this.dataSourceService.loadMoreData( skip, take ).then( ( ) => {
             this.renderList( skip );
         } );
     }
 
 
-    renderList( skip, take? ) {
-        let rowCurrent = 0;
+    renderList( skip  ) {
         if ( !this.dataSourceService.datasource ) {
-            setTimeout( () => {
-                if ( this.listBody.nativeElement.children.length > 0 ) {
-                    this.removeChilds();
-                }
-                for ( let row = 0; row < this.dataSourceService.datasource.length; row++ ) {
-
-                    let elementTR = new ElementRef( this.renderer.createElement( 'tr' ) );
-                    this.renderer.setAttribute( elementTR.nativeElement, 'row', String( (row + skip) ) );
-                    this.renderer.setStyle( elementTR.nativeElement, 'top', (row + skip) * this.datatable.rowHeight + 'px' );
-                    this.renderer.setStyle( elementTR.nativeElement, 'position', 'absolute' );
-                    this.renderer.setStyle( elementTR.nativeElement, 'height', this.datatable.rowHeight + 'px' );
-                    this.renderer.addClass( elementTR.nativeElement, 'row' );
-                    this.renderer.appendChild( this.listBody.nativeElement, elementTR.nativeElement );
-
-                    for ( let collumn = 0; collumn < this.datatable.columns.length; collumn++ ) {
-                        let elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
-                        this.renderer.addClass( elementTD.nativeElement, 'cel' );
-                        this.renderer.addClass( elementTD.nativeElement, this.datatable.getClassAlignment( this.datatable.columns[ collumn ].alignment ) );
-                        elementTD.nativeElement.innerHTML = this.dataSourceService.datasource[ row ][ this.datatable.columns[ collumn ].field ];
-                        this.renderer.appendChild( this.listBody.nativeElement.children[ row ], elementTD.nativeElement );
-
-                    }
-
-                }
-            } );
-            return;
+            return setTimeout( () => {
+                this.render( skip )
+            });
         }
-        if ( this.listBody.nativeElement.children.length > 0 ) {
-            this.removeChilds();
-        }
+       this.render(skip)
+    }
+
+
+    render(skip){
+        this.removeChilds();
+
         for ( let row = 0; row < this.dataSourceService.datasource.length; row++ ) {
 
             let elementTR = new ElementRef( this.renderer.createElement( 'tr' ) );
@@ -242,13 +174,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 this.renderer.appendChild( this.listBody.nativeElement.children[ row ], elementTD.nativeElement );
             }
         }
-
     }
-
 
     removeChilds() {
-        this.listBody.nativeElement.innerHTML = '';
+        if ( this.listBody.nativeElement.children.length > 0 ) {
+            this.listBody.nativeElement.innerHTML = '';
+        }
     }
+
 
     setCurrentRow() {
         this.lastRowViewport = Math.round( ( this.datatable.height + this.scrollTop  ) / this.datatable.rowHeight );

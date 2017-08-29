@@ -20,12 +20,12 @@
     SOFTWARE.
 */
 
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { Injectable, SimpleChanges } from '@angular/core';
 import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
 
 @Injectable()
-export class TlDatatableDataSource implements OnChanges{
+export class TlDatatableDataSource {
 
     public datasource: any;
 
@@ -33,16 +33,7 @@ export class TlDatatableDataSource implements OnChanges{
 
     private datatable: TlDatatable;
 
-
-    private fistRow: number;
-
-    private lastRow: number;
-
     constructor() {}
-
-    ngOnChanges(changes){
-        console.log(changes, 'ServiceChanges')
-    }
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -68,7 +59,7 @@ export class TlDatatableDataSource implements OnChanges{
     getRowsInMemory(skip: number, take: number): Promise<any> {
         return new Promise((resolve) => {
             const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-            resolve((data as  Array<any>).slice(skip,take));
+            resolve((data as  Array<any>).slice(skip, take));
         })
     }
 
@@ -77,12 +68,12 @@ export class TlDatatableDataSource implements OnChanges{
            if (  this.datatable.lazy ) {
                this.loadingSource = true;
                this.datatable.lazyLoad.emit({ skip: skip,  take: take });
-               resolve(false);
+              return resolve(false);
 
            }
            this.getRowsInMemory( skip, take ).then((res) => {
                this.datasource = res;
-               resolve(res);
+               return resolve(res);
            });
 
        });

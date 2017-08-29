@@ -7,6 +7,10 @@
   border: 1px solid #CACACA;
 }
 
+.listbox-wrapper {
+  position: relative;
+}
+
 .list {
   margin: 0 !important;
   padding: 0 !important;
@@ -14,7 +18,7 @@
 
 .list-box-container::-webkit-scrollbar{
   background: #F1F1F1;
-  width: 7px;
+  width: 15px;
 }
 .list-box-container::-webkit-scrollbar-corner{
   background: #F1F1F1;
@@ -22,7 +26,9 @@
 
 .list-box-container::-webkit-scrollbar-track{
   background: #F6F6F6;
+  border-left: 1px solid #CACACA;
 }
+
 .list-box-container::-webkit-scrollbar-thumb{
   background: #66CC99;
 }
@@ -65,13 +71,21 @@
 }
 
 .showmore {
-  position: inherit;
-  width: calc(100%);
+  position: absolute;
   height: 15px;
+  width: calc(100% - 15px);
+  z-index: 100;
   text-align: center;
-  background-color: #66CC99;
-  bottom: 0;
+  background-color: #80d6ab;
   line-height: 15px;
+}
+
+.down {
+  bottom: 0;
+}
+
+.up {
+  top: 0;
 }
 
 .showmore:hover {
@@ -80,4 +94,5 @@
 
 .showmore i {
   color: #fff;
+  z-index: 150;
 }

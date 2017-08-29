@@ -38,11 +38,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
             'onCreateElement', [
                 transition( ':enter', [
                     style( { opacity: 0 } ),
-                    animate( '100ms ease-in', style( { opacity: 1 } ) )
+                    animate( '200ms ease-in', style( { opacity: 1 } ) )
                 ] ),
                 transition( ':leave', [
                     style( { opacity: 1 } ),
-                    animate( '100ms ease-out', style( { opacity: 0 } ) )
+                    animate( '200ms ease-out', style( { opacity: 0 } ) )
                 ] )
             ]
         )
@@ -104,6 +104,10 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private filtering = false;
 
+    private skip;
+
+    private take;
+
     constructor( private renderer: Renderer2, private change: ChangeDetectorRef, private zone: NgZone ) {}
 
     ngOnInit() {
@@ -137,12 +141,19 @@ export class TlListBox implements OnInit, AfterViewInit {
                 setTimeout( () => {
                     if ( $event.target.value === '' ) {
                         this.filtering = false;
-                        this.renderPageData( 0, this.rowsPage );
+                       this.resetSkipAndTake();
+                        this.renderPageData();
                     }
                 }, 100 );
             } );
         }
-        this.renderPageData( 0, this.rowsPage );
+        this.resetSkipAndTake();
+        this.renderPageData();
+    }
+
+    resetSkipAndTake() {
+        this.skip = 0;
+        this.take = this.rowsPage;
     }
 
     handleClickItem( item ) {
@@ -150,33 +161,57 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     handleSearch( searchValue ) {
-        if ( searchValue.length >= this.charsToSearch ) {
-            const filter = [];
-            this.data.forEach( ( item, index, array ) => {
-                this.searchQuery.forEach( ( query, index2, array2 ) => {
-                    if ( item[ query ].toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
-                        if ( filter.indexOf( item ) === -1 ) {
-                            filter.push( item );
-                        }
-                    }
-                } )
-            } );
+        this.itemContainer.nativeElement.scrollTop = 0;
+        setTimeout( () => {
+            if ( searchValue.length >= this.charsToSearch ) {
+                this.filtredData = this.filterData(searchValue);
+                this.handleSkipAndTakeWhileSearching();
+                this.validateFiltredAsEmpty();
 
-            this.filtredData = filter;
-            this.filtering = true;
-            this.filtredData.length === 0 ? this.renderPageData(0, this.datasource.length)
-                : this.renderPageData( 0, this.filtredData.length );
-            this.change.detectChanges();
+            } else {
+                this.filtering = false;
+                this.datasource = this.data;
+                this.validateFiltredAsEmpty();
+                this.resetSkipAndTake();
+                this.renderPageData();
+            }
+            this.handleScroll();
+        }, 1 );
+    }
 
-
-            this.validateFiltredAsEmpty();
-        } else {
-            this.filtering = false;
-            this.datasource = this.data;
-            this.validateFiltredAsEmpty();
-            this.renderPageData( 0, this.rowsPage );
+    handleSkipAndTakeWhileSearching() {
+        if (this.filtredData.length) {
+            this.setSkipAndTakeAsDataSource();
+            this.renderPageData()
+        }else {
+            this.setSkipAndTakeAsFiltredData();
+            this.renderPageData()
         }
-        this.handleScroll();
+    }
+
+    setSkipAndTakeAsDataSource() {
+        this.skip = 0;
+        this.take = this.datasource.length;
+    }
+
+    setSkipAndTakeAsFiltredData() {
+        this.skip = 0;
+        this.take = this.filtredData.length;
+    }
+
+    filterData(searchValue) {
+        const filter = [];
+        this.filtering = true;
+        this.data.forEach( ( item, index, array ) => {
+            this.searchQuery.forEach( ( query, index2, array2 ) => {
+                if ( item[ query ].toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
+                    if ( filter.indexOf( item ) === -1 ) {
+                        filter.push( item );
+                    }
+                }
+            } )
+        } );
+        return filter;
     }
 
     handleScroll() {
@@ -188,6 +223,8 @@ export class TlListBox implements OnInit, AfterViewInit {
             this.showMore = false;
             this.change.detectChanges();
         }
+
+
     }
 
     validateFiltredAsEmpty() {
@@ -218,19 +255,14 @@ export class TlListBox implements OnInit, AfterViewInit {
         const lastChildElem = this.listBox.nativeElement.children[ this.listBox.nativeElement.children.length - 1 ];
 
         if ( lastChildElem ) {
-
             const clientRect = lastChildElem.getBoundingClientRect();
             const parentClientRect = this.itemContainer.nativeElement.getBoundingClientRect();
-
             if ( clientRect ) {
                 if ( clientRect.bottom < parentClientRect.bottom + (5 * this.rowHeight) ) {
-                    const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-
-                    let take = this.lastRowViewport + this.quantityInVisibleRows;
-
-                    take = take > this.data.length ? this.data.length : take;
-
-                    this.renderPageData( skip + 1, take );
+                    this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+                    this.take = this.lastRowViewport + this.quantityInVisibleRows;
+                    this.take = this.take > this.data.length ? this.data.length : this.take;
+                    this.renderPageData();
                 }
             } else {
                 this.handleScrollFast();
@@ -242,20 +274,15 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollUp() {
         const firstElement = this.listBox.nativeElement.children[ 0 ];
-
         const parentClientRect = this.itemContainer.nativeElement.getBoundingClientRect();
-
         if ( firstElement ) {
             if ( ( firstElement.offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                 const clientRect = firstElement.getBoundingClientRect();
                 if ( clientRect.top > parentClientRect.top - (5 * this.rowHeight) ) {
-                    let skip = this.listBox.nativeElement.children[ 0 ].getAttribute( 'data-indexnumber' ) - this.quantityInVisibleRows;
-                    let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
-                    if ( skip < 0 ) {
-                        skip = 0;
-                        take = this.rowsPage;
-                    }
-                    this.renderPageData( skip, take );
+                    this.skip = this.listBox.nativeElement.children[ 0 ].getAttribute( 'data-indexnumber' ) - this.quantityInVisibleRows;
+                    this.take = this.skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
+                    this.validateSkipAndTakeRange();
+                    this.renderPageData();
                 }
             } else {
                 this.handleScrollFast();
@@ -263,14 +290,13 @@ export class TlListBox implements OnInit, AfterViewInit {
         }
     }
 
-    renderPageData( skip, take ) {
-        this.filtering ? this.datasource = this.filtredData.slice( skip, take )
-            : this.datasource = this.data.slice( skip, take );
-        this.renderList( skip );
+    renderPageData() {
+        this.filtering ? this.datasource = this.filtredData.slice( this.skip, this.take )
+            : this.datasource = this.data.slice( this.skip, this.take );
+        this.renderList();
     }
 
-
-    renderList( skip ) {
+    renderList() {
         if ( this.datasource ) {
             if ( this.listBox.nativeElement.children.length > 0 ) {
                 this.removeChilds();
@@ -279,8 +305,8 @@ export class TlListBox implements OnInit, AfterViewInit {
 
                 const liElement = new ElementRef( this.renderer.createElement( 'li' ) );
 
-                this.renderer.setAttribute( liElement.nativeElement, 'data-indexnumber', String( (row + skip) ) );
-                this.renderer.setStyle( liElement.nativeElement, 'top', (row + skip) * this.rowHeight + 'px' );
+                this.renderer.setAttribute( liElement.nativeElement, 'data-indexnumber', String( (row + this.skip) ) );
+                this.renderer.setStyle( liElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
                 this.renderer.setStyle( liElement.nativeElement, 'position', 'absolute' );
                 this.renderer.setStyle( liElement.nativeElement, 'width', '100%' );
                 this.renderer.setStyle( liElement.nativeElement, 'height', this.rowHeight + 'px' );
@@ -296,7 +322,6 @@ export class TlListBox implements OnInit, AfterViewInit {
                 this.renderer.setStyle( spanID.nativeElement, 'font-size', this.labelSize );
                 this.renderer.setStyle( spanID.nativeElement, 'float', 'right' );
                 spanID.nativeElement.innerHTML = this.datasource[ row ][ this.id ];
-
 
                 const spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
                 this.renderer.setStyle( spanLabel.nativeElement, 'font-size', this.labelSize );
@@ -324,25 +349,41 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollFast() {
         const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
+        this.skip = currentStartIndex - this.quantityInVisibleRows;
+        this.take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
+        this.validateSkipAndTakeRange();
+        this.renderPageData();
+    }
 
-        let skip = currentStartIndex - this.quantityInVisibleRows;
-        let take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
-
-        if ( skip < 0 ) {
-            skip = 0;
-            take = this.rowsPage;
+    validateSkipAndTakeRange() {
+        if ( this.skip < 0 ) {
+            this.skip = 0;
+            this.take = this.rowsPage;
         }
-
-        this.renderPageData( skip, take );
-
     }
 
     onShowMoreMouseOut() {
-        clearInterval( this.time );
+        clearTimeout( this.time );
     }
 
-    onShowMoreMouseIn() {
+    onShowMoreMouseIn( direction ) {
+        this.time = setTimeout( () => {
+            direction === 'down' ?  this.scrollToDown(direction) : this.scrollToUp(direction);
+        }, 100 );
+    }
 
+    scrollToUp(direction) {
+        if ( this.scrollTop > 0 ) {
+            this.itemContainer.nativeElement.scrollTop = this.itemContainer.nativeElement.scrollTop - this.rowHeight;
+            this.onShowMoreMouseIn( direction );
+        }
+    }
+
+    scrollToDown(direction) {
+        if ( this.scrollTop < this.listBox.nativeElement.offsetHeight ) {
+            this.itemContainer.nativeElement.scrollTop = this.itemContainer.nativeElement.scrollTop + this.rowHeight;
+            this.onShowMoreMouseIn( direction );
+        }
     }
 
     setCurrentRow() {

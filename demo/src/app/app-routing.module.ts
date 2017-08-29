@@ -22,7 +22,8 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'dialog', loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'},
-      {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'}
+      {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'},
+      {path: 'listbox', loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'},
     ])
   ],
   exports: [RouterModule]

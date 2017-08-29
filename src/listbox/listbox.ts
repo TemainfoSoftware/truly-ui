@@ -23,10 +23,10 @@ import {
     Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
     ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, NgZone
 } from '@angular/core';
-import { Subject } from "rxjs/Subject";
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
-import { animate, style, transition, trigger } from "@angular/animations";
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component( {
     selector: 'tl-listbox',
@@ -70,7 +70,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     @Input() id = '';
 
-    @Output() onClickItem : EventEmitter<any> = new EventEmitter();
+    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'list' ) listBox;
 
@@ -82,7 +82,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private showMore = false;
 
-    private subject : Subject<string> = new Subject();
+    private subject: Subject<string> = new Subject();
 
     private filtredData = [];
 
@@ -104,7 +104,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private filtering = false;
 
-    constructor( private renderer : Renderer2, private change : ChangeDetectorRef, private zone : NgZone ) {}
+    constructor( private renderer: Renderer2, private change: ChangeDetectorRef, private zone: NgZone ) {}
 
     ngOnInit() {
         this.datasource = this.data;
@@ -135,7 +135,7 @@ export class TlListBox implements OnInit, AfterViewInit {
             } );
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
-                    if ( $event.target.value === "" ) {
+                    if ( $event.target.value === '' ) {
                         this.filtering = false;
                         this.renderPageData( 0, this.rowsPage );
                     }
@@ -151,7 +151,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleSearch( searchValue ) {
         if ( searchValue.length >= this.charsToSearch ) {
-            let filter = [];
+            const filter = [];
             this.data.forEach( ( item, index, array ) => {
                 this.searchQuery.forEach( ( query, index2, array2 ) => {
                     if ( item[ query ].toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
@@ -224,7 +224,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
             if ( clientRect ) {
                 if ( clientRect.bottom < parentClientRect.bottom + (5 * this.rowHeight) ) {
-                    let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+                    const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
 
                     let take = this.lastRowViewport + this.quantityInVisibleRows;
 
@@ -241,13 +241,13 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     handleScrollUp() {
-        let firstElement = this.listBox.nativeElement.children[ 0 ];
+        const firstElement = this.listBox.nativeElement.children[ 0 ];
 
-        let parentClientRect = this.itemContainer.nativeElement.getBoundingClientRect();
+        const parentClientRect = this.itemContainer.nativeElement.getBoundingClientRect();
 
         if ( firstElement ) {
             if ( ( firstElement.offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
-                let clientRect = firstElement.getBoundingClientRect();
+                const clientRect = firstElement.getBoundingClientRect();
                 if ( clientRect.top > parentClientRect.top - (5 * this.rowHeight) ) {
                     let skip = this.listBox.nativeElement.children[ 0 ].getAttribute( 'data-indexnumber' ) - this.quantityInVisibleRows;
                     let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
@@ -277,7 +277,7 @@ export class TlListBox implements OnInit, AfterViewInit {
             }
             for ( let row = 0; row < this.datasource.length; row++ ) {
 
-                let liElement = new ElementRef( this.renderer.createElement( 'li' ) );
+                const liElement = new ElementRef( this.renderer.createElement( 'li' ) );
 
                 this.renderer.setAttribute( liElement.nativeElement, 'data-indexnumber', String( (row + skip) ) );
                 this.renderer.setStyle( liElement.nativeElement, 'top', (row + skip) * this.rowHeight + 'px' );
@@ -292,18 +292,18 @@ export class TlListBox implements OnInit, AfterViewInit {
 
                 this.renderer.appendChild( this.listBox.nativeElement, liElement.nativeElement );
 
-                let spanID = new ElementRef( this.renderer.createElement( 'span' ) );
+                const spanID = new ElementRef( this.renderer.createElement( 'span' ) );
                 this.renderer.setStyle( spanID.nativeElement, 'font-size', this.labelSize );
                 this.renderer.setStyle( spanID.nativeElement, 'float', 'right' );
                 spanID.nativeElement.innerHTML = this.datasource[ row ][ this.id ];
 
 
-                let spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+                const spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
                 this.renderer.setStyle( spanLabel.nativeElement, 'font-size', this.labelSize );
                 spanLabel.nativeElement.innerHTML = this.datasource[ row ][ this.label ];
 
 
-                let spanDetail = new ElementRef( this.renderer.createElement( 'span' ) );
+                const spanDetail = new ElementRef( this.renderer.createElement( 'span' ) );
                 this.renderer.setStyle( spanDetail.nativeElement, 'font-size', this.labelDetailSize );
                 spanDetail.nativeElement.innerHTML = this.datasource[ row ][ this.labelDetail ];
 
@@ -323,7 +323,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     handleScrollFast() {
-        let currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
+        const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
 
         let skip = currentStartIndex - this.quantityInVisibleRows;
         let take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;

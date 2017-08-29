@@ -102,6 +102,8 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private datasource = [];
 
+    private scrollFinish = false;
+
     private filtering = false;
 
     private skip;
@@ -202,8 +204,8 @@ export class TlListBox implements OnInit, AfterViewInit {
     filterData(searchValue) {
         const filter = [];
         this.filtering = true;
-        this.data.forEach( ( item, index, array ) => {
-            this.searchQuery.forEach( ( query, index2, array2 ) => {
+        this.data.forEach( ( item ) => {
+            this.searchQuery.forEach( ( query ) => {
                 if ( item[ query ].toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
                     if ( filter.indexOf( item ) === -1 ) {
                         filter.push( item );
@@ -253,7 +255,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollDown() {
         const lastChildElem = this.listBox.nativeElement.children[ this.listBox.nativeElement.children.length - 1 ];
-
+        this.handleScrollFinish();
         if ( lastChildElem ) {
             const clientRect = lastChildElem.getBoundingClientRect();
             const parentClientRect = this.itemContainer.nativeElement.getBoundingClientRect();
@@ -270,6 +272,15 @@ export class TlListBox implements OnInit, AfterViewInit {
 
         }
 
+    }
+
+    handleScrollFinish() {
+        this.scrollFinish = (this.itemContainer.nativeElement.scrollTop +
+        (this.quantityVisibleRows * this.rowHeight) >= this.listBox.nativeElement.offsetHeight);
+
+        if (this.scrollFinish) {
+            this.onShowMoreMouseOut();
+        }
     }
 
     handleScrollUp() {

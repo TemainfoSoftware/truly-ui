@@ -18,7 +18,7 @@
 
 .list-box-container::-webkit-scrollbar{
   background: #F1F1F1;
-  width: 15px;
+  width: 13px;
 }
 .list-box-container::-webkit-scrollbar-corner{
   background: #F1F1F1;
@@ -73,7 +73,7 @@
 .showmore {
   position: absolute;
   height: 15px;
-  width: calc(100% - 15px);
+  width: calc(100% - 13px);
   z-index: 100;
   text-align: center;
   background-color: #80d6ab;

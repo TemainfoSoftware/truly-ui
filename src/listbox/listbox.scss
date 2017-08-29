@@ -1,0 +1,83 @@
+.list-box-container {
+  position: relative;
+  height: 500px;
+  width: auto;
+  background: #fff;
+  overflow-y: auto;
+  border: 1px solid #CACACA;
+}
+
+.list {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.list-box-container::-webkit-scrollbar{
+  background: #F1F1F1;
+  width: 7px;
+}
+.list-box-container::-webkit-scrollbar-corner{
+  background: #F1F1F1;
+}
+
+.list-box-container::-webkit-scrollbar-track{
+  background: #F6F6F6;
+}
+.list-box-container::-webkit-scrollbar-thumb{
+  background: #66CC99;
+}
+
+.item {
+  width: inherit;
+  border-bottom: 1px solid #eeeeee;
+  transition: background 0.15s ease-in-out;
+  padding: 10px;
+  height: 50px;
+  list-style: none;
+}
+
+.item span {
+  display: inherit;
+}
+
+.item h4, h6 {
+  margin: 0 !important;
+}
+
+.item:hover {
+  cursor: pointer;
+  background-color: #f6f6f6;
+}
+
+.nothingToShow {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  top: calc(50% - 40px);
+  padding: 10px;
+  color: #b1b1b1;
+  z-index: 100;
+}
+
+.nothingToShow i {
+  font-size: 2.5em;
+}
+
+.showmore {
+  position: inherit;
+  width: calc(100%);
+  height: 15px;
+  text-align: center;
+  background-color: #66CC99;
+  bottom: 0;
+  line-height: 15px;
+}
+
+.showmore:hover {
+  cursor: pointer;
+}
+
+.showmore i {
+  color: #fff;
+}

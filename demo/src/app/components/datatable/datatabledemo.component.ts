@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import * as json from './datatabledemo-dataproperties.json';
 
@@ -7,6 +7,7 @@ import * as jsonEvents from './datatabledemo-dataevents.json';
 
 @Component( {
   selector: 'app-datatable',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './datatabledemo.component.html',
   styleUrls: [ './datatabledemo.component.scss' ]
 } )
@@ -30,7 +31,7 @@ export class DataTableDemo {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
 
-    this.data = this.createRandomData(100);
+    this.data = this.createRandomData(1000000);
 
     this.dataLazy = {
       "data" : this.getDataFromService(0,this.take),
@@ -45,15 +46,12 @@ export class DataTableDemo {
   }
 
   onLazyLoad(event){
-      console.log(event);
       setTimeout(()=>{
         this.dataLazy = {
-          "data" : this.getDataFromService(event.skip,event.skip + event.take),
+          "data" : this.getDataFromService(event.skip,event.take),
           "total" : this.data.length
         };
-      },250)
-
-
+      },0)
   }
 
   onPageChange(event){

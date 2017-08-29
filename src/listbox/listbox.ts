@@ -110,6 +110,14 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private take;
 
+    private listElement;
+
+    private spanElementId;
+
+    private spanElementLabel;
+
+    private spanElementLabelDetail;
+
     constructor( private renderer: Renderer2, private change: ChangeDetectorRef, private zone: NgZone ) {}
 
     ngOnInit() {
@@ -280,45 +288,60 @@ export class TlListBox implements OnInit, AfterViewInit {
                 this.removeChilds();
             }
             for ( let row = 0; row < this.datasource.length; row++ ) {
-
-                const liElement = new ElementRef( this.renderer.createElement( 'li' ) );
-
-                this.renderer.setAttribute( liElement.nativeElement, 'data-indexnumber', String( (row + this.skip) ) );
-                this.renderer.setStyle( liElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
-                this.renderer.setStyle( liElement.nativeElement, 'position', 'absolute' );
-                this.renderer.setStyle( liElement.nativeElement, 'width', '100%' );
-                this.renderer.setStyle( liElement.nativeElement, 'height', this.rowHeight + 'px' );
-                this.renderer.addClass( liElement.nativeElement, 'item' );
-
-                liElement.nativeElement.addEventListener('click', () => {
-                    this.handleClickItem(this.datasource[row]);
-                });
-
-                this.renderer.appendChild( this.listBox.nativeElement, liElement.nativeElement );
-
-                const spanID = new ElementRef( this.renderer.createElement( 'span' ) );
-                this.renderer.setStyle( spanID.nativeElement, 'font-size', this.labelSize );
-                this.renderer.setStyle( spanID.nativeElement, 'float', 'right' );
-                spanID.nativeElement.innerHTML = this.datasource[ row ][ this.id ];
-
-                const spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-                this.renderer.setStyle( spanLabel.nativeElement, 'font-size', this.labelSize );
-                spanLabel.nativeElement.innerHTML = this.datasource[ row ][ this.label ];
-
-
-                const spanDetail = new ElementRef( this.renderer.createElement( 'span' ) );
-                this.renderer.setStyle( spanDetail.nativeElement, 'font-size', this.labelDetailSize );
-                spanDetail.nativeElement.innerHTML = this.datasource[ row ][ this.labelDetail ];
-
-
-                this.renderer.appendChild( liElement.nativeElement, spanID.nativeElement );
-                this.renderer.appendChild( liElement.nativeElement, spanLabel.nativeElement );
-                this.renderer.appendChild( liElement.nativeElement, spanDetail.nativeElement );
+                this.createElementList(row);
+                this.addEventClickToListElement(row);
+                this.appendListElementToListBox();
+                this.createElementSpanId(row);
+                this.createElementSpanLabel(row);
+                this.createElementSpanLabelDetail(row);
+                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
+                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
+                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
 
             }
             this.change.detectChanges();
         }
 
+    }
+
+    createElementList(row) {
+        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
+        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( (row + this.skip) ) );
+        this.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
+        this.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
+        this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
+        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.rowHeight + 'px' );
+        this.renderer.addClass( this.listElement.nativeElement, 'item' );
+    }
+
+    addEventClickToListElement(row) {
+        this.listElement.nativeElement.addEventListener('click', () => {
+            this.handleClickItem(this.datasource[row]);
+        });
+    }
+
+    appendListElementToListBox() {
+        this.renderer.appendChild( this.listBox.nativeElement, this.listElement.nativeElement );
+    }
+
+
+    createElementSpanId(row) {
+        this.spanElementId = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
+        this.spanElementId.nativeElement.innerHTML = this.datasource[ row ][ this.id ];
+    }
+
+    createElementSpanLabel(row) {
+        this.spanElementLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
+        this.spanElementLabel.nativeElement.innerHTML = this.datasource[ row ][ this.label ];
+    }
+
+    createElementSpanLabelDetail(row) {
+        this.spanElementLabelDetail = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementLabelDetail.nativeElement, 'font-size', this.labelDetailSize );
+        this.spanElementLabelDetail.nativeElement.innerHTML = this.datasource[ row ][ this.labelDetail ];
     }
 
     handleScrollFast() {

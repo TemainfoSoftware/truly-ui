@@ -27,7 +27,7 @@ import {
     AfterViewInit,
     ChangeDetectionStrategy,
     Output,
-    EventEmitter, ViewEncapsulation
+    EventEmitter, ViewEncapsulation, ChangeDetectorRef
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -63,7 +63,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
     templateUrl: './input.html',
     styleUrls: [ './input.scss' ],
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
     ]
@@ -192,8 +191,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Function to clear input value.
      */
     clearInput() {
-        this.modelValue = '';
-        this.input.nativeElement.value = '';
+        this.writeValue('');
         this.input.nativeElement.focus();
         this.clear.emit();
     }

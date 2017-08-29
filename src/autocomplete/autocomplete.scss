@@ -57,9 +57,7 @@
       > .tl-autocomplete-list-items {
         overflow: auto;
         background: #FFF;
-        //box-shadow: 0 1px 1px 0 #BABABA;
         border-radius: 0 0 4px 4px;
-        //background-color: #E8E8E8;
         border: 1px solid rgba(0, 0, 0, .13);
         color: #616161;
         border-top: 0;
@@ -77,20 +75,17 @@
           //padding: 0 10px;
           padding: 5px 0 5px 5px;
           border-bottom: 1px solid #ece8f0;
-          > span {
-            //color: #616161;
-            font-weight: bold;
-          }
         }
         > li:last-child {
           border-bottom: 0px solid #ece8f0;
         }
         > li:hover {
           background-color: #f2f2f2;
-          cursor: default;
+          cursor: pointer;
         }
         > li.no-data-found{
           color: #b1b1b1;
+          cursor: default;
           i{
             font-size: 1.3em;
           }
@@ -108,9 +103,10 @@
     }
 
     > .field {
+      display: table-cell;
       border: 1px solid #CACACA;
       height: 25px;
-      padding: 4px 12px;
+      padding: 4px 24px 4px 12px;
       font-size: 0.9em;
       width: 100%;
       color: #737373;
@@ -123,29 +119,23 @@
       @include textInput;
     }
     > .addon {
-      display: table-cell;
-      padding: 4px 12px;
+      position: absolute;
       font-size: 14px;
       font-weight: 400;
-      line-height: 1;
+      line-height: 1.5em;
       color: #6E6E6E;
       text-align: center;
       width: 1%;
       white-space: nowrap;
       vertical-align: middle;
+      top: 4px;
+      right: 12px;
     }
     > .addon.-clearbutton {
-      border-right: 1px solid #CACACA;
-      border-top: 1px solid #CACACA;
-      border-bottom: 1px solid #CACACA;
       font-size: 0.7em;
       font-family: 'Lato', sans-serif;
-      background: #fff;
       cursor: pointer;
       color: #99a1a4;
-    }
-    > .addon.-clearbutton:hover {
-      background: #EEEEEE;
     }
   }
 }

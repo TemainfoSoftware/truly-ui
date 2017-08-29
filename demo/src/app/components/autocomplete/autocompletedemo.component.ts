@@ -47,22 +47,15 @@ export class AutoCompleteDemo {
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.data = [
-      { idItem: '11', textItem : 'Animal', valueItem : '1' },
-      { idItem: '21', textItem : 'Animal2', valueItem : '2' },
-      { idItem: '31', textItem : 'Animal3', valueItem : '3' },
-      { idItem: '41', textItem : 'Casa', valueItem : '4' },
-      { idItem: '51', textItem : 'Casa2', valueItem : '5' },
-      { idItem: '54', textItem : 'Casa3', valueItem : '6' },
-      { idItem: '53', textItem : 'Her', valueItem : '7' },
-      { idItem: '52', textItem : 'Fer', valueItem : '8' },
-      { idItem: '51', textItem : 'Casa2', valueItem : '5' },
-      { idItem: '54', textItem : 'Casa3', valueItem : '6' },
-      { idItem: '53', textItem : 'Her', valueItem : '7' },
-      { idItem: '52', textItem : 'Fer', valueItem : '8' },
-      { idItem: '51', textItem : 'Casa2', valueItem : '5' },
-      { idItem: '54', textItem : 'Casa3', valueItem : '6' },
-      { idItem: '53', textItem : 'Her', valueItem : '7' },
-      { idItem: '52', textItem : 'Fer', valueItem : '8' }
+      { idItem: '1', textItem : 'Item 1', valueItem : '1' },
+      { idItem: '2', textItem : 'Item 2', valueItem : '2' },
+      { idItem: '3', textItem : 'Item 3', valueItem : '3' },
+      { idItem: '4', textItem : 'Item 4', valueItem : '4' },
+      { idItem: '5', textItem : 'Item 5', valueItem : '5' },
+      { idItem: '6', textItem : 'Item 6', valueItem : '6' },
+      { idItem: '7', textItem : 'Item 7', valueItem : '7' },
+      { idItem: '8', textItem : 'Item 8', valueItem : '8' },
+      { idItem: '9', textItem : 'Item 9', valueItem : '9' }
     ];
     this.bigData = [
       { idItem: '1', textItem : 'Item 1', valueItem : '1' },

@@ -287,21 +287,23 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     renderList() {
         if ( this.datasource ) {
-            if ( this.listBox.nativeElement.children.length > 0 ) {
-                this.removeChilds();
-            }
-            for ( let row = 0; row < this.datasource.length; row++ ) {
-                this.createElementList(row);
-                this.addEventClickToListElement(row);
-                this.appendListElementToListBox();
-                this.createElementSpanId(row);
-                this.createElementSpanLabel(row);
-                this.createElementSpanLabelDetail(row);
-                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
-                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
-                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
+            this.zone.runOutsideAngular( () => {
+                if ( this.listBox.nativeElement.children.length > 0 ) {
+                    this.removeChilds();
+                }
+                for ( let row = 0; row < this.datasource.length; row++ ) {
+                    this.createElementList( row );
+                    this.addEventClickToListElement( row );
+                    this.appendListElementToListBox();
+                    this.createElementSpanId( row );
+                    this.createElementSpanLabel( row );
+                    this.createElementSpanLabelDetail( row );
+                    this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
+                    this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
+                    this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
 
-            }
+                }
+            } );
             this.change.detectChanges();
         }
 

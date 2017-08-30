@@ -153,10 +153,13 @@ export class TlListBox implements OnInit, AfterViewInit {
             } );
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
-                    if ( $event.target.value === '' ) {
+                    this.itemContainer.nativeElement.scrollTop = 0;
+                    if ( $event.target.value.length === 0 ) {
                         this.filtering = false;
                         this.resetSkipAndTake();
                         this.renderPageData();
+                        this.validateFiltredAsEmpty();
+                        this.handleScroll();
                     }
                 }, 100 );
             } );

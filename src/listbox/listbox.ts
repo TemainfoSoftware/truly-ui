@@ -269,7 +269,7 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.filtering = true;
         this.data.forEach( ( item ) => {
             this.searchQuery.forEach( ( query ) => {
-                if ( item[ query ].toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
+                if ( item[ query ].toLowerCase().trim().indexOf( searchValue.toLowerCase().trim() ) !== -1 ) {
                     if ( filter.indexOf( item ) === -1 ) {
                         filter.push( item );
                     }

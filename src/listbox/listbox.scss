@@ -72,20 +72,23 @@
 
 .showmore {
   position: absolute;
-  height: 15px;
-  width: calc(100% - 13px);
+  height: 17px;
+  left: calc(50% - 25px);
+  width: 50px;
   z-index: 100;
   text-align: center;
   background-color: #80d6ab;
-  line-height: 15px;
+  line-height: 17px;
 }
 
 .down {
   bottom: 0;
+  border-radius: 3px 3px 0 0;
 }
 
 .up {
   top: 0;
+  border-radius: 0 0 3px 3px;
 }
 
 .showmore:hover {

@@ -191,11 +191,11 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleSkipAndTakeWhileSearching() {
         if (this.filtredData.length) {
-            this.setSkipAndTakeAsDataSource();
-            this.renderPageData()
-        }else {
             this.setSkipAndTakeAsFiltredData();
-            this.renderPageData()
+            this.renderPageData();
+        }else {
+            this.setSkipAndTakeAsDataSource();
+            this.renderPageData();
         }
     }
 

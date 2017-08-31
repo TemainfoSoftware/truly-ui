@@ -5,17 +5,14 @@
         <i class="ion-chevron-up"></i>
     </div>
     <div #itemContainer class="list-box-container">
-        <ul #list class="list" [style.position]="'relative'"
-            [style.height]="filtering ? (filtredData.length * rowHeight) + 'px' : (data.length * rowHeight) + 'px'"></ul>
+        <ul containerDirective #list class="list" [style.position]="'relative'"
+            [style.height]="filtering ? (filtredData.length * rowHeight) + 'px' : (data.length * rowHeight) + 'px'">
+            <div #customTemplate><ng-content></ng-content></div>
+        </ul>
     </div>
     <div [@onCreateElement]="true" *ngIf="showMore && !scrollFinish" (mouseup)="onShowMoreMouseOut()" (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
         <i class="ion-chevron-down"></i>
     </div>
 </div>
-
-
-
-
-
 
 

@@ -19,41 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
 
-import { DatatableModule } from './datatable';
-import { InputModule } from './input';
-import { ButtonModule } from './button';
-import { MultiselectModule } from './multiselect';
-import { TooltipModule } from './tooltip';
-import { ModalModule } from './modal';
-import { DialogModule } from './dialog';
-import { FormModule } from './form';
-import { ListBoxModule } from './listbox';
+import { Directive, ViewContainerRef } from '@angular/core';
 
-export * from './datatable';
-export * from './input';
-export * from './button';
-export * from './multiselect';
-export * from './tooltip';
-export * from './modal';
-export * from './dialog';
-export * from './form';
-export * from './listbox';
-
-@NgModule({
-  imports: [
-      ButtonModule,
-      DatatableModule,
-      InputModule,
-      MultiselectModule,
-      TooltipModule,
-      ModalModule,
-      FormModule,
-      DialogModule,
-      ListBoxModule
-  ]
+@Directive({
+    selector: '[containerDirective]'
 })
-export class TrulyModule {}
+ export class ListBoxContainerDirective {
 
+    constructor(public viewList: ViewContainerRef) {}
 
+ }

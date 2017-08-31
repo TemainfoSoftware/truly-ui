@@ -21,12 +21,17 @@
  */
 import {
     Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
-    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, NgZone
+    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, NgZone,
+    ContentChild, TemplateRef
 } from '@angular/core';
+
 import { Subject } from 'rxjs/Subject';
+
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
 import { animate, style, transition, trigger } from '@angular/animations';
+
+import { ListBoxContainerDirective } from './lisbox-container-directive';
 
 @Component( {
     selector: 'tl-listbox',
@@ -76,6 +81,12 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     @ViewChild( 'itemContainer' ) itemContainer;
 
+    @ViewChild( 'customTemplate' ) customTemplate;
+
+    @ViewChild( ListBoxContainerDirective ) listTemplateContainer: ListBoxContainerDirective;
+
+    @ContentChild( TemplateRef ) template: TemplateRef<Object>;
+
     @Input() searchQuery = [];
 
     private nothingToShow = false;
@@ -118,7 +129,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private spanElementLabelDetail;
 
-    constructor( private renderer: Renderer2, private change: ChangeDetectorRef, private zone: NgZone ) {}
+    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone ) {}
 
     ngOnInit() {
         this.datasource = this.data;
@@ -143,8 +154,8 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.existSearchElement();
         this.resetSkipAndTake();
         this.renderPageData();
+        this.change.detectChanges();
     }
-
 
     existSearchElement() {
         if ( this.searchElement ) {
@@ -282,7 +293,16 @@ export class TlListBox implements OnInit, AfterViewInit {
     renderPageData() {
         this.filtering ? this.datasource = this.filtredData.slice( this.skip, this.take )
             : this.datasource = this.data.slice( this.skip, this.take );
-        this.renderList();
+        this.existCustomTemplate() ? this.renderCustomList() : this.renderList();
+    }
+
+    existCustomTemplate() {
+        for (const node of this.customTemplate.nativeElement.childNodes) {
+            if (node.nodeName === '#comment') {
+                return true;
+            }
+        }
+        return false;
     }
 
     renderList() {
@@ -315,6 +335,7 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
         this.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
         this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
+
         this.renderer.setStyle( this.listElement.nativeElement, 'height', this.rowHeight + 'px' );
         this.renderer.addClass( this.listElement.nativeElement, 'item' );
     }
@@ -328,7 +349,6 @@ export class TlListBox implements OnInit, AfterViewInit {
     appendListElementToListBox() {
         this.renderer.appendChild( this.listBox.nativeElement, this.listElement.nativeElement );
     }
-
 
     createElementSpanId(row) {
         this.spanElementId = new ElementRef( this.renderer.createElement( 'span' ) );
@@ -348,6 +368,39 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.renderer.setStyle( this.spanElementLabelDetail.nativeElement, 'font-size', this.labelDetailSize );
         this.spanElementLabelDetail.nativeElement.innerHTML = this.datasource[ row ][ this.labelDetail ];
     }
+
+    createCustomTemplate(item, index) {
+        return this.template.createEmbeddedView( {
+            item: item,
+            index: index
+        } );
+    }
+
+    renderCustomList() {
+        if ( this.datasource ) {
+            if ( this.listBox.nativeElement.children.length > 0 ) {
+                this.removeChilds();
+            }
+            for ( let row = 0; row < this.datasource.length; row++ ) {
+                const nodes = this.createCustomTemplate( this.datasource[ row ], row );
+                this.listTemplateContainer.viewList.insert( nodes );
+
+                for (const element of nodes.rootNodes) {
+                    if (element.nodeName === 'LI') {
+                        this.renderer.appendChild(this.listBox.nativeElement, element);
+                        this.renderer.setAttribute( element, 'data-indexnumber', String( (row + this.skip) ) );
+                        this.renderer.setStyle( element, 'top', (row + this.skip) * this.rowHeight + 'px' );
+                        this.renderer.setStyle( element, 'position', 'absolute' );
+                        this.renderer.setStyle( element, 'width', '100%' );
+                        this.renderer.setStyle( element, 'height', this.rowHeight + 'px' );
+                    }
+                }
+
+            }
+
+        }
+    }
+
 
     handleScrollFast() {
         const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );

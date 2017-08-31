@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlListBox } from './listbox';
+import { ListBoxContainerDirective } from './lisbox-container-directive';
 
 @NgModule({
     imports: [
@@ -10,10 +11,12 @@ import { TlListBox } from './listbox';
         FormsModule,
     ],
     declarations: [
-        TlListBox
+        TlListBox,
+        ListBoxContainerDirective,
     ],
     exports: [
-        TlListBox
-    ]
+        TlListBox,
+        ListBoxContainerDirective,
+    ],
 })
 export class ListBoxModule {}

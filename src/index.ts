@@ -29,7 +29,6 @@ import { TooltipModule } from './tooltip';
 import { ModalModule } from './modal';
 import { DialogModule } from './dialog';
 import { FormModule } from './form';
-import { ListBoxModule } from './listbox';
 
 export * from './datatable';
 export * from './input';
@@ -39,7 +38,6 @@ export * from './tooltip';
 export * from './modal';
 export * from './dialog';
 export * from './form';
-export * from './listbox';
 
 @NgModule({
   imports: [
@@ -51,7 +49,6 @@ export * from './listbox';
       ModalModule,
       FormModule,
       DialogModule,
-      ListBoxModule
   ]
 })
 export class TrulyModule {}

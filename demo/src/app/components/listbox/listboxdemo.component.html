@@ -7,16 +7,20 @@
   <div class="showcase">
     <div class="row">
       <div class="form-group">
-        <div class="col-md-3">
+        <div class="col-md-6">
           <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #input
                     [placeholder]="'Search...'"></tl-input>
           <tl-listbox
             [data]="data"
             [id]="'id'"
-            [searchQuery]="['firstName']"
             [label]="'firstName'"
             [labelDetail]="'lastName'"
             [searchElement]="input">
+              <ng-template let-item="item" let-index="index">
+                <li class="list-template-demo"><img class="img-circle" src="../assets/img/avatar.png" width="30">{{item.firstName}}  -  <span>{{item.lastName}}</span>
+                  <span class="list-bagde badge">{{item.id}}</span>
+                </li>
+              </ng-template>
           </tl-listbox>
         </div>
       </div>

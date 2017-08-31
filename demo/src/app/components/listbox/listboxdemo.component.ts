@@ -24,7 +24,7 @@ export class ListBoxDemo {
     this.dataTableProperties = jsonProp.dataProperties;
     this.events = jsonEvt.events;
 
-    this.data = this.dataDumpService.createRandomData(700);
+    this.data = this.dataDumpService.createRandomData(5000);
 
   }
 

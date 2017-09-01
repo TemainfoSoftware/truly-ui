@@ -26,9 +26,8 @@
 
 
 ## Motivation
-TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
-TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
-TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world.
+TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world. TrulyUI is based on Angular, maintained by world-wide community. By the way, we believe that Angular is the most promising Web Framework. We developed TrulyUI thinking to fill a gap on open-source Web Technologies that's poor when it's about applications on Desktop.
+Ex: Electron, App.js and NW.js
 
 ## Installation
 

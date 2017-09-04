@@ -8,41 +8,65 @@
 
   <div class="showcase">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="group-component">
-          <h5>Basic</h5>
-          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ result }}</span>
+          <h5>Basic SimpleData</h5>
+          <tl-autocomplete [data]="simpleData" [(ngModel)]="result"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result | json }}</span>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="group-component">
-          <h5>Label</h5>
-          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result2" [label]="'Label Text'"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ result2 }}</span>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="group-component">
-          <h5>Clear Button</h5>
-          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result3" [clearButton]="true"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ result3 }}</span>
+          <h5>Basic Data</h5>
+          <tl-autocomplete [data]="data" [display]="['label']" [valueField]="['label']" [query]="['label']"
+                           [(ngModel)]="result2"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result2 | json }}</span>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="group-component">
-          <h5>Required</h5>
-          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result4" [label]="'Required'" [validations]="{required: true}"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ result4 }}</span>
+          <h5>Basic Big Data</h5>
+          <tl-autocomplete [data]="bigData" [display]="['id', 'label']" [valueField]="['label']"
+                           [query]="['id', 'label']" [(ngModel)]="result3"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result3 | json }}</span>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
+        <div class="group-component">
+          <h5>Label</h5>
+          <tl-autocomplete [data]="data" [label]="'Label Text'" [display]="['label']" [valueField]="['label']"
+                           [query]="['label']" [(ngModel)]="result4"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result4 | json }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="group-component">
+          <h5>Clear Button</h5>
+          <tl-autocomplete [data]="data" [clearButton]="true" [display]="['label']" [valueField]="['label']"
+                           [query]="['label']" [(ngModel)]="result5"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result5 | json }}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
         <div class="group-component">
           <h5>Placeholder</h5>
-          <tl-autocomplete [data]="data" [id]="'idItem'" [text]="'textItem'" [value]="'valueItem'" [query]="['idItem', 'textItem']" [(ngModel)]="result5" [placeholder]="'ex.: Item 1'"></tl-autocomplete>
-          <span class="returned-value"> Returned Value: {{ result5 }}</span>
+          <tl-autocomplete [data]="data" [placeholder]="'ex.: Asia'" [display]="['label']" [valueField]="['label']"
+                           [query]="['label']" [(ngModel)]="result6"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result6 | json }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="group-component">
+          <h5>Required</h5>
+          <tl-autocomplete [data]="data" [label]="'Required:'" [validations]="{required: true}" [display]="['label']" [valueField]="['label']"
+                           [query]="['label']" [(ngModel)]="result7"></tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result7 | json }}</span>
         </div>
       </div>
     </div>
@@ -64,15 +88,15 @@
           <th>Options</th>
         </tr>
         </thead>
-        <!--<tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">-->
-        <!--<tr>-->
-        <!--<td><span>{{ item.name }}</span></td>-->
-        <!--<td><span class="badge">{{ item.type }}</span></td>-->
-        <!--<td><code>{{ item.default }}</code></td>-->
-        <!--<td>{{ item.description }}</td>-->
-        <!--<td><code> {{ item.options }} </code></td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
+        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
+        <tr>
+        <td><span>{{ item.name }}</span></td>
+        <td><span class="badge">{{ item.type }}</span></td>
+        <td><code>{{ item.default }}</code></td>
+        <td>{{ item.description }}</td>
+        <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
       </table>
     </div>
     <hr>
@@ -81,11 +105,67 @@
   <div class="examples">
     <h3 class="title">Examples</h3>
     <div class="group-component">
-      <h5 class="title">Basic</h5>
+      <h5 class="title">Basic SimpleData</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-
-<tl-autocomplete [(ngModel)]="result"></tl-autocomplete>
-
+<tl-autocomplete [data]="simpleData" [(ngModel)]="result"></tl-autocomplete>
+      </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Basic Data</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-autocomplete [data]="data"
+                 [display]="['label']"
+                 [valueField]="['label']"
+                 [query]="['label']"
+                 [(ngModel)]="result2">
+</tl-autocomplete>
+      </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Basic Big Data</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-autocomplete [data]="bigData"
+                 [display]="['id', 'label']"
+                 [valueField]="['label']"
+                 [query]="['id', 'label']"
+                 [(ngModel)]="result3">
+</tl-autocomplete>
+      </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Label</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-autocomplete [data]="data"
+                 [label]="'Label Text'"
+                 [display]="['label']"
+                 [valueField]="['label']"
+                 [query]="['label']"
+                 [(ngModel)]="result4">
+</tl-autocomplete>
+      </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Clear Button</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-autocomplete [data]="data"
+                 [clearButton]="true"
+                 [display]="['label']"
+                 [valueField]="['label']"
+                 [query]="['label']"
+                 [(ngModel)]="result5">
+</tl-autocomplete>
+      </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Placeholder</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-autocomplete [data]="data"
+                 [placeholder]="'ex.: Asia'"
+                 [display]="['label']"
+                 [valueField]="['label']"
+                 [query]="['label']"
+                 [(ngModel)]="result6">
+</tl-autocomplete>
       </textarea>
     </div>
   </div>

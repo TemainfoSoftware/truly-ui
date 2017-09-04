@@ -540,11 +540,6 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.listElement.nativeElement.addEventListener( 'click', () => {
             this.handleClickItem( this.datasource[ row ], row );
         } );
-        this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
-            $event.preventDefault();
-            $event.stopPropagation();
-            this.handleEventKeyDown( $event );
-        } );
     }
 
     appendListElementToListBox() {

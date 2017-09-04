@@ -7,6 +7,7 @@
     height: 500px;
     border-radius: 3px;
     border: 1px solid #ccc;
+    cursor: default;
     border-top: 0;
 
     > .header {
@@ -24,6 +25,7 @@
     > .header .bar {
     float: left;
     width: 100%;
+        cursor: default;
     }
 
     > .header .controls {

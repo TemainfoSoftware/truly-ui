@@ -17,11 +17,18 @@ export const dataProperties = [
     options: "any text"
   },
   {
-    name: "size",
-    type: "string",
-    default: "125px (min)",
-    description: "Button size.",
-    options: "string | ex: 150px"
+    name: "width",
+    type: "number",
+    default: "125 (min)",
+    description: "Button width.",
+    options: "number | ex: 150"
+  },
+  {
+    name: "height",
+    type: "number",
+    default: "39",
+    description: "Button height.",
+    options: "number | ex: 25"
   },
   {
     name: "disabled",
@@ -63,6 +70,34 @@ export const dataProperties = [
     type: "string",
     default: "null",
     description: "Style class of the addon after.",
+    options: "CSS class"
+  },
+  {
+    name: "iconBeforeText",
+    type: "string",
+    default: "null",
+    description: "Creates an icon before the text button.",
+    options: "ion-printer | fa fa-home | any"
+  },
+  {
+    name: "iconBeforeTextClass",
+    type: "string",
+    default: "null",
+    description: "Style class of the icon before the text button.",
+    options: "CSS class"
+  },
+  {
+    name: "iconAfterText",
+    type: "string",
+    default: "null",
+    description: "Creates an icon after the text button.",
+    options: "ion-printer | fa fa-home | any"
+  },
+  {
+    name: "iconAfterTextClass",
+    type: "string",
+    default: "null",
+    description: "Style class of the icon after the text button.",
     options: "CSS class"
   },
   {

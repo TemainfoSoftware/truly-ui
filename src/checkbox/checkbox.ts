@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter,
+    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
+    ChangeDetectorRef,
 } from '@angular/core';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -33,6 +34,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
     selector: 'tl-checkbox',
     templateUrl: './checkbox.html',
     styleUrls: [ './checkbox.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlCheckBox ), multi: true }
     ]
@@ -43,6 +45,8 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() tabindex = 0;
 
+    @Input() checked = false;
+
     @ViewChild( 'checkbox' ) checkbox;
 
     @Output() onCheckBox: EventEmitter<any> = new EventEmitter();
@@ -52,12 +56,16 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
     private toggle = false;
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
-                 nameService: NameGeneratorService ) {
+                 nameService: NameGeneratorService, private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
     }
 
     ngAfterViewInit() {
         this.setElement( this.checkbox, 'checkbox' );
+        if ( this.checked ) {
+            this.modelValue = true;
+            this.change.detectChanges();
+        }
         if (!this.label) {
             throw new EvalError( 'The [label] property is required!' );
         }

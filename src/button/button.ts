@@ -50,7 +50,17 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @Input() buttonAddonAfterClass: string;
 
-    @Input() size: string;
+    @Input() iconBeforeText: string;
+
+    @Input() iconBeforeTextClass: string;
+
+    @Input() iconAfterText: string;
+
+    @Input() iconAfterTextClass: string;
+
+    @Input() height: number;
+
+    @Input() width: number;
 
     @Input() defaultFocus: boolean;
 
@@ -80,8 +90,8 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
     }
 
     constructor( public button: ElementRef, public modalService: ModalService,
-                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
-        super(tabIndexService, idService, nameService);
+                 tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+        super( tabIndexService, idService, nameService );
         this.initializeDefaultInputValues();
     }
 
@@ -94,6 +104,7 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
         this.hasText();
+        this.checkWidthAndHeight();
     }
 
     initializeDefaultInputValues() {
@@ -102,9 +113,13 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         this.toggleClass = '';
         this.buttonAddonAfterClass = '';
         this.buttonAddonBeforeClass = '';
+        this.iconAfterTextClass = '';
+        this.iconBeforeTextClass = '';
         this.buttonClass = '';
         this.iconAddonBefore = '';
-        this.iconAddonBefore = '';
+        this.iconAddonAfter = '';
+        this.iconAfterText = '';
+        this.iconBeforeText = '';
         this.disabled = null;
         this.toggle = false;
         this._buttonSelected = true;
@@ -113,6 +128,15 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
     keydown( $event: KeyboardEvent ) {
         if ( $event.keyCode === KeyEvent.ENTER ) {
             this.clickToggle();
+        }
+    }
+
+    checkWidthAndHeight() {
+        if ( (typeof this.width !== 'number') && (typeof this.width !== 'undefined') ) {
+            throw new EvalError( 'You must pass some valid number value to the WIDTH property of the button element.' );
+        }
+        if ( (typeof this.height !== 'number') && (typeof this.height !== 'undefined') ) {
+            throw new EvalError( 'You must pass some valid number value to the HEIGHT property of the button element.' );
         }
     }
 
@@ -143,13 +167,13 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     dispatchCallback() {
         const listModals = document.querySelectorAll( 'tl-modal' );
-        if (!this.mdResult || ModalResult.MRCUSTOM) {
+        if ( !this.mdResult || ModalResult.MRCUSTOM ) {
             return;
         }
         if ( listModals.length > 0 ) {
             this.modalService.execCallBack( {
-                'mdResult': ModalResult[ this.mdResult ],
-                'formResult': this.formResult
+                'mdResult' : ModalResult[ this.mdResult ],
+                'formResult' : this.formResult
             }, this.findParentOfChildren( listModals ) );
         }
     }

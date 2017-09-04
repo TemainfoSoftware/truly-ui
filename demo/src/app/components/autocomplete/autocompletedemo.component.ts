@@ -38,6 +38,14 @@ export class AutoCompleteDemo {
 
   private result3: any;
 
+  private result4: any;
+
+  private result5: any;
+
+  private result6: any;
+
+  private result7: any;
+
   public data: any[];
 
   public bigData: any[];
@@ -46,36 +54,40 @@ export class AutoCompleteDemo {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.simpleData = [ 'Asia', 'Africa', 'Antarctica', 'Australia', 'Europe', 'North America', 'South America' ];
     this.data = [
-      { idItem: '1', textItem : 'Item 1', valueItem : '1' },
-      { idItem: '2', textItem : 'Item 2', valueItem : '2' },
-      { idItem: '3', textItem : 'Item 3', valueItem : '3' },
-      { idItem: '4', textItem : 'Item 4', valueItem : '4' },
-      { idItem: '5', textItem : 'Item 5', valueItem : '5' },
-      { idItem: '6', textItem : 'Item 6', valueItem : '6' },
-      { idItem: '7', textItem : 'Item 7', valueItem : '7' },
-      { idItem: '8', textItem : 'Item 8', valueItem : '8' },
-      { idItem: '9', textItem : 'Item 9', valueItem : '9' }
+      { id: '1', label : 'Asia', value : '10' },
+      { id: '2', label : 'Africa', value : '20' },
+      { id: '3', label : 'Antarctica', value : '30' },
+      { id: '4', label : 'Australia', value : '40' },
+      { id: '5', label : 'Europe', value : '50' },
+      { id: '6', label : 'North America', value : '60' },
+      { id: '7', label : 'South America', value : '70' }
     ];
     this.bigData = [
-      { idItem: '1', textItem : 'Item 1', valueItem : '1' },
-      { idItem: '2', textItem : 'Item 2', valueItem : '2' },
-      { idItem: '3', textItem : 'Item 3', valueItem : '3' },
-      { idItem: '4', textItem : 'Item 4', valueItem : '4' },
-      { idItem: '5', textItem : 'Item 5', valueItem : '5' },
-      { idItem: '6', textItem : 'Item 6', valueItem : '6' },
-      { idItem: '7', textItem : 'Item 7', valueItem : '7' },
-      { idItem: '8', textItem : 'Item 8', valueItem : '8' },
-      { idItem: '9', textItem : 'Item 9', valueItem : '9' },
-      { idItem: '10', textItem : 'Item 10', valueItem : '10' },
-      { idItem: '11', textItem : 'Item 11', valueItem : '11' },
-      { idItem: '12', textItem : 'Item 12', valueItem : '12' },
-      { idItem: '13', textItem : 'Item 13', valueItem : '13' },
-      { idItem: '14', textItem : 'Item 14', valueItem : '14' },
-      { idItem: '15', textItem : 'Item 15', valueItem : '15' },
-      { idItem: '16', textItem : 'Item 16', valueItem : '16' }
+      { id: '1', label : 'Asia', value : '10' },
+      { id: '2', label : 'Africa', value : '20' },
+      { id: '3', label : 'Antarctica', value : '30' },
+      { id: '4', label : 'Australia', value : '40' },
+      { id: '5', label : 'Europe', value : '50' },
+      { id: '6', label : 'North America', value : '60' },
+      { id: '7', label : 'South America', value : '70' },
+      { id: '8', label : 'Asia 2', value : '80' },
+      { id: '9', label : 'Africa 2', value : '90' },
+      { id: '10', label : 'Antarctica 2', value : '100' },
+      { id: '11', label : 'Australia 2', value : '110' },
+      { id: '12', label : 'Europe 2', value : '120' },
+      { id: '13', label : 'North America 2', value : '130' },
+      { id: '14', label : 'South America 2', value : '140' },
+      { id: '15', label : 'South America', value : '150' },
+      { id: '16', label : 'Asia 3', value : '160' },
+      { id: '17', label : 'Africa 3', value : '170' },
+      { id: '18', label : 'Antarctica 3', value : '180' },
+      { id: '19', label : 'Australia 3', value : '190' },
+      { id: '20', label : 'Europe 3', value : '200' },
+      { id: '21', label : 'North America 3', value : '210' },
+      { id: '22', label : 'South America 3', value : '220' }
     ];
-    this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5' ];
   }
 
 }

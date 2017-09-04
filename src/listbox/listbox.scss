@@ -1,6 +1,5 @@
 .list-box-container {
   position: relative;
-  height: 500px;
   width: auto;
   background: #fff;
   overflow-y: auto;
@@ -36,9 +35,12 @@
 .item {
   width: inherit;
   border-bottom: 1px solid #eeeeee;
-  transition: background 0.15s ease-in-out;
   padding: 10px;
   list-style: none;
+}
+
+.item:focus {
+  outline: none;
 }
 
 .item span {
@@ -51,7 +53,6 @@
 
 .item:hover {
   cursor: pointer;
-  background-color: #f6f6f6;
 }
 
 .nothingToShow {
@@ -97,4 +98,8 @@
 .showmore i {
   color: #fff;
   z-index: 150;
+}
+
+.selected {
+  background-color: #cee8db;
 }

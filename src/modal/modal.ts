@@ -163,6 +163,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     mousemoveListener() {
         this.subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
+            event.preventDefault();
             if ( !( this.moving && this.draggable) ) {
                 return;
             }

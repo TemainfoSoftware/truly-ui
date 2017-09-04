@@ -65,11 +65,17 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     check( boolean ) {
         this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
-        this.onCheckBox.emit( this.modelValue );
+        this.emitEvent();
+    }
+
+    emitEvent() {
+        setTimeout( () => {
+            this.onCheckBox.emit( this.modelValue );
+        }, 1 );
     }
 
     focusCheckBox() {
-        this.onFocusBox.emit(this.modelValue);
+        this.onFocusBox.emit( this.modelValue );
     }
 
 }

@@ -5,6 +5,7 @@
            [checked]="toggle"
            type="checkbox"
            #model="ngModel"
+           (click)="emitEvent()"
            [tabindex]="tabindex"
            (focus)="focusCheckBox()"
            [(ngModel)]="modelValue">

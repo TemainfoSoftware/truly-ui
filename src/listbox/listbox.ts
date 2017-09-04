@@ -183,18 +183,22 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     createListenerOnTemplate() {
         if ( this.existCustomTemplate() ) {
-            this.listBox.nativeElement.addEventListener( 'click', ( $event ) => {
-                const indexDataGlobal = $event.target.dataset.indexnumber;
-                let indexDataSet;
+            this.addClickEventToCustomTemplate();
+        }
+    }
 
-                for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
-                    if ( $event.target === this.listBox.nativeElement.children[ element ] ) {
-                        indexDataSet = element;
-                    }
-                }
+    addClickEventToCustomTemplate() {
+        this.listBox.nativeElement.addEventListener( 'click', ( $event ) => {
+            const indexDataGlobal = $event.target.dataset.indexnumber;
+            this.handleClickItem( this.data[ indexDataGlobal ], this.getIndexOnList( $event ) );
+        } );
+    }
 
-                this.handleClickItem( this.data[ indexDataGlobal ], indexDataSet );
-            } );
+    getIndexOnList( $event ) {
+        for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
+            if ( $event.target === this.listBox.nativeElement.children[ element ] ) {
+                return element;
+            }
         }
     }
 
@@ -210,9 +214,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     existSearchElement() {
         if ( this.searchElement ) {
             this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
-                setTimeout( () => {
-                    this.handleEventKeyDown( $event );
-                }, 1 );
+                this.handleEventKeyDown( $event );
             } );
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
@@ -359,6 +361,7 @@ export class TlListBox implements OnInit, AfterViewInit {
                 this.resetSkipAndTake();
                 this.renderPageData();
             }
+        this.cursor = -1;
         this.handleScrollShowMore();
     }
 
@@ -479,8 +482,8 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     renderList() {
-        requestAnimationFrame( () => {
-            if ( this.datasource ) {
+        if ( this.datasource ) {
+            requestAnimationFrame( () => {
                 this.zone.runOutsideAngular( () => {
                     if ( this.listBox.nativeElement.children.length > 0 ) {
                         this.removeChilds();
@@ -488,6 +491,7 @@ export class TlListBox implements OnInit, AfterViewInit {
                     for ( let row = 0; row < this.datasource.length; row++ ) {
                         this.createElementList( row );
                         this.addEventClickToListElement( row );
+                        this.addEventKeyDownToListElement();
                         this.appendListElementToListBox();
                         this.createElementSpanId( row );
                         this.createElementSpanLabel( row );
@@ -497,12 +501,11 @@ export class TlListBox implements OnInit, AfterViewInit {
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
                     }
                 } );
-
                 if ( this.cursor > -1 ) {
                     this.getElementOfList();
                 }
-            }
-        } );
+            } );
+        }
     }
 
 
@@ -531,7 +534,6 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
         this.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
         this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
-
         this.renderer.setStyle( this.listElement.nativeElement, 'height', this.rowHeight + 'px' );
         this.renderer.addClass( this.listElement.nativeElement, 'item' );
     }
@@ -540,6 +542,16 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.listElement.nativeElement.addEventListener( 'click', () => {
             this.handleClickItem( this.datasource[ row ], row );
         } );
+    }
+
+    addEventKeyDownToListElement() {
+        if ( !this.searchElement && !this.existCustomTemplate() ) {
+            this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+                $event.preventDefault();
+                $event.stopPropagation();
+                this.handleEventKeyDown( $event );
+            } );
+        }
     }
 
     appendListElementToListBox() {

@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { Injectable, SimpleChanges } from '@angular/core';
+import { EventEmitter, Injectable, SimpleChanges } from '@angular/core';
 import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
 
@@ -32,6 +32,8 @@ export class TlDatatableDataSource {
     public loadingSource = false;
 
     private datatable: TlDatatable;
+
+    public onChangeDataSourceEmitter : EventEmitter<any> = new EventEmitter();
 
     constructor() {}
 
@@ -48,6 +50,7 @@ export class TlDatatableDataSource {
         const dataChange = data['data'].currentValue;
         if ( ( !data['data'].firstChange ) && dataChange ) {
             this.datasource = dataChange.data;
+            this.onChangeDataSourceEmitter.emit(this.datasource);
             this.loadingSource = false;
         }
     }

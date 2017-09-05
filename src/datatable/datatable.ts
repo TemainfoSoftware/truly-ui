@@ -75,6 +75,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
+    public loading = false;
+
     public columns: any[] = [];
 
     public tabindex = 0;

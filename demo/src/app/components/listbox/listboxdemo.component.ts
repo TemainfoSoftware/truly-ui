@@ -18,14 +18,20 @@ export class ListBoxDemo {
   private dataTableProperties;
   private events;
   private data = [];
+  private example = '{{item.firstName}}';
 
 
   constructor(private dataDumpService: DumpDataService) {
     this.dataTableProperties = jsonProp.dataProperties;
     this.events = jsonEvt.events;
 
-    this.data = this.dataDumpService.createRandomData(5000);
+    this.data = this.dataDumpService.createRandomData(600000);
 
+  }
+
+
+  onClickNoItem(item) {
+    console.log(item);
   }
 
 }

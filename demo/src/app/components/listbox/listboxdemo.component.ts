@@ -17,7 +17,8 @@ export class ListBoxDemo {
 
   private dataTableProperties;
   private events;
-  private data = [];
+  private dataBasic = [];
+  private dataCustom = [];
   private example = '{{item.firstName}}';
 
 
@@ -25,7 +26,8 @@ export class ListBoxDemo {
     this.dataTableProperties = jsonProp.dataProperties;
     this.events = jsonEvt.events;
 
-    this.data = this.dataDumpService.createRandomData(600000);
+    this.dataBasic = this.dataDumpService.createRandomData(20000);
+    this.dataCustom = this.dataDumpService.createRandomData(50000);
 
   }
 

@@ -40,11 +40,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
-    private bodyHeight: number;
+    private bodyHeight = 0;
 
-    private quantityVisibleRows: number;
+    private quantityVisibleRows = 0;
 
-    private quantityInVisibleRows: number;
+    private quantityInVisibleRows = 0;
 
     private lastRowViewport = 0;
 
@@ -54,11 +54,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private lastRecord: any;
 
-    private skip : number = 0;
+    private skip = 0;
 
-    private scrollLockAt: number = 0;
+    private scrollLockAt = 0;
 
-    private mouseClicked: boolean =false;
+    private mouseClicked = false;
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
                  public dataSourceService: TlDatatableDataSource,
@@ -71,16 +71,16 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.quantityVisibleRows = this.datatable.height / this.datatable.rowHeight;
         this.quantityInVisibleRows = Math.round( ( this.datatable.rowsPage - this.quantityVisibleRows ) / 2 );
 
-        this.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource)=>{
+        this.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
             this.cd.detectChanges();
-            if ( this.lastRecord !== dataSource[0]){
-                this.renderList(this.skip,dataSource);
+            if ( this.lastRecord !== dataSource[0]) {
+                this.renderList(this.skip, dataSource);
                 this.datatable.loading = false;
                 this.cd.detectChanges();
             }
         });
 
-        this.listComponent.nativeElement.addEventListener('scroll',()=>{
+        this.listComponent.nativeElement.addEventListener('scroll', () => {
             this.setScrollTop();
             this.setCurrentRow();
             this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
@@ -88,17 +88,17 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         });
 
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.renderList( 0, this.dataSourceService.datasource );
             this.cd.detectChanges();
-        },1)
+        }, 1)
     }
 
-    mouseDown(event){
+    mouseDown() {
         this.mouseClicked = true;
     }
 
-    mouseUp(event){
+    mouseUp() {
         this.mouseClicked = false;
     }
 
@@ -110,7 +110,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 const parentClientRect = this.listComponent.nativeElement.getBoundingClientRect();
                 if ( clientRect ) {
                     if ( clientRect.bottom < parentClientRect.bottom + (5 * this.datatable.rowHeight) ) {
-
                         const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
                         let take = this.lastRowViewport + this.quantityInVisibleRows;
                         take = take > this.datatable.totalRows ? this.datatable.totalRows : take;
@@ -173,7 +172,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
 
-    renderList( lastRow, dataSource ){
+    renderList( lastRow, dataSource ) {
 
         this.removeChilds();
         this.lastRecord = dataSource[0];
@@ -207,7 +206,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     setScrollTop() {
-        if (this.datatable.loading && (!this.mouseClicked)){
+        if (this.datatable.loading && (!this.mouseClicked)) {
             this.listComponent.nativeElement.scrollTop = this.scrollLockAt;
             return
         }

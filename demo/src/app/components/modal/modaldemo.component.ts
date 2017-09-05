@@ -37,7 +37,7 @@ export class ModalDemo {
 
   modal1() {
     this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
-        this.modalResult = modalResult.mdResult;
+        this.modalResult = modalResult;
     });
   }
 

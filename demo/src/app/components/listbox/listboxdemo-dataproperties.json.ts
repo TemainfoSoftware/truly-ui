@@ -10,6 +10,13 @@ export const dataProperties = [
     options: "any text"
   },
   {
+    name: "id",
+    type: "string",
+    default: "null",
+    description: "The text shown as ID when using the default list",
+    options: "any text"
+  },
+  {
     name: "label",
     type: "string",
     default: "null",
@@ -70,20 +77,6 @@ export const dataProperties = [
     type: "string",
     default: "'Nothing to Show'",
     description: "Text shown when the search results are empty",
-    options: "any text"
-  },
-  {
-    name: "filterEmptyMessage",
-    type: "string",
-    default: "'Nothing to Show'",
-    description: "Text shown when the search results are empty",
-    options: "any text"
-  },
-  {
-    name: "id",
-    type: "string",
-    default: "null",
-    description: "The text shown as ID when using the default list",
     options: "any text"
   },
   {

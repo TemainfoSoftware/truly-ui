@@ -12,8 +12,8 @@ import { InputModule } from 'truly-ui/input';
 import { ModalModule } from "truly-ui/modal";
 import { TooltipModule } from "truly-ui/tooltip";
 
-import { CadPessoa } from "./newpessoa/cadPessoa.component";
-import { DataFormService } from "./newpessoa/dataform.service";
+import { NewPerson } from "./newperson/newperson.component";
+import { DataFormService } from "./newperson/dataform.service";
 import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
@@ -22,7 +22,7 @@ import { CheckBoxModule } from "truly-ui/checkbox";
 
 @NgModule({
   declarations: [
-    CadPessoa,
+    NewPerson,
     FormDemo,
   ],
   imports:[
@@ -43,13 +43,13 @@ import { CheckBoxModule } from "truly-ui/checkbox";
   ],
   exports: [
     FormDemo,
-    CadPessoa,
+    NewPerson,
   ],
   providers: [
     DataFormService
   ],
   entryComponents: [
-    CadPessoa
+    NewPerson
   ]
 })
 export class FormDemoModule {}

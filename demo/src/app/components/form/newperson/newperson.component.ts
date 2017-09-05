@@ -2,13 +2,13 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { DataFormService } from "./dataform.service";
 
 @Component( {
-  selector: 'cad-pessoa',
-  templateUrl: './cadPessoa.html',
-  styleUrls: [ './cadPessoa.component.scss' ]
+  selector: 'new-person',
+  templateUrl: './newperson.html',
+  styleUrls: [ './newperson.component.scss' ]
 } )
-export class CadPessoa implements OnInit, OnChanges {
+export class NewPerson implements OnInit, OnChanges {
 
-  private pessoa;
+  private person;
   private data;
   @Input() input ='21122112';
 
@@ -19,7 +19,7 @@ export class CadPessoa implements OnInit, OnChanges {
       { textItem : 'Male', valueItem : 'M' },
       { textItem : 'Female', valueItem : 'F' },
     ];
-    this.pessoa = this.formDataService.getDataForm();
+    this.person = this.formDataService.getDataForm();
   }
 
 
@@ -30,5 +30,10 @@ export class CadPessoa implements OnInit, OnChanges {
 
   changess() {
     console.log('add');
+  }
+
+
+  onCheckRadio() {
+    alert('Temainfo')
   }
 }

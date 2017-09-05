@@ -27,11 +27,11 @@ import { DataMetadata } from '../core/types/datametadata';
 @Injectable()
 export class TlDatatableDataSource {
 
+    public onChangeDataSourceEmitter: EventEmitter<any> = new EventEmitter();
+
     public datasource: any;
 
     private datatable: TlDatatable;
-
-    public onChangeDataSourceEmitter : EventEmitter<any> = new EventEmitter();
 
     constructor(  private zone: NgZone ) {}
 
@@ -58,8 +58,8 @@ export class TlDatatableDataSource {
 
     getRowsInMemory(skip: number, take: number): Promise<any> {
         return new Promise((resolve) => {
-            let data: any =[];
-            this.zone.runOutsideAngular(()=> {
+            let data: any = [];
+            this.zone.runOutsideAngular(() => {
                 data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
                 data = (data as  Array<any>).slice( skip, take );
             });

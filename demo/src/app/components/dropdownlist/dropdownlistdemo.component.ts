@@ -4,7 +4,7 @@ import * as json from './dropdownlistdemo-dataproperties.json';
 
 
 @Component( {
-  selector : 'app-button-group',
+  selector : 'app-dropdown-list',
   templateUrl : './dropdownlistdemo.component.html',
   styleUrls : [ './dropdownlistdemo.component.scss' ]
 } )

@@ -23,6 +23,7 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'},
       {path: 'datatable/lazy', loadChildren: './components/datatable/lazy/datatablelazydemo.module#DatatableLazyDemoModule'},
+      {path: 'datatable/scrollable', loadChildren: './components/datatable/scrollable/datatablescrollabledemo.module#DatatableScrollableDemoModule'},
       {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'},
       {path: 'listbox', loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'},
     ])

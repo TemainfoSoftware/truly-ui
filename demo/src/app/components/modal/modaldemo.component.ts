@@ -18,6 +18,7 @@ export class ModalDemo {
   public modals;
   public modalOptions: ModalOptions;
   private modalprop;
+  private modalResult;
 
   constructor(private view: ViewContainerRef, private modalService: ModalService) {
     this.modalService.setView(this.view);
@@ -30,13 +31,13 @@ export class ModalDemo {
       width: '500px',
       height: 'auto',
       maximizable: true,
-      minimizable: true
+      minimizable: true,
     };
   }
 
   modal1() {
     this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
-      console.log('Return',modalResult);
+        this.modalResult = modalResult.mdResult;
     });
   }
 

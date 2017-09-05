@@ -145,11 +145,11 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.backToTop();
         this.setZIndex();
         this.getBoundingContent();
+        this.setDefaultDimensions();
         this.setModalCenterParent();
         this.resizeListener();
         this.mousemoveListener();
         this.mouseupListener();
-        this.setDefaultDimensions();
         this.validateProperty();
     }
 
@@ -213,8 +213,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     setModalCenterParent() {
         this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
-        this.modal.nativeElement.style.top = window.innerHeight -
-            this.modal.nativeElement.offsetHeight + 'px';
+        this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {

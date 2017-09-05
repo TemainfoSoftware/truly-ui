@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component,ChangeDetectorRef } from '@angular/core';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 
 import * as json from './datatablelazydemo-dataproperties.json';
@@ -7,6 +7,7 @@ import * as jsonEvents from './datatablelazydemo-dataevents.json';
 @Component( {
   selector: 'app-datatable-lazy',
   templateUrl: './datatablelazydemo.component.html',
+ // changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './datatablelazydemo.component.scss' ],
   providers: [DumpDataService]
 } )
@@ -26,7 +27,7 @@ export class DataTableLazyDemo {
 
   private timeout ;
 
-  constructor(private dumpDataService: DumpDataService) {
+  constructor(private dumpDataService: DumpDataService, private cd : ChangeDetectorRef) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
 

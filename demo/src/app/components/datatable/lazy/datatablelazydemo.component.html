@@ -6,6 +6,19 @@
   </div>
 <hr>
   <div class="showcase">
+
+
+    <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+    <!--<div class="group-component">-->
+    <!--<h5>Mode Scrollable</h5>-->
+    <!--<tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'" [rowsPage]="50" [height]="310"> </tl-datatable>-->
+    <!--<div>Row Selected:<span> {{rowSelected | json}} </span></div>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+
+
     <div class="row">
       <div class="col-md-12">
         <div class="group-component">
@@ -27,100 +40,100 @@
 
     <hr>
   </div>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody  class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
+  <!--<div class="setup">-->
+    <!--<h3 class="title">Properties</h3>-->
+    <!--<div class="table-box">-->
+      <!--<table class="table table-truly">-->
+        <!--<thead class="table-truly-head">-->
+        <!--<tr>-->
+          <!--<th>Name</th>-->
+          <!--<th>Type</th>-->
+          <!--<th>Default</th>-->
+          <!--<th>Description</th>-->
+          <!--<th>Options</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody  class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">-->
+        <!--<tr>-->
+          <!--<td><span>{{ item.name }}</span></td>-->
+          <!--<td><span class="badge">{{ item.type }}</span></td>-->
+          <!--<td><code>{{ item.default }}</code></td>-->
+          <!--<td>{{ item.description }}</td>-->
+          <!--<td><code> {{ item.options }} </code></td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
 
-      </table>
-    </div>
+      <!--</table>-->
+    <!--</div>-->
 
-    <h3 class="title">Events</h3>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Parameters</th>
-          <th>Description</th>
-        </tr>
-        </thead>
-        <tbody  class="table-truly-body" *ngFor="let item of dataTableEvents; let i = index">
-        <tr >
-          <td style=" vertical-align: middle;"><span>{{ item.name }}</span></td>
-          <td style=" vertical-align: middle;">
-            <div *ngFor="let param of item.parameters; let i = index">
-              <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
-            </div>
-          </td>
-          <td style=" vertical-align: middle;">{{ item.description }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-  </div>
+    <!--<h3 class="title">Events</h3>-->
+    <!--<div class="table-box">-->
+      <!--<table class="table table-truly">-->
+        <!--<thead class="table-truly-head">-->
+        <!--<tr>-->
+          <!--<th>Name</th>-->
+          <!--<th>Parameters</th>-->
+          <!--<th>Description</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody  class="table-truly-body" *ngFor="let item of dataTableEvents; let i = index">-->
+        <!--<tr >-->
+          <!--<td style=" vertical-align: middle;"><span>{{ item.name }}</span></td>-->
+          <!--<td style=" vertical-align: middle;">-->
+            <!--<div *ngFor="let param of item.parameters; let i = index">-->
+              <!--<code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>-->
+            <!--</div>-->
+          <!--</td>-->
+          <!--<td style=" vertical-align: middle;">{{ item.description }}</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+      <!--</table>-->
+    <!--</div>-->
+    <!--<hr>-->
+  <!--</div>-->
 
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Mode Normal</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      <tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
-    </textarea>
-    </div>
+  <!--<div class="examples">-->
+    <!--<h3 class="title">Examples</h3>-->
+    <!--<div class="group-component">-->
+      <!--<h5 class="title">Mode Normal</h5>-->
+      <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
+      <!--<tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>-->
+    <!--</textarea>-->
+    <!--</div>-->
 
-    <div class="group-component">
-      <h5 class="title">Mode Normal - Global Filter</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-         <tl-datatable
-           [data]="data"
-           [globalFilter]="tlInput"
-           [globalFilterOptions]="{caseSensitive: false}"
-           (rowSelect)="onRowSelect($event, index )">
-        </tl-datatable>
-    </textarea>
-    </div>
+    <!--<div class="group-component">-->
+      <!--<h5 class="title">Mode Normal - Global Filter</h5>-->
+      <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
+         <!--<tl-datatable-->
+           <!--[data]="data"-->
+           <!--[globalFilter]="tlInput"-->
+           <!--[globalFilterOptions]="{caseSensitive: false}"-->
+           <!--(rowSelect)="onRowSelect($event, index )">-->
+        <!--</tl-datatable>-->
+    <!--</textarea>-->
+    <!--</div>-->
 
-    <div class="group-component">
-      <h5 class="title">Mode Scrollable</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-        <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>
-    </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Mode Scrollable + LazyLoad</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-     <tl-datatable
-       [data]="dataLazy"
-       [mode]="'scrollable'"
-       [height]="'310px'"
-       [rowsPage]="take"
-       [lazy]="true"
-       (pageChange)="onPageChange($event)"
-       (lazyLoad)="onLazyLoad($event)"
-       (rowSelect)="onRowSelect($event, index )"
-     >
-     </tl-datatable>
-    </textarea>
-    </div>
-  </div>
+    <!--<div class="group-component">-->
+      <!--<h5 class="title">Mode Scrollable</h5>-->
+      <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
+        <!--<tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>-->
+    <!--</textarea>-->
+    <!--</div>-->
+    <!--<div class="group-component">-->
+      <!--<h5 class="title">Mode Scrollable + LazyLoad</h5>-->
+      <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
+     <!--<tl-datatable-->
+       <!--[data]="dataLazy"-->
+       <!--[mode]="'scrollable'"-->
+       <!--[height]="'310px'"-->
+       <!--[rowsPage]="take"-->
+       <!--[lazy]="true"-->
+       <!--(pageChange)="onPageChange($event)"-->
+       <!--(lazyLoad)="onLazyLoad($event)"-->
+       <!--(rowSelect)="onRowSelect($event, index )"-->
+     <!--&gt;-->
+     <!--</tl-datatable>-->
+    <!--</textarea>-->
+    <!--</div>-->
+  <!--</div>-->
 </div>

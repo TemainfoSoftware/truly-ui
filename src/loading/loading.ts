@@ -60,8 +60,8 @@ export class TlLoading implements OnChanges, AfterViewInit {
 
     ngAfterViewInit() {
         this.createElementInstance();
-        this.setConfigToElement();
         this.getElementRefFromIstance();
+        this.setConfigToElement();
         this.buildLoadingElement();
     }
 

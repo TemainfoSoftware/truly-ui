@@ -75,7 +75,7 @@
           //padding: 0 10px;
           padding: 5px 0 5px 5px;
           border-bottom: 1px solid #ece8f0;
-          > span:first-child{
+          > span:first-child {
             margin-right: 5px;
           }
         }
@@ -87,22 +87,27 @@
           background-color: #53C68C;
           cursor: pointer;
         }
-        > li.no-data-found{
+        > li.no-data-found {
           color: #b1b1b1;
           cursor: default;
-          i{
+          i {
             font-size: 1.3em;
           }
         }
-        > li.no-data-found:hover{
+        > li.no-data-found:hover {
           background-color: transparent;
         }
       }
       > .tl-autocomplete-list-items::-webkit-scrollbar {
-        width: 0.4em;
+        width: 0.6em;
+        background: #F1F1F1;
       }
       > .tl-autocomplete-list-items::-webkit-scrollbar-thumb {
         background-color: #66CC99;
+      }
+      > .tl-autocomplete-list-items::-webkit-scrollbar-track {
+        background: #F6F6F6;
+        border-left: 1px solid #CACACA;
       }
     }
 

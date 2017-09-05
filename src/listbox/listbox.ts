@@ -249,8 +249,8 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     getElementSelected() {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
-            if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'selected' ) ) {
-                return this.renderer.removeClass( this.listBox.nativeElement.children[ element ], 'selected' );
+            if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'listbox-selected-item' ) ) {
+                return this.renderer.removeClass( this.listBox.nativeElement.children[ element ], 'listbox-selected-item' );
             }
         }
     }
@@ -332,19 +332,19 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     addSelectedClassOnNext() {
-        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'selected' );
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor + 1 ], 'selected' );
+        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
+        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor + 1 ], 'listbox-selected-item' );
     }
 
     addSelectedClassOnPrevious() {
-        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'selected' );
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor - 1 ], 'selected' );
+        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
+        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor - 1 ], 'listbox-selected-item' );
     }
 
 
     handleCursorInit() {
         this.cursor++;
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'selected' );
+        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
     }
 
     handleSearch( searchValue ) {
@@ -523,7 +523,7 @@ export class TlListBox implements OnInit, AfterViewInit {
             if (!this.searchElement) {
                 this.listBox.nativeElement.children[ this.cursor ].focus();
             }
-            this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'selected' );
+            this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
         }
     }
 

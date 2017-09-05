@@ -20,4 +20,8 @@ export class CheckBoxDemo {
     this.events = jsonEvt.events;
   }
 
+  onCheckItem($event) {
+    alert($event);
+  }
+
 }

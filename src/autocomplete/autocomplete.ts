@@ -266,6 +266,12 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.showHide = false;
     }
 
+    selectItem( $event, i ) {
+        this.cursor = i;
+        this.onEnter( $event );
+        this.autocomplete.nativeElement.focus();
+    }
+
     checkOnSelect() {
         this.valueField.forEach( ( queryValue ) => {
             let numberOfError = 0;
@@ -344,17 +350,16 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             return;
         }
         this.change.detectChanges();
-        if ( (this.lastValue !== searchValue) && (this.datasource.length > 0) ) {
+        if ( (this.datasource.length > 0) ) {
             this.itemSelected = [];
             this.list.nativeElement.scrollTop = 0;
             this.topRow = 0;
             this.noDataFound = false;
             this.lastRow = this.itemAmount - 1;
             this.removeActive();
-            this.setFirstActive();
             this.lastValue = searchValue;
+            this.setFirstActive();
         }
-
     }
 
     searchItem( searchValue, $event ) {
@@ -410,7 +415,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    closeList() {
+    closeList( $event ) {
         this.showHide = false;
     }
 

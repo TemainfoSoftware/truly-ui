@@ -2,28 +2,48 @@
   <div class="header-title-demo">
     <h1 class="title">ListBox</h1>
     <p class="text-content">ListBox is a component where exists a list of itens to search and select.</p>
+    <p class="text-content">Truly UI has two diferent types of list, the default and with Custom Template, like shown below.</p>
   </div>
   <hr>
   <div class="showcase">
     <div class="row">
-      <div class="form-group">
         <div class="col-md-6">
-          <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #input
+          <h5>Basic Usage</h5>
+          <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputBasic
                     [placeholder]="'Search...'"></tl-input>
           <tl-listbox
-            [data]="data"
+            [data]="dataBasic"
+            (onClickItem)="onClickNoItem($event)"
+            [itensToShow]="10"
+            [searchElement]="inputBasic"
             [id]="'id'"
             [label]="'firstName'"
-            [labelDetail]="'lastName'"
-            [searchElement]="input">
-              <ng-template let-item="item" let-index="index">
-                <li class="list-template-demo"><img class="img-circle" src="../assets/img/avatar.png" width="30">{{item.firstName}}  -  <span>{{item.lastName}}</span>
-                  <span class="list-bagde badge">{{item.id}}</span>
-                </li>
-              </ng-template>
+            [labelDetail]="'city'"
+            [rowHeight]="50">
           </tl-listbox>
         </div>
-      </div>
+        <div class="col-md-6">
+          <h5>With Custom Template</h5>
+          <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                    [placeholder]="'Search...'"></tl-input>
+          <tl-listbox
+            [data]="dataCustom"
+            (onClickItem)="onClickNoItem($event)"
+            [itensToShow]="10"
+            [searchElement]="inputCustom"
+            [id]="'id'"
+            [label]="'firstName'"
+            [labelDetail]="'city'"
+            [rowHeight]="50">
+            <ng-template let-item="item" let-index="index">
+              <li class="list-template-demo">
+                <img class="img-circle" src="../assets/img/avatar.png"
+                     width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
+                <span class="list-bagde badge">{{item.id}}</span>
+              </li>
+            </ng-template>
+          </tl-listbox>
+        </div>
     </div>
   </div>
   <hr>
@@ -73,9 +93,43 @@
   <div class="examples">
     <h3 class="title">Examples</h3>
     <div class="group-component">
-      <h5 class="title">Basic</h5>
+      <h5 class="title">Basic Usage</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-checkbox [label]="'Select this option'"></tl-checkbox>
+        <tl-listbox
+          [data]="data"
+          (onClickItem)="onClickNoItem($event)"
+          [itensToShow]="10"
+          [searchElement]="input"
+          [id]="'id'"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+        </tl-listbox>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Custom Template</h5>
+      <p><code>Atention:</code> The example below needs to be interpolated <code>{{example}}</code> for example. Not allowed to used here on highlight code.</p>
+      <textarea highlight-js [options]="{}" [lang]="'html'">
+<tl-listbox
+          [data]="data"
+          (onClickItem)="onClickNoItem($event)"
+          [itensToShow]="10"
+          [searchElement]="input"
+          [id]="'id'"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+
+   <ng-template let-item="item" let-index="index">
+      <li class="list-template-demo">
+        <img class="img-circle" src="../assets/img/avatar.png"
+             width="30"> item.firstName - <span> item.lastName </span>
+        <span class="list-bagde badge"> item.id </span>
+      </li>
+   </ng-template>
+
+</tl-listbox>
     </textarea>
     </div>
   </div>

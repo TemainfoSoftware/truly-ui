@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { EventEmitter, Injectable, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Injectable, NgZone, SimpleChanges } from '@angular/core';
 import { TlDatatable } from './datatable';
 import { DataMetadata } from '../core/types/datametadata';
 
@@ -29,13 +29,11 @@ export class TlDatatableDataSource {
 
     public datasource: any;
 
-    public loadingSource = false;
-
     private datatable: TlDatatable;
 
     public onChangeDataSourceEmitter : EventEmitter<any> = new EventEmitter();
 
-    constructor() {}
+    constructor(  private zone: NgZone ) {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -51,7 +49,6 @@ export class TlDatatableDataSource {
         if ( ( !data['data'].firstChange ) && dataChange ) {
             this.datasource = dataChange.data;
             this.onChangeDataSourceEmitter.emit(this.datasource);
-            this.loadingSource = false;
         }
     }
 
@@ -61,22 +58,26 @@ export class TlDatatableDataSource {
 
     getRowsInMemory(skip: number, take: number): Promise<any> {
         return new Promise((resolve) => {
-            const data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-            resolve((data as  Array<any>).slice(skip, take));
+            let data: any =[];
+            this.zone.runOutsideAngular(()=> {
+                data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
+                data = (data as  Array<any>).slice( skip, take );
+            });
+            resolve(  data );
         })
     }
 
-    loadMoreData(skip: number, take: number): Promise<any> {
+    loadMoreData(skip: number, take: number): Promise<boolean> {
        return new Promise(( resolve ) => {
            if (  this.datatable.lazy ) {
-               this.loadingSource = true;
-               this.datatable.lazyLoad.emit({ skip: skip,  take: take });
-              return resolve(false);
+              this.datatable.lazyLoad.emit({ skip: skip,  take: take });
+              return resolve();
 
            }
            this.getRowsInMemory( skip, take ).then((res) => {
                this.datasource = res;
-               return resolve(res);
+               this.onChangeDataSourceEmitter.emit(this.datasource);
+               return resolve();
            });
 
        });
@@ -87,14 +88,11 @@ export class TlDatatableDataSource {
         return data instanceof Array;
     }
 
-
     private refreshTotalRows( data: any ) {
         if ( this.isDataArray( data ) ) {
             this.datatable.totalRows =  data.length;
             return;
         }
-
         this.datatable.totalRows = data.total;
     }
-
 }

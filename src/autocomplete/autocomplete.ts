@@ -19,7 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, EventEmitter, forwardRef, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import {
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, Renderer2,
+    ViewChild
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -36,6 +39,7 @@ let globalZindex = 1;
     selector : 'tl-autocomplete',
     templateUrl : './autocomplete.html',
     styleUrls : [ './autocomplete.scss' ],
+    changeDetection : ChangeDetectionStrategy.OnPush,
     animations : [
         trigger(
             'enterAnimation', [
@@ -63,7 +67,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     @Input() clearButton: boolean;
 
-    @Input() minLengthSearch = 1;
+    // @Input() minLengthSearch = 1;
 
     @Input() id = '';
 
@@ -72,6 +76,12 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     @Input() value = '';
 
     @Input() query: any[] = [];
+
+    @Input() display: any[] = [];
+
+    @Input() valueField = [];
+
+    @Input() return: any[] = [];
 
     @Input() itemAmount = 5;
 
@@ -89,6 +99,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private showHide: boolean;
 
+    private dataType: string;
+
     private noDataFound: boolean;
 
     private lastValue: string;
@@ -97,25 +109,28 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private lastRow: number;
 
-    private itemSelected: any[];
+    private itemSelected: any[] = [];
 
     constructor( tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
-                 public nameService: NameGeneratorService ) {
+                 public nameService: NameGeneratorService,
+                 private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
         this.labelPlacement = 'left';
         this.topRow = 0;
         this.lastRow = this.itemAmount - 1;
         this.noDataFound = false;
         this.showHide = false;
+        this.dataType = null;
     }
 
     ngAfterViewInit(): void {
         this.setElement( this.autocomplete, 'autocomplete' );
-        this.updateDataSource( this.data );
+        this.updateDataSource( this.getData() );
     }
 
     clearField() {
+        // verificar writevalue pra limpar
         this.modelValue = '';
         this.showHide = false;
         this.autocomplete.nativeElement.value = '';
@@ -129,9 +144,45 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     updateDataSource( data ) {
-        data.forEach( ( value, index, array ) => {
+        data.forEach( ( value ) => {
             this.datasource.push( value );
         } );
+    }
+
+    getData() {
+        if ( ( this.data[ 0 ] === undefined ) ) {
+            throw new EvalError( 'You must pass some valid data to the DATA property of the tl-autocomplete element.' );
+        }
+        if ( (typeof this.data[ 0 ] === 'object') && ( (this.valueField.length <= 0)
+            || (this.display.length <= 0) || (this.query.length <= 0) ) ) {
+            throw new EvalError( 'You must use the DISPLAY, ONSELECT and QUERY properties' +
+                ' when using the DATA property of the tl-autocomplete element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && ( (this.valueField[ 0 ].length <= 0)
+            || (this.display[ 0 ].length <= 0) || (this.query[ 0 ].length <= 0) ) ) {
+            throw new EvalError( 'You must pass some valid value to the DISPLAY, ONSELECT and QUERY properties' +
+                ' when using the DATA property of the tl-autocomplete element.' );
+        }
+        if ( (typeof this.data[ 0 ] === 'string') && ((this.query.length !== 0) ||
+            (this.display.length !== 0) || (this.valueField.length !== 0)) ) {
+            throw new EvalError( 'You should not use the QUERY, DISPLAY and ONSELECT properties' +
+                ' when using the SIMPLEDATA of the tl-autocomplete element.' );
+        }
+        this.checkOnSelect();
+        this.checkQuery();
+        this.checkDisplay();
+        if ( typeof this.data[ 0 ] === 'string' ) {
+            const simpleData = [];
+            this.data.forEach( ( value ) => {
+                simpleData.push( { 'value' : value } );
+            } );
+            this.display = [ 'value' ];
+            this.query = [ 'value' ];
+            this.valueField = [ 'value' ];
+            this.dataType = 'simpleData';
+            return simpleData;
+        }
+        return this.data;
     }
 
     getCursor() {
@@ -140,23 +191,6 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 this.cursor = item;
             }
         }
-    }
-
-    onSelectItem( $event ) {
-        this.datasource.forEach( ( value, index, array ) => {
-            if ( value[ this.id ] + ' - ' + value[ this.text ] === $event.target.innerText.trim() ) {
-                this.itemSelected = value;
-                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-                    this.writeValue( '' );
-                }
-                this.modelValue = this.itemSelected[ this.value ];
-                setTimeout( () => {
-                    this.autocomplete.nativeElement.value = this.itemSelected[ this.text ];
-                }, 0 );
-            }
-
-        } );
-        this.showHide = false;
     }
 
     onListOpened( $event ) {
@@ -217,27 +251,72 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.datasource.forEach( ( value, index, array ) => {
             if ( index === this.cursor ) {
                 this.itemSelected = value;
-                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-                    this.writeValue( '' );
+                if ( this.itemSelected[ this.valueField[ 0 ] ] === null || this.itemSelected[ this.valueField[ 0 ] ] === '' ) {
+                    return this.writeValue( '' );
                 }
-                this.lastValue = this.itemSelected[ this.text ];
-                this.modelValue = this.itemSelected[ this.value ];
+                const selectValue = this.itemSelected[ this.valueField[ 0 ] ];
+                this.lastValue = selectValue.toLowerCase();
+                this.modelValue = this.itemSelected;
                 setTimeout( () => {
-                    this.autocomplete.nativeElement.value = this.itemSelected[ this.text ];
-                }, 0 );
+                    this.autocomplete.nativeElement.value = this.itemSelected[ this.valueField[ 0 ] ];
+                }, 1 );
+                this.change.detectChanges();
             }
         } );
         this.showHide = false;
     }
 
-    searchItem( value, $event ) {
-        if ( this.itemSelected ) {
-            if ( this.itemSelected[ this.text ] === value ) {
+    checkOnSelect() {
+        this.valueField.forEach( ( queryValue ) => {
+            let numberOfError = 0;
+            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
+                if ( dataKey !== queryValue ) {
+                    numberOfError = numberOfError + 1;
+                }
+            } );
+            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
+                throw new EvalError( 'You must pass a valid value to a ONSELECT property that exists in the DATA property.' );
+            }
+        } );
+    }
+
+    checkQuery() {
+        this.query.forEach( ( queryValue ) => {
+            let numberOfError = 0;
+            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
+                if ( dataKey !== queryValue ) {
+                    numberOfError = numberOfError + 1;
+                }
+            } );
+            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
+                throw new EvalError( 'You must pass a valid value to a QUERY property that exists in the DATA property.' );
+            }
+        } );
+    }
+
+    checkDisplay() {
+        this.display.forEach( ( queryValue ) => {
+            let numberOfError = 0;
+            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
+                if ( dataKey !== queryValue ) {
+                    numberOfError = numberOfError + 1;
+                }
+            } );
+            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
+                throw new EvalError( 'You must pass a valid value to a DISPLAY property that exists in the DATA property.' );
+            }
+        } );
+    }
+
+    simpleDataSearch( searchValue ) {
+        searchValue = searchValue.toLowerCase();
+        if ( this.itemSelected && this.itemSelected.length > 0 ) {
+            if ( this.itemSelected[ this.text ] === searchValue ) {
                 this.showHide = false;
                 return;
             }
         }
-        const newValue = value.trim();
+        const newValue = searchValue.trim();
         if ( !newValue || newValue.length <= 0 || newValue === '' || newValue === 'undefined' || newValue === null ) {
             this.noDataFound = false;
             this.lastValue = '';
@@ -248,40 +327,105 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         }
         this.showHide = true;
         this.getAndSetZIndex();
-        this.searchInDatasource( value );
+        const filtredData = [];
+        this.data.forEach( ( dataValue ) => {
+            if ( dataValue.toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
+                this.noDataFound = false;
+                filtredData.push( { value : dataValue } );
+            }
+        } );
+        this.datasource = this.checkDuplicateItems( filtredData );
         if ( this.datasource.length <= 0 && this.modelValue ) {
             this.showHide = true;
             this.itemSelected = [];
-            this.lastValue = value;
+            this.lastValue = searchValue;
             this.noDataFound = true;
             this.removeActive();
+            return;
         }
-        if ( (this.lastValue !== value) && (this.datasource.length > 0) ) {
+        this.change.detectChanges();
+        if ( (this.lastValue !== searchValue) && (this.datasource.length > 0) ) {
             this.itemSelected = [];
-            setTimeout( () => {
-                this.list.nativeElement.scrollTop = 0;
-                this.topRow = 0;
-                this.noDataFound = false;
-                this.lastRow = this.itemAmount - 1;
-                this.removeActive();
-                this.setFirstActive();
-                this.lastValue = value;
-            }, 0 );
+            this.list.nativeElement.scrollTop = 0;
+            this.topRow = 0;
+            this.noDataFound = false;
+            this.lastRow = this.itemAmount - 1;
+            this.removeActive();
+            this.setFirstActive();
+            this.lastValue = searchValue;
         }
+
+    }
+
+    searchItem( searchValue, $event ) {
+        // 65 a 90 de A-Z
+        // 48 a 57 96 a 105 de 0-9
+        // 32 SPACE
+        // 13 ENTER
+        // 8 Backspace - 46 delete
+        if ( ($event.which >= 48 && $event.which <= 57) || ($event.which === 32 || $event.which === 8 || $event.which === 46)
+            || ($event.which >= 65 && $event.which <= 90) || ($event.which >= 96 && $event.which <= 105) ) {
+            searchValue = searchValue.toLowerCase();
+            if ( this.dataType != null ) {
+                return this.simpleDataSearch( searchValue );
+            }
+            if ( this.itemSelected ) {
+                if ( this.itemSelected[ this.text ] === searchValue ) {
+                    this.showHide = false;
+                    return;
+                }
+            }
+            const newValue = searchValue.trim();
+            if ( !newValue || newValue.length <= 0 || newValue === '' || newValue === 'undefined' || newValue === null ) {
+                this.noDataFound = false;
+                this.lastValue = '';
+                this.itemSelected = [];
+                this.removeActive();
+                this.datasource = this.data;
+                return this.showHide = false;
+            }
+            this.showHide = true;
+            this.getAndSetZIndex();
+            this.searchInDatasource( searchValue );
+
+            if ( this.datasource.length <= 0 && this.modelValue ) {
+                this.showHide = true;
+                this.itemSelected = [];
+                this.lastValue = searchValue;
+                this.noDataFound = true;
+                this.removeActive();
+            }
+            if ( (this.lastValue !== searchValue) && (this.datasource.length > 0) ) {
+                this.itemSelected = [];
+                setTimeout( () => {
+                    this.list.nativeElement.scrollTop = 0;
+                    this.topRow = 0;
+                    this.noDataFound = false;
+                    this.lastRow = this.itemAmount - 1;
+                    this.removeActive();
+                    this.setFirstActive();
+                    this.lastValue = searchValue;
+                }, 0 );
+            }
+        }
+    }
+
+    closeList() {
+        this.showHide = false;
     }
 
     searchInDatasource( value ) {
         const filtredData = [];
-        this.data.forEach( ( value2 ) => {
-            this.query.forEach( ( value3 ) => {
-                if ( value2[ String( value3 ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
+        this.data.forEach( ( dataValue ) => {
+            this.query.forEach( ( queryValue ) => {
+                if ( dataValue[ String( queryValue ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
                     this.noDataFound = false;
-                    filtredData.push( value2 );
+                    filtredData.push( dataValue );
                 }
 
             } );
         } );
-        this.datasource = this.removeDuplicateItems( filtredData );
+        return this.datasource = this.removeDuplicateItems( filtredData );
     }
 
     removeActive() {
@@ -300,6 +444,16 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             return inputArray.indexOf( item ) === index;
         } );
         return newData;
+    }
+
+    checkDuplicateItems( data ) {
+        let newData;
+        newData = data.filter( function ( item, index, inputArray ) {
+            if ( (inputArray.indexOf( item ) === index) === false ) {
+                throw new EvalError( 'You must pass a UNIQUE VALUE to the data array when using the SIMPLEDATA type.' );
+            }
+        } );
+        return data;
     }
 
     calcHeightItem() {

@@ -1,15 +1,20 @@
 <button #tlbutton
         attr.tabindex="{{tabindex}}"
         [type]="type"
-        [ngStyle]="{'width': size}"
+        [ngStyle]="{'width': width + 'px', 'height': height + 'px', 'line-height': height - 2 + 'px'}"
         [ngClass]="{' disabled ': disabled}"
         [class]="buttonClass + ' tl-button ' + toggleClassName"
         [disabled]="disabled ? true : null"
         (click)="clickToggle()"
         (keydown)="keydown($event)">
 
-    <span *ngIf="iconAddonBefore" [ngClass]="iconAddonBefore" [class]="'iconAddonBefore ' + buttonAddonBeforeClass"></span>
-    <span class="textButton"> {{ text }} </span>
+    <span *ngIf="iconAddonBefore" [ngClass]="iconAddonBefore"
+          [class]="'iconAddonBefore ' + buttonAddonBeforeClass"></span>
+    <span class="textButton" [ngStyle]="{'line-height': height - 2 + 'px'}">
+        <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText" [class]="iconBeforeTextClass"></i>
+        {{ text }}
+        <i *ngIf="iconAfterText" [ngClass]="iconAfterText" [class]="iconAfterTextClass"></i>
+    </span>
     <span *ngIf="iconAddonAfter" [ngClass]="iconAddonAfter" [class]="'iconAddonAfter ' + buttonAddonAfterClass"></span>
 
 </button>

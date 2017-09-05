@@ -25,9 +25,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 
 @Component( {
-    selector: 'dialog-backdrop',
-    templateUrl: './dialog-backdrop.html',
-    styleUrls: [ './dialog-backdrop.scss' ],
+    selector: 'tl-backdrop',
+    templateUrl: './backdrop.html',
+    styleUrls: [ './backdrop.scss' ],
     animations: [
         trigger(
             'enterAnimation', [
@@ -39,7 +39,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
         )
     ]
 } )
-export class TlDialogBackdrop {
+export class TlBackdrop {
 
     @ViewChild('backdrop') backdrop;
 

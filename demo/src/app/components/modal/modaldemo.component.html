@@ -8,8 +8,9 @@
   <div class="row">
     <div class="col-md-3">
       <div class="group-component">
-        <h5>Show Modal</h5>
         <tl-button [text]="'Show Modal'" [iconAddonBefore]="'ion-monitor'" (click)="modal1()"></tl-button>
+        <br><br>
+        <span class="returned-value">Modal Result: {{ modalResult }}</span>
       </div>
     </div>
   </div>
@@ -36,7 +37,6 @@
           <td><code> {{ item.options }} </code></td>
         </tr>
         </tbody>
-
       </table>
     </div>
     <hr>

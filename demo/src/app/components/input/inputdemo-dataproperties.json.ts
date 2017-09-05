@@ -73,4 +73,12 @@ export const dataProperties = [
     description: "Display a text After the Input",
     options: "Any Text"
   }
+  ,
+  {
+    name: "autocomplete",
+    type: "string",
+    default: "null",
+    description: "Define the autocomplete of the input",
+    options: "on | off"
+  }
   ];

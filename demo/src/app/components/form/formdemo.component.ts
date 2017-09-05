@@ -3,8 +3,8 @@ import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { FormService } from "../../../../../src/form/form.service";
 import * as json from './form-dataproperties.json';
-import { CadPessoa } from "./newpessoa/cadPessoa.component";
-import { DataFormService } from "./newpessoa/dataform.service";
+import { NewPerson } from "./newperson/newperson.component";
+import { DataFormService } from "./newperson/dataform.service";
 
 
 @Component( {
@@ -41,7 +41,7 @@ export class FormDemo {
 
 
   modal1() {
-    this.formService.createForm(CadPessoa, this.modalOptions, (modalResult) => {
+    this.formService.createForm(NewPerson, this.modalOptions, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });

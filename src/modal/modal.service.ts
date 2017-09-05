@@ -22,7 +22,7 @@
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
-import { ModalOptions } from './modal-options';
+import { TlBackdrop } from '../backdrop/backdrop';
 
 let index = -1;
 
@@ -51,6 +51,9 @@ export class ModalService {
 
     createModal( component, modalOptions, callback ) {
         index++;
+        if (modalOptions.backdrop) {
+            this.createBackdrop(TlBackdrop);
+        }
         this.setComponentModal();
         this.setComponentInjected( component );
         this.setGlobalSettings( modalOptions );
@@ -70,7 +73,7 @@ export class ModalService {
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
     }
 
-    setGlobalSettings( modalOptions: Array<ModalOptions> ) {
+    setGlobalSettings( modalOptions ) {
         (<TlModal>this.component.instance).status = 'MAX';
         (<TlModal>this.component.instance).setOptions( modalOptions );
         this.setZIndex();

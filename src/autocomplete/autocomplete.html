@@ -12,9 +12,8 @@
                (keyup)="searchItem($event.target.value, $event)"
                (keydown)="onListOpened($event)"
                [(ngModel)]="modelValue"
+               (blur)="closeList()"
                [required]="validations.required"
-               (blur)="onBlur()"
-               (focus)="onFocus()"
                type="text">
         <span (click)="clearField()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
 
@@ -22,8 +21,8 @@
             <ul #list class="tl-autocomplete-list-items"
                 [ngStyle]="calcHeightItem()"
                 [style.display]="showHide === true ? 'block' : 'none'">
-                <li *ngFor="let item of datasource; let i = index" tabindex="{{ i }}" (click)="onSelectItem($event)"
-                    [innerHtml]="(item[id] | highlight : modelValue) +' - '+ (item[text] | highlight : modelValue)">
+                <li *ngFor="let item of datasource; let i = index" tabindex="{{ i }}">
+                    <span *ngFor="let itemDisplay of display;"> {{ item[itemDisplay] }} </span>
                 </li>
                 <li *ngIf="noDataFound" class="no-data-found"><i class="ion-sad-outline"></i> No Data Found</li>
             </ul>

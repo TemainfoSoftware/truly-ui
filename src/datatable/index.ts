@@ -6,13 +6,15 @@ import { TlDatatableColumn } from './datatable-column';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
+import { LoadingModule } from '../loading';
 
 export * from './datatable';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        LoadingModule
     ],
     declarations: [
         TlDatatable,

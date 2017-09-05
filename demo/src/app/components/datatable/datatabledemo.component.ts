@@ -4,10 +4,8 @@ import * as json from './datatabledemo-dataproperties.json';
 
 import * as jsonEvents from './datatabledemo-dataevents.json';
 
-
 @Component( {
   selector: 'app-datatable',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './datatabledemo.component.html',
   styleUrls: [ './datatabledemo.component.scss' ]
 } )
@@ -19,13 +17,13 @@ export class DataTableDemo {
 
   public rowSelected: any;
 
-  private take = 40;
+  private take = 200;
 
   private dataTableProperties;
 
   private dataTableEvents;
 
-  private timeout = null;
+  private timeout ;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
@@ -46,12 +44,13 @@ export class DataTableDemo {
   }
 
   onLazyLoad(event){
-      setTimeout(()=>{
-        this.dataLazy = {
+    clearTimeout(this.timeout );
+    this.timeout = setTimeout(()=>{
+      this.dataLazy = {
           "data" : this.getDataFromService(event.skip,event.take),
           "total" : this.data.length
         };
-      },0)
+    },2000)
   }
 
   onPageChange(event){

@@ -119,7 +119,20 @@
             <li><a href="#" routerLink="multiselect" routerLinkActive="active"><i class="fa fa-circle-o"></i> MultiSelect</a></li>
           </ul>
         </li>
-        <li><a href="#" routerLink="datatable" routerLinkActive="active"><i class="fa fa-list-alt"></i> <span>DataTable</span></a></li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-list-alt"></i>
+            <span>DataTable</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="datatable" routerLinkActive="active"><i class="fa fa-circle-o"></i> Datatable</a></li>
+            <li><a href="#" routerLink="datatable/scrollable" routerLinkActive="active"><i class="fa fa-circle-o"></i> Scrollable</a></li>
+            <li><a href="#" routerLink="datatable/lazy" routerLinkActive="active"><i class="fa fa-circle-o"></i> Lazy</a></li>
+          </ul>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

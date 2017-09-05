@@ -1,4 +1,4 @@
-<div class="dataTableScrollable"  >
+<div class="dataTableScrollable"  (mousedown)="mouseDown()"  (mouseup)="mouseUp()" >
     <div class="scrollBoxHeader">
         <table class="datatable">
             <thead class="datatableHeader">
@@ -9,7 +9,8 @@
         </table>
     </div>
 
-    <div #listComponent (scroll)="onScroll()" id="id-component" [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
+
+    <div [tlLoading]="datatable.loading" #listComponent id="id-component" [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
         <div [ngStyle]="{height: bodyHeight+'px'}">
             <table class="datatable" [ngStyle]="{position: 'relative'}">
                 <tbody #listBody class="datatableBody"></tbody>

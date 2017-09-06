@@ -10,7 +10,9 @@
         <div class="col-md-6">
           <h5>Basic Usage</h5>
           <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputBasic
-                    [placeholder]="'Search...'"></tl-input>
+                    [autocomplete]="'off'"
+                    [placeholder]="'Search...'">
+          </tl-input>
           <tl-listbox
             [data]="dataBasic"
             (onClickItem)="onClickNoItem($event)"
@@ -25,6 +27,7 @@
         <div class="col-md-6">
           <h5>With Custom Template</h5>
           <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                    [autocomplete]="'off'"
                     [placeholder]="'Search...'"></tl-input>
           <tl-listbox
             [data]="dataCustom"

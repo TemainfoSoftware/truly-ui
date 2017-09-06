@@ -3,31 +3,38 @@
  */
 export const dataProperties = [
   {
-    name: "label",
+    name: "labelGroup",
     type: "string",
-    default: "null",
-    description: "Label of Radio Button",
+    default: "Panel Group",
+    description: "Label of PanelGroup",
     options: "any text"
   },
   {
-    name: "value",
-    type: "string | number",
-    default: "null",
-    description: "Value of Radio Button that going be returned to model",
-    options: "any text"
-  },
-  {
-    name: "nameGroup",
+    name: "backgroundColor",
     type: "string",
     default: "null",
-    description: "Name of group of Radio Button",
-    options: "Any Text"
+    description: "The background color of the PanelGroup",
+    options: "Hexadecimal"
   },
   {
-    name: "orientation",
+    name: "borderColor",
     type: "string",
-    default: "horizontal",
-    description: "Orientation of the Radios",
-    options: "vertical | horizontal"
+    default: "null",
+    description: "Color of PanelGroup border",
+    options: "Hexadecimal"
+  },
+  {
+    name: "fontColorCaption",
+    type: "string",
+    default: "null",
+    description: "Font color of caption of the PanelGroup",
+    options: "Hexadecimal"
+  },
+  {
+    name: "fontSizeCaption",
+    type: "string",
+    default: "null",
+    description: "Font size of caption of the PanelGroup",
+    options: "css measure"
   }
   ];

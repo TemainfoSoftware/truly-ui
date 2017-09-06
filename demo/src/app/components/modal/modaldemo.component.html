@@ -40,6 +40,23 @@
       </table>
     </div>
     <hr>
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of modalevts; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <div class="examples">

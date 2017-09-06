@@ -24,6 +24,13 @@ export const dataProperties = [
     options: "Hexadecimal"
   },
   {
+    name: "fontColor",
+    type: "string",
+    default: "#fff",
+    description: "Font Color of window dialog header",
+    options: "Hexadecimal"
+  },
+  {
     name: "width",
     type: "string",
     default: "500px",
@@ -56,6 +63,27 @@ export const dataProperties = [
     type: "boolean",
     default: "true",
     description: "Control if window dialog is minimizable or not",
+    options: "true | false"
+  },
+  {
+    name: "restoreMaximize",
+    type: "boolean",
+    default: "true",
+    description: "Handle if can be restorable or not",
+    options: "true | false"
+  },
+  {
+    name: "backdrop",
+    type: "boolean",
+    default: "false",
+    description: "Background overlay of modal",
+    options: "true | false"
+  },
+  {
+    name: "fullscreen",
+    type: "boolean",
+    default: "false",
+    description: "Opens the modal in fullscreen mode",
     options: "true | false"
   }
   ];

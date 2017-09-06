@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
-    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+        Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
@@ -46,10 +46,6 @@ let globalZindex = 1;
     ]
 })
 export class TlModal implements OnInit, ModalOptions, OnDestroy {
-
-    @Input() status = '';
-
-    @Input() index;
 
     @Input() draggable = true;
 
@@ -81,17 +77,23 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @HostBinding( '@enterAnimation' ) public animation;
 
-    @Output() show: EventEmitter<any> = new EventEmitter();
+    @Output() onShow: EventEmitter<any> = new EventEmitter();
 
-    @Output() hide: EventEmitter<any> = new EventEmitter();
+    @Output() onMinimize: EventEmitter<any> = new EventEmitter();
 
-    @Output() maximize: EventEmitter<any> = new EventEmitter();
+    @Output() onMaximize: EventEmitter<any> = new EventEmitter();
+
+    @Output() onClose: EventEmitter<any> = new EventEmitter();
 
     public componentRef: ComponentRef<TlModal>;
 
     public ZIndex = 1;
 
     public modalResult;
+
+    public status = '';
+
+    public index;
 
     private serviceControl: ModalService;
 
@@ -151,6 +153,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.mousemoveListener();
         this.mouseupListener();
         this.validateProperty();
+        this.onShow.emit();
     }
 
     resizeListener() {
@@ -352,7 +355,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             return;
         }
      this.serviceControl.minimize( this.componentRef );
-     this.hide.emit();
+     this.onMinimize.emit();
     }
 
     backToTop() {
@@ -361,7 +364,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     closeModal() {
         this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
-        this.hide.emit();
+        this.onClose.emit();
     }
 
     maximizeModal() {
@@ -376,7 +379,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
             this.maximized = true;
             this.moving = false;
-            this.maximize.emit();
+            this.onMaximize.emit();
         } else {
             this.restoreMaximizeModal();
         }

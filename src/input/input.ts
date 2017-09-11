@@ -163,6 +163,11 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() tabindex = 0;
 
     /**
+     * Define the alignment of the text inside of the input.
+     */
+    @Input() textAlign;
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;

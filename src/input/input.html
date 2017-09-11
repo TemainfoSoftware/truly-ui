@@ -12,6 +12,7 @@
     <input #input #model="ngModel"
            attr.name="{{name}}"
            class="field"
+           [style.text-align]="textAlign"
            type="text"
            [ngClass]="{
                '-cursorblocked' : readonly || disabled,

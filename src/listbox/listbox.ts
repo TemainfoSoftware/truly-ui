@@ -105,7 +105,9 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private filtredData = [];
 
-    private time;
+    private timeArrow;
+
+    private timeScroll;
 
     private lastRowViewport = 0;
 
@@ -147,6 +149,12 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private lastScrollTopOnKey;
 
+    private scrollListener;
+
+    private scrollByArrows;
+
+    private isScrolling;
+
     constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone ) {}
 
     ngOnInit() {
@@ -165,14 +173,8 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.firstRow = 0;
 
         this.handleScrollShowMore();
-        this.zone.runOutsideAngular( () => {
-            this.itemContainer.nativeElement.addEventListener( 'scroll', () => {
-                this.onScroll();
-                this.zone.run( () => {
-                    this.change.detectChanges()
-                } )
-            } )
-        } );
+        this.createListScrollListener();
+
         this.validateProperties();
         this.createListenerOnTemplate();
         this.existSearchElement();
@@ -180,6 +182,66 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.renderPageData();
         this.change.detectChanges();
     }
+
+    createListScrollListener() {
+        this.zone.runOutsideAngular( () => {
+            this.scrollListener = this.renderer.listen( this.itemContainer.nativeElement, 'scroll', ( $event ) => {
+                clearTimeout( this.timeScroll );
+                this.onScroll();
+                this.detectChangesScroll();
+                this.timeScroll = setTimeout( () => {
+                    if ( !this.scrollByArrows ) {
+                        this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
+                    }
+                }, 66 )
+            } );
+        } );
+    }
+
+    detectChangesScroll() {
+        this.zone.run( () => {
+            this.change.detectChanges()
+        } );
+    }
+
+    setFocusOnLast() {
+        const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
+        const end = currentStartIndex + this.quantityVisibleRows - 1;
+
+        const element = document.querySelector( 'li[data-indexnumber="' + end + '"]' );
+
+        this.scrollListener();
+
+        (element as HTMLElement).focus();
+        this.setNewItemPosition();
+
+    }
+
+    setFocusOnFirst() {
+        const init = Math.floor( this.scrollTop / this.rowHeight );
+
+
+        const element = document.querySelector( 'li[data-indexnumber="' + init + '"]' );
+
+        this.scrollListener();
+        (element as HTMLElement).focus();
+
+        this.setNewItemPosition();
+    }
+
+
+    setNewItemPosition() {
+        for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
+            if ( this.listBox.nativeElement.children[ element ] === document.activeElement ) {
+                this.cursor = element;
+                this.getCursorViewPortPosition( element );
+                this.snapScreenScroll();
+                this.createListScrollListener();
+                return;
+            }
+        }
+    }
+
 
     createListenerOnTemplate() {
         if ( this.existCustomTemplate() ) {
@@ -238,7 +300,6 @@ export class TlListBox implements OnInit, AfterViewInit {
     handleClickItem( item, index ) {
         this.onClickItem.emit( item );
         this.cursor = index;
-        this.snapScreenScroll();
         this.focusElement( index );
         this.updateLastSelect();
         this.getCursorViewPortPosition( index );
@@ -247,7 +308,11 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     snapScreenScroll() {
         const initRange = Math.floor( this.scrollTop / this.rowHeight );
-        this.itemContainer.nativeElement.scrollTop = (initRange * this.rowHeight);
+        const calcLines = (initRange * this.rowHeight);
+
+        if ( (this.itemContainer.nativeElement.scrollTop % calcLines) ) {
+            this.itemContainer.nativeElement.scrollTop = calcLines;
+        }
     }
 
     getCursorViewPortPosition( index ) {
@@ -377,16 +442,16 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollDown() {
         this.handleScrollFinish();
-        if ( this.lastChildElement() ) {
-            if ( this.lastChildElement() ) {
-                if ( this.lastChildElement().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+        if ( this.lastChildElement().getBoundingClientRect() ) {
+            if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
+                if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
                     this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
                     this.take = this.lastRowViewport + this.quantityInVisibleRows;
                     this.take = this.take > this.data.length ? this.data.length : this.take;
                     this.renderPageData();
                 }
             } else {
-                this.handleScrollFast();
+                this.handleScrollFast( 'DOWN' );
             }
         }
     }
@@ -401,7 +466,7 @@ export class TlListBox implements OnInit, AfterViewInit {
                     this.renderPageData();
                 }
             } else {
-                this.handleScrollFast();
+                this.handleScrollFast( 'UP' );
             }
         }
     }
@@ -412,8 +477,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
 
     lastChildElement() {
-        const lastChildElem = this.listBox.nativeElement.children[ this.listBox.nativeElement.children.length - 1 ];
-        return lastChildElem.getBoundingClientRect();
+        return this.listBox.nativeElement.children[ this.listBox.nativeElement.children.length - 1 ];
     }
 
     parentElement() {
@@ -523,6 +587,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     addEventKeyDownToListElement() {
         this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+            this.scrollByArrows = true;
             $event.preventDefault();
             $event.stopPropagation();
             this.handleEventKeyDown( $event );
@@ -586,13 +651,17 @@ export class TlListBox implements OnInit, AfterViewInit {
         }
     }
 
-    handleScrollFast() {
+    handleScrollFast( direction ) {
+        this.isScrolling = direction;
         const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
         this.skip = currentStartIndex - this.quantityInVisibleRows;
         this.take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
         this.validateSkipAndTakeRange();
         this.renderPageData();
+        this.scrollByArrows = false;
+        this.snapScreenScroll();
     }
+
 
     validateSkipAndTakeRange() {
         if ( this.skip < 0 ) {
@@ -616,15 +685,14 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.setCurrentRow();
         this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
         this.setLastScrollTop();
-        this.handleScrollDown();
     }
 
     onShowMoreMouseOut() {
-        clearTimeout( this.time );
+        clearTimeout( this.timeArrow );
     }
 
     onShowMoreMouseIn( direction ) {
-        this.time = setTimeout( () => {
+        this.timeArrow = setTimeout( () => {
             direction === 'down' ?  this.scrollToDown(direction) : this.scrollToUp(direction);
         }, 100 );
     }

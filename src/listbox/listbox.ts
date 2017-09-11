@@ -171,16 +171,15 @@ export class TlListBox implements OnInit, AfterViewInit {
 
         this.lastRow = this.quantityVisibleRows - 1;
         this.firstRow = 0;
-
         this.handleScrollShowMore();
         this.createListScrollListener();
-
         this.validateProperties();
         this.createListenerOnTemplate();
         this.existSearchElement();
         this.resetSkipAndTake();
         this.renderPageData();
         this.change.detectChanges();
+        this.listBox.nativeElement.children[0].focus();
     }
 
     createListScrollListener() {
@@ -205,27 +204,19 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     setFocusOnLast() {
-        const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
-        const end = currentStartIndex + this.quantityVisibleRows - 1;
-
+        const end = this.getScrollPositionByContainer() + this.quantityVisibleRows - 1;
         const element = document.querySelector( 'li[data-indexnumber="' + end + '"]' );
-
         this.scrollListener();
-
         (element as HTMLElement).focus();
+        this.createListScrollListener();
         this.setNewItemPosition();
-
     }
 
     setFocusOnFirst() {
-        const init = Math.floor( this.scrollTop / this.rowHeight );
-
-
-        const element = document.querySelector( 'li[data-indexnumber="' + init + '"]' );
-
+        const element = document.querySelector( 'li[data-indexnumber="' + this.getScrollPositionByContainer() + '"]' );
         this.scrollListener();
         (element as HTMLElement).focus();
-
+        this.createListScrollListener();
         this.setNewItemPosition();
     }
 
@@ -236,7 +227,6 @@ export class TlListBox implements OnInit, AfterViewInit {
                 this.cursor = element;
                 this.getCursorViewPortPosition( element );
                 this.snapScreenScroll();
-                this.createListScrollListener();
                 return;
             }
         }
@@ -276,11 +266,9 @@ export class TlListBox implements OnInit, AfterViewInit {
     existSearchElement() {
         if ( this.searchElement ) {
 
-
             this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
                 this.handleEventKeyDown( $event );
             } );
-
 
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
@@ -305,9 +293,13 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.getCursorViewPortPosition( index );
     }
 
+    getScrollPositionByContainer() {
+        return Math.floor( this.scrollTop / this.rowHeight );
+    }
+
 
     snapScreenScroll() {
-        const initRange = Math.floor( this.scrollTop / this.rowHeight );
+        const initRange = this.getScrollPositionByContainer();
         const calcLines = (initRange * this.rowHeight);
 
         if ( (this.itemContainer.nativeElement.scrollTop % calcLines) ) {
@@ -316,7 +308,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     getCursorViewPortPosition( index ) {
-        const initRange = Math.floor( this.scrollTop / this.rowHeight );
+        const initRange = this.getScrollPositionByContainer();
         this.cursorViewPortPosition = this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) - initRange;
         this.lastScrollTopOnKey = this.itemContainer.nativeElement.scrollTop;
     }
@@ -653,7 +645,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollFast( direction ) {
         this.isScrolling = direction;
-        const currentStartIndex = Math.floor( this.scrollTop / this.rowHeight );
+        const currentStartIndex = this.getScrollPositionByContainer();
         this.skip = currentStartIndex - this.quantityInVisibleRows;
         this.take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
         this.validateSkipAndTakeRange();

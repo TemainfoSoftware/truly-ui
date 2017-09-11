@@ -115,6 +115,28 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Text Alignment Right</h5>
+          <tl-input
+            [textAlign]="'right'">
+          </tl-input>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>With Directive Charcase(Uppercase)</h5>
+          <tl-input charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-input>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>With Directive Charcase(Lowercase)</h5>
+          <tl-input charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-input>
+        </div>
+      </div>
+    </div>
   </div>
   <hr>
   <div class="setup">
@@ -142,7 +164,6 @@
       </table>
     </div>
     <hr>
-    <!--<h3 class="title">Events</h3>-->
   </div>
   <div class="examples">
     <h3 class="title">Examples</h3>
@@ -250,6 +271,26 @@
 <tl-input
   textAfter="@domain.com">
 </tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Text Alignment Right</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [textAlign]="'right'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Directive Charcase(Uppercase)</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-input charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Directive Charcase(Lowercase)</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-input>
     </textarea>
     </div>
   </div>

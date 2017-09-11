@@ -80,5 +80,12 @@ export const dataProperties = [
     default: "null",
     description: "Define the autocomplete of the input",
     options: "on | off"
+  },
+  {
+    name: "textAlign",
+    type: "string",
+    default: "left",
+    description: "Define the alignment of the text inside of the input. (css text-align)",
+    options: "left|right|center|justify|initial|inherit"
   }
   ];

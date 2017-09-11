@@ -2,7 +2,11 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { FormService } from "../../../../../src/form/form.service";
+
 import * as json from './form-dataproperties.json';
+
+import * as jsonEvents from './form-dataevents.json';
+
 import { NewPerson } from "./newperson/newperson.component";
 import { DataFormService } from "./newperson/dataform.service";
 
@@ -17,17 +21,21 @@ export class FormDemo {
 
   public index: number;
 
-  public modalOptions: ModalOptions;
+  public formOptions: ModalOptions;
 
-  private modalprop;
+  private formprop;
+
+  private formevts;
 
   private result;
 
   constructor(private view: ViewContainerRef, private formService: FormService, private dataFormService: DataFormService) {
     this.formService.setViewForm(view);
 
-    this.modalprop = json.dataProperties;
-    this.modalOptions = {
+    this.formprop = json.dataProperties;
+    this.formevts = jsonEvents.dataEvents;
+
+    this.formOptions = {
       title: 'New Form',
       icon: 'ion-ios-list-outline',
       draggable: true,
@@ -41,7 +49,7 @@ export class FormDemo {
 
 
   modal1() {
-    this.formService.createForm(NewPerson, this.modalOptions, (modalResult) => {
+    this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });

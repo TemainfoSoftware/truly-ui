@@ -100,7 +100,7 @@
   z-index: 150;
 }
 
-.listbox-selected-item {
+.list li:focus {
   background-color: #66CC99;
   color: #fff;
 }

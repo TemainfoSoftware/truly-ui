@@ -213,9 +213,13 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     existSearchElement() {
         if ( this.searchElement ) {
+
+
             this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
                 this.handleEventKeyDown( $event );
             } );
+
+
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
                     this.itemContainer.nativeElement.scrollTop = 0;
@@ -234,10 +238,16 @@ export class TlListBox implements OnInit, AfterViewInit {
     handleClickItem( item, index ) {
         this.onClickItem.emit( item );
         this.cursor = index;
-        this.focusOnSearchElement( index );
-        this.getElementSelected();
+        this.snapScreenScroll();
+        this.focusElement( index );
         this.updateLastSelect();
         this.getCursorViewPortPosition( index );
+    }
+
+
+    snapScreenScroll() {
+        const initRange = Math.floor( this.scrollTop / this.rowHeight );
+        this.itemContainer.nativeElement.scrollTop = (initRange * this.rowHeight);
     }
 
     getCursorViewPortPosition( index ) {
@@ -246,18 +256,8 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.lastScrollTopOnKey = this.itemContainer.nativeElement.scrollTop;
     }
 
-
-    getElementSelected() {
-        for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
-            if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'listbox-selected-item' ) ) {
-                return this.renderer.removeClass( this.listBox.nativeElement.children[ element ], 'listbox-selected-item' );
-            }
-        }
-    }
-
-    focusOnSearchElement( index ) {
-        !this.searchElement ? this.listBox.nativeElement.children[ index ].focus()
-            : this.searchElement.input.nativeElement.focus();
+    focusElement( index ) {
+        this.listBox.nativeElement.children[ index ].focus();
     }
 
     handleEventKeyDown( $event ) {
@@ -280,10 +280,6 @@ export class TlListBox implements OnInit, AfterViewInit {
     handleKeyArrowDown() {
         if ( this.listBox.nativeElement.children ) {
 
-            if ( this.cursor === -1 ) {
-                return this.handleCursorInit();
-            }
-
             if ( this.lastScrollTopOnKey !== this.itemContainer.nativeElement.scrollTop ) {
                 this.itemContainer.nativeElement.scrollTop = this.lastScrollTopOnKey;
             }
@@ -291,11 +287,12 @@ export class TlListBox implements OnInit, AfterViewInit {
             if ( this.cursor < this.listBox.nativeElement.children.length - 1 ) {
                 if ( this.cursorViewPortPosition >= this.quantityVisibleRows - 1 ) {
                     this.itemContainer.nativeElement.scrollTop += this.rowHeight;
-                    this.addSelectedClassOnNext();
+                    this.listBox.nativeElement.children[ this.cursor + 1 ].focus();
 
                 } else {
                     this.cursorViewPortPosition++;
-                    this.addSelectedClassOnNext();
+                    this.listBox.nativeElement.children[ this.cursor + 1 ].focus();
+
                 }
 
                 this.cursor++;
@@ -316,10 +313,10 @@ export class TlListBox implements OnInit, AfterViewInit {
             if ( this.cursor > 0 ) {
                 if ( this.cursorViewPortPosition <= 0 ) {
                     this.itemContainer.nativeElement.scrollTop -= this.rowHeight;
-                    this.addSelectedClassOnPrevious();
+                    this.listBox.nativeElement.children[ this.cursor - 1 ].focus();
                 } else {
                     this.cursorViewPortPosition--;
-                    this.addSelectedClassOnPrevious();
+                    this.listBox.nativeElement.children[ this.cursor - 1 ].focus();
                 }
 
                 this.cursor--;
@@ -329,22 +326,6 @@ export class TlListBox implements OnInit, AfterViewInit {
             }
 
         }
-    }
-
-    addSelectedClassOnNext() {
-        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor + 1 ], 'listbox-selected-item' );
-    }
-
-    addSelectedClassOnPrevious() {
-        this.renderer.removeClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor - 1 ], 'listbox-selected-item' );
-    }
-
-
-    handleCursorInit() {
-        this.cursor++;
-        this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
     }
 
     handleSearch( searchValue ) {
@@ -424,7 +405,6 @@ export class TlListBox implements OnInit, AfterViewInit {
             }
         }
     }
-
 
     firstChildElement() {
         return this.listBox.nativeElement.children[ 0 ];
@@ -520,10 +500,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     updateLastSelect() {
         if ( this.listBox.nativeElement.children[ this.cursor ] ) {
-            if (!this.searchElement) {
-                this.listBox.nativeElement.children[ this.cursor ].focus();
-            }
-            this.renderer.addClass( this.listBox.nativeElement.children[ this.cursor ], 'listbox-selected-item' );
+            this.listBox.nativeElement.children[ this.cursor ].focus();
         }
     }
 
@@ -545,13 +522,11 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     addEventKeyDownToListElement() {
-        if ( !this.searchElement && !this.existCustomTemplate() ) {
-            this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
-                $event.preventDefault();
-                $event.stopPropagation();
-                this.handleEventKeyDown( $event );
-            } );
-        }
+        this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+            $event.preventDefault();
+            $event.stopPropagation();
+            this.handleEventKeyDown( $event );
+        } );
     }
 
     appendListElementToListBox() {

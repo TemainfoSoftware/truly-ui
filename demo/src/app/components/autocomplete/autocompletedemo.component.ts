@@ -32,6 +32,12 @@ export class AutoCompleteDemo {
 
   private dataTableProperties;
 
+  public simpleData: any[];
+
+  public data: any[];
+
+  public complexData: any[];
+
   private result: any;
 
   private result2: any;
@@ -46,11 +52,7 @@ export class AutoCompleteDemo {
 
   private result7: any;
 
-  public data: any[];
-
-  public bigData: any[];
-
-  public simpleData: any[];
+  private result8: any;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
@@ -64,29 +66,22 @@ export class AutoCompleteDemo {
       { id: '6', label : 'North America', value : '60' },
       { id: '7', label : 'South America', value : '70' }
     ];
-    this.bigData = [
-      { id: '1', label : 'Asia', value : '10' },
-      { id: '2', label : 'Africa', value : '20' },
-      { id: '3', label : 'Antarctica', value : '30' },
-      { id: '4', label : 'Australia', value : '40' },
-      { id: '5', label : 'Europe', value : '50' },
-      { id: '6', label : 'North America', value : '60' },
-      { id: '7', label : 'South America', value : '70' },
-      { id: '8', label : 'Asia 2', value : '80' },
-      { id: '9', label : 'Africa 2', value : '90' },
-      { id: '10', label : 'Antarctica 2', value : '100' },
-      { id: '11', label : 'Australia 2', value : '110' },
-      { id: '12', label : 'Europe 2', value : '120' },
-      { id: '13', label : 'North America 2', value : '130' },
-      { id: '14', label : 'South America 2', value : '140' },
-      { id: '15', label : 'South America', value : '150' },
-      { id: '16', label : 'Asia 3', value : '160' },
-      { id: '17', label : 'Africa 3', value : '170' },
-      { id: '18', label : 'Antarctica 3', value : '180' },
-      { id: '19', label : 'Australia 3', value : '190' },
-      { id: '20', label : 'Europe 3', value : '200' },
-      { id: '21', label : 'North America 3', value : '210' },
-      { id: '22', label : 'South America 3', value : '220' }
+    this.complexData = [
+      { resource: { id: '1', label : 'Asia', value : '10' } },
+      { resource: { id: '2', label : 'Africa', value : '20' } },
+      { resource: { id: '3', label : 'Antarctica', value : '30' } },
+      { resource: { id: '4', label : 'Australia', value : '40' } },
+      { resource: { id: '5', label : 'Europe', value : '50' } },
+      { resource: { id: '6', label : 'North America', value : '60' } },
+      { resource: { id: '7', label : 'South America', value : '70' } },
+      { resource: { id: '8', label : 'Asia 2', value : '80' } },
+      { resource: { id: '9', label : 'Africa 2', value : '90' } },
+      { resource: { id: '10', label : 'Antarctica 2', value : '100' } },
+      { resource: { id: '11', label : 'Australia 2', value : '110' } },
+      { resource: { id: '12', label : 'Europe 2', value : '120' } },
+      { resource: { id: '13', label : 'North America 2', value : '130'} },
+      { resource: { id: '14', label : 'South America 2', value : '140' } },
+      { resource: { id: '15', label : 'South America', value : '150' } }
     ];
   }
 

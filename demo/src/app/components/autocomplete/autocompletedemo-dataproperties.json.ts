@@ -79,5 +79,12 @@ export const dataProperties = [
     default: "false",
     description: "Display an icon to clear any Input Value.",
     options: "any text"
+  },
+  {
+    name: "minCharsToSearch",
+    type: "number",
+    default: "2",
+    description: "Set minimum of characters to search.",
+    options: "any number | ex: 4"
   }
 ];

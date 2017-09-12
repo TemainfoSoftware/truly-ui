@@ -478,9 +478,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.subscribeResize();
         this.subscribeMouseMove();
         this.subscribeMouseUp();
-        listenersDocument.forEach( ( value, index2, array ) => {
-            value();
-        } )
     }
 
 }

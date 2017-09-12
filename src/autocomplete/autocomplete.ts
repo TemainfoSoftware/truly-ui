@@ -92,7 +92,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private dataSource: any[] = [];
 
-    private filterString: Subject<string> = new Subject();
+    private filterString = new Subject();
 
     private lastItemPosition;
 

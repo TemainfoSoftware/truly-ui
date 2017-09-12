@@ -101,7 +101,7 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private cursor = -1;
 
-    private subject: Subject<string> = new Subject();
+    private subject = new Subject();
 
     private filtredData = [];
 

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, Renderer2,
-    ViewChild
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
+    EventEmitter, forwardRef, Input, NgZone, OnInit, Output, Renderer2, ViewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -32,6 +32,9 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
+
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
 
 let globalZindex = 1;
 
@@ -55,238 +58,264 @@ let globalZindex = 1;
     ]
 } )
 
-export class TlAutoComplete extends ComponentHasModelBase implements AfterViewInit {
+export class TlAutoComplete extends ComponentHasModelBase implements AfterViewInit, OnInit {
 
-    @Input( 'data' ) data: Array<any>;
+    @Input() data: Array<any>;
 
-    @Input() labelPlacement: string;
+    @Input() itemHeight: number;
 
-    @Input() labelSize: number;
+    @Input() itemsToScroll: number;
 
-    @Input() label: string;
+    @Input() dataID: string;
 
-    @Input() clearButton: boolean;
-
-    // @Input() minLengthSearch = 1;
-
-    @Input() id = '';
-
-    @Input() text = '';
-
-    @Input() value = '';
+    @Input() dataLabel: string;
 
     @Input() query: any[] = [];
 
-    @Input() display: any[] = [];
+    @Input() clearButton: boolean;
 
-    @Input() valueField = [];
-
-    @Input() return: any[] = [];
-
-    @Input() itemAmount = 5;
-
-    @ViewChild( 'autocomplete' ) autocomplete;
+    @Input() minCharToSearch: number;
 
     @ViewChild( 'list' ) list;
+
+    @ViewChild( 'filter' ) filter;
+
+    @ViewChild( 'customTemplate' ) customTemplate;
 
     @Output() clear: EventEmitter<any> = new EventEmitter();
 
     public zIndex = 0;
 
-    private datasource: any[] = [];
-
-    private cursor = -1;
-
-    private showHide: boolean;
+    private showList: boolean;
 
     private dataType: string;
 
-    private noDataFound: boolean;
+    private dataSource: any[] = [];
 
-    private lastValue: string;
+    private filterString: Subject<string> = new Subject();
 
-    private topRow: number;
+    private lastItemPosition;
 
-    private lastRow: number;
+    private firstItemPosition;
 
-    private itemSelected: any[] = [];
+    private listElement;
 
-    constructor( tabIndexService: TabIndexService,
+    private spanElementDataID;
+
+    private spanElementDataLabel;
+
+    private filtredData = [];
+
+    private cursor;
+
+    private nothingToShow: boolean;
+
+    constructor( public renderer: Renderer2,
+                 tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public nameService: NameGeneratorService,
-                 private change: ChangeDetectorRef ) {
+                 private change: ChangeDetectorRef,
+                 public zone: NgZone ) {
         super( tabIndexService, idService, nameService );
-        this.labelPlacement = 'left';
-        this.topRow = 0;
-        this.lastRow = this.itemAmount - 1;
-        this.noDataFound = false;
-        this.showHide = false;
-        this.dataType = null;
+        this.itemHeight = 36;
+        this.itemsToScroll = 5;
+        this.showList = false;
+        this.clearButton = false;
+        this.dataType = 'object';
+        this.dataID = '';
+        this.dataLabel = '';
+        this.cursor = -1;
+        this.nothingToShow = false;
+        this.minCharToSearch = 1;
     }
 
-    ngAfterViewInit(): void {
-        this.setElement( this.autocomplete, 'autocomplete' );
+    ngOnInit() {
+        this.filterString.debounceTime( 250 )
+            .subscribe( searchTextValue => {
+                this.handleSearch( searchTextValue );
+            } );
+    }
+
+    ngAfterViewInit() {
+        this.setElement( this.filter, 'autocomplete' );
         this.updateDataSource( this.getData() );
+        this.validateDefaultProperties();
+        this.lastItemPosition = this.itemsToScroll - 1;
+        this.firstItemPosition = 0;
+        this.renderDataList();
+        this.change.detectChanges();
     }
 
-    clearField() {
-        // verificar writevalue pra limpar
-        this.modelValue = '';
-        this.showHide = false;
-        this.autocomplete.nativeElement.value = '';
-        this.autocomplete.nativeElement.focus();
-        this.clear.emit();
+    renderDataList() {
+        if ( !this.existCustomTemplate() ) {
+            if ( this.nothingToShow ) {
+                if ( this.list.nativeElement.children.length > 0 ) {
+                    while ( this.list.nativeElement.hasChildNodes() ) {
+                        this.list.nativeElement.removeChild( this.list.nativeElement.lastChild );
+                    }
+                }
+                this.createElementNothingToShow();
+                this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
+                this.createElementIconNothingToShow();
+                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataID.nativeElement );
+                this.createElementLabelNothingToShow();
+                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
+
+                return;
+            }
+            if ( this.dataSource ) {
+                this.zone.runOutsideAngular( () => {
+                    if ( this.list.nativeElement.children.length > 0 ) {
+                        while ( this.list.nativeElement.hasChildNodes() ) {
+                            this.list.nativeElement.removeChild( this.list.nativeElement.lastChild );
+                        }
+                    }
+                    for ( let item = 0; item < this.dataSource.length; item++ ) {
+                        this.createElementLi( item );
+                        this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
+                        if ( this.dataType === 'object' ) {
+                            this.createElementSpanDataID( item );
+                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataID.nativeElement );
+                        }
+                        this.createElementSpanLabel( item );
+                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
+                    }
+                } );
+            }
+        }
     }
 
-    getAndSetZIndex() {
-        this.zIndex = globalZindex++;
-        return this.zIndex;
+    createElementLabelNothingToShow() {
+        this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.spanElementDataLabel.nativeElement.append( ' No Data Found' );
+    }
+
+    createElementLi( item ) {
+        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
+        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( item ) );
+        this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
+        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight + 'px' );
+        // this.renderer.addClass( this.listElement.nativeElement, 'item' );
+    }
+
+    createElementNothingToShow() {
+        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
+        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', '0' );
+        this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
+        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight + 'px' );
+        this.renderer.addClass( this.listElement.nativeElement, 'no-data-found' );
+    }
+
+    createElementIconNothingToShow() {
+        this.spanElementDataID = new ElementRef( this.renderer.createElement( 'i' ) );
+        this.renderer.addClass( this.spanElementDataID.nativeElement, 'ion-sad-outline' );
+    }
+
+    createElementSpanDataID( item ) {
+        this.spanElementDataID = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementDataID.nativeElement, 'float', 'right' );
+        this.spanElementDataID.nativeElement.append( this.dataSource[ item ][ this.dataID ] );
+    }
+
+    createElementSpanLabel( item ) {
+        this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.spanElementDataLabel.nativeElement.append( this.dataSource[ item ][ this.dataLabel ] );
+    }
+
+    existCustomTemplate() {
+        for ( const node of this.customTemplate.nativeElement.childNodes ) {
+            if ( node.nodeName === '#comment' ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    validateDefaultProperties() {
+        if ( typeof this.itemsToScroll !== 'number' ) {
+            throw new EvalError( 'You must pass some valid number to the [itemsToScroll] property of the tl-autocomplete element.' +
+                ' Ex.: [itemsToScroll]="4"' );
+        }
+        if ( typeof this.itemHeight !== 'number' ) {
+            throw new EvalError( 'You must pass some valid number to the [itemHeight] property of the tl-autocomplete element.' +
+                ' Ex.: [itemHeight]="4"' );
+        }
     }
 
     updateDataSource( data ) {
         data.forEach( ( value ) => {
-            this.datasource.push( value );
+            this.dataSource.push( value );
         } );
     }
 
     getData() {
-        if ( ( this.data[ 0 ] === undefined ) ) {
-            throw new EvalError( 'You must pass some valid data to the DATA property of the tl-autocomplete element.' );
+        this.dataType = typeof this.data[ 0 ];
+        if ( ( this.dataType === undefined ) ) {
+            throw new EvalError( 'You must pass some valid data to the [data] property of the tl-autocomplete element.' );
         }
-        if ( (typeof this.data[ 0 ] === 'object') && ( (this.valueField.length <= 0)
-            || (this.display.length <= 0) || (this.query.length <= 0) ) ) {
-            throw new EvalError( 'You must use the DISPLAY, ONSELECT and QUERY properties' +
-                ' when using the DATA property of the tl-autocomplete element.' );
+        if ( this.dataType === 'string' ) {
+            return this.constructSimpleData();
         }
-        if ( typeof this.data[ 0 ] === 'object' && ( (this.valueField[ 0 ].length <= 0)
-            || (this.display[ 0 ].length <= 0) || (this.query[ 0 ].length <= 0) ) ) {
-            throw new EvalError( 'You must pass some valid value to the DISPLAY, ONSELECT and QUERY properties' +
-                ' when using the DATA property of the tl-autocomplete element.' );
+        if ( (typeof this.data[ 0 ] === 'object') && ( (this.dataID.length <= 0)
+            || (this.dataLabel.length <= 0) || (this.query.length <= 0) ) ) {
+            throw new EvalError( 'You must use the [dataID], [dataLabel] and [query] properties' +
+                ' when using the [data] property of the tl-autocomplete element.' );
         }
-        if ( (typeof this.data[ 0 ] === 'string') && ((this.query.length !== 0) ||
-            (this.display.length !== 0) || (this.valueField.length !== 0)) ) {
-            throw new EvalError( 'You should not use the QUERY, DISPLAY and ONSELECT properties' +
-                ' when using the SIMPLEDATA of the tl-autocomplete element.' );
+        if ( typeof this.data[ 0 ] === 'object' && ( (this.dataID.length <= 0)
+            || (this.dataLabel.length <= 0) || (this.query[ 0 ].length <= 0) ) ) {
+            throw new EvalError( 'You must pass some valid value to the [dataID], [dataLabel] and [query] properties' +
+                ' when using the [data] property of the tl-autocomplete element.' );
         }
-        this.checkOnSelect();
-        this.checkQuery();
-        this.checkDisplay();
-        if ( typeof this.data[ 0 ] === 'string' ) {
-            const simpleData = [];
-            this.data.forEach( ( value ) => {
-                simpleData.push( { 'value' : value } );
-            } );
-            this.display = [ 'value' ];
-            this.query = [ 'value' ];
-            this.valueField = [ 'value' ];
-            this.dataType = 'simpleData';
-            return simpleData;
-        }
+        this.checkDataProperties();
         return this.data;
     }
 
-    getCursor() {
-        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            if ( this.list.nativeElement.children[ item ].classList[ 1 ] === 'activeItem' ) {
-                this.cursor = item;
-            }
+    constructSimpleData() {
+        if ( this.query.length > 0 || this.dataLabel.length > 0 || this.dataID.length > 0 ) {
+            throw new EvalError( 'You should not use the [dataID], [dataLabel] and [query] properties' +
+                ' when using the SIMPLEDATA of the tl-autocomplete element.' );
         }
+        const simpleData = [];
+        this.data.forEach( ( value ) => {
+            simpleData.push( { 'value' : value } );
+        } );
+        this.dataID = 'value';
+        this.dataLabel = 'value';
+        this.query = [ 'value' ];
+        return simpleData;
     }
 
-    onListOpened( $event ) {
-        if ( this.showHide ) {
-            this.getAndSetZIndex();
-            this.getCursor();
-            switch ( $event.keyCode ) {
-                case KeyEvent.ARROWDOWN:
-                    this.onArrowDown();
-                    this.stopPropagationAndPreventDefault( $event );
-                    break;
-                case KeyEvent.ARROWUP:
-                    this.onArrowUp();
-                    this.stopPropagationAndPreventDefault( $event );
-                    break;
-                case KeyEvent.ENTER:
-                    this.onEnter( $event );
-                    $event.stopPropagation();
-                    break;
-            }
-        }
+    checkDataProperties() {
+        this.isQuery();
+        this.isDataID();
+        this.isDataLabel();
     }
 
-    stopPropagationAndPreventDefault( $event ) {
-        $event.stopPropagation();
-        $event.preventDefault();
-    }
-
-    onArrowDown() {
-        if ( this.cursor < this.list.nativeElement.children.length - 1 ) {
-            this.removeActive();
-            this.cursor = this.cursor + 1;
-            if ( this.cursor > this.lastRow ) {
-                this.topRow += 1;
-                this.lastRow += 1;
-                this.list.nativeElement.scrollTop += 36;
-            }
-            this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
-            return;
-        }
-    }
-
-    onArrowUp() {
-        if ( this.cursor > 0 && this.cursor !== -1 ) {
-            this.removeActive();
-            this.cursor = this.cursor - 1;
-            if ( this.cursor < this.topRow ) {
-                this.topRow -= 1;
-                this.lastRow -= 1;
-                this.list.nativeElement.scrollTop -= 36;
-            }
-            this.list.nativeElement.children[ this.cursor ].classList.add( 'activeItem' );
-            return;
-        }
-    }
-
-    onEnter( $event ) {
-        this.datasource.forEach( ( value, index, array ) => {
-            if ( index === this.cursor ) {
-                this.itemSelected = value;
-                if ( this.itemSelected[ this.valueField[ 0 ] ] === null || this.itemSelected[ this.valueField[ 0 ] ] === '' ) {
-                    return this.writeValue( '' );
-                }
-                const selectValue = this.itemSelected[ this.valueField[ 0 ] ];
-                this.lastValue = selectValue.toLowerCase();
-                this.modelValue = this.itemSelected;
-                setTimeout( () => {
-                    this.autocomplete.nativeElement.value = this.itemSelected[ this.valueField[ 0 ] ];
-                }, 1 );
-                this.change.detectChanges();
+    isDataID() {
+        let numberOfError = 0;
+        Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
+            if ( dataKey !== this.dataID ) {
+                numberOfError = numberOfError + 1;
             }
         } );
-        this.showHide = false;
+        if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
+            throw new EvalError( 'You must pass a valid value to a [dataID] property that exists in the [data] property.' );
+        }
     }
 
-    selectItem( $event, i ) {
-        this.cursor = i;
-        this.onEnter( $event );
-        this.autocomplete.nativeElement.focus();
-    }
-
-    checkOnSelect() {
-        this.valueField.forEach( ( queryValue ) => {
-            let numberOfError = 0;
-            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
-                if ( dataKey !== queryValue ) {
-                    numberOfError = numberOfError + 1;
-                }
-            } );
-            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-                throw new EvalError( 'You must pass a valid value to a ONSELECT property that exists in the DATA property.' );
+    isDataLabel() {
+        let numberOfError = 0;
+        Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
+            if ( dataKey !== this.dataLabel ) {
+                numberOfError = numberOfError + 1;
             }
         } );
+        if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
+            throw new EvalError( 'You must pass a valid value to a [dataLabel] property that exists in the [data] property.' );
+        }
     }
 
-    checkQuery() {
+    isQuery() {
         this.query.forEach( ( queryValue ) => {
             let numberOfError = 0;
             Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
@@ -295,178 +324,84 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 }
             } );
             if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-                throw new EvalError( 'You must pass a valid value to a QUERY property that exists in the DATA property.' );
+                throw new EvalError( 'You must pass a valid value to a [query] property that exists in the [data] property.' );
             }
         } );
     }
 
-    checkDisplay() {
-        this.display.forEach( ( queryValue ) => {
-            let numberOfError = 0;
-            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
-                if ( dataKey !== queryValue ) {
-                    numberOfError = numberOfError + 1;
-                }
-            } );
-            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-                throw new EvalError( 'You must pass a valid value to a DISPLAY property that exists in the DATA property.' );
-            }
-        } );
+    handleFilter( $event ) {
+        const filterValue = $event.target.value;
+        this.filterString.next( filterValue );
     }
 
-    simpleDataSearch( searchValue ) {
-        searchValue = searchValue.toLowerCase();
-        if ( this.itemSelected && this.itemSelected.length > 0 ) {
-            if ( this.itemSelected[ this.text ] === searchValue ) {
-                this.showHide = false;
-                return;
-            }
-        }
-        const newValue = searchValue.trim();
-        if ( !newValue || newValue.length <= 0 || newValue === '' || newValue === 'undefined' || newValue === null ) {
-            this.noDataFound = false;
-            this.lastValue = '';
-            this.itemSelected = [];
-            this.removeActive();
-            this.datasource = this.data;
-            return this.showHide = false;
-        }
-        this.showHide = true;
+    handleList( $event ) {
+    }
+
+    handleSearch( searchValue ) {
         this.getAndSetZIndex();
-        const filtredData = [];
-        this.data.forEach( ( dataValue ) => {
-            if ( dataValue.toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
-                this.noDataFound = false;
-                filtredData.push( { value : dataValue } );
-            }
-        } );
-        this.datasource = this.checkDuplicateItems( filtredData );
-        if ( this.datasource.length <= 0 && this.modelValue ) {
-            this.showHide = true;
-            this.itemSelected = [];
-            this.lastValue = searchValue;
-            this.noDataFound = true;
-            this.removeActive();
-            return;
-        }
-        this.change.detectChanges();
-        if ( (this.datasource.length > 0) ) {
-            this.itemSelected = [];
+        if ( searchValue.length >= this.minCharToSearch ) {
+            this.showList = true;
             this.list.nativeElement.scrollTop = 0;
-            this.topRow = 0;
-            this.noDataFound = false;
-            this.lastRow = this.itemAmount - 1;
-            this.removeActive();
-            this.lastValue = searchValue;
-            this.setFirstActive();
+            this.dataSource = this.filterData( searchValue );
+        }
+        this.validateFiltredAsEmpty();
+        this.renderDataList();
+        this.cursor = -1;
+
+    }
+
+    validateFiltredAsEmpty() {
+        if ( this.dataSource.length === 0 ) {
+            this.nothingToShow = true;
+            this.change.detectChanges();
+        } else {
+            this.nothingToShow = false;
+            this.change.detectChanges();
         }
     }
 
-    searchItem( searchValue, $event ) {
-        // 65 a 90 de A-Z
-        // 48 a 57 96 a 105 de 0-9
-        // 32 SPACE
-        // 13 ENTER
-        // 8 Backspace - 46 delete
-        if ( ($event.which >= 48 && $event.which <= 57) || ($event.which === 32 || $event.which === 8 || $event.which === 46)
-            || ($event.which >= 65 && $event.which <= 90) || ($event.which >= 96 && $event.which <= 105) ) {
-            searchValue = searchValue.toLowerCase();
-            if ( this.dataType != null ) {
-                return this.simpleDataSearch( searchValue );
-            }
-            if ( this.itemSelected ) {
-                if ( this.itemSelected[ this.text ] === searchValue ) {
-                    this.showHide = false;
-                    return;
+    filterData( searchValue ) {
+        const filter = [];
+        this.data.forEach( ( item ) => {
+            if ( this.dataType === 'object' ) {
+                this.query.forEach( ( query ) => {
+                    if ( item[ query ].toString().toLowerCase().trim().includes( searchValue.toLowerCase().trim() ) ) {
+                        if ( filter.indexOf( item ) === -1 ) {
+                            filter.push( item );
+                        }
+                    }
+                } );
+            } else {
+                if ( item.toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
+                    filter.push( { value : item } );
                 }
             }
-            const newValue = searchValue.trim();
-            if ( !newValue || newValue.length <= 0 || newValue === '' || newValue === 'undefined' || newValue === null ) {
-                this.noDataFound = false;
-                this.lastValue = '';
-                this.itemSelected = [];
-                this.removeActive();
-                this.datasource = this.data;
-                return this.showHide = false;
-            }
-            this.showHide = true;
-            this.getAndSetZIndex();
-            this.searchInDatasource( searchValue );
-
-            if ( this.datasource.length <= 0 && this.modelValue ) {
-                this.showHide = true;
-                this.itemSelected = [];
-                this.lastValue = searchValue;
-                this.noDataFound = true;
-                this.removeActive();
-            }
-            if ( (this.lastValue !== searchValue) && (this.datasource.length > 0) ) {
-                this.itemSelected = [];
-                setTimeout( () => {
-                    this.list.nativeElement.scrollTop = 0;
-                    this.topRow = 0;
-                    this.noDataFound = false;
-                    this.lastRow = this.itemAmount - 1;
-                    this.removeActive();
-                    this.setFirstActive();
-                    this.lastValue = searchValue;
-                }, 0 );
-            }
-        }
-    }
-
-    closeList( $event ) {
-        this.showHide = false;
-    }
-
-    searchInDatasource( value ) {
-        const filtredData = [];
-        this.data.forEach( ( dataValue ) => {
-            this.query.forEach( ( queryValue ) => {
-                if ( dataValue[ String( queryValue ) ].toLowerCase().indexOf( value.toLowerCase() ) !== -1 ) {
-                    this.noDataFound = false;
-                    filtredData.push( dataValue );
-                }
-
-            } );
         } );
-        return this.datasource = this.removeDuplicateItems( filtredData );
+        return filter;
     }
 
-    removeActive() {
-        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            this.list.nativeElement.children[ item ].classList.remove( 'activeItem' );
-        }
+    getAndSetZIndex() {
+        this.zIndex = globalZindex++;
+        return this.zIndex;
     }
 
-    setFirstActive() {
-        this.list.nativeElement.children[ 0 ].classList.add( 'activeItem' );
+    clearFilter() {
+        this.writeValue( '' );
+        this.filter.nativeElement.focus();
+        this.clear.emit();
     }
 
-    removeDuplicateItems( data ) {
-        let newData;
-        newData = data.filter( function ( item, index, inputArray ) {
-            return inputArray.indexOf( item ) === index;
-        } );
-        return newData;
-    }
-
-    checkDuplicateItems( data ) {
-        let newData;
-        newData = data.filter( function ( item, index, inputArray ) {
-            if ( (inputArray.indexOf( item ) === index) === false ) {
-                throw new EvalError( 'You must pass a UNIQUE VALUE to the data array when using the SIMPLEDATA type.' );
-            }
-        } );
-        return data;
-    }
-
-    calcHeightItem() {
-        if ( this.itemAmount >= this.datasource.length ) {
+    calcListHeight() {
+        if ( this.itemsToScroll >= this.dataSource.length ) {
             return { 'height' : 'auto' };
         } else {
-            return { 'height' : (36) * this.itemAmount + 'px' };
+            return { 'height' : (this.itemHeight * this.itemsToScroll) + 'px' };
         }
     }
+
+    closeList() {
+        this.showList = false;
+    }
+
 
 }

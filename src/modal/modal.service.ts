@@ -37,9 +37,9 @@ export class ModalService {
 
     public backdrop;
 
-    private callBack = Function();
+    public view: ViewContainerRef;
 
-    private view: ViewContainerRef;
+    private callBack = Function();
 
     private minModals: any[] = [];
 
@@ -121,9 +121,17 @@ export class ModalService {
                comp = value;
            }
         });
-        this.componentList.splice(1, comp);
-        this.removeBackdrop();
         this.view.remove( this.view.indexOf(comp));
+        this.removeOfTheList();
+        this.removeBackdrop();
+    }
+
+
+    removeOfTheList() {
+        setTimeout( () => {
+            this.componentList.splice( this.componentList.length - 1, 1 );
+            this.sortComponentsByZIndex();
+        }, 1 );
     }
 
     removeBackdrop() {
@@ -134,6 +142,12 @@ export class ModalService {
 
     getMinModals() {
         return this.minModals;
+    }
+
+    sortComponentsByZIndex() {
+        this.componentList.sort( ( a, b ) => {
+            return a.location.nativeElement.children[ 0 ].style.zIndex - b.location.nativeElement.children[ 0 ].style.zIndex
+        } );
     }
 
     execCallBack( result: any, component? ) {

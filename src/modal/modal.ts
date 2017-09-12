@@ -19,15 +19,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
-        Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
+    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+} from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
+import { KeyEvent } from '../core/enums/key-events';
 
 let globalZindex = 1;
+
+const listenersDocument = [];
 
 @Component({
     selector: 'tl-modal',
@@ -45,7 +50,7 @@ let globalZindex = 1;
         )
     ]
 })
-export class TlModal implements OnInit, ModalOptions, OnDestroy {
+export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() draggable = true;
 
@@ -154,6 +159,29 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.mouseupListener();
         this.validateProperty();
         this.onShow.emit();
+    }
+
+    ngAfterViewInit() {
+        const listener = this.renderer.listen( document, 'keyup', ( $event ) => {
+            if ( $event.keyCode === KeyEvent.ESCAPE ) {
+                if ( document.getElementsByClassName( 'tl-modal-container' ).length > 0 ) {
+                    this.serviceControl.execCallBack( ModalResult.MRCLOSE,
+                        this.serviceControl.componentList[ this.serviceControl.componentList.length - 1 ] );
+                }
+            }
+        } );
+        listenersDocument.push( listener );
+        this.removeListeners();
+    }
+
+
+    removeListeners() {
+        listenersDocument.forEach( ( value, index2, array ) => {
+            if ( index2 !== 0 ) {
+                listenersDocument.splice( value, 1 );
+                value();
+            }
+        } );
     }
 
     resizeListener() {
@@ -326,6 +354,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     setZIndex() {
         this.serviceControl.setZIndex( this.modal, this.getZIndex() );
+        this.serviceControl.sortComponentsByZIndex();
     }
 
     isMouseOutOfTheWindowRight( event ) {
@@ -449,6 +478,9 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.subscribeResize();
         this.subscribeMouseMove();
         this.subscribeMouseUp();
+        listenersDocument.forEach( ( value, index2, array ) => {
+            value();
+        } )
     }
 
 }

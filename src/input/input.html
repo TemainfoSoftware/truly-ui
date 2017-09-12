@@ -12,7 +12,6 @@
     <input #input #model="ngModel"
            attr.name="{{name}}"
            class="field"
-           [style.text-align]="textAlign"
            type="text"
            [ngClass]="{
                '-cursorblocked' : readonly || disabled,
@@ -21,6 +20,7 @@
                '-hasValidation': hasValidation()
            }"
            [tabindex]="tabindex"
+           [style.text-align]="textAlign"
            [readonly]="readonly ? true : null"
            [disabled]="disabled ? true : null"
            [autocomplete]="autocomplete"
@@ -32,11 +32,16 @@
            (blur)="onBlur()"
            (focus)="onFocus()">
 
-    <span (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
-    <span *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
+
+    <span #afterIcon *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
+
     <span *ngIf="textAfter"
+          #afterText
           class="addon -borderright"
           [ngClass]="{'-predefined' : textAfter}">{{textAfter}}
     </span>
+
+    <span [style.right]="clearButtonPosition + 'px'" (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
+
 </div>
 

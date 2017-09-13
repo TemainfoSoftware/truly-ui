@@ -203,8 +203,22 @@ export class TlListBox implements OnInit, AfterViewInit {
         } );
     }
 
-    addEventKeyDownToListElement() {
-        this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+    addEventKeyDownToListElement( customListElement? ) {
+        if ( !customListElement ) {
+            this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+                this.scrollByArrows = true;
+                $event.preventDefault();
+                $event.stopPropagation();
+                this.handleEventKeyDown( $event );
+            } );
+        } else {
+            this.addCustomTemplateKeyDownListener(customListElement);
+        }
+
+    }
+
+    addCustomTemplateKeyDownListener(customListElement) {
+        customListElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
             this.scrollByArrows = true;
             $event.preventDefault();
             $event.stopPropagation();
@@ -591,10 +605,12 @@ export class TlListBox implements OnInit, AfterViewInit {
                         if ( element.nodeName === 'LI' ) {
                             this.renderer.appendChild( this.listBox.nativeElement, element );
                             this.renderer.setAttribute( element, 'data-indexnumber', String( (row + this.skip) ) );
+                            this.renderer.setAttribute( element, 'tabindex', '-1' );
                             this.renderer.setStyle( element, 'top', (row + this.skip) * this.rowHeight + 'px' );
                             this.renderer.setStyle( element, 'position', 'absolute' );
                             this.renderer.setStyle( element, 'width', '100%' );
                             this.renderer.setStyle( element, 'height', this.rowHeight + 'px' );
+                            this.addEventKeyDownToListElement( element );
                         }
                     }
                 }

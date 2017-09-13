@@ -77,15 +77,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.firstRender();
     }
 
-
-    private setProprertiesFromTale(){
+    private setProprertiesFromTale() {
         this.bodyHeight = this.datatable.rowHeight * this.datatable.totalRows;
         this.quantityVisibleRows = this.datatable.height / this.datatable.rowHeight;
         this.quantityInVisibleRows = Math.round( ( this.datatable.rowsPage - this.quantityVisibleRows ) / 2 );
         this.setlastRowViewport();
     }
 
-    private addListenerToDataSource(){
+    private addListenerToDataSource() {
         this.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
 
             if ( this.lastRecord !== dataSource[0]) {
@@ -97,7 +96,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         });
     }
 
-    private addListenerToScroll(){
+    private addListenerToScroll() {
         this.listComponent.nativeElement.addEventListener('scroll', () => {
             this.setScrollTop();
             this.setlastRowViewport();
@@ -107,7 +106,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     }
 
-    private firstRender(){
+    private firstRender() {
         setTimeout(() => {
             this.renderList( 0, this.dataSourceService.datasource );
             this.activeElement = this.listBody.nativeElement.rows[0];
@@ -218,7 +217,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private setlastRowViewport() {
         this.lastRowViewport = Math.round( ( this.datatable.height + this.scrollTop  ) / this.datatable.rowHeight );
-        this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows+1;
+        this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows + 1;
     }
 
     private setScrollTop() {
@@ -246,7 +245,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
 
-    onClick(event){
+    private onClick(event) {
         this.activeElement = event.target.parentElement;
         const initRange = Math.floor( this.scrollTop / this.datatable.rowHeight );
 
@@ -271,32 +270,32 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
     }
 
-    private handleKeyArrowDown(){
-        if(this.activeElement.nextElementSibling){
+    private handleKeyArrowDown() {
+        if (this.activeElement.nextElementSibling) {
             (this.activeElement.nextElementSibling as HTMLElement).focus();
             this.activeElement = document.activeElement;
         }
     }
 
-    private handleKeyArrowUp(){
-        if (this.activeElement.previousElementSibling){
+    private handleKeyArrowUp() {
+        if (this.activeElement.previousElementSibling) {
             (this.activeElement.previousElementSibling as HTMLElement).focus();
             this.activeElement = document.activeElement;
         }
     }
 
-    private setFocusForNextElement(){
+    private setFocusForNextElement() {
         const rowNumber = this.activeElement.getAttribute('row');
 
         let  nextElement;
-        if (document.querySelector('tr[row="'+rowNumber+'"]')){
-            nextElement = document.querySelector('tr[row="'+rowNumber+'"]').nextElementSibling;
-        }else{
-            this.lastRowViewport = this.lastRowViewport-2;
-            nextElement = document.querySelector('tr[row="'+this.lastRowViewport+'"]').nextElementSibling;
+        if (document.querySelector('tr[row="' + rowNumber + '"]')) {
+            nextElement = document.querySelector('tr[row="' + rowNumber + '"]').nextElementSibling;
+        }else {
+            this.lastRowViewport = this.lastRowViewport - 2;
+            nextElement = document.querySelector('tr[row="' + this.lastRowViewport + '"]').nextElementSibling;
         }
 
-        if( nextElement !== null ){
+        if ( nextElement !== null ) {
             (nextElement as HTMLElement).focus();
             this.activeElement = document.activeElement;
         }

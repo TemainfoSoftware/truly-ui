@@ -25,7 +25,7 @@
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",
     "ngx-highlight-js": "^1.0.1",
-    "rxjs": "^5.1.0",
+    "rxjs": "^5.4.2",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {

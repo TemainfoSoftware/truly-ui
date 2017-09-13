@@ -10,10 +10,13 @@
     </div>
 
 
-    <div [tlLoading]="datatable.loading" #listComponent id="id-component" [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
+    <div #listComponent id="id-component"
+         (keydown)="onKeydown($event)"
+         [tlLoading]="datatable.loading"
+         [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
         <div [ngStyle]="{height: bodyHeight+'px'}">
             <table class="datatable" [ngStyle]="{position: 'relative'}">
-                <tbody #listBody class="datatableBody"></tbody>
+                <tbody (click)="onClick($event)" #listBody class="datatableBody" ></tbody>
             </table>
         </div>
     </div>

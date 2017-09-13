@@ -219,7 +219,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private setlastRowViewport() {
         this.lastRowViewport = Math.round( ( this.datatable.height + this.scrollTop  ) / this.datatable.rowHeight );
         this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows+1;
-        console.log(this.lastRowViewport,this.firstRowViewport);
     }
 
     private setScrollTop() {
@@ -235,7 +234,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private isScrollDown() {
-        console.log('ScrollTOP',this.scrollTop ,this.lastScrollTop);
         return this.scrollTop > this.lastScrollTop;
     }
 

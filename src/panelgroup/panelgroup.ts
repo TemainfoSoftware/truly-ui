@@ -20,20 +20,29 @@
  SOFTWARE.
  */
 
-import { KeyEvent } from '../core/enums/key-events';
+import { Component, AfterViewInit, Input } from '@angular/core';
 
-export class DialogDefaultBehavior {
+@Component( {
+    selector: 'tl-panelgroup',
+    templateUrl: './panelgroup.html',
+    styleUrls: [ './panelgroup.scss' ],
+} )
+export class TlPanelGroup implements AfterViewInit {
 
-    public buttonAction;
+    @Input() labelGroup = 'Panel Group';
+
+    @Input() backgroundColor = '';
+
+    @Input() borderColor = '';
+
+    @Input() fontColorCaption = '';
+
+    @Input() fontSizeCaption = '';
 
     constructor() {}
 
-    onKeyDown( $event: KeyboardEvent ) {
-        $event.stopPropagation();
-        switch ( $event.keyCode ) {
-            case KeyEvent.TAB:
-                $event.preventDefault();
-                break;
-        }
-    }
+
+    ngAfterViewInit() {}
+
 }
+

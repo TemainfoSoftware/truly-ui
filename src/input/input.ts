@@ -163,15 +163,35 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() tabindex = 0;
 
     /**
+     * Define the alignment of the text inside of the input.
+     */
+    @Input() textAlign;
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;
+
+    /**
+     * View for textAfter
+     */
+    @ViewChild('afterText') public textClearButton;
+
+    /**
+     * View for textAfter
+     */
+    @ViewChild('afterIcon') public iconClearButton;
 
     /**
      * Output event for clear button
      * @type {EventEmitter}
      */
     @Output() clear: EventEmitter<any> = new EventEmitter();
+
+    /**
+     * Control the position of the clearButton.
+     */
+    private clearButtonPosition;
 
     /**
      * Constructor
@@ -185,6 +205,20 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     ngAfterViewInit() {
         this.setElement( this.input, 'input' );
+        this.validateClearButtonPosition();
+    }
+
+    validateClearButtonPosition() {
+        if (this.textClearButton) {
+            this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
+        }
+        if (this.iconClearButton) {
+            this.clearButtonPosition = this.iconClearButton.nativeElement.offsetWidth + 5;
+        }
+        if (this.textClearButton && this.iconClearButton) {
+            this.clearButtonPosition =
+                (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
+        }
     }
 
     /**

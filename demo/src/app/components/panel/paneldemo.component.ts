@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 
-import * as json from './radiobuttondemo-dataproperties.json';
-import * as jsonEvts from './radiobuttondemo-events.json';
+import * as json from './paneldemo-dataproperties.json';
+import * as jsonEvts from './paneldemo-events.json';
 
 @Component( {
-  selector: 'app-radio',
-  templateUrl: './radiobuttondemo.component.html',
+  selector: 'app-paneldemo',
+  templateUrl: './paneldemo.component.html',
   animations: [ routerTransition() ],
-  styleUrls: [ './radiobuttondemo.component.scss' ]
+  styleUrls: [ './paneldemo.component.scss' ]
 } )
-export class RadioButtonDemo {
+export class PanelDemo {
   private dataTableProperties;
-
-  private radio;
-
-  private radio2;
 
   private dataEvents;
 

@@ -26,6 +26,7 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'datatable/scrollable', loadChildren: './components/datatable/scrollable/datatablescrollabledemo.module#DatatableScrollableDemoModule'},
       {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'},
       {path: 'listbox', loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'},
+      {path: 'panelgroup', loadChildren: './components/panel/paneldemo.module#PanelDemoModule'},
     ])
   ],
   exports: [RouterModule]

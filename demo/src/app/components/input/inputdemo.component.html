@@ -97,8 +97,8 @@
         <div class="group-component">
           <h5>Text After</h5>
           <tl-input
-            textAfter="@domain.com"
-          ></tl-input>
+            textAfter="@domain.com">
+          </tl-input>
         </div>
       </div>
       <div class="col-md-3">
@@ -112,6 +112,28 @@
             ngModel="Many Properties"
             [autocomplete]="'off'">
           </tl-input>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>Text Alignment Right</h5>
+          <tl-input
+            [textAlign]="'right'">
+          </tl-input>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>With Directive Charcase(Uppercase)</h5>
+          <tl-input charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-input>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="group-component">
+          <h5>With Directive Charcase(Lowercase)</h5>
+          <tl-input charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-input>
         </div>
       </div>
     </div>
@@ -142,21 +164,133 @@
       </table>
     </div>
     <hr>
-    <!--<h3 class="title">Events</h3>-->
   </div>
   <div class="examples">
     <h3 class="title">Examples</h3>
     <div class="group-component">
-      <h5 class="title">Basic</h5>
+      <h5 class="title">All Properties</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-input
-        ngModel="Many Properties"
-        [iconBefore]="'ion-printer'"
-        [placeholder]="'With Placeholder'"
-        [textAfter]="'US'"
-        [clearButton]="true"
-        [autocomplete]="'off'">
-      </tl-input>
+<tl-input
+    ngModel="Many Properties"
+    [iconBefore]="'ion-printer'"
+    [placeholder]="'With Placeholder'"
+    [textAfter]="'US'"
+    [clearButton]="true"
+    [autocomplete]="'off'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Icon Before</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [iconBefore]="'ion-printer'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Icon After</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [iconAfter]="'ion-printer'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Icon Both Sides</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [iconBefore]="'ion-card'"
+  [iconAfter]="'ion-social-usd'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Label</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [labelSize]="20"
+  [label]="'Name'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">AutoComplete</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [autocomplete]="'off'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Clear Button</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+    ngModel="Click at the button side"
+    [clearButton]="true">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Disabled</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+    [(ngModel)]="disabled"
+    [disabled]="true">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">ReadOnly</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+    [(ngModel)]="readonly"
+    [readonly]="true">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Placeholder</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [placeholder]="'With Placeholder'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Text Before</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  textBefore="My Input">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Text After</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  textAfter="@domain.com">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Text Alignment Right</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [textAlign]="'right'">
+</tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Directive Charcase(Uppercase)</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-input charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-input>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Directive Charcase(Lowercase)</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-input>
     </textarea>
     </div>
   </div>

@@ -20,20 +20,13 @@
  SOFTWARE.
  */
 
-import { KeyEvent } from '../core/enums/key-events';
+import { Directive, ViewContainerRef } from '@angular/core';
 
-export class DialogDefaultBehavior {
+@Directive({
+    selector: '[containerDirective]'
+})
+export class AutocompleteContainerDirective {
 
-    public buttonAction;
+    constructor(public viewList: ViewContainerRef) {}
 
-    constructor() {}
-
-    onKeyDown( $event: KeyboardEvent ) {
-        $event.stopPropagation();
-        switch ( $event.keyCode ) {
-            case KeyEvent.TAB:
-                $event.preventDefault();
-                break;
-        }
-    }
 }

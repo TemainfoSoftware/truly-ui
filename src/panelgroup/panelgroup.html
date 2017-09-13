@@ -1,0 +1,10 @@
+<div class="panelgroup-container" [style.border-color]="borderColor" [style.background-color]="backgroundColor">
+    <div class="header-group">
+        <span class="spacer spacer-left"></span>
+        <span [style.color]="fontColorCaption" [style.font-size]="fontSizeCaption">{{labelGroup}}</span>
+        <span class="spacer spacer-right"></span>
+    </div>
+    <div class="panelgroup-body">
+        <ng-content></ng-content>
+    </div>
+</div>

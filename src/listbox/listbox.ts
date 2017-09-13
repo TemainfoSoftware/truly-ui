@@ -232,7 +232,6 @@ export class TlListBox implements OnInit, AfterViewInit {
         }
     }
 
-
     createListenerOnTemplate() {
         if ( this.existCustomTemplate() ) {
             this.addClickEventToCustomTemplate();
@@ -241,14 +240,25 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     addClickEventToCustomTemplate() {
         this.listBox.nativeElement.addEventListener( 'click', ( $event ) => {
-            const indexDataGlobal = $event.target.dataset.indexnumber;
-            this.handleClickItem( this.data[ indexDataGlobal ], this.getIndexOnList( $event ) );
+            this.handleClickItem( this.data[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
+                this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
         } );
     }
 
-    getIndexOnList( $event ) {
+    getElementListOfCustomTemplate( $event ) {
+        let item = { indexDataGlobal: '', listElement: '' };
+        for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
+            if ( $event.path[ pathElement ].localName === 'li' ) {
+                item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
+                item.listElement = $event.path[ pathElement ];
+                return item;
+            }
+        }
+    }
+
+    getIndexOnList( listElement ) {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
-            if ( $event.target === this.listBox.nativeElement.children[ element ] ) {
+            if ( listElement === this.listBox.nativeElement.children[ element ] ) {
                 return element;
             }
         }
@@ -299,17 +309,15 @@ export class TlListBox implements OnInit, AfterViewInit {
 
 
     snapScreenScroll() {
-        const initRange = this.getScrollPositionByContainer();
-        const calcLines = (initRange * this.rowHeight);
-
+        const calcLines = (this.getScrollPositionByContainer() * this.rowHeight);
         if ( (this.itemContainer.nativeElement.scrollTop % calcLines) ) {
             this.itemContainer.nativeElement.scrollTop = calcLines;
         }
     }
 
     getCursorViewPortPosition( index ) {
-        const initRange = this.getScrollPositionByContainer();
-        this.cursorViewPortPosition = this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) - initRange;
+        this.cursorViewPortPosition =
+            this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) - this.getScrollPositionByContainer();
         this.lastScrollTopOnKey = this.itemContainer.nativeElement.scrollTop;
     }
 

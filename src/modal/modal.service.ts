@@ -104,7 +104,8 @@ export class ModalService {
         }, 280 );
     }
 
-    removeMinModals( indexModal ) {
+    showModal( item, indexModal ) {
+        item.instance.element.nativeElement.style.display = 'block';
         this.minModals.splice( indexModal, 1 );
     }
 

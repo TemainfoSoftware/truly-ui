@@ -19,45 +19,32 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../backdrop/backdrop';
-import { TlContainerModal } from './container-modal/container-modal';
 
-export * from './modal';
+import { Component, Input, ViewChild } from '@angular/core';
+import { ModalService } from '../modal.service';
 
-@NgModule( {
-    imports: [
-        CommonModule,
-    ],
-    declarations: [
-        TlModal,
-        TlContainerModal,
-        TlBackdrop
-    ],
-    exports: [
-        TlModal,
-        TlContainerModal,
-        TlBackdrop
-    ],
-    entryComponents: [
-        TlModal,
-        TlBackdrop
-    ],
-    providers: [
-        ToneColorGenerator
-    ]
-} )
-export class ModalModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ModalModule,
-            providers: [
-                ModalService
-            ]
-        }
-    }
+ @Component({
+     selector: 'tl-container-modal',
+     templateUrl: './container-modal.html',
+     styleUrls: ['./container-modal.scss']
+ })
+export class TlContainerModal {
+
+     @Input() containerColor = '#F2F2F2';
+
+     @Input() height = '40px';
+
+     @ViewChild('container') container;
+
+     constructor(private modalService: ModalService) {}
+
+     showWindow(item, i) {
+        this.modalService.showModal(item, i)
+     }
+
+     closeWindow(item, i) {
+         this.modalService.showModal(item, i);
+         this.modalService.close(item);
+     }
+
 }

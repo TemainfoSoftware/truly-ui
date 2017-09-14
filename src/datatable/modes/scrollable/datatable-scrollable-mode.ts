@@ -101,7 +101,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     onKeydown( $event ) {
         $event.preventDefault();
-        if ( this.datatable.loading){
+        if ( this.datatable.loading) {
             return
         }
         switch ( $event.keyCode ) {
@@ -151,23 +151,22 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }, 1)
     }
 
-    private handleKeyPageUp(){
+    private handleKeyPageUp() {
 
     }
 
-    private handleKeyPageDown(){
-        console.log('PageDown')
+    private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.datatable.rowHeight;
     }
 
-    private handleKeyEnd( event: KeyboardEvent  ){
-        if ( event.ctrlKey ){
+    private handleKeyEnd( event: KeyboardEvent  ) {
+        if ( event.ctrlKey ) {
             this.listComponent.nativeElement.scrollTop = this.datatable.rowHeight * this.datatable.totalRows;
         }
     }
 
-    private handleKeyHome( event: KeyboardEvent ){
-        if ( event.ctrlKey ){
+    private handleKeyHome( event: KeyboardEvent ) {
+        if ( event.ctrlKey ) {
             this.listComponent.nativeElement.scrollTop = 0;
         }
     }
@@ -248,7 +247,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
     }
 
-    private createElementTR( row, lastRow){
+    private createElementTR( row, lastRow) {
         this.elementTR = new ElementRef( this.renderer.createElement( 'tr' ) );
         this.renderer.setAttribute( this.elementTR.nativeElement, 'row', String( (row + lastRow) ) );
         this.renderer.setAttribute( this.elementTR.nativeElement, 'tabindex', String( (row + lastRow) ) );
@@ -292,12 +291,12 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.lastScrollTop = this.scrollTop;
     }
 
-    private setScrollDirection( ){
+    private setScrollDirection( ) {
         this.scrollDirection =  (this.scrollTop > this.lastScrollTop ) ? 'DOWN' : 'UP';
     }
 
     private isScrollDown() {
-        return this.scrollDirection == 'DOWN';
+        return this.scrollDirection === 'DOWN';
     }
 
     private addEventClickToListElement( row ) {
@@ -306,14 +305,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         } );
     }
 
-    private handleClickItem( item, index ){
+    private handleClickItem( item, index ) {
         this.setActiveElement();
         this.getCursorViewPortPosition();
     }
 
     private getCursorViewPortPosition() {
-        let indexItemInList: any = this.activeElement.getAttribute( 'row' );
-        this.cursorViewPortPosition = ( ( this.lastRowViewport - indexItemInList )  - this.quantityVisibleRows -1) * -1;
+        const indexItemInList: any = this.activeElement.getAttribute( 'row' );
+        this.cursorViewPortPosition = ( ( this.lastRowViewport - indexItemInList )  - this.quantityVisibleRows - 1) * -1;
     }
 
     private handleKeyArrowDown() {
@@ -324,29 +323,29 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.setFocusInPreviousElement();
     }
 
-    private setFocusInPreviousElement(){
+    private setFocusInPreviousElement() {
         if (this.activeElement.previousElementSibling) {
-            if ( this.cursorViewPortPosition > 1  ){
+            if ( this.cursorViewPortPosition > 1  ) {
                 this.cursorViewPortPosition --;
-            }else{
+            }else {
                 this.listComponent.nativeElement.scrollTop -= this.datatable.rowHeight;
             }
             this.setFocus( this.activeElement.previousElementSibling );
         }
     }
 
-    private setFocusInNextElement(){
+    private setFocusInNextElement() {
         if (this.activeElement.nextElementSibling) {
-            if ( this.cursorViewPortPosition < this.quantityVisibleRows ){
+            if ( this.cursorViewPortPosition < this.quantityVisibleRows ) {
                 this.cursorViewPortPosition ++;
-            }else{
+            }else {
                 this.listComponent.nativeElement.scrollTop += this.datatable.rowHeight;
             }
             this.setFocus( this.activeElement.nextElementSibling );
         }
     }
 
-    private setActiveElement(){
+    private setActiveElement() {
         this.activeElement = document.activeElement;
     }
 
@@ -354,15 +353,15 @@ export class TlDatatableScrollableMode implements AfterContentInit {
        this.setFocus( this.getFocusElementOnChangeData() ) ;
     }
 
-    private getFocusElementOnChangeData(){
+    private getFocusElementOnChangeData() {
         const rowNumber = this.activeElement.getAttribute('row');
         if (document.querySelector('tr[row="' + rowNumber + '"]')) {
             return document.querySelector('tr[row="' + rowNumber + '"]');
         }
 
-        if ( this.isScrollDown() ){
-            return document.querySelector('tr[row="' + ( this.lastRowViewport-1 ) + '"]');
-        }else{
+        if ( this.isScrollDown() ) {
+            return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');
+        }else {
             return document.querySelector('tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]');
         }
 

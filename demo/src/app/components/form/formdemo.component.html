@@ -7,17 +7,36 @@
 <hr>
 <div class="showcase">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-10">
         <div class="group-component">
           <h5>Show Form</h5>
-          <tl-button [text]="'Show Form'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="modal1()"></tl-button>
+          <div class="col-md-3">
+            <tl-button [text]="'Show Form 1'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form1()"></tl-button>
+          </div>
+          <div class="col-md-3">
+            <tl-button [text]="'Show Form 2'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form2()"></tl-button>
+          </div>
+          <div class="col-md-3">
+            <tl-button [text]="'Show Form 3'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form3()"></tl-button>
+          </div>
         </div>
       </div>
     </div>
+
+  <div class="row">
     <br>
-  <pre>
-  <code>{{result | json}}</code>
-  </pre>
+    <div class="col-md-12">
+    <pre>
+      <code>
+      {{result | json}}
+     </code>
+    </pre>
+    </div>
+
+    <div class="col-md-12">
+      <tl-container-modal></tl-container-modal>
+    </div>
+  </div>
   <div class="setup">
     <h3 class="title">Note</h3>
     <div class="pattern" style="font-size: 15px">

@@ -42,7 +42,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() buttonAddonAfterClass;
 
-    @Input() size;
+    @Input() width;
 
     @Input() disabled;
 

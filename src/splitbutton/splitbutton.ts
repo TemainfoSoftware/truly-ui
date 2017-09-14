@@ -63,7 +63,7 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() buttonAddonAfterClass;
 
-    @Input() size;
+    @Input() width;
 
     @Input() disabled: boolean = null;
 

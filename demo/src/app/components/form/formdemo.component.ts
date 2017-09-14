@@ -21,7 +21,9 @@ export class FormDemo {
 
   public index: number;
 
-  public formOptions: ModalOptions;
+  public formOptions1: ModalOptions;
+  public formOptions2: ModalOptions;
+  public formOptions3: ModalOptions;
 
   private formprop;
 
@@ -35,9 +37,31 @@ export class FormDemo {
     this.formprop = json.dataProperties;
     this.formevts = jsonEvents.dataEvents;
 
-    this.formOptions = {
-      title: 'New Form',
-      icon: 'ion-ios-list-outline',
+    this.formOptions1 = {
+      title: 'User Register',
+      icon: 'ion-person-add',
+      draggable: true,
+      width: '500px',
+      height: '500px',
+      maximizable: true,
+      minimizable: true,
+      fullscreen: false
+    };
+
+    this.formOptions2 = {
+      title: 'Pacient Register',
+      icon: 'ion-heart',
+      draggable: true,
+      width: '500px',
+      height: '500px',
+      maximizable: true,
+      minimizable: true,
+      fullscreen: false
+    };
+
+    this.formOptions3 = {
+      title: 'Count Register',
+      icon: 'ion-stats-bars',
       draggable: true,
       width: '500px',
       height: '500px',
@@ -48,11 +72,27 @@ export class FormDemo {
   }
 
 
-  modal1() {
-    this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
+  form1() {
+    this.formService.createForm(NewPerson, this.formOptions1, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });
   }
+
+  form2() {
+    this.formService.createForm(NewPerson, this.formOptions2, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
+    });
+  }
+
+  form3() {
+    this.formService.createForm(NewPerson, this.formOptions3, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
+    });
+  }
+
+
 
 }

@@ -16,7 +16,7 @@
     "test-jest": "jest --config=jest.conf.json",
     "test-jest:watch": "jest --watch --config=jest.conf.json",
     "test-jest:ci": "jest --config=jest.conf.json --runInBand",
-    "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish dist --access public && semantic-release post"
   },
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",

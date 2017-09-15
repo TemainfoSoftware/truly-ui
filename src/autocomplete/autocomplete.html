@@ -6,6 +6,8 @@
 
     <div class="tl-autocomplete-wrapper">
 
+        <i *ngIf="searchIcon" class="search-icon ion-search"></i>
+
         <input #filter
                autocomplete="off"
                attr.name="{{name}}"
@@ -17,9 +19,11 @@
                [(ngModel)]="modelValue"
                (blur)="closeList()"
                [required]="validations.required"
+               [style.paddingLeft]="searchIcon === true ? '30px' : '6px'"
+               [style.paddingRight]="clearButton === true ? '16px' : '6px'"
                type="text">
 
-        <span (click)="clearFilter()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
+        <i *ngIf="clearButton && ngValue" (click)="clearFilter()" class="addon -clearbutton ion-close-round"></i>
 
         <div class="tl-autocomplete-list" [style.zIndex]="zIndex" [@enterAnimation]="showHide">
 

@@ -70,11 +70,15 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     @Input() dataLabel: string;
 
+    @Input() dataDescription: string;
+
     @Input() query: any[] = [];
 
     @Input() clearButton: boolean;
 
     @Input() minCharToSearch: number;
+
+    @Input() searchIcon: boolean;
 
     @ViewChild( 'list' ) list;
 
@@ -104,11 +108,15 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private spanElementDataLabel;
 
-    private filtredData = [];
+    private spanElementDataDescription;
+
+    private iElementIconAdd;
+
+    private spanElementIconAdd;
 
     private cursor;
 
-    private nothingToShow: boolean;
+    private searchValue;
 
     constructor( public renderer: Renderer2,
                  tabIndexService: TabIndexService,
@@ -117,16 +125,17 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                  private change: ChangeDetectorRef,
                  public zone: NgZone ) {
         super( tabIndexService, idService, nameService );
-        this.itemHeight = 36;
+        this.itemHeight = 33;
         this.itemsToScroll = 5;
         this.showList = false;
         this.clearButton = false;
         this.dataType = 'object';
         this.dataID = '';
         this.dataLabel = '';
+        this.dataDescription = '';
         this.cursor = -1;
-        this.nothingToShow = false;
         this.minCharToSearch = 1;
+        this.searchIcon = false;
     }
 
     ngOnInit() {
@@ -148,21 +157,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     renderDataList() {
         if ( !this.existCustomTemplate() ) {
-            if ( this.nothingToShow ) {
-                if ( this.list.nativeElement.children.length > 0 ) {
-                    while ( this.list.nativeElement.hasChildNodes() ) {
-                        this.list.nativeElement.removeChild( this.list.nativeElement.lastChild );
-                    }
-                }
-                this.createElementNothingToShow();
-                this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
-                this.createElementIconNothingToShow();
-                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataID.nativeElement );
-                this.createElementLabelNothingToShow();
-                this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
 
-                return;
-            }
             if ( this.dataSource ) {
                 this.zone.runOutsideAngular( () => {
                     if ( this.list.nativeElement.children.length > 0 ) {
@@ -173,53 +168,86 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                     for ( let item = 0; item < this.dataSource.length; item++ ) {
                         this.createElementLi( item );
                         this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
+                        this.createElementSpanDataLabel( item );
+                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
                         if ( this.dataType === 'object' ) {
+                            this.createElementSpanDataDescription( item );
+                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataDescription.nativeElement );
                             this.createElementSpanDataID( item );
                             this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataID.nativeElement );
                         }
-                        this.createElementSpanLabel( item );
-                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
+                    }
+                    this.createElementLi( 'add' );
+                    this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
+                    this.createElementIconAdd();
+                    this.renderer.appendChild( this.listElement.nativeElement, this.iElementIconAdd.nativeElement );
+                    this.createElementLabelAdd();
+                    this.renderer.appendChild( this.listElement.nativeElement, this.spanElementIconAdd.nativeElement );
+                    this.list.nativeElement.scrollTop = 0;
+                    if ( this.dataSource.length > 0 ) {
+                        this.setActiveItemClassOnFirstElement();
                     }
                 } );
             }
         }
     }
 
-    createElementLabelNothingToShow() {
-        this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataLabel.nativeElement.append( ' No Data Found' );
+    removeActiveItemClassForAllElements() {
+        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
+            this.list.nativeElement.children[ item ].classList.remove( 'activeItem' );
+        }
+    }
+
+    setActiveItemClassOnFirstElement() {
+        this.list.nativeElement.children[ 0 ].classList.add( 'active-item' );
+    }
+
+    checkDuplicateDataItem() {
+        for ( let i = 0; i < (this.data.length - 1); i++ ) {
+            if ( JSON.stringify( this.data[ i ] ) === JSON.stringify( this.data[ i + 1 ] ) ) {
+                console.warn( 'Warning: Please check the values ​​of your [data] property, there are duplicate values.' );
+            }
+        }
+    }
+
+    createElementLabelAdd() {
+        this.spanElementIconAdd = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.spanElementIconAdd.nativeElement.append( 'Add New' );
+    }
+
+    createElementIconAdd() {
+        this.iElementIconAdd = new ElementRef( this.renderer.createElement( 'i' ) );
+        this.renderer.addClass( this.iElementIconAdd.nativeElement, 'ion-plus' );
     }
 
     createElementLi( item ) {
+        let labelClass;
+        labelClass = (item === 'add') ? 'item-add' : 'item-list';
         this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( item ) );
         this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
         this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight + 'px' );
-        // this.renderer.addClass( this.listElement.nativeElement, 'item' );
-    }
-
-    createElementNothingToShow() {
-        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', '0' );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight + 'px' );
-        this.renderer.addClass( this.listElement.nativeElement, 'no-data-found' );
-    }
-
-    createElementIconNothingToShow() {
-        this.spanElementDataID = new ElementRef( this.renderer.createElement( 'i' ) );
-        this.renderer.addClass( this.spanElementDataID.nativeElement, 'ion-sad-outline' );
+        this.renderer.addClass( this.listElement.nativeElement, labelClass );
     }
 
     createElementSpanDataID( item ) {
         this.spanElementDataID = new ElementRef( this.renderer.createElement( 'span' ) );
         this.renderer.setStyle( this.spanElementDataID.nativeElement, 'float', 'right' );
-        this.spanElementDataID.nativeElement.append( this.dataSource[ item ][ this.dataID ] );
+        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataID ].toString(), this.searchValue ) );
+        this.renderer.addClass( this.spanElementDataID.nativeElement, 'item-id' );
     }
 
-    createElementSpanLabel( item ) {
+    createElementSpanDataLabel( item ) {
+        let labelClass;
+        labelClass = (this.dataType === 'string') ? 'item-simple-label' : 'item-label';
         this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataLabel.nativeElement.append( this.dataSource[ item ][ this.dataLabel ] );
+        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataLabel ], this.searchValue ) );
+        this.renderer.addClass( this.spanElementDataLabel.nativeElement, labelClass );
+    }
+
+    createElementSpanDataDescription( item ) {
+        this.spanElementDataDescription = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataDescription ], this.searchValue ) );
+        this.renderer.addClass( this.spanElementDataDescription.nativeElement, 'item-description' );
     }
 
     existCustomTemplate() {
@@ -267,6 +295,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 ' when using the [data] property of the tl-autocomplete element.' );
         }
         this.checkDataProperties();
+        this.checkDuplicateDataItem();
         return this.data;
     }
 
@@ -282,6 +311,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.dataID = 'value';
         this.dataLabel = 'value';
         this.query = [ 'value' ];
+        this.checkDuplicateDataItem();
         return simpleData;
     }
 
@@ -299,7 +329,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             }
         } );
         if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-            throw new EvalError( 'You must pass a valid value to a [dataID] property that exists in the [data] property.' );
+            throw new EvalError( 'You must pass a valid value to a [dataID] property that exists in the' +
+                ' [data] property. (Ex: [dataID]="\'id\'")' );
         }
     }
 
@@ -311,7 +342,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             }
         } );
         if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-            throw new EvalError( 'You must pass a valid value to a [dataLabel] property that exists in the [data] property.' );
+            throw new EvalError( 'You must pass a valid value to a [dataLabel] property that exists in the' +
+                ' [data] property. (Ex: [dataLabel]="\'firstName\'")' );
         }
     }
 
@@ -324,7 +356,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                 }
             } );
             if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-                throw new EvalError( 'You must pass a valid value to a [query] property that exists in the [data] property.' );
+                throw new EvalError( 'You must pass a valid value to a [query] property that exists in the' +
+                    ' [data] property. (Ex: [query]="[\'id\',\'firstName\']" )' );
             }
         } );
     }
@@ -338,26 +371,20 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     handleSearch( searchValue ) {
+        if ( !searchValue ) {
+            this.showList = false;
+        }
         this.getAndSetZIndex();
         if ( searchValue.length >= this.minCharToSearch ) {
             this.showList = true;
             this.list.nativeElement.scrollTop = 0;
             this.dataSource = this.filterData( searchValue );
         }
-        this.validateFiltredAsEmpty();
+        this.change.detectChanges();
+        this.searchValue = searchValue;
         this.renderDataList();
         this.cursor = -1;
 
-    }
-
-    validateFiltredAsEmpty() {
-        if ( this.dataSource.length === 0 ) {
-            this.nothingToShow = true;
-            this.change.detectChanges();
-        } else {
-            this.nothingToShow = false;
-            this.change.detectChanges();
-        }
     }
 
     filterData( searchValue ) {
@@ -403,5 +430,19 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.showList = false;
     }
 
+    highlight( text: string, search ): string {
+        if ( typeof search !== 'object' ) {
+            if ( search && text ) {
+                let pattern = search.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
+                pattern = pattern.split( ' ' ).filter( ( t ) => {
+                    return t.length > 0;
+                } ).join( '|' );
+                const regex = new RegExp( pattern, 'gi' );
+
+                return text.replace( regex, ( match ) => `<strong>${match}</strong>` );
+            }
+            return text;
+        }
+    }
 
 }

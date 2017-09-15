@@ -232,7 +232,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     createElementSpanDataID( item ) {
         this.spanElementDataID = new ElementRef( this.renderer.createElement( 'span' ) );
         this.renderer.setStyle( this.spanElementDataID.nativeElement, 'float', 'right' );
-        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataID ].toString(), this.searchValue ) );
+        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend',
+            this.highlight( this.dataSource[ item ][ this.dataID ].toString(), this.searchValue ) );
         this.renderer.addClass( this.spanElementDataID.nativeElement, 'item-id' );
     }
 
@@ -240,13 +241,15 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         let labelClass;
         labelClass = (this.dataType === 'string') ? 'item-simple-label' : 'item-label';
         this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataLabel ], this.searchValue ) );
+        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend',
+            this.highlight( this.dataSource[ item ][ this.dataLabel ], this.searchValue ) );
         this.renderer.addClass( this.spanElementDataLabel.nativeElement, labelClass );
     }
 
     createElementSpanDataDescription( item ) {
         this.spanElementDataDescription = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( this.dataSource[ item ][ this.dataDescription ], this.searchValue ) );
+        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend',
+            this.highlight( this.dataSource[ item ][ this.dataDescription ], this.searchValue ) );
         this.renderer.addClass( this.spanElementDataDescription.nativeElement, 'item-description' );
     }
 

@@ -11,13 +11,16 @@
         <div class="group-component">
           <h5>Show Form</h5>
           <div class="col-md-3">
-            <tl-button [text]="'Show Form 1'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form1()"></tl-button>
+            <tl-button [text]="'User Register'" [iconAddonBefore]="'ion-ios-list-outline'"
+                       (click)="form1()"></tl-button>
           </div>
           <div class="col-md-3">
-            <tl-button [text]="'Show Form 2'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form2()"></tl-button>
+            <tl-button [text]="'Pacient Register'" [iconAddonBefore]="'ion-ios-list-outline'"
+                       (click)="form2()"></tl-button>
           </div>
           <div class="col-md-3">
-            <tl-button [text]="'Show Form 3'" [iconAddonBefore]="'ion-ios-list-outline'" (click)="form3()"></tl-button>
+            <tl-button [text]="'Count Register'" [iconAddonBefore]="'ion-ios-list-outline'"
+                       (click)="form3()"></tl-button>
           </div>
         </div>
       </div>
@@ -34,7 +37,9 @@
     </div>
 
     <div class="col-md-12">
-      <tl-container-modal></tl-container-modal>
+      <div class="container-modal">
+        <tl-container-modal></tl-container-modal>
+      </div>
     </div>
   </div>
   <div class="setup">

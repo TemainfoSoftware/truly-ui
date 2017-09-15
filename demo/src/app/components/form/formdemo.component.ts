@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 import { ModalOptions } from "../../../../../src/modal/modal-options";
 import { FormService } from "../../../../../src/form/form.service";
@@ -19,10 +19,14 @@ import { DataFormService } from "./newperson/dataform.service";
 } )
 export class FormDemo {
 
+  @ViewChild( 'containerModal' ) containerModal;
+
   public index: number;
 
   public formOptions1: ModalOptions;
+
   public formOptions2: ModalOptions;
+
   public formOptions3: ModalOptions;
 
   private formprop;

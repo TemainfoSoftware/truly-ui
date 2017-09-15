@@ -20,23 +20,35 @@
  SOFTWARE.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../modal.service';
+import { ToneColorGenerator } from "../../core/helper/tonecolor-generator";
 
  @Component({
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss']
  })
- export class TlContainerModal {
+ export class TlContainerModal implements OnInit {
 
      @Input() containerColor = '#F2F2F2';
 
      @Input() height = '40px';
 
+     @Input() boxColor = '#66cc99';
+
      @ViewChild('container') container;
 
-     constructor(private modalService: ModalService ) {}
+     private boxColorInactive = '#6da78d';
+
+     private borderBoxColor = '#54a378';
+
+     constructor(private modalService: ModalService, private colorService: ToneColorGenerator) {}
+
+     ngOnInit() {
+       this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
+       this.borderBoxColor = this.colorService.calculate(this.boxColor, -0.2);
+     }
 
      showWindow(item, i) {
          this.modalService.activeModal = item;

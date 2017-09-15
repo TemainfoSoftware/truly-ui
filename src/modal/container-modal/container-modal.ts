@@ -28,7 +28,7 @@ import { ModalService } from '../modal.service';
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss']
  })
-export class TlContainerModal {
+ export class TlContainerModal {
 
      @Input() containerColor = '#F2F2F2';
 
@@ -36,14 +36,15 @@ export class TlContainerModal {
 
      @ViewChild('container') container;
 
-     constructor(private modalService: ModalService) {}
+     constructor(private modalService: ModalService ) {}
 
      showWindow(item, i) {
-        this.modalService.showModal(item, i)
+         this.modalService.activeModal = item;
+         this.modalService.showModal( item, i );
+
      }
 
-     closeWindow(item, i) {
-         this.modalService.showModal(item, i);
+     closeWindow( item ) {
          this.modalService.close(item);
      }
 

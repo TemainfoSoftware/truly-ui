@@ -62,7 +62,6 @@ export class ModalService implements OnDestroy {
         this.setComponentInjected( component );
         this.setGlobalSettings( modalOptions );
         this.setInitialZIndex();
-
         this.callBack = callback;
     }
 
@@ -209,11 +208,9 @@ export class ModalService implements OnDestroy {
 
     setActiveWindow() {
         let maxZindex = [];
-
-        if ( (this.getVisibleModals().length - 1) === 0 ) {
+        if ( (this.getVisibleModals().length - 1) <= 0 ) {
             return this.activeModal = null;
         }
-
         maxZindex = this.forms;
         this.sortArrayByZIndex( maxZindex );
         this.activeModal = maxZindex[ maxZindex.length - 1 ];

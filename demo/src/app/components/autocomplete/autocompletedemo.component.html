@@ -11,14 +11,15 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Basic SimpleData</h5>
-          <tl-autocomplete [data]="simpleData" [(ngModel)]="result"></tl-autocomplete>
+          <tl-autocomplete [data]="simpleData" [(ngModel)]="result" [searchIcon]="true" [clearButton]="true"></tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result | json }}</span>
         </div>
       </div>
       <div class="col-md-6">
         <div class="group-component">
           <h5>Basic Data</h5>
-          <tl-autocomplete [data]="data" [dataID]="'id'" [dataLabel]="'label'" [query]="['label']"
+          <tl-autocomplete [data]="data" [dataID]="'id'" [dataID]="'id'" [dataLabel]="'firstName'"
+                           [query]="['id','firstName']" [dataDescription]="'title'"
                            [(ngModel)]="result2"></tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result2 | json }}</span>
         </div>
@@ -46,8 +47,9 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Clear Button</h5>
-          <tl-autocomplete [data]="data" [clearButton]="true" [dataID]="'id'" [dataLabel]="'label'"
-                           [query]="['id','label']" [(ngModel)]="result5"></tl-autocomplete>
+          <tl-autocomplete [data]="data" [clearButton]="true" [dataID]="'id'" [dataLabel]="'firstName'"
+                           [query]="['id','firstName','title']" [dataDescription]="'title'"
+                           [(ngModel)]="result5"></tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result5 | json }}</span>
         </div>
       </div>

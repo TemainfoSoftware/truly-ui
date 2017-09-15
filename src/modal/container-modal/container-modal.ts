@@ -22,7 +22,7 @@
 
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../modal.service';
-import { ToneColorGenerator } from "../../core/helper/tonecolor-generator";
+import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
 
  @Component({
      selector: 'tl-container-modal',
@@ -54,10 +54,6 @@ import { ToneColorGenerator } from "../../core/helper/tonecolor-generator";
          this.modalService.activeModal = item;
          this.modalService.showModal( item, i );
 
-     }
-
-     closeWindow( item ) {
-         this.modalService.close(item);
      }
 
 }

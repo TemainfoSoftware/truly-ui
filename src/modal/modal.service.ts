@@ -22,7 +22,7 @@
 import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } from '@angular/core';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
-import { TlBackdrop } from '../backdrop/backdrop';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import set = Reflect.set;
 
 let lastZIndex = 1;

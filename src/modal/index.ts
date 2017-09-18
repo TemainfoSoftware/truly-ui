@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../backdrop/backdrop';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { TlContainerModal } from './container-modal/container-modal';
 
 export * from './modal';
@@ -41,7 +41,6 @@ export * from './modal';
     exports: [
         TlModal,
         TlContainerModal,
-        TlBackdrop
     ],
     entryComponents: [
         TlModal,

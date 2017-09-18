@@ -1,11 +1,11 @@
-.tl-container-modals {
+.container-modals {
   width: 100%;
   min-height: 40px;
   border: 1px solid #C8C8C8;
-  > .minimized-windows {
+  > .wrapper-container-modals {
     display: inline-flex;
     position: relative;
-    > .box {
+    > .container-modal-box {
       cursor: pointer;
       color: #fff;
       display: flex;

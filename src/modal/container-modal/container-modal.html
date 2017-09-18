@@ -1,6 +1,6 @@
-<div #container [style.height]="height" [style.background-color]="containerColor" class="tl-container-modals">
-    <div class="minimized-windows" [style.line-height]="height">
-        <div class="box"
+<div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
+    <div class="wrapper-container-modals" [style.line-height]="height">
+        <div class="container-modal-box"
              [style.background]="item === modalService.activeModal ? boxColor  : boxColorInactive"
              [style.border]="'1px solid ' + borderBoxColor"
              [style.opacity]="item === modalService.activeModal ? 1 : 0.7"

@@ -118,6 +118,14 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private searchValue;
 
+    private scrollListener;
+
+    private scrollTop;
+
+    private topItem: number;
+
+    private lastItem: number;
+
     constructor( public renderer: Renderer2,
                  tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
@@ -136,6 +144,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.cursor = -1;
         this.minCharToSearch = 1;
         this.searchIcon = false;
+        this.topItem = 0;
+        this.lastItem = this.itemsToScroll - 1;
     }
 
     ngOnInit() {
@@ -151,8 +161,29 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.validateDefaultProperties();
         this.lastItemPosition = this.itemsToScroll - 1;
         this.firstItemPosition = 0;
+        this.addScrollListListener();
         this.renderDataList();
         this.change.detectChanges();
+    }
+
+    addScrollListListener() {
+        this.zone.runOutsideAngular( () => {
+            this.scrollListener = this.renderer.listen( this.list.nativeElement, 'scroll', () => {
+                this.onScroll();
+                this.detectChangesScroll();
+            } );
+        } );
+    }
+
+    onScroll() {
+        this.scrollTop = this.list.nativeElement.scrollTop;
+        console.log(this.scrollTop);
+    }
+
+    detectChangesScroll() {
+        this.zone.run( () => {
+            this.change.detectChanges()
+        } );
     }
 
     renderDataList() {
@@ -185,20 +216,15 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
                     this.renderer.appendChild( this.listElement.nativeElement, this.spanElementIconAdd.nativeElement );
                     this.list.nativeElement.scrollTop = 0;
                     if ( this.dataSource.length > 0 ) {
-                        this.setActiveItemClassOnFirstElement();
+                        this.setActiveItemOnFirstElement();
                     }
                 } );
             }
         }
     }
 
-    removeActiveItemClassForAllElements() {
-        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            this.list.nativeElement.children[ item ].classList.remove( 'activeItem' );
-        }
-    }
-
-    setActiveItemClassOnFirstElement() {
+    setActiveItemOnFirstElement() {
+        this.cursor = 0;
         this.list.nativeElement.children[ 0 ].classList.add( 'active-item' );
     }
 
@@ -230,26 +256,25 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     createElementSpanDataID( item ) {
+        const highlight = this.dataSource[ item ][ this.dataID ].toString();
         this.spanElementDataID = new ElementRef( this.renderer.createElement( 'span' ) );
         this.renderer.setStyle( this.spanElementDataID.nativeElement, 'float', 'right' );
-        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataID ].toString(), this.searchValue ) );
+        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( highlight, this.searchValue ) );
         this.renderer.addClass( this.spanElementDataID.nativeElement, 'item-id' );
     }
 
     createElementSpanDataLabel( item ) {
-        let labelClass;
-        labelClass = (this.dataType === 'string') ? 'item-simple-label' : 'item-label';
+        const labelClass = (this.dataType === 'string') ? 'item-simple-label' : 'item-label';
         this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataLabel ], this.searchValue ) );
+        const highlight = this.dataSource[ item ][ this.dataLabel ];
+        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( highlight, this.searchValue ) );
         this.renderer.addClass( this.spanElementDataLabel.nativeElement, labelClass );
     }
 
     createElementSpanDataDescription( item ) {
+        const highlight = this.dataSource[ item ][ this.dataDescription ];
         this.spanElementDataDescription = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataDescription ], this.searchValue ) );
+        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend', this.highlight( highlight, this.searchValue ) );
         this.renderer.addClass( this.spanElementDataDescription.nativeElement, 'item-description' );
     }
 
@@ -366,11 +391,80 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     handleFilter( $event ) {
-        const filterValue = $event.target.value;
-        this.filterString.next( filterValue );
+        if ( ($event.keyCode !== KeyEvent.ARROWDOWN) && ($event.keyCode !== KeyEvent.ARROWUP) && ($event.keyCode !== KeyEvent.ENTER) ) {
+            const filterValue = $event.target.value;
+            this.filterString.next( filterValue );
+        }
     }
 
     handleList( $event ) {
+        if ( this.showList ) {
+            this.getCursorPosition();
+            switch ( $event.keyCode ) {
+                case KeyEvent.ARROWDOWN:
+                    this.onArrowDown();
+                    $event.preventDefault();
+                    // this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ARROWUP:
+                    this.onArrowUp();
+                    $event.preventDefault();
+                    // this.stopPropagationAndPreventDefault( $event );
+                    break;
+                case KeyEvent.ENTER:
+                    this.onEnter( $event );
+                    $event.stopPropagation();
+                    break;
+            }
+        }
+    }
+
+    removeActiveItemClass( cursor ) {
+        if ( cursor === this.list.nativeElement.children.length - 1 ) {
+            return this.list.nativeElement.children[ cursor ].classList.remove( 'item-add-active' );
+        }
+        this.list.nativeElement.children[ cursor ].classList.remove( 'active-item' );
+    }
+
+    setActiveItemClass( cursor ) {
+        if ( cursor === this.list.nativeElement.children.length - 1 ) {
+            return this.list.nativeElement.children[ cursor ].classList.add( 'item-add-active' );
+        }
+        this.list.nativeElement.children[ cursor ].classList.add( 'active-item' );
+    }
+
+    onArrowDown() {
+        if ( this.cursor < this.list.nativeElement.children.length - 1 ) {
+            this.removeActiveItemClass( this.cursor );
+            this.cursor = this.cursor + 1;
+            this.setActiveItemClass( this.cursor );
+            if ( this.cursor > this.lastItem ) {
+                this.topItem += 1;
+                this.lastItem += 1;
+                this.list.nativeElement.scrollTop += this.itemHeight;
+            }
+        }
+    }
+
+    onArrowUp() {
+        if ( this.cursor > 0 && this.cursor !== -1 ) {
+            this.removeActiveItemClass( this.cursor );
+            this.cursor = this.cursor - 1;
+            this.setActiveItemClass( this.cursor );
+            if ( this.cursor < this.topItem ) {
+                this.topItem -= 1;
+                this.lastItem -= 1;
+                this.list.nativeElement.scrollTop -= this.itemHeight;
+            }
+        }
+    }
+
+    onEnter( $event ) {
+
+    }
+
+    getCursorPosition() {
+
     }
 
     handleSearch( searchValue ) {
@@ -386,7 +480,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         this.change.detectChanges();
         this.searchValue = searchValue;
         this.renderDataList();
-        this.cursor = -1;
+        // this.cursor = -1;
+        console.log( 'Pesquisou' );
 
     }
 

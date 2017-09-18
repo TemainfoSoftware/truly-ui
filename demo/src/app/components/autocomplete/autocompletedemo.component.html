@@ -1,7 +1,9 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">AutoComplete</h1>
+    <h1 class="title">AutoComplete <span class="module-name"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></p>
     <p class="text-content">There's a lot of ways to create a autocomplete using Truly UI. Below, are some of those.</p>
+
   </div>
 
   <hr>
@@ -11,7 +13,7 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Basic SimpleData</h5>
-          <tl-autocomplete [data]="simpleData" [(ngModel)]="result" [searchIcon]="true" [clearButton]="true"></tl-autocomplete>
+          <tl-autocomplete [data]="simpleData" [(ngModel)]="result"></tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result | json }}</span>
         </div>
       </div>
@@ -46,11 +48,30 @@
     <div class="row">
       <div class="col-md-6">
         <div class="group-component">
+          <h5>Search Icon</h5>
+          <tl-autocomplete [data]="data"
+                           [searchIcon]="true"
+                           [dataID]="'id'"
+                           [dataLabel]="'firstName'"
+                           [dataDescription]="'title'"
+                           [query]="['id','firstName','title']"
+                           [(ngModel)]="result3">
+          </tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result3 | json }}</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="group-component">
           <h5>Clear Button</h5>
-          <tl-autocomplete [data]="data" [clearButton]="true" [dataID]="'id'" [dataLabel]="'firstName'"
-                           [query]="['id','firstName','title']" [dataDescription]="'title'"
-                           [(ngModel)]="result5"></tl-autocomplete>
-          <span class="returned-value"> Return Value: {{ result5 | json }}</span>
+          <tl-autocomplete [data]="data"
+                           [clearButton]="true"
+                           [dataID]="'id'"
+                           [dataLabel]="'firstName'"
+                           [dataDescription]="'title'"
+                           [query]="['id','firstName','title']"
+                           [(ngModel)]="result4">
+          </tl-autocomplete>
+          <span class="returned-value"> Return Value: {{ result4 | json }}</span>
         </div>
       </div>
       <!--<div class="col-md-6">-->

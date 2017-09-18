@@ -3,9 +3,6 @@
   "title": "Truly-UI",
   "description": "Web Components for Desktop Applications.",
   "version": "0.0.0-development",
-  "scripts": {
-    "semantic-release": "npm install semantic-release@6.3.6 -g && semantic-release pre && npm publish --access public && semantic-release post"
-  },
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
   "homepage": "https://temainfosistemas.github.io/truly-ui/",

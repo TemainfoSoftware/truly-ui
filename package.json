@@ -2,6 +2,8 @@
   "name": "truly-ui",
   "title": "Truly-UI",
   "description": "Web Components for Desktop Applications.",
+  "main": "dist/truly-ui.umd.js",
+  "types": "dist/truly-ui.d.ts",
   "version": "0.0.0-development",
   "scripts": {
     "build": "gulp build",

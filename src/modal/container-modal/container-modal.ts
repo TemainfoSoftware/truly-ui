@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DoCheck, Input, KeyValueDiffers, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
 
@@ -29,7 +29,7 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss']
  })
- export class TlContainerModal implements OnInit {
+ export class TlContainerModal implements OnInit, DoCheck {
 
      @Input() containerColor = '#F2F2F2';
 
@@ -37,13 +37,27 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
 
      @Input() boxColor = '#66cc99';
 
+     @Input() modalBoxWidth = 150;
+
+     @Input() limitStringBox = 12;
+
      @ViewChild('container') container;
+
+     @ViewChild( 'wrapper' ) wrapper;
+
+     @ViewChild( 'arrowRight' ) arrowRight;
 
      private boxColorInactive = '#6da78d';
 
      private borderBoxColor = '#54a378';
 
-     constructor(private modalService: ModalService, private colorService: ToneColorGenerator) {}
+     private isScrolling = false;
+
+     private differ;
+
+     constructor( private modalService: ModalService, private colorService: ToneColorGenerator, differs: KeyValueDiffers ) {
+         this.differ = differs.find( {} ).create( null );
+     }
 
      ngOnInit() {
        this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
@@ -53,7 +67,38 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
      showWindow(item, i) {
          this.modalService.activeModal = item;
          this.modalService.showModal( item, i );
+     }
 
+     validateScroll() {
+         setTimeout( () => {
+             this.wrapper.nativeElement.offsetWidth >= this.container.nativeElement.offsetWidth ?
+                 this.isScrolling = true : this.isScrolling = false;
+         }, 1 );
+     }
+
+     showMoreBoxes() {
+         this.handleArrowRight();
+         this.handleScrollFinish();
+     }
+
+     handleArrowRight() {
+         if (  this.container.nativeElement.scrollLeft < this.wrapper.nativeElement.offsetWidth ) {
+             this.container.nativeElement.scrollLeft += 150;
+         }
+     }
+
+     handleScrollFinish() {
+         const scrollLeft = this.container.nativeElement.scrollLeft + this.container.nativeElement.offsetWidth;
+         if (scrollLeft >= this.wrapper.nativeElement.offsetWidth) {
+             this.isScrolling = false;
+         }
+     }
+
+     ngDoCheck() {
+         const changes = this.differ.diff( this.modalService.forms );
+         if ( changes ) {
+             this.validateScroll();
+         }
      }
 
 }

@@ -22,9 +22,8 @@
  */
 
 import {
-    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
-    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, NgZone,
-    ContentChild, TemplateRef
+    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef,
+    ElementRef, NgZone, ContentChild, TemplateRef, EmbeddedViewRef
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -584,7 +583,7 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.spanElementLabelDetail.nativeElement.append( this.datasource[ row ][ this.labelDetail ] );
     }
 
-    createCustomTemplate(item, index) {
+    createCustomTemplate(item, index): EmbeddedViewRef<any> {
         return this.template.createEmbeddedView( {
             item: item,
             index: index

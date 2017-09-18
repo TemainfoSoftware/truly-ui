@@ -19,38 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-
-import { DatatableModule } from './datatable';
-import { InputModule } from './input';
-import { ButtonModule } from './button';
-import { MultiselectModule } from './multiselect';
-import { TooltipModule } from './tooltip';
-import { ModalModule } from './modal';
-import { DialogModule } from './dialog';
-import { FormModule } from './form';
-
-export * from './datatable';
-export * from './input';
-export * from './button';
-export * from './multiselect';
-export * from './tooltip';
-export * from './modal';
-export * from './dialog';
-export * from './form';
-
-@NgModule({
-  imports: [
-      ButtonModule,
-      DatatableModule,
-      InputModule,
-      MultiselectModule,
-      TooltipModule,
-      ModalModule,
-      FormModule,
-      DialogModule,
-  ]
-})
-export class TrulyModule {}
-
+export * from './datatable/index';
+export * from './input/index';
+export * from './button/index';
+export * from './multiselect/index';
+export * from './tooltip/index';
+export * from './modal/index';
+export * from './dialog/index';
+export * from './form/index';
 

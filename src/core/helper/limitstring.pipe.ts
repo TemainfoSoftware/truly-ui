@@ -19,47 +19,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../backdrop/backdrop';
-import { TlContainerModal } from './container-modal/container-modal';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
+import { Pipe, PipeTransform } from '@angular/core';
 
-export * from './modal';
+@Pipe( { name: 'limitString' } )
+export class LimitStringPipe implements PipeTransform {
 
-@NgModule( {
-    imports: [
-        CommonModule,
-    ],
-    declarations: [
-        TlModal,
-        TlContainerModal,
-        TlBackdrop,
-        LimitStringPipe
-    ],
-    exports: [
-        TlModal,
-        TlContainerModal,
-        TlBackdrop
-    ],
-    entryComponents: [
-        TlModal,
-        TlBackdrop
-    ],
-    providers: [
-        ToneColorGenerator
-    ]
-} )
-export class ModalModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ModalModule,
-            providers: [
-                ModalService
-            ]
+    transform( text: string, value: number )  {
+        if (text.length > value) {
+            let subStr = '';
+            const strArray = text.split('');
+            strArray.forEach((value2, index, array) => {
+                if (index <= value) {
+                    subStr += value2;
+                }
+            });
+            subStr += '...'.trim();
+            return subStr;
+        } else {
+            return text;
         }
     }
+
 }
+

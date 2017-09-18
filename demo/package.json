@@ -23,6 +23,8 @@
     "@angular/router": "^4.0.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
+    "font-awesome": "^4.7.0",
+    "ionicons-npm": "^2.0.1",
     "jquery": "^3.2.1",
     "ngx-highlight-js": "^1.0.1",
     "rxjs": "^5.4.2",

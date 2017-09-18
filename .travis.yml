@@ -17,7 +17,9 @@ before_script:
   - npm run lint
   - npm run test-jest:ci
 after_success:
+  - cd dist
   - npm run semantic-release
+  - cd ..
   - cd src
   - npm link
   - cd ..

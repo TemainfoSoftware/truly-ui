@@ -109,7 +109,6 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     ngAfterContentInit() {
         const height = this.height;
         this.rowHeight =  height / this.rowsClient;
-
         this.inicializeGlobalFilter();
     }
 
@@ -207,7 +206,4 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     setHeightRowTable() {
         this.rowHeightCalculated = this.rowHeight;
     }
-
-
-
 }

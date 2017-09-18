@@ -34,7 +34,7 @@ Ex: Electron, App.js and NW.js
 
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
-* [NodeJS >= 6](https://nodejs.org)
+* [NodeJS >= 7](https://nodejs.org)
 * [Angular Cli >= 1.2.0](https://cli.angular.io/)
 
 ## Installation

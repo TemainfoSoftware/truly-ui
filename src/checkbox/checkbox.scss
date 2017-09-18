@@ -20,7 +20,7 @@ input[type='checkbox']:checked:before {
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 1px solid #cacaca;
+  outline: 1px solid #cacaca;
 }
 
 input[type='checkbox']:after {
@@ -33,20 +33,22 @@ input[type='checkbox']:after {
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 1px solid #cacaca;
+  outline: 1px solid #cacaca;
   transition: background 0.15s ease-in-out;
+
 }
 
 input[type='checkbox']:checked:after {
   content: '\f00c';
   position: absolute;
   font-family: FontAwesome;
-  padding-top: 3px;
   color: #fff;
   font-size: 0.8em;
   text-align: center;
   background-color: #66cc99;
+  outline: 1px solid #66cc99;
   border: 0;
+  line-height: 1.8;
 }
 
 input[type=checkbox]:hover {

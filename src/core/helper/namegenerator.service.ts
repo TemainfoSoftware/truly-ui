@@ -20,23 +20,21 @@
  SOFTWARE.
  */
 
- import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 let nextUniqueName = 0;
 
- @Injectable()
- export class NameGeneratorService {
+@Injectable()
+export class NameGeneratorService {
 
-     constructor() {}
-
-     createName(element, name) {
+    constructor() {}
+         createName(element, name) {
          if ( element.nativeElement.name === '' ) {
              element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
          }
-     }
+    }
 
-     clearName() {
-         nextUniqueName = 0;
-     }
-
- }
+    clearName() {
+        nextUniqueName = 0;
+    }
+}

@@ -22,11 +22,13 @@
 import { Component } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 @Component( {
   selector : 'app-autocomplete',
   templateUrl : './autocompletedemo.component.html',
-  styleUrls : [ './autocompletedemo.component.scss' ]
+  styleUrls : [ './autocompletedemo.component.scss' ],
+  providers : [ DumpDataService ]
 } )
 export class AutoCompleteDemo {
 
@@ -35,8 +37,6 @@ export class AutoCompleteDemo {
   public simpleData: any[];
 
   public data: any[];
-
-  public complexData: any[];
 
   private result: any;
 
@@ -54,35 +54,10 @@ export class AutoCompleteDemo {
 
   private result8: any;
 
-  constructor() {
+  constructor( private dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
-    this.simpleData = [ 'Asia', 'Africa', 'Antarctica', 'Australia', 'Europe', 'North America', 'South America' ];
-    this.data = [
-      { id: '1', label : 'Asia', value : '10' },
-      { id: '2', label : 'Africa', value : '20' },
-      { id: '3', label : 'Antarctica', value : '30' },
-      { id: '4', label : 'Australia', value : '40' },
-      { id: '5', label : 'Europe', value : '50' },
-      { id: '6', label : 'North America', value : '60' },
-      { id: '7', label : 'South America', value : '70' }
-    ];
-    this.complexData = [
-      { resource: { id: '1', label : 'Asia', value : '10' } },
-      { resource: { id: '2', label : 'Africa', value : '20' } },
-      { resource: { id: '3', label : 'Antarctica', value : '30' } },
-      { resource: { id: '4', label : 'Australia', value : '40' } },
-      { resource: { id: '5', label : 'Europe', value : '50' } },
-      { resource: { id: '6', label : 'North America', value : '60' } },
-      { resource: { id: '7', label : 'South America', value : '70' } },
-      { resource: { id: '8', label : 'Asia 2', value : '80' } },
-      { resource: { id: '9', label : 'Africa 2', value : '90' } },
-      { resource: { id: '10', label : 'Antarctica 2', value : '100' } },
-      { resource: { id: '11', label : 'Australia 2', value : '110' } },
-      { resource: { id: '12', label : 'Europe 2', value : '120' } },
-      { resource: { id: '13', label : 'North America 2', value : '130'} },
-      { resource: { id: '14', label : 'South America 2', value : '140' } },
-      { resource: { id: '15', label : 'South America', value : '150' } }
-    ];
+    this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
+    this.data = this.dataDumpService.createRandomData( 20 );
   }
 
 }

@@ -1,48 +1,30 @@
-
 .tl-container-modals {
   width: 100%;
   min-height: 40px;
   border: 1px solid #C8C8C8;
+  > .minimized-windows {
+    display: inline-flex;
+    position: relative;
+    > .box {
+      cursor: pointer;
+      color: #fff;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      background: #66CC99;
+      margin: 5px;
+      height: 28px;
+      line-height: 28px;
+      margin-right: 0;
+      border: 1px solid #54a378;
+      > .item {
+        padding: 10px;
+      }
+      > .item:first-child {
+        padding: 0 0 0 10px;
+      }
+    }
+  }
 }
-
-.minimized-windows {
-  display: inline-flex;
-  position: relative;
-}
-
-.window {
-  cursor: pointer;
-  color: #fff;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-  background: #5DBA8C;
-  margin: 5px;
-  height: 28px;
-  line-height: 28px;
-  margin-right: 0;
-  border: 1px solid #54A77E;
-}
-
-.window .item {
-  padding: 0;
-}
-
-.window .item:first-child {
-  padding: 0 10px;
-}
-
-.window .item:last-child {
-  padding: 0 10px;
-  height: 28px;
-  line-height: 28px;
-  margin-left: 7px;
-  border-left: 1px solid #54A77E;
-}
-
-.window .item:last-child:hover {
-  background-color: #54A77E;
-}
-

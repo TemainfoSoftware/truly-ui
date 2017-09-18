@@ -1,9 +1,12 @@
 <div #container [style.height]="height" [style.background-color]="containerColor" class="tl-container-modals">
     <div class="minimized-windows" [style.line-height]="height">
-        <div class="window" #window *ngFor="let item of modalService.getMinModals(); let i = index" (click)="showWindow(item, i)">
+        <div class="box"
+             [style.background]="item === modalService.activeModal ? boxColor  : boxColorInactive"
+             [style.border]="'1px solid ' + borderBoxColor"
+             [style.opacity]="item === modalService.activeModal ? 1 : 0.7"
+             *ngFor="let item of modalService.forms; let i = index" (click)="showWindow(item, i)">
             <span class="item"><i ngClass="{{item.instance.icon}}"></i></span>
             <span class="item">{{item.instance.title}}</span>
-            <span class="item" (click)="closeWindow(item, i)"><i class="ion-close"></i></span>
         </div>
     </div>
 </div>

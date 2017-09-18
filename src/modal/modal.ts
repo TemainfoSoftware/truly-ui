@@ -30,8 +30,6 @@ import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { KeyEvent } from '../core/enums/key-events';
 
-let globalZindex = 1;
-
 const listenersDocument = [];
 
 @Component({
@@ -42,10 +40,13 @@ const listenersDocument = [];
     animations: [
         trigger(
             'enterAnimation', [
-                state('enter', style({ transform: 'none', opacity: 1 })),
-                state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
-                state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
-                transition('* => *', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+                transition( ':enter', [
+                    style( { opacity: 0 } ),
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1 } ),
+                    animate( '100ms', style( { opacity: 0 } ) )
+                ] )
             ]
         )
     ]
@@ -91,8 +92,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Output() onClose: EventEmitter<any> = new EventEmitter();
 
     public componentRef: ComponentRef<TlModal>;
-
-    public ZIndex = 1;
 
     public modalResult;
 
@@ -150,7 +149,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnInit() {
         this.backToTop();
-        this.setZIndex();
         this.getBoundingContent();
         this.setDefaultDimensions();
         this.setModalCenterParent();
@@ -352,8 +350,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         return event.clientX < this.offsetLeftContent
     }
 
-    setZIndex() {
-        this.serviceControl.setZIndex( this.modal, this.getZIndex() );
+    setZIndex( $event ) {
+        this.serviceControl.setZIndex( this.componentRef, this.modal );
         this.serviceControl.sortComponentsByZIndex();
     }
 
@@ -432,11 +430,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.offsetTopContent = this.parent.offsetTop;
     }
 
-    getZIndex() {
-        this.ZIndex = globalZindex++;
-        return this.ZIndex;
-    }
-
     getColorHover() {
         return this.colorService.calculate(this.color, -0.05);
     }
@@ -474,7 +467,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.ZIndex = 1;
         this.subscribeResize();
         this.subscribeMouseMove();
         this.subscribeMouseUp();

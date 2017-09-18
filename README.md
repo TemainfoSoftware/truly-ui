@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/TemainfoSistemas/truly-ui.svg)](https://greenkeeper.io/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/666b375858d540d08c7dccb9fe8e5a30)](https://www.codacy.com/app/mister-x59/truly-ui?utm_source=github.com&utm_medium=referral&utm_content=TemainfoSistemas/truly-ui&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/TemainfoSistemas/truly-ui.svg?branch=master)](https://travis-ci.org/TemainfoSistemas/truly-ui) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Dependency Status](https://david-dm.org/TemainfoSistemas/truly-ui.svg)](https://david-dm.org/TemainfoSistemas/truly-ui)
+[![Dependency Status](https://david-dm.org/TemainfoSistemas/truly-ui.svg)](https://david-dm.org/TemainfoSistemas/truly-ui)[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 **Web Components for Desktop Applications.**
 
@@ -11,6 +11,7 @@
 
 <p align="center">
     <a href="#motivation">Motivation</a> &bull;
+    <a href="#installation">Prerequisites</a> &bull;
     <a href="#installation">Installation</a> &bull;
     <a href="#usage">Usage</a> &bull;
     <a href="#feedback">Feedback</a> &bull;
@@ -28,6 +29,13 @@
 ## Motivation
 TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world. TrulyUI is based on Angular, maintained by world-wide community. By the way, we believe that Angular is the most promising Web Framework. We developed TrulyUI thinking to fill a gap on open-source Web Technologies that's poor when it's about applications on Desktop.
 Ex: Electron, App.js and NW.js
+
+## Prerequisites
+
+We assume that you have already installed the following packages at least and are already running an AngularIO project.
+
+* [NodeJS >= 6](https://nodejs.org)
+* [Angular Cli >= 1.2.0](https://cli.angular.io/)
 
 ## Installation
 

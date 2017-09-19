@@ -122,7 +122,6 @@ gulp.task('rollup:umd', function () {
       globals: {
         typescript: 'ts'
       }
-
     }))
     .pipe(rename('truly-ui.umd.js'))
     .pipe(gulp.dest(distFolder));

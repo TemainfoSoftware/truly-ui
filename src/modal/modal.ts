@@ -241,7 +241,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setModalCenterParent() {
-        this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
+        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) -
+            (this.modal.nativeElement.offsetWidth / 2) + 'px';
         this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 

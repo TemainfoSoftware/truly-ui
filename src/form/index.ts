@@ -45,7 +45,7 @@ export * from './form.service';
     declarations: [
         TlForm
     ],
-    providers:[
+    providers: [
         DialogService,
         TabIndexService,
         IdGeneratorService,

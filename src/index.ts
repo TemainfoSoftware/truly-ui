@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-//Modules...
+// Modules...
 export * from './autocomplete/index';
 export * from './button/index';
 export * from './buttongroup/index';
@@ -39,7 +39,7 @@ export * from './radiobutton/index';
 export * from './splitbutton/index';
 export * from './tooltip/index';
 
-//Services..
+// Services..
 export * from './modal/modal.service'
 export * from './dialog/dialog.service'
 export * from './form/form.service'

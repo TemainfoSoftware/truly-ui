@@ -32,9 +32,9 @@ import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
-    selector : 'tl-button',
+    selector: 'tl-button',
     templateUrl : './button.html',
-    styleUrls : [ './button.scss' ]
+    styleUrls: [ './button.scss' ]
 } )
 export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 

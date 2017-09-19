@@ -24,9 +24,9 @@ import { Component, ElementRef, HostListener, Input, AfterContentInit } from '@a
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
-    selector : 'tl-button-group-item',
-    templateUrl : './buttongroup-item.html',
-    styleUrls : [ './buttongroup-item.scss' ]
+    selector: 'tl-button-group-item',
+    templateUrl: './buttongroup-item.html',
+    styleUrls: [ './buttongroup-item.scss' ]
 } )
 export class TlButtonGroupItem implements AfterContentInit {
 

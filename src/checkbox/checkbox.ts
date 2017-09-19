@@ -21,7 +21,7 @@
  */
 import {
     Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
-    ChangeDetectorRef,
+    ChangeDetectorRef, ViewEncapsulation,
 } from '@angular/core';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -33,7 +33,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 @Component( {
     selector: 'tl-checkbox',
     templateUrl: './checkbox.html',
-    styleUrls: [ './checkbox.scss' ],
+    styleUrls: [ './checkbox.scss', '../core/style/reset.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlCheckBox ), multi: true }

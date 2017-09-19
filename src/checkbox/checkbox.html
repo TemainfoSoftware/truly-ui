@@ -1,4 +1,5 @@
 <div class="check-container">
+    <i (click)="check(checkbox.checked)" *ngIf="modelValue" class="fa fa-check checked"></i>
     <input attr.id="{{id}}"
            attr.name="{{name}}"
            #checkbox

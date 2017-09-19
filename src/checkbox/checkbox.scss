@@ -39,11 +39,7 @@ input[type='checkbox']:after {
 }
 
 input[type='checkbox']:checked:after {
-  content: '\f00c';
   position: absolute;
-  font-family: FontAwesome;
-  color: #fff;
-  font-size: 0.8em;
   text-align: center;
   background-color: #66cc99;
   outline: 1px solid #66cc99;
@@ -65,5 +61,18 @@ input[type=checkbox]:hover {
 }
 
 .-label:hover {
+  cursor: pointer;
+}
+
+.checked {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  bottom: 0;
+  left: 4px;
+  color: #fff;
+}
+
+.checked:hover {
   cursor: pointer;
 }

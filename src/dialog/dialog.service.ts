@@ -45,6 +45,10 @@ export class DialogService {
 
     constructor( public modalService: ModalService ) {}
 
+    setView(view) {
+        this.modalService.setView(view);
+    }
+
     info( message, callback, options?: InfoOptions ) {
         this.setModalOptions( ModalInfoOptions, options );
         this.modalService.createBackdrop( TlBackdrop );

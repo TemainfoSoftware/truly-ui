@@ -43,6 +43,18 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="title"> Important </h3>
+      <h5>The First step to get work is declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your constructor.
+        like below</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor(private view: ViewContainerRef, private formService: FormService) {
+  this.formService.setView(this.view);
+}
+      </textarea>
+    </div>
+  </div>
   <div class="setup">
     <h3 class="title">Note</h3>
     <div class="pattern" style="font-size: 15px">

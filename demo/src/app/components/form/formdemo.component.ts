@@ -36,7 +36,7 @@ export class FormDemo {
   private result;
 
   constructor(private view: ViewContainerRef, private formService: FormService, private dataFormService: DataFormService) {
-    this.formService.setViewForm(view);
+    this.formService.setView(view);
 
     this.formprop = json.dataProperties;
     this.formevts = jsonEvents.dataEvents;

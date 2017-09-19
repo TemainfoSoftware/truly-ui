@@ -3,18 +3,18 @@ export const dataProperties = [
     name: "data",
     type: "object | array",
     default: "null",
-    description: "Sets the data of the Dropdown List",
+    description: "Sets the data of the Dropdown List.",
     options: "any object | any array"
   },
   {
-    name: "data.text",
+    name: "text",
     type: "string",
     default: "text",
     description: "Sets the data item field that represents the item text.",
     options: "any text"
   },
   {
-    name: "data.value",
+    name: "value",
     type: "string",
     default: "value",
     description: "Sets the data item field that represents the item value.",
@@ -28,14 +28,14 @@ export const dataProperties = [
     options: "any text"
   },
   {
-    name: "label.labelPlacement",
+    name: "labelPlacement",
     type: "string",
     default: "left",
     description: "Sets the label position.",
     options: "left | top"
   },
   {
-    name: "label.labelSize",
+    name: "labelSize",
     type: "number",
     default: "100",
     description: "Sets the label width.",

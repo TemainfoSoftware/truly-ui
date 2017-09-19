@@ -31,9 +31,9 @@ import { TlSplitButtonAction } from './splitbutton-action';
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-split-button',
-    templateUrl : './splitbutton.html',
-    styleUrls : [ './splitbutton.scss' ],
+    selector: 'tl-split-button',
+    templateUrl: './splitbutton.html',
+    styleUrls: [ './splitbutton.scss' ],
     animations: [
         trigger(
             'enterAnimation', [

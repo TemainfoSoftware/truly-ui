@@ -28,10 +28,10 @@ import { TlButtonGroupItem } from './buttongroup-item';
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
-    selector : 'tl-button-group',
-    templateUrl : './buttongroup.html',
-    styleUrls : [ './buttongroup.scss' ],
-    providers : [ ButtonGroupService ]
+    selector: 'tl-button-group',
+    templateUrl: './buttongroup.html',
+    styleUrls: [ './buttongroup.scss' ],
+    providers: [ ButtonGroupService ]
 } )
 export class TlButtonGroup implements AfterContentInit {
 

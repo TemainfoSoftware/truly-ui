@@ -36,10 +36,10 @@ import { TabIndexService } from '../form/tabIndex.service';
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-dropdown-list',
-    templateUrl : './dropdownlist.html',
-    styleUrls : [ './dropdownlist.scss' ],
-    animations : [
+    selector: 'tl-dropdown-list',
+    templateUrl: './dropdownlist.html',
+    styleUrls: [ './dropdownlist.scss' ],
+    animations: [
         trigger(
             'enterAnimation', [
                 state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),

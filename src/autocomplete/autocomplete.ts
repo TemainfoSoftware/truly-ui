@@ -39,11 +39,11 @@ import 'rxjs/add/operator/debounceTime';
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-autocomplete',
-    templateUrl : './autocomplete.html',
-    styleUrls : [ './autocomplete.scss' ],
-    changeDetection : ChangeDetectionStrategy.OnPush,
-    animations : [
+    selector: 'tl-autocomplete',
+    templateUrl: './autocomplete.html',
+    styleUrls: [ './autocomplete.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
         trigger(
             'enterAnimation', [
                 state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),

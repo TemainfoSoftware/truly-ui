@@ -29,10 +29,10 @@ import { KeyEvent } from '../../../core/enums/key-events';
 import { TlDatatableDataSource } from '../../datatable-datasource.service';
 
 @Component( {
-    selector : 'tl-datatable-scrollable-mode',
-    templateUrl : './datatable-scrollable-mode.html',
+    selector: 'tl-datatable-scrollable-mode',
+    templateUrl: './datatable-scrollable-mode.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls : [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
+    styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
 } )
 export class TlDatatableScrollableMode implements AfterContentInit {
 

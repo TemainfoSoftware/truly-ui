@@ -10,7 +10,6 @@
     <div class="row">
       <div class="col-md-10">
         <div class="group-component">
-          <h5>Show Form</h5>
           <div class="col-md-3">
             <tl-button [text]="'User Register'" [iconAddonBefore]="'ion-ios-list-outline'"
                        (click)="form1()"></tl-button>
@@ -26,7 +25,7 @@
         </div>
       </div>
     </div>
-
+  <hr>
   <div class="row">
     <br>
     <div class="col-md-12">
@@ -45,23 +44,71 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <h3 class="title"> Important </h3>
-      <h5>The First step to get work is declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your constructor.
-        like below</h5>
+      <h3 class="title"> Getting Worked </h3>
+      <h4>Step One</h4>
+      <h5>Declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>.</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor(private view: ViewContainerRef, private formService: FormService) {}
+      </textarea>
+      <hr>
+      <h4>Step Two</h4>
+      <h5>Inside of your <code>constructor</code>, set your view calling the method of the Form Service.</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 constructor(private view: ViewContainerRef, private formService: FormService) {
-  this.formService.setView(this.view);
+     this.formService.setView(this.view);
 }
+      </textarea>
+      <hr>
+
+      <h4>Step Tree</h4>
+      <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
+  <!--Your Content Here-->
+ </tl-form>
+      </textarea>
+      <hr>
+      <h4>Step Four</h4>
+      <h5>Import your custom component that will be inside the form as entry component the property ( <code>entryComponents</code> ) in your module. In this case is <code>NewPerson</code></h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+
+@NgModule({
+  declarations: [
+    FormDemo,
+    NewPerson,
+  ],
+  imports:[
+    CommonModule,
+    FormsModule,
+    FormModule,
+  ],
+  exports: [
+    FormDemo,
+    NewPerson
+  ],
+  providers: [
+    DialogService
+  ],
+  entryComponents: [
+    NewPerson
+  ]
+})
+export class FormDemoModule {}
+      </textarea>
+      <hr>
+      <h4>Final Step</h4>
+      <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For example:</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
+  });
+});
       </textarea>
     </div>
   </div>
+
   <div class="setup">
-    <h3 class="title">Note</h3>
-    <div class="pattern" style="font-size: 15px">
-      <blockquote>The Component that you want to customize inside an Form has to be created with the form tag:
-        <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code>
-      </blockquote>
-    </div>
     <h3 class="title">Properties</h3>
     <div class="table-box">
       <table class="table table-truly">

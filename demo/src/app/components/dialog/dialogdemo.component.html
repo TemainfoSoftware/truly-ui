@@ -42,12 +42,29 @@
 </div>
   <div class="row">
     <div class="col-md-12">
-      <h3 class="title"> Important </h3>
-      <h5>The First step to get work is declare the <code>DialogService</code> and the <code>ViewContainerRef</code> in your constructor.
-        like below</h5>
+      <h3 class="title"> Getting Worked </h3>
+      <h4>Step One</h4>
+      <h5>Declare the <code>DialogService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>.</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor(private view: ViewContainerRef, private dialogService: DialogService) {}
+      </textarea>
+      <hr>
+<h4>Step Two</h4>
+      <h5>Inside of your <code>constructor</code>, set your view calling the method of the Dialog Service.</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 constructor(private view: ViewContainerRef, private dialogService: DialogService) {
-  this.dialogService.setView(this.view);
+     this.dialogService.setView(this.view);
+}
+      </textarea>
+      <hr>
+      <h4>Final Step</h4>
+      <h5>Create an function to call the dialog type method of the DialogService. For example:</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+
+showDialogConfirmation() {
+    this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
+        console.log('Return',modalResult);
+    })
 }
       </textarea>
     </div>

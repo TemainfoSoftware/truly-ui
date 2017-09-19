@@ -7,8 +7,8 @@
 }
 
 input[type='radio'] {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   position: absolute;
   margin: 0 !important;
 }
@@ -45,8 +45,8 @@ input[type='radio']:checked:after {
   width: 10px;
   position: absolute;
   height: 10px;
-  top: 4px;
-  left: 4px;
+  top: 5px;
+  left: 5px;
   background-color: #66cc99;
   border: 0;
 }

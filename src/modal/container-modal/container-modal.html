@@ -1,4 +1,6 @@
 <div class="container-wrapper">
+     <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left"><i
+             class="ion-chevron-left"></i></span>
 <div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
     <div #wrapper class="wrapper-container-modals" [style.line-height]="height" [ngStyle]="
     {position: 'absolute'}">
@@ -13,6 +15,6 @@
         </div>
     </div>
 </div>
-    <span #arrowRight (click)="showMoreBoxes()" *ngIf="isScrolling" class="arrow-right"><i
+    <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right"><i
             class="ion-chevron-right"></i></span>
 </div>

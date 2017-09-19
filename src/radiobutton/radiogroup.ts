@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, QueryList, Input, AfterContentInit, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter,
+    Component, ContentChildren, QueryList, Input, AfterContentInit, forwardRef, ViewChild, AfterViewInit, Output,
+    EventEmitter, ViewEncapsulation,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
@@ -39,6 +40,7 @@ const Orientation = {
     selector: 'tl-radio-group',
     templateUrl: './radiogroup.html',
     styleUrls: [ './radiobutton.scss' ],
+    encapsulation: ViewEncapsulation.Native,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioGroup ), multi: true }
     ]

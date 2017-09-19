@@ -33,7 +33,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 @Component( {
     selector: 'tl-checkbox',
     templateUrl: './checkbox.html',
-    styleUrls: [ './checkbox.scss', '../core/style/reset.scss' ],
+    styleUrls: [ './checkbox.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlCheckBox ), multi: true }

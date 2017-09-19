@@ -67,10 +67,11 @@ input[type=checkbox]:hover {
 .checked {
   position: absolute;
   z-index: 2;
-  top: 2px;
+  top: 6px;
   bottom: 0;
-  left: 4px;
+  left: 6px;
   color: #fff;
+  font-size: 0.8em;
 }
 
 .checked:hover {

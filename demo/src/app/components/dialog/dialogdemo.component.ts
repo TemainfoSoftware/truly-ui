@@ -19,8 +19,8 @@ export class DialogDemo {
 
   private dialogProp;
 
-  constructor( private view: ViewContainerRef, private dialogService : DialogService ) {
-    this.dialogService.modalService.setView(this.view);
+  constructor( private view: ViewContainerRef, private dialogService: DialogService ) {
+    this.dialogService.setView(this.view);
     this.dialogProp = json.dataProperties;
   }
 

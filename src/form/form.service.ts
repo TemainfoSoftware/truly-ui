@@ -29,7 +29,7 @@ export class FormService {
 
     constructor(public modalService: ModalService) {}
 
-    setViewForm(view) {
+    setView(view) {
         this.viewForm = view;
         this.modalService.setView(view);
     }

@@ -21,11 +21,12 @@
  */
 import {
     AfterViewInit,
-    Component, Input
+    Component, Input, ViewEncapsulation
 } from '@angular/core';
 
 @Component( {
     selector: 'tl-radiobutton',
+    encapsulation: ViewEncapsulation.Native,
     template: '',
 } )
 export class TlRadioButton implements AfterViewInit {

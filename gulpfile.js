@@ -72,14 +72,14 @@ gulp.task('rollup:fesm', function () {
       input: `${buildFolder}/index.js`,
 
       // A list of IDs of modules that should remain external to the bundle
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#external
+      // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
         '@angular/common'
       ],
 
       // Format of generated bundle
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#format
+      // See "format" in https://rollupjs.org/#core-functionality
       format: 'es'
     }))
     .pipe(gulp.dest(distFolder));
@@ -95,18 +95,18 @@ gulp.task('rollup:umd', function () {
     .pipe(rollup({
 
       // Bundle's entry point
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
+      // See "input" in https://rollupjs.org/#core-functionality
       input: `${buildFolder}/index.js`,
 
       // A list of IDs of modules that should remain external to the bundle
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#external
+      // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
         '@angular/common'
       ],
 
       // Format of generated bundle
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#format
+      // See "format" in https://rollupjs.org/#core-functionality
       format: 'umd',
 
       // Export mode to use
@@ -115,14 +115,13 @@ gulp.task('rollup:umd', function () {
 
       // The name to use for the module for UMD/IIFE bundles
       // (required for bundles with exports)
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#modulename
+      // See "name" in https://rollupjs.org/#core-functionality
       name: 'truly-ui',
 
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals
+      // See "globals" in https://rollupjs.org/#core-functionality
       globals: {
         typescript: 'ts'
       }
-
     }))
     .pipe(rename('truly-ui.umd.js'))
     .pipe(gulp.dest(distFolder));

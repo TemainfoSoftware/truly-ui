@@ -19,6 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
+//Modules...
 export * from './autocomplete/index';
 export * from './button/index';
 export * from './buttongroup/index';
@@ -37,3 +39,7 @@ export * from './radiobutton/index';
 export * from './splitbutton/index';
 export * from './tooltip/index';
 
+//Services..
+export * from './modal/modal.service'
+export * from './dialog/dialog.service'
+export * from './form/form.service'

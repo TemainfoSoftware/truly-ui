@@ -14,7 +14,7 @@ import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation'
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogInfo } from './dialog-info/dialog-info';
 
-export * from '../dialog';
+export * from './dialog.service';
 
 @NgModule( {
     imports: [

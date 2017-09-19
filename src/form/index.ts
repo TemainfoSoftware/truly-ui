@@ -33,6 +33,8 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
 
+export * from './form.service';
+
 @NgModule( {
     imports: [
         CommonModule,
@@ -42,6 +44,14 @@ import { DropDownListModule } from '../dropdownlist/index';
     ],
     declarations: [
         TlForm
+    ],
+    providers:[
+        DialogService,
+        TabIndexService,
+        IdGeneratorService,
+        NameGeneratorService,
+        ModalService,
+        FormService,
     ],
     exports: [
         TlForm
@@ -54,10 +64,6 @@ export class FormModule {
             providers: [
                 ModalService,
                 FormService,
-                DialogService,
-                TabIndexService,
-                IdGeneratorService,
-                NameGeneratorService
             ]
         }
     }

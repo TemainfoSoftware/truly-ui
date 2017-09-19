@@ -22,14 +22,14 @@
 import { Component, ElementRef, HostListener, Input } from '@angular/core';
 
 @Component( {
-    selector : 'tl-split-button-action',
-    template : `
+    selector: 'tl-split-button-action',
+    template: `
         <li [class]="separator ? 'separator' : null">
             <i *ngIf="icon" class="icon-action {{ icon }}"></i>
             {{ label }}
         </li>
     `,
-    styleUrls : [ './splitbutton-action.scss' ]
+    styleUrls: [ './splitbutton-action.scss' ]
 } )
 export class TlSplitButtonAction {
 

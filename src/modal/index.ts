@@ -29,6 +29,7 @@ import { TlContainerModal } from './container-modal/container-modal';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 
 export * from './modal';
+export * from './modal.service';
 
 @NgModule( {
     imports: [

@@ -3,12 +3,31 @@
   > .arrow-right {
     position: absolute;
     line-height: 28px;
-    background: #327168;
-    outline: 1px solid #327168;
+    background: #797979;
+    border: 1px solid #C8C8C8;
+    border-left: 0;
     color: #fff;
     top: 0;
     right: 0;
     padding: 5px;
+  }
+  >.arrow-right:hover {
+    cursor: pointer;
+  }
+  > .arrow-left {
+    position: absolute;
+    line-height: 28px;
+    background: #797979;
+    border: 1px solid #C8C8C8;
+    border-right: 0;
+    color: #fff;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    z-index: 100;
+  }
+  >.arrow-left:hover {
+    cursor: pointer;
   }
 }
 

@@ -23,11 +23,26 @@
 import { Component, DoCheck, Input, KeyValueDiffers, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
+import { animate, style, transition, trigger } from '@angular/animations';
 
  @Component({
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
-     styleUrls: ['./container-modal.scss']
+     styleUrls: ['./container-modal.scss'],
+     animations: [
+         trigger(
+             'onCreateElement', [
+                 transition( ':enter', [
+                     style( { opacity: 0 } ),
+                     animate( '100ms ease-in', style( { opacity: 1 } ) )
+                 ] ),
+                 transition( ':leave', [
+                     style( { opacity: 1 } ),
+                     animate( '100ms ease-out', style( { opacity: 0 } ) )
+                 ] )
+             ]
+         )
+     ]
  })
  export class TlContainerModal implements OnInit, DoCheck {
 
@@ -39,13 +54,13 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
 
      @Input() modalBoxWidth = 150;
 
+     @Input() arrowsColor = '#797979';
+
      @Input() limitStringBox = 12;
 
      @ViewChild('container') container;
 
      @ViewChild( 'wrapper' ) wrapper;
-
-     @ViewChild( 'arrowRight' ) arrowRight;
 
      private boxColorInactive = '#6da78d';
 
@@ -76,22 +91,23 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
          }, 1 );
      }
 
-     showMoreBoxes() {
-         this.handleArrowRight();
+     handleArrowRight() {
+         if (  this.container.nativeElement.scrollLeft < this.wrapper.nativeElement.offsetWidth ) {
+             this.container.nativeElement.scrollLeft += 300;
+         }
          this.handleScrollFinish();
      }
 
-     handleArrowRight() {
-         if (  this.container.nativeElement.scrollLeft < this.wrapper.nativeElement.offsetWidth ) {
-             this.container.nativeElement.scrollLeft += 150;
+     handleArrowLeft() {
+         if ( this.container.nativeElement.scrollLeft > 0 ) {
+             this.container.nativeElement.scrollLeft -= 300;
          }
+         this.handleScrollFinish();
      }
 
      handleScrollFinish() {
          const scrollLeft = this.container.nativeElement.scrollLeft + this.container.nativeElement.offsetWidth;
-         if (scrollLeft >= this.wrapper.nativeElement.offsetWidth) {
-             this.isScrolling = false;
-         }
+         scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
      }
 
      ngDoCheck() {

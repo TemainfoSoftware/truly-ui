@@ -85,7 +85,7 @@ small {
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    font-size: 0.7em;
+    font-size: 10px;
     font-family: Verdana;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -97,6 +97,7 @@ small {
 
 .tags-detail {
     padding: 5px;
+    font-size: 10px;
 }
 
 .tags b {
@@ -112,8 +113,8 @@ small {
     border-top: 1px solid #ece8f0;
     border-left: 1px solid #ece8f0;
     border-right: 1px solid #ece8f0;
-    font-size: 0.8em;
-    font-family: Arial;
+    font-size: 12px;
+    font-family: "Segoe UI";
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;

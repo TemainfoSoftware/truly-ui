@@ -1,5 +1,10 @@
 $background-color: #FAFAFA;
 
+.multiselect-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 small {
     opacity: 0.7;
 }
@@ -43,7 +48,10 @@ small {
 
 .select-options {
     display: block;
+    position: absolute;
+    width: 100%;
     overflow: auto;
+    z-index: 1000;
     margin: 0 auto;
     padding: 0 !important;
     border: 0 solid #ece8f0;

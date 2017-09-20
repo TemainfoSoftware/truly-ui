@@ -26,7 +26,7 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy,
+    ChangeDetectionStrategy, Renderer2,
 } from '@angular/core';
 
 let nextInputUniqueId = 0;
@@ -84,18 +84,32 @@ export class TlMultiSelect implements OnInit {
     @ViewChild( 'ul' ) ul;
 
     public isOpen = 'none';
+
     public filtredItens: any[] = [];
+
     private children = -1;
+
     private placeholderMessage: string;
+
     private tags: any[] = [];
 
+    constructor( private renderer: Renderer2 ) {}
 
-    constructor() {}
 
     ngOnInit() {
         this.placeholderMessage = this.placeholder;
         this.setFiltredItens();
         this.validationProperty();
+        this.documentListener();
+    }
+
+    documentListener() {
+        this.renderer.listen( document, 'mousedown', ( $event ) => {
+            this.isOpen = 'block';
+            if ( $event.target !== document.activeElement && $event.target.nodeName !== 'LI') {
+                this.isOpen = 'none';
+            }
+        } );
     }
 
     validationProperty() {

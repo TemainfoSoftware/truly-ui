@@ -1,35 +1,37 @@
-<div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
-     class="input-form"
-     (click)="toogleOpen('block')">
+<div class="multiselect-wrapper">
+        <div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
+             class="input-form"
+             (click)="toogleOpen('block')">
 
-  <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
-        *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailOnTag && detail !== undefined"
-         class="tags-detail"><{{tag?.source[detail]}}></small><b
-         (click)="removeTag(i, tag)">x</b>
-  </span>
+      <span class="tags" (click)="selectTagClick($event, i, tag)" [ngStyle]="changeColorTag(tag)"
+            *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailOnTag && detail !== undefined"
+                                                                                 class="tags-detail"><{{tag?.source[detail]}}></small><b
+              (click)="removeTag(i, tag)">x</b>
+      </span>
 
-    <input [attr.autocomplete]="'off'" [attr.id]="inputID" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
-           #input width="300" (blur)="close($event)"
-           (focus)="receiveFocus()"
-           [attr.placeholder]="placeholder"
-           (keyup)="searchItem($event.target.value, $event)"
-           (keydown)="inputKeyDown($event.key)"
-           type="text">
-</div>
+            <input [attr.autocomplete]="'off'" [attr.id]="inputID" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
+                   #input width="300" (blur)="close($event)"
+                   (focus)="receiveFocus()"
+                   [attr.placeholder]="placeholder"
+                   (keyup)="searchItem($event.target.value, $event)"
+                   (keydown)="inputKeyDown($event.key)"
+                   type="text">
+    </div>
 
-<div [ngStyle]="{'display': isOpen}">
+        <div [ngStyle]="{'display': isOpen}">
 
-    <ul [attr.id]="listID" #ul class="select-options"
-        [ngStyle]="calcHeightItem()">
+            <ul [attr.id]="listID" #ul class="select-options"
+                [ngStyle]="calcHeightItem()">
 
-        <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
-            (keydown)="inputKeyDown($event.key, i, item)"
-            *ngFor="let item of filtredItens; let i = index"
-            class="itens" (click)="addTag(i, item, li)"><i *ngIf="showIcon" style="padding: 10px"
-                                                           ngClass="{{item?.effect[icon]}}"></i>
-            {{item?.source[query]}}
-            <small>{{item?.source[detail]}}</small>
-        </li>
+                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
+                    (keydown)="inputKeyDown($event.key, i, item)"
+                    *ngFor="let item of filtredItens; let i = index"
+                    class="itens" (click)="addTag(i, item, li)"><i *ngIf="showIcon" style="padding: 10px"
+                                                                   ngClass="{{item?.effect[icon]}}"></i>
+                    {{item?.source[query]}}
+                    <small>{{item?.source[detail]}}</small>
+                </li>
 
-    </ul>
+            </ul>
+    </div>
 </div>

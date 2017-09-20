@@ -26,7 +26,7 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2,
+    ChangeDetectionStrategy, Renderer2, OnDestroy,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -41,7 +41,7 @@ import { KeyEvent } from '../core/enums/key-events';
     styleUrls: [ './multiselect.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush
 } )
-export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
+export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDestroy {
     @Input() color: string;
 
     @Input() data: any[] = [];
@@ -82,6 +82,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
 
     private placeholderMessage: string;
 
+    private documentListener;
+
     private tags: any[] = [];
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
@@ -94,11 +96,11 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
         this.setFiltredItens();
         this.validationProperty();
         this.setElement( this.input, 'multiselect' );
-        this.documentListener();
+        this.createDocumentListener();
     }
 
-    documentListener() {
-        this.renderer.listen( document, 'mousedown', ( $event ) => {
+    createDocumentListener() {
+        this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
             this.isOpen = 'block';
             if ( $event.target !== document.activeElement && $event.target.nodeName !== 'LI') {
                 this.isOpen = 'none';
@@ -335,6 +337,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
         if ( event.relatedTarget === null ) {
             this.toogleOpen( 'none' );
         }
+    }
+
+    ngOnDestroy() {
+        this.documentListener();
     }
 }
 

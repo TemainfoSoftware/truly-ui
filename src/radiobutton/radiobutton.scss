@@ -7,15 +7,16 @@
 }
 
 input[type='radio'] {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 17px;
   position: absolute;
   margin: 0 !important;
+  left: 3px;
 }
 
 input[type='radio']:checked:before {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   border-radius: 15px;
   position: absolute;
   background-color: #fff;
@@ -26,8 +27,8 @@ input[type='radio']:checked:before {
 }
 
 input[type='radio']:after {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   border-radius: 15px;
   top: 0;
   left: 0;
@@ -42,11 +43,11 @@ input[type='radio']:after {
 
 input[type='radio']:checked:after {
   content: '';
-  width: 10px;
+  width: 9px;
   position: absolute;
-  height: 10px;
-  top: 5px;
-  left: 5px;
+  height: 9px;
+  top: 4px;
+  left: 4px;
   background-color: #66cc99;
   border: 0;
 }
@@ -57,7 +58,7 @@ input[type=radio]:hover {
 
 .-label {
   font-family: "Segoe UI" !important;
-  font-size: 1em !important;
+  font-size: 14px !important;
   font-weight: normal !important;
   position: relative;
   padding-left: 25px;

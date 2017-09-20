@@ -6,15 +6,16 @@
 }
 
 input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   position: absolute;
   margin: 0 !important;
+  top: 5px;
 }
 
 input[type='checkbox']:checked:before {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   position: absolute;
   background-color: #fff;
   content: '';
@@ -24,8 +25,8 @@ input[type='checkbox']:checked:before {
 }
 
 input[type='checkbox']:after {
-  width: 18px;
-  height: 18px;
+  width: 15px;
+  height: 15px;
   top: 0;
   left: 0;
   position: absolute;
@@ -53,7 +54,7 @@ input[type=checkbox]:hover {
 
 .-label {
   font-family: "Segoe UI" !important;
-  font-size: 1em !important;
+  font-size: 0.8em !important;
   font-weight: normal !important;
   position: relative;
   left: 25px;
@@ -67,11 +68,11 @@ input[type=checkbox]:hover {
 .checked {
   position: absolute;
   z-index: 2;
-  top: 6px;
+  top: 7px;
   bottom: 0;
-  left: 6px;
+  left: 4px;
   color: #fff;
-  font-size: 0.8em;
+  font-size: 12px;
 }
 
 .checked:hover {

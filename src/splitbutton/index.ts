@@ -6,6 +6,7 @@ import { TlSplitButton } from './splitbutton';
 import { TlSplitButtonAction } from './splitbutton-action';
 
 export * from './splitbutton';
+export * from './splitbutton-action';
 
 @NgModule({
     imports: [

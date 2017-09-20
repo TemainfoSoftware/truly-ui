@@ -28,39 +28,29 @@ import {
     ViewChild,
     ChangeDetectionStrategy, Renderer2,
 } from '@angular/core';
-import { ComponentHasModelBase } from "../core/base/component-has-model.base";
-import { TabIndexService } from "../form/tabIndex.service";
-import { NameGeneratorService } from "../core/helper/namegenerator.service";
-import { IdGeneratorService } from "../core/helper/idgenerator.service";
-import { KeyEvent } from "../core/enums/key-events";
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { TabIndexService } from '../form/tabIndex.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { KeyEvent } from '../core/enums/key-events';
 
-let nextInputUniqueId = 0;
-let nextListUniqueId = 0;
 
 @Component( {
-    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
-    styleUrls: [ './multiselect.scss' ]
+    styleUrls: [ './multiselect.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
     @Input() color: string;
 
-    /**
-     * Array de Objetos que é utilizado na listagem dos dados
-     */
     @Input() data: any[] = [];
 
-    /**
-     * Chave a qual ira ser realizada a pesquisa
-     */
     @Input() query: string;
 
     @Input() label: string;
 
     @Input() detail: string;
-
-    @Input() placeholder: string;
 
     @Input() icon: string;
 
@@ -94,7 +84,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
 
     private tags: any[] = [];
 
-    constructor( tabIndexService : TabIndexService, idService : IdGeneratorService, nameService : NameGeneratorService, private renderer : Renderer2 ) {
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                 private renderer: Renderer2 ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -142,6 +133,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
 
     toogleOpen( opened: string ) {
         this.isOpen = opened;
+        this.setInputFocus();
     }
 
     receiveFocus() {
@@ -173,16 +165,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
         }
     }
 
-    /**
-     * Remove uma TAG do input ao precionar BACKSPACE
-     *
-     * @param {KeyboardEvent} $event The target to process see
-     * @param {KeyboardEvent} $event2 The target2 to process see
-     *
-     * @example
-     * This is a good example
-     * processTarget('yo')
-     */
     removeTagOnBackspace() {
         if ( this.input.nativeElement.value === '' && this.tags.length > 0 ) {
             this.removeTag( this.tags.length - 1 );
@@ -199,11 +181,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
     }
 
     removeTag( index, item? ) {
-        if ( item ) {
-            this.filtredItens.push( item );
-        } else {
-            this.filtredItens.push( this.tags[ index ] );
-        }
+        item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
         this.tags.splice( index, 1 );
         this.getSelecteds.emit( this.tags );
         this.changePlaceholder();
@@ -229,10 +207,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
 
     selectTagNavitation( keycode ) {
         this.cleanTagSelected();
-        if ( keycode === 'ArrowRight' && this.selectTag !== this.tags.length - 1 ) {
+        if ( keycode === KeyEvent.ARROWRIGHT && this.selectTag !== this.tags.length - 1 ) {
             this.selectTag++;
             this.tags[ this.selectTag ][ 'selected' ] = true;
-        } else if ( keycode === 'ArrowLeft' && this.selectTag !== 0 && this.tags.length !== 0 ) {
+        } else if ( keycode === KeyEvent.ARROWLEFT && this.selectTag !== 0 && this.tags.length !== 0 ) {
             this.selectTag--;
             this.tags[ this.selectTag ][ 'selected' ] = true;
         }
@@ -284,7 +262,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit {
                 this.toogleOpen( 'none' );
                 break;
             case KeyEvent.ARROWLEFT || KeyEvent.ARROWRIGHT && this.tags.length !== 0:
-                this.selectTagNavitation( event );
+                this.selectTagNavitation( $event.keyCode );
                 break;
         }
     }

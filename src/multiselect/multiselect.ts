@@ -38,7 +38,7 @@ let nextListUniqueId = 0;
     templateUrl: './multiselect.html',
     styleUrls: [ './multiselect.scss' ]
 } )
-export class TlMultiselect implements OnInit {
+export class TlMultiSelect implements OnInit {
     @Input() color: string;
 
     /**
@@ -52,22 +52,35 @@ export class TlMultiselect implements OnInit {
     @Input() query: string;
 
     @Input() label: string;
+
     @Input() detail: string;
+
     @Input() placeholder: string;
+
     @Input() icon: string;
+
     @Input() showIcon = true;
+
     @Input() openFocus = false;
+
     @Input() detailOnTag = null;
+
     @Input() selectTag: number;
+
     @Input() itemHeight = 10;
+
     @Input() itemAmount = 5;
+
     @Input() minLengthSearch = 2;
+
     @Input() inputID = `input-truly-select-${nextInputUniqueId++}`;
+
     @Input() listID = `list-truly-select-${nextListUniqueId++}`;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'input' ) input;
+
     @ViewChild( 'ul' ) ul;
 
     public isOpen = 'none';
@@ -77,9 +90,7 @@ export class TlMultiselect implements OnInit {
     private tags: any[] = [];
 
 
-    constructor() {
-
-    }
+    constructor() {}
 
     ngOnInit() {
         this.placeholderMessage = this.placeholder;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlMultiselect } from './multiselect';
+import { TlMultiSelect } from './multiselect';
 
 export * from './multiselect';
 
@@ -9,10 +9,10 @@ export * from './multiselect';
     CommonModule
   ],
   declarations: [
-    TlMultiselect,
+    TlMultiSelect,
   ],
   exports: [
-    TlMultiselect,
+    TlMultiSelect,
   ]
 })
-export class MultiselectModule {}
+export class MultiSelectModule {}

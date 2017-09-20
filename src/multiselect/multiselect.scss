@@ -1,4 +1,6 @@
-$background-color: #FAFAFA;
+$background-color: #FFFFFF;
+$background-border: #CACACA;
+
 
 .multiselect-wrapper {
     position: relative;
@@ -10,15 +12,17 @@ small {
 }
 
 .input-form {
-    border: 1px solid #e3e5e6;
-    padding: 2.5px;
+    padding: 1.5px 5px;
+    border: 1px solid $background-border;
     background: $background-color;
+    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
 }
 
 .input-form input::placeholder{
     font-size: 0.9em;
-    color: #797a75;
-
+    color: #d2d4d4;
 }
 
 .input {
@@ -36,7 +40,6 @@ small {
     height: 22px;
     background: $background-color;
 }
-
 
 
 .inputFormOpenFilter {

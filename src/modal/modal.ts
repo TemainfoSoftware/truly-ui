@@ -160,7 +160,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     ngAfterViewInit() {
-        const listener = this.renderer.listen( document, 'keyup', ( $event ) => {
+        const listener = this.renderer.listen( document, 'keydown', ( $event ) => {
             if ( $event.keyCode === KeyEvent.ESCAPE ) {
                 if ( document.getElementsByClassName( 'tl-modal-container' ).length > 0 ) {
                     this.serviceControl.execCallBack( ModalResult.MRCLOSE,

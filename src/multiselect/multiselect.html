@@ -10,6 +10,8 @@
       </span>
 
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
+                   #model="ngModel"
+                   [(ngModel)]="modelValue"
                    #input width="300" (blur)="close($event)"
                    (focus)="receiveFocus()"
                    [attr.placeholder]="placeholder"
@@ -26,7 +28,7 @@
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
-                    class="itens" (click)="addTag(item, li)"><i *ngIf="showIcon" style="padding: 10px"
+                    class="itens" (click)="addTag(item)"><i *ngIf="showIcon" style="padding: 10px"
                                                                    ngClass="{{item?.effect[icon]}}"></i>
                     {{item?.source[query]}}
                     <small>{{item?.source[detail]}}</small>

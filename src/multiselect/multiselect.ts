@@ -26,22 +26,27 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import set = Reflect.set;
 
 
 @Component( {
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
     styleUrls: [ './multiselect.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlMultiSelect ), multi: true }
+    ]
 } )
-export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDestroy {
+export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {
     @Input() color: string;
 
     @Input() data: any[] = [];
@@ -87,7 +92,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
     private tags: any[] = [];
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                 private renderer: Renderer2 ) {
+                 private renderer: Renderer2, private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -99,6 +104,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         this.createDocumentListener();
     }
 
+    ngAfterViewInit() {
+        this.validateHasModel();
+    }
+
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
             this.isOpen = 'block';
@@ -106,6 +115,17 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
                 this.isOpen = 'none';
             }
         } );
+    }
+
+    validateHasModel() {
+        setTimeout( () => {
+            if ( this.componentModel.model ) {
+                this.tags = this.componentModel.model;
+                this.cleanInput();
+                this.change.detectChanges();
+                this.receiveFocus();
+            }
+        }, 1 );
     }
 
     validationProperty() {
@@ -227,14 +247,16 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
 
     addTag( item ) {
         this.tags.push( item );
+        this.modelValue = this.tags;
         this.placeholder = '';
         this.children = -1;
-        this.getSelecteds.emit( this.tags );
         this.selectTag = this.tags.length;
+        this.getSelecteds.emit( this.tags );
         this.cleanTagSelected();
-        this.cleanInput();
         this.receiveFocus();
         this.setInputFocus();
+        this.change.detectChanges();
+        this.cleanInput();
     }
 
     handleKeyDown( $event, item ) {
@@ -320,7 +342,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
     }
 
     cleanInput() {
-        this.input.nativeElement.value = '';
+        setTimeout( () => {
+            this.input.nativeElement.value = '';
+        }, 1 );
     }
 
     cleanTagSelected() {

@@ -7,11 +7,12 @@
 }
 
 input[type='radio'] {
-  width: 18px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
   position: absolute;
   margin: 0 !important;
   left: 3px;
+  top: 3px;
 }
 
 input[type='radio']:checked:before {
@@ -46,8 +47,8 @@ input[type='radio']:checked:after {
   width: 9px;
   position: absolute;
   height: 9px;
-  top: 4px;
-  left: 4px;
+  top: 3px;
+  left: 3px;
   background-color: #66cc99;
   border: 0;
 }
@@ -57,11 +58,12 @@ input[type=radio]:hover {
 }
 
 .-label {
-  font-family: "Segoe UI" !important;
-  font-size: 14px !important;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9em !important;
   font-weight: normal !important;
+  color: #737373;
   position: relative;
-  padding-left: 25px;
+  padding-left: 22px;
   margin: 0 !important;
 }
 

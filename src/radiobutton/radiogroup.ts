@@ -40,7 +40,6 @@ const Orientation = {
     selector: 'tl-radio-group',
     templateUrl: './radiogroup.html',
     styleUrls: [ './radiobutton.scss' ],
-    encapsulation: ViewEncapsulation.Native,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioGroup ), multi: true }
     ]

@@ -15,6 +15,7 @@ export class MultiSelectDemo {
   private dataTableProperties;
   private events;
   private dataBasic = [];
+  private dataBasicModel;
 
   constructor() {
     this.dataTableProperties = jsonProp.dataProperties;
@@ -29,10 +30,27 @@ export class MultiSelectDemo {
         { source: { id: 1, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } }
         ,
       ];
+
+    this.dataBasicModel = [{ source: { id: 1, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
+      { source: { id: 1, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } }]
+
   }
 
-  onClickNoItem( item ) {
-    console.log( item );
+  show() {
+    alert(JSON.stringify(this.dataBasicModel));
+  }
+
+
+  getSelecteds($event) {
+    console.log('New Tags', $event);
+  }
+
+  onClickTag($event) {
+    console.log('Clicked Tag', $event);
+  }
+
+  onRemoveTag($event) {
+    console.log('Removed Tag', $event);
   }
 
 }

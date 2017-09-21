@@ -34,8 +34,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import set = Reflect.set;
-
 
 @Component( {
     selector: 'tl-multiselect',
@@ -47,6 +45,7 @@ import set = Reflect.set;
     ]
 } )
 export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {
+
     @Input() color: string;
 
     @Input() data: any[] = [];
@@ -74,6 +73,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     @Input() minLengthSearch = 2;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
+
+    @Output() onClickTag: EventEmitter<any> = new EventEmitter();
+
+    @Output() onRemoveTag: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'input' ) input;
 
@@ -155,7 +158,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     toogleOpen( opened: string ) {
         this.isOpen = opened;
-        this.setInputFocus();
     }
 
     receiveFocus() {
@@ -188,12 +190,20 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     removeTagOnBackspace() {
-        if ( this.input.nativeElement.value === '' && this.tags.length > 0 ) {
+        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
             this.removeTag( this.tags.length - 1 );
             this.receiveFocus();
         } else {
             this.setFiltredItens();
         }
+    }
+
+    isInputValueEqualsEmpty() {
+        return this.input.nativeElement.value === '';
+    }
+
+    isTagsLengthMoreThanZero() {
+        return this.tags.length > 0;
     }
 
     closeFilterOnEscape( $event ) {
@@ -205,12 +215,14 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     removeTag( index, item? ) {
         item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
         this.tags.splice( index, 1 );
+        this.onRemoveTag.emit( item );
         this.getSelecteds.emit( this.tags );
         this.changePlaceholder();
         this.setInputFocus();
     }
 
     selectTagClick( event, item? ) {
+        this.onClickTag.emit( item );
         if ( item.selected === true ) {
             item.selected = false;
         } else if ( event.ctrlKey ) {
@@ -231,11 +243,15 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.cleanTagSelected();
         if ( keycode === KeyEvent.ARROWRIGHT && this.selectTag !== this.tags.length - 1 ) {
             this.selectTag++;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
+            this.setSelectTagAsTrue();
         } else if ( keycode === KeyEvent.ARROWLEFT && this.selectTag !== 0 && this.tags.length !== 0 ) {
             this.selectTag--;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
+            this.setSelectTagAsTrue();
         }
+    }
+
+    setSelectTagAsTrue() {
+        this.tags[ this.selectTag ][ 'selected' ] = true;
     }
 
 
@@ -301,18 +317,34 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     handleArrowDown() {
         if ( this.children < this.ul.nativeElement.children.length - 1 ) {
-            this.ul.nativeElement.children[ this.children + 1 ].focus();
+            this.setFocusOnNextElement();
             this.children = this.children + 1;
         }
     }
 
     handleArrowUp() {
-        if ( this.children !== 0 && this.children !== -1 ) {
-            this.ul.nativeElement.children[ this.children - 1 ].focus();
+        if ( !this.isChildrenEqualsZero() && !this.isChildrenEqualsNegativeOne() ) {
+            this.setFocusOnPreviousElement();
             this.children = this.children - 1;
         } else {
             this.setInputFocus();
         }
+    }
+
+    setFocusOnNextElement() {
+        this.ul.nativeElement.children[ this.children + 1 ].focus();
+    }
+
+    setFocusOnPreviousElement() {
+        this.ul.nativeElement.children[ this.children - 1 ].focus();
+    }
+
+    isChildrenEqualsZero() {
+        return this.children === 0;
+    }
+
+    isChildrenEqualsNegativeOne() {
+        return this.children === -1;
     }
 
     calcHeightItem() {

@@ -11,11 +11,11 @@
                       (click)="removeTag(i, tag)">x</b>
           </span>
 
-            <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
+            <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
                    #model="ngModel"
                    [(ngModel)]="modelValue"
                    #input width="300"
-                   (blur)="close($event, element)"
+                   (blur)="closeList($event, element)"
                    (focus)="receiveFocus(element)"
                    [attr.placeholder]="placeholder"
                    (keyup)="searchItem($event.target.value, $event)"
@@ -26,7 +26,7 @@
         <div [ngStyle]="{'display': isOpen}">
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
+                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
                     class="itens" (click)="addTag(item)">

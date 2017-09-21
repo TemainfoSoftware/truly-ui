@@ -48,7 +48,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() color: string;
 
-    @Input() data: any[] = [];
+    @Input() data = [];
 
     @Input() query: string;
 
@@ -90,7 +90,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     public isOpen = 'none';
 
-    public filtredItens: any[] = [];
+    public filtredItens = [];
 
     private children = -1;
 
@@ -98,7 +98,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     private documentListener;
 
-    private tags: any[] = [];
+    private tags = [];
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
                  private renderer: Renderer2, private change: ChangeDetectorRef ) {
@@ -151,148 +151,35 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         if ( this.detail === undefined && this.detailOnTag !== null ) {
             throw new Error( 'You have to declare the [detail] property' );
         }
+    }
+
+    validateEmptySearch() {
+        setTimeout( () => {
+            if ( this.input.nativeElement.value === '' ) {
+                return this.filtredItens = this.data;
+            }
+        }, 1 );
+    }
+
+    validateOpenOnFocus() {
         if ( this.openFocus ) {
             this.toogleOpen( 'block' );
         }
     }
 
-    setFiltredItens() {
-        if ( !(this.tags.length > 0) ) {
-            this.filtredItens = this.data;
-        }
-    }
-
-    toogleOpen( opened: string ) {
-        this.isOpen = opened;
-    }
-
-    receiveFocus( element? ) {
-        const self = this;
-        this.children = -1;
-        if ( this.tags.length > 0 ) {
-            this.tags.forEach( function ( tag ) {
-                self.filtredItens = self.data.filter( function ( value ) {
-                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
-                } );
-            } );
-        }
-        this.setOutlineMultiSelect( element );
-    }
-
-    setOutlineMultiSelect( element ) {
-        if ( element ) {
-            element.style.outline = '5px auto -webkit-focus-ring-color';
-        }
-    }
-
-    clearOutlineMultiSelect( element ) {
-        if ( element ) {
-            element.style.outline = 'none';
-        }
-    }
-
-    searchItem( inputed, $event ) {
-        const self = this;
-        this.closeFilterOnEscape( $event );
-        if ( inputed.length >= this.minLengthSearch ) {
-            this.toogleOpen( 'block' );
-            if ( !(this.tags.length > 0) ) {
-                this.filtredItens = this.data.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
-            } else {
-                this.filtredItens = this.filtredItens.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
-            }
-        }
-    }
-
-    removeTagOnBackspace() {
-        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
-            this.removeTag( this.tags.length - 1 );
-            this.receiveFocus();
-        } else {
-            this.setFiltredItens();
-        }
-    }
-
-    isInputValueEqualsEmpty() {
-        return this.input.nativeElement.value === '';
-    }
-
-    isTagsLengthMoreThanZero() {
-        return this.tags.length > 0;
-    }
-
-    closeFilterOnEscape( $event ) {
-        if ( $event.keyCode === KeyEvent.ESCAPE ) {
-            this.toogleOpen( 'none' );
-        }
-    }
-
-    removeTag( index, item? ) {
-        item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
-        this.tags.splice( index, 1 );
-        this.onRemoveTag.emit( item );
-        this.getSelecteds.emit( this.tags );
-        this.changePlaceholder();
-        this.setInputFocus();
-    }
-
-    selectTagClick( event, item? ) {
-        this.onClickTag.emit( item );
-        if ( item.selected === true ) {
-            item.selected = false;
-        } else if ( event.ctrlKey ) {
-            this.selectTagCtrlBindClick( item );
-        } else {
-            this.cleanTagSelected();
-            item[ 'selected' ] = true;
-        }
-        this.setInputFocus();
-    }
-
-    selectTagCtrlBindClick( item ) {
-        item[ 'selected' ] = true;
-        this.setInputFocus();
-    }
-
-    selectTagNavitation( keycode ) {
-        this.cleanTagSelected();
-        if ( keycode === KeyEvent.ARROWRIGHT && this.selectTag !== this.tags.length - 1 ) {
-            this.selectTag++;
-            this.setSelectTagAsTrue();
-        } else if ( keycode === KeyEvent.ARROWLEFT && this.selectTag !== 0 && this.tags.length !== 0 ) {
-            this.selectTag--;
-            this.setSelectTagAsTrue();
-        }
-    }
-
-    setSelectTagAsTrue() {
-        this.tags[ this.selectTag ][ 'selected' ] = true;
-    }
-
-
-    changePlaceholder() {
+    validateEventOnKeyEnter( $event ) {
         if ( this.tags.length === 0 ) {
-            this.placeholder = this.placeholderMessage;
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
         }
     }
 
-    addTag( item ) {
-        this.tags.push( item );
-        this.modelValue = this.tags;
-        this.placeholder = '';
-        this.children = -1;
-        this.selectTag = this.tags.length;
-        this.getSelecteds.emit( this.tags );
-        this.cleanTagSelected();
-        this.receiveFocus();
-        this.setInputFocus();
-        this.change.detectChanges();
-        this.cleanInput();
+    validateItemToAddTag( item ) {
+        if ( item !== undefined ) {
+            this.addTag( item );
+        }
     }
+
 
     handleKeyDown( $event, item ) {
         switch ( $event.keyCode ) {
@@ -314,48 +201,46 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.deleteTagSelected();
                 break;
             case KeyEvent.BACKSPACE:
-                this.stopEventKeyDown( $event );
                 this.removeTagOnBackspace();
-                this.receiveFocus();
                 break;
             case KeyEvent.TAB:
                 this.toogleOpen( 'none' );
                 break;
-            case KeyEvent.ARROWLEFT || KeyEvent.ARROWRIGHT && this.tags.length !== 0:
+            case KeyEvent.ARROWLEFT:
                 this.stopEventKeyDown( $event );
-                this.selectTagNavitation( $event.keyCode );
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowLeft();
+                }
+                break;
+            case KeyEvent.ARROWRIGHT:
+                this.stopEventKeyDown($event);
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowRight();
+                }
                 break;
             case KeyEvent.ESCAPE:
-                this.stopEventKeyDown( $event );
-                this.toogleOpen( 'none' );
+                if ( this.isOpen === 'block' ) {
+                    this.stopEventKeyDown( $event );
+                    this.toogleOpen( 'none' );
+                }
                 break;
         }
     }
 
-    validateEventOnKeyEnter( $event ) {
-        if ( this.tags.length === 0 ) {
-            this.stopEventKeyDown( $event );
-            this.setInputFocus();
+    handleArrowRight() {
+        this.cleanTagSelected();
+        if (this.selectTag !== this.tags.length - 1) {
+            this.selectTag++;
+            this.setSelectTagAsTrue();
         }
     }
 
-    validateItemToAddTag( item ) {
-        if ( item !== undefined ) {
-            this.addTag( item );
+    handleArrowLeft() {
+        this.cleanTagSelected();
+        if (this.selectTag !== 0 && this.tags.length !== 0) {
+            this.selectTag--;
+            this.setSelectTagAsTrue();
         }
-    }
-
-    stopEventKeyDown( $event ) {
-        $event.preventDefault();
-        $event.stopPropagation();
-    }
-
-    deleteTagSelected() {
-        this.tags = this.tags.filter( function ( value ) {
-            return !value.selected;
-        } );
-        this.selectTag = this.tags.length - 1;
-        this.receiveFocus();
     }
 
     handleArrowDown() {
@@ -373,6 +258,47 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.setInputFocus();
         }
     }
+    setFiltredItens() {
+        this.validateEmptySearch();
+        if ( !this.isTagsLengthMoreThanZero() ) {
+            if ( this.isFiltredLengthEqualsDataLength() ) {
+                this.filtredItens = this.data;
+            }
+        }
+    }
+
+    toogleOpen( opened: string ) {
+        this.isOpen = opened;
+    }
+
+    receiveFocus( element? ) {
+        const self = this;
+        this.children = -1;
+        if ( this.tags.length > 0 ) {
+            this.tags.forEach( function ( tag ) {
+                self.filtredItens = self.data.filter( function ( value ) {
+                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
+                } );
+            } );
+        }
+        this.validateOpenOnFocus();
+        this.setOutlineMultiSelect( element );
+    }
+
+    setOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = '5px auto -webkit-focus-ring-color';
+        }
+    }
+
+
+    setSelectTagAsTrue() {
+        this.tags[ this.selectTag ][ 'selected' ] = true;
+    }
+
+    setInputFocus() {
+        this.input.nativeElement.focus();
+    }
 
     setFocusOnNextElement() {
         this.ul.nativeElement.children[ this.children + 1 ].focus();
@@ -382,12 +308,67 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.ul.nativeElement.children[ this.children - 1 ].focus();
     }
 
-    isChildrenEqualsZero() {
-        return this.children === 0;
+    addTag( item ) {
+        this.tags.push( item );
+        this.modelValue = this.tags;
+        this.placeholder = '';
+        this.children = -1;
+        this.selectTag = this.tags.length;
+        this.getSelecteds.emit( this.tags );
+        this.cleanTagSelected();
+        this.receiveFocus();
+        this.setInputFocus();
+        this.change.detectChanges();
+        this.cleanInput();
     }
 
-    isChildrenEqualsNegativeOne() {
-        return this.children === -1;
+
+    stopEventKeyDown( $event ) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    }
+
+    deleteTagSelected() {
+        this.tags = this.tags.filter( function ( value ) {
+            return !value.selected;
+        } );
+        this.selectTag = this.tags.length - 1;
+        this.receiveFocus();
+    }
+
+    searchItem( inputed, $event ) {
+        const self = this;
+        this.closeFilterOnEscape( $event );
+        if ( inputed.length >= this.minLengthSearch ) {
+            this.toogleOpen( 'block' );
+            if ( !(this.tags.length > 0) ) {
+                this.filtredItens = this.data.filter( function ( valor ) {
+                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+                } );
+            } else {
+                this.filtredItens = this.filtredItens.filter( function ( valor ) {
+                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+                } );
+            }
+        }
+    }
+
+    selectTagCtrlBindClick( item ) {
+        item[ 'selected' ] = true;
+        this.setInputFocus();
+    }
+
+    selectTagClick( event, item? ) {
+        this.onClickTag.emit( item );
+        if ( item.selected === true ) {
+            item.selected = false;
+        } else if ( event.ctrlKey ) {
+            this.selectTagCtrlBindClick( item );
+        } else {
+            this.cleanTagSelected();
+            item[ 'selected' ] = true;
+        }
+        this.setInputFocus();
     }
 
     calcHeightWidthItem() {
@@ -413,8 +394,28 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         }
     }
 
-    setInputFocus() {
-        this.input.nativeElement.focus();
+    changePlaceholder() {
+        if ( this.tags.length === 0 ) {
+            this.placeholder = this.placeholderMessage;
+        }
+    }
+
+    removeTagOnBackspace() {
+        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
+            this.removeTag( this.tags.length - 1 );
+            this.receiveFocus();
+        } else {
+            this.setFiltredItens();
+        }
+    }
+
+    removeTag( index, item? ) {
+        item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
+        this.tags.splice( index, 1 );
+        this.onRemoveTag.emit( item );
+        this.getSelecteds.emit( this.tags );
+        this.changePlaceholder();
+        this.setInputFocus();
     }
 
     cleanInput() {
@@ -429,11 +430,43 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         } );
     }
 
-    hasTag() {
+    clearOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = 'none';
+        }
+    }
+
+    closeFilterOnEscape( $event ) {
+        if ( $event.keyCode === KeyEvent.ESCAPE ) {
+            this.toogleOpen( 'none' );
+        }
+    }
+
+    isTagsEqualsZero() {
         return this.tags.length === 0;
     }
 
-    close( event, element? ) {
+    isChildrenEqualsZero() {
+        return this.children === 0;
+    }
+
+    isChildrenEqualsNegativeOne() {
+        return this.children === -1;
+    }
+
+    isInputValueEqualsEmpty() {
+        return this.input.nativeElement.value === '';
+    }
+
+    isTagsLengthMoreThanZero() {
+        return this.tags.length > 0;
+    }
+
+    isFiltredLengthEqualsDataLength() {
+        return this.filtredItens.length === this.data.length;
+    }
+
+    closeList( event, element? ) {
         this.clearOutlineMultiSelect( element );
         if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
             this.toogleOpen( 'none' );
@@ -442,6 +475,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     ngOnDestroy() {
         this.documentListener();
+        this.change.detach();
     }
 }
 

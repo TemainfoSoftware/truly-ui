@@ -63,6 +63,14 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() buttonAddonAfterClass;
 
+    @Input() iconBeforeText;
+
+    @Input() iconBeforeTextClass;
+
+    @Input() iconAfterText;
+
+    @Input() iconAfterTextClass;
+
     @Input() width;
 
     @Input() height = 39;

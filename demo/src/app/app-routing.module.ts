@@ -27,6 +27,7 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'},
       {path: 'listbox', loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'},
       {path: 'panelgroup', loadChildren: './components/panel/paneldemo.module#PanelDemoModule'},
+      {path: 'multiselect', loadChildren: './components/multiselect/multiselectdemo.module#MultiSelectDemoModule'},
     ])
   ],
   exports: [RouterModule]

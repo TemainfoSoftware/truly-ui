@@ -41,7 +41,9 @@
           [ngClass]="{'-predefined' : textAfter}">{{textAfter}}
     </span>
 
-    <span [style.right]="clearButtonPosition + 'px'" (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>
+    <i *ngIf="clearButton && ngValue" (click)="clearInput()" class="addon -clearbutton ion-close-round" [style.right]="clearButtonPosition + 'px'"></i>
+
+    <!--<span [style.right]="clearButtonPosition + 'px'" (click)="clearInput()" class="addon -clearbutton" *ngIf="clearButton && ngValue">X</span>-->
 
 </div>
 

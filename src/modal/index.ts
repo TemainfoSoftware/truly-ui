@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
@@ -30,6 +30,8 @@ import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 
 export * from './modal';
 export * from './modal.service';
+export * from './modal-options';
+export * from './container-modal/container-modal';
 
 @NgModule( {
     imports: [
@@ -50,16 +52,9 @@ export * from './modal.service';
         TlBackdrop
     ],
     providers: [
-        ToneColorGenerator
+        ToneColorGenerator,
+        ModalService
     ]
 } )
 export class ModalModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ModalModule,
-            providers: [
-                ModalService
-            ]
-        }
-    }
 }

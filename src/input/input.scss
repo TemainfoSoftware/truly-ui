@@ -61,13 +61,17 @@ $success-background-color: #E3F5EC;
     border-radius: 0 2px 2px 0;
   }
   > .addon.-clearbutton {
-    font-size: 1em;
+    font-size: 11px;
     position: absolute;
     border: 0;
-    top: 2px;
+    top: 3px;
     right: 4px;
     cursor: pointer;
     background: transparent;
+    color: #99a1a4;
+  }
+  > .addon.-clearbutton:hover{
+    color: #6c7477;
   }
   > .addon.-predefined {
     font-family: 'Lato', sans-serif;

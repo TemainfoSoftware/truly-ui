@@ -35,7 +35,7 @@ import { MultiSelectModule } from 'truly-ui/multiselect';
     InputModule,
     CheckBoxModule,
     FormDemoRoutingModule,
-    FormModule.forRoot(),
+    FormModule,
     DialogModule,
     FormsModule,
     ModalModule,

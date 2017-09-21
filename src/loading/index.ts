@@ -16,8 +16,7 @@ export * from './loading';
         TlLoadingComponent
     ],
     exports: [
-        TlLoading,
-        TlLoadingComponent
+        TlLoading
     ],
     entryComponents: [
         TlLoadingComponent

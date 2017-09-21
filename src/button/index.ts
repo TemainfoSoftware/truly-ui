@@ -6,10 +6,14 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ModalService } from '../modal/modal.service';
+import { ModalModule } from '../modal/index';
+
+export * from './button';
 
 @NgModule({
     imports: [
         CommonModule,
+        ModalModule
     ],
     declarations: [
         TlButton

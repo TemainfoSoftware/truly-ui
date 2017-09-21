@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlForm } from './form';
 import { FormService } from './form.service';
@@ -34,6 +34,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
 
 export * from './form.service';
+export * from './form';
 
 @NgModule( {
     imports: [
@@ -57,14 +58,4 @@ export * from './form.service';
         TlForm
     ]
 } )
-export class FormModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: FormModule,
-            providers: [
-                ModalService,
-                FormService,
-            ]
-        }
-    }
-}
+export class FormModule {}

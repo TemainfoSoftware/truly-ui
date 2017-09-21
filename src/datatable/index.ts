@@ -36,9 +36,6 @@ export * from './modes/scrollable/datatable-scrollable-mode';
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,
         TlDatatableScrollableMode,
-    ],
-    providers:[
-
     ]
 })
 export class DatatableModule {}

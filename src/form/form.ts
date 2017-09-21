@@ -426,7 +426,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-
+        this.cdr.detach();
     }
 }
 

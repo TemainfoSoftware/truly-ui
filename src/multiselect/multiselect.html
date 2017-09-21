@@ -1,12 +1,12 @@
 <div class="multiselect-wrapper">
         <div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
-             class="input-form"
-             (click)="toogleOpen('block')">
+             class="input-wrapper-multiselect"
+             (click)="toogleOpen('block');setInputFocus()">
 
       <span class="tags" (click)="selectTagClick($event, tag)" [ngStyle]="changeColorTag(tag)"
-            *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}<small *ngIf="detailOnTag && detail !== undefined"
-                                                                                 class="tags-detail"><{{tag?.source[detail]}}></small><b
-              (click)="removeTag(i, tag)">x</b>
+            *ngFor="let tag of tags; let i = index">{{tag?.source[label]}}
+          <small *ngIf="detailOnTag && detail !== undefined" class="tags-detail"><{{tag?.source[detail]}}></small><b
+                  (click)="removeTag(i, tag)">x</b>
       </span>
 
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': hasTag(), 'input': !hasTag()}"
@@ -21,19 +21,17 @@
     </div>
 
         <div [ngStyle]="{'display': isOpen}">
-
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightItem()">
-
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="close($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
-                    class="itens" (click)="addTag(item)"><i *ngIf="showIcon" style="padding: 10px"
-                                                                   ngClass="{{item?.effect[icon]}}"></i>
+                    class="itens" (click)="addTag(item)">
+                    <i *ngIf="showIcon" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+
                     {{item?.source[query]}}
                     <small>{{item?.source[detail]}}</small>
                 </li>
-
             </ul>
     </div>
 </div>

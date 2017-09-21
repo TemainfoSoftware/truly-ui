@@ -50,4 +50,21 @@
       <tl-checkbox (onCheckBox)="onCheckRadio()" [label]="'Notify ?'" [ngModel]="person?.notify"></tl-checkbox>
     </div>
   </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-multiselect
+          [data]="dataBasic"
+          [ngModel]="person?.friends"
+          [labelSize]="'80px'"
+          [label]="'Dependents'"
+          [openFocus]="true"
+          [labelTag]="'firstName'"
+          [detail]="'email'"
+          [query]="'firstName'">
+        </tl-multiselect>
+      </div>
+    </div>
+  </div>
 </tl-form>

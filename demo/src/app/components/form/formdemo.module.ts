@@ -19,6 +19,7 @@ import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
 import { RadioButtonModule } from "truly-ui/radiobutton";
 import { CheckBoxModule } from "truly-ui/checkbox";
+import { MultiSelectModule } from 'truly-ui/multiselect';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { CheckBoxModule } from "truly-ui/checkbox";
     FormsModule,
     ModalModule,
     HighlightJsModule,
-    TooltipModule
+    TooltipModule,
+    MultiSelectModule
   ],
   exports: [
     FormDemo,

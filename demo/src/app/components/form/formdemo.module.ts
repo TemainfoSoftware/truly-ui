@@ -34,7 +34,7 @@ import { CheckBoxModule } from "truly-ui/checkbox";
     InputModule,
     CheckBoxModule,
     FormDemoRoutingModule,
-    FormModule.forRoot(),
+    FormModule,
     DialogModule,
     FormsModule,
     ModalModule,

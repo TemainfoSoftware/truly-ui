@@ -54,6 +54,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() label: string;
 
+    @Input() labelSize = '120px';
+
+    @Input() labelTag: string;
+
     @Input() detail: string;
 
     @Input() icon: string;
@@ -81,6 +85,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'ul' ) ul;
+
+    @ViewChild( 'element' ) wrapperTags;
 
     public isOpen = 'none';
 
@@ -139,8 +145,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             throw new Error( 'The property [data] and property [query] are Required ' + '' +
                 'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
         }
-        if ( !this.label ) {
-            this.label = this.query;
+        if ( !this.labelTag ) {
+            this.labelTag = this.query;
         }
         if ( this.detail === undefined && this.detailOnTag !== null ) {
             throw new Error( 'You have to declare the [detail] property' );
@@ -160,7 +166,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.isOpen = opened;
     }
 
-    receiveFocus() {
+    receiveFocus( element? ) {
         const self = this;
         this.children = -1;
         if ( this.tags.length > 0 ) {
@@ -169,6 +175,19 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                     return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
                 } );
             } );
+        }
+        this.setOutlineMultiSelect( element );
+    }
+
+    setOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = '5px auto -webkit-focus-ring-color';
+        }
+    }
+
+    clearOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = 'none';
         }
     }
 
@@ -278,23 +297,24 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     handleKeyDown( $event, item ) {
         switch ( $event.keyCode ) {
             case KeyEvent.ENTER:
-                if (item !== undefined) {
-                    this.addTag( item );
-                }
+                this.validateEventOnKeyEnter( $event );
+                this.validateItemToAddTag( item );
                 break;
             case KeyEvent.ARROWDOWN:
-                $event.preventDefault();
+                this.stopEventKeyDown( $event );
                 this.toogleOpen( 'block' );
                 this.handleArrowDown();
                 break;
             case KeyEvent.ARROWUP:
-                $event.preventDefault();
+                this.stopEventKeyDown( $event );
                 this.handleArrowUp();
                 break;
             case KeyEvent.DELETE:
+                this.stopEventKeyDown( $event );
                 this.deleteTagSelected();
                 break;
             case KeyEvent.BACKSPACE:
+                this.stopEventKeyDown( $event );
                 this.removeTagOnBackspace();
                 this.receiveFocus();
                 break;
@@ -302,9 +322,32 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.toogleOpen( 'none' );
                 break;
             case KeyEvent.ARROWLEFT || KeyEvent.ARROWRIGHT && this.tags.length !== 0:
+                this.stopEventKeyDown( $event );
                 this.selectTagNavitation( $event.keyCode );
                 break;
+            case KeyEvent.ESCAPE:
+                this.stopEventKeyDown( $event );
+                this.toogleOpen( 'none' );
+                break;
         }
+    }
+
+    validateEventOnKeyEnter( $event ) {
+        if ( this.tags.length === 0 ) {
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
+        }
+    }
+
+    validateItemToAddTag( item ) {
+        if ( item !== undefined ) {
+            this.addTag( item );
+        }
+    }
+
+    stopEventKeyDown( $event ) {
+        $event.preventDefault();
+        $event.stopPropagation();
     }
 
     deleteTagSelected() {
@@ -347,11 +390,12 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         return this.children === -1;
     }
 
-    calcHeightItem() {
+    calcHeightWidthItem() {
         if ( this.itemAmount >= this.filtredItens.length ) {
-            return { 'height': 'auto' };
+            return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         } else {
-            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px' };
+            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px',
+                'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         }
     }
 
@@ -389,8 +433,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         return this.tags.length === 0;
     }
 
-    close( event ) {
-        if ( event.relatedTarget === null ) {
+    close( event, element? ) {
+        this.clearOutlineMultiSelect( element );
+        if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
             this.toogleOpen( 'none' );
         }
     }

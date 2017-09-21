@@ -11,7 +11,7 @@ small {
     opacity: 0.7;
 }
 
-.input-form {
+.input-wrapper-multiselect {
     padding: 1.5px 5px;
     border: 1px solid $background-border;
     background: $background-color;
@@ -20,7 +20,7 @@ small {
     box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
 }
 
-.input-form input::placeholder{
+.input-wrapper-multiselect input::placeholder{
     font-size: 0.9em;
     color: #d2d4d4;
 }

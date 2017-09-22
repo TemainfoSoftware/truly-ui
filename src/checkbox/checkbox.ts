@@ -47,6 +47,10 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() checked = false;
 
+    @Input() checkmarkColor = '#fff';
+
+    @Input() checkedColorBg = '#66CC99';
+
     @ViewChild( 'checkbox' ) checkbox;
 
     @Output() onCheckBox: EventEmitter<any> = new EventEmitter();

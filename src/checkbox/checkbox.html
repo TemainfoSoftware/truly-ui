@@ -1,5 +1,14 @@
 <div class="check-container">
-    <i (click)="check(checkbox.checked)" *ngIf="modelValue" class="fa fa-check checked"></i>
+
+    <div (click)="check(checkbox.checked)" *ngIf="modelValue" [style.background-color]="checkedColorBg"
+         [style.border]="'1px solid ' + checkedColorBg" class="checkmark-wrapper">
+        <div class="checkmark">
+            <div class="checkmark_stem" [style.background-color]="checkmarkColor"></div>
+            <div class="checkmark_kick" [style.background-color]="checkmarkColor"></div>
+        </div>
+    </div>
+    <!--<i (click)="check(checkbox.checked)" *ngIf="modelValue" class="fa fa-check checked"></i>-->
+
     <input attr.id="{{id}}"
            attr.name="{{name}}"
            #checkbox

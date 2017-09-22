@@ -54,7 +54,7 @@
     "@angular/platform-browser": "~4.4.0",
     "@angular/platform-browser-dynamic": "~4.4.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",
-    "@types/jest": "^20.0.0",
+    "@types/jest": "^21.1.0",
     "@types/node": "~8.0.1",
     "codelyzer": "~3.0.1",
     "cz-conventional-changelog": "^2.0.0",

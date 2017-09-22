@@ -26,7 +26,6 @@ import {
 
 @Component( {
     selector: 'tl-radiobutton',
-    encapsulation: ViewEncapsulation.Native,
     template: '',
 } )
 export class TlRadioButton implements AfterViewInit {

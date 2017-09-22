@@ -7,8 +7,8 @@
 }
 
 input[type='radio'] {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   position: absolute;
   margin: 0 !important;
   left: 3px;
@@ -20,8 +20,8 @@ input[type='radio']:before {
 }
 
 input[type='radio']:checked:before {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 15px;
   position: absolute;
   background-color: #fff;
@@ -32,8 +32,8 @@ input[type='radio']:checked:before {
 }
 
 input[type='radio']:after {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   border-radius: 15px;
   top: 0;
   left: -1px;

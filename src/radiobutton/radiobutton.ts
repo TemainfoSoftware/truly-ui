@@ -41,6 +41,8 @@ export class TlRadioButton implements AfterViewInit {
 
     @Input() checked = false;
 
+    @Input() colorSelected = '#66CC99';
+
     ngAfterViewInit() {
         if (!this.name) {
             throw new EvalError( 'The [name] property is required!' );

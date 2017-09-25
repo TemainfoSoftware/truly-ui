@@ -159,7 +159,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     removeElementsForFilter() {
-        const dataTemp = this.data;
+        const dataTemp = this.data.slice();
         this.tags.forEach((value) => {
             dataTemp.forEach((value2, index, array) => {
                 if (JSON.stringify(value.source) === JSON.stringify(value2.source)) {
@@ -291,6 +291,12 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.setInputFocus();
         }
     }
+
+    handleInputFocus(element) {
+        this.validateOpenOnFocus();
+        this.setOutlineMultiSelect( element );
+    }
+
     setFiltredItens() {
         this.validateEmptySearch();
         if ( !this.isTagsLengthMoreThanZero() ) {
@@ -304,18 +310,13 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.isOpen = opened;
     }
 
-    receiveFocus( element? ) {
-        const self = this;
+    removeTagOfFilter( tag? ) {
         this.children = -1;
-        if ( this.tags.length > 0 ) {
-            this.tags.forEach( function ( tag ) {
-                self.filtredItens = self.data.filter( function ( value ) {
-                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
-                } );
-            } );
-        }
-        this.validateOpenOnFocus();
-        this.setOutlineMultiSelect( element );
+        this.filtredItens.forEach((item, index, array2) => {
+            if (JSON.stringify(tag.source) === JSON.stringify(item.source)) {
+                this.filtredItens.splice(index, 1);
+            }
+        });
     }
 
     setOutlineMultiSelect( element ) {
@@ -349,7 +350,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.getSelecteds.emit( this.tags );
         this.setModelValue();
         this.cleanTagSelected();
-        this.receiveFocus();
+        this.removeTagOfFilter(item);
         this.setInputFocus();
         this.cleanInput();
         this.change.detectChanges();
@@ -373,7 +374,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             return !value.selected;
         } );
         this.selectTag = this.tags.length - 1;
-        this.receiveFocus();
+        this.removeTagOfFilter();
     }
 
     searchItem( inputed, $event ) {
@@ -443,7 +444,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     removeTagOnBackspace() {
         if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
             this.removeTag( this.tags.length - 1 );
-            this.receiveFocus();
+            this.setInputFocus();
         } else {
             this.setFiltredItens();
         }

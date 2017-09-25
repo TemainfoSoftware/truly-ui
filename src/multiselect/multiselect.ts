@@ -456,6 +456,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.getSelecteds.emit( this.tags );
         this.changePlaceholder();
         this.setInputFocus();
+        this.setModelValue();
+        this.cleanInput();
+        this.change.detectChanges();
     }
 
     cleanInput() {

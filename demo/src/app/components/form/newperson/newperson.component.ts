@@ -25,7 +25,7 @@ export class NewPerson implements OnInit, OnChanges {
     ];
     this.dataBasic =
       [
-        { source: { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
+        { source: { id: 1, firstName: 'Isadora', lastName: 'Nascimento', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
         { source: { id: 1, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
         { source: { id: 1, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
         { source: { id: 1, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
@@ -46,8 +46,4 @@ export class NewPerson implements OnInit, OnChanges {
     console.log('add');
   }
 
-
-  onCheckRadio() {
-    alert('Temainfo')
-  }
 }

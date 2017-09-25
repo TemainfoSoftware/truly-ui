@@ -42,7 +42,7 @@ export class MultiSelectDemo {
 
 
   getSelecteds($event) {
-    console.log('New Tags', $event);
+    /*console.log('New Tags', $event);*/
   }
 
   onClickTag($event) {

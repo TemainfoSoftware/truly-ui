@@ -62,6 +62,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() icon: string;
 
+    @Input() defaultColorTag = '#66CC99';
+
     @Input() showIcon = true;
 
     @Input() openFocus = false;
@@ -422,16 +424,16 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     changeColorTag( tag ) {
-        if ( this.color !== undefined ) {
+        if ( (this.color) && (tag.effect)) {
             if ( !tag.selected ) {
-                return { 'background': tag.effect.color };
+                return { 'background': tag.effect[this.color] };
             }
-            return { 'background': tag.effect.color, 'opacity': 0.8 };
+            return { 'background': tag.effect[this.color], 'opacity': 0.8 };
         } else {
             if ( tag.selected ) {
-                return { 'background': '#66CC99', 'opacity': 0.8 };
+                return { 'background': this.defaultColorTag, 'opacity': 0.8 };
             }
-            return { 'background': '#66CC99' };
+            return { 'background': this.defaultColorTag };
         }
     }
 

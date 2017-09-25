@@ -21,14 +21,18 @@
  */
 import {
     AfterViewInit,
-    Component, Input, ViewEncapsulation
+    Component, Input,
 } from '@angular/core';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { TabIndexService } from '../form/tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 @Component( {
     selector: 'tl-radiobutton',
     template: '',
 } )
-export class TlRadioButton implements AfterViewInit {
+export class TlRadioButton extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() label = '';
 
@@ -36,11 +40,13 @@ export class TlRadioButton implements AfterViewInit {
 
     @Input() tabindex = 0;
 
-    @Input() name = '';
-
     @Input() checked = false;
 
     @Input() colorSelected = '#66CC99';
+
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+        super( tabIndexService, idService, nameService );
+    }
 
     ngAfterViewInit() {
         if (!this.name) {

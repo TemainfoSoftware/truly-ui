@@ -96,8 +96,19 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
             if ( !this.componentModel.model ) {
                 this.checkFirstItem();
                 this.handleChecked();
+            }else {
+                this.handleModelValue();
             }
         }, 1 );
+    }
+
+
+    handleModelValue() {
+        this.listRadioButton.toArray().forEach((value2, index, array) => {
+            if (this.componentModel.model === value2.value) {
+                this.itemSelected = value2;
+            }
+        });
     }
 
     handleChecked() {

@@ -32,6 +32,7 @@ import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
+import { TlMultiSelect } from '../multiselect/multiselect';
 
 let componentFormIndex;
 
@@ -56,6 +57,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @ContentChildren( TlRadioGroup ) radioButtonList: QueryList<TlRadioGroup>;
 
     @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
+
+    @ContentChildren( TlMultiSelect ) multiselectList: QueryList<TlMultiSelect>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -104,6 +107,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
+            this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
@@ -115,6 +119,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
+            this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
@@ -390,29 +395,35 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getInputValues() {
         this.inputList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getDropdownListValues() {
          this.dropdownList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
          } );
     }
 
 
     getRadioButtonValues() {
         this.radioButtonList.forEach( ( item, index, array ) => {
-            this.formResult[ 'gender' ] = item.componentModel.model;
+            this.formResult[ item.nameGroup.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getCheckBoxValues() {
         this.checkboxList.forEach( ( item, index, array ) => {
-            this.formResult[ 'notify' ] = item.componentModel.model;
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
+    }
+
+    getMultiSelectValues() {
+        this.multiselectList.forEach( ( item, index, array ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+        } )
     }
 
     hasValueOnForm() {

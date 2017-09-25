@@ -21,7 +21,7 @@
  */
 import {
     Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
-    ChangeDetectorRef, ViewEncapsulation,
+    ChangeDetectorRef
 } from '@angular/core';
 
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -68,15 +68,18 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
         this.setElement( this.checkbox, 'checkbox' );
         if ( this.checked ) {
             this.modelValue = true;
-            this.change.detectChanges();
         }
         if (!this.label) {
             throw new EvalError( 'The [label] property is required!' );
         }
+        setTimeout( () => {
+            this.change.detectChanges();
+        }, 1 );
     }
 
     check( boolean ) {
         this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
+        this.change.detectChanges();
         this.emitEvent();
     }
 

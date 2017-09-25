@@ -128,13 +128,46 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     validateHasModel() {
         setTimeout( () => {
-            if ( this.componentModel.model ) {
-                this.tags = this.componentModel.model;
+            if ( this.modelValue ) {
+                this.handleModelValueAsTags();
                 this.cleanInput();
+                this.removeElementsForFilter();
                 this.change.detectChanges();
-                this.receiveFocus();
             }
         }, 1 );
+    }
+
+    handleModelValueAsTags() {
+        this.setModelValueWithSourceKey();
+        let modeltemp;
+        modeltemp = this.modelValue;
+        modeltemp.forEach((value, index, array) => {
+            this.data.forEach((value2, index2, array2) => {
+                if (JSON.stringify(value) === JSON.stringify(value2.source)) {
+                    this.tags.push(value2);
+                }
+            });
+        });
+    }
+
+    setModelValueWithSourceKey() {
+       for (let item = 0; item < this.modelValue.length; item++) {
+           if (this.modelValue[item].source) {
+               return this.tags = this.modelValue;
+           }
+       }
+    }
+
+    removeElementsForFilter() {
+        const dataTemp = this.data;
+        this.tags.forEach((value) => {
+            dataTemp.forEach((value2, index, array) => {
+                if (JSON.stringify(value.source) === JSON.stringify(value2.source)) {
+                    dataTemp.splice(index, 1);
+                }
+            });
+        });
+        this.filtredItens = dataTemp;
     }
 
     validationProperty() {
@@ -310,22 +343,29 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     addTag( item ) {
         this.tags.push( item );
-        this.modelValue = this.tags;
         this.placeholder = '';
         this.children = -1;
         this.selectTag = this.tags.length;
         this.getSelecteds.emit( this.tags );
+        this.setModelValue();
         this.cleanTagSelected();
         this.receiveFocus();
         this.setInputFocus();
-        this.change.detectChanges();
         this.cleanInput();
+        this.change.detectChanges();
     }
-
 
     stopEventKeyDown( $event ) {
         $event.preventDefault();
         $event.stopPropagation();
+    }
+
+    setModelValue() {
+        const modeltemp = [];
+        this.tags.forEach((value, index, array) => {
+           modeltemp.push(value.source);
+        });
+        this.modelValue = modeltemp;
     }
 
     deleteTagSelected() {

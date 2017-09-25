@@ -16,7 +16,7 @@
                    [(ngModel)]="modelValue"
                    #input width="300"
                    (blur)="closeList($event, element)"
-                   (focus)="receiveFocus(element)"
+                   (focus)="toogleOpen('block')"
                    [attr.placeholder]="placeholder"
                    (keyup)="searchItem($event.target.value, $event)"
                    (keydown)="handleKeyDown($event)"

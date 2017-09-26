@@ -207,6 +207,12 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.stopEventKeyDown( $event );
             this.setInputFocus();
         }
+
+        if ( this.isOpen === 'block' ) {
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
+        }
+
     }
 
     validateItemToAddTag( item ) {
@@ -228,8 +234,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.handleArrowDown();
                 break;
             case KeyEvent.ARROWUP:
-                this.stopEventKeyDown( $event );
-                this.handleArrowUp();
+                if (this.isOpen === 'block') {
+                    this.stopEventKeyDown( $event );
+                    this.handleArrowUp();
+                }
                 break;
             case KeyEvent.DELETE:
                 this.stopEventKeyDown( $event );
@@ -334,6 +342,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     setInputFocus() {
         this.input.nativeElement.focus();
+            this.children = -1;
     }
 
     setFocusOnNextElement() {

@@ -82,7 +82,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private componentsWithValidations = [];
 
-    private listeners = [];
+    private listener;
+
+    private time;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private cdr: ChangeDetectorRef ) {
@@ -128,7 +130,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            this.listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
             } );
         } );
@@ -159,7 +161,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     validateElements() {
-        setTimeout( () => {
+        this.time = setTimeout( () => {
             for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
                 this.validForm = true;
                 this.cdr.detectChanges();
@@ -437,6 +439,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
+        clearTimeout(this.time);
+        this.listener();
         this.cdr.detach();
     }
 }

@@ -39,6 +39,8 @@ export class TlButtonGroup implements AfterContentInit {
 
     @Input() index: number;
 
+    @Input() height: number;
+
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'list' ) list: ElementRef;
@@ -127,6 +129,7 @@ export class TlButtonGroup implements AfterContentInit {
     setItems() {
         this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
+            item.height = this.height;
             this.list.nativeElement.appendChild( item._element.nativeElement );
         } );
     }

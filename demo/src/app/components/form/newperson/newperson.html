@@ -2,27 +2,27 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+        <tl-input [name]="'name'" [labelSize]="'80'" [ngModel]="person?.name" [label]="'Name'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
+        <tl-input [name]="'lastname'" [labelSize]="'80'" [validations]="{required: true}" [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="person?.city" [label]="'City'"></tl-input>
+        <tl-input [name]="'city'" [labelSize]="'80'" [ngModel]="person?.city" [label]="'City'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <div class="col-md-6">
-          <tl-radio-group [nameGroup]="'Genero'" [ngModel]="person?.gender">
+          <tl-radio-group [nameGroup]="'Gender'" [ngModel]="person?.gender">
             <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
             <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
           </tl-radio-group>
@@ -33,21 +33,41 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [ngModel]="person?.country" [label]="'Country'"></tl-input>
+        <tl-input [name]="'country'" [labelSize]="'80'" [ngModel]="person?.country" [label]="'Country'"></tl-input>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [labelSize]="'80'" [validations]="{required: true}" [ngModel]="person?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
+        <tl-input [name]="'birthday'" [labelSize]="'80'" [validations]="{required: true}" [ngModel]="person?.birthday" [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <tl-input [labelSize]="'80'" [ngModel]="person?.state" [label]="'State'"></tl-input>
+      <tl-input [name]="'state'" [labelSize]="'80'" [ngModel]="person?.state" [label]="'State'"></tl-input>
     </div>
     <div class="col-md-5 col-md-offset-1">
-      <tl-checkbox (onCheckBox)="onCheckRadio()" [label]="'Notify ?'" [ngModel]="person?.notify"></tl-checkbox>
+      <tl-checkbox [name]="'notification'" [label]="'Notify ?'" [ngModel]="person?.notification"></tl-checkbox>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-multiselect
+          [data]="dataBasic"
+          [color]="'color'"
+          [ngModel]="person?.dependents"
+          [labelSize]="'80px'"
+          [name]="'dependents'"
+          [placeholder]="'Select...'"
+          [label]="'Dependents'"
+          [openFocus]="true"
+          [labelTag]="'firstName'"
+          [detail]="'email'"
+          [query]="'firstName'">
+        </tl-multiselect>
+      </div>
     </div>
   </div>
 </tl-form>

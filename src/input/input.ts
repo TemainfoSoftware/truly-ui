@@ -148,7 +148,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     /**
      * Property to control autocomplete input
      */
-    @Input() autocomplete: boolean = null;
+    @Input() autocomplete = 'off';
 
 
     /**

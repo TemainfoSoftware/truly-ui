@@ -26,33 +26,43 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
-
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component( {
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
     styleUrls: [ './multiselect.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlMultiSelect ), multi: true }
+    ]
 } )
-export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDestroy {
+export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {
+
     @Input() color: string;
 
-    @Input() data: any[] = [];
+    @Input() data = [];
 
     @Input() query: string;
 
     @Input() label: string;
 
+    @Input() labelSize = '120px';
+
+    @Input() labelTag: string;
+
     @Input() detail: string;
 
     @Input() icon: string;
+
+    @Input() defaultColorTag = '#66CC99';
 
     @Input() showIcon = true;
 
@@ -70,13 +80,19 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
+    @Output() onClickTag: EventEmitter<any> = new EventEmitter();
+
+    @Output() onRemoveTag: EventEmitter<any> = new EventEmitter();
+
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'ul' ) ul;
 
+    @ViewChild( 'element' ) wrapperTags;
+
     public isOpen = 'none';
 
-    public filtredItens: any[] = [];
+    public filtredItens = [];
 
     private children = -1;
 
@@ -84,10 +100,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
 
     private documentListener;
 
-    private tags: any[] = [];
+    private tags = [];
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                 private renderer: Renderer2 ) {
+                 private renderer: Renderer2, private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -99,6 +115,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         this.createDocumentListener();
     }
 
+    ngAfterViewInit() {
+        this.validateHasModel();
+    }
+
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
             this.isOpen = 'block';
@@ -106,6 +126,50 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
                 this.isOpen = 'none';
             }
         } );
+    }
+
+    validateHasModel() {
+        setTimeout( () => {
+            if ( this.modelValue ) {
+                this.handleModelValueAsTags();
+                this.cleanInput();
+                this.removeElementsForFilter();
+                this.change.detectChanges();
+            }
+        }, 1 );
+    }
+
+    handleModelValueAsTags() {
+        this.setModelValueWithSourceKey();
+        let modeltemp;
+        modeltemp = this.modelValue;
+        modeltemp.forEach((value, index, array) => {
+            this.data.forEach((value2, index2, array2) => {
+                if (JSON.stringify(value) === JSON.stringify(value2.source)) {
+                    this.tags.push(value2);
+                }
+            });
+        });
+    }
+
+    setModelValueWithSourceKey() {
+       for (let item = 0; item < this.modelValue.length; item++) {
+           if (this.modelValue[item].source) {
+               return this.tags = this.modelValue;
+           }
+       }
+    }
+
+    removeElementsForFilter() {
+        const dataTemp = this.data.slice();
+        this.tags.forEach((value) => {
+            dataTemp.forEach((value2, index, array) => {
+                if (JSON.stringify(value.source) === JSON.stringify(value2.source)) {
+                    dataTemp.splice(index, 1);
+                }
+            });
+        });
+        this.filtredItens = dataTemp;
     }
 
     validationProperty() {
@@ -116,38 +180,212 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
             throw new Error( 'The property [data] and property [query] are Required ' + '' +
                 'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
         }
-        if ( !this.label ) {
-            this.label = this.query;
+        if ( !this.labelTag ) {
+            this.labelTag = this.query;
         }
         if ( this.detail === undefined && this.detailOnTag !== null ) {
             throw new Error( 'You have to declare the [detail] property' );
         }
+    }
+
+    validateEmptySearch() {
+        setTimeout( () => {
+            if ( this.input.nativeElement.value === '' ) {
+                return this.filtredItens = this.data;
+            }
+        }, 1 );
+    }
+
+    validateOpenOnFocus() {
         if ( this.openFocus ) {
             this.toogleOpen( 'block' );
         }
     }
 
+    validateEventOnKeyEnter( $event ) {
+        if ( this.tags.length === 0 ) {
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
+        }
+
+        if ( this.isOpen === 'block' ) {
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
+        }
+
+    }
+
+    validateItemToAddTag( item ) {
+        if ( item !== undefined ) {
+            this.addTag( item );
+        }
+    }
+
+
+    handleKeyDown( $event, item ) {
+        switch ( $event.keyCode ) {
+            case KeyEvent.ENTER:
+                this.validateEventOnKeyEnter( $event );
+                this.validateItemToAddTag( item );
+                break;
+            case KeyEvent.ARROWDOWN:
+                this.stopEventKeyDown( $event );
+                this.toogleOpen( 'block' );
+                this.handleArrowDown();
+                break;
+            case KeyEvent.ARROWUP:
+                if (this.isOpen === 'block') {
+                    this.stopEventKeyDown( $event );
+                    this.handleArrowUp();
+                }
+                break;
+            case KeyEvent.DELETE:
+                this.stopEventKeyDown( $event );
+                this.deleteTagSelected();
+                break;
+            case KeyEvent.BACKSPACE:
+                this.removeTagOnBackspace();
+                break;
+            case KeyEvent.TAB:
+                this.toogleOpen( 'none' );
+                break;
+            case KeyEvent.ARROWLEFT:
+                this.stopEventKeyDown( $event );
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowLeft();
+                }
+                break;
+            case KeyEvent.ARROWRIGHT:
+                this.stopEventKeyDown($event);
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowRight();
+                }
+                break;
+            case KeyEvent.ESCAPE:
+                if ( this.isOpen === 'block' ) {
+                    this.stopEventKeyDown( $event );
+                    this.toogleOpen( 'none' );
+                }
+                break;
+        }
+    }
+
+    handleArrowRight() {
+        this.cleanTagSelected();
+        if (this.selectTag !== this.tags.length - 1) {
+            this.selectTag++;
+            this.setSelectTagAsTrue();
+        }
+    }
+
+    handleArrowLeft() {
+        this.cleanTagSelected();
+        if (this.selectTag !== 0 && this.tags.length !== 0) {
+            this.selectTag--;
+            this.setSelectTagAsTrue();
+        }
+    }
+
+    handleArrowDown() {
+        if ( this.children < this.ul.nativeElement.children.length - 1 ) {
+            this.setFocusOnNextElement();
+            this.children = this.children + 1;
+        }
+    }
+
+    handleArrowUp() {
+        if ( !this.isChildrenEqualsZero() && !this.isChildrenEqualsNegativeOne() ) {
+            this.setFocusOnPreviousElement();
+            this.children = this.children - 1;
+        } else {
+            this.setInputFocus();
+        }
+    }
+
+    handleInputFocus(element) {
+        this.validateOpenOnFocus();
+        this.setOutlineMultiSelect( element );
+    }
+
     setFiltredItens() {
-        if ( !(this.tags.length > 0) ) {
-            this.filtredItens = this.data;
+        this.validateEmptySearch();
+        if ( !this.isTagsLengthMoreThanZero() ) {
+            if ( this.isFiltredLengthEqualsDataLength() ) {
+                this.filtredItens = this.data;
+            }
         }
     }
 
     toogleOpen( opened: string ) {
         this.isOpen = opened;
-        this.setInputFocus();
     }
 
-    receiveFocus() {
-        const self = this;
+    removeTagOfFilter( tag? ) {
         this.children = -1;
-        if ( this.tags.length > 0 ) {
-            this.tags.forEach( function ( tag ) {
-                self.filtredItens = self.data.filter( function ( value ) {
-                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
-                } );
-            } );
+        this.filtredItens.forEach((item, index, array2) => {
+            if (JSON.stringify(tag.source) === JSON.stringify(item.source)) {
+                this.filtredItens.splice(index, 1);
+            }
+        });
+    }
+
+    setOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = '5px auto -webkit-focus-ring-color';
         }
+    }
+
+
+    setSelectTagAsTrue() {
+        this.tags[ this.selectTag ][ 'selected' ] = true;
+    }
+
+    setInputFocus() {
+        this.input.nativeElement.focus();
+            this.children = -1;
+    }
+
+    setFocusOnNextElement() {
+        this.ul.nativeElement.children[ this.children + 1 ].focus();
+    }
+
+    setFocusOnPreviousElement() {
+        this.ul.nativeElement.children[ this.children - 1 ].focus();
+    }
+
+    addTag( item ) {
+        this.tags.push( item );
+        this.placeholder = '';
+        this.children = -1;
+        this.selectTag = this.tags.length;
+        this.getSelecteds.emit( this.tags );
+        this.setModelValue();
+        this.cleanTagSelected();
+        this.removeTagOfFilter(item);
+        this.setInputFocus();
+        this.cleanInput();
+        this.change.detectChanges();
+    }
+
+    stopEventKeyDown( $event ) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    }
+
+    setModelValue() {
+        const modeltemp = [];
+        this.tags.forEach((value, index, array) => {
+           modeltemp.push(value.source);
+        });
+        this.modelValue = modeltemp;
+    }
+
+    deleteTagSelected() {
+        this.tags = this.tags.filter( function ( value ) {
+            return !value.selected;
+        } );
+        this.selectTag = this.tags.length - 1;
+        this.removeTagOfFilter();
     }
 
     searchItem( inputed, $event ) {
@@ -167,30 +405,13 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         }
     }
 
-    removeTagOnBackspace() {
-        if ( this.input.nativeElement.value === '' && this.tags.length > 0 ) {
-            this.removeTag( this.tags.length - 1 );
-            this.receiveFocus();
-        } else {
-            this.setFiltredItens();
-        }
-    }
-
-    closeFilterOnEscape( $event ) {
-        if ( $event.keyCode === KeyEvent.ESCAPE ) {
-            this.toogleOpen( 'none' );
-        }
-    }
-
-    removeTag( index, item? ) {
-        item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
-        this.tags.splice( index, 1 );
-        this.getSelecteds.emit( this.tags );
-        this.changePlaceholder();
+    selectTagCtrlBindClick( item ) {
+        item[ 'selected' ] = true;
         this.setInputFocus();
     }
 
     selectTagClick( event, item? ) {
+        this.onClickTag.emit( item );
         if ( item.selected === true ) {
             item.selected = false;
         } else if ( event.ctrlKey ) {
@@ -202,22 +423,28 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         this.setInputFocus();
     }
 
-    selectTagCtrlBindClick( item ) {
-        item[ 'selected' ] = true;
-        this.setInputFocus();
-    }
-
-    selectTagNavitation( keycode ) {
-        this.cleanTagSelected();
-        if ( keycode === KeyEvent.ARROWRIGHT && this.selectTag !== this.tags.length - 1 ) {
-            this.selectTag++;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
-        } else if ( keycode === KeyEvent.ARROWLEFT && this.selectTag !== 0 && this.tags.length !== 0 ) {
-            this.selectTag--;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
+    calcHeightWidthItem() {
+        if ( this.itemAmount >= this.filtredItens.length ) {
+            return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
+        } else {
+            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px',
+                'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         }
     }
 
+    changeColorTag( tag ) {
+        if ( (this.color) && (tag.effect)) {
+            if ( !tag.selected ) {
+                return { 'background': tag.effect[this.color] };
+            }
+            return { 'background': tag.effect[this.color], 'opacity': 0.8 };
+        } else {
+            if ( tag.selected ) {
+                return { 'background': this.defaultColorTag, 'opacity': 0.8 };
+            }
+            return { 'background': this.defaultColorTag };
+        }
+    }
 
     changePlaceholder() {
         if ( this.tags.length === 0 ) {
@@ -225,102 +452,31 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         }
     }
 
-    addTag( item ) {
-        this.tags.push( item );
-        this.placeholder = '';
-        this.children = -1;
-        this.getSelecteds.emit( this.tags );
-        this.selectTag = this.tags.length;
-        this.cleanTagSelected();
-        this.cleanInput();
-        this.receiveFocus();
-        this.setInputFocus();
-    }
-
-    handleKeyDown( $event, item ) {
-        switch ( $event.keyCode ) {
-            case KeyEvent.ENTER:
-                if (item !== undefined) {
-                    this.addTag( item );
-                }
-                break;
-            case KeyEvent.ARROWDOWN:
-                $event.preventDefault();
-                this.toogleOpen( 'block' );
-                this.handleArrowDown();
-                break;
-            case KeyEvent.ARROWUP:
-                $event.preventDefault();
-                this.handleArrowUp();
-                break;
-            case KeyEvent.DELETE:
-                this.deleteTagSelected();
-                break;
-            case KeyEvent.BACKSPACE:
-                this.removeTagOnBackspace();
-                this.receiveFocus();
-                break;
-            case KeyEvent.TAB:
-                this.toogleOpen( 'none' );
-                break;
-            case KeyEvent.ARROWLEFT || KeyEvent.ARROWRIGHT && this.tags.length !== 0:
-                this.selectTagNavitation( $event.keyCode );
-                break;
-        }
-    }
-
-    deleteTagSelected() {
-        this.tags = this.tags.filter( function ( value ) {
-            return !value.selected;
-        } );
-        this.selectTag = this.tags.length - 1;
-        this.receiveFocus();
-    }
-
-    handleArrowDown() {
-        if ( this.children < this.ul.nativeElement.children.length - 1 ) {
-            this.ul.nativeElement.children[ this.children + 1 ].focus();
-            this.children = this.children + 1;
-        }
-    }
-
-    handleArrowUp() {
-        if ( this.children !== 0 && this.children !== -1 ) {
-            this.ul.nativeElement.children[ this.children - 1 ].focus();
-            this.children = this.children - 1;
-        } else {
+    removeTagOnBackspace() {
+        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
+            this.removeTag( this.tags.length - 1 );
             this.setInputFocus();
-        }
-    }
-
-    calcHeightItem() {
-        if ( this.itemAmount >= this.filtredItens.length ) {
-            return { 'height': 'auto' };
         } else {
-            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px' };
+            this.setFiltredItens();
         }
     }
 
-    changeColorTag( tag ) {
-        if ( this.color !== undefined ) {
-            if ( !tag.selected ) {
-                return { 'background': tag.effect.color };
-            }
-            return { 'background': tag.effect.color, 'opacity': 0.8 };
-        } else {
-            if ( tag.selected ) {
-                return { 'background': '#66CC99', 'opacity': 0.8 };
-            }
-            return { 'background': '#66CC99' };
-        }
-    }
-
-    setInputFocus() {
-        this.input.nativeElement.focus();
+    removeTag( index, item? ) {
+        item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
+        this.tags.splice( index, 1 );
+        this.onRemoveTag.emit( item );
+        this.getSelecteds.emit( this.tags );
+        this.changePlaceholder();
+        this.setInputFocus();
+        this.setModelValue();
+        this.cleanInput();
+        this.change.detectChanges();
     }
 
     cleanInput() {
-        this.input.nativeElement.value = '';
+        setTimeout( () => {
+            this.input.nativeElement.value = '';
+        }, 1 );
     }
 
     cleanTagSelected() {
@@ -329,18 +485,52 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, OnDe
         } );
     }
 
-    hasTag() {
+    clearOutlineMultiSelect( element ) {
+        if ( element ) {
+            element.style.outline = 'none';
+        }
+    }
+
+    closeFilterOnEscape( $event ) {
+        if ( $event.keyCode === KeyEvent.ESCAPE ) {
+            this.toogleOpen( 'none' );
+        }
+    }
+
+    isTagsEqualsZero() {
         return this.tags.length === 0;
     }
 
-    close( event ) {
-        if ( event.relatedTarget === null ) {
+    isChildrenEqualsZero() {
+        return this.children === 0;
+    }
+
+    isChildrenEqualsNegativeOne() {
+        return this.children === -1;
+    }
+
+    isInputValueEqualsEmpty() {
+        return this.input.nativeElement.value === '';
+    }
+
+    isTagsLengthMoreThanZero() {
+        return this.tags.length > 0;
+    }
+
+    isFiltredLengthEqualsDataLength() {
+        return this.filtredItens.length === this.data.length;
+    }
+
+    closeList( event, element? ) {
+        this.clearOutlineMultiSelect( element );
+        if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
             this.toogleOpen( 'none' );
         }
     }
 
     ngOnDestroy() {
         this.documentListener();
+        this.change.detach();
     }
 }
 

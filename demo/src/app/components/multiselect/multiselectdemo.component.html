@@ -1,4 +1,5 @@
 <div class="router-outlet">
+  <!--<span class="returned-value">Returned Value:  <label class="label label-info" (click)="show()">Show</label></span>-->
   <div class="header-title-demo">
     <h1 class="title"> MultiSelect <span class="module-name"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></p>
@@ -8,48 +9,56 @@
   <div class="showcase">
     <div class="row">
         <div class="col-md-6">
-          <h5>Basic Usage</h5>
+          <div class="form-group">
+            <tl-multiselect
+              [data]="dataBasic"
+              (getSelecteds)="getSelecteds($event)"
+              (onClickTag)="onClickTag($event)"
+              (onRemoveTag)="onRemoveTag($event)"
+              [labelTag]="'firstName'"
+              [label]="'Basic Usage'"
+              [detail]="'email'"
+              [(ngModel)]="dataBasicModel"
+              [query]="'firstName'">
+          </tl-multiselect>
+        </div>
+      </div>
+      <!--<div class="col-md-6">
+        <div class="form-group">
           <tl-multiselect
             [data]="dataBasic"
-            [label]="'firstName'"
+            [color]="'color'"
+            [label]="'With Custom Color'"
+            [labelTag]="'firstName'"
             [detail]="'email'"
             [query]="'firstName'">
           </tl-multiselect>
         </div>
-      <div class="col-md-6">
-        <h5>With Custom Color</h5>
-        <tl-multiselect
-          [data]="dataBasic"
-          [color]="'color'"
-          [label]="'firstName'"
-          [detail]="'email'"
-          [query]="'firstName'">
-        </tl-multiselect>
-      </div>
+      </div>-->
     </div>
-    <div class="row">
+   <!-- <div class="row">
       <div class="col-md-6">
-        <h5>With Detail on Tag</h5>
         <tl-multiselect
           [data]="dataBasic"
           [detailOnTag]="true"
-          [label]="'firstName'"
+          [label]="'With Detail on Tag'"
+          [labelTag]="'firstName'"
           [detail]="'email'"
           [query]="'firstName'">
         </tl-multiselect>
       </div>
       <div class="col-md-6">
-        <h5>With Icon</h5>
         <tl-multiselect
           [data]="dataBasic"
           [color]="'color'"
           [icon]="'icon'"
-          [label]="'firstName'"
+          [label]="'With Icon'"
+          [labelTag]="'firstName'"
           [detail]="'email'"
           [query]="'firstName'">
         </tl-multiselect>
       </div>
-    </div>
+    </div>-->
   </div>
   <hr>
   <h3 class="title">Important</h3>

@@ -39,8 +39,7 @@ const Orientation = {
 @Component( {
     selector: 'tl-radio-group',
     templateUrl: './radiogroup.html',
-    styleUrls: [ './radiobutton.scss' ],
-    encapsulation: ViewEncapsulation.Native,
+    styleUrls: [ './radiobutton.scss'],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioGroup ), multi: true }
     ]
@@ -97,8 +96,19 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
             if ( !this.componentModel.model ) {
                 this.checkFirstItem();
                 this.handleChecked();
+            }else {
+                this.handleModelValue();
             }
         }, 1 );
+    }
+
+
+    handleModelValue() {
+        this.listRadioButton.toArray().forEach((value2, index, array) => {
+            if (this.componentModel.model === value2.value) {
+                this.itemSelected = value2;
+            }
+        });
     }
 
     handleChecked() {

@@ -77,7 +77,7 @@ export const dataProperties = [
   {
     name: "autocomplete",
     type: "string",
-    default: "null",
+    default: "off",
     description: "Define the autocomplete of the input",
     options: "on | off"
   },

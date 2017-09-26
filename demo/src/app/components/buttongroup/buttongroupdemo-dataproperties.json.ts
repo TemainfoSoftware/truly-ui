@@ -8,6 +8,13 @@ export const dataProperties = [
     default: "false",
     description: "Enables selection of multiple buttons if set to true.",
     options: "true | false"
+  },
+  {
+    name: "height",
+    type: "number",
+    default: "null",
+    description: "Button group height.",
+    options: "number | ex: 25"
   }
   ];
 export const dataProperties2 = [
@@ -26,11 +33,11 @@ export const dataProperties2 = [
     options: "any text"
   },
   {
-    name: "size",
-    type: "string",
-    default: "100px (min)",
-    description: "Button size.",
-    options: "string | ex: 150px"
+    name: "width",
+    type: "number",
+    default: "100 (min)",
+    description: "Button width.",
+    options: "number | ex: 150"
   },
   {
     name: "disabled",
@@ -72,6 +79,34 @@ export const dataProperties2 = [
     type: "string",
     default: "null",
     description: "Style class of the addon after.",
+    options: "CSS class"
+  },
+  {
+    name: "iconBeforeText",
+    type: "string",
+    default: "null",
+    description: "Creates an icon before the text button.",
+    options: "ion-printer | fa fa-home | any"
+  },
+  {
+    name: "iconBeforeTextClass",
+    type: "string",
+    default: "null",
+    description: "Style class of the icon before the text button.",
+    options: "CSS class"
+  },
+  {
+    name: "iconAfterText",
+    type: "string",
+    default: "null",
+    description: "Creates an icon after the text button.",
+    options: "ion-printer | fa fa-home | any"
+  },
+  {
+    name: "iconAfterTextClass",
+    type: "string",
+    default: "null",
+    description: "Style class of the icon after the text button.",
     options: "CSS class"
   },
   {

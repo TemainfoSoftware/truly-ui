@@ -32,6 +32,7 @@ import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
+import { TlMultiSelect } from '../multiselect/multiselect';
 
 let componentFormIndex;
 
@@ -57,6 +58,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
 
+    @ContentChildren( TlMultiSelect ) multiselectList: QueryList<TlMultiSelect>;
+
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
     @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
@@ -79,7 +82,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private componentsWithValidations = [];
 
-    private listeners = [];
+    private listener;
+
+    private time;
 
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private cdr: ChangeDetectorRef ) {
@@ -104,6 +109,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
+            this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
@@ -115,6 +121,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
+            this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
@@ -123,7 +130,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            this.listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
             } );
         } );
@@ -154,7 +161,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     validateElements() {
-        setTimeout( () => {
+        this.time = setTimeout( () => {
             for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
                 this.validForm = true;
                 this.cdr.detectChanges();
@@ -390,29 +397,35 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getInputValues() {
         this.inputList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getDropdownListValues() {
          this.dropdownList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
          } );
     }
 
 
     getRadioButtonValues() {
         this.radioButtonList.forEach( ( item, index, array ) => {
-            this.formResult[ 'gender' ] = item.componentModel.model;
+            this.formResult[ item.nameGroup.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getCheckBoxValues() {
         this.checkboxList.forEach( ( item, index, array ) => {
-            this.formResult[ 'notify' ] = item.componentModel.model;
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
+    }
+
+    getMultiSelectValues() {
+        this.multiselectList.forEach( ( item, index, array ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+        } )
     }
 
     hasValueOnForm() {
@@ -426,7 +439,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-
+        clearTimeout(this.time);
+        this.listener();
+        this.cdr.detach();
     }
 }
 

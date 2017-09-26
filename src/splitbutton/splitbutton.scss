@@ -27,7 +27,6 @@ $button-font-size: 0.9em;
     >.actions-menu{
       position: absolute;
       overflow: hidden;
-      top: 39px;
       left:0;
       margin: 0;
       height:auto;
@@ -42,7 +41,7 @@ $button-font-size: 0.9em;
       cursor: auto;
     }
   }
-  > .split-button-actions:hover, .split-button-actions.ativo{
+  > .split-button-actions:hover, .split-button-actions.active{
     background-color: #dedede;
   }
   > .split-button-actions:active{

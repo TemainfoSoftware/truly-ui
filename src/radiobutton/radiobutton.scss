@@ -7,16 +7,21 @@
 }
 
 input[type='radio'] {
-  width: 18px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
   position: absolute;
   margin: 0 !important;
   left: 3px;
+  top: 4px;
+}
+
+input[type='radio']:before {
+  left: -1px;
 }
 
 input[type='radio']:checked:before {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   border-radius: 15px;
   position: absolute;
   background-color: #fff;
@@ -27,11 +32,11 @@ input[type='radio']:checked:before {
 }
 
 input[type='radio']:after {
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   border-radius: 15px;
   top: 0;
-  left: 0;
+  left: -1px;
   position: absolute;
   background-color: #fff;
   content: '';
@@ -41,30 +46,33 @@ input[type='radio']:after {
   transition: background 0.15s ease-in-out;
 }
 
-input[type='radio']:checked:after {
-  content: '';
-  width: 9px;
-  position: absolute;
-  height: 9px;
-  top: 4px;
-  left: 4px;
-  background-color: #66cc99;
-  border: 0;
-}
-
 input[type=radio]:hover {
   cursor: pointer;
 }
 
 .-label {
-  font-family: "Segoe UI" !important;
-  font-size: 14px !important;
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9em !important;
   font-weight: normal !important;
+  color: #737373;
   position: relative;
-  padding-left: 25px;
+  padding-left: 22px;
   margin: 0 !important;
 }
 
 .-label:hover {
   cursor: pointer;
+}
+
+.radio-selected {
+  width: 10px;
+  height: 10px;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  z-index: 500;
+  position: absolute;
+  font-size: 10px;
+  left: 5px;
+  top: 5px;
 }

@@ -35,7 +35,6 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
-let dataSource = [];
 
 @Component( {
     selector: 'tl-multiselect',
@@ -106,6 +105,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     private tags = [];
 
+    private dataSource = [];
+
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
                  private renderer: Renderer2, private change: ChangeDetectorRef ) {
@@ -118,7 +119,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validationProperty();
         this.setElement( this.input, 'multiselect' );
         this.createDocumentListener();
-        dataSource = this.data;
+        this.dataSource = this.data;
     }
 
     ngAfterViewInit() {
@@ -158,7 +159,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         let modeltemp;
         modeltemp = this.modelValue;
         modeltemp.forEach((value, index, array) => {
-            dataSource.forEach( ( value2, index2, array2 ) => {
+            this.dataSource.forEach( ( value2, index2, array2 ) => {
                 if (JSON.stringify(value) === JSON.stringify(value2.source)) {
                     this.tags.push(value2);
                 }
@@ -186,13 +187,13 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     removeElementsForFilter() {
         this.tags.forEach((value) => {
-            dataSource.forEach( ( value2, index, array ) => {
+            this.dataSource.forEach( ( value2, index, array ) => {
                 if (JSON.stringify(value.source) === JSON.stringify(value2.source)) {
-                    dataSource.splice( index, 1 );
+                    this.dataSource.splice( index, 1 );
                 }
             });
         });
-        this.filtredItens = dataSource;
+        this.filtredItens = this.dataSource;
         this.sortFiltredItens();
     }
 
@@ -215,7 +216,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     validateEmptySearch() {
         setTimeout( () => {
             if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
-                return this.filtredItens = dataSource;
+                return this.filtredItens = this.dataSource;
             }
         }, 1 );
         this.sortFiltredItens();
@@ -346,7 +347,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validateEmptySearch();
         if ( !this.isTagsLengthMoreThanZero() ) {
             if ( this.isFiltredLengthEqualsDataLength() ) {
-                this.filtredItens = dataSource;
+                this.filtredItens = this.dataSource;
                 this.sortFiltredItens();
             }
         }
@@ -434,7 +435,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     filterOfData(inputed) {
-        this.filtredItens = dataSource.filter( ( value ) => {
+        this.filtredItens = this.dataSource.filter( ( value ) => {
             return value.source[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
         } );
     }
@@ -567,7 +568,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     isFiltredLengthEqualsDataLength() {
-        return this.filtredItens.length === dataSource.length;
+        return this.filtredItens.length === this.dataSource.length;
     }
 
     closeList( event ) {

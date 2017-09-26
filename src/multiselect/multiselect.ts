@@ -419,12 +419,27 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     deleteTagSelected() {
+        this.addTagSelectedToFiltred();
+        this.filterTagsNotSelected();
+        this.sortFiltredItens();
+        this.selectTag = this.tags.length - 1;
+    }
+
+
+    addTagSelectedToFiltred() {
+        this.tags.forEach((value, index, array) => {
+            if (value.selected) {
+                this.filtredItens.push(value);
+            }
+        });
+    }
+
+    filterTagsNotSelected() {
         this.tags = this.tags.filter( function ( value ) {
             return !value.selected;
         } );
-        this.selectTag = this.tags.length - 1;
-        this.removeTagOfFilter();
     }
+
 
     searchItem( inputed, $event ) {
         this.closeFilterOnEscape( $event );

@@ -192,13 +192,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     setTabIndex(element) {
         if ( !element.tabIndex ) {
             componentFormIndex++;
-            if ( this.notExistTabIndexInserted() ) {
-                element.setAttribute( 'tabIndex', componentFormIndex );
-            } else {
-                this.setTabIndex(element);
-            }
+            this.notExistTabIndexInserted() ? element.setAttribute( 'tabIndex', componentFormIndex )
+                : this.setTabIndex(element);
         }
     }
+
 
 
     isLastTabIndexElement(element, index, array) {

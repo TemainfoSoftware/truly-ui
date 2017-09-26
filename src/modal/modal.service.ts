@@ -150,6 +150,9 @@ export class ModalService implements OnDestroy {
     }
 
     close( component ) {
+        if ( this.view === undefined || component === undefined ) {
+            return;
+        }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
         this.handleModalForms( component );
         this.removeOfTheList();
@@ -226,10 +229,8 @@ export class ModalService implements OnDestroy {
     }
 
     removeOfTheList() {
-        setTimeout( () => {
             this.componentList.splice( this.componentList.length - 1, 1 );
             this.sortComponentsByZIndex();
-        }, 1 );
     }
 
     removeBackdrop() {

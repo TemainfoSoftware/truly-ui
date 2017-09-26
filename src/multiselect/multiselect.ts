@@ -122,10 +122,18 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
             this.toogleOpen( true );
-            if ( $event.target !== document.activeElement && $event.target.nodeName !== 'LI') {
+            if ( !this.isTargetElementEqualActiveElement( $event ) && !this.isTargetNodeNameEqualLi( $event ) ) {
                 this.toogleOpen( false );
             }
         } );
+    }
+
+    isTargetElementEqualActiveElement( $event ) {
+        return $event.target === document.activeElement;
+    }
+
+    isTargetNodeNameEqualLi( $event ) {
+        return $event.target.nodeName === 'LI';
     }
 
     validateHasModel() {
@@ -221,8 +229,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         }
     }
 
-
     handleKeyDown( $event, item ) {
+        this.activeInputText();
         switch ( $event.keyCode ) {
             case KeyEvent.ENTER:
                 this.validateEventOnKeyEnter( $event );
@@ -270,6 +278,14 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         }
     }
 
+    activeInputText() {
+        this.input.nativeElement.style.webkitTextFillColor = '#737373';
+    }
+
+    deActiveInputText() {
+        this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+    }
+
     handleArrowRight() {
         this.cleanTagSelected();
         if (this.selectTag !== this.tags.length - 1) {
@@ -302,9 +318,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         }
     }
 
-    handleInputFocus(element) {
+    handleInputFocus() {
+        this.deActiveInputText();
         this.validateOpenOnFocus();
-        this.setOutlineMultiSelect( element );
+        this.setOutlineMultiSelect();
     }
 
     setFiltredItens() {
@@ -329,12 +346,11 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         });
     }
 
-    setOutlineMultiSelect( element ) {
-        if ( element ) {
-            element.style.outline = '5px auto -webkit-focus-ring-color';
+    setOutlineMultiSelect() {
+        if ( this.wrapperTags ) {
+            this.wrapperTags.nativeElement.style.outline = '5px auto -webkit-focus-ring-color';
         }
     }
-
 
     setSelectTagAsTrue() {
         this.tags[ this.selectTag ][ 'selected' ] = true;
@@ -406,20 +422,20 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     selectTagCtrlBindClick( item ) {
-        item[ 'selected' ] = true;
+        item.selected = true;
         this.setInputFocus();
     }
 
     selectTagClick( event, item? ) {
         this.onClickTag.emit( item );
-        if ( item.selected === true ) {
-            item.selected = false;
-        } else if ( event.ctrlKey ) {
-            this.selectTagCtrlBindClick( item );
-        } else {
-            this.cleanTagSelected();
-            item[ 'selected' ] = true;
+        if (item.selected) {
+            return item.selected = false;
         }
+        if (event.ctrlKey) {
+            return this.selectTagCtrlBindClick( item );
+        }
+        this.cleanTagSelected();
+        item.selected = true;
         this.setInputFocus();
     }
 
@@ -485,16 +501,20 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         } );
     }
 
-    clearOutlineMultiSelect( element ) {
-        if ( element ) {
-            element.style.outline = 'none';
+    clearOutlineMultiSelect() {
+        if ( this.wrapperTags ) {
+            this.wrapperTags.nativeElement.style.outline = 'none';
         }
     }
 
     closeFilterOnEscape( $event ) {
-        if ( $event.keyCode === KeyEvent.ESCAPE ) {
+        if ( this.isKeyEventEqualsEscape( $event ) ) {
             this.toogleOpen( false );
         }
+    }
+
+    isKeyEventEqualsEscape( $event ) {
+        return $event.keyCode === KeyEvent.ESCAPE
     }
 
     isTagsEqualsZero() {
@@ -521,8 +541,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         return this.filtredItens.length === this.data.length;
     }
 
-    closeList( event, element? ) {
-        this.clearOutlineMultiSelect( element );
+    closeList( event ) {
+        this.clearOutlineMultiSelect();
         if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
             this.toogleOpen( false );
         }

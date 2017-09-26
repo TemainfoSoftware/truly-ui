@@ -405,20 +405,27 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     searchItem( inputed, $event ) {
-        const self = this;
         this.closeFilterOnEscape( $event );
-        if ( inputed.length >= this.minLengthSearch ) {
+        if ( this.isValueMoreOrEqualThanMinLengthSearch(inputed)  ) {
             this.toogleOpen( true );
-            if ( !(this.tags.length > 0) ) {
-                this.filtredItens = this.data.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
-            } else {
-                this.filtredItens = this.filtredItens.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
-            }
+            !this.isTagsLengthMoreThanZero() ? this.filterOfData(inputed) : this.filterOfFiltredItens(inputed);
         }
+    }
+
+    filterOfData(inputed) {
+        this.filtredItens = this.data.filter( ( value ) => {
+            return value.source[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+        } );
+    }
+
+    filterOfFiltredItens(inputed) {
+        this.filtredItens = this.filtredItens.filter(( value ) => {
+            return value.source[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+        } );
+    }
+
+    isValueMoreOrEqualThanMinLengthSearch(value) {
+        return value.length >= this.minLengthSearch;
     }
 
     selectTagCtrlBindClick( item ) {

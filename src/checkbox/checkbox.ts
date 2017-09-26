@@ -73,13 +73,13 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
             throw new EvalError( 'The [label] property is required!' );
         }
         setTimeout( () => {
-            this.change.detectChanges();
+            this.change.markForCheck();
         }, 1 );
     }
 
     check( boolean ) {
         this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
-        this.change.detectChanges();
+        this.change.markForCheck();
         this.emitEvent();
     }
 

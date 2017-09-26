@@ -27,14 +27,18 @@ let nextUniqueName = 0;
 @Injectable()
 export class NameGeneratorService {
 
+    public name;
+
     constructor() {}
          createName(element, name) {
          if ( element.nativeElement.name === '' ) {
-             element.nativeElement.name = 'tl-' + name + '-' + nextUniqueName++;
+             this.name = 'tl-' + name + '-' + nextUniqueName++;
+             element.nativeElement.name = name;
          }
     }
 
     clearName() {
         nextUniqueName = 0;
     }
+
 }

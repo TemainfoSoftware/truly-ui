@@ -71,8 +71,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() detailOnTag = null;
 
-    @Input() selectTag: number;
-
     @Input() itemHeight = 10;
 
     @Input() itemAmount = 5;
@@ -98,6 +96,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     public filtredItens = [];
 
     private children = -1;
+
+    private selectTag: number;
 
     private placeholderMessage: string;
 

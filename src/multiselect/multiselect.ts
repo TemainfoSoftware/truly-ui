@@ -90,7 +90,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @ViewChild( 'element' ) wrapperTags;
 
-    public isOpen = 'none';
+    public isOpen = false;
 
     public filtredItens = [];
 
@@ -121,9 +121,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
-            this.isOpen = 'block';
+            this.toogleOpen( true );
             if ( $event.target !== document.activeElement && $event.target.nodeName !== 'LI') {
-                this.isOpen = 'none';
+                this.toogleOpen( false );
             }
         } );
     }
@@ -198,7 +198,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     validateOpenOnFocus() {
         if ( this.openFocus ) {
-            this.toogleOpen( 'block' );
+            this.toogleOpen( true );
         }
     }
 
@@ -208,7 +208,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.setInputFocus();
         }
 
-        if ( this.isOpen === 'block' ) {
+        if ( this.isOpen ) {
             this.stopEventKeyDown( $event );
             this.setInputFocus();
         }
@@ -230,11 +230,11 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 break;
             case KeyEvent.ARROWDOWN:
                 this.stopEventKeyDown( $event );
-                this.toogleOpen( 'block' );
+                this.toogleOpen( true );
                 this.handleArrowDown();
                 break;
             case KeyEvent.ARROWUP:
-                if (this.isOpen === 'block') {
+                if ( this.isOpen ) {
                     this.stopEventKeyDown( $event );
                     this.handleArrowUp();
                 }
@@ -247,7 +247,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.removeTagOnBackspace();
                 break;
             case KeyEvent.TAB:
-                this.toogleOpen( 'none' );
+                this.toogleOpen( false );
                 break;
             case KeyEvent.ARROWLEFT:
                 this.stopEventKeyDown( $event );
@@ -262,9 +262,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 }
                 break;
             case KeyEvent.ESCAPE:
-                if ( this.isOpen === 'block' ) {
+                if ( this.isOpen ) {
                     this.stopEventKeyDown( $event );
-                    this.toogleOpen( 'none' );
+                    this.toogleOpen( false );
                 }
                 break;
         }
@@ -316,7 +316,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         }
     }
 
-    toogleOpen( opened: string ) {
+    toogleOpen( opened ) {
         this.isOpen = opened;
     }
 
@@ -342,7 +342,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     setInputFocus() {
         this.input.nativeElement.focus();
-            this.children = -1;
+        this.children = -1;
     }
 
     setFocusOnNextElement() {
@@ -392,7 +392,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         const self = this;
         this.closeFilterOnEscape( $event );
         if ( inputed.length >= this.minLengthSearch ) {
-            this.toogleOpen( 'block' );
+            this.toogleOpen( true );
             if ( !(this.tags.length > 0) ) {
                 this.filtredItens = this.data.filter( function ( valor ) {
                     return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
@@ -493,7 +493,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     closeFilterOnEscape( $event ) {
         if ( $event.keyCode === KeyEvent.ESCAPE ) {
-            this.toogleOpen( 'none' );
+            this.toogleOpen( false );
         }
     }
 
@@ -524,7 +524,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     closeList( event, element? ) {
         this.clearOutlineMultiSelect( element );
         if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
-            this.toogleOpen( 'none' );
+            this.toogleOpen( false );
         }
     }
 

@@ -26,7 +26,7 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit, OnChanges,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -34,6 +34,8 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
+let dataSource = [];
 
 @Component( {
     selector: 'tl-multiselect',
@@ -66,7 +68,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() showIcon = true;
 
-    @Input() openFocus = false;
+    @Input() openFocus = true;
 
     @Input() detailOnTag = null;
 
@@ -77,6 +79,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     @Input() itemAmount = 5;
 
     @Input() minLengthSearch = 2;
+
+    @Input() sortAlphabetically = false;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
@@ -102,6 +106,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     private tags = [];
 
+
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
                  private renderer: Renderer2, private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
@@ -113,6 +118,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validationProperty();
         this.setElement( this.input, 'multiselect' );
         this.createDocumentListener();
+        dataSource = this.data;
     }
 
     ngAfterViewInit() {
@@ -152,7 +158,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         let modeltemp;
         modeltemp = this.modelValue;
         modeltemp.forEach((value, index, array) => {
-            this.data.forEach((value2, index2, array2) => {
+            dataSource.forEach( ( value2, index2, array2 ) => {
                 if (JSON.stringify(value) === JSON.stringify(value2.source)) {
                     this.tags.push(value2);
                 }
@@ -168,16 +174,26 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
        }
     }
 
+    sortFiltredItens() {
+        if ( this.sortAlphabetically ) {
+            this.filtredItens.sort( ( a, b ) => {
+                let x = a.source[ this.query ].toLowerCase();
+                let y = b.source[ this.query ].toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            } );
+        }
+    }
+
     removeElementsForFilter() {
-        const dataTemp = this.data.slice();
         this.tags.forEach((value) => {
-            dataTemp.forEach((value2, index, array) => {
+            dataSource.forEach( ( value2, index, array ) => {
                 if (JSON.stringify(value.source) === JSON.stringify(value2.source)) {
-                    dataTemp.splice(index, 1);
+                    dataSource.splice( index, 1 );
                 }
             });
         });
-        this.filtredItens = dataTemp;
+        this.filtredItens = dataSource;
+        this.sortFiltredItens();
     }
 
     validationProperty() {
@@ -198,10 +214,11 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     validateEmptySearch() {
         setTimeout( () => {
-            if ( this.input.nativeElement.value === '' ) {
-                return this.filtredItens = this.data;
+            if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
+                return this.filtredItens = dataSource;
             }
         }, 1 );
+        this.sortFiltredItens();
     }
 
     validateOpenOnFocus() {
@@ -322,13 +339,15 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.deActiveInputText();
         this.validateOpenOnFocus();
         this.setOutlineMultiSelect();
+        this.sortFiltredItens();
     }
 
     setFiltredItens() {
         this.validateEmptySearch();
         if ( !this.isTagsLengthMoreThanZero() ) {
             if ( this.isFiltredLengthEqualsDataLength() ) {
-                this.filtredItens = this.data;
+                this.filtredItens = dataSource;
+                this.sortFiltredItens();
             }
         }
     }
@@ -344,6 +363,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.filtredItens.splice(index, 1);
             }
         });
+        this.sortFiltredItens();
     }
 
     setOutlineMultiSelect() {
@@ -378,6 +398,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.setModelValue();
         this.cleanTagSelected();
         this.removeTagOfFilter(item);
+        this.removeElementsForFilter();
         this.setInputFocus();
         this.cleanInput();
         this.change.detectChanges();
@@ -413,7 +434,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     filterOfData(inputed) {
-        this.filtredItens = this.data.filter( ( value ) => {
+        this.filtredItens = dataSource.filter( ( value ) => {
             return value.source[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
         } );
     }
@@ -486,12 +507,13 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     removeTag( index, item? ) {
         item ? this.filtredItens.push( item ) : this.filtredItens.push( this.tags[ index ] );
-        this.tags.splice( index, 1 );
-        this.onRemoveTag.emit( item );
+        this.onRemoveTag.emit( item ? item : this.tags[ index ] );
         this.getSelecteds.emit( this.tags );
+        this.tags.splice( index, 1 );
         this.changePlaceholder();
         this.setInputFocus();
         this.setModelValue();
+        this.sortFiltredItens();
         this.cleanInput();
         this.change.detectChanges();
     }
@@ -545,7 +567,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     isFiltredLengthEqualsDataLength() {
-        return this.filtredItens.length === this.data.length;
+        return this.filtredItens.length === dataSource.length;
     }
 
     closeList( event ) {

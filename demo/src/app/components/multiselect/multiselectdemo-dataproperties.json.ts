@@ -24,11 +24,32 @@ export const dataProperties = [
     options: "any text"
   },
   {
+    name: "labelSize",
+    type: "css measure",
+    default: "120px",
+    description: "Width of label",
+    options: "css measure"
+  },
+  {
+    name: "labelTag",
+    type: "string",
+    default: "query",
+    description: "Defines what text will be shown on text tag.",
+    options: "Object Key"
+  },
+  {
     name: "icon",
     type: "string",
     default: "null",
     description: "Key that will shown on icon section of list item.",
     options: "FontAwesome Class | IonIcons class"
+  },
+  {
+    name: "detail",
+    type: "string",
+    default: "null",
+    description: "Key that will shown on detail section of list item.",
+    options: "Object Key"
   },
   {
     name: "color",
@@ -72,4 +93,19 @@ export const dataProperties = [
     description: "Controls if the list will be show on input focus.",
     options: "any text"
   },
+  {
+    name: "sortAlphabetically",
+    type: "boolean",
+    default: "false",
+    description: "Controls if the list will be show sorted alphabetically",
+    options: "true | false"
+  },
+  {
+    name: "detailOnTag",
+    type: "boolean",
+    default: "false",
+    description: "Controls if the tag will be shown with the detail",
+    options: "true | false"
+  },
   ];
+

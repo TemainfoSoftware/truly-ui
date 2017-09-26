@@ -18,23 +18,26 @@
               [labelTag]="'firstName'"
               [label]="'Basic Usage'"
               [detail]="'email'"
+              [sortAlphabetically]="true"
               [(ngModel)]="dataBasicModel"
               [query]="'firstName'">
           </tl-multiselect>
         </div>
       </div>
-      <!--<div class="col-md-6">
+      <div class="col-md-6">
         <div class="form-group">
           <tl-multiselect
-            [data]="dataBasic"
+            [data]="dataCustom"
             [color]="'color'"
             [label]="'With Custom Color'"
+            [defaultColorTag]="'#0090d9'"
+            [detailOnTag]="true"
             [labelTag]="'firstName'"
             [detail]="'email'"
             [query]="'firstName'">
           </tl-multiselect>
         </div>
-      </div>-->
+      </div>
     </div>
    <!-- <div class="row">
       <div class="col-md-6">

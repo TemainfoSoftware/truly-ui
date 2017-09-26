@@ -26,7 +26,7 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit, OnChanges,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -178,8 +178,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     sortFiltredItens() {
         if ( this.sortAlphabetically ) {
             this.filtredItens.sort( ( a, b ) => {
-                let x = a.source[ this.query ].toLowerCase();
-                let y = b.source[ this.query ].toLowerCase();
+                const x = a.source[ this.query ].toLowerCase();
+                const y = b.source[ this.query ].toLowerCase();
                 return x < y ? -1 : x > y ? 1 : 0;
             } );
         }

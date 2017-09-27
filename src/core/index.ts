@@ -28,7 +28,7 @@ import { ApplicationConfig } from './configs/application.config';
 
 export * from './core';
 
-export function CoreServiceFactory(config:ApplicationConfig): Function {
+export function CoreServiceFactory(config: ApplicationConfig): Function {
     return () => { return new CoreService(config) };
 }
 
@@ -46,12 +46,6 @@ export const APPLICATION_CONFIGURATION = new InjectionToken<ApplicationConfig>('
     ]
 } )
 export class CoreModule {
-    constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
-        if (parentModule) {
-            throw new Error(
-                'CoreModule is already loaded. Import it in the AppModule only !!!!!!!!');
-        }
-    }
 
     static forRoot( config: ApplicationConfig ): ModuleWithProviders {
         return {
@@ -64,8 +58,15 @@ export class CoreModule {
                     deps: [APPLICATION_CONFIGURATION ],
                     multi: true
                 },
-                {provide:APPLICATION_CONFIGURATION, useValue: config},
+                {provide: APPLICATION_CONFIGURATION, useValue: config},
             ]
+        }
+    }
+
+    constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
+        if (parentModule) {
+            throw new Error(
+                'CoreModule is already loaded. Import it in the AppModule only !!!!!!!!');
         }
     }
 }

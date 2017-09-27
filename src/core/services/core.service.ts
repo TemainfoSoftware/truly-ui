@@ -24,7 +24,7 @@ import { Injectable, Optional } from '@angular/core';
 import { ApplicationConfig } from '../configs/application.config';
 
 @Injectable()
-export class CoreService{
+export class CoreService {
     constructor( @Optional() private config: ApplicationConfig ) {
         console.log(this.config);
     }

@@ -44,7 +44,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @Input('mode') mode = 'normal';
 
-    @Input('lazy') lazy = false;
+    @Input('allowLazy') allowLazy = false;
 
     @Input('rowsPage') rowsPage = 20;
 

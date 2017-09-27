@@ -69,7 +69,7 @@ export class TlDatatableDataSource {
 
     loadMoreData(skip: number, take: number): Promise<boolean> {
        return new Promise(( resolve ) => {
-           if (  this.datatable.lazy ) {
+           if (  this.datatable.allowLazy ) {
               this.datatable.lazyLoad.emit({ skip: skip,  take: take });
               return resolve();
 

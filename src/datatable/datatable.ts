@@ -74,6 +74,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
+    @ViewChild( 'datatableBox' ) datatableBox: ElementRef;
+
     public loading = false;
 
     public columns: any[] = [];
@@ -157,7 +159,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         const column = new TlDatatableColumn();
         column.title = field.toUpperCase();
         column.field = field;
+        column.width = this.getWidthColumn();
         return column;
+    }
+
+    getWidthColumn() {
+        const columnsTotal = Object.keys( this.dataSourceService.datasource[0] ).length;
+        const widthScrollbar = 10;
+        return (this.datatableBox.nativeElement.clientWidth - widthScrollbar) / columnsTotal;
     }
 
     onRowClick( row, index ) {

@@ -1,90 +1,87 @@
-table{
-  border-collapse: inherit;
-}
-
 $border-color : #DCDCDC;
 
 
 .tl-datatable-box{
+  width: 100%;
   border-left: 1px $border-color solid;
   border-top: 1px $border-color solid;
   border-bottom: 1px $border-color solid;
-  box-sizing: content-box;
   &.-borderleft{
-    border-right: 1px $border-color solid;
+   border-right: 1px $border-color solid;
   }
 
 }
 
 .datatable{
-  border-spacing: 0;
   border-right: 1px $border-color solid;
-  width: 100%;
   font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
   text-align: center;
-  table-layout: fixed;
+  display: flex;
 }
 
 .datatableHeader{
-  color: #7a838b;
+  color: #7A838B;
   font-size: 13px;
-  table-layout: fixed;
 
   > .row{
-    height: 30px;
-    width: 100%;
     background: #E9E9E9;
-    border: 1px #6E6E6E solid;
-    box-sizing: content-box;
-    margin:0px
+    display: flex;
+    height: 25px;
+    margin: 0;
   }
   > .row .cel{
-    width: 100%;
+    box-sizing: border-box;
     border-right: 1px $border-color solid;
     border-bottom: 1px $border-color solid;
+    padding: 0;
+    height: 25px;
 
+    display: flex;
+    align-items: center;
   }
   >.row .cel.-textleft{
-    text-align: left;
+    justify-content: left;
   }
   >.row .cel.-textright{
-    text-align: right;
+    justify-content: right;
   }
   >.row .cel.-textcenter{
-    text-align: center;
+    justify-content: center;
   }
   > .row .cel:last-child{
-    border-right: none
+ //   border-right: none
   }
 }
 
 .datatableBody{
-  table-layout: fixed;
-
   > .row{
-    height: 25px;
+    display: flex;
     font-size: 13px;
     background: #E9E9E9;
     outline: none;
     color: #7a838b;
-    margin:0px
+    margin: 0;
   }
   > .row .cel{
-    width: 200px;
-
     border-right: 1px $border-color solid;
+    box-sizing: border-box;
+    padding: 0px;
+
+    display: flex;
+    align-items: center;
   }
   >.row .cel.-textleft{
-    text-align: left;
+    justify-content: left;
   }
   >.row .cel.-textright{
-    text-align: right;
+    justify-content: right;
   }
   >.row .cel.-textcenter{
-    text-align: center;
+    justify-content: center;
   }
   > .row .cel:last-child{
-    border-right: none
+    border-right: 1px $border-color solid;
+
   }
   > .row:nth-child(odd){
    background: #FFFFFF;

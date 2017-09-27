@@ -81,14 +81,34 @@ export class MultiSelectDemo implements OnChanges {
   }
 
   show() {
-    this.dialogService.info( JSON.stringify( this.dataNoSourceBasicModel ), ( modalResult ) => {
+    try {
+      if (this.dataNoSourceBasicModel.length < 1) {
+        throw {name: 'DATA LENGTH ERROR', message: 'Invalid Data, needs more than ONE tag selected'};
+      } else {
+        this.showInfo();
+      }
+    }
+    catch (err) {
+      this.exception(err);
+    }
+  }
+
+
+  showInfo() {
+    this.dialogService.info( JSON.stringify(this.dataNoSourceBasicModel), ( modalResult ) => {
         console.log('Return',modalResult);
       },{
-        title: 'MultiSelect Model Value',
+        title: 'Model Value',
         textOk: 'Ok',
         draggable: true,
       }
-    );
+    )
+  }
+
+  exception(error) {
+    this.dialogService.error( error.message, ( modalResult ) => {
+      console.log( 'Return', modalResult );
+    }, {exceptionName: error.name, exceptionMessage: error.message});
   }
 
   onClickTag($event) {

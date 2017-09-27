@@ -1,8 +1,9 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, ViewContainerRef } from '@angular/core';
 
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
 import { DumpDataService } from "../../shared/services/dumpdata";
+import { DialogService } from "../../../../../src/dialog/dialog.service";
 
 @Component( {
   selector: 'app-multiselect-demo',
@@ -26,7 +27,8 @@ export class MultiSelectDemo implements OnChanges {
 
   private dataCustomDetail = [];
 
-  constructor() {
+  constructor(private view: ViewContainerRef, private dialogService: DialogService) {
+    this.dialogService.setView(this.view);
 
     this.dataTableProperties = jsonProp.dataProperties;
 
@@ -79,7 +81,14 @@ export class MultiSelectDemo implements OnChanges {
   }
 
   show() {
-    alert( JSON.stringify( this.dataNoSourceBasicModel ) );
+    this.dialogService.info( JSON.stringify( this.dataNoSourceBasicModel ), ( modalResult ) => {
+        console.log('Return',modalResult);
+      },{
+        title: 'MultiSelect Model Value',
+        textOk: 'Ok',
+        draggable: true,
+      }
+    );
   }
 
   onClickTag($event) {

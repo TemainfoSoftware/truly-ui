@@ -99,40 +99,36 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getElementsOfForm();
         this.getComponentsWithValidations();
         this.validateElements();
-        this.listenButtonFormCancel();
-        this.listenButtonFormOK();
         this.listenComponentWithValidations();
     }
 
 
-    listenButtonFormOK() {
-        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
-            $event.stopPropagation();
-            this.getInputValues();
-            this.getMultiSelectValues();
-            this.getDropdownListValues();
-            this.getRadioButtonValues();
-            this.getCheckBoxValues();
-        } ));
+    onKeyDownButtonOk($event) {
+        $event.stopPropagation();
+        this.getInputValues();
+        this.getMultiSelectValues();
+        this.getDropdownListValues();
+        this.getRadioButtonValues();
+        this.getCheckBoxValues();
     }
 
 
-    listenButtonFormCancel() {
-        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
-            $event.stopPropagation();
-            this.getInputValues();
-            this.getMultiSelectValues();
-            this.getDropdownListValues();
-            this.getRadioButtonValues();
-            this.getCheckBoxValues();
-        } ));
+    onClickButtonOk( $event ) {
+        $event.stopPropagation();
+        this.getInputValues();
+        this.getMultiSelectValues();
+        this.getDropdownListValues();
+        this.getRadioButtonValues();
+        this.getCheckBoxValues();
     }
+
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.listeners.push(this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            const listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
-            } ));
+            } );
+            this.listeners.push( listener );
         } );
     }
 
@@ -196,7 +192,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
                 : this.setTabIndex(element);
         }
     }
-
 
 
     isLastTabIndexElement(element, index, array) {

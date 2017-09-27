@@ -16,11 +16,15 @@ export class MultiSelectDemo implements OnChanges {
 
   private events;
 
-  private dataBasic = [];
+  private dataNoSourceBasic = [];
 
-  private dataCustom = [];
+  private dataNoSourceBasicModel = [];
 
-  private dataBasicModel;
+  private dataCustomColors = [];
+
+  private dataCustomIcon = [];
+
+  private dataCustomDetail = [];
 
   constructor() {
 
@@ -28,46 +32,54 @@ export class MultiSelectDemo implements OnChanges {
 
     this.events = jsonEvt.events;
 
-    this.dataBasic =
+    this.dataNoSourceBasic =
       [
-        { source: { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
-        { source: { id: 1, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
-        { source: { id: 1, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
-        { source: { id: 1, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } },
-        { source: { id: 1, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com', }, effect: { icon: 'ion-gear-a', color: '#dd6c6c' } }
+        { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
+        { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
+        { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
+        { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+        { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
         ,
       ];
 
-    this.dataCustom =
+    this.dataNoSourceBasicModel = [
+      { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+      { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
+    ];
+
+    this.dataCustomColors =
       [
-        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com', } },
-        { source: { id: 1, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com', } },
-        { source: { id: 1, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com', } },
-        { source: { id: 1, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com', } },
-        { source: { id: 1, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', } }
+        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#DC136C' } },
+        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#84B082' } },
+        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#353A47' } },
+        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: {color: '#885A5A' } },
+        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', effect: {color: '#F7C1BB' } } }
         ,
       ];
 
-    this.dataBasicModel = [
-      {
-        source: { id: 1, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com', },
-        effect: { icon: 'ion-gear-a', color: '#dd6c6c' }
-      },
-      {
-        source: { id: 1, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com', },
-        effect: { icon: 'ion-gear-a', color: '#dd6c6c' }
-      }
-    ]
+    this.dataCustomDetail =
+      [
+        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }},
+        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }},
+        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }},
+        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}},
+        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com'}}
+        ,
+      ];
 
+    this.dataCustomIcon =
+      [
+        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-heart' }},
+        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com'}, effect: { icon: 'ion-upload' }},
+        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-ribbon-b' } },
+        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: { icon: 'ion-ios-paper-outline' } },
+        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-ios-alarm' } }
+        ,
+      ];
   }
 
   show() {
-    alert(JSON.stringify(this.dataBasicModel));
-  }
-
-
-  getSelecteds($event) {
-    /*console.log('New Tags', $event);*/
+    alert( JSON.stringify( this.dataNoSourceBasicModel ) );
   }
 
   onClickTag($event) {

@@ -1,15 +1,26 @@
 <div class="wrapper-container">
     <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
     <div class="multiselect-wrapper">
-
         <div [ngClass]="{'inputFormOpenFilter': isOpen && filtredItens.length !== 0}"
              class="input-wrapper-multiselect" #element (click)="setInputFocus()">
+          <span class="tags" *ngIf="hasKeySource">
+              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
+                    [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
 
-          <span class="tags" *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)" [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
-              <small *ngIf="detailOnTag && detail !== undefined" class="tags-detail"><{{tag?.source[detail]}}></small><b
-                      (click)="removeTag(i, tag)">X</b>
+                  <small *ngIf="detailOnTag && detail !== undefined"
+                         class="tags-detail"><{{tag?.source[detail]}}></small>
+
+                  <b (click)="removeTag(i, tag)">X</b>
+              </span>
           </span>
-
+          <span class="tags" *ngIf="!hasKeySource">
+              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
+                    [ngStyle]="changeColorTag(tag)">{{tag[labelTag]}}
+                  <small *ngIf="detailOnTag && detail !== undefined"
+                         class="tags-detail"><{{tag[detail]}}></small>
+                  <b (click)="removeTag(i, tag)">X</b>
+              </span>
+          </span>
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
                    #model="ngModel"
                    #input width="300"
@@ -21,18 +32,35 @@
                    (keydown)="handleKeyDown($event)"
                    type="text">
         </div>
-
-        <div [style.display]=" isOpen ? 'block' : 'none' ">
+        <div *ngIf="hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightWidthItem()">
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
                     class="itens" (click)="addTag(item)">
-                    <i *ngIf="showIcon" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+
+                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item?.source[query]}}
                     <small>{{item?.source[detail]}}</small>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
+            <ul #ul class="select-options"
+                [ngStyle]="calcHeightWidthItem()">
+                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
+                    (keydown)="handleKeyDown($event, item)"
+                    *ngFor="let item of filtredItens; let i = index"
+                    class="itens" (click)="addTag(item)">
+
+                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+
+                    {{item[query]}}
+                    <small>{{item[detail]}}</small>
                 </li>
             </ul>
         </div>

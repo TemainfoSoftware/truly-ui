@@ -98,7 +98,7 @@ small {
     outline: 1px solid #66CC99;
 }
 
-.tags {
+.tags span {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -121,9 +121,10 @@ small {
 .tags-detail {
     padding: 5px;
     font-size: 10px;
+    opacity: 1 !important;
 }
 
-.tags b {
+.tags span b {
     padding: 5px;
     margin-left: 7px;
     border-left: 1px solid #fff;

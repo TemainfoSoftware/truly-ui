@@ -260,9 +260,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private createElementsTD( row, dataSource ) {
         for ( let collumn = 0; collumn < this.datatable.columns.length; collumn++ ) {
+
+            const classAlignColumn = this.datatable.getClassAlignment(this.datatable.columns[ collumn ].alignment );
+
             this.elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
             this.renderer.addClass(  this.elementTD.nativeElement, 'cel' );
+            this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
             this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.datatable.rowHeight + 'px' );
+            this.renderer.setStyle(  this.elementTD.nativeElement, 'width',  this.datatable.columns[ collumn ].width + 'px' );
             this.elementTD.nativeElement.innerHTML = dataSource[ row ][ this.datatable.columns[ collumn ].field ];
             this.renderer.appendChild( this.listBody.nativeElement.children[ row ],  this.elementTD.nativeElement );
         }

@@ -2,7 +2,7 @@
     <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
     <div class="multiselect-wrapper">
 
-        <div [ngClass]="{'inputFormOpenFilter': isOpen === 'block' && filtredItens.length !== 0}"
+        <div [ngClass]="{'inputFormOpenFilter': isOpen && filtredItens.length !== 0}"
              class="input-wrapper-multiselect" #element (click)="setInputFocus()">
 
           <span class="tags" *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)" [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
@@ -15,14 +15,14 @@
                    #input width="300"
                    [(ngModel)]="modelValue"
                    (blur)="closeList($event, element)"
-                   (focus)="toogleOpen('block'); handleInputFocus(element)"
+                   (focus)="handleInputFocus(element)"
                    [attr.placeholder]="placeholder"
                    (keyup)="searchItem($event.target.value, $event)"
                    (keydown)="handleKeyDown($event)"
                    type="text">
         </div>
 
-        <div [ngStyle]="{'display': isOpen}">
+        <div [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightWidthItem()">
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"

@@ -82,7 +82,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private componentsWithValidations = [];
 
-    private listener;
+    private listeners = [];
 
     private time;
 
@@ -106,33 +106,33 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     listenButtonFormOK() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
+        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
-        } );
+        } ));
     }
 
 
     listenButtonFormCancel() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
+        this.listeners.push(this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
             $event.stopPropagation();
             this.getInputValues();
             this.getMultiSelectValues();
             this.getDropdownListValues();
             this.getRadioButtonValues();
             this.getCheckBoxValues();
-        } );
+        } ));
     }
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            this.listeners.push(this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
-            } );
+            } ));
         } );
     }
 
@@ -192,13 +192,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     setTabIndex(element) {
         if ( !element.tabIndex ) {
             componentFormIndex++;
-            if ( this.notExistTabIndexInserted() ) {
-                element.setAttribute( 'tabIndex', componentFormIndex );
-            } else {
-                this.setTabIndex(element);
-            }
+            this.notExistTabIndexInserted() ? element.setAttribute( 'tabIndex', componentFormIndex )
+                : this.setTabIndex(element);
         }
     }
+
 
 
     isLastTabIndexElement(element, index, array) {
@@ -410,20 +408,20 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
 
     getRadioButtonValues() {
-        this.radioButtonList.forEach( ( item, index, array ) => {
+        this.radioButtonList.forEach( ( item ) => {
             this.formResult[ item.nameGroup.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getCheckBoxValues() {
-        this.checkboxList.forEach( ( item, index, array ) => {
+        this.checkboxList.forEach( ( item ) => {
             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
     getMultiSelectValues() {
-        this.multiselectList.forEach( ( item, index, array ) => {
+        this.multiselectList.forEach( ( item ) => {
             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } )
     }
@@ -440,8 +438,15 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy() {
         clearTimeout(this.time);
-        this.listener();
+        this.destroyListeners();
         this.cdr.detach();
     }
+
+    destroyListeners() {
+        this.listeners.forEach((value) => {
+            value();
+        })
+    }
+
 }
 

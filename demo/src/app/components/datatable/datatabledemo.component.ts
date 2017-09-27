@@ -17,40 +17,15 @@ export class DataTableDemo {
 
   public rowSelected: any;
 
-  private take = 200;
-
   private dataTableProperties;
 
   private dataTableEvents;
-
-  private timeout ;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
 
-    this.data = this.createRandomData(1000000);
-
-    this.dataLazy = {
-      "data" : this.getDataFromService(0,this.take),
-      "total" : this.data.length
-    }
-  }
-
-  getDataFromService(skip, take) {
-
-      return this.data.slice(skip, take);
-
-  }
-
-  onLazyLoad(event){
-    clearTimeout(this.timeout );
-    this.timeout = setTimeout(()=>{
-      this.dataLazy = {
-          "data" : this.getDataFromService(event.skip,event.take),
-          "total" : this.data.length
-        };
-    },2000)
+    this.data = this.createRandomData(100);
   }
 
   onPageChange(event){

@@ -7,12 +7,12 @@
                #model="ngModel"
                type="radio"
                (click)="checkRadio(item)"
-               [style.top]="orientation == 'vertical' ? '12px' : '3px'"
                [tabindex]="tabindex"
                [value]="item.value"
                (focus)="focusRadio(item)"
                [(ngModel)]="modelValue">
-        <span [style.top]="orientation == 'vertical' ? '15px' : '6px'" *ngIf="itemSelected === item" [style.background-color]="item.colorSelected" class="radio-selected"></span>
+        <span class="radio-ring"></span>
+        <span [style.top]="orientation == 'vertical' ? '13px' : '3px'" *ngIf="itemSelected === item" [style.background-color]="item.colorSelected" class="radio-selected"></span>
         <label (click)="checkRadio(item)" class="-label" attr.for="{{id}}">{{item.label}}</label>
     </div>
 </div>

@@ -27,7 +27,7 @@ export const dataProperties = [
     name: "labelSize",
     type: "css measure",
     default: "120px",
-    description: "Width of label",
+    description: "Width of label.",
     options: "css measure"
   },
   {
@@ -62,7 +62,7 @@ export const dataProperties = [
     name: "itemHeight",
     type: "string",
     default: "10",
-    description: "Height of item list",
+    description: "Height of item list.",
     options: "css measure"
   },
   {
@@ -97,15 +97,29 @@ export const dataProperties = [
     name: "sortAlphabetically",
     type: "boolean",
     default: "false",
-    description: "Controls if the list will be show sorted alphabetically",
+    description: "Controls if the list will be show sorted alphabetically.",
     options: "true | false"
   },
   {
     name: "detailOnTag",
     type: "boolean",
     default: "false",
-    description: "Controls if the tag will be shown with the detail",
+    description: "Controls if the tag will be shown with the detail.",
     options: "true | false"
+  },
+  {
+    name: "defaultColorTag",
+    type: "string",
+    default: "#66CC99",
+    description: "The background color default for all tags.",
+    options: "Hexadecimal"
+  },
+  {
+    name: "defaultIconTag",
+    type: "string",
+    default: "null",
+    description: "The icon default for all tags.",
+    options: "FontAwesome Class | IonIcons class"
   },
   ];
 

@@ -1,10 +1,8 @@
 <div class="wrapper-container">
     <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
     <div class="multiselect-wrapper">
-
         <div [ngClass]="{'inputFormOpenFilter': isOpen && filtredItens.length !== 0}"
              class="input-wrapper-multiselect" #element (click)="setInputFocus()">
-
           <span class="tags" *ngIf="hasKeySource">
               <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
                     [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
@@ -15,7 +13,6 @@
                   <b (click)="removeTag(i, tag)">X</b>
               </span>
           </span>
-
           <span class="tags" *ngIf="!hasKeySource">
               <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
                     [ngStyle]="changeColorTag(tag)">{{tag[labelTag]}}
@@ -24,7 +21,6 @@
                   <b (click)="removeTag(i, tag)">X</b>
               </span>
           </span>
-
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
                    #model="ngModel"
                    #input width="300"
@@ -36,7 +32,6 @@
                    (keydown)="handleKeyDown($event)"
                    type="text">
         </div>
-
         <div *ngIf="hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightWidthItem()">
@@ -53,7 +48,6 @@
                 </li>
             </ul>
         </div>
-
         <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
                 [ngStyle]="calcHeightWidthItem()">
@@ -70,8 +64,5 @@
                 </li>
             </ul>
         </div>
-
-
-
     </div>
 </div>

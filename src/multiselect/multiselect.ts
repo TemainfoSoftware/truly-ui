@@ -133,8 +133,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     validateKeySource() {
         this.dataSource[0].source ? this.hasKeySource = true : this.hasKeySource = false;
-
-        console.log('HasKey', this.hasKeySource);
     }
 
     createDocumentListener() {
@@ -244,12 +242,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.stopEventKeyDown( $event );
             this.setInputFocus();
         }
-
         if ( this.isOpen ) {
             this.stopEventKeyDown( $event );
             this.setInputFocus();
         }
-
     }
 
     validateItemToAddTag( item ) {

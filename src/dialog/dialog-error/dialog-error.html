@@ -15,11 +15,9 @@
         <i [ngClass]="{'ion-chevron-down': !errorlog, 'ion-chevron-up': errorlog}" class="ion-chevron-down"></i>
     </div>
     <div [@enterAnimation]="errorlog" *ngIf="errorlog" class="error-log">
-        <pre>Error Code: 158</pre>
+        <pre>Exception Name/Code: {{exceptionName}}</pre>
         <code>
-            ERROR Error: Uncaught (in promise): Error: Template parse errors:
-            'tl-dialog2' is not a known element:
-            1. If 'tl-dialog2' is an Angular component, then verify that it is part of this module
+           {{exceptionMessage}}
         </code>
     </div>
 </div>

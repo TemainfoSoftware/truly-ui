@@ -44,7 +44,9 @@
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
                     class="itens" (click)="addTag(item)">
-                    <i *ngIf="showIcon" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+
+                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item?.source[query]}}
                     <small>{{item?.source[detail]}}</small>
@@ -59,7 +61,9 @@
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filtredItens; let i = index"
                     class="itens" (click)="addTag(item)">
-                    <i *ngIf="showIcon" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+
+                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item[query]}}
                     <small>{{item[detail]}}</small>

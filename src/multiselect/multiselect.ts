@@ -65,6 +65,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() defaultColorTag = '#66CC99';
 
+    @Input() defaultIconTag = null;
+
     @Input() openFocus = true;
 
     @Input() detailOnTag = null;

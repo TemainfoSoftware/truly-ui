@@ -149,9 +149,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnInit() {
         this.backToTop();
-        this.getBoundingContent();
-        this.setDefaultDimensions();
-        this.setModalCenterParent();
         this.resizeListener();
         this.mousemoveListener();
         this.mouseupListener();
@@ -160,6 +157,13 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     ngAfterViewInit() {
+        this.getBoundingContent();
+        this.setDefaultDimensions();
+        this.setModalCenterParent();
+        this.createDocumentListener();
+    }
+
+    createDocumentListener() {
         const listener = this.renderer.listen( document, 'keydown', ( $event ) => {
             if ( $event.keyCode === KeyEvent.ESCAPE ) {
                 if ( document.getElementsByClassName( 'tl-modal-container' ).length > 0 ) {
@@ -173,7 +177,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         listenersDocument.push( listener );
         this.removeListeners();
     }
-
 
     removeListeners() {
         listenersDocument.forEach( ( value, index2, array ) => {

@@ -9,6 +9,8 @@
                        [text]="'Ok'"
                        mdResult="MROK"
                        [disabled]="!validForm"
+                       (mouseup)="onClickButtonOk($event)"
+                       (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"
                        [buttonAddonBeforeClass]="'icon'"
                        [iconAddonBefore]="'ion-checkmark'">

@@ -2,19 +2,23 @@ table{
   border-collapse: inherit;
 }
 
+$border-color : #DCDCDC;
+
+
 .tl-datatable-box{
-  border-left: 1px #E5E5E5 solid;
-  border-top: 1px #E5E5E5 solid;
-  border-bottom: 1px #E5E5E5 solid;
+  border-left: 1px $border-color solid;
+  border-top: 1px $border-color solid;
+  border-bottom: 1px $border-color solid;
+  box-sizing: content-box;
   &.-borderleft{
-    border-right: 1px #E5E5E5 solid;
+    border-right: 1px $border-color solid;
   }
 
 }
 
 .datatable{
   border-spacing: 0;
-  border-right: 1px #E5E5E5 solid;
+  border-right: 1px $border-color solid;
   width: 100%;
   font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
   text-align: center;
@@ -22,20 +26,22 @@ table{
 }
 
 .datatableHeader{
-  color: #656565;
+  color: #7a838b;
   font-size: 13px;
   table-layout: fixed;
 
   > .row{
     height: 30px;
     width: 100%;
-    background: #F6F6F6;
+    background: #E9E9E9;
     border: 1px #6E6E6E solid;
+    box-sizing: content-box;
+    margin:0px
   }
   > .row .cel{
     width: 100%;
-    border-right: 1px #E5E5E5 solid;
-    border-bottom: 1px #E5E5E5 solid;
+    border-right: 1px $border-color solid;
+    border-bottom: 1px $border-color solid;
 
   }
   >.row .cel.-textleft{
@@ -58,13 +64,15 @@ table{
   > .row{
     height: 25px;
     font-size: 13px;
-    background: #F5F5F5;
+    background: #E9E9E9;
     outline: none;
+    color: #7a838b;
+    margin:0px
   }
   > .row .cel{
     width: 200px;
 
-    border-right: 1px #E5E5E5 solid;
+    border-right: 1px $border-color solid;
   }
   >.row .cel.-textleft{
     text-align: left;

@@ -12,7 +12,6 @@
     <input #input #model="ngModel"
            attr.name="{{name}}"
            class="field"
-           type="text"
            [ngClass]="{
                '-cursorblocked' : readonly || disabled,
                '-disabled': disabled,
@@ -30,6 +29,7 @@
            [required]="validations.required"
            [(ngModel)]="modelValue"
            (blur)="onBlur()"
+           [type]="type"
            (focus)="onFocus()">
 
 

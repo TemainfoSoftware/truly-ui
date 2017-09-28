@@ -25,9 +25,8 @@ import {
     ViewChild,
     forwardRef,
     AfterViewInit,
-    ChangeDetectionStrategy,
     Output,
-    EventEmitter, ViewEncapsulation, ChangeDetectorRef
+    EventEmitter,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -62,7 +61,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: [ './input.scss' ],
-    encapsulation: ViewEncapsulation.None,
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
     ]
@@ -168,6 +166,11 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() textAlign;
 
     /**
+     * Type of Input
+     */
+    @Input() type = 'text';
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;
@@ -229,5 +232,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         this.input.nativeElement.focus();
         this.clear.emit();
     }
+
 
 }

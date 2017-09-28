@@ -6,7 +6,6 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { CharcaseDirective } from './directives/charcase.directive';
-import { FieldMaskDirective } from './directives/field-mask.directive';
 import { TypeDirective } from './directives/type.directive';
 
 export * from './input';
@@ -19,13 +18,11 @@ export * from './input';
     declarations: [
         TlInput,
         CharcaseDirective,
-        FieldMaskDirective,
         TypeDirective
     ],
     exports: [
         TlInput,
         CharcaseDirective,
-        FieldMaskDirective,
         TypeDirective
     ],
     providers: [

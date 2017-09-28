@@ -1,44 +1,46 @@
-import {
-    Directive,
-    HostListener,
-    Input,
-    AfterViewInit, ContentChildren, QueryList, AfterContentInit, Renderer2
-} from '@angular/core';
-import { TlInput } from '../input';
+import { Renderer2 } from '@angular/core';
+import { KeyEvent } from '../core/enums/key-events';
 
+export class InputMask {
 
-@Directive( {
-    selector: '[mask]',
-} )
-export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
-
-    @ContentChildren( TlInput ) tlinput: QueryList<TlInput>;
+    private tlinput;
 
     private maskGuides = true;
+
     private valueUppercase;
+
     private literalChar;
+
     private _value;
+
     private input;
 
     private startPosition: number;
+
     private endPosition: number;
 
     private shiftStart = '';
 
     private maskExpression: string;
+
     private maskGuideExpression: string;
+
     private maskSpecialCharacters: string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+' ];
+
     private maskAwaliablePatterns: { [key: string] : RegExp } = {
         '0': /\d/,
         '9': /\d/,
         'A': /[a-zA-Z]/,
     };
 
-    constructor( private renderer: Renderer2 ) {
+    constructor( element, private renderer: Renderer2, maskValue  ) {
+        this.tlinput = element;
+        this.input = element.input;
+        this.setMaskExpression(maskValue);
+        this.initializeMask();
     }
 
-    @Input( 'mask' )
-    public set _maskExpression( value: any ) {
+    setMaskExpression(value) {
         if ( !value ) {
             return;
         }
@@ -62,56 +64,60 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
         this.input.nativeElement.value = value;
     }
 
-    @HostListener( 'keypress', [ '$event' ] )
-    public onKeyPress( $event ): void {
-        this.handleKeypress( $event );
-        this.updateModel();
-        this.onComplete();
-    }
-
-    @HostListener( 'mouseup', [ '$event' ] )
-    public onMouseUp( $event ): void {
-        this.getPosition();
-    }
-
-
-    @HostListener( 'keydown', [ '$event' ] )
-    onKeyDown( event ): void {
-        switch ( event.code ) {
-            case 'Backspace':
-                this.handleBackspace( event );
-                break;
-            case 'Delete':
-                this.handleDelete( event );
-                break;
-            case 'ArrowRight':
-                this.handleArrowRight( event );
-                break;
-            case 'ArrowLeft':
-                this.handleArrowLeft( event );
-                break;
-            case 'Home':
-                this.handleHome( event );
-                break;
-            case 'End':
-                this.handleEnd( event );
-                break;
-            case 'KeyA':
-                this.handleSelectAll( event );
-                break;
-        }
-    }
-
-    ngAfterContentInit() {
-        this.input = this.tlinput.toArray()[ 0 ].input;
+    initializeMask() {
         this.inicializeOnFocus();
-    }
-
-    public ngAfterViewInit() {
         this.generateMaskGuideExpression();
         this.applyMaskOnInit();
+
         this.setPlaceholder();
         this.setValidation();
+
+        this.onKeyPressInputListener();
+        this.onMouseUpInputListener();
+        this.onKeyDownInputListener();
+    }
+
+
+    onKeyPressInputListener() {
+        this.renderer.listen(this.input.nativeElement, 'keypress', $event => {
+            this.handleKeypress( $event );
+            this.updateModel();
+            this.onComplete();
+        });
+    }
+
+    onMouseUpInputListener() {
+        this.renderer.listen(this.input.nativeElement, 'mouseup', $event => {
+            this.getPosition();
+        });
+    }
+
+    onKeyDownInputListener() {
+        this.renderer.listen(this.input.nativeElement, 'keydown', $event => {
+            switch ( $event.keyCode ) {
+                case KeyEvent.BACKSPACE:
+                    this.handleBackspace( $event );
+                    break;
+                case KeyEvent.DELETE:
+                    this.handleDelete( $event );
+                    break;
+                case KeyEvent.ARROWRIGHT:
+                    this.handleArrowRight( $event );
+                    break;
+                case KeyEvent.ARROWLEFT:
+                    this.handleArrowLeft( $event );
+                    break;
+                case KeyEvent.HOME:
+                    this.handleHome( $event );
+                    break;
+                case KeyEvent.END:
+                    this.handleEnd( $event );
+                    break;
+                case 'KeyA':
+                    this.handleSelectAll( $event );
+                    break;
+            }
+        });
     }
 
     private applyMaskOnInit() {
@@ -154,7 +160,7 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     private onFocusOut() {
         if ( !this.isTextLengthMatchWithExpressionLength() ) {
             this.value = '';
-            this.tlinput.toArray()[ 0 ].ngValue = '';
+            this.tlinput.ngValue = '';
             this.updateModel();
             this.onComplete();
         }
@@ -406,11 +412,11 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
     }
 
     private onComplete() {
-        if (this.tlinput.toArray()[ 0 ].validations['required']) {
-            this.tlinput.toArray()[ 0 ].validations[ 'validMask' ] = !this.isTextLengthMatchWithExpressionLength();
+        if (this.tlinput.validations['required']) {
+            this.tlinput.validations['validMask'] = !this.isTextLengthMatchWithExpressionLength();
         }
         if ( this.isTextLengthMatchWithExpressionLength() ) {
-            this.tlinput.toArray()[ 0 ].writeValue( this.value );
+            this.tlinput.writeValue( this.value );
         }
     }
 
@@ -435,8 +441,8 @@ export class FieldMaskDirective implements AfterViewInit, AfterContentInit {
             this.value = this.value.toUpperCase();
         }
         setTimeout( () => {
-            this.tlinput.toArray()[ 0 ].onChangeCallback( this.clearMask( this.value ) );
-            this.tlinput.toArray()[ 0 ].componentModel.model = this.clearMask( this.value );
+            this.tlinput.onChangeCallback( this.clearMask( this.value ) );
+            this.tlinput.componentModel.model = this.clearMask( this.value );
         }, 0 );
         this.setPosition( endPosition );
     }

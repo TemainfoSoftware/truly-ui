@@ -4,7 +4,7 @@ import {
     Input,
     AfterViewInit, ContentChildren, QueryList, AfterContentInit, Renderer2
 } from '@angular/core';
-import { TlInput } from '../../input/input';
+import { TlInput } from '../input';
 
 
 @Directive( {

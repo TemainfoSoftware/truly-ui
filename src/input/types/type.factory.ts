@@ -26,11 +26,10 @@ import { NullType } from './null.type';
 
 export class TypeFactory {
 
-    static getInstance( type ): CustomType {
-
+    static getInstance( type, tlinput ): CustomType {
         switch ( type ) {
             case 'cpf' :
-                return new CpfType();
+                return new CpfType(tlinput);
             default :
                 return new NullType();
         }

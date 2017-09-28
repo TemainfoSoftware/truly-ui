@@ -43,15 +43,16 @@ export class TypeDirective implements Validator, AfterViewInit {
 
     @ContentChild( TlInput ) input;
 
-    constructor( private element: ElementRef) {
-    }
+    constructor( private element: ElementRef) {}
 
     ngAfterViewInit() {
         this.element.nativeElement.setAttribute( 'type', this.type );
     }
 
     validate( c: FormControl ) {
-        return TypeFactory.getInstance( this.type ).validate()( c );
+        if (this.input) {
+            return TypeFactory.getInstance( this.type, this.input ).validate()( c );
+        }
     }
 
 }

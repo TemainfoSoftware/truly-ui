@@ -25,9 +25,14 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class CpfType implements CustomType {
 
+    constructor(tlinput) {
+        tlinput.mask = '999.999.999-99';
+    }
+
     validate(): ValidatorFn {
         return ( c: AbstractControl ) => {
             return null
         }
     }
+
 }

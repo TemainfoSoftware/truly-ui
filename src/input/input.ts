@@ -26,13 +26,14 @@ import {
     forwardRef,
     AfterViewInit,
     Output,
-    EventEmitter,
+    EventEmitter, Renderer2,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { InputMask } from './input-mask';
 
 /**
  * Input Component personalized with few features.
@@ -165,6 +166,9 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Input() textAlign;
 
+
+    @Input() mask;
+
     /**
      * Type of Input
      */
@@ -191,15 +195,19 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Output() clear: EventEmitter<any> = new EventEmitter();
 
+
     /**
      * Control the position of the clearButton.
      */
     private clearButtonPosition;
 
+    private fieldMask: InputMask;
+
     /**
      * Constructor
      */
-    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                private renderer: Renderer2) {
         super(tabIndexService, idService, nameService);
     }
 
@@ -209,6 +217,13 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     ngAfterViewInit() {
         this.setElement( this.input, 'input' );
         this.validateClearButtonPosition();
+        this.hasMask();
+    }
+
+    hasMask() {
+        if (this.mask) {
+            this.fieldMask = new InputMask(this, this.renderer, this.mask );
+        }
     }
 
     validateClearButtonPosition() {

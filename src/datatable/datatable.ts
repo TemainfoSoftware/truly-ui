@@ -89,8 +89,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     public totalRows: number;
 
     constructor( private render: Renderer2,
-                 private filterService: TlDatatableFilterService,
-                 private dataSourceService: TlDatatableDataSource
+                 public filterService: TlDatatableFilterService,
+                 public dataSourceService: TlDatatableDataSource
     ) {}
 
     ngOnInit() {

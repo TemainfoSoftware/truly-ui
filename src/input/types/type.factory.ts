@@ -22,17 +22,35 @@
 
 import { CustomType } from './custom-type';
 import { CpfType } from './cpf.type';
+import { CnpjType } from './cnpj.type';
 import { NullType } from './null.type';
 
 export class TypeFactory {
 
     static getInstance( type, tlinput ): CustomType {
         switch ( type ) {
-            case 'cpf' :
-                return new CpfType(tlinput);
+            case 'cpf':
+                this.setCpfMask(tlinput);
+                return new CpfType();
+            case 'cnpj':
+                this.setCnpjMask(tlinput);
+                return new CnpjType();
             default :
                 return new NullType();
         }
 
     }
+
+    static setCpfMask(tlinput) {
+        if (tlinput) {
+            tlinput.mask = '999.999.999-99';
+        }
+    }
+
+    static setCnpjMask(tlinput) {
+        if (tlinput) {
+            tlinput.mask = '99.999.999/9999-99';
+        }
+    }
+
 }

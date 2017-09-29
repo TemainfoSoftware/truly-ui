@@ -23,66 +23,70 @@
 import { CustomType } from './custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export class CpfType implements CustomType {
+export class CnpjType implements CustomType {
 
     validate(): ValidatorFn {
         return ( c: AbstractControl ) => {
-            let sum;
 
-            let leftover;
+            if ( (this.cnpjUnmasked( c ) === null) || (this.cnpjUnmasked( c ).length < 14) ) {
+                return { cnpj: false };
+            }
 
+            if ( this.isAllCharacteresEquals( c ) ) {
+                return { cnpj: false };
+            }
+
+            let size: any = this.cnpjUnmasked( c ).length - 2;
+            let numbers: any = this.cnpjUnmasked( c ).substring( 0, size );
+            const digits: any = this.cnpjUnmasked( c ).substring( size );
+
+            let sum = 0;
+            let pos = size - 7;
+
+            for ( let i = size; i >= 1; i-- ) {
+                sum += numbers.charAt( size - i ) * pos--;
+                if ( pos < 2 ) {
+                    pos = 9;
+                }
+            }
+
+            let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+            if ( result !== digits.charAt( 0 ) ) {
+                return { cnpj: false };
+            }
+
+            size = size + 1;
+            numbers = this.cnpjUnmasked( c ).substring( 0, size );
             sum = 0;
-
-            if ((this.cpfUnmasked( c ) === null) || (this.cpfUnmasked( c ).length < 9)) {
-                return {cpf: false};
+            pos = size - 7;
+            for ( let i = size; i >= 1; i-- ) {
+                sum += numbers.charAt( size - i ) * pos--;
+                if ( pos < 2 ) {
+                    pos = 9;
+                }
             }
-
-            if ( this.isAllCharacteresEquals(c) ) {
-                return {cpf: false};
-            }
-
-            for ( let i = 1; i <= 9; i++ ) {
-                sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (11 - i);
-            }
-
-            leftover = (sum * 10) % 11;
-            if ( (leftover === 10) || (leftover === 11) ) {
-                leftover = 0;
-            }
-            if ( leftover !== Number( this.cpfUnmasked( c ).substring( 9, 10 ) ) ) {
-                return {cpf: false};
-            }
-            sum = 0;
-            for ( let i = 1; i <= 10; i++ ) {
-                sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (12 - i);
-            }
-            leftover = (sum * 10) % 11;
-            if ( (leftover === 10) || (leftover === 11) ) {
-                leftover = 0;
-            }
-            if ( leftover !== Number( this.cpfUnmasked( c ).substring( 10, 11 ) ) ) {
-                return {cpf: false};
+            result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+            if ( result !== digits.charAt( 1 ) ) {
+                return { cnpj: false };
             }
             return null;
-
         }
     }
 
-    cpfUnmasked( c ) {
+    cnpjUnmasked( c ) {
         return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
     }
 
 
-    isAllCharacteresEquals(c) {
+    isAllCharacteresEquals( c ) {
         let result = true;
-        for (let i = 1; i <= 9; i++) {
-            if (this.cpfUnmasked( c ).substring( i - 1, i ) !== this.cpfUnmasked( c )[0]) {
+        for ( let i = 1; i <= 9; i++ ) {
+            if ( this.cnpjUnmasked( c ).substring( i - 1, i ) !== this.cnpjUnmasked( c )[ 0 ] ) {
                 result = false;
                 break;
             }
         }
         return result;
     }
-
 
 }

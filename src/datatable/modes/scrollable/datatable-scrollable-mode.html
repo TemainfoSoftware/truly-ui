@@ -3,9 +3,9 @@
         <table class="datatable">
             <thead class="datatableHeader">
             <tr class="row">
-                <th *ngFor="let column of datatable.columns;"
+                <th *ngFor="let column of dt.columns;"
                     [ngStyle]="{width: column.width+'px'}"
-                    [class]="' cel ' + datatable.getClassAlignment(column.alignment)">{{column.title}}</th>
+                    [class]="' cel ' + dt.getClassAlignment(column.alignment)">{{column.title}}</th>
             </tr>
             </thead>
         </table>
@@ -15,8 +15,8 @@
     <div #listComponent id="id-component"
          class="scrollBoxContainer"
          (keydown)="onKeydown($event)"
-         [tlLoading]="datatable.loading"
-         [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
+         [tlLoading]="dt.loading"
+         [ngStyle]="{'height': dt.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
         <div [ngStyle]="{height: bodyHeight+'px'}">
             <table class="datatable" [ngStyle]="{position: 'relative'}">
                 <tbody (click)="onClick($event)" #listBody class="datatableBody" ></tbody>

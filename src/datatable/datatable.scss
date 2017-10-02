@@ -28,18 +28,18 @@ $border-color : #DCDCDC;
   > .row .cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
-    padding: 0;
+    padding: 2px;
     height: 25px;
     align-items: center;
   }
   >.row .cel.-textleft{
-    justify-content: left;
+    text-align: left;
   }
   >.row .cel.-textright{
-    justify-content: right;
+    text-align: right;
   }
   >.row .cel.-textcenter{
-    justify-content: center;
+    text-align: center;
   }
   > .row .cel:last-child{
     border-right: none
@@ -57,17 +57,17 @@ $border-color : #DCDCDC;
   > .row .cel{
     border-right: 1px $border-color solid;
     box-sizing: border-box;
-    padding: 0px;
+    padding: 2px;
     align-items: center;
   }
   >.row .cel.-textleft{
-    justify-content: left;
+    text-align: left;
   }
   >.row .cel.-textright{
-    justify-content: right;
+    text-align: right;
   }
   >.row .cel.-textcenter{
-    justify-content: center;
+    text-align: center;
   }
   > .row .cel:last-child{
     border-right: 1px $border-color solid;

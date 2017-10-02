@@ -54,6 +54,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @Input('height') height = 300;
 
+    @Input('width') width = 300;
+
     @Input('globalFilter') globalFilter: any;
 
     @Input('globalFilterOptions') globalFilterOptions: DatatableFilterOptions;

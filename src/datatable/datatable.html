@@ -1,4 +1,4 @@
-<div class="tl-datatable-box" #datatableBox *ngIf="data" [ngClass]="{'-borderleft':scrollable === 'normal'}">
+<div class="tl-datatable-box" #datatableBox *ngIf="data" [ngClass]="{'-borderleft':scrollable === 'normal'}" [ngStyle]="{width: width}">
 
     <tl-datatable-normal-mode *ngIf="mode === 'normal'"></tl-datatable-normal-mode>
 

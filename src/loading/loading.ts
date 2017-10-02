@@ -95,9 +95,9 @@ export class TlLoading implements OnChanges, AfterViewInit {
         this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
     }
 
-    private happenedResize(){
-        if (this.loadingElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + "px") return true;
-        if (this.loadingElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + "px") return true;
+    private happenedResize() {
+        if (this.loadingElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
+        if (this.loadingElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
     }
 
     private buildLoadingElement() {

@@ -20,38 +20,19 @@
  SOFTWARE.
  */
 
-import {
-    AfterViewInit, ContentChild, Directive, ElementRef, forwardRef, Input
-} from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { TypeFactory } from '../types/type.factory';
-import { TlInput } from '../input';
+import { CustomType } from './custom-type';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-@Directive( {
-    selector: '[type][ngModel]',
-    providers: [
-        {
-            multi: true,
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef( () => TypeDirective )
+export class FloatNumberType implements CustomType {
+
+    validate(): ValidatorFn {
+        return ( c: AbstractControl ) => {
+            if (c.value !== null && c.value.length >= 3) {
+                return null;
+            }
+            return { float: false }
         }
-    ]
-} )
-export class TypeDirective implements Validator, AfterViewInit {
 
-    @Input() type = '';
-
-    @Input() decimals = 2;
-
-    @ContentChild( TlInput ) input;
-
-    constructor( private element: ElementRef) {}
-
-    ngAfterViewInit() {
-        this.element.nativeElement.setAttribute( 'type', this.type );
     }
 
-    validate( c: FormControl ) {
-        return TypeFactory.getInstance( this.type, this.input, this.decimals ).validate()( c );
-    }
 }

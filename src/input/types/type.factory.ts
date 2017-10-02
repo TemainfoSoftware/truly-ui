@@ -24,10 +24,11 @@ import { CustomType } from './custom-type';
 import { CpfType } from './cpf.type';
 import { CnpjType } from './cnpj.type';
 import { NullType } from './null.type';
+import { FloatNumberType } from './floatnumber.type';
 
 export class TypeFactory {
 
-    static getInstance( type, tlinput ): CustomType {
+    static getInstance( type, tlinput, decimals ): CustomType {
         switch ( type ) {
             case 'cpf':
                 this.setCpfMask(tlinput);
@@ -35,6 +36,9 @@ export class TypeFactory {
             case 'cnpj':
                 this.setCnpjMask(tlinput);
                 return new CnpjType();
+            case 'floatnumber':
+                this.setFloatNumber( tlinput, decimals );
+                return new FloatNumberType();
             default :
                 return new NullType();
         }
@@ -53,4 +57,17 @@ export class TypeFactory {
         }
     }
 
+    static setFloatNumber( tlinput, decimals ) {
+        if ( tlinput ) {
+            tlinput.input.nativeElement.value = tlinput.input.nativeElement.value.replace( /\D/g, '' );
+            tlinput.input.nativeElement.addEventListener( 'blur', $event => {
+                if ( !tlinput.input.nativeElement.value.includes( ',' ) && tlinput.input.nativeElement.value !== '' ) {
+                    tlinput.input.nativeElement.value =
+                        new Intl.NumberFormat(
+                            'pt-BR', { minimumFractionDigits: decimals } )
+                            .format( Number( tlinput.input.nativeElement.value ) );
+                }
+            } );
+        }
+    }
 }

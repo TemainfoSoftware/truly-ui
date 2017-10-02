@@ -6,6 +6,7 @@ import { MultiSelectDemo } from "./multiselectdemo.component";
 import { MultiSelectDemoRoutingModule } from "./multiselectdemo-routing.module";
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { MultiSelectModule } from 'truly-ui/multiselect';
+import { DialogModule } from 'truly-ui/dialog';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MultiSelectModule } from 'truly-ui/multiselect';
     CommonModule,
     MultiSelectModule,
     FormsModule,
+    DialogModule,
     HighlightJsModule,
     MultiSelectDemoRoutingModule,
   ],

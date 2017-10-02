@@ -19,14 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export const ModalInfoOptions = {
-    icon: 'ion-information-circled',
-    title: 'Information',
-    color: '#0090D9',
-    width: 'auto',
-    height: 'auto',
-    draggable: true,
-    maximizable: false,
-    minimizable: false,
-    backdrop: false,
-};
+
+import { CustomType } from './custom-type';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+
+
+export class NullType implements CustomType {
+
+    validate(): ValidatorFn {
+        return ( c: AbstractControl ) => {
+            return null;
+        }
+    }
+}

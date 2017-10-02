@@ -458,6 +458,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         if ( this.isValueMoreOrEqualThanMinLengthSearch(inputed)  ) {
             this.toogleOpen( true );
             !this.isTagsLengthMoreThanZero() ? this.filterOfData(inputed) : this.filterOfFiltredItens(inputed);
+        } else {
+            this.removeElementsForFilter();
         }
     }
 
@@ -525,7 +527,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     removeTagOnBackspace() {
-        this.removeElementsForFilter();
         if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
             this.removeTag( this.tags.length - 1 );
             this.setInputFocus();

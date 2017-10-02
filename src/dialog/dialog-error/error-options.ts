@@ -22,5 +22,7 @@
  export interface ErrorOptions {
      title?: string;
      textOk?: string;
+     exceptionName?: string;
+     exceptionMessage?: string;
      draggable?: boolean;
  }

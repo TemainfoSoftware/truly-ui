@@ -1,8 +1,8 @@
-<div class="content" (keydown)="onKeyDown($event)">
-    <div class="form" style="text-align: center">
-        <h5>{{message}}</h5>
+<div class="content-dialog" (keydown)="onKeyDown($event)">
+    <div class="form">
+        <p>{{message}}</p>
     </div>
-    <div class="header-controls" style="text-align: center;float: left; width: 100%">
+    <div class="header-controls">
         <tl-button [text]="textClose"
                    #button
                    mdResult="MRCLOSE"

@@ -19,14 +19,39 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export const ModalInfoOptions = {
-    icon: 'ion-information-circled',
-    title: 'Information',
-    color: '#0090D9',
-    width: 'auto',
-    height: 'auto',
-    draggable: true,
-    maximizable: false,
-    minimizable: false,
-    backdrop: false,
-};
+
+import {
+    AfterViewInit, ContentChild, Directive, ElementRef, forwardRef, Input
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { TypeFactory } from '../types/type.factory';
+import { TlInput } from '../input';
+
+@Directive( {
+    selector: '[type][ngModel]',
+    providers: [
+        {
+            multi: true,
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef( () => TypeDirective )
+        }
+    ]
+} )
+export class TypeDirective implements Validator, AfterViewInit {
+
+    @Input() type = '';
+
+    @Input() decimals = 2;
+
+    @ContentChild( TlInput ) input;
+
+    constructor( private element: ElementRef) {}
+
+    ngAfterViewInit() {
+        this.element.nativeElement.setAttribute( 'type', this.type );
+    }
+
+    validate( c: FormControl ) {
+        return TypeFactory.getInstance( this.type, this.input, this.decimals ).validate()( c );
+    }
+}

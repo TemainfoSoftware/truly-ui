@@ -20,17 +20,18 @@
  SOFTWARE.
  */
 
+
 import { CustomType } from './custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export class FloatNumberType implements CustomType {
+export class IntegerNumberType implements CustomType {
 
     validate(): ValidatorFn {
         return ( c: AbstractControl ) => {
             if (c.value !== null && c.value.length >= 1) {
                 return null;
             }
-            return { float: false }
+            return { int: false }
         }
     }
 

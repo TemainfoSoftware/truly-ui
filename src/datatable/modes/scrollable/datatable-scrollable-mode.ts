@@ -68,7 +68,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private scrollLockAt = 0;
 
-    private translateY: number = 0;
+    private translateY = 0;
 
     private lastRecordProcessed: any;
 
@@ -142,7 +142,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private addListenerToScroll() {
         this.listComponent.nativeElement.addEventListener('scroll', ($event) => {
 
-            if(this.isScrollLeft()) {
+            if ( this.isScrollLeft() ) {
                 this.handleScrollLeft();
                 this.setLastScrollLeft();
                 return
@@ -157,7 +157,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     }
 
-    private handleScrollLeft(){
+    private handleScrollLeft() {
         this.scrollBoxHeader.nativeElement.scrollLeft  = this.listComponent.nativeElement.scrollLeft;
     }
 
@@ -224,7 +224,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
 
         const clientRect = firstElement.getBoundingClientRect();
-        if( ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.skip === 0) ){
+        if ( ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.skip === 0) ) {
             return;
         }
         if ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) {
@@ -235,7 +235,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 take = this.dt.rowsPage;
             }
             this.scrollLockAt = this.scrollTop;
-            console.log('Skip2',skip,take);
             this.renderPageData( skip, take );
         }
     }
@@ -249,7 +248,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             skip = 0;
             take = this.dt.rowsPage;
         }
-        console.log('Skip3',skip);
         this.renderPageData( skip, take );
     }
 

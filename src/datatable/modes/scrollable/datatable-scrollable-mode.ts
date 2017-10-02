@@ -38,6 +38,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listComponent' ) listComponent: ElementRef;
 
+    @ViewChild( 'scrollBoxHeader' ) scrollBoxHeader: ElementRef;
+
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
     private bodyHeight = 0;
@@ -58,11 +60,15 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private lastScrollTop = 0;
 
+    private lastScrollLeft= 0;
+
     private scrollDirection = 'DOWN';
 
     private skip = 0;
 
     private scrollLockAt = 0;
+
+    private translateY: number = 0;
 
     private lastRecordProcessed: any;
 
@@ -134,14 +140,25 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private addListenerToScroll() {
-        this.listComponent.nativeElement.addEventListener('scroll', () => {
+        this.listComponent.nativeElement.addEventListener('scroll', ($event) => {
+
+            if(this.isScrollLeft()) {
+                this.handleScrollLeft();
+                this.setLastScrollLeft();
+                return
+            }
+
             this.setScrollTop();
             this.setlastRowViewport();
             this.setScrollDirection();
             this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
-            this.setLastScrollTop()
+            this.setLastScrollTop();
         });
 
+    }
+
+    private handleScrollLeft(){
+        this.scrollBoxHeader.nativeElement.scrollLeft  = this.listComponent.nativeElement.scrollLeft;
     }
 
     private firstRender() {
@@ -218,6 +235,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 take = this.dt.rowsPage;
             }
             this.scrollLockAt = this.scrollTop;
+            console.log('Skip2',skip,take);
             this.renderPageData( skip, take );
         }
     }
@@ -231,6 +249,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             skip = 0;
             take = this.dt.rowsPage;
         }
+        console.log('Skip3',skip);
         this.renderPageData( skip, take );
     }
 
@@ -244,6 +263,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private renderList( lastRow, dataSource ) {
         this.removeChilds();
         this.lastRecordProcessed = dataSource[0];
+        this.translateY = ( lastRow) * this.dt.rowHeight;
         for ( let row = 0; row < dataSource.length; row++ ) {
             this.createElementTR( row, lastRow);
             this.createElementsTD( row, dataSource );
@@ -255,8 +275,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.elementTR = new ElementRef( this.renderer.createElement( 'tr' ) );
         this.renderer.setAttribute( this.elementTR.nativeElement, 'row', String( (row + lastRow) ) );
         this.renderer.setAttribute( this.elementTR.nativeElement, 'tabindex', String( (row + lastRow) ) );
-        this.renderer.setStyle( this.elementTR.nativeElement, 'top', (row + lastRow) * this.dt.rowHeight + 'px' );
-        this.renderer.setStyle( this.elementTR.nativeElement, 'position', 'absolute' );
         this.renderer.setStyle( this.elementTR.nativeElement, 'height', this.dt.rowHeight + 'px' );
         this.renderer.addClass( this.elementTR.nativeElement, 'row' );
         this.renderer.appendChild( this.listBody.nativeElement, this.elementTR.nativeElement );
@@ -271,7 +289,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             this.renderer.addClass(  this.elementTD.nativeElement, 'cel' );
             this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
             this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.dt.rowHeight + 'px' );
-            this.renderer.setStyle(  this.elementTD.nativeElement, 'width',  this.dt.columns[ collumn ].width + 'px' );
             this.elementTD.nativeElement.innerHTML = dataSource[ row ][ this.dt.columns[ collumn ].field ];
             this.renderer.appendChild( this.listBody.nativeElement.children[ row ],  this.elementTD.nativeElement );
         }
@@ -300,12 +317,19 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.lastScrollTop = this.scrollTop;
     }
 
+    private setLastScrollLeft() {
+        this.lastScrollLeft =  this.listComponent.nativeElement.scrollLeft;
+    }
     private setScrollDirection( ) {
         this.scrollDirection =  (this.scrollTop > this.lastScrollTop ) ? 'DOWN' : 'UP';
     }
 
     private isScrollDown() {
         return this.scrollDirection === 'DOWN';
+    }
+
+    private isScrollLeft() {
+        return this.lastScrollLeft !== this.listComponent.nativeElement.scrollLeft;
     }
 
     private addEventClickToListElement( row ) {

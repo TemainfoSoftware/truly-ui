@@ -159,7 +159,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         const column = new TlDatatableColumn();
         column.title = field.toUpperCase();
         column.field = field;
-        column.width = this.getWidthColumn();
+        column.width = this.getWidthColumn() + '%';
         return column;
     }
 

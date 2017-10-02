@@ -52,6 +52,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private cursorViewPortPosition = 1;
 
+    private wrapOnRemaining = 5;
+
     private scrollTop = 0;
 
     private lastScrollTop = 0;
@@ -182,7 +184,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return this.handleScrollFast();
         }
 
-        if ( clientRect.bottom < parentClientRect.bottom + (5 * this.dt.rowHeight) ) {
+        if ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
             let take = this.lastRowViewport + this.quantityInVisibleRows;
             take = take > this.dt.totalRows ? this.dt.totalRows : take;
@@ -205,8 +207,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
 
         const clientRect = firstElement.getBoundingClientRect();
-        if ( clientRect.top > parentClientRect.top - (5 * this.dt.rowHeight) ) {
-            let skip = this.listBody.nativeElement.children[ 0 ].getAttribute( 'row' ) - this.quantityInVisibleRows;
+        if( ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.skip === 0) ){
+            return;
+        }
+        if ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) {
+            let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows - this.wrapOnRemaining;
             let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
             if ( skip < 0 ) {
                 skip = 0;

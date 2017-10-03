@@ -75,6 +75,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private skip = 0;
 
+    private take = 0;
+
     private scrollLockAt = 0;
 
     private translateY = 0;
@@ -155,7 +157,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             if ( this.isScrollLeft() ) {
                 this.handleScrollLeft();
                 this.setLastScrollLeft();
-                return
+                return;
             }
 
             this.setScrollTop();
@@ -181,10 +183,12 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows*2 ) + '"]') )
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport-1 ) + this.quantityVisibleRows ) + '"]') )
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -211,6 +215,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return this.handleScrollFast();
         }
 
+        if ( ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.take === this.dt.totalRows) ) {
+            return;
+        }
         if ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
             let take = this.lastRowViewport + this.quantityInVisibleRows;
@@ -245,6 +252,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 take = this.dt.rowsPage;
             }
             this.scrollLockAt = this.scrollTop;
+            console.log('UP',skip, take);
             this.renderPageData( skip, take );
         }
     }
@@ -264,6 +272,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private renderPageData( skip, take ) {
         this.dt.loading = true;
         this.skip = skip;
+        this.take = take;
         this.dt.dataSourceService.loadMoreData(skip, take);
         this.cd.markForCheck();
     }
@@ -395,10 +404,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private getFocusElementOnChangeData() {
-        const rowNumber = this.activeElement.getAttribute('row');
-        if (document.querySelector('tr[row="' + rowNumber + '"]')) {
-            return document.querySelector('tr[row="' + rowNumber + '"]');
-        }
+        // const rowNumber = this.activeElement.getAttribute('row');
+        // if (document.querySelector('tr[row="' + rowNumber + '"]')) {
+        //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
+        //     return document.querySelector('tr[row="' + rowNumber + '"]');
+        // }
 
         if ( this.isScrollDown() ) {
             return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');

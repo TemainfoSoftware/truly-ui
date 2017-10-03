@@ -34,12 +34,14 @@ import {
 } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
+import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 
 @Component( {
     selector: 'tl-datatable-scrollable-mode',
     templateUrl: './datatable-scrollable-mode.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
+    providers: [DatatableHelpersService]
 } )
 export class TlDatatableScrollableMode implements AfterContentInit {
 
@@ -89,7 +91,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
                  private renderer: Renderer2,
-                 private cd: ChangeDetectorRef
+                 private cd: ChangeDetectorRef,
+                 private helperService: DatatableHelpersService
     ) {}
 
     ngAfterContentInit() {
@@ -288,7 +291,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private createElementsTD( row, dataSource ) {
         for ( let collumn = 0; collumn < this.dt.columns.length; collumn++ ) {
 
-            const classAlignColumn = this.dt.getClassAlignment(this.dt.columns[ collumn ].alignment );
+            const classAlignColumn = this.helperService.getClassAlignment(this.dt.columns[ collumn ].alignment );
 
             this.elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
             this.renderer.addClass(  this.elementTD.nativeElement, 'cel' );

@@ -7,7 +7,7 @@
             <thead class="ui-datatable-table-head">
                 <tr class="row">
                     <th *ngFor="let column of dt.columns;"
-                        [class]="' cel ' + dt.getClassAlignment(column.alignment)">{{column.title}}</th>
+                        [class]="' cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}</th>
                 </tr>
             </thead>
         </table>

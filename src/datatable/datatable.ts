@@ -28,6 +28,7 @@ import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
 import { TlDatatableFilterService } from './services/datatable-filter.service';
 import { TlDatatableDataSource } from './services/datatable-datasource.service';
+import { TlDatatableColumnService } from './services/datatable-column.service';
 
 @Component({
     selector: 'tl-datatable',
@@ -36,9 +37,10 @@ import { TlDatatableDataSource } from './services/datatable-datasource.service';
     providers: [
         TlDatatableFilterService,
         TlDatatableDataSource,
+        TlDatatableColumnService,
     ]
 })
-export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
+export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
@@ -86,31 +88,18 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     public globalFilterTimeout: any;
 
-    public rowHeightCalculated: number;
-
     public totalRows: number;
 
     constructor( private render: Renderer2,
                  public filterService: TlDatatableFilterService,
-                 public dataSourceService: TlDatatableDataSource
+                 public dataSourceService: TlDatatableDataSource,
+                 public columnService: TlDatatableColumnService
     ) {}
 
-    ngOnInit() {
-        this.dataSourceService.onInitDataSource(this);
-        this.setHeightRowTable();
-
-      //   this.render.listen(window, 'load', () => {
-      //      // this.calcHeightRowTable();
-      //   });
-      //
-      //   this.render.listen(window, 'resize', () => {
-      //   })
-    }
-
-
     ngAfterContentInit() {
-        const height = this.height;
-        this.rowHeight =  height / this.rowsClient;
+        this.setRowHeight();
+        this.dataSourceService.onInitDataSource(this);
+        this.columnService.onInitColumnService(this);
         this.inicializeGlobalFilter();
     }
 
@@ -118,55 +107,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         if (changes['data'] !== undefined) {
             this.dataSourceService.onChangeDataSource(changes)
         }
-
     }
 
-    setColumns() {
-        this.exitsColumns() ? this.getColumnsFromContentChield() : this.getColumnsFromDataSource();
+    setRowHeight() {
+        this.rowHeight = this.height / this.rowsClient;
     }
 
     setTabIndex( value: number ) {
         this.tabindex = value;
-    }
-
-    getColumnsFromDataSource() {
-        if (this.dataSourceService.datasource) {
-            Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
-                this.columns.push( this.buildNewDataTableColumn( columnField ) );
-            })
-        }
-    }
-
-    getColumnsFromContentChield() {
-        this.datatableColumns.map( column => {
-            this.columns.push( column );
-        } );
-    }
-
-    getClassAlignment( alignment: string ) {
-        return alignment ? '-text' + alignment : '';
-    }
-
-    getObjectRow( row , index ) {
-        return { data : row, index: index };
-    }
-
-    exitsColumns() {
-        return ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) );
-    }
-
-    buildNewDataTableColumn(field) {
-        const column = new TlDatatableColumn();
-        column.title = field.toUpperCase();
-        column.field = field;
-        column.width = this.getWidthColumn() + '%';
-        return column;
-    }
-
-    getWidthColumn() {
-        const columnsTotal = Object.keys( this.dataSourceService.datasource[0] ).length;
-        const widthScrollbar = 10;
-        return (this.datatableBox.nativeElement.clientWidth - widthScrollbar) / columnsTotal;
     }
 
     onRowClick( row, index ) {
@@ -182,6 +130,10 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
     }
 
+    getObjectRow( row , index ) {
+        return { data : row, index: index };
+    }
+
     inicializeGlobalFilter() {
         if ( this.globalFilter ) {
             this.globalFilterTimeout = setTimeout( () => {
@@ -195,24 +147,5 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     filter( value: any ) {
         this.filterService.filter( value );
-    }
-
-    calcHeightRowTable() {
-        if ( this.tbody !== undefined) {
-
-            this.rowHeightCalculated = this.rowHeight;
-            let heightMax = this.rowHeight;
-
-            for ( let i = 0; i < this.tbody.nativeElement.children.length; i++) {
-                if ( this.tbody.nativeElement.children[i].clientHeight > heightMax ) {
-                    heightMax = this.tbody.nativeElement.children[i].clientHeight;
-                }
-            }
-            this.rowHeightCalculated = heightMax;
-        }
-    }
-
-    setHeightRowTable() {
-        this.rowHeightCalculated = this.rowHeight;
     }
 }

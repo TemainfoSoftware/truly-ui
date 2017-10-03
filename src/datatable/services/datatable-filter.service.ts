@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
- import { forwardRef, Inject, Injectable, Injector } from '@angular/core';
+ import { Injectable, Injector } from '@angular/core';
  import { TlDatatable } from '../datatable';
  import { TlDatatableDataSource } from './datatable-datasource.service';
 
@@ -31,11 +31,10 @@
 
      private datatable: TlDatatable;
 
-
      constructor( public dataSourceService: TlDatatableDataSource, injectable: Injector  ) {
-      setTimeout(() => {
+        setTimeout(() => {
           this.datatable = injectable.get(TlDatatable)
-      })
+        })
      }
 
      public filter( dataToFilter: any ) {

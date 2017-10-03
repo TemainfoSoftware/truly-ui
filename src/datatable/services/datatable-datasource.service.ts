@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { ChangeDetectorRef, EventEmitter, Injectable, NgZone, SimpleChanges } from '@angular/core';
+import { EventEmitter, Injectable, NgZone, SimpleChanges } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
 
@@ -39,7 +39,7 @@ export class TlDatatableDataSource {
         this.datatable = datatableInstance;
         this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
             this.datasource = res;
-            this.datatable.setColumns();
+            this.datatable.columnService.setColumns();
         });
         this.refreshTotalRows(this.datatable.data);
     }
@@ -56,16 +56,7 @@ export class TlDatatableDataSource {
         this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
     }
 
-    getRowsInMemory(skip: number, take: number): Promise<any> {
-        return new Promise((resolve) => {
-            let data: any = [];
-            this.zone.runOutsideAngular(() => {
-                data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-                data = (data as  Array<any>).slice( skip, take );
-            });
-            resolve(  data );
-        })
-    }
+
 
     loadMoreData(skip: number, take: number): Promise<boolean> {
        return new Promise(( resolve ) => {
@@ -83,9 +74,19 @@ export class TlDatatableDataSource {
        });
     }
 
-
     public isDataArray( data: any ) {
         return data instanceof Array;
+    }
+
+    private getRowsInMemory(skip: number, take: number): Promise<any> {
+        return new Promise((resolve) => {
+            let data: any = [];
+            this.zone.runOutsideAngular(() => {
+                data = this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
+                data = (data as  Array<any>).slice( skip, take );
+            });
+            resolve(  data );
+        })
     }
 
     private refreshTotalRows( data: any ) {

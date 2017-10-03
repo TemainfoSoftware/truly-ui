@@ -24,10 +24,10 @@ import {
     ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './datatable-column';
-import { DatatableFilterOptions } from './datatable-filter-options';
+import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
-import { TlDatatableFilterService } from './datatable-filter.service';
-import { TlDatatableDataSource } from './datatable-datasource.service';
+import { TlDatatableFilterService } from './services/datatable-filter.service';
+import { TlDatatableDataSource } from './services/datatable-datasource.service';
 
 @Component({
     selector: 'tl-datatable',

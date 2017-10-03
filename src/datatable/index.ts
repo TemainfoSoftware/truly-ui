@@ -10,9 +10,9 @@ import { LoadingModule } from '../loading/index';
 
 export * from './datatable';
 export * from './datatable-column';
-export * from './datatable-datasource.service';
-export * from './datatable-filter.service';
-export * from './datatable-filter-options';
+export * from './services/datatable-datasource.service';
+export * from './services/datatable-filter.service';
+export * from './configs/datatable-filter-options';
 export * from './modes/normal/datatable-normal-mode';
 export * from './modes/paginator/datatable-paginator-mode';
 export * from './modes/scrollable/datatable-scrollable-mode';

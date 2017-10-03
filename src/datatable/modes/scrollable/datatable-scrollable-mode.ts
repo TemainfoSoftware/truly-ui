@@ -22,11 +22,18 @@
  */
 
 import {
-    AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, NgZone, Renderer2, ViewChild
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    forwardRef,
+    Inject,
+    Renderer2,
+    ViewChild
 } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
-import { TlDatatableDataSource } from '../../datatable-datasource.service';
 
 @Component( {
     selector: 'tl-datatable-scrollable-mode',

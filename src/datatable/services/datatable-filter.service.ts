@@ -21,7 +21,7 @@
 */
 
  import { forwardRef, Inject, Injectable, Injector } from '@angular/core';
- import { TlDatatable } from './datatable';
+ import { TlDatatable } from '../datatable';
  import { TlDatatableDataSource } from './datatable-datasource.service';
 
  @Injectable()

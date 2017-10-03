@@ -22,7 +22,7 @@
 
 import { forwardRef, Inject, Injectable, Injector } from '@angular/core';
 import { TlDatatable } from '../datatable';
-import { TlDatatableColumn } from '../parts/datatable-column';
+import { TlDatatableColumn } from '../parts/column/datatable-column';
 
 @Injectable()
 export class TlDatatableColumnService {

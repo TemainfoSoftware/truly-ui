@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlDatatable } from './datatable';
-import { TlDatatableColumn } from './parts/datatable-column';
+import { TlDatatableColumn } from './parts/column/datatable-column';
 import { TlDatatableHeader } from './parts/column-headers/datatable-header';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
@@ -10,7 +10,7 @@ import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-
 import { LoadingModule } from '../loading/index';
 
 export * from './datatable';
-export * from './parts/datatable-column';
+export * from './parts/column/datatable-column';
 export * from './services/datatable-datasource.service';
 export * from './services/datatable-filter.service';
 export * from './configs/datatable-filter-options';

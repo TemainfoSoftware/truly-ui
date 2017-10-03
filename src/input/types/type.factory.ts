@@ -25,6 +25,8 @@ import { CpfType } from './cpf.type';
 import { CnpjType } from './cnpj.type';
 import { NullType } from './null.type';
 import { FloatNumberType } from './floatnumber.type';
+import { IntegerNumberType } from './integernumber.type';
+import { KeyEvent } from '../../core/enums/key-events';
 
 export class TypeFactory {
 
@@ -39,6 +41,9 @@ export class TypeFactory {
             case 'floatnumber':
                 this.setFloatNumber( tlinput, decimals );
                 return new FloatNumberType();
+            case 'intnumber':
+                this.setIntegerNumber( tlinput );
+                return new IntegerNumberType();
             default :
                 return new NullType();
         }
@@ -70,4 +75,13 @@ export class TypeFactory {
             } );
         }
     }
+
+    static setIntegerNumber( tlinput ) {
+        if ( tlinput ) {
+            if ( tlinput.input.nativeElement.value ) {
+                tlinput.input.nativeElement.value = parseInt( tlinput.input.nativeElement.value );
+            }
+        }
+    }
+
 }

@@ -1,93 +1,16 @@
 $border-color : #DCDCDC;
 
-
 .tl-datatable-box{
   width: 100%;
   border-left: 1px $border-color solid;
   border-top: 1px $border-color solid;
   border-bottom: 1px $border-color solid;
-  &.-borderleft{
-   border-right: 1px $border-color solid;
-  }
-
 }
 
-.datatable{
-  border-right: 1px $border-color solid;
+.ui-datatable-table{
   font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
   text-align: center;
-  display: flex;
-}
-
-.datatableHeader{
-  color: #7A838B;
-  font-size: 13px;
-
-  > .row{
-    background: #E9E9E9;
-    display: flex;
-    height: 25px;
-    margin: 0;
-  }
-  > .row .cel{
-    box-sizing: border-box;
-    border-right: 1px $border-color solid;
-    border-bottom: 1px $border-color solid;
-    padding: 0;
-    height: 25px;
-
-    display: flex;
-    align-items: center;
-  }
-  >.row .cel.-textleft{
-    justify-content: left;
-  }
-  >.row .cel.-textright{
-    justify-content: right;
-  }
-  >.row .cel.-textcenter{
-    justify-content: center;
-  }
-  > .row .cel:last-child{
- //   border-right: none
-  }
-}
-
-.datatableBody{
-  > .row{
-    display: flex;
-    font-size: 13px;
-    background: #E9E9E9;
-    outline: none;
-    color: #7a838b;
-    margin: 0;
-  }
-  > .row .cel{
-    border-right: 1px $border-color solid;
-    box-sizing: border-box;
-    padding: 0px;
-
-    display: flex;
-    align-items: center;
-  }
-  >.row .cel.-textleft{
-    justify-content: left;
-  }
-  >.row .cel.-textright{
-    justify-content: right;
-  }
-  >.row .cel.-textcenter{
-    justify-content: center;
-  }
-  > .row .cel:last-child{
-    border-right: 1px $border-color solid;
-
-  }
-  > .row:nth-child(odd){
-   background: #FFFFFF;
-  }
-  > .row:focus{
-    background: #66CC99 !important;
-    color: #FFF;
-  }
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0px;
 }

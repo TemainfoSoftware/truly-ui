@@ -23,11 +23,11 @@ import {
     AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
-import { TlDatatableColumn } from './datatable-column';
-import { DatatableFilterOptions } from './datatable-filter-options';
+import { TlDatatableColumn } from './parts/datatable-column';
+import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
-import { TlDatatableFilterService } from './datatable-filter.service';
-import { TlDatatableDataSource } from './datatable-datasource.service';
+import { TlDatatableFilterService } from './services/datatable-filter.service';
+import { TlDatatableDataSource } from './services/datatable-datasource.service';
 
 @Component({
     selector: 'tl-datatable',
@@ -53,6 +53,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     @Input('rowsClient') rowsClient = 10;
 
     @Input('height') height = 300;
+
+    @Input('width') width = 300;
 
     @Input('globalFilter') globalFilter: any;
 
@@ -89,13 +91,11 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     public totalRows: number;
 
     constructor( private render: Renderer2,
-                 private filterService: TlDatatableFilterService,
-                 private dataSourceService: TlDatatableDataSource
+                 public filterService: TlDatatableFilterService,
+                 public dataSourceService: TlDatatableDataSource
     ) {}
 
     ngOnInit() {
-
-
         this.dataSourceService.onInitDataSource(this);
         this.setHeightRowTable();
 
@@ -159,7 +159,7 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         const column = new TlDatatableColumn();
         column.title = field.toUpperCase();
         column.field = field;
-        column.width = this.getWidthColumn();
+        column.width = this.getWidthColumn() + '%';
         return column;
     }
 

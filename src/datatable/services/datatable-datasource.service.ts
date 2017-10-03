@@ -21,8 +21,8 @@
 */
 
 import { ChangeDetectorRef, EventEmitter, Injectable, NgZone, SimpleChanges } from '@angular/core';
-import { TlDatatable } from './datatable';
-import { DataMetadata } from '../core/types/datametadata';
+import { TlDatatable } from '../datatable';
+import { DataMetadata } from '../../core/types/datametadata';
 
 @Injectable()
 export class TlDatatableDataSource {

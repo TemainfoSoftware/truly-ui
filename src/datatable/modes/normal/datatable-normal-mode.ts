@@ -23,7 +23,7 @@
  import { Component, ElementRef, forwardRef, Inject, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
- import { TlDatatableDataSource } from '../../datatable-datasource.service';
+ import { TlDatatableDataSource } from '../../services/datatable-datasource.service';
  import { animate, state, style, transition, trigger } from '@angular/animations'
 
  @Component({

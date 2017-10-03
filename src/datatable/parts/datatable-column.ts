@@ -33,7 +33,7 @@ export class TlDatatableColumn implements OnInit {
 
     @Input( 'alignment' ) alignment = 'center';
 
-    @Input('width') width = 40;
+    @Input('width') width: string;
 
     constructor() {}
 

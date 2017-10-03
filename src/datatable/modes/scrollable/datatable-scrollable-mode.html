@@ -1,25 +1,18 @@
-<div class="dataTableScrollable"  (mousedown)="onMouseDown()"  (mouseup)="onMouseUp()" >
-    <div class="scrollBoxHeader">
-        <table class="datatable">
-            <thead class="datatableHeader">
-            <tr class="row">
-                <th *ngFor="let column of datatable.columns;"
-                    [ngStyle]="{width: column.width+'px'}"
-                    [class]="' cel ' + datatable.getClassAlignment(column.alignment)">{{column.title}}</th>
-            </tr>
-            </thead>
-        </table>
-    </div>
+<div class="ui-datatable-scrollable"  (mousedown)="onMouseDown()"  (mouseup)="onMouseUp()" >
 
+    <tl-datatble-header></tl-datatble-header>
 
     <div #listComponent id="id-component"
-         class="scrollBoxContainer"
+         class="ui-datatable-content-wrap"
          (keydown)="onKeydown($event)"
-         [tlLoading]="datatable.loading"
-         [ngStyle]="{'height': datatable.height+'px', 'overflow-y' : 'scroll', 'overflow-x' : 'hidden', 'min-height':'300px'}">
+         [tlLoading]="dt.loading"
+         [ngStyle]="{'height': dt.height+'px' }">
         <div [ngStyle]="{height: bodyHeight+'px'}">
-            <table class="datatable" [ngStyle]="{position: 'relative'}">
-                <tbody (click)="onClick($event)" #listBody class="datatableBody" ></tbody>
+            <table class="ui-datatable-table" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
+                <colgroup>
+                    <col *ngFor="let column of dt.columns;" [ngStyle]="{width: column.width}">
+                </colgroup>
+                <tbody (click)="onClick($event)" #listBody class="ui-datatable-content-body" ></tbody>
             </table>
         </div>
     </div>

@@ -28,7 +28,7 @@ $border-color : #DCDCDC;
   > .row .cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
-    padding: 2px;
+    padding: 0px;
     height: 25px;
     align-items: center;
   }
@@ -57,7 +57,7 @@ $border-color : #DCDCDC;
   > .row .cel{
     border-right: 1px $border-color solid;
     box-sizing: border-box;
-    padding: 2px;
+    padding: 0px;
     align-items: center;
   }
   >.row .cel.-textleft{

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlDatatable } from './datatable';
 import { TlDatatableColumn } from './parts/datatable-column';
+import { TlDatatableHeader } from './parts/column-headers/datatable-header';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
@@ -26,16 +27,14 @@ export * from './modes/scrollable/datatable-scrollable-mode';
     declarations: [
         TlDatatable,
         TlDatatableColumn,
+        TlDatatableHeader,
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,
         TlDatatableScrollableMode,
     ],
     exports: [
         TlDatatable,
-        TlDatatableColumn,
-        TlDatatableNormalMode,
-        TlDatatablePaginatorMode,
-        TlDatatableScrollableMode,
+        TlDatatableColumn
     ]
 })
 export class DatatableModule {}

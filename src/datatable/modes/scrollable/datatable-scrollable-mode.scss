@@ -1,16 +1,8 @@
+$border-color : #DCDCDC;
+
 .ui-datatable-scrollable{
   overflow: hidden;
   border-right: 1px #DCDCDC solid
-}
-
-.ui-datatable-header{
-  padding: 0 15px 0 0;
-  border-bottom: 1px #DCDCDC solid
-}
-
-.ui-datatable-header-wrap{
-  overflow: hidden;
-  border-right: 1px #DCDCDC solid;
 }
 
 .ui-datatable-content-wrap{
@@ -18,6 +10,42 @@
   overflow-x : auto;
   min-height : 300px;
 }
+
+.ui-datatable-content-body{
+  > .row{
+    font-size: 13px;
+    background: #E9E9E9;
+    outline: none;
+    color: #7a838b;
+    margin: 0;
+  }
+  > .row .cel{
+    border-right: 1px $border-color solid;
+    box-sizing: border-box;
+    padding: 0px;
+    align-items: center;
+  }
+  >.row .cel.-textleft{
+    text-align: left;
+  }
+  >.row .cel.-textright{
+    text-align: right;
+  }
+  >.row .cel.-textcenter{
+    text-align: center;
+  }
+  > .row .cel:last-child{
+    border-right: 1px $border-color solid;
+  }
+  > .row:nth-child(odd){
+    background: #FFFFFF;
+  }
+  > .row:focus{
+    background: #66CC99 !important;
+    color: #FFF;
+  }
+}
+
 //
 //.ui-datatable-content-wrap::-webkit-scrollbar{
 ////  background: #F1F1F1;

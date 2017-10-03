@@ -180,7 +180,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private handleKeyPageUp() {
-
+        this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
     }
 
     private handleKeyPageDown() {

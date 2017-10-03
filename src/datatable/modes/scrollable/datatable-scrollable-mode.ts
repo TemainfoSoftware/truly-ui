@@ -183,12 +183,12 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows*2 ) + '"]') )
+        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]') )
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport-1 ) + this.quantityVisibleRows ) + '"]') )
+        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]') )
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -224,7 +224,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
     }
 
-    hasScrollDown(clientRect, parentClientRect) {
+    private hasScrollDown(clientRect, parentClientRect) {
         const clientBottom = clientRect.bottom;
         const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
         const parentBottom = parentClientRect.bottom;
@@ -254,12 +254,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
                 take = this.dt.rowsPage;
             }
             this.scrollLockAt = this.scrollTop;
-            console.log('UP',skip, take);
             this.renderPageData( skip, take );
         }
     }
 
-    hasScrollUp(clientRect, parentClientRect) {
+    private hasScrollUp(clientRect, parentClientRect) {
         const clientTop = clientRect.top;
         const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
         const parentTop = parentClientRect.top;

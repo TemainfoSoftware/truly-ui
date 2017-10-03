@@ -20,18 +20,13 @@
     SOFTWARE.
 */
 
-import { Component, forwardRef, Inject } from '@angular/core';
-import { TlDatatable } from '../../datatable';
-import { DatatableHelpersService } from '../../services/datatable-helpers.service';
+import { Injectable } from '@angular/core';
 
-@Component({
-    selector: 'tl-datatble-header',
-    templateUrl: './datatable-header.html',
-    styleUrls: ['./datatable-header.scss', '../../datatable.scss'],
-    providers: [DatatableHelpersService]
-})
-export class TlDatatableHeader {
-    constructor(@Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
-                private helperService: DatatableHelpersService
-                ) {}
+@Injectable()
+export class DatatableHelpersService {
+
+    getClassAlignment( alignment: string ) {
+        return alignment ? '-text' + alignment : '';
+    }
+
 }

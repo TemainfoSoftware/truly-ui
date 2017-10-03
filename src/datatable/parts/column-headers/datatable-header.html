@@ -1,0 +1,15 @@
+<div class="ui-datatable-header">
+    <div class="ui-datatable-header-wrap" #scrollBoxHeader >
+        <table class="ui-datatable-table" >
+            <colgroup>
+                <col *ngFor="let column of dt.columns;" [ngStyle]="{width: column.width}">
+            </colgroup>
+            <thead class="ui-datatable-table-head">
+                <tr class="row">
+                    <th *ngFor="let column of dt.columns;"
+                        [class]="' cel ' + dt.getClassAlignment(column.alignment)">{{column.title}}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>

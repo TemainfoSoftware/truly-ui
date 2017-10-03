@@ -1,0 +1,40 @@
+$border-color : #DCDCDC;
+
+.ui-datatable-header{
+  padding: 0 15px 0 0;
+  border-bottom: 1px #DCDCDC solid
+}
+
+.ui-datatable-header-wrap{
+  overflow: hidden;
+  border-right: 1px #DCDCDC solid;
+}
+
+.ui-datatable-table-head{
+  color: #7A838B;
+  font-size: 13px;
+  > .row{
+    background: #E9E9E9;
+    height: 25px;
+    margin: 0;
+  }
+  > .row .cel{
+    box-sizing: border-box;
+    border-right: 1px $border-color solid;
+    padding: 0px;
+    height: 25px;
+    align-items: center;
+  }
+  >.row .cel.-textleft{
+    text-align: left;
+  }
+  >.row .cel.-textright{
+    text-align: right;
+  }
+  >.row .cel.-textcenter{
+    text-align: center;
+  }
+  > .row .cel:last-child{
+    border-right: none
+  }
+}

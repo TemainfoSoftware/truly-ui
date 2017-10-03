@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { forwardRef, Inject, Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { TlDatatableColumn } from '../parts/column/datatable-column';
 

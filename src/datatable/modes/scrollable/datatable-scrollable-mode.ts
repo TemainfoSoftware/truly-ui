@@ -215,16 +215,21 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return this.handleScrollFast();
         }
 
-        if ( ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.take === this.dt.totalRows) ) {
-            return;
-        }
-        if ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) {
+        if ( this.hasScrollDown( clientRect, parentClientRect ) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
             let take = this.lastRowViewport + this.quantityInVisibleRows;
             take = take > this.dt.totalRows ? this.dt.totalRows : take;
             this.scrollLockAt = this.scrollTop;
             this.renderPageData( skip, take );
         }
+    }
+
+    hasScrollDown(clientRect, parentClientRect) {
+        const clientBottom = clientRect.bottom;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentBottom = parentClientRect.bottom;
+
+        return clientBottom < parentBottom + pointOfWrap && ( !(this.take === this.dt.totalRows))
     }
 
 
@@ -241,10 +246,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
 
         const clientRect = firstElement.getBoundingClientRect();
-        if ( ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.skip === 0) ) {
-            return;
-        }
-        if ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) {
+        if ( this.hasScrollUp( clientRect, parentClientRect ) ) {
             let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows - this.wrapOnRemaining;
             let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
             if ( skip < 0 ) {
@@ -255,6 +257,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             console.log('UP',skip, take);
             this.renderPageData( skip, take );
         }
+    }
+
+    hasScrollUp(clientRect, parentClientRect) {
+        const clientTop = clientRect.top;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentTop = parentClientRect.top;
+
+        return clientTop > parentTop - pointOfWrap && ( !(this.skip === 0))
     }
 
 

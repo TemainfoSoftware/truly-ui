@@ -20,7 +20,6 @@
  SOFTWARE.
  */
 
-
 import { CustomType } from './custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
@@ -34,5 +33,4 @@ export class IntegerNumberType implements CustomType {
             return { int: false }
         }
     }
-
 }

@@ -79,7 +79,7 @@ export class TypeFactory {
     static setIntegerNumber( tlinput ) {
         if ( tlinput ) {
             if ( tlinput.input.nativeElement.value ) {
-                tlinput.input.nativeElement.value = parseInt( tlinput.input.nativeElement.value );
+                tlinput.input.nativeElement.value = parseInt( tlinput.input.nativeElement.value, 10 );
             }
         }
     }

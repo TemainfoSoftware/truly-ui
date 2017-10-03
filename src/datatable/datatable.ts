@@ -23,7 +23,7 @@ import {
     AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
     ViewChild
 } from '@angular/core';
-import { TlDatatableColumn } from './datatable-column';
+import { TlDatatableColumn } from './parts/datatable-column';
 import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
 import { TlDatatableFilterService } from './services/datatable-filter.service';
@@ -96,8 +96,6 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-
-
         this.dataSourceService.onInitDataSource(this);
         this.setHeightRowTable();
 

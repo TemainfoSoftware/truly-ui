@@ -31,6 +31,8 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 
+let zindex = 0;
+
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
@@ -84,16 +86,21 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     private _buttonSelected: boolean;
 
+    private zIndex;
+
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
         this.executeToggle();
     }
 
+
     constructor( public button: ElementRef, public modalService: ModalService,
                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
+        this.zIndex = zindex++;
         this.initializeDefaultInputValues();
     }
+
 
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );

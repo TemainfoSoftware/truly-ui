@@ -8,6 +8,7 @@ import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
 import { LoadingModule } from '../loading/index';
+import { TlColgroupDirective } from './directives/colgroup.directive';
 
 export * from './datatable';
 export * from './parts/column/datatable-column';
@@ -25,12 +26,14 @@ export * from './modes/scrollable/datatable-scrollable-mode';
         LoadingModule
     ],
     declarations: [
+        TlColgroupDirective,
         TlDatatable,
         TlDatatableColumn,
         TlDatatableHeader,
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,
         TlDatatableScrollableMode,
+
     ],
     exports: [
         TlDatatable,

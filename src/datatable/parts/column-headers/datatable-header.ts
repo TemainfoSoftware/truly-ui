@@ -31,7 +31,8 @@ import { DatatableHelpersService } from '../../services/datatable-helpers.servic
     providers: [DatatableHelpersService]
 })
 export class TlDatatableHeader {
-    constructor(@Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
+
+    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
                 private helperService: DatatableHelpersService
-                ) {}
+    ) {}
 }

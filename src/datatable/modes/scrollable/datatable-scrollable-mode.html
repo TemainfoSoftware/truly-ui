@@ -8,10 +8,7 @@
          [tlLoading]="dt.loading"
          [ngStyle]="{'height': dt.height+'px' }">
         <div [ngStyle]="{height: bodyHeight+'px'}">
-            <table class="ui-datatable-table" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
-                <colgroup>
-                    <col *ngFor="let column of dt.columns;" [ngStyle]="{width: column.width}">
-                </colgroup>
+            <table class="ui-datatable-table" [colgroup]="dt.columns" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
                 <tbody (click)="onClick($event)" #listBody class="ui-datatable-content-body" ></tbody>
             </table>
         </div>

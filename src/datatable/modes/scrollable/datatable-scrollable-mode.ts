@@ -75,6 +75,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private skip = 0;
 
+    private take = 0;
+
     private scrollLockAt = 0;
 
     private translateY = 0;
@@ -155,7 +157,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             if ( this.isScrollLeft() ) {
                 this.handleScrollLeft();
                 this.setLastScrollLeft();
-                return
+                return;
             }
 
             this.setScrollTop();
@@ -180,11 +182,13 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private handleKeyPageUp() {
-
+        this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]') )
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]') )
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -211,13 +215,21 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return this.handleScrollFast();
         }
 
-        if ( clientRect.bottom < parentClientRect.bottom + (this.wrapOnRemaining * this.dt.rowHeight) ) {
+        if ( this.hasScrollDown( clientRect, parentClientRect ) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
             let take = this.lastRowViewport + this.quantityInVisibleRows;
             take = take > this.dt.totalRows ? this.dt.totalRows : take;
             this.scrollLockAt = this.scrollTop;
             this.renderPageData( skip, take );
         }
+    }
+
+    private hasScrollDown(clientRect, parentClientRect) {
+        const clientBottom = clientRect.bottom;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentBottom = parentClientRect.bottom;
+
+        return clientBottom < parentBottom + pointOfWrap && ( !(this.take === this.dt.totalRows))
     }
 
 
@@ -234,10 +246,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
 
         const clientRect = firstElement.getBoundingClientRect();
-        if ( ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) && (this.skip === 0) ) {
-            return;
-        }
-        if ( clientRect.top > parentClientRect.top - (this.wrapOnRemaining * this.dt.rowHeight) ) {
+        if ( this.hasScrollUp( clientRect, parentClientRect ) ) {
             let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows - this.wrapOnRemaining;
             let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
             if ( skip < 0 ) {
@@ -247,6 +256,14 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             this.scrollLockAt = this.scrollTop;
             this.renderPageData( skip, take );
         }
+    }
+
+    private hasScrollUp(clientRect, parentClientRect) {
+        const clientTop = clientRect.top;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentTop = parentClientRect.top;
+
+        return clientTop > parentTop - pointOfWrap && ( !(this.skip === 0))
     }
 
 
@@ -264,6 +281,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private renderPageData( skip, take ) {
         this.dt.loading = true;
         this.skip = skip;
+        this.take = take;
         this.dt.dataSourceService.loadMoreData(skip, take);
         this.cd.markForCheck();
     }
@@ -395,10 +413,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private getFocusElementOnChangeData() {
-        const rowNumber = this.activeElement.getAttribute('row');
-        if (document.querySelector('tr[row="' + rowNumber + '"]')) {
-            return document.querySelector('tr[row="' + rowNumber + '"]');
-        }
+        // const rowNumber = this.activeElement.getAttribute('row');
+        // if (document.querySelector('tr[row="' + rowNumber + '"]')) {
+        //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
+        //     return document.querySelector('tr[row="' + rowNumber + '"]');
+        // }
 
         if ( this.isScrollDown() ) {
             return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');
@@ -415,220 +434,4 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             this.getCursorViewPortPosition();
         }
     }
-
-
-    //
-    // onKeyUp( $event ) {
-    //     switch ( $event.keyCode ) {
-    //         case KeyEvent.ARROWDOWN:
-    //             // setTimeout( () => {
-    //             //  this.scrollBoxElementRef.nativeElement.scrollTop =
-    //             // ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
-    //             // }, 1 );
-    //             break;
-    //     }
-    // }
-    //
-    //
-    // emitLazyLoad() {
-    //     //  if ( this.isLazy() ) {
-    //     // let at: any = document.activeElement;
-    //     //
-    //     //
-    //     // this.Counter = Math.round(
-    //     // (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-    //     // / this.datatable.rowHeight
-    //     // );
-    //
-    //     if ( this.scrollPosition > this.scrollTop ) {
-    //         if ( this.currentRow <= this.datatable.totalRows ) {
-    //             if ( ( this.currentRow - this.qtdRowClient ) <= this.skip ) {
-    //                 this.loadingSource = true;
-    //                 this.skip = ( this.skip >= this.qtdRowClient ) && (  this.currentRow > this.qtdRowClient  )
-    //                     ? this.currentRow - (this.qtdRowClient * 2)
-    //                     : 0;
-    //                 this.skip = this.skip < 0 ? 0 : this.skip;
-    //
-    //                 this.take = this.datatable.rowsPage;
-    //                 this.scrollOfTop = (this.scrollTop - this.qtdRowClient * this.datatable.rowHeight) > 0
-    //                                     ? this.scrollTop - this.qtdRowClient * this.datatable.rowHeight
-    //                                     : 0;
-    //
-    //                 this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
-    //                     setTimeout(() => {
-    //                         this.loadingSource = loadingSource;
-    //                     }, 100)
-    //                 });
-    //
-    //             }
-    //         }
-    //     } else if ( this.scrollPosition < this.scrollTop ) {
-    //         if ( this.currentRow <= this.datatable.totalRows ) {
-    //             if ( ( this.take + this.skip ) <= this.currentRow ) {
-    //                  this.loadingSource = true;
-    //                  this.skip = this.currentRow - this.qtdRowClient;
-    //                  this.take = this.datatable.rowsPage;
-    //                  this.scrollOfTop = this.scrollTop;
-    //
-    //                  this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
-    //                    setTimeout( () => {
-    //                        this.loadingSource = loadingSource;
-    //                    }, 100);
-    //                  });
-    //             }
-    //         }
-    //     }
-    //     //  }
-    // }
-    //
-    // emitEndRow() {
-    //     if ( this.scrollTop >= (this.scrollHeight - (this.clientHeight)) ) {
-    //         this.datatable.endRow.emit( { endRow : this.currentRow } )
-    //     }
-    // }
-    //
-    // emitChangePage() {
-    //     if ( this.isLazy() ) {
-    //         const pageNumber = Math.round( this.currentRow / this.datatable.rowsPage );
-    //         if ( (this.scrollTop + this.clientHeight) >= (this.pageHeight * pageNumber) ) {
-    //             if ( pageNumber !== this.pageNumber ) {
-    //                 this.pageNumber = pageNumber;
-    //                 this.datatable.pageChange.emit( { page : pageNumber } );
-    //             }
-    //         }
-    //     }
-    // }
-    //
-    // onRowClick( data, index ) {
-    //     const at: any = document.activeElement;
-    //     this.Counter = Math.round(
-    //         (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-    //         / this.datatable.rowHeight
-    //     );
-    //     this.datatable.onRowClick( data, index );
-    // }
-    //
-    //
-    // handleKeyArrowDown(event) {
-    //     if ( this.dataSourceService.loadingSource === true ) {
-    //         console.log('Loading data...');
-    //         return;
-    //     }
-    //     const at: any = document.activeElement;
-    //     this.setCurrentRow();
-    //     if ( this.isLastRow() ) {
-    //         if ( at !== this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ] ) {
-    //             this.scrollBoxTableBodyElementRef.nativeElement.children[ at.tabIndex + 1 ].focus();
-    //             this.datatable.tabindex = at.tabIndex + 1;
-    //
-    //             if ( this.Counter >= this.qtdRowClient ) {
-    //
-    //                 this.scrollBoxElementRef.nativeElement.scrollTop = (
-    //                     (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight
-    //                 );
-    //
-    //             } else {
-    //                 this.Counter++
-    //             }
-    //         }
-    //         return;
-    //     }
-    //
-    //     this.scrollBoxTableBodyElementRef.nativeElement.children[ this.datatable.tabindex + 1 ].focus();
-    //     this.datatable.tabindex = this.datatable.tabindex + 1;
-    //
-    //     if ( this.Counter >= this.qtdRowClient ) {
-    //         this.scrollBoxElementRef.nativeElement.scrollTop =( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
-    //     } else {
-    //         this.Counter++
-    //     }
-    // }
-    //
-    // getChildrenOfTable() {
-    //     return this.scrollBoxTableBodyElementRef.nativeElement.children;
-    // }
-    //
-    //
-    // handleKeyArrowUp() {
-    //     if ( this.loadingSource === true ) {
-    //         console.log('Loading data...');
-    //         return;
-    //     }
-    //     const at: any = document.activeElement;
-    //     this.setCurrentRow();
-    //     if ( this.isFirstRow() ) {
-    //
-    //         if ( at !== this.getChildrenOfTable()[ 0 ] ) {
-    //             this.scrollBoxTableBodyElementRef.nativeElement.children[ at.tabIndex - 1 ].focus();
-    //             this.datatable.tabindex = at.tabIndex - 1;
-    //
-    //             if ( this.Counter > 1 ) {
-    //                 this.Counter--
-    //             } else {
-    //                 this.scrollBoxElementRef.nativeElement.scrollTop = (
-    //                     (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight
-    //                 );
-    //             }
-    //         }
-    //         return;
-    //     }
-    //
-    //     this.scrollBoxTableBodyElementRef.nativeElement.children[ this.datatable.tabindex - 1 ].focus();
-    //     this.datatable.tabindex = this.datatable.tabindex - 1;
-    //
-    //
-    //     if ( this.Counter > 1 ) {
-    //         this.Counter--
-    //     } else {
-    //         this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight);
-    //     }
-    // }
-    //
-    // handleKeyHome() {
-    //     this.scrollBoxElementRef.nativeElement.scrollTop = 0;
-    //     setTimeout( () => {
-    //         this.getChildrenOfTable()[ 0 ].focus();
-    //
-    //         this.Counter = 1
-    //     }, 300 );
-    // }
-    //
-    // handleKeyEnd() {
-    //     this.scrollBoxElementRef.nativeElement.scrollTop = this.containerHeight;
-    //     setTimeout( () => {
-    //         this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ].focus();
-    //         const at: any = document.activeElement;
-    //         this.Counter = Math.round(
-    //             (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-    //             / this.datatable.rowHeight
-    //         );
-    //     }, 300 );
-    // }
-    //
-    // refreshScrollPosition() {
-    //     setTimeout( () => {
-    //         this.scrollPosition = this.scrollTop;
-    //     }, 10 )
-    // }
-    //
-    // getScrollOfTop() {
-    //     return 'translateY(' + this.scrollOfTop + 'px)';
-    // }
-    //
-
-
-    //
-
-    //
-    // isLastRow() {
-    //     return this.datatable.tabindex + 1 > this.scrollBoxTableBodyElementRef.nativeElement.children.length - 1;
-    // }
-    //
-    // isFirstRow() {
-    //     return this.datatable.tabindex === 0;
-    // }
-    //
-    // isLazy() {
-    //     return this.datatable.lazy;
-    // }
 }

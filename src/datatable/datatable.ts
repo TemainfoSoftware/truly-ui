@@ -20,7 +20,16 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    Renderer2,
     ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './parts/column/datatable-column';

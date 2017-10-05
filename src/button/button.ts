@@ -172,17 +172,21 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         }
     }
 
-    dispatchCallback() {
-        const listModals = document.querySelectorAll( 'tl-modal' );
-        if ( !this.mdResult || ModalResult.MRCUSTOM ) {
-            return;
-        }
-        if ( listModals.length > 0 ) {
-            this.modalService.execCallBack( {
-                'mdResult' : ModalResult[ this.mdResult ],
-                'formResult' : this.formResult
-            }, this.findParentOfChildren( listModals ) );
-        }
+    dispatchCallback(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const listModals = document.querySelectorAll( 'tl-modal' );
+            if ( !this.mdResult || ModalResult.MRCUSTOM ) {
+                return;
+            }
+            if ( listModals.length > 0 ) {
+                this.modalService.execCallBack( {
+                    'mdResult' : ModalResult[ this.mdResult ],
+                    'formResult' : this.formResult
+                }, this.findParentOfChildren( listModals ) ).then(() => {
+                    resolve();
+                });
+            }
+        });
     }
 
     findParentOfChildren( listModals ) {

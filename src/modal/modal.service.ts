@@ -245,15 +245,21 @@ export class ModalService implements OnDestroy {
         } );
     }
 
-    execCallBack( result: any, component? ) {
-        this.setMdResult( result );
-        if ( this.isResultUndefined() ) {
-            return;
-        }
-        if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
-            this.close(component);
-        }
-        this.resultCallback();
+    execCallBack( result: any, component? ): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.setMdResult( result );
+            if ( this.isResultUndefined() ) {
+                return;
+            }
+            if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
+                this.close(component);
+            }
+            setTimeout(() => {
+                this.resultCallback();
+                console.log('exec..');
+                resolve();
+            }, 1000)
+        })
     }
 
     isMdResultEqualsNone( mdResult: ModalResult ) {

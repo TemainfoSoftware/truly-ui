@@ -1,10 +1,12 @@
-<div class="ui-datatable-header">
-    <div class="ui-datatable-header-wrap" #scrollBoxHeader >
-        <table class="ui-datatable-table" [colgroup]="dt.columns" >
+<div class="ui-datatable-header" [resizer]="dt.allowResize" [datatable]="dt" >
+    <div class="ui-datatable-header-wrap">
+        <div class="ui-datatable-column-separator"></div>
+        <table #table class="ui-datatable-table" [colgroup]="dt.columns">
             <thead class="ui-datatable-table-head">
                 <tr class="row">
                     <th *ngFor="let column of dt.columns;"
-                        [class]="' cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}</th>
+                        [class]="' cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
+                    </th>
                 </tr>
             </thead>
         </table>

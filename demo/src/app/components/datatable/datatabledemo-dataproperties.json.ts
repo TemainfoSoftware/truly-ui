@@ -19,12 +19,18 @@ export const dataProperties = [
     description: "Define how the datatable works.",
     options: "normal | scrollable | paginator"
   }, {
-    name: "lazy",
+    name: "allowLazy",
     type: "boolean",
     default: "false",
     description: "Data is loaded and interacted in Lazy mode.",
     options: "true | false"
   }, {
+    name: "allowResize",
+    type: "boolean",
+    default: "false",
+    description: "Allows you to resize table columns.",
+    options: "true | false"
+  },{
     name: "rowsPage",
     type: "number",
     default: "20",

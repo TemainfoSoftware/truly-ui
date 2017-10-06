@@ -9,6 +9,7 @@ import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollab
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
 import { LoadingModule } from '../loading/index';
 import { TlColgroupDirective } from './directives/colgroup.directive';
+import { TlResizerDirective } from './directives/resizer.directive';
 
 export * from './datatable';
 export * from './parts/column/datatable-column';
@@ -33,7 +34,7 @@ export * from './modes/scrollable/datatable-scrollable-mode';
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,
         TlDatatableScrollableMode,
-
+        TlResizerDirective,
     ],
     exports: [
         TlDatatable,

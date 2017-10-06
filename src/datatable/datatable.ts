@@ -57,6 +57,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowLazy') allowLazy = false;
 
+    @Input('allowResize') allowResize = false;
+
     @Input('rowsPage') rowsPage = 20;
 
     @Input('rowHeight') rowHeight = 25;

@@ -8,6 +8,22 @@ $border-color : #DCDCDC;
 .ui-datatable-header-wrap{
   overflow: hidden;
   border-right: 1px #DCDCDC solid;
+  position: relative;
+}
+
+.ui-datatable-column-separator {
+  position: absolute;
+  top: 0;
+  height: 247px;
+  left: 0;
+  width: 7px;
+ //background-color: #b9b900;
+ opacity: 0;
+  z-index: 9999;
+}
+
+.ui-datatable-column-separator:hover {
+  cursor: col-resize;
 }
 
 .ui-datatable-table-head{

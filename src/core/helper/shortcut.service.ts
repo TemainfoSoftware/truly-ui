@@ -51,6 +51,9 @@ export class ShortcutService {
                     return this.handleClickComponentWithEqualsKeys();
                 }
                 this.handleClickComponentWithoutEqualsKeys();
+                setTimeout(() => {
+                    this.handleElementsOfView();
+                }, 0);
             } );
         }
     }
@@ -65,7 +68,7 @@ export class ShortcutService {
     handleClickComponentWithoutEqualsKeys() {
         this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
             this.activeElementButton( this.elementIndex ) :
-            this.elementsListener[ this.elementIndex ].element.nativeElement.click()
+            this.elementsListener[ this.elementIndex ].element.nativeElement.click();
     }
 
 
@@ -98,7 +101,7 @@ export class ShortcutService {
     }
 
     filterButtons() {
-        this.elementsListener.forEach( ( value, index, array ) => {
+        this.elementsListener.forEach( ( value ) => {
             if ( this.isElementInstanceOfButton( value ) ) {
                 if ( buttonElements.indexOf( value ) < 0 ) {
                     buttonElements.push( value );
@@ -120,11 +123,12 @@ export class ShortcutService {
     }
 
     handleElementsOfView() {
-        this.elementsListener.forEach( ( item, index, array ) => {
-            this.isElementInstanceOfButton( item ) ?
-                this.handleElementButton( item ) :
-                this.handleOtherElements( item );
-        } );
+        let tempArrayElements = this.elementsListener.slice(0);
+        for (let element = 0; element < tempArrayElements.length; element++) {
+            this.isElementInstanceOfButton( tempArrayElements[element] ) ?
+                this.handleElementButton( tempArrayElements[element] ) :
+                this.handleOtherElements( tempArrayElements[element] );
+        }
     }
 
     handleElementButton( item ) {
@@ -136,8 +140,8 @@ export class ShortcutService {
 
 
     handleOtherElements( item ) {
-        if ( !this.existElementOnView( item.element.nativeElement ) ) {
-            this.deleteElementFromArray( item );
+         if ( !this.existElementOnView( item.element.nativeElement ) ) {
+             this.deleteElementFromArray( item );
         }
     }
 

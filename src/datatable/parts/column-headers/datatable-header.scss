@@ -29,28 +29,28 @@ $border-color : #DCDCDC;
 .ui-datatable-table-head{
   color: #7A838B;
   font-size: 13px;
-  > .row{
+  > .ui-row{
     background: #E9E9E9;
     height: 25px;
     margin: 0;
   }
-  > .row .cel{
+  > .ui-row .ui-cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
     padding: 0px;
     height: 25px;
     align-items: center;
   }
-  >.row .cel.-textleft{
+  >.ui-row .ui-cel.-textleft{
     text-align: left;
   }
-  >.row .cel.-textright{
+  >.ui-row .ui-cel.-textright{
     text-align: right;
   }
-  >.row .cel.-textcenter{
+  >.ui-row .ui-cel.-textcenter{
     text-align: center;
   }
-  > .row .cel:last-child{
+  > .ui-row .ui-cel:last-child{
     border-right: none
   }
 }

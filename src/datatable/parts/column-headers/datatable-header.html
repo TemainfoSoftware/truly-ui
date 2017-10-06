@@ -3,9 +3,9 @@
         <div class="ui-datatable-column-separator"></div>
         <table #table class="ui-datatable-table" [colgroup]="dt.columns">
             <thead class="ui-datatable-table-head">
-                <tr class="row">
+                <tr class="ui-row">
                     <th *ngFor="let column of dt.columns;"
-                        [class]="' cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
+                        [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
                     </th>
                 </tr>
             </thead>

@@ -7,28 +7,28 @@
   overflow-x: auto;
   min-height: 300px; }
 
-.ui-datatable-content-body > .row {
+.ui-datatable-content-body > .ui-row {
   font-size: 13px;
   background: #E9E9E9;
   outline: none;
   color: #7a838b;
   margin: 0; }
-.ui-datatable-content-body > .row .cel {
+.ui-datatable-content-body > .ui-row .ui-cel {
   border-right: 1px #DCDCDC solid;
   box-sizing: border-box;
   padding: 0px;
   align-items: center; }
-.ui-datatable-content-body > .row .cel.-textleft {
+.ui-datatable-content-body > .ui-row .ui-cel.-textleft {
   text-align: left; }
-.ui-datatable-content-body > .row .cel.-textright {
+.ui-datatable-content-body > .ui-row .ui-cel.-textright {
   text-align: right; }
-.ui-datatable-content-body > .row .cel.-textcenter {
+.ui-datatable-content-body > .ui-row .ui-cel.-textcenter {
   text-align: center; }
-.ui-datatable-content-body > .row .cel:last-child {
+.ui-datatable-content-body > .ui-row .ui-cel:last-child {
   border-right: 1px #DCDCDC solid; }
-.ui-datatable-content-body > .row:nth-child(odd) {
+.ui-datatable-content-body > .ui-row:nth-child(odd) {
   background: #FFFFFF; }
-.ui-datatable-content-body > .row:focus {
+.ui-datatable-content-body > .ui-row:focus {
   background: #66CC99 !important;
   color: #FFF; }
 

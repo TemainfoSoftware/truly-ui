@@ -12,35 +12,35 @@ $border-color : #DCDCDC;
 }
 
 .ui-datatable-content-body{
-  > .row{
+  > .ui-row{
     font-size: 13px;
     background: #E9E9E9;
     outline: none;
     color: #7a838b;
     margin: 0;
   }
-  > .row .cel{
+  > .ui-row .ui-cel{
     border-right: 1px $border-color solid;
     box-sizing: border-box;
     padding: 0px;
     align-items: center;
   }
-  >.row .cel.-textleft{
+  >.ui-row .ui-cel.-textleft{
     text-align: left;
   }
-  >.row .cel.-textright{
+  >.ui-row .ui-cel.-textright{
     text-align: right;
   }
-  >.row .cel.-textcenter{
+  >.ui-row .ui-cel.-textcenter{
     text-align: center;
   }
-  > .row .cel:last-child{
+  > .ui-row .ui-cel:last-child{
     border-right: 1px $border-color solid;
   }
-  > .row:nth-child(odd){
+  > .ui-row:nth-child(odd){
     background: #FFFFFF;
   }
-  > .row:focus{
+  > .ui-row:focus{
     background: #66CC99 !important;
     color: #FFF;
   }

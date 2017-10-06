@@ -79,7 +79,7 @@ export class TlResizerDirective implements AfterContentInit {
 
     async getElementTableHeaderRow() {
         await this.datatabeHeaderRef;
-        this.tableHeaderRowElement = this.datatabeHeaderRef.nativeElement.getElementsByClassName('row')[0];
+        this.tableHeaderRowElement = this.datatabeHeaderRef.nativeElement.getElementsByClassName('ui-row')[0];
         this.render.listen(this.tableHeaderRowElement, 'mouseover', ( event ) => {
             this.onTableHeaderRowMouseOver(event);
         });

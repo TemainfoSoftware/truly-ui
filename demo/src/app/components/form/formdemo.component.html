@@ -11,15 +11,26 @@
       <div class="col-md-10">
         <div class="group-component">
           <div class="col-md-3">
-            <tl-button [text]="'User Register'" [iconAddonBefore]="'ion-ios-list-outline'"
-                       (click)="form1()"></tl-button>
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="form1()">
+            </tl-button>
           </div>
           <div class="col-md-3">
-            <tl-button [text]="'Pacient Register'" [iconAddonBefore]="'ion-ios-list-outline'"
-                       (click)="form2()"></tl-button>
+            <tl-button [text]="'Pacient Register'"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'F2'"
+                       mdResult="MRCUSTOM"
+                       (click)="form2()">
+            </tl-button>
           </div>
           <div class="col-md-3">
-            <tl-button [text]="'Count Register'" [iconAddonBefore]="'ion-ios-list-outline'"
+            <tl-button [text]="'Count Register'"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       mdResult="MRCUSTOM"
+                       [shortcut]="'ctrl + alt + t'"
                        (click)="form3()"></tl-button>
           </div>
         </div>

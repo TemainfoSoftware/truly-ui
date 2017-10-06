@@ -123,7 +123,7 @@ export class ShortcutService {
     }
 
     handleElementsOfView() {
-        let tempArrayElements = this.elementsListener.slice(0);
+        const tempArrayElements = this.elementsListener.slice(0);
         for (let element = 0; element < tempArrayElements.length; element++) {
             this.isElementInstanceOfButton( tempArrayElements[element] ) ?
                 this.handleElementButton( tempArrayElements[element] ) :

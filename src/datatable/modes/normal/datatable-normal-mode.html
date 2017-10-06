@@ -1,17 +1,18 @@
-<table class="datatable"  (keydown)="onKeydown($event)">
-    <thead class="datatableHeader">
-    <tr class="row">
-        <th *ngFor="let column of datatable.columns;" [class]="' cel ' + datatable.getClassAlignment(column.alignment)">{{column.title}}</th>
-    </tr>
-    </thead>
+<div class="ui-datatable-normal">
 
-    <tbody #datatableTbody class="datatableBody">
-        <tr #tbody class="row" [tabindex]="i"  [@enterAnimation]="'in'" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable._rowHeight+'px'}"
-            (click)="datatable.onRowClick(dataSourceService.datasource[i],i)"
-            (focus)="datatable.onRowSelect(dataSourceService.datasource[i],i)"
-            (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)"
-        >
-            <td *ngFor="let column of datatable.columns;" [class]="'cel ' + datatable.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
-        </tr>
-    </tbody>
-</table>
+    <tl-datatble-header></tl-datatble-header>
+
+    <div class="ui-datatable-content-wrap">
+        <table class="ui-datatable-table"  (keydown)="onKeydown($event)">
+            <tbody #datatableTbody class="ui-datatable-content-body">
+            <tr #tbody class="row" [tabindex]="i"  [@enterAnimation]="'in'" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable.rowHeight+'px'}"
+                (click)="datatable.onRowClick(dataSourceService.datasource[i],i)"
+                (focus)="datatable.onRowSelect(dataSourceService.datasource[i],i)"
+                (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)"
+            >
+                <td *ngFor="let column of datatable.columns;" [class]="'cel ' + helperService.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,7 +1,7 @@
 <button #tlbutton
         attr.tabindex="{{tabindex}}"
         [type]="type"
-        [ngStyle]="{'width': width + 'px', 'height': height + 'px', 'line-height': height - 2 + 'px'}"
+        [ngStyle]="{'width': width + 'px', 'height': height + 'px', 'line-height': height - 2 + 'px', 'zIndex': zIndex}"
         [ngClass]="{' disabled ': disabled}"
         [class]="buttonClass + ' tl-button ' + toggleClassName"
         [disabled]="disabled ? true : null"

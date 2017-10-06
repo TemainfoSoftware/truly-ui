@@ -39,10 +39,10 @@ export const APPLICATION_CONFIGURATION = new InjectionToken<ApplicationConfig>('
         CommonModule,
     ],
     declarations: [
-        TlCore
+        TlCore,
     ],
     exports: [
-        TlCore
+        TlCore,
     ]
 } )
 export class CoreModule {

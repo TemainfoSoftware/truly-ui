@@ -32,7 +32,7 @@ import { TabIndexService } from './tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
-import { DirectiveModule } from "../core/directives/index";
+import { DirectiveModule } from '../core/directives/index';
 
 export * from './form.service';
 export * from './form';

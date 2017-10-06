@@ -37,9 +37,11 @@ $border-color : #DCDCDC;
   > .ui-row .ui-cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
-    padding: 0px;
+    padding: 0;
     height: 25px;
     align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
   }
   >.ui-row .ui-cel.-textleft{
     text-align: left;

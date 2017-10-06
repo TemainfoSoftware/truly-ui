@@ -16,8 +16,10 @@
 .ui-datatable-content-body > .ui-row .ui-cel {
   border-right: 1px #DCDCDC solid;
   box-sizing: border-box;
-  padding: 0px;
-  align-items: center; }
+  padding: 0;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap; }
 .ui-datatable-content-body > .ui-row .ui-cel.-textleft {
   text-align: left; }
 .ui-datatable-content-body > .ui-row .ui-cel.-textright {

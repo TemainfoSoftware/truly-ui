@@ -23,7 +23,9 @@ $border-color : #DCDCDC;
   > .ui-row .ui-cel{
     border-right: 1px $border-color solid;
     box-sizing: border-box;
-    padding: 0px;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
     align-items: center;
   }
   >.ui-row .ui-cel.-textleft{

@@ -9,7 +9,7 @@
                  [ngStyle]="{'background-color': colorHoverMinimize}"
                  (mouseover)="hoverMinimize()"
                  (mouseleave)="leaveMinimize()"
-                 (mouseup)="minimizeModal()">
+                 (click)="minimizeModal()">
                 <i [style.color]="fontColor" class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </div>
 
@@ -17,7 +17,7 @@
                  [ngStyle]="{'background-color': colorHoverMaximize}"
                  (mouseover)="hoverMaximize()"
                  (mouseleave)="leaveMaximize()"
-                 (mouseup)="maximizeModal()">
+                 (click)="maximizeModal()">
                 <i [style.color]="fontColor" ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </div>
 
@@ -25,15 +25,16 @@
                  [ngStyle]="{'background-color': colorHoverRestore}"
                  (mouseover)="hoverRestore()"
                  (mouseleave)="leaveRestore()"
-                 (mouseup)="restoreMaximizeModal()">
+                 (click)="restoreMaximizeModal()">
                 <i [style.color]="fontColor" ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
             </div>
 
             <div class="control-item"
-                 [ngStyle]="{'background-color': colorHoverClose}"
+                 [ngStyle]="{'background-color': colorHoverClose, 'zIndex': modal.style.zIndex}"
+                 [shortcut]="'escape'"
                  (mouseover)="hoverClose()"
                  (mouseleave)="leaveClose()"
-                 (mouseup)="closeModal()">
+                 (click)="closeModal()">
                 <i [style.color]="fontColor" class="ion-close"></i>
             </div>
         </div>

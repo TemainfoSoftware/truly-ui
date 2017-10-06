@@ -27,6 +27,7 @@ import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { TlContainerModal } from './container-modal/container-modal';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
+import { DirectiveModule } from '../core/directives/index';
 
 export * from './modal';
 export * from './modal.service';
@@ -36,6 +37,7 @@ export * from './container-modal/container-modal';
 @NgModule( {
     imports: [
         CommonModule,
+        DirectiveModule
     ],
     declarations: [
         TlModal,

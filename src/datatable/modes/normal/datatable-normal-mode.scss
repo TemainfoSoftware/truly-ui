@@ -1,6 +1,6 @@
 $border-color : #DCDCDC;
 
-.ui-datatable-scrollable{
+.ui-datatable-normal{
   overflow: hidden;
   border-right: 1px #DCDCDC solid
 }
@@ -18,7 +18,6 @@ $border-color : #DCDCDC;
     outline: none;
     color: #7a838b;
     margin: 0;
-    content: none;
   }
   > .ui-row .ui-cel{
     border-right: 1px $border-color solid;

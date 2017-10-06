@@ -24,14 +24,16 @@ import { Component, forwardRef, Inject } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 
-@Component({
-    selector: 'tl-datatble-header',
-    templateUrl: './datatable-header.html',
-    styleUrls: ['./datatable-header.scss', '../../datatable.scss'],
-    providers: [DatatableHelpersService]
-})
+@Component( {
+    selector : 'tl-datatble-header',
+    templateUrl : './datatable-header.html',
+    styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
+    providers : [ DatatableHelpersService ]
+} )
 export class TlDatatableHeader {
-    constructor(@Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
-                private helperService: DatatableHelpersService
-                ) {}
+
+    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
+                 public helperService: DatatableHelpersService
+    ) {}
+
 }

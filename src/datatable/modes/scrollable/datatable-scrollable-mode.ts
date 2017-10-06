@@ -302,7 +302,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.renderer.setAttribute( this.elementTR.nativeElement, 'row', String( (row + lastRow) ) );
         this.renderer.setAttribute( this.elementTR.nativeElement, 'tabindex', String( (row + lastRow) ) );
         this.renderer.setStyle( this.elementTR.nativeElement, 'height', this.dt.rowHeight + 'px' );
-        this.renderer.addClass( this.elementTR.nativeElement, 'row' );
+        this.renderer.addClass( this.elementTR.nativeElement, 'ui-row' );
         this.renderer.appendChild( this.listBody.nativeElement, this.elementTR.nativeElement );
     }
 
@@ -312,7 +312,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             const classAlignColumn = this.helperService.getClassAlignment(this.dt.columns[ collumn ].alignment );
 
             this.elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
-            this.renderer.addClass(  this.elementTD.nativeElement, 'cel' );
+            this.renderer.addClass(  this.elementTD.nativeElement, 'ui-cel' );
             this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
             this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.dt.rowHeight + 'px' );
             this.elementTD.nativeElement.innerHTML = dataSource[ row ][ this.dt.columns[ collumn ].field ];

@@ -227,8 +227,8 @@ export class ShortcutService {
         const tmpNormalElements = this.filterElementsNotEqualButton();
         tmpNormalElements.sort( ( a, b ) => {
             if ( a.element.nativeElement ) {
-                return parseInt( a.element.nativeElement.style.zIndex ) -
-                    parseInt( b.element.nativeElement.style.zIndex );
+                return parseInt( a.element.nativeElement.style.zIndex, 10 ) -
+                    parseInt( b.element.nativeElement.style.zIndex, 10 );
             }
         } );
         this.highestZindexElement = tmpNormalElements[ tmpNormalElements.length - 1 ];

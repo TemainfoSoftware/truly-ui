@@ -60,7 +60,11 @@ export class TlResizerDirective implements AfterContentInit {
 
     private displacement = 0;
 
-    constructor( private datatabeHeaderRef: ElementRef, private render: Renderer2) {}
+    private mouseMoveListener: () => void;
+
+    private mouseupListener: () => void;
+
+    constructor( private datatabeHeaderRef: ElementRef, private render: Renderer2 ) {}
 
     ngAfterContentInit() {
         if (this.resizer) {
@@ -68,7 +72,6 @@ export class TlResizerDirective implements AfterContentInit {
             this.getElementTableHeader();
             this.getElementTableHeaderRow();
             this.getColsOfColGroups();
-            this.createHandlerEventsHeader();
         }
     }
 
@@ -97,23 +100,7 @@ export class TlResizerDirective implements AfterContentInit {
         this.render.listen(this.columnSeparator, 'mousedown', ( event ) => {
             this.onColumnSeparatorMouseDown(event);
         });
-        this.render.listen(this.columnSeparator, 'mouseup', ( ) => {
-            this.onColumnSeparatorMouseUp();
-        });
-    }
 
-    createHandlerEventsHeader() {
-        this.render.listen(this.datatabeHeaderRef.nativeElement, 'mousemove', ( event ) => {
-            this.onColumnResize(event);
-        });
-
-        this.render.listen(this.datatabeHeaderRef.nativeElement, 'mouseleave', ( ) => {
-            this.onHeaderMouseLeave();
-        });
-
-        this.render.listen(this.datatabeHeaderRef.nativeElement, 'mouseup', ( ) => {
-            this.onHeaderMouseUp();
-        });
     }
 
     onColumnResize(event: MouseEvent) {
@@ -133,16 +120,25 @@ export class TlResizerDirective implements AfterContentInit {
         }
     }
 
-    onHeaderMouseLeave() {
-        this.stopResize();
-    }
-
-    onHeaderMouseUp() {
-        this.stopResize();
-    }
-
     onColumnSeparatorMouseUp() {
         this.stopResize();
+    }
+
+    createHandlerEventListeners() {
+        this.mouseMoveListener = this.render.listen(document, 'mousemove', ( event ) => {
+            this.onColumnResize(event);
+        });
+
+        this.mouseupListener = this.render.listen(document, 'mouseup', ( ) => {
+            this.onColumnSeparatorMouseUp();
+        });
+    }
+
+    destroyHandleEventListeners() {
+        if (this.mouseMoveListener || this.mouseupListener) {
+            this.mouseMoveListener();
+            this.mouseupListener();
+        }
     }
 
     moveSeparatorAtCursor(element: HTMLElement) {
@@ -193,11 +189,10 @@ export class TlResizerDirective implements AfterContentInit {
 
     setNewPositionsColumns(leftColumn, rightColumn) {
         if ( ( leftColumn > 15 ) && ( rightColumn > 15 )) {
-            this.columnLeftHeader.style.width = leftColumn + 'px';
-            this.columnRightHeader.style.width = rightColumn + 'px';
-
-            this.columnLeftBody.style.width = leftColumn + 'px';
-            this.columnRightBody.style.width = rightColumn + 'px';
+                this.render.setStyle(this.columnLeftHeader,'width',leftColumn + 'px');
+                this.render.setStyle(this.columnRightHeader,'width',rightColumn + 'px');
+                this.render.setStyle(this.columnLeftBody,'width',leftColumn + 'px');
+                this.render.setStyle(this.columnRightBody,'width',rightColumn + 'px');
         }
     }
 
@@ -212,11 +207,13 @@ export class TlResizerDirective implements AfterContentInit {
 
     startResize() {
         this.isMoving = true;
+        this.createHandlerEventListeners();
         this.changeCursorResize();
     }
 
     stopResize() {
         this.isMoving = false;
+        this.destroyHandleEventListeners();
         this.changeCursorResize();
     }
 

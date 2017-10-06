@@ -36,6 +36,8 @@ export class ShortcutService {
 
     private elementIndex;
 
+    private highestZindexElement;
+
     setRenderer( renderer ) {
         this.renderer = renderer;
         this.createListener();
@@ -51,9 +53,7 @@ export class ShortcutService {
                     return this.handleClickComponentWithEqualsKeys();
                 }
                 this.handleClickComponentWithoutEqualsKeys();
-                setTimeout(() => {
-                    this.handleElementsOfView();
-                }, 0);
+                this.handleElementsOfView();
             } );
         }
     }
@@ -82,7 +82,8 @@ export class ShortcutService {
 
     handleEqualElement() {
         this.orderElementsByZindex();
-        return this.elementsListener[ this.elementsListener.length - 1 ].element.nativeElement.click();
+        this.elementsListener[ this.elementsListener.indexOf( this.highestZindexElement ) ].element.nativeElement.click();
+        this.handleElementsOfView();
     }
 
 
@@ -123,12 +124,14 @@ export class ShortcutService {
     }
 
     handleElementsOfView() {
-        const tempArrayElements = this.elementsListener.slice(0);
-        for (let element = 0; element < tempArrayElements.length; element++) {
-            this.isElementInstanceOfButton( tempArrayElements[element] ) ?
-                this.handleElementButton( tempArrayElements[element] ) :
-                this.handleOtherElements( tempArrayElements[element] );
-        }
+        setTimeout( () => {
+            const tempArrayElements = this.elementsListener.slice( 0 );
+            for ( let element = 0; element < tempArrayElements.length; element++ ) {
+                this.isElementInstanceOfButton( tempArrayElements[ element ] ) ?
+                    this.handleElementButton( tempArrayElements[ element ] ) :
+                    this.handleOtherElements( tempArrayElements[ element ] );
+            }
+        }, 280 );
     }
 
     handleElementButton( item ) {
@@ -221,8 +224,20 @@ export class ShortcutService {
     }
 
     orderElementsByZindex() {
-        this.elementsListener.sort( ( a, b ) => {
-            return a.element.nativeElement.firstChild.zIndex - b.element.nativeElement.firstChild.zIndex;
+        const tmpNormalElements = this.filterElementsNotEqualButton();
+        tmpNormalElements.sort( ( a, b ) => {
+            if ( a.element.nativeElement ) {
+                return parseInt( a.element.nativeElement.style.zIndex ) -
+                    parseInt( b.element.nativeElement.style.zIndex );
+            }
+        } );
+        this.highestZindexElement = tmpNormalElements[ tmpNormalElements.length - 1 ];
+
+    }
+
+    filterElementsNotEqualButton() {
+        return this.elementsListener.filter( ( value, index, array ) => {
+            return !this.isElementInstanceOfButton( value );
         } );
     }
 

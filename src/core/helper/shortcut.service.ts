@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 import { TlButton } from '../../button/button';
 
 let listener;
@@ -32,7 +32,9 @@ export class ShortcutService {
 
     public elementsListener = [];
 
-    private renderer;
+    private renderer: Renderer2;
+
+    private elementIndex;
 
     setRenderer( renderer ) {
         this.renderer = renderer;
@@ -41,44 +43,63 @@ export class ShortcutService {
 
     createListener() {
         if ( !listener ) {
-            listener = this.renderer.listen( document, 'keydown', ( $event ) => {
-                for ( let element = 0; element < this.elementsListener.length; element++ ) {
-                    if ( this.isKeysShortcutEqualsKeysEvent( element, $event ) ) {
-                        if ( this.elementsListener[ element ].element instanceof TlButton ) {
-                            if ( this.getEqualKeys( this.elementsListener[ element ].shortcut ).length > 1 ) {
-                                this.orderButtonsByZindex();
-                                if ( this.isButtonDisabled() ) {
-                                    return;
-                                }
-                                buttonElements[ buttonElements.length - 1 ].element.buttonElement.nativeElement.click();
-                                buttonElements[ buttonElements.length - 1 ].element.dispatchCallback().then( () => {
-                                    this.elementExistInView();
-                                } );
-                                return;
-                            }
-
-                            this.elementsListener[ element ].element.buttonElement.nativeElement.click();
-                            this.elementsListener[ element ].element.dispatchCallback().then( () => {
-                                this.elementExistInView();
-                            } );
-
-                        } else {
-                            if ( this.getEqualKeys( this.elementsListener[ element ].shortcut ).length > 1 ) {
-                                this.orderElementsByZindex();
-                                this.elementsListener[ this.elementsListener.length - 1 ].element.nativeElement.click();
-                                return;
-                            }
-                            this.elementsListener[ element ].element.nativeElement.click();
-                        }
-                    }
+            listener = this.renderer.listen( document, 'keydown', ( $event: KeyboardEvent ) => {
+                if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
+                    return;
                 }
+                if ( this.getEqualKeys( this.elementsListener[ this.elementIndex ].shortcut ).length > 1 ) {
+                    return this.handleClickComponentWithEqualsKeys();
+                }
+                this.handleClickComponentWithoutEqualsKeys();
             } );
         }
     }
 
+    handleClickComponentWithEqualsKeys() {
+        this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
+            this.handleEqualButton() :
+            this.handleEqualElement()
+    }
+
+
+    handleClickComponentWithoutEqualsKeys() {
+        this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
+            this.activeElementButton( this.elementIndex ) :
+            this.elementsListener[ this.elementIndex ].element.nativeElement.click()
+    }
+
+
+    handleEqualButton() {
+        this.orderButtonsByZindex();
+        if ( this.isButtonDisabled() ) {
+            return;
+        }
+        return this.activeHighestButtonElement();
+    }
+
+    handleEqualElement() {
+        this.orderElementsByZindex();
+        return this.elementsListener[ this.elementsListener.length - 1 ].element.nativeElement.click();
+    }
+
+
+    activeHighestButtonElement() {
+        buttonElements[ buttonElements.length - 1 ].element.buttonElement.nativeElement.click();
+        buttonElements[ buttonElements.length - 1 ].element.dispatchCallback().then( () => {
+            this.handleElementsOfView();
+        } );
+    }
+
+    activeElementButton( element ) {
+        this.elementsListener[ element ].element.buttonElement.nativeElement.click();
+        this.elementsListener[ element ].element.dispatchCallback().then( () => {
+            this.handleElementsOfView();
+        } );
+    }
+
     filterButtons() {
         this.elementsListener.forEach( ( value, index, array ) => {
-            if ( value.element instanceof TlButton ) {
+            if ( this.isElementInstanceOfButton( value ) ) {
                 if ( buttonElements.indexOf( value ) < 0 ) {
                     buttonElements.push( value );
                 }
@@ -86,57 +107,68 @@ export class ShortcutService {
         } );
     }
 
-    isKeysShortcutEqualsKeysEvent( element, $event: KeyboardEvent ) {
-        return (this.getShortcutEventMultipleKey( $event ).key === this.getShortcutMultipleKey( element ).key) &&
-            (this.getShortcutEventMultipleKey( $event ).ctrlKey === this.getShortcutMultipleKey( element ).ctrlKey) &&
-            (this.getShortcutEventMultipleKey( $event ).shiftKey === this.getShortcutMultipleKey( element ).shiftKey) &&
-            (this.getShortcutEventMultipleKey( $event ).altKey === this.getShortcutMultipleKey( element ).altKey);
+    isKeysShortcutEqualsKeysEvent( $event: KeyboardEvent ) {
+        for ( let element = 0; element < this.elementsListener.length; element++ ) {
+            if ( this.getShortcutEventMultipleKey( $event ).key === this.handleShortcutMultipleKey( element ).key &&
+                this.getShortcutEventMultipleKey( $event ).ctrlKey === this.handleShortcutMultipleKey( element ).ctrlKey &&
+                this.getShortcutEventMultipleKey( $event ).shiftKey === this.handleShortcutMultipleKey( element ).shiftKey &&
+                this.getShortcutEventMultipleKey( $event ).altKey === this.handleShortcutMultipleKey( element ).altKey ) {
+                this.elementIndex = element;
+                return this.elementsListener[ element ];
+            }
+        }
     }
 
-    elementExistInView() {
-        let query;
-        this.elementsListener.forEach( ( value, index, array ) => {
-            if ( value.element instanceof TlButton ) {
-                query = document.body.contains( value.element.buttonElement.nativeElement );
-                if ( !query ) {
-                    this.deleteButtonElementFromArray( value );
-                    this.deleteElementFromArray( value );
-                }
-            } else {
-                query = document.body.contains( value.element.nativeElement );
-                if ( !query ) {
-                    this.deleteElementFromArray( value );
-                }
-            }
+    handleElementsOfView() {
+        this.elementsListener.forEach( ( item, index, array ) => {
+            this.isElementInstanceOfButton( item ) ?
+                this.handleElementButton( item ) :
+                this.handleOtherElements( item );
         } );
     }
 
-    getShortcutMultipleKey( element ) {
-        let ctrl = false;
-        let shift = false;
-        let alt = false;
+    handleElementButton( item ) {
+        if ( !this.existElementOnView( item.element.buttonElement.nativeElement ) ) {
+            this.deleteButtonElementFromArray( item );
+            this.deleteElementFromArray( item );
+        }
+    }
+
+
+    handleOtherElements( item ) {
+        if ( !this.existElementOnView( item.element.nativeElement ) ) {
+            this.deleteElementFromArray( item );
+        }
+    }
+
+
+    isElementInstanceOfButton( value ) {
+        return value.element instanceof TlButton;
+    }
+
+    handleShortcutMultipleKey( element ) {
+        const assistKeys = { ctrl: false, shift: false, alt: false };
         let key = this.elementsListener[ element ].shortcut.toLowerCase();
-        const split = this.elementsListener[ element ].shortcut.toLowerCase().split( '' );
 
-        const withoutSpaces = split.filter( ( value, index, array ) => {
-            return value !== ' ';
-        } );
-
-        const str = withoutSpaces.toString().replace( /,/gi, '' );
-
-        str.split( '+' ).forEach( ( value, index, array ) => {
+        this.getShortcutWithoutSpaces( element ).split( '+' ).forEach( ( value, index, array ) => {
             if ( value === 'ctrl' ) {
-                ctrl = true;
-            } else if ( value === 'shift' ) {
-                shift = true;
-            } else if ( value === 'alt' ) {
-                alt = true;
-            } else {
-                key = value;
+                return assistKeys.ctrl = true;
             }
+            if ( value === 'shift' ) {
+                return assistKeys.shift = true;
+            }
+            if ( value === 'alt' ) {
+                return assistKeys.alt = true;
+            }
+            key = value;
         } );
 
-        return { ctrlKey: ctrl, shiftKey: shift, altKey: alt, key: key }
+        return {
+            ctrlKey: assistKeys.ctrl,
+            shiftKey: assistKeys.shift,
+            altKey: assistKeys.alt,
+            key: key
+        }
     }
 
     getShortcutEventMultipleKey( $event: KeyboardEvent ) {
@@ -148,6 +180,23 @@ export class ShortcutService {
         };
     }
 
+    existElementOnView( value ) {
+        return document.body.contains( value );
+    }
+
+    getCharsOfShortcut( element ) {
+        return this.elementsListener[ element ].shortcut.toLowerCase().split( '' );
+    }
+
+    getShortcutWithoutSpaces( element ) {
+        return this.removeSpacesShortcutString( element ).toString().replace( /,/gi, '' );
+    }
+
+    removeSpacesShortcutString( element ) {
+        return this.getCharsOfShortcut( element ).filter( ( value ) => {
+            return value !== ' ';
+        } );
+    }
 
     deleteElementFromArray( element ) {
         this.elementsListener.splice( this.elementsListener.indexOf( element ), 1 );
@@ -162,7 +211,7 @@ export class ShortcutService {
     }
 
     getEqualKeys( shortcut ) {
-        return this.elementsListener.filter( ( value, index, array ) => {
+        return this.elementsListener.filter( ( value ) => {
             return shortcut === value.shortcut;
         } );
     }
@@ -172,7 +221,6 @@ export class ShortcutService {
             return a.element.nativeElement.firstChild.zIndex - b.element.nativeElement.firstChild.zIndex;
         } );
     }
-
 
     orderButtonsByZindex() {
         buttonElements.sort( ( a, b ) => {

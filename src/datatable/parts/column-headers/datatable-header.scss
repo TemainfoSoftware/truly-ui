@@ -14,11 +14,11 @@ $border-color : #DCDCDC;
 .ui-datatable-column-separator {
   position: absolute;
   top: 0;
-  height: 247px;
+  height: 100%;
   left: 0;
-  width: 7px;
- //background-color: #b9b900;
- opacity: 0;
+  width: 4px;
+//  background-color: #111111;
+  cursor: col-resize;
   z-index: 9999;
 }
 

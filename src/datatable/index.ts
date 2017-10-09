@@ -10,6 +10,7 @@ import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-
 import { LoadingModule } from '../loading/index';
 import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
+import { InputModule } from '../input/index';
 
 export * from './datatable';
 export * from './parts/column/datatable-column';
@@ -24,7 +25,8 @@ export * from './modes/scrollable/datatable-scrollable-mode';
     imports: [
         CommonModule,
         FormsModule,
-        LoadingModule
+        LoadingModule,
+        InputModule
     ],
     declarations: [
         TlColgroupDirective,

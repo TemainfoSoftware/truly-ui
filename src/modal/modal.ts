@@ -75,6 +75,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() backdrop = false;
 
+    @Input() closeShortcut = '';
+
+    @Input() restoreShortcut = '';
+
+    @Input() maximizeShortcut = '';
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;

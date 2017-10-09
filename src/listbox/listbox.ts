@@ -82,6 +82,8 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
+    @Input() rowsPage = 50;
+
     @ViewChild( 'list' ) listBox;
 
     @ViewChild( 'itemContainer' ) itemContainer;
@@ -117,8 +119,6 @@ export class TlListBox implements OnInit, AfterViewInit {
     private quantityInVisibleRows;
 
     private quantityVisibleRows;
-
-    private rowsPage = 50;
 
     private datasource = [];
 
@@ -422,16 +422,18 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollDown() {
         this.handleScrollFinish();
-        if ( this.lastChildElement().getBoundingClientRect() ) {
-            if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
-                if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
-                    this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-                    this.take = this.lastRowViewport + this.quantityInVisibleRows;
-                    this.take = this.take > this.data.length ? this.data.length : this.take;
-                    this.renderPageData();
+        if ( this.isDataSourceGreaterThanRowsPage() ) {
+            if ( this.lastChildElement().getBoundingClientRect() ) {
+                if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
+                    if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+                        this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+                        this.take = this.lastRowViewport + this.quantityInVisibleRows;
+                        this.take = this.take > this.data.length ? this.data.length : this.take;
+                        this.renderPageData();
+                    }
+                } else {
+                    this.handleScrollFast( 'DOWN' );
                 }
-            } else {
-                this.handleScrollFast( 'DOWN' );
             }
         }
     }
@@ -748,6 +750,10 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     isLastScrollTopOnKeyEqualsScroll() {
         return this.lastScrollTopOnKey === this.itemContainer.nativeElement.scrollTop;
+    }
+
+    isDataSourceGreaterThanRowsPage() {
+        return this.datasource.length > this.rowsPage;
     }
 
     existChildElements() {

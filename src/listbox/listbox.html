@@ -1,18 +1,24 @@
 <div *ngIf="nothingToShow" class="nothingToShow"><i class="ion-sad-outline"></i><br>{{filterEmptyMessage}}</div>
 
 <div class="listbox-wrapper">
-    <div [@onCreateElement]="true" *ngIf="scrollTop >= 12" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()" (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
+
+    <div [@onCreateElement]="true" *ngIf="scrollTop >= 12" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
+         (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
         <i class="ion-chevron-up"></i>
     </div>
+
     <div #itemContainer class="list-box-container" [style.height]="itensToShow * rowHeight + 'px'">
         <ul containerDirective #list class="list" [style.position]="'relative'"
             [style.height]="filtering ? (filtredData.length * rowHeight) + 'px' : (data.length * rowHeight) + 'px'">
             <div #customTemplate><ng-content></ng-content></div>
         </ul>
     </div>
-    <div [@onCreateElement]="true" *ngIf="showMore && !scrollFinish" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()" (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
+
+    <div [@onCreateElement]="true" *ngIf="showMore && !scrollFinish" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
+         (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
         <i class="ion-chevron-down"></i>
     </div>
+
 </div>
 
 

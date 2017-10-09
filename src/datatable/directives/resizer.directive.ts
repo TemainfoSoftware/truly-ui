@@ -194,7 +194,7 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
     }
 
     setNewPositionsColumns(leftColumn, rightColumn) {
-        if ( ( leftColumn > 15 ) && ( rightColumn > 15 )) {
+        if ( ( leftColumn > 40 ) && ( rightColumn > 40 )) {
                 this.render.setStyle(this.columnLeftHeader, 'width', leftColumn + 'px');
                 this.render.setStyle(this.columnRightHeader, 'width', rightColumn + 'px');
                 this.render.setStyle(this.columnLeftBody, 'width', leftColumn + 'px');

@@ -76,6 +76,10 @@ $success-background-color: #E3F5EC;
     color: #484848;
   }
 
+  > .addon:hover {
+    cursor: pointer;
+  }
+
   //Label
   > .label {
     line-height: 1;

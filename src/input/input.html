@@ -2,7 +2,7 @@
     <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
         <b *ngIf="required" style="color: #FF6666">*</b>
     </label>
-    <span *ngIf="iconBefore" class="addon -borderleft">
+    <span *ngIf="iconBefore" (click)="clickAddon($event, 'before')" class="addon -borderleft">
         <i [ngClass]="iconBefore"></i>
     </span>
 
@@ -34,7 +34,7 @@
            (focus)="onFocus()">
 
 
-    <span #afterIcon *ngIf="iconAfter" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
+    <span #afterIcon *ngIf="iconAfter" (click)="clickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
 
     <span *ngIf="textAfter"
           #afterText

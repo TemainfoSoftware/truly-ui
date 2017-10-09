@@ -196,6 +196,9 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Output() clear: EventEmitter<any> = new EventEmitter();
 
 
+    @Output() onClickAddon: EventEmitter<any> = new EventEmitter();
+
+
     /**
      * Control the position of the clearButton.
      */
@@ -237,6 +240,10 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
             this.clearButtonPosition =
                 (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
         }
+    }
+
+    clickAddon(MouseEvent, side) {
+        this.onClickAddon.emit({MouseEvent, side});
     }
 
     /**

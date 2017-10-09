@@ -217,7 +217,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
         if ( this.hasScrollDown( clientRect, parentClientRect ) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-            let take = this.lastRowViewport + this.quantityInVisibleRows;
+            let take = skip + (this.quantityInVisibleRows * 2) + this.quantityVisibleRows;
             take = take > this.dt.totalRows ? this.dt.totalRows : take;
             this.scrollLockAt = this.scrollTop;
             this.renderPageData( skip, take );
@@ -228,8 +228,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         const clientBottom = clientRect.bottom;
         const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
         const parentBottom = parentClientRect.bottom;
-
-        return clientBottom < parentBottom + pointOfWrap && ( !(this.take === this.dt.totalRows))
+        const dataGreathenRowPage = this.dt.totalRows >= this.dt.rowsPage;
+        return ( clientBottom < parentBottom + pointOfWrap ) && ( !(this.take === this.dt.totalRows)) && dataGreathenRowPage
     }
 
 

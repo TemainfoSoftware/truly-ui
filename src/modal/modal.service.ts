@@ -256,9 +256,8 @@ export class ModalService implements OnDestroy {
             }
             setTimeout(() => {
                 this.resultCallback();
-                console.log('exec..');
                 resolve();
-            }, 1000)
+            }, 500)
         })
     }
 

@@ -36,6 +36,8 @@ export class ShortcutService {
 
     private elementIndex;
 
+    private highestZindexElement;
+
     setRenderer( renderer ) {
         this.renderer = renderer;
         this.createListener();
@@ -51,6 +53,7 @@ export class ShortcutService {
                     return this.handleClickComponentWithEqualsKeys();
                 }
                 this.handleClickComponentWithoutEqualsKeys();
+                this.handleElementsOfView();
             } );
         }
     }
@@ -65,7 +68,7 @@ export class ShortcutService {
     handleClickComponentWithoutEqualsKeys() {
         this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
             this.activeElementButton( this.elementIndex ) :
-            this.elementsListener[ this.elementIndex ].element.nativeElement.click()
+            this.elementsListener[ this.elementIndex ].element.nativeElement.click();
     }
 
 
@@ -79,7 +82,8 @@ export class ShortcutService {
 
     handleEqualElement() {
         this.orderElementsByZindex();
-        return this.elementsListener[ this.elementsListener.length - 1 ].element.nativeElement.click();
+        this.elementsListener[ this.elementsListener.indexOf( this.highestZindexElement ) ].element.nativeElement.click();
+        this.handleElementsOfView();
     }
 
 
@@ -98,7 +102,7 @@ export class ShortcutService {
     }
 
     filterButtons() {
-        this.elementsListener.forEach( ( value, index, array ) => {
+        this.elementsListener.forEach( ( value ) => {
             if ( this.isElementInstanceOfButton( value ) ) {
                 if ( buttonElements.indexOf( value ) < 0 ) {
                     buttonElements.push( value );
@@ -120,11 +124,14 @@ export class ShortcutService {
     }
 
     handleElementsOfView() {
-        this.elementsListener.forEach( ( item, index, array ) => {
-            this.isElementInstanceOfButton( item ) ?
-                this.handleElementButton( item ) :
-                this.handleOtherElements( item );
-        } );
+        setTimeout( () => {
+            const tempArrayElements = this.elementsListener.slice( 0 );
+            for ( let element = 0; element < tempArrayElements.length; element++ ) {
+                this.isElementInstanceOfButton( tempArrayElements[ element ] ) ?
+                    this.handleElementButton( tempArrayElements[ element ] ) :
+                    this.handleOtherElements( tempArrayElements[ element ] );
+            }
+        }, 280 );
     }
 
     handleElementButton( item ) {
@@ -136,8 +143,8 @@ export class ShortcutService {
 
 
     handleOtherElements( item ) {
-        if ( !this.existElementOnView( item.element.nativeElement ) ) {
-            this.deleteElementFromArray( item );
+         if ( !this.existElementOnView( item.element.nativeElement ) ) {
+             this.deleteElementFromArray( item );
         }
     }
 
@@ -217,8 +224,20 @@ export class ShortcutService {
     }
 
     orderElementsByZindex() {
-        this.elementsListener.sort( ( a, b ) => {
-            return a.element.nativeElement.firstChild.zIndex - b.element.nativeElement.firstChild.zIndex;
+        const tmpNormalElements = this.filterElementsNotEqualButton();
+        tmpNormalElements.sort( ( a, b ) => {
+            if ( a.element.nativeElement ) {
+                return parseInt( a.element.nativeElement.style.zIndex, 10 ) -
+                    parseInt( b.element.nativeElement.style.zIndex, 10 );
+            }
+        } );
+        this.highestZindexElement = tmpNormalElements[ tmpNormalElements.length - 1 ];
+
+    }
+
+    filterElementsNotEqualButton() {
+        return this.elementsListener.filter( ( value, index, array ) => {
+            return !this.isElementInstanceOfButton( value );
         } );
     }
 

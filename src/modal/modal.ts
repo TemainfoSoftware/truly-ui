@@ -30,8 +30,6 @@ import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { KeyEvent } from '../core/enums/key-events';
 
-const listenersDocument = [];
-
 @Component({
     selector: 'tl-modal',
     templateUrl: './modal.html',
@@ -160,31 +158,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.getBoundingContent();
         this.setDefaultDimensions();
         this.setModalCenterParent();
-        this.createDocumentListener();
-    }
-
-    createDocumentListener() {
-        const listener = this.renderer.listen( document, 'keydown', ( $event ) => {
-            if ( $event.keyCode === KeyEvent.ESCAPE ) {
-                if ( document.getElementsByClassName( 'tl-modal-container' ).length > 0 ) {
-                    if (this.serviceControl.componentList.length > 0) {
-                        this.serviceControl.execCallBack( ModalResult.MRCLOSE,
-                            this.serviceControl.componentList[ this.serviceControl.componentList.length - 1 ] );
-                    }
-                }
-            }
-        } );
-        listenersDocument.push( listener );
-        this.removeListeners();
-    }
-
-    removeListeners() {
-        listenersDocument.forEach( ( value, index2, array ) => {
-            if ( index2 !== 0 ) {
-                listenersDocument.splice( value, 1 );
-                value();
-            }
-        } );
     }
 
     resizeListener() {
@@ -356,7 +329,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         return event.clientX < this.offsetLeftContent
     }
 
-    setZIndex( $event ) {
+    setZIndex() {
         this.serviceControl.setZIndex( this.componentRef, this.modal );
         this.serviceControl.sortComponentsByZIndex();
     }

@@ -180,8 +180,8 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
             }
             if ( listModals.length > 0 ) {
                 this.modalService.execCallBack( {
-                    'mdResult' : ModalResult[ this.mdResult ],
-                    'formResult' : this.formResult
+                    mdResult : ModalResult[ this.mdResult ],
+                    formResult : this.formResult
                 }, this.findParentOfChildren( listModals ) ).then(() => {
                     resolve();
                 });

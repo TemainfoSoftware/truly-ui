@@ -50,6 +50,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @Input() messageDialogConfirmation = 'Are you sure ?';
 
+    @Input() submitButtonShortcut = '';
+
+    @Input() cancelButtonShortcut = '';
+
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;

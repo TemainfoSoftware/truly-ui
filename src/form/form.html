@@ -9,8 +9,9 @@
                        [text]="'Ok'"
                        mdResult="MROK"
                        [disabled]="!validForm"
-                       (mouseup)="onClickButtonOk($event)"
+                       (click)="onClickButtonOk($event)"
                        (keyup)="onKeyDownButtonOk($event)"
+                       [shortcut]="submitButtonShortcut"
                        [formResult]="formResult"
                        [buttonAddonBeforeClass]="'icon'"
                        [iconAddonBefore]="'ion-checkmark'">
@@ -20,6 +21,7 @@
                        mdResult="MRCANCEL"
                        [formResult]="formResult"
                        [buttonClass]="'botao'"
+                       [shortcut]="cancelButtonShortcut"
                        [buttonAddonBeforeClass]="'iconCadUsuario'"
                        [iconAddonBefore]="'ion-close-circled'">
             </tl-button>

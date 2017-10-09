@@ -23,7 +23,6 @@ import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } fro
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { ShortcutService } from "../core/helper/shortcut.service";
 
 let lastZIndex = 1;
 

@@ -104,6 +104,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getComponentsWithValidations();
         this.validateElements();
         this.listenComponentWithValidations();
+        this.clickListener();
     }
 
 
@@ -116,9 +117,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getCheckBoxValues();
     }
 
+    clickListener() {
+        this.renderer.listen(this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
+            $event.stopPropagation();
+            this.onClickButtonOk();
+        });
+    }
 
-    onClickButtonOk( $event ) {
-        $event.stopPropagation();
+    onClickButtonOk() {
         this.getInputValues();
         this.getMultiSelectValues();
         this.getDropdownListValues();

@@ -35,6 +35,10 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('width') width: string;
 
+    @Input('type') type = 'text';
+
+    @Input('filter') filter = true;
+
     constructor() {}
 
     ngOnInit() {

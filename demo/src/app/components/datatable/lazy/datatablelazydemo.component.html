@@ -18,10 +18,23 @@
             [height]="300"
             [rowsClient]="12"
             [rowsPage]="take"
-
             [allowLazy]="true"
+            [allowResize]="true"
+            [allowFilterColumn]="true"
             (lazyLoad)="onLazyLoad($event)"
           >
+            <tl-datatable-column [field]="'id'" [width]="'70px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'lastName'" [width]="'120px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'title'" [type]="'date'" [width]="'300px'"></tl-datatable-column>
+
+            <!--<tl-datatable-column [field]="'id'" [width]="'5%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'firstName'" [width]="'100px'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'lastName'" [width]="'30%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'city'" [width]="'25%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'title'" [width]="'25%'"></tl-datatable-column>-->
+
           </tl-datatable>
           <div>Row Selected:<span> {{rowSelected | json}} </span></div>
         </div>

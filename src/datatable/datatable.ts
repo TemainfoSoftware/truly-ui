@@ -59,7 +59,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowResize') allowResize = false;
 
-    @Input('allowFilterRow') allowFilterRow = false;
+    @Input('allowFilterColumn') allowFilterColumn = false;
 
     @Input('rowsPage') rowsPage = 20;
 

@@ -1,0 +1,7 @@
+<ng-template ngFor let-column [ngForOf]="tlColumnFilter">
+    <th class="ui-cel ui-filter-cel">
+        <tl-input *ngIf="column?.filter" [iconBefore]="'ion-ios-search-strong'" [type]="column?.type" [placeholder]="'Search...'" ></tl-input>
+    </th>
+</ng-template>
+
+

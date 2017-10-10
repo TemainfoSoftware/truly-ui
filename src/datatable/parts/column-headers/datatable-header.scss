@@ -2,7 +2,6 @@ $border-color : #DCDCDC;
 
 .ui-datatable-header{
   padding: 0 15px 0 0;
-  border-bottom: 1px #DCDCDC solid
 }
 
 .ui-datatable-header-wrap{
@@ -33,6 +32,7 @@ $border-color : #DCDCDC;
     background: #E9E9E9;
     height: 25px;
     margin: 0;
+    border-bottom: 1px $border-color solid;
   }
   > .ui-row .ui-cel{
     box-sizing: border-box;
@@ -54,5 +54,8 @@ $border-color : #DCDCDC;
   }
   > .ui-row .ui-cel:last-child{
     border-right: none
+  }
+  >.ui-row .ui-cel.ui-filter-cel {
+    padding: 5px;
   }
 }

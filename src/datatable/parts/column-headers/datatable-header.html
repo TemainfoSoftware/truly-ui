@@ -8,6 +8,7 @@
                         [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
                     </th>
                 </tr>
+                <tr *ngIf="dt.allowFilterColumn" class="ui-row" [tlColumnFilter]="dt.columns"></tr>
             </thead>
         </table>
     </div>

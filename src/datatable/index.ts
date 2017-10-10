@@ -11,6 +11,7 @@ import { LoadingModule } from '../loading/index';
 import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { InputModule } from '../input/index';
+import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column-filter';
 
 export * from './datatable';
 export * from './parts/column/datatable-column';
@@ -32,6 +33,7 @@ export * from './modes/scrollable/datatable-scrollable-mode';
         TlColgroupDirective,
         TlDatatable,
         TlDatatableColumn,
+        TlDatatabaleColumnFilter,
         TlDatatableHeader,
         TlDatatableNormalMode,
         TlDatatablePaginatorMode,

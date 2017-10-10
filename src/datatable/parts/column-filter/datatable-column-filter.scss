@@ -1,0 +1,13 @@
+$border-color : #DCDCDC;
+.ui-cel{
+  box-sizing: border-box;
+  border-right: 1px $border-color solid;
+  padding: 0;
+  height: 25px;
+  align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ui-filter-cel {
+  padding: 4px;
+}

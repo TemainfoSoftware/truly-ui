@@ -28,6 +28,7 @@ import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { TlContainerModal } from './container-modal/container-modal';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { DirectiveModule } from '../core/directives/index';
+import { ShortcutService } from '../core/helper/shortcut.service';
 
 export * from './modal';
 export * from './modal.service';
@@ -55,6 +56,7 @@ export * from './container-modal/container-modal';
     ],
     providers: [
         ToneColorGenerator,
+        ShortcutService,
         ModalService
     ]
 } )

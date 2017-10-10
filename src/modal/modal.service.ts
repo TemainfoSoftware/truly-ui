@@ -258,7 +258,7 @@ export class ModalService implements OnDestroy {
                 this.resultCallback();
                 resolve();
             }, 500)
-        })
+        });
     }
 
     isMdResultEqualsNone( mdResult: ModalResult ) {

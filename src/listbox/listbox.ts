@@ -58,6 +58,8 @@ import { KeyEvent } from '../core/enums/key-events';
 } )
 export class TlListBox implements OnInit, AfterViewInit {
 
+    @Input() id = '';
+
     @Input() data = [];
 
     @Input() label = '';
@@ -76,13 +78,17 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     @Input() itensToShow = 10;
 
-    @Input() filterEmptyMessage = 'Nothing to Show';
+    @Input() searchQuery = [];
 
-    @Input() id = '';
+    @Input() hiddenScroll = false;
+
+    @Input() filterEmptyMessage = 'Nothing to Show';
 
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
     @Input() rowsPage = 50;
+
+    @Input() showArrows = true;
 
     @ViewChild( 'list' ) listBox;
 
@@ -93,8 +99,6 @@ export class TlListBox implements OnInit, AfterViewInit {
     @ViewChild( ListBoxContainerDirective ) listTemplateContainer: ListBoxContainerDirective;
 
     @ContentChild( TemplateRef ) template: TemplateRef<Object>;
-
-    @Input() searchQuery = [];
 
     private nothingToShow = false;
 
@@ -422,7 +426,6 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollDown() {
         this.handleScrollFinish();
-        if ( this.isDataSourceGreaterThanRowsPage() ) {
             if ( this.lastChildElement().getBoundingClientRect() ) {
                 if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                     if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
@@ -435,7 +438,6 @@ export class TlListBox implements OnInit, AfterViewInit {
                     this.handleScrollFast( 'DOWN' );
                 }
             }
-        }
     }
 
     handleScrollUp() {

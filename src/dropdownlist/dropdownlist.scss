@@ -29,7 +29,7 @@ $success-background-color: #E3F5EC;
     color: #737373;
     font-weight: normal;
     line-height: 1;
-    width: 100px;
+
     white-space: nowrap;
     vertical-align: middle;
     > b.required {
@@ -53,7 +53,6 @@ $success-background-color: #E3F5EC;
     margin: 0;
     padding: 0;
     > .select {
-      box-sizing: unset;
       overflow: hidden;
       background: $default-backgroundColor;
       font-family: $default-fontFamily;
@@ -63,10 +62,13 @@ $success-background-color: #E3F5EC;
       border: $default-border;
       margin: 0;
       padding: 0;
-      padding-left: 10px;
-      padding-right: 30px;
       vertical-align: middle;
       user-select: none;
+    }
+    > .select.without-icon {
+      box-sizing: unset;
+      padding-left: 10px;
+      padding-right: 30px;
     }
     > .select:hover {
       background-color: $default-backgroundHoverColor;
@@ -113,6 +115,7 @@ $success-background-color: #E3F5EC;
       padding: 0;
       margin: 0;
       width: 100%;
+      border-top: $default-border;
       > .dropdown-list-select {
         background-color: $default-backgroundColor;
         border: $default-border;
@@ -138,6 +141,9 @@ $success-background-color: #E3F5EC;
         > li:active {
           background-color: $default-backgroundActiveColor;
           color: $default-color;
+        }
+        > li span {
+          font-weight: normal;
         }
       }
       > .dropdown-list-select::-webkit-scrollbar {
@@ -170,4 +176,22 @@ $success-background-color: #E3F5EC;
       cursor: $default-cursor;
     }
   }
+}
+
+
+.ui-icon{
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  display: inline-block;
+}
+
+.ui-overlap{
+  position: absolute;
+  color: $default-color;
+  cursor: pointer;
+  padding: 0px;
+  text-align: center;
+  border: $default-border;
+  background-color: #E8E8E8;
 }

@@ -28,16 +28,16 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./datatable-column-filter.scss']
 })
 export class TlDatatabaleColumnFilter {
-    @Input("tlColumnFilter") tlColumnFilter;
-    dataWidthIcon
-    itemSelected9
-    constructor(){
+    @Input('tlColumnFilter') tlColumnFilter;
+    dataWidthIcon;
+    itemSelected9;
+    constructor() {
         this.dataWidthIcon = [
-            { textItem : 'Contains', valueItem : '1', icon:'fa fa-arrows' },
-            { textItem : 'Does not Contains', valueItem : '2', icon:'fa fa-arrows-v' },
-            { textItem : 'Ends Withs', valueItem : '3', icon:'fa fa-bus' },
-            { textItem : 'Equals', valueItem : '4', icon:'fa fa-circle' },
-            { textItem : 'Not Equals', valueItem : '5', icon:'fa fa-external-link' }
+            { textItem : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
+            { textItem : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },
+            { textItem : 'Ends Withs', valueItem : '3', icon: 'fa fa-bus' },
+            { textItem : 'Equals', valueItem : '4', icon: 'fa fa-circle' },
+            { textItem : 'Not Equals', valueItem : '5', icon: 'fa fa-external-link' }
         ];
     }
 }

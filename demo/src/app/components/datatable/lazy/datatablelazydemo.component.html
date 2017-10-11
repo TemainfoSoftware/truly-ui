@@ -23,7 +23,7 @@
             [allowFilterColumn]="true"
             (lazyLoad)="onLazyLoad($event)"
           >
-            <tl-datatable-column [field]="'id'" [width]="'70px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
             <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
             <tl-datatable-column [field]="'lastName'" [width]="'120px'"></tl-datatable-column>
             <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>

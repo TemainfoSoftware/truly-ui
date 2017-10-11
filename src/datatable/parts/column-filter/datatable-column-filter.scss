@@ -1,4 +1,5 @@
 $border-color : #DCDCDC;
+
 .ui-cel{
   box-sizing: border-box;
   border-right: 1px $border-color solid;
@@ -8,6 +9,30 @@ $border-color : #DCDCDC;
   overflow: hidden;
   white-space: nowrap;
 }
+
+.ui-cel:last-child{
+  border-right: none
+}
+.ui-dropdown{
+  text-align: left;
+}
+
+.ui-input {
+  margin-left: 36px;
+  &.-without-margin {
+    margin-left: 0;
+  }
+}
+
 .ui-filter-cel {
   padding: 4px;
+}
+
+.ui-filter{
+  width: 100%;
+}
+
+tl-dropdown-list{
+  position: absolute;
+  z-index: 4;
 }

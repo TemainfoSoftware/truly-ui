@@ -12,6 +12,7 @@ import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { InputModule } from '../input/index';
 import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column-filter';
+import { DropDownListModule } from '../dropdownlist/index';
 
 export * from './datatable';
 export * from './parts/column/datatable-column';
@@ -27,7 +28,8 @@ export * from './modes/scrollable/datatable-scrollable-mode';
         CommonModule,
         FormsModule,
         LoadingModule,
-        InputModule
+        InputModule,
+        DropDownListModule
     ],
     declarations: [
         TlColgroupDirective,

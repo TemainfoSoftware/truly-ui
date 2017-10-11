@@ -37,7 +37,9 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('type') type = 'text';
 
-    @Input('filter') filter = true;
+    @Input('showFilter') showFilter = true;
+
+    @Input('showFilterOptions') showFilterOptions = true;
 
     constructor() {}
 

@@ -138,6 +138,23 @@
         <span class="returned-value">Returned Value: {{ itemSelected9 }}</span>
       </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="group-component">
+        <h5>With Icon</h5>
+        <tl-dropdown-list [data]="dataWidthIcon"
+                          [text]="'textItem'"
+                          [icon]="'icon'"
+                          [width]="160"
+                          [placeholder]="'Filter'"
+                          [placeholderIcon]="'fa fa-filter'"
+                          [showOnlyIcon]="true"
+                          [value]="'valueItem'"
+                          [(ngModel)]="itemSelected9">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected9 }}</span>
+      </div>
+    </div>
   </div>
 
   <hr>

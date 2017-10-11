@@ -64,6 +64,7 @@ $success-background-color: #E3F5EC;
       padding: 0;
       vertical-align: middle;
       user-select: none;
+      box-sizing: border-box;
     }
     > .select.without-icon {
       box-sizing: unset;
@@ -116,6 +117,7 @@ $success-background-color: #E3F5EC;
       margin: 0;
       width: 100%;
       border-top: $default-border;
+      text-align: left;
       > .dropdown-list-select {
         background-color: $default-backgroundColor;
         border: $default-border;
@@ -194,5 +196,6 @@ $success-background-color: #E3F5EC;
   padding: 0px;
   text-align: center;
   border: $default-border;
+  box-sizing: border-box;
   background-color: #E8E8E8;
 }

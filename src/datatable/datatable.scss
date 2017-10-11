@@ -5,6 +5,7 @@ $border-color : #DCDCDC;
   border-left: 1px $border-color solid;
   border-top: 1px $border-color solid;
   border-bottom: 1px $border-color solid;
+  box-sizing: content-box;
 }
 
 .ui-datatable-table{

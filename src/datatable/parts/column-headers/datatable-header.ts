@@ -25,7 +25,7 @@ import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 
 @Component( {
-    selector : 'tl-datatble-header',
+    selector : 'tl-datatable-header',
     templateUrl : './datatable-header.html',
     styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
     providers : [ DatatableHelpersService ]

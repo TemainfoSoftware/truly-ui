@@ -47,8 +47,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listComponent' ) listComponent: ElementRef;
 
-    @ViewChild( 'scrollBoxHeader' ) scrollBoxHeader: ElementRef;
-
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
     private bodyHeight = 0;
@@ -91,6 +89,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private elementTD: ElementRef;
 
+    private scrollBoxHeader: HTMLCollectionOf<Element>;
+
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
@@ -102,6 +102,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.addListenerToDataSource();
         this.addListenerToScroll();
         this.firstRender();
+        this.scrollBoxHeader = document.getElementsByClassName('ui-datatable-header-wrap');
     }
 
     onMouseDown() {
@@ -170,7 +171,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private handleScrollLeft() {
-        this.scrollBoxHeader.nativeElement.scrollLeft  = this.listComponent.nativeElement.scrollLeft;
+        this.scrollBoxHeader[0].scrollLeft  = this.listComponent.nativeElement.scrollLeft;
     }
 
     private firstRender() {

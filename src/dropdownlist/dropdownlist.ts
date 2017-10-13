@@ -121,7 +121,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     ngAfterContentInit() {
-        setTimeout(()=>{
+        setTimeout(() => {
             this.widthList = this.wrapper.nativeElement.clientWidth;
         })
     }
@@ -139,7 +139,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
         this._renderer.listen( document, 'mousedown', ( event ) => {
             if ( event.target.nodeName !== 'LI' ) {
-                if ( event.target.parentElement.nodeName !== 'LI' ){
+                if ( event.target.parentElement.nodeName !== 'LI' ) {
                     this.showHide = false;
                     this.changeDectection.markForCheck();
                 }

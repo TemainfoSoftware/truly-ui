@@ -92,7 +92,16 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @ViewChild( 'dropdownShow' ) dropdownShow;
 
+    @ViewChild( 'wrapper' ) wrapper;
+
+
     public zIndex = 0;
+
+    private topPosition = null;
+
+    private leftPosition = '0px';
+
+    private position = 'absolute';
 
     private showHide = false;
 
@@ -101,6 +110,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     private itemSelected: any[];
 
     private datasource: any[] = [];
+
+    private widthList = 0;
 
     constructor( private _renderer: Renderer2,
                  public tabIndexService: TabIndexService,
@@ -111,6 +122,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     ngAfterViewInit() {
         this.setElement( this.dropdown, 'dropdown' );
+        this.widthList = this.wrapper.nativeElement.offsetWidth;
         this.updateDataSource( this.getData() );
 
         this.isNumber( this.width, 'width' );
@@ -237,7 +249,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                     break;
                 case KeyEvent.ENTER:
                     if ( !this.itemSelected ) {
-                        this.changeShowStatus();
+                        this.changeShowStatus($event);
                     } else {
                         this.onEnter( $event );
                     }
@@ -386,7 +398,25 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
-    changeShowStatus() {
+    changeShowStatus(event) {
+
+        event.stopPropagation();
+
+
+        let target = event.path.filter((value)=>{
+            return value.className == 'tl-dropdown-list-box';
+        });
+
+
+        if(this.showOnlyIcon){
+            this.topPosition = event.clientY + ( target[0].offsetHeight - event.layerY) + 'px' ;
+            this.leftPosition = event.clientX  - event.layerX  + 'px';
+            this.position = 'fixed';
+        }
+
+
+
+
         if ( !this.disabled ) {
             this.showHide = !this.showHide;
             if ( this.showHide ) {

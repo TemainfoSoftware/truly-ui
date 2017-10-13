@@ -109,11 +109,11 @@ $success-background-color: #E3F5EC;
       padding: 0 9.3px;
     }
     > .dropdown-list-wrapper-select {
-      position: absolute;
+      z-index: 10;
       outline: $default-outline;
       cursor: $default-cursorHover;
-      left: 0;
       padding: 0;
+      left: 0;
       margin: 0;
       width: 100%;
       border-top: $default-border;

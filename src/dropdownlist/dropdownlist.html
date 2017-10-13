@@ -55,7 +55,7 @@
                (keydown)="onListOpened($event)"
                #list
                [ngStyle]="calcHeightItem()"
-               [style.display]="showHide === true ? 'block' : 'none'">
+               [style.display]="showHide ? 'block' : 'none'">
                <li *ngFor="let item of datasource; let i = index"
                    (click)="selectOption(item, i)"
                    tabindex="{{ i }}"

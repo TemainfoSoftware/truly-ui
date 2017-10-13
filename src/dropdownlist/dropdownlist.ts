@@ -20,8 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit,
-    Component, forwardRef, Input, Renderer2, ViewChild
+    AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -116,6 +115,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     constructor( private _renderer: Renderer2,
                  public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
+                 private changeDectection: ChangeDetectorRef,
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
@@ -130,9 +130,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.isBoolean( this.disabled, 'disabled' );
         this.isString( this.placeholder, 'placeholder' );
 
-        this._renderer.listen( document, 'click', ( event ) => {
+        this._renderer.listen( document, 'mousedown', ( event ) => {
             this.showHide = false;
-        } );
+            this.changeDectection.markForCheck();
+        });
         setTimeout( () => {
             if ( this.componentModel.model ) {
                 this.selectValueModelLoaded();

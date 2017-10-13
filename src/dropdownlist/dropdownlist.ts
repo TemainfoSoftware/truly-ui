@@ -138,11 +138,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
 
         this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( event.target.nodeName !== 'LI' ) {
-                if ( event.target.parentElement.nodeName !== 'LI' ) {
-                    this.showHide = false;
-                    this.changeDectection.markForCheck();
-                }
+            if ( this.isNotListDropdown(event) ) {
+                this.showHide = false;
+                this.changeDectection.markForCheck();
             }
         });
 
@@ -221,6 +219,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 ' property of the tl-dropdown-list element.' );
         }
     };
+
+    isNotListDropdown(event) {
+        if ( ( event.target.nodeName !== 'LI') && ( event.target.className.indexOf('-placeholder') < 0 )) {
+            if ( (event.target.parentElement.nodeName !== 'LI') && ( event.target.parentElement.className.indexOf('-placeholder') < 0) ) {
+                return true;
+            }
+        }
+    }
 
     onListOpened( $event ) {
         switch ( $event.keyCode ) {

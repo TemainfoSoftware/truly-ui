@@ -13,15 +13,19 @@ $border-color : #DCDCDC;
 .ui-cel:last-child{
   border-right: none
 }
+
 .ui-dropdown{
   text-align: left;
+  width: 35px;
+  display: table-cell;
+  &.-without-dropdown {
+    width: 0;
+  }
 }
 
 .ui-input {
-  margin-left: 36px;
-  &.-without-margin {
-    margin-left: 0;
-  }
+  display: table-cell;
+  padding-left: 1px;
 }
 
 .ui-filter-cel {
@@ -30,9 +34,5 @@ $border-color : #DCDCDC;
 
 .ui-filter{
   width: 100%;
-}
-
-tl-dropdown-list{
-  position: absolute;
-  z-index: 4;
+  display: table;
 }

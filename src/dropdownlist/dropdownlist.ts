@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, Renderer2, ViewChild
+    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, OnInit, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -53,7 +53,7 @@ let globalZindex = 1;
     ]
 } )
 
-export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit {
+export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, AfterContentInit {
 
     @Input( 'data' ) data: Array<any>;
 
@@ -120,9 +120,15 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         super( tabIndexService, idService, nameService );
     }
 
+    ngAfterContentInit() {
+        setTimeout(()=>{
+            this.widthList = this.wrapper.nativeElement.clientWidth;
+        })
+    }
+
     ngAfterViewInit() {
         this.setElement( this.dropdown, 'dropdown' );
-        this.widthList = this.wrapper.nativeElement.offsetWidth;
+
         this.updateDataSource( this.getData() );
 
         this.isNumber( this.width, 'width' );
@@ -130,10 +136,16 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.isBoolean( this.disabled, 'disabled' );
         this.isString( this.placeholder, 'placeholder' );
 
+
         this._renderer.listen( document, 'mousedown', ( event ) => {
-            this.showHide = false;
-            this.changeDectection.markForCheck();
+            if ( event.target.nodeName !== 'LI' ) {
+                if ( event.target.parentElement.nodeName !== 'LI' ){
+                    this.showHide = false;
+                    this.changeDectection.markForCheck();
+                }
+            }
         });
+
         setTimeout( () => {
             if ( this.componentModel.model ) {
                 this.selectValueModelLoaded();
@@ -444,6 +456,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.setModelComponent( item[ this.value ] );
         this.setValueInputAsLabel( item );
         this.dropdown.nativeElement.focus();
+
     }
 
     selectPlaceholder() {

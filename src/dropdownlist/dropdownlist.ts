@@ -399,23 +399,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     changeShowStatus(event) {
-
         event.stopPropagation();
-
-
-        let target = event.path.filter((value)=>{
-            return value.className == 'tl-dropdown-list-box';
-        });
-
-
-        if(this.showOnlyIcon){
-            this.topPosition = event.clientY + ( target[0].offsetHeight - event.layerY) + 'px' ;
-            this.leftPosition = event.clientX  - event.layerX  + 'px';
-            this.position = 'fixed';
-        }
-
-
-
+        this.setPositionListItens(event);
 
         if ( !this.disabled ) {
             this.showHide = !this.showHide;
@@ -437,6 +422,18 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     getAndSetZIndex() {
         this.zIndex = globalZindex++;
         return this.zIndex;
+    }
+
+    setPositionListItens(event) {
+        if (this.showOnlyIcon) {
+            const target = event.path.filter( (value) => {
+                return value.className === 'tl-dropdown-list-box';
+            });
+
+            this.topPosition = event.clientY + ( target[0].offsetHeight - event.layerY) + 'px' ;
+            this.leftPosition = event.clientX  - event.layerX  + 'px';
+            this.position = 'fixed';
+        }
     }
 
     selectOption( item, index ) {

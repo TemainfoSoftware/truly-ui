@@ -151,7 +151,7 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
         this.columnSeparator.style.left = this.getPositionSeparetorFromElement(element) + 'px';
     }
 
-    getPositionSeparetorFromElement(element){
+    getPositionSeparetorFromElement(element) {
         return (
             ( element.offsetWidth + element.offsetLeft ) -
             ( Math.round( this.columnSeparator.offsetWidth / 2 ) ) -
@@ -218,7 +218,7 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
         this.displacement = this.displacement < 0 ? this.displacement * -1 : this.displacement
     }
 
-    getHeaderWrapScrollLeft(){
+    getHeaderWrapScrollLeft() {
        return this.datatabeHeaderRef.nativeElement.firstElementChild.scrollLeft;
     }
 

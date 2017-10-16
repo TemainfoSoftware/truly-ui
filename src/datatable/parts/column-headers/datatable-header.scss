@@ -1,14 +1,15 @@
 $border-color : #DCDCDC;
 
+
 .ui-datatable-header{
   padding: 0 15px 0 0;
-  border-bottom: 1px #DCDCDC solid
+  position: relative;
 }
 
 .ui-datatable-header-wrap{
   overflow: hidden;
   border-right: 1px #DCDCDC solid;
-  position: relative;
+  //position: relative;
 }
 
 .ui-datatable-column-separator {
@@ -17,9 +18,9 @@ $border-color : #DCDCDC;
   height: 100%;
   left: 0;
   width: 4px;
-//  background-color: #111111;
   cursor: col-resize;
   z-index: 9999;
+  //background-color: #111111; // ACTIVE TO DEBUG SEPARATOR
 }
 
 .ui-datatable-column-separator:hover {
@@ -33,6 +34,7 @@ $border-color : #DCDCDC;
     background: #E9E9E9;
     height: 25px;
     margin: 0;
+    border-bottom: 1px $border-color solid;
   }
   > .ui-row .ui-cel{
     box-sizing: border-box;
@@ -54,5 +56,8 @@ $border-color : #DCDCDC;
   }
   > .ui-row .ui-cel:last-child{
     border-right: none
+  }
+  >.ui-row .ui-cel.ui-filter-cel {
+    padding: 5px;
   }
 }

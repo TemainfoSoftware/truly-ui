@@ -21,6 +21,20 @@ export const dataProperties = [
     options: "any text"
   },
   {
+    name: "icon",
+    type: "string",
+    default: "null",
+    description: "Sets the data item field that represents the item icon.",
+    options: "any text"
+  },
+  {
+    name: "showOnlyIcon",
+    type: "boolean",
+    default: "false",
+    description: "Changes the dropdown to display only icon.",
+    options: "true | false"
+  },
+  {
     name: "label",
     type: "string",
     default: "null",
@@ -47,6 +61,13 @@ export const dataProperties = [
     default: "null",
     description: "Display a help text on dropdown list.",
     options: "any text"
+  },
+  {
+    name: "placeholderIcon",
+    type: "string",
+    default: "ion-navicon-round",
+    description: "Displays a default icon in dropdown icon mode.",
+    options: "any icon name"
   },
   {
     name: "disabled",

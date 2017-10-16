@@ -148,8 +148,15 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
     }
 
     moveSeparatorAtCursor(element: HTMLElement) {
-        const position = (element.offsetWidth + element.offsetLeft) - (Math.round( this.columnSeparator.offsetWidth / 2 )) + 'px';
-        this.columnSeparator.style.left = position;
+        this.columnSeparator.style.left = this.getPositionSeparetorFromElement(element) + 'px';
+    }
+
+    getPositionSeparetorFromElement(element) {
+        return (
+            ( element.offsetWidth + element.offsetLeft ) -
+            ( Math.round( this.columnSeparator.offsetWidth / 2 ) ) -
+            this.getHeaderWrapScrollLeft()
+        );
     }
 
     getColsBetweenSeparator() {
@@ -171,7 +178,7 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
     }
 
     itIsBetweenSeparator(column: HTMLElement) {
-        return column.offsetLeft + column.offsetWidth - (this.columnSeparator.offsetWidth / 2) === this.columnSeparator.offsetLeft
+        return this.getPositionSeparetorFromElement(column) === this.columnSeparator.offsetLeft;
     }
 
     resizeColumns(event) {
@@ -194,7 +201,7 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
     }
 
     setNewPositionsColumns(leftColumn, rightColumn) {
-        if ( ( leftColumn > 15 ) && ( rightColumn > 15 )) {
+        if ( ( leftColumn > 40 ) && ( rightColumn > 40 )) {
                 this.render.setStyle(this.columnLeftHeader, 'width', leftColumn + 'px');
                 this.render.setStyle(this.columnRightHeader, 'width', rightColumn + 'px');
                 this.render.setStyle(this.columnLeftBody, 'width', leftColumn + 'px');
@@ -209,6 +216,10 @@ export class TlResizerDirective implements AfterContentInit, OnDestroy {
     setDisplacement(event) {
         this.displacement = this.pointOfClick - event.clientX;
         this.displacement = this.displacement < 0 ? this.displacement * -1 : this.displacement
+    }
+
+    getHeaderWrapScrollLeft() {
+       return this.datatabeHeaderRef.nativeElement.firstElementChild.scrollLeft;
     }
 
     startResize() {

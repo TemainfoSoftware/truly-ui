@@ -60,7 +60,7 @@
       <div class="col-md-12">
         <div class="group-component">
           <h5>Mode Normal</h5>
-          <tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
+          <tl-datatable [data]="data" [allowResize]="true" [allowFilterColumn]="true"  (rowSelect)="onRowSelect($event, index )"></tl-datatable>
           <div>Row Selected:<span> {{rowSelected | json}} </span></div>
         </div>
       </div>

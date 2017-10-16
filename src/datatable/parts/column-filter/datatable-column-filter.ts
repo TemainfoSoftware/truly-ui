@@ -20,20 +20,24 @@
     SOFTWARE.
 */
 
-import { Component, forwardRef, Inject } from '@angular/core';
-import { TlDatatable } from '../../datatable';
-import { DatatableHelpersService } from '../../services/datatable-helpers.service';
+import { Component, Input } from '@angular/core';
 
-@Component( {
-    selector : 'tl-datatable-header',
-    templateUrl : './datatable-header.html',
-    styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
-    providers : [ DatatableHelpersService ]
-} )
-export class TlDatatableHeader {
-
-    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
-                 public helperService: DatatableHelpersService
-    ) {}
-
+@Component({
+    selector: '[tlColumnFilter]',
+    templateUrl: './datatable-column-filter.html',
+    styleUrls: ['./datatable-column-filter.scss']
+})
+export class TlDatatabaleColumnFilter {
+    @Input('tlColumnFilter') tlColumnFilter;
+    dataWidthIcon;
+    itemSelected9;
+    constructor() {
+        this.dataWidthIcon = [
+            { textItem : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
+            { textItem : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },
+            { textItem : 'Ends Withs', valueItem : '3', icon: 'fa fa-bus' },
+            { textItem : 'Equals', valueItem : '4', icon: 'fa fa-circle' },
+            { textItem : 'Not Equals', valueItem : '5', icon: 'fa fa-external-link' }
+        ];
+    }
 }

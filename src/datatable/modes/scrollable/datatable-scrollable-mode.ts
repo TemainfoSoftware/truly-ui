@@ -47,8 +47,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listComponent' ) listComponent: ElementRef;
 
-    @ViewChild( 'scrollBoxHeader' ) scrollBoxHeader: ElementRef;
-
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
     private bodyHeight = 0;
@@ -91,6 +89,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private elementTD: ElementRef;
 
+    private scrollBoxHeader: HTMLCollectionOf<Element>;
+
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
@@ -102,6 +102,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.addListenerToDataSource();
         this.addListenerToScroll();
         this.firstRender();
+        this.scrollBoxHeader = document.getElementsByClassName('ui-datatable-header-wrap');
     }
 
     onMouseDown() {
@@ -170,7 +171,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private handleScrollLeft() {
-        this.scrollBoxHeader.nativeElement.scrollLeft  = this.listComponent.nativeElement.scrollLeft;
+        this.scrollBoxHeader[0].scrollLeft  = this.listComponent.nativeElement.scrollLeft;
     }
 
     private firstRender() {
@@ -217,7 +218,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
         if ( this.hasScrollDown( clientRect, parentClientRect ) ) {
             const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-            let take = this.lastRowViewport + this.quantityInVisibleRows;
+            let take = skip + (this.quantityInVisibleRows * 2) + this.quantityVisibleRows;
             take = take > this.dt.totalRows ? this.dt.totalRows : take;
             this.scrollLockAt = this.scrollTop;
             this.renderPageData( skip, take );
@@ -228,8 +229,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         const clientBottom = clientRect.bottom;
         const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
         const parentBottom = parentClientRect.bottom;
-
-        return clientBottom < parentBottom + pointOfWrap && ( !(this.take === this.dt.totalRows))
+        const dataGreathenRowPage = this.dt.totalRows >= this.dt.rowsPage;
+        return ( clientBottom < parentBottom + pointOfWrap ) && ( !(this.take === this.dt.totalRows)) && dataGreathenRowPage
     }
 
 

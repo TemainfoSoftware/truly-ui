@@ -34,6 +34,8 @@ export class DropDownListDemo {
 
   public bigData: any[];
 
+  public dataWidthIcon: any[];
+
   public simpleData: any[];
 
   constructor() {
@@ -62,6 +64,14 @@ export class DropDownListDemo {
       { textItem : 'Item 14', valueItem : '14' },
       { textItem : 'Item 15', valueItem : '15' },
       { textItem : 'Item 16', valueItem : '16' }
+    ];
+    this.dataWidthIcon = [
+      { textItem : 'Contains', valueItem : '1', icon:'fa fa-arrows' },
+      { textItem : 'Does not Contains', valueItem : '2', icon:'fa fa-arrows-v' },
+      { textItem : 'Ends Withs', valueItem : '3', icon:'fa fa-bus' },
+      { textItem : 'Equals', valueItem : '4', icon:'fa fa-circle' },
+      { textItem : 'Not Equals', valueItem : '5', icon:'fa fa-external-link' },
+      { textItem : 'Reset', valueItem : '6', icon:'ion-help-buoy' }
     ];
     this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5' ];
   }

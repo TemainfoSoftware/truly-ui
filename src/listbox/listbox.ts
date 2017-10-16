@@ -22,8 +22,9 @@
  */
 
 import {
-    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef,
-    ElementRef, NgZone, ContentChild, TemplateRef, EmbeddedViewRef
+    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2, ViewChild, ChangeDetectionStrategy,
+    ChangeDetectorRef, DoCheck,
+    ElementRef, NgZone, ContentChild, TemplateRef, EmbeddedViewRef, IterableDiffers
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -56,7 +57,7 @@ import { KeyEvent } from '../core/enums/key-events';
         )
     ]
 } )
-export class TlListBox implements OnInit, AfterViewInit {
+export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() id = '';
 
@@ -158,7 +159,12 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     private isScrolling;
 
-    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone ) {}
+    private iterableDiffer;
+
+    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
+                 private _iterableDiffers: IterableDiffers ) {
+        this.iterableDiffer = this._iterableDiffers.find([]).create(null);
+    }
 
     ngOnInit() {
         this.datasource = this.data;
@@ -182,7 +188,6 @@ export class TlListBox implements OnInit, AfterViewInit {
         this.resetSkipAndTake();
         this.renderPageData();
         this.change.detectChanges();
-        this.listBox.nativeElement.children[0].focus();
     }
 
     addScrollListListener() {
@@ -276,7 +281,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     focusElement( index ) {
-        this.listBox.nativeElement.children[ index ].focus();
+        // this.listBox.nativeElement.children[ index ].focus();
     }
 
     getElementListOfCustomTemplate( $event ) {
@@ -426,6 +431,9 @@ export class TlListBox implements OnInit, AfterViewInit {
 
     handleScrollDown() {
         this.handleScrollFinish();
+
+        if (this.isDataSourceGreaterThanRowsPage()) {
+
             if ( this.lastChildElement().getBoundingClientRect() ) {
                 if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                     if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
@@ -438,6 +446,8 @@ export class TlListBox implements OnInit, AfterViewInit {
                     this.handleScrollFast( 'DOWN' );
                 }
             }
+        }
+
     }
 
     handleScrollUp() {
@@ -669,7 +679,7 @@ export class TlListBox implements OnInit, AfterViewInit {
         const end = this.getScrollPositionByContainer() + this.quantityVisibleRows - 1;
         const element = document.querySelector( 'li[data-indexnumber="' + end + '"]' );
         this.scrollListener();
-        (element as HTMLElement).focus();
+        // (element as HTMLElement).focus();
         this.addScrollListListener();
         this.setNewItemPosition();
     }
@@ -677,7 +687,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     setFocusOnFirst() {
         const element = document.querySelector( 'li[data-indexnumber="' + this.getScrollPositionByContainer() + '"]' );
         this.scrollListener();
-        (element as HTMLElement).focus();
+        // (element as HTMLElement).focus();
         this.addScrollListListener();
         this.setNewItemPosition();
     }
@@ -755,7 +765,7 @@ export class TlListBox implements OnInit, AfterViewInit {
     }
 
     isDataSourceGreaterThanRowsPage() {
-        return this.datasource.length > this.rowsPage;
+        return this.data.length > this.rowsPage;
     }
 
     existChildElements() {
@@ -779,6 +789,14 @@ export class TlListBox implements OnInit, AfterViewInit {
     removeChilds() {
         while ( this.listBox.nativeElement.hasChildNodes() ) {
             this.listBox.nativeElement.removeChild( this.listBox.nativeElement.lastChild );
+        }
+    }
+
+    ngDoCheck() {
+        const changes = this.iterableDiffer.diff(this.data);
+        if (changes) {
+            this.renderPageData();
+            this.change.detectChanges();
         }
     }
 

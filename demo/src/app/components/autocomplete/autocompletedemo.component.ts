@@ -57,7 +57,7 @@ export class AutoCompleteDemo {
   constructor( private dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
     this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
-    this.data = this.dataDumpService.createRandomData( 20 );
+    this.data = this.dataDumpService.createRandomData( 50 );
   }
 
 }

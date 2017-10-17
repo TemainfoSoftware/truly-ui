@@ -13,11 +13,18 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Basic SimpleData</h5>
-          <tl-autocomplete [data]="simpleData" [(ngModel)]="result"></tl-autocomplete>
-          <span class="returned-value"> Return Value: {{ result | json }}</span>
+          <br><br><br>
+          <tl-autocomplete [data]="data"
+                           [id]="'id'"
+                           [label]="'firstName'"
+                           [labelDetail]="'lastName'"
+                           [labelName]="'Clients'"
+                           [(ngModel)]="result">
+
+          </tl-autocomplete>
         </div>
       </div>
-      <div class="col-md-6">
+      <!--<div class="col-md-6">
         <div class="group-component">
           <h5>Basic Data</h5>
           <tl-autocomplete [data]="data" [dataID]="'id'" [dataID]="'id'" [dataLabel]="'firstName'"
@@ -25,28 +32,10 @@
                            [(ngModel)]="result2"></tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result2 | json }}</span>
         </div>
-      </div>
+      </div>-->
     </div>
-    <!--<div class="row">-->
-    <!--<div class="col-md-6">-->
-    <!--<div class="group-component">-->
-    <!--<h5>Basic Big Data</h5>-->
-    <!--<tl-autocomplete [data]="bigData" [display]="['id', 'label']" [valueField]="['label']"-->
-    <!--[query]="['id', 'label']" [(ngModel)]="result3"></tl-autocomplete>-->
-    <!--<span class="returned-value"> Return Value: {{ result3 | json }}</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-md-6">-->
-    <!--<div class="group-component">-->
-    <!--<h5>Label</h5>-->
-    <!--<tl-autocomplete [data]="data" [label]="'Label:'" [labelPlacement]="'left'" [labelWidth]="70" [display]="['label']" [valueField]="['label']"-->
-    <!--[query]="['label']" [(ngModel)]="result4"></tl-autocomplete>-->
-    <!--<span class="returned-value"> Return Value: {{ result4 | json }}</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
     <div class="row">
-      <div class="col-md-6">
+      <!--<div class="col-md-6">
         <div class="group-component">
           <h5>Search Icon</h5>
           <tl-autocomplete [data]="data"
@@ -59,8 +48,8 @@
           </tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result3 | json }}</span>
         </div>
-      </div>
-      <div class="col-md-6">
+      </div>-->
+      <!--<div class="col-md-6">
         <div class="group-component">
           <h5>Clear Button</h5>
           <tl-autocomplete [data]="data"
@@ -73,33 +62,8 @@
           </tl-autocomplete>
           <span class="returned-value"> Return Value: {{ result4 | json }}</span>
         </div>
-      </div>
-      <!--<div class="col-md-6">-->
-      <!--<div class="group-component">-->
-      <!--<h5>Placeholder</h5>-->
-      <!--<tl-autocomplete [data]="data" [placeholder]="'ex.: Asia'" [display]="['label']" [valueField]="['label']"-->
-      <!--[query]="['label']" [(ngModel)]="result6"></tl-autocomplete>-->
-      <!--<span class="returned-value"> Return Value: {{ result6 | json }}</span>-->
-      <!--</div>-->
-      <!--</div>-->
+      </div>-->
     </div>
-    <!--<div class="row">-->
-    <!--<div class="col-md-6">-->
-    <!--<div class="group-component">-->
-    <!--<h5>Required</h5>-->
-    <!--<tl-autocomplete [data]="data" [label]="'Required:'" [validations]="{required: true}" [display]="['label']" [valueField]="['label']"-->
-    <!--[query]="['label']" [(ngModel)]="result7"></tl-autocomplete>-->
-    <!--<span class="returned-value"> Return Value: {{ result7 | json }}</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="col-md-6">-->
-    <!--<div class="group-component">-->
-    <!--<h5>Minimum Character To Search</h5>-->
-    <!--<tl-autocomplete [data]="data" [display]="['label']" [valueField]="['label']" [query]="['label']" [(ngModel)]="result8" [minCharToSearch]="4"></tl-autocomplete>-->
-    <!--<span class="returned-value"> Return Value: {{ result8 | json }}</span>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
   </div>
 
   <hr>

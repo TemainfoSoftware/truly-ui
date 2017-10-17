@@ -104,7 +104,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     createDocumentListener() {
-        this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
+        this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
             this.isNotRelatedWithAutocomplete( $event )
                 ? this.searching = false : this.searching = true;
             this.change.detectChanges();
@@ -147,8 +147,12 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     isNotRelatedWithAutocomplete( $event ) {
-        return !this.isTargetEqualsListBox( $event ) && !this.isTargetParentEqualsLi( $event )
-            && !this.isTargetEqualsInputSearch( $event );
+        if (!this.existAutocompleteInputInPath($event)) {
+            return true;
+        }
+        return  !this.isTargetEqualsListBox( $event ) &&
+                !this.isTargetParentEqualsLi( $event ) &&
+                !this.isTargetEqualsInputSearch( $event );
     }
 
     isTargetEqualsListBox( $event ) {
@@ -161,6 +165,15 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     isTargetEqualsInputSearch( $event ) {
         return $event.target === this.input.element.nativeElement;
+    }
+
+    existAutocompleteInputInPath($event) {
+        for (let element = 0; element < $event.path.length; element++) {
+            if (this.input.element.nativeElement === $event.path[element]) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

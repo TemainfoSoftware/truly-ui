@@ -38,6 +38,15 @@
   padding: 5px;
   box-sizing: border-box;
   list-style: none;
+  color: #7a838b;
+}
+
+.item.stripped:nth-of-type(odd){
+  background: #fff;
+}
+
+.item.stripped:nth-of-type(even){
+  background: #E9E9E9;
 }
 
 .item:focus {

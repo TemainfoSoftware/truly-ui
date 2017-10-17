@@ -77,7 +77,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() charsToSearch = 3;
 
-    @Input() addMore = true;
+    @Input() addMore = false;
 
     @Input() itensToShow = 10;
 
@@ -87,13 +87,19 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() filterEmptyMessage = 'Nothing to Show';
 
-    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
-
     @Input() rowsPage = 50;
 
     @Input() showArrows = true;
 
+    @Input() fixedHeight = true;
+
     @Input() addMoreMessage = 'Add More';
+
+    @Input() listStripped = false;
+
+    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+
+    @Output() onClickAddMore: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'list' ) listBox;
 
@@ -140,6 +146,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     private take;
 
     private listElement;
+
+    private addMoreElement;
+
+    private spanAddMoreLabel;
+
+    private spanAddMoreIcon;
 
     private spanElementId;
 
@@ -314,7 +326,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     getCursorViewPortPosition( index ) {
         this.cursorViewPortPosition =
-            this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) - this.getScrollPositionByContainer();
+            this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) -
+            this.getScrollPositionByContainer();
         this.lastScrollTopOnKey = this.itemContainer.nativeElement.scrollTop;
     }
 
@@ -338,6 +351,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 return;
             case KeyEvent.ENTER:
                 $event.preventDefault();
+                if ( document.activeElement !== this.searchElement.element.nativeElement ) {
+                    this.handleClickItem( this.data[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
+                        this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
+                }
                 break;
         }
         this.subject.next( $event.target.value );
@@ -437,9 +454,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleScrollDown() {
         this.handleScrollFinish();
-
         if (this.isDataSourceGreaterThanRowsPage()) {
-
             if ( this.lastChildElement().getBoundingClientRect() ) {
                 if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                     if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
@@ -544,7 +559,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
                     }
-                    this.createElementAddMore();
+                    this.createAddMore();
                 } );
                 if ( this.cursor > -1 ) {
                     this.getElementOfList();
@@ -554,51 +569,73 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
 
-    createElementAddMore() {
+    createAddMore() {
         if ( !this.addMore ) {
             return;
         }
+        this.createElementAddMore();
+        this.createSpanAddMore();
+        this.createSpanIconAddMore();
 
-        const addmore = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( addmore.nativeElement, 'data-indexnumber', String( ((this.datasource.length + 1) + this.skip) ) );
-        this.renderer.setAttribute( addmore.nativeElement, 'tabindex', '-1' );
-        this.renderer.setStyle( addmore.nativeElement, 'top', ((this.datasource.length) + this.skip) * this.rowHeight + 'px' );
-        this.renderer.setStyle( addmore.nativeElement, 'line-height', (this.rowHeight - 10) + 'px' );
-        this.renderer.setStyle( addmore.nativeElement, 'height', this.rowHeight + 'px' );
-        this.renderer.addClass( addmore.nativeElement, 'item' );
-        this.renderer.addClass( addmore.nativeElement, 'addMore' );
+        this.renderer.appendChild( this.listBox.nativeElement, this.addMoreElement.nativeElement );
 
-        const span = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
-        span.nativeElement.append( this.addMoreMessage );
-        this.renderer.appendChild( addmore.nativeElement, span.nativeElement );
-
-        const ion = new ElementRef( this.renderer.createElement( 'i' ) );
-        this.renderer.addClass( ion.nativeElement, 'ion-ios-plus-outline' );
-        this.renderer.appendChild( span.nativeElement, ion.nativeElement );
-
-
-        this.renderer.appendChild( this.listBox.nativeElement, addmore.nativeElement );
-
-        addmore.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+        this.addMoreElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
             this.scrollByArrows = true;
             $event.preventDefault();
             $event.stopPropagation();
+            if ( $event.keyCode === KeyEvent.ENTER ) {
+                this.handleClickAddMore();
+            }
             this.handleEventKeyDown( $event );
+        } );
+
+        this.addMoreElement.nativeElement.addEventListener( 'click', ( $event: MouseEvent ) => {
+            $event.preventDefault();
+            $event.stopPropagation();
+            this.handleClickAddMore();
         } );
 
     }
 
+    createSpanIconAddMore() {
+        this.spanAddMoreIcon = new ElementRef( this.renderer.createElement( 'i' ) );
+        this.renderer.addClass( this.spanAddMoreIcon.nativeElement, 'ion-ios-plus-outline' );
+        this.renderer.appendChild( this.spanAddMoreLabel.nativeElement, this.spanAddMoreIcon.nativeElement );
+    }
+
+    createSpanAddMore() {
+        this.spanAddMoreLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
+        this.spanAddMoreLabel.nativeElement.append( this.addMoreMessage );
+        this.renderer.appendChild( this.addMoreElement.nativeElement, this.spanAddMoreLabel.nativeElement );
+    }
+
+    createElementAddMore() {
+        this.addMoreElement = new ElementRef( this.renderer.createElement( 'li' ) );
+        this.renderer.setAttribute( this.addMoreElement.nativeElement, 'data-indexnumber',
+            String( ((this.datasource.length + 1) + this.skip) ) );
+        this.renderer.setAttribute( this.addMoreElement.nativeElement, 'tabindex', '-1' );
+        this.renderer.setStyle( this.addMoreElement.nativeElement, 'top',
+            ((this.datasource.length) + this.skip) * this.rowHeight + 'px' );
+        this.renderer.setStyle( this.addMoreElement.nativeElement, 'line-height', (this.rowHeight - 10) + 'px' );
+        this.renderer.setStyle( this.addMoreElement.nativeElement, 'height', this.rowHeight + 'px' );
+        this.renderer.addClass( this.addMoreElement.nativeElement, 'item' );
+        this.renderer.addClass( this.addMoreElement.nativeElement, 'addMore' );
+    }
+
+    handleClickAddMore() {
+        this.onClickAddMore.emit();
+    }
+
     getListBoxHeight() {
-        if (this.itensToShow < this.filtredData.length) {
-            if (this.addMore) {
-                return (this.filtredData.length * this.rowHeight) + this.rowHeight;
+        if (!this.fixedHeight) {
+            if ( (this.filtredData.length < this.itensToShow) && this.filtering ) {
+                let height = this.filtredData.length * this.rowHeight;
+                return this.addMore ? height += this.rowHeight + 2 : height += 2;
             }
-            return this.filtredData.length * this.rowHeight;
         }
         return this.itensToShow * this.rowHeight;
     }
-
 
     getElementOfList() {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
@@ -624,6 +661,9 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
         this.renderer.setStyle( this.listElement.nativeElement, 'height', this.rowHeight + 'px' );
         this.renderer.addClass( this.listElement.nativeElement, 'item' );
+        if (this.listStripped) {
+            this.renderer.addClass( this.listElement.nativeElement, 'stripped' );
+        }
     }
 
     appendListElementToListBox() {
@@ -656,6 +696,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             index: index
         } );
     }
+
 
     renderCustomList() {
         if ( this.datasource ) {
@@ -837,6 +878,11 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     resetSkipAndTake() {
         this.skip = 0;
         this.take = this.rowsPage;
+    }
+
+    public resetCursors() {
+        this.cursor = -1;
+        this.cursorViewPortPosition = -1;
     }
 
     removeChilds() {

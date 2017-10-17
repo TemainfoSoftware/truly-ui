@@ -1,6 +1,6 @@
-<div *ngIf="nothingToShow" class="nothingToShow"><i class="ion-sad-outline"></i><br>{{filterEmptyMessage}}</div>
+<div *ngIf="nothingToShow && fixedHeight" class="nothingToShow"><i class="ion-sad-outline"></i><br>{{filterEmptyMessage}}</div>
 
-<div class="listbox-wrapper" [style.overflow]="!overflow ? 'hidden' : 'auto'">
+<div class="listbox-wrapper" [style.overflow]="hiddenScroll ? 'hidden' : 'auto'">
 
     <div [@onCreateElement]="true" *ngIf="scrollTop >= 12 && showArrows" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
          (mousedown)="onShowMoreMouseIn('up')" class="showmore up">

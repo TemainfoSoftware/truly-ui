@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { TlListBox } from './listbox';
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 
+export * from './listbox';
+
 @NgModule({
     imports: [
         CommonModule,

@@ -77,6 +77,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() charsToSearch = 3;
 
+    @Input() addMore = true;
+
     @Input() itensToShow = 10;
 
     @Input() searchQuery = [];
@@ -90,6 +92,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     @Input() rowsPage = 50;
 
     @Input() showArrows = true;
+
+    @Input() addMoreMessage = 'Add More';
 
     @ViewChild( 'list' ) listBox;
 
@@ -147,7 +151,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     private firstRow;
 
-    private cursorViewPortPosition = 0;
+    private cursorViewPortPosition = -1;
 
     private lastSelected;
 
@@ -206,7 +210,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     addEventClickToListElement(row) {
-        this.listElement.nativeElement.addEventListener( 'click', () => {
+        this.listElement.nativeElement.addEventListener( 'click', ( $event ) => {
+            $event.stopPropagation();
             this.handleClickItem( this.datasource[ row ], row );
         } );
     }
@@ -324,6 +329,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     handleEventKeyDown( $event ) {
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN :
+                $event.preventDefault();
                 this.handleKeyArrowDown();
                 return;
             case KeyEvent.ARROWUP:
@@ -538,12 +544,59 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
                     }
+                    this.createElementAddMore();
                 } );
                 if ( this.cursor > -1 ) {
                     this.getElementOfList();
                 }
             } );
         }
+    }
+
+
+    createElementAddMore() {
+        if ( !this.addMore ) {
+            return;
+        }
+
+        const addmore = new ElementRef( this.renderer.createElement( 'li' ) );
+        this.renderer.setAttribute( addmore.nativeElement, 'data-indexnumber', String( ((this.datasource.length + 1) + this.skip) ) );
+        this.renderer.setAttribute( addmore.nativeElement, 'tabindex', '-1' );
+        this.renderer.setStyle( addmore.nativeElement, 'top', ((this.datasource.length) + this.skip) * this.rowHeight + 'px' );
+        this.renderer.setStyle( addmore.nativeElement, 'line-height', (this.rowHeight - 10) + 'px' );
+        this.renderer.setStyle( addmore.nativeElement, 'height', this.rowHeight + 'px' );
+        this.renderer.addClass( addmore.nativeElement, 'item' );
+        this.renderer.addClass( addmore.nativeElement, 'addMore' );
+
+        const span = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
+        span.nativeElement.append( this.addMoreMessage );
+        this.renderer.appendChild( addmore.nativeElement, span.nativeElement );
+
+        const ion = new ElementRef( this.renderer.createElement( 'i' ) );
+        this.renderer.addClass( ion.nativeElement, 'ion-ios-plus-outline' );
+        this.renderer.appendChild( span.nativeElement, ion.nativeElement );
+
+
+        this.renderer.appendChild( this.listBox.nativeElement, addmore.nativeElement );
+
+        addmore.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+            this.scrollByArrows = true;
+            $event.preventDefault();
+            $event.stopPropagation();
+            this.handleEventKeyDown( $event );
+        } );
+
+    }
+
+    getListBoxHeight() {
+        if (this.itensToShow < this.filtredData.length) {
+            if (this.addMore) {
+                return (this.filtredData.length * this.rowHeight) + this.rowHeight;
+            }
+            return this.filtredData.length * this.rowHeight;
+        }
+        return this.itensToShow * this.rowHeight;
     }
 
 

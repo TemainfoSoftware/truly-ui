@@ -2,6 +2,7 @@
     <div class="tl-autocomplete-wrapper" #autocompleteList>
         <tl-input [label]="labelName" #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
         <div class="autocomplete-listbox"
+             [@enterAnimation]="searching"
              [style.width]="input.element?.nativeElement?.offsetWidth + 'px'"
              [style.display]="searching ? 'block' : 'none'"
              [style.left]="listPosition + 'px'">
@@ -10,10 +11,14 @@
                     [id]="id"
                     [label]="label"
                     [labelDetail]="labelDetail"
+                    [listStripped]="true"
                     [itensToShow]="5"
+                    (onClickAddMore)="addMore($event)"
                     (onClickItem)="onClickItemList($event)"
                     [searchElement]="input"
                     [showArrows]="false"
+                    [fixedHeight]="false"
+                    [addMore]="true"
                     [rowHeight]="40">
             </tl-listbox>
         </div>

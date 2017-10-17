@@ -20,23 +20,34 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component,
-    forwardRef, Input, OnDestroy, OnInit, Renderer2, ViewChild
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
+    forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
+import { TlListBox } from '../listbox/listbox';
 
 @Component( {
     selector: 'tl-autocomplete',
     templateUrl: './autocomplete.html',
     styleUrls: [ './autocomplete.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        trigger(
+            'enterAnimation', [
+                state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
+                state( 'false', style( { opacity : 0, transform : 'translate(0%,-3%)', flex : '0' } ) ),
+                transition( '1 => 0', animate( '200ms' ) ),
+                transition( '0 => 1', animate( '200ms' ) ),
+            ]
+        )
+    ],
     providers : [
         { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlAutoComplete ), multi : true }
     ]
@@ -59,6 +70,10 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     @ViewChild( 'autoComplete' ) autoComplete;
 
     @ViewChild( 'autocompleteList' ) list;
+
+    @ViewChild(TlListBox) listBox: TlListBox;
+
+    @Output() onAddMore: EventEmitter<any> = new EventEmitter();
 
     private searching = true;
 
@@ -106,6 +121,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         switch ($event.keyCode) {
             case KeyEvent.ESCAPE:
                 this.searching = false;
+                this.listBox.resetCursors();
+                this.input.element.nativeElement.focus();
                 this.change.detectChanges();
                 break;
             case KeyEvent.ARROWDOWN:
@@ -116,12 +133,17 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
+    addMore() {
+        this.onAddMore.emit();
+    }
+
     onClickItemList($event) {
         this.input.element.nativeElement.value = $event[this.label];
         this.input.componentModel.model = $event;
         this.searching = false;
+        this.listBox.resetCursors();
+        this.input.element.nativeElement.focus();
         this.change.detectChanges();
-        console.log('click', $event);
     }
 
     isNotRelatedWithAutocomplete( $event ) {

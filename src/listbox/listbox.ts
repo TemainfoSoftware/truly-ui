@@ -222,9 +222,14 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     addEventClickToListElement(row) {
-        this.listElement.nativeElement.addEventListener( 'click', ( $event ) => {
-            $event.stopPropagation();
-            this.handleClickItem( this.datasource[ row ], row );
+        this.zone.run( () => {
+            this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
+                $event.stopPropagation();
+                this.handleClickItem( this.datasource[ row ], row );
+            } );
+            /*this.listElement.nativeElement.addEventListener( 'click', ( $event ) => {
+
+             } );*/
         } );
     }
 
@@ -576,25 +581,33 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.createElementAddMore();
         this.createSpanAddMore();
         this.createSpanIconAddMore();
-
         this.renderer.appendChild( this.listBox.nativeElement, this.addMoreElement.nativeElement );
+        this.createListenerKeyDownAddMore();
+        this.createListenerClickAddMore();
+    }
 
-        this.addMoreElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
-            this.scrollByArrows = true;
-            $event.preventDefault();
-            $event.stopPropagation();
-            if ( $event.keyCode === KeyEvent.ENTER ) {
+    createListenerKeyDownAddMore() {
+        this.zone.run( () => {
+            this.addMoreElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+                this.scrollByArrows = true;
+                $event.preventDefault();
+                $event.stopPropagation();
+                if ( $event.keyCode === KeyEvent.ENTER ) {
+                    this.handleClickAddMore();
+                }
+                this.handleEventKeyDown( $event );
+            } );
+        } );
+    }
+
+    createListenerClickAddMore() {
+        this.zone.run( () => {
+            this.addMoreElement.nativeElement.addEventListener( 'click', ( $event: MouseEvent ) => {
+                $event.preventDefault();
+                $event.stopPropagation();
                 this.handleClickAddMore();
-            }
-            this.handleEventKeyDown( $event );
+            } );
         } );
-
-        this.addMoreElement.nativeElement.addEventListener( 'click', ( $event: MouseEvent ) => {
-            $event.preventDefault();
-            $event.stopPropagation();
-            this.handleClickAddMore();
-        } );
-
     }
 
     createSpanIconAddMore() {

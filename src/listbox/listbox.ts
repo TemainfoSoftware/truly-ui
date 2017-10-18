@@ -227,9 +227,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 $event.stopPropagation();
                 this.handleClickItem( this.datasource[ row ], row );
             } );
-            /*this.listElement.nativeElement.addEventListener( 'click', ( $event ) => {
-
-             } );*/
         } );
     }
 
@@ -348,10 +345,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN :
                 $event.preventDefault();
+                $event.stopPropagation();
                 this.handleKeyArrowDown();
                 return;
             case KeyEvent.ARROWUP:
                 $event.preventDefault();
+                $event.stopPropagation();
                 this.handleKeyArrowUp();
                 return;
             case KeyEvent.ENTER:
@@ -459,17 +458,19 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleScrollDown() {
         this.handleScrollFinish();
-        if (this.isDataSourceGreaterThanRowsPage()) {
-            if ( this.lastChildElement().getBoundingClientRect() ) {
-                if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
-                    if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
-                        this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-                        this.take = this.lastRowViewport + this.quantityInVisibleRows;
-                        this.take = this.take > this.data.length ? this.data.length : this.take;
-                        this.renderPageData();
+        if ( this.isDataSourceGreaterThanRowsPage() ) {
+            if ( !this.filtering ) {
+                if ( this.lastChildElement().getBoundingClientRect() ) {
+                    if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
+                        if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+                            this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+                            this.take = this.lastRowViewport + this.quantityInVisibleRows;
+                            this.take = this.take > this.data.length ? this.data.length : this.take;
+                            this.renderPageData();
+                        }
+                    } else {
+                        this.handleScrollFast( 'DOWN' );
                     }
-                } else {
-                    this.handleScrollFast( 'DOWN' );
                 }
             }
         }

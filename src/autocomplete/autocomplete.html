@@ -1,6 +1,14 @@
 <div class="tl-autocomplete-box" #autoComplete>
     <div class="tl-autocomplete-wrapper" #autocompleteList>
-        <tl-input [label]="labelName" #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+        <input notform="true" class="autocomplete-model" #model="ngModel" [(ngModel)]="modelValue">
+        <tl-input #input
+                (keydown)="onKeyDown($event)"
+                (focus)="onFocusInput()"
+                (focusout)="onFocusOut($event)"
+                [label]="labelName"
+                [placeholder]="'Search...'"
+                [clearButton]="true">
+        </tl-input>
         <div class="autocomplete-listbox"
              [@enterAnimation]="searching"
              [style.width]="input.element?.nativeElement?.offsetWidth + 'px'"
@@ -11,7 +19,6 @@
                     [id]="id"
                     [label]="label"
                     [labelDetail]="labelDetail"
-                    [listStripped]="true"
                     [itensToShow]="5"
                     (onClickAddMore)="addMore($event)"
                     (onClickItem)="onClickItemList($event)"

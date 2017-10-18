@@ -43,8 +43,8 @@ import { TlListBox } from '../listbox/listbox';
             'enterAnimation', [
                 state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
                 state( 'false', style( { opacity : 0, transform : 'translate(0%,-3%)', flex : '0' } ) ),
-                transition( '1 => 0', animate( '200ms' ) ),
-                transition( '0 => 1', animate( '200ms' ) ),
+                transition( '1 => 0', animate( '100ms' ) ),
+                transition( '0 => 1', animate( '100ms' ) ),
             ]
         )
     ],
@@ -65,6 +65,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     @Input() labelName = '';
 
+    @Input() openOnFocus = false;
+
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'autoComplete' ) autoComplete;
@@ -81,7 +83,9 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private documentListener;
 
-    private inputListener;
+    private focusListener;
+
+    private keyDownListener;
 
     constructor( public renderer: Renderer2,
                  public tabIndexService: TabIndexService,
@@ -97,32 +101,62 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     ngAfterViewInit() {
         this.createDocumentListener();
-        this.createListenerInput();
+        this.handleAutoCompleteModel();
         this.listPosition = this.list.nativeElement.offsetLeft;
         this.input.labelSize ? this.listPosition += this.input.labelSize : this.listPosition += 100;
         this.searching = false;
     }
 
+    handleAutoCompleteModel() {
+        setTimeout( () => {
+            if ( this.componentModel.model ) {
+                this.input.element.nativeElement.value = this.componentModel.model[ this.label ];
+            }
+        }, 1 );
+    }
+
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
-            this.isNotRelatedWithAutocomplete( $event )
-                ? this.searching = false : this.searching = true;
-            this.change.detectChanges();
+            if ( this.isNotRelatedWithAutocomplete( $event ) ) {
+                this.searching = false;
+                this.change.detectChanges();
+                return;
+            }
+            this.handleOpenOnFocus();
         } );
     }
 
-    createListenerInput() {
-        this.inputListener = this.renderer.listen(this.input.element.nativeElement, 'keydown', ($event) => {
-           this.handleKeyDown($event);
-        });
+
+    onFocusInput() {
+        this.handleOpenOnFocus();
+    }
+
+    onFocusOut( $event ) {
+        if ( !this.isActiveElementEqualsInput() && !this.isRelatedTargetLi($event) ) {
+            this.searching = false;
+            this.change.detectChanges();
+        }
+    }
+
+    onKeyDown( $event ) {
+        this.searching = true;
+        this.change.detectChanges();
+        this.handleKeyDown( $event );
+    }
+
+    handleOpenOnFocus() {
+        if ( this.openOnFocus ) {
+            this.searching = true;
+            this.change.detectChanges();
+        }
     }
 
     handleKeyDown($event) {
         switch ($event.keyCode) {
             case KeyEvent.ESCAPE:
                 this.searching = false;
-                this.listBox.resetCursors();
                 this.input.element.nativeElement.focus();
+                this.listBox.resetCursors();
                 this.change.detectChanges();
                 break;
             case KeyEvent.ARROWDOWN:
@@ -139,10 +173,10 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     onClickItemList($event) {
         this.input.element.nativeElement.value = $event[this.label];
-        this.input.componentModel.model = $event;
+        this.componentModel.model = $event;
         this.searching = false;
-        this.listBox.resetCursors();
         this.input.element.nativeElement.focus();
+        this.listBox.resetCursors();
         this.change.detectChanges();
     }
 
@@ -150,6 +184,11 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         if (!this.existAutocompleteInputInPath($event)) {
             return true;
         }
+
+        if ( this.isTargetEqualsLi ) {
+            return false;
+        }
+
         return  !this.isTargetEqualsListBox( $event ) &&
                 !this.isTargetParentEqualsLi( $event ) &&
                 !this.isTargetEqualsInputSearch( $event );
@@ -159,12 +198,24 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
         return $event.target.className === 'list-box-container';
     }
 
+    isTargetEqualsLi( $event ) {
+        return $event.target.nodeName === 'LI';
+    }
+
     isTargetParentEqualsLi( $event ) {
         return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
     }
 
+    isRelatedTargetLi($event) {
+        return $event.relatedTarget.nodeName === 'LI';
+    }
+
     isTargetEqualsInputSearch( $event ) {
         return $event.target === this.input.element.nativeElement;
+    }
+
+    isActiveElementEqualsInput() {
+        return document.activeElement === this.input.element.nativeElement;
     }
 
     existAutocompleteInputInPath($event) {
@@ -194,6 +245,8 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     ngOnDestroy() {
         this.documentListener();
+        this.focusListener();
+        this.keyDownListener();
     }
 
 }

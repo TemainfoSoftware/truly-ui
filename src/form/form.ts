@@ -33,6 +33,7 @@ import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
 import { TlMultiSelect } from '../multiselect/multiselect';
+import { TlAutoComplete } from '../autocomplete/autocomplete';
 
 let componentFormIndex;
 
@@ -63,6 +64,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
 
     @ContentChildren( TlMultiSelect ) multiselectList: QueryList<TlMultiSelect>;
+
+    @ContentChildren( TlAutoComplete ) autoCompleteList: QueryList<TlAutoComplete>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -115,6 +118,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getDropdownListValues();
         this.getRadioButtonValues();
         this.getCheckBoxValues();
+        this.getAutoCompleteValues();
     }
 
     clickListener() {
@@ -130,6 +134,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getDropdownListValues();
         this.getRadioButtonValues();
         this.getCheckBoxValues();
+        this.getAutoCompleteValues();
     }
 
 
@@ -158,12 +163,22 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     getElementsOfForm() {
         const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
         for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
-            if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' ) {
+            if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' &&
+                !this.taggedNotForm( listFormComponents[ childFormComponents ] ) ) {
                 this.focusElements.push( listFormComponents[ childFormComponents ] );
             }
         }
         this.addButtonsOfFormToListElements();
         this.handleTabIndexComponentsOfForm();
+    }
+
+    taggedNotForm( element ) {
+        for ( let item = 0; item < element.attributes.length; item++ ) {
+            if ( element.attributes[ item ].name === 'notform' ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     validateElements() {
@@ -427,6 +442,13 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getMultiSelectValues() {
         this.multiselectList.forEach( ( item ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+        } )
+    }
+
+
+    getAutoCompleteValues() {
+        this.autoCompleteList.forEach( ( item ) => {
             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } )
     }

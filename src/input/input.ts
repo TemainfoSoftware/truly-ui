@@ -92,7 +92,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Property to labelSize
      * @type {string}
      */
-    @Input() labelSize = '100';
+    @Input() labelSize = 100;
 
     /**
      * Label of Input

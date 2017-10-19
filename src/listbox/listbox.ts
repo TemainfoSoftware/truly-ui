@@ -284,7 +284,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     listenerFocusSearchElement() {
         this.renderer.listen( this.searchElement.input.nativeElement, 'focus', ( $event ) => {
-            console.log(this.searchElement);
             if ( this.openFocus ) {
                 this.showList = true;
                 this.detectChanges();
@@ -419,7 +418,9 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                     this.cursorViewPortPosition++;
                     this.setFocusOnNextCursor();
                 }
-                !this.searchElement ? this.cursor++ : this.cursor;
+                if ( !this.searchElement ) {
+                    this.cursor++;
+                }
                 this.setLastSelected();
                 this.setLastScrollTopOnKey();
             }
@@ -437,7 +438,9 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                     this.cursorViewPortPosition--;
                     this.setFocusOnPreviousCursor();
                 }
-                !this.searchElement ? this.cursor-- : this.cursor;
+                if ( !this.searchElement ) {
+                    this.cursor--;
+                }
                 this.setLastSelected();
                 this.setLastScrollTopOnKey();
             }
@@ -460,19 +463,18 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleSearch( searchValue ) {
         this.itemContainer.nativeElement.scrollTop = 0;
-            if ( searchValue.length >= this.charsToSearch ) {
-                this.itemSelected = null;
-                this.filtredData = this.filterData(searchValue);
-                this.handleSkipAndTakeWhileSearching();
-                this.validateFiltredAsEmpty();
-
-            } else {
-                this.filtering = false;
-                this.datasource = this.data;
-                this.validateFiltredAsEmpty();
-                this.resetSkipAndTake();
-                this.renderPageData();
-            }
+        if ( searchValue.length < this.charsToSearch ) {
+            this.filtering = false;
+            this.datasource = this.data;
+            this.validateFiltredAsEmpty();
+            this.resetSkipAndTake();
+            this.renderPageData();
+        } else {
+            this.itemSelected = null;
+            this.filtredData = this.filterData( searchValue );
+            this.handleSkipAndTakeWhileSearching();
+            this.validateFiltredAsEmpty();
+        }
         this.cursor = -1;
         this.handleScrollShowMore();
     }
@@ -508,20 +510,22 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleScrollDown() {
         this.handleScrollFinish();
-        if ( this.isDataSourceGreaterThanRowsPage() ) {
-            if ( !this.filtering ) {
-                if ( this.lastChildElement().getBoundingClientRect() ) {
-                    if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
-                        if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
-                            this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-                            this.take = this.lastRowViewport + this.quantityInVisibleRows;
-                            this.take = this.take > this.data.length ? this.data.length : this.take;
-                            this.renderPageData();
-                        }
-                    } else {
-                        this.handleScrollFast( 'DOWN' );
-                    }
+        if ( !this.isDataSourceGreaterThanRowsPage() ) {
+            return;
+        }
+        if ( this.filtering ) {
+            return;
+        }
+        if ( this.lastChildElement().getBoundingClientRect() ) {
+            if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
+                if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+                    this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+                    this.take = this.lastRowViewport + this.quantityInVisibleRows;
+                    this.take = this.take > this.data.length ? this.data.length : this.take;
+                    this.renderPageData();
                 }
+            } else {
+                this.handleScrollFast( 'DOWN' );
             }
         }
     }
@@ -898,13 +902,13 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     setFocusOnNextCursor() {
-        let index = this.cursor + 1;
+        const index = this.cursor + 1;
         this.listBox.nativeElement.children[ index ].focus();
         this.handleSelectItemWhileNavigating(index);
     }
 
     setFocusOnPreviousCursor() {
-        let index = this.cursor - 1;
+        const index = this.cursor - 1;
         this.listBox.nativeElement.children[ index ].focus();
         this.handleSelectItemWhileNavigating(index);
     }

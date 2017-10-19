@@ -210,7 +210,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Constructor
      */
     constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                private renderer: Renderer2) {
+                public renderer: Renderer2) {
         super(tabIndexService, idService, nameService);
     }
 

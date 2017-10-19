@@ -24,7 +24,6 @@ import {
     forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -32,6 +31,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
+import { TlInput } from '../input/input';
 
 @Component( {
     selector: 'tl-autocomplete',
@@ -53,13 +53,11 @@ import { TlListBox } from '../listbox/listbox';
     ]
 } )
 
-export class TlAutoComplete extends ComponentHasModelBase implements AfterViewInit, OnInit, OnDestroy {
+export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
 
     @Input() data: Array<any>;
 
     @Input() id = '';
-
-    @Input() label = '';
 
     @Input() labelDetail = '';
 
@@ -87,12 +85,11 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
 
     private keyDownListener;
 
-    constructor( public renderer: Renderer2,
-                 public tabIndexService: TabIndexService,
+    constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
-                 public nameService: NameGeneratorService ) {
-        super( tabIndexService, idService, nameService );
+                 public nameService: NameGeneratorService, public renderer: Renderer2, ) {
+        super( tabIndexService, idService, nameService, renderer );
     }
 
     ngOnInit() {
@@ -110,7 +107,7 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     handleAutoCompleteModel() {
         setTimeout( () => {
             if ( this.componentModel.model ) {
-                this.input.element.nativeElement.value = this.componentModel.model[ this.label ];
+                this.input.element.nativeElement.value = this.componentModel.model[ this.labelName ];
             }
         }, 1 );
     }
@@ -172,11 +169,11 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
     }
 
     onClickItemList($event) {
-        this.input.element.nativeElement.value = $event[this.label];
+        this.input.element.nativeElement.value = $event[this.labelName];
         this.componentModel.model = $event;
-        this.searching = false;
         this.input.element.nativeElement.focus();
         this.listBox.resetCursors();
+        this.searching = false;
         this.change.detectChanges();
     }
 

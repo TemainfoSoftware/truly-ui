@@ -5,9 +5,12 @@
                 (keydown)="onKeyDown($event)"
                 (focus)="onFocusInput()"
                 (focusout)="onFocusOut($event)"
-                [label]="labelName"
-                [placeholder]="'Search...'"
-                [clearButton]="true">
+                [label]="label"
+                [labelSize]="labelSize"
+                [labelPlacement]="labelPlacement"
+                [required]="validations.required"
+                [placeholder]="placeholder"
+                [clearButton]="clearButton">
         </tl-input>
         <div class="autocomplete-listbox"
              [@enterAnimation]="searching"
@@ -17,7 +20,7 @@
             <tl-listbox
                     [data]="data"
                     [id]="id"
-                    [label]="label"
+                    [label]="labelName"
                     [labelDetail]="labelDetail"
                     [itensToShow]="5"
                     (onClickAddMore)="addMore($event)"

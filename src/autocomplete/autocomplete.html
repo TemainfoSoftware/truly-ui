@@ -1,10 +1,11 @@
 <div class="tl-autocomplete-box" #autoComplete>
     <div class="tl-autocomplete-wrapper" #autocompleteList>
-        <input notform="true" class="autocomplete-model" #model="ngModel" [(ngModel)]="modelValue">
+        <!--<input  #model="ngModel" [(ngModel)]="modelValue">-->
         <tl-input #input
                 [label]="label"
                 (keydown)="onKeyDown($event)"
                 (focusout)="onInputFocusOut($event)"
+                [name]="name"
                 [labelSize]="labelSize"
                 [iconBefore]="iconBefore"
                 [iconAfter]="iconAfter"

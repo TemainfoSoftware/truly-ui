@@ -230,16 +230,16 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         } );
     }
 
-    addEventKeyDownToListElement( customListElement? ) {
-        if ( !customListElement ) {
+    addEventKeyDownToListElement( row ) {
+        if ( !this.existCustomTemplate() ) {
             this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
                 this.scrollByArrows = true;
                 $event.preventDefault();
                 $event.stopPropagation();
-                this.handleEventKeyDown( $event );
+                this.handleEventKeyDown( $event, row );
             } );
         } else {
-            this.addCustomTemplateKeyDownListener(customListElement);
+            this.addCustomTemplateKeyDownListener(row);
         }
 
     }
@@ -274,6 +274,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.renderer.listen( this.searchElement.input.nativeElement, 'focus', ( $event ) => {
                 if (this.openFocus) {
                     this.showList = true;
+                    this.listBox.resetCursors();
                 }
             } );
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
@@ -290,8 +291,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             } );
         }
     }
-
-
 
 
     public detectChanges() {
@@ -349,7 +348,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.getCursorViewPortPosition( index );
     }
 
-    handleEventKeyDown( $event ) {
+    handleEventKeyDown( $event, row? ) {
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN :
                 $event.preventDefault();
@@ -363,17 +362,27 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 return;
             case KeyEvent.ENTER:
                 $event.preventDefault();
-                if ( document.activeElement !== this.searchElement.element.nativeElement ) {
-                    this.handleClickItem( this.data[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
-                        this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
-                }
-                break;
+                this.handleKeyEnter($event, row);
+                return;
         }
         this.subject.next( $event.target.value );
     }
 
 
+    handleKeyEnter($event, row) {
+        if (!this.existCustomTemplate()) {
+            this.handleClickItem(this.datasource[row], row);
+            return;
+        }
+        if ( document.activeElement !== this.searchElement.element.nativeElement ) {
+            this.handleClickItem( this.data[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
+                this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
+        }
+    }
+
+
     handleKeyArrowDown() {
+        this.handleShowList();
         if ( this.existChildElements() ) {
            this.handleLastScrollTopOnKey();
             if ( this.cursor < this.listBox.nativeElement.children.length - 1 ) {
@@ -389,7 +398,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 this.setLastScrollTopOnKey();
             }
         }
-
     }
 
     handleKeyArrowUp() {
@@ -414,6 +422,13 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     handleLastScrollTopOnKey() {
         if ( !this.isLastScrollTopOnKeyEqualsScroll() ) {
             this.itemContainer.nativeElement.scrollTop = this.lastScrollTopOnKey;
+        }
+    }
+
+    handleShowList() {
+        if (!this.showList) {
+            this.showList = true;
+            this.detectChanges();
         }
     }
 
@@ -563,7 +578,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                     for ( let row = 0; row < this.datasource.length; row++ ) {
                         this.createElementList( row );
                         this.addEventClickToListElement( row );
-                        this.addEventKeyDownToListElement();
+                        this.addEventKeyDownToListElement( row );
                         this.appendListElementToListBox();
                         this.createElementSpanId( row );
                         this.createElementSpanLabel( row );
@@ -652,7 +667,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         if (!this.fixedHeight) {
             if ( (this.filtredData.length < this.itensToShow) && this.filtering ) {
                 let height = this.filtredData.length * this.rowHeight;
-                return this.addMore ? height += this.rowHeight + 2 : height += 2;
+                return this.addMore ? height += this.rowHeight + 1 : height += 1;
             }
         }
         return this.itensToShow * this.rowHeight;
@@ -902,6 +917,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     public resetCursors() {
+        this.itemContainer.nativeElement.scrollTop = 0;
         this.cursor = -1;
         this.cursorViewPortPosition = -1;
     }

@@ -3,7 +3,14 @@
         <input notform="true" class="autocomplete-model" #model="ngModel" [(ngModel)]="modelValue">
         <tl-input #input
                 [label]="label"
+                (keydown)="onKeyDown($event)"
+                (focusout)="onInputFocusOut($event)"
                 [labelSize]="labelSize"
+                [iconBefore]="iconBefore"
+                [iconAfter]="iconAfter"
+                [textAfter]="textAfter"
+                [textBefore]="textBefore"
+                [textAlign]="textAlign"
                 [labelPlacement]="labelPlacement"
                 [required]="validations.required"
                 [readonly]="readonly ? true : null"
@@ -13,7 +20,7 @@
                 [clearButton]="clearButton">
         </tl-input>
         <div class="autocomplete-listbox"
-             [style.width]="input.element?.nativeElement?.offsetWidth + 'px'"
+             [style.width]="autoCompleteWidth + 'px'"
              [style.left]="listPosition + 'px'">
             <tl-listbox
                     [data]="data"
@@ -21,6 +28,7 @@
                     [label]="labelName"
                     [labelDetail]="labelDetail"
                     [itensToShow]="5"
+                    [openFocus]="openFocus"
                     (onClickAddMore)="addMore($event)"
                     (onClickItem)="onClickItemList($event)"
                     [searchElement]="input"
@@ -31,6 +39,7 @@
             </tl-listbox>
         </div>
     </div>
-
+    <br><br><br>
+    {{componentModel.model | json}}
 
 </div>

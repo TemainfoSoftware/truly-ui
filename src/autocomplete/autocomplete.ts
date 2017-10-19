@@ -79,6 +79,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     private documentListener;
 
+    private autoCompleteWidth;
+
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -94,9 +96,10 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.createDocumentListener();
         this.handleAutoCompleteModel();
         this.listPosition = this.list.nativeElement.offsetLeft;
-        this.input.labelSize ? this.listPosition += this.input.labelSize : this.listPosition += 100;
+        this.input.labelSize ? this.listPosition += parseInt(this.input.labelSize, 10) : this.listPosition += 100;
         this.listBox.showList = false;
         this.listBox.detectChanges();
+        this.getAutoCompleteWidth();
     }
 
     handleAutoCompleteModel() {
@@ -144,6 +147,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
                 this.listBox.showList = true;
                 this.listBox.detectChanges();
                 break;
+            case KeyEvent.ENTER:
+              this.handleKeyEnter($event);
         }
     }
 
@@ -151,12 +156,25 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.onAddMore.emit();
     }
 
+    onInputFocusOut($event) {
+        if (!this.isRelatedTargetLi($event)) {
+            this.listBox.showList = false;
+            this.listBox.detectChanges();
+        }
+    }
+
     onClickItemList($event) {
         this.input.element.nativeElement.value = $event[this.labelName];
         this.componentModel.model = $event;
         this.input.element.nativeElement.focus();
-        this.listBox.showList = false;
-        this.listBox.detectChanges();
+    }
+
+    handleKeyEnter($event) {
+        if (this.listBox.showList) {
+            $event.stopPropagation();
+            this.listBox.showList = false;
+            this.listBox.detectChanges();
+        }
     }
 
     isNotRelatedWithAutocomplete( $event ) {
@@ -186,15 +204,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     isRelatedTargetLi($event) {
-        return $event.relatedTarget.nodeName === 'LI';
+        if ($event.relatedTarget) {
+            return $event.relatedTarget.nodeName === 'LI';
+        }
     }
 
     isTargetEqualsInputSearch( $event ) {
         return $event.target === this.input.element.nativeElement;
-    }
-
-    isActiveElementEqualsInput() {
-        return document.activeElement === this.input.element.nativeElement;
     }
 
     existAutocompleteInputInPath($event) {
@@ -206,6 +222,11 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         return false;
     }
 
+    getAutoCompleteWidth() {
+        this.autoCompleteWidth = this.input.element.nativeElement.offsetWidth +
+            (this.input.element.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
+        this.change.detectChanges();
+    }
 
     highlight( text: string, search ): string {
         if ( typeof search !== 'object' ) {

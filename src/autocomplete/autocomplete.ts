@@ -79,10 +79,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     private documentListener;
 
-    private focusListener;
-
-    private keyDownListener;
-
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -159,7 +155,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.input.element.nativeElement.value = $event[this.labelName];
         this.componentModel.model = $event;
         this.input.element.nativeElement.focus();
-        this.listBox.resetCursors();
         this.listBox.showList = false;
         this.listBox.detectChanges();
     }
@@ -229,8 +224,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     ngOnDestroy() {
         this.documentListener();
-        this.focusListener();
-        this.keyDownListener();
     }
 
 }

@@ -2,20 +2,18 @@
     <div class="tl-autocomplete-wrapper" #autocompleteList>
         <input notform="true" class="autocomplete-model" #model="ngModel" [(ngModel)]="modelValue">
         <tl-input #input
-                (keydown)="onKeyDown($event)"
-                (focus)="onFocusInput()"
-                (focusout)="onFocusOut($event)"
                 [label]="label"
                 [labelSize]="labelSize"
                 [labelPlacement]="labelPlacement"
                 [required]="validations.required"
+                [readonly]="readonly ? true : null"
+                [disabled]="disabled ? true : null"
+                [autocomplete]="autocomplete"
                 [placeholder]="placeholder"
                 [clearButton]="clearButton">
         </tl-input>
         <div class="autocomplete-listbox"
-             [@enterAnimation]="searching"
              [style.width]="input.element?.nativeElement?.offsetWidth + 'px'"
-             [style.display]="searching ? 'block' : 'none'"
              [style.left]="listPosition + 'px'">
             <tl-listbox
                     [data]="data"

@@ -31,7 +31,7 @@ import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/map';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
@@ -44,15 +44,11 @@ import { KeyEvent } from '../core/enums/key-events';
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
         trigger(
-            'onCreateElement', [
-                transition( ':enter', [
-                    style( { opacity: 0 } ),
-                    animate( '200ms ease-in', style( { opacity: 1 } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity: 1 } ),
-                    animate( '200ms ease-out', style( { opacity: 0 } ) )
-                ] )
+            'enterAnimation', [
+                state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
+                state( 'false', style( { opacity : 0, transform : 'translate(0%,-3%)', flex : '0' } ) ),
+                transition( '1 => 0', animate( '100ms' ) ),
+                transition( '0 => 1', animate( '100ms' ) ),
             ]
         )
     ]
@@ -97,6 +93,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() listStripped = false;
 
+    @Input() openFocus = false;
+
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
     @Output() onClickAddMore: EventEmitter<any> = new EventEmitter();
@@ -110,6 +108,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     @ViewChild( ListBoxContainerDirective ) listTemplateContainer: ListBoxContainerDirective;
 
     @ContentChild( TemplateRef ) template: TemplateRef<Object>;
+
+    public  showList = true;
 
     private nothingToShow = false;
 
@@ -211,7 +211,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.scrollListener = this.renderer.listen( this.itemContainer.nativeElement, 'scroll', () => {
                 clearTimeout( this.timeScroll );
                 this.onScroll();
-                this.detectChangesScroll();
+                this.detectChanges();
                 this.timeScroll = setTimeout( () => {
                     if ( !this.scrollByArrows ) {
                         this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
@@ -271,6 +271,11 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
                 this.handleEventKeyDown( $event );
             } );
+            this.renderer.listen( this.searchElement.input.nativeElement, 'focus', ( $event ) => {
+                if (this.openFocus) {
+                    this.showList = true;
+                }
+            } );
             this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
                 setTimeout( () => {
                     this.itemContainer.nativeElement.scrollTop = 0;
@@ -286,7 +291,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    detectChangesScroll() {
+
+
+
+    public detectChanges() {
         this.zone.run( () => {
             this.change.detectChanges()
         } );
@@ -474,7 +482,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 }
             }
         }
-
     }
 
     handleScrollUp() {

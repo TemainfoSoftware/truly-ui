@@ -63,7 +63,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() labelName = '';
 
-    @Input() openOnFocus = false;
+    @Input() openFocus = false;
 
     @ViewChild( 'input' ) input;
 
@@ -74,8 +74,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     @ViewChild(TlListBox) listBox: TlListBox;
 
     @Output() onAddMore: EventEmitter<any> = new EventEmitter();
-
-    private searching = true;
 
     private listPosition;
 
@@ -101,7 +99,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.handleAutoCompleteModel();
         this.listPosition = this.list.nativeElement.offsetLeft;
         this.input.labelSize ? this.listPosition += this.input.labelSize : this.listPosition += 100;
-        this.searching = false;
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
     }
 
     handleAutoCompleteModel() {
@@ -115,51 +114,39 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-                this.searching = false;
-                this.change.detectChanges();
+                this.listBox.showList = false;
+                this.listBox.detectChanges();
                 return;
             }
             this.handleOpenOnFocus();
         } );
     }
 
-
-    onFocusInput() {
-        this.handleOpenOnFocus();
-    }
-
-    onFocusOut( $event ) {
-        if ( !this.isActiveElementEqualsInput() && !this.isRelatedTargetLi($event) ) {
-            this.searching = false;
-            this.change.detectChanges();
-        }
-    }
-
     onKeyDown( $event ) {
-        this.searching = true;
-        this.change.detectChanges();
+        this.listBox.showList = true;
+        this.listBox.detectChanges();
         this.handleKeyDown( $event );
     }
 
     handleOpenOnFocus() {
-        if ( this.openOnFocus ) {
-            this.searching = true;
-            this.change.detectChanges();
+        if ( this.openFocus ) {
+            this.listBox.showList = true;
+            this.listBox.detectChanges();
         }
     }
 
     handleKeyDown($event) {
         switch ($event.keyCode) {
             case KeyEvent.ESCAPE:
-                this.searching = false;
+                this.listBox.showList = false;
                 this.input.element.nativeElement.focus();
                 this.listBox.resetCursors();
-                this.change.detectChanges();
+                this.listBox.detectChanges();
                 break;
             case KeyEvent.ARROWDOWN:
                 $event.stopPropagation();
-                this.searching = true;
-                this.change.detectChanges();
+                this.listBox.showList = true;
+                this.listBox.detectChanges();
                 break;
         }
     }
@@ -173,8 +160,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.componentModel.model = $event;
         this.input.element.nativeElement.focus();
         this.listBox.resetCursors();
-        this.searching = false;
-        this.change.detectChanges();
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
     }
 
     isNotRelatedWithAutocomplete( $event ) {

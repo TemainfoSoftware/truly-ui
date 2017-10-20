@@ -20,7 +20,7 @@
                 [clearButton]="clearButton">
         </tl-input>
         <div class="autocomplete-listbox"
-             [style.width]="autoCompleteWidth + 'px'"
+             [style.width]="getAutoCompleteWidth() + 'px'"
              [style.left]="listPosition + 'px'">
             <tl-listbox
                     [data]="data"

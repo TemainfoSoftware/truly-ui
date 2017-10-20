@@ -1,6 +1,5 @@
 <div class="tl-autocomplete-box" #autoComplete>
     <div class="tl-autocomplete-wrapper" #autocompleteList>
-        <!--<input  #model="ngModel" [(ngModel)]="modelValue">-->
         <tl-input #input
                 [label]="label"
                 (keydown)="onKeyDown($event)"
@@ -40,7 +39,4 @@
             </tl-listbox>
         </div>
     </div>
-    <br><br><br>
-    {{componentModel.model | json}}
-
 </div>

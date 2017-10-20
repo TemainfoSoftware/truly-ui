@@ -23,7 +23,6 @@ import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
     forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -32,6 +31,7 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
 import { TlInput } from '../input/input';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 @Component( {
     selector: 'tl-autocomplete',
@@ -48,9 +48,7 @@ import { TlInput } from '../input/input';
             ]
         )
     ],
-    providers : [
-        { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlAutoComplete ), multi : true }
-    ]
+    providers : [ MakeProvider(TlAutoComplete) ]
 } )
 
 export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {

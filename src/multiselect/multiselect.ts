@@ -26,14 +26,14 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy, forwardRef, ChangeDetectorRef, AfterViewInit,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, ChangeDetectorRef, AfterViewInit,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 
 @Component( {
@@ -42,7 +42,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
     styleUrls: [ './multiselect.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlMultiSelect ), multi: true }
+        [ MakeProvider(TlMultiSelect) ]
     ]
 } )
 export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {

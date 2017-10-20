@@ -20,16 +20,16 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, QueryList, Input, AfterContentInit, forwardRef, ViewChild, AfterViewInit, Output,
+    Component, ContentChildren, QueryList, Input, AfterContentInit, ViewChild, AfterViewInit, Output,
     EventEmitter, ViewEncapsulation,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 const Orientation = {
     VERTICAL: 'vertical',
@@ -41,7 +41,7 @@ const Orientation = {
     templateUrl: './radiogroup.html',
     styleUrls: [ './radiobutton.scss'],
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlRadioGroup ), multi: true }
+        [ MakeProvider(TlRadioGroup) ]
     ]
 } )
 export class TlRadioGroup extends ComponentHasModelBase implements AfterContentInit, AfterViewInit {

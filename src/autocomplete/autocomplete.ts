@@ -65,6 +65,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() openFocus = false;
 
+    @Input() ngModel = '';
+
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'autoComplete' ) autoComplete;
@@ -104,8 +106,9 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     handleAutoCompleteModel() {
         setTimeout( () => {
-            if ( this.componentModel.model ) {
-                this.input.element.nativeElement.value = this.componentModel.model[ this.labelName ];
+            if ( this.ngModel ) {
+                this.input.componentModel.model = this.ngModel;
+                this.input.element.nativeElement.value = this.ngModel[ this.labelName ];
             }
         }, 1 );
     }
@@ -165,13 +168,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     onClickItemList($event) {
         this.input.element.nativeElement.value = $event[this.labelName];
-        this.componentModel.model = $event;
+        this.ngModel = $event;
+        this.input.componentModel.model = $event;
         this.input.element.nativeElement.focus();
     }
 
     handleKeyEnter($event) {
         if (this.listBox.showList) {
-            $event.stopPropagation();
             this.listBox.showList = false;
             this.listBox.detectChanges();
         }

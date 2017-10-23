@@ -79,8 +79,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     private documentListener;
 
-    private autoCompleteWidth;
-
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -224,9 +222,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     getAutoCompleteWidth() {
-        this.autoCompleteWidth = this.input.element.nativeElement.offsetWidth +
-            (this.input.element.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
-        this.change.detectChanges();
+        return this.input.input.nativeElement.offsetWidth +
+            (this.input.input.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
     }
 
     highlight( text: string, search ): string {

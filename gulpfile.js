@@ -93,7 +93,7 @@ gulp.task('rollup:umd', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
   // transform the files here.
     .pipe(rollup({
-
+      allowRealFiles: true,
       // Bundle's entry point
       // See "input" in https://rollupjs.org/#core-functionality
       input: `${buildFolder}/index.js`,

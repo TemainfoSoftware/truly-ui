@@ -65,6 +65,10 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() ngModel = '';
 
+    @Input() rowHeight = 30;
+
+    @Input() listStripped = false;
+
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'autoComplete' ) autoComplete;
@@ -127,7 +131,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     handleOpenOnFocus() {
-        if ( this.openFocus ) {
+        if ( this.openFocus && !this.listBox.showList) {
             this.listBox.showList = true;
             this.listBox.detectChanges();
         }

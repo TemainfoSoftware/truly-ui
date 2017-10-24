@@ -32,10 +32,11 @@
                     (onClickAddMore)="addMore($event)"
                     (onClickItem)="onClickItemList($event)"
                     [searchElement]="input"
+                    [listStripped]="listStripped"
                     [showArrows]="false"
                     [fixedHeight]="false"
                     [addMore]="true"
-                    [rowHeight]="40">
+                    [rowHeight]="rowHeight">
             </tl-listbox>
         </div>
     </div>

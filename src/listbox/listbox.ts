@@ -395,6 +395,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleOpenFocusList() {
         if (this.openFocus) {
+            this.searchElement.input.nativeElement.focus();
             this.showList = false;
             this.detectChanges();
         }
@@ -444,7 +445,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 this.setLastSelected();
                 this.setLastScrollTopOnKey();
             }
-
+            this.handleFocusOnSearchElement();
         }
     }
 
@@ -613,10 +614,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                         this.appendListElementToListBox();
                         this.createElementSpanId( row );
                         this.createElementSpanLabel( row );
-                        this.createElementSpanLabelDetail( row );
-                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
-                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabelDetail.nativeElement );
+                        if ( this.id ) {
+                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement )
+                        }
                     }
                     this.createAddMore();
                 } );
@@ -738,23 +739,36 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     createElementSpanId(row) {
-        this.spanElementId = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
-        this.spanElementId.nativeElement.append( this.datasource[ row ][ this.id ] );
+        if ( this.id ) {
+            const padding = 10;
+            this.spanElementId = new ElementRef( this.renderer.createElement( 'div' ) );
+            this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
+            this.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.rowHeight - padding) + 'px' );
+            this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
+            this.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.rowHeight - padding) + 'px' );
+            this.spanElementId.nativeElement.append( this.datasource[ row ][ this.id ] );
+        }
     }
 
     createElementSpanLabel(row) {
-        this.spanElementLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        this.spanElementLabel = new ElementRef( this.renderer.createElement( 'div' ) );
         this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
-        this.spanElementLabel.nativeElement.append( this.datasource[ row ][ this.label ] );
+        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'position', 'absolute' );
 
+        const spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
+        spanLabel.nativeElement.append( this.datasource[ row ][ this.label ] );
+        this.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
+
+        this.createElementSpanLabelDetail( row );
     }
 
-    createElementSpanLabelDetail(row) {
-        this.spanElementLabelDetail = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanElementLabelDetail.nativeElement, 'font-size', this.labelDetailSize );
-        this.spanElementLabelDetail.nativeElement.append( this.datasource[ row ][ this.labelDetail ] );
+    createElementSpanLabelDetail( row ) {
+        if ( this.labelDetail ) {
+            const spanLabelDetail = new ElementRef( this.renderer.createElement( 'span' ) );
+            this.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
+            spanLabelDetail.nativeElement.append( this.datasource[ row ][ this.labelDetail ] );
+            this.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabelDetail.nativeElement );
+        }
     }
 
     createCustomTemplate(item, index): EmbeddedViewRef<any> {
@@ -811,7 +825,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     validateProperties() {
-        if ( (!this.existCustomTemplate()) && (!this.label || !this.labelDetail || !this.id) ) {
+        if ( (!this.existCustomTemplate()) && (!this.label) ) {
             throw new EvalError( 'The properties [label] and [labelDetail] are required when the template is not defined' );
         }
         if ( !this.rowHeight ) {
@@ -911,6 +925,17 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         const index = this.cursor - 1;
         this.listBox.nativeElement.children[ index ].focus();
         this.handleSelectItemWhileNavigating(index);
+    }
+
+    handleFocusOnSearchElement() {
+        if ( !this.searchElement ) {
+            return;
+        }
+        if ( document.activeElement === this.listBox.nativeElement.children[ 0 ] ) {
+            this.searchElement.input.nativeElement.focus();
+            this.resetCursors();
+            return;
+        }
     }
 
     handleSelectItemWhileNavigating(index) {

@@ -95,6 +95,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() openFocus = false;
 
+    @Input() customInput = false;
+
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
     @Output() onClickAddMore: EventEmitter<any> = new EventEmitter();
@@ -187,7 +189,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     ngOnInit() {
         this.datasource = this.data;
         this.handleSearchQuery();
-        this.subject.debounceTime( 200 ).subscribe( searchTextValue => {
+        this.subject.debounceTime( 100 ).subscribe( searchTextValue => {
             this.handleSearch( searchTextValue );
         } );
     }
@@ -263,7 +265,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     addClickEventToCustomTemplate() {
         this.listBox.nativeElement.addEventListener( 'click', ( $event ) => {
-            this.handleClickItem( this.data[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
+            const array = !this.filtering ? this.data : this.datasource;
+            this.handleClickItem(  array[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
                 this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
         } );
     }
@@ -272,13 +275,26 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         if ( this.searchElement ) {
             this.listenerKeyDownSearchElement();
             this.listenerFocusSearchElement();
-            this.listenerChangeSearchElement();
         }
     }
 
     listenerKeyDownSearchElement() {
         this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
-            this.handleEventKeyDown( $event );
+            setTimeout( () => {
+                if ( $event.target.value.length === 0 ) {
+                    if ((this.skip !== 0) || (this.take !== this.rowsPage)) {
+                        this.filtering = false;
+                        this.resetSkipAndTake();
+                        this.renderPageData();
+                        this.validateFiltredAsEmpty();
+                        this.handleScrollShowMore();
+                        return;
+                    }
+                }else {
+                    this.handleEventKeyDown( $event );
+                }
+            }, 1 );
+
         } );
     }
 
@@ -290,22 +306,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             }
         } );
     }
-
-    listenerChangeSearchElement() {
-        this.renderer.listen( this.searchElement.input.nativeElement, 'change', ( $event ) => {
-            setTimeout( () => {
-                this.itemContainer.nativeElement.scrollTop = 0;
-                if ( $event.target.value.length === 0 ) {
-                    this.filtering = false;
-                    this.resetSkipAndTake();
-                    this.renderPageData();
-                    this.validateFiltredAsEmpty();
-                    this.handleScrollShowMore();
-                }
-            }, 1 );
-        } );
-    }
-
 
     public detectChanges() {
         this.zone.run( () => {
@@ -464,20 +464,22 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleSearch( searchValue ) {
         this.itemContainer.nativeElement.scrollTop = 0;
-        if ( searchValue.length < this.charsToSearch ) {
-            this.filtering = false;
-            this.datasource = this.data;
-            this.validateFiltredAsEmpty();
-            this.resetSkipAndTake();
-            this.renderPageData();
-        } else {
-            this.itemSelected = null;
-            this.filtredData = this.filterData( searchValue );
-            this.handleSkipAndTakeWhileSearching();
-            this.validateFiltredAsEmpty();
+        if (searchValue) {
+            if ( searchValue.length < this.charsToSearch ) {
+                this.filtering = false;
+                this.datasource = this.data;
+                this.validateFiltredAsEmpty();
+                this.resetSkipAndTake();
+                this.renderPageData();
+            } else {
+                this.itemSelected = null;
+                this.filtredData = this.filterData( searchValue );
+                this.handleSkipAndTakeWhileSearching();
+                this.validateFiltredAsEmpty();
+            }
+            this.cursor = -1;
+            this.handleScrollShowMore();
         }
-        this.cursor = -1;
-        this.handleScrollShowMore();
     }
 
     handleSkipAndTakeWhileSearching() {
@@ -673,7 +675,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     createSpanAddMore() {
         this.spanAddMoreLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
+        this.renderer.setStyle( this.spanAddMoreLabel.nativeElement, 'font-size', this.labelSize );
         this.spanAddMoreLabel.nativeElement.append( this.addMoreMessage );
         this.renderer.appendChild( this.addMoreElement.nativeElement, this.spanAddMoreLabel.nativeElement );
     }
@@ -693,6 +695,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleClickAddMore() {
         this.onClickAddMore.emit();
+        this.showList = false;
+        this.change.detectChanges();
     }
 
     getListBoxHeight() {
@@ -802,6 +806,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                         }
                     }
                 }
+                this.createAddMore();
             } );
             this.getElementOfList();
         }
@@ -969,6 +974,9 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     existCustomTemplate() {
+        if ( this.customInput ) {
+            return true;
+        }
         for (const node of this.customTemplate.nativeElement.childNodes) {
             if (node.nodeName === '#comment') {
                 return true;

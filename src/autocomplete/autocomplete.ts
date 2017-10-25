@@ -140,17 +140,21 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     handleKeyDown($event) {
         switch ($event.keyCode) {
             case KeyEvent.ESCAPE:
+                $event.preventDefault();
+                $event.stopPropagation();
                 this.listBox.showList = false;
                 this.input.element.nativeElement.focus();
                 this.listBox.resetCursors();
                 this.listBox.detectChanges();
                 break;
             case KeyEvent.ARROWDOWN:
+                $event.preventDefault();
                 $event.stopPropagation();
                 this.listBox.showList = true;
                 this.listBox.detectChanges();
                 break;
             case KeyEvent.ENTER:
+               $event.preventDefault();
               this.handleKeyEnter($event);
         }
     }

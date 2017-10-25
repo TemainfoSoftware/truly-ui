@@ -21,7 +21,7 @@
  */
 import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
-    forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild
+    forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, ViewChild
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -69,6 +69,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() listStripped = false;
 
+    @Input() customTemplate: TemplateRef<any>;
+
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'autoComplete' ) autoComplete;
@@ -92,6 +94,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     ngOnInit() {
         this.setElement( this.autoComplete, 'autocomplete' );
+        this.handleCustom();
     }
 
     ngAfterViewInit() {
@@ -102,6 +105,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.listBox.showList = false;
         this.listBox.detectChanges();
         this.getAutoCompleteWidth();
+    }
+
+    handleCustom() {
+        if (this.customTemplate) {
+            this.listBox.customInput = true;
+            this.listBox.template = this.customTemplate;
+        }
     }
 
     handleAutoCompleteModel() {
@@ -171,10 +181,12 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     onClickItemList($event) {
-        this.input.element.nativeElement.value = $event[this.labelName];
-        this.ngModel = $event;
-        this.input.componentModel.model = $event;
-        this.input.element.nativeElement.focus();
+        if ($event[this.labelName]) {
+            this.input.element.nativeElement.value = $event[this.labelName];
+            this.ngModel = $event;
+            this.input.componentModel.model = $event;
+            this.input.element.nativeElement.focus();
+        }
     }
 
     handleKeyEnter($event) {

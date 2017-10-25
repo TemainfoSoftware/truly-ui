@@ -21,7 +21,7 @@
  */
 import {
     Component, ContentChildren, QueryList, Input, AfterContentInit, ViewChild, AfterViewInit, Output,
-    EventEmitter, ViewEncapsulation,
+    EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
@@ -40,6 +40,7 @@ const Orientation = {
     selector: 'tl-radio-group',
     templateUrl: './radiogroup.html',
     styleUrls: [ './radiobutton.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         [ MakeProvider(TlRadioGroup) ]
     ]
@@ -70,6 +71,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
+                 private change: ChangeDetectorRef,
                  nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
@@ -83,6 +85,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
         this.setElement( this.radiobutton, 'radiobutton' );
         this.validateProperty();
         this.validateCheckedRadios();
+        this.change.detectChanges();
     }
 
     validateProperty() {
@@ -93,11 +96,11 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     handleInitialValue() {
         setTimeout( () => {
-            if ( !this.componentModel.model ) {
+            if ( this.modelValue ) {
+                this.handleModelValue();
+            } else {
                 this.checkFirstItem();
                 this.handleChecked();
-            }else {
-                this.handleModelValue();
             }
         }, 1 );
     }
@@ -105,8 +108,9 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     handleModelValue() {
         this.listRadioButton.toArray().forEach((value2, index, array) => {
-            if (this.componentModel.model === value2.value) {
+            if (this.modelValue === value2.value) {
                 this.itemSelected = value2;
+                this.change.detectChanges();
             }
         });
     }
@@ -157,6 +161,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
         this.modelValue = item.value;
         this.itemSelected = item;
         this.onCheckRadio.emit(this.itemSelected);
+        this.change.detectChanges();
     }
 
     focusRadio(item) {

@@ -30,6 +30,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { MakeProvider } from '../core/base/value-accessor-provider';
+import { KeyEvent } from "../core/enums/key-events";
 
 const Orientation = {
     VERTICAL: 'vertical',
@@ -121,6 +122,17 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
                 this.setItemChecked( item );
             }, 1 );
         });
+    }
+
+    handleKeyDown($event: KeyboardEvent) {
+        switch ($event.keyCode) {
+            case KeyEvent.ARROWDOWN:
+                $event.preventDefault();
+                break;
+            case KeyEvent.ARROWUP:
+                $event.preventDefault();
+                break;
+        }
     }
 
     setInitialSettings() {

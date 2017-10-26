@@ -262,15 +262,17 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
                 this.validateItemToAddTag( item );
                 break;
             case KeyEvent.ARROWDOWN:
-                this.stopEventKeyDown( $event );
+                if ( this.tags.length === 0 ) {
+                    this.stopEventKeyDown( $event );
+                }
                 this.toogleOpen( true );
                 this.handleArrowDown();
                 break;
             case KeyEvent.ARROWUP:
                 if ( this.isOpen ) {
                     this.stopEventKeyDown( $event );
-                    this.handleArrowUp();
                 }
+                this.handleArrowUp();
                 break;
             case KeyEvent.DELETE:
                 this.stopEventKeyDown( $event );

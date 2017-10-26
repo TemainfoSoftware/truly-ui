@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter,
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter,
     forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, ViewChild
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -69,8 +69,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() listStripped = false;
 
-    @Input() customTemplate: TemplateRef<any>;
-
     @ViewChild( 'input' ) input;
 
     @ViewChild( 'autoComplete' ) autoComplete;
@@ -78,6 +76,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     @ViewChild( 'autocompleteList' ) list;
 
     @ViewChild(TlListBox) listBox: TlListBox;
+
+    @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
 
     @Output() onAddMore: EventEmitter<any> = new EventEmitter();
 

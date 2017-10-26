@@ -188,6 +188,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.handleSearchQuery();
         this.subject.debounceTime( 100 ).subscribe( searchTextValue => {
             this.handleSearch( searchTextValue );
+            this.removeSelected();
             this.setCursorsToInitialList();
             this.addClassSelected( 0 );
         } );
@@ -237,7 +238,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     addEventClickToListElement(row) {
         this.zone.run( () => {
-            this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
+            this.renderer.listen( this.listElement.nativeElement, 'mousedown', ( $event ) => {
                 $event.stopPropagation();
                 this.handleClickItem( this.datasource[ row ], row );
                 this.handleOpenFocusList();
@@ -384,10 +385,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleKeyEnter() {
         this.handleAddMoreSelected();
-        if (!this.existCustomTemplate()) {
-            this.handleFiltredListNotSelected();
-            return;
-        }
+        this.handleFiltredListNotSelected();
     }
 
     handleAddMoreSelected() {
@@ -475,29 +473,33 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleSearch( searchValue ) {
-        if ( searchValue ) {
+    handleSearch( searchTerm ) {
+        if ( searchTerm ) {
             this.showList = true;
             this.detectChanges();
-            this.scrollListener();
-            this.itemContainer.nativeElement.scrollTop = 0;
+            this.setScrollTopZero();
             this.addScrollListListener();
             this.resetCursors();
             this.removeSelected();
-            if ( searchValue.length < this.charsToSearch ) {
-                this.filtering = false;
-                this.datasource = this.data;
-                this.validateFiltredAsEmpty();
-                this.resetSkipAndTake();
-                this.renderPageData();
-            } else {
-                this.itemSelected = null;
-                this.filtredData = this.filterData( searchValue );
-                this.handleSkipAndTakeWhileSearching();
-                this.validateFiltredAsEmpty();
-            }
+            this.isSearchTermLessThanCharsToSearch( searchTerm ) ?
+                this.handleSearchAsDefaultData() : this.handleSearchAsFoundData( searchTerm );
             this.handleScrollShowMore();
         }
+    }
+
+    handleSearchAsDefaultData() {
+        this.filtering = false;
+        this.datasource = this.data;
+        this.validateFiltredAsEmpty();
+        this.resetSkipAndTake();
+        this.renderPageData();
+    }
+
+    handleSearchAsFoundData( searchTerm ) {
+        this.itemSelected = null;
+        this.filtredData = this.filterData( searchTerm );
+        this.handleSkipAndTakeWhileSearching();
+        this.validateFiltredAsEmpty();
     }
 
     handleSkipAndTakeWhileSearching() {
@@ -603,12 +605,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.cursorViewPortPosition = 0;
     }
 
-    filterData(searchValue) {
+    filterData( searchTerm ) {
         const filter = [];
         this.filtering = true;
         this.data.forEach( ( item ) => {
             this.searchQuery.forEach( ( query ) => {
-                if ( item[ query ].toString().toLowerCase().trim().includes( searchValue.toLowerCase().trim() ) ) {
+                if ( item[ query ].toString().toLowerCase().trim().includes( searchTerm.toLowerCase().trim() ) ) {
                     if ( filter.indexOf( item ) === -1 ) {
                         filter.push( item );
                     }
@@ -936,6 +938,11 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.handleSelectItemWhileNavigating(index);
     }
 
+    setScrollTopZero() {
+        this.scrollListener();
+        this.itemContainer.nativeElement.scrollTop = 0;
+    }
+
     isElementAddMore( index ) {
         return this.listBox.nativeElement.children[ index ].getAttribute( 'class' ).includes( 'addMore' );
     }
@@ -981,6 +988,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     isDataSourceGreaterThanRowsPage() {
         return this.data.length > this.rowsPage;
+    }
+
+    isSearchTermLessThanCharsToSearch( searchTerm ) {
+        return searchTerm.length < this.charsToSearch;
     }
 
     existChildElements() {

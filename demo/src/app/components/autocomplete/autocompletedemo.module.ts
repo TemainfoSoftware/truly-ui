@@ -29,21 +29,27 @@ import { AutoCompleteModule } from 'truly-ui/autocomplete';
 
 import { AutoCompleteDemo } from './autocompletedemo.component';
 import { AutoCompleteDemoRoutingModule } from './autocompletedemo-routing.module';
+import { DialogService } from "../../../../../src/dialog/dialog.service";
+import { DialogModule } from "../../../../../src/dialog/index";
 
 
 @NgModule({
   declarations: [
-    AutoCompleteDemo
+    AutoCompleteDemo,
   ],
   imports: [
     AutoCompleteDemoRoutingModule,
     AutoCompleteModule,
     CommonModule,
+    DialogModule,
     FormsModule,
     HighlightJsModule
   ],
   exports: [
-    AutoCompleteDemo
-  ]
+    AutoCompleteDemo,
+  ],
+  providers: [
+    DialogService
+  ],
 })
 export class AutoCompleteDemoModule { }

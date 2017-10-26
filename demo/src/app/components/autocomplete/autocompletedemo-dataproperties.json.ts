@@ -22,69 +22,137 @@
 export const dataProperties = [
   {
     name: "data",
-    type: "object | array",
+    type: "Array<Object>",
     default: "null",
-    description: "Sets the data of the Autocomplete.",
-    options: "any object | any array"
-  },{
-    name: "data.display",
-    type: "object | array",
+    description: "Array of object used to populate the list.",
+    options: "Array<Object>"
+  },
+  {
+    name: "id",
+    type: "string",
     default: "null",
-    description: "Sets the values ​​to be displayed in the list. (Use data property values)",
-    options: "any object | any array"
-  },{
-    name: "data.query",
-    type: "object | array",
+    description: "Key of object used to describe the ID on list (Normal Usage)",
+    options: "Any Text"
+  },
+  {
+    name: "labelDetail",
+    type: "string",
     default: "null",
-    description: "Sets the values ​​to be searched. (Use data property values)",
-    options: "any object | any array"
-  },{
-    name: "data.valueField",
-    type: "array",
+    description: "Key of object used to describe the labelDetail on list (Normal Usage)",
+    options: "Any Text"
+  },
+  {
+    name: "labelName",
+    type: "string",
     default: "null",
-    description: "Set the value to be displayed in the input when the item is selected. (Use data property value)",
-    options: "any array"
+    description: "Key of object used to describe the labelName on list (Normal Usage)",
+    options: "Any Text"
+  },
+  {
+    name: "openFocus",
+    type: "boolean",
+    default: "false",
+    description: "Handle of show list when input receives focus",
+    options: "true | false"
+  },
+  {
+    name: "rowHeight",
+    type: "number",
+    default: "30",
+    description: "Value rowHeight of the list element",
+    options: "Any number"
+  },
+  {
+    name: "listStripped",
+    type: "boolean",
+    default: "false",
+    description: "Handle to show list stripped",
+    options: "true | false"
+  },
+  {
+    name: "iconBefore",
+    type: "string",
+    default: "null",
+    description: "Create an icon Before the Input.",
+    options: "ion-printer | fa fa-home | any"
+  },
+  {
+    name: "iconAfter",
+    type: "string",
+    default: "null",
+    description: "Create an icon After the Input.",
+    options: "ion-printer | fa fa-home | any"
   },
   {
     name: "label",
     type: "string",
     default: "null",
-    description: "Create a label together with Autocomplete.",
-    options: "any text"
+    description: "Create a label together with Input Element",
+    options: "Any Text"
   },
   {
-    name: "label.labelPlacement",
+    name: "labelPlacement",
     type: "string",
     default: "left",
-    description: "Sets the label position.",
-    options: "left | top"
-  },
-  {
-    name: "label.labelSize",
-    type: "number",
-    default: "100",
-    description: "Sets the label width.",
-    options: "any number"
-  },
-  {
-    name: "placeholder",
-    type: "string",
-    default: "null",
-    description: "Display a help text on autocomplete.",
-    options: "any text"
+    description: "Label Position",
+    options: "top | left"
   },
   {
     name: "clearButton",
     type: "boolean",
     default: "false",
-    description: "Display an icon to clear any Input Value.",
-    options: "any text"
+    description: "Display an icon to clear any Input Value",
+    options: "Any Text"
   },
   {
-    name: "minCharsToSearch",
-    type: "number",
-    default: "2",
-    description: "Set minimum of characters to search.",
-    options: "any number | ex: 4"
+    name: "disabled",
+    type: "boolean",
+    default: "false",
+    description: "Display an input with not selectable text (disabled)",
+    options: "Any Text"
+  },
+  {
+    name: "readonly",
+    type: "boolean",
+    default: "false",
+    description: "Display an input with selectable text (only read)",
+    options: "Any Text"
+  },
+  {
+    name: "placeholder",
+    type: "string",
+    default: "null",
+    description: "Display a help text on Input",
+    options: "Any Text"
+  },
+  {
+    name: "textBefore",
+    type: "string",
+    default: "null",
+    description: "Display a text Before the Input",
+    options: "Any Text"
+  }
+  ,
+  {
+    name: "textAfter",
+    type: "string",
+    default: "null",
+    description: "Display a text After the Input",
+    options: "Any Text"
+  }
+  ,
+  {
+    name: "autocomplete",
+    type: "string",
+    default: "off",
+    description: "Define the autocomplete of the input",
+    options: "on | off"
+  },
+  {
+    name: "textAlign",
+    type: "string",
+    default: "left",
+    description: "Define the alignment of the text inside of the input. (css text-align)",
+    options: "left|right|center|justify|initial|inherit"
   }
 ];

@@ -92,7 +92,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     @Input() listStripped = false;
 
-    @Input() openFocus = false;
+    @Input() dynamicShowHide = false;
 
     @Input() customInput = false;
 
@@ -188,6 +188,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.handleSearchQuery();
         this.subject.debounceTime( 100 ).subscribe( searchTextValue => {
             this.handleSearch( searchTextValue );
+            this.setCursorsToInitialList();
+            this.addClassSelected( 0 );
         } );
     }
 
@@ -238,7 +240,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
                 $event.stopPropagation();
                 this.handleClickItem( this.datasource[ row ], row );
-                this.handleOpenFocusList($event);
+                this.handleOpenFocusList();
             } );
         } );
     }
@@ -261,23 +263,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         if ( this.searchElement ) {
             this.subscribeClearButton();
             this.listenerKeyDownSearchElement();
-            this.listenerFocusSearchElement();
         }
     }
 
     listenerKeyDownSearchElement() {
         this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
             this.handleEventKeyDown( $event );
-        } );
-    }
-
-    listenerFocusSearchElement() {
-        this.renderer.listen( this.searchElement.input.nativeElement, 'focus', ( $event ) => {
-            if ( this.openFocus ) {
-                this.showList = true;
-                this.scrollByArrows = true;
-                this.detectChanges();
-            }
         } );
     }
 
@@ -343,19 +334,23 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleEventKeyDown( $event ) {
         switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN :
-                $event.preventDefault();
+            case KeyEvent.ESCAPE:
                 $event.stopPropagation();
-                this.handleKeyArrowDown();
+                this.handleFiltredListNotSelected();
+                this.handleOpenFocusList();
+                return;
+            case KeyEvent.ARROWDOWN :
+                this.handleKeyArrowDown( $event );
                 return;
             case KeyEvent.ARROWUP:
-                $event.preventDefault();
-                $event.stopPropagation();
-                this.handleKeyArrowUp();
+                this.handleKeyArrowUp( $event );
+                return;
+            case KeyEvent.TAB:
+                this.handleFiltredListNotSelected();
                 return;
             case KeyEvent.ENTER:
                 $event.preventDefault();
-                this.handleKeyEnter($event);
+                this.handleKeyEnter();
                 return;
             case KeyEvent.ARROWLEFT:
                 $event.stopPropagation();
@@ -387,11 +382,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
 
-    handleKeyEnter($event) {
+    handleKeyEnter() {
         this.handleAddMoreSelected();
         if (!this.existCustomTemplate()) {
             this.handleFiltredListNotSelected();
-            this.handleOpenFocusList($event);
             return;
         }
     }
@@ -404,12 +398,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleOpenFocusList($event) {
-        if (this.showList) {
-            $event.stopPropagation();
-        }
-        if (this.openFocus) {
-            this.searchElement.input.nativeElement.focus();
+    handleOpenFocusList() {
+        if (this.dynamicShowHide) {
             this.showList = false;
             this.detectChanges();
         }
@@ -421,7 +411,11 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleKeyArrowDown() {
+    handleKeyArrowDown( $event ) {
+        if ( (this.searchElement.componentModel.model) && (!this.showList) ) {
+            return;
+        }
+        $event.stopPropagation();
         this.handleShowList();
         if ( this.existChildElements() ) {
             this.handleLastScrollTopOnKey();
@@ -442,7 +436,11 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleKeyArrowUp() {
+    handleKeyArrowUp( $event ) {
+        if ( (this.searchElement.componentModel.model) && (!this.showList) ) {
+            return;
+        }
+        $event.stopPropagation();
         if ( this.existChildElements() ) {
             this.handleLastScrollTopOnKey();
             if ( this.cursor > 0 ) {
@@ -478,7 +476,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     handleSearch( searchValue ) {
-        if (searchValue) {
+        if ( searchValue ) {
             this.showList = true;
             this.detectChanges();
             this.scrollListener();
@@ -497,8 +495,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 this.filtredData = this.filterData( searchValue );
                 this.handleSkipAndTakeWhileSearching();
                 this.validateFiltredAsEmpty();
-                this.setCursorsToInitialList();
-                this.addClassSelected( 0 );
             }
             this.handleScrollShowMore();
         }

@@ -41,6 +41,11 @@
   color: #7a838b;
 }
 
+.selected {
+  background: #66CC99;
+  color: #fff;
+}
+
 .item.stripped:nth-of-type(odd){
   background: #fff;
 }

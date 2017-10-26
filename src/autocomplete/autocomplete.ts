@@ -126,7 +126,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-                console.log('up');
                 this.listBox.showList = false;
                 this.listBox.detectChanges();
                 return;
@@ -136,8 +135,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     onKeyDown( $event ) {
-        this.listBox.showList = true;
-        this.listBox.detectChanges();
         this.handleKeyDown( $event );
     }
 
@@ -164,9 +161,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
                 this.listBox.showList = true;
                 this.listBox.detectChanges();
                 break;
-            case KeyEvent.ENTER:
-               $event.preventDefault();
-              this.handleKeyEnter($event);
         }
     }
 
@@ -187,13 +181,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
             this.ngModel = $event;
             this.input.componentModel.model = $event;
             this.input.element.nativeElement.focus();
-        }
-    }
-
-    handleKeyEnter($event) {
-        if (this.listBox.showList) {
-            this.listBox.showList = false;
-            this.listBox.detectChanges();
         }
     }
 

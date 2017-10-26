@@ -30,7 +30,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { KeyEvent } from "../core/enums/key-events";
+import { KeyEvent } from '../core/enums/key-events';
 
 const Orientation = {
     VERTICAL: 'vertical',

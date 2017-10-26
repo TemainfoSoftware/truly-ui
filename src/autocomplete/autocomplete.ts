@@ -126,6 +126,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     createDocumentListener() {
         this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
+                console.log('up');
                 this.listBox.showList = false;
                 this.listBox.detectChanges();
                 return;
@@ -174,7 +175,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     onInputFocusOut($event) {
-        if (!this.isRelatedTargetLi($event)) {
+        if (!this.isRelatedTargetLi($event) && (!this.isTargetEqualsInputSearch($event))) {
             this.listBox.showList = false;
             this.listBox.detectChanges();
         }
@@ -197,14 +198,15 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     isNotRelatedWithAutocomplete( $event ) {
+        if (this.isTargetEqualsClearButton($event)) {
+            return false;
+        }
         if (!this.existAutocompleteInputInPath($event)) {
             return true;
         }
-
         if ( this.isTargetEqualsLi ) {
             return false;
         }
-
         return  !this.isTargetEqualsListBox( $event ) &&
                 !this.isTargetParentEqualsLi( $event ) &&
                 !this.isTargetEqualsInputSearch( $event );
@@ -220,6 +222,10 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     isTargetParentEqualsLi( $event ) {
         return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
+    }
+
+    isTargetEqualsClearButton( $event ) {
+        return $event.target.className.includes('-clearbutton');
     }
 
     isRelatedTargetLi($event) {

@@ -22,9 +22,9 @@
  */
 
 import {
-    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2, ViewChild, ChangeDetectionStrategy,
-    ChangeDetectorRef, DoCheck,
-    ElementRef, NgZone, ContentChild, TemplateRef, EmbeddedViewRef, IterableDiffers
+    Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
+    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, ElementRef, NgZone,
+    ContentChild, TemplateRef, EmbeddedViewRef, IterableDiffers
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -35,8 +35,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
-import set = Reflect.set;
-
 
 @Component( {
     selector: 'tl-listbox',
@@ -159,7 +157,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     private spanElementId;
 
     private spanElementLabel;
-    
+
     private lastRow;
 
     private firstRow;
@@ -209,6 +207,17 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.change.detectChanges();
     }
 
+    subscribeClearButton() {
+        this.searchElement.clear.subscribe( () => {
+            this.filtering = false;
+            this.resetSkipAndTake();
+            this.renderPageData();
+            this.validateFiltredAsEmpty();
+            this.handleScrollShowMore();
+            this.removeSelected();
+        } )
+    }
+
     addScrollListListener() {
         this.zone.runOutsideAngular( () => {
             this.scrollListener = this.renderer.listen( this.itemContainer.nativeElement, 'scroll', () => {
@@ -234,26 +243,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         } );
     }
 
-    addEventKeyDownToListElement( row ) {
-        if ( !this.existCustomTemplate() ) {
-            this.listElement.nativeElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
-                $event.preventDefault();
-                $event.stopPropagation();
-                this.handleEventKeyDown( $event, row );
-            } );
-        } else {
-            this.addCustomTemplateKeyDownListener(row);
-        }
-    }
-
-    addCustomTemplateKeyDownListener(customListElement) {
-        customListElement.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
-            $event.preventDefault();
-            $event.stopPropagation();
-            this.handleEventKeyDown( $event );
-        } );
-    }
-
     addListenerOnTemplate() {
         if ( this.existCustomTemplate() ) {
             this.addClickEventToCustomTemplate();
@@ -270,6 +259,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     addListenersSearchElement() {
         if ( this.searchElement ) {
+            this.subscribeClearButton();
             this.listenerKeyDownSearchElement();
             this.listenerFocusSearchElement();
         }
@@ -366,6 +356,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             case KeyEvent.ENTER:
                 $event.preventDefault();
                 this.handleKeyEnter();
+                return;
+            case KeyEvent.ARROWLEFT:
+                $event.stopPropagation();
+                return;
+            case KeyEvent.ARROWRIGHT:
+                $event.stopPropagation();
                 return;
             case KeyEvent.BACKSPACE:
                 this.handleKeyBackspace( $event );
@@ -628,7 +624,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                     for ( let row = 0; row < this.datasource.length; row++ ) {
                         this.createElementList( row );
                         this.addEventClickToListElement( row );
-                        this.addEventKeyDownToListElement( row );
                         this.appendListElementToListBox();
                         this.createElementSpanId( row );
                         this.createElementSpanLabel( row );
@@ -819,7 +814,6 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                             this.renderer.setStyle( element, 'position', 'absolute' );
                             this.renderer.setStyle( element, 'width', '100%' );
                             this.renderer.setStyle( element, 'height', this.rowHeight + 'px' );
-                            this.addEventKeyDownToListElement( element );
                         }
                     }
                 }
@@ -874,19 +868,15 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     setFocusOnLast() {
         const end = this.getScrollPositionByContainer() + this.quantityVisibleRows - 1;
-        const strDataIndex : string = 'li[data-indexnumber="' + end + '"]';
-        const element = document.querySelector( strDataIndex );
+        const strDataIndex: string = 'li[data-indexnumber="' + end + '"]';
         this.scrollListener();
-        // (element as HTMLElement).focus();
         this.addScrollListListener();
         this.setNewItemPosition();
     }
 
     setFocusOnFirst() {
-        const strDataIndex : string = 'li[data-indexnumber="' + this.getScrollPositionByContainer() + '"]';
-        const element = document.querySelector( strDataIndex );
+        const strDataIndex: string = 'li[data-indexnumber="' + this.getScrollPositionByContainer() + '"]';
         this.scrollListener();
-        // (element as HTMLElement).focus();
         this.addScrollListListener();
         this.setNewItemPosition();
     }

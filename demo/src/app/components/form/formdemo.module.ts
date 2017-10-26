@@ -21,6 +21,8 @@ import { RadioButtonModule } from "truly-ui/radiobutton";
 import { CheckBoxModule } from "truly-ui/checkbox";
 import { MultiSelectModule } from 'truly-ui/multiselect';
 import { DirectiveModule } from "../../../../../src/core/directives/index";
+import { AutoCompleteModule } from "../../../../../src/autocomplete/index";
+import { DumpDataService } from "../../shared/services/dumpdata";
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { DirectiveModule } from "../../../../../src/core/directives/index";
     FormDemoRoutingModule,
     FormModule,
     DialogModule,
+    AutoCompleteModule,
     FormsModule,
     ModalModule,
     HighlightJsModule,
@@ -50,6 +53,7 @@ import { DirectiveModule } from "../../../../../src/core/directives/index";
     NewPerson,
   ],
   providers: [
+    DumpDataService,
     DataFormService
   ],
   entryComponents: [

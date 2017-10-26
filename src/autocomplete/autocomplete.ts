@@ -130,6 +130,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
                 this.listBox.detectChanges();
                 return;
             }
+            this.handleOpenOnFocus();
         } );
     }
 
@@ -149,10 +150,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     handleKeyDown($event) {
-        switch ($event.keyCode) {
-            case KeyEvent.ENTER:
-                this.closeList($event);
-                break;
+        if ( $event.keyCode === KeyEvent.ENTER ) {
+            this.closeList( $event );
         }
     }
 

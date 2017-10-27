@@ -415,21 +415,32 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.handleShowList();
         if ( this.existChildElements() ) {
             this.handleLastScrollTopOnKey();
-            if ( this.cursor < this.listBox.nativeElement.children.length - 1 ) {
-                if ( this.cursorViewPortPosition >= this.quantityVisibleRows - 1 ) {
-                    this.itemContainer.nativeElement.scrollTop += this.rowHeight;
-                    this.setFocusOnNextCursor();
-                } else {
-                    this.cursorViewPortPosition++;
-                    this.setFocusOnNextCursor();
-                }
-                if ( !this.searchElement ) {
-                    this.cursor++;
-                }
+            if ( this.isCursorLessThanListLength() ) {
+                this.isCursorViewMoreThanVisibleRows() ?
+                    this.setScrollTopAndFocusNext() : this.setCursorViewNextAndFocusNext();
+                this.handleCursorWithoutSearchElement();
                 this.setLastSelected();
                 this.setLastScrollTopOnKey();
             }
         }
+    }
+
+    setScrollTopAndFocusNext() {
+        this.itemContainer.nativeElement.scrollTop += this.rowHeight;
+        this.setFocusOnNextCursor();
+    }
+
+    setCursorViewNextAndFocusNext() {
+        this.cursorViewPortPosition++;
+        this.setFocusOnNextCursor();
+    }
+
+    isCursorLessThanListLength() {
+        return this.cursor < this.listBox.nativeElement.children.length - 1;
+    }
+
+    isCursorViewMoreThanVisibleRows() {
+       return this.cursorViewPortPosition >= this.quantityVisibleRows - 1;
     }
 
     handleValueSearchElement() {
@@ -438,30 +449,43 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
+    handleCursorWithoutSearchElement() {
+        if ( !this.searchElement ) {
+            this.cursor++;
+        }
+    }
+
     handleKeyArrowUp( $event ) {
         this.handleValueSearchElement();
         $event.stopPropagation();
-
-
         if ( this.existChildElements() ) {
             this.handleLastScrollTopOnKey();
-            if ( this.cursor > 0 ) {
-                if ( this.cursorViewPortPosition <= 0 ) {
-                    this.itemContainer.nativeElement.scrollTop -= this.rowHeight;
-                    this.setFocusOnPreviousCursor();
-                } else {
-                    this.cursorViewPortPosition--;
-                    this.setFocusOnPreviousCursor();
-                }
-                if ( !this.searchElement ) {
-                    this.cursor--;
-                }
+            if ( this.isCursorGreaterThanZero() ) {
+                this.isCursorViewLessOrEqualZero() ? this.setScrollTopAndFocusPrevious() :
+                    this.setCursorViewNextAndFocusPrevious();
+                this.handleCursorWithoutSearchElement();
                 this.setLastSelected();
                 this.setLastScrollTopOnKey();
             }
         }
+    }
 
+    isCursorGreaterThanZero() {
+        return this.cursor > 0;
+    }
 
+    isCursorViewLessOrEqualZero() {
+        return this.cursorViewPortPosition <= 0;
+    }
+
+    setScrollTopAndFocusPrevious() {
+        this.itemContainer.nativeElement.scrollTop -= this.rowHeight;
+        this.setFocusOnPreviousCursor();
+    }
+
+    setCursorViewNextAndFocusPrevious() {
+        this.cursorViewPortPosition--;
+        this.setFocusOnPreviousCursor();
     }
 
     handleLastScrollTopOnKey() {
@@ -512,7 +536,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         if (this.filteredData.length) {
             this.setSkipAndTakeAsFilteredData();
             this.renderPageData();
-        }else {
+        } else {
             this.setSkipAndTakeAsDataSource();
             this.renderPageData();
         }
@@ -838,21 +862,18 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     validateFilteredAsEmpty() {
-        if ( this.datasource.length === 0 ) {
-            this.nothingToShow = true;
-            this.change.detectChanges();
-        } else {
-            this.nothingToShow = false;
-            this.change.detectChanges();
-        }
+        this.datasource.length === 0 ? this.setNothingToShow(true)
+            : this.setNothingToShow(false);
+    }
+
+    setNothingToShow(value) {
+        this.nothingToShow = value;
+        this.change.detectChanges();
     }
 
     validateProperties() {
         if ( (!this.existCustomTemplate()) && (!this.label) ) {
-            throw new EvalError( 'The properties [label] and [labelDetail] are required when the template is not defined' );
-        }
-        if ( !this.rowHeight ) {
-            throw new EvalError( 'The properties [rowHeight] is required' );
+            throw new EvalError( 'At least the property [label] are required when the Custom Template is not defined' );
         }
     }
 

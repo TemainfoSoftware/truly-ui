@@ -80,13 +80,9 @@ small {
     z-index: 1000;
     margin: 0 auto;
     padding: 0 !important;
-    border: 0 solid #ece8f0;
+    border: 1px solid #ece8f0;
+    border-top: 0;
     cursor: pointer;
-    background: #f2f2f2;
-    -webkit-box-shadow: 0 1px 1px 0 #BABABA;
-    box-shadow: 0 1px 1px 0 #BABABA;
-    -webkit-border-radius: 4px 4px;
-    border-radius: 4px 4px;
 }
 
 .select-options::-webkit-scrollbar {
@@ -96,6 +92,10 @@ small {
 .select-options::-webkit-scrollbar-thumb {
     background-color: #66CC99;
     outline: 1px solid #66CC99;
+}
+
+.selected {
+  background: #dddddd !important;
 }
 
 .tags span {
@@ -133,6 +133,7 @@ small {
 .select-options .itens {
     display: list-item;
     list-style: none;
+    color: #7a838b;
     background: #fff;
     border-top: 1px solid #ece8f0;
     border-left: 1px solid #ece8f0;

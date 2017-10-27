@@ -413,7 +413,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
         this.handleValueSearchElement();
         $event.stopPropagation();
         this.handleShowList();
-        if ( this.existChildElements() ) {
+        if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
             if ( this.isCursorLessThanListLength() ) {
                 this.isCursorViewMoreThanVisibleRows() ?
@@ -458,7 +458,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
     handleKeyArrowUp( $event ) {
         this.handleValueSearchElement();
         $event.stopPropagation();
-        if ( this.existChildElements() ) {
+        if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
             if ( this.isCursorGreaterThanZero() ) {
                 this.isCursorViewLessOrEqualZero() ? this.setScrollTopAndFocusPrevious() :
@@ -1022,7 +1022,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
         return searchTerm.length < this.charsToSearch;
     }
 
-    existChildElements() {
+    existChildrenElements() {
         return this.listBox.nativeElement.children;
     }
 

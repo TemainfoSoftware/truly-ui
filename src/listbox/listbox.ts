@@ -24,7 +24,7 @@
 import {
     Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
     ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, DoCheck, ElementRef, NgZone,
-    ContentChild, TemplateRef, EmbeddedViewRef, IterableDiffers
+    ContentChild, TemplateRef, EmbeddedViewRef, IterableDiffers, OnDestroy
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -52,7 +52,7 @@ import { KeyEvent } from '../core/enums/key-events';
         )
     ]
 } )
-export class TlListBox implements OnInit, AfterViewInit, DoCheck {
+export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
 
     @Input() id = '';
 
@@ -1061,6 +1061,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.renderPageData();
             this.change.detectChanges();
         }
+    }
+
+    ngOnDestroy() {
+        this.scrollListener();
     }
 
 }

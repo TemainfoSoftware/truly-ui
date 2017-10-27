@@ -120,7 +120,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     private subject = new Subject();
 
-    private filtredData = [];
+    private filteredData = [];
 
     private timeArrow;
 
@@ -215,7 +215,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
             this.filtering = false;
             this.resetSkipAndTake();
             this.renderPageData();
-            this.validateFiltredAsEmpty();
+            this.validateFilteredAsEmpty();
             this.handleScrollShowMore();
             this.removeSelected();
         } )
@@ -286,16 +286,16 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    getElementListOfCustomTemplate( $event ) {
-        const item = { indexDataGlobal: '', listElement: '' };
-        for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
-            if ( $event.path[ pathElement ].localName === 'li' ) {
-                item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
-                item.listElement = $event.path[ pathElement ];
-                return item;
-            }
+    getElementListOfCustomTemplate( $event ): { indexDataGlobal: string; listElement: string } {
+    const item = { indexDataGlobal: '', listElement: '' };
+    for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
+        if ( $event.path[ pathElement ].localName === 'li' ) {
+            item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
+            item.listElement = $event.path[ pathElement ];
+            return item;
         }
     }
+}
 
     getIndexOnList( listElement ) {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
@@ -328,7 +328,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     removeSelected() {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
             if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'selected' ) ) {
-                this.removeClassSelected( element );
+                return this.removeClassSelected( element );
             }
         }
     }
@@ -337,7 +337,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         switch ( $event.keyCode ) {
             case KeyEvent.ESCAPE:
                 $event.stopPropagation();
-                this.handleFiltredListNotSelected();
+                this.handleFilteredListNotSelected();
                 this.handleOpenFocusList();
                 return;
             case KeyEvent.ARROWDOWN :
@@ -347,7 +347,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 this.handleKeyArrowUp( $event );
                 return;
             case KeyEvent.TAB:
-                this.handleFiltredListNotSelected();
+                this.handleFilteredListNotSelected();
                 return;
             case KeyEvent.ENTER:
                 $event.preventDefault();
@@ -373,7 +373,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                     this.filtering = false;
                     this.resetSkipAndTake();
                     this.renderPageData();
-                    this.validateFiltredAsEmpty();
+                    this.validateFilteredAsEmpty();
                     this.handleScrollShowMore();
                     this.removeSelected();
                     return;
@@ -385,7 +385,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     handleKeyEnter() {
         this.handleAddMoreSelected();
-        this.handleFiltredListNotSelected();
+        this.handleFilteredListNotSelected();
     }
 
     handleAddMoreSelected() {
@@ -403,16 +403,14 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleFiltredListNotSelected() {
-        if (this.showList && this.filtredData.length > 0 && !this.itemSelected) {
+    handleFilteredListNotSelected() {
+        if (this.showList && this.filteredData.length > 0 && !this.itemSelected) {
             this.handleClickItem(this.datasource[0], 0);
         }
     }
 
     handleKeyArrowDown( $event ) {
-        if ( (this.searchElement.componentModel.model) && (!this.showList) ) {
-            return;
-        }
+        this.handleValueSearchElement();
         $event.stopPropagation();
         this.handleShowList();
         if ( this.existChildElements() ) {
@@ -434,11 +432,17 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    handleKeyArrowUp( $event ) {
+    handleValueSearchElement() {
         if ( (this.searchElement.componentModel.model) && (!this.showList) ) {
             return;
         }
+    }
+
+    handleKeyArrowUp( $event ) {
+        this.handleValueSearchElement();
         $event.stopPropagation();
+
+
         if ( this.existChildElements() ) {
             this.handleLastScrollTopOnKey();
             if ( this.cursor > 0 ) {
@@ -456,6 +460,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
                 this.setLastScrollTopOnKey();
             }
         }
+
+
     }
 
     handleLastScrollTopOnKey() {
@@ -490,21 +496,21 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     handleSearchAsDefaultData() {
         this.filtering = false;
         this.datasource = this.data;
-        this.validateFiltredAsEmpty();
+        this.validateFilteredAsEmpty();
         this.resetSkipAndTake();
         this.renderPageData();
     }
 
     handleSearchAsFoundData( searchTerm ) {
         this.itemSelected = null;
-        this.filtredData = this.filterData( searchTerm );
+        this.filteredData = this.filterData( searchTerm );
         this.handleSkipAndTakeWhileSearching();
-        this.validateFiltredAsEmpty();
+        this.validateFilteredAsEmpty();
     }
 
     handleSkipAndTakeWhileSearching() {
-        if (this.filtredData.length) {
-            this.setSkipAndTakeAsFiltredData();
+        if (this.filteredData.length) {
+            this.setSkipAndTakeAsFilteredData();
             this.renderPageData();
         }else {
             this.setSkipAndTakeAsDataSource();
@@ -513,14 +519,13 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     handleScrollShowMore() {
-        const itens = this.datasource.length;
-        if ( itens > 10 ) {
-            this.showMore = true;
-            this.change.detectChanges();
-        } else {
-            this.showMore = false;
-            this.change.detectChanges();
-        }
+        this.datasource.length > 10 ?
+            this.setShowMore( true ) : this.setShowMore( false );
+    }
+
+    setShowMore( value ) {
+        this.showMore = value;
+        this.change.detectChanges();
     }
 
     handleSearchQuery() {
@@ -621,7 +626,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     renderPageData() {
-        this.filtering ? this.datasource = this.filtredData.slice( this.skip, this.take )
+        this.filtering ? this.datasource = this.filteredData.slice( this.skip, this.take )
             : this.datasource = this.data.slice( this.skip, this.take );
         this.existCustomTemplate() ? this.renderCustomList() : this.renderList();
     }
@@ -630,19 +635,14 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         if ( this.datasource ) {
             requestAnimationFrame( () => {
                 this.zone.runOutsideAngular( () => {
-                    if ( this.listBox.nativeElement.children.length > 0 ) {
-                        this.removeChilds();
-                    }
+                    this.handleRemoveListChildren();
                     for ( let row = 0; row < this.datasource.length; row++ ) {
                         this.createElementList( row );
                         this.addEventClickToListElement( row );
                         this.appendListElementToListBox();
-                        this.createElementSpanId( row );
                         this.createElementSpanLabel( row );
                         this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
-                        if ( this.id ) {
-                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement )
-                        }
+                        this.handleCreationIdElement( row );
                     }
                     this.createAddMore();
                 } );
@@ -653,6 +653,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
+    handleCreationIdElement( row ) {
+        if ( this.id ) {
+            this.createElementSpanId( row );
+            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement )
+        }
+    }
 
     createAddMore() {
         if ( !this.addMore ) {
@@ -709,8 +715,8 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
 
     getListBoxHeight() {
         if (!this.fixedHeight) {
-            if ( (this.filtredData.length < this.itensToShow) && this.filtering ) {
-                let height = this.filtredData.length * this.rowHeight;
+            if ( (this.filteredData.length < this.itensToShow) && this.filtering ) {
+                let height = this.filteredData.length * this.rowHeight;
                 return this.addMore ? height += this.rowHeight + 1 : height += 1;
             }
         }
@@ -755,15 +761,13 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
     }
 
     createElementSpanId(row) {
-        if ( this.id ) {
-            const padding = 10;
-            this.spanElementId = new ElementRef( this.renderer.createElement( 'div' ) );
-            this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
-            this.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.rowHeight - padding) + 'px' );
-            this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
-            this.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.rowHeight - padding) + 'px' );
-            this.spanElementId.nativeElement.append( this.datasource[ row ][ this.id ] );
-        }
+        const padding = 10;
+        this.spanElementId = new ElementRef( this.renderer.createElement( 'div' ) );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.rowHeight - padding) + 'px' );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
+        this.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.rowHeight - padding) + 'px' );
+        this.spanElementId.nativeElement.append( this.datasource[ row ][ this.id ] );
     }
 
     createElementSpanLabel(row) {
@@ -794,13 +798,10 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         } );
     }
 
-
     renderCustomList() {
         if ( this.datasource ) {
             this.zone.runOutsideAngular( () => {
-                if ( this.listBox.nativeElement.children.length > 0 ) {
-                    this.removeChilds();
-                }
+                this.handleRemoveListChildren();
                 for ( let row = 0; row < this.datasource.length; row++ ) {
                     const nodes = this.createCustomTemplate( this.datasource[ row ], row );
                     this.listTemplateContainer.viewList.insert( nodes );
@@ -823,6 +824,12 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
+    handleRemoveListChildren() {
+        if ( this.listBox.nativeElement.children.length > 0 ) {
+            this.removeChildren();
+        }
+    }
+
     validateSkipAndTakeRange() {
         if ( this.skip < 0 ) {
             this.skip = 0;
@@ -830,7 +837,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         }
     }
 
-    validateFiltredAsEmpty() {
+    validateFilteredAsEmpty() {
         if ( this.datasource.length === 0 ) {
             this.nothingToShow = true;
             this.change.detectChanges();
@@ -924,9 +931,9 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.take = this.datasource.length;
     }
 
-    setSkipAndTakeAsFiltredData() {
+    setSkipAndTakeAsFilteredData() {
         this.skip = 0;
-        this.take = this.filtredData.length;
+        this.take = this.filteredData.length;
     }
 
     setFocusOnNextCursor() {
@@ -1021,7 +1028,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck {
         this.cursorViewPortPosition = -1;
     }
 
-    removeChilds() {
+    removeChildren() {
         while ( this.listBox.nativeElement.hasChildNodes() ) {
             this.listBox.nativeElement.removeChild( this.listBox.nativeElement.lastChild );
         }

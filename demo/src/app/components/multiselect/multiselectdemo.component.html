@@ -1,0 +1,207 @@
+<div class="router-outlet">
+  <!--<span class="returned-value">Returned Value:  <label class="label label-info" (click)="show()">Show</label></span>-->
+  <div class="header-title-demo">
+    <h1 class="title"> MultiSelect <span class="module-name"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></p>
+    <p class="text-content">MultiSelect is a component where exists a list of itens to search and select like tags.</p>
+  </div>
+  <hr>
+  <div class="showcase">
+    <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <tl-multiselect
+              [data]="dataNoSourceBasic"
+              (onClickTag)="onClickTag($event)"
+              (onRemoveTag)="onRemoveTag($event)"
+              [labelTag]="'firstName'"
+              [label]="'Basic Usage'"
+              [(ngModel)]="dataNoSourceBasicModel"
+              [detail]="'email'"
+              [sortAlphabetically]="true"
+              [query]="'firstName'">
+          </tl-multiselect>
+            <span style="margin-left: 120px" class="returned-value" (click)="show()">Show Model Value</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <tl-multiselect
+            [data]="dataCustomColors"
+            [color]="'color'"
+            [label]="'With Custom Colors'"
+            [defaultColorTag]="'#0090d9'"
+            [detailOnTag]="true"
+            [labelTag]="'firstName'"
+            [detail]="'email'"
+            [query]="'firstName'">
+          </tl-multiselect>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <tl-multiselect
+            [data]="dataCustomDetail"
+            [detailOnTag]="true"
+            [label]="'With Detail on Tag'"
+            [labelTag]="'firstName'"
+            [detail]="'email'"
+            [query]="'firstName'">
+          </tl-multiselect>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <tl-multiselect
+            [data]="dataCustomIcon"
+            [icon]="'icon'"
+            [label]="'With Icons'"
+            [labelTag]="'firstName'"
+            [detail]="'email'"
+            [defaultColorTag]="'#ff9102'"
+            [query]="'firstName'">
+          </tl-multiselect>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <h3 class="title">Important</h3>
+  <p> There's <code>TWO</code> ways to use MultiSelect, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
+    you want to. For Example:
+  <textarea highlight-js [options]="{}" [lang]="'typescript'">
+this.dataNoSourceBasic =
+      [
+        { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
+        { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
+        { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
+        { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+        { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
+      ];
+    </textarea>
+
+  <p> The other one is a <code>Complex Array of Objects</code> where you <code>must</code> must pass a pattern to the component.
+    The Keys <code>[source]</code> and <code>[effect]</code>. In this case you can personalize each tag. For Example:
+  </p>
+
+  <textarea highlight-js [options]="{}" [lang]="'typescript'">
+    this.dataCustomColors =
+      [
+        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#DC136C' } },
+        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#84B082' } },
+        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#353A47' } },
+        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: {color: '#885A5A' } },
+        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', effect: {color: '#F7C1BB' } } }
+      ];
+    </textarea>
+
+  <p> The Keys inside those objects can be custom, referenced through the properties.</p>
+
+  <div class="setup">
+    <h3 class="title">Properties</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td><span class="badge">{{ item.type }}</span></td>
+          <td><code>{{ item.default }}</code></td>
+          <td>{{ item.description }}</td>
+          <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of events; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <h5 class="title">Basic Usage</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-multiselect
+  [data]="dataNoSourceBasic"
+  (getSelecteds)="getSelecteds($event)"
+  (onClickTag)="onClickTag($event)"
+  (onRemoveTag)="onRemoveTag($event)"
+  [labelTag]="'firstName'"
+  [label]="'Basic Usage With Model'"
+  [(ngModel)]="dataNoSourceBasicModel"
+  [detail]="'email'"
+  [sortAlphabetically]="true"
+  [query]="'firstName'">
+</tl-multiselect>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Custom Colors</h5>
+      <textarea highlight-js [options]="{}" [lang]="'html'">
+<tl-multiselect
+  [data]="dataCustomColors"
+  [color]="'color'"
+  [label]="'With Custom Colors'"
+  [defaultColorTag]="'#0090d9'"
+  [detailOnTag]="true"
+  [labelTag]="'firstName'"
+  [detail]="'email'"
+  [query]="'firstName'">
+</tl-multiselect>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Detail on Tag</h5>
+      <textarea highlight-js [options]="{}" [lang]="'html'">
+<tl-multiselect
+  [data]="dataCustomDetail"
+  [detailOnTag]="true"
+  [label]="'With Detail on Tag'"
+  [labelTag]="'firstName'"
+  [detail]="'email'"
+  [query]="'firstName'">
+</tl-multiselect>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">With Icon</h5>
+      <textarea highlight-js [options]="{}" [lang]="'html'">
+<tl-multiselect
+  [data]="dataCustomIcon"
+  [icon]="'icon'"
+  [label]="'With Icon'"
+  [labelTag]="'firstName'"
+  [detail]="'email'"
+  [defaultColorTag]="'#ff9102'"
+  [query]="'firstName'">
+</tl-multiselect>
+    </textarea>
+    </div>
+  </div>
+</div>

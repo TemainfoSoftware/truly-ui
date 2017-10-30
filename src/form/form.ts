@@ -32,6 +32,8 @@ import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
+import { TlMultiSelect } from '../multiselect/multiselect';
+import { TlAutoComplete } from '../autocomplete/autocomplete';
 
 let componentFormIndex;
 
@@ -49,6 +51,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     @Input() messageDialogConfirmation = 'Are you sure ?';
 
+    @Input() submitButtonShortcut = '';
+
+    @Input() cancelButtonShortcut = '';
+
     @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
 
     @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
@@ -56,6 +62,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     @ContentChildren( TlRadioGroup ) radioButtonList: QueryList<TlRadioGroup>;
 
     @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
+
+    @ContentChildren( TlMultiSelect ) multiselectList: QueryList<TlMultiSelect>;
+
+    @ContentChildren( TlAutoComplete ) autoCompleteList: QueryList<TlAutoComplete>;
 
     @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -81,6 +91,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     private listeners = [];
 
+    private time;
+
     constructor( private renderer: Renderer2, private dialogService: DialogService,
                  private cdr: ChangeDetectorRef ) {
     }
@@ -94,38 +106,44 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.getElementsOfForm();
         this.getComponentsWithValidations();
         this.validateElements();
-        this.listenButtonFormCancel();
-        this.listenButtonFormOK();
         this.listenComponentWithValidations();
+        this.clickListener();
     }
 
 
-    listenButtonFormOK() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keyup', ( $event: KeyboardEvent ) => {
+    onKeyDownButtonOk($event) {
+        $event.stopPropagation();
+        this.getInputValues();
+        this.getMultiSelectValues();
+        this.getDropdownListValues();
+        this.getRadioButtonValues();
+        this.getCheckBoxValues();
+        this.getAutoCompleteValues();
+    }
+
+    clickListener() {
+        this.renderer.listen(this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
             $event.stopPropagation();
-            this.getInputValues();
-            this.getDropdownListValues();
-            this.getRadioButtonValues();
-            this.getCheckBoxValues();
-        } );
+            this.onClickButtonOk();
+        });
     }
 
-
-    listenButtonFormCancel() {
-        this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', ( $event: MouseEvent ) => {
-            $event.stopPropagation();
-            this.getInputValues();
-            this.getDropdownListValues();
-            this.getRadioButtonValues();
-            this.getCheckBoxValues();
-        } );
+    onClickButtonOk() {
+        this.getInputValues();
+        this.getMultiSelectValues();
+        this.getDropdownListValues();
+        this.getRadioButtonValues();
+        this.getCheckBoxValues();
+        this.getAutoCompleteValues();
     }
+
 
     listenComponentWithValidations() {
         this.componentsWithValidations.forEach( ( item, index, array ) => {
-            this.renderer.listen( item.element.nativeElement, 'blur', $event => {
+            const listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
                 this.validateElements();
             } );
+            this.listeners.push( listener );
         } );
     }
 
@@ -145,7 +163,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     getElementsOfForm() {
         const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
         for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
-            if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' ) {
+            if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' &&
+                !this.taggedNotForm( listFormComponents[ childFormComponents ] ) ) {
                 this.focusElements.push( listFormComponents[ childFormComponents ] );
             }
         }
@@ -153,8 +172,17 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         this.handleTabIndexComponentsOfForm();
     }
 
+    taggedNotForm( element ) {
+        for ( let item = 0; item < element.attributes.length; item++ ) {
+            if ( element.attributes[ item ].name === 'notform' ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     validateElements() {
-        setTimeout( () => {
+        this.time = setTimeout( () => {
             for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
                 this.validForm = true;
                 this.cdr.detectChanges();
@@ -185,11 +213,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     setTabIndex(element) {
         if ( !element.tabIndex ) {
             componentFormIndex++;
-            if ( this.notExistTabIndexInserted() ) {
-                element.setAttribute( 'tabIndex', componentFormIndex );
-            } else {
-                this.setTabIndex(element);
-            }
+            this.notExistTabIndexInserted() ? element.setAttribute( 'tabIndex', componentFormIndex )
+                : this.setTabIndex(element);
         }
     }
 
@@ -390,29 +415,42 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getInputValues() {
         this.inputList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getDropdownListValues() {
          this.dropdownList.forEach( ( item ) => {
-            this.formResult[ item.label.toLowerCase() ] = item.componentModel.model;
+             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
          } );
     }
 
 
     getRadioButtonValues() {
-        this.radioButtonList.forEach( ( item, index, array ) => {
-            this.formResult[ 'gender' ] = item.componentModel.model;
+        this.radioButtonList.forEach( ( item ) => {
+            this.formResult[ item.nameGroup.trim().toLowerCase() ] = item.componentModel.model;
         } );
     }
 
 
     getCheckBoxValues() {
-        this.checkboxList.forEach( ( item, index, array ) => {
-            this.formResult[ 'notify' ] = item.componentModel.model;
+        this.checkboxList.forEach( ( item ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
         } );
+    }
+
+    getMultiSelectValues() {
+        this.multiselectList.forEach( ( item ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+        } )
+    }
+
+
+    getAutoCompleteValues() {
+        this.autoCompleteList.forEach( ( item ) => {
+            this.formResult[ item.name.trim().toLowerCase() ] = item.input.componentModel.model;
+        } )
     }
 
     hasValueOnForm() {
@@ -426,7 +464,16 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
 
     ngOnDestroy() {
-
+        clearTimeout(this.time);
+        this.destroyListeners();
+        this.cdr.detach();
     }
+
+    destroyListeners() {
+        this.listeners.forEach((value) => {
+            value();
+        })
+    }
+
 }
 

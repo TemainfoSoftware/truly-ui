@@ -19,31 +19,51 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import * as json from './chatlistdemo-dataproperties.json';
+import { DumpDataService } from "../../shared/services/dumpdata";
+import { ChatListService } from "../../../../../src/chatlist/chatlist.service";
 
 @Component( {
-    selector: 'tl-datatable-column',
-    template: ''
+  selector : 'app-chat',
+  templateUrl : './chatlistdemo.component.html',
+  styleUrls : [ './chatlistdemo.component.scss' ]
 } )
-export class TlDatatableColumn implements OnInit {
+export class ChatListDemo {
 
-    @Input( 'field' ) field = '';
+  private dataTableProperties;
 
-    @Input( 'title' ) title = '';
+  private dataSource = [];
 
-    @Input( 'alignment' ) alignment = 'center';
+  private selected;
 
-    constructor() {}
 
-    ngOnInit() {
-        this.getTitle();
-    }
+  constructor(private dataDumpService: DumpDataService, private chatListService: ChatListService) {
+    this.dataTableProperties = json.dataProperties;
+    this.dataSource = this.dataDumpService.createRandomData(100);
 
-    getTitle() {
-        if (!this.title) {
-            if (this.field) {
-                this.title = this.field.toUpperCase();
-            }
-        }
-    }
+  }
+
+  clickChat($event) {
+    this.selected = $event;
+  }
+
+  changeBusy() {
+    this.chatListService.changeStatus(this.selected, 'Busy');
+  }
+
+  changeOnline() {
+    this.chatListService.changeStatus(this.selected, 'Online');
+  }
+
+  changeOffline() {
+    this.chatListService.changeStatus(this.selected, 'Offline');
+  }
+
+  changeAway() {
+    this.chatListService.changeStatus(this.selected, 'Away');
+  }
+
 }
+

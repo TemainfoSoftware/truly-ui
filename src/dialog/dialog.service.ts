@@ -36,7 +36,7 @@ import { ConfirmationOptions } from './dialog-confirmation/confirmation-options'
 import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
-import { TlBackdrop } from '../backdrop/backdrop';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
 
 @Injectable()
 export class DialogService {
@@ -44,6 +44,10 @@ export class DialogService {
     public modalResult;
 
     constructor( public modalService: ModalService ) {}
+
+    setView(view) {
+        this.modalService.setView(view);
+    }
 
     info( message, callback, options?: InfoOptions ) {
         this.setModalOptions( ModalInfoOptions, options );

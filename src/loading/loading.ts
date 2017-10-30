@@ -79,7 +79,11 @@ export class TlLoading implements OnChanges, AfterViewInit {
     }
 
     private show() {
+        if ( this.happenedResize() ) {
+           this.buildLoadingElement();
+        }
         this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'blur(1px)');
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
         this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'table');
     }
 
@@ -92,12 +96,16 @@ export class TlLoading implements OnChanges, AfterViewInit {
         this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
     }
 
-    private buildLoadingElement() {
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'position', 'absolute');
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
-       this.renderer.setStyle(this.loadingElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
+    private happenedResize() {
+        if (this.loadingElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
+        if (this.loadingElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
+    }
+
+   private buildLoadingElement() {
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'position', 'absolute');
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.loadingElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
     }
 }

@@ -1,90 +1,18 @@
-@import "../core/core";
-
-table{
-  border-collapse: inherit;
-}
+$border-color : #DCDCDC;
 
 .tl-datatable-box{
-  border-left: 1px #E5E5E5 solid;
-  border-top: 1px #E5E5E5 solid;
-  border-bottom: 1px #E5E5E5 solid;
-  &.-borderleft{
-    border-right: 1px #E5E5E5 solid;
-  }
-
+  width: 100%;
+  border-left: 1px $border-color solid;
+  border-top: 1px $border-color solid;
+  border-bottom: 1px $border-color solid;
+  box-sizing: content-box;
 }
 
-.datatable{
-  border-spacing: 0;
-  border-right: 1px #E5E5E5 solid;
-  width: 100%;
+.ui-datatable-table{
   font-family: "RobotoRegular",Helvetica,Arial,sans-serif;
   text-align: center;
+  width: 100%;
   table-layout: fixed;
-}
-
-.datatableHeader{
-  color: #656565;
-  font-size: 13px;
-  table-layout: fixed;
-
-  > .row{
-    height: 30px;
-    width: 100%;
-    background: #F6F6F6;
-    border: 1px #6E6E6E solid;
-  }
-  > .row .cel{
-    width: 100%;
-    border-right: 1px #E5E5E5 solid;
-    border-bottom: 1px #E5E5E5 solid;
-
-  }
-  >.row .cel.-textleft{
-    text-align: left;
-  }
-  >.row .cel.-textright{
-    text-align: right;
-  }
-  >.row .cel.-textcenter{
-    text-align: center;
-  }
-  > .row .cel:last-child{
-    border-right: none
-  }
-}
-
-.datatableBody{
-  table-layout: fixed;
-
-  > .row{
-    height: 25px;
-    font-size: 13px;
-    background: #F5F5F5;
-    outline: none;
-  }
-  > .row .cel{
-    width: 200px;
-
-    border-right: 1px #E5E5E5 solid;
-  }
-  >.row .cel.-textleft{
-    text-align: left;
-  }
-  >.row .cel.-textright{
-    text-align: right;
-  }
-  >.row .cel.-textcenter{
-    text-align: center;
-  }
-  > .row .cel:last-child{
-    border-right: none
-  }
-  > .row:nth-child(odd){
-   background: #FFFFFF;
-  }
-  > .row:focus{
-    background: #66CC99 !important;
-    color: #FFF;
-  }
+  border-spacing: 0;
+  border-collapse: collapse;
 }

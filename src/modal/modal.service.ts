@@ -22,8 +22,7 @@
 import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } from '@angular/core';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
-import { TlBackdrop } from '../backdrop/backdrop';
-import set = Reflect.set;
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
 
 let lastZIndex = 1;
 
@@ -151,6 +150,9 @@ export class ModalService implements OnDestroy {
     }
 
     close( component ) {
+        if ( this.view === undefined || component === undefined ) {
+            return;
+        }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
         this.handleModalForms( component );
         this.removeOfTheList();
@@ -227,10 +229,8 @@ export class ModalService implements OnDestroy {
     }
 
     removeOfTheList() {
-        setTimeout( () => {
             this.componentList.splice( this.componentList.length - 1, 1 );
             this.sortComponentsByZIndex();
-        }, 1 );
     }
 
     removeBackdrop() {
@@ -245,15 +245,20 @@ export class ModalService implements OnDestroy {
         } );
     }
 
-    execCallBack( result: any, component? ) {
-        this.setMdResult( result );
-        if ( this.isResultUndefined() ) {
-            return;
-        }
-        if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
-            this.close(component);
-        }
-        this.resultCallback();
+    execCallBack( result: any, component? ): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.setMdResult( result );
+            if ( this.isResultUndefined() ) {
+                return;
+            }
+            if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
+                this.close(component);
+            }
+            setTimeout(() => {
+                this.resultCallback();
+                resolve();
+            }, 500)
+        });
     }
 
     isMdResultEqualsNone( mdResult: ModalResult ) {

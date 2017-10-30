@@ -1,6 +1,7 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">ListBox</h1>
+    <h1 class="title">ListBox <span class="module-name"><code><u>Module Name</u>: <strong>ListBoxModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ListBoxModule</strong></code></p>
     <p class="text-content">ListBox is a component where exists a list of itens to search and select.</p>
     <p class="text-content">Truly UI has two diferent types of list, the default and with Custom Template, like shown below.</p>
   </div>
@@ -38,7 +39,7 @@
             [label]="'firstName'"
             [labelDetail]="'city'"
             [rowHeight]="50">
-            <ng-template let-item="item" let-index="index">
+            <ng-template let-item="item" let-index="index" >
               <li class="list-template-demo">
                 <img class="img-circle" src="../assets/img/avatar.png"
                      width="30">{{item.firstName}} - <span>{{item.lastName}}</span>

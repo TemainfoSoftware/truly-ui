@@ -20,16 +20,31 @@
  SOFTWARE.
  */
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, DoCheck, Input, KeyValueDiffers, OnInit, ViewChild } from '@angular/core';
 import { ModalService } from '../modal.service';
 import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
+import { animate, style, transition, trigger } from '@angular/animations';
 
  @Component({
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
-     styleUrls: ['./container-modal.scss']
+     styleUrls: ['./container-modal.scss'],
+     animations: [
+         trigger(
+             'onCreateElement', [
+                 transition( ':enter', [
+                     style( { opacity: 0 } ),
+                     animate( '100ms ease-in', style( { opacity: 1 } ) )
+                 ] ),
+                 transition( ':leave', [
+                     style( { opacity: 1 } ),
+                     animate( '100ms ease-out', style( { opacity: 0 } ) )
+                 ] )
+             ]
+         )
+     ]
  })
- export class TlContainerModal implements OnInit {
+ export class TlContainerModal implements OnInit, DoCheck {
 
      @Input() containerColor = '#F2F2F2';
 
@@ -37,13 +52,27 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
 
      @Input() boxColor = '#66cc99';
 
+     @Input() modalBoxWidth = 150;
+
+     @Input() arrowsColor = '#797979';
+
+     @Input() limitStringBox = 12;
+
      @ViewChild('container') container;
+
+     @ViewChild( 'wrapper' ) wrapper;
 
      private boxColorInactive = '#6da78d';
 
      private borderBoxColor = '#54a378';
 
-     constructor(private modalService: ModalService, private colorService: ToneColorGenerator) {}
+     private isScrolling = false;
+
+     private differ;
+
+     constructor( private modalService: ModalService, private colorService: ToneColorGenerator, differs: KeyValueDiffers ) {
+         this.differ = differs.find( {} ).create( null );
+     }
 
      ngOnInit() {
        this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
@@ -53,7 +82,39 @@ import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
      showWindow(item, i) {
          this.modalService.activeModal = item;
          this.modalService.showModal( item, i );
+     }
 
+     validateScroll() {
+         setTimeout( () => {
+             this.wrapper.nativeElement.offsetWidth >= this.container.nativeElement.offsetWidth ?
+                 this.isScrolling = true : this.isScrolling = false;
+         }, 1 );
+     }
+
+     handleArrowRight() {
+         if (  this.container.nativeElement.scrollLeft < this.wrapper.nativeElement.offsetWidth ) {
+             this.container.nativeElement.scrollLeft += 300;
+         }
+         this.handleScrollFinish();
+     }
+
+     handleArrowLeft() {
+         if ( this.container.nativeElement.scrollLeft > 0 ) {
+             this.container.nativeElement.scrollLeft -= 300;
+         }
+         this.handleScrollFinish();
+     }
+
+     handleScrollFinish() {
+         const scrollLeft = this.container.nativeElement.scrollLeft + this.container.nativeElement.offsetWidth;
+         scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
+     }
+
+     ngDoCheck() {
+         const changes = this.differ.diff( this.modalService.forms );
+         if ( changes ) {
+             this.validateScroll();
+         }
      }
 
 }

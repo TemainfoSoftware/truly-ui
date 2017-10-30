@@ -26,65 +26,183 @@ import {
     OnInit,
     Output,
     ViewChild,
-    ChangeDetectionStrategy,
+    ChangeDetectionStrategy, Renderer2, OnDestroy, ChangeDetectorRef, AfterViewInit,
 } from '@angular/core';
+import { ComponentHasModelBase } from '../core/base/component-has-model.base';
+import { TabIndexService } from '../form/tabIndex.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { KeyEvent } from '../core/enums/key-events';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
-let nextInputUniqueId = 0;
-let nextListUniqueId = 0;
 
 @Component( {
-    changeDetection: ChangeDetectionStrategy.OnPush,
     selector: 'tl-multiselect',
     templateUrl: './multiselect.html',
-    styleUrls: [ './multiselect.scss' ]
+    styleUrls: [ './multiselect.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        [ MakeProvider(TlMultiSelect) ]
+    ]
 } )
-export class TlMultiselect implements OnInit {
+export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {
+
     @Input() color: string;
 
-    /**
-     * Array de Objetos que é utilizado na listagem dos dados
-     */
-    @Input() data: any[] = [];
+    @Input() data = [];
 
-    /**
-     * Chave a qual ira ser realizada a pesquisa
-     */
     @Input() query: string;
 
     @Input() label: string;
+
+    @Input() labelSize = '120px';
+
+    @Input() labelTag: string;
+
     @Input() detail: string;
-    @Input() placeholder: string;
+
     @Input() icon: string;
-    @Input() showIcon = true;
-    @Input() openFocus = false;
+
+    @Input() defaultColorTag = '#66CC99';
+
+    @Input() defaultIconTag = null;
+
+    @Input() openFocus = true;
+
     @Input() detailOnTag = null;
-    @Input() selectTag: number;
+
     @Input() itemHeight = 10;
+
     @Input() itemAmount = 5;
+
     @Input() minLengthSearch = 2;
-    @Input() inputID = `input-truly-select-${nextInputUniqueId++}`;
-    @Input() listID = `list-truly-select-${nextListUniqueId++}`;
+
+    @Input() sortAlphabetically = false;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
+    @Output() onClickTag: EventEmitter<any> = new EventEmitter();
+
+    @Output() onRemoveTag: EventEmitter<any> = new EventEmitter();
+
     @ViewChild( 'input' ) input;
+
     @ViewChild( 'ul' ) ul;
 
-    public isOpen = 'none';
-    public filtredItens: any[] = [];
-    private children = -1;
+    @ViewChild( 'element' ) wrapperTags;
+
+    public isOpen = false;
+
+    public filteredItens = [];
+
+    private showIcon = true;
+
+    private cursor = -1;
+
+    private selectTag: number;
+
     private placeholderMessage: string;
-    private tags: any[] = [];
 
+    private documentListener;
 
-    constructor() {
+    private tags = [];
 
+    private dataSource = [];
+
+    private hasKeySource: boolean;
+
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                 private renderer: Renderer2, private change: ChangeDetectorRef ) {
+        super( tabIndexService, idService, nameService );
     }
 
     ngOnInit() {
         this.placeholderMessage = this.placeholder;
-        this.setFiltredItens();
+        this.dataSource = this.data;
+        this.validateKeySource();
+        this.setFilteredItens();
         this.validationProperty();
+        this.setElement( this.input, 'multiselect' );
+        this.createDocumentListener();
+    }
+
+    ngAfterViewInit() {
+        this.validateHasModel();
+    }
+
+    validateKeySource() {
+        this.dataSource[0].source ? this.hasKeySource = true : this.hasKeySource = false;
+    }
+
+    createDocumentListener() {
+        this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
+            this.toogleOpen( true );
+            if ( !this.isTargetElementEqualActiveElement( $event ) && !this.isTargetNodeNameEqualLi( $event ) ) {
+                this.toogleOpen( false );
+            }
+        } );
+    }
+
+    isTargetElementEqualActiveElement( $event ) {
+        return $event.target === document.activeElement;
+    }
+
+    isTargetNodeNameEqualLi( $event ) {
+        return $event.target.nodeName === 'LI';
+    }
+
+    validateHasModel() {
+        setTimeout( () => {
+            if ( this.modelValue ) {
+                this.handleModelValueAsTags();
+                this.cleanInput();
+                this.removeElementsForFilter();
+                this.change.detectChanges();
+            }
+        }, 1 );
+    }
+
+    handleModelValueAsTags() {
+        this.setModelValueWithSourceKey();
+        let modeltemp;
+        modeltemp = this.modelValue;
+        modeltemp.forEach((value, index, array) => {
+            this.dataSource.forEach( ( value2, index2, array2 ) => {
+                if (JSON.stringify(value) === JSON.stringify(this.getValue(value2))) {
+                    this.tags.push(value2);
+                }
+            });
+        });
+    }
+
+    setModelValueWithSourceKey() {
+       for (let item = 0; item < this.modelValue.length; item++) {
+           if (this.modelValue[item].source) {
+               return this.tags = this.modelValue;
+           }
+       }
+    }
+
+    sortFilteredItens() {
+        if ( this.sortAlphabetically ) {
+            this.filteredItens.sort( ( a, b ) => {
+                const x = this.getValue(a)[ this.query ].toLowerCase();
+                const y = this.getValue(b)[ this.query ].toLowerCase();
+                return x < y ? -1 : x > y ? 1 : 0;
+            } );
+        }
+    }
+
+    removeElementsForFilter() {
+        this.tags.forEach((value) => {
+            this.dataSource.forEach( ( value2, index, array ) => {
+                if (JSON.stringify(this.getValue(value)) === JSON.stringify(this.getValue(value2))) {
+                    this.dataSource.splice( index, 1 );
+                }
+            });
+        });
+        this.filteredItens = this.dataSource;
+        this.sortFilteredItens();
     }
 
     validationProperty() {
@@ -95,120 +213,380 @@ export class TlMultiselect implements OnInit {
             throw new Error( 'The property [data] and property [query] are Required ' + '' +
                 'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
         }
-        if ( !this.label ) {
-            this.label = this.query;
+        if ( !this.labelTag ) {
+            this.labelTag = this.query;
         }
         if ( this.detail === undefined && this.detailOnTag !== null ) {
             throw new Error( 'You have to declare the [detail] property' );
         }
     }
 
-    setFiltredItens() {
-        if ( !(this.tags.length > 0) ) {
-            this.filtredItens = this.data;
-        }
+    validateEmptySearch() {
+        setTimeout( () => {
+            if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
+                return this.filteredItens = this.dataSource;
+            }
+        }, 1 );
+        this.sortFilteredItens();
     }
 
-    toogleOpen( opened: string ) {
-        this.isOpen = opened;
-    }
-
-    receiveFocus() {
-        const self = this;
-        this.children = -1;
-        if ( this.tags.length > 0 ) {
-            this.tags.forEach( function ( tag ) {
-                self.filtredItens = self.data.filter( function ( value ) {
-                    return ((value.source !== tag.source) && ( self.tags.indexOf( value ) < 0 ));
-                } );
-            } );
-        }
+    validateOpenOnFocus() {
         if ( this.openFocus ) {
-            this.toogleOpen( 'block' );
+            this.toogleOpen( true );
         }
     }
 
-    searchItem( inputed, $event ) {
-        const self = this;
-        this.closeFilterOnEscape( $event );
-        if ( inputed.length >= this.minLengthSearch ) {
-            this.toogleOpen( 'block' );
-            if ( !(this.tags.length > 0) ) {
-                this.filtredItens = this.data.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
-            } else {
-                this.filtredItens = this.filtredItens.filter( function ( valor ) {
-                    return valor.source[ self.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-                } );
+    validateEventOnKeyEnter( $event ) {
+        if ( this.tags.length === 0 ) {
+            this.stopEventKeyDown( $event );
+            this.setInputFocus();
+        }
+        this.stopEventKeyDown( $event );
+        this.setInputFocus();
+    }
+
+    addTagOnKeyEnter() {
+        for ( let element = 0; element < this.ul.nativeElement.children.length; element++ ) {
+            if ( this.ul.nativeElement.children[ element ].className.includes( 'selected' ) ) {
+                return this.addTag( this.filteredItens[ element ] );
             }
         }
     }
 
-    /**
-     * Remove uma TAG do input ao precionar BACKSPACE
-     *
-     * @param {KeyboardEvent} $event The target to process see
-     * @param {KeyboardEvent} $event2 The target2 to process see
-     *
-     * @example
-     * This is a good example
-     * processTarget('yo')
-     */
-    removeTagOnBackspace( $event ) {
-        if ( $event === 'Backspace' && this.input.nativeElement.value === '' && this.tags.length > 0 ) {
-            this.removeTag( this.tags.length - 1 );
-            this.receiveFocus();
-        } else {
-            this.setFiltredItens();
+    removeAllSelectedClasses() {
+        for ( let element = 0; element < this.ul.nativeElement.children.length; element++ ) {
+            if ( this.ul.nativeElement.children[ element ].className.includes( 'selected' ) ) {
+                this.removeClassSelected( element );
+            }
         }
     }
 
-    closeFilterOnEscape( $event ) {
-        if ( $event.code === 'Escape' ) {
-            this.toogleOpen( 'none' );
+    handleKeyDown( $event ) {
+        this.activeInputText();
+        switch ( $event.keyCode ) {
+            case KeyEvent.ENTER:
+                this.handleKeyEnter( $event );
+                break;
+            case KeyEvent.ARROWDOWN:
+                if ( this.isOpen ) {
+                    this.stopEventKeyDown( $event );
+                }
+                this.toogleOpen( true );
+                this.handleArrowDown();
+                break;
+            case KeyEvent.ARROWUP:
+                if ( this.isOpen ) {
+                    this.stopEventKeyDown( $event );
+                }
+                this.handleArrowUp();
+                break;
+            case KeyEvent.DELETE:
+                this.handleKeyDelete( $event );
+                break;
+            case KeyEvent.BACKSPACE:
+                this.handleKeyBackspace();
+                break;
+            case KeyEvent.TAB:
+                this.toogleOpen( false );
+                break;
+            case KeyEvent.ARROWLEFT:
+                this.stopEventKeyDown( $event );
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowLeft();
+                }
+                break;
+            case KeyEvent.ARROWRIGHT:
+                this.stopEventKeyDown($event);
+                if (!this.isTagsEqualsZero()) {
+                    this.handleArrowRight();
+                }
+                break;
+            case KeyEvent.ESCAPE:
+                if ( this.isOpen ) {
+                    this.stopEventKeyDown( $event );
+                    this.toogleOpen( false );
+                }
+                break;
         }
     }
 
-    removeTag( index, item? ) {
-        if ( item ) {
-            this.filtredItens.push( item );
-        } else {
-            this.filtredItens.push( this.tags[ index ] );
+    handleKeyEnter( $event ) {
+        if ( this.isOpen ) {
+            this.validateEventOnKeyEnter( $event );
+            this.addTagOnKeyEnter();
+            this.addClassSelected( 0 );
+            this.cursor = 0;
         }
-        this.tags.splice( index, 1 );
+    }
+
+    handleKeyDelete( $event ) {
+        this.stopEventKeyDown( $event );
+        this.deleteTagSelected();
+        this.removeAllSelectedClasses();
+        this.addClassSelected( 0 );
+        this.cursor = 0;
+    }
+
+    handleKeyBackspace() {
+        this.removeAllSelectedClasses();
+        this.removeTagOnBackspace();
+        this.addClassSelected( 0 );
+        this.cursor = 0;
+    }
+
+    activeInputText() {
+        this.input.nativeElement.style.webkitTextFillColor = '#737373';
+    }
+
+    deActiveInputText() {
+        this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+    }
+
+    handleArrowRight() {
+        this.cleanTagSelected();
+        if (this.selectTag !== this.tags.length - 1) {
+            this.selectTag++;
+            this.setSelectTagAsTrue();
+        }
+    }
+
+    handleArrowLeft() {
+        this.cleanTagSelected();
+        if (this.selectTag !== 0 && this.tags.length !== 0) {
+            this.selectTag--;
+            this.setSelectTagAsTrue();
+        }
+    }
+
+    handleArrowDown() {
+        if ( !this.isOpen ) {
+            return;
+        }
+        if ( this.cursor < this.ul.nativeElement.children.length - 1 ) {
+            this.setFocusOnNextElement();
+            this.cursor = this.cursor + 1;
+        }
+
+    }
+
+    handleArrowUp() {
+        if ( !this.isOpen ) {
+            return;
+        }
+        if ( !this.isChildrenEqualsZero() && !this.isChildrenEqualsNegativeOne() ) {
+            this.setFocusOnPreviousElement();
+            this.cursor = this.cursor - 1;
+        } else {
+            this.setInputFocus();
+        }
+
+    }
+
+    handleInputFocus() {
+        this.deActiveInputText();
+        this.validateOpenOnFocus();
+        this.setOutlineMultiSelect();
+        this.sortFilteredItens();
+        this.addClassSelected( 0 );
+        this.cursor = 0;
+    }
+
+    setFilteredItens() {
+        this.validateEmptySearch();
+        if ( !this.isTagsLengthMoreThanZero() ) {
+            if ( this.isFilteredLengthEqualsDataLength() ) {
+                this.filteredItens = this.dataSource;
+                this.sortFilteredItens();
+            }
+        }
+    }
+
+    toogleOpen( opened ) {
+        this.isOpen = opened;
+    }
+
+    removeTagOfFilter( tag? ) {
+        this.cursor = -1;
+        this.filteredItens.forEach( ( item, index, array2 ) => {
+            if (JSON.stringify(this.getValue(tag)) === JSON.stringify(this.getValue(item))) {
+                this.filteredItens.splice( index, 1 );
+            }
+        });
+        this.sortFilteredItens();
+    }
+
+    getValue(value) {
+        return this.hasKeySource ? value.source : value;
+    }
+
+    setOutlineMultiSelect() {
+        if ( this.wrapperTags ) {
+            this.wrapperTags.nativeElement.style.outline = '5px auto -webkit-focus-ring-color';
+        }
+    }
+
+    setSelectTagAsTrue() {
+        this.tags[ this.selectTag ][ 'selected' ] = true;
+    }
+
+    setInputFocus() {
+        this.input.nativeElement.focus();
+        this.cursor = -1;
+    }
+
+    setFocusOnNextElement() {
+        const nextCursor = this.cursor + 1;
+        if ( this.cursor >= 0 ) {
+            this.removeClassSelected( this.cursor );
+        }
+        this.addClassSelected( nextCursor );
+    }
+
+    setFocusOnPreviousElement() {
+        const previousCursor = this.cursor - 1;
+        if ( this.cursor >= 0 ) {
+            this.removeClassSelected( this.cursor );
+        }
+        this.addClassSelected( previousCursor );
+    }
+
+    addClassSelected( index ) {
+        this.renderer.addClass( this.ul.nativeElement.children[ index ], 'selected' );
+    }
+
+    removeClassSelected( index ) {
+        this.renderer.removeClass( this.ul.nativeElement.children[ index ], 'selected' );
+    }
+
+
+    addTag( item ) {
+        this.tags.push( item );
+        this.placeholder = '';
+        this.selectTag = this.tags.length;
         this.getSelecteds.emit( this.tags );
-        this.changePlaceholder();
-        this.inputSetFocus();
+        this.setModelValue();
+        this.cleanTagSelected();
+        this.removeTagOfFilter(item);
+        this.removeElementsForFilter();
+        this.setInputFocus();
+        this.cleanInput();
+        this.toogleOpen( true );
+        this.change.detectChanges();
+        this.addClassSelected( 0 );
+        this.cursor = 0;
     }
 
-    selectTagClick( event, index, item? ) {
-        if ( item.selected === true ) {
-            item.selected = false;
-        } else if ( event.ctrlKey ) {
-            this.selectTagCtrlBindClick( item );
+    stopEventKeyDown( $event ) {
+        $event.preventDefault();
+        $event.stopPropagation();
+    }
+
+    setModelValue() {
+        const modeltemp = [];
+        this.tags.forEach((value, index, array) => {
+           modeltemp.push(this.getValue(value));
+        });
+        this.modelValue = modeltemp;
+    }
+
+    deleteTagSelected() {
+        this.addTagSelectedToFiltered();
+        this.filterTagsNotSelected();
+        this.sortFilteredItens();
+        this.selectTag = this.tags.length - 1;
+    }
+
+    addTagSelectedToFiltered() {
+        this.tags.forEach((value, index, array) => {
+            if (value.selected) {
+                this.filteredItens.push( value );
+            }
+        });
+    }
+
+    filterTagsNotSelected() {
+        this.tags = this.tags.filter( function ( value ) {
+            return !value.selected;
+        } );
+    }
+
+
+    searchItem( inputed, $event ) {
+        this.closeFilterOnEscape( $event );
+        if ( this.isValueMoreOrEqualThanMinLengthSearch(inputed)  ) {
+            this.toogleOpen( true );
+            !this.isTagsLengthMoreThanZero() ? this.filterOfData( inputed ) : this.filterOfFilteredItens( inputed );
         } else {
-            this.cleanTagSelected();
-            item[ 'selected' ] = true;
+            this.removeElementsForFilter();
         }
+        this.setNewSelected( inputed );
+    }
+
+    setNewSelected( value ) {
+        if ( value ) {
+            this.removeAllSelectedClasses();
+            this.addClassSelected( 0 );
+            this.cursor = 0;
+        }
+    }
+
+
+    filterOfData(inputed) {
+        this.filteredItens = this.dataSource.filter( ( value ) => {
+            return this.getValue(value)[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+        } );
+    }
+
+    filterOfFilteredItens( inputed ) {
+        this.filteredItens = this.filteredItens.filter( ( value ) => {
+            return this.getValue(value)[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+        } );
+    }
+
+    isValueMoreOrEqualThanMinLengthSearch(value) {
+        return value.length >= this.minLengthSearch;
     }
 
     selectTagCtrlBindClick( item ) {
-        item[ 'selected' ] = true;
-        this.inputSetFocus();
+        item.selected = true;
+        this.setInputFocus();
     }
 
-    selectTagNavitation( keycode ) {
+    selectTagClick( event, item? ) {
+        this.onClickTag.emit( item );
+        if (item.selected) {
+            return item.selected = false;
+        }
+        if (event.ctrlKey) {
+            return this.selectTagCtrlBindClick( item );
+        }
         this.cleanTagSelected();
-        if ( keycode === 'ArrowRight' && this.selectTag !== this.tags.length - 1 ) {
-            this.selectTag++;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
-        } else if ( keycode === 'ArrowLeft' && this.selectTag !== 0 && this.tags.length !== 0 ) {
-            this.selectTag--;
-            this.tags[ this.selectTag ][ 'selected' ] = true;
+        item.selected = true;
+        this.setInputFocus();
+    }
+
+    calcHeightWidthItem() {
+        if ( this.itemAmount >= this.filteredItens.length ) {
+            return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
+        } else {
+            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px',
+                'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         }
     }
 
+    changeColorTag( tag ) {
+        if ( (this.color) && (tag.effect)) {
+            if ( !tag.selected ) {
+                return { 'background': tag.effect[this.color] };
+            }
+            return { 'background': tag.effect[this.color], 'opacity': 0.8 };
+        } else {
+            if ( tag.selected ) {
+                return { 'background': this.defaultColorTag, 'opacity': 0.8 };
+            }
+            return { 'background': this.defaultColorTag };
+        }
+    }
 
     changePlaceholder() {
         if ( this.tags.length === 0 ) {
@@ -216,96 +594,33 @@ export class TlMultiselect implements OnInit {
         }
     }
 
-    addTag( index, item ) {
-        this.tags.push( item );
-        this.placeholder = '';
-        this.children = -1;
+    removeTagOnBackspace() {
+        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
+            this.removeTag( this.tags.length - 1 );
+            this.setInputFocus();
+        } else {
+            this.setFilteredItens();
+        }
+        this.toogleOpen( true );
+    }
+
+    removeTag( index, item? ) {
+        item ? this.filteredItens.push( item ) : this.filteredItens.push( this.tags[ index ] );
+        this.onRemoveTag.emit( item ? item : this.tags[ index ] );
         this.getSelecteds.emit( this.tags );
-        this.selectTag = this.tags.length;
-        this.cleanTagSelected();
-        this.inputSetFocus();
+        this.tags.splice( index, 1 );
+        this.changePlaceholder();
+        this.setInputFocus();
+        this.setModelValue();
+        this.sortFilteredItens();
         this.cleanInput();
-        this.receiveFocus();
-    }
-
-    inputKeyDown( event, index, item ) {
-        if ( event === 'Enter' && item !== undefined ) {
-            this.addTag( index, item );
-        }
-        if ( event === 'ArrowDown' ) {
-            this.toogleOpen( 'block' );
-            this.arrowDown();
-        }
-        if ( event === 'ArrowUp' && this.ul.nativeElement.children.length !== 0 ) {
-            this.arrowUp();
-        }
-        if ( event === 'Delete' ) {
-            this.deleteTagSelected();
-        }
-        if ( event === 'Backspace' ) {
-            this.removeTagOnBackspace( event );
-            this.receiveFocus();
-        }
-        if ( event === 'Tab' ) {
-            this.toogleOpen( 'none' );
-        }
-        if ( event === 'ArrowLeft' || event === 'ArrowRight' && this.tags.length !== 0 ) {
-            this.selectTagNavitation( event );
-        }
-    }
-
-    deleteTagSelected() {
-        this.tags = this.tags.filter( function ( value ) {
-            return !value.selected;
-        } );
-        this.selectTag = this.tags.length - 1;
-        this.receiveFocus();
-    }
-
-    arrowDown() {
-        if ( this.children < this.ul.nativeElement.children.length - 1 ) {
-            this.ul.nativeElement.children[ this.children + 1 ].focus();
-            this.children = this.children + 1;
-        }
-    }
-
-    arrowUp() {
-        if ( this.children !== 0 && this.children !== -1 ) {
-            this.ul.nativeElement.children[ this.children - 1 ].focus();
-            this.children = this.children - 1;
-        } else {
-            this.inputSetFocus();
-        }
-    }
-
-    calcHeightItem() {
-        if ( this.itemAmount >= this.filtredItens.length ) {
-            return { 'height': 'auto' };
-        } else {
-            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px' };
-        }
-    }
-
-    changeColorTag( tag ) {
-        if ( this.color !== undefined ) {
-            if ( !tag.selected ) {
-                return { 'background': tag.effect.color };
-            }
-            return { 'background': tag.effect.color, 'opacity': 0.8 };
-        } else {
-            if ( tag.selected ) {
-                return { 'background': '#66CC99', 'opacity': 0.8 };
-            }
-            return { 'background': '#66CC99' };
-        }
-    }
-
-    inputSetFocus() {
-        this.input.nativeElement.focus();
+        this.change.detectChanges();
     }
 
     cleanInput() {
-        this.input.nativeElement.value = '';
+        setTimeout( () => {
+            this.input.nativeElement.value = '';
+        }, 1 );
     }
 
     cleanTagSelected() {
@@ -314,14 +629,56 @@ export class TlMultiselect implements OnInit {
         } );
     }
 
-    hasTag() {
+    clearOutlineMultiSelect() {
+        if ( this.wrapperTags ) {
+            this.wrapperTags.nativeElement.style.outline = 'none';
+        }
+    }
+
+    closeFilterOnEscape( $event ) {
+        if ( this.isKeyEventEqualsEscape( $event ) ) {
+            this.toogleOpen( false );
+        }
+    }
+
+    isKeyEventEqualsEscape( $event ) {
+        return $event.keyCode === KeyEvent.ESCAPE
+    }
+
+    isTagsEqualsZero() {
         return this.tags.length === 0;
     }
 
-    close( event ) {
-        if ( event.relatedTarget === null ) {
-            this.toogleOpen( 'none' );
+    isChildrenEqualsZero() {
+        return this.cursor === 0;
+    }
+
+    isChildrenEqualsNegativeOne() {
+        return this.cursor === -1;
+    }
+
+    isInputValueEqualsEmpty() {
+        return this.input.nativeElement.value === '';
+    }
+
+    isTagsLengthMoreThanZero() {
+        return this.tags.length > 0;
+    }
+
+    isFilteredLengthEqualsDataLength() {
+        return this.filteredItens.length === this.dataSource.length;
+    }
+
+    closeList( event ) {
+        this.clearOutlineMultiSelect();
+        if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
+            this.toogleOpen( false );
         }
+    }
+
+    ngOnDestroy() {
+        this.documentListener();
+        this.change.detach();
     }
 }
 

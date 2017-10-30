@@ -5,21 +5,29 @@ import { TlButton } from './button';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { ModalService } from '../modal/modal.service';
+import { ModalModule } from '../modal/index';
+import { DirectiveModule } from '../core/directives/index';
+
+export * from './button';
 
 @NgModule({
     imports: [
         CommonModule,
+        DirectiveModule,
+        ModalModule
     ],
     declarations: [
-        TlButton
+        TlButton,
     ],
     exports: [
-        TlButton
+        TlButton,
     ],
     providers: [
         TabIndexService,
         IdGeneratorService,
-        NameGeneratorService
+        NameGeneratorService,
+        ModalService
     ]
 })
 export class ButtonModule {}

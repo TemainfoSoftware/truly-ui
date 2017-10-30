@@ -1,11 +1,17 @@
 <div class="check-container">
+    <div (click)="check(checkbox.checked)" *ngIf="modelValue" [style.background-color]="checkedColorBg"
+         [style.border]="'1px solid ' + checkedColorBg" class="checkmark-wrapper">
+        <div class="checkmark">
+            <div class="checkmark_stem" [style.background-color]="checkmarkColor"></div>
+            <div class="checkmark_kick" [style.background-color]="checkmarkColor"></div>
+        </div>
+    </div>
     <input attr.id="{{id}}"
            attr.name="{{name}}"
            #checkbox
            type="checkbox"
            #model="ngModel"
            (focus)="focusCheckBox()"
-           (click)="emitEvent()"
            [checked]="toggle"
            [tabindex]="tabindex"
            [(ngModel)]="modelValue">

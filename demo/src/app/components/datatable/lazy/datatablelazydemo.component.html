@@ -1,23 +1,12 @@
 <div class="router-outlet">
 
   <div class="header-title-demo">
-    <h1 class="title">DataTable Lazy</h1>
+    <h1 class="title">DataTable Lazy <span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
     <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
   </div>
 <hr>
   <div class="showcase">
-
-
-    <!--<div class="row">-->
-    <!--<div class="col-md-12">-->
-    <!--<div class="group-component">-->
-    <!--<h5>Mode Scrollable</h5>-->
-    <!--<tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'" [rowsPage]="50" [height]="310"> </tl-datatable>-->
-    <!--<div>Row Selected:<span> {{rowSelected | json}} </span></div>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
-
 
     <div class="row">
       <div class="col-md-12">
@@ -29,9 +18,23 @@
             [height]="300"
             [rowsClient]="12"
             [rowsPage]="take"
-            [lazy]="true"
+            [allowLazy]="true"
+            [allowResize]="true"
+            [allowFilterColumn]="true"
             (lazyLoad)="onLazyLoad($event)"
           >
+            <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'lastName'" [width]="'120px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'title'" [type]="'date'" [width]="'300px'"></tl-datatable-column>
+
+            <!--<tl-datatable-column [field]="'id'" [width]="'5%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'firstName'" [width]="'100px'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'lastName'" [width]="'30%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'city'" [width]="'25%'"></tl-datatable-column>-->
+            <!--<tl-datatable-column [field]="'title'" [width]="'25%'"></tl-datatable-column>-->
+
           </tl-datatable>
           <div>Row Selected:<span> {{rowSelected | json}} </span></div>
         </div>

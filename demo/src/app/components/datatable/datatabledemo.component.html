@@ -1,7 +1,8 @@
 <div class="router-outlet">
 
   <div class="header-title-demo">
-    <h1 class="title">DataTable</h1>
+    <h1 class="title">DataTable <span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
     <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
   </div>
 <hr>
@@ -58,17 +59,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="group-component">
-          <h5>Mode Scrollable + LazyLoad</h5>
-          <tl-datatable
-            [data]="dataLazy"
-            [mode]="'scrollable'"
-            [height]="300"
-            [rowsClient]="12"
-            [rowsPage]="take"
-            [lazy]="true"
-            (lazyLoad)="onLazyLoad($event)"
-          >
-          </tl-datatable>
+          <h5>Mode Normal</h5>
+          <tl-datatable [data]="data" [allowResize]="true" [allowFilterColumn]="true"  (rowSelect)="onRowSelect($event, index )"></tl-datatable>
           <div>Row Selected:<span> {{rowSelected | json}} </span></div>
         </div>
       </div>

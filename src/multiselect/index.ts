@@ -1,18 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlMultiselect } from './multiselect';
+import { TlMultiSelect } from './multiselect';
+import { TabIndexService } from '../form/tabIndex.service';
+import { IdGeneratorService } from '../core/helper/idgenerator.service';
+import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { FormsModule } from '@angular/forms';
 
 export * from './multiselect';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [
-    TlMultiselect,
+    TlMultiSelect,
   ],
   exports: [
-    TlMultiselect,
-  ]
+    TlMultiSelect,
+  ],
+  providers: [
+    TabIndexService,
+    IdGeneratorService,
+    NameGeneratorService]
 })
-export class MultiselectModule {}
+export class MultiSelectModule {}

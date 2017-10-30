@@ -23,8 +23,9 @@
  import { Component, ElementRef, forwardRef, Inject, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
  import { KeyEvent } from '../../../core/enums/key-events';
- import { TlDatatableDataSource } from '../../datatable-datasource.service';
+ import { TlDatatableDataSource } from '../../services/datatable-datasource.service';
  import { animate, state, style, transition, trigger } from '@angular/animations'
+ import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 
  @Component({
      selector: 'tl-datatable-normal-mode',
@@ -42,14 +43,16 @@
 
          ])
      ],
-     styleUrls: ['../../datatable.scss']
+     providers: [DatatableHelpersService],
+     styleUrls: ['../../datatable.scss', './datatable-normal-mode.scss']
  })
  export class TlDatatableNormalMode {
 
      @ViewChild( 'datatableTbody' ) datatableTbodyRef: ElementRef;
 
      constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable,
-                   public dataSourceService: TlDatatableDataSource  ) {}
+                   public dataSourceService: TlDatatableDataSource,
+                   private helperService: DatatableHelpersService) {}
 
      onKeydown( $event ) {
          $event.preventDefault();

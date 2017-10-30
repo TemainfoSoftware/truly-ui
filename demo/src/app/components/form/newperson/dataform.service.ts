@@ -34,7 +34,9 @@ export class DataFormService {
         country: '',
         state: '',
         gender: '',
-        notify: ''
+        notification: '',
+        dependents: '',
+        clients: '',
       };
 
   constructor() {}

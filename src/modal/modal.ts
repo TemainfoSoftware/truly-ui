@@ -30,8 +30,6 @@ import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { KeyEvent } from '../core/enums/key-events';
 
-const listenersDocument = [];
-
 @Component({
     selector: 'tl-modal',
     templateUrl: './modal.html',
@@ -76,6 +74,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Input() restoreMaximize = true;
 
     @Input() backdrop = false;
+
+    @Input() closeShortcut = '';
+
+    @Input() restoreShortcut = '';
+
+    @Input() maximizeShortcut = '';
 
     @ViewChild( 'modal' ) modal: ElementRef;
 
@@ -149,9 +153,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnInit() {
         this.backToTop();
-        this.getBoundingContent();
-        this.setDefaultDimensions();
-        this.setModalCenterParent();
         this.resizeListener();
         this.mousemoveListener();
         this.mouseupListener();
@@ -160,26 +161,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     ngAfterViewInit() {
-        const listener = this.renderer.listen( document, 'keyup', ( $event ) => {
-            if ( $event.keyCode === KeyEvent.ESCAPE ) {
-                if ( document.getElementsByClassName( 'tl-modal-container' ).length > 0 ) {
-                    this.serviceControl.execCallBack( ModalResult.MRCLOSE,
-                        this.serviceControl.componentList[ this.serviceControl.componentList.length - 1 ] );
-                }
-            }
-        } );
-        listenersDocument.push( listener );
-        this.removeListeners();
-    }
-
-
-    removeListeners() {
-        listenersDocument.forEach( ( value, index2, array ) => {
-            if ( index2 !== 0 ) {
-                listenersDocument.splice( value, 1 );
-                value();
-            }
-        } );
+        this.getBoundingContent();
+        this.setDefaultDimensions();
+        this.setModalCenterParent();
     }
 
     resizeListener() {
@@ -241,7 +225,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setModalCenterParent() {
-        this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
+        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) -
+            (this.modal.nativeElement.offsetWidth / 2) + 'px';
         this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 
@@ -350,7 +335,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         return event.clientX < this.offsetLeftContent
     }
 
-    setZIndex( $event ) {
+    setZIndex() {
         this.serviceControl.setZIndex( this.componentRef, this.modal );
         this.serviceControl.sortComponentsByZIndex();
     }

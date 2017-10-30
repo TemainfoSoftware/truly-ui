@@ -24,9 +24,9 @@ import { Component, ElementRef, HostListener, Input, AfterContentInit } from '@a
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
-    selector : 'tl-button-group-item',
-    templateUrl : './buttongroup-item.html',
-    styleUrls : [ './buttongroup-item.scss' ]
+    selector: 'tl-button-group-item',
+    templateUrl: './buttongroup-item.html',
+    styleUrls: [ './buttongroup-item.scss' ]
 } )
 export class TlButtonGroupItem implements AfterContentInit {
 
@@ -42,6 +42,14 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() buttonAddonAfterClass;
 
+    @Input() iconBeforeText;
+
+    @Input() iconBeforeTextClass;
+
+    @Input() iconAfterText;
+
+    @Input() iconAfterTextClass;
+
     @Input() width;
 
     @Input() disabled;
@@ -51,6 +59,8 @@ export class TlButtonGroupItem implements AfterContentInit {
     @Input() buttonClass;
 
     @Input() checkedItem = null;
+
+    public height: number;
 
     public index = -1;
 
@@ -62,7 +72,9 @@ export class TlButtonGroupItem implements AfterContentInit {
         return this._buttonSelected;
     }
 
-    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {}
+    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {
+        this.height = null;
+    }
 
     ngAfterContentInit() {
         this.isPreselectedItem();

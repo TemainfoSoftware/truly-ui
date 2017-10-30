@@ -9,6 +9,7 @@ import * as jsonEvents from './form-dataevents.json';
 
 import { NewPerson } from "./newperson/newperson.component";
 import { DataFormService } from "./newperson/dataform.service";
+import { DumpDataService } from "../../shared/services/dumpdata";
 
 
 @Component( {
@@ -35,8 +36,13 @@ export class FormDemo {
 
   private result;
 
-  constructor(private view: ViewContainerRef, private formService: FormService, private dataFormService: DataFormService) {
-    this.formService.setViewForm(view);
+  private data;
+
+  constructor(private view: ViewContainerRef, private formService: FormService,
+              private dataFormService: DataFormService,  private dataDumpService: DumpDataService) {
+
+    this.formService.setView(view);
+    this.data = this.dataDumpService.createRandomData( 100 );
 
     this.formprop = json.dataProperties;
     this.formevts = jsonEvents.dataEvents;

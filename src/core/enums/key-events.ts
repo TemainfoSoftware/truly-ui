@@ -31,5 +31,7 @@ export enum KeyEvent {
     ENTER = 13,
     ESCAPE = 27,
     TAB = 9,
-    SPACE= 32,
+    SPACE = 32,
+    DELETE = 46,
+    BACKSPACE = 8
 }

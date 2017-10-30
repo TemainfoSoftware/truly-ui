@@ -32,3 +32,7 @@ Desktop.ini
 # Build files
 dist/*
 coverage
+
+#Styles
+src/**/*.css
+src/**/*.css.map

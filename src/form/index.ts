@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlForm } from './form';
 import { FormService } from './form.service';
@@ -32,33 +32,32 @@ import { TabIndexService } from './tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
+import { DirectiveModule } from '../core/directives/index';
+
+export * from './form.service';
+export * from './form';
 
 @NgModule( {
     imports: [
         CommonModule,
         ModalModule,
         ButtonModule,
-        DropDownListModule
+        DropDownListModule,
+        DirectiveModule
     ],
     declarations: [
         TlForm
+    ],
+    providers: [
+        DialogService,
+        TabIndexService,
+        IdGeneratorService,
+        NameGeneratorService,
+        ModalService,
+        FormService,
     ],
     exports: [
         TlForm
     ]
 } )
-export class FormModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: FormModule,
-            providers: [
-                ModalService,
-                FormService,
-                DialogService,
-                TabIndexService,
-                IdGeneratorService,
-                NameGeneratorService
-            ]
-        }
-    }
-}
+export class FormModule {}

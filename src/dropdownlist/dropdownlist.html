@@ -2,7 +2,13 @@
     <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
         <b *ngIf="required" class="required">*</b>
     </label>
-    <div class="wrapper">
+
+    <div class="wrapper" #wrapper (click)="changeShowStatus($event)">
+        <div *ngIf="showOnlyIcon"
+            class="ui-overlap"
+            [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', width: 35 + 'px'}">
+            <i #dropdownShow class="{{placeholderIcon}}"></i>
+        </div>
         <input #dropdown
                class="select"
                attr.tabindex="{{ tabindex }}"
@@ -10,47 +16,54 @@
                #model="ngModel"
                readonly
                [ngClass]="{
-               'disabled': disabled,
-               '-hasValidation': hasValidation()}"
+                   'disabled': disabled,
+                   'without-icon':!showOnlyIcon,
+                   '-hasValidation': hasValidation()
+               }"
                [(ngModel)]="modelValue"
                [required]="validations.required"
                [maxlength]="validations.maxLength"
                [minlength]="validations.minLength"
-               [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', 'width': width + 'px'}"
+               [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', 'width': !showOnlyIcon ? width+'px' : '35px'}"
                [disabled]="disabled ? true : null"
-               (click)="changeShowStatus($event.stopPropagation())"
                (keydown)="onListClosed($event)">
 
-
-        <div class="dropdown-list-icon"
-             (click)="changeShowStatus($event.stopPropagation())"
+        <div *ngIf="!showOnlyIcon" class="dropdown-list-icon"
              [ngStyle]="{'height' : (height + 2) + 'px', 'line-height' : (height + 2) + 'px'}"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down"></i>
         </div>
-
-        <div class="dropdown-list-wrapper-select" *ngIf="!disabled" [style.zIndex]="zIndex"
-             [@enterAnimation]="showHide">
-            <div class="-placeholder"
-                 *ngIf="placeholder && showHide"
-                 #defaultPlaceholder
-                 [style.zIndex]="zIndex"
-                 [ngStyle]="{'line-height' : height + 'px'}"
-                 (keydown)="placeholderEnter($event)"
-                 (click)="selectPlaceholder()" tabindex="-1">{{ placeholder }}
-            </div>
-            <ul class="dropdown-list-select"
-                (keydown)="onListOpened($event)"
-                #list
-                [ngStyle]="calcHeightItem()"
-                [style.display]="showHide === true ? 'block' : 'none'">
-                <li *ngFor="let item of datasource; let i = index"
-                    (click)="selectOption(item, i)"
-                    tabindex="{{ i }}"
-                    [ngStyle]="{'line-height' : height + 'px'}">
-                    {{ item[text] }}
-                </li>
-            </ul>
-        </div>
     </div>
+
+   <div class="wrapper">
+       <div class="dropdown-list-wrapper-select"
+            *ngIf="!disabled"
+            [style.zIndex]="1000"
+            [@enterAnimation]="showHide"
+            [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px', top: topPosition, left: leftPosition, position: position }"
+       >
+           <div class="-placeholder"
+                *ngIf="placeholder && showHide"
+                #defaultPlaceholder
+                [style.zIndex]="1000"
+                [ngStyle]="{'line-height' : height + 'px'}"
+                (keydown)="placeholderEnter($event)"
+                (click)="selectPlaceholder()" tabindex="-1">
+               <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i> <span> {{ placeholder }}</span>
+           </div>
+           <ul class="dropdown-list-select"
+               (keydown)="onListOpened($event)"
+               #list
+               [ngStyle]="calcHeightItem()"
+               [style.display]="showHide ? 'block' : 'none'">
+               <li *ngFor="let item of datasource; let i = index"
+                   (click)="selectOption(item, i)"
+                   tabindex="{{ i }}"
+                   [ngStyle]="{'line-height' : height + 'px'}">
+                   <i *ngIf="item[icon]" [class]="'ui-icon '+item[icon]"> </i> <span> {{ item[text] }}</span>
+               </li>
+           </ul>
+       </div>
+   </div>
+
 </div>

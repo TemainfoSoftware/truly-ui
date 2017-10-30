@@ -31,9 +31,9 @@ import { TlSplitButtonAction } from './splitbutton-action';
 let globalZindex = 1;
 
 @Component( {
-    selector : 'tl-split-button',
-    templateUrl : './splitbutton.html',
-    styleUrls : [ './splitbutton.scss' ],
+    selector: 'tl-split-button',
+    templateUrl: './splitbutton.html',
+    styleUrls: [ './splitbutton.scss' ],
     animations: [
         trigger(
             'enterAnimation', [
@@ -63,7 +63,17 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() buttonAddonAfterClass;
 
+    @Input() iconBeforeText;
+
+    @Input() iconBeforeTextClass;
+
+    @Input() iconAfterText;
+
+    @Input() iconAfterTextClass;
+
     @Input() width;
+
+    @Input() height = 39;
 
     @Input() disabled: boolean = null;
 
@@ -95,7 +105,7 @@ export class TlSplitButton implements AfterContentInit {
 
     ngAfterContentInit() {
         this._renderer.listen( document, 'click', ( event ) => {
-            if ( !(event.target.className === 'split-button-actions ativo') && !(event.target.localName === 'i') ) {
+            if ( !(event.target.className === 'split-button-actions active') && !(event.target.localName === 'i') ) {
                 this.showHide = false;
             }
         } );

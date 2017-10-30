@@ -20,417 +20,224 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef,
-    EventEmitter, forwardRef, Input, NgZone, OnInit, Output, Renderer2, ViewChild
+    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter,
+    forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, ViewChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
-
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-
-let globalZindex = 1;
+import { TlListBox } from '../listbox/listbox';
+import { TlInput } from '../input/input';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 @Component( {
-    selector : 'tl-autocomplete',
-    templateUrl : './autocomplete.html',
-    styleUrls : [ './autocomplete.scss' ],
-    changeDetection : ChangeDetectionStrategy.OnPush,
-    animations : [
+    selector: 'tl-autocomplete',
+    templateUrl: './autocomplete.html',
+    styleUrls: [ './autocomplete.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
         trigger(
             'enterAnimation', [
                 state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
-                state( 'false', style( { opacity : 0, transform : 'translate(0%,-5%)', flex : '0' } ) ),
-                transition( '1 => 0', animate( '200ms' ) ),
-                transition( '0 => 1', animate( '200ms' ) ),
+                state( 'false', style( { opacity : 0, transform : 'translate(0%,-3%)', flex : '0' } ) ),
+                transition( '1 => 0', animate( '100ms' ) ),
+                transition( '0 => 1', animate( '100ms' ) ),
             ]
         )
     ],
-    providers : [
-        { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlAutoComplete ), multi : true }
-    ]
+    providers : [ MakeProvider(TlAutoComplete) ]
 } )
 
-export class TlAutoComplete extends ComponentHasModelBase implements AfterViewInit, OnInit {
+export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
 
     @Input() data: Array<any>;
 
-    @Input() itemHeight: number;
+    @Input() id = '';
 
-    @Input() itemsToScroll: number;
+    @Input() labelDetail = '';
 
-    @Input() dataID: string;
+    @Input() labelName = '';
 
-    @Input() dataLabel: string;
+    @Input() openFocus = false;
 
-    @Input() dataDescription: string;
+    @Input() ngModel = '';
 
-    @Input() query: any[] = [];
+    @Input() rowHeight = 30;
 
-    @Input() clearButton: boolean;
+    @Input() listStripped = false;
 
-    @Input() minCharToSearch: number;
+    @ViewChild( 'input' ) input;
 
-    @Input() searchIcon: boolean;
+    @ViewChild( 'autoComplete' ) autoComplete;
 
-    @ViewChild( 'list' ) list;
+    @ViewChild( 'autocompleteList' ) list;
 
-    @ViewChild( 'filter' ) filter;
+    @ViewChild(TlListBox) listBox: TlListBox;
 
-    @ViewChild( 'customTemplate' ) customTemplate;
+    @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
 
-    @Output() clear: EventEmitter<any> = new EventEmitter();
+    @Output() onAddMore: EventEmitter<any> = new EventEmitter();
 
-    public zIndex = 0;
+    private listPosition;
 
-    private showList: boolean;
+    private documentListener;
 
-    private dataType: string;
-
-    private dataSource: any[] = [];
-
-    private filterString = new Subject();
-
-    private lastItemPosition;
-
-    private firstItemPosition;
-
-    private listElement;
-
-    private spanElementDataID;
-
-    private spanElementDataLabel;
-
-    private spanElementDataDescription;
-
-    private iElementIconAdd;
-
-    private spanElementIconAdd;
-
-    private cursor;
-
-    private searchValue;
-
-    constructor( public renderer: Renderer2,
-                 tabIndexService: TabIndexService,
+    constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
-                 public nameService: NameGeneratorService,
-                 private change: ChangeDetectorRef,
-                 public zone: NgZone ) {
-        super( tabIndexService, idService, nameService );
-        this.itemHeight = 33;
-        this.itemsToScroll = 5;
-        this.showList = false;
-        this.clearButton = false;
-        this.dataType = 'object';
-        this.dataID = '';
-        this.dataLabel = '';
-        this.dataDescription = '';
-        this.cursor = -1;
-        this.minCharToSearch = 1;
-        this.searchIcon = false;
+                 public change: ChangeDetectorRef,
+                 public nameService: NameGeneratorService, public renderer: Renderer2, ) {
+        super( tabIndexService, idService, nameService, renderer );
     }
 
     ngOnInit() {
-        this.filterString.debounceTime( 250 )
-            .subscribe( searchTextValue => {
-                this.handleSearch( searchTextValue );
-            } );
+        this.setElement( this.autoComplete, 'autocomplete' );
+        this.handleCustom();
     }
 
     ngAfterViewInit() {
-        this.setElement( this.filter, 'autocomplete' );
-        this.updateDataSource( this.getData() );
-        this.validateDefaultProperties();
-        this.lastItemPosition = this.itemsToScroll - 1;
-        this.firstItemPosition = 0;
-        this.renderDataList();
-        this.change.detectChanges();
+        this.createDocumentListener();
+        this.handleAutoCompleteModel();
+        this.listPosition = this.list.nativeElement.offsetLeft;
+        this.input.labelSize ? this.listPosition += parseInt(this.input.labelSize, 10) : this.listPosition += 100;
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
+        this.getAutoCompleteWidth();
     }
 
-    renderDataList() {
-        if ( !this.existCustomTemplate() ) {
+    handleCustom() {
+        if (this.customTemplate) {
+            this.listBox.customInput = true;
+            this.listBox.template = this.customTemplate;
+        }
+    }
 
-            if ( this.dataSource ) {
-                this.zone.runOutsideAngular( () => {
-                    if ( this.list.nativeElement.children.length > 0 ) {
-                        while ( this.list.nativeElement.hasChildNodes() ) {
-                            this.list.nativeElement.removeChild( this.list.nativeElement.lastChild );
-                        }
-                    }
-                    for ( let item = 0; item < this.dataSource.length; item++ ) {
-                        this.createElementLi( item );
-                        this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
-                        this.createElementSpanDataLabel( item );
-                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataLabel.nativeElement );
-                        if ( this.dataType === 'object' ) {
-                            this.createElementSpanDataDescription( item );
-                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataDescription.nativeElement );
-                            this.createElementSpanDataID( item );
-                            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementDataID.nativeElement );
-                        }
-                    }
-                    this.createElementLi( 'add' );
-                    this.renderer.appendChild( this.list.nativeElement, this.listElement.nativeElement );
-                    this.createElementIconAdd();
-                    this.renderer.appendChild( this.listElement.nativeElement, this.iElementIconAdd.nativeElement );
-                    this.createElementLabelAdd();
-                    this.renderer.appendChild( this.listElement.nativeElement, this.spanElementIconAdd.nativeElement );
-                    this.list.nativeElement.scrollTop = 0;
-                    if ( this.dataSource.length > 0 ) {
-                        this.setActiveItemClassOnFirstElement();
-                    }
-                } );
+    handleAutoCompleteModel() {
+        setTimeout( () => {
+            if ( this.ngModel ) {
+                this.input.componentModel.model = this.ngModel;
+                this.input.element.nativeElement.value = this.ngModel[ this.labelName ];
             }
-        }
+        }, 1 );
     }
 
-    removeActiveItemClassForAllElements() {
-        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
-            this.list.nativeElement.children[ item ].classList.remove( 'activeItem' );
-        }
-    }
-
-    setActiveItemClassOnFirstElement() {
-        this.list.nativeElement.children[ 0 ].classList.add( 'active-item' );
-    }
-
-    checkDuplicateDataItem() {
-        for ( let i = 0; i < (this.data.length - 1); i++ ) {
-            if ( JSON.stringify( this.data[ i ] ) === JSON.stringify( this.data[ i + 1 ] ) ) {
-                console.warn( 'Warning: Please check the values ​​of your [data] property, there are duplicate values.' );
+    createDocumentListener() {
+        this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
+            if ( this.isNotRelatedWithAutocomplete( $event ) ) {
+                this.listBox.showList = false;
+                this.listBox.detectChanges();
+                return;
             }
+            this.handleOpenOnFocus();
+        } );
+    }
+
+    onFocusInput() {
+        this.handleOpenOnFocus();
+    }
+
+    onKeyDown( $event ) {
+        this.handleKeyDown( $event );
+    }
+
+    handleOpenOnFocus() {
+        if ( this.openFocus && !this.listBox.showList) {
+            this.listBox.showList = true;
+            this.listBox.detectChanges();
         }
     }
 
-    createElementLabelAdd() {
-        this.spanElementIconAdd = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementIconAdd.nativeElement.append( 'Add New' );
+    handleKeyDown($event) {
+        if ( $event.keyCode === KeyEvent.ENTER ) {
+            this.closeList( $event );
+        }
     }
 
-    createElementIconAdd() {
-        this.iElementIconAdd = new ElementRef( this.renderer.createElement( 'i' ) );
-        this.renderer.addClass( this.iElementIconAdd.nativeElement, 'ion-plus' );
+    closeList($event) {
+        $event.preventDefault();
+        if (this.listBox.showList) {
+            $event.stopPropagation();
+        }
+        this.listBox.showList = false;
+        this.listBox.resetCursors();
+        this.listBox.detectChanges();
     }
 
-    createElementLi( item ) {
-        let labelClass;
-        labelClass = (item === 'add') ? 'item-add' : 'item-list';
-        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight + 'px' );
-        this.renderer.addClass( this.listElement.nativeElement, labelClass );
+    addMore() {
+        this.onAddMore.emit();
     }
 
-    createElementSpanDataID( item ) {
-        this.spanElementDataID = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanElementDataID.nativeElement, 'float', 'right' );
-        this.spanElementDataID.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataID ].toString(), this.searchValue ) );
-        this.renderer.addClass( this.spanElementDataID.nativeElement, 'item-id' );
+    onInputFocusOut($event) {
+        if (!this.isRelatedTargetLi($event)) {
+            this.listBox.showList = false;
+            this.listBox.detectChanges();
+        }
     }
 
-    createElementSpanDataLabel( item ) {
-        let labelClass;
-        labelClass = (this.dataType === 'string') ? 'item-simple-label' : 'item-label';
-        this.spanElementDataLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataLabel.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataLabel ], this.searchValue ) );
-        this.renderer.addClass( this.spanElementDataLabel.nativeElement, labelClass );
+    onClickItemList($event) {
+        if ($event[this.labelName]) {
+            this.input.element.nativeElement.value = $event[this.labelName];
+            this.ngModel = $event;
+            this.input.componentModel.model = $event;
+            this.input.element.nativeElement.focus();
+        }
     }
 
-    createElementSpanDataDescription( item ) {
-        this.spanElementDataDescription = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.spanElementDataDescription.nativeElement.insertAdjacentHTML( 'beforeend',
-            this.highlight( this.dataSource[ item ][ this.dataDescription ], this.searchValue ) );
-        this.renderer.addClass( this.spanElementDataDescription.nativeElement, 'item-description' );
+    isNotRelatedWithAutocomplete( $event ) {
+        if (this.isTargetEqualsClearButton($event)) {
+            return false;
+        }
+        if (!this.existAutocompleteInputInPath($event)) {
+            return true;
+        }
+        if ( this.isTargetEqualsLi ) {
+            return false;
+        }
+        return  !this.isTargetEqualsListBox( $event ) &&
+                !this.isTargetParentEqualsLi( $event ) &&
+                !this.isTargetEqualsInputSearch( $event );
     }
 
-    existCustomTemplate() {
-        for ( const node of this.customTemplate.nativeElement.childNodes ) {
-            if ( node.nodeName === '#comment' ) {
+    isTargetEqualsListBox( $event ) {
+        return $event.target.className === 'list-box-container';
+    }
+
+    isTargetEqualsLi( $event ) {
+        return $event.target.nodeName === 'LI';
+    }
+
+    isTargetParentEqualsLi( $event ) {
+        return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
+    }
+
+    isTargetEqualsClearButton( $event ) {
+        return $event.target.className.includes('-clearbutton');
+    }
+
+    isRelatedTargetLi($event) {
+        if ($event.relatedTarget) {
+            return $event.relatedTarget.nodeName === 'LI';
+        }
+    }
+
+    isTargetEqualsInputSearch( $event ) {
+        return $event.target === this.input.element.nativeElement;
+    }
+
+    existAutocompleteInputInPath($event) {
+        for (let element = 0; element < $event.path.length; element++) {
+            if (this.input.element.nativeElement === $event.path[element]) {
                 return true;
             }
         }
         return false;
     }
 
-    validateDefaultProperties() {
-        if ( typeof this.itemsToScroll !== 'number' ) {
-            throw new EvalError( 'You must pass some valid number to the [itemsToScroll] property of the tl-autocomplete element.' +
-                ' Ex.: [itemsToScroll]="4"' );
-        }
-        if ( typeof this.itemHeight !== 'number' ) {
-            throw new EvalError( 'You must pass some valid number to the [itemHeight] property of the tl-autocomplete element.' +
-                ' Ex.: [itemHeight]="4"' );
-        }
-    }
-
-    updateDataSource( data ) {
-        data.forEach( ( value ) => {
-            this.dataSource.push( value );
-        } );
-    }
-
-    getData() {
-        this.dataType = typeof this.data[ 0 ];
-        if ( ( this.dataType === undefined ) ) {
-            throw new EvalError( 'You must pass some valid data to the [data] property of the tl-autocomplete element.' );
-        }
-        if ( this.dataType === 'string' ) {
-            return this.constructSimpleData();
-        }
-        if ( (typeof this.data[ 0 ] === 'object') && ( (this.dataID.length <= 0)
-            || (this.dataLabel.length <= 0) || (this.query.length <= 0) ) ) {
-            throw new EvalError( 'You must use the [dataID], [dataLabel] and [query] properties' +
-                ' when using the [data] property of the tl-autocomplete element.' );
-        }
-        if ( typeof this.data[ 0 ] === 'object' && ( (this.dataID.length <= 0)
-            || (this.dataLabel.length <= 0) || (this.query[ 0 ].length <= 0) ) ) {
-            throw new EvalError( 'You must pass some valid value to the [dataID], [dataLabel] and [query] properties' +
-                ' when using the [data] property of the tl-autocomplete element.' );
-        }
-        this.checkDataProperties();
-        this.checkDuplicateDataItem();
-        return this.data;
-    }
-
-    constructSimpleData() {
-        if ( this.query.length > 0 || this.dataLabel.length > 0 || this.dataID.length > 0 ) {
-            throw new EvalError( 'You should not use the [dataID], [dataLabel] and [query] properties' +
-                ' when using the SIMPLEDATA of the tl-autocomplete element.' );
-        }
-        const simpleData = [];
-        this.data.forEach( ( value ) => {
-            simpleData.push( { 'value' : value } );
-        } );
-        this.dataID = 'value';
-        this.dataLabel = 'value';
-        this.query = [ 'value' ];
-        this.checkDuplicateDataItem();
-        return simpleData;
-    }
-
-    checkDataProperties() {
-        this.isQuery();
-        this.isDataID();
-        this.isDataLabel();
-    }
-
-    isDataID() {
-        let numberOfError = 0;
-        Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
-            if ( dataKey !== this.dataID ) {
-                numberOfError = numberOfError + 1;
-            }
-        } );
-        if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-            throw new EvalError( 'You must pass a valid value to a [dataID] property that exists in the' +
-                ' [data] property. (Ex: [dataID]="\'id\'")' );
-        }
-    }
-
-    isDataLabel() {
-        let numberOfError = 0;
-        Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
-            if ( dataKey !== this.dataLabel ) {
-                numberOfError = numberOfError + 1;
-            }
-        } );
-        if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-            throw new EvalError( 'You must pass a valid value to a [dataLabel] property that exists in the' +
-                ' [data] property. (Ex: [dataLabel]="\'firstName\'")' );
-        }
-    }
-
-    isQuery() {
-        this.query.forEach( ( queryValue ) => {
-            let numberOfError = 0;
-            Object.keys( this.data[ 0 ] ).forEach( ( dataKey ) => {
-                if ( dataKey !== queryValue ) {
-                    numberOfError = numberOfError + 1;
-                }
-            } );
-            if ( numberOfError === Object.keys( this.data[ 0 ] ).length ) {
-                throw new EvalError( 'You must pass a valid value to a [query] property that exists in the' +
-                    ' [data] property. (Ex: [query]="[\'id\',\'firstName\']" )' );
-            }
-        } );
-    }
-
-    handleFilter( $event ) {
-        const filterValue = $event.target.value;
-        this.filterString.next( filterValue );
-    }
-
-    handleList( $event ) {
-    }
-
-    handleSearch( searchValue ) {
-        if ( !searchValue ) {
-            this.showList = false;
-        }
-        this.getAndSetZIndex();
-        if ( searchValue.length >= this.minCharToSearch ) {
-            this.showList = true;
-            this.list.nativeElement.scrollTop = 0;
-            this.dataSource = this.filterData( searchValue );
-        }
-        this.change.detectChanges();
-        this.searchValue = searchValue;
-        this.renderDataList();
-        this.cursor = -1;
-
-    }
-
-    filterData( searchValue ) {
-        const filter = [];
-        this.data.forEach( ( item ) => {
-            if ( this.dataType === 'object' ) {
-                this.query.forEach( ( query ) => {
-                    if ( item[ query ].toString().toLowerCase().trim().includes( searchValue.toLowerCase().trim() ) ) {
-                        if ( filter.indexOf( item ) === -1 ) {
-                            filter.push( item );
-                        }
-                    }
-                } );
-            } else {
-                if ( item.toLowerCase().indexOf( searchValue.toLowerCase() ) !== -1 ) {
-                    filter.push( { value : item } );
-                }
-            }
-        } );
-        return filter;
-    }
-
-    getAndSetZIndex() {
-        this.zIndex = globalZindex++;
-        return this.zIndex;
-    }
-
-    clearFilter() {
-        this.writeValue( '' );
-        this.filter.nativeElement.focus();
-        this.clear.emit();
-    }
-
-    calcListHeight() {
-        if ( this.itemsToScroll >= this.dataSource.length ) {
-            return { 'height' : 'auto' };
-        } else {
-            return { 'height' : (this.itemHeight * this.itemsToScroll) + 'px' };
-        }
-    }
-
-    closeList() {
-        this.showList = false;
+    getAutoCompleteWidth() {
+        return this.input.input.nativeElement.offsetWidth +
+            (this.input.input.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
     }
 
     highlight( text: string, search ): string {
@@ -446,6 +253,10 @@ export class TlAutoComplete extends ComponentHasModelBase implements AfterViewIn
             }
             return text;
         }
+    }
+
+    ngOnDestroy() {
+        this.documentListener();
     }
 
 }

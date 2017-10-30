@@ -35,8 +35,23 @@
 .item {
   width: inherit;
   border-bottom: 1px solid #eeeeee;
-  padding: 10px;
+  padding: 5px;
+  box-sizing: border-box;
   list-style: none;
+  color: #7a838b;
+}
+
+.selected {
+  background: #66CC99;
+  color: #fff;
+}
+
+.item.stripped:nth-of-type(odd){
+  background: #fff;
+}
+
+.item.stripped:nth-of-type(even){
+  background: #E9E9E9;
 }
 
 .item:focus {
@@ -103,4 +118,16 @@
 .list li:focus {
   background-color: #66CC99;
   color: #fff;
+}
+
+.addMore {
+  position: absolute;
+  width: 100%;
+  background: #ffe4c4;
+}
+
+.addMore i {
+  padding: 0 10px;
+  float: left;
+  font-size: 1.5em;
 }

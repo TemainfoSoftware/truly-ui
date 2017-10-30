@@ -1,25 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-import { CharcaseDirective } from './charcase.directive';
-import { FieldMaskDirective } from './field-mask.directive';
-import { TooltipDirective } from './tooltip.directive';
+import { ShortcutDirective } from './shortcut.directive';
+import { ShortcutService } from '../helper/shortcut.service';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [
-        CharcaseDirective,
-        FieldMaskDirective,
-        TooltipDirective
+        ShortcutDirective,
     ],
     exports: [
-        CharcaseDirective,
-        FieldMaskDirective,
-        TooltipDirective
+        ShortcutDirective,
     ],
+    providers: [
+        ShortcutService,
+    ]
 })
 export class DirectiveModule {}

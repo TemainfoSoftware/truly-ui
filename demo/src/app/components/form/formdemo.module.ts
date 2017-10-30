@@ -19,6 +19,10 @@ import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
 import { RadioButtonModule } from "truly-ui/radiobutton";
 import { CheckBoxModule } from "truly-ui/checkbox";
+import { MultiSelectModule } from 'truly-ui/multiselect';
+import { DirectiveModule } from "../../../../../src/core/directives/index";
+import { AutoCompleteModule } from "../../../../../src/autocomplete/index";
+import { DumpDataService } from "../../shared/services/dumpdata";
 
 @NgModule({
   declarations: [
@@ -34,18 +38,22 @@ import { CheckBoxModule } from "truly-ui/checkbox";
     InputModule,
     CheckBoxModule,
     FormDemoRoutingModule,
-    FormModule.forRoot(),
+    FormModule,
     DialogModule,
+    AutoCompleteModule,
     FormsModule,
     ModalModule,
     HighlightJsModule,
-    TooltipModule
+    TooltipModule,
+    MultiSelectModule,
+    DirectiveModule
   ],
   exports: [
     FormDemo,
     NewPerson,
   ],
   providers: [
+    DumpDataService,
     DataFormService
   ],
   entryComponents: [

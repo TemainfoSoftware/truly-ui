@@ -31,10 +31,12 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 
+let zindex = 0;
+
 @Component( {
-    selector : 'tl-button',
-    templateUrl : './button.html',
-    styleUrls : [ './button.scss' ]
+    selector: 'tl-button',
+    templateUrl: './button.html',
+    styleUrls: [ './button.scss' ]
 } )
 export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
@@ -84,16 +86,21 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     private _buttonSelected: boolean;
 
+    private zIndex;
+
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
         this.executeToggle();
     }
 
+
     constructor( public button: ElementRef, public modalService: ModalService,
                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
+        this.zIndex = zindex++;
         this.initializeDefaultInputValues();
     }
+
 
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
@@ -165,17 +172,21 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         }
     }
 
-    dispatchCallback() {
-        const listModals = document.querySelectorAll( 'tl-modal' );
-        if ( !this.mdResult || ModalResult.MRCUSTOM ) {
-            return;
-        }
-        if ( listModals.length > 0 ) {
-            this.modalService.execCallBack( {
-                'mdResult' : ModalResult[ this.mdResult ],
-                'formResult' : this.formResult
-            }, this.findParentOfChildren( listModals ) );
-        }
+    dispatchCallback(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const listModals = document.querySelectorAll( 'tl-modal' );
+            if ( !this.mdResult || ModalResult.MRCUSTOM ) {
+                return;
+            }
+            if ( listModals.length > 0 ) {
+                this.modalService.execCallBack( {
+                    mdResult : ModalResult[ this.mdResult ],
+                    formResult : this.formResult
+                }, this.findParentOfChildren( listModals ) ).then(() => {
+                    resolve();
+                });
+            }
+        });
     }
 
     findParentOfChildren( listModals ) {

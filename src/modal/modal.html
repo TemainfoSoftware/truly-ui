@@ -9,31 +9,37 @@
                  [ngStyle]="{'background-color': colorHoverMinimize}"
                  (mouseover)="hoverMinimize()"
                  (mouseleave)="leaveMinimize()"
-                 (mouseup)="minimizeModal()">
+                 (click)="minimizeModal()">
                 <i [style.color]="fontColor" class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </div>
 
             <div class="control-item" *ngIf="!maximized"
-                 [ngStyle]="{'background-color': colorHoverMaximize}"
+                 [ngStyle]="{'background-color': colorHoverMaximize,
+                 'zIndex': modal.style.zIndex}"
                  (mouseover)="hoverMaximize()"
                  (mouseleave)="leaveMaximize()"
-                 (mouseup)="maximizeModal()">
+                 [shortcut]="maximizeShortcut"
+                 (click)="maximizeModal()">
                 <i [style.color]="fontColor" ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </div>
 
             <div class="control-item" *ngIf="maximized"
-                 [ngStyle]="{'background-color': colorHoverRestore}"
+                 [ngStyle]="{'background-color': colorHoverRestore,
+                 'zIndex': modal.style.zIndex}"
                  (mouseover)="hoverRestore()"
                  (mouseleave)="leaveRestore()"
-                 (mouseup)="restoreMaximizeModal()">
+                 [shortcut]="restoreShortcut"
+                 (click)="restoreMaximizeModal()">
                 <i [style.color]="fontColor" ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
             </div>
 
             <div class="control-item"
-                 [ngStyle]="{'background-color': colorHoverClose}"
+                 [ngStyle]="{'background-color': colorHoverClose,
+                  'zIndex': modal.style.zIndex}"
+                 [shortcut]="closeShortcut"
                  (mouseover)="hoverClose()"
                  (mouseleave)="leaveClose()"
-                 (mouseup)="closeModal()">
+                 (click)="closeModal()">
                 <i [style.color]="fontColor" class="ion-close"></i>
             </div>
         </div>

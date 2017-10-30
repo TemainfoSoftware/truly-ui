@@ -242,6 +242,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
                 $event.stopPropagation();
                 this.handleClickItem( this.datasource[ row ], row );
                 this.handleOpenFocusList();
+                this.setInputFocus();
             } );
         } );
     }
@@ -255,6 +256,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
     addClickEventToCustomTemplate() {
         this.listBox.nativeElement.addEventListener( 'click', ( $event ) => {
             const array = !this.filtering ? this.data : this.datasource;
+            this.setInputFocus();
             this.handleClickItem(  array[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
                 this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
         } );
@@ -428,6 +430,14 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
     setScrollTopAndFocusNext() {
         this.itemContainer.nativeElement.scrollTop += this.rowHeight;
         this.setFocusOnNextCursor();
+    }
+
+    setInputFocus() {
+        if (this.searchElement) {
+            setTimeout(() => {
+                this.searchElement.input.nativeElement.focus();
+            }, 1)
+        }
     }
 
     setCursorViewNextAndFocusNext() {
@@ -765,7 +775,7 @@ export class TlListBox implements OnInit, AfterViewInit, DoCheck, OnDestroy {
     createElementList(row) {
         this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
         this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( (row + this.skip) ) );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
+        // this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
         this.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
         this.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
         this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );

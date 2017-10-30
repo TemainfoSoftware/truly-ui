@@ -66,9 +66,9 @@ gulp.task('rollup:fesm', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
   // transform the files here.
     .pipe(rollup({
-      allowRealFiles: false,
+      allowRealFiles: true,
       // Bundle's entry point
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
+      // See "input" in https://rollupjs.org/#core-functionality
       input: `${buildFolder}/index.js`,
 
       // A list of IDs of modules that should remain external to the bundle

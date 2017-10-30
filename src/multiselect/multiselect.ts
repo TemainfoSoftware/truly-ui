@@ -387,8 +387,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validateOpenOnFocus();
         this.setOutlineMultiSelect();
         this.sortFilteredItens();
-        this.addClassSelected( 0 );
-        this.cursor = 0;
     }
 
     setFilteredItens() {
@@ -472,8 +470,14 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.cleanInput();
         this.toogleOpen( true );
         this.change.detectChanges();
-        this.addClassSelected( 0 );
-        this.cursor = 0;
+        this.handleSelectTagOnFirst();
+    }
+
+    handleSelectTagOnFirst() {
+        if ( this.ul.nativeElement.children[ 0 ] ) {
+            this.addClassSelected( 0 );
+            this.cursor = 0;
+        }
     }
 
     stopEventKeyDown( $event ) {
@@ -614,7 +618,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.setModelValue();
         this.sortFilteredItens();
         this.cleanInput();
+        this.toogleOpen(true);
         this.change.detectChanges();
+        this.handleSelectTagOnFirst();
     }
 
     cleanInput() {

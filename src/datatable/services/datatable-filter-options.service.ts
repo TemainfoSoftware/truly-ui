@@ -20,17 +20,18 @@
     SOFTWARE.
 */
 
-import { Component, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-@Component({
-    selector: '[tlColumnFilter]',
-    templateUrl: './datatable-column-filter.html',
-    styleUrls: ['./datatable-column-filter.scss']
-})
-export class TlDatatabaleColumnFilter {
-    @Input('tlColumnFilter') tlColumnFilter;
-    itemSelected9;
-    constructor() {
+@Injectable()
+export class FilterOptionsService {
 
+    getOptionsByType(type): Array<any>{
+      return  [
+          { description : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
+          { description : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },
+          { description : 'Ends Withs', valueItem : '3', icon: 'fa fa-bus' },
+          { description : 'Equals', valueItem : '4', icon: 'fa fa-circle' },
+          { description : 'Not Equals', valueItem : '5', icon: 'fa fa-external-link' }
+      ]
     }
 }

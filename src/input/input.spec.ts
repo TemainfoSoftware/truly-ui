@@ -83,7 +83,7 @@ describe( 'TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
     } ) );
 
     test( 'deve exibir o elemento "label" com width setado em "LabelSize"', async( () => {
-        componentInputInstance.labelSize = '350';
+        componentInputInstance.labelSize = 350;
         fixture.detectChanges();
         expect( elementoHTMLLabel.style.width ).toEqual( '350px' );
     } ) );

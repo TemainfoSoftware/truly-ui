@@ -19,37 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { forwardRef } from '@angular/core';
 
-import { HighlightJsModule } from 'ngx-highlight-js';
-
-import { AutoCompleteModule } from 'truly-ui/autocomplete';
-
-import { AutoCompleteDemo } from './autocompletedemo.component';
-import { AutoCompleteDemoRoutingModule } from './autocompletedemo-routing.module';
-import { DialogService } from "../../../../../src/dialog/dialog.service";
-import { DialogModule } from "../../../../../src/dialog/index";
-
-
-@NgModule({
-  declarations: [
-    AutoCompleteDemo,
-  ],
-  imports: [
-    AutoCompleteDemoRoutingModule,
-    AutoCompleteModule,
-    CommonModule,
-    DialogModule,
-    FormsModule,
-    HighlightJsModule
-  ],
-  exports: [
-    AutoCompleteDemo,
-  ],
-  providers: [
-    DialogService
-  ],
-})
-export class AutoCompleteDemoModule { }
+export function MakeProvider( type: any): any {
+    return {
+        provide: NG_VALUE_ACCESSOR,
+        useExisting: forwardRef(() => type),
+        multi: true
+    };
+}

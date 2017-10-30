@@ -23,17 +23,16 @@ import {
     Component,
     Input,
     ViewChild,
-    forwardRef,
     AfterViewInit,
     Output,
     EventEmitter, Renderer2,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { InputMask } from './input-mask';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 /**
  * Input Component personalized with few features.
@@ -62,9 +61,7 @@ import { InputMask } from './input-mask';
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: [ './input.scss' ],
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
-    ]
+    providers: [ MakeProvider(TlInput) ]
 } )
 export class TlInput extends ComponentHasModelBase implements AfterViewInit {
 
@@ -92,7 +89,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Property to labelSize
      * @type {string}
      */
-    @Input() labelSize = '';
+    @Input() labelSize = 100;
 
     /**
      * Label of Input
@@ -210,7 +207,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Constructor
      */
     constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                private renderer: Renderer2) {
+                public renderer: Renderer2) {
         super(tabIndexService, idService, nameService);
     }
 

@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, OnInit, Renderer2, ViewChild
+    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -28,9 +28,9 @@ import { style, transition, trigger, animate, state } from '@angular/animations'
 import { KeyEvent } from '../core/enums/key-events';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 let globalZindex = 1;
 
@@ -49,7 +49,7 @@ let globalZindex = 1;
         )
     ],
     providers : [
-        { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlDropDownList ), multi : true }
+        [ MakeProvider(TlDropDownList) ]
     ]
 } )
 

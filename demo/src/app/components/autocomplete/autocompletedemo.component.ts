@@ -19,14 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
+import { DialogService } from "../../../../../src/dialog/dialog.service";
 
 @Component( {
   selector : 'app-autocomplete',
   templateUrl : './autocompletedemo.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls : [ './autocompletedemo.component.scss' ],
   providers : [ DumpDataService ]
 } )
@@ -37,6 +39,8 @@ export class AutoCompleteDemo {
   public simpleData: any[];
 
   public data: any[];
+
+  private modalOptions;
 
   private result: any;
 
@@ -54,10 +58,33 @@ export class AutoCompleteDemo {
 
   private result8: any;
 
-  constructor( private dataDumpService: DumpDataService ) {
+  private example = '{{item.firstName}}';
+
+  constructor( private dataDumpService: DumpDataService,
+               private view: ViewContainerRef, private dialogService: DialogService ) {
     this.dataTableProperties = json.dataProperties;
+
+
+
+    this.dialogService.setView(this.view);
     this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
-    this.data = this.dataDumpService.createRandomData( 20 );
+    this.data = this.dataDumpService.createRandomData( 1000 );
+
+    this.modalOptions = {
+      title: 'New Modal',
+      icon: 'ion-monitor',
+      draggable: true,
+      width: '500px',
+      height: 'auto',
+      maximizable: true,
+      minimizable: true
+    };
+  }
+
+  newClient() {
+    this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
+      console.log('Return',modalResult);
+    })
   }
 
 }

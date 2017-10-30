@@ -1,9 +1,11 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DataFormService } from "./dataform.service";
+import { DumpDataService } from "../../../shared/services/dumpdata";
 
 @Component( {
   selector: 'new-person',
   templateUrl: './newperson.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './newperson.component.scss' ]
 } )
 export class NewPerson implements OnInit, OnChanges {
@@ -16,7 +18,13 @@ export class NewPerson implements OnInit, OnChanges {
 
   private dataBasic;
 
-  constructor(public formDataService: DataFormService) {}
+  private dataAuto;
+
+  private result;
+
+  constructor(public formDataService: DataFormService,  private dataDumpService: DumpDataService) {
+    this.dataAuto = this.dataDumpService.createRandomData( 200 );
+  }
 
   ngOnInit() {
     this.data = [

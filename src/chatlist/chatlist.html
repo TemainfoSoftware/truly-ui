@@ -1,0 +1,63 @@
+<div class="ui-chat-wrapper">
+    <div class="ui-chat-overflow" (scroll)="handleScrollChat($event)" [style.height]="((10 * 50) + (50)) + 'px'">
+        <div class="ui-chat-lists" [style.height]="(data.length * 50) - (50) + 'px'">
+
+            <div class="ui-chat-content" [style.transform]="'translateY(' + scrollChat + 'px)'">
+
+                <div class="ui-status">Online ({{chatListService.online.length}})</div>
+                <tl-listbox
+                        [data]="chatListService.online"
+                        [itensToShow]="5"
+                        [searchElement]="searchInput"
+                        (onClickItem)="onClickItemChat($event)"
+                        [showArrows]="false"
+                        [hiddenScroll]="true"
+                        [rowHeight]="50">
+
+                    <ng-template let-item="item" let-index="index">
+                        <li class="ui-chat-template">
+                            <img class="img-circle" src="../assets/img/avatar.png" width="30">
+                            <div class="ui-chat-infowrapper">
+                                <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
+                                <span class="ui-chat-sector">{{item.lastName}}</span>
+                            </div>
+                            <span class="ui-chat-bagde"
+                                  [style.margin-top]="((50 / 2) - 4) + 'px'"
+                                  [style.background-color]="getColorByStatus(item)">
+                             </span>
+                        </li>
+                    </ng-template>
+
+                </tl-listbox>
+
+                <div class="ui-status">Offline ({{chatListService.offline.length}})</div>
+
+                <tl-listbox
+                        [data]="chatListService.offline"
+                        [itensToShow]="5"
+                        [searchElement]="searchInput"
+                        (onClickItem)="onClickItemChat($event)"
+                        [showArrows]="false"
+                        [hiddenScroll]="true"
+                        [rowHeight]="50">
+
+                    <ng-template let-item="item" let-index="index">
+                        <li class="ui-chat-template">
+                            <img class="img-circle" src="../assets/img/avatar.png" width="30">
+                            <div class="ui-chat-infowrapper">
+                                <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
+                                <span class="ui-chat-sector">{{item.lastName}}</span>
+                            </div>
+                            <span class="ui-chat-bagde"
+                                  [style.margin-top]="((50 / 2) - 4) + 'px'"
+                                  [style.background-color]="getColorByStatus(item)">
+                             </span>
+                        </li>
+                    </ng-template>
+                </tl-listbox>
+
+            </div>
+
+        </div>
+    </div>
+</div>

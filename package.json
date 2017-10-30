@@ -76,7 +76,7 @@
     "node-sass-tilde-importer": "^1.0.0",
     "node-watch": "^0.5.2",
     "protractor": "~5.1.0",
-    "rollup": "^0.47.5",
+    "rollup": "^0.50.0",
     "run-sequence": "^2.0.0",
     "semantic-release": "^6.3.6",
     "ts-node": "~3.3.0",

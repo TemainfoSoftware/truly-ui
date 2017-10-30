@@ -1,11 +1,12 @@
-<ng-template ngFor let-column [ngForOf]="tlColumnFilter">
+<ng-template ngFor let-column let-index [ngForOf]="tlColumnFilter">
     <th class="ui-cel ui-filter-cel">
         <div class="ui-filter">
-            <div class="ui-dropdown" [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
+            <div class="ui-dropdown"
+                 *ngIf="column?.showFilterOptions && column?.filterOptions.length"
+                 [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
                 <tl-dropdown-list
-                    *ngIf="column?.showFilterOptions"
-                    [data]="dataWidthIcon"
-                    [text]="'textItem'"
+                    [data]="column?.filterOptions"
+                    [text]="'description'"
                     [icon]="'icon'"
                     [width]="160"
                     [height]="25"

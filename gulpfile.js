@@ -75,7 +75,9 @@ gulp.task('rollup:fesm', function () {
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
-        '@angular/common'
+        '@angular/common',
+        '@angular/forms',
+        '@angular/animations'
       ],
 
       // Format of generated bundle
@@ -102,7 +104,9 @@ gulp.task('rollup:umd', function () {
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
-        '@angular/common'
+        '@angular/common',
+        '@angular/forms',
+        '@angular/animations'
       ],
 
       // Format of generated bundle

@@ -8,46 +8,85 @@
   <hr>
   <div class="showcase">
     <div class="row">
-        <div class="col-md-6">
-          <h5>Basic Usage</h5>
-          <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputBasic
-                    [autocomplete]="'off'"
-                    [placeholder]="'Search...'">
-          </tl-input>
-          <tl-listbox
-            [data]="dataBasic"
-            (onClickItem)="onClickNoItem($event)"
-            [itensToShow]="10"
-            [searchElement]="inputBasic"
-            [id]="'id'"
-            [label]="'firstName'"
-            [labelDetail]="'city'"
-            [rowHeight]="50">
-          </tl-listbox>
-        </div>
-        <div class="col-md-6">
-          <h5>With Custom Template</h5>
-          <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
-                    [autocomplete]="'off'"
-                    [placeholder]="'Search...'"></tl-input>
-          <tl-listbox
-            [data]="dataCustom"
-            (onClickItem)="onClickNoItem($event)"
-            [itensToShow]="10"
-            [searchElement]="inputCustom"
-            [id]="'id'"
-            [label]="'firstName'"
-            [labelDetail]="'city'"
-            [rowHeight]="50">
-            <ng-template let-item="item" let-index="index" >
-              <li class="list-template-demo">
-                <img class="img-circle" src="../assets/img/avatar.png"
-                     width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
-                <span class="list-bagde badge">{{item.id}}</span>
-              </li>
-            </ng-template>
-          </tl-listbox>
-        </div>
+      <div class="col-md-6">
+        <h5>Basic Usage - Normal Mode</h5>
+        <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                  [autocomplete]="'off'"
+                  [placeholder]="'Search...'"></tl-input>
+        <tl-listbox
+          [data]="dataBasic"
+          [itensToShow]="10"
+          [searchElement]="inputCustom"
+          [id]="'id'"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+        </tl-listbox>
+      </div>
+      <div class="col-md-6">
+        <h5>Basic Usage - Lazy Mode</h5>
+        <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                  [autocomplete]="'off'"
+                  [placeholder]="'Search...'"></tl-input>
+        <tl-listbox
+          [data]="dataLazy"
+          [itensToShow]="10"
+          [lazyMode]="true"
+          (lazyLoad)="onLazyLoad($event)"
+          [searchElement]="inputCustom"
+          [id]="'id'"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+        </tl-listbox>
+      </div>
+
+      <div class="col-md-6">
+        <h5>Custom Template Normal Mode</h5>
+        <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                  [autocomplete]="'off'"
+                  [placeholder]="'Search...'"></tl-input>
+        <tl-listbox
+          [data]="dataCustom"
+          [itensToShow]="10"
+          [searchElement]="inputCustom"
+          [id]="'id'"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+          <ng-template let-item="item" let-index="index">
+            <li class="list-template-demo">
+              <img class="img-circle" src="../assets/img/avatar.png"
+                   width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
+              <span class="list-bagde badge">{{item.id}}</span>
+            </li>
+          </ng-template>
+        </tl-listbox>
+      </div>
+      <div class="col-md-6">
+        <h5>Custom Template Lazy Mode</h5>
+        <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputCustom
+                  [autocomplete]="'off'"
+                  [placeholder]="'Search...'"></tl-input>
+        <tl-listbox
+          [data]="dataLazy"
+          [itensToShow]="10"
+          [searchElement]="inputCustom"
+          [id]="'id'"
+          [lazyMode]="true"
+          (lazyLoad)="onLazyLoad($event)"
+          [label]="'firstName'"
+          [labelDetail]="'city'"
+          [rowHeight]="50">
+          <ng-template let-item="item" let-index="index">
+            <li class="list-template-demo">
+              <img class="img-circle" src="../assets/img/avatar.png"
+                   width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
+              <span class="list-bagde badge">{{item.id}}</span>
+            </li>
+          </ng-template>
+        </tl-listbox>
+      </div>
     </div>
   </div>
   <hr>

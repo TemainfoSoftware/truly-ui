@@ -23,7 +23,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <div class="col-md-6">
-          <tl-radio-group [nameGroup]="'Sexo'" [ngModel]="person?.gender">
+          <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
             <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
             <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
           </tl-radio-group>
@@ -76,18 +76,22 @@
     <div class="col-md-12">
       <div class="form-group">
         <tl-autocomplete [data]="dataAuto"
-                         [id]="'id'"
-                         [iconBefore]="'ion-ios-search-strong'"
-                         [openFocus]="false"
-                         [placeholder]="'Procurar...'"
-                         [clearButton]="true"
-                         [labelSize]="100"
-                         [rowHeight]="40"
+                         [openFocus]="true"
                          [name]="'clients'"
+                         (onAddMore)="newClient()"
                          [label]="'Clients'"
-                         [labelDetail]="'lastName'"
                          [labelName]="'firstName'"
-                         [ngModel]="person?.clients">
+                         [clearButton]="true"
+                         [rowHeight]="35"
+                         [placeholder]="'Search...'"
+                         [(ngModel)]="result">
+          <ng-template let-item="item" let-index="index">
+            <li class="list-template-demo">
+              <img class="img-circle" src="../assets/img/avatar.png"
+                   width="20">{{item.firstName}} - <span>{{item.lastName}}</span>
+              <span class="list-bagde badge">{{item.id}}</span>
+            </li>
+          </ng-template>
         </tl-autocomplete>
       </div>
     </div>

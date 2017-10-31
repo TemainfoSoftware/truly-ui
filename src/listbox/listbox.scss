@@ -131,3 +131,23 @@
   float: left;
   font-size: 1.5em;
 }
+
+.loading {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  background: #dfe7ea;
+  opacity: 0.8;
+}
+
+.loading span {
+  position: absolute;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+  top: calc(50% - 40px);
+  padding: 10px;
+  color: #585858;
+  z-index: 100;
+}

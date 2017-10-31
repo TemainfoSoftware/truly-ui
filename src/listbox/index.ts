@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlListBox } from './listbox';
+import { LoadingModule } from '../loading/index';
 import { ListBoxContainerDirective } from './lisbox-container-directive';
+import { ListBoxDataSourceService } from './listbox-datasource.service';
 
 export * from './listbox';
 
@@ -11,6 +13,7 @@ export * from './listbox';
     imports: [
         CommonModule,
         FormsModule,
+        LoadingModule
     ],
     declarations: [
         TlListBox,
@@ -20,5 +23,8 @@ export * from './listbox';
         TlListBox,
         ListBoxContainerDirective,
     ],
+    providers: [
+        ListBoxDataSourceService
+    ]
 })
 export class ListBoxModule {}

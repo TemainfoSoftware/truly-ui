@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FilterOptionsService {
 
-    getOptionsByType(type): Array<any>{
+    getOptionsByType(type): Array<any> {
       return  [
           { description : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
           { description : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },

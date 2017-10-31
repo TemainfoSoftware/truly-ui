@@ -64,7 +64,7 @@ export class TlDatatableColumn implements OnInit {
     }
 
     setFilterOptions() {
-        if (!this.filterOptions.length){
+        if (!this.filterOptions.length) {
             this.filterOptions = this.filterOptionsService.getOptionsByType( this.type );
         }
     }

@@ -23,9 +23,9 @@
 
 import {
     Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
-    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, NgZone,
+    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, NgZone,
     OnChanges,
-    ContentChild, TemplateRef, EmbeddedViewRef, OnDestroy, SimpleChanges
+    ContentChild, TemplateRef, OnDestroy, SimpleChanges
 } from '@angular/core';
 
 import { Subject } from 'rxjs/Subject';
@@ -36,7 +36,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
-import { ListBoxDataSourceService } from './listbox-datasource.service';
+import { ListBoxDataSourceService } from './services/listbox-datasource.service';
+import { ListBoxListRenderService } from './parts/listbox-list-render';
+import { AddNewRenderService } from './parts/listbox-addnew-render';
+import { ListBoxTemplateRenderService } from './parts/listbox-template-render';
 
 @Component( {
     selector: 'tl-listbox',
@@ -52,6 +55,12 @@ import { ListBoxDataSourceService } from './listbox-datasource.service';
                 transition( '0 => 1', animate( '100ms' ) ),
             ]
         )
+    ],
+    providers: [
+        ListBoxDataSourceService,
+        ListBoxListRenderService,
+        AddNewRenderService,
+        ListBoxTemplateRenderService,
     ]
 } )
 export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
@@ -74,7 +83,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() charsToSearch = 3;
 
-    @Input() addMore = false;
+    @Input() addNew = false;
 
     @Input() itensToShow = 10;
 
@@ -92,7 +101,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() lazyMode = false;
 
-    @Input() addMoreMessage = 'Add More';
+    @Input() addNewMessage = 'Add New';
 
     @Input() listStripped = false;
 
@@ -102,7 +111,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
-    @Output() onClickAddMore: EventEmitter<any> = new EventEmitter();
+    @Output() onClickAddNew: EventEmitter<any> = new EventEmitter();
 
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
@@ -118,11 +127,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     public  showList = true;
 
+    public cursor = -1;
+
+    public skip = 0;
+
     private nothingToShow = false;
 
     private showMore = false;
-
-    private cursor = -1;
 
     private loadingMoreData = false;
 
@@ -130,13 +141,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     private filteredData = [];
 
-    private timeArrow;
-
     private timeScroll;
 
     private lastRowViewport = 0;
 
     private scrollTop = 0;
+
+    private time;
 
     private lastScrollTop = 0;
 
@@ -148,21 +159,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     private filtering = false;
 
-    private skip = 0;
-
     private take = this.rowsPage;
-
-    private listElement;
-
-    private addMoreElement;
-
-    private spanAddMoreLabel;
-
-    private spanAddMoreIcon;
-
-    private spanElementId;
-
-    private spanElementLabel;
 
     private lastRow;
 
@@ -183,7 +180,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     private itemSelected;
 
     constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
-                 private dataService: ListBoxDataSourceService ) {}
+                 public dataService: ListBoxDataSourceService,
+                 private addNewRenderService: AddNewRenderService,
+                 private listRenderService: ListBoxListRenderService,
+                 private listCustomRenderService: ListBoxTemplateRenderService ) {
+
+        this.listRenderService.setInstanceListBox(this);
+        this.listCustomRenderService.setInstanceListBox(this);
+    }
 
     ngOnInit() {
         this.handleSearchQuery();
@@ -234,17 +238,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                         this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
                     }
                 }, 66 )
-            } );
-        } );
-    }
-
-    addEventClickToListElement(row) {
-        this.zone.run( () => {
-            this.renderer.listen( this.listElement.nativeElement, 'mousedown', ( $event ) => {
-                $event.stopPropagation();
-                this.handleClickItem( this.dataService.datasource[ row ], row );
-                this.handleOpenFocusList();
-                this.setInputFocus();
             } );
         } );
     }
@@ -339,30 +332,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     handleEventKeyDown( $event ) {
         switch ( $event.keyCode ) {
-            case KeyEvent.ESCAPE:
-                this.handleEscape( $event );
-                return;
-            case KeyEvent.ARROWDOWN :
-                this.handleKeyArrowDown( $event );
-                return;
-            case KeyEvent.ARROWUP:
-                this.handleKeyArrowUp( $event );
-                return;
-            case KeyEvent.TAB:
-                this.handleFilteredListNotSelected();
-                return;
-            case KeyEvent.ENTER:
-                this.handleKeyEnter( $event );
-                return;
-            case KeyEvent.ARROWLEFT:
-                $event.stopPropagation();
-                return;
-            case KeyEvent.ARROWRIGHT:
-                $event.stopPropagation();
-                return;
-            case KeyEvent.BACKSPACE:
-                this.handleKeyBackspace( $event );
-                return;
+            case KeyEvent.ESCAPE: this.handleEscape( $event ); return;
+            case KeyEvent.ARROWDOWN : this.handleKeyArrowDown( $event ); return;
+            case KeyEvent.ARROWUP: this.handleKeyArrowUp( $event ); return;
+            case KeyEvent.TAB: this.handleFilteredListNotSelected(); return;
+            case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
+            case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
+            case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
+            case KeyEvent.BACKSPACE: this.handleKeyBackspace( $event ); return;
         }
         this.subject.next( $event.target.value );
     }
@@ -391,16 +368,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     handleKeyEnter( $event ) {
         $event.preventDefault();
-        this.handleAddMoreSelected();
+        this.addNewRenderService.handleAddNewSelected();
         this.handleFilteredListNotSelected();
-    }
-
-    handleAddMoreSelected() {
-        if (this.addMore) {
-            if (this.addMoreElement.nativeElement.className.includes('selected')) {
-                this.handleClickAddMore();
-            }
-        }
     }
 
     handleOpenFocusList() {
@@ -427,7 +396,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
             if ( this.isCursorLessThanListLength() ) {
-                this.isCursorViewMoreThanVisibleRows() ?
+                this.isCursorViewNewThanVisibleRows() ?
                     this.setScrollTopAndFocusNext() : this.setCursorViewNextAndFocusNext();
                 this.handleCursorWithoutSearchElement();
                 this.setLastSelected();
@@ -458,7 +427,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         return this.cursor < this.listBox.nativeElement.children.length - 1;
     }
 
-    isCursorViewMoreThanVisibleRows() {
+    isCursorViewNewThanVisibleRows() {
        return this.cursorViewPortPosition >= this.quantityVisibleRows - 1;
     }
 
@@ -696,83 +665,21 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     renderList() {
-        if ( this.dataService.datasource ) {
-            requestAnimationFrame( () => {
-                this.zone.runOutsideAngular( () => {
-                    this.handleRemoveListChildren();
-                    for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
-                        this.createElementList( row );
-                        this.addEventClickToListElement( row );
-                        this.appendListElementToListBox();
-                        this.createElementSpanLabel( row );
-                        this.renderer.appendChild( this.listElement.nativeElement, this.spanElementLabel.nativeElement );
-                        this.handleCreationIdElement( row );
-                    }
-                    this.createAddMore();
-                } );
-                if ( this.cursor > -1 ) {
-                    this.getElementOfList();
-                }
-            } );
-        }
+        this.listRenderService.createList();
     }
 
-    handleCreationIdElement( row ) {
-        if ( this.id ) {
-            this.createElementSpanId( row );
-            this.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement )
-        }
+    renderCustomList() {
+        this.listCustomRenderService.createCustomTemplate();
     }
 
-    createAddMore() {
-        if ( !this.addMore ) {
-            return;
-        }
-        this.createElementAddMore();
-        this.createSpanAddMore();
-        this.createSpanIconAddMore();
-        this.renderer.appendChild( this.listBox.nativeElement, this.addMoreElement.nativeElement );
-        this.createListenerClickAddMore();
+    handleCreateAddNew() {
+        if ( !this.addNew ) { return; }
+        this.addNewRenderService.setInstanceListBox(this);
+        this.addNewRenderService.createAddNew();
     }
 
-    createListenerClickAddMore() {
-        this.zone.run( () => {
-            this.addMoreElement.nativeElement.addEventListener( 'click', ( $event: MouseEvent ) => {
-                $event.preventDefault();
-                $event.stopPropagation();
-                this.handleClickAddMore();
-            } );
-        } );
-    }
-
-    createSpanIconAddMore() {
-        this.spanAddMoreIcon = new ElementRef( this.renderer.createElement( 'i' ) );
-        this.renderer.addClass( this.spanAddMoreIcon.nativeElement, 'ion-ios-plus-outline' );
-        this.renderer.appendChild( this.spanAddMoreLabel.nativeElement, this.spanAddMoreIcon.nativeElement );
-    }
-
-    createSpanAddMore() {
-        this.spanAddMoreLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        this.renderer.setStyle( this.spanAddMoreLabel.nativeElement, 'font-size', this.labelSize );
-        this.spanAddMoreLabel.nativeElement.append( this.addMoreMessage );
-        this.renderer.appendChild( this.addMoreElement.nativeElement, this.spanAddMoreLabel.nativeElement );
-    }
-
-    createElementAddMore() {
-        this.addMoreElement = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( this.addMoreElement.nativeElement, 'data-indexnumber',
-            String( ((this.dataService.datasource.length + 1) + this.skip) ) );
-        this.renderer.setAttribute( this.addMoreElement.nativeElement, 'tabindex', '-1' );
-        this.renderer.setStyle( this.addMoreElement.nativeElement, 'top',
-            ((this.dataService.datasource.length) + this.skip) * this.rowHeight + 'px' );
-        this.renderer.setStyle( this.addMoreElement.nativeElement, 'line-height', (this.rowHeight - 10) + 'px' );
-        this.renderer.setStyle( this.addMoreElement.nativeElement, 'height', this.rowHeight + 'px' );
-        this.renderer.addClass( this.addMoreElement.nativeElement, 'item' );
-        this.renderer.addClass( this.addMoreElement.nativeElement, 'addMore' );
-    }
-
-    handleClickAddMore() {
-        this.onClickAddMore.emit();
+    handleClickAddNew() {
+        this.onClickAddNew.emit();
         this.showList = false;
         this.change.detectChanges();
     }
@@ -781,7 +688,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if (!this.fixedHeight) {
             if ( (this.filteredData.length < this.itensToShow) && this.filtering ) {
                 let height = this.filteredData.length * this.rowHeight;
-                return this.addMore ? height += this.rowHeight + 1 : height += 1;
+                return this.addNew ? height += this.rowHeight + 1 : height += 1;
             }
         }
         return this.itensToShow * this.rowHeight;
@@ -799,92 +706,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     updateLastSelect() {
         if ( this.listBox.nativeElement.children[ this.cursor ] ) {
             this.addClassSelected( this.cursor );
-        }
-    }
-
-    createElementList(row) {
-        this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
-        this.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( (row + this.skip) ) );
-        // this.renderer.setAttribute( this.listElement.nativeElement, 'tabindex', '-1' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.skip) * this.rowHeight + 'px' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
-        this.renderer.setStyle( this.listElement.nativeElement, 'height', this.rowHeight + 'px' );
-        this.renderer.addClass( this.listElement.nativeElement, 'item' );
-        this.handleListStripped();
-    }
-
-    handleListStripped() {
-        if (this.listStripped) {
-            this.renderer.addClass( this.listElement.nativeElement, 'stripped' );
-        }
-    }
-
-    appendListElementToListBox() {
-        this.renderer.appendChild( this.listBox.nativeElement, this.listElement.nativeElement );
-    }
-
-    createElementSpanId(row) {
-        const padding = 10;
-        this.spanElementId = new ElementRef( this.renderer.createElement( 'div' ) );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.labelSize );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.rowHeight - padding) + 'px' );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
-        this.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.rowHeight - padding) + 'px' );
-        this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.id ] );
-    }
-
-    createElementSpanLabel(row) {
-        this.spanElementLabel = new ElementRef( this.renderer.createElement( 'div' ) );
-        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.labelSize );
-        this.renderer.setStyle( this.spanElementLabel.nativeElement, 'position', 'absolute' );
-
-        const spanLabel = new ElementRef( this.renderer.createElement( 'span' ) );
-        spanLabel.nativeElement.append( this.dataService.datasource[ row ][ this.label ] );
-        this.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
-
-        this.createElementSpanLabelDetail( row );
-    }
-
-    createElementSpanLabelDetail( row ) {
-        if ( this.labelDetail ) {
-            const spanLabelDetail = new ElementRef( this.renderer.createElement( 'span' ) );
-            this.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
-            spanLabelDetail.nativeElement.append( this.dataService.datasource[ row ][ this.labelDetail ] );
-            this.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabelDetail.nativeElement );
-        }
-    }
-
-    createCustomTemplate(item, index): EmbeddedViewRef<any> {
-        return this.template.createEmbeddedView( {
-            item: item,
-            index: index
-        } );
-    }
-
-    renderCustomList() {
-        if ( this.dataService.datasource ) {
-            this.zone.runOutsideAngular( () => {
-                this.handleRemoveListChildren();
-                for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
-                    const nodes = this.createCustomTemplate( this.dataService.datasource[ row ], row );
-                    this.listTemplateContainer.viewList.insert( nodes );
-
-                    for ( const element of nodes.rootNodes ) {
-                        if ( element.nodeName === 'LI' ) {
-                            this.renderer.appendChild( this.listBox.nativeElement, element );
-                            this.renderer.setAttribute( element, 'data-indexnumber', String( (row + this.skip) ) );
-                            this.renderer.setAttribute( element, 'tabindex', '-1' );
-                            this.renderer.setStyle( element, 'top', (row + this.skip) * this.rowHeight + 'px' );
-                            this.renderer.setStyle( element, 'position', 'absolute' );
-                            this.renderer.setStyle( element, 'width', '100%' );
-                            this.renderer.setStyle( element, 'height', this.rowHeight + 'px' );
-                        }
-                    }
-                }
-                this.createAddMore();
-            } );
-            this.getElementOfList();
         }
     }
 
@@ -922,16 +743,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.setCurrentRow();
         this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
         this.setLastScrollTop();
-    }
-
-    onShowMoreMouseOut() {
-        clearTimeout( this.timeArrow );
-    }
-
-    onShowMoreMouseIn( direction ) {
-        this.timeArrow = setTimeout( () => {
-            direction === 'down' ?  this.setScrollToDown(direction) : this.setScrollToUp(direction);
-        }, 100 );
     }
 
     setFocusOnLast() {
@@ -1010,8 +821,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.itemContainer.nativeElement.scrollTop = 0;
     }
 
-    isElementAddMore( index ) {
-        return this.listBox.nativeElement.children[ index ].getAttribute( 'class' ).includes( 'addMore' );
+    isElementAddNew( index ) {
+        return this.listBox.nativeElement.children[ index ].getAttribute( 'class' ).includes( 'addNew' );
     }
 
     addClassSelected( index ) {
@@ -1032,7 +843,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleSelectItemWhileNavigating(index) {
-        if ( (this.searchElement) && (!this.isElementAddMore( index )) ) {
+        if ( (this.searchElement) && (!this.isElementAddNew( index )) ) {
             this.handleClickItem( this.dataService.datasource[ index ], index );
         }
     }
@@ -1081,6 +892,32 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.skip = 0;
         this.take = this.rowsPage;
     }
+
+    onShowMoreMouseOut() {
+        clearTimeout( this.time );
+    }
+
+    onShowMoreMouseIn( direction ) {
+        this.time = setTimeout( () => {
+            direction === 'down' ?  this.scrollToDown(direction) : this.scrollToUp(direction);
+        }, 100 );
+    }
+
+    scrollToUp(direction) {
+        if ( this.scrollTop > 0 ) {
+            this.itemContainer.nativeElement.scrollTop = this.itemContainer.nativeElement.scrollTop - this.rowHeight;
+            this.onShowMoreMouseIn( direction );
+        }
+    }
+
+    scrollToDown(direction) {
+        if ( this.scrollTop < this.listBox.nativeElement.offsetHeight ) {
+            this.itemContainer.nativeElement.scrollTop = this.itemContainer.nativeElement.scrollTop + this.rowHeight;
+            this.onShowMoreMouseIn( direction );
+        }
+    }
+
+
 
     public resetCursors() {
         this.itemContainer.nativeElement.scrollTop = 0;

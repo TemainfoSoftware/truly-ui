@@ -39,7 +39,7 @@
     "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
   "dependencies": {
-    "@angular/animations": "~4.4.0",
+    "@angular/animations": "~5.0.0",
     "@angular/common": "~4.4.0",
     "@angular/core": "~4.4.0",
     "@angular/forms": "~4.4.0",

@@ -294,7 +294,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         for ( let row = 0; row < dataSource.length; row++ ) {
             this.createElementTR( row, lastRow);
             this.createElementsTD( row, dataSource );
-            this.addEventClickToListElement( row );
+            this.addEventClickToListElement( row, dataSource );
         }
     }
 
@@ -359,9 +359,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         return this.lastScrollLeft !== this.listComponent.nativeElement.scrollLeft;
     }
 
-    private addEventClickToListElement( row ) {
+    private addEventClickToListElement( row, dataSource ) {
         this.elementTR.nativeElement.addEventListener( 'click', () => {
-            this.handleClickItem( this.dt.dataSourceService.datasource[ row ], row );
+            this.handleClickItem( dataSource[ row ], row );
         } );
     }
 

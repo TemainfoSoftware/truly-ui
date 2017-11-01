@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@angular/compiler": "~4.4.0",
-    "@angular/compiler-cli": "~4.4.0",
+    "@angular/compiler-cli": "~5.0.0",
     "@angular/platform-browser": "~4.4.0",
     "@angular/platform-browser-dynamic": "~4.4.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",

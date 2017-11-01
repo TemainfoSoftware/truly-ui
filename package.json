@@ -50,7 +50,7 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/compiler": "~4.4.0",
+    "@angular/compiler": "~5.0.0",
     "@angular/compiler-cli": "~4.4.0",
     "@angular/platform-browser": "~4.4.0",
     "@angular/platform-browser-dynamic": "~4.4.0",

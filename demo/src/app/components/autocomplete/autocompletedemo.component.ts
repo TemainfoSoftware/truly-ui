@@ -28,7 +28,6 @@ import { DialogService } from "../../../../../src/dialog/dialog.service";
 @Component( {
   selector : 'app-autocomplete',
   templateUrl : './autocompletedemo.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls : [ './autocompletedemo.component.scss' ],
   providers : [ DumpDataService ]
 } )
@@ -36,27 +35,15 @@ export class AutoCompleteDemo {
 
   private dataTableProperties;
 
-  public simpleData: any[];
+  public dataLazy;
 
-  public data: any[];
+  public dataBasic;
 
   private modalOptions;
 
-  private result: any;
+  private timeout;
 
-  private result2: any;
-
-  private result3: any;
-
-  private result4: any;
-
-  private result5: any;
-
-  private result6: any;
-
-  private result7: any;
-
-  private result8: any;
+  private take = 70;
 
   private example = '{{item.firstName}}';
 
@@ -65,10 +52,9 @@ export class AutoCompleteDemo {
     this.dataTableProperties = json.dataProperties;
 
 
-
-    this.dialogService.setView(this.view);
-    this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
-    this.data = this.dataDumpService.createRandomData( 1000 );
+    this.dialogService.setView( this.view );
+    // this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
+    this.dataBasic = this.dataDumpService.createRandomData( 1000 );
 
     this.modalOptions = {
       title: 'New Modal',
@@ -79,12 +65,31 @@ export class AutoCompleteDemo {
       maximizable: true,
       minimizable: true
     };
+
+    this.dataLazy = {
+      "data": this.getDataFromService( 0, this.take ),
+      "total": this.dataBasic.length
+    }
+  }
+
+  getDataFromService( skip, take ) {
+    return this.dataBasic.slice( skip, take );
+  }
+
+  onLazyLoad( event ) {
+    clearTimeout( this.timeout );
+    this.timeout = setTimeout( () => {
+      this.dataLazy = {
+        "data": this.getDataFromService( event.skip, event.take ),
+        "total": this.dataBasic.length
+      };
+    }, 2000 );
   }
 
   newClient() {
     this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
-      console.log('Return',modalResult);
-    })
+      console.log( 'Return', modalResult );
+    } )
   }
 
 }

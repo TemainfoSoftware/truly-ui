@@ -13,10 +13,12 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Normal Usage</h5>
-          <tl-autocomplete [data]="data"
+          <tl-autocomplete [data]="dataLazy"
                            [id]="'id'"
                            [openFocus]="true"
                            [name]="'clients'"
+                           [lazyMode]="true"
+                           (lazyLoad)="onLazyLoad($event)"
                            (onAddMore)="newClient()"
                            [label]="'Clients'"
                            [clearButton]="true"
@@ -28,10 +30,10 @@
           {{result}}
         </div>
       </div>
-      <div class="col-md-6">
+      <!--<div class="col-md-6">
         <div class="group-component">
           <h5>With Template</h5>
-          <tl-autocomplete [data]="data"
+          <tl-autocomplete [data]="dataLazy"
                            [id]="'id'"
                            [openFocus]="true"
                            [name]="'clients'"
@@ -51,7 +53,7 @@
             </ng-template>
           </tl-autocomplete>
         </div>
-      </div>
+      </div>-->
   </div>
   <hr>
   <div class="setup">

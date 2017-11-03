@@ -21,7 +21,7 @@
  */
 import {
     AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter,
-    forwardRef, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, ViewChild
+    forwardRef, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, TemplateRef, ViewChild
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -36,8 +36,8 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
 @Component( {
     selector: 'tl-autocomplete',
     templateUrl: './autocomplete.html',
-    styleUrls: [ './autocomplete.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: [ './autocomplete.scss' ],
     animations: [
         trigger(
             'enterAnimation', [
@@ -51,7 +51,7 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
     providers : [ MakeProvider(TlAutoComplete) ]
 } )
 
-export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
+export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy, OnChanges {
 
     @Input() data: Array<any>;
 
@@ -83,13 +83,14 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Output() onAddMore: EventEmitter<any> = new EventEmitter();
 
+    @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+
     private listPosition;
 
     private documentListener;
 
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
-                 public change: ChangeDetectorRef,
                  public nameService: NameGeneratorService, public renderer: Renderer2, ) {
         super( tabIndexService, idService, nameService, renderer );
     }
@@ -233,6 +234,10 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         return $event.target === this.input.element.nativeElement;
     }
 
+    onLazyLoadAutocomplete($event) {
+        this.lazyLoad.emit($event);
+    }
+
     existAutocompleteInputInPath($event) {
         for (let element = 0; element < $event.path.length; element++) {
             if (this.input.element.nativeElement === $event.path[element]) {
@@ -247,7 +252,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
             (this.input.input.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
     }
 
-    highlight( text: string, search ): string {
+/*    highlight( text: string, search ): string {
         if ( typeof search !== 'object' ) {
             if ( search && text ) {
                 let pattern = search.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
@@ -260,10 +265,14 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
             }
             return text;
         }
-    }
+    }*/
 
     ngOnDestroy() {
         this.documentListener();
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+
     }
 
 }

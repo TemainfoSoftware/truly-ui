@@ -9,3 +9,8 @@
   font-size: 5em;
   color: #d2d6de;
 }
+
+.fastSpin {
+  -webkit-animation: fa-spin 1s infinite linear;
+  animation: fa-spin 1s infinite linear;
+}

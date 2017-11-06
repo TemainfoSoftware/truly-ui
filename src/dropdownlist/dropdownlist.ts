@@ -504,13 +504,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     getData() {
-
         if ( ( this.data[ 0 ] === undefined ) ) {
             throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
-        }
-        if ( typeof this.data[ 0 ] === 'object' && (this.text === 'text' || this.value === 'value') ) {
-            throw new EvalError( 'You must pass some value to the TEXT and VALUE properties' +
-                ' when using the DATA property of the tl-dropdown-list element.' );
         }
         if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
             throw new EvalError( 'You must pass a string value to the TEXT and VALUE properties of the tl-dropdown-list element.' );

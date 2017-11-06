@@ -13,13 +13,11 @@
       <div class="col-md-6">
         <div class="group-component">
           <h5>Normal Usage</h5>
-          <tl-autocomplete [data]="dataLazy"
+          <tl-autocomplete [data]="dataBasic"
                            [id]="'id'"
                            [openFocus]="true"
                            [name]="'clients'"
-                           [lazyMode]="true"
-                           (lazyLoad)="onLazyLoad($event)"
-                           (onAddMore)="newClient()"
+                           (onAddNew)="newClient()"
                            [label]="'Clients'"
                            [clearButton]="true"
                            [rowHeight]="35"
@@ -27,7 +25,7 @@
                            [labelName]="'firstName'"
                            [(ngModel)]="result">
           </tl-autocomplete>
-          {{result}}
+          {{result | json}}
         </div>
       </div>
       <!--<div class="col-md-6">
@@ -94,7 +92,7 @@
      [id]="'id'"
      [openFocus]="true"
      [name]="'clients'"
-     (onAddMore)="newClient()"
+     (onAddNew)="newClient()"
      [label]="'Clients'"
      [clearButton]="true"
      [rowHeight]="35"
@@ -114,7 +112,7 @@
     [id]="'id'"
     [openFocus]="true"
     [name]="'clients'"
-    (onAddMore)="newClient()"
+    (onAddNew)="newClient()"
     [label]="'Clients'"
     [clearButton]="true"
     [rowHeight]="35"

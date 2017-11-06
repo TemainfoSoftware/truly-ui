@@ -24,6 +24,9 @@ import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/c
 import * as json from './autocompletedemo-dataproperties.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { DialogService } from "../../../../../src/dialog/dialog.service";
+import { FormService } from "../../../../../src/form/form.service";
+import { NewClient } from "./newclient/newclient.component";
+import { DataClientService } from "./newclient/dataclient.service";
 
 @Component( {
   selector : 'app-autocomplete',
@@ -39,41 +42,40 @@ export class AutoCompleteDemo {
 
   public dataBasic;
 
-  private modalOptions;
-
   private timeout;
 
   private take = 70;
 
+  private formOptions1;
+
+  private result;
+
   private example = '{{item.firstName}}';
 
   constructor( private dataDumpService: DumpDataService,
+               private formService: FormService,
+               private dataFormService: DataClientService,
                private view: ViewContainerRef, private dialogService: DialogService ) {
     this.dataTableProperties = json.dataProperties;
-
-
-    this.dialogService.setView( this.view );
-    // this.simpleData = [ 'Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige' ];
     this.dataBasic = this.dataDumpService.createRandomData( 1000 );
+    this.dialogService.setView( this.view );
 
-    this.modalOptions = {
-      title: 'New Modal',
-      icon: 'ion-monitor',
+    this.formOptions1 = {
+      title: 'New Client',
+      icon: 'ion-person-add',
       draggable: true,
       width: '500px',
-      height: 'auto',
+      height: '500px',
       maximizable: true,
-      minimizable: true
+      minimizable: true,
+      fullscreen: false
     };
+
 
     this.dataLazy = {
       "data": this.getDataFromService( 0, this.take ),
       "total": this.dataBasic.length
     }
-  }
-
-  getDataFromService( skip, take ) {
-    return this.dataBasic.slice( skip, take );
   }
 
   onLazyLoad( event ) {
@@ -83,13 +85,26 @@ export class AutoCompleteDemo {
         "data": this.getDataFromService( event.skip, event.take ),
         "total": this.dataBasic.length
       };
-    }, 2000 );
+    }, 200 );
   }
 
   newClient() {
-    this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
-      console.log( 'Return', modalResult );
-    } )
+    this.formService.createForm(NewClient, this.formOptions1, (modalResult) => {
+      if (modalResult.formResult) {
+        this.handleSaveClient(modalResult.formResult);
+      }
+    });
+  }
+
+  handleSaveClient(result) {
+    this.dataFormService.saveDataForm(result);
+    this.result = this.dataFormService.getDataForm();
+    this.result['id'] = this.dataBasic.length + 1;
+    this.dataBasic.push(this.result);
+  }
+
+  getDataFromService( skip, take ) {
+    return this.dataBasic.slice( skip, take );
   }
 
 }

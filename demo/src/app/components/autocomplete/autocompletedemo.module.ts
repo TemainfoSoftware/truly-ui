@@ -31,11 +31,19 @@ import { AutoCompleteDemo } from './autocompletedemo.component';
 import { AutoCompleteDemoRoutingModule } from './autocompletedemo-routing.module';
 import { DialogService } from "../../../../../src/dialog/dialog.service";
 import { DialogModule } from "../../../../../src/dialog/index";
+import { ModalModule } from "../../../../../src/modal/index";
+import { FormModule } from "../../../../../src/form/index";
+import { NewClient } from "./newclient/newclient.component";
+import { InputModule } from "../../../../../src/input/index";
+import { DropDownListModule } from "../../../../../src/dropdownlist/index";
+import { DataClientService } from "./newclient/dataclient.service";
+import { DumpDataService } from "../../shared/services/dumpdata";
 
 
 @NgModule({
   declarations: [
     AutoCompleteDemo,
+    NewClient
   ],
   imports: [
     AutoCompleteDemoRoutingModule,
@@ -43,13 +51,21 @@ import { DialogModule } from "../../../../../src/dialog/index";
     CommonModule,
     DialogModule,
     FormsModule,
+    InputModule,
+    FormModule,
+    DropDownListModule,
+    AutoCompleteModule,
+    ModalModule,
     HighlightJsModule
   ],
   exports: [
     AutoCompleteDemo,
   ],
   providers: [
-    DialogService
+    DialogService,
+    DataClientService,
+    DumpDataService
   ],
+  entryComponents: [ NewClient ]
 })
 export class AutoCompleteDemoModule { }

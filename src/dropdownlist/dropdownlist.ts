@@ -93,7 +93,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @ViewChild( 'wrapper' ) wrapper;
 
-
     public zIndex = 0;
 
     private topPosition = null;
@@ -345,15 +344,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             return;
         }
         this.datasource.forEach( ( value, index, array ) => {
-            if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
+            if ( (value[ this.text ]).trim() === document.activeElement.textContent.trim() ) {
                 this.itemSelected = value;
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
                     this.clearModelComponent();
                 }
-                this.setModelComponent( this.itemSelected[ this.value ] );
                 this.setValueInputAsLabel( this.itemSelected );
+                this.setModelComponent( this.itemSelected[ this.value ] );
             }
-
         } );
     }
 

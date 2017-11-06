@@ -7,7 +7,7 @@
             <i class="ion-chevron-up"></i>
         </div>
 
-        <div #itemContainer class="list-box-container" [style.height]="getListBoxHeight() + 'px'">
+        <div #itemContainer class="list-box-container" [style.height]="fixedHeight ? (itensToShow * rowHeight) + 'px' : getListBoxHeight() + 'px'">
             <ul containerDirective #list class="list" [style.position]="'relative'"
                 [style.height]="filtering ? (filteredData.length * rowHeight) + 'px' : ((lazyMode ? data.total : data.length) * rowHeight) + 'px'">
                 <div #customTemplate><ng-content></ng-content></div>

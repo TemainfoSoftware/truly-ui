@@ -64,8 +64,8 @@ export class AddNewRenderService {
     setStyleAddNew() {
         this.renderer.setStyle( this.addNewElement.nativeElement, 'top',
             ((this.dataService.datasource.length) + this.listBox.skip) * this.listBox.rowHeight + 'px' );
-        this.renderer.setStyle( this.addNewElement.nativeElement, 'line-height', (this.listBox.rowHeight) + 'px' );
-        this.renderer.setStyle( this.addNewElement.nativeElement, 'height', this.listBox.rowHeight + 'px' );
+        this.renderer.setStyle( this.addNewElement.nativeElement, 'line-height', (this.listBox.rowHeight) - 2 + 'px' );
+        this.renderer.setStyle( this.addNewElement.nativeElement, 'height', (this.listBox.rowHeight) - 2 + 'px' );
         this.renderer.setStyle( this.addNewElement.nativeElement, 'cursor', 'pointer' );
         this.renderer.setStyle( this.addNewElement.nativeElement, 'color', '#7a838b' );
         this.renderer.setStyle( this.addNewElement.nativeElement, 'position', 'absolute');
@@ -92,6 +92,7 @@ export class AddNewRenderService {
         this.renderer.setStyle(this.spanAddNewIcon.nativeElement, 'padding', '0 0px');
         this.renderer.setStyle(this.spanAddNewIcon.nativeElement, 'float', 'left');
         this.renderer.setStyle(this.spanAddNewIcon.nativeElement, 'padding-left', '10px');
+        this.renderer.setStyle(this.spanAddNewIcon.nativeElement, 'height', '10px');
         this.renderer.setStyle(this.spanAddNewIcon.nativeElement, 'font-size', '1.5em');
     }
 

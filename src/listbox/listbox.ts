@@ -631,9 +631,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     filterData( searchTerm ) {
         const filter = [];
         this.filtering = true;
-        this.data.forEach( ( item ) => {
+        const data = this.lazyMode ? this.data.data : this.data;
+        data.forEach( ( item ) => {
             this.searchQuery.forEach( ( query ) => {
-                if ( item[ query ].toString().toLowerCase().trim().includes( searchTerm.toLowerCase().trim() ) ) {
+                if ( item[ query ].toLowerCase().trim().includes( searchTerm.toLowerCase().trim() ) ) {
                     if ( filter.indexOf( item ) === -1 ) {
                         filter.push( item );
                     }
@@ -685,13 +686,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     getListBoxHeight() {
-        if (!this.fixedHeight) {
-            if ( (this.filteredData.length < this.itensToShow) && this.filtering ) {
-                let height = this.filteredData.length * this.rowHeight;
-                return this.addNew ? height += this.rowHeight + 1 : height += 1;
-            }
+        if ( (this.filteredData.length < this.itensToShow) && this.filtering ) {
+            return this.addNew ? (this.filteredData.length * this.rowHeight) + (this.rowHeight + 2) :
+                (this.filteredData.length * this.rowHeight);
         }
-        return this.itensToShow * this.rowHeight;
+        return this.addNew ? (this.itensToShow * this.rowHeight) + 2 : this.itensToShow * this.rowHeight;
     }
 
     getElementOfList() {

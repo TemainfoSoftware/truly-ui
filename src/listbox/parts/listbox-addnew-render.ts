@@ -57,6 +57,7 @@ export class AddNewRenderService {
             String( ((this.dataService.datasource.length + 1) + this.listBox.skip) ) );
         this.renderer.setAttribute( this.addNewElement.nativeElement, 'tabindex', '-1' );
         this.renderer.addClass( this.addNewElement.nativeElement, 'item' );
+        this.renderer.addClass( this.addNewElement.nativeElement, 'addNew' );
         this.setStyleAddNew();
     }
 

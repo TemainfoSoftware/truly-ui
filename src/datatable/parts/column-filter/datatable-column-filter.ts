@@ -20,24 +20,55 @@
     SOFTWARE.
 */
 
-import { Component, Input } from '@angular/core';
+import {
+    Component, EventEmitter, Input, OnInit, Output
+} from '@angular/core';
+import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
     selector: '[tlColumnFilter]',
     templateUrl: './datatable-column-filter.html',
     styleUrls: ['./datatable-column-filter.scss']
 })
-export class TlDatatabaleColumnFilter {
+export class TlDatatabaleColumnFilter implements OnInit {
+
     @Input('tlColumnFilter') tlColumnFilter;
-    dataWidthIcon;
-    itemSelected9;
-    constructor() {
-        this.dataWidthIcon = [
-            { textItem : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
-            { textItem : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },
-            { textItem : 'Ends Withs', valueItem : '3', icon: 'fa fa-bus' },
-            { textItem : 'Equals', valueItem : '4', icon: 'fa fa-circle' },
-            { textItem : 'Not Equals', valueItem : '5', icon: 'fa fa-external-link' }
-        ];
+
+    @Output() filterEvent: EventEmitter<any> = new EventEmitter();
+
+    private filters: FilterMetadata = { matchMode: {}, value: {} };
+
+    private subject =  new Subject();
+
+    constructor() {}
+
+    ngOnInit() {
+        this.subject.debounceTime(600).subscribe((event) => {
+            if (event !== undefined) {
+                const eventFilter = this.makeFilterEvent();
+                this.filterEvent.emit( eventFilter ) ;
+            }
+        });
+    }
+
+    onChangeFilter(event) {
+        this.subject.next(event)
+    }
+
+    makeFilterEvent(): FilterEventMetadata {
+        const filter: FilterEventMetadata = { filters: {} };
+
+        this.tlColumnFilter.forEach((value) => {
+            if (this.filters.value[value.field]) {
+                filter.filters[value.field] = {
+                    value: this.filters.value[value.field],
+                    matchMode: this.filters.matchMode[value.field] ? this.filters.matchMode[value.field] : 'startsWith'
+                }
+            }
+        });
+
+        return Object.keys(filter.filters).length ? filter : { filters: {} };
     }
 }

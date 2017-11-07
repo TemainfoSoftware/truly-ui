@@ -9,6 +9,7 @@
                (click)="checkRadio(item)"
                [tabindex]="tabindex"
                [value]="item.value"
+               (keydown)="handleKeyDown($event)"
                (focus)="focusRadio(item)"
                [(ngModel)]="modelValue">
         <span class="radio-ring"></span>

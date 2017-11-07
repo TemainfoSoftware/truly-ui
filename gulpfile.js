@@ -66,16 +66,18 @@ gulp.task('rollup:fesm', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
   // transform the files here.
     .pipe(rollup({
-
+      allowRealFiles: true,
       // Bundle's entry point
-      // See https://github.com/rollup/rollup/wiki/JavaScript-API#entry
+      // See "input" in https://rollupjs.org/#core-functionality
       input: `${buildFolder}/index.js`,
 
       // A list of IDs of modules that should remain external to the bundle
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
-        '@angular/common'
+        '@angular/common',
+        '@angular/forms',
+        '@angular/animations'
       ],
 
       // Format of generated bundle
@@ -93,7 +95,7 @@ gulp.task('rollup:umd', function () {
   return gulp.src(`${buildFolder}/**/*.js`)
   // transform the files here.
     .pipe(rollup({
-
+      allowRealFiles: false,
       // Bundle's entry point
       // See "input" in https://rollupjs.org/#core-functionality
       input: `${buildFolder}/index.js`,
@@ -102,7 +104,9 @@ gulp.task('rollup:umd', function () {
       // See "external" in https://rollupjs.org/#core-functionality
       external: [
         '@angular/core',
-        '@angular/common'
+        '@angular/common',
+        '@angular/forms',
+        '@angular/animations'
       ],
 
       // Format of generated bundle

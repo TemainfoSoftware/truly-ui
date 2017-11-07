@@ -20,10 +20,12 @@
  SOFTWARE.
  */
 import { Component, Input, OnInit } from '@angular/core';
+import { FilterOptionsService } from '../../services/datatable-filter-options.service';
 
 @Component( {
     selector: 'tl-datatable-column',
-    template: ''
+    template: '',
+    providers: [FilterOptionsService]
 } )
 export class TlDatatableColumn implements OnInit {
 
@@ -41,17 +43,35 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('showFilterOptions') showFilterOptions = true;
 
-    constructor() {}
+    @Input('filterOptions') filterOptions = [];
 
-    ngOnInit() {
-        this.getTitle();
+    private filterOptionsService = new FilterOptionsService();
+
+    constructor() {
+        this.setFilterOptions();
     }
 
-    getTitle() {
+    ngOnInit() {
+        this.setFilterOptionsWhenTypeNotDefault();
+        this.setTitle();
+    }
+
+    setTitle() {
         if (!this.title) {
             if (this.field) {
                 this.title = this.field.toUpperCase();
             }
         }
+    }
+
+
+    setFilterOptionsWhenTypeNotDefault() {
+        if ( this.type !== 'text' ) {
+            this.setFilterOptions();
+        }
+    }
+
+    setFilterOptions() {
+        this.filterOptions = this.filterOptionsService.getOptionsByType( this.type );
     }
 }

@@ -3,12 +3,6 @@
   cursor: pointer;
 }
 
-.list-template-demo:focus {
-  background-color: #13BBB6;
-  outline: none;
-  color: #fff;
-}
-
 .list-template-demo img {
   margin: 10px
 }
@@ -18,4 +12,9 @@
   margin: 12px
 }
 
+.selected {
+  background-color: #13BBB6;
+  outline: none;
+  color: #fff;
+}
 

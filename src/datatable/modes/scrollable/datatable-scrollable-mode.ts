@@ -89,6 +89,10 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private elementTD: ElementRef;
 
+    private foundRecords = true;
+
+    private loading = false;
+
     private scrollBoxHeader: HTMLCollectionOf<Element>;
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
@@ -139,13 +143,23 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.quantityVisibleRows = this.dt.height / this.dt.rowHeight;
         this.quantityInVisibleRows = Math.round( ( this.dt.rowsPage - this.quantityVisibleRows ) / 2 );
         this.setlastRowViewport();
+
+        this.dt.getLoading().subscribe((value) => {
+            this.loading = value;
+            this.cd.markForCheck();
+        })
     }
 
     private addListenerToDataSource() {
         this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
-            if ( this.lastRecordProcessed !== dataSource[0]) {
+
+       //     console.log('DATASOURCE-PARM', dataSource,this.lastRecordProcessed);
+
+            if ( this.lastRecordProcessed !== dataSource[1]) {
+                this.foundRecords = dataSource.length > 0;
                 this.renderList(this.skip, dataSource);
                 this.dt.loading = false;
+                this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
                 this.cd.detectChanges();
                 this.setFocusWhenChangeData();
             }
@@ -267,7 +281,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         return clientTop > parentTop - pointOfWrap && ( !(this.skip === 0))
     }
 
-
     private handleScrollFast( ) {
         const currentStartIndex = Math.floor( this.scrollTop / this.dt.rowHeight );
         let skip = currentStartIndex - this.quantityInVisibleRows;
@@ -294,7 +307,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         for ( let row = 0; row < dataSource.length; row++ ) {
             this.createElementTR( row, lastRow);
             this.createElementsTD( row, dataSource );
-            this.addEventClickToListElement( row );
+            this.addEventClickToListElement( row, dataSource );
         }
     }
 
@@ -359,9 +372,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         return this.lastScrollLeft !== this.listComponent.nativeElement.scrollLeft;
     }
 
-    private addEventClickToListElement( row ) {
+    private addEventClickToListElement( row, dataSource ) {
         this.elementTR.nativeElement.addEventListener( 'click', () => {
-            this.handleClickItem( this.dt.dataSourceService.datasource[ row ], row );
+            this.handleClickItem( dataSource[ row ], row );
         } );
     }
 
@@ -419,6 +432,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
         //     return document.querySelector('tr[row="' + rowNumber + '"]');
         // }
+
+        if (document.activeElement.nodeName === 'INPUT') {
+            return document.activeElement;
+        }
+
 
         if ( this.isScrollDown() ) {
             return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');

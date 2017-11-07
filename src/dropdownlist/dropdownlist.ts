@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, forwardRef, Input, OnInit, Renderer2, ViewChild
+    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, Renderer2, ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -28,16 +28,16 @@ import { style, transition, trigger, animate, state } from '@angular/animations'
 import { KeyEvent } from '../core/enums/key-events';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 let globalZindex = 1;
 
 @Component( {
     selector: 'tl-dropdown-list',
     templateUrl: './dropdownlist.html',
-    styleUrls: [ './dropdownlist.scss' ],
+    styleUrls: [ './dropdownlist.scss', '../datatable/styles/dx-icons.scss'],
     animations: [
         trigger(
             'enterAnimation', [
@@ -49,7 +49,7 @@ let globalZindex = 1;
         )
     ],
     providers : [
-        { provide : NG_VALUE_ACCESSOR, useExisting : forwardRef( () => TlDropDownList ), multi : true }
+        [ MakeProvider(TlDropDownList) ]
     ]
 } )
 
@@ -92,7 +92,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     @ViewChild( 'dropdownShow' ) dropdownShow;
 
     @ViewChild( 'wrapper' ) wrapper;
-
 
     public zIndex = 0;
 
@@ -138,11 +137,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
 
         this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( event.target.nodeName !== 'LI' ) {
-                if ( event.target.parentElement.nodeName !== 'LI' ) {
-                    this.showHide = false;
-                    this.changeDectection.markForCheck();
-                }
+            if ( this.isNotListDropdown(event) ) {
+                this.showHide = false;
+                this.changeDectection.markForCheck();
             }
         });
 
@@ -221,6 +218,17 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 ' property of the tl-dropdown-list element.' );
         }
     };
+
+    isNotListDropdown(event) {
+        if (!event.target.parentElement) {
+            return false;
+        }
+        if ( ( event.target.nodeName !== 'LI') && ( event.target.className.indexOf('-placeholder') < 0 )) {
+            if ( (event.target.parentElement.nodeName !== 'LI') && ( event.target.parentElement.className.indexOf('-placeholder') < 0) ) {
+                return true;
+            }
+        }
+    }
 
     onListOpened( $event ) {
         switch ( $event.keyCode ) {
@@ -339,15 +347,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             return;
         }
         this.datasource.forEach( ( value, index, array ) => {
-            if ( value[ this.text ] === document.activeElement.innerHTML.trim() ) {
+            if ( (value[ this.text ]).trim() === document.activeElement.textContent.trim() ) {
                 this.itemSelected = value;
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
                     this.clearModelComponent();
                 }
-                this.setModelComponent( this.itemSelected[ this.value ] );
                 this.setValueInputAsLabel( this.itemSelected );
+                this.setModelComponent( this.itemSelected[ this.value ] );
             }
-
         } );
     }
 
@@ -500,13 +507,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     getData() {
-
         if ( ( this.data[ 0 ] === undefined ) ) {
             throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
-        }
-        if ( typeof this.data[ 0 ] === 'object' && (this.text === 'text' || this.value === 'value') ) {
-            throw new EvalError( 'You must pass some value to the TEXT and VALUE properties' +
-                ' when using the DATA property of the tl-dropdown-list element.' );
         }
         if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
             throw new EvalError( 'You must pass a string value to the TEXT and VALUE properties of the tl-dropdown-list element.' );

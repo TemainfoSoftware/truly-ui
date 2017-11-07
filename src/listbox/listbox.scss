@@ -35,8 +35,24 @@
 .item {
   width: inherit;
   border-bottom: 1px solid #eeeeee;
-  padding: 10px;
+  padding: 5px;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
   list-style: none;
+  color: #7a838b;
+}
+
+.selected {
+  background: #66CC99;
+  color: #fff;
+}
+
+.item.stripped:nth-of-type(odd){
+  background: #fff;
+}
+
+.item.stripped:nth-of-type(even){
+  background: #E9E9E9;
 }
 
 .item:focus {

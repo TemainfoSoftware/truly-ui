@@ -31,7 +31,7 @@ export * from './dropdownlist/index';
 export * from './form/index';
 export * from './input/index';
 export * from './listbox/index';
-export * from './loading/index';
+export * from './overlay/index';
 export * from './multiselect/index';
 export * from './modal/index';
 export * from './panelgroup/index';

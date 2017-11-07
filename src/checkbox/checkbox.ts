@@ -20,15 +20,15 @@
  SOFTWARE.
  */
 import {
-    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
+    Component, Input, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
     ChangeDetectorRef
 } from '@angular/core';
 
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 @Component( {
     selector: 'tl-checkbox',
@@ -36,7 +36,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
     styleUrls: [ './checkbox.scss' ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlCheckBox ), multi: true }
+        [ MakeProvider(TlCheckBox) ]
     ]
 } )
 export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {

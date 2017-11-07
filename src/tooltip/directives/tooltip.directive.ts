@@ -3,7 +3,7 @@ import {
     Directive, HostListener, Input,
     ViewContainerRef
 } from '@angular/core';
-import { TlToolTip } from '../';
+import { TlToolTip } from '../tooltip';
 import { TooltipOptions } from '../tooltipOptions';
 
 @Directive( {

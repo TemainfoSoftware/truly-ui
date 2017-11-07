@@ -20,16 +20,11 @@
     SOFTWARE.
 */
 
-import { Component, ElementRef } from '@angular/core';
-import { LoadingConfig } from './loading-config';
-@Component({
-    selector: 'tl-loading-component',
-    template: `<div id="loading"><i id="icon" class="fa {{config.icon}} fa-spin fa-3x fa-fw"></i></div>`,
-    styleUrls: ['./loading.scss']
-})
-export class TlLoadingComponent {
+export interface FilterMetadata {
+    value?: any;
+    matchMode?: any;
+}
 
-    public config: LoadingConfig = new LoadingConfig();
-
-    constructor( public element: ElementRef) {}
+export interface FilterEventMetadata {
+    filters?: {}
 }

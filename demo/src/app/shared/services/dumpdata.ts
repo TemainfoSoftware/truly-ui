@@ -27,17 +27,19 @@ export class DumpDataService {
 
   createRandomData(count: number) {
     const firstNames = ["Adilson", "William", "Silvio", "Maicon", "Jaisson", "Moacyr", "Marcio", "Laura", "Anne", "Nige"],
-      lastNames = ["Davolio", "Fuller", "Leverling", "Peacock", "Buchanan", "Suyama", "King", "Callahan", "Dodsworth", "White"],
+      lastNames = ["Finance", "Development Sector", "Sales", "Analytic Quality", "Technical Support", "Reception",],
       cities = ["Seattle", "Tacoma", "Kirkland", "Redmond", "London", "Philadelphia", "New York", "Seattle", "London", "Boston"],
       titles = ["Accountant", "Vice President, Sales", "Sales Representative", "Technical Support", "Sales Manager", "Web Designer",
-        "Software Developer"];
+        "Software Developer"],
+      status = ["Away", "Online", "Offline", "Busy"];
 
     return Array(count).fill({}).map((_, idx) => ({
         id: idx + 1,
         firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
         lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
         city: cities[Math.floor(Math.random() * cities.length)],
-        title: titles[Math.floor(Math.random() * titles.length)]
+        title: titles[Math.floor(Math.random() * titles.length)],
+        status: status[Math.floor(Math.random() * status.length)]
       })
     );
   }

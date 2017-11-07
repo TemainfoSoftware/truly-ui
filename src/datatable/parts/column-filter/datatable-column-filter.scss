@@ -1,5 +1,10 @@
 $border-color : #DCDCDC;
 
+@font-face {
+  font-family: DXIcons;
+  src: url('./icons/dxicons.ttf');
+}
+
 .ui-cel{
   box-sizing: border-box;
   border-right: 1px $border-color solid;

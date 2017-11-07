@@ -20,30 +20,11 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { TlDatatable } from '../../datatable';
-import { DatatableHelpersService } from '../../services/datatable-helpers.service';
-import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
+export interface FilterMetadata {
+    value?: any;
+    matchMode?: any;
+}
 
-@Component( {
-    selector : 'tl-datatable-header',
-    templateUrl : './datatable-header.html',
-    styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
-    providers : [ DatatableHelpersService ]
-} )
-export class TlDatatableHeader implements AfterViewInit {
-
-    @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
-
-    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
-                 public helperService: DatatableHelpersService
-    ) {}
-
-
-    ngAfterViewInit() {
-        this.columnsFilter.filterEvent.subscribe((value) => {
-           this.dt.dataSourceService.setFilter(value);
-        })
-    }
-
+export interface FilterEventMetadata {
+    filters?: {}
 }

@@ -38,6 +38,9 @@ import { DataMetadata } from '../core/types/datametadata';
 import { TlDatatableFilterService } from './services/datatable-filter.service';
 import { TlDatatableDataSource } from './services/datatable-datasource.service';
 import { TlDatatableColumnService } from './services/datatable-column.service';
+import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'tl-datatable',
@@ -47,6 +50,7 @@ import { TlDatatableColumnService } from './services/datatable-column.service';
         TlDatatableFilterService,
         TlDatatableDataSource,
         TlDatatableColumnService,
+        TlDatatableFilterConstraints,
     ]
 })
 export class TlDatatable implements AfterContentInit, OnChanges {
@@ -93,8 +97,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ViewChild( 'datatableBox' ) datatableBox: ElementRef;
 
-    public loading = false;
-
     public columns: any[] = [];
 
     public tabindex = 0;
@@ -102,6 +104,17 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     public globalFilterTimeout: any;
 
     public totalRows: number;
+
+    private loadingSubject = new Subject<any>();
+
+    private _loading = false;
+    set loading(value){
+        this._loading = value;
+        this.loadingSubject.next(value);
+    }
+    get loading(){
+        return this._loading;
+    }
 
     constructor( private render: Renderer2,
                  public filterService: TlDatatableFilterService,
@@ -141,6 +154,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
+    }
+
+    getLoading(): Observable<any> {
+        return this.loadingSubject.asObservable();
     }
 
     getObjectRow( row , index ) {

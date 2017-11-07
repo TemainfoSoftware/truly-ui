@@ -20,6 +20,8 @@
     SOFTWARE.
 */
 
-export class LoadingConfig {
-    public icon = 'fa-refresh'
+export class OverlayConfig {
+    public icon = 'fa-refresh';
+    public spin = true;
+    public message = '';
 }

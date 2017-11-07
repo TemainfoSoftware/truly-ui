@@ -52,6 +52,7 @@ export class TlDatatableColumn implements OnInit {
     }
 
     ngOnInit() {
+        this.setFilterOptionsWhenTypeNotDefault();
         this.setTitle();
     }
 
@@ -63,9 +64,14 @@ export class TlDatatableColumn implements OnInit {
         }
     }
 
-    setFilterOptions() {
-        if (!this.filterOptions.length) {
-            this.filterOptions = this.filterOptionsService.getOptionsByType( this.type );
+
+    setFilterOptionsWhenTypeNotDefault() {
+        if ( this.type !== 'text' ) {
+            this.setFilterOptions();
         }
+    }
+
+    setFilterOptions() {
+        this.filterOptions = this.filterOptionsService.getOptionsByType( this.type );
     }
 }

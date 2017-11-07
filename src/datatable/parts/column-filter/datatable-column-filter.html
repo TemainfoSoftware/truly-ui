@@ -8,17 +8,25 @@
                     [data]="column?.filterOptions"
                     [text]="'description'"
                     [icon]="'icon'"
-                    [width]="160"
+                    [width]="175"
                     [height]="25"
                     [showOnlyIcon]="true"
                     [placeholder]="'Reset'"
                     [placeholderIcon]="'ion-search'"
                     [value]="'valueItem'"
-                    [(ngModel)]="itemSelected9">
+                    [ngModel]="filters.matchMode[column.field]"
+                    (ngModelChange)="onChangeFilter(filters.matchMode[column.field] = $event)"
+                >
                 </tl-dropdown-list>
             </div>
-            <div class="ui-input">
-                <tl-input *ngIf="column?.showFilter" [clearButton]="true" [placeholder]="'Filter..'" [type]="column?.type" ></tl-input>
+            <div  class="ui-input">
+                <tl-input *ngIf="column?.showFilter"
+                          [clearButton]="true"
+                          [ngModel]="filters.value[column.field]"
+                          (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
+                          [placeholder]="'Filter..'"
+                          [type]="column?.type" >
+                </tl-input>
             </div>
         </div>
     </th>

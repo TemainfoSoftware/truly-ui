@@ -415,41 +415,41 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
     getInputValues() {
         this.inputList.forEach( ( item ) => {
-            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim() ] = item.componentModel.model;
         } );
     }
 
 
     getDropdownListValues() {
          this.dropdownList.forEach( ( item ) => {
-             this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+             this.formResult[ item.name.trim() ] = item.componentModel.model;
          } );
     }
 
 
     getRadioButtonValues() {
         this.radioButtonList.forEach( ( item ) => {
-            this.formResult[ item.nameGroup.trim().toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.nameGroup.trim() ] = item.componentModel.model;
         } );
     }
 
 
     getCheckBoxValues() {
         this.checkboxList.forEach( ( item ) => {
-            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim() ] = item.componentModel.model;
         } );
     }
 
     getMultiSelectValues() {
         this.multiselectList.forEach( ( item ) => {
-            this.formResult[ item.name.trim().toLowerCase() ] = item.componentModel.model;
+            this.formResult[ item.name.trim() ] = item.componentModel.model;
         } )
     }
 
 
     getAutoCompleteValues() {
         this.autoCompleteList.forEach( ( item ) => {
-            this.formResult[ item.name.trim().toLowerCase() ] = item.input.componentModel.model;
+            this.formResult[ item.name.trim() ] = item.input.componentModel.model;
         } )
     }
 

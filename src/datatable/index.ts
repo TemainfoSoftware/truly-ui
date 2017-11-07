@@ -7,7 +7,7 @@ import { TlDatatableHeader } from './parts/column-headers/datatable-header';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
-import { LoadingModule } from '../loading/index';
+import { OverlayModule } from '../overlay/index';
 import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { InputModule } from '../input/index';
@@ -27,7 +27,7 @@ export * from './modes/scrollable/datatable-scrollable-mode';
     imports: [
         CommonModule,
         FormsModule,
-        LoadingModule,
+        OverlayModule,
         InputModule,
         DropDownListModule
     ],

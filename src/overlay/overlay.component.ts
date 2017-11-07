@@ -20,30 +20,23 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { TlDatatable } from '../../datatable';
-import { DatatableHelpersService } from '../../services/datatable-helpers.service';
-import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
+import { Component, ElementRef } from '@angular/core';
+import { OverlayConfig } from './overlay-config';
 
-@Component( {
-    selector : 'tl-datatable-header',
-    templateUrl : './datatable-header.html',
-    styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
-    providers : [ DatatableHelpersService ]
-} )
-export class TlDatatableHeader implements AfterViewInit {
+@Component({
+    selector: 'tl-overlay-component',
+    template: `
+        <div id="overlay">
+            <div class="overlay-content">
+                <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
+                <span *ngIf="config.message">{{config.message}}</span>
+            </div>
+        </div>`,
+    styleUrls: ['./overlay.scss']
+})
+export class TlOverlayComponent {
 
-    @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
+    public config: OverlayConfig = new OverlayConfig();
 
-    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
-                 public helperService: DatatableHelpersService
-    ) {}
-
-
-    ngAfterViewInit() {
-        this.columnsFilter.filterEvent.subscribe((value) => {
-           this.dt.dataSourceService.setFilter(value);
-        })
-    }
-
+    constructor( public element: ElementRef) {}
 }

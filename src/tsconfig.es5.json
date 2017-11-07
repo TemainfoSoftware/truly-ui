@@ -3,7 +3,7 @@
     "declaration": true,
     "module": "es2015",
     "target": "es5",
-    "baseUrl": ".",
+    "baseUrl": "/",
     "stripInternal": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -27,6 +27,6 @@
     "flatModuleId": "truly-ui"
   },
   "files": [
-    "./index.ts"
+    "index.ts"
   ]
 }

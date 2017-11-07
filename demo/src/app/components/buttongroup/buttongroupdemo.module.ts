@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 
 import { HighlightJsModule } from 'ngx-highlight-js';
 
-import { ButtonGroupModule } from 'truly-ui/buttongroup';
+import { ButtonGroupModule } from 'truly-ui/buttongroup/index';
 import { ModalService } from "truly-ui/modal/modal.service";
 
 import { ButtonGroupDemo } from "./buttongroupdemo.component";

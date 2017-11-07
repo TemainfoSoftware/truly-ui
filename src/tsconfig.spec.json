@@ -3,8 +3,8 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
+    "emitDecoratorMetadata": true,
     "target": "es6",
-    "baseUrl": "",
     "types": [
       "jasmine",
       "jest",
@@ -12,7 +12,8 @@
     ]
   },
   "files": [
-    "test.ts"
+    "test.ts",
+    "index.ts"
   ],
   "include": [
     "**/*.spec.ts",

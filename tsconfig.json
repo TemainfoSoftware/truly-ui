@@ -3,6 +3,7 @@
     "baseUrl": "./src",
     "experimentalDecorators": true,
     "noStrictGenericChecks": true,
+    "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "rootDir": "./src",
     "target": "es5",

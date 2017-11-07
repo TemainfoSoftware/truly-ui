@@ -3,22 +3,36 @@ export const dataProperties = [
     name: "data",
     type: "object | array",
     default: "null",
-    description: "Sets the data of the Dropdown List",
+    description: "Sets the data of the Dropdown List.",
     options: "any object | any array"
   },
   {
-    name: "data.text",
+    name: "text",
     type: "string",
     default: "text",
     description: "Sets the data item field that represents the item text.",
     options: "any text"
   },
   {
-    name: "data.value",
+    name: "value",
     type: "string",
     default: "value",
     description: "Sets the data item field that represents the item value.",
     options: "any text"
+  },
+  {
+    name: "icon",
+    type: "string",
+    default: "null",
+    description: "Sets the data item field that represents the item icon.",
+    options: "any text"
+  },
+  {
+    name: "showOnlyIcon",
+    type: "boolean",
+    default: "false",
+    description: "Changes the dropdown to display only icon.",
+    options: "true | false"
   },
   {
     name: "label",
@@ -28,14 +42,14 @@ export const dataProperties = [
     options: "any text"
   },
   {
-    name: "label.labelPlacement",
+    name: "labelPlacement",
     type: "string",
     default: "left",
     description: "Sets the label position.",
     options: "left | top"
   },
   {
-    name: "label.labelSize",
+    name: "labelSize",
     type: "number",
     default: "100",
     description: "Sets the label width.",
@@ -47,6 +61,13 @@ export const dataProperties = [
     default: "null",
     description: "Display a help text on dropdown list.",
     options: "any text"
+  },
+  {
+    name: "placeholderIcon",
+    type: "string",
+    default: "ion-navicon-round",
+    description: "Displays a default icon in dropdown icon mode.",
+    options: "any icon name"
   },
   {
     name: "disabled",

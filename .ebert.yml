@@ -1,0 +1,22 @@
+styleguide: plataformatec/linters
+engines:
+  fixme:
+    enabled: true
+  eslint:
+    enabled: true
+  csslint:
+    enabled: true
+  scss-lint:
+    enabled: true
+  remark-lint:
+    enabled: true
+  tslint:
+    enabled: true
+    channel: beta
+exclude_paths:
+- assets
+- demo
+- dist
+- docs
+- tools
+

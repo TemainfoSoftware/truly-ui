@@ -1,6 +1,7 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Dropdown List</h1>
+    <h1 class="title">Dropdown List <span class="module-name"><code><u>Module Name</u>: <strong>DropDownListModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DropDownListModule</strong></code></p>
     <p class="text-content">There's a lot of ways to create a dropdown list using Truly UI. Below, are some of
       those.</p>
   </div>
@@ -131,6 +132,23 @@
                           [labelSize]="80"
                           [labelPlacement]="top"
                           [text]="'textItem'"
+                          [value]="'valueItem'"
+                          [(ngModel)]="itemSelected9">
+        </tl-dropdown-list>
+        <span class="returned-value">Returned Value: {{ itemSelected9 }}</span>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="group-component">
+        <h5>With Icon</h5>
+        <tl-dropdown-list [data]="dataWidthIcon"
+                          [text]="'textItem'"
+                          [icon]="'icon'"
+                          [width]="160"
+                          [placeholder]="'Filter'"
+                          [placeholderIcon]="'fa fa-filter'"
+                          [showOnlyIcon]="true"
                           [value]="'valueItem'"
                           [(ngModel)]="itemSelected9">
         </tl-dropdown-list>

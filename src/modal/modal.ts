@@ -19,15 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
-    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
+    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+} from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-
-let globalZindex = 1;
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component({
     selector: 'tl-modal',
@@ -37,19 +38,18 @@ let globalZindex = 1;
     animations: [
         trigger(
             'enterAnimation', [
-                state('enter', style({ transform: 'none', opacity: 1 })),
-                state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
-                state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
-                transition('* => *', animate('300ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+                transition( ':enter', [
+                    style( { opacity: 0 } ),
+                ] ),
+                transition( ':leave', [
+                    style( { opacity: 1 } ),
+                    animate( '100ms', style( { opacity: 0 } ) )
+                ] )
             ]
         )
     ]
 })
-export class TlModal implements OnInit, ModalOptions, OnDestroy {
-
-    @Input() status = '';
-
-    @Input() index;
+export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() draggable = true;
 
@@ -75,23 +75,33 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     @Input() backdrop = false;
 
+    @Input() closeShortcut = '';
+
+    @Input() restoreShortcut = '';
+
+    @Input() maximizeShortcut = '';
+
     @ViewChild( 'modal' ) modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
 
     @HostBinding( '@enterAnimation' ) public animation;
 
-    @Output() show: EventEmitter<any> = new EventEmitter();
+    @Output() onShow: EventEmitter<any> = new EventEmitter();
 
-    @Output() hide: EventEmitter<any> = new EventEmitter();
+    @Output() onMinimize: EventEmitter<any> = new EventEmitter();
 
-    @Output() maximize: EventEmitter<any> = new EventEmitter();
+    @Output() onMaximize: EventEmitter<any> = new EventEmitter();
+
+    @Output() onClose: EventEmitter<any> = new EventEmitter();
 
     public componentRef: ComponentRef<TlModal>;
 
-    public ZIndex = 1;
-
     public modalResult;
+
+    public status = '';
+
+    public index;
 
     private serviceControl: ModalService;
 
@@ -143,26 +153,29 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     ngOnInit() {
         this.backToTop();
-        this.setZIndex();
-        this.getBoundingContent();
-        this.setModalCenterParent();
         this.resizeListener();
         this.mousemoveListener();
         this.mouseupListener();
-        this.setDefaultDimensions();
         this.validateProperty();
+        this.onShow.emit();
+    }
+
+    ngAfterViewInit() {
+        this.getBoundingContent();
+        this.setDefaultDimensions();
+        this.setModalCenterParent();
     }
 
     resizeListener() {
         this.subscribeResize = this.renderer.listen( window, 'resize', () => {
-            this.maximizeModal();
             this.getBoundingContent();
-            this.setModalCenterParent();
+            this.maximizeModal();
         } );
     }
 
     mousemoveListener() {
         this.subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
+            event.preventDefault();
             if ( !( this.moving && this.draggable) ) {
                 return;
             }
@@ -212,9 +225,9 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     setModalCenterParent() {
-        this.modal.nativeElement.style.left = this.parent.offsetWidth / 2 + 'px';
-        this.modal.nativeElement.style.top = window.innerHeight -
-            this.modal.nativeElement.offsetHeight + 'px';
+        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) -
+            (this.modal.nativeElement.offsetWidth / 2) + 'px';
+        this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {
@@ -323,7 +336,8 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     setZIndex() {
-        this.serviceControl.setZIndex( this.modal, this.getZIndex() );
+        this.serviceControl.setZIndex( this.componentRef, this.modal );
+        this.serviceControl.sortComponentsByZIndex();
     }
 
     isMouseOutOfTheWindowRight( event ) {
@@ -353,7 +367,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             return;
         }
      this.serviceControl.minimize( this.componentRef );
-     this.hide.emit();
+     this.onMinimize.emit();
     }
 
     backToTop() {
@@ -362,7 +376,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
 
     closeModal() {
         this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
-        this.hide.emit();
+        this.onClose.emit();
     }
 
     maximizeModal() {
@@ -377,7 +391,7 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
             this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
             this.maximized = true;
             this.moving = false;
-            this.maximize.emit();
+            this.onMaximize.emit();
         } else {
             this.restoreMaximizeModal();
         }
@@ -399,11 +413,6 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
         this.parent = this.componentRef.instance.element.nativeElement.parentElement;
         this.offsetLeftContent = this.parent.offsetLeft;
         this.offsetTopContent = this.parent.offsetTop;
-    }
-
-    getZIndex() {
-        this.ZIndex = globalZindex++;
-        return this.ZIndex;
     }
 
     getColorHover() {
@@ -443,7 +452,6 @@ export class TlModal implements OnInit, ModalOptions, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.ZIndex = 1;
         this.subscribeResize();
         this.subscribeMouseMove();
         this.subscribeMouseUp();

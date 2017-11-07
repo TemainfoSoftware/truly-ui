@@ -28,16 +28,18 @@ import { TlButtonGroupItem } from './buttongroup-item';
 import { ButtonGroupService } from './buttongroup.service';
 
 @Component( {
-    selector : 'tl-button-group',
-    templateUrl : './buttongroup.html',
-    styleUrls : [ './buttongroup.scss' ],
-    providers : [ ButtonGroupService ]
+    selector: 'tl-button-group',
+    templateUrl: './buttongroup.html',
+    styleUrls: [ './buttongroup.scss' ],
+    providers: [ ButtonGroupService ]
 } )
 export class TlButtonGroup implements AfterContentInit {
 
     @Input() multiSelect = false;
 
     @Input() index: number;
+
+    @Input() height: number;
 
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
@@ -127,6 +129,7 @@ export class TlButtonGroup implements AfterContentInit {
     setItems() {
         this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
+            item.height = this.height;
             this.list.nativeElement.appendChild( item._element.nativeElement );
         } );
     }

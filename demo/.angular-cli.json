@@ -20,12 +20,16 @@
       "prefix": "app",
       "styles": [
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+        "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/ionicons-npm/css/ionicons.min.css",
+        "./assets/css/atom-one-dark.min.css",
         "./assets/css/demo.css",
         "styles.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "./assets/js/highlight.min.js",
         "./assets/js/demo.js"
       ],
       "environmentSource": "environments/environment.ts",

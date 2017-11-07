@@ -22,7 +22,13 @@ import { GettingStarted } from "./getting-started/getting-started.component";
       {path: 'dialog', loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'},
       {path: 'tooltip', loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'},
       {path: 'datatable', loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'},
-      {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'}
+      {path: 'datatable/lazy', loadChildren: './components/datatable/lazy/datatablelazydemo.module#DatatableLazyDemoModule'},
+      {path: 'datatable/scrollable', loadChildren: './components/datatable/scrollable/datatablescrollabledemo.module#DatatableScrollableDemoModule'},
+      {path: 'checkbox', loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'},
+      {path: 'listbox', loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'},
+      {path: 'panelgroup', loadChildren: './components/panel/paneldemo.module#PanelDemoModule'},
+      {path: 'chatlist', loadChildren: './components/chatlist/chatlistdemo.module#ChatListDemoModule'},
+      {path: 'multiselect', loadChildren: './components/multiselect/multiselectdemo.module#MultiSelectDemoModule'},
     ])
   ],
   exports: [RouterModule]

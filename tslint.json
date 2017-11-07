@@ -116,7 +116,7 @@
     ],
 
     "directive-selector": [true, "attribute","", "camelCase"],
-    "component-selector": [true, "element","", "kebab-case"],
+    "component-selector": [true, ["attribute","element"],"", ["kebab-case","camelCase"]],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

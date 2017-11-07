@@ -27,12 +27,16 @@ import { TlAutoComplete } from './autocomplete';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { ListBoxModule } from '../listbox/index';
+import { InputModule } from '../input/index';
 
 export * from './autocomplete';
 
 @NgModule( {
     imports : [
         CommonModule,
+        ListBoxModule,
+        InputModule,
         FormsModule
     ],
     declarations : [

@@ -1,3 +1,4 @@
+'use strict';
 /*
  MIT License
 
@@ -21,318 +22,435 @@
  */
 
 import {
-    AfterContentInit, AfterViewInit, Component, ElementRef, forwardRef, Inject, NgZone, OnInit,
+    AfterContentInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    forwardRef,
+    Inject,
+    Renderer2,
     ViewChild
 } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
-import { TlDatatableDataSource } from '../../datatable-datasource.service';
+import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 
 @Component( {
-    selector : 'tl-datatable-scrollable-mode',
-    templateUrl : './datatable-scrollable-mode.html',
-    styleUrls : [ './datatable-scrollable-mode.scss', '../../datatable.scss' ]
+    selector: 'tl-datatable-scrollable-mode',
+    templateUrl: './datatable-scrollable-mode.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
+    providers: [DatatableHelpersService]
 } )
-export class TlDatatableScrollableMode implements AfterViewInit, OnInit, AfterContentInit {
+export class TlDatatableScrollableMode implements AfterContentInit {
 
-    @ViewChild( 'scrollBoxTableBody' ) scrollBoxTableBodyElementRef: ElementRef;
+    @ViewChild( 'listComponent' ) listComponent: ElementRef;
 
-    @ViewChild( 'scrollBox' ) scrollBoxElementRef: ElementRef;
+    @ViewChild( 'listBody' ) listBody: ElementRef;
 
+    private bodyHeight = 0;
 
-    public loadingSource = false;
+    private quantityVisibleRows = 0;
 
-    private scrollPosition: number;
+    private quantityInVisibleRows = 0;
 
-    private containerHeight: number;
+    private lastRowViewport = 0;
+
+    private firstRowViewport = 0;
+
+    private cursorViewPortPosition = 1;
+
+    private wrapOnRemaining = 5;
+
+    private scrollTop = 0;
+
+    private lastScrollTop = 0;
+
+    private lastScrollLeft= 0;
+
+    private scrollDirection = 'DOWN';
 
     private skip = 0;
 
     private take = 0;
 
-    private scrollOfTop = 0;
+    private scrollLockAt = 0;
 
-    private clientHeight = 0;
+    private translateY = 0;
 
-    private scrollTop = 0;
+    private lastRecordProcessed: any;
 
-    private scrollHeight = 0;
+    private mouseClicked = false;
 
-    private pageHeight = 0;
+    private activeElement: Element;
 
-    private currentRow = 0;
+    private elementTR: ElementRef;
 
-    private pageNumber = 1;
+    private elementTD: ElementRef;
 
-    private Counter = 1;
-    private qtdRowClient = 0;
+    private foundRecords = true;
 
+    private loading = false;
 
-    constructor( @Inject( forwardRef( () => TlDatatable ) ) private datatable: TlDatatable,
-                 public dataSourceService: TlDatatableDataSource,
-    ) {
+    private scrollBoxHeader: HTMLCollectionOf<Element>;
 
-    }
-
-    ngOnInit() {
-        this.take = this.datatable.rowsPage;
-    }
-
-    ngAfterViewInit() {
-        this.clientHeight = this.scrollBoxElementRef.nativeElement.clientHeight;
-        this.scrollHeight = this.scrollBoxElementRef.nativeElement.scrollHeight;
-        this.pageHeight = this.datatable.rowsPage * this.datatable.rowHeight;
-        this.qtdRowClient = Math.round( this.clientHeight / this.datatable.rowHeight );
-    }
+    constructor( @Inject( forwardRef( () => TlDatatable ) ) private dt: TlDatatable,
+                 private renderer: Renderer2,
+                 private cd: ChangeDetectorRef,
+                 private helperService: DatatableHelpersService
+    ) {}
 
     ngAfterContentInit() {
-        this.containerHeight = this.datatable.rowHeight * this.datatable.totalRows;
+        this.setProprertiesFromTable();
+        this.addListenerToDataSource();
+        this.addListenerToScroll();
+        this.firstRender();
+        this.scrollBoxHeader = document.getElementsByClassName('ui-datatable-header-wrap');
     }
 
-    onScroll( $event ) {
-        this.setScrollTop();
-        this.setCurrentRow();
+    onMouseDown() {
+        this.mouseClicked = true;
+    }
 
-        this.emitEndRow();
-        this.emitChangePage();
-       this.emitLazyLoad();
+    onMouseUp() {
+        this.mouseClicked = false;
+    }
 
-        this.refreshScrollPosition();
+
+    onClick(event) {
+        this.activeElement = event.target.parentElement;
+        const initRange = Math.floor( this.scrollTop / this.dt.rowHeight );
     }
 
     onKeydown( $event ) {
         $event.preventDefault();
-
+        if ( this.dt.loading) {
+            return
+        }
         switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN:
-                this.handleKeyArrowDown($event);
-                break;
-            case KeyEvent.ARROWUP:
-                this.handleKeyArrowUp();
-                break;
-            case KeyEvent.HOME:
-                this.handleKeyHome();
-                break;
-            case KeyEvent.END:
-                this.handleKeyEnd();
-                break;
+            case KeyEvent.ARROWDOWN: this.handleKeyArrowDown(); break;
+            case KeyEvent.ARROWUP: this.handleKeyArrowUp(); break;
+            case KeyEvent.HOME: this.handleKeyHome( $event ); break;
+            case KeyEvent.END: this.handleKeyEnd( $event ); break;
+            case KeyEvent.PAGEUP: this.handleKeyPageUp(  ); break;
+            case KeyEvent.PAGEDOWN: this.handleKeyPageDown( ); break;
         }
     }
 
-    onKeyUp( $event ) {
-        switch ( $event.keyCode ) {
-            case KeyEvent.ARROWDOWN:
-                // setTimeout( () => {
-                //  this.scrollBoxElementRef.nativeElement.scrollTop =
-                // ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
-                // }, 1 );
-                break;
-        }
+    private setProprertiesFromTable() {
+        this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
+        this.quantityVisibleRows = this.dt.height / this.dt.rowHeight;
+        this.quantityInVisibleRows = Math.round( ( this.dt.rowsPage - this.quantityVisibleRows ) / 2 );
+        this.setlastRowViewport();
+
+        this.dt.getLoading().subscribe((value) => {
+            this.loading = value;
+            this.cd.markForCheck();
+        })
     }
 
+    private addListenerToDataSource() {
+        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
 
-    emitLazyLoad() {
-        //  if ( this.isLazy() ) {
-        // let at: any = document.activeElement;
-        //
-        //
-        // this.Counter = Math.round(
-        // (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-        // / this.datatable.rowHeight
-        // );
+       //     console.log('DATASOURCE-PARM', dataSource,this.lastRecordProcessed);
 
-        if ( this.scrollPosition > this.scrollTop ) {
-            if ( this.currentRow <= this.datatable.totalRows ) {
-                if ( ( this.currentRow - this.qtdRowClient ) <= this.skip ) {
-                    this.loadingSource = true;
-                    this.skip = ( this.skip >= this.qtdRowClient ) && (  this.currentRow > this.qtdRowClient  )
-                        ? this.currentRow - (this.qtdRowClient * 2)
-                        : 0;
-                    this.skip = this.skip < 0 ? 0 : this.skip;
-
-                    this.take = this.datatable.rowsPage;
-                    this.scrollOfTop = (this.scrollTop - this.qtdRowClient * this.datatable.rowHeight) > 0
-                                        ? this.scrollTop - this.qtdRowClient * this.datatable.rowHeight
-                                        : 0;
-
-                    this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
-                        setTimeout(() => {
-                            this.loadingSource = loadingSource;
-                        }, 100)
-                    });
-
-                }
+            if ( this.lastRecordProcessed !== dataSource[1]) {
+                this.foundRecords = dataSource.length > 0;
+                this.renderList(this.skip, dataSource);
+                this.dt.loading = false;
+                this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
+                this.cd.detectChanges();
+                this.setFocusWhenChangeData();
             }
-        } else if ( this.scrollPosition < this.scrollTop ) {
-            if ( this.currentRow <= this.datatable.totalRows ) {
-                if ( ( this.take + this.skip ) <= this.currentRow ) {
-                     this.loadingSource = true;
-                     this.skip = this.currentRow - this.qtdRowClient;
-                     this.take = this.datatable.rowsPage;
-                     this.scrollOfTop = this.scrollTop;
+        });
+    }
 
-                     this.dataSourceService.loadMoreData( this.skip, this.take ).then(( loadingSource: boolean ) => {
-                       setTimeout( () => {
-                           this.loadingSource = loadingSource;
-                       }, 100);
-                     });
-                }
+    private addListenerToScroll() {
+        this.listComponent.nativeElement.addEventListener('scroll', ($event) => {
+
+            if ( this.isScrollLeft() ) {
+                this.handleScrollLeft();
+                this.setLastScrollLeft();
+                return;
             }
-        }
-        //  }
+
+            this.setScrollTop();
+            this.setlastRowViewport();
+            this.setScrollDirection();
+            this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
+            this.setLastScrollTop();
+        });
+
     }
 
-    emitEndRow() {
-        if ( this.scrollTop >= (this.scrollHeight - (this.clientHeight)) ) {
-            this.datatable.endRow.emit( { endRow : this.currentRow } )
+    private handleScrollLeft() {
+        this.scrollBoxHeader[0].scrollLeft  = this.listComponent.nativeElement.scrollLeft;
+    }
+
+    private firstRender() {
+        setTimeout(() => {
+            this.renderList( 0, this.dt.dataSourceService.datasource );
+            this.activeElement = this.listBody.nativeElement.rows[0];
+            this.cd.detectChanges();
+        }, 1)
+    }
+
+    private handleKeyPageUp() {
+        this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]') )
+    }
+
+    private handleKeyPageDown() {
+        this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
+        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]') )
+    }
+
+    private handleKeyEnd( event: KeyboardEvent  ) {
+        if ( event.ctrlKey ) {
+            this.listComponent.nativeElement.scrollTop = this.dt.rowHeight * this.dt.totalRows;
         }
     }
 
-    emitChangePage() {
-        if ( this.isLazy() ) {
-            const pageNumber = Math.round( this.currentRow / this.datatable.rowsPage );
-            if ( (this.scrollTop + this.clientHeight) >= (this.pageHeight * pageNumber) ) {
-                if ( pageNumber !== this.pageNumber ) {
-                    this.pageNumber = pageNumber;
-                    this.datatable.pageChange.emit( { page : pageNumber } );
-                }
+    private handleKeyHome( event: KeyboardEvent ) {
+        if ( event.ctrlKey ) {
+            this.listComponent.nativeElement.scrollTop = 0;
+        }
+    }
+
+    private handleScrollDown() {
+        const lastChildElem = this.listBody.nativeElement.rows[ this.listBody.nativeElement.rows.length - 1 ];
+        if ( !lastChildElem ) {
+            return this.handleScrollFast();
+        }
+
+        const clientRect = lastChildElem.getBoundingClientRect();
+        const parentClientRect = this.listComponent.nativeElement.getBoundingClientRect();
+        if ( !clientRect ) {
+            return this.handleScrollFast();
+        }
+
+        if ( this.hasScrollDown( clientRect, parentClientRect ) ) {
+            const skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
+            let take = skip + (this.quantityInVisibleRows * 2) + this.quantityVisibleRows;
+            take = take > this.dt.totalRows ? this.dt.totalRows : take;
+            this.scrollLockAt = this.scrollTop;
+            this.renderPageData( skip, take );
+        }
+    }
+
+    private hasScrollDown(clientRect, parentClientRect) {
+        const clientBottom = clientRect.bottom;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentBottom = parentClientRect.bottom;
+        const dataGreathenRowPage = this.dt.totalRows >= this.dt.rowsPage;
+        return ( clientBottom < parentBottom + pointOfWrap ) && ( !(this.take === this.dt.totalRows)) && dataGreathenRowPage
+    }
+
+
+    private handleScrollUp() {
+        const firstElement = this.listBody.nativeElement.children[ 0 ];
+        const parentClientRect = this.listComponent.nativeElement.getBoundingClientRect();
+
+        if ( !firstElement ) {
+            return this.handleScrollFast();
+        }
+
+        if (!( ( firstElement.offsetTop <= this.scrollTop ) && (  this.listBody.nativeElement.rows.length > 0 ) ) ) {
+            return this.handleScrollFast();
+        }
+
+        const clientRect = firstElement.getBoundingClientRect();
+        if ( this.hasScrollUp( clientRect, parentClientRect ) ) {
+            let skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows - this.wrapOnRemaining;
+            let take = skip + this.quantityVisibleRows + (this.quantityInVisibleRows * 2);
+            if ( skip < 0 ) {
+                skip = 0;
+                take = this.dt.rowsPage;
             }
+            this.scrollLockAt = this.scrollTop;
+            this.renderPageData( skip, take );
         }
     }
 
-    onRowClick( data, index ) {
-        const at: any = document.activeElement;
-        this.Counter = Math.round(
-            (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-            / this.datatable.rowHeight
-        );
-        this.datatable.onRowClick( data, index );
+    private hasScrollUp(clientRect, parentClientRect) {
+        const clientTop = clientRect.top;
+        const pointOfWrap = (this.wrapOnRemaining * this.dt.rowHeight);
+        const parentTop = parentClientRect.top;
+
+        return clientTop > parentTop - pointOfWrap && ( !(this.skip === 0))
     }
 
-
-    handleKeyArrowDown(event) {
-        if ( this.dataSourceService.loadingSource === true ) {
-            console.log('Loading data...');
-            return;
+    private handleScrollFast( ) {
+        const currentStartIndex = Math.floor( this.scrollTop / this.dt.rowHeight );
+        let skip = currentStartIndex - this.quantityInVisibleRows;
+        let take = currentStartIndex + this.quantityVisibleRows + this.quantityInVisibleRows;
+        if ( skip < 0 ) {
+            skip = 0;
+            take = this.dt.rowsPage;
         }
-        const at: any = document.activeElement;
-        this.setCurrentRow();
-        if ( this.isLastRow() ) {
-            if ( at !== this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ] ) {
-                this.scrollBoxTableBodyElementRef.nativeElement.children[ at.tabIndex + 1 ].focus();
-                this.datatable.tabindex = at.tabIndex + 1;
+        this.renderPageData( skip, take );
+    }
 
-                if ( this.Counter >= this.qtdRowClient ) {
+    private renderPageData( skip, take ) {
+        this.dt.loading = true;
+        this.skip = skip;
+        this.take = take;
+        this.dt.dataSourceService.loadMoreData(skip, take);
+        this.cd.markForCheck();
+    }
 
-                    this.scrollBoxElementRef.nativeElement.scrollTop = (
-                        (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight
-                    );
+    private renderList( lastRow, dataSource ) {
+        this.removeChilds();
+        this.lastRecordProcessed = dataSource[0];
+        this.translateY = ( lastRow) * this.dt.rowHeight;
+        for ( let row = 0; row < dataSource.length; row++ ) {
+            this.createElementTR( row, lastRow);
+            this.createElementsTD( row, dataSource );
+            this.addEventClickToListElement( row, dataSource );
+        }
+    }
 
-                } else {
-                    this.Counter++
-                }
+    private createElementTR( row, lastRow) {
+        this.elementTR = new ElementRef( this.renderer.createElement( 'tr' ) );
+        this.renderer.setAttribute( this.elementTR.nativeElement, 'row', String( (row + lastRow) ) );
+        this.renderer.setAttribute( this.elementTR.nativeElement, 'tabindex', String( (row + lastRow) ) );
+        this.renderer.setStyle( this.elementTR.nativeElement, 'height', this.dt.rowHeight + 'px' );
+        this.renderer.addClass( this.elementTR.nativeElement, 'ui-row' );
+        this.renderer.appendChild( this.listBody.nativeElement, this.elementTR.nativeElement );
+    }
+
+    private createElementsTD( row, dataSource ) {
+        for ( let collumn = 0; collumn < this.dt.columns.length; collumn++ ) {
+
+            const classAlignColumn = this.helperService.getClassAlignment(this.dt.columns[ collumn ].alignment );
+
+            this.elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
+            this.renderer.addClass(  this.elementTD.nativeElement, 'ui-cel' );
+            this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
+            this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.dt.rowHeight + 'px' );
+            this.elementTD.nativeElement.innerHTML = dataSource[ row ][ this.dt.columns[ collumn ].field ];
+            this.renderer.appendChild( this.listBody.nativeElement.children[ row ],  this.elementTD.nativeElement );
+        }
+    }
+
+    private removeChilds() {
+        if ( this.listBody.nativeElement.children.length > 0 ) {
+            this.listBody.nativeElement.innerHTML = '';
+        }
+    }
+
+    private setlastRowViewport() {
+        this.lastRowViewport = Math.round( ( this.dt.height + this.scrollTop  ) / this.dt.rowHeight );
+        this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows + 1;
+    }
+
+    private setScrollTop() {
+        if (this.dt.loading && (!this.mouseClicked)) {
+            this.listComponent.nativeElement.scrollTop = this.scrollLockAt;
+            return
+        }
+        this.scrollTop = this.listComponent.nativeElement.scrollTop;
+    }
+
+    private setLastScrollTop() {
+        this.lastScrollTop = this.scrollTop;
+    }
+
+    private setLastScrollLeft() {
+        this.lastScrollLeft =  this.listComponent.nativeElement.scrollLeft;
+    }
+    private setScrollDirection( ) {
+        this.scrollDirection =  (this.scrollTop > this.lastScrollTop ) ? 'DOWN' : 'UP';
+    }
+
+    private isScrollDown() {
+        return this.scrollDirection === 'DOWN';
+    }
+
+    private isScrollLeft() {
+        return this.lastScrollLeft !== this.listComponent.nativeElement.scrollLeft;
+    }
+
+    private addEventClickToListElement( row, dataSource ) {
+        this.elementTR.nativeElement.addEventListener( 'click', () => {
+            this.handleClickItem( dataSource[ row ], row );
+        } );
+    }
+
+    private handleClickItem( item, index ) {
+        this.setActiveElement();
+        this.getCursorViewPortPosition();
+    }
+
+    private getCursorViewPortPosition() {
+        const indexItemInList: any = this.activeElement.getAttribute( 'row' );
+        this.cursorViewPortPosition = ( ( this.lastRowViewport - indexItemInList )  - this.quantityVisibleRows - 1) * -1;
+    }
+
+    private handleKeyArrowDown() {
+        this.setFocusInNextElement();
+    }
+
+    private handleKeyArrowUp() {
+        this.setFocusInPreviousElement();
+    }
+
+    private setFocusInPreviousElement() {
+        if (this.activeElement.previousElementSibling) {
+            if ( this.cursorViewPortPosition > 1  ) {
+                this.cursorViewPortPosition --;
+            }else {
+                this.listComponent.nativeElement.scrollTop -= this.dt.rowHeight;
             }
-            return;
-        }
-
-        this.scrollBoxTableBodyElementRef.nativeElement.children[ this.datatable.tabindex + 1 ].focus();
-        this.datatable.tabindex = this.datatable.tabindex + 1;
-
-        if ( this.Counter >= this.qtdRowClient ) {
-            this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient - 1)) * this.datatable.rowHeight );
-        } else {
-            this.Counter++
+            this.setFocus( this.activeElement.previousElementSibling );
         }
     }
 
-    getChildrenOfTable() {
-        return this.scrollBoxTableBodyElementRef.nativeElement.children;
-    }
-
-
-    handleKeyArrowUp() {
-        if ( this.loadingSource === true ) {
-            console.log('Loading data...');
-            return;
-        }
-        const at: any = document.activeElement;
-        this.setCurrentRow();
-        if ( this.isFirstRow() ) {
-
-            if ( at !== this.getChildrenOfTable()[ 0 ] ) {
-                this.scrollBoxTableBodyElementRef.nativeElement.children[ at.tabIndex - 1 ].focus();
-                this.datatable.tabindex = at.tabIndex - 1;
-
-                if ( this.Counter > 1 ) {
-                    this.Counter--
-                } else {
-                    this.scrollBoxElementRef.nativeElement.scrollTop = (
-                        (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight
-                    );
-                }
+    private setFocusInNextElement() {
+        if (this.activeElement.nextElementSibling) {
+            if ( this.cursorViewPortPosition < this.quantityVisibleRows ) {
+                this.cursorViewPortPosition ++;
+            }else {
+                this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
             }
-            return;
-        }
-
-        this.scrollBoxTableBodyElementRef.nativeElement.children[ this.datatable.tabindex - 1 ].focus();
-        this.datatable.tabindex = this.datatable.tabindex - 1;
-
-
-        if ( this.Counter > 1 ) {
-            this.Counter--
-        } else {
-            this.scrollBoxElementRef.nativeElement.scrollTop = ( (this.currentRow - (this.qtdRowClient + 1)) * this.datatable.rowHeight);
+            this.setFocus( this.activeElement.nextElementSibling );
         }
     }
 
-    handleKeyHome() {
-        this.scrollBoxElementRef.nativeElement.scrollTop = 0;
-        setTimeout( () => {
-            this.getChildrenOfTable()[ 0 ].focus();
-
-            this.Counter = 1
-        }, 300 );
+    private setActiveElement() {
+        this.activeElement = document.activeElement;
     }
 
-    handleKeyEnd() {
-        this.scrollBoxElementRef.nativeElement.scrollTop = this.containerHeight;
-        setTimeout( () => {
-            this.getChildrenOfTable()[ this.getChildrenOfTable().length - 1 ].focus();
-            const at: any = document.activeElement;
-            this.Counter = Math.round(
-                (at.offsetTop + this.scrollOfTop - this.scrollBoxElementRef.nativeElement.scrollTop + this.datatable.rowHeight )
-                / this.datatable.rowHeight
-            );
-        }, 300 );
+    private setFocusWhenChangeData() {
+       this.setFocus( this.getFocusElementOnChangeData() ) ;
     }
 
-    refreshScrollPosition() {
-        setTimeout( () => {
-            this.scrollPosition = this.scrollTop;
-        }, 10 )
+    private getFocusElementOnChangeData() {
+        // const rowNumber = this.activeElement.getAttribute('row');
+        // if (document.querySelector('tr[row="' + rowNumber + '"]')) {
+        //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
+        //     return document.querySelector('tr[row="' + rowNumber + '"]');
+        // }
+
+        if (document.activeElement.nodeName === 'INPUT') {
+            return document.activeElement;
+        }
+
+
+        if ( this.isScrollDown() ) {
+            return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');
+        }else {
+            return document.querySelector('tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]');
+        }
+
     }
 
-    getScrollOfTop() {
-        return 'translateY(' + this.scrollOfTop + 'px)';
-    }
-
-    setScrollTop() {
-        this.scrollTop = this.scrollBoxElementRef.nativeElement.scrollTop;
-    }
-
-    setCurrentRow() {
-        this.currentRow = Math.round( ( this.clientHeight + this.scrollTop  ) / this.datatable.rowHeight );
-    }
-
-    isLastRow() {
-        return this.datatable.tabindex + 1 > this.scrollBoxTableBodyElementRef.nativeElement.children.length - 1;
-    }
-
-    isFirstRow() {
-        return this.datatable.tabindex === 0;
-    }
-
-    isLazy() {
-        return this.datatable.lazy;
+    private setFocus( htmlElement ) {
+        if ( htmlElement !== null ) {
+            ( htmlElement as HTMLElement ).focus();
+            this.setActiveElement();
+            this.getCursorViewPortPosition();
+        }
     }
 }

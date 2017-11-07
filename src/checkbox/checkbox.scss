@@ -6,15 +6,16 @@
 }
 
 input[type='checkbox'] {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   position: absolute;
   margin: 0 !important;
+  top: 5px;
 }
 
 input[type='checkbox']:checked:before {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   position: absolute;
   background-color: #fff;
   content: '';
@@ -24,8 +25,8 @@ input[type='checkbox']:checked:before {
 }
 
 input[type='checkbox']:after {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   top: 0;
   left: 0;
   position: absolute;
@@ -38,15 +39,31 @@ input[type='checkbox']:after {
 }
 
 input[type='checkbox']:checked:after {
-  content: '\f00c';
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
   position: absolute;
-  font-family: FontAwesome;
-  padding-top: 3px;
-  color: #fff;
-  font-size: 0.8em;
-  text-align: center;
-  background-color: #66cc99;
-  border: 0;
+  background-color: #fff;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid #cacaca;
+  transition: background 0.15s ease-in-out;
+}
+
+input[type='checkbox']:checked:before {
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-color: #fff;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 1px solid #cacaca;
+  transition: background 0.15s ease-in-out;
 }
 
 input[type=checkbox]:hover {
@@ -54,14 +71,55 @@ input[type=checkbox]:hover {
 }
 
 .-label {
-  font-family: "Segoe UI" !important;
+  font-family: 'Lato', sans-serif;
   font-size: 1em !important;
   font-weight: normal !important;
   position: relative;
+  color: #737373;
   left: 25px;
   margin: 0 !important;
 }
 
 .-label:hover {
   cursor: pointer;
+}
+
+.checkmark-wrapper {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  margin: 0 !important;
+  top: 5px;
+  z-index: 400;
+}
+
+.checkmark {
+  position: absolute;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  top: -3px;
+  left: -4px;
+  right: 0;
+  bottom: 0;
+  z-index: 500;
+}
+
+.checkmark_stem {
+  position: absolute;
+  width: 3px;
+  height: 10px;
+  left: 10.5px;
+  top: 5px;
+}
+
+.checkmark_kick {
+  position: absolute;
+  width: 4px;
+  height: 3px;
+  left: 8px;
+  top: 12px;
 }

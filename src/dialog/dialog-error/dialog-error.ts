@@ -48,6 +48,10 @@ export class TlDialogError extends DialogDefaultBehavior implements AfterViewIni
 
     textOk = 'Ok';
 
+    exceptionName = '';
+
+    exceptionMessage = '';
+
     @ViewChild('button') button;
 
     @HostBinding( '@enterAnimation' ) public animation;

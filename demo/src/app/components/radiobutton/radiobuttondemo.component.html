@@ -1,18 +1,34 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Radio Button</h1>
+    <h1 class="title">Radio Button <span class="module-name"><code><u>Module Name</u>: <strong>RadioButtonModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>RadioButtonModule</strong></code></p>
     <p class="text-content">There's a lot of ways to create an Radio Button using Truly UI. Below, are some of
       those.</p>
   </div>
   <hr>
   <div class="showcase">
-    <div class="form-group">
-      <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio">
-        <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
-        <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
-      </tl-radio-group>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <h5>Orientation Horizontal</h5>
+          <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
+            <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+            <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+          </tl-radio-group>
+        </div>
+        <span class="returned-value">Returned Value: {{ radio }}</span>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <h5>Orientation Vertical</h5>
+          <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
+            <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+            <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+          </tl-radio-group>
+        </div>
+        <span class="returned-value">Returned Value: {{ radio2 }}</span>
+      </div>
     </div>
-    <span class="returned-value">Returned Value: {{ radio }}</span>
   </div>
   <hr>
   <div class="setup">
@@ -40,21 +56,43 @@
       </table>
     </div>
     <hr>
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of dataEvents; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
     <!--<h3 class="title">Events</h3>-->
   </div>
   <div class="examples">
     <h3 class="title">Examples</h3>
     <div class="group-component">
-      <h5 class="title">Basic</h5>
+      <h5 class="title">Horizontal Grouping</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-input
-        ngModel="Many Properties"
-        [iconBefore]="'ion-printer'"
-        [placeholder]="'With Placeholder'"
-        [textAfter]="'US'"
-        [clearButton]="true"
-        [autocomplete]="'off'">
-      </tl-input>
+<tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
+  <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+  <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+</tl-radio-group>
+    </textarea>
+    </div>
+    <div class="group-component">
+      <h5 class="title">Vertical Grouping</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
+  <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+  <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+</tl-radio-group>
     </textarea>
     </div>
   </div>

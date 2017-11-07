@@ -19,38 +19,46 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
+import { TlContainerModal } from './container-modal/container-modal';
+import { LimitStringPipe } from '../core/helper/limitstring.pipe';
+import { DirectiveModule } from '../core/directives/index';
+import { ShortcutService } from '../core/helper/shortcut.service';
 
 export * from './modal';
+export * from './modal.service';
+export * from './modal-options';
+export * from './container-modal/container-modal';
 
 @NgModule( {
     imports: [
         CommonModule,
+        DirectiveModule
     ],
     declarations: [
         TlModal,
+        TlContainerModal,
+        TlBackdrop,
+        LimitStringPipe
     ],
     exports: [
         TlModal,
+        TlContainerModal,
     ],
     entryComponents: [
-        TlModal
+        TlModal,
+        TlBackdrop
     ],
     providers: [
-        ToneColorGenerator
+        ToneColorGenerator,
+        ShortcutService,
+        ModalService
     ]
 } )
 export class ModalModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ModalModule,
-            providers: [
-                ModalService
-            ]
-        }
-    }
 }

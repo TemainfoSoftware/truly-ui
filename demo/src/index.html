@@ -6,18 +6,83 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Truly UI - Web Components for Desktop Applications</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/atom-one-dark.min.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<app-root>Loading...</app-root>
-<!-- ./wrapper -->
+<app-root>
+  <div class="lds-css ng-scope">
+    <div style="width:100%;height:100%" class="lds-eclipse">
+      <div></div>
+    </div>
+    <style type="text/css">
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+      body {
+        background-color: #ECF0F5;
+      }
+
+      app-root {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      @keyframes lds-eclipse {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        50% {
+          -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes lds-eclipse {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        50% {
+          -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+      .lds-eclipse {
+        position: relative;
+      }
+      .lds-eclipse div {
+        position: absolute;
+        -webkit-animation: lds-eclipse 1s linear infinite;
+        animation: lds-eclipse 1s linear infinite;
+        width: 160px;
+        height: 160px;
+        top: 20px;
+        left: 20px;
+        border-radius: 50%;
+        box-shadow: 0 4px 0 0 #66cc99;
+        -webkit-transform-origin: 80px 82px;
+        transform-origin: 80px 82px;
+      }
+      .lds-eclipse {
+        width: 145px !important;
+        height: 145px !important;
+        -webkit-transform: translate(-72.5px, -72.5px) scale(0.725) translate(72.5px, 72.5px);
+        transform: translate(-72.5px, -72.5px) scale(0.725) translate(72.5px, 72.5px);
+      }
+    </style>
+  </div>
+</app-root>
+<!-- ./wrapper -->
 
 </body>
 </html>

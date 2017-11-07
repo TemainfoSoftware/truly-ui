@@ -1,0 +1,17 @@
+<div class="ui-datatable-header" [resizer]="dt.allowResize" [datatable]="dt" >
+    <div class="ui-datatable-header-wrap">
+
+        <div class="ui-datatable-column-separator"></div>
+
+        <table #table class="ui-datatable-table" [colgroup]="dt.columns">
+            <thead class="ui-datatable-table-head">
+                <tr class="ui-row">
+                    <th *ngFor="let column of dt.columns;"
+                        [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
+                    </th>
+                </tr>
+                <tr *ngIf="dt.allowFilterColumn" class="ui-row" [tlColumnFilter]="dt.columns"></tr>
+            </thead>
+        </table>
+    </div>
+</div>

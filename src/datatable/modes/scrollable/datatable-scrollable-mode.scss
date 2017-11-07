@@ -1,18 +1,86 @@
-.scrollBoxHeader{
-  margin-right: 10px;
+$border-color : #DCDCDC;
+
+.ui-datatable-scrollable{
+  overflow: hidden;
+  border-right: 1px #DCDCDC solid
 }
 
-.scrollBoxContainer::-webkit-scrollbar{
-  background: #F1F1F1;
-  width: 10px;
-}
-.scrollBoxContainer::-webkit-scrollbar-corner{
-  background: #F1F1F1;
+.ui-box-notfound-records{
+  background-color: #FFF;
+  height: 100%;
+  >.ui-container{
+    color: #7a838b;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &.ui-show{
+    display: block;
+  }
+
+  &.ui-hide{
+    display: none;
+  }
 }
 
-.scrollBoxContainer::-webkit-scrollbar-track{
-  background: #F6F6F6;
+.ui-datatable-content-wrap{
+  overflow-y : scroll;
+  overflow-x : auto;
+  min-height : 300px;
 }
-.scrollBoxContainer::-webkit-scrollbar-thumb{
-  background: #66CC99;
+
+.ui-datatable-content-body{
+  > .ui-row{
+    font-size: 13px;
+    background: #E9E9E9;
+    outline: none;
+    color: #7a838b;
+    margin: 0;
+    content: none;
+  }
+  > .ui-row .ui-cel{
+    border-right: 1px $border-color solid;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    align-items: center;
+  }
+  >.ui-row .ui-cel.-textleft{
+    text-align: left;
+  }
+  >.ui-row .ui-cel.-textright{
+    text-align: right;
+  }
+  >.ui-row .ui-cel.-textcenter{
+    text-align: center;
+  }
+  > .ui-row .ui-cel:last-child{
+    border-right: 1px $border-color solid;
+  }
+  > .ui-row:nth-child(odd){
+    background: #FFFFFF;
+  }
+  > .ui-row:focus{
+    background: #66CC99 !important;
+    color: #FFF;
+  }
 }
+
+//
+//.ui-datatable-content-wrap::-webkit-scrollbar{
+////  background: #F1F1F1;
+//  width: 10px;
+//}
+//.ui-datatable-content-wrap::-webkit-scrollbar-corner{
+//  background: #F1F1F1;
+//}
+//
+//.ui-datatable-content-wrap::-webkit-scrollbar-track{
+//  background: #F6F6F6;
+//}
+//.ui-datatable-content-wrap::-webkit-scrollbar-thumb{
+//  background: #66CC99;
+//}
+

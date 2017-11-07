@@ -9,4 +9,11 @@ export const dataProperties = [
     description: "The text which will display front of checkbox",
     options: "any text"
   },
+  {
+    name: "checked",
+    type: "boolean",
+    default: "false",
+    description: "Define if the checkedbox initilize checked or not.",
+    options: "true | false"
+  },
   ];

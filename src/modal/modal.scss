@@ -5,8 +5,10 @@
     background-color: #fff;
     width: 500px;
     height: 500px;
+    box-sizing: content-box;
     border-radius: 3px;
     border: 1px solid #ccc;
+    cursor: default;
     border-top: 0;
 
     > .header {
@@ -19,11 +21,14 @@
     line-height: 34px;
     color: #fff;
     user-select: none;
+    font-family: "Segoe UI";
+    font-size: 13px;
     }
 
     > .header .bar {
     float: left;
     width: 100%;
+    cursor: default;
     }
 
     > .header .controls {
@@ -42,6 +47,7 @@
     width: 30px;
     left: 5px;
     margin: 0;
+    font-size: 13px;
     }
 
     > .header .controls .control-item .disabled {

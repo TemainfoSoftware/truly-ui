@@ -26,7 +26,7 @@ import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
     FormsModule,
     HighlightJsModule,
     InputModule,
-    ModalModule.forRoot(),
+    ModalModule,
     ModalDemoRoutingModule
   ],
   exports: [

@@ -5,7 +5,7 @@ import { DataTableDemo } from './datatabledemo.component';
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: DataTableDemo }
+      { path: '', component: DataTableDemo },
     ] )
   ],
   exports: [

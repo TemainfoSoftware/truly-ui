@@ -20,7 +20,7 @@ import {DataTableDemoRoutingModule } from './datatabledemo-routing.module';
     DatatableModule,
     FormsModule,
     HighlightJsModule,
-    InputModule
+    InputModule,
   ],
   exports: [
     DataTableDemo

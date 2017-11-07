@@ -5,7 +5,6 @@ import { NgModule } from "@angular/core";
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { InputModule } from 'truly-ui/input';
-import { DirectiveModule } from 'truly-ui/core/directives/index';
 import { TooltipModule } from 'truly-ui/tooltip';
 
 import { InputMaskDemo } from "./inputmaskdemo.component";
@@ -17,7 +16,6 @@ import { InputMaskDemoRoutingModule } from "./inputmaskdemo-routing.module";
   ],
   imports:[
     CommonModule,
-    DirectiveModule,
     FormsModule,
     HighlightJsModule,
     InputMaskDemoRoutingModule,

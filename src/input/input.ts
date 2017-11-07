@@ -23,17 +23,16 @@ import {
     Component,
     Input,
     ViewChild,
-    forwardRef,
     AfterViewInit,
-    ChangeDetectionStrategy,
     Output,
-    EventEmitter, ViewEncapsulation
+    EventEmitter, Renderer2,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { InputMask } from './input-mask';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 /**
  * Input Component personalized with few features.
@@ -62,11 +61,7 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
     selector: 'tl-input',
     templateUrl: './input.html',
     styleUrls: [ './input.scss' ],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.Default,
-    providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlInput ), multi: true }
-    ]
+    providers: [ MakeProvider(TlInput) ]
 } )
 export class TlInput extends ComponentHasModelBase implements AfterViewInit {
 
@@ -94,7 +89,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Property to labelSize
      * @type {string}
      */
-    @Input() labelSize = '';
+    @Input() labelSize = 100;
 
     /**
      * Label of Input
@@ -149,7 +144,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     /**
      * Property to control autocomplete input
      */
-    @Input() autocomplete: boolean = null;
+    @Input() autocomplete = 'off';
 
 
     /**
@@ -164,9 +159,32 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() tabindex = 0;
 
     /**
+     * Define the alignment of the text inside of the input.
+     */
+    @Input() textAlign;
+
+
+    @Input() mask;
+
+    /**
+     * Type of Input
+     */
+    @Input() type = 'text';
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;
+
+    /**
+     * View for textAfter
+     */
+    @ViewChild('afterText') public textClearButton;
+
+    /**
+     * View for textAfter
+     */
+    @ViewChild('afterIcon') public iconClearButton;
 
     /**
      * Output event for clear button
@@ -174,10 +192,22 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Output() clear: EventEmitter<any> = new EventEmitter();
 
+
+    @Output() onClickAddon: EventEmitter<any> = new EventEmitter();
+
+
+    /**
+     * Control the position of the clearButton.
+     */
+    private clearButtonPosition;
+
+    private fieldMask: InputMask;
+
     /**
      * Constructor
      */
-    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
+    constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                public renderer: Renderer2) {
         super(tabIndexService, idService, nameService);
     }
 
@@ -186,16 +216,41 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     ngAfterViewInit() {
         this.setElement( this.input, 'input' );
+        this.validateClearButtonPosition();
+        this.hasMask();
+    }
+
+    hasMask() {
+        if (this.mask) {
+            this.fieldMask = new InputMask(this, this.renderer, this.mask );
+        }
+    }
+
+    validateClearButtonPosition() {
+        if (this.textClearButton) {
+            this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
+        }
+        if (this.iconClearButton) {
+            this.clearButtonPosition = this.iconClearButton.nativeElement.offsetWidth + 5;
+        }
+        if (this.textClearButton && this.iconClearButton) {
+            this.clearButtonPosition =
+                (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
+        }
+    }
+
+    clickAddon(MouseEvent, side) {
+        this.onClickAddon.emit({MouseEvent, side});
     }
 
     /**
      * Function to clear input value.
      */
     clearInput() {
-        this.modelValue = '';
-        this.input.nativeElement.value = '';
+        this.writeValue('');
         this.input.nativeElement.focus();
         this.clear.emit();
     }
+
 
 }

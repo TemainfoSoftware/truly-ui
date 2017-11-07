@@ -1,20 +1,19 @@
 engines:
-  rubocop:
-    enabled: true
   eslint:
-    enabled: true
-  tslint:
     enabled: true
   csslint:
     enabled: true
   duplication:
     enabled: true
-  config:
-      languages:
-      - typescript
+    config:
+        languages:
+        - javascript
 exclude_paths:
-- "demo/"
-- "dist/"
-- "docs/"
-- "node_modules/"
-- "tools/"
+  - "demo/"
+  - "dist/"
+  - "docs/"
+  - "node_modules/"
+  - "tools/"
+ratings:
+   paths:
+   - "src/**/**.ts"

@@ -1,13 +1,13 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">CheckBox</h1>
-    <p class="text-content">There's a lot of ways to create an Radio Button using Truly UI. Below, are some of
-      those.</p>
+    <h1 class="title">CheckBox <span class="module-name"><code><u>Module Name</u>: <strong>CheckBoxModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>CheckBoxModule</strong></code></p>
+    <p class="text-content">The CheckBox component allows the user to select many options.</p>
   </div>
   <hr>
   <div class="showcase">
     <div class="form-group">
-        <tl-checkbox [label]="'Select this option'"></tl-checkbox>
+        <tl-checkbox [checked]="true" [label]="'Select this option'"></tl-checkbox>
         <tl-checkbox [label]="'Select this option'"></tl-checkbox>
         <tl-checkbox [label]="'Select this option'"></tl-checkbox>
         <tl-checkbox [label]="'Select this option'"></tl-checkbox>
@@ -63,7 +63,7 @@
     <div class="group-component">
       <h5 class="title">Basic</h5>
       <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-checkbox [label]="'Select this option'"></tl-checkbox>
+      &nbsp;&nbsp;&nbsp;<tl-checkbox [checked]="true" [label]="'Select this option'"></tl-checkbox>
     </textarea>
     </div>
   </div>

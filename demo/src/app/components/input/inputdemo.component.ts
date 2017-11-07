@@ -11,7 +11,8 @@ import * as json from './inputdemo-dataproperties.json';
 } )
 export class InputDemo {
   private dataTableProperties;
-
+  uppercase = '';
+  lowercase = '';
   readonly = "I'm an Truly Ui Input (Selectable)";
   disabled = "I'm an Truly Ui Input (Not Selectable)";
 

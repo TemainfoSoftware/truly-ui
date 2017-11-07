@@ -9,7 +9,7 @@ import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GettingStartedModule } from './getting-started/getting-started.module';
 import { GithubAPIService } from "./shared/services/githubapi";
-
+import { DirectiveModule } from "../../../src/core/directives/index";
 
 @NgModule({
   declarations: [
@@ -19,10 +19,11 @@ import { GithubAPIService } from "./shared/services/githubapi";
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    DirectiveModule,
     FormsModule,
     HttpModule,
     GettingStartedModule,
-    HomeModule
+    HomeModule,
   ],
   exports: [],
   providers: [GithubAPIService],

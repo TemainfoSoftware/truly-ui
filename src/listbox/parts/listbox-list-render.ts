@@ -97,8 +97,11 @@ export class ListBoxListRenderService {
         const spanLabel = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
         spanLabel.nativeElement.append( this.listBox.dataService.datasource[ row ][ this.listBox.label ] );
         this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
-
         this.createElementSpanLabelDetail( row );
+        if (!this.listBox.labelDetail) {
+            const padding = 10;
+            this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
+        }
     }
 
     createElementSpanLabelDetail( row ) {

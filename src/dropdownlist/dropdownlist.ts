@@ -220,6 +220,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     };
 
     isNotListDropdown(event) {
+        if (!event.target.parentElement) {
+            return false;
+        }
         if ( ( event.target.nodeName !== 'LI') && ( event.target.className.indexOf('-placeholder') < 0 )) {
             if ( (event.target.parentElement.nodeName !== 'LI') && ( event.target.parentElement.className.indexOf('-placeholder') < 0) ) {
                 return true;

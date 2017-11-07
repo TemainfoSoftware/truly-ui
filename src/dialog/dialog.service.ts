@@ -36,7 +36,7 @@ import { ConfirmationOptions } from './dialog-confirmation/confirmation-options'
 import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
-import { TlDialogBackdrop } from './dialog-backdrop/dialog-backdrop';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
 
 @Injectable()
 export class DialogService {
@@ -45,9 +45,13 @@ export class DialogService {
 
     constructor( public modalService: ModalService ) {}
 
+    setView(view) {
+        this.modalService.setView(view);
+    }
+
     info( message, callback, options?: InfoOptions ) {
         this.setModalOptions( ModalInfoOptions, options );
-        this.modalService.createBackdrop( TlDialogBackdrop );
+        this.modalService.createBackdrop( TlBackdrop );
         this.modalService.createModal( TlDialogInfo, ModalInfoOptions,  callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
@@ -55,7 +59,7 @@ export class DialogService {
 
     confirmation( message, callback, options?: ConfirmationOptions) {
         this.setModalOptions( ModalConfirmationOptions, options );
-        this.modalService.createBackdrop( TlDialogBackdrop );
+        this.modalService.createBackdrop( TlBackdrop );
         this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
         if (options) {
             this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
@@ -66,7 +70,7 @@ export class DialogService {
 
     alert( message, callback, options?: AlertOptions ) {
         this.setModalOptions( ModalAlertOptions, options );
-        this.modalService.createBackdrop( TlDialogBackdrop );
+        this.modalService.createBackdrop( TlBackdrop );
         this.modalService.createModal( TlDialogAlert, ModalAlertOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
@@ -74,7 +78,7 @@ export class DialogService {
 
     error( message, callback, options?: ErrorOptions ) {
         this.setModalOptions( ModalErrorOptions, options );
-        this.modalService.createBackdrop( TlDialogBackdrop );
+        this.modalService.createBackdrop( TlBackdrop );
         this.modalService.createModal( TlDialogError, ModalErrorOptions, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );

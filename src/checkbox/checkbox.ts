@@ -20,21 +20,23 @@
  SOFTWARE.
  */
 import {
-    Component, Input, forwardRef, ViewChild, AfterViewInit, Output, EventEmitter,
+    Component, Input, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
+    ChangeDetectorRef
 } from '@angular/core';
 
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 @Component( {
     selector: 'tl-checkbox',
     templateUrl: './checkbox.html',
     styleUrls: [ './checkbox.scss' ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
-        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef( () => TlCheckBox ), multi: true }
+        [ MakeProvider(TlCheckBox) ]
     ]
 } )
 export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
@@ -42,6 +44,12 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
     @Input() label = '';
 
     @Input() tabindex = 0;
+
+    @Input() checked = false;
+
+    @Input() checkmarkColor = '#fff';
+
+    @Input() checkedColorBg = '#66CC99';
 
     @ViewChild( 'checkbox' ) checkbox;
 
@@ -52,24 +60,37 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
     private toggle = false;
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
-                 nameService: NameGeneratorService ) {
+                 nameService: NameGeneratorService, private change: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
     }
 
     ngAfterViewInit() {
         this.setElement( this.checkbox, 'checkbox' );
+        if ( this.checked ) {
+            this.modelValue = true;
+        }
         if (!this.label) {
             throw new EvalError( 'The [label] property is required!' );
         }
+        setTimeout( () => {
+            this.change.markForCheck();
+        }, 1 );
     }
 
     check( boolean ) {
         this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
-        this.onCheckBox.emit( this.modelValue );
+        this.change.markForCheck();
+        this.emitEvent();
+    }
+
+    emitEvent() {
+        setTimeout( () => {
+            this.onCheckBox.emit( this.modelValue );
+        }, 1 );
     }
 
     focusCheckBox() {
-        this.onFocusBox.emit(this.modelValue);
+        this.onFocusBox.emit( this.modelValue );
     }
 
 }

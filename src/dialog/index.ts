@@ -10,12 +10,11 @@ import { ModalService } from '../modal/modal.service';
 import { TabIndexService } from '../form/tabIndex.service';
 
 import { TlDialogAlert } from './dialog-alert/dialog-alert';
-import { TlDialogBackdrop } from './dialog-backdrop/dialog-backdrop';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogInfo } from './dialog-info/dialog-info';
 
-export * from '../dialog';
+export * from './dialog.service';
 
 @NgModule( {
     imports: [
@@ -25,7 +24,6 @@ export * from '../dialog';
     ],
     declarations: [
         TlDialogInfo,
-        TlDialogBackdrop,
         TlDialogAlert,
         TlDialogError,
         TlDialogConfirmation
@@ -33,13 +31,11 @@ export * from '../dialog';
     exports: [
         TlDialogInfo,
         TlDialogAlert,
-        TlDialogBackdrop,
         TlDialogError,
         TlDialogConfirmation
     ],
     entryComponents: [
         TlDialogInfo,
-        TlDialogBackdrop,
         TlDialogAlert,
         TlDialogError,
         TlDialogConfirmation

@@ -20,32 +20,50 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, Renderer2,
-    ViewChild, ViewEncapsulation
+    AfterContentInit,
+    Component,
+    ContentChildren,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    QueryList,
+    Renderer2,
+    ViewChild
 } from '@angular/core';
-import { TlDatatableColumn } from './datatable-column';
-import { DatatableFilterOptions } from './datatable-filter-options';
+import { TlDatatableColumn } from './parts/column/datatable-column';
+import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
-import { TlDatatableFilterService } from './datatable-filter.service';
-import { TlDatatableDataSource } from './datatable-datasource.service';
+import { TlDatatableFilterService } from './services/datatable-filter.service';
+import { TlDatatableDataSource } from './services/datatable-datasource.service';
+import { TlDatatableColumnService } from './services/datatable-column.service';
+import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
-    // encapsulation: ViewEncapsulation.Native,
     providers: [
         TlDatatableFilterService,
         TlDatatableDataSource,
+        TlDatatableColumnService,
+        TlDatatableFilterConstraints,
     ]
 })
-export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
+export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
     @Input('mode') mode = 'normal';
 
-    @Input('lazy') lazy = false;
+    @Input('allowLazy') allowLazy = false;
+
+    @Input('allowResize') allowResize = false;
+
+    @Input('allowFilterColumn') allowFilterColumn = false;
 
     @Input('rowsPage') rowsPage = 20;
 
@@ -54,6 +72,8 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     @Input('rowsClient') rowsClient = 10;
 
     @Input('height') height = 300;
+
+    @Input('width') width = 300;
 
     @Input('globalFilter') globalFilter: any;
 
@@ -75,39 +95,37 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     @ViewChild( 'tbody' ) tbody: ElementRef;
 
+    @ViewChild( 'datatableBox' ) datatableBox: ElementRef;
+
     public columns: any[] = [];
 
     public tabindex = 0;
 
     public globalFilterTimeout: any;
 
-    public rowHeightCalculated: number;
-
     public totalRows: number;
 
-    constructor( private render: Renderer2,
-                 private filterService: TlDatatableFilterService,
-                 private dataSourceService: TlDatatableDataSource,
-    ) {}
+    private loadingSubject = new Subject<any>();
 
-    ngOnInit() {
-
-        this.dataSourceService.onInitDataSource(this);
-        this.setHeightRowTable();
-        this.render.listen(window, 'load', () => {
-           // this.calcHeightRowTable();
-        });
-
-        this.render.listen(window, 'resize', () => {
-      //      this.calcHeightRowTable();
-        })
+    private _loading = false;
+    set loading(value){
+        this._loading = value;
+        this.loadingSubject.next(value);
+    }
+    get loading(){
+        return this._loading;
     }
 
+    constructor( private render: Renderer2,
+                 public filterService: TlDatatableFilterService,
+                 public dataSourceService: TlDatatableDataSource,
+                 public columnService: TlDatatableColumnService
+    ) {}
 
     ngAfterContentInit() {
-        const height = this.height;
-        this.rowHeight =  height / this.rowsClient;
-
+        this.setRowHeight();
+        this.dataSourceService.onInitDataSource(this);
+        this.columnService.onInitColumnService(this);
         this.inicializeGlobalFilter();
     }
 
@@ -115,49 +133,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
         if (changes['data'] !== undefined) {
             this.dataSourceService.onChangeDataSource(changes)
         }
-
     }
 
-    setColumns() {
-        this.exitsColumns() ? this.getColumnsFromContentChield() : this.getColumnsFromDataSource();
+    setRowHeight() {
+        this.rowHeight = this.height / this.rowsClient;
     }
 
     setTabIndex( value: number ) {
         this.tabindex = value;
-    }
-
-    getColumnsFromDataSource() {
-        if (this.dataSourceService.datasource) {
-            Object.keys( this.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
-                this.columns.push( this.buildNewDataTableColumn( columnField ) );
-            })
-        }
-
-    }
-
-    getColumnsFromContentChield() {
-        this.datatableColumns.map( column => {
-            this.columns.push( column );
-        } );
-    }
-
-    getClassAlignment( alignment: string ) {
-        return alignment ? '-text' + alignment : '';
-    }
-
-    getObjectRow( row , index ) {
-        return { data : row, index: index };
-    }
-
-    exitsColumns() {
-        return ( ( this.datatableColumns.length ) && ( this.datatableColumns.first.field ) );
-    }
-
-    buildNewDataTableColumn(field) {
-        const column = new TlDatatableColumn();
-        column.title = field.toUpperCase();
-        column.field = field;
-        return column;
     }
 
     onRowClick( row, index ) {
@@ -171,6 +154,14 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
+    }
+
+    getLoading(): Observable<any> {
+        return this.loadingSubject.asObservable();
+    }
+
+    getObjectRow( row , index ) {
+        return { data : row, index: index };
     }
 
     inicializeGlobalFilter() {
@@ -187,26 +178,4 @@ export class TlDatatable implements AfterContentInit, OnInit, OnChanges {
     filter( value: any ) {
         this.filterService.filter( value );
     }
-
-    calcHeightRowTable() {
-        if ( this.tbody !== undefined) {
-
-            this.rowHeightCalculated = this.rowHeight;
-            let heightMax = this.rowHeight;
-
-            for ( let i = 0; i < this.tbody.nativeElement.children.length; i++) {
-                if ( this.tbody.nativeElement.children[i].clientHeight > heightMax ) {
-                    heightMax = this.tbody.nativeElement.children[i].clientHeight;
-                }
-            }
-            this.rowHeightCalculated = heightMax;
-        }
-    }
-
-    setHeightRowTable() {
-        this.rowHeightCalculated = this.rowHeight;
-    }
-
-
-
 }

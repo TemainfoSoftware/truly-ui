@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { routerTransition } from "../../router.animations";
 
 import * as json from './radiobuttondemo-dataproperties.json';
+import * as jsonEvts from './radiobuttondemo-events.json';
 
 @Component( {
   selector: 'app-radio',
@@ -16,11 +17,11 @@ export class RadioButtonDemo {
 
   private radio2;
 
-  readonly = "I'm an Truly Ui Input (Selectable)";
-  disabled = "I'm an Truly Ui Input (Not Selectable)";
+  private dataEvents;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvts.dataEvents;
   }
 
 }

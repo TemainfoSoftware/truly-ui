@@ -94,9 +94,9 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Lifehook of OnInit Angular.
      */
     ngOnInit() {
-        const self = this;
-        Object.keys( this.validations ).forEach( function ( key ) {
-            self[ key ] = self.validations[ key ];
+        this.handleNameComponent();
+        Object.keys( this.validations ).forEach(( key ) => {
+            this[ key ] = this.validations[ key ];
         } );
     }
 
@@ -145,6 +145,12 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     hasValidation() {
         return Object.keys( this.validations ).length > 0;
+    }
+
+    handleNameComponent() {
+        if (!this.name) {
+            this.name = this.nameService.name;
+        }
     }
 
 

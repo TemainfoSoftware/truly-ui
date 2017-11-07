@@ -1,0 +1,59 @@
+.panelgroup-container {
+  width: 100%;
+  position: relative;
+  border: 1px solid #ccc;
+  border-top: 0;
+}
+
+.panelgroup-body {
+  padding: 20px;
+}
+
+.header-group {
+  display: table-row;
+  line-height: 1.5em;
+  white-space: nowrap;
+  position: absolute;
+  top: -10.8px;
+}
+
+.header-group span {
+  font-size: 12px;
+  color: #777;
+  overflow: hidden;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.header-group span.spacer-left {
+  width: 5%;
+}
+
+.header-group span.spacer-right {
+  width: 95%;
+}
+
+.header-group span.spacer {
+  padding: 0 10px;
+}
+
+.header-group span.spacer-left {
+  padding: 0 7px 0 0;
+}
+
+.header-group span.spacer-right {
+  padding: 0 0 0 7px;
+}
+
+.header-group span.spacer:after {
+  display: inline-block;
+  width: 100%;
+  content: ".";
+  font-size: 0;
+  color: transparent;
+  height: 1px;
+  background: #ccc;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}

@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlInput } from './input';
-import { DirectiveModule } from '../core/directives/index';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
+import { CharcaseDirective } from './directives/charcase.directive';
+import { TypeDirective } from './directives/type.directive';
 
 export * from './input';
 
@@ -13,14 +14,16 @@ export * from './input';
     imports: [
         CommonModule,
         FormsModule,
-        DirectiveModule,
     ],
     declarations: [
-        TlInput
+        TlInput,
+        CharcaseDirective,
+        TypeDirective
     ],
     exports: [
         TlInput,
-        DirectiveModule,
+        CharcaseDirective,
+        TypeDirective
     ],
     providers: [
         IdGeneratorService,

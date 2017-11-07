@@ -4,7 +4,7 @@ import * as json from './dropdownlistdemo-dataproperties.json';
 
 
 @Component( {
-  selector : 'app-button-group',
+  selector : 'app-dropdown-list',
   templateUrl : './dropdownlistdemo.component.html',
   styleUrls : [ './dropdownlistdemo.component.scss' ]
 } )
@@ -33,6 +33,8 @@ export class DropDownListDemo {
   public data: any[];
 
   public bigData: any[];
+
+  public dataWidthIcon: any[];
 
   public simpleData: any[];
 
@@ -63,7 +65,15 @@ export class DropDownListDemo {
       { textItem : 'Item 15', valueItem : '15' },
       { textItem : 'Item 16', valueItem : '16' }
     ];
-    this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+    this.dataWidthIcon = [
+      { textItem : 'Contains', valueItem : '1', icon:'fa fa-arrows' },
+      { textItem : 'Does not Contains', valueItem : '2', icon:'fa fa-arrows-v' },
+      { textItem : 'Ends Withs', valueItem : '3', icon:'fa fa-bus' },
+      { textItem : 'Equals', valueItem : '4', icon:'fa fa-circle' },
+      { textItem : 'Not Equals', valueItem : '5', icon:'fa fa-external-link' },
+      { textItem : 'Reset', valueItem : '6', icon:'ion-help-buoy' }
+    ];
+    this.simpleData = [ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5' ];
   }
 
 }

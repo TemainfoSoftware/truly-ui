@@ -1,11 +1,25 @@
-.form {
-  padding: 25px;
-  text-align: center;
-}
-
-.form h5 {
-  font-family: "Segoe UI";
-  font-weight: normal;
+.content-dialog {
+  position: relative;
+  margin: 0 auto;
+  min-height: 140px;
+  min-width: 400px;
+  max-width: 60vw;
+  > .form {
+    padding: 23px;
+    text-align: center;
+    > p {
+      font-family: "Segoe UI";
+      font-size: 1em;
+      font-weight: normal;
+      line-height: 1.5em;
+    }
+  }
+  > .header-controls {
+    text-align: center;
+    float: left;
+    width: 100%;
+    margin-bottom: 30px;
+  }
 }
 
 

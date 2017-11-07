@@ -12,17 +12,21 @@ import { InputModule } from 'truly-ui/input';
 import { ModalModule } from "truly-ui/modal";
 import { TooltipModule } from "truly-ui/tooltip";
 
-import { CadPessoa } from "./newpessoa/cadPessoa.component";
-import { DataFormService } from "./newpessoa/dataform.service";
+import { NewPerson } from "./newperson/newperson.component";
+import { DataFormService } from "./newperson/dataform.service";
 import { FormDemo } from "./formdemo.component";
 import { FormDemoRoutingModule } from "./formdemo-routing.module";
 import { DialogModule } from "truly-ui/dialog";
 import { RadioButtonModule } from "truly-ui/radiobutton";
 import { CheckBoxModule } from "truly-ui/checkbox";
+import { MultiSelectModule } from 'truly-ui/multiselect';
+import { DirectiveModule } from "../../../../../src/core/directives/index";
+import { AutoCompleteModule } from "../../../../../src/autocomplete/index";
+import { DumpDataService } from "../../shared/services/dumpdata";
 
 @NgModule({
   declarations: [
-    CadPessoa,
+    NewPerson,
     FormDemo,
   ],
   imports:[
@@ -34,22 +38,26 @@ import { CheckBoxModule } from "truly-ui/checkbox";
     InputModule,
     CheckBoxModule,
     FormDemoRoutingModule,
-    FormModule.forRoot(),
+    FormModule,
     DialogModule,
+    AutoCompleteModule,
     FormsModule,
     ModalModule,
     HighlightJsModule,
-    TooltipModule
+    TooltipModule,
+    MultiSelectModule,
+    DirectiveModule
   ],
   exports: [
     FormDemo,
-    CadPessoa,
+    NewPerson,
   ],
   providers: [
+    DumpDataService,
     DataFormService
   ],
   entryComponents: [
-    CadPessoa
+    NewPerson
   ]
 })
 export class FormDemoModule {}

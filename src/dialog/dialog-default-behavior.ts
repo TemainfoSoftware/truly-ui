@@ -34,9 +34,6 @@ export class DialogDefaultBehavior {
             case KeyEvent.TAB:
                 $event.preventDefault();
                 break;
-            case KeyEvent.ESCAPE:
-                this.buttonAction.dispatchCallback();
-                break;
         }
     }
 }

@@ -1,0 +1,66 @@
+<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-input [name]="'firstName'" [labelSize]="100" [ngModel]="person?.firstName" [label]="'Name'"></tl-input>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-input [name]="'lastName'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.lastName"
+                  [label]="'LastName'"></tl-input>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-autocomplete [data]="dataCity"
+                         [openFocus]="true"
+                         [name]="'city'"
+                         (onAddMore)="newClient()"
+                         [label]="'City'"
+                         [labelName]="'name'"
+                         [clearButton]="true"
+                         [rowHeight]="35"
+                         [placeholder]="'Search...'"
+                         [ngModel]="person?.city">
+        </tl-autocomplete>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-dropdown-list [data]="dataTitles"
+                          [text]="'text'"
+                          [label]="'Job'"
+                          [name]="'title'"
+                          [height]="25"
+                          [labelSize]="100"
+                          [value]="'value'"
+                          [placeholder]="'Select item'"
+                          [ngModel]="person?.title">
+        </tl-dropdown-list>
+      </div>
+    </div>
+  </div>
+<!--  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <tl-dropdown-list [data]="dataStatus"
+                          [label]="'Status'"
+                          [labelSize]="100"
+                          [name]="'status'"
+                          [height]="25"
+                          [text]="'title'"
+                          [value]="'valueItem'"
+                          [placeholder]="'Select item'"
+                          [ngModel]="person?.status">
+        </tl-dropdown-list>
+      </div>
+    </div>
+  </div>-->
+</tl-form>

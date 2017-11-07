@@ -82,7 +82,7 @@
     "semantic-release": "^6.3.6",
     "ts-node": "~3.3.0",
     "tslint": "~5.4.2",
-    "typescript": "~2.4.1"
+    "typescript": "~2.5.2"
   },
   "engines": {
     "node": ">=6.0.0"

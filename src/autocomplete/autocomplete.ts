@@ -65,6 +65,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Input() ngModel = '';
 
+    @Input() lazyMode = false;
+
     @Input() rowHeight = 30;
 
     @Input() listStripped = false;
@@ -98,6 +100,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     ngAfterViewInit() {
+        this.validationProperty();
         this.createDocumentListener();
         this.handleAutoCompleteModel();
         this.listPosition = this.list.nativeElement.offsetLeft;
@@ -111,6 +114,12 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         if (this.customTemplate) {
             this.listBox.customInput = true;
             this.listBox.template = this.customTemplate;
+        }
+    }
+
+    validationProperty() {
+        if (!this.labelName) {
+            throw new Error('The [labelName] property is required to show the content on input while selecting');
         }
     }
 
@@ -177,12 +186,10 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     onClickItemList($event) {
-        if ($event[this.labelName]) {
-            this.input.element.nativeElement.value = $event[this.labelName];
-            this.ngModel = $event;
-            this.input.componentModel.model = $event;
-            this.input.element.nativeElement.focus();
-        }
+        this.input.element.nativeElement.value = $event[this.labelName];
+        this.ngModel = $event;
+        this.input.componentModel.model = $event;
+        this.input.element.nativeElement.focus();
     }
 
     isNotRelatedWithAutocomplete( $event ) {

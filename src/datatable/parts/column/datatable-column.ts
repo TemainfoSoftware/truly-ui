@@ -63,9 +63,9 @@ export class TlDatatableColumn implements OnInit {
             }
         }
     }
-
-    setFilterOptionsWhenTypeNotDefault(){
-        if (this.type !== 'text') {
+    
+    setFilterOptionsWhenTypeNotDefault() {
+        if ( this.type !== 'text' ) {
             this.setFilterOptions();
         }
     }

@@ -25,7 +25,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FilterOptionsService {
 
-    getOptionsByType(type): Array<any>{
+    getOptionsByType(type): Array<any> {
       return  [
           { description : 'Start With', valueItem : 'startsWith', icon: 'dx-icon-filter-operation-starts-with' },
           { description : 'Contains', valueItem : 'contains', icon: 'dx-icon-filter-operation-contains' },

@@ -34,7 +34,7 @@ export class TlDatatableColumnService {
     }
 
     setColumns() {
-        this.exitsColumns() ? this.getColumnsFromContentChield() : this.getColumnsFromDataSource();
+        this.exitsColumns() ? this.getColumnsFromContentChild() : this.getColumnsFromDataSource();
     }
 
     exitsColumns() {
@@ -63,7 +63,7 @@ export class TlDatatableColumnService {
         return (this.dt.datatableBox.nativeElement.clientWidth - widthScrollbar) / columnsTotal;
     }
 
-    getColumnsFromContentChield() {
+    getColumnsFromContentChild() {
         this.dt.datatableColumns.map( column => {
             this.dt.columns.push( column );
         } );

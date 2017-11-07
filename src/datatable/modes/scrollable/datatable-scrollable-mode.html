@@ -5,8 +5,15 @@
     <div #listComponent id="id-component"
          class="ui-datatable-content-wrap"
          (keydown)="onKeydown($event)"
-         [tlLoading]="dt.loading"
+         [tlLoading]="loading"
          [ngStyle]="{'height': dt.height+'px' }">
+
+        <div [ngClass]="{'ui-box-notfound-records':true, 'ui-show': !foundRecords,'ui-hide': foundRecords}" >
+            <div class="ui-container" >
+                <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+                <div class="ui-notfound-text">Not to show</div>
+            </div>
+        </div>
         <div [ngStyle]="{height: bodyHeight+'px'}">
             <table class="ui-datatable-table" [colgroup]="dt.columns" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
                 <tbody (click)="onClick($event)" #listBody class="ui-datatable-content-body" ></tbody>

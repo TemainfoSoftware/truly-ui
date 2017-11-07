@@ -5,6 +5,25 @@ $border-color : #DCDCDC;
   border-right: 1px #DCDCDC solid
 }
 
+.ui-box-notfound-records{
+  background-color: #FFF;
+  height: 100%;
+  >.ui-container{
+    color: #7a838b;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  &.ui-show{
+    display: block;
+  }
+
+  &.ui-hide{
+    display: none;
+  }
+}
+
 .ui-datatable-content-wrap{
   overflow-y : scroll;
   overflow-x : auto;

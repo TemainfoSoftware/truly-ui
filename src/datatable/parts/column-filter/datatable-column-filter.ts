@@ -32,7 +32,7 @@ import 'rxjs/add/operator/debounceTime';
     templateUrl: './datatable-column-filter.html',
     styleUrls: ['./datatable-column-filter.scss']
 })
-export class TlDatatabaleColumnFilter implements OnInit{
+export class TlDatatabaleColumnFilter implements OnInit {
 
     @Input('tlColumnFilter') tlColumnFilter;
 
@@ -44,10 +44,10 @@ export class TlDatatabaleColumnFilter implements OnInit{
 
     constructor() {}
 
-    ngOnInit(){
-        this.subject.debounceTime(600).subscribe((event)=>{
-            if (event !== undefined){
-                let eventFilter = this.makeFilterEvent();
+    ngOnInit() {
+        this.subject.debounceTime(600).subscribe((event) => {
+            if (event !== undefined) {
+                const eventFilter = this.makeFilterEvent();
                 this.filterEvent.emit( eventFilter ) ;
             }
         });
@@ -57,10 +57,10 @@ export class TlDatatabaleColumnFilter implements OnInit{
         this.subject.next(event)
     }
 
-    makeFilterEvent() : FilterEventMetadata {
-        let filter: FilterEventMetadata = { filters: {} };
+    makeFilterEvent(): FilterEventMetadata {
+        const filter: FilterEventMetadata = { filters: {} };
 
-        this.tlColumnFilter.forEach((value)=>{
+        this.tlColumnFilter.forEach((value) => {
             if (this.filters.value[value.field]) {
                 filter.filters[value.field] = {
                     value: this.filters.value[value.field],

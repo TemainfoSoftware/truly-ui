@@ -31,7 +31,7 @@ import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filt
     styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
     providers : [ DatatableHelpersService ]
 } )
-export class TlDatatableHeader implements AfterViewInit{
+export class TlDatatableHeader implements AfterViewInit {
 
     @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
 
@@ -40,8 +40,8 @@ export class TlDatatableHeader implements AfterViewInit{
     ) {}
 
 
-    ngAfterViewInit(){
-        this.columnsFilter.filterEvent.subscribe((value)=>{
+    ngAfterViewInit() {
+        this.columnsFilter.filterEvent.subscribe((value) => {
            this.dt.dataSourceService.setFilter(value);
         })
     }

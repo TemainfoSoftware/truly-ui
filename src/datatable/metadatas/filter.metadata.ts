@@ -25,6 +25,6 @@ export interface FilterMetadata {
     matchMode?: any;
 }
 
-export interface FilterEventMetadata{
+export interface FilterEventMetadata {
     filters?: {}
 }

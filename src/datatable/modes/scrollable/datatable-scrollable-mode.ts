@@ -144,7 +144,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.quantityInVisibleRows = Math.round( ( this.dt.rowsPage - this.quantityVisibleRows ) / 2 );
         this.setlastRowViewport();
 
-        this.dt.getLoading().subscribe((value)=>{
+        this.dt.getLoading().subscribe((value) => {
             this.loading = value;
             this.cd.markForCheck();
         })
@@ -433,7 +433,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         //     return document.querySelector('tr[row="' + rowNumber + '"]');
         // }
 
-        if (document.activeElement.nodeName == 'INPUT'){
+        if (document.activeElement.nodeName === 'INPUT') {
             return document.activeElement;
         }
 

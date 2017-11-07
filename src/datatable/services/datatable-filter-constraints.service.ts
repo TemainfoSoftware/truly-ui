@@ -23,24 +23,24 @@
 export class  TlDatatableFilterConstraints {
 
     startsWith(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
-        let filterValue = filter.toLowerCase();
+        const filterValue = filter.toLowerCase();
         return value.toString().toLowerCase().slice(0, filterValue.length) === filterValue;
     }
 
     contains(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
@@ -48,124 +48,125 @@ export class  TlDatatableFilterConstraints {
     }
 
     notContains(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
-        return value.toString().toLowerCase().indexOf(filter.toLowerCase()) == -1;
+        return value.toString().toLowerCase().indexOf(filter.toLowerCase()) === -1;
     }
 
     endsWith(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
-        let filterValue = filter.toString().toLowerCase();
+        const filterValue = filter.toString().toLowerCase();
         return value.toString().toLowerCase().indexOf(filterValue, value.toString().length - filterValue.length) !== -1;
     }
 
     equals(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
-        return value.toString().toLowerCase() == filter.toString().toLowerCase();
+        return value.toString().toLowerCase() === filter.toString().toLowerCase();
     }
 
     notEquals(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return false;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return true;
         }
 
-        return value.toString().toLowerCase() != filter.toString().toLowerCase();
+        return value.toString().toLowerCase() !== filter.toString().toLowerCase();
     }
 
     lessThan(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return false;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return true;
         }
 
-        return parseInt(value ) < parseInt(filter);
+        return parseInt(value, 10) < parseInt(filter, 10);
     }
 
     greaterThan(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return false;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return true;
         }
 
-        return parseInt(value ) > parseInt(filter);
+        return parseInt(value, 10) > parseInt(filter, 10);
     }
 
     lessThanOrEqual(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return false;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return true;
         }
 
-        return parseInt(value ) <= parseInt(filter);
+        return parseInt(value, 10) <= parseInt(filter, 10);
     }
 
     greaterThanOrEqual(value, filter): boolean {
-        if( this.isFilterValid(filter) ) {
+        if ( this.isFilterValid(filter) ) {
             return false;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return true;
         }
 
-        return parseInt(value ) >= parseInt(filter);
+        return parseInt(value, 10) >= parseInt(filter, 10);
     }
 
     in(value, filter: any[]): boolean {
-        if(filter === undefined || filter === null || filter.length === 0) {
+        if (filter === undefined || filter === null || filter.length === 0) {
             return true;
         }
 
-        if(this.isValueValid(value)) {
+        if (this.isValueValid(value)) {
             return false;
         }
 
-        for(let i = 0; i < filter.length; i++) {
-            if(filter[i] === value)
+        for (let i = 0; i < filter.length; i++) {
+            if (filter[i] === value) {
                 return true;
+            }
         }
 
         return false;
     }
 
-    private isFilterValid(filter){
+    private isFilterValid(filter) {
         return filter === undefined || filter === null || (typeof filter === 'string' && filter.trim() === '')
     }
 
-    private isValueValid(value){
+    private isValueValid(value) {
        return value === undefined || value === null
     }
 }

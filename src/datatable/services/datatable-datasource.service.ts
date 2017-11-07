@@ -80,8 +80,8 @@ export class TlDatatableDataSource implements DatasourceService {
         });
     }
 
-    setFilter(value: FilterEventMetadata){
-        if (!this.existsFilter(value)){
+    setFilter(value: FilterEventMetadata) {
+        if (!this.existsFilter(value)) {
             this.filtredData = [];
         }
         this.loadMoreData(0, this.datatable.rowsPage, value);
@@ -96,7 +96,7 @@ export class TlDatatableDataSource implements DatasourceService {
             let data: any;
             data = this.getData(filter);
             data = this.filterData(data, filter);
-            //data = this.sortData(data, sort);
+            // data = this.sortData(data, sort);
             this.refreshTotalRows(data);
             data = this.sliceData(data, skip, take);
 
@@ -113,7 +113,7 @@ export class TlDatatableDataSource implements DatasourceService {
     }
 
     private getData(filter) {
-        if (this.filtredData.length && (!this.existsFilter(filter)) ){
+        if (this.filtredData.length && (!this.existsFilter(filter)) ) {
             return this.filtredData;
         }
         return this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
@@ -127,19 +127,19 @@ export class TlDatatableDataSource implements DatasourceService {
         return (data as Array<any>).slice( skip, take );
     }
 
-    private filterData(data,filter) {
+    private filterData(data, filter) {
         if (! this.existsFilter(filter) ) { return data; }
         this.filtredData = [];
         this.zone.runOutsideAngular(() => {
             data.forEach( value => {
                 let match = true;
-                let filterArray = Object.keys( filter.filters );
+                const filterArray = Object.keys( filter.filters );
 
                 for ( let valueIndex = 0; valueIndex < filterArray.length; valueIndex++ ) {
 
-                    let dataValue = value[ filterArray[ valueIndex ] ];
-                    let filterValue = filter.filters[ filterArray[ valueIndex ] ].value.toLowerCase();
-                    let matchMode = filter.filters[ filterArray[ valueIndex ] ].matchMode;
+                    const dataValue = value[ filterArray[ valueIndex ] ];
+                    const filterValue = filter.filters[ filterArray[ valueIndex ] ].value.toLowerCase();
+                    const matchMode = filter.filters[ filterArray[ valueIndex ] ].matchMode;
 
                     if ( ! this.filterConstraints[matchMode]( dataValue, filterValue) ) {
                         match = false;
@@ -157,7 +157,7 @@ export class TlDatatableDataSource implements DatasourceService {
 
     }
 
-    private existsFilter(filter){
+    private existsFilter(filter) {
         return  (filter !== undefined) && Object.keys(filter.filters).length;
     }
 }

@@ -25,6 +25,7 @@ export * from './autocomplete/index';
 export * from './button/index';
 export * from './buttongroup/index';
 export * from './checkbox/index';
+export * from './chatlist/index';
 export * from './datatable/index';
 export * from './dialog/index';
 export * from './dropdownlist/index';

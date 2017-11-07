@@ -71,7 +71,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
      private differ;
 
      constructor( private modalService: ModalService, private colorService: ToneColorGenerator, differs: KeyValueDiffers ) {
-         this.differ = differs.find( {} ).create( null );
+       //  this.differ = differs.find( {} ).create( null );
      }
 
      ngOnInit() {

@@ -41,7 +41,7 @@
   "dependencies": {
     "@angular/animations": "~5.0.0",
     "@angular/common": "~5.0.0",
-    "@angular/core": "~4.4.0",
+    "@angular/core": "~5.0.0",
     "@angular/forms": "~5.0.0",
     "font-awesome": "^4.7.0",
     "ionicons-npm": "^2.0.1",
@@ -50,10 +50,10 @@
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
-    "@angular/compiler": "~4.4.0",
-    "@angular/compiler-cli": "~4.4.0",
+    "@angular/compiler": "~5.0.0",
+    "@angular/compiler-cli": "~5.0.0",
     "@angular/platform-browser": "~5.0.0",
-    "@angular/platform-browser-dynamic": "~4.4.0",
+    "@angular/platform-browser-dynamic": "~5.0.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",
     "@types/jest": "^21.1.0",
     "@types/node": "~8.0.1",
@@ -62,8 +62,8 @@
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
-    "jasmine-core": "~2.8.0",
     "gulp-rollup": "^2.15.0",
+    "jasmine-core": "^2.6.2",
     "jasmine-spec-reporter": "~4.2.0",
     "jest": "^20.0.4",
     "jest-preset-angular": "^4.0.0",

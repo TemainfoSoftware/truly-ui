@@ -10,7 +10,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ChatListService } from './chatlist.service';
 
-export * from './';
+export * from './chatlist';
 
 @NgModule({
     imports: [

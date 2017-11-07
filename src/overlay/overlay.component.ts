@@ -21,15 +21,22 @@
 */
 
 import { Component, ElementRef } from '@angular/core';
-import { LoadingConfig } from './loading-config';
-@Component({
-    selector: 'tl-loading-component',
-    template: `<div id="loading"><i id="icon" class="fa {{config.icon}} fa-spin fa-3x fa-fw"></i></div>`,
-    styleUrls: ['./loading.scss']
-})
-export class TlLoadingComponent {
+import { OverlayConfig } from './overlay-config';
 
-    public config: LoadingConfig = new LoadingConfig();
+@Component({
+    selector: 'tl-overlay-component',
+    template: `
+        <div id="overlay">
+            <div class="overlay-content">
+                <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
+                <span *ngIf="config.message">{{config.message}}</span>
+            </div>
+        </div>`,
+    styleUrls: ['./overlay.scss']
+})
+export class TlOverlayComponent {
+
+    public config: OverlayConfig = new OverlayConfig();
 
     constructor( public element: ElementRef) {}
 }

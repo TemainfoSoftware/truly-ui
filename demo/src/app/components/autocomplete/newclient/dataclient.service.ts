@@ -20,26 +20,28 @@
  SOFTWARE.
  */
 
-// Modules...
-export * from './autocomplete/index';
-export * from './button/index';
-export * from './buttongroup/index';
-export * from './checkbox/index';
-export * from './datatable/index';
-export * from './dialog/index';
-export * from './dropdownlist/index';
-export * from './form/index';
-export * from './input/index';
-export * from './listbox/index';
-export * from './overlay/index';
-export * from './multiselect/index';
-export * from './modal/index';
-export * from './panelgroup/index';
-export * from './radiobutton/index';
-export * from './splitbutton/index';
-export * from './tooltip/index';
+import { Injectable } from "@angular/core";
 
-// Services..
-export * from './modal/modal.service';
-export * from './dialog/dialog.service';
-export * from './form/form.service';
+@Injectable()
+export class DataClientService {
+
+  public dataForm =
+      {
+        firstName: '',
+        lastName: '',
+        city: '',
+        title: '',
+        status: '',
+      };
+
+  constructor() {}
+
+  saveDataForm(result) {
+    this.dataForm = result;
+  }
+
+  getDataForm() {
+    return this.dataForm;
+  }
+
+}

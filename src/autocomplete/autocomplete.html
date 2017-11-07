@@ -31,13 +31,14 @@
                     [lazyMode]="lazyMode"
                     [itensToShow]="5"
                     [dynamicShowHide]="true"
-                    (onClickAddMore)="addMore($event)"
+                    (onClickAddNew)="addNew($event)"
+                    (lazyLoad)="onLazyLoadAutocomplete($event)"
                     (onClickItem)="onClickItemList($event)"
                     [searchElement]="input"
                     [listStripped]="listStripped"
                     [showArrows]="false"
                     [fixedHeight]="false"
-                    [addMore]="true"
+                    [addNew]="true"
                     [rowHeight]="rowHeight">
             </tl-listbox>
         </div>

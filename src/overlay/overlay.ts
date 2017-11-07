@@ -30,21 +30,21 @@ import {
     Renderer2,
     ViewContainerRef
 } from '@angular/core';
-import { LoadingConfig } from './loading-config';
-import { TlLoadingComponent } from './loading.component';
+import { OverlayConfig } from './overlay-config';
+import { TlOverlayComponent } from "./overlay.component";
 
 @Directive({
-    selector: '[tlLoading]'
+    selector: '[tlOverlay]'
 })
-export class TlLoading implements OnChanges, AfterViewInit {
+export class TlOverlay implements OnChanges, AfterViewInit {
 
-    @Input() tlLoading: boolean;
+    @Input() tlOverlay: boolean;
 
-    @Input() loadingConfig: LoadingConfig = new LoadingConfig();
+    @Input() overlayConfig: OverlayConfig = new OverlayConfig();
 
-    private loadingElement: ElementRef;
+    private overalyElement: ElementRef;
 
-    private loadingElementInstance: ComponentRef<TlLoadingComponent>;
+    private overalyElementInstance: ComponentRef<TlOverlayComponent>;
 
     constructor( private elementRef: ElementRef,
                  private viewContainerRef: ViewContainerRef,
@@ -53,25 +53,25 @@ export class TlLoading implements OnChanges, AfterViewInit {
     ) {}
 
     ngOnChanges(changes) {
-        if (changes['tlLoading'] && (!changes['tlLoading'].firstChange) ) {
-            this.troggleLoader( changes['tlLoading'].currentValue )
+        if (changes['tlOverlay'] && (!changes['tlOverlay'].firstChange) ) {
+            this.troggleLoader( changes['tlOverlay'].currentValue )
         }
     }
 
     ngAfterViewInit() {
         this.createElementInstance();
-        this.getElementRefFromIstance();
+        this.getElementRefFromInstance();
         this.setConfigToElement();
         this.buildLoadingElement();
     }
 
     private createElementInstance() {
-        const componentFactory = this.compiler.resolveComponentFactory( TlLoadingComponent );
-        this.loadingElementInstance = this.viewContainerRef.createComponent( componentFactory );
+        const componentFactory = this.compiler.resolveComponentFactory( TlOverlayComponent );
+        this.overalyElementInstance = this.viewContainerRef.createComponent( componentFactory );
     }
 
     private setConfigToElement() {
-        this.loadingElementInstance.instance.config = this.loadingConfig;
+        this.overalyElementInstance.instance.config = this.overlayConfig;
     }
 
     private troggleLoader(showLoading: boolean) {
@@ -83,29 +83,29 @@ export class TlLoading implements OnChanges, AfterViewInit {
            this.buildLoadingElement();
         }
         this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'blur(1px)');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'table');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'table');
     }
 
-    private getElementRefFromIstance() {
-        this.loadingElement = this.loadingElementInstance.instance.element;
+    private getElementRefFromInstance() {
+        this.overalyElement = this.overalyElementInstance.instance.element;
     }
 
     private hide() {
         this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'blur(0px)');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'none');
     }
 
     private happenedResize() {
-        if (this.loadingElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
-        if (this.loadingElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
+        if (this.overalyElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
+        if (this.overalyElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
     }
 
    private buildLoadingElement() {
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'position', 'absolute');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'display', 'none');
-        this.renderer.setStyle(this.loadingElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'position', 'absolute');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.overalyElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
     }
 }

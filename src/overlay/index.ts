@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TlLoading } from './loading';
-import { TlLoadingComponent } from './loading.component';
+import { TlOverlayComponent } from './overlay.component';
+import { TlOverlay } from "./overlay";
 
-export * from './loading';
+export * from './overlay';
 
 @NgModule({
     imports: [
@@ -12,14 +12,14 @@ export * from './loading';
         FormsModule,
     ],
     declarations: [
-        TlLoading,
-        TlLoadingComponent
+        TlOverlay,
+        TlOverlayComponent
     ],
     exports: [
-        TlLoading
+        TlOverlay
     ],
     entryComponents: [
-        TlLoadingComponent
+        TlOverlayComponent
     ]
 })
-export class LoadingModule {}
+export class OverlayModule {}

@@ -37,7 +37,7 @@ let globalZindex = 1;
 @Component( {
     selector: 'tl-dropdown-list',
     templateUrl: './dropdownlist.html',
-    styleUrls: [ './dropdownlist.scss' ],
+    styleUrls: [ './dropdownlist.scss','../datatable/styles/dx-icons.scss'],
     animations: [
         trigger(
             'enterAnimation', [

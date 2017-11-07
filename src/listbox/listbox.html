@@ -1,13 +1,15 @@
 <div class="wrapper-display" [style.display]="showList ? 'block' : 'none'" [@enterAnimation]="showList"
      [tlOverlay]="nothingToShow && fixedHeight" [overlayConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
-    <div class="listbox-wrapper" [style.overflow]="hiddenScroll ? 'hidden' : 'auto'" [tlOverlay]="loadingMoreData">
+    <div class="listbox-wrapper" [style.overflow]="hiddenScroll ? 'hidden' : 'auto'">
 
         <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
              (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
             <i class="ion-chevron-up"></i>
         </div>
 
-        <div #itemContainer class="list-box-container" [style.height]="fixedHeight ? (itensToShow * rowHeight) + 'px' : getListBoxHeight() + 'px'">
+        <div #itemContainer class="list-box-container"
+             [tlOverlay]="loadingMoreData"
+             [style.height]="fixedHeight ? (itensToShow * rowHeight) + 'px' : getListBoxHeight() + 'px'">
             <ul containerDirective #list class="list" [style.position]="'relative'"
                 [style.height]="filtering ? (filteredData.length * rowHeight) + 'px' : ((lazyMode ? data.total : data.length) * rowHeight) + 'px'">
                 <div #customTemplate><ng-content></ng-content></div>

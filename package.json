@@ -52,21 +52,21 @@
   "devDependencies": {
     "@angular/compiler": "~4.4.0",
     "@angular/compiler-cli": "~4.4.0",
-    "@angular/platform-browser": "~4.4.0",
+    "@angular/platform-browser": "~5.0.0",
     "@angular/platform-browser-dynamic": "~4.4.0",
     "@compodoc/compodoc": "^1.0.0-beta.7",
-    "@types/jest": "^20.0.0",
+    "@types/jest": "^21.1.0",
     "@types/node": "~8.0.1",
     "codelyzer": "~3.0.1",
     "cz-conventional-changelog": "^2.0.0",
     "del": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-rename": "^1.2.2",
+    "jasmine-core": "~2.8.0",
     "gulp-rollup": "^2.15.0",
-    "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.2.0",
     "jest": "^20.0.4",
-    "jest-preset-angular": "^3.0.0",
+    "jest-preset-angular": "^4.0.0",
     "karma": "~1.7.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-cli": "~1.0.1",
@@ -81,8 +81,8 @@
     "run-sequence": "^2.0.0",
     "semantic-release": "^6.3.6",
     "ts-node": "~3.3.0",
-    "tslint": "~5.4.2",
-    "typescript": "~2.4.1"
+    "tslint": "~5.7.0",
+    "typescript": "~2.5.2"
   },
   "engines": {
     "node": ">=6.0.0"

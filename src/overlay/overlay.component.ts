@@ -30,7 +30,7 @@ import { OverlayConfig } from './overlay-config';
             <div class="overlay-content">
                 <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
                 <span *ngIf="config.message">{{config.message}}</span>
-            </div>    
+            </div>
         </div>`,
     styleUrls: ['./overlay.scss']
 })

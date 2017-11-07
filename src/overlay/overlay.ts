@@ -31,7 +31,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import { OverlayConfig } from './overlay-config';
-import { TlOverlayComponent } from "./overlay.component";
+import { TlOverlayComponent } from './overlay.component';
 
 @Directive({
     selector: '[tlOverlay]'

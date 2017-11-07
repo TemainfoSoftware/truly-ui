@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlOverlayComponent } from './overlay.component';
-import { TlOverlay } from "./overlay";
+import { TlOverlay } from './overlay';
 
 export * from './overlay';
 

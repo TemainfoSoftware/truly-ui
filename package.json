@@ -81,7 +81,7 @@
     "run-sequence": "^2.0.0",
     "semantic-release": "^6.3.6",
     "ts-node": "~3.3.0",
-    "tslint": "~5.4.2",
+    "tslint": "~5.7.0",
     "typescript": "~2.5.2"
   },
   "engines": {

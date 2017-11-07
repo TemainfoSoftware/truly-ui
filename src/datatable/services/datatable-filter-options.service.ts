@@ -27,11 +27,16 @@ export class FilterOptionsService {
 
     getOptionsByType(type): Array<any>{
       return  [
-          { description : 'Contains', valueItem : '1', icon: 'fa fa-arrows' },
-          { description : 'Does not Contains', valueItem : '2', icon: 'fa fa-arrows-v' },
-          { description : 'Ends Withs', valueItem : '3', icon: 'fa fa-bus' },
-          { description : 'Equals', valueItem : '4', icon: 'fa fa-circle' },
-          { description : 'Not Equals', valueItem : '5', icon: 'fa fa-external-link' }
+          { description : 'Start With', valueItem : 'startsWith', icon: 'dx-icon-filter-operation-starts-with' },
+          { description : 'Contains', valueItem : 'contains', icon: 'dx-icon-filter-operation-contains' },
+          { description : 'Does not Contains', valueItem : 'notContains', icon: 'dx-icon-filter-operation-not-contains' },
+          { description : 'Ends Withs', valueItem : 'endsWith', icon: 'dx-icon-filter-operation-ends-with' },
+          { description : 'Equals', valueItem : 'equals', icon: 'dx-icon-filter-operation-equals' },
+          { description : 'Not Equals', valueItem : 'notEquals', icon: 'dx-icon-filter-operation-not-equals' },
+          { description : 'Less Than', valueItem : 'lessThan', icon: 'dx-icon-filter-operation-less' },
+          { description : 'Greater Than', valueItem : 'greaterThan', icon: 'dx-icon-filter-operation-greater' },
+          { description : 'Less Than or equal to', valueItem : 'lessThanOrEqual', icon: 'dx-icon-filter-operation-less-equal' },
+          { description : 'Greater Than or equal to', valueItem : 'greaterThanOrEqual', icon: 'dx-icon-filter-operation-greater-equal' },
       ]
     }
 }

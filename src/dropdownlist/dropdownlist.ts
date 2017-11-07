@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, Renderer2, ViewChild
+    AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Renderer2,
+    ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -53,7 +54,7 @@ let globalZindex = 1;
     ]
 } )
 
-export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, AfterContentInit {
+export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, AfterContentInit, OnInit {
 
     @Input( 'data' ) data: Array<any>;
 
@@ -74,6 +75,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     @Input( 'labelSize' ) labelSize: string;
 
     @Input( 'height' ) height = 37;
+
+    @Input( 'preSelected' ) preSelected = '';
 
     @Input( 'width' ) width = 83;
 
@@ -114,41 +117,55 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     constructor( private _renderer: Renderer2,
                  public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
-                 private changeDectection: ChangeDetectorRef,
+                 private change: ChangeDetectorRef,
                  public nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
+    }
+
+    ngOnInit() {
+        this.setElement( this.dropdown, 'dropdown' );
     }
 
     ngAfterContentInit() {
         setTimeout(() => {
             this.widthList = this.wrapper.nativeElement.clientWidth;
-        })
+        } );
     }
 
     ngAfterViewInit() {
-        this.setElement( this.dropdown, 'dropdown' );
-
         this.updateDataSource( this.getData() );
+        this.listenerMouseDown();
+        this.handleInitializeValues();
+    }
 
-        this.isNumber( this.width, 'width' );
-        this.isNumber( this.scroll, 'scroll' );
-        this.isBoolean( this.disabled, 'disabled' );
-        this.isString( this.placeholder, 'placeholder' );
-
-
+    listenerMouseDown() {
         this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( this.isNotListDropdown(event) ) {
+            if ( this.isNotListDropdown( event ) ) {
                 this.showHide = false;
-                this.changeDectection.markForCheck();
+                this.change.markForCheck();
             }
-        });
+        } );
+    }
 
+    handleInitializeValues() {
         setTimeout( () => {
-            if ( this.componentModel.model ) {
+            if ( this.hasModel() ) {
                 this.selectValueModelLoaded();
                 this.selectItemListLoaded();
+                return;
             }
+            this.handlePreSelected();
         }, 1 );
+    }
+
+    handlePreSelected() {
+        if ( this.preSelected ) {
+             this.selectOption( this.datasource[ this.preSelected ], this.preSelected );
+        }
+    }
+
+    hasModel() {
+        return this.componentModel.model;
     }
 
     selectValueModelLoaded() {
@@ -180,44 +197,17 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     calcHeightItem() {
-        this.isNumber( this.height, 'height' );
         if ( this.showHide && !this.disabled ) {
-            if ( (!this.scroll) ) {
+            if ( !this.scroll ) {
                 if ( (this.datasource.length > 10) ) {
                     return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
-                } else {
-                    return { 'height' : 'auto', 'overflow-y' : 'visible' };
                 }
-            } else {
-                if ( this.scroll > this.datasource.length ) {
-                    this.scroll = this.datasource.length;
-                }
-                return { 'height' : (this.scroll * this.height) + 'px', 'overflow-y' : 'scroll' };
+                return { 'height': 'auto', 'overflow-y': 'visible' };
             }
+            this.scroll = this.scroll > this.datasource.length ? this.datasource.length : this.scroll;
+            return { 'height': (this.scroll * this.height) + 'px', 'overflow-y': 'scroll' };
         }
     }
-
-    isNumber( value, propertyName ) {
-        if ( ( typeof value !== 'number' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a numeric value to ' + propertyName.toUpperCase() + '' +
-                ' property of the tl-dropdown-list element.' );
-        }
-        return value;
-    }
-
-    isBoolean( value, propertyName ) {
-        if ( ( typeof value !== 'boolean' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a boolean value to ' + propertyName.toUpperCase() + '' +
-                ' property of the tl-dropdown-list element.' );
-        }
-    }
-
-    isString( value, propertyName ) {
-        if ( ( typeof value !== 'string' && value !== null ) || value === undefined ) {
-            throw new EvalError( 'You must pass a string value to ' + propertyName.toUpperCase() + '' +
-                ' property of the tl-dropdown-list element.' );
-        }
-    };
 
     isNotListDropdown(event) {
         if (!event.target.parentElement) {
@@ -317,21 +307,33 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     onEnter( $event ) {
         if ( !this.showHide ) {
-            if ( this.itemSelected ) {
-                $event.preventDefault();
-                return;
-            }
-            if ( !this.itemSelected || this.placeholder || this.itemSelected === null || this.itemSelected === undefined ) {
-                this.setTimeoutWithZIndexAndFocusOnElement();
-                this.showHide = true;
-                return;
-            }
+            this.handleEventWhileItemSelected( $event );
+            this.handleDropdownValueAsNull();
         }
-        if ( !this.componentModel.model ) {
-            this.onChangeItem();
-        }
+        this.handleAddNewOption();
         this.showHide = false;
         this.setFocusOnDropdown();
+    }
+
+    handleEventWhileItemSelected( $event ) {
+        if ( this.itemSelected ) {
+            $event.preventDefault();
+            return;
+        }
+    }
+
+    handleAddNewOption() {
+        if ( !this.hasModel() ) {
+            this.onChangeItem();
+        }
+    }
+
+    handleDropdownValueAsNull() {
+        if ( !this.itemSelected || this.placeholder || this.itemSelected === null || this.itemSelected === undefined ) {
+            this.setTimeoutWithZIndexAndFocusOnElement();
+            this.showHide = true;
+            return;
+        }
     }
 
     setTimeoutWithZIndexAndFocusOnElement() {
@@ -352,8 +354,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
                     this.clearModelComponent();
                 }
-                this.setValueInputAsLabel( this.itemSelected );
                 this.setModelComponent( this.itemSelected[ this.value ] );
+                this.setValueInputAsLabel( this.itemSelected );
             }
         } );
     }
@@ -449,7 +451,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             const target = event.path.filter( (value) => {
                 return value.className === 'tl-dropdown-list-box';
             });
-
             this.topPosition = event.clientY + ( target[0].offsetHeight - event.layerY) + 'px' ;
             this.leftPosition = event.clientX  - event.layerX  + 'px';
             this.position = 'fixed';
@@ -480,8 +481,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     setValueInputAsLabel( item ) {
         setTimeout( () => {
             this.dropdown.nativeElement.value = item[ this.text ];
-            this.setIconClass(item[ this.icon ]);
-        }, 1 );
+            this.setIconClass( item[ this.icon ] );
+        }, 0 );
     }
 
     setIconClass(item) {

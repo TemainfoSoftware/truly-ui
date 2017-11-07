@@ -748,27 +748,29 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         const end = this.getScrollPositionByContainer() + this.quantityVisibleRows - 1;
         const strDataIndex: string = 'li[data-indexnumber="' + end + '"]';
         const element = document.querySelector(strDataIndex);
+        if ( element ) {
+            const indexElementDataSource = this.getIndexOnList( element );
+            this.handleScrollWhileChangingCursor();
+            this.snapScreenScroll();
 
-        const indexElementDataSource = this.getIndexOnList(element);
-        this.handleScrollWhileChangingCursor();
-        this.snapScreenScroll();
-
-        this.addClassSelected(indexElementDataSource);
-        this.setCursorsWhileScrolling(element);
-        this.handleClickItem(this.data[end], indexElementDataSource);
+            this.addClassSelected( indexElementDataSource );
+            this.setCursorsWhileScrolling( element );
+            this.handleClickItem( this.data[ end ], indexElementDataSource );
+        }
     }
-
 
     setFocusOnFirst() {
         const strDataIndex: string = 'li[data-indexnumber="' + this.getScrollPositionByContainer() + '"]';
         const element = document.querySelector(strDataIndex);
+        if ( element ) {
+            const indexElementDataSource = this.getIndexOnList(element);
+            this.handleScrollWhileChangingCursor();
+            this.snapScreenScroll();
 
-        const indexElementDataSource = this.getIndexOnList(element);
-        this.handleScrollWhileChangingCursor();
-
-        this.addClassSelected(indexElementDataSource);
-        this.setCursorsWhileScrolling(element);
-        this.handleClickItem(this.data[this.getScrollPositionByContainer()], indexElementDataSource);
+            this.addClassSelected(indexElementDataSource);
+            this.setCursorsWhileScrolling(element);
+            this.handleClickItem(this.data[this.getScrollPositionByContainer()], indexElementDataSource);
+        }
     }
 
     handleScrollWhileChangingCursor() {

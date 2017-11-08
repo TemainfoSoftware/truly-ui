@@ -52,13 +52,9 @@ export class AutoCompleteDemo {
 
   private example = '{{item.firstName}}';
 
-  constructor( private dataDumpService: DumpDataService,
-               private formService: FormService,
-               private dataFormService: DataClientService,
-               private view: ViewContainerRef, private dialogService: DialogService ) {
+  constructor( private dataDumpService: DumpDataService, ) {
     this.dataTableProperties = json.dataProperties;
     this.dataBasic = this.dataDumpService.createRandomData( 1000 );
-    this.dialogService.setView( this.view );
 
     this.formOptions1 = {
       title: 'New Client',
@@ -87,7 +83,7 @@ export class AutoCompleteDemo {
       };
     }, 200 );
   }
-
+/*
   newClient() {
     this.formService.createForm(NewClient, this.formOptions1, (modalResult) => {
       if (modalResult.formResult) {
@@ -101,7 +97,7 @@ export class AutoCompleteDemo {
     this.result = this.dataFormService.getDataForm();
     this.result['id'] = this.dataBasic.length + 1;
     this.dataBasic.push(this.result);
-  }
+  }*/
 
   getDataFromService( skip, take ) {
     return this.dataBasic.slice( skip, take );

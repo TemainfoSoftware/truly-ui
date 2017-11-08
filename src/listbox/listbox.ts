@@ -131,6 +131,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     public skip = 0;
 
+    public typeOfData = 'object';
+
     private nothingToShow = false;
 
     private showMore = false;
@@ -190,6 +192,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     ngOnInit() {
+        this.validateDataType();
         this.handleSearchQuery();
         this.subject.debounceTime( 500 ).subscribe( searchTextValue => {
             this.handleSearch( searchTextValue );
@@ -212,6 +215,19 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.addListenerOnTemplate();
         this.addListenersSearchElement();
         this.change.detectChanges();
+    }
+
+    validateDataType() {
+        if (!this.hasComplexObject()) {
+            this.typeOfData = 'ArrayString';
+        }
+    }
+
+    hasComplexObject() {
+        const data = this.lazyMode ? this.data.data : this.data;
+        for (let item = 0; item < data.length; item++) {
+            if (typeof data[item] === 'object') return true;
+        }
     }
 
     subscribeClearButton() {

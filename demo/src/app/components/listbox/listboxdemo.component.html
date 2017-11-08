@@ -14,16 +14,16 @@
                   [autocomplete]="'off'"
                   [placeholder]="'Search...'"></tl-input>
         <tl-listbox
-          [data]="dataBasic"
+          [data]="dataSimple"
           [itensToShow]="5"
           [searchElement]="inputBasic"
           [id]="'id'"
           [label]="'firstName'"
           [labelDetail]="'city'"
-          [rowHeight]="50">
+          [rowHeight]="35">
         </tl-listbox>
       </div>
-      <div class="col-md-6">
+<!--      <div class="col-md-6">
         <h5>Basic Usage - Lazy Mode</h5>
         <tl-input [iconAfter]="'ion-ios-search-strong'" [clearButton]="true" #inputBasicLazy
                   [autocomplete]="'off'"
@@ -85,7 +85,7 @@
             </li>
           </ng-template>
         </tl-listbox>
-      </div>
+      </div>-->
     </div>
   </div>
   <hr>

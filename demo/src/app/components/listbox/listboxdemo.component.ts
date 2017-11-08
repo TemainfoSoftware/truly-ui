@@ -22,6 +22,8 @@ export class ListBoxDemo {
 
   private dataCustom = [];
 
+  private dataSimple = [];
+
   private dataLazy;
 
   private take = 100;
@@ -30,7 +32,6 @@ export class ListBoxDemo {
 
   private example = '{{item.firstName}}';
 
-
   constructor(private dataDumpService: DumpDataService) {
     this.dataTableProperties = jsonProp.dataProperties;
     this.events = jsonEvt.events;
@@ -38,6 +39,21 @@ export class ListBoxDemo {
     this.dataBasic = this.dataDumpService.createRandomData(2000);
     this.dataCustom = this.dataDumpService.createRandomData(2000);
     this.dataLazy = this.dataDumpService.createRandomData(2000);
+    this.dataSimple = [
+      'Cliente 1',
+      'Cliente 2',
+      'Cliente 3',
+      'Cliente 4',
+      'Cliente 5',
+      'Cliente 6',
+      'Cliente 7',
+      'Cliente 8',
+      'Cliente 9',
+      'Cliente 10',
+      'Cliente 11',
+      'Cliente 12',
+    ];
+
 
     this.dataLazy = {
       "data" : this.getDataFromService(0,this.take),

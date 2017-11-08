@@ -80,13 +80,15 @@ export class ListBoxListRenderService {
     }
 
     createElementSpanId(row) {
-        const padding = 10;
-        this.spanElementId = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
-        this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.listBox.labelSize );
-        this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.listBox.rowHeight - padding) + 'px' );
-        this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
-        this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
-        this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.id ] );
+        if ( this.isTypeArrayObject() ) {
+            const padding = 10;
+            this.spanElementId = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
+            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.listBox.labelSize );
+            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.listBox.rowHeight - padding) + 'px' );
+            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
+            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
+            this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.id ] );
+        }
     }
 
     createElementSpanLabel(row) {
@@ -95,17 +97,23 @@ export class ListBoxListRenderService {
         this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'position', 'absolute' );
 
         const spanLabel = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
-        spanLabel.nativeElement.append( this.listBox.dataService.datasource[ row ][ this.listBox.label ] );
+        spanLabel.nativeElement.append( this.isTypeArrayObject() ?
+            this.listBox.dataService.datasource[ row ][ this.listBox.label ] : this.listBox.dataService.datasource[ row ]);
         this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
+
         this.createElementSpanLabelDetail( row );
-        if (!this.listBox.labelDetail) {
+        this.handleAlignmentLine();
+    }
+
+    handleAlignmentLine() {
+        if (!this.listBox.labelDetail || !this.isTypeArrayObject()) {
             const padding = 10;
             this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
         }
     }
 
     createElementSpanLabelDetail( row ) {
-        if ( this.listBox.labelDetail ) {
+        if ( (this.listBox.labelDetail) && (this.isTypeArrayObject()) ) {
             const spanLabelDetail = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
             this.listBox.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
             spanLabelDetail.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.labelDetail ] );
@@ -114,10 +122,15 @@ export class ListBoxListRenderService {
     }
 
     handleCreationIdElement( row ) {
-        if ( this.listBox.id ) {
+        if ( (this.listBox.id) && (this.isTypeArrayObject()) ) {
             this.createElementSpanId( row );
             this.listBox.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement )
         }
+    }
+
+
+    isTypeArrayObject() {
+        return this.listBox.typeOfData === 'object';
     }
 
     addEventClickToListElement(row) {

@@ -26,10 +26,10 @@ import { DatatableHelpersService } from '../../services/datatable-helpers.servic
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
 
 @Component( {
-    selector : 'tl-datatable-header',
-    templateUrl : './datatable-header.html',
-    styleUrls : [ './datatable-header.scss', '../../datatable.scss' ],
-    providers : [ DatatableHelpersService ]
+    selector: 'tl-datatable-header',
+    templateUrl: './datatable-header.html',
+    styleUrls: [ './datatable-header.scss', '../../datatable.scss' ],
+    providers: [ DatatableHelpersService ]
 } )
 export class TlDatatableHeader implements AfterViewInit {
 

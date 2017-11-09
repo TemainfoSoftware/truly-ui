@@ -1,0 +1,388 @@
+/*==========  Mobile First Method  ==========*/
+/* Custom, iPhone Retina */
+@media only screen and (min-width: 320px) {
+  .home-page {
+    margin-bottom: 100px;
+    padding: 0;
+    margin: 0; }
+
+  .banner {
+    background-color: #444444; }
+    .banner .logo {
+      position: relative;
+      margin: 0;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      color: #66CC99; }
+      .banner .logo > .logo-img img {
+        margin: 0 auto; }
+      .banner .logo > .description {
+        font-family: "Segoe UI";
+        color: #fff;
+        font-size: 26px; }
+      .banner .logo > .description p {
+        line-height: 1.3em;
+        margin: 0; }
+      .banner .logo > .description p:last-child {
+        margin-top: 10px;
+        font-size: 20px;
+        text-align: right; }
+    .banner .btn-get-started {
+      font-family: 'Segoe UI';
+      text-transform: uppercase;
+      background-color: #66CC99;
+      margin-bottom: 20px; }
+    .banner .btn-get-started:hover {
+      background-color: #5DBA8C;
+      color: #fff;
+      cursor: pointer; }
+    .banner .desk {
+      padding-top: 35px;
+      background-color: #4c4c4c;
+      z-index: 1; }
+      .banner .desk > .desk-table img {
+        margin: 25px auto 0 auto; }
+    .banner .desk:before {
+      display: block;
+      position: absolute;
+      content: '';
+      top: 0;
+      right: -25%;
+      z-index: -1;
+      width: 150%;
+      height: 50%;
+      background: inherit;
+      transform: rotate(4deg);
+      transform-origin: 80% 0; }
+    .banner .info-version-md {
+      display: none; }
+
+  .info-version {
+    font-family: "Segoe UI";
+    text-align: center;
+    color: #8c8c8c;
+    margin-bottom: 10px;
+    font-size: 11px; }
+    .info-version a:hover {
+      color: #66CC99; }
+
+  .info-version a {
+    color: #8c8c8c; }
+
+  .why-truly-ui {
+    padding-top: 50px;
+    padding-bottom: 35px; }
+    .why-truly-ui .logo img {
+      width: 50%;
+      margin: 0 auto; }
+    .why-truly-ui .why-tl {
+      text-align: center;
+      font-family: "Segoe UI"; }
+      .why-truly-ui .why-tl h1 {
+        margin-bottom: 15px; }
+      .why-truly-ui .why-tl p {
+        font-size: 1.7em;
+        line-height: 1.7em;
+        color: #444;
+        font-weight: 300;
+        word-break: normal;
+        padding-bottom: 45px; }
+    .why-truly-ui .feature-box {
+      font-family: "Segoe UI";
+      padding-bottom: 15px; }
+      .why-truly-ui .feature-box h3 {
+        font-weight: 500;
+        margin-top: 4px;
+        margin-bottom: 5px;
+        line-height: 1.1em; }
+      .why-truly-ui .feature-box h3 i {
+        color: #66CC99;
+        padding-right: 5px; }
+      .why-truly-ui .feature-box p {
+        font-size: 16px;
+        line-height: 1.7em;
+        font-weight: 400;
+        color: #817f7f;
+        letter-spacing: -.02em;
+        margin-bottom: 15px; }
+
+  .web-components {
+    display: block;
+    background: #66CC99;
+    padding-top: 30px;
+    padding-bottom: 25px; }
+    .web-components h1 {
+      color: #FFF;
+      margin-bottom: 25px; }
+    .web-components h3 {
+      color: #FFF;
+      opacity: 0.6;
+      margin-bottom: 25px; }
+    .web-components .web-components-list {
+      margin-bottom: 25px; }
+      .web-components .web-components-list i {
+        color: #626060;
+        font-size: 4em; }
+      .web-components .web-components-list p {
+        font-family: 'Segoe UI';
+        color: #fff;
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.8em; }
+
+  .git-and-getstarted {
+    padding-top: 50px;
+    padding-bottom: 25px; }
+    .git-and-getstarted .list {
+      margin-bottom: 25px; }
+      .git-and-getstarted .list h2 {
+        margin-top: 0;
+        color: #8c8c8c; }
+      .git-and-getstarted .list h2:hover {
+        color: #66CC99; }
+      .git-and-getstarted .list i {
+        margin-left: -10px;
+        color: #626060;
+        font-size: 4em;
+        margin-top: 4px; }
+      .git-and-getstarted .list p {
+        font-family: 'Segoe UI';
+        color: #aeafb1;
+        font-size: 16px;
+        margin: 0;
+        line-height: 1.8em; }
+
+  .fix-padding {
+    padding-right: 0;
+    padding-left: 0; }
+
+  .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
+    padding-left: 90px;
+    padding-right: 10px; }
+    .tl-input i, .tl-form i, .tl-dialog i, .tl-datatable i, .tl-schedule i, .tl-button i {
+      position: absolute;
+      top: 2px;
+      left: -75px; }
+
+  .tl-dialog i {
+    margin-top: -11px; } }
+/* Extra Small Devices, Phones */
+@media only screen and (min-width: 480px) {
+  .banner .logo > .description p {
+    text-align: center; }
+  .banner .logo > .description p:last-child {
+    text-align: center; }
+  .banner .info-version {
+    font-size: 13px; }
+
+  .why-truly-ui .logo img {
+    width: 150px; }
+
+  .web-components .web-components-list {
+    min-height: 100px; }
+
+  .git-and-getstarted .list i {
+    font-size: 5em; } }
+/* Small Devices, Tablets */
+@media only screen and (min-width: 768px) {
+  .banner .info-version {
+    font-size: 11px;
+    margin-bottom: 40px; }
+  .banner .btn-get-started {
+    padding: 15px 50px;
+    font-size: 17px; }
+
+  .why-truly-ui {
+    padding-top: 15px; }
+    .why-truly-ui .logo img {
+      width: 150px; }
+    .why-truly-ui .why-tl h1 {
+      font-size: 28px; }
+    .why-truly-ui .why-tl p {
+      font-size: 20px;
+      padding-bottom: 25px; }
+    .why-truly-ui .feature-box {
+      text-align: center; }
+
+  .ss-style-triangles::after {
+    position: relative;
+    bottom: 50px;
+    z-index: 0;
+    background: inherit;
+    background-color: #4c4c4c;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    -webkit-transform: translateX(-50%) rotate(45deg);
+    transform: translateX(-50%) rotate(45deg); } }
+/* Medium Devices, Desktops */
+@media only screen and (min-width: 992px) {
+  .banner {
+    height: 350px;
+    position: relative;
+    width: 100%; }
+    .banner .banner-separator {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 350px;
+      background-color: #4c4c4c;
+      width: 55%;
+      float: right;
+      -webkit-transform: skew(-20deg) translateX(10px);
+      -ms-transform: skew(-20deg) translateX(10px);
+      transform: skew(-20deg) translateX(100px); }
+    .banner .logo .logo-img img {
+      position: absolute;
+      top: 50px;
+      left: 110px;
+      user-select: none;
+      overflow: hidden; }
+    .banner .logo .description {
+      position: absolute;
+      font-family: "Segoe UI";
+      color: #fff;
+      top: 175px;
+      left: 110px;
+      font-size: 14px; }
+    .banner .logo .description p {
+      text-align: inherit;
+      font-size: 1.5em; }
+    .banner .logo .description p:last-child {
+      text-align: inherit;
+      font-size: 1.5em; }
+    .banner .banner-footer {
+      position: absolute;
+      height: 70px;
+      background-color: #4c4c4c;
+      width: 100%;
+      bottom: 0; }
+      .banner .banner-footer a.btn-get-started {
+        background-color: #66CC99;
+        border-radius: 5px;
+        height: 40px;
+        line-height: 37px;
+        vertical-align: middle;
+        text-align: center;
+        width: 180px;
+        margin-top: 15px;
+        padding: 0;
+        font-family: "Segoe UI", sans-serif;
+        font-size: 1.1em;
+        text-decoration: none;
+        text-transform: uppercase;
+        margin-left: 80px; }
+      .banner .banner-footer a.btn-get-started:hover {
+        background-color: #5DBA8C;
+        color: #FFF; }
+      .banner .banner-footer .info-version {
+        display: none; }
+    .banner .banner-image {
+      position: absolute;
+      width: 48%;
+      height: 230px;
+      right: 0;
+      top: 123.5px;
+      background: url("../../../assets/img/desk.png") no-repeat;
+      background-size: 620px; }
+    .banner .info-version-md {
+      display: block;
+      position: absolute;
+      top: 50px;
+      width: 32%;
+      right: 50px;
+      text-align: center;
+      font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 14px; }
+      .banner .info-version-md p {
+        color: #8c8c8c; }
+        .banner .info-version-md p a {
+          color: #8c8c8c; }
+        .banner .info-version-md p a:hover {
+          color: #66CC99; }
+
+  .why-truly-ui {
+    margin-top: 100px;
+    margin-bottom: 85px; }
+    .why-truly-ui .logo img {
+      width: 200px; }
+    .why-truly-ui .why-tl {
+      padding-bottom: 100px; }
+      .why-truly-ui .why-tl h1 {
+        font-size: 36px;
+        text-align: left; }
+      .why-truly-ui .why-tl p {
+        font-weight: 300;
+        text-align: justify;
+        word-break: normal;
+        font-size: 1.5em;
+        line-height: 45px; }
+    .why-truly-ui .feature-box {
+      text-align: left; }
+      .why-truly-ui .feature-box h3 i {
+        margin-left: -5px; }
+
+  .web-components {
+    padding-top: 120px;
+    padding-bottom: 0; }
+    .web-components .web-components-header {
+      padding-bottom: 100px; }
+      .web-components .web-components-header h1 {
+        font-family: "Segoe UI";
+        font-weight: normal;
+        margin: 0 auto;
+        color: #fff; }
+    .web-components .web-components-row {
+      padding-bottom: 100px; }
+    .web-components .tl-input, .web-components .tl-form, .web-components .tl-dialog, .web-components .tl-datatable, .web-components .tl-schedule, .web-components .tl-button {
+      padding-left: 90px;
+      padding-right: 10px; }
+
+  .ss-style-triangles:after {
+    display: none; }
+
+  .git-and-getstarted {
+    padding-top: 40px;
+    padding-bottom: 40px; }
+    .git-and-getstarted .list {
+      margin-bottom: 0; }
+      .git-and-getstarted .list i {
+        margin-left: -35px; }
+    .git-and-getstarted .list:first-child .getting-started {
+      margin-left: -15px; }
+    .git-and-getstarted .list:first-child p {
+      padding-right: 30px; }
+    .git-and-getstarted .list:last-child {
+      margin-left: -20px;
+      padding-right: 50px; }
+    .git-and-getstarted .separator {
+      margin: 0 auto;
+      margin-left: -18px;
+      position: absolute;
+      width: 2px;
+      height: 140px;
+      background: -webkit-linear-gradient(top, rgba(236, 240, 245, 0) 0%, #dedfe1 49%, rgba(255, 255, 255, 0) 100%); } }
+/* Fix Version */
+@media only screen and (min-width: 1540px) {
+  .banner .banner-footer .info-version {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    display: block;
+    font-size: 14px;
+    padding-top: 25px; }
+    .banner .banner-footer .info-version p {
+      text-align: center; }
+      .banner .banner-footer .info-version p a:hover {
+        color: #66CC99; }
+  .banner .info-version-md {
+    display: none; } }
+/* Large Devices, Wide Screens */
+/* min 1840w to max 1920w */
+@media only screen and (min-width: 1840px) {
+  .git-and-getstarted .separator {
+    height: 100px; }
+
+  .tl-input, .tl-form, .tl-dialog, .tl-datatable, .tl-schedule, .tl-button {
+    padding-left: 90px;
+    padding-right: 83px; } }
+
+/*# sourceMappingURL=home.component.css.map */

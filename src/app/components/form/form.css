@@ -1,0 +1,23 @@
+.formContent {
+  padding: 10px;
+  position: relative; }
+
+.forFooter {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.3rem;
+  text-align: center;
+  background-color: #f2f2f2;
+  border-top: 1px solid #C8C8C8; }
+
+.clearfix {
+  height: 55px; }
+
+.controls {
+  text-align: left;
+  float: right;
+  padding: 5px; }
+
+/*# sourceMappingURL=form.css.map */

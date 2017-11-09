@@ -1,0 +1,106 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.tl-input-box {
+  width: 100%;
+  position: relative;
+  display: table;
+  border-collapse: separate; }
+  .tl-input-box > .addon {
+    border-top: 1px solid #CACACA;
+    border-bottom: 1px solid #CACACA;
+    display: table-cell;
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #6E6E6E;
+    text-align: center;
+    background-color: #EEE;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle; }
+  .tl-input-box > .addon.-borderleft {
+    border-left: 1px solid #CACACA;
+    border-radius: 2px 0 0 2px; }
+  .tl-input-box > .addon.-borderright {
+    border-right: 1px solid #CACACA;
+    border-radius: 0 2px 2px 0; }
+  .tl-input-box > .addon.-clearbutton {
+    font-size: 11px;
+    position: absolute;
+    border: 0;
+    top: 3px;
+    right: 4px;
+    cursor: pointer;
+    background: transparent;
+    color: #99a1a4; }
+  .tl-input-box > .addon.-clearbutton:hover {
+    color: #6c7477; }
+  .tl-input-box > .addon.-predefined {
+    font-family: 'Lato', sans-serif;
+    color: #484848; }
+  .tl-input-box > .addon:hover {
+    cursor: pointer; }
+  .tl-input-box > .label {
+    line-height: 1;
+    width: 100px;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #737373;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9em; }
+  .tl-input-box > .label.-labeltop {
+    text-align: left;
+    padding: 0 0 5px 0;
+    display: table-caption; }
+  .tl-input-box > .label.-labelleft {
+    text-align: right;
+    padding: 5px 5px 5px 0;
+    display: table-cell; }
+  .tl-input-box > .label.-validation {
+    color: #FF6666;
+    font-size: 0.7em; }
+  .tl-input-box > .field {
+    display: table-cell;
+    border: 1px solid #CACACA;
+    height: 25px;
+    padding: 4px 12px;
+    background: #FFFFFF;
+    font-size: 0.9em;
+    width: 100%;
+    float: right;
+    padding-right: 20px;
+    color: #737373;
+    font-family: 'Lato', sans-serif;
+    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.1); }
+  .tl-input-box > .field::placeholder {
+    color: #CACACA;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9em; }
+  .tl-input-box > .field.-cursorblocked {
+    cursor: not-allowed; }
+  .tl-input-box > .field.-disabled {
+    opacity: 0.35;
+    filter: Alpha(Opacity=35);
+    cursor: default !important;
+    background-color: #E8E8E8;
+    color: #707070; }
+  .tl-input-box > .field.-readonly {
+    background-color: #EEE; }
+  .tl-input-box > .field.-hasValidation.ng-touched.ng-invalid::placeholder {
+    color: #FFB9B9; }
+  .tl-input-box > .field.-hasValidation.ng-touched.ng-invalid {
+    border: 1px solid #FF6666;
+    background-color: #FFF1F1;
+    outline: none; }
+  .tl-input-box > .field.-hasValidation.ng-valid.ng-touched {
+    border: 1px solid #66CC99;
+    background-color: #E3F5EC;
+    outline: none; }
+
+/*# sourceMappingURL=input.css.map */

@@ -12,6 +12,7 @@ exclude_paths:
   - "demo/"
   - "dist/"
   - "docs/"
+  - "e2e/"
   - "node_modules/"
   - "tools/"
 ratings:

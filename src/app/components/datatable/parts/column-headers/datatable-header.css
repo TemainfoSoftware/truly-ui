@@ -1,0 +1,48 @@
+.ui-datatable-header {
+  padding: 0 15px 0 0;
+  position: relative; }
+
+.ui-datatable-header-wrap {
+  overflow: hidden;
+  border-right: 1px #DCDCDC solid; }
+
+.ui-datatable-column-separator {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  left: 0;
+  width: 4px;
+  cursor: col-resize;
+  z-index: 9999; }
+
+.ui-datatable-column-separator:hover {
+  cursor: col-resize; }
+
+.ui-datatable-table-head {
+  color: #7A838B;
+  font-size: 13px; }
+  .ui-datatable-table-head > .ui-row {
+    background: #E9E9E9;
+    height: 25px;
+    margin: 0;
+    border-bottom: 1px #DCDCDC solid; }
+  .ui-datatable-table-head > .ui-row .ui-cel {
+    box-sizing: border-box;
+    border-right: 1px #DCDCDC solid;
+    padding: 0;
+    height: 25px;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap; }
+  .ui-datatable-table-head > .ui-row .ui-cel.-textleft {
+    text-align: left; }
+  .ui-datatable-table-head > .ui-row .ui-cel.-textright {
+    text-align: right; }
+  .ui-datatable-table-head > .ui-row .ui-cel.-textcenter {
+    text-align: center; }
+  .ui-datatable-table-head > .ui-row .ui-cel:last-child {
+    border-right: none; }
+  .ui-datatable-table-head > .ui-row .ui-cel.ui-filter-cel {
+    padding: 5px; }
+
+/*# sourceMappingURL=datatable-header.css.map */

@@ -57,7 +57,7 @@ import 'rxjs/add/operator/debounceTime';
 
 export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, AfterContentInit, OnInit {
 
-    @Input( 'data' ) data: Array<any>;
+    @Input( 'data' ) data: any[] = [];
 
     @Input( 'value' ) value = 'value';
 
@@ -119,8 +119,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     private widthList = 0;
 
-    private filtered = [];
-
     private subject = new Subject();
 
     constructor( private _renderer: Renderer2,
@@ -139,7 +137,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     ngAfterContentInit() {
-        this.setFilteredDefault();
         setTimeout(() => {
             this.widthList = this.wrapper.nativeElement.clientWidth;
         } );
@@ -150,10 +147,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.updateDataSource( this.getData() );
         this.listenerMouseDown();
         this.handleInitializeValues();
-    }
-
-    setFilteredDefault() {
-        this.filtered = this.data;
     }
 
     validateData() {
@@ -190,13 +183,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     handleSearch( searchTextValue ) {
         const filter = [];
-        this.filtered = this.datasource.slice();
-        this.filtered.filter( ( item ) => {
+        this.datasource = this.data.slice();
+        this.datasource.filter( ( item ) => {
             if ( (item[ this.text ].substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
                 filter.push( item );
             }
         } );
-        this.filtered = filter;
+        this.datasource = filter;
     }
 
     handleInitializeValues() {

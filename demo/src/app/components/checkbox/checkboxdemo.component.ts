@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as jsonProp from './checkboxdemo-dataproperties.json';
 import * as jsonEvt from './checkboxdemo-events.json';
@@ -10,7 +10,7 @@ import * as jsonEvt from './checkboxdemo-events.json';
   animations: [ routerTransition() ],
   styleUrls: [ './checkboxdemo.component.scss' ]
 } )
-export class CheckBoxDemo {
+export class CheckBoxDemoComponent {
   private dataTableProperties;
 
   private events;

@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { InputMaskDemo } from './inputmaskdemo.component';
+import { InputMaskDemoComponent } from './inputmaskdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: InputMaskDemo }
+      { path: '', component: InputMaskDemoComponent }
     ] )
   ],
   exports: [

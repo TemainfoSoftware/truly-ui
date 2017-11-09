@@ -6,7 +6,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
   templateUrl: './getting-started.component.html',
   styleUrls: ['./getting-started.component.scss']
 })
-export class GettingStarted implements OnInit, AfterViewInit {
+export class GettingStartedComponent implements OnInit, AfterViewInit {
   title = 'app works!';
 
   ngOnInit() {

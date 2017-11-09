@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { DataTableScrollableDemo } from './datatablescrollabledemo.component';
+import { DataTableScrollableDemoComponent } from './datatablescrollabledemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: DataTableScrollableDemo },
+      { path: '', component: DataTableScrollableDemoComponent },
     ] )
   ],
   exports: [

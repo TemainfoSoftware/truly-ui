@@ -1,49 +1,49 @@
 export const dataProperties = [
   {
-    name: "rowSelect",
+    name: 'rowSelect',
     parameters: [
-      { event: 'event.row', description:'Selected data' },
-      { event: 'event.index', description:'index of Selected data' }
+      { event: 'event.row', description: 'Selected data' },
+      { event: 'event.index', description: 'index of Selected data' }
     ],
-    description: "Callback to invoke when a row is selected."
+    description: 'Callback to invoke when a row is selected.'
   },
   {
-    name: "rowClick",
+    name: 'rowClick',
     parameters: [
-      { event: 'event.row', description:'Selected data' },
-      { event: 'event.index', description:'index of Selected data' }
+      { event: 'event.row', description: 'Selected data' },
+      { event: 'event.index', description: 'index of Selected data' }
     ],
-    description: "Callback to invoke when a row is clicked."
+    description: 'Callback to invoke when a row is clicked.'
   },
   {
-    name: "rowDblclick",
+    name: 'rowDblclick',
     parameters: [
-      { event: 'event.row', description:'Selected data' },
-      { event: 'event.index', description:'index of Selected data' }
+      { event: 'event.row', description: 'Selected data' },
+      { event: 'event.index', description: 'index of Selected data' }
     ],
-    description: "Callback to invoke when a row is double clicked."
+    description: 'Callback to invoke when a row is double clicked.'
   },
   {
-    name: "pageChange",
+    name: 'pageChange',
     parameters: [
-      { event: 'event.page', description:'Current page number' }
+      { event: 'event.page', description: 'Current page number' }
     ],
-    description: "Callback to invoke when pagination occurs."
+    description: 'Callback to invoke when pagination occurs.'
   },
   {
-    name: "lazyLoad",
+    name: 'lazyLoad',
     parameters: [
-      { event: 'event.skip', description:'First row offset ' },
-      { event: 'event.take', description:'Number of rows per page ' }
+      { event: 'event.skip', description: 'First row offset ' },
+      { event: 'event.take', description: 'Number of rows per page ' }
     ],
-    description: "Callback to invoke when paging, sorting or filtering happens in lazy mode."
+    description: 'Callback to invoke when paging, sorting or filtering happens in lazy mode.'
   }
   ,
   {
-    name: "endRow",
+    name: 'endRow',
     parameters: [
-      { event: 'event.endRow', description:'End line number' }
+      { event: 'event.endRow', description: 'End line number' }
     ],
-    description: "Callback to invoke when the scroll or selection arrives on the last line"
+    description: 'Callback to invoke when the scroll or selection arrives on the last line'
   }
 ];

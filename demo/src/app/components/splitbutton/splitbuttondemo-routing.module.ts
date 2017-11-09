@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { SplitButtonDemo } from './splitbuttondemo.component';
+import { SplitButtonDemoComponent } from './splitbuttondemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: SplitButtonDemo }
+      { path: '', component: SplitButtonDemoComponent }
     ] )
   ],
   exports: [

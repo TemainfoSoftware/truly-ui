@@ -2,17 +2,17 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { GettingStarted } from './getting-started.component';
+import { GettingStartedComponent } from './getting-started.component';
 
 @NgModule({
   declarations: [
-    GettingStarted
+    GettingStartedComponent
   ],
   imports: [
     FormsModule,
     HighlightJsModule,
     HttpModule,
   ],
-  exports: [GettingStarted]
+  exports: [GettingStartedComponent]
 })
 export class GettingStartedModule { }

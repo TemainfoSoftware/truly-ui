@@ -11,7 +11,7 @@ import * as jsonEvents from './datatablescrollabledemo-dataevents.json';
   styleUrls: [ './datatablescrollabledemo.component.scss' ],
   providers: [DumpDataService]
 } )
-export class DataTableScrollableDemo {
+export class DataTableScrollableDemoComponent {
 
   public data: Array<any>;
 
@@ -34,8 +34,8 @@ export class DataTableScrollableDemo {
     this.data = this.dumpDataService.createRandomData(1000000);
 
     this.dataLazy = {
-      "data" : this.getDataFromService(0,this.take),
-      "total" : this.data.length
+      'data' : this.getDataFromService(0, this.take),
+      'total' : this.data.length
     }
   }
 
@@ -45,17 +45,17 @@ export class DataTableScrollableDemo {
 
   }
 
-  onLazyLoad(event){
+  onLazyLoad(event) {
     clearTimeout(this.timeout );
-    this.timeout = setTimeout(()=>{
+    this.timeout = setTimeout(() => {
       this.dataLazy = {
-          "data" : this.getDataFromService(event.skip,event.take),
-          "total" : this.data.length
+          'data' : this.getDataFromService(event.skip, event.take),
+          'total' : this.data.length
         };
-    },2000)
+    }, 2000)
   }
 
-  onPageChange(event){
+  onPageChange(event) {
    // console.log(event);
   }
 

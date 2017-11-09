@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { ButtonGroupDemo } from './buttongroupdemo.component';
+import { ButtonGroupDemoComponent } from './buttongroupdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: ButtonGroupDemo }
+      { path: '', component: ButtonGroupDemoComponent }
     ] )
   ],
   exports: [

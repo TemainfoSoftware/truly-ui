@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as json from './paneldemo-dataproperties.json';
 import * as jsonEvts from './paneldemo-events.json';
@@ -10,7 +10,7 @@ import * as jsonEvts from './paneldemo-events.json';
   animations: [ routerTransition() ],
   styleUrls: [ './paneldemo.component.scss' ]
 } )
-export class PanelDemo {
+export class PanelDemoComponent {
   private dataTableProperties;
 
   private dataEvents;

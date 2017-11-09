@@ -22,15 +22,15 @@
 import { Component } from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
-import { DumpDataService } from "../../shared/services/dumpdata";
-import { ChatListService } from "../../../../../src/chatlist/chatlist.service";
+import { DumpDataService } from '../../shared/services/dumpdata';
+import { ChatListService } from '../../../../../src/chatlist/chatlist.service';
 
 @Component( {
   selector : 'app-chat',
   templateUrl : './chatlistdemo.component.html',
   styleUrls : [ './chatlistdemo.component.scss' ]
 } )
-export class ChatListDemo {
+export class ChatListDemoComponent {
 
   private dataTableProperties;
 

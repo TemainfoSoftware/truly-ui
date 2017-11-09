@@ -2,8 +2,8 @@ import { Component, OnChanges, SimpleChanges, ViewContainerRef } from '@angular/
 
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
-import { DumpDataService } from "../../shared/services/dumpdata";
-import { DialogService } from "../../../../../src/dialog/dialog.service";
+import { DumpDataService } from '../../shared/services/dumpdata';
+import { DialogService } from '../../../../../src/dialog/dialog.service';
 
 @Component( {
   selector: 'app-multiselect-demo',
@@ -11,7 +11,7 @@ import { DialogService } from "../../../../../src/dialog/dialog.service";
   styleUrls: [ './multiselectdemo.component.scss' ],
   providers: [ DumpDataService ]
 } )
-export class MultiSelectDemo implements OnChanges {
+export class MultiSelectDemoComponent implements OnChanges {
 
   private dataTableProperties;
 
@@ -82,13 +82,12 @@ export class MultiSelectDemo implements OnChanges {
 
   show() {
     try {
-      if (this.dataNoSourceBasicModel.length < 1) {
-        throw {name: 'DATA LENGTH ERROR', message: 'Invalid Data, needs more than ONE tag selected'};
-      } else {
+      if ( this.dataNoSourceBasicModel.length >= 1 ) {
         this.showInfo();
+      } else {
+        throw { name: 'DATA LENGTH ERROR', message: 'Invalid Data, needs more than ONE tag selected' };
       }
-    }
-    catch (err) {
+    } catch (err) {
       this.exception(err);
     }
   }
@@ -96,8 +95,8 @@ export class MultiSelectDemo implements OnChanges {
 
   showInfo() {
     this.dialogService.info( JSON.stringify(this.dataNoSourceBasicModel), ( modalResult ) => {
-        console.log('Return',modalResult);
-      },{
+        console.log('Return', modalResult);
+      }, {
         title: 'Model Value',
         textOk: 'Ok',
         draggable: true,
@@ -119,7 +118,7 @@ export class MultiSelectDemo implements OnChanges {
     console.log('Removed Tag', $event);
   }
 
-  ngOnChanges( change : SimpleChanges ) {
+  ngOnChanges( change: SimpleChanges ) {
     console.log( 'changes', change );
   }
 

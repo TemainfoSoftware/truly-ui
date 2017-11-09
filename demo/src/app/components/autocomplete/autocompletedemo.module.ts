@@ -21,29 +21,29 @@
  */
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { AutoCompleteModule } from 'truly-ui/autocomplete';
 
-import { AutoCompleteDemo } from './autocompletedemo.component';
+import { AutoCompleteDemoComponent } from './autocompletedemo.component';
 import { AutoCompleteDemoRoutingModule } from './autocompletedemo-routing.module';
-import { DialogService } from "../../../../../src/dialog/dialog.service";
-import { DialogModule } from "../../../../../src/dialog/index";
-import { ModalModule } from "../../../../../src/modal/index";
-import { FormModule } from "../../../../../src/form/index";
-import { NewClient } from "./newclient/newclient.component";
-import { InputModule } from "../../../../../src/input/index";
-import { DropDownListModule } from "../../../../../src/dropdownlist/index";
-import { DataClientService } from "./newclient/dataclient.service";
-import { DumpDataService } from "../../shared/services/dumpdata";
+import { DialogService } from '../../../../../src/dialog/dialog.service';
+import { DialogModule } from '../../../../../src/dialog/index';
+import { ModalModule } from '../../../../../src/modal/index';
+import { FormModule } from '../../../../../src/form/index';
+import { NewClientComponent } from './newclient/newclient.component';
+import { InputModule } from '../../../../../src/input/index';
+import { DropDownListModule } from '../../../../../src/dropdownlist/index';
+import { DataClientService } from './newclient/dataclient.service';
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 
 @NgModule({
   declarations: [
-    AutoCompleteDemo,
-    NewClient
+    AutoCompleteDemoComponent,
+    NewClientComponent
   ],
   imports: [
     AutoCompleteDemoRoutingModule,
@@ -59,13 +59,13 @@ import { DumpDataService } from "../../shared/services/dumpdata";
     HighlightJsModule
   ],
   exports: [
-    AutoCompleteDemo,
+    AutoCompleteDemoComponent,
   ],
   providers: [
     DialogService,
     DataClientService,
     DumpDataService
   ],
-  entryComponents: [ NewClient ]
+  entryComponents: [ NewClientComponent ]
 })
 export class AutoCompleteDemoModule { }

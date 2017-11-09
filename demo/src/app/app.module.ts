@@ -8,8 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GettingStartedModule } from './getting-started/getting-started.module';
-import { GithubAPIService } from "./shared/services/githubapi";
-import { DirectiveModule } from "../../../src/core/directives/index";
+import { GithubAPIService } from './shared/services/githubapi';
+import { DirectiveModule } from '../../../src/core/directives/index';
 
 @NgModule({
   declarations: [

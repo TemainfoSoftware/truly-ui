@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as jsonProp from './listboxdemo-dataproperties.json';
 import * as jsonEvt from './listboxdemo-events.json';
-import { DumpDataService } from "../../shared/services/dumpdata";
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 @Component( {
   selector: 'app-listbox',
@@ -12,7 +12,7 @@ import { DumpDataService } from "../../shared/services/dumpdata";
   styleUrls: [ './listboxdemo.component.scss' ],
   providers: [DumpDataService]
 } )
-export class ListBoxDemo {
+export class ListBoxDemoComponent {
 
   private dataTableProperties;
 
@@ -56,8 +56,8 @@ export class ListBoxDemo {
 
 
     this.dataLazy = {
-      "data" : this.getDataFromService(0,this.take),
-      "total" : this.dataBasic.length
+      'data' : this.getDataFromService(0, this.take),
+      'total' : this.dataBasic.length
     }
   }
 
@@ -69,8 +69,8 @@ export class ListBoxDemo {
     clearTimeout( this.timeout );
     this.timeout = setTimeout( () => {
       this.dataLazy = {
-        "data": this.getDataFromService( event.skip, event.take ),
-        "total": this.dataBasic.length
+        'data': this.getDataFromService( event.skip, event.take ),
+        'total': this.dataBasic.length
       };
       console.log('datalazy', this.dataLazy);
     }, 2000 );

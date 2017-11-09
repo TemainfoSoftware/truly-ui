@@ -1,18 +1,18 @@
 import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { RadioButtonModule } from 'truly-ui/radiobutton';
 
-import { RadioButtonDemo } from "./radiobuttondemo.component";
-import { RadioButtonDemoRoutingModule } from "./radiobuttondemo-routing.module";
+import { RadioButtonDemoComponent } from './radiobuttondemo.component';
+import { RadioButtonDemoRoutingModule } from './radiobuttondemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 @NgModule({
   declarations: [
-    RadioButtonDemo
+    RadioButtonDemoComponent
   ],
-  imports:[
+  imports: [
     CommonModule,
     FormsModule,
     HighlightJsModule,
@@ -20,7 +20,7 @@ import { HighlightJsModule } from 'ngx-highlight-js';
     RadioButtonModule
   ],
   exports: [
-    RadioButtonDemo
+    RadioButtonDemoComponent
   ]
 })
 export class RadioButtonDemoModule {}

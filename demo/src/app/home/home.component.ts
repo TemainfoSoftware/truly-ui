@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GithubAPIService } from "../shared/services/githubapi";
+import { GithubAPIService } from '../shared/services/githubapi';
 
 
 @Component({
@@ -11,7 +11,7 @@ export class HomeComponent {
 
   private lastRelease;
 
-  constructor( private githubService : GithubAPIService ) {
+  constructor( private githubService: GithubAPIService ) {
     this.githubService.getReleases().subscribe( (releases => {
       this.lastRelease = JSON.parse( releases[ '_body' ] )[ 0 ];
     }) );

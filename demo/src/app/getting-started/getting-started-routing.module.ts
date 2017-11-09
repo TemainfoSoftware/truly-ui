@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { GettingStarted } from './getting-started.component';
+import { GettingStartedComponent } from './getting-started.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: GettingStarted }
+      { path: '', component: GettingStartedComponent }
     ] )
   ],
   exports: [

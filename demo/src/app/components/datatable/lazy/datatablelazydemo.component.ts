@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component,ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 
 import * as json from './datatablelazydemo-dataproperties.json';
@@ -11,7 +11,7 @@ import * as jsonEvents from './datatablelazydemo-dataevents.json';
   styleUrls: [ './datatablelazydemo.component.scss' ],
   providers: [DumpDataService]
 } )
-export class DataTableLazyDemo {
+export class DataTableLazyDemoComponent {
 
   public data: Array<any>;
 
@@ -27,15 +27,15 @@ export class DataTableLazyDemo {
 
   private timeout ;
 
-  constructor(private dumpDataService: DumpDataService, private cd : ChangeDetectorRef) {
+  constructor(private dumpDataService: DumpDataService, private cd: ChangeDetectorRef) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
 
     this.data = this.dumpDataService.createRandomData(1000000);
 
     this.dataLazy = {
-      "data" : this.getDataFromService(0,this.take),
-      "total" : this.data.length
+      'data' : this.getDataFromService(0, this.take),
+      'total' : this.data.length
     }
   }
 
@@ -45,17 +45,17 @@ export class DataTableLazyDemo {
 
   }
 
-  onLazyLoad(event){
+  onLazyLoad(event) {
     clearTimeout(this.timeout );
-    this.timeout = setTimeout(()=>{
+    this.timeout = setTimeout(() => {
       this.dataLazy = {
-          "data" : this.getDataFromService(event.skip,event.take),
-          "total" : this.data.length
+          'data' : this.getDataFromService(event.skip, event.take),
+          'total' : this.data.length
         };
-    },2000)
+    }, 2000)
   }
 
-  onPageChange(event){
+  onPageChange(event) {
    // console.log(event);
   }
 

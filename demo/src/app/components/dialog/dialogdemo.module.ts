@@ -1,21 +1,21 @@
 import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from 'truly-ui/input';
 import { ButtonModule } from 'truly-ui/button';
 import { DatatableModule } from 'truly-ui/datatable';
 
-import { DialogDemo } from "./dialogdemo.component";
-import { DialogDemoRoutingModule } from "./dialogdemo-routing.module";
-import { DialogModule } from "truly-ui/dialog";
+import { DialogDemoComponent } from './dialogdemo.component';
+import { DialogDemoRoutingModule } from './dialogdemo-routing.module';
+import { DialogModule } from 'truly-ui/dialog';
 
 @NgModule({
   declarations: [
-    DialogDemo,
+    DialogDemoComponent,
   ],
-  imports:[
+  imports: [
     ButtonModule,
     CommonModule,
     DatatableModule,
@@ -26,7 +26,7 @@ import { DialogModule } from "truly-ui/dialog";
     DialogModule
   ],
   exports: [
-    DialogDemo,
+    DialogDemoComponent,
   ],
 })
 export class DialogDemoModule {

@@ -23,10 +23,10 @@ import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/c
 
 import * as json from './autocompletedemo-dataproperties.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { DialogService } from "../../../../../src/dialog/dialog.service";
-import { FormService } from "../../../../../src/form/form.service";
-import { NewClient } from "./newclient/newclient.component";
-import { DataClientService } from "./newclient/dataclient.service";
+import { DialogService } from '../../../../../src/dialog/dialog.service';
+import { FormService } from '../../../../../src/form/form.service';
+import { NewClient } from './newclient/newclient.component';
+import { DataClientService } from './newclient/dataclient.service';
 
 @Component( {
   selector : 'app-autocomplete',
@@ -34,7 +34,7 @@ import { DataClientService } from "./newclient/dataclient.service";
   styleUrls : [ './autocompletedemo.component.scss' ],
   providers : [ DumpDataService ]
 } )
-export class AutoCompleteDemo {
+export class AutoCompleteDemoComponent {
 
   private dataTableProperties;
 
@@ -69,8 +69,8 @@ export class AutoCompleteDemo {
 
 
     this.dataLazy = {
-      "data": this.getDataFromService( 0, this.take ),
-      "total": this.dataBasic.length
+      'data': this.getDataFromService( 0, this.take ),
+      'total': this.dataBasic.length
     }
   }
 
@@ -78,8 +78,8 @@ export class AutoCompleteDemo {
     clearTimeout( this.timeout );
     this.timeout = setTimeout( () => {
       this.dataLazy = {
-        "data": this.getDataFromService( event.skip, event.take ),
-        "total": this.dataBasic.length
+        'data': this.getDataFromService( event.skip, event.take ),
+        'total': this.dataBasic.length
       };
     }, 200 );
   }

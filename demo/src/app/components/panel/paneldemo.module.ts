@@ -1,19 +1,19 @@
 import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
-import { PanelDemo } from "./paneldemo.component";
+import { PanelDemoComponent } from './paneldemo.component';
 import { PanelGroupModule } from 'truly-ui/panelgroup';
 import { InputModule } from 'truly-ui/input';
 import { RadioButtonModule } from 'truly-ui/radiobutton'
-import { PanelDemoRoutingModule } from "./paneldemo-routing.module";
+import { PanelDemoRoutingModule } from './paneldemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 @NgModule({
   declarations: [
-    PanelDemo
+    PanelDemoComponent
   ],
-  imports:[
+  imports: [
     CommonModule,
     PanelGroupModule,
     FormsModule,
@@ -23,7 +23,7 @@ import { HighlightJsModule } from 'ngx-highlight-js';
     HighlightJsModule,
   ],
   exports: [
-    PanelDemo
+    PanelDemoComponent
   ]
 })
 export class PanelDemoModule {}

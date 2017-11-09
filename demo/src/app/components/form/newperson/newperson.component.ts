@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { DataFormService } from "./dataform.service";
-import { DumpDataService } from "../../../shared/services/dumpdata";
+import { DataFormService } from './dataform.service';
+import { DumpDataService } from '../../../shared/services/dumpdata';
 
 @Component( {
-  selector: 'new-person',
+  selector: 'app-new-person',
   templateUrl: './newperson.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './newperson.component.scss' ]
 } )
-export class NewPerson implements OnInit, OnChanges {
+export class NewPersonComponent implements OnInit, OnChanges {
 
-  @Input() input ='21122112';
+  @Input() input = '21122112';
 
   private person;
 

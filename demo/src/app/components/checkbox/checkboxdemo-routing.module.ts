@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { CheckBoxDemo } from './checkboxdemo.component';
+import { CheckBoxDemoComponent } from './checkboxdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: CheckBoxDemo }
+      { path: '', component: CheckBoxDemoComponent }
     ] )
   ],
   exports: [

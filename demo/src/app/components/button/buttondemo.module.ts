@@ -1,18 +1,18 @@
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
-import {NgModule} from "@angular/core";
+import {NgModule} from '@angular/core';
 
 import {HighlightJsModule} from 'ngx-highlight-js';
 
 import {ButtonModule} from 'truly-ui/button';
-import {ModalService } from "truly-ui/modal/modal.service";
+import {ModalService } from 'truly-ui/modal/modal.service';
 
-import {ButtonDemoRoutingModule} from "./buttondemo-routing.module";
-import {ButtonDemo} from "./buttondemo.component";
+import {ButtonDemoRoutingModule} from './buttondemo-routing.module';
+import {ButtonDemoComponent} from './buttondemo.component';
 
 @NgModule({
   declarations: [
-    ButtonDemo
+    ButtonDemoComponent
   ],
   imports: [
     ButtonDemoRoutingModule,
@@ -22,7 +22,7 @@ import {ButtonDemo} from "./buttondemo.component";
     HighlightJsModule
   ],
   exports: [
-    ButtonDemo
+    ButtonDemoComponent
   ],
   providers: [
     ModalService

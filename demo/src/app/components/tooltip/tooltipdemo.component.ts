@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as json from './tooltipdemo-dataproperties.json';
 
@@ -10,7 +10,7 @@ import * as json from './tooltipdemo-dataproperties.json';
   animations: [ routerTransition() ],
   styleUrls: [ './tooltipdemo.component.scss' ]
 } )
-export class TooltipDemo {
+export class TooltipDemoComponent {
   private tooltipProperties;
 
   constructor() {

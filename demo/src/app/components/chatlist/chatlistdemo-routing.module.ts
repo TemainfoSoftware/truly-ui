@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { ChatListDemo } from './chatlistdemo.component';
+import { ChatListDemoComponent } from './chatlistdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: ChatListDemo }
+      { path: '', component: ChatListDemoComponent }
     ] )
   ],
   exports: [

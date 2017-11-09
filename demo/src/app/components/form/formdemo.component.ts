@@ -1,15 +1,15 @@
 import { AfterViewInit, Component, ViewChild, ViewContainerRef } from '@angular/core';
-import { routerTransition } from "../../router.animations";
-import { ModalOptions } from "../../../../../src/modal/modal-options";
-import { FormService } from "../../../../../src/form/form.service";
+import { routerTransition } from '../../router.animations';
+import { ModalOptions } from '../../../../../src/modal/modal-options';
+import { FormService } from '../../../../../src/form/form.service';
 
 import * as json from './form-dataproperties.json';
 
 import * as jsonEvents from './form-dataevents.json';
 
-import { NewPerson } from "./newperson/newperson.component";
-import { DataFormService } from "./newperson/dataform.service";
-import { DumpDataService } from "../../shared/services/dumpdata";
+import { NewPersonComponent } from './newperson/newperson.component';
+import { DataFormService } from './newperson/dataform.service';
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 
 @Component( {
@@ -18,7 +18,7 @@ import { DumpDataService } from "../../shared/services/dumpdata";
   animations: [ routerTransition() ],
   styleUrls: [ './formdemo.component.scss' ]
 } )
-export class FormDemo {
+export class FormDemoComponent {
 
   @ViewChild( 'containerModal' ) containerModal;
 
@@ -83,21 +83,21 @@ export class FormDemo {
 
 
   form1() {
-    this.formService.createForm(NewPerson, this.formOptions1, (modalResult) => {
+    this.formService.createForm(NewPersonComponent, this.formOptions1, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });
   }
 
   form2() {
-    this.formService.createForm(NewPerson, this.formOptions2, (modalResult) => {
+    this.formService.createForm(NewPersonComponent, this.formOptions2, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });
   }
 
   form3() {
-    this.formService.createForm(NewPerson, this.formOptions3, (modalResult) => {
+    this.formService.createForm(FormDemoComponent, this.formOptions3, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });

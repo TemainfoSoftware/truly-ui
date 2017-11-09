@@ -19,19 +19,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 @Injectable()
 export class DumpDataService {
 
   constructor() {}
 
   createRandomData(count: number) {
-    const firstNames = ["Adilson", "William", "Silvio", "Maicon", "Jaisson", "Moacyr", "Marcio", "Laura", "Anne", "Nige"],
-      lastNames = ["Finance", "Development Sector", "Sales", "Analytic Quality", "Technical Support", "Reception",],
-      cities = ["Seattle", "Tacoma", "Kirkland", "Redmond", "London", "Philadelphia", "New York", "Seattle", "London", "Boston"],
-      titles = ["Accountant", "Vice President, Sales", "Sales Representative", "Technical Support", "Sales Manager", "Web Designer",
-        "Software Developer"],
-      status = ["Away", "Online", "Offline", "Busy"];
+    const firstNames = ['Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige'],
+      lastNames = ['Finance', 'Development Sector', 'Sales', 'Analytic Quality', 'Technical Support', 'Reception', ],
+      cities = ['Seattle', 'Tacoma', 'Kirkland', 'Redmond', 'London', 'Philadelphia', 'New York', 'Seattle', 'London', 'Boston'],
+      titles = ['Accountant', 'Vice President, Sales', 'Sales Representative', 'Technical Support', 'Sales Manager', 'Web Designer',
+        'Software Developer'],
+      status = ['Away', 'Online', 'Offline', 'Busy'];
 
     return Array(count).fill({}).map((_, idx) => ({
         id: idx + 1,

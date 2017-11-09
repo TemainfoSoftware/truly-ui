@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as json from './radiobuttondemo-dataproperties.json';
 import * as jsonEvts from './radiobuttondemo-events.json';
@@ -10,7 +10,7 @@ import * as jsonEvts from './radiobuttondemo-events.json';
   animations: [ routerTransition() ],
   styleUrls: [ './radiobuttondemo.component.scss' ]
 } )
-export class RadioButtonDemo {
+export class RadioButtonDemoComponent {
   private dataTableProperties;
 
   private radio;

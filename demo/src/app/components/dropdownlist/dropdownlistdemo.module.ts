@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { DropDownListModule } from 'truly-ui/dropdownlist';
 
-import { DropDownListDemo } from './dropdownlistdemo.component';
+import { DropDownListDemoComponent } from './dropdownlistdemo.component';
 import { DropDownListDemoRoutingModule } from './dropdownlistdemo-routing.module';
 
 @NgModule({
   declarations: [
-    DropDownListDemo
+    DropDownListDemoComponent
   ],
   imports: [
     DropDownListDemoRoutingModule,
@@ -21,7 +21,7 @@ import { DropDownListDemoRoutingModule } from './dropdownlistdemo-routing.module
     HighlightJsModule
   ],
   exports: [
-    DropDownListDemo
+    DropDownListDemoComponent
   ]
 })
 export class DropDownListDemoModule { }

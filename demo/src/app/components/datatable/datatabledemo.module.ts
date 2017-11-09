@@ -7,12 +7,12 @@ import {HighlightJsModule} from 'ngx-highlight-js';
 import {DatatableModule} from 'truly-ui/datatable';
 import {InputModule} from 'truly-ui/input';
 
-import {DataTableDemo} from './datatabledemo.component';
+import {DataTableDemoComponent} from './datatabledemo.component';
 import {DataTableDemoRoutingModule } from './datatabledemo-routing.module';
 
 @NgModule({
   declarations: [
-    DataTableDemo
+    DataTableDemoComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +23,7 @@ import {DataTableDemoRoutingModule } from './datatabledemo-routing.module';
     InputModule,
   ],
   exports: [
-    DataTableDemo
+    DataTableDemoComponent
   ]
 })
 export class DatatableDemoModule {}

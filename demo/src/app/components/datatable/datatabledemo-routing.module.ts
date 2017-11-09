@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { DataTableDemo } from './datatabledemo.component';
+import { DataTableDemoComponent } from './datatabledemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: DataTableDemo },
+      { path: '', component: DataTableDemoComponent },
     ] )
   ],
   exports: [

@@ -9,7 +9,7 @@ import * as jsonEvents from './datatabledemo-dataevents.json';
   templateUrl: './datatabledemo.component.html',
   styleUrls: [ './datatabledemo.component.scss' ]
 } )
-export class DataTableDemo {
+export class DataTableDemoComponent {
 
   public data: Array<any>;
 
@@ -28,7 +28,7 @@ export class DataTableDemo {
     this.data = this.createRandomData(100);
   }
 
-  onPageChange(event){
+  onPageChange(event) {
    // console.log(event);
   }
 
@@ -37,11 +37,11 @@ export class DataTableDemo {
   }
 
   private createRandomData(count: number) {
-    const firstNames = ["Adilson", "William", "Silvio", "Maicon", "Jaisson", "Moacyr", "Marcio", "Laura", "Anne", "Nige"],
-      lastNames = ["Davolio", "Fuller", "Leverling", "Peacock", "Buchanan", "Suyama", "King", "Callahan", "Dodsworth", "White"],
-      cities = ["Seattle", "Tacoma", "Kirkland", "Redmond", "London", "Philadelphia", "New York", "Seattle", "London", "Boston"],
-      titles = ["Accountant", "Vice President, Sales", "Sales Representative", "Technical Support", "Sales Manager", "Web Designer",
-        "Software Developer"];
+    const firstNames = ['Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige'],
+      lastNames = ['Davolio', 'Fuller', 'Leverling', 'Peacock', 'Buchanan', 'Suyama', 'King', 'Callahan', 'Dodsworth', 'White'],
+      cities = ['Seattle', 'Tacoma', 'Kirkland', 'Redmond', 'London', 'Philadelphia', 'New York', 'Seattle', 'London', 'Boston'],
+      titles = ['Accountant', 'Vice President, Sales', 'Sales Representative', 'Technical Support', 'Sales Manager', 'Web Designer',
+        'Software Developer'];
 
     return Array(count).fill({}).map((_, idx) => ({
         id: idx + 1,

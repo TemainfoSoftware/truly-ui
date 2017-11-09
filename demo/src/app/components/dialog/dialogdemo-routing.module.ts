@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { DialogDemo } from './dialogdemo.component';
+import { DialogDemoComponent } from './dialogdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: DialogDemo }
+      { path: '', component: DialogDemoComponent }
     ] )
   ],
   exports: [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as json from './inputdemo-dataproperties.json';
 
@@ -9,12 +9,12 @@ import * as json from './inputdemo-dataproperties.json';
   animations: [ routerTransition() ],
   styleUrls: [ './inputdemo.component.scss' ]
 } )
-export class InputDemo {
+export class InputDemoComponent {
   private dataTableProperties;
   uppercase = '';
   lowercase = '';
-  readonly = "I'm an Truly Ui Input (Selectable)";
-  disabled = "I'm an Truly Ui Input (Not Selectable)";
+  readonly = 'I\'m an Truly Ui Input (Selectable)';
+  disabled = 'I\'m an Truly Ui Input (Not Selectable)';
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

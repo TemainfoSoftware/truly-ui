@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { DataClientService } from "./dataclient.service";
-import { DumpDataService } from "../../../shared/services/dumpdata";
+import { DataClientService } from './dataclient.service';
+import { DumpDataService } from '../../../shared/services/dumpdata';
 
 @Component( {
-  selector: 'new-client',
+  selector: 'app-new-client',
   templateUrl: './newclient.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './newclient.component.scss' ],
   providers: [ DataClientService ]
 } )
-export class NewClient implements OnInit {
+export class NewClientComponent implements OnInit {
 
   @Input() input = '21122112';
 

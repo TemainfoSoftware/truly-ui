@@ -1,18 +1,18 @@
 import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { ListBoxModule } from 'truly-ui/listbox';
 import { InputModule } from 'truly-ui/input';
-import { ListBoxDemo } from "./listboxdemo.component";
-import { ListBoxDemoRoutingModule } from "./listboxdemo-routing.module";
+import { ListBoxDemoComponent } from './listboxdemo.component';
+import { ListBoxDemoRoutingModule } from './listboxdemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 @NgModule({
   declarations: [
-    ListBoxDemo
+    ListBoxDemoComponent
   ],
-  imports:[
+  imports: [
     CommonModule,
     FormsModule,
     InputModule,
@@ -21,7 +21,7 @@ import { HighlightJsModule } from 'ngx-highlight-js';
     ListBoxModule
   ],
   exports: [
-    ListBoxDemo
+    ListBoxDemoComponent
   ]
 })
 export class ListBoxDemoModule {}

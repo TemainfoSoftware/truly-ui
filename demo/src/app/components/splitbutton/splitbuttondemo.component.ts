@@ -8,7 +8,7 @@ import * as json from './splitbuttondemo-dataproperties.json';
   templateUrl: './splitbuttondemo.component.html',
   styleUrls: [ './splitbuttondemo.component.scss' ]
 } )
-export class SplitButtonDemo {
+export class SplitButtonDemoComponent {
 
   private dataTableProperties;
   private dataTableProperties2;

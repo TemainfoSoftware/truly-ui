@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { routerTransition } from "../../router.animations";
-import { DialogService } from "../../../../../src/dialog/dialog.service";
-import { ModalResult } from "../../../../../src/core/enums/modal-result";
+import { routerTransition } from '../../router.animations';
+import { DialogService } from '../../../../../src/dialog/dialog.service';
+import { ModalResult } from '../../../../../src/core/enums/modal-result';
 
 import * as json from './dialog-dataproperties.json';
 
@@ -12,7 +12,7 @@ import * as json from './dialog-dataproperties.json';
   styleUrls: [ './dialogdemo.component.scss' ],
   providers: [DialogService]
 } )
-export class DialogDemo {
+export class DialogDemoComponent {
 
   public index: number;
   public modals;
@@ -26,7 +26,7 @@ export class DialogDemo {
 
   info() {
     this.dialogService.info( 'This is an Info Dialog', ( modalResult ) => {
-      console.log('Return',modalResult);
+      console.log('Return', modalResult);
     }, {
       title: 'My custom dialog',
       textOk: 'Ok',
@@ -39,7 +39,7 @@ export class DialogDemo {
       if (modalResult.modalResult === ModalResult.MRYES) {
         alert('clicked YES')
       }
-    },)
+    }, )
   }
 
   alert() {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { routerTransition } from "../../router.animations";
+import { routerTransition } from '../../router.animations';
 
 import * as json from './inputmaskdemo-dataproperties.json';
 
@@ -9,7 +9,7 @@ import * as json from './inputmaskdemo-dataproperties.json';
   animations: [ routerTransition() ],
   styleUrls: [ './inputmaskdemo.component.scss' ]
 } )
-export class InputMaskDemo {
+export class InputMaskDemoComponent {
   public basic;
   public literal;
   public textNumber;

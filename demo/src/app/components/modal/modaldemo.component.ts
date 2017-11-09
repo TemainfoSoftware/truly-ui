@@ -1,8 +1,8 @@
 import { Component, ViewContainerRef } from '@angular/core';
-import { ModalService } from "../../../../../src/modal/modal.service";
-import { routerTransition } from "../../router.animations";
-import { ModalOptions } from "../../../../../src/modal/modal-options";
-import { NewModal } from "./newmodal/newModal.component";
+import { ModalService } from '../../../../../src/modal/modal.service';
+import { routerTransition } from '../../router.animations';
+import { ModalOptions } from '../../../../../src/modal/modal-options';
+import { NewModalComponent } from './newmodal/newModal.component';
 
 import * as json from './modal-dataproperties.json';
 import * as jsonEvt from './modal-dataevents.json';
@@ -14,7 +14,7 @@ import * as jsonEvt from './modal-dataevents.json';
   animations: [ routerTransition() ],
   styleUrls: [ './modaldemo.component.scss' ]
 } )
-export class ModalDemo {
+export class ModalDemoComponent {
 
   public index: number;
   public modals;
@@ -43,7 +43,7 @@ export class ModalDemo {
   }
 
   modal1() {
-    this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
+    this.modalService.createModal(NewModalComponent, this.modalOptions, (modalResult) => {
         this.modalResult = modalResult;
     });
   }

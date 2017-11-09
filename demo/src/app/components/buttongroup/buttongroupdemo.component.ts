@@ -8,7 +8,7 @@ import * as json from './buttongroupdemo-dataproperties.json';
   templateUrl: './buttongroupdemo.component.html',
   styleUrls: [ './buttongroupdemo.component.scss' ]
 } )
-export class ButtonGroupDemo {
+export class ButtonGroupDemoComponent {
 
   private dataTableProperties;
 
@@ -36,28 +36,28 @@ export class ButtonGroupDemo {
     });
   }
 
-  showItemSelected2(event){
+  showItemSelected2(event) {
     this.itemSelected2 = [];
     event.forEach( (item) => {
       this.itemSelected2.push( ' ' + item.text );
     });
   }
 
-  showItemSelected3(event){
+  showItemSelected3(event) {
     this.itemSelected3 = [];
     event.forEach( (item) => {
       this.itemSelected3.push( ' ' + item.text );
     });
   }
 
-  showItemSelected4(event){
+  showItemSelected4(event) {
     this.itemSelected4 = [];
     event.forEach( (item) => {
       this.itemSelected4.push( ' ' + item.text );
     });
   }
 
-  showItemSelected5(event){
+  showItemSelected5(event) {
     this.itemSelected5 = [];
     event.forEach( (item) => {
       this.itemSelected5.push( ' ' + item.text );

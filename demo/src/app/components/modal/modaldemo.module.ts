@@ -1,25 +1,25 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule  } from '@angular/common';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { ButtonModule } from 'truly-ui/button';
 import { DatatableModule } from 'truly-ui/datatable';
-import { DialogService } from "truly-ui/dialog/dialog.service";
+import { DialogService } from 'truly-ui/dialog/dialog.service';
 import { InputModule } from 'truly-ui/input';
-import { ModalModule } from "truly-ui/modal";
+import { ModalModule } from 'truly-ui/modal';
 
-import { NewModal } from "./newmodal/newModal.component";
-import { ModalDemo } from "./modaldemo.component";
-import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
+import { NewModalComponent } from './newmodal/newModal.component';
+import { ModalDemoComponent } from './modaldemo.component';
+import { ModalDemoRoutingModule } from './modaldemo-routing.module';
 
 @NgModule({
   declarations: [
-    ModalDemo,
-    NewModal,
+    ModalDemoComponent,
+    NewModalComponent,
   ],
-  imports:[
+  imports: [
     ButtonModule,
     CommonModule,
     DatatableModule,
@@ -30,14 +30,14 @@ import { ModalDemoRoutingModule } from "./modaldemo-routing.module";
     ModalDemoRoutingModule
   ],
   exports: [
-    ModalDemo,
-    NewModal
+    ModalDemoComponent,
+    NewModalComponent
   ],
   providers: [
     DialogService
   ],
   entryComponents: [
-    NewModal
+    NewModalComponent
   ]
 })
 export class ModalDemoModule {}

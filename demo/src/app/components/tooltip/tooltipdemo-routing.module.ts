@@ -1,11 +1,11 @@
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { TooltipDemo } from './tooltipdemo.component';
+import { TooltipDemoComponent } from './tooltipdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: TooltipDemo }
+      { path: '', component: TooltipDemoComponent }
     ] )
   ],
   exports: [

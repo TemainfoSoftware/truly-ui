@@ -28,7 +28,7 @@ import * as json from './buttondemo-dataproperties.json';
   templateUrl : './buttondemo.component.html',
   styleUrls : [ './buttondemo.component.scss' ]
 } )
-export class ButtonDemo {
+export class ButtonDemoComponent {
 
   private dataTableProperties;
 

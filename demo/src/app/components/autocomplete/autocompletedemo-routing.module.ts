@@ -19,14 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule }     from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router'
-import { AutoCompleteDemo } from './autocompletedemo.component';
+import { AutoCompleteDemoComponent } from './autocompletedemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: AutoCompleteDemo }
+      { path: '', component: AutoCompleteDemoComponent }
     ] )
   ],
   exports: [

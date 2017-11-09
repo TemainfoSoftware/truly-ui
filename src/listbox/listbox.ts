@@ -226,7 +226,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     hasComplexObject() {
         const data = this.lazyMode ? this.data.data : this.data;
         for (let item = 0; item < data.length; item++) {
-            if (typeof data[item] === 'object') return true;
+            if (typeof data[item] === 'object') {return true};
         }
     }
 

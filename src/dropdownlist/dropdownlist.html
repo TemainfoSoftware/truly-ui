@@ -5,8 +5,10 @@
 
     <div class="wrapper" #wrapper (click)="changeShowStatus($event)">
         <div *ngIf="showOnlyIcon"
-            class="ui-overlap"
-            [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', width: 35 + 'px'}">
+             class="ui-overlap"
+             (keydown)="onListOpened($event)"
+             tabindex="-1"
+             [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', width: 35 + 'px'}">
             <i #dropdownShow class="{{placeholderIcon}}"></i>
         </div>
         <input #dropdown
@@ -35,15 +37,22 @@
         </div>
     </div>
 
-   <div class="wrapper">
-       <div class="dropdown-list-wrapper-select"
-            *ngIf="!disabled"
-            [style.zIndex]="1000"
-            [@enterAnimation]="showHide"
-            [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px', top: topPosition, left: leftPosition, position: position }"
-       >
-           <div class="-placeholder"
-                *ngIf="placeholder && showHide"
+    <div class="wrapper">
+        <div class="dropdown-list-wrapper-select"
+             *ngIf="!disabled"
+             [style.zIndex]="1000"
+             [@enterAnimation]="showHide"
+             [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px', top: topPosition, left: leftPosition, position: position }">
+
+            <div class="search-input" *ngIf="searchOnList">
+                <i class="search-input-icon ion-ios-search-strong"></i>
+                <input #searchInput class="search-input-field"
+                       (keyup)="onKeyDownSearchInput($event);onListOpened($event)"
+                       [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px'}">
+            </div>
+
+            <div class="-placeholder"
+                 [style.display]="placeholder && showHide ? 'block' : 'none'"
                 #defaultPlaceholder
                 [style.zIndex]="1000"
                 [ngStyle]="{'line-height' : height + 'px'}"
@@ -51,12 +60,13 @@
                 (click)="selectPlaceholder()" tabindex="-1">
                <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i> <span> {{ placeholder }}</span>
            </div>
+
            <ul class="dropdown-list-select"
                (keydown)="onListOpened($event)"
                #list
                [ngStyle]="calcHeightItem()"
                [style.display]="showHide ? 'block' : 'none'">
-               <li *ngFor="let item of datasource; let i = index"
+               <li *ngFor="let item of filtered; let i = index"
                    (click)="selectOption(item, i)"
                    tabindex="{{ i }}"
                    [ngStyle]="{'line-height' : height + 'px'}">

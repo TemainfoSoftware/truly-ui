@@ -181,6 +181,30 @@ $success-background-color: #E3F5EC;
   }
 }
 
+.search-input {
+  >.search-input-icon {
+    position: absolute;
+    font-size: 1em;
+    line-height: 25px;
+    padding-left: 7px;
+    color: #737373;
+  }
+  >.search-input-field {
+    padding-left: 20px;
+    height: 25px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+    color: #737373;
+    border: $default-border;
+    border-bottom: 0;
+    border-top: 0;
+  }
+}
+
+.selected {
+  background: $default-backgroundFocusColor !important;
+  color: #fff !important;
+}
 
 .ui-icon{
   width: 20px;

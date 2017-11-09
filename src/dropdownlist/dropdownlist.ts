@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, Renderer2,
+    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Renderer2,
     ViewChild
 } from '@angular/core';
 
@@ -33,7 +33,8 @@ import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 
-let globalZindex = 1;
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
 
 @Component( {
     selector: 'tl-dropdown-list',
@@ -82,6 +83,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'placeholder' ) placeholder = null;
 
+    @Input( 'searchOnList' ) searchOnList = false;
+
     @Input( 'placeholderIcon' ) placeholderIcon = 'ion-navicon-round';
 
     @Input( 'scroll' ) scroll = null;
@@ -93,6 +96,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     @ViewChild( 'dropdown' ) dropdown;
 
     @ViewChild( 'dropdownShow' ) dropdownShow;
+
+    @ViewChild( 'searchInput' ) searchInput;
 
     @ViewChild( 'wrapper' ) wrapper;
 
@@ -114,6 +119,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     private widthList = 0;
 
+    private filtered = [];
+
+    private subject = new Subject();
+
     constructor( private _renderer: Renderer2,
                  public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
@@ -124,27 +133,70 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     ngOnInit() {
         this.setElement( this.dropdown, 'dropdown' );
+        this.subject.debounceTime( 200 ).subscribe( searchTextValue => {
+            this.handleSearch( searchTextValue );
+        } );
     }
 
     ngAfterContentInit() {
+        this.setFilteredDefault();
         setTimeout(() => {
             this.widthList = this.wrapper.nativeElement.clientWidth;
         } );
     }
 
     ngAfterViewInit() {
+        this.validateData();
         this.updateDataSource( this.getData() );
         this.listenerMouseDown();
         this.handleInitializeValues();
     }
 
+    setFilteredDefault() {
+        this.filtered = this.data;
+    }
+
+    validateData() {
+        if ( ( this.data[ 0 ] === undefined ) ) {
+            throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
+            throw new EvalError( 'You must pass a string value to the TEXT and VALUE properties of the tl-dropdown-list element.' );
+        }
+        if ( typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) {
+            throw new EvalError( 'You should not pass a value to the TEXT and VALUE properties' +
+                ' when using the SIMPLEDATA property of the tl-dropdown-list element.' );
+        }
+    }
+
     listenerMouseDown() {
         this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( this.isNotListDropdown( event ) ) {
+            if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
                 this.showHide = false;
                 this.change.markForCheck();
             }
         } );
+    }
+
+    isSearchInput( event ) {
+        if ( this.searchInput ) {
+            return event.target === this.searchInput.nativeElement;
+        }
+    }
+
+    onKeyDownSearchInput( $event ) {
+        this.subject.next( $event.target.value );
+    }
+
+    handleSearch( searchTextValue ) {
+        const filter = [];
+        this.filtered = this.datasource.slice();
+        this.filtered.filter( ( item ) => {
+            if ( (item[ this.text ].substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
+                filter.push( item );
+            }
+        } );
+        this.filtered = filter;
     }
 
     handleInitializeValues() {
@@ -164,12 +216,18 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         }
     }
 
+    handleFocusSearchInput() {
+        if ( this.searchInput ) {
+            this.searchInput.nativeElement.focus();
+        }
+    }
+
     hasModel() {
         return this.componentModel.model;
     }
 
     selectValueModelLoaded() {
-        this.datasource.forEach( ( item, index, array ) => {
+        this.datasource.forEach( ( item ) => {
             if ( this.componentModel.model === item[ this.value ] ) {
                 this.setValueInputAsLabel( item );
                 this.itemSelected = item;
@@ -223,12 +281,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     onListOpened( $event ) {
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
-                this.onArrowDown();
                 this.stopPropagationAndPreventDefault( $event );
+                this.onArrowDown();
                 break;
             case KeyEvent.ARROWUP:
-                this.onArrowUp();
                 this.stopPropagationAndPreventDefault( $event );
+                this.onArrowUp();
                 break;
             case KeyEvent.ENTER:
                 $event.stopPropagation();
@@ -281,19 +339,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     onSpace() {
         if ( !this.showHide ) {
             this.showHide = true;
-            this.setTimeoutWithZIndexAndFocusOnElement();
         }
     }
 
-    setFocusOnElement() {
-        if ( this.placeholder && this.children === -1 ) {
-            this.placeholderDiv.nativeElement.focus();
-            return;
-        }
+    setInitialChildren() {
         if ( this.children === -1 ) {
             this.children = 0;
         }
-        this.list.nativeElement.children[ this.children ].focus();
     }
 
     onEscape( $event ) {
@@ -330,17 +382,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     handleDropdownValueAsNull() {
         if ( !this.itemSelected || this.placeholder || this.itemSelected === null || this.itemSelected === undefined ) {
-            this.setTimeoutWithZIndexAndFocusOnElement();
             this.showHide = true;
             return;
         }
-    }
-
-    setTimeoutWithZIndexAndFocusOnElement() {
-        setTimeout( () => {
-            this.getAndSetZIndex();
-            this.setFocusOnElement();
-        }, 0 );
     }
 
     onChangeItem() {
@@ -348,16 +392,22 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.onShowHideFalse();
             return;
         }
-        this.datasource.forEach( ( value, index, array ) => {
-            if ( (value[ this.text ]).trim() === document.activeElement.textContent.trim() ) {
+        this.datasource.forEach( ( value ) => {
+            if ( (value[ this.text ]).trim() === this.getSelectedItem().textContent.trim() ) {
                 this.itemSelected = value;
-                if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-                    this.clearModelComponent();
-                }
+                this.handleItemSelectedAsNull();
                 this.setModelComponent( this.itemSelected[ this.value ] );
                 this.setValueInputAsLabel( this.itemSelected );
             }
         } );
+    }
+
+    getSelectedItem() {
+        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
+            if ( this.list.nativeElement.children[ item ].getAttribute( 'class' ).includes( 'selected' ) ) {
+                return this.list.nativeElement.children[ item ];
+            }
+        }
     }
 
     placeholderEnter( $event ) {
@@ -382,40 +432,60 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     onShowHideFalse() {
-        if ( this.children === -1 ) {
-            this.children = 0;
-        }
+        this.setInitialChildren();
         this.itemSelected = this.datasource[ this.children ];
-        if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
-            this.clearModelComponent();
-        }
+        this.handleItemSelectedAsNull();
         this.setModelComponent( this.itemSelected[ this.value ] );
         this.setValueInputAsLabel( this.itemSelected );
     }
 
+    handleItemSelectedAsNull() {
+        if ( this.itemSelected[ this.value ] === null || this.itemSelected[ this.value ] === '' ) {
+            this.clearModelComponent();
+        }
+    }
+
     onArrowDown() {
         if ( this.children < this.list.nativeElement.children.length - 1 ) {
-            this.list.nativeElement.children[ this.children + 1 ].focus();
-            this.children = this.children + 1;
+            const index = this.children + 1;
+            this.children = index;
+            this.removeSelectedClass();
+            this.handleSelectedAsPlaceholder();
+            this.addSelectedClass( index );
             this.onChangeItem();
+        }
+    }
+
+    addSelectedClass( index ) {
+        this._renderer.addClass( this.list.nativeElement.children[ index ], 'selected' );
+    }
+
+    removeSelectedClass() {
+        for ( let item = 0; item < this.list.nativeElement.children.length; item++ ) {
+            if ( this.list.nativeElement.children[ item ].getAttribute( 'class' ).includes( 'selected' ) ) {
+                this._renderer.removeClass( this.list.nativeElement.children[ item ], 'selected' );
+            }
         }
     }
 
     onArrowUp() {
         if ( this.placeholder && this.children <= 0 ) {
+            this.removeSelectedClass();
+            this.addSelectedClassPlaceholder();
             this.children = -1;
             this.itemSelected = null;
             this.clearModelComponent();
-            if ( this.showHide ) {
-                this.placeholderDiv.nativeElement.focus();
-            }
             this.dropdown.nativeElement.value = this.placeholder;
             this.setPlaceholderIcon();
-
         }
+        this.handleSelectItemArrowUP();
+    }
+
+    handleSelectItemArrowUP() {
         if ( this.children > 0 && this.children !== -1 ) {
+            this.removeSelectedClass();
             this.children = this.children - 1;
-            this.list.nativeElement.children[ this.children ].focus();
+            this.addSelectedClass( this.children );
             this.onChangeItem();
         }
     }
@@ -423,31 +493,46 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     changeShowStatus(event) {
         event.stopPropagation();
         this.setPositionListItens(event);
+        this.showHide = !this.showHide;
+        if ( this.disabled ) {
+            return;
+        }
+        if ( !this.showHide ) {
+            return;
+        }
+        this.handleNewSelected();
+        this.handleFocusSearchInput();
+    }
 
-        if ( !this.disabled ) {
-            this.showHide = !this.showHide;
-            if ( this.showHide ) {
-                setTimeout( () => {
-                    this.getAndSetZIndex();
-                    if ( this.children === -1 && this.placeholder ) {
-                        this.placeholderDiv.nativeElement.focus();
-                    } else if ( this.children === -1 ) {
-                        this.list.nativeElement.children[ 0 ].focus();
-                    } else {
-                        this.list.nativeElement.children[ this.children ].focus();
-                    }
-                }, 0 );
+    handleNewSelected() {
+        setTimeout( () => {
+            if ( this.children === -1 ) {
+                this.children = 0;
+                this.addSelectedClass( 0 );
+            } else {
+                this.removeSelectedClass();
+                this.addSelectedClass( this.children );
             }
+        }, 0 );
+    }
+
+    handleSelectedAsPlaceholder() {
+        if (this.placeholderDiv.nativeElement.getAttribute('class').includes('selected')) {
+            this.removeSelectedClassPlaceholder();
         }
     }
 
-    getAndSetZIndex() {
-        this.zIndex = globalZindex++;
-        return this.zIndex;
+    addSelectedClassPlaceholder() {
+        this._renderer.addClass( this.placeholderDiv.nativeElement, 'selected' );
+    }
+
+    removeSelectedClassPlaceholder() {
+        this._renderer.removeClass( this.placeholderDiv.nativeElement, 'selected' );
     }
 
     setPositionListItens(event) {
         if (this.showOnlyIcon) {
+            this.placeholder = false;
             const target = event.path.filter( (value) => {
                 return value.className === 'tl-dropdown-list-box';
             });
@@ -464,7 +549,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this.setModelComponent( item[ this.value ] );
         this.setValueInputAsLabel( item );
         this.dropdown.nativeElement.focus();
-
     }
 
     selectPlaceholder() {
@@ -508,16 +592,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     getData() {
-        if ( ( this.data[ 0 ] === undefined ) ) {
-            throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
-        }
-        if ( typeof this.data[ 0 ] === 'object' && (this.text === undefined || this.value === undefined) ) {
-            throw new EvalError( 'You must pass a string value to the TEXT and VALUE properties of the tl-dropdown-list element.' );
-        }
-        if ( typeof this.data[ 0 ] === 'string' && (this.text !== 'text' || this.value !== 'value') ) {
-            throw new EvalError( 'You should not pass a value to the TEXT and VALUE properties' +
-                ' when using the SIMPLEDATA property of the tl-dropdown-list element.' );
-        }
         if ( typeof this.data[ 0 ] === 'string' ) {
             const simpleData = [];
             this.data.forEach( ( value ) => {

@@ -44,7 +44,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
          )
      ]
  })
- export class TlContainerModal implements OnInit {
+ export class TlContainerModal implements OnInit, DoCheck {
 
      @Input() containerColor = '#F2F2F2';
 
@@ -71,7 +71,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
      private differ;
 
      constructor( public modalService: ModalService, private colorService: ToneColorGenerator, differs: KeyValueDiffers ) {
-       //  this.differ = differs.find( {} ).create( null );
+         this.differ = differs.find( {} ).create();
      }
 
      ngOnInit() {
@@ -110,11 +110,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
          scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
      }
 
-     // ngDoCheck() {
-     //     const changes = this.differ.diff( this.modalService.forms );
-     //     if ( changes ) {
-     //         this.validateScroll();
-     //     }
-     // }
+      ngDoCheck() {
+         const changes = this.differ.diff( this.modalService.forms );
+         if ( changes ) {
+             this.validateScroll();
+         }
+     }
 
 }

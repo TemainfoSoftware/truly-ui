@@ -4,12 +4,13 @@
   "collectCoverage": true,
   "mapCoverage": true,
   "collectCoverageFrom" : [
-    "src/**/*.ts"
+    "src/components/**/*.ts"
   ],
   "coveragePathIgnorePatterns":[
     "<rootDir>/node_modules/",
     "<rootDir>/demo/",
-    "<rootDir>/dist/"
+    "<rootDir>/dist/",
+    "<rootDir>/src/*.d.ts"
   ],
   "coverageDirectory": "coverage",
   "coverageReporters": ["json", "lcov"],
@@ -19,6 +20,7 @@
     "<rootDir>/docs/",
     "<rootDir>/dist/",
     "<rootDir>/node_modules/",
+    "<rootDir>/e2e/",
     "<rootDir>/tools/"
   ]
 }

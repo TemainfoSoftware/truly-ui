@@ -1,0 +1,195 @@
+<div class="router-outlet">
+<div class="header-title-demo">
+  <h1 class="title">Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span></h1>
+  <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
+  <p class="text-content">The form component uses Modal, the difference between them is tabbing, and the default buttons that act as a submit form.</p>
+  <p class="text-content">The way of the form appears (fullscreen) on window is relative with the parent HTML element.</p>
+</div>
+<hr>
+<div class="showcase">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="group-component">
+          <div class="col-md-3">
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="form1()">
+            </tl-button>
+          </div>
+          <div class="col-md-3">
+            <tl-button [text]="'Pacient Register'"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'F2'"
+                       mdResult="MRCUSTOM"
+                       (click)="form2()">
+            </tl-button>
+          </div>
+          <div class="col-md-3">
+            <tl-button [text]="'Count Register'"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       mdResult="MRCUSTOM"
+                       [shortcut]="'ctrl + alt + t'"
+                       (click)="form3()"></tl-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <hr>
+  <div class="row">
+    <br>
+    <div class="col-md-12">
+    <pre>
+      <code>
+      {{result | json}}
+     </code>
+    </pre>
+    </div>
+
+    <!--<div class="col-md-12">
+      <div class="container-modal">
+        <tl-container-modal></tl-container-modal>
+      </div>
+    </div>-->
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="title"> Getting Worked </h3>
+      <h4>Step One</h4>
+      <h5>Declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>.</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor(public view: ViewContainerRef, public formService: FormService) {}
+      </textarea>
+      <hr>
+      <h4>Step Two</h4>
+      <h5>Inside of your <code>constructor</code>, set your view calling the method of the Form Service.</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor(public view: ViewContainerRef, public formService: FormService) {
+     this.formService.setView(this.view);
+}
+      </textarea>
+      <hr>
+
+      <h4>Step Tree</h4>
+      <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
+  <!--Your Content Here-->
+ </tl-form>
+      </textarea>
+      <hr>
+      <h4>Step Four</h4>
+      <h5>Import your custom component that will be inside the form as entry component the property ( <code>entryComponents</code> ) in your module. In this case is <code>NewPerson</code></h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+
+@NgModule({
+  declarations: [
+    FormDemo,
+    NewPerson,
+  ],
+  imports:[
+    CommonModule,
+    FormsModule,
+    FormModule,
+  ],
+  exports: [
+    FormDemo,
+    NewPerson
+  ],
+  providers: [
+    DialogService
+  ],
+  entryComponents: [
+    NewPerson
+  ]
+})
+export class FormDemoModule {}
+      </textarea>
+      <hr>
+      <h4>Final Step</h4>
+      <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For example:</h5>
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
+  });
+});
+      </textarea>
+    </div>
+  </div>
+
+  <div class="setup">
+    <h3 class="title">Properties</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of formprop; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td><span class="badge">{{ item.type }}</span></td>
+          <td><code>{{ item.default }}</code></td>
+          <td>{{ item.description }}</td>
+          <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of formevts; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td>{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="examples">
+      <h3 class="title">Examples</h3>
+      <div class="group-component">
+        <h5 class="title">Modal Options</h5>
+        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.formOptions = {
+    title: 'New Modal',
+    icon: 'ion-monitor',
+    draggable: true,
+    width: '500px',
+    height: 'auto',
+    maximizable: true,
+    minimizable: true
+};
+        </textarea>
+      </div>
+      <div class="group-component">
+        <h5 class="title">Form With Options</h5>
+        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+ this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
+  });
+});
+        </textarea>
+      </div>
+    </div>
+</div>
+</div>

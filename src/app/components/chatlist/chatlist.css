@@ -1,0 +1,67 @@
+.ui-chat-wrapper {
+  position: relative; }
+  .ui-chat-wrapper > .ui-chat-overflow {
+    position: relative;
+    overflow: auto; }
+    .ui-chat-wrapper > .ui-chat-overflow > .ui-chat-lists {
+      position: relative;
+      width: 100%; }
+      .ui-chat-wrapper > .ui-chat-overflow > .ui-chat-lists > .ui-chat-content > .ui-status {
+        background: #efefef;
+        color: #6f6f6f;
+        height: 25px;
+        padding-left: 10px;
+        border-left: 1px solid #CACACA;
+        border-right: 1px solid #CACACA;
+        font-family: "Segoe UI", Helvetica;
+        line-height: 25px; }
+      .ui-chat-wrapper > .ui-chat-overflow > .ui-chat-lists > .ui-chat-content > .ui-status:first-child {
+        border-top: 1px solid #CACACA; }
+  .ui-chat-wrapper > .ui-chat-overflow::-webkit-scrollbar {
+    background: #F1F1F1;
+    width: 13px; }
+  .ui-chat-wrapper > .ui-chat-overflow::-webkit-scrollbar-corner {
+    background: #F1F1F1; }
+  .ui-chat-wrapper > .ui-chat-overflow::-webkit-scrollbar-track {
+    background: #F6F6F6;
+    border-right: 1px solid #CACACA; }
+  .ui-chat-wrapper > .ui-chat-overflow::-webkit-scrollbar-thumb {
+    background: #66CC99; }
+
+.ui-chat-template {
+  border-bottom: 1px solid #f1f1f1;
+  cursor: pointer; }
+  .ui-chat-template > .ui-chat-infowrapper {
+    display: inline-grid;
+    position: absolute;
+    top: 20%; }
+    .ui-chat-template > .ui-chat-infowrapper > .ui-chat-name {
+      font-family: 'Lato', sans-serif;
+      font-size: 13px;
+      color: #565656; }
+    .ui-chat-template > .ui-chat-infowrapper > .ui-chat-sector {
+      font-family: 'Lato', sans-serif;
+      font-size: 10px;
+      color: #858585; }
+
+.ui-chat-template:focus {
+  background-color: #13BBB6;
+  outline: none; }
+  .ui-chat-template:focus > .ui-chat-infowrapper > .ui-chat-name {
+    color: #ffffff; }
+  .ui-chat-template:focus > .ui-chat-infowrapper > .ui-chat-sector {
+    color: #ffffff;
+    opacity: 0.8; }
+
+.ui-chat-template img {
+  margin: 10px; }
+
+.ui-chat-bagde {
+  float: right;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  margin: 12px;
+  transition: linear background-color 0.1s; }
+
+/*# sourceMappingURL=chatlist.css.map */

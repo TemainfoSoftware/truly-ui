@@ -1,0 +1,52 @@
+.ui-datatable-scrollable {
+  overflow: hidden;
+  border-right: 1px #DCDCDC solid; }
+
+.ui-box-notfound-records {
+  background-color: #FFF;
+  height: 100%; }
+  .ui-box-notfound-records > .ui-container {
+    color: #7a838b;
+    text-align: center;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); }
+  .ui-box-notfound-records.ui-show {
+    display: block; }
+  .ui-box-notfound-records.ui-hide {
+    display: none; }
+
+.ui-datatable-content-wrap {
+  overflow-y: scroll;
+  overflow-x: auto;
+  min-height: 300px; }
+
+.ui-datatable-content-body > .ui-row {
+  font-size: 13px;
+  background: #E9E9E9;
+  outline: none;
+  color: #7a838b;
+  margin: 0;
+  content: none; }
+.ui-datatable-content-body > .ui-row .ui-cel {
+  border-right: 1px #DCDCDC solid;
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  align-items: center; }
+.ui-datatable-content-body > .ui-row .ui-cel.-textleft {
+  text-align: left; }
+.ui-datatable-content-body > .ui-row .ui-cel.-textright {
+  text-align: right; }
+.ui-datatable-content-body > .ui-row .ui-cel.-textcenter {
+  text-align: center; }
+.ui-datatable-content-body > .ui-row .ui-cel:last-child {
+  border-right: 1px #DCDCDC solid; }
+.ui-datatable-content-body > .ui-row:nth-child(odd) {
+  background: #FFFFFF; }
+.ui-datatable-content-body > .ui-row:focus {
+  background: #66CC99 !important;
+  color: #FFF; }
+
+/*# sourceMappingURL=datatable-scrollable-mode.css.map */

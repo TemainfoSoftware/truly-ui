@@ -50,7 +50,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() iconAfterTextClass;
 
-    @Input() width;
+    @Input() width = 125;
 
     @Input() disabled;
 

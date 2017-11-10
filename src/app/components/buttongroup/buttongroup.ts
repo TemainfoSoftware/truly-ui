@@ -73,8 +73,7 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
         item._element.nativeElement.style.position = 'absolute';
         if (index2 >= 1) {
           item._element.nativeElement.style.left =
-            array[index2 - 1]._element.nativeElement.offsetLeft +
-            item._element.nativeElement.offsetWidth + 'px';
+            array[index2 - 1]._element.nativeElement.offsetLeft + array[index2 - 1].width + 'px';
         }
       });
     }

@@ -41,10 +41,11 @@
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
     "semantic-release-pre": "semantic-release pre",
-    "semantic-release-post": " semantic-release post"
+    "semantic-release-post": " semantic-release post",
+    "publish": "npm publish dist/ --access public"
 
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^5.0.0",
     "@angular/common": "^5.0.0",

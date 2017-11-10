@@ -10,11 +10,12 @@
              [style.border]="'1px solid ' + borderBoxColor"
              [style.opacity]="item === modalService.activeModal ? 1 : 0.7"
              *ngFor="let item of modalService.forms; let i = index" (click)="showWindow(item, i)">
-            <span class="item"><i ngClass="{{item.instance.icon}}"></i></span>
-            <span class="item">{{item.instance.title}}</span>
+            <span class="item"><i [ngClass]="item.instance.icon"></i></span>
+            <span class="item">{{getTextContainerItem(item.instance.title)}}</span>
         </div>
     </div>
 </div>
-    <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right"><i
-            class="ion-chevron-right"></i></span>
+    <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
+      <i class="ion-chevron-right"></i>
+    </span>
 </div>

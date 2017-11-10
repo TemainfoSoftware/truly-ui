@@ -31,10 +31,10 @@
     "e2e": "ng e2e",
 
     "prebuild:library": "rimraf dist tmp",
-    "build:library": "gulp inline-templates && npm run compile",
+    "build:library": "npm run compile",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library",
-    "compile": "ngc -p tsconfig-release.json",
+    "compile": "gulp inline-templates && ngc -p tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",

@@ -3,13 +3,14 @@
   "compilerOptions": {
     "outDir": "./dist/components",
     "baseUrl": "src",
-    "rootDir": "src/app/components",
+    "rootDir": "./tmp/src-inlined/",
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "module": "es2015",
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -19,12 +20,16 @@
     ]
   },
   "include": [
-    "src/app/components/**/*.ts"
+    "./tmp/src-inlined/**/*.ts"
   ],
   "exclude": [
     "test.ts",
     "**/*.spec.ts",
     "node_modules/*",
     "node_modules/@types/jest/index.d.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "genDir": "./dist/components",
+    "skipTemplateCodegen": true
+  }
 }

@@ -23,7 +23,7 @@
 -------
 
 <p align="center">
-  <img src="assets/logo.png" width="500">
+  <img src="src/assets/images/logo.png" width="500">
 </p>
 
 
@@ -38,6 +38,7 @@ We assume that you have already installed the following packages at least and ar
 
 * [NodeJS >= 7](https://nodejs.org)
 * [Angular Cli >= 1.2.0](https://cli.angular.io/)
+* [Angular >= 5.0.0](https://angular.io/)
 
 ## Installation
 

@@ -1,0 +1,19 @@
+h3 {
+  margin-top: 10px !important; }
+
+.code-area {
+  margin-top: 10px; }
+
+.description {
+  font-size: 1em;
+  font-family: "Segoe UI"; }
+
+ul {
+  font-weight: 800;
+  font-size: 16px;
+  padding-top: 5px; }
+
+li a {
+  color: #66CC99; }
+
+/*# sourceMappingURL=getting-started.component.css.map */

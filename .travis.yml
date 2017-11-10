@@ -10,24 +10,18 @@ notifications:
 node_js:
   - '7'
   - '6'
-script:
-  - npm run build
 before_script:
   - npm prune
   - npm run lint
-  - npm run test-jest:ci
+  - npm run test
+script:
+  - npm run compile
 after_success:
   - npm run semantic-release
-  - cd src
-  - npm link
-  - cd ..
-  - cd demo
-  - npm install
-  - npm link truly-ui
-  - ng build
+  - npm run build:showcase
 deploy:
   - provider: s3
-    local_dir: dist
+    local_dir: showcase
     skip_cleanup: true
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY
@@ -35,7 +29,7 @@ deploy:
     region: sa-east-1
     acl: public_read
   - provider: s3
-    local_dir: dist
+    local_dir: showcase
     skip_cleanup: true
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY

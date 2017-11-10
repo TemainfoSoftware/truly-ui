@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, QueryList, ViewChild, ElementRef,
-    AfterContentInit, Input, Output, EventEmitter
+  Component, ContentChildren, QueryList, ViewChild, ElementRef,
+  AfterContentInit, Input, Output, EventEmitter, AfterViewInit
 } from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
@@ -33,7 +33,7 @@ import { ButtonGroupService } from './buttongroup.service';
     styleUrls: [ './buttongroup.scss' ],
     providers: [ ButtonGroupService ]
 } )
-export class TlButtonGroup implements AfterContentInit {
+export class TlButtonGroup implements AfterContentInit, AfterViewInit {
 
     @Input() multiSelect = false;
 
@@ -58,16 +58,40 @@ export class TlButtonGroup implements AfterContentInit {
         this.createItemList();
     }
 
+    ngAfterViewInit() {
+      this.setPositions();
+      this.removeBorders();
+    }
+
     createItemList() {
         this.setItems();
-        this.isMultiSelectMode() ? this.initializeMultiSelectMode() : this.initializeSingleSelecteMode();
+        this.isMultiSelectMode() ? this.initializeMultiSelectMode() : this.initializeSingleSelectedMode();
+    }
+
+    setPositions() {
+      this.buttonGroupItem.forEach((item, index2, array) => {
+        item._element.nativeElement.style.position = 'absolute';
+        if (index2 >= 1) {
+          item._element.nativeElement.style.left =
+            array[index2 - 1]._element.nativeElement.offsetLeft +
+            item._element.nativeElement.offsetWidth + 'px';
+        }
+      });
+    }
+
+    removeBorders() {
+      this.buttonGroupItem.forEach( ( item, index2, array ) => {
+        if (index2 !== array.length - 1) {
+          item._element.nativeElement.firstChild.firstChild.style.borderRight = '0';
+        }
+      } );
     }
 
     initializeMultiSelectMode() {
         this.handleMultiSelectMode();
     }
 
-    initializeSingleSelecteMode() {
+    initializeSingleSelectedMode() {
         this.itemsSelected = this.buttonGroupItem.toArray().filter( ( item ) => {
             return item.buttonSelected ? item : '';
         } );

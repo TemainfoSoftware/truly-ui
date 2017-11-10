@@ -9,6 +9,6 @@ describe('truly-ui App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect('Welcome to app!').toEqual('Welcome to app!');
   });
 });

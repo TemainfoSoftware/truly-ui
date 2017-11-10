@@ -40,7 +40,9 @@
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
-    "semantic-release": "semantic-release pre && npm publish --access public && semantic-release post"
+    "semantic-release-pre": "semantic-release pre",
+    "semantic-release-post": " semantic-release post"
+
   },
   "private": true,
   "dependencies": {

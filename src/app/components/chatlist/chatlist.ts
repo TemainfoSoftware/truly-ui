@@ -20,8 +20,9 @@
  SOFTWARE.
  */
 import {
-    Component, ElementRef, AfterViewInit, Input, OnInit, QueryList,
-    ViewChildren, forwardRef, NgZone, Output, EventEmitter, DoCheck,
+  Component, ElementRef, AfterViewInit, Input, OnInit, QueryList,
+  ViewChildren, NgZone, Output, EventEmitter, forwardRef,
+  ViewChild,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -36,107 +37,98 @@ const Online = 'Online';
 const Offline = 'Offline';
 const Busy = 'Busy';
 
-
 @Component( {
     selector: 'tl-chatlist',
     templateUrl: './chatlist.html',
     styleUrls: [ './chatlist.scss' ]
 } )
-export class TlChatList extends ComponentDefaultBase implements AfterViewInit, OnInit, DoCheck {
+export class TlChatList extends ComponentDefaultBase implements AfterViewInit, OnInit {
 
-    @Input() data = [];
+  @Input() data = [];
 
-    @Input() searchInput;
+  @Input() searchInput;
 
-    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+  @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
-    @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
+  @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
 
-    public scrollChat;
+  @ViewChild( 'overflow' ) overflow: ElementRef;
 
-    private selected = '';
+  public scrollChat;
 
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                 public chatListService: ChatListService, private chat: ElementRef, private zone: NgZone) {
-        super( tabIndexService, idService, nameService );
-    }
+  private selected = '';
 
-    ngOnInit() {
-        this.chatListService.data = this.data;
-        this.filterDataStatus();
-    }
+  constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+               public chatListService: ChatListService, private chat: ElementRef ) {
+    super( tabIndexService, idService, nameService );
+  }
 
-    ngAfterViewInit() {
-        this.setElement( this.chat, 'tl-chatlist' );
-    }
+  ngOnInit() {
+      this.chatListService.data = this.data;
+      this.filterDataStatus();
+  }
 
-    filterDataStatus() {
-        this.chatListService.data.forEach( ( value ) => {
-            this.isNotOffline( value ) ?
-                this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
-        } );
-        this.chatListService.sortArray( this.chatListService.online );
-        this.chatListService.sortArray( this.chatListService.offline );
-    }
+  ngAfterViewInit() {
+      this.setElement( this.chat, 'tl-chatlist' );
+  }
 
-    getColorByStatus( item ) {
-        switch ( item.status ) {
-            case 'Busy':
-                return '#f77171';
-            case 'Online':
-                return '#81e2b2';
-            case 'Offline':
-                return '#d8d8d8';
-            case 'Away':
-                return '#fcb27e';
-        }
-    }
+  filterDataStatus() {
+      this.chatListService.data.forEach( ( value ) => {
+          this.isNotOffline( value ) ?
+              this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
+      } );
+      this.chatListService.sortArray( this.chatListService.online );
+      this.chatListService.sortArray( this.chatListService.offline );
+  }
 
-    handleScrollChat( $event ) {
-        requestAnimationFrame( () => {
-            this.zone.runOutsideAngular( () => {
+  getColorByStatus( item ) {
+      switch ( item.status ) {
+          case 'Busy':
+              return '#f77171';
+          case 'Online':
+              return '#81e2b2';
+          case 'Offline':
+              return '#d8d8d8';
+          case 'Away':
+              return '#fcb27e';
+      }
+  }
 
-                this.setScrollChat( $event );
-                this.setScrollFirstList();
+  handleScrollChat( $event ) {
+      this.setScrollChat( $event );
+      this.setScrollFirstList();
 
-                if ( this.scrollChat + this.heightSecondList() >= this.heightFirstList() ) {
-                    this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.scrollTop =
-                        (this.scrollChat - this.heightFirstList());
-                }
-            } );
-        } );
-    }
+      if ( this.scrollChat + this.heightSecondList() >= this.heightFirstList() ) {
+          this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.scrollTop =
+              (this.scrollChat - this.heightFirstList());
+      }
+  }
 
 
-    onClickItemChat( $event ) {
-        this.onClickItem.emit( $event );
-        this.selected = $event;
-    }
+  onClickItemChat( $event ) {
+      this.onClickItem.emit( $event );
+      this.selected = $event;
+  }
 
-    setScrollChat( $event ) {
-        this.scrollChat = $event.target.scrollTop;
-    }
+  setScrollChat( $event ) {
+      this.scrollChat = $event.target.scrollTop;
+  }
 
-    heightFirstList() {
-        return (parseInt( this.listBoxes.toArray()[ 0 ].listBox.nativeElement.style.height, 10 ));
-    }
+  heightFirstList() {
+      return (parseInt( this.listBoxes.toArray()[ 0 ].listBox.nativeElement.style.height, 10 ));
+  }
 
-    heightSecondList() {
-        return (parseInt( this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.style.height, 10 ));
-    }
+  heightSecondList() {
+      return (parseInt( this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.style.height, 10 ));
+  }
 
-    setScrollFirstList() {
-        this.listBoxes.toArray()[ 0 ].itemContainer.nativeElement.scrollTop = this.scrollChat;
+  setScrollFirstList() {
+      this.listBoxes.toArray()[ 0 ].itemContainer.nativeElement.scrollTop = this.scrollChat;
+  }
 
-    }
-
-    isNotOffline( value ) {
-        return value.status.toLowerCase() !== Offline.toLowerCase();
-    }
-
-    ngDoCheck() {
-
-    }
+  isNotOffline( value ) {
+      return value.status.toLowerCase() !== Offline.toLowerCase();
+  }
 
 }
 

@@ -36,7 +36,7 @@ export class TlDatatableDataSource implements DatasourceService {
 
     private filtredData = [];
 
-    private filter: FilterEventMetadata = null;
+    private filter: FilterEventMetadata;
 
     private datatable: TlDatatable;
 
@@ -63,15 +63,15 @@ export class TlDatatableDataSource implements DatasourceService {
         this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
     }
 
-    loadMoreData(skip: number, take: number, filter?: any): Promise<boolean> {
+    loadMoreData(skip: number, take: number): Promise<boolean> {
         return new Promise(( resolve ) => {
             if (  this.datatable.allowLazy ) {
                 this.datatable.loading = true;
-               this.datatable.lazyLoad.emit({ skip: skip,  take: take, filters: filter.filters });
+               this.datatable.lazyLoad.emit({ skip: skip,  take: take, filters: this.getFilter() });
                return resolve();
 
             }
-            this.getRowsInMemory( skip, take, filter ).then((res) => {
+            this.getRowsInMemory( skip, take ).then((res) => {
                this.datasource = res;
                this.onChangeDataSourceEmitter.emit(this.datasource);
                return resolve();
@@ -81,21 +81,26 @@ export class TlDatatableDataSource implements DatasourceService {
     }
 
     setFilter(value: FilterEventMetadata) {
-        if (!this.existsFilter(value)) {
+        if (!this.existsFilter()) {
             this.filtredData = [];
         }
-        this.loadMoreData(0, this.datatable.rowsPage, value);
+        this.filter = value;
+        this.loadMoreData(0, this.datatable.rowsPage);
+    }
+
+    getFilter() {
+      return this.existsFilter() ? this.filter.filters : {};
     }
 
     isDataArray( data: any ) {
         return data instanceof Array;
     }
 
-    private getRowsInMemory(skip: number, take: number, filter?: any): Promise<any> {
+    private getRowsInMemory(skip: number, take: number): Promise<any> {
         return new Promise((resolve) => {
             let data: any;
-            data = this.getData(filter);
-            data = this.filterData(data, filter);
+            data = this.getData();
+            data = this.filterData(data);
             // data = this.sortData(data, sort);
             this.refreshTotalRows(data);
             data = this.sliceData(data, skip, take);
@@ -112,8 +117,8 @@ export class TlDatatableDataSource implements DatasourceService {
         this.datatable.totalRows = data.total;
     }
 
-    private getData(filter) {
-        if (this.filtredData.length && (!this.existsFilter(filter)) ) {
+    private getData() {
+        if (this.filtredData.length && (!this.existsFilter()) ) {
             return this.filtredData;
         }
         return this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
@@ -127,19 +132,19 @@ export class TlDatatableDataSource implements DatasourceService {
         return (data as Array<any>).slice( skip, take );
     }
 
-    private filterData(data, filter) {
-        if (! this.existsFilter(filter) ) { return data; }
+    private filterData(data) {
+        if (! this.existsFilter() ) { return data; }
         this.filtredData = [];
         this.zone.runOutsideAngular(() => {
             data.forEach( value => {
                 let match = true;
-                const filterArray = Object.keys( filter.filters );
+                const filterArray = Object.keys( this.filter.filters );
 
                 for ( let valueIndex = 0; valueIndex < filterArray.length; valueIndex++ ) {
 
                     const dataValue = value[ filterArray[ valueIndex ] ];
-                    const filterValue = filter.filters[ filterArray[ valueIndex ] ].value.toLowerCase();
-                    const matchMode = filter.filters[ filterArray[ valueIndex ] ].matchMode;
+                    const filterValue = this.filter.filters[ filterArray[ valueIndex ] ].value.toLowerCase();
+                    const matchMode = this.filter.filters[ filterArray[ valueIndex ] ].matchMode;
 
                     if ( ! this.filterConstraints[matchMode]( dataValue, filterValue) ) {
                         match = false;
@@ -157,7 +162,7 @@ export class TlDatatableDataSource implements DatasourceService {
 
     }
 
-    private existsFilter(filter) {
-        return  (filter !== undefined) && Object.keys(filter.filters).length;
+    private existsFilter() {
+        return  (this.filter !== undefined) && Object.keys(this.filter.filters).length;
     }
 }

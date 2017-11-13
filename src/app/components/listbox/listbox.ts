@@ -109,6 +109,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() customInput = false;
 
+  @Input() focusOnScroll = true;
+
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
     @Output() onClickAddNew: EventEmitter<any> = new EventEmitter();
@@ -248,10 +250,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                 clearTimeout( this.timeScroll );
                 this.onScroll();
                 this.timeScroll = setTimeout( () => {
-                    if ( !this.scrollByArrows ) {
-                        this.change.detectChanges();
-                        this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
-                    }
+                  if ( !this.scrollByArrows ) {
+                      this.change.detectChanges();
+                      if ( !this.focusOnScroll ) {
+                        return;
+                      }
+                      this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
+                  }
                 }, 66 );
             } );
         } );

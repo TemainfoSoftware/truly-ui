@@ -40,7 +40,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Object of validations (receive a bunch of validations).
      */
-    @Input() validations: Validations[] = [];
+    @Input() validations: Validations = new Validations();
 
     /**
      * Text to display in Input Placeholder.
@@ -56,7 +56,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Output of Event on Blur element.
      */
     @Output() blur: EventEmitter<any> = new EventEmitter();
-
 
     /**
      * Output of Event on Focus element.
@@ -89,11 +88,13 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     ngOnInit() {
       this.handleNameComponent();
-      if ( this.validations ) {
+      if (this.validations) {
+
         Object.keys( this.validations ).forEach( ( key ) => {
           this[ key ] = this.validations[ key ];
         } );
       }
+
     }
 
     get modelValue(): any {

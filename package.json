@@ -29,7 +29,6 @@
     "test:ci": "jest --config=jest.conf.json --runInBand",
     "lint": "ng lint",
     "e2e": "ng e2e",
-
     "prebuild:library": "rimraf dist tmp",
     "build:library": "npm run compile",
     "build:showcase": "ng build --aot -prod",
@@ -43,7 +42,6 @@
     "semantic-release-pre": "semantic-release pre",
     "semantic-release-post": " semantic-release post",
     "publish": "npm publish dist/ --access public"
-
   },
   "private": false,
   "dependencies": {
@@ -86,11 +84,15 @@
     "jest": "^20.0.4",
     "jest-preset-angular": "^4.0.0",
     "node-sass": "^4.6.0",
+    "pre-commit": "^1.2.2",
     "protractor": "~5.1.2",
     "rimraf": "^2.6.2",
     "semantic-release": "^6.3.6",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
-  }
+  },
+  "pre-commit": [
+    "ci"
+  ]
 }

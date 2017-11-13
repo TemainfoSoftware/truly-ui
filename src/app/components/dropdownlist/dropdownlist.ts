@@ -523,7 +523,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     setPositionListItens(event) {
         if (this.showOnlyIcon) {
-            this.placeholder = false;
             const target = event.path.filter( (value) => {
                 return value.className === 'tl-dropdown-list-box';
             });

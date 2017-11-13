@@ -40,7 +40,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Object of validations (receive a bunch of validations).
      */
-    @Input() validations: Validations = new Validations();
+    @Input() validations: Validations[] = [];
 
     /**
      * Text to display in Input Placeholder.
@@ -88,10 +88,12 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Lifehook of OnInit Angular.
      */
     ngOnInit() {
-        this.handleNameComponent();
-        Object.keys( this.validations ).forEach(( key ) => {
-            this[ key ] = this.validations[ key ];
+      this.handleNameComponent();
+      if ( this.validations ) {
+        Object.keys( this.validations ).forEach( ( key ) => {
+          this[ key ] = this.validations[ key ];
         } );
+      }
     }
 
     get modelValue(): any {
@@ -137,7 +139,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Method that validate if has Validations;
      */
     hasValidation() {
-        return Object.keys( this.validations ).length > 0;
+      return this.validations && Object.keys( this.validations ).length > 0;
     }
 
     handleNameComponent() {

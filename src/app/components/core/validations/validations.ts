@@ -25,7 +25,7 @@ export class Validations {
     /**
      * Property to control if input is required or not.
      */
-    @Input() required: number = null;
+    @Input() required: boolean;
 
     /**
      * Property for minLength value

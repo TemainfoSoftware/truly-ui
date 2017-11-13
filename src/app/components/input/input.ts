@@ -208,6 +208,8 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         this.setElement( this.input, 'input' );
         this.validateClearButtonPosition();
         this.hasMask();
+
+
     }
 
     hasMask() {

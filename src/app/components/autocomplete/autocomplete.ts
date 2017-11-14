@@ -84,6 +84,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Output() onAddNew: EventEmitter<any> = new EventEmitter();
 
+    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
     public listPosition;
@@ -191,6 +193,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         if ($event) {
           this.input.writeValue( $event );
           this.ngModel = $event;
+          this.onClickItem.emit($event);
           this.setInputValue( $event );
           this.input.element.nativeElement.focus();
         }

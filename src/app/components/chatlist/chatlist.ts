@@ -1,3 +1,4 @@
+///<reference path="../../../../node_modules/rxjs/add/operator/debounceTime.d.ts"/>
 /*
  MIT License
 
@@ -22,7 +23,7 @@
 import {
   Component, ElementRef, AfterViewInit, Input, OnInit, QueryList,
   ViewChildren, NgZone, Output, EventEmitter, forwardRef,
-  ViewChild, KeyValueDiffers, DoCheck, ChangeDetectionStrategy, ChangeDetectorRef,
+  ViewChild, KeyValueDiffers, DoCheck, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -31,6 +32,10 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlListBox } from '../listbox/listbox';
 import { ChatListService } from './chatlist.service';
+import { Subject } from 'rxjs/Subject';
+
+import 'rxjs/add/operator/debounceTime';
+
 
 const Away = 'Away';
 const Online = 'Online';
@@ -48,20 +53,29 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   @Input() searchInput;
 
+  @Input() searchQuery;
+
   @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
   @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
 
   @ViewChild( 'overflow' ) overflow: ElementRef;
 
+  public differ;
+
   public scrollChat;
+
+  public filteredData = [];
+
+  public filtering = false;
+
+  private subject = new Subject();
 
   private selected = '';
 
-  public differ;
-
   constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
                differs: KeyValueDiffers,
+               public renderer: Renderer2,
                public chatListService: ChatListService, private chat: ElementRef ) {
     super( tabIndexService, idService, nameService );
     this.differ = differs.find( {} ).create();
@@ -69,20 +83,32 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   ngOnInit() {
       this.chatListService.data = this.data;
-      this.filterDataStatus();
+      this.filterDataStatus(this.chatListService.data);
   }
 
   ngAfterViewInit() {
       this.setElement( this.chat, 'tl-chatlist' );
+      this.listenInputSearch();
+      this.subject.debounceTime( 500 ).subscribe( searchTextValue => {
+        this.handlefilterData( searchTextValue );
+      } );
   }
 
-  filterDataStatus() {
-      this.chatListService.data.forEach( ( value ) => {
+  filterDataStatus(array) {
+    this.chatListService.online = [];
+    this.chatListService.offline = [];
+    array.forEach( ( value ) => {
           this.isNotOffline( value ) ?
               this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
       } );
-      this.chatListService.sortArray( this.chatListService.online );
-      this.chatListService.sortArray( this.chatListService.offline );
+    this.chatListService.sortArray( this.chatListService.online );
+    this.chatListService.sortArray( this.chatListService.offline );
+  }
+
+  listenInputSearch() {
+    this.renderer.listen(this.searchInput.input.nativeElement, 'keyup', ($event) => {
+      this.subject.next($event.target.value);
+    });
   }
 
   getColorByStatus( item ) {
@@ -101,13 +127,36 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   handleScrollChat( $event ) {
       this.setScrollChat( $event );
       this.setScrollFirstList();
-
-      if ( this.scrollChat + this.heightSecondList() >= this.heightFirstList() ) {
-          this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.scrollTop =
-              (this.scrollChat - this.heightFirstList());
-      }
+      this.calculateScrollChat();
   }
 
+  calculateScrollChat() {
+    if ( this.scrollChat + this.heightSecondList() >= this.heightFirstList() ) {
+      this.listBoxes.toArray()[ 1 ].itemContainer.nativeElement.scrollTop =
+        (this.scrollChat - this.heightFirstList());
+    }
+  }
+
+  handlefilterData( searchTerm ) {
+    !searchTerm ? this.handleFilterAsEmpty() : this.filterData(searchTerm);
+  }
+
+  filterData(searchTerm) {
+    this.filtering = true;
+    this.data.forEach( ( item ) => {
+      if (item[this.searchQuery].substr(0, searchTerm.length).toLowerCase().includes(searchTerm.toLowerCase())) {
+        if (this.filteredData.indexOf(item) < 0) {
+          this.filteredData.push(item);
+        }
+      }
+    } );
+    this.filterDataStatus(this.filteredData);
+  }
+
+  handleFilterAsEmpty() {
+    this.filtering = false;
+    this.filterDataStatus(this.chatListService.data);
+  }
 
   onClickItemChat( $event ) {
       this.onClickItem.emit( $event );
@@ -135,13 +184,11 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   ngDoCheck() {
-    const changes = this.differ.diff( this.chatListService.online );
-    if ( changes ) {
-      if (this.listBoxes) {
-        this.listBoxes.forEach((item, index, array) => {
+    const online = this.differ.diff( this.chatListService.online );
+    if ( online && this.listBoxes ) {
+        this.listBoxes.forEach((item) => {
           item.renderPageData();
         });
-      }
     }
   }
 

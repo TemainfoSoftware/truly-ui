@@ -109,7 +109,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() customInput = false;
 
-  @Input() focusOnScroll = true;
+    @Input() focusOnScroll = true;
 
     @Output() onClickItem: EventEmitter<any> = new EventEmitter();
 
@@ -957,7 +957,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     ngOnChanges( change: SimpleChanges ) {
-        this.dataService.updateDataSource( this.data.data ).then(value => {
+        this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then(value => {
             this.handleRenderList();
         });
         this.loadingMoreData = false;

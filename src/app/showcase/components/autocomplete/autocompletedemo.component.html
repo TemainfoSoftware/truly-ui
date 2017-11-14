@@ -3,16 +3,14 @@
     <h1 class="title">AutoComplete <span class="module-name"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></p>
     <p class="text-content">There's a lot of ways to create a autocomplete using Truly UI. Below, are some of those.</p>
-
   </div>
-
   <hr>
-
   <div class="showcase">
     <div class="row">
       <div class="col-md-6">
         <div class="group-component">
           <h5>Normal Usage</h5>
+          <br>
           <tl-autocomplete [data]="dataBasic"
                            [id]="'id'"
                            [openFocus]="true"
@@ -27,19 +25,21 @@
           {{result | json}}
         </div>
       </div>
-      <!--<div class="col-md-6">
+      <div class="col-md-6">
         <div class="group-component">
           <h5>With Template</h5>
+          <br>
           <tl-autocomplete [data]="dataLazy"
-                           [id]="'id'"
                            [openFocus]="true"
-                           [name]="'clients'"
-                           (onAddMore)="newClient()"
-                           [label]="'Clients'"
+                           [lazyMode]="true"
                            [clearButton]="true"
-                           [rowHeight]="35"
+                           [id]="'id'"
+                           [name]="'clients'"
+                           [label]="'Clients'"
+                           (lazyLoad)="onLazyLoad($event)"
                            [placeholder]="'Search...'"
                            [labelName]="'firstName'"
+                           [rowHeight]="35"
                            [(ngModel)]="result">
             <ng-template let-item="item" let-index="index">
               <li class="list-template-demo">
@@ -50,7 +50,7 @@
             </ng-template>
           </tl-autocomplete>
         </div>
-      </div>-->
+      </div>
   </div>
   <hr>
   <div class="setup">
@@ -80,6 +80,29 @@
     </div>
     <hr>
   </div>
+    <h3 class="title">Events</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Parameters</th>
+          <th>Description</th>
+        </tr>
+        </thead>
+        <tbody class="table-truly-body" *ngFor="let item of dataEvents; let i = index">
+        <tr>
+          <td style=" vertical-align: middle;"><span>{{ item.name }}</span></td>
+          <td style=" vertical-align: middle;">
+            <div *ngFor="let param of item.parameters; let i = index">
+              <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
+            </div>
+          </td>
+          <td style=" vertical-align: middle;">{{ item.description }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
   <div class="examples">
     <h3 class="title">Examples</h3>

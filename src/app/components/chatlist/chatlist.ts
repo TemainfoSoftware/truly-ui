@@ -22,7 +22,7 @@
 import {
   Component, ElementRef, AfterViewInit, Input, OnInit, QueryList,
   ViewChildren, NgZone, Output, EventEmitter, forwardRef,
-  ViewChild,
+  ViewChild, KeyValueDiffers, DoCheck, ChangeDetectionStrategy, ChangeDetectorRef,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -42,7 +42,7 @@ const Busy = 'Busy';
     templateUrl: './chatlist.html',
     styleUrls: [ './chatlist.scss' ]
 } )
-export class TlChatList extends ComponentDefaultBase implements AfterViewInit, OnInit {
+export class TlChatList extends ComponentDefaultBase implements AfterViewInit, OnInit, DoCheck {
 
   @Input() data = [];
 
@@ -58,9 +58,13 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   private selected = '';
 
+  public differ;
+
   constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+               differs: KeyValueDiffers,
                public chatListService: ChatListService, private chat: ElementRef ) {
     super( tabIndexService, idService, nameService );
+    this.differ = differs.find( {} ).create();
   }
 
   ngOnInit() {
@@ -128,6 +132,17 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   isNotOffline( value ) {
       return value.status.toLowerCase() !== Offline.toLowerCase();
+  }
+
+  ngDoCheck() {
+    const changes = this.differ.diff( this.chatListService.online );
+    if ( changes ) {
+      if (this.listBoxes) {
+        this.listBoxes.forEach((item, index, array) => {
+          item.renderPageData();
+        });
+      }
+    }
   }
 
 }

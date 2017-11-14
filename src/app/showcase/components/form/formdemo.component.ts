@@ -64,6 +64,7 @@ export class FormDemoComponent {
       draggable: true,
       width: '500px',
       height: '500px',
+      color: '#f27a4f',
       maximizable: true,
       minimizable: true,
       fullscreen: false
@@ -74,6 +75,7 @@ export class FormDemoComponent {
       icon: 'ion-stats-bars',
       draggable: true,
       width: '500px',
+      color: '#5bbcf2',
       height: '500px',
       maximizable: true,
       minimizable: true,
@@ -97,7 +99,7 @@ export class FormDemoComponent {
   }
 
   form3() {
-    this.formService.createForm(FormDemoComponent, this.formOptions3, (modalResult) => {
+    this.formService.createForm(NewPersonComponent, this.formOptions3, (modalResult) => {
       this.dataFormService.saveDataForm(modalResult.formResult);
       this.result = this.dataFormService.getDataForm();
     });

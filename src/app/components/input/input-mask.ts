@@ -65,7 +65,7 @@ export class InputMask {
     }
 
     initializeMask() {
-        this.inicializeOnFocus();
+        this.initializeOnFocus();
         this.generateMaskGuideExpression();
         this.applyMaskOnInit();
 
@@ -138,7 +138,7 @@ export class InputMask {
         this.endPosition = this.input.nativeElement.selectionEnd;
     }
 
-    private inicializeOnFocus() {
+    private initializeOnFocus() {
         this.renderer.listen( this.input.nativeElement, 'focus', () => {
             this.onFocus();
         } );
@@ -174,7 +174,7 @@ export class InputMask {
         const valueArray = value.split( '' );
         this.getPosition();
 
-        if ( InputMask.hasTextSelected( this.startPosition, this.endPosition ) ) {
+        if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
             event.preventDefault();
             this.deleteTextOnKeyPress( valueArray, this.startPosition, this.endPosition );
             return;
@@ -215,7 +215,7 @@ export class InputMask {
         if ( event.key === 'Enter' ) {
             return;
         }
-        if ( InputMask.hasTextSelected( this.startPosition, this.endPosition ) ) {
+        if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
             this.deleteTextOnKeyPress( inputArray, this.startPosition, this.endPosition );
             this.setPosition( this.startPosition );
             inputArray = this.value.split( '' );
@@ -239,7 +239,6 @@ export class InputMask {
             } else {
                 this.setPosition( this.startPosition, this.endPosition + 1 );
             }
-
         }
     }
 
@@ -267,7 +266,6 @@ export class InputMask {
         } else {
             this.setPosition( 0 );
         }
-
     }
 
     private handleEnd( event ) {
@@ -279,9 +277,7 @@ export class InputMask {
         } else {
             this.setPosition( this.value.length );
         }
-
     }
-
 
     private handleSelectAll( event ) {
         if ( event.ctrlKey ) {
@@ -380,13 +376,13 @@ export class InputMask {
         return String(valueArray).replace(/,/gi, '');
     }
 
-    private replaceUndescoreForChar( valueArray, charInputed, cursorEnd ) {
+    private replaceUnderscoreForChar( valueArray, charInputted, cursorEnd ) {
         if ( this.maskSpecialCharacters.indexOf( this.maskExpression[ cursorEnd ] ) >= 0 ) {
             cursorEnd++;
         }
         valueArray.forEach( function ( value, index, array ) {
             if ( index === cursorEnd ) {
-                array[ index ] = charInputed;
+                array[ index ] = charInputted;
             }
         } );
         return valueArray.toString().replace( /,/gi, '' );
@@ -407,7 +403,7 @@ export class InputMask {
 
     private replaceValidChar( charInputted, cursor, inputArray ) {
         if ( this.isValidSymbolMask( charInputted, this.maskExpression[ cursor ] ) ) {
-            this.value = this.replaceUndescoreForChar( inputArray, charInputted, cursor );
+            this.value = this.replaceUnderscoreForChar( inputArray, charInputted, cursor );
             this.setPosition( cursor + 1 );
         }
     }
@@ -417,17 +413,17 @@ export class InputMask {
             this.tlInput.validations['validMask'] = !this.isTextLengthMatchWithExpressionLength();
         }
         if ( this.isTextLengthMatchWithExpressionLength() ) {
-            this.tlInput.writeValue( this.value );
+            this.tlInput.onChangeCallback( this.clearMask(this.value) );
             setTimeout(() => {
               this.tlInput.componentModel.model = this.clearMask(this.value);
-            }, 100)
+            }, 100);
         }
     }
 
     private isTextLengthMatchWithExpressionLength() {
         return ( this.clearMask( this.maskExpression ).length === this.clearMask( this.value ).length)
-            && ( ( InputMask.cleanValue( this.maskExpression ).length === InputMask.cleanValue( this.value ).length))
-            && ( ( InputMask.removeUnderscore( this.maskExpression ).length === InputMask.removeUnderscore( this.value ).length));
+            && ( ( this.cleanValue( this.maskExpression ).length === this.cleanValue( this.value ).length))
+            && ( ( this.removeUnderscore( this.maskExpression ).length === this.removeUnderscore( this.value ).length));
     }
 
     private isValidSymbolMask( inputSymbol: string, maskSymbolChar: string ): boolean {
@@ -478,13 +474,13 @@ export class InputMask {
 
     private clearMask( value: string ): string {
         if ( !(this.literalChar) ) {
-            return InputMask.cleanValue( value );
+            return this.cleanValue( value );
         }
-        return InputMask.removeUnderscore( value );
+        return this.removeUnderscore( value );
     }
 
     private jumpCharMask( startPosition, endPosition ) {
-        if ( InputMask.isFirstPosition( startPosition ) ) {
+        if ( this.isFirstPosition( startPosition ) ) {
             this.setPosition( startPosition - 1, endPosition - 1 );
         }
     }
@@ -501,15 +497,15 @@ export class InputMask {
         return value[ position - 1 ] === this.maskGuideExpression[ position - 1 ];
     }
 
-    private static isFirstPosition( startPosition ) {
+    private isFirstPosition( startPosition ) {
         return startPosition > 0;
     }
 
-    private static hasTextSelected( startPosition, endPosition ) {
+    private hasTextSelected( startPosition, endPosition ) {
         return startPosition !== endPosition;
     }
 
-    private static removeUnderscore( value ) {
+    private removeUnderscore( value ) {
         return value.replace( /_/gi, '' );
     }
 
@@ -521,7 +517,7 @@ export class InputMask {
         this._value = this.value;
     }
 
-    private static cleanValue( value ) {
+    private cleanValue( value ) {
         return value.replace( /([\/.-_():+])/gi, '' );
     }
 }

@@ -52,7 +52,7 @@ export class FormDemoComponent {
       icon: 'ion-person-add',
       draggable: true,
       width: '500px',
-      height: '500px',
+      height: 'auto',
       maximizable: true,
       minimizable: true,
       fullscreen: false
@@ -63,7 +63,7 @@ export class FormDemoComponent {
       icon: 'ion-heart',
       draggable: true,
       width: '500px',
-      height: '500px',
+      height: 'auto',
       color: '#f27a4f',
       maximizable: true,
       minimizable: true,
@@ -76,7 +76,7 @@ export class FormDemoComponent {
       draggable: true,
       width: '500px',
       color: '#5bbcf2',
-      height: '500px',
+      height: 'auto',
       maximizable: true,
       minimizable: true,
       fullscreen: false

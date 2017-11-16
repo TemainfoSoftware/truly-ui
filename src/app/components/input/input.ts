@@ -138,12 +138,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Input() autocomplete = 'off';
 
-
-    /**
-     * Property required.
-     */
-    @Input() required = false;
-
     /**
      * TabIndex of Element;
      */

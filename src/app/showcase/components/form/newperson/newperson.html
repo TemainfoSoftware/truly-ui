@@ -23,10 +23,12 @@
     <div class="col-md-6">
       <div class="form-group">
         <div class="col-md-6">
-          <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
-            <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
-            <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
-          </tl-radio-group>
+          <tl-panelgroup [labelGroup]="'Gender'" [width]="'210px'">
+            <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
+              <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+              <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
+            </tl-radio-group>
+          </tl-panelgroup>
         </div>
       </div>
     </div>

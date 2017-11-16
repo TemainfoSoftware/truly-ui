@@ -197,7 +197,7 @@ export class InputMask {
         this.getPosition();
         event.preventDefault();
         if ( this.maskGuides ) {
-            if ( InputMask.hasTextSelected( this.startPosition, this.endPosition ) ) {
+            if ( this.hasTextSelected( this.startPosition, this.endPosition ) ) {
                 this.deleteTextOnKeyPress( valueArray, this.startPosition, this.endPosition );
             } else {
                 this.value = this.deleteCharOnDeleteKey(valueArray);
@@ -326,7 +326,7 @@ export class InputMask {
     }
 
     private deleteTextOnKeyPress( valueArray, startPosition, endPosition ) {
-        if ( InputMask.hasTextSelected( startPosition, endPosition ) ) {
+        if ( this.hasTextSelected( startPosition, endPosition ) ) {
             this.value = this.deleteTextSelected( valueArray, startPosition, endPosition );
             this.setPosition( startPosition, startPosition );
         } else {
@@ -413,10 +413,7 @@ export class InputMask {
             this.tlInput.validations['validMask'] = !this.isTextLengthMatchWithExpressionLength();
         }
         if ( this.isTextLengthMatchWithExpressionLength() ) {
-            this.tlInput.onChangeCallback( this.clearMask(this.value) );
-            setTimeout(() => {
-              this.tlInput.componentModel.model = this.clearMask(this.value);
-            }, 100);
+            this.tlInput.writeValue( this.value );
         }
     }
 

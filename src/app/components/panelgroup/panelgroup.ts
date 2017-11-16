@@ -35,6 +35,8 @@ export class TlPanelGroup implements AfterViewInit {
 
     @Input() borderColor = '';
 
+    @Input() width = '100%';
+
     @Input() fontColorCaption = '';
 
     @Input() fontSizeCaption = '';

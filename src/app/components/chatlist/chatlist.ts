@@ -1,4 +1,3 @@
-///<reference path="../../../../node_modules/rxjs/add/operator/debounceTime.d.ts"/>
 /*
  MIT License
 
@@ -22,8 +21,8 @@
  */
 import {
   Component, ElementRef, AfterViewInit, Input, OnInit, QueryList,
-  ViewChildren, NgZone, Output, EventEmitter, forwardRef,
-  ViewChild, KeyValueDiffers, DoCheck, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2,
+  ViewChildren, Output, EventEmitter, forwardRef,
+  ViewChild, KeyValueDiffers, DoCheck, Renderer2,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -35,7 +34,6 @@ import { ChatListService } from './chatlist.service';
 import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
-
 
 const Away = 'Away';
 const Online = 'Online';

@@ -1,6 +1,7 @@
 .ui-chat-wrapper {
   position: relative;;
   > .ui-chat-overflow {
+    border-top: 1px solid #cacaca;
     position: relative;
     overflow: auto;
     > .ui-chat-lists {
@@ -18,7 +19,7 @@
           line-height: 25px;
         }
         > .ui-status:first-child {
-          border-top: 1px solid #CACACA;
+          border-top: 0;
         }
       }
     }

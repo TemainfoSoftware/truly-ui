@@ -37,6 +37,7 @@ export class DataFormService {
         notification: '',
         dependents: '',
         clients: '',
+        cpf: '',
       };
 
   constructor() {}

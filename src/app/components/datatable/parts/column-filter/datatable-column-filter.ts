@@ -47,8 +47,8 @@ export class TlDatatabaleColumnFilter implements OnInit {
     ngOnInit() {
         this.subject.debounceTime(600).subscribe((event) => {
             if (event !== undefined) {
-                const eventFilter = this.makeFilterEvent();
-                this.filterEvent.emit( eventFilter ) ;
+                const filterEventObject = this.makeFilterEvent();
+                this.filterEvent.emit( filterEventObject ) ;
             }
         });
     }

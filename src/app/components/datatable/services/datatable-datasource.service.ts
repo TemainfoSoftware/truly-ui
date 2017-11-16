@@ -25,7 +25,7 @@ import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
 import { FilterEventMetadata } from '../metadatas/filter.metadata';
 import { DatasourceService } from '../interfaces/datasource.service';
-import { TlDatatableFilterConstraints } from './datatable-filter-constraints.service';
+import { TlDatatableFilterService } from './datatable-filter.service';
 
 @Injectable()
 export class TlDatatableDataSource implements DatasourceService {
@@ -34,13 +34,9 @@ export class TlDatatableDataSource implements DatasourceService {
 
     public datasource: any;
 
-    private filtredData = [];
-
-    private filter: FilterEventMetadata;
-
     private datatable: TlDatatable;
 
-    constructor(  private zone: NgZone, private cd: ChangeDetectorRef, private filterConstraints: TlDatatableFilterConstraints ) {}
+    constructor( private filterService: TlDatatableFilterService ) {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -49,6 +45,11 @@ export class TlDatatableDataSource implements DatasourceService {
             this.datatable.columnService.setColumns();
         });
         this.refreshTotalRows(this.datatable.data);
+
+        this.filterService.onFilter().subscribe(() => {
+          this.loadMoreData(0, this.datatable.rowsPage);
+        });
+
     }
 
     onChangeDataSource( data: SimpleChanges ) {
@@ -59,49 +60,31 @@ export class TlDatatableDataSource implements DatasourceService {
         }
     }
 
-    updateDataSource( data ) {
-        this.datasource  = this.isDataArray( data ) ? data : ( data as DataMetadata ).data;
-    }
-
-    loadMoreData(skip: number, take: number): Promise<boolean> {
+    loadMoreData(skip: number, take: number, scrolling?: boolean): Promise<boolean> {
         return new Promise(( resolve ) => {
             if (  this.datatable.allowLazy ) {
-                this.datatable.loading = true;
-               this.datatable.lazyLoad.emit({ skip: skip,  take: take, filters: this.getFilter() });
+               this.datatable.loading = true;
+               this.datatable.lazyLoad.emit({ skip: skip,  take: take, filters: this.filterService.getFilter() });
                return resolve();
-
             }
-            this.getRowsInMemory( skip, take ).then((res) => {
+            this.getRowsInMemory( skip, take, scrolling ).then((res) => {
                this.datasource = res;
                this.onChangeDataSourceEmitter.emit(this.datasource);
                return resolve();
             });
-
         });
     }
 
-    setFilter(value: FilterEventMetadata) {
-        if (!this.existsFilter()) {
-            this.filtredData = [];
-        }
-        this.filter = value;
-        this.loadMoreData(0, this.datatable.rowsPage);
-    }
-
-    getFilter() {
-      return this.existsFilter() ? this.filter.filters : {};
-    }
 
     isDataArray( data: any ) {
         return data instanceof Array;
     }
 
-    private getRowsInMemory(skip: number, take: number): Promise<any> {
+    private getRowsInMemory(skip: number, take: number, scrolling?: boolean): Promise<any> {
         return new Promise((resolve) => {
             let data: any;
             data = this.getData();
-            data = this.filterData(data);
-            // data = this.sortData(data, sort);
+            data = this.filterService.filterWithData(data, scrolling);
             this.refreshTotalRows(data);
             data = this.sliceData(data, skip, take);
 
@@ -118,51 +101,11 @@ export class TlDatatableDataSource implements DatasourceService {
     }
 
     private getData() {
-        if (this.filtredData.length && (!this.existsFilter()) ) {
-            return this.filtredData;
-        }
         return this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-    }
-
-    private sortData(data, sort) {
-
     }
 
     private sliceData(data, skip, take) {
         return (data as Array<any>).slice( skip, take );
     }
 
-    private filterData(data) {
-        if (! this.existsFilter() ) { return data; }
-        this.filtredData = [];
-        this.zone.runOutsideAngular(() => {
-            data.forEach( value => {
-                let match = true;
-                const filterArray = Object.keys( this.filter.filters );
-
-                for ( let valueIndex = 0; valueIndex < filterArray.length; valueIndex++ ) {
-
-                    const dataValue = value[ filterArray[ valueIndex ] ];
-                    const filterValue = this.filter.filters[ filterArray[ valueIndex ] ].value.toLowerCase();
-                    const matchMode = this.filter.filters[ filterArray[ valueIndex ] ].matchMode;
-
-                    if ( ! this.filterConstraints[matchMode]( dataValue, filterValue) ) {
-                        match = false;
-                        break;
-                    }
-                }
-
-                if ( match ) {
-                    this.filtredData.push( value );
-                }
-            } );
-        });
-
-        return this.filtredData;
-
-    }
-
-    private existsFilter() {
-        return  (this.filter !== undefined) && Object.keys(this.filter.filters).length;
-    }
 }

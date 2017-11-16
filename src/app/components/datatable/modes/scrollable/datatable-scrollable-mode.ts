@@ -152,17 +152,12 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private addListenerToDataSource() {
         this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
-
-       //     console.log('DATASOURCE-PARM', dataSource,this.lastRecordProcessed);
-
-            if ( this.lastRecordProcessed !== dataSource[1]) {
-                this.foundRecords = dataSource.length > 0;
-                this.renderList(this.skip, dataSource);
-                this.dt.loading = false;
-                this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
-                this.cd.detectChanges();
-                this.setFocusWhenChangeData();
-            }
+            this.foundRecords = dataSource.length > 0;
+            this.renderList(this.skip, dataSource);
+            this.dt.loading = false;
+            this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
+            this.cd.detectChanges();
+            this.setFocusWhenChangeData();
         });
     }
 
@@ -296,7 +291,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.dt.loading = true;
         this.skip = skip;
         this.take = take;
-        this.dt.dataSourceService.loadMoreData(skip, take);
+        this.dt.dataSourceService.loadMoreData(skip, take, true);
         this.cd.markForCheck();
     }
 

@@ -20,64 +20,76 @@
     SOFTWARE.
 */
 
- import { Injectable, Injector } from '@angular/core';
- import { TlDatatable } from '../datatable';
- import { TlDatatableDataSource } from './datatable-datasource.service';
+import { Injectable } from '@angular/core';
+import { TlDatatable } from '../datatable';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+ import { TlDatatableFilterConstraints } from './datatable-filter-constraints.service';
+ import { FilterEventMetadata } from '../metadatas/filter.metadata';
 
- @Injectable()
- export class TlDatatableFilterService {
+@Injectable()
+export class TlDatatableFilterService {
 
-     private filtredData: any[];
+    private datatable: TlDatatable;
 
-     private datatable: TlDatatable;
+    private subject: Subject<any> = new Subject();
 
-     constructor( public dataSourceService: TlDatatableDataSource, injectable: Injector  ) {
-        setTimeout(() => {
-          this.datatable = injectable.get(TlDatatable);
-        });
-     }
+    public filter: FilterEventMetadata;
 
-     public filter( dataToFilter: any ) {
-         this.filtredData = [];
+    public filtredData = [];
 
-         if ( !dataToFilter ) {
-             this.dataSourceService.updateDataSource( this.datatable.data );
-             return ;
-         }
+    private filterArray = [];
 
-         ( this.datatable.data as Array<any> ).filter( ( row ) => {
-             this.datatable.columns.forEach( (columnValue ) => {
-                 if ( this.isValidMatch( String(dataToFilter), String(row[columnValue.field]) ) ) {
-                     this.filtredData.push(row);
-                 }
-             });
-         });
+    constructor( private filterConstraints: TlDatatableFilterConstraints ) {}
 
-         this.dataSourceService.updateDataSource( this.filtredData );
+    onInicializeFilterService( datatable ) {
+        this.datatable = datatable;
+    }
+
+    onFilter(): Observable<any> {
+        return this.subject.asObservable();
+    }
+
+    setFilter(filter) {
+        this.filter = filter;
+        this.filterArray = Object.keys( this.filter.filters );
+
+        if (!this.existsFilter()) {
+          this.filtredData = [];
+        }
+        this.subject.next();
+    }
+
+    existsFilter() {
+        return  (this.filter !== undefined) && Object.keys(this.filter.filters).length;
+    }
+
+    getFilter() {
+        return this.existsFilter() ? this.filter.filters : {};
     }
 
 
+    filterWithData(data, scrolling) {
+        if (! this.existsFilter()) { return data; }
+        if ( scrolling ) { return this.filtredData; }
 
-     matchWith(searchValue, valueMatch) {
-         if (this.datatable.globalFilterOptions) {
-             switch (this.datatable.globalFilterOptions.mode) {
-                 case 'startsWith' : return (valueMatch).startsWith(searchValue);
-                 case 'endsWith' : return String(valueMatch).endsWith(searchValue);
-                 case 'contains' : return String(valueMatch).includes(searchValue);
-                 default: return String(valueMatch).includes(searchValue);
-             }
-         }
-         return String(valueMatch).includes(searchValue);
-     }
+        this.filtredData = [];
+        data.forEach( value => {
+          let match = true;
 
+          for ( let valueIndex = 0; valueIndex < this.filterArray.length; valueIndex++ ) {
+            const dataValue = value[ this.filterArray[ valueIndex ] ];
+            const filterValue = this.filter.filters[ this.filterArray[ valueIndex ] ].value.toLowerCase();
+            const matchMode = this.filter.filters[ this.filterArray[ valueIndex ] ].matchMode;
+            if ( ! this.filterConstraints[matchMode]( dataValue, filterValue) ) {
+              match = false;
+              break;
+            }
+          }
 
-     private isValidMatch( searchValue: string, valueMatch: string ) {
-         if ( this.datatable.globalFilterOptions ) {
-             if (!this.datatable.globalFilterOptions.caseSensitive )  {
-                 valueMatch = valueMatch.toLowerCase();
-                 searchValue = searchValue.toLowerCase();
-             }
-         }
-         return this.matchWith( searchValue, valueMatch );
-     }
+          if ( match ) { this.filtredData.push( value ); }
+        });
+
+        return this.filtredData;
+    }
  }

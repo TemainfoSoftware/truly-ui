@@ -24,6 +24,7 @@ import { AfterViewInit, Component, forwardRef, Inject, OnInit, ViewChild } from 
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
+import { TlDatatableFilterService } from '../../services/datatable-filter.service';
 
 @Component( {
     selector: 'tl-datatable-header',
@@ -36,13 +37,14 @@ export class TlDatatableHeader implements AfterViewInit {
     @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
-                 public helperService: DatatableHelpersService
+                 public helperService: DatatableHelpersService,
+                 public filterService: TlDatatableFilterService,
     ) {}
 
 
     ngAfterViewInit() {
         this.columnsFilter.filterEvent.subscribe((value) => {
-           this.dt.dataSourceService.setFilter(value);
+           this.filterService.setFilter(value);
         });
     }
 

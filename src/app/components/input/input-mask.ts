@@ -123,13 +123,11 @@ export class InputMask {
 
     private applyMaskOnInit() {
         if ( this.value !== this.maskGuideExpression ) {
-            setTimeout( () => {
-                if ( this.value.length > 0 ) {
-                    this.setValueOnInitialize();
-                    this.applyGuides();
-                    this.applyMask();
-                }
-            }, 0 );
+            if ( this.value.length > 0 ) {
+                this.setValueOnInitialize();
+                this.applyGuides();
+                this.applyMask();
+            }
         }
     }
 

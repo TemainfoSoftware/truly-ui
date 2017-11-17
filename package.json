@@ -71,7 +71,7 @@
     "ionicons-npm": "^2.0.1"
   },
   "devDependencies": {
-    "@angular/cli": "1.5.1",
+    "@angular/cli": "1.5.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "@types/jest": "^21.1.0",

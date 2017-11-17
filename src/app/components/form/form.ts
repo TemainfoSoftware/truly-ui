@@ -157,7 +157,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       }
     } );
     this.autoCompleteList.toArray().forEach((item, index, array) => {
-      if (Object.keys( item.input ).length > 0) {
+      if (Object.keys( item.input.validations ).length > 0) {
         this.componentsWithValidations.push( item.input );
       }
     });

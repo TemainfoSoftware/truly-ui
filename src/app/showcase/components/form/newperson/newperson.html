@@ -2,22 +2,28 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [name]="'name'" [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+        <tl-panelgroup [labelGroup]="'Name'">
+          <tl-input [name]="'name'" [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [name]="'lastname'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.lastname"
-                  [label]="'LastName'"></tl-input>
+        <tl-panelgroup [labelGroup]="'LastName'">
+          <tl-input [name]="'lastname'" [labelSize]="100" [validations]="{required: true}"
+                    [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [name]="'city'" [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
+        <tl-panelgroup [labelGroup]="'City'">
+          <tl-input [name]="'city'" [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
     <div class="col-md-6">
@@ -36,71 +42,85 @@
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [name]="'country'" [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
+        <tl-panelgroup [labelGroup]="'Country'">
+            <tl-input [name]="'country'" [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <tl-input [name]="'birthday'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.birthday"
+        <tl-panelgroup [labelGroup]="'Birthday'">
+            <tl-input [name]="'birthday'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.birthday"
                   [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <tl-input [name]="'state'" [labelSize]="100" [ngModel]="person?.state" [label]="'State'"></tl-input>
+      <tl-panelgroup [labelGroup]="'State'">
+        <tl-input [name]="'state'" [labelSize]="100" [ngModel]="person?.state" [label]="'State'"></tl-input>
+      </tl-panelgroup>
     </div>
-    <div class="col-md-5 col-md-offset-1">
-      <tl-checkbox [name]="'notification'" [label]="'Notify ?'" [ngModel]="person?.notification"></tl-checkbox>
+    <div class="col-md-6">
+      <tl-panelgroup [labelGroup]="'Notification'">
+        <tl-checkbox [name]="'notification'" [label]="'Notify ?'" [ngModel]="person?.notification"></tl-checkbox>
+      </tl-panelgroup>
     </div>
   </div>
   <br>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-multiselect
-          [data]="dataBasic"
-          [ngModel]="person?.dependents"
-          [labelSize]="100"
-          [defaultColorTag]="'#8EC2F4'"
-          [name]="'dependents'"
-          [placeholder]="'Select...'"
-          [label]="'Dependents'"
-          [openFocus]="false"
-          [labelTag]="'firstName'"
-          [detail]="'email'"
-          [query]="'firstName'">
-        </tl-multiselect>
+        <tl-panelgroup [labelGroup]="'Dependents'">
+          <tl-multiselect
+            [data]="dataBasic"
+            [ngModel]="person?.dependents"
+            [labelSize]="100"
+            [defaultColorTag]="'#8EC2F4'"
+            [name]="'dependents'"
+            [placeholder]="'Select...'"
+            [label]="'Dependents'"
+            [openFocus]="false"
+            [labelTag]="'firstName'"
+            [detail]="'email'"
+            [query]="'firstName'">
+          </tl-multiselect>
+        </tl-panelgroup>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-autocomplete [data]="dataAuto"
-                         [openFocus]="true"
-                         [name]="'clients'"
-                         [label]="'Clients'"
-                         [labelName]="'firstName'"
-                         [clearButton]="true"
-                         [rowHeight]="35"
-                         [placeholder]="'Search...'"
-                         [ngModel]="person?.clients">
-          <ng-template let-item="item" let-index="index">
-            <li class="list-template-demo">
-              <img class="img-circle" src="../assets/img/avatar.png"
-                   width="20">{{item.firstName}} - <span>{{item.lastName}}</span>
-              <span class="list-bagde badge">{{item.id}}</span>
-            </li>
-          </ng-template>
-        </tl-autocomplete>
+        <tl-panelgroup [labelGroup]="'Clients'">
+          <tl-autocomplete [data]="dataAuto"
+                           [openFocus]="true"
+                           [name]="'clients'"
+                           [label]="'Clients'"
+                           [labelName]="'firstName'"
+                           [clearButton]="true"
+                           [rowHeight]="35"
+                           [placeholder]="'Search...'"
+                           [ngModel]="person?.clients">
+            <ng-template let-item="item" let-index="index">
+              <li class="list-template-demo">
+                <img class="img-circle" src="../assets/img/avatar.png"
+                     width="20">{{item.firstName}} - <span>{{item.lastName}}</span>
+                <span class="list-bagde badge">{{item.id}}</span>
+              </li>
+            </ng-template>
+          </tl-autocomplete>
+        </tl-panelgroup>
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
-        <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
+        <tl-panelgroup [labelGroup]="'CPF'">
+          <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
+        </tl-panelgroup>
       </div>
     </div>
   </div>

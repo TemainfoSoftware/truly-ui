@@ -449,13 +449,21 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     addClassSelected( index ) {
+      if (this.existChildren()) {
         this.renderer.addClass( this.ul.nativeElement.children[ index ], 'selected' );
+      }
     }
 
     removeClassSelected( index ) {
+      if (this.existChildren()) {
         this.renderer.removeClass( this.ul.nativeElement.children[ index ], 'selected' );
+      }
     }
 
+
+    existChildren() {
+      return this.ul.nativeElement.children.length > 0;
+    }
 
     addTag( item ) {
         this.tags.push( item );

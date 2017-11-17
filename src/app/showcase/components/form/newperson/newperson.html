@@ -1,4 +1,4 @@
-<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
+<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'" [cancelButtonShortcut]="'ctrl+f6'">
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
@@ -23,10 +23,12 @@
     <div class="col-md-6">
       <div class="form-group">
         <div class="col-md-6">
-          <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
-            <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
-            <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
-          </tl-radio-group>
+          <tl-panelgroup [labelGroup]="'Gender'" [width]="'210px'">
+            <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
+              <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
+              <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
+            </tl-radio-group>
+          </tl-panelgroup>
         </div>
       </div>
     </div>
@@ -92,6 +94,13 @@
             </li>
           </ng-template>
         </tl-autocomplete>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
       </div>
     </div>
   </div>

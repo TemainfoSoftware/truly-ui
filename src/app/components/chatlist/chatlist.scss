@@ -1,6 +1,7 @@
 .ui-chat-wrapper {
   position: relative;;
   > .ui-chat-overflow {
+    border-top: 1px solid #cacaca;
     position: relative;
     overflow: auto;
     > .ui-chat-lists {
@@ -18,7 +19,7 @@
           line-height: 25px;
         }
         > .ui-status:first-child {
-          border-top: 1px solid #CACACA;
+          border-top: 0;
         }
       }
     }
@@ -63,19 +64,16 @@
   }
 }
 
-.ui-chat-template:focus {
-  background-color: #13BBB6;
-  outline: none;
+.ui-chat-template {
   >.ui-chat-infowrapper {
     >.ui-chat-name {
-      color: #ffffff;
+      color: #99a1a4;
     }
     >.ui-chat-sector {
-      color: #ffffff;
+      color: #99a1a4;
       opacity: 0.8;
     }
   }
-
 }
 
 .ui-chat-template img {
@@ -91,5 +89,13 @@
   transition: linear background-color 0.1s;
 }
 
+.selected {
+  background-color: #13BBB6;
+  outline: none;
+}
+
+.selected span {
+  color: #fff !important;
+}
 
 

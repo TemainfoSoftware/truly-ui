@@ -22,6 +22,7 @@
 import { Component } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
+import * as jsonEvt from './autocompletedemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
 
 @Component( {
@@ -33,6 +34,8 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 export class AutoCompleteDemoComponent {
 
   public dataTableProperties;
+
+  public dataEvents;
 
   public dataLazy;
 
@@ -50,6 +53,7 @@ export class AutoCompleteDemoComponent {
 
   constructor( public dataDumpService: DumpDataService, ) {
     this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvt.events;
     this.dataBasic = this.dataDumpService.createRandomData( 1000 );
 
     this.formOptions1 = {

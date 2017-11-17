@@ -23,6 +23,7 @@ import { ModalModule } from '../../../components/modal';
 import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
+import { PanelGroupModule } from '../../../components/panelgroup/index';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DirectiveModule } from '../../../components/core/directives';
     DialogModule,
     AutoCompleteModule,
     FormsModule,
+    PanelGroupModule,
     ModalModule,
     HighlightJsModule,
     TooltipModule,

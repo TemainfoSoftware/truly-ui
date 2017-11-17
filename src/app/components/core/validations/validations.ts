@@ -19,21 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Input } from '@angular/core';
 export class Validations {
-
-    /**
-     * Property to control if input is required or not.
-     */
-    @Input() required: number = null;
-
-    /**
-     * Property for minLength value
-     */
-    @Input() minLength: string;
-
-    /**
-     * Property for maxLength value
-     */
-    @Input() maxLength: string;
+   public required: boolean;
+   public minLength: number;
+   public maxLength: number;
 }

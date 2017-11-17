@@ -138,12 +138,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      */
     @Input() autocomplete = 'off';
 
-
-    /**
-     * Property required.
-     */
-    @Input() required = false;
-
     /**
      * TabIndex of Element;
      */
@@ -208,6 +202,8 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         this.setElement( this.input, 'input' );
         this.validateClearButtonPosition();
         this.hasMask();
+
+
     }
 
     hasMask() {

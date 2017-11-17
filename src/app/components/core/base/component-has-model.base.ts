@@ -57,7 +57,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      */
     @Output() blur: EventEmitter<any> = new EventEmitter();
 
-
     /**
      * Output of Event on Focus element.
      */
@@ -88,10 +87,14 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Lifehook of OnInit Angular.
      */
     ngOnInit() {
-        this.handleNameComponent();
-        Object.keys( this.validations ).forEach(( key ) => {
-            this[ key ] = this.validations[ key ];
+      this.handleNameComponent();
+      if (this.validations) {
+
+        Object.keys( this.validations ).forEach( ( key ) => {
+          this[ key ] = this.validations[ key ];
         } );
+      }
+
     }
 
     get modelValue(): any {
@@ -137,7 +140,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * Method that validate if has Validations;
      */
     hasValidation() {
-        return Object.keys( this.validations ).length > 0;
+      return this.validations && Object.keys( this.validations ).length > 0;
     }
 
     handleNameComponent() {

@@ -32,6 +32,7 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
 import { TlInput } from '../input/input';
 import { MakeProvider } from '../core/base/value-accessor-provider';
+import set = Reflect.set;
 
 @Component( {
     selector: 'tl-autocomplete',
@@ -83,6 +84,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Output() onAddNew: EventEmitter<any> = new EventEmitter();
 
+    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
     public listPosition;
@@ -127,8 +130,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     handleAutoCompleteModel() {
         setTimeout( () => {
             if ( this.ngModel ) {
-                this.input.componentModel.model = this.ngModel;
-                this.input.element.nativeElement.value = this.ngModel[ this.labelName ];
+                this.input.modelValue = this.ngModel;
+                this.setInputValue(this.ngModel);
             }
         }, 1 );
     }
@@ -144,7 +147,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         } );
     }
 
-    onFocusInput( event ) {
+    onFocusInput() {
         this.handleOpenOnFocus();
     }
 
@@ -175,7 +178,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.listBox.detectChanges();
     }
 
-    addNew( event ) {
+    addNew() {
         this.onAddNew.emit();
     }
 
@@ -188,11 +191,18 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     onClickItemList($event) {
         if ($event) {
-            this.input.element.nativeElement.value = $event[this.labelName];
-            this.ngModel = $event;
-            this.input.componentModel.model = $event;
-            this.input.element.nativeElement.focus();
+          this.input.writeValue( $event );
+          this.ngModel = $event;
+          this.onClickItem.emit($event);
+          this.setInputValue( $event );
+          this.input.element.nativeElement.focus();
         }
+    }
+
+    setInputValue( $event ) {
+        setTimeout( () => {
+          this.input.element.nativeElement.value = $event[ this.labelName ];
+        }, 2 );
     }
 
     isNotRelatedWithAutocomplete( $event ) {

@@ -124,7 +124,9 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     constructor( private _renderer: Renderer2,
                  public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
-                 public nameService: NameGeneratorService ) {
+                 public nameService: NameGeneratorService,
+                 private cd: ChangeDetectorRef,
+    ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -165,6 +167,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         this._renderer.listen( document, 'mousedown', ( event ) => {
             if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
                 this.showHide = false;
+                this.cd.markForCheck();
             }
         } );
     }
@@ -523,7 +526,6 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     setPositionListItens(event) {
         if (this.showOnlyIcon) {
-            this.placeholder = false;
             const target = event.path.filter( (value) => {
                 return value.className === 'tl-dropdown-list-box';
             });

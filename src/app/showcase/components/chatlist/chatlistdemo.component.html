@@ -5,29 +5,31 @@
     <p class="module-name-top"><code><u>Module Name</u>: <strong>ChatModule</strong></code></p>
     <p class="text-content">The ChatList component is used to create/handle an chat conversation.</p>
   </div>
-
   <hr>
-
   <div class="showcase">
     <div class="row">
-      <div class="col-md-4">
-        <tl-chatlist (onClickItem)="clickChat($event)" [searchInput]="input" [data]="dataSource"></tl-chatlist>
-        <tl-input #input [placeholder]="'Search...'"></tl-input>
-      </div>
-      <div class="col-md-1">
-        <br>
+      <div class="col-md-5">
+        <h5>Status Changer</h5>
         <tl-button (click)="changeBusy()" [text]="'Busy'"></tl-button>
         <tl-button (click)="changeOnline()" [text]="'Online'"></tl-button>
         <tl-button (click)="changeOffline()" [text]="'Offline'"></tl-button>
         <tl-button (click)="changeAway()" [text]="'Away'"></tl-button>
       </div>
     </div>
+    <br>
     <div class="row">
-      Selected: {{selected | json}}
+      <div class="col-md-4">
+        <tl-chatlist (onClickItem)="clickChat($event)" [searchQuery]="'firstName'" [searchInput]="input" [data]="dataSource"></tl-chatlist>
+        <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        Selected: {{selected | json}}
+      </div>
     </div>
     <hr>
   </div>
-
   <div class="setup">
     <h3 class="title">Properties</h3>
     <h5>tl-button</h5>

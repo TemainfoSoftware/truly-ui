@@ -25,18 +25,49 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class FilterOptionsService {
 
-    getOptionsByType(type): Array<any> {
-      return  [
-          { description : 'Start With', valueItem : 'startsWith', icon: 'dx-icon-filter-operation-starts-with' },
-          { description : 'Contains', valueItem : 'contains', icon: 'dx-icon-filter-operation-contains' },
-          { description : 'Does not Contains', valueItem : 'notContains', icon: 'dx-icon-filter-operation-not-contains' },
-          { description : 'Ends Withs', valueItem : 'endsWith', icon: 'dx-icon-filter-operation-ends-with' },
-          { description : 'Equals', valueItem : 'equals', icon: 'dx-icon-filter-operation-equals' },
-          { description : 'Not Equals', valueItem : 'notEquals', icon: 'dx-icon-filter-operation-not-equals' },
-          { description : 'Less Than', valueItem : 'lessThan', icon: 'dx-icon-filter-operation-less' },
-          { description : 'Greater Than', valueItem : 'greaterThan', icon: 'dx-icon-filter-operation-greater' },
-          { description : 'Less Than or equal to', valueItem : 'lessThanOrEqual', icon: 'dx-icon-filter-operation-less-equal' },
-          { description : 'Greater Than or equal to', valueItem : 'greaterThanOrEqual', icon: 'dx-icon-filter-operation-greater-equal' },
-      ];
-    }
+  getOptionsByType(type): Array<any> {
+      switch (type) {
+        case 'text' : return this.getOptionsText();
+        case 'number' : return this.getOptionsNumber();
+        default : return this.getOptionsDefault();
+      }
+  }
+
+  getOptionsDefault() {
+    return  [
+      { description : 'Start With', valueItem : 'startsWith', icon: 'dx-icon-filter-operation-starts-with' },
+      { description : 'Contains', valueItem : 'contains', icon: 'dx-icon-filter-operation-contains' },
+      { description : 'Does not Contains', valueItem : 'notContains', icon: 'dx-icon-filter-operation-not-contains' },
+      { description : 'Ends Withs', valueItem : 'endsWith', icon: 'dx-icon-filter-operation-ends-with' },
+      { description : 'Equals', valueItem : 'equals', icon: 'dx-icon-filter-operation-equals' },
+      { description : 'Not Equals', valueItem : 'notEquals', icon: 'dx-icon-filter-operation-not-equals' },
+      { description : 'Less Than', valueItem : 'lessThan', icon: 'dx-icon-filter-operation-less' },
+      { description : 'Greater Than', valueItem : 'greaterThan', icon: 'dx-icon-filter-operation-greater' },
+      { description : 'Less Than or equal to', valueItem : 'lessThanOrEqual', icon: 'dx-icon-filter-operation-less-equal' },
+      { description : 'Greater Than or equal to', valueItem : 'greaterThanOrEqual', icon: 'dx-icon-filter-operation-greater-equal' },
+    ];
+  }
+
+
+  getOptionsText() {
+    return  [
+      { description : 'Start With', valueItem : 'startsWith', icon: 'dx-icon-filter-operation-starts-with' },
+      { description : 'Contains', valueItem : 'contains', icon: 'dx-icon-filter-operation-contains' },
+      { description : 'Does not Contains', valueItem : 'notContains', icon: 'dx-icon-filter-operation-not-contains' },
+      { description : 'Ends Withs', valueItem : 'endsWith', icon: 'dx-icon-filter-operation-ends-with' },
+      { description : 'Equals', valueItem : 'equals', icon: 'dx-icon-filter-operation-equals' },
+      { description : 'Not Equals', valueItem : 'notEquals', icon: 'dx-icon-filter-operation-not-equals' }
+    ];
+  }
+
+  getOptionsNumber() {
+    return  [
+      { description : 'Equals', valueItem : 'equals', icon: 'dx-icon-filter-operation-equals' },
+      { description : 'Not Equals', valueItem : 'notEquals', icon: 'dx-icon-filter-operation-not-equals' },
+      { description : 'Less Than', valueItem : 'lessThan', icon: 'dx-icon-filter-operation-less' },
+      { description : 'Greater Than', valueItem : 'greaterThan', icon: 'dx-icon-filter-operation-greater' },
+      { description : 'Less Than or equal to', valueItem : 'lessThanOrEqual', icon: 'dx-icon-filter-operation-less-equal' },
+      { description : 'Greater Than or equal to', valueItem : 'greaterThanOrEqual', icon: 'dx-icon-filter-operation-greater-equal' },
+    ];
+  }
 }

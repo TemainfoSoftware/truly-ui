@@ -117,15 +117,16 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     constructor( private render: Renderer2,
-                 public filterService: TlDatatableFilterService,
                  public dataSourceService: TlDatatableDataSource,
-                 public columnService: TlDatatableColumnService
+                 public columnService: TlDatatableColumnService,
+                 public filterService: TlDatatableFilterService,
     ) {}
 
     ngAfterContentInit() {
         this.setRowHeight();
         this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
+        this.filterService.onInicializeFilterService(this);
         this.inicializeGlobalFilter();
     }
 
@@ -168,14 +169,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         if ( this.globalFilter ) {
             this.globalFilterTimeout = setTimeout( () => {
                 this.render.listen(this.globalFilter.element.nativeElement, 'input', ( event ) => {
-                    this.filter( event.target.value ) ;
+                   // this.filter( event.target.value ) ;
                     this.globalFilterTimeout = null;
                 });
             }, 0);
         }
-    }
-
-    filter( value: any ) {
-        this.filterService.filter( value );
     }
 }

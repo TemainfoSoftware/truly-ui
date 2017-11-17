@@ -24,11 +24,10 @@ import {
   OnInit,
   QueryList, Renderer2,
   ViewChild,
+  forwardRef,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
-import { DialogService } from '../dialog/dialog.service';
-import { ModalResult } from '../core/enums/modal-result';
 import { TlDropDownList } from '../dropdownlist/dropdownlist';
 import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
@@ -55,17 +54,17 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() cancelButtonShortcut = '';
 
-  @ContentChildren( TlInput ) inputList: QueryList<TlInput>;
+  @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
 
-  @ContentChildren( TlDropDownList ) dropdownList: QueryList<TlDropDownList>;
+  @ContentChildren( forwardRef(() => TlDropDownList ), {descendants: true}) dropdownList: QueryList<TlDropDownList>;
 
-  @ContentChildren( TlRadioGroup ) radioButtonList: QueryList<TlRadioGroup>;
+  @ContentChildren( forwardRef(() => TlRadioGroup ), {descendants: true}) radioButtonList: QueryList<TlRadioGroup>;
 
-  @ContentChildren( TlCheckBox ) checkboxList: QueryList<TlCheckBox>;
+  @ContentChildren( forwardRef(() => TlCheckBox ), {descendants: true}) checkboxList: QueryList<TlCheckBox>;
 
-  @ContentChildren( TlMultiSelect ) multiselectList: QueryList<TlMultiSelect>;
+  @ContentChildren( forwardRef(() => TlMultiSelect ), {descendants: true}) multiselectList: QueryList<TlMultiSelect>;
 
-  @ContentChildren( TlAutoComplete ) autoCompleteList: QueryList<TlAutoComplete>;
+  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true})autoCompleteList: QueryList<TlAutoComplete>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -77,11 +76,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   public formResult = {};
 
-  private dialogOpen = false;
-
   private lastTabIndex;
-
-  private lastActiveElement;
 
   private focusElements = [];
 
@@ -93,9 +88,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   private time;
 
-  constructor( private renderer: Renderer2, private dialogService: DialogService,
-               private cdr: ChangeDetectorRef ) {
-  }
+  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {}
 
   ngOnInit() {
     componentFormIndex = -1;
@@ -112,11 +105,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   onKeyDownButtonOk( $event ) {
     $event.stopPropagation();
-    this.getInputValues();
-    this.getMultiSelectValues();
-    this.getDropdownListValues();
-    this.getRadioButtonValues();
-    this.getCheckBoxValues();
+    this.getComponentValues( this.inputList.toArray() );
+    this.getComponentValues( this.multiselectList.toArray() );
+    this.getComponentValues( this.dropdownList.toArray() );
+    this.getComponentValues( this.radioButtonList.toArray() );
+    this.getComponentValues( this.checkboxList.toArray() );
     this.getAutoCompleteValues();
   }
 
@@ -128,14 +121,20 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   onClickButtonOk() {
-    this.getInputValues();
-    this.getMultiSelectValues();
-    this.getDropdownListValues();
-    this.getRadioButtonValues();
-    this.getCheckBoxValues();
+    this.getComponentValues( this.inputList.toArray() );
+    this.getComponentValues( this.multiselectList.toArray() );
+    this.getComponentValues( this.dropdownList.toArray() );
+    this.getComponentValues( this.radioButtonList.toArray() );
+    this.getComponentValues( this.checkboxList.toArray() );
     this.getAutoCompleteValues();
   }
 
+  getComponentValues( array ) {
+    array.forEach( ( item ) => {
+      this.formResult[ item instanceof TlRadioGroup ? item.nameGroup.trim() :
+        item.name.trim() ] = item.componentModel.model;
+    } );
+  }
 
   listenComponentWithValidations() {
     this.componentsWithValidations.forEach( ( item, index, array ) => {
@@ -213,7 +212,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }, 10 );
   }
 
-
   setTabIndex( element ) {
     if ( !element.tabIndex ) {
       componentFormIndex++;
@@ -222,13 +220,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
   }
 
-
   isLastTabIndexElement( element, index, array ) {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
     }
   }
-
 
   generateTabIndexOfElements() {
     this.focusElements.forEach( ( element, index, array ) => {
@@ -260,7 +256,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         ' of elements enough according with TabIndex passed : ' + Math.max( ...this.elementsWithTabIndex ) );
     }
   }
-
 
   notExistTabIndexInserted() {
     return this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0;
@@ -376,10 +371,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
   }
 
-  getLastActiveElement() {
-    this.lastActiveElement = document.activeElement;
-  }
-
   inputHasChanged() {
     let inputDirty = false;
     this.inputList.toArray().forEach( ( value ) => {
@@ -390,81 +381,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return inputDirty;
   }
 
-  closeForm() {
-    this.getLastActiveElement();
-    if ( this.showConfirmOnChange && this.inputHasChanged() ) {
-      this.showConfirmation();
-      return;
-    }
-    this.buttonFormCancel.dispatchCallback();
-    if ( !this.hasValueOnForm() ) {
-      this.buttonFormCancel.dispatchCallback();
-      return;
-    }
-  }
-
-  showConfirmation() {
-    if ( !this.dialogOpen ) {
-      this.dialogOpen = true;
-      this.dialogService.modalService.setBackdropModalOverModal();
-      this.dialogService.confirmation( this.messageDialogConfirmation, ( callback ) => {
-        if ( callback.mdResult === ModalResult.MRYES ) {
-          this.buttonFormCancel.dispatchCallback();
-        }
-        this.dialogOpen = false;
-        this.lastActiveElement.focus();
-      }, { draggable: false } );
-    }
-  }
-
-  getInputValues() {
-    this.inputList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.componentModel.model;
-    } );
-  }
-
-
-  getDropdownListValues() {
-    this.dropdownList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.componentModel.model;
-    } );
-  }
-
-
-  getRadioButtonValues() {
-    this.radioButtonList.forEach( ( item ) => {
-      this.formResult[ item.nameGroup.trim() ] = item.componentModel.model;
-    } );
-  }
-
-
-  getCheckBoxValues() {
-    this.checkboxList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.componentModel.model;
-    } );
-  }
-
-  getMultiSelectValues() {
-    this.multiselectList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.componentModel.model;
-    } );
-  }
-
-
   getAutoCompleteValues() {
     this.autoCompleteList.forEach( ( item ) => {
       this.formResult[ item.name.trim() ] = item.input.componentModel.model;
     } );
-  }
-
-  hasValueOnForm() {
-    let model;
-    this.inputList.toArray().forEach( ( value ) => {
-      if ( value.ngValue ) {
-        model = value.ngValue;
-      }
-    } );
-    return model;
   }
 
   ngOnDestroy() {

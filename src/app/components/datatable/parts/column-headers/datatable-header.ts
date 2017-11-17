@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, forwardRef, Inject, ViewChild } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';

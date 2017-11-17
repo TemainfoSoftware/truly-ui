@@ -40,10 +40,13 @@ export class ChatListService {
 
     handleChangeOffline(item, newstatus) {
         if (newstatus === 'Offline') {
-            this.online.splice(this.online.indexOf( item ), 1);
-            this.offline.push(item);
-            this.sortArraysStatus();
+          if (this.offline.indexOf(item) > 0) {
             return;
+          }
+          this.online.splice(this.online.indexOf( item ), 1);
+          this.offline.push(item);
+          this.sortArraysStatus();
+          return;
         }
 
         if (item.status !== 'Offline') {

@@ -130,7 +130,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     handleAutoCompleteModel() {
         setTimeout( () => {
             if ( this.ngModel ) {
-                this.input.modelValue = this.ngModel;
+                this.input.componentModel.model = this.ngModel;
                 this.setInputValue(this.ngModel);
             }
         }, 1 );

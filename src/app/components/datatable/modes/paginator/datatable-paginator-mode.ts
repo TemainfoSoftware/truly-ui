@@ -22,7 +22,6 @@
 
  import { Component, ElementRef, forwardRef, Inject, ViewChild } from '@angular/core';
  import { TlDatatable } from '../../datatable';
- import { KeyEvent } from '../../../core/enums/key-events';
 
  @Component({
      selector: 'tl-datatable-paginator-mode',

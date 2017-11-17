@@ -9,8 +9,6 @@ notifications:
   hipchat: F6Rp7PgVWhO5B7cniWWk9tl9iAdLZJR03GNf0O1y@3935008
 node_js:
   - '7'
-  - '6'
-  - '8'
 before_script:
   - npm prune
   - npm run lint

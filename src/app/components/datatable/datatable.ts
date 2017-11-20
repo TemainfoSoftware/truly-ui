@@ -41,16 +41,18 @@ import { TlDatatableColumnService } from './services/datatable-column.service';
 import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { TlDatatableSortService } from './services/datatable-sort.service';
 
 @Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
     providers: [
-        TlDatatableFilterService,
-        TlDatatableDataSource,
-        TlDatatableColumnService,
-        TlDatatableFilterConstraints,
+      TlDatatableDataSource,
+      TlDatatableColumnService,
+      TlDatatableFilterConstraints,
+      TlDatatableFilterService,
+      TlDatatableSortService
     ]
 })
 export class TlDatatable implements AfterContentInit, OnChanges {
@@ -120,6 +122,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
                  public dataSourceService: TlDatatableDataSource,
                  public columnService: TlDatatableColumnService,
                  public filterService: TlDatatableFilterService,
+                 public sortService: TlDatatableSortService
     ) {}
 
     ngAfterContentInit() {
@@ -127,6 +130,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
+        this.sortService.onInicializeSortService(this);
         this.inicializeGlobalFilter();
     }
 

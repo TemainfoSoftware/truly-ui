@@ -34,7 +34,7 @@ export class TlDatatableFilterService {
 
     private subject: Subject<any> = new Subject();
 
-    public filter: FilterEventMetadata;
+    private filter: FilterEventMetadata;
 
     public filtredData = [];
 

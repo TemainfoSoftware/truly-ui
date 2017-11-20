@@ -41,6 +41,8 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('showFilter') showFilter = true;
 
+    @Input('sorteable') sorteable = true;
+
     @Input('showFilterOptions') showFilterOptions = true;
 
     @Input('filterOptions') filterOptions = [];

@@ -95,6 +95,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     public filteredItens = [];
 
+    public listPosition;
+
     public hasKeySource: boolean;
 
     private showIcon = true;
@@ -366,7 +368,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
             this.setFocusOnNextElement();
             this.cursor = this.cursor + 1;
         }
-
     }
 
     handleArrowUp() {
@@ -379,14 +380,15 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         } else {
             this.setInputFocus();
         }
-
     }
 
-    handleInputFocus(element) {
+    handleInputFocus() {
         this.deActiveInputText();
         this.validateOpenOnFocus();
         this.setOutlineMultiSelect();
         this.sortFilteredItens();
+        this.listPosition = document.activeElement.getBoundingClientRect().left - 5;
+        this.change.detectChanges();
     }
 
     setFilteredItens() {
@@ -459,7 +461,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.renderer.removeClass( this.ul.nativeElement.children[ index ], 'selected' );
       }
     }
-
 
     existChildren() {
       return this.ul.nativeElement.children.length > 0;

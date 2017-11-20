@@ -1,6 +1,6 @@
 .autocomplete-listbox {
-  position: absolute;
-  z-index: 100;
+  position: fixed;
+  z-index: 1000;
 }
 
 .autocomplete-model {

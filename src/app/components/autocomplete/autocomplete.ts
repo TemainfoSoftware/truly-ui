@@ -32,7 +32,6 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
 import { TlInput } from '../input/input';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import set = Reflect.set;
 
 @Component( {
     selector: 'tl-autocomplete',
@@ -94,6 +93,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
+                 public change: ChangeDetectorRef,
                  public nameService: NameGeneratorService, public renderer: Renderer2, ) {
         super( tabIndexService, idService, nameService, renderer );
     }
@@ -107,8 +107,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.validationProperty();
         this.createDocumentListener();
         this.handleAutoCompleteModel();
-        this.listPosition = this.list.nativeElement.offsetLeft;
-        this.input.labelSize ? this.listPosition += parseInt(this.input.labelSize, 10) : this.listPosition += 100;
         this.listBox.showList = false;
         this.listBox.detectChanges();
         this.getAutoCompleteWidth();
@@ -159,6 +157,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         if ( this.openFocus && !this.listBox.showList) {
             this.listBox.showList = true;
             this.listBox.detectChanges();
+            this.listPosition = document.activeElement.getBoundingClientRect().left;
+            this.change.detectChanges();
         }
     }
 

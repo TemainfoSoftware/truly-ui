@@ -34,6 +34,8 @@
         </div>
         <div *ngIf="hasKeySource" [style.display]="isOpen ? 'block' : 'none'">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
                     *ngFor="let item of filteredItens; let i = index"
@@ -49,6 +51,8 @@
         </div>
         <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
                 <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"

@@ -112,7 +112,7 @@ $success-background-color: #E3F5EC;
     display: table-cell;
     border: 1px solid $background-border;
     height: 25px;
-    padding: 4px 12px;
+    padding: 4px 6px;
     background: $background-white;
     font-size: 0.9em;
     width: 100%;
@@ -126,6 +126,11 @@ $success-background-color: #E3F5EC;
   }
   > .field::placeholder {
     @include textInput;
+  }
+  > .field:focus {
+    background: #fffbe9;
+    outline: none;
+    border: 1px solid #ffcf94;
   }
   > .field.-cursorblocked {
     cursor: not-allowed;

@@ -1,0 +1,12 @@
+<div class="wrapper">
+  <ng-template #tabsHeader let-tabs="tabs">
+    <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
+      <li *ngFor="let tab of tabs" [ngClass]="{selected: tab.selected}" (click)="selectTab(tab)">
+        {{tab.title}}
+      </li>
+    </ul>
+  </ng-template>
+  <span class="line-separator" [style.width]="'calc(100% '+'- '+ widthSeparator + 'px)'" [style.left]="widthSeparator+'px'"></span>
+  <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
+  <ng-content></ng-content>
+</div>

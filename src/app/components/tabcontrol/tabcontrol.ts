@@ -47,8 +47,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     public widthSeparator = 0;
 
-    constructor( public button: ElementRef, public modalService: ModalService,
-                 tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
 

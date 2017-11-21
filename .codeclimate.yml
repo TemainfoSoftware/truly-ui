@@ -15,6 +15,7 @@ exclude_paths:
   - "e2e/"
   - "node_modules/"
   - "tools/"
+  - "src/assets/"
 ratings:
    paths:
    - "src/**/**.ts"

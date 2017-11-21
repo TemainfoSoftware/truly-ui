@@ -42,6 +42,8 @@ export class TlTab implements AfterViewInit {
 
   public lastComponent;
 
+  public background;
+
   public firstComponent;
 
   public trulyComponents = ['input'];

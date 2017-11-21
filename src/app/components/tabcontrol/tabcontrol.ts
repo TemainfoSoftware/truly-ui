@@ -20,10 +20,9 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, Renderer2,
+  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild,
 } from '@angular/core';
 
-import { ModalService } from '../modal/modal.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -38,6 +37,10 @@ import { TlTab } from './tab/tab';
 export class TlTabControl extends ComponentDefaultBase implements AfterContentInit {
 
     @Input( 'height' ) height = 'auto';
+
+    @Input( 'background' ) background = '#fff';
+
+    @Input( 'titleColor' ) titleColor = '#848484';
 
     @ViewChild('tabsHeader') tabsHeader;
 
@@ -56,7 +59,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       if (!selectedTab && this.tabs.first) {
         this.tabs.first.selected = true;
       }
-      this.setTabHeight();
+      this.setTabProperties();
       this.getElementList();
     }
 
@@ -65,8 +68,9 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       tab.selected = true;
     }
 
-  setTabHeight() {
+  setTabProperties() {
     this.tabs.forEach( ( item, index, array ) => {
+      item.background = this.background;
       item.height = this.height;
     } );
   }

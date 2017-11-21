@@ -103,7 +103,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.setInitialFocus();
     this.getElementsOfForm();
     this.getTabsComponent();
-    // this.listenerDocument();
     this.getComponentsWithValidations();
     this.validateElements();
     this.listenComponentWithValidations();
@@ -140,7 +139,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   handleKeyDownLastElementTab( $event, index ) {
-    if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 ) {
+    if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 && (!$event.shiftKey)) {
       this.nextTabAndElement( index );
     }
     if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) ) {
@@ -153,27 +152,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return this.tabsList.toArray().indexOf( tab );
   }
 
-  listenerDocument() {
-    this.renderer.listen( document, 'keydown', ($event => {
-      if ( ($event.keyCode === KeyEvent.TAB) && ($event.shiftKey) ) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        const index = this.getTabSelected();
-        this.nextTabAndElement( index );
-        this.cdr.detectChanges();
-      }
-      if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) && ($event.shiftKey) ) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        const index = this.getTabSelected();
-        this.previousTabAndElement( index );
-        this.cdr.detectChanges();
-      }
-    }) );
-  }
-
   handleKeyDownFirstElementTab( $event, index ) {
     if ( [ KeyEvent.ARROWUP, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 ) {
+      this.previousTabAndElement( index );
+    }
+    if (($event.keyCode === KeyEvent.TAB) && ($event.shiftKey)) {
       this.previousTabAndElement( index );
     }
   }
@@ -183,9 +166,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       this.resetTabsSelected();
       this.tabsList.toArray()[ index + 1 ].selected = true;
       this.setFocusNext( index + 1 );
-    } else {
-      this.nextTabAndElement( -1 );
     }
+  }
+
+  nextTab(index) {
+    this.resetTabsSelected();
+    this.tabsList.toArray()[ index + 1 ] ? this.tabsList.toArray()[ index + 1 ].selected = true :
+    this.tabsList.toArray()[0].selected = true;
+    this.cdr.detectChanges();
   }
 
   setFocusNext( index ) {

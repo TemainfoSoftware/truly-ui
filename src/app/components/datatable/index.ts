@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlDatatable } from './datatable';
 import { TlDatatableColumn } from './parts/column/datatable-column';
-import { TlDatatableHeader } from './parts/column-headers/datatable-header';
+import { TlDatatableHeader } from './parts/header/datatable-header';
 import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
 import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
 import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';

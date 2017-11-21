@@ -77,6 +77,10 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() minLengthSearch = 2;
 
+    @Input() selectedFontColor = '#fff';
+
+    @Input() selectedBackgroundColor = '#66CC99';
+
     @Input() sortAlphabetically = false;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
@@ -337,11 +341,13 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     activeInputText() {
-        this.input.nativeElement.style.webkitTextFillColor = '#737373';
+        this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
     }
 
     deActiveInputText() {
+      if (this.isOpen) {
         this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+      }
     }
 
     handleArrowRight() {
@@ -383,9 +389,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     handleInputFocus() {
-        this.deActiveInputText();
         this.validateOpenOnFocus();
         this.setOutlineMultiSelect();
+        this.deActiveInputText();
         this.sortFilteredItens();
         this.listPosition = this.element.nativeElement.getBoundingClientRect() - 5;
         this.change.detectChanges();
@@ -421,7 +427,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     setOutlineMultiSelect() {
         if ( this.wrapperTags ) {
-            this.wrapperTags.nativeElement.style.outline = '1px solid #ffcf94';
+            this.wrapperTags.nativeElement.style.background = '#fffbe9';
+            this.wrapperTags.nativeElement.style.border = '1px solid #ffcf94';
         }
     }
 
@@ -453,12 +460,16 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     addClassSelected( index ) {
       if (this.existChildren()) {
         this.renderer.addClass( this.ul.nativeElement.children[ index ], 'selected' );
+        this.filteredItens[index].selected = true;
+        this.change.detectChanges();
       }
     }
 
     removeClassSelected( index ) {
       if (this.existChildren()) {
         this.renderer.removeClass( this.ul.nativeElement.children[ index ], 'selected' );
+        this.filteredItens[index].selected = false;
+        this.change.detectChanges();
       }
     }
 
@@ -646,7 +657,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     clearOutlineMultiSelect() {
         if ( this.wrapperTags ) {
-            this.wrapperTags.nativeElement.style.outline = 'none';
+            this.wrapperTags.nativeElement.style.background = '#fff';
+            this.wrapperTags.nativeElement.style.border = '1px solid #CACACA';
         }
     }
 

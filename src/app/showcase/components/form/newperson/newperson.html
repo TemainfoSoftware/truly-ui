@@ -1,6 +1,6 @@
 <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'" [cancelButtonShortcut]="'ctrl+f6'">
     <tl-tabcontrol [height]="'200px'">
-      <tl-tab [title]="'Cadastro de Medicamentos'">
+      <tl-tab [title]="'Person Information'">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
@@ -46,15 +46,8 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <tl-input [name]="'country'" [labelSize]="100" [ngModel]="person?.country" [label]="'Outro'"></tl-input>
-            </div>
-          </div>
-        </div>
       </tl-tab>
-      <tl-tab [title]="'Tab 2'">
+      <tl-tab [title]="'Person Information 2'">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -106,22 +99,6 @@
           <div class="col-md-12">
             <div class="form-group">
                 <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
-            </div>
-          </div>
-        </div>
-      </tl-tab>
-      <tl-tab [title]="'Outra Tab'">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <tl-input [name]="'outro'" [label]="'Outro 1'" [ngModel]="person?.cpf"></tl-input>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <tl-input [name]="'cpf'" [label]="'Outro 2'" [ngModel]="person?.cpf"></tl-input>
             </div>
           </div>
         </div>

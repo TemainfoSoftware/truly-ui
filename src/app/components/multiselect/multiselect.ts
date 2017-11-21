@@ -387,7 +387,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validateOpenOnFocus();
         this.setOutlineMultiSelect();
         this.sortFilteredItens();
-        this.listPosition = document.activeElement.getBoundingClientRect().left - 5;
+        this.listPosition = this.element.nativeElement.getBoundingClientRect() - 5;
         this.change.detectChanges();
     }
 
@@ -421,7 +421,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     setOutlineMultiSelect() {
         if ( this.wrapperTags ) {
-            this.wrapperTags.nativeElement.style.outline = '5px auto -webkit-focus-ring-color';
+            this.wrapperTags.nativeElement.style.outline = '1px solid #ffcf94';
         }
     }
 

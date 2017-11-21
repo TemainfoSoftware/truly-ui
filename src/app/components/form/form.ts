@@ -149,7 +149,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   getTabSelected() {
-    const tab = this.tabsList.toArray().find( tab => tab.selected );
+    const tab = this.tabsList.toArray().find( item => item.selected );
     return this.tabsList.toArray().indexOf( tab );
   }
 

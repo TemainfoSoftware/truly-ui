@@ -6,7 +6,7 @@
       </li>
     </ul>
   </ng-template>
-  <span class="line-separator" [style.width]="'calc(100% '+'- '+ widthSeparator + 'px)'" [style.left]="widthSeparator+'px'"></span>
+  <span class="line-separator" [style.width]="'calc(100% '+'- '+ widthSeparator + 'px)'" [style.left]="widthSeparator + 1 +'px'"></span>
   <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
   <ng-content></ng-content>
 </div>

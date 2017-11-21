@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ContentChildren, QueryList, forwardRef, AfterContentInit, ViewChild,
+  Component, ElementRef, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, Renderer2,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -36,6 +36,8 @@ import { TlTab } from './tab/tab';
     styleUrls: [ './tabcontrol.scss' ]
 } )
 export class TlTabControl extends ComponentDefaultBase implements AfterContentInit {
+
+    @Input( 'height' ) height = 'auto';
 
     @ViewChild('tabsHeader') tabsHeader;
 
@@ -55,6 +57,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       if (!selectedTab && this.tabs.first) {
         this.tabs.first.selected = true;
       }
+      this.setTabHeight();
       this.getElementList();
     }
 
@@ -62,6 +65,12 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       this.tabs.forEach(item => item.selected = false);
       tab.selected = true;
     }
+
+  setTabHeight() {
+    this.tabs.forEach( ( item, index, array ) => {
+      item.height = this.height;
+    } );
+  }
 
     getElementList() {
       setTimeout(() => {
@@ -77,8 +86,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     setWidthSeparator() {
       for (let i = 0; i < this.elementListTabs.length; i++) {
-        console.log('', this.elementListTabs[i]);
-        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth);
+        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth) - 1;
       }
     }
 

@@ -25,6 +25,8 @@ import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
 import { TlDatatableFilterService } from '../../services/datatable-filter.service';
+import { TlDatatableColumn } from '../column/datatable-column';
+import { TlDatatableSortService } from '../../services/datatable-sort.service';
 
 @Component( {
     selector: 'tl-datatable-header',
@@ -36,16 +38,41 @@ export class TlDatatableHeader implements AfterViewInit {
 
     @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
 
+    private filderOrder = 1;
+
+    private sortField;
+
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  public helperService: DatatableHelpersService,
                  public filterService: TlDatatableFilterService,
+                 private sortService: TlDatatableSortService,
     ) {}
-
 
     ngAfterViewInit() {
         this.columnsFilter.filterEvent.subscribe((value) => {
            this.filterService.setFilter(value);
         });
+    }
+
+    onClick(column: TlDatatableColumn) {
+      if (!column.sorteable) {
+        return;
+      }
+      this.filderOrder = this.filderOrder * -1;
+      if (this.sortField !==  column.field) {
+        this.sortField = column.field;
+        this.filderOrder = 1;
+      }
+
+      this.sortService.setSort( {sorts: {column: column.field, sortBy: this.filderOrder}} );
+    }
+
+    getSortOrder(column) {
+      let order = 0;
+      if (this.sortField === column.field) {
+        order = this.filderOrder;
+      }
+      return order;
     }
 
 }

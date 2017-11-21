@@ -1,5 +1,13 @@
 $border-color : #DCDCDC;
 
+.ui-datatable-header{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 .ui-datatable-header{
   padding: 0 15px 0 0;
@@ -36,13 +44,34 @@ $border-color : #DCDCDC;
     margin: 0;
     border-bottom: 1px $border-color solid;
   }
+
+  > .ui-row .ui-sort-indicator {
+    font-size: 15px;
+    color: #7a838b;
+    width: 5.65px;
+    height: 17px;
+    font-weight: 600;
+    content: ' ';
+  }
+  > .ui-row .ui-sort-indicator.-push-left {
+    float: right;
+  }
+  > .ui-row .ui-sort-indicator.-push-center {
+    float: right;
+  }
+  > .ui-row .ui-sort-indicator.-push-right {
+    float: left;
+  }
   > .ui-row .ui-cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
-    padding: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 24px;
     height: 25px;
     align-items: center;
     overflow: hidden;
+    cursor: pointer;
     white-space: nowrap;
   }
   >.ui-row .ui-cel.-textleft{

@@ -5,11 +5,25 @@
 
         <table #table class="ui-datatable-table" [colgroup]="dt.columns">
             <thead class="ui-datatable-table-head">
+
                 <tr class="ui-row">
                     <th *ngFor="let column of dt.columns;"
-                        [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">{{column.title}}
+                        (click)="onClick(column)"
+                        [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">
+
+                        <span>{{column.title}}</span>
+                        <div class="ui-sort-indicator -push-{{column.alignment}}">
+                          <span
+                            [ngClass]="{
+                                    'ion-ios-arrow-thin-up': getSortOrder(column) == 1,
+                                    'ion-ios-arrow-thin-down': getSortOrder(column) == -1
+                            }"
+                          >
+                        </span>
+                        </div>
                     </th>
                 </tr>
+
                 <tr *ngIf="dt.allowFilterColumn" class="ui-row" [tlColumnFilter]="dt.columns"></tr>
             </thead>
         </table>

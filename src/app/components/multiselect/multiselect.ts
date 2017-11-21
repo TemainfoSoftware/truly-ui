@@ -71,7 +71,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() detailOnTag = null;
 
-    @Input() itemHeight = 10;
+    @Input() itemHeight = '7px';
 
     @Input() itemAmount = 5;
 
@@ -593,7 +593,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         if ( this.itemAmount >= this.filteredItens.length ) {
             return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         } else {
-            return { 'height': (this.itemHeight * 3.6) * this.itemAmount + 'px',
+            return { 'height': (parseInt(this.itemHeight, 10) * 3.6) * this.itemAmount + 'px',
                 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
         }
     }

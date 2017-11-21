@@ -39,7 +39,7 @@
                 [ngStyle]="calcHeightWidthItem()">
                 <li
                   [ngStyle]=" {
-                      'padding': itemHeight + 'px',
+                      'padding': itemHeight,
                       'background': item.selected ? selectedBackgroundColor : '#fff',
                       'color': item.selected ? selectedFontColor : '#7a838b'
                       }"
@@ -62,7 +62,7 @@
                 [style.left]="listPosition + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
                 <li [ngStyle]="{
-                            'padding': itemHeight + 'px',
+                            'padding': itemHeight,
                             'background': item.selected ? selectedBackgroundColor : '#fff',
                             'color': item.selected ? selectedFontColor : '#7a838b'
                         }"

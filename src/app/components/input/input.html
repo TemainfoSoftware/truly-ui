@@ -1,5 +1,5 @@
 <div class="tl-input-box">
-    <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}<b *ngIf="validations.required" style="color: #FF6666">*</b></label>
+    <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}<b *ngIf="validations.required" style="color: #FF6666">*</b></label>
 
         <span *ngIf="iconBefore" (click)="clickAddon($event, 'before')" class="addon -borderleft"><i [ngClass]="iconBefore"></i></span>
         <span *ngIf="textBefore" class="addon -borderleft" [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>

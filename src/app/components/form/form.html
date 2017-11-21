@@ -1,5 +1,5 @@
 <div class="formBox" (keydown)="handleKeysForm($event)">
-    <div class="formContent" #content>
+    <div class="formContent" #content [style.padding]="padding">
         <ng-content></ng-content>
     </div>
     <div class="clearfix"></div>

@@ -24,6 +24,7 @@ import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
 import { PanelGroupModule } from '../../../components/panelgroup/index';
+import { TabControlModule } from '../../../components/tabcontrol/index';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PanelGroupModule } from '../../../components/panelgroup/index';
     CheckBoxModule,
     FormDemoRoutingModule,
     FormModule,
+    TabControlModule,
     DialogModule,
     AutoCompleteModule,
     FormsModule,

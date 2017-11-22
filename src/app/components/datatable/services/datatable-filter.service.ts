@@ -57,6 +57,7 @@ export class TlDatatableFilterService {
         if (!this.existsFilter()) {
           this.filtredData = [];
         }
+        this.datatable.filterData.next(this.filter);
         this.subject.next();
     }
 

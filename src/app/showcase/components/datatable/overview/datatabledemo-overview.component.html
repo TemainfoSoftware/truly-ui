@@ -21,11 +21,27 @@
             <li>Intelligent Column Width Algorithms which allow you to resize the table automatically</li>
             <li>Keyboard Navigation( ArrowDown, ArrownUP, Home, End, etc)</li>
           </ul>
-          <tl-datatable [data]="data" [allowResize]="true" [allowFilterColumn]="true"  (rowSelect)="onRowSelect( $event )"></tl-datatable>
+          <tl-datatable
+            [data]="data"
+            [allowResize]="true"
+            [allowFilterColumn]="true"
+            [mode]="'scrollable'"
+            (rowSelect)="onRowSelect( $event )"
+            (sortData)="onSortData($event)"
+            (filterData)="onFilterData($event)"
+          ></tl-datatable>
           <div class="examples">
             <h4 class="title">Example</h4>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-              <tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>
+<tl-datatable
+      [data]="data"
+      [allowResize]="true"
+      [allowFilterColumn]="true"
+      [mode]="'scrollable'"
+      (rowSelect)="onRowSelect( $event )"
+      (sortData)="onSortData($event)"
+      (filterData)="onFilterData($event)">
+</tl-datatable>
             </textarea>
           </div>
         </div>

@@ -70,6 +70,7 @@ export class TlDatatableSortService {
 
   setSort(sort) {
     this.sort = sort;
+    this.datatable.sortData.next(this.sort);
     this.subject.next();
   }
 

@@ -1,7 +1,7 @@
 
 export const dataProperties = [
   {
-    name: 'onFilter',
+    name: 'dataFilter',
     parameters: [
       { event: 'event.filter', description: 'Data from the filter that was created ' }
     ],

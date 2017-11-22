@@ -25,10 +25,10 @@ export const dataProperties = [
   },
   {
     name: 'labelSize',
-    type: 'css measure',
+    type: 'string',
     default: '120px',
-    description: 'Width of label.',
-    options: 'css measure'
+    description: 'Width of label text',
+    options: 'px | % | em'
   },
   {
     name: 'labelTag',
@@ -61,9 +61,23 @@ export const dataProperties = [
   {
     name: 'itemHeight',
     type: 'string',
-    default: '10',
+    default: '7px',
     description: 'Height of item list.',
-    options: 'css measure'
+    options: 'px | % | em'
+  },
+  {
+    name: 'selectedBackgroundColor',
+    type: 'string',
+    default: '#66CC99',
+    description: 'Color of list selected item',
+    options: 'Hex | RGB'
+  },
+  {
+    name: 'selectedFontColor',
+    type: 'string',
+    default: '#fff',
+    description: 'Font Color of list selected item',
+    options: 'Hex | RGB'
   },
   {
     name: 'itemAmount',

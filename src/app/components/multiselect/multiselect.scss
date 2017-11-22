@@ -4,9 +4,9 @@ $background-border: #CACACA;
 @mixin defaultInput() {
     border: 0 !important;
     outline: none;
-    height: auto;
+    height: 21px;
     background: $background-color;
-    padding: 4px 5px;
+    padding: 5px 5px;
     font-size: 0.9em;
     padding-right: 0;
     color: #737373;
@@ -41,9 +41,10 @@ small {
 }
 
 .input-wrapper-multiselect {
-    padding: 1.5px 5px;
+    padding-left: 5px;
     border: 1px solid $background-border;
     background: $background-color;
+    min-height: 25px;
     -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
     -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
     box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
@@ -61,9 +62,19 @@ small {
 
 .input-empty {
     @include defaultInput;
+    padding-left: 0;
     width: 100%;
 }
 
+.input:focus {
+  background: #fffbe9;
+  outline: none;
+}
+
+.input-empty:focus {
+  background: #fffbe9;
+  outline: none;
+}
 
 .inputFormOpenFilter {
     border-top: 1px solid #e3e5e6 !important;
@@ -94,21 +105,18 @@ small {
     outline: 1px solid #66CC99;
 }
 
-.selected {
-  background: #dddddd !important;
-}
-
 .tags span {
     position: relative;
     display: inline-block;
     cursor: pointer;
-    margin: 2.5px;
-    padding: 4px 0 4px 5px;
+    height: 15px;
     color: #fff;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
     font-size: 10px;
+    margin-left: 3px;
+    padding-left: 5px;
     font-family: Verdana;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -116,6 +124,10 @@ small {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.tags span:first-child {
+  margin-left: 0;
 }
 
 .tags-detail {

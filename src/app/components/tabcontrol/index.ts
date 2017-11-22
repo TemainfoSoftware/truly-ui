@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 import { TlTabControl } from './tabcontrol';
 import { TlTab } from './tab/tab';
-import { DirectiveModule } from '../core/directives/index';
 
 export * from './tabcontrol';
 
 @NgModule({
     imports: [
         CommonModule,
-        DirectiveModule,
         FormsModule
     ],
     declarations: [

@@ -65,7 +65,7 @@ small {
 
 .select-options {
   display: block;
-  position: absolute;
+  position: fixed;
   width: 100%;
   overflow: auto;
   z-index: 1000;

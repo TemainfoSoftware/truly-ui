@@ -20,10 +20,9 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ContentChildren, QueryList, forwardRef, AfterContentInit, ViewChild,
+  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild,
 } from '@angular/core';
 
-import { ModalService } from '../modal/modal.service';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -37,6 +36,12 @@ import { TlTab } from './tab/tab';
 } )
 export class TlTabControl extends ComponentDefaultBase implements AfterContentInit {
 
+    @Input( 'height' ) height = 'auto';
+
+    @Input( 'background' ) background = '#fff';
+
+    @Input( 'titleColor' ) titleColor = '#848484';
+
     @ViewChild('tabsHeader') tabsHeader;
 
     @ContentChildren( forwardRef(() => TlTab )) tabs: QueryList<TlTab>;
@@ -45,8 +50,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     public widthSeparator = 0;
 
-    constructor( public button: ElementRef, public modalService: ModalService,
-                 tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -55,6 +59,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       if (!selectedTab && this.tabs.first) {
         this.tabs.first.selected = true;
       }
+      this.setTabProperties();
       this.getElementList();
     }
 
@@ -62,6 +67,13 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       this.tabs.forEach(item => item.selected = false);
       tab.selected = true;
     }
+
+  setTabProperties() {
+    this.tabs.forEach( ( item, index, array ) => {
+      item.background = this.background;
+      item.height = this.height;
+    } );
+  }
 
     getElementList() {
       setTimeout(() => {
@@ -77,8 +89,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     setWidthSeparator() {
       for (let i = 0; i < this.elementListTabs.length; i++) {
-        console.log('', this.elementListTabs[i]);
-        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth);
+        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth) - 1;
       }
     }
 

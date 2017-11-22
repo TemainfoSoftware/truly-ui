@@ -20,7 +20,10 @@
  SOFTWARE.
  */
 
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  AfterViewInit, Component, ElementRef, Input,
+  ViewChild
+} from '@angular/core';
 
 @Component({
   selector: 'tl-tab',
@@ -33,9 +36,13 @@ export class TlTab implements AfterViewInit {
 
   @ViewChild( 'tabComponents' ) tabComponents: ElementRef;
 
+  public height = 'auto';
+
   public selected;
 
   public lastComponent;
+
+  public background;
 
   public firstComponent;
 

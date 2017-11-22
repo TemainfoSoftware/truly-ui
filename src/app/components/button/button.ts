@@ -74,6 +74,10 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @Input() toggleClassName: string;
 
+    @Input() colorIconBefore: string;
+
+    @Input() colorIconAfter: string;
+
     @Input() buttonClass: string;
 
     @Input() mdResult: ModalResult;

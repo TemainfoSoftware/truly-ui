@@ -8,15 +8,24 @@
         (click)="clickToggle()"
         (keydown)="keydown($event)">
 
-    <span *ngIf="iconAddonBefore" [ngClass]="iconAddonBefore"
+    <span *ngIf="iconAddonBefore"
+          [ngClass]="iconAddonBefore"
           [class]="'iconAddonBefore ' + buttonAddonBeforeClass"
-          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}"></span>
+          [style.color]="colorIconBefore"
+          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}">
+    </span>
+
     <span class="textButton" [ngStyle]="{'line-height': height - 2 + 'px'}">
         <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText" [class]="iconBeforeTextClass"></i>
         {{ text }}
         <i *ngIf="iconAfterText" [ngClass]="iconAfterText" [class]="iconAfterTextClass"></i>
     </span>
-    <span *ngIf="iconAddonAfter" [ngClass]="iconAddonAfter" [class]="'iconAddonAfter ' + buttonAddonAfterClass"
-          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}"></span>
+
+    <span *ngIf="iconAddonAfter"
+          [ngClass]="iconAddonAfter"
+          [style.color]="colorIconAfter"
+          [class]="'iconAddonAfter ' + buttonAddonAfterClass"
+          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}">
+    </span>
 
 </button>

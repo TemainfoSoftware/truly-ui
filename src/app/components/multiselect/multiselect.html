@@ -34,23 +34,39 @@
         </div>
         <div *ngIf="hasKeySource" [style.display]="isOpen ? 'block' : 'none'">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
+                <li
+                  [ngStyle]=" {
+                      'padding': itemHeight,
+                      'background': item.selected ? selectedBackgroundColor : '#fff',
+                      'color': item.selected ? selectedFontColor : '#7a838b'
+                      }"
+                    (blur)="closeList($event)"
+                    tabindex="-1"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
 
-                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
-                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+                    <i *ngIf="defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item.selected ? selectedFontColor : '#7a838b'}" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item.selected ? selectedFontColor : '#7a838b'}" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item?.source[query]}}
-                    <small>{{item?.source[detail]}}</small>
+                    <small [ngStyle]="{'color': item.selected ? selectedFontColor : '#7a838b'}">{{item?.source[detail]}}</small>
                 </li>
             </ul>
         </div>
         <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
+                <li [ngStyle]="{
+                            'padding': itemHeight,
+                            'background': item.selected ? selectedBackgroundColor : '#fff',
+                            'color': item.selected ? selectedFontColor : '#7a838b'
+                        }"
+                    (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
@@ -59,7 +75,7 @@
                     <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item[query]}}
-                    <small>{{item[detail]}}</small>
+                    <small [ngStyle]="{'color': item.selected ? selectedFontColor : '#7a838b'}">{{item[detail]}}</small>
                 </li>
             </ul>
         </div>

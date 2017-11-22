@@ -24,6 +24,13 @@ export const dataProperties = [
     options: 'Any Text'
   },
   {
+    name: 'labelSize',
+    type: 'string',
+    default: '100px',
+    description: 'Width of label text',
+    options: 'px | % | em'
+  },
+  {
     name: 'labelPlacement',
     type: 'string',
     default: 'left',

@@ -38,6 +38,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },
       {
+        path: 'tabcontrol',
+        loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
+      },
+      {
         path: 'autocomplete',
         loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
       },

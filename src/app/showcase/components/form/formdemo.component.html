@@ -84,16 +84,16 @@
             <h5>Inside of your <code>constructor</code>, set your view calling the method of the Form Service.</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   constructor(public view: ViewContainerRef, public formService: FormService) {
-       this.formService.setView(this.view);
-  }
+   this.formService.setView(this.view);
+}
         </textarea>
             <hr>
             <h4>Step Tree</h4>
             <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
+<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
     <!--Your Content Here-->
-   </tl-form>
+</tl-form>
         </textarea>
             <hr>
             <h4>Step Four</h4>
@@ -124,14 +124,28 @@
   export class FormDemoModule {}
         </textarea>
             <hr>
+            <h4>Step Five</h4>
+            <h5>Set the form options <code>object</code> used on form creation described on <b>Final Step</b>.</h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+    this.formOptions = {
+    title: 'New Modal',
+    icon: 'ion-monitor',
+    draggable: true,
+    width: '500px',
+    height: 'auto',
+    maximizable: true,
+    minimizable: true
+};
+            </textarea>
+            <hr>
             <h4>Final Step</h4>
             <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
-        this.dataFormService.saveDataForm(modalResult.formResult);
-        this.result = this.dataFormService.getDataForm();
-    });
+this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
+      this.dataFormService.saveDataForm(modalResult.formResult);
+      this.result = this.dataFormService.getDataForm();
   });
+});
         </textarea>
           </app-card>
         </app-showcase-card>
@@ -163,33 +177,5 @@
         </div>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Examples'" [icon]="'ion-code-working'">
-        <app-card>
-          <div class="group-component">
-            <h5 class="title">Modal Options</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-    this.formOptions = {
-        title: 'New Modal',
-        icon: 'ion-monitor',
-        draggable: true,
-        width: '500px',
-        height: 'auto',
-        maximizable: true,
-        minimizable: true
-    };
-            </textarea>
-          </div>
-          <div class="group-component">
-            <h5 class="title">Form With Options</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-     this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
-          this.dataFormService.saveDataForm(modalResult.formResult);
-          this.result = this.dataFormService.getDataForm();
-      });
-    });
-            </textarea>
-          </div>
-        </app-card>
-      </app-showcase-card>
   </div>
 </div>

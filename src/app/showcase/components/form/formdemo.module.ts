@@ -25,7 +25,7 @@ import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
 import { PanelGroupModule } from '../../../components/panelgroup/index';
 import { TabControlModule } from '../../../components/tabcontrol/index';
-import { ShowcaseCardModule } from '../showcase-card/showcase-card.module';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 
 @NgModule({
   declarations: [

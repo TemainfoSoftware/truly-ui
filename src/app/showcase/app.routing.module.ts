@@ -61,16 +61,25 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         path: 'tooltip',
         loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
       },
-      {path: 'datatable',
-        loadChildren: './components/datatable/datatabledemo.module#DatatableDemoModule'
+      {
+        path: 'datatable',
+        loadChildren: './components/datatable/overview/datatabledemo-overview.module#DatatableDemoOverviewModule'
       },
       {
-        path: 'datatable/lazy',
-        loadChildren: './components/datatable/lazy/datatablelazydemo.module#DatatableLazyDemoModule'
+        path: 'datatable/tablemodes',
+        loadChildren: './components/datatable/tablemodes/datatable-tablemodes.demo.module#DatatableTableModesDemoModule'
       },
       {
-        path: 'datatable/scrollable',
-        loadChildren: './components/datatable/scrollable/datatablescrollabledemo.module#DatatableScrollableDemoModule'
+        path: 'datatable/rowmodels',
+        loadChildren: './components/datatable/rowmodels/datatable-rowmodels.demo.module#DatatableRowModelsDemoModule'
+      },
+      {
+        path: 'datatable/columnfeatures',
+        loadChildren: './components/datatable/columnfeatures/datatable-columnfeatures.demo.module#DatatableColumnFeaturesDemoModule'
+      },
+      {
+        path: 'datatable/filtering',
+        loadChildren: './components/datatable/filtering/datatable-filtering.demo.module#DatatableFilteringDemoModule'
       },
       {
         path: 'checkbox',

@@ -31,12 +31,12 @@ export const dataProperties = [
     description: 'Callback to invoke when pagination occurs.'
   },
   {
-    name: 'lazyLoad',
+    name: 'dataCHange',
     parameters: [
       { event: 'event.skip', description: 'First row offset ' },
       { event: 'event.take', description: 'Number of rows per page ' }
     ],
-    description: 'Callback to invoke when paging, sorting or filtering happens in lazy mode.'
+    description: 'Callback to invoke when paging, sorting or filtering happens in infinite mode.'
   }
   ,
   {

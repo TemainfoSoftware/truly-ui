@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DataTableDemoComponent } from './datatabledemo.component';
+import { DataTableDemoComponent } from './datatabledemo-overview.component';
 
 @NgModule( {
   imports: [
@@ -12,5 +12,5 @@ import { DataTableDemoComponent } from './datatabledemo.component';
     RouterModule
   ]
 } )
-export class DataTableDemoRoutingModule {
+export class DatatabledemoOverviewRoutingModule {
 }

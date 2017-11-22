@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
-import * as json from './datatabledemo-dataproperties.json';
+import * as json from './datatabledemo-overview-dataproperties.json';
 
-import * as jsonEvents from './datatabledemo-dataevents.json';
+import * as jsonEvents from './datatabledemo-overview-dataevents.json';
 
 @Component( {
   selector: 'app-datatable',
-  templateUrl: './datatabledemo.component.html',
-  styleUrls: [ './datatabledemo.component.scss' ]
+  templateUrl: './datatabledemo-overview.component.html',
+  styleUrls: [ './datatabledemo-overview.component.scss' ]
 } )
 export class DataTableDemoComponent {
 

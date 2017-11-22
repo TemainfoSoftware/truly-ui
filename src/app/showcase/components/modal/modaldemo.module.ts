@@ -12,6 +12,7 @@ import { DatatableModule } from '../../../components/datatable';
 import { InputModule } from '../../../components/input';
 import { ModalModule } from '../../../components/modal';
 import { DialogService } from '../../../components/dialog';
+import { ShowcaseCardModule } from '../showcase-card/showcase-card.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DialogService } from '../../../components/dialog';
     DatatableModule,
     FormsModule,
     HighlightJsModule,
+    ShowcaseCardModule,
     InputModule,
     ModalModule,
     ModalDemoRoutingModule

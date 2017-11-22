@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,aAAc;EACZ,UAAU,EAAE,OAAO;EACnB,MAAM,EAAE,IAAI;EACZ,QAAQ,EAAE,KAAK;EACf,GAAG,EAAE,GAAG;;AAGV,kBAAmB;EACjB,UAAU,EAAE,MAAM;EAClB,KAAK,EAAE,IAAI;EACX,WAAW,EAAE,IAAI;EACjB,OAAO,EAAE,IAAI;EACb,YAAY,EAAG,iBAAiB",
-"sources": ["modaldemo.component.scss"],
-"names": [],
-"file": "modaldemo.component.css"
-}

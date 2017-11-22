@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAEA,QAAQ;EACN,OAAO,EAAE,MAAM;EACf,KAAK,EAAE,OAAO;EACd,eAAe,EAAE,IAAI;EACrB,OAAO,EAAE,KAAK;EACd,MAAM,EAAE,OAAO;;AAEjB,cAAc;EACZ,gBAAgB,EAAE,OAAO;;AAE3B,kBAAkB;EAChB,aAAa,EAAE,iBAAiB;;AAElC,qBAAqB;EACnB,KAAK,EAAE,OAAO;EACd,OAAO,EAAE,SAAS",
-"sources": ["splitbutton-action.scss"],
-"names": [],
-"file": "splitbutton-action.css"
-}

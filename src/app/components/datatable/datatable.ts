@@ -91,6 +91,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Output('pageChange') pageChange: EventEmitter<any> = new EventEmitter();
 
+    @Output('sortData') sortData: EventEmitter<any> = new EventEmitter();
+
+    @Output('filterData') filterData: EventEmitter<any> = new EventEmitter();
+
     @Output('loadData') loadData: EventEmitter<any> = new EventEmitter();
 
     @Output('endRow') endRow: EventEmitter<any> = new EventEmitter();

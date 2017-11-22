@@ -3,54 +3,38 @@ import { Component } from '@angular/core';
 import * as json from './datatabledemo-overview-dataproperties.json';
 
 import * as jsonEvents from './datatabledemo-overview-dataevents.json';
+import { DumpDataService } from '../../../shared/services/dumpdata';
 
 @Component( {
   selector: 'app-datatable',
   templateUrl: './datatabledemo-overview.component.html',
-  styleUrls: [ './datatabledemo-overview.component.scss' ]
+  styleUrls: [ './datatabledemo-overview.component.scss' ],
+  providers: [ DumpDataService ]
 } )
 export class DataTableDemoComponent {
 
   public data: Array<any>;
 
-  public dataLazy: any;
-
-  public rowSelected: any;
-
   public dataTableProperties;
 
   public dataTableEvents;
 
-  constructor() {
+  constructor( private dataDummy: DumpDataService) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
 
-    this.data = this.createRandomData(100);
+    this.data = this.dataDummy.createRandomData(100);
   }
 
-  onPageChange(event) {
-   // console.log(event);
+  onSortData( event ) {
+    console.log('Sort Event: ', event);
+  }
+
+  onFilterData( event ) {
+    console.log('Filter Event: ', event);
   }
 
   onRowSelect( row ) {
-    this.rowSelected = row;
+    console.log('Row Select: ', row);
   }
-
-  public createRandomData(count: number) {
-    const firstNames = ['Adilson', 'William', 'Silvio', 'Maicon', 'Jaisson', 'Moacyr', 'Marcio', 'Laura', 'Anne', 'Nige'],
-      lastNames = ['Davolio', 'Fuller', 'Leverling', 'Peacock', 'Buchanan', 'Suyama', 'King', 'Callahan', 'Dodsworth', 'White'],
-      cities = ['Seattle', 'Tacoma', 'Kirkland', 'Redmond', 'London', 'Philadelphia', 'New York', 'Seattle', 'London', 'Boston'],
-      titles = ['Accountant', 'Vice President, Sales', 'Sales Representative', 'Technical Support', 'Sales Manager', 'Web Designer',
-        'Software Developer'];
-
-    return Array(count).fill({}).map((_, idx) => ({
-        id: idx + 1,
-        firstName: firstNames[Math.floor(Math.random() * firstNames.length)],
-        lastName: lastNames[Math.floor(Math.random() * lastNames.length)],
-        city: cities[Math.floor(Math.random() * cities.length)],
-        title: titles[Math.floor(Math.random() * titles.length)]
-      })
-    );
-  }
-
 }

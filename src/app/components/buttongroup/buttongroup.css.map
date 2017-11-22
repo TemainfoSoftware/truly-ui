@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAGA,oBAAqB;EACnB,OAAO,EAAC,YAAY",
-"sources": ["buttongroup.scss"],
-"names": [],
-"file": "buttongroup.css"
-}

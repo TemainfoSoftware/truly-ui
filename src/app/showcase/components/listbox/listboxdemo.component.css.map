@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,mBAAoB;EAClB,aAAa,EAAE,cAAc;EAC7B,MAAM,EAAE,OAAO;;AAGjB,uBAAwB;EACtB,MAAM,EAAE,IAAI;;AAGd,WAAY;EACV,KAAK,EAAE,KAAK;EACZ,MAAM,EAAE,IAAI;;AAGd,SAAU;EACR,gBAAgB,EAAE,OAAO;EACzB,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,IAAI",
-"sources": ["listboxdemo.component.scss"],
-"names": [],
-"file": "listboxdemo.component.css"
-}

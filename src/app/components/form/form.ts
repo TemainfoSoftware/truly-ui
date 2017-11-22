@@ -127,15 +127,19 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   listenLastElementTab( last, index ) {
-    this.renderer.listen( last, 'keydown', ( $event ) => {
-      this.handleKeyDownLastElementTab( $event, index );
-    } );
+    if (last) {
+      this.renderer.listen( last, 'keydown', ( $event ) => {
+        this.handleKeyDownLastElementTab( $event, index );
+      } );
+    }
   }
 
   listenPreviousElementTab( previous, index ) {
-    this.renderer.listen( previous, 'keydown', ( $event ) => {
-      this.handleKeyDownFirstElementTab( $event, index );
-    } );
+    if (previous) {
+      this.renderer.listen( previous, 'keydown', ( $event ) => {
+        this.handleKeyDownFirstElementTab( $event, index );
+      } );
+    }
   }
 
   handleKeyDownLastElementTab( $event, index ) {

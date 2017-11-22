@@ -1,0 +1,22 @@
+<div class="table-box">
+  <table class="table table-truly">
+    <thead class="table-truly-head">
+    <tr>
+      <th>Name</th>
+      <th>Parameters</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody  class="table-truly-body" *ngFor="let item of data; let i = index">
+    <tr >
+      <td style=" vertical-align: middle;"><span>{{ item.name }}</span></td>
+      <td style=" vertical-align: middle;">
+        <div *ngFor="let param of item.parameters; let i = index">
+          <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
+        </div>
+      </td>
+      <td style=" vertical-align: middle;">{{ item.description }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

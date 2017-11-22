@@ -61,9 +61,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('mode') mode = 'normal';
 
-    @Input('allowLazy') allowLazy = false;
+    @Input('rowModel') rowModel = 'inmemory';
 
     @Input('allowResize') allowResize = false;
+
+    @Input('allowSortColumn') allowSortColumn = false;
 
     @Input('allowFilterColumn') allowFilterColumn = false;
 
@@ -89,7 +91,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Output('pageChange') pageChange: EventEmitter<any> = new EventEmitter();
 
-    @Output('lazyLoad') lazyLoad: EventEmitter<any> = new EventEmitter();
+    @Output('loadData') loadData: EventEmitter<any> = new EventEmitter();
 
     @Output('endRow') endRow: EventEmitter<any> = new EventEmitter();
 

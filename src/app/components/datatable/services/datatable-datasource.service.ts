@@ -65,9 +65,9 @@ export class TlDatatableDataSource implements DatasourceService {
 
     loadMoreData(skip: number, take: number, scrolling?: boolean): Promise<boolean> {
         return new Promise(( resolve ) => {
-            if (  this.datatable.allowLazy ) {
+            if (  this.datatable.rowModel === 'infinite' ) {
                this.datatable.loading = true;
-               this.datatable.lazyLoad.emit({
+               this.datatable.loadData.emit({
                  skip: skip,
                  take: take,
                  filters: this.filterService.getFilter(),

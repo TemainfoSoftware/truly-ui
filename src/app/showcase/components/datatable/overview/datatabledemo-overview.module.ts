@@ -4,25 +4,26 @@ import {NgModule} from '@angular/core';
 
 import {HighlightJsModule} from 'ngx-highlight-js';
 
-import {DataTableLazyDemoComponent} from './datatablelazydemo.component';
-import { DataTableLazyDemoRoutingModule } from './datatablelazydemo-routing.module';
+
+import {DataTableDemoComponent} from './datatabledemo-overview.component';
+import {DatatabledemoOverviewRoutingModule } from './datatabledemo-overview-routing.module';
 import { DatatableModule } from '../../../../components/datatable';
 import { InputModule } from '../../../../components/input';
 
 @NgModule({
   declarations: [
-    DataTableLazyDemoComponent
+    DataTableDemoComponent
   ],
   imports: [
     CommonModule,
-    DataTableLazyDemoRoutingModule,
+    DatatabledemoOverviewRoutingModule,
     DatatableModule,
     FormsModule,
     HighlightJsModule,
     InputModule,
   ],
   exports: [
-    DataTableLazyDemoComponent
+    DataTableDemoComponent
   ]
 })
-export class DatatableLazyDemoModule {}
+export class DatatableDemoOverviewModule {}

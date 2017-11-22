@@ -1,0 +1,141 @@
+<div class="router-outlet">
+
+  <div class="header-title-demo">
+    <h1 class="title">Column Features<span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
+    <p class="text-content">The Datatable supports options for configuring the behavior of its columns.</p>
+  </div>
+<hr>
+  <div class="showcase">
+    <!--AUTO GENERATE COLUMNS-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="group-component">
+          <h2>Auto-Generated Columns</h2>
+          <p>
+            If the Datatable columns are not explicitly configured, the Grid auto-generates them and establishes their number
+            depending on the data fields the Grid is bound to.
+          </p>
+          <tl-datatable [data]="data" [mode]="'scrollable'">
+          </tl-datatable>
+          <div class="examples">
+            <h3 class="title">Example</h3>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [mode]="'scrollable'"></tl-datatable>
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--COLUMN RESIZING-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="group-component">
+          <h2>Column Resizing</h2>
+          <p>
+            The Datatable enables you to resize its columns by dragging the edges (resize handles) of the header cells.
+            To enable column resizing, set the <code>[allowResize]</code> property of the Datatable to true.
+          </p>
+          <tl-datatable [data]="data" [mode]="'scrollable'" [allowResize]="true"></tl-datatable>
+          <div class="examples">
+            <h3 class="title">Example</h3>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [mode]="'scrollable'" [allowResize]="true"></tl-datatable>
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--COLUMN FILTER-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="group-component">
+          <h2>Column Filtering</h2>
+          <p>
+            By default, when <code>[allowFilterColumn]</code> is enabled, the Datatable renders a filter row in its header. Based on the type of
+            data the columns contain, the filter row displays textboxes in each column header where the user can filter
+            string, numeric, or date inputs.
+            <br>
+            You can also hide the filter options for a particular column using parameter <code>[showFilterOptions]</code>
+            or even remove a filter for a specific column using parameter <code>[showFilter]</code> in column property.
+          </p>
+          <tl-datatable [data]="data" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>
+          <div class="examples">
+            <h3 class="title">Example</h3>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--COLUMN SORT-->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="group-component">
+          <h2>Column Sorting</h2>
+          <p>
+            Simply enabling <code>[allowSortColumn]</code> property of Datatable to make a columns sortables.<br>
+            You can also deactivate the ordering of a given column by passing the <code>[sorteable]</code> parameter in the column component.
+          </p>
+          <tl-datatable [data]="data" [mode]="'scrollable'" [allowSortColumn]="true"></tl-datatable>
+          <div class="examples">
+            <h3 class="title">Example</h3>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [mode]="'scrollable'"  [allowSortColumn]="true"></tl-datatable>
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="setup">
+    <h3 class="title">Properties of <i>TL-DATATABLE-COLUMN</i></h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody  class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td><span class="badge">{{ item.type }}</span></td>
+          <td><code>{{ item.default }}</code></td>
+          <td>{{ item.description }}</td>
+          <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+  </div>
+
+  <div class="examples">
+    <h3 class="title">Examples</h3>
+    <div class="group-component">
+      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+       <tl-datatable [data]="data" [mode]="'scrollable'" [height]="300" [rowsClient]="12" [allowFilterColumn]="true">
+        <tl-datatable-column [field]="'id'"        [width]="'70px'"></tl-datatable-column>
+        <tl-datatable-column [field]="'title'"     [width]="'300px'" [type]="'date'" ></tl-datatable-column>
+        <tl-datatable-column [field]="'lastName'"  [width]="'120px'" [showFilterOptions]="false"></tl-datatable-column>
+        <tl-datatable-column [field]="'firstName'" [width]="'100px'" [title]="'FISTNAME'" [showFilter]="false" ></tl-datatable-column>
+        <tl-datatable-column [field]="'city'"      [width]="'300px'" [sorteable]="false"  [alignment]="'left'" ></tl-datatable-column>
+</tl-datatable>
+      </textarea>
+    </div>
+  </div>
+</div>

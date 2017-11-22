@@ -19,16 +19,22 @@ export const dataProperties = [
     description: 'Define how the datatable works.',
     options: 'normal | scrollable | paginator'
   }, {
-    name: 'allowLazy',
-    type: 'boolean',
-    default: 'false',
-    description: 'Data is loaded and interacted in Lazy mode.',
-    options: 'true | false'
+    name: 'rowModel',
+    type: 'string',
+    default: 'inmemmory',
+    description: 'Data is loaded and interacted in InMemory or Infinite Mode.',
+    options: 'inmemory | infinite'
   }, {
     name: 'allowResize',
     type: 'boolean',
     default: 'false',
     description: 'Allows you to resize table columns.',
+    options: 'true | false'
+  }, {
+    name: 'allowFilterColumn',
+    type: 'boolean',
+    default: 'false',
+    description: 'Allows you to filter by columns.',
     options: 'true | false'
   }, {
     name: 'rowsPage',
@@ -43,11 +49,23 @@ export const dataProperties = [
     description: 'Height of each table row.',
     options: 'any number'
   }, {
+    name: 'rowsClient',
+    type: 'number',
+    default: '10',
+    description: 'Number of records you want to view at one time.',
+    options: 'any number'
+  }, {
+    name: 'width',
+    type: 'number',
+    default: '300',
+    description: 'Width(In Pixel) of the scroll viewport.',
+    options: 'any number'
+  }, {
     name: 'height',
-    type: 'string',
-    default: '300px',
-    description: 'Height of the scroll viewport.',
-    options: 'px | % '
+    type: 'number',
+    default: '300',
+    description: 'Height(In Pixel) of the scroll viewport.',
+    options: 'any number'
   }, {
     name: 'globalFilter',
     type: 'any',

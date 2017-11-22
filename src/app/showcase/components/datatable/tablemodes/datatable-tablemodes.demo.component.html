@@ -1,0 +1,100 @@
+<div class="router-outlet">
+
+  <div class="header-title-demo">
+    <h1 class="title">Table Modes<span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
+    <p class="text-content">You can use the DataGrid in several ways including Normal, Scrollable, Paginator.</p>
+  </div>
+<hr>
+  <div class="showcase">
+    <!-- NORMAL -->
+    <div class="row">
+    <div class="col-md-12">
+      <div class="group-component">
+        <h2>Normal</h2>
+        <p>
+          This is the default. Simple table that shows only the records that you pass at the time of creation.
+          But you can use navigation, filtering, sorting all in memory.
+        </p>
+        <tl-datatable [data]="dataNormal"></tl-datatable>
+        <div class="examples">
+          <h3 class="title">Example</h3>
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+              <tl-datatable [data]="dataNormal"></tl-datatable>
+            </textarea>
+
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableColumnFeaturesDemoComponent {
+
+  public dataNormal = [];
+
+  constructor( private dumpDataService: DumpDataService ) {
+    this.dataNormal = this.dumpDataService.createRandomData(1000);
+  }
+}
+            </textarea>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+    <!-- SCROLLABLE -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="group-component">
+          <h2>Scrollable</h2>
+          <p>
+            With scrollable you can navigate the data in a fluid and objective way by scrolling and scrolling to view new or old data.
+            But you can use navigation, filtering, sorting all in memory.
+          </p>
+          <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>
+          <div class="examples">
+            <h3 class="title">Example</h3>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>
+            </textarea>
+
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableColumnFeaturesDemoComponent {
+
+  public dataNormal = [];
+
+  constructor( private dumpDataService: DumpDataService ) {
+    this.dataNormal = this.dumpDataService.createRandomData(1000);
+  }
+}
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="setup">
+    <h3 class="title">Properties</h3>
+    <div class="table-box">
+      <table class="table table-truly">
+        <thead class="table-truly-head">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Default</th>
+          <th>Description</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody  class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
+        <tr>
+          <td><span>{{ item.name }}</span></td>
+          <td><span class="badge">{{ item.type }}</span></td>
+          <td><code>{{ item.default }}</code></td>
+          <td>{{ item.description }}</td>
+          <td><code> {{ item.options }} </code></td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>

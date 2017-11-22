@@ -45,7 +45,7 @@ export class DataTableScrollableDemoComponent {
 
   }
 
-  onLazyLoad(event) {
+  onLoadData(event) {
     clearTimeout(this.timeout );
     this.timeout = setTimeout(() => {
       this.dataLazy = {

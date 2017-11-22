@@ -49,9 +49,11 @@ export class TlDatatableHeader implements AfterViewInit {
     ) {}
 
     ngAfterViewInit() {
-        this.columnsFilter.filterEvent.subscribe((value) => {
-           this.filterService.setFilter(value);
-        });
+        if (this.columnsFilter !== undefined) {
+          this.columnsFilter.filterEvent.subscribe( ( value ) => {
+            this.filterService.setFilter( value );
+          } );
+        }
     }
 
     onClick(column: TlDatatableColumn) {

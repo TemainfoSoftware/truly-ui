@@ -9,6 +9,9 @@ import {DataTableDemoComponent} from './datatabledemo-overview.component';
 import {DatatabledemoOverviewRoutingModule } from './datatabledemo-overview-routing.module';
 import { DatatableModule } from '../../../../components/datatable';
 import { InputModule } from '../../../../components/input';
+import { ShowcaseCardModule } from '../../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { InputModule } from '../../../../components/input';
     DatatableModule,
     FormsModule,
     HighlightJsModule,
+    ShowcaseCardModule,
+    ShowcaseTableEventsModule,
+    ShowcaseTablePropertiesModule,
     InputModule,
   ],
   exports: [

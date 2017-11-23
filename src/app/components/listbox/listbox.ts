@@ -111,7 +111,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() focusOnScroll = true;
 
-    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+    @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
     @Output() onClickAddNew: EventEmitter<any> = new EventEmitter();
 
@@ -336,7 +336,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     handleClickItem( item, index ) {
         this.removeSelected();
         this.cursor = index;
-        this.onClickItem.emit( item );
+        this.clickItem.emit( item );
         this.itemSelected = item;
         this.updateLastSelect();
         this.getCursorViewPortPosition( index );

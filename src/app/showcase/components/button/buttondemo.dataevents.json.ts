@@ -19,26 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
-
-import * as json from './buttondemo-dataproperties.json';
-import * as jsonEvts from './buttondemo.dataevents.json';
-
-@Component( {
-  selector : 'app-button',
-  templateUrl : './buttondemo.component.html',
-  styleUrls : [ './buttondemo.component.scss' ]
-} )
-export class ButtonDemoComponent {
-
-  public dataTableProperties;
-
-  public dataEvents;
-
-  constructor() {
-    this.dataTableProperties = json.dataProperties;
-    this.dataEvents = jsonEvts.dataEvents;
-  }
-
-}
-
+export const dataEvents = [
+  {
+    name: 'isSelected',
+    parameters: [
+      {
+        event: 'object', description: 'Button Selected'
+      }
+    ],
+    description: 'Callback to invoke when toogle button.',
+  },
+];

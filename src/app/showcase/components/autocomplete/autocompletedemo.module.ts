@@ -36,6 +36,9 @@ import { InputModule } from '../../../components/input';
 import { FormModule } from '../../../components/form';
 import { DropDownListModule } from '../../../components/dropdownlist';
 import { ModalModule } from '../../../components/modal';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { ModalModule } from '../../../components/modal';
     DropDownListModule,
     AutoCompleteModule,
     ModalModule,
-    HighlightJsModule
+    HighlightJsModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseCardModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     AutoCompleteDemoComponent,

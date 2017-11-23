@@ -1,138 +1,101 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">PanelGroup <span class="module-name"><code><u>Module Name</u>: <strong>PanelGroupModule</strong></code></span></h1>
+    <h1 class="title">PanelGroup <span
+      class="module-name"><code><u>Module Name</u>: <strong>PanelGroupModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>PanelGroupModule</strong></code></p>
     <p class="text-content">Panels are used to organize components in the view.</p>
   </div>
-  <hr>
   <div class="showcase">
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group" style="padding-bottom: 10px">
-          <h5>Basic Usage</h5>
-        </div>
-        <div class="form-group">
-          <tl-panelgroup [backgroundColor]="'#fafafa'" [labelGroup]="'Register Fields'">
-            <div class="form-group">
-              <tl-input [label]="'FirstName'"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'LastName'"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
-            </div>
-          </tl-panelgroup>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group" style="padding-bottom: 10px">
-          <h5>Nested PanelGroups</h5>
-        </div>
-        <div class="form-group">
-          <tl-panelgroup [labelGroup]="'Register Fields'">
-            <div class="form-group">
-              <tl-input [label]="'FirstName'"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'LastName'"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
-            </div>
-            <div class="form-group">
-              <tl-panelgroup [labelGroup]="'Gender'">
-                <tl-radio-group [nameGroup]="'gender'">
-                  <tl-radiobutton [label]="'Male'" [value]="'M'" [checked]="true"></tl-radiobutton>
-                  <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
-                </tl-radio-group>
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <h5>Basic Usage</h5>
+              <tl-panelgroup [backgroundColor]="'#fafafa'" [labelGroup]="'Register Fields'">
+                <div class="form-group">
+                  <tl-input [label]="'FirstName'"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'LastName'"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
+                </div>
               </tl-panelgroup>
             </div>
-          </tl-panelgroup>
-        </div>
+            <div class="col-md-6">
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-panelgroup [backgroundColor]="'#fafafa'" [labelGroup]="'Register Fields'">
+      <tl-input [label]="'FirstName'"></tl-input>
+      <tl-input [label]="'LastName'"></tl-input>
+      <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
+      <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
+  </tl-panelgroup>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>Nested PanelGroups</h5>
+              <tl-panelgroup [labelGroup]="'Register Fields'">
+                <div class="form-group">
+                  <tl-input [label]="'FirstName'"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'LastName'"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
+                </div>
+                <div class="form-group">
+                  <tl-panelgroup [labelGroup]="'Gender'">
+                    <tl-radio-group [nameGroup]="'gender'">
+                      <tl-radiobutton [label]="'Male'" [value]="'M'" [checked]="true"></tl-radiobutton>
+                      <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+                    </tl-radio-group>
+                  </tl-panelgroup>
+                </div>
+              </tl-panelgroup>
+            </div>
+            <div class="col-md-6">
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-panelgroup [labelGroup]="'Register Fields'">
+      <tl-input [label]="'FirstName'"></tl-input>
+      <tl-input [label]="'LastName'"></tl-input>
+      <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
+      <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
+      <tl-panelgroup [labelGroup]="'Gender'">
+        <tl-radio-group [nameGroup]="'gender'">
+          <tl-radiobutton [label]="'Male'" [value]="'M'" [checked]="true"></tl-radiobutton>
+          <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
+        </tl-radio-group>
+      </tl-panelgroup>
+  </tl-panelgroup>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+          <app-card>
+            <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+          </app-card>
+        </app-showcase-card>
       </div>
-    </div>
-  </div>
-  <hr>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-  </div>
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Basic Usage</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-panelgroup [backgroundColor]="'#fafafa'" [labelGroup]="'Register Fields'">
-  <div class="form-group">
-    <tl-input [label]="'FirstName'"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'LastName'"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
-  </div>
-</tl-panelgroup>
-    </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Nested PanelGroups</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-panelgroup [labelGroup]="'Register Fields'">
-  <div class="form-group">
-    <tl-input [label]="'FirstName'"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'LastName'"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'Birthday'" [mask]="{mask: '00/00/0000'}"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-input [label]="'Phone'" [mask]="{mask: '000-000-0000'}"></tl-input>
-  </div>
-  <div class="form-group">
-    <tl-panelgroup [labelGroup]="'Gender'">
-      <tl-radio-group [nameGroup]="'gender'">
-        <tl-radiobutton [label]="'Male'" [value]="'M'" [checked]="true"></tl-radiobutton>
-        <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
-      </tl-radio-group>
-    </tl-panelgroup>
-  </div>
-</tl-panelgroup>
-    </textarea>
     </div>
   </div>
 </div>

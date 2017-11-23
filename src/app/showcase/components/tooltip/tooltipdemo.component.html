@@ -1,119 +1,76 @@
 <div class="router-outlet">
-<div class="header-title-demo">
-  <h1 class="title">Tooltip <span class="module-name"><code><u>Module Name</u>: <strong>TooltipModule</strong></code></span></h1>
-  <p class="module-name-top"><code><u>Module Name</u>: <strong>TooltipModule</strong></code></p>
-  <p class="text-content">The tooltip can be used in any HTML element.</p>
-</div>
-<hr>
-<div class="showcase">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Placement Top</h5>
-        <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top'}"></tl-input>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Placement Right</h5>
-        <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right'}"></tl-input>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Placement Bottom</h5>
-        <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom'}"></tl-input>
+  <div class="header-title-demo">
+    <h1 class="title">Tooltip <span class="module-name"><code><u>Module Name</u>: <strong>TooltipModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>TooltipModule</strong></code></p>
+    <p class="text-content">The tooltip can be used in any HTML element.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <h5>Placement Top</h5>
+              <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top'}"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top'}"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Placement Right</h5>
+              <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right'}"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right'}"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>Placement Bottom</h5>
+              <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom'}"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom'}"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Placement Left</h5>
+              <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'left'}"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'left'}"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>Custom Background Color</h5>
+              <tl-input type="text"
+                        [tooltip]="{text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.', placement: 'top', color: '#CC181E', width: '320px'}">
+              </tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Custom Font Color</h5>
+              <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom', color: '#167AC6', fontColor: '#000' }"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right', color: '#167AC6', fontColor: '#000' }"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Placement Left</h5>
-        <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'left'}"></tl-input>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Custom Background Color</h5>
-        <tl-input type="text"
-                  [tooltip]="{text: 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="group-component">
-        <h5>Custom Font Color</h5>
-        <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom', color: '#167AC6', fontColor: '#000' }"></tl-input>
-      </div>
-    </div>
-  </div>
-</div>
-<hr>
-<div class="setup">
-  <h3 class="title">Properties</h3>
-  <div class="table-box">
-    <table class="table table-truly">
-      <thead class="table-truly-head">
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-        <th>Options</th>
-      </tr>
-      </thead>
-      <tbody class="table-truly-body" *ngFor="let item of tooltipProperties; let i = index">
-      <tr>
-        <td><span>{{ item.name }}</span></td>
-        <td><span class="badge">{{ item.type }}</span></td>
-        <td><code>{{ item.default }}</code></td>
-        <td>{{ item.description }}</td>
-        <td><code> {{ item.options }} </code></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <hr>
-  <!--<h3 class="title">Events</h3>-->
-</div>
-
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Placement Top</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top'}"></tl-input>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Placement Right</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right'}"></tl-input>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Placement Bottom</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'bottom'}"></tl-input>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Placement Left</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'left'}"></tl-input>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Custom Background Color</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'top', color: '#CC181E', width: '320px'}"></tl-input>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Custom Font Color</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-     <tl-input type="text" [tooltip]="{text: 'My tooltip', placement: 'right', color: '#167AC6', fontColor: '#000' }"></tl-input>
-  </textarea>
-    </div>
-</div>
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <app-showcase-table-properties [data]="tooltipProperties"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
 </div>

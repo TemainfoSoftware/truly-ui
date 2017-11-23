@@ -8,6 +8,9 @@ import { TooltipDemoRoutingModule } from './tooltipdemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { InputModule } from '../../../components/input';
 import { TooltipModule } from '../../../components/tooltip';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { TooltipModule } from '../../../components/tooltip';
     HighlightJsModule,
     InputModule,
     TooltipDemoRoutingModule,
-    TooltipModule
+    TooltipModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     TooltipDemoComponent,

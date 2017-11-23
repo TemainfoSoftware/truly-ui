@@ -101,6 +101,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     public listPosition;
 
+  public listTopPosition;
+
     public hasKeySource: boolean;
 
     private showIcon = true;
@@ -130,6 +132,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.validationProperty();
         this.setElement( this.input, 'multiselect' );
         this.createDocumentListener();
+      this.documentScrollListener();
     }
 
     ngAfterViewInit() {
@@ -252,18 +255,16 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     addTagOnKeyEnter() {
-        for ( let element = 0; element < this.ul.nativeElement.children.length; element++ ) {
-            if ( this.ul.nativeElement.children[ element ].className.includes( 'selected' ) ) {
-                return this.addTag( this.filteredItens[ element ] );
-            }
+      for ( let item = 0; item < this.filteredItens.length; item++ ) {
+        if ( this.filteredItens[ item ].selected ) {
+          return this.addTag( this.filteredItens[ item ] );
         }
+      }
     }
 
     removeAllSelectedClasses() {
-        for ( let element = 0; element < this.ul.nativeElement.children.length; element++ ) {
-            if ( this.ul.nativeElement.children[ element ].className.includes( 'selected' ) ) {
-                this.removeClassSelected( element );
-            }
+      for ( let item = 0; item < this.filteredItens.length; item++ ) {
+        this.filteredItens[ item ].selected = false;
         }
     }
 
@@ -334,6 +335,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     handleKeyBackspace() {
+      this.getTopPosition();
         this.removeAllSelectedClasses();
         this.removeTagOnBackspace();
         this.addClassSelected( 0 );
@@ -394,8 +396,21 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.deActiveInputText();
         this.sortFilteredItens();
         this.listPosition = this.element.nativeElement.getBoundingClientRect() - 5;
+      this.getTopPosition();
         this.change.detectChanges();
     }
+
+  getTopPosition() {
+    this.listTopPosition = this.element.nativeElement.getBoundingClientRect().top;
+  }
+
+  documentScrollListener() {
+    this.renderer.listen( document, 'scroll', ( event ) => {
+      this.getTopPosition();
+      this.isOpen = false;
+      this.change.detectChanges();
+    } );
+  }
 
     setFilteredItens() {
         this.validateEmptySearch();
@@ -459,7 +474,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     addClassSelected( index ) {
       if (this.existChildren()) {
-        this.renderer.addClass( this.ul.nativeElement.children[ index ], 'selected' );
         this.filteredItens[index].selected = true;
         this.change.detectChanges();
       }
@@ -467,7 +481,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     removeClassSelected( index ) {
       if (this.existChildren()) {
-        this.renderer.removeClass( this.ul.nativeElement.children[ index ], 'selected' );
         this.filteredItens[index].selected = false;
         this.change.detectChanges();
       }
@@ -483,6 +496,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.selectTag = this.tags.length;
         this.getSelecteds.emit( this.tags );
         this.setModelValue();
+      this.getTopPosition();
         this.cleanTagSelected();
         this.removeTagOfFilter(item);
         this.removeElementsForFilter();
@@ -517,7 +531,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.addTagSelectedToFiltered();
         this.filterTagsNotSelected();
         this.sortFilteredItens();
-        this.selectTag = this.tags.length - 1;
     }
 
     addTagSelectedToFiltered() {
@@ -576,8 +589,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.setInputFocus();
     }
 
-    selectTagClick( event, item? ) {
+  selectTagClick( event, index, item? ) {
         this.tagClick.emit( item );
+    this.selectTag = index;
         if (item.selected) {
             return item.selected = false;
         }

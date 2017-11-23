@@ -85,9 +85,9 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
-    @Output() onClickTag: EventEmitter<any> = new EventEmitter();
+    @Output() tagClick: EventEmitter<any> = new EventEmitter();
 
-    @Output() onRemoveTag: EventEmitter<any> = new EventEmitter();
+    @Output() tagRemove: EventEmitter<any> = new EventEmitter();
 
     @ViewChild( 'input' ) input;
 
@@ -577,7 +577,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     selectTagClick( event, item? ) {
-        this.onClickTag.emit( item );
+        this.tagClick.emit( item );
         if (item.selected) {
             return item.selected = false;
         }
@@ -630,7 +630,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     removeTag( index, item? ) {
         item ? this.filteredItens.push( item ) : this.filteredItens.push( this.tags[ index ] );
-        this.onRemoveTag.emit( item ? item : this.tags[ index ] );
+        this.tagRemove.emit( item ? item : this.tags[ index ] );
         this.getSelecteds.emit( this.tags );
         this.tags.splice( index, 1 );
         this.changePlaceholder();

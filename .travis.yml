@@ -16,12 +16,12 @@ before_script:
 script:
   - npm run compile
 after_success:
-  - npm run semantic-release-pre
-  - npm run create:packagejson
-  - npm run copy:aotimports
-  - npm run publish
-  - npm run semantic-release-post
-  - npm run build:showcase
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run semantic-release-pre; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run create:packagejson; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run copy:aotimports; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run publish; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run semantic-release-post; fi
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then npm run build:showcase; fi
 deploy:
   - provider: s3
     local_dir: showcase

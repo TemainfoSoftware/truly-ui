@@ -3,14 +3,14 @@
     <thead class="table-truly-head">
     <tr>
       <th>Name</th>
-      <th>Parameters</th>
+      <th *ngIf="parameters?.length > 0">Parameters</th>
       <th>Description</th>
     </tr>
     </thead>
     <tbody  class="table-truly-body" *ngFor="let item of data; let i = index">
     <tr >
       <td style=" vertical-align: middle;"><span>{{ item.name }}</span></td>
-      <td style=" vertical-align: middle;">
+      <td *ngIf="parameters?.length > 0" style=" vertical-align: middle;">
         <div *ngFor="let param of item.parameters; let i = index">
           <code> {{param.event}} </code>: <span style="color: #000;">{{param.description}}</span>
         </div>

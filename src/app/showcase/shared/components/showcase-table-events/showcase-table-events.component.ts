@@ -1,17 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-showcase-table-events',
   templateUrl: './showcase-table-events.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./showcase-table-events.component.scss'],
 })
-export class ShowcaseTableEventsComponent implements OnInit {
+export class ShowcaseTableEventsComponent implements AfterViewInit {
 
   @Input('data') data = [];
 
-  constructor() { }
+  public parameters;
 
-  ngOnInit() {
+  constructor(private change: ChangeDetectorRef) { }
+
+  ngAfterViewInit() {
+    this.hasParams();
+  }
+
+  hasParams() {
+    this.parameters = this.data.filter((value, index, array) => {
+      return value.parameters;
+    });
+    this.change.detectChanges();
   }
 
 }

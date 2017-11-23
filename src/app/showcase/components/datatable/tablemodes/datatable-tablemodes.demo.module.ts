@@ -8,6 +8,8 @@ import { DatatableTableModesDemoComponent } from './datatable-tablemodes.demo.co
 import { DatatableTableModesDemoRoutingModule } from './datatable-tablemodes.demo.routing.module';
 import { DatatableModule } from '../../../../components/datatable';
 import { InputModule } from '../../../../components/input';
+import { ShowcaseCardModule } from '../../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { InputModule } from '../../../../components/input';
   imports: [
     CommonModule,
     DatatableTableModesDemoRoutingModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
     DatatableModule,
     FormsModule,
     HighlightJsModule,

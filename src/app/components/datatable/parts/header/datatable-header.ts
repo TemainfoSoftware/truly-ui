@@ -57,7 +57,7 @@ export class TlDatatableHeader implements AfterViewInit {
     }
 
     onClick(column: TlDatatableColumn) {
-      if (!column.sorteable) {
+      if (( column.sortable === false )  || ( this.dt.allowSortColumn === false)) {
         return;
       }
       this.filderOrder = this.filderOrder * -1;

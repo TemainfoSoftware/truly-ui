@@ -12,14 +12,14 @@
                         [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">
 
                         <span>{{column.title}}</span>
-                        <div class="ui-sort-indicator -push-{{column.alignment}}">
-                          <span
-                            [ngClass]="{
-                                    'ion-ios-arrow-thin-up': getSortOrder(column) == 1,
-                                    'ion-ios-arrow-thin-down': getSortOrder(column) == -1
-                            }"
-                          >
-                        </span>
+                        <div *ngIf="dt.allowSortColumn" class="ui-sort-indicator -push-{{column.alignment}}">
+                            <span
+                              [ngClass]="{
+                                      'ion-ios-arrow-thin-up': getSortOrder(column) == 1,
+                                      'ion-ios-arrow-thin-down': getSortOrder(column) == -1
+                              }"
+                            >
+                          </span>
                         </div>
                     </th>
                 </tr>

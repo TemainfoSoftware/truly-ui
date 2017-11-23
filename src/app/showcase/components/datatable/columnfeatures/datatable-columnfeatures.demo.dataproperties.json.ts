@@ -56,7 +56,7 @@ export const dataProperties = [
     options: '[{ description : "Equals", valueItem : equals, icon: "dx-icon-filter-operation-equals" }]'
   },
   {
-    name: 'sorteable',
+    name: 'sortable',
     type: 'boolean',
     default: 'true',
     description: 'Allows you to block the ordering for a given column.',

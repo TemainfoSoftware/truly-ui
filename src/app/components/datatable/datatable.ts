@@ -65,7 +65,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowResize') allowResize = false;
 
-    @Input('allowSortColumn') allowSortColumn = false;
+    @Input('allowSortColumn') allowSortColumn = true;
 
     @Input('allowFilterColumn') allowFilterColumn = false;
 

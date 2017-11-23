@@ -84,7 +84,7 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @Input() formResult;
 
-    @Output() isSelected: EventEmitter<any> = new EventEmitter<any>();
+    @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
@@ -160,11 +160,11 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         if ( this.toggle ) {
             if ( this._buttonSelected ) {
                 this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
-                this.isSelected.emit( { selected : this._buttonSelected } );
+                this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = false;
             } else {
                 this.toggleClassName = '';
-                this.isSelected.emit( { selected : this._buttonSelected } );
+                this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = true;
             }
         }

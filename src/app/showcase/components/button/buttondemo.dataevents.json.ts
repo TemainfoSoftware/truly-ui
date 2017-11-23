@@ -21,10 +21,10 @@
  */
 export const dataEvents = [
   {
-    name: 'isSelected',
+    name: 'selected',
     parameters: [
       {
-        event: 'object', description: 'Button Selected'
+        event: 'selected', description: 'Button Selected'
       }
     ],
     description: 'Callback to invoke when toogle button.',

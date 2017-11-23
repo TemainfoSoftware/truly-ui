@@ -1,5 +1,4 @@
 <div class="router-outlet">
-  <!--<span class="returned-value">Returned Value:  <label class="label label-info" (click)="show()">Show</label></span>-->
   <div class="header-title-demo">
     <h1 class="title"> MultiSelect <span class="module-name"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></p>
@@ -17,26 +16,28 @@
               (onRemoveTag)="onRemoveTag($event)"
               [labelTag]="'firstName'"
               [label]="'Basic Usage'"
+              [labelSize]="'auto'"
               [(ngModel)]="dataNoSourceBasicModel"
               [detail]="'email'"
               [sortAlphabetically]="true"
               [query]="'firstName'">
             </tl-multiselect>
             <span style="margin-left: 120px" class="returned-value" (click)="show()">Show Model Value</span>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
   [data]="dataNoSourceBasic"
   (getSelecteds)="getSelecteds($event)"
   (onClickTag)="onClickTag($event)"
   (onRemoveTag)="onRemoveTag($event)"
   [labelTag]="'firstName'"
-  [label]="'Basic Usage With Model'"
+  [label]="'Basic Usage'"
+  [labelSize]="'auto'"
   [(ngModel)]="dataNoSourceBasicModel"
   [detail]="'email'"
   [sortAlphabetically]="true"
   [query]="'firstName'">
 </tl-multiselect>
-    </textarea>
+</textarea>
           </div>
           <div class="col-md-6">
             <tl-multiselect
@@ -46,11 +47,12 @@
               [defaultColorTag]="'#0090d9'"
               [detailOnTag]="true"
               [labelTag]="'firstName'"
+              [labelSize]="'auto'"
               [detail]="'email'"
               [query]="'firstName'">
             </tl-multiselect>
             <br>
-             <textarea highlight-js [options]="{}" [lang]="'html'">
+<textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-multiselect
   [data]="dataCustomColors"
   [color]="'color'"
@@ -58,11 +60,12 @@
   [defaultColorTag]="'#0090d9'"
   [detailOnTag]="true"
   [labelTag]="'firstName'"
+  [labelSize]="'auto'"
   [detail]="'email'"
   [query]="'firstName'">
 </tl-multiselect>
-    </textarea>
-          </div>
+</textarea>
+        </div>
         </app-card>
         <app-card>
           <div class="col-md-6">
@@ -81,6 +84,7 @@
   [detailOnTag]="true"
   [label]="'With Detail on Tag'"
   [labelTag]="'firstName'"
+  [labelSize]="'auto'"
   [detail]="'email'"
   [query]="'firstName'">
 </tl-multiselect>
@@ -92,7 +96,7 @@
               [icon]="'icon'"
               [label]="'With Icons'"
               [labelTag]="'firstName'"
-              [labelSize]="'80px'"
+              [labelSize]="'auto'"
               [detail]="'email'"
               [defaultColorTag]="'#ff9102'"
               [query]="'firstName'">
@@ -104,6 +108,8 @@
   [icon]="'icon'"
   [label]="'With Icon'"
   [labelTag]="'firstName'"
+  [labelSize]="'auto'"
+  [labelSize]="'auto'"
   [detail]="'email'"
   [defaultColorTag]="'#ff9102'"
   [query]="'firstName'">

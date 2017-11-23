@@ -8,6 +8,9 @@ import { SplitButtonDemoComponent } from './splitbuttondemo.component';
 import { SplitButtonDemoRoutingModule } from './splitbuttondemo-routing.module';
 import { SplitButtonModule } from '../../../components/splitbutton';
 import { ModalService } from '../../../components/modal';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 
 @NgModule({
@@ -19,7 +22,10 @@ import { ModalService } from '../../../components/modal';
     FormsModule,
     HighlightJsModule,
     SplitButtonDemoRoutingModule,
-    SplitButtonModule
+    SplitButtonModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule,
   ],
   exports: [
     SplitButtonDemoComponent

@@ -12,9 +12,10 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-12">
-              <h4>Normal Usage</h4>
+              <h5>Normal Usage</h5>
               <tl-autocomplete [data]="dataBasic"
                                [id]="'id'"
+                               [labelSize]="'10px'"
                                [openFocus]="true"
                                [name]="'clients'"
                                [label]="'Clients'"
@@ -30,6 +31,7 @@
 <tl-autocomplete
   [data]="data"
   [id]="'id'"
+  [labelSize]="'10px'"
   [openFocus]="true"
   [name]="'clients'"
   (onAddNew)="newClient()"
@@ -45,12 +47,13 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h4>With Template</h4>
+              <h5>With Template</h5>
               <tl-autocomplete [data]="dataLazy"
                                [openFocus]="true"
                                [lazyMode]="true"
                                [clearButton]="true"
                                [id]="'id'"
+                               [labelSize]="'10px'"
                                [name]="'clients'"
                                [label]="'Clients'"
                                (lazyLoad)="onLazyLoad($event)"
@@ -69,28 +72,29 @@
               <div class="spacer"></div>
               <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-autocomplete
-  [data]="data"
-  [id]="'id'"
+  [data]="dataLazy"
   [openFocus]="true"
-  [name]="'clients'"
-  (onAddNew)="newClient()"
-  [label]="'Clients'"
+  [lazyMode]="true"
   [clearButton]="true"
-  [rowHeight]="35"
+  [id]="'id'"
+  [labelSize]="'10px'"
+  [name]="'clients'"
+  [label]="'Clients'"
+  (lazyLoad)="onLazyLoad($event)"
   [placeholder]="'Search...'"
   [labelName]="'firstName'"
+  [rowHeight]="35"
   [(ngModel)]="result">
-      <ng-template let-item="item" let-index="index">
-        <li class="list-template-demo">
-          <img class="img-circle" src="../assets/img/avatar.png"
-               width="20">item.firstName - <span>item.lastName</span>
-          <span class="list-bagde badge">item.id</span>
-        </li>
-      </ng-template>
+<ng-template let-item="item" let-index="index">
+  <li class="list-template-demo">
+    <img class="img-circle" src="../assets/img/avatar.png"
+         width="20">item.firstName - <span>item.lastName</span>
+    <span class="list-bagde badge">item.id</span>
+  </li>
+</ng-template>
 </tl-autocomplete>
-
     </textarea>
-              <p><code>Atention:</code> The example below needs to be interpolated <code>{{example}}</code> for example. Not
+              <p><code>Atention:</code> The example above needs to be interpolated <code>{{example}}</code> for example. Not
                 allowed to used here on highlight code.</p>
             </div>
           </app-card>

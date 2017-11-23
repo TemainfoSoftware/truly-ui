@@ -9,6 +9,9 @@ import { PanelGroupModule } from '../../../components/panelgroup';
 import { RadioButtonModule } from '../../../components/radiobutton';
 import { InputModule } from '../../../components/input';
 import { TabControlModule } from '../../../components/tabcontrol/index';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { TabControlModule } from '../../../components/tabcontrol/index';
     InputModule,
     TabControlDemoRoutingModule,
     HighlightJsModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     TabControlDemoComponent

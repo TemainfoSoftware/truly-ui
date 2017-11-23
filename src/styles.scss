@@ -39,6 +39,11 @@
   border-collapse: inherit;
 }
 
+.spacer {
+  padding-bottom: 10px; height: 10px;
+}
+
+
 .router-outlet {
   padding: 20px;
 }

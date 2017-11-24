@@ -4,67 +4,79 @@
     <p class="module-name-top"><code><u>Module Name</u>: <strong>CheckBoxModule</strong></code></p>
     <p class="text-content">The CheckBox component allows the user to select many options.</p>
   </div>
-  <hr>
   <div class="showcase">
-    <div class="form-group">
-        <tl-checkbox [checked]="true" [label]="'Select this option'"></tl-checkbox>
-        <tl-checkbox [label]="'Select this option'"></tl-checkbox>
-        <tl-checkbox [label]="'Select this option'"></tl-checkbox>
-        <tl-checkbox [label]="'Select this option'"></tl-checkbox>
-        <tl-checkbox [label]="'Select this option'"></tl-checkbox>
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <h5>Basic</h5>
+              <tl-checkbox [label]="'Option 1'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 2'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 3'"></tl-checkbox>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-checkbox [label]="'Option 1'"></tl-checkbox>
+<tl-checkbox [label]="'Option 2'"></tl-checkbox>
+<tl-checkbox [label]="'Option 3'"></tl-checkbox>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Pre Selected Value</h5>
+              <tl-checkbox [label]="'Option 1'"></tl-checkbox>
+              <tl-checkbox [checked]="true" [label]="'Option 2'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 3'"></tl-checkbox>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-checkbox [label]="'Option 1'"></tl-checkbox>
+<tl-checkbox [checked]="true" [label]="'Option 2'"></tl-checkbox>
+<tl-checkbox [label]="'Option 3'"></tl-checkbox>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>Custom CheckMark Color</h5>
+              <tl-checkbox [checkmarkColor]="'#2e632e'" [checked]="true" [label]="'Option 1'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 2'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 3'"></tl-checkbox>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-checkbox [checkmarkColor]="'#2e632e'"
+             [checked]="true" [label]="'Option 1'">
+</tl-checkbox>
+<tl-checkbox [label]="'Option 2'"></tl-checkbox>
+<tl-checkbox [label]="'Option 3'"></tl-checkbox>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Custom Checked Color Background</h5>
+              <tl-checkbox [checkedColorBg]="'#40b1ff'" [checked]="true" [label]="'Option 1'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 2'"></tl-checkbox>
+              <tl-checkbox [label]="'Option 3'"></tl-checkbox>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-checkbox [checkedColorBg]="'#40b1ff'"
+             [checked]="true" [label]="'Option 1'">
+</tl-checkbox>
+<tl-checkbox [label]="'Option 2'"></tl-checkbox>
+<tl-checkbox [label]="'Option 3'"></tl-checkbox>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
     </div>
   </div>
-  <hr>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-    <h3 class="title">Events</h3>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of events; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td>{{ item.description }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Basic</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-      &nbsp;&nbsp;&nbsp;<tl-checkbox [checked]="true" [label]="'Select this option'"></tl-checkbox>
-    </textarea>
-    </div>
-  </div>
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-card>
+      <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+      <app-showcase-table-events [data]="events"></app-showcase-table-events>
+    </app-card>
+  </app-showcase-card>
 </div>

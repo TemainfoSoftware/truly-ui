@@ -62,6 +62,8 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     @Input() orientation = Orientation.HORIZONTAL;
 
+    @Input() colorSelected = '#66CC99';
+
     @ViewChild( 'radiobutton' ) radiobutton;
 
     @ContentChildren( TlRadioButton ) listRadioButton: QueryList<TlRadioButton>;

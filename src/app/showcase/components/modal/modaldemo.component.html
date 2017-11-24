@@ -94,7 +94,9 @@
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
         console.log('Return',modalResult);
-  });
+  }).on('show', () => {
+    console.log('Show Modal');
+  })
         </textarea>
           </app-card>
         </app-showcase-card>

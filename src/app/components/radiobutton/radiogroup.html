@@ -13,7 +13,7 @@
                (focus)="focusRadio(item)"
                [(ngModel)]="modelValue">
         <span class="radio-ring"></span>
-        <span [style.top]="orientation == 'vertical' ? '13px' : '3px'" *ngIf="itemSelected === item" [style.background-color]="item.colorSelected" class="radio-selected"></span>
+        <span [style.top]="orientation == 'vertical' ? '13px' : '3px'" *ngIf="itemSelected === item" [style.background-color]="colorSelected" class="radio-selected"></span>
         <label (click)="checkRadio(item)" class="-label" attr.for="{{id}}">{{item.label}}</label>
     </div>
 </div>

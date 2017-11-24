@@ -3,19 +3,19 @@
  */
 export const dataEvents = [
   {
-    name: 'onShow',
-    description: 'Dispatched when the modal Shows Up.',
+    name: 'show',
+    description: 'Callback to invoke when modal Opens.',
   },
   {
-    name: 'onMinimize',
-    description: 'Dispatched when the modal is Minimized',
+    name: 'minimize',
+    description: 'Callback to invoke when modal Minimize.',
   },
   {
-    name: 'onMaximize',
-    description: 'Dispatched when the modal is Maximized',
+    name: 'maximize',
+    description: 'Callback to invoke when modal Maximize.',
   },
   {
-    name: 'onClose',
-    description: 'Dispatched when the modal is Closed',
+    name: 'close',
+    description: 'Callback to invoke when modal Close.',
   },
   ];

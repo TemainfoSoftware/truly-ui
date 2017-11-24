@@ -87,13 +87,13 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @HostBinding( '@enterAnimation' ) public animation;
 
-    @Output() onShow: EventEmitter<any> = new EventEmitter();
+    @Output() show: EventEmitter<any> = new EventEmitter();
 
-    @Output() onMinimize: EventEmitter<any> = new EventEmitter();
+    @Output() minimize: EventEmitter<any> = new EventEmitter();
 
-    @Output() onMaximize: EventEmitter<any> = new EventEmitter();
+    @Output() maximize: EventEmitter<any> = new EventEmitter();
 
-    @Output() onClose: EventEmitter<any> = new EventEmitter();
+    @Output() close: EventEmitter<any> = new EventEmitter();
 
     public componentRef: ComponentRef<TlModal>;
 
@@ -157,7 +157,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.mousemoveListener();
         this.mouseupListener();
         this.validateProperty();
-        this.onShow.emit();
+        this.show.emit();
     }
 
     ngAfterViewInit() {
@@ -367,7 +367,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             return;
         }
      this.serviceControl.minimize( this.componentRef );
-     this.onMinimize.emit();
+     this.minimize.emit(this.componentRef.instance);
     }
 
     backToTop() {
@@ -376,7 +376,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     closeModal() {
         this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
-        this.onClose.emit();
+        this.close.emit(this.componentRef.instance);
     }
 
     maximizeModal() {
@@ -391,7 +391,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
             this.maximized = true;
             this.moving = false;
-            this.onMaximize.emit();
+            this.maximize.emit();
         } else {
             this.restoreMaximizeModal();
         }

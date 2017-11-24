@@ -62,6 +62,12 @@ export class ModalService implements OnDestroy {
         this.setGlobalSettings( modalOptions );
         this.setInitialZIndex();
         this.callBack = callback;
+        return this;
+    }
+
+    on(event, callback) {
+      this.component.instance[event].subscribe(callback);
+      return this;
     }
 
     setComponentModal() {

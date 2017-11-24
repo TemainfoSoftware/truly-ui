@@ -43,10 +43,6 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() label = '';
 
-    @Input() id = '';
-
-    @Input() tabindex = 0;
-
     @Input() checked = false;
 
     @Input() checkmarkColor = '#fff';
@@ -55,9 +51,9 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @ViewChild( 'checkbox' ) checkbox;
 
-    @Output() onCheckBox: EventEmitter<any> = new EventEmitter();
+    @Output() checkBox: EventEmitter<any> = new EventEmitter();
 
-    @Output() onFocusBox: EventEmitter<any> = new EventEmitter();
+    @Output() focusBox: EventEmitter<any> = new EventEmitter();
 
     public toggle = false;
 
@@ -87,12 +83,12 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     emitEvent() {
         setTimeout( () => {
-            this.onCheckBox.emit( this.modelValue );
+            this.checkBox.emit( this.modelValue );
         }, 1 );
     }
 
     focusCheckBox() {
-        this.onFocusBox.emit( this.modelValue );
+        this.focusBox.emit( this.modelValue );
     }
 
 }

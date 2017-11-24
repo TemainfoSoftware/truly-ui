@@ -46,6 +46,6 @@ export class ModalDemoComponent {
         this.modalResult = modalResult;
     }).on('show', () => {
       console.log('Show Modal');
-    })
+    });
   }
 }

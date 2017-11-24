@@ -37,7 +37,7 @@ export const dataProperties = [
   {
     name: 'width',
     type: 'number',
-    default: '125 (min)',
+    default: '125px',
     description: 'Button width.',
     options: 'number | ex: 150'
   },

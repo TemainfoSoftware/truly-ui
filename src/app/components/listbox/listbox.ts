@@ -113,7 +113,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
-    @Output() onClickAddNew: EventEmitter<any> = new EventEmitter();
+    @Output() clickAddNew: EventEmitter<any> = new EventEmitter();
 
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
@@ -701,7 +701,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleClickAddNew() {
-        this.onClickAddNew.emit();
+        this.clickAddNew.emit();
         this.showList = false;
         this.change.detectChanges();
     }

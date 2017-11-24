@@ -49,6 +49,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
+    @ViewChild( 'datatableHeader' ) datatableHeader: ElementRef;
+
     public loading = false;
 
     public foundRecords = true;
@@ -165,7 +167,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.listComponent.nativeElement.addEventListener('scroll', ($event) => {
 
             if ( this.isScrollLeft() ) {
-                this.handleScrollLeft();
+                this.handleScrolHorizontal();
                 this.setLastScrollLeft();
                 return;
             }
@@ -179,8 +181,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     }
 
-    private handleScrollLeft() {
-        this.scrollBoxHeader[0].scrollLeft  = this.listComponent.nativeElement.scrollLeft;
+    private handleScrolHorizontal() {
+        this.dt.scrollingHorizontalSubject.next(this.listComponent.nativeElement.scrollLeft);
     }
 
     private firstRender() {

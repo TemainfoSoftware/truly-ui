@@ -113,6 +113,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     public totalRows: number;
 
+    public scrollingHorizontalSubject = new Subject<any>();
+
     private loadingSubject = new Subject<any>();
 
     private _loading = false;
@@ -169,6 +171,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     getLoading(): Observable<any> {
         return this.loadingSubject.asObservable();
+    }
+
+    getScrollingHorizontal(): Observable<any> {
+      return this.scrollingHorizontalSubject.asObservable();
     }
 
     getObjectRow( row , index ) {

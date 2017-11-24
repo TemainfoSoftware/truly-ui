@@ -193,12 +193,16 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]') );
+        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]';
+        const element = this.listBody.nativeElement.querySelector(elementToFind);
+        this.setFocus(element );
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]') );
+        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]';
+        const element = this.listBody.nativeElement.querySelector(elementToFind);
+        this.setFocus( element );
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -423,23 +427,17 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private getFocusElementOnChangeData() {
-        // const rowNumber = this.activeElement.getAttribute('row');
-        // if (document.querySelector('tr[row="' + rowNumber + '"]')) {
-        //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
-        //     return document.querySelector('tr[row="' + rowNumber + '"]');
-        // }
-
         if (document.activeElement.nodeName === 'INPUT') {
             return document.activeElement;
         }
 
-
         if ( this.isScrollDown() ) {
-            return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');
+            const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
+            return this.listBody.nativeElement.querySelector(elementToFind);
         }else {
-            return document.querySelector('tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]');
+            const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]';
+            return this.listBody.nativeElement.querySelector(elementToFind);
         }
-
     }
 
     private setFocus( htmlElement ) {

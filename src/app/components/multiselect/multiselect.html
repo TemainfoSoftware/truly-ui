@@ -26,7 +26,7 @@
                    #input width="300"
                    [(ngModel)]="modelValue"
                    (blur)="closeList($event, element)"
-                   (focus)="handleInputFocus(element)"
+                   (focus)="handleInputFocus()"
                    [attr.placeholder]="placeholder"
                    (keyup)="searchItem($event.target.value, $event)"
                    (keydown)="handleKeyDown($event)"

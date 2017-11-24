@@ -19,7 +19,7 @@
     "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=7.0.0"
   },
   "scripts": {
     "ng": "ng",

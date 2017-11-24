@@ -2,10 +2,9 @@
   <div class="header-title-demo">
     <h1 class="title">ListBox <span class="module-name"><code><u>Module Name</u>: <strong>ListBoxModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>ListBoxModule</strong></code></p>
-    <p class="text-content">ListBox is a component where exists a list of itens to search and select.</p>
-    <p class="text-content">Truly UI has two diferent types of list, the default and with Custom Template, like shown below.</p>
+    <p class="text-content">ListBox is a component where exists a list of items to search and select.</p>
+    <p class="text-content">Truly UI has two different types of list, the default and with Custom Template, like shown below.</p>
   </div>
-  <hr>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
@@ -18,7 +17,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataBasic"
-                [itensToShow]="5"
+                [itemsToShow]="5"
                 [searchElement]="inputBasic"
                 [id]="'id'"
                 [label]="'firstName'"
@@ -27,15 +26,14 @@
               </tl-listbox>
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-        <tl-listbox
-          [data]="data"
-          (onClickItem)="onClickNoItem($event)"
-          [itensToShow]="10"
-          [searchElement]="input"
-          [id]="'id'"
-          [label]="'firstName'"
-          [labelDetail]="'city'"
-          [rowHeight]="50">
+<tl-listbox
+  [data]="dataBasic"
+  [itemsToShow]="5"
+  [searchElement]="inputBasic"
+  [id]="'id'"
+  [label]="'firstName'"
+  [labelDetail]="'city'"
+  [rowHeight]="50">
 </tl-listbox>
 </textarea>
             </div>
@@ -46,7 +44,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataLazy"
-                [itensToShow]="5"
+                [itemsToShow]="5"
                 [lazyMode]="true"
                 (lazyLoad)="onLazyLoad($event)"
                 [searchElement]="inputBasicLazy"
@@ -56,16 +54,17 @@
                 [rowHeight]="50">
               </tl-listbox>
               <hr>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-listbox [data]="dataLazy"
-            [itensToShow]="5"
-            [lazyMode]="true"
-            (lazyLoad)="onLazyLoad($event)"
-            [searchElement]="inputBasicLazy"
-            [id]="'id'"
-            [label]="'firstName'"
-            [labelDetail]="'city'"
-            [rowHeight]="50">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-listbox
+  [data]="dataLazy"
+  [itemsToShow]="5"
+  [lazyMode]="true"
+  (lazyLoad)="onLazyLoad($event)"
+  [searchElement]="inputBasicLazy"
+  [id]="'id'"
+  [label]="'firstName'"
+  [labelDetail]="'city'"
+  [rowHeight]="50">
 </tl-listbox>
 </textarea>
             </div>
@@ -78,7 +77,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataCustom"
-                [itensToShow]="5"
+                [itemsToShow]="5"
                 [searchElement]="inputCustomNormal"
                 [id]="'id'"
                 [label]="'firstName'"
@@ -94,17 +93,16 @@
               </tl-listbox>
               <hr>
               <p><code>Atention:</code> The example below needs to be interpolated <code>{{example}}</code> for example. Not allowed to used here on highlight code.</p>
-              <textarea highlight-js [options]="{}" [lang]="'html'">
+<textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-listbox
   [data]="data"
   (onClickItem)="onClickNoItem($event)"
-  [itensToShow]="10"
+  [itemsToShow]="10"
   [searchElement]="input"
   [id]="'id'"
   [label]="'firstName'"
   [labelDetail]="'city'"
   [rowHeight]="50">
-
   <ng-template let-item="item" let-index="index">
     <li class="list-template-demo">
       <img class="img-circle" src="../assets/img/avatar.png"
@@ -112,7 +110,6 @@
       <span class="list-bagde badge"> item.id </span>
     </li>
   </ng-template>
-
 </tl-listbox>
     </textarea>
             </div>
@@ -123,7 +120,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataLazy"
-                [itensToShow]="5"
+                [itemsToShow]="5"
                 [searchElement]="inputCustomLazy"
                 [id]="'id'"
                 [lazyMode]="true"
@@ -144,7 +141,7 @@
               <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-listbox
   [data]="dataLazy"
-  [itensToShow]="5"
+  [itemsToShow]="5"
   [searchElement]="inputCustomLazy"
   [id]="'id'"
   [lazyMode]="true"
@@ -152,7 +149,6 @@
   [label]="'firstName'"
   [labelDetail]="'city'"
   [rowHeight]="50">
-
   <ng-template let-item="item" let-index="index">
     <li class="list-template-demo">
       <img class="img-circle" src="../assets/img/avatar.png"

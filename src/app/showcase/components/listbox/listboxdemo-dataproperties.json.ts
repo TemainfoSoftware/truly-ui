@@ -66,7 +66,7 @@ export const dataProperties = [
     options: 'any number'
   },
   {
-    name: 'itensToShow',
+    name: 'itemsToShow',
     type: 'number',
     default: '10',
     description: 'Number of lines that going to be shown on list',

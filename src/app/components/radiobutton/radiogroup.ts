@@ -54,12 +54,6 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     @Input() labelGroup = '';
 
-    @Input() label = '';
-
-    @Input() value = '';
-
-    @Input() tabindex = 0;
-
     @Input() orientation = Orientation.HORIZONTAL;
 
     @Input() colorSelected = '#66CC99';

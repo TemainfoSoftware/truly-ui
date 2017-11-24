@@ -85,7 +85,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() addNew = false;
 
-    @Input() itensToShow = 10;
+    @Input() itemsToShow = 10;
 
     @Input() searchQuery = [];
 
@@ -707,11 +707,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     getListBoxHeight() {
-        if ( (this.filteredData.length < this.itensToShow) && this.filtering ) {
+        if ( (this.filteredData.length < this.itemsToShow) && this.filtering ) {
             return this.addNew ? (this.filteredData.length * this.rowHeight) + (this.rowHeight) :
                 (this.filteredData.length * this.rowHeight);
         }
-        return this.addNew ? (this.itensToShow * this.rowHeight) : this.itensToShow * this.rowHeight;
+        return this.addNew ? (this.itemsToShow * this.rowHeight) : this.itemsToShow * this.rowHeight;
     }
 
     getElementOfList() {

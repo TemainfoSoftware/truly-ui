@@ -101,7 +101,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     public listPosition;
 
-  public listTopPosition;
+    public listTopPosition;
 
     public hasKeySource: boolean;
 
@@ -118,6 +118,8 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     private tags = [];
 
     private dataSource = [];
+
+    private scrollDocument;
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
                  private renderer: Renderer2, private change: ChangeDetectorRef ) {
@@ -405,7 +407,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
   }
 
   documentScrollListener() {
-    this.renderer.listen( document, 'scroll', ( event ) => {
+    this.scrollDocument = this.renderer.listen( document, 'scroll', ( event ) => {
       this.getTopPosition();
       this.isOpen = false;
       this.change.detectChanges();
@@ -719,6 +721,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     ngOnDestroy() {
         this.documentListener();
+        this.scrollDocument();
         this.change.detach();
     }
 }

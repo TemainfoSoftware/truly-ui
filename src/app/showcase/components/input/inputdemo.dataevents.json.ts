@@ -25,7 +25,7 @@ export const dataEvents = [
     description: 'Callback to invoke when button clear is clicked.',
   },
   {
-    name: 'onClickAddon',
+    name: 'clickAddon',
     description: 'Callback to invoke when addon is clicked.',
   },
   {

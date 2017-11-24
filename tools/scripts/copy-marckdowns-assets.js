@@ -8,3 +8,4 @@ const licenseFile = './LICENSE.md';
 // }
 
 fs.writeFileSync('dist/' + licenseFile, fs.readFileSync(licenseFile));
+fs.writeFileSync('dist/' + readmeFile, fs.readFileSync(readmeFile));

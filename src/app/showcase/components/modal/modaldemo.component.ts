@@ -44,7 +44,8 @@ export class ModalDemoComponent {
   modal1() {
     this.modalService.createModal(NewModalComponent, this.modalOptions, (modalResult) => {
         this.modalResult = modalResult;
-    });
+    }).on('show', () => {
+      console.log('Show Modal');
+    })
   }
-
 }

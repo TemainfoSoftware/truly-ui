@@ -15,6 +15,7 @@ export * from './components/overlay/index';
 export * from './components/panelgroup/index';
 export * from './components/radiobutton/index';
 export * from './components/splitbutton/index';
+export * from './components/tabcontrol/index';
 export * from './components/tooltip/index';
 
 // Services..

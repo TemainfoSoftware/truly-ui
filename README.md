@@ -1420,8 +1420,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
-// Import your library, for example the InputComponent:
-import { InputModule } from 'truly-ui';
+// Import your library, for example the InputComponent :
+import { InputModule } from 'truly-ui/truly-ui';         //Import of all Modules
+import { ButtonModule } from 'truly-ui/component/button';//Only the specific Module imports
 
 @NgModule({
   declarations: [
@@ -1430,7 +1431,8 @@ import { InputModule } from 'truly-ui';
   imports: [
     BrowserModule,
     // Specify your library as an import
-    InputModule
+    InputModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

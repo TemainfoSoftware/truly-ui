@@ -42,8 +42,6 @@ export class TlRadioButton extends ComponentHasModelBase implements AfterViewIni
 
     @Input() checked = false;
 
-    @Input() colorSelected = '#66CC99';
-
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }

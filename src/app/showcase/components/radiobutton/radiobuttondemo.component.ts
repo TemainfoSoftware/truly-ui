@@ -13,6 +13,8 @@ import { slideToLeft } from '../../shared/animations/router.animations';
 export class RadioButtonDemoComponent {
   public dataTableProperties;
 
+  public dataTablePropertiesRadioButton;
+
   public radio;
 
   public radio2;
@@ -21,6 +23,7 @@ export class RadioButtonDemoComponent {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataTablePropertiesRadioButton = json.dataPropertiesRadioButton;
     this.dataEvents = jsonEvts.dataEvents;
   }
 

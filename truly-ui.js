@@ -21,4 +21,5 @@ __export(require("./components/overlay/index"));
 __export(require("./components/panelgroup/index"));
 __export(require("./components/radiobutton/index"));
 __export(require("./components/splitbutton/index"));
+__export(require("./components/tabcontrol/index"));
 __export(require("./components/tooltip/index"));

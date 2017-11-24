@@ -3,41 +3,38 @@
     <h1 class="title">Getting Started</h1>
     <p class="text-content">We'll cover the basics and get you started from the ground up.</p>
   </div>
-  <hr>
-  <div class="header-title-demo">
-
-    <h3 class="title">Prerequisites</h3>
-    <hr>
-    <span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>
-
-    <ul>
-      <li><a href="https://nodejs.org">NodeJS >= 7</a></li>
-      <li><a href="https://cli.angular.io">Angular Cli >= 1.5.0</a></li>
-      <li><a href="https://angular.io">Angular >= 5.0.0</a></li>
-    </ul>
-
-    <br>
-    <h3 class="title">Installation</h3>
-    <hr>
-    <span class="description">1. Having NPM installation run the following command on your terminal to install it:</span>
-    <div class="code-area">
+    <app-showcase-card [title]="'Prerequisites'" [icon]="'ion-document-text'">
+      <app-card>
+        <h3>Prerequisites</h3>
+        <hr>
+        <span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>
+        <ul>
+          <li><a href="https://nodejs.org">NodeJS >= 7</a></li>
+          <li><a href="https://cli.angular.io">Angular Cli >= 1.5.0</a></li>
+          <li><a href="https://angular.io">Angular >= 5.0.0</a></li>
+        </ul>
+      </app-card>
+      <app-card>
+        <h3>Installation</h3>
+        <hr>
+        <span class="description">1. Having NPM installation run the following command on your terminal to install it:</span>
+        <div class="code-area">
     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
   $ npm install truly-ui --save
   </textarea>
-    <span class="description">2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
-      <p>Inside the <code>.angular-cli.json</code> file add the following paths to the <code>styles</code> key</p>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+          <span class="description">2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
+          <p>Inside the <code>.angular-cli.json</code> file add the following paths to the <code>styles</code> key</p>
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 "styles": [
   "../node_modules/font-awesome/css/font-awesome.min.css",
   "../node_modules/ionicons-npm/css/ionicons.min.css",
 ]
       </textarea>
-      <br>
-      <h3 class="title">Usage</h3>
-      <hr>
-      <span class="description">Import the TrulyUI module in your AppModule.</span>
-      <div class="code-area">
-
+          <hr>
+          <h3>Usage</h3>
+          <hr>
+          <span class="description">Import the TrulyUI module in your AppModule.</span>
+          <div class="code-area">
       <textarea highlight-js [options]="{'tabReplace': ''}" lang="'typescript'">
       import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -61,10 +58,10 @@ import { InputModule } from 'truly-ui';
 })
 export class AppModule { }
     </textarea>
-      </div>
-    </div>
-    <span class="description">Once your library is imported, you can use its components, directives and pipes in your Angular application:</span>
-    <div class="code-area">
+          </div>
+        </div>
+        <span class="description">Once your library is imported, you can use its components, directives and pipes in your Angular application:</span>
+        <div class="code-area">
     <textarea highlight-js [options]="{'tabReplace': ''}" lang="'html'">
       <!-- You can now use your library component in app.component.html or other component what you want -->
    <tl-input
@@ -76,6 +73,7 @@ export class AppModule { }
      [autocomplete]="'off'">
     </tl-input>
     </textarea>
-    </div>
-  </div>
+        </div>
+      </app-card>
+    </app-showcase-card>
 </div>

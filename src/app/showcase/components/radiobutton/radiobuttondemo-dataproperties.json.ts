@@ -22,7 +22,7 @@ export const dataProperties = [
     default: 'horizontal',
     description: 'Orientation of the Radios',
     options: 'vertical | horizontal'
-  }
+  },
   {
     name: 'colorSelected',
     type: 'string',

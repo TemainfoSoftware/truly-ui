@@ -32,21 +32,21 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Key of object used to describe the ID on list (Normal Usage)',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'labelDetail',
     type: 'string',
     default: 'null',
     description: 'Key of object used to describe the labelDetail on list (Normal Usage)',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'labelName',
     type: 'string',
     default: 'null',
     description: 'Key of object used to describe the labelName on list (Normal Usage)',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'openFocus',
@@ -60,7 +60,7 @@ export const dataProperties = [
     type: 'number',
     default: '30',
     description: 'Value rowHeight of the list element',
-    options: 'Any number'
+    options: 'any number'
   },
   {
     name: 'listStripped',
@@ -88,7 +88,7 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Create a label together with Input Element',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'labelPlacement',
@@ -102,45 +102,43 @@ export const dataProperties = [
     type: 'boolean',
     default: 'false',
     description: 'Display an icon to clear any Input Value',
-    options: 'Any Text'
+    options: 'true | false'
   },
   {
     name: 'disabled',
     type: 'boolean',
     default: 'false',
     description: 'Display an input with not selectable text (disabled)',
-    options: 'Any Text'
+    options: 'true | false'
   },
   {
     name: 'readonly',
     type: 'boolean',
     default: 'false',
     description: 'Display an input with selectable text (only read)',
-    options: 'Any Text'
+    options: 'true | false'
   },
   {
     name: 'placeholder',
     type: 'string',
     default: 'null',
     description: 'Display a help text on Input',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'textBefore',
     type: 'string',
     default: 'null',
     description: 'Display a text Before the Input',
-    options: 'Any Text'
-  }
-  ,
+    options: 'any text'
+  },
   {
     name: 'textAfter',
     type: 'string',
     default: 'null',
     description: 'Display a text After the Input',
-    options: 'Any Text'
-  }
-  ,
+    options: 'any text'
+  },
   {
     name: 'autocomplete',
     type: 'string',

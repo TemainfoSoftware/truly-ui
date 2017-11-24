@@ -14,28 +14,28 @@ export const dataProperties = [
     type: 'string',
     default: 'My Modal',
     description: 'Title of window dialog',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'color',
     type: 'string',
     default: '#53C68C',
     description: 'Color of window dialog header',
-    options: 'Hexadecimal'
+    options: 'Hex | RGBA'
   },
   {
     name: 'width',
     type: 'string',
     default: '500px',
     description: 'Width of window dialog',
-    options: 'Any CSS selector measure'
+    options: 'px | % | em'
   },
   {
     name: 'height',
     type: 'string',
     default: '500px',
     description: 'Height of window dialog',
-    options: 'Any CSS selector measure'
+    options: 'px | % | em'
   },
   {
     name: 'draggable',

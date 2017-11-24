@@ -1,5 +1,5 @@
 <div class="ui-chat-wrapper">
-    <div class="ui-chat-overflow" (scroll)="handleScrollChat($event)" #overflow [style.height]="((10 * 50) + (50)) + 'px'">
+    <div class="ui-chat-overflow" (scroll)="handleScrollChat($event)" #overflow [style.height]="(((itemsToShow * 2) * 50) + (50)) + 'px'">
         <div class="ui-chat-lists" [style.height]="!filtering ? (data.length * 50) + (300) + 'px' : filteredData.length + (300) + 'px'">
 
             <div class="ui-chat-content" [style.transform]="'translateY(' + scrollChat + 'px)'">
@@ -7,8 +7,8 @@
                 <div class="ui-status">Online ({{chatListService.online.length}})</div>
                 <tl-listbox
                         [data]="chatListService.online"
-                        [itensToShow]="5"
-                        (onClickItem)="onClickItemChat($event)"
+                        [itemsToShow]="itemsToShow"
+                        (clickItem)="onClickItemChat($event)"
                         [showArrows]="false"
                         [hiddenScroll]="true"
                         [focusOnScroll]="false"
@@ -34,8 +34,8 @@
 
                 <tl-listbox
                         [data]="chatListService.offline"
-                        [itensToShow]="5"
-                        (onClickItem)="onClickItemChat($event)"
+                        [itemsToShow]="itemsToShow"
+                        (clickItem)="onClickItemChat($event)"
                         [showArrows]="false"
                         [hiddenScroll]="true"
                         [focusOnScroll]="false"

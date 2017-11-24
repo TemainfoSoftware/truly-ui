@@ -12,8 +12,8 @@
           <div class="col-md-6">
             <tl-multiselect
               [data]="dataNoSourceBasic"
-              (onClickTag)="onClickTag($event)"
-              (onRemoveTag)="onRemoveTag($event)"
+              (tagClick)="onClickTag($event)"
+              (tagRemove)="onRemoveTag($event)"
               [labelTag]="'firstName'"
               [label]="'Basic Usage'"
               [labelSize]="'auto'"
@@ -27,8 +27,8 @@
 <tl-multiselect
   [data]="dataNoSourceBasic"
   (getSelecteds)="getSelecteds($event)"
-  (onClickTag)="onClickTag($event)"
-  (onRemoveTag)="onRemoveTag($event)"
+  (tagClick)="onClickTag($event)"
+  (tagRemove)="onRemoveTag($event)"
   [labelTag]="'firstName'"
   [label]="'Basic Usage'"
   [labelSize]="'auto'"
@@ -108,7 +108,6 @@
   [icon]="'icon'"
   [label]="'With Icon'"
   [labelTag]="'firstName'"
-  [labelSize]="'auto'"
   [labelSize]="'auto'"
   [detail]="'email'"
   [defaultColorTag]="'#ff9102'"

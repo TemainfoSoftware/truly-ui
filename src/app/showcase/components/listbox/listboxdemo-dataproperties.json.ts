@@ -7,7 +7,7 @@ export const dataProperties = [
     type: 'Array<Object>',
     default: 'null',
     description: 'Array of data to shown on list.',
-    options: 'any text'
+    options: 'Array<Object>'
   },
   {
     name: 'id',
@@ -25,10 +25,10 @@ export const dataProperties = [
   },
   {
     name: 'labelSize',
-    type: 'css measure',
+    type: 'string',
     default: '1em',
     description: 'The size of the label when using the default list.',
-    options: 'any css measure'
+    options: 'px | % | em'
   },
   {
     name: 'labelDetail',
@@ -39,10 +39,10 @@ export const dataProperties = [
   },
   {
     name: 'labelDetailSize',
-    type: 'css measure',
+    type: 'string',
     default: '0.7em',
     description: 'The size of the labelDetailSize when using the default list.',
-    options: 'any css measure'
+    options: 'px | % | em'
   },
   {
     name: 'rowHeight',
@@ -66,17 +66,66 @@ export const dataProperties = [
     options: 'any number'
   },
   {
-    name: 'itensToShow',
+    name: 'itemsToShow',
     type: 'number',
     default: '10',
     description: 'Number of lines that going to be shown on list',
     options: 'any number'
   },
   {
+    name: 'addNew',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls if the listBox will have the Add New element at the end of the list.',
+    options: 'true | false'
+  },
+  {
+    name: 'hiddenScroll',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls if going to have scroll or not',
+    options: 'true | false'
+  },
+  {
+    name: 'showArrows',
+    type: 'boolean',
+    default: 'true',
+    description: 'Controls if going to have Arrows Up and Down to navigate through the list',
+    options: 'true | false'
+  },
+  {
+    name: 'showArrows',
+    type: 'boolean',
+    default: 'true',
+    description: 'Controls if the list going to be fixed or relative',
+    options: 'true | false'
+  },
+  {
+    name: 'listStripped',
+    type: 'boolean',
+    default: 'false',
+    description: 'Handle to show list stripped',
+    options: 'true | false'
+  },
+  {
+    name: 'focusOnScroll',
+    type: 'boolean',
+    default: 'true',
+    description: 'Controls if will set focus while scrolling',
+    options: 'true | false'
+  },
+  {
     name: 'filterEmptyMessage',
     type: 'string',
     default: '\'Nothing to Show\'',
     description: 'Text shown when the search results are empty',
+    options: 'any text'
+  },
+  {
+    name: 'addNewMessage',
+    type: 'string',
+    default: '\'Add New\'',
+    description: 'Text shown in Add New element',
     options: 'any text'
   },
   {

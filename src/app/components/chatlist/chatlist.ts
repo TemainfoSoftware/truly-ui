@@ -53,7 +53,9 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   @Input() searchQuery;
 
-  @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+  @Input() itemsToShow = 5;
+
+  @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
   @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
 
@@ -157,7 +159,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   onClickItemChat( $event ) {
-      this.onClickItem.emit( $event );
+      this.clickItem.emit( $event );
       this.selected = $event;
   }
 

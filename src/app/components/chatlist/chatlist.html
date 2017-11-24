@@ -7,7 +7,7 @@
                 <div class="ui-status">Online ({{chatListService.online.length}})</div>
                 <tl-listbox
                         [data]="chatListService.online"
-                        [itensToShow]="itemsToShow"
+                        [itemsToShow]="itemsToShow"
                         (clickItem)="onClickItemChat($event)"
                         [showArrows]="false"
                         [hiddenScroll]="true"
@@ -34,7 +34,7 @@
 
                 <tl-listbox
                         [data]="chatListService.offline"
-                        [itensToShow]="itemsToShow"
+                        [itemsToShow]="itemsToShow"
                         (clickItem)="onClickItemChat($event)"
                         [showArrows]="false"
                         [hiddenScroll]="true"

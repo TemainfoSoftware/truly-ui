@@ -12,7 +12,7 @@ export const data = [
     type: 'string',
     default: 'null',
     description: 'Receive the text itself',
-    options: 'Any Text'
+    options: 'any text'
   },
   {
     name: 'tooltip.placement',
@@ -26,20 +26,20 @@ export const data = [
     type: 'string',
     default: '#000',
     description: 'Hex Color for background color',
-    options: 'Hex Color'
+    options: 'Hex | RGBA'
   },
   {
     name: 'tooltip.fontColor',
     type: 'string',
     default: '#fff',
     description: 'Hex color for font color',
-    options: 'Hex Color'
+    options: 'Hex | RGBA'
   },
   {
     name: 'tooltip.width',
     type: 'string',
     default: '120px',
     description: 'Width of the Tooltip',
-    options: 'string | ex: 200px'
+    options: 'px'
   },
 ];

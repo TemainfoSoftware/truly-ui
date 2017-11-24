@@ -39,31 +39,38 @@ export class ChatListDemoComponent {
   public selected;
 
 
-  constructor(public dataDumpService: DumpDataService, public chatListService: ChatListService) {
+  constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
     this.dataTableProperties = json.dataProperties;
-    this.dataSource = this.dataDumpService.createRandomData(100);
+    this.dataSource = this.dataDumpService.createRandomData( 100 );
 
   }
 
-  clickChat($event) {
+  clickChat( $event ) {
     this.selected = $event;
   }
 
   changeBusy() {
-    this.chatListService.changeStatus(this.selected, 'Busy');
+    if ( this.selected ) {
+      this.chatListService.changeStatus( this.selected, 'Busy' );
+    }
   }
 
   changeOnline() {
-    this.chatListService.changeStatus(this.selected, 'Online');
+    if ( this.selected ) {
+      this.chatListService.changeStatus( this.selected, 'Online' );
+    }
   }
 
   changeOffline() {
-    this.chatListService.changeStatus(this.selected, 'Offline');
+    if ( this.selected ) {
+    }
+    this.chatListService.changeStatus( this.selected, 'Offline' );
   }
 
   changeAway() {
-    this.chatListService.changeStatus(this.selected, 'Away');
+    if ( this.selected ) {
+      this.chatListService.changeStatus( this.selected, 'Away' );
+    }
   }
-
 }
 

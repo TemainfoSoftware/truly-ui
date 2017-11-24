@@ -32,7 +32,7 @@
     "prebuild:library": "rimraf dist tmp",
     "build:library": "npm run compile",
     "build:showcase": "ng build --aot -prod",
-    "ci": "npm run lint && npm run test && npm run build:library",
+    "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
     "compile": "gulp inline-templates && ngc -p tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",

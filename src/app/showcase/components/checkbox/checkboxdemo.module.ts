@@ -6,6 +6,9 @@ import { CheckBoxDemoComponent } from './checkboxdemo.component';
 import { CheckBoxDemoRoutingModule } from './checkboxdemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { CheckBoxModule } from '../../../components/checkbox';
+import {ShowcaseCardModule} from '../../shared/components/showcase-card/showcase-card.module';
+import {ShowcaseTablePropertiesModule} from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import {ShowcaseTableEventsModule} from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { CheckBoxModule } from '../../../components/checkbox';
     FormsModule,
     HighlightJsModule,
     CheckBoxDemoRoutingModule,
-    CheckBoxModule
+    CheckBoxModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     CheckBoxDemoComponent

@@ -1,7 +1,7 @@
 <div class="tl-input-box">
     <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}<b *ngIf="validations.required" style="color: #FF6666">*</b></label>
 
-        <span *ngIf="iconBefore" (click)="clickAddon($event, 'before')" class="addon -borderleft"><i [ngClass]="iconBefore"></i></span>
+        <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')" class="addon -borderleft"><i [ngClass]="iconBefore"></i></span>
         <span *ngIf="textBefore" class="addon -borderleft" [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
         <input #input #model="ngModel"
                attr.name="{{name}}"
@@ -26,7 +26,7 @@
                (blur)="onBlur()"
                [type]="type"
                (focus)="onFocus()">
-        <span #afterIcon *ngIf="iconAfter" (click)="clickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
+        <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
         <span *ngIf="textAfter" #afterText class="addon -borderright" [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
         <i *ngIf="clearButton && ngValue" (click)="clearInput()" class="addon -clearbutton ion-close-round" [style.right]="clearButtonPosition + 'px'"></i>
 

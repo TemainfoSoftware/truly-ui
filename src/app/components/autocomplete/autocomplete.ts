@@ -81,9 +81,9 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
 
-    @Output() onAddNew: EventEmitter<any> = new EventEmitter();
+    @Output() addNew: EventEmitter<any> = new EventEmitter();
 
-    @Output() onClickItem: EventEmitter<any> = new EventEmitter();
+    @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
@@ -178,8 +178,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.listBox.detectChanges();
     }
 
-    addNew() {
-        this.onAddNew.emit();
+    onAddNew() {
+        this.addNew.emit();
     }
 
     onInputFocusOut($event) {
@@ -193,7 +193,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         if ($event) {
           this.input.writeValue( $event );
           this.ngModel = $event;
-          this.onClickItem.emit($event);
+          this.clickItem.emit($event);
           this.setInputValue( $event );
           this.input.element.nativeElement.focus();
         }

@@ -1,0 +1,72 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Table Modes<span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
+    <p class="text-content">You can use the DataGrid in several ways including Normal, Scrollable, Paginator.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Table Modes'" [icon]="'ion-android-bulb'">
+          <!-- Normal Mode -->
+          <app-card>
+            <h3>Normal Mode</h3>
+            <p>
+              This is the default. Simple table that shows only the records that you pass at the time of creation.
+              But you can use navigation, filtering, sorting all in memory.
+            </p>
+
+            <tl-datatable [data]="dataNormal"></tl-datatable>
+            <hr>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+              <tl-datatable [data]="dataNormal"></tl-datatable>
+            </textarea>
+
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableColumnFeaturesDemoComponent {
+
+  public dataNormal = [];
+
+  constructor( private dumpDataService: DumpDataService ) {
+    this.dataNormal = this.dumpDataService.createRandomData(1000);
+  }
+}
+            </textarea>
+          </app-card>
+
+          <!-- Scrollable Mode -->
+          <app-card>
+            <h3>Scrollable Mode</h3>
+            <p>
+              With scrollable you can navigate the data in a fluid and objective way by scrolling and scrolling to view new or old data.
+              But you can use navigation, filtering, sorting all in memory.
+            </p>
+            <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>
+            <hr>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>
+            </textarea>
+
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableColumnFeaturesDemoComponent {
+
+  public dataNormal = [];
+
+  constructor( private dumpDataService: DumpDataService ) {
+    this.dataNormal = this.dumpDataService.createRandomData(1000);
+  }
+}
+            </textarea>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+  <div class="setup">
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

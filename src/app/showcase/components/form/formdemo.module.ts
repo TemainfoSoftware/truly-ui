@@ -24,6 +24,10 @@ import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
 import { PanelGroupModule } from '../../../components/panelgroup/index';
+import { TabControlModule } from '../../../components/tabcontrol/index';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +44,7 @@ import { PanelGroupModule } from '../../../components/panelgroup/index';
     CheckBoxModule,
     FormDemoRoutingModule,
     FormModule,
+    TabControlModule,
     DialogModule,
     AutoCompleteModule,
     FormsModule,
@@ -48,7 +53,10 @@ import { PanelGroupModule } from '../../../components/panelgroup/index';
     HighlightJsModule,
     TooltipModule,
     MultiSelectModule,
-    DirectiveModule
+    DirectiveModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     FormDemoComponent,

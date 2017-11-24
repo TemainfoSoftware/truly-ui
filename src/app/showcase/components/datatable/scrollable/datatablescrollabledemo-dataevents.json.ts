@@ -31,7 +31,7 @@ export const dataProperties = [
     description: 'Callback to invoke when pagination occurs.'
   },
   {
-    name: 'lazyLoad',
+    name: 'loadData',
     parameters: [
       { event: 'event.skip', description: 'First row offset ' },
       { event: 'event.take', description: 'Number of rows per page ' }

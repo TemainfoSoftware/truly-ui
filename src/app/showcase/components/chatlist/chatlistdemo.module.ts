@@ -12,6 +12,9 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 import { ChatListModule } from '../../../components/chatlist';
 import { InputModule } from '../../../components/input';
 import { ButtonModule } from '../../../components/button';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule( {
   declarations: [
@@ -24,7 +27,10 @@ import { ButtonModule } from '../../../components/button';
     CommonModule,
     ButtonModule,
     FormsModule,
-    HighlightJsModule
+    HighlightJsModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     ChatListDemoComponent

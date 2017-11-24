@@ -41,16 +41,18 @@ import { TlDatatableColumnService } from './services/datatable-column.service';
 import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { TlDatatableSortService } from './services/datatable-sort.service';
 
 @Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
     providers: [
-        TlDatatableFilterService,
-        TlDatatableDataSource,
-        TlDatatableColumnService,
-        TlDatatableFilterConstraints,
+      TlDatatableDataSource,
+      TlDatatableColumnService,
+      TlDatatableFilterConstraints,
+      TlDatatableFilterService,
+      TlDatatableSortService
     ]
 })
 export class TlDatatable implements AfterContentInit, OnChanges {
@@ -59,17 +61,19 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('mode') mode = 'normal';
 
-    @Input('allowLazy') allowLazy = false;
+    @Input('rowModel') rowModel = 'inmemory';
 
     @Input('allowResize') allowResize = false;
 
+    @Input('allowSortColumn') allowSortColumn = true;
+
     @Input('allowFilterColumn') allowFilterColumn = false;
 
-    @Input('rowsPage') rowsPage = 20;
+    @Input('rowsPage') rowsPage = 26;
 
     @Input('rowHeight') rowHeight = 25;
 
-    @Input('rowsClient') rowsClient = 10;
+    @Input('rowsClient') rowsClient = 12;
 
     @Input('height') height = 300;
 
@@ -87,7 +91,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Output('pageChange') pageChange: EventEmitter<any> = new EventEmitter();
 
-    @Output('lazyLoad') lazyLoad: EventEmitter<any> = new EventEmitter();
+    @Output('sortData') sortData: EventEmitter<any> = new EventEmitter();
+
+    @Output('filterData') filterData: EventEmitter<any> = new EventEmitter();
+
+    @Output('loadData') loadData: EventEmitter<any> = new EventEmitter();
 
     @Output('endRow') endRow: EventEmitter<any> = new EventEmitter();
 
@@ -105,6 +113,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     public totalRows: number;
 
+    public scrollingHorizontalSubject = new Subject<any>();
+
     private loadingSubject = new Subject<any>();
 
     private _loading = false;
@@ -120,6 +130,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
                  public dataSourceService: TlDatatableDataSource,
                  public columnService: TlDatatableColumnService,
                  public filterService: TlDatatableFilterService,
+                 public sortService: TlDatatableSortService
     ) {}
 
     ngAfterContentInit() {
@@ -127,6 +138,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
+        this.sortService.onInicializeSortService(this);
         this.inicializeGlobalFilter();
     }
 
@@ -159,6 +171,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     getLoading(): Observable<any> {
         return this.loadingSubject.asObservable();
+    }
+
+    getScrollingHorizontal(): Observable<any> {
+      return this.scrollingHorizontalSubject.asObservable();
     }
 
     getObjectRow( row , index ) {

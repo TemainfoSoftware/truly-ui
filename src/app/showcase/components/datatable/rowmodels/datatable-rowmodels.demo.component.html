@@ -1,0 +1,148 @@
+<div class="router-outlet">
+
+  <div class="header-title-demo">
+    <h1 class="title">Row Models<span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
+    <p class="text-content">Depending on your needs, the Datatable can be configured with different row models.</p>
+  </div>
+<hr>
+  <div class="showcase">
+
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Row Models'" [icon]="'ion-android-bulb'">
+          <!-- In Memory -->
+          <app-card>
+            <h3>In Memory</h3>
+            <p>
+              This is the default. The Datatable will load all of the data into the grid in one go.
+              The grid can then perform navigation, filtering, sorting all in memory.
+            </p>
+            <tl-datatable
+              [data]="dataInMemory"
+              [mode]="'scrollable'"
+              [rowModel]="'inmemory'"
+              [height]="300"
+              [rowsClient]="12"
+              [allowFilterColumn]="true"
+            >
+              <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+              <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+              <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+              <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+              <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+
+            </tl-datatable>
+            <hr>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+          <tl-datatable  [rowModel]="'inmemory'" [data]="dataInMemory" [mode]="'scrollable'" [height]="300" [rowsClient]="12" [allowFilterColumn]="true">
+            <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+</tl-datatable>
+            </textarea>
+
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableColumnFeaturesDemoComponent {
+
+  public data = [];
+
+  constructor( private dumpDataService: DumpDataService ) {
+    this.data = this.dumpDataService.createRandomData(1000);
+  }
+}
+            </textarea>
+          </app-card>
+
+          <!-- Infinite -->
+          <app-card>
+            <h3>Infinite</h3>
+            <p>
+              This will present the data to the user and load more data as the user scrolls down. Use this if you want to
+              display a large flat (not grouped) list of data.
+            </p>
+            <tl-datatable
+              [data]="dataInfinite"
+              [mode]="'scrollable'"
+              [rowModel]="'infinite'"
+              [height]="300"
+              [rowsClient]="12"
+              [rowsPage]="take"
+              (loadData)="onLoadData($event)"
+              [allowFilterColumn]="true"
+            >
+              <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+              <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+              <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+              <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+              <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+
+            </tl-datatable>
+            <hr>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+          <tl-datatable [data]="dataInfinite" [mode]="'scrollable'" [rowModel]="'infinite'" [height]="300" [rowsClient]="12" [rowsPage]="take"
+                        (loadData)="onLoadData($event)" [allowFilterColumn]="true"
+          >
+            <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+            <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+            <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+
+</tl-datatable>
+            </textarea>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class DatatableRowModelsDemoComponent {
+
+  public data = this.dumpDataService.createRandomData(5000);
+
+  public dataInfinite: any;
+
+  public take = 200;
+
+  public timeout;
+
+  constructor( private dumpDataService: DumpDataService, private cd: ChangeDetectorRef ) {
+    this.dataInfinite = {
+        'data' : this.getDataFromService(0, this.take),
+        'total' : this.data.length
+    };
+  }
+
+  onLoadData(event) {
+    clearTimeout(this.timeout );
+    this.timeout = setTimeout(() => {
+      this.dataInfinite = {
+        'data' : this.getDataFromService(event.skip, event.take),
+        'total' : this.data.length
+      };
+      this.cd.markForCheck();
+    }, 1000);
+  }
+
+  private getDataFromService(skip, take) {
+    return this.data.slice(skip, take);
+  }
+}
+            </textarea>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+  <div class="setup">
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataTableEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

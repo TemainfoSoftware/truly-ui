@@ -22,6 +22,7 @@
 import { Component } from '@angular/core';
 
 import * as json from './buttondemo-dataproperties.json';
+import * as jsonEvts from './buttondemo.dataevents.json';
 
 @Component( {
   selector : 'app-button',
@@ -32,8 +33,11 @@ export class ButtonDemoComponent {
 
   public dataTableProperties;
 
+  public dataEvents;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvts.dataEvents;
   }
 
 }

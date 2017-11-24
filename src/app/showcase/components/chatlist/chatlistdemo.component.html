@@ -5,61 +5,55 @@
     <p class="module-name-top"><code><u>Module Name</u>: <strong>ChatModule</strong></code></p>
     <p class="text-content">The ChatList component is used to create/handle an chat conversation.</p>
   </div>
-  <hr>
   <div class="showcase">
     <div class="row">
-      <div class="col-md-5">
-        <h5>Status Changer</h5>
-        <tl-button (click)="changeBusy()" [text]="'Busy'"></tl-button>
-        <tl-button (click)="changeOnline()" [text]="'Online'"></tl-button>
-        <tl-button (click)="changeOffline()" [text]="'Offline'"></tl-button>
-        <tl-button (click)="changeAway()" [text]="'Away'"></tl-button>
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-3">
+              <tl-button [text]="'Change to Online'"
+                         [buttonClass]="'infoDialog'" (click)="changeOnline()"></tl-button>
+            </div>
+            <div class="col-md-3">
+              <tl-button [text]="'Change to Busy'"
+                         [buttonClass]="'busy'" (click)="changeBusy()"></tl-button>
+            </div>
+            <div class="col-md-3">
+              <tl-button [text]="'Change to Away'"
+                         [buttonClass]="'alertDialog'"
+                         (click)="changeAway()"></tl-button>
+            </div>
+            <div class="col-md-3">
+              <tl-button [text]="'Change to Offline'"
+                         [buttonClass]="'errorDialog'"
+                         (click)="changeOffline()"></tl-button>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <tl-chatlist [itemsToShow]="3" (clickItem)="clickChat($event)" [searchQuery]="'firstName'" [searchInput]="input" [data]="dataSource"></tl-chatlist>
+              <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+            </div>
+            <div class="col-md-6">
+<textarea highlight-js [options]="{}" [lang]="'html'">
+<tl-chatlist
+  [data]="dataSource"
+  [itemsToShow]="3"
+  (clickItem)="clickChat($event)"
+  [searchQuery]="'firstName'"
+  [searchInput]="input">
+</tl-chatlist>
+<tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
       </div>
     </div>
-    <br>
-    <div class="row">
-      <div class="col-md-4">
-        <tl-chatlist (onClickItem)="clickChat($event)" [searchQuery]="'firstName'" [searchInput]="input" [data]="dataSource"></tl-chatlist>
-        <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        Selected: {{selected | json}}
-      </div>
-    </div>
-    <hr>
   </div>
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <h5>tl-button</h5>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
-
-      </table>
-    </div>
-    <hr>
-  </div>
-
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-  </div>
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
 </div>

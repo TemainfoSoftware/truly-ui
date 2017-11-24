@@ -10,6 +10,9 @@ import { ButtonModule } from '../../../components/button';
 import { DatatableModule } from '../../../components/datatable';
 import { InputModule } from '../../../components/input';
 import { DialogModule } from '../../../components/dialog';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { DialogModule } from '../../../components/dialog';
     FormsModule,
     HighlightJsModule,
     InputModule,
-    DialogModule
+    DialogModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     DialogDemoComponent,

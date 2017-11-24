@@ -14,7 +14,7 @@
               </span>
           </span>
           <span class="tags" *ngIf="!hasKeySource">
-              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
+              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, i, tag)"
                     [ngStyle]="changeColorTag(tag)">{{tag[labelTag]}}
                   <small *ngIf="detailOnTag && detail !== undefined"
                          class="tags-detail"><{{tag[detail]}}></small>
@@ -26,7 +26,7 @@
                    #input width="300"
                    [(ngModel)]="modelValue"
                    (blur)="closeList($event, element)"
-                   (focus)="handleInputFocus(element)"
+                   (focus)="handleInputFocus()"
                    [attr.placeholder]="placeholder"
                    (keyup)="searchItem($event.target.value, $event)"
                    (keydown)="handleKeyDown($event)"
@@ -34,23 +34,41 @@
         </div>
         <div *ngIf="hasKeySource" [style.display]="isOpen ? 'block' : 'none'">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
+                [style.top]="listTopPosition + 25 + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
+                <li
+                  [ngStyle]=" {
+                      'padding': itemHeight,
+                      'background': item?.selected ? selectedBackgroundColor : '#fff',
+                      'color': item?.selected ? selectedFontColor : '#7a838b'
+                      }"
+                    (blur)="closeList($event)"
+                    tabindex="-1"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
 
-                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
-                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+                    <i *ngIf="defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}" ngClass="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item?.source[query]}}
-                    <small>{{item?.source[detail]}}</small>
+                    <small [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}">{{item?.source[detail]}}</small>
                 </li>
             </ul>
         </div>
         <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
             <ul #ul class="select-options"
+                [style.position]="'fixed'"
+                [style.left]="listPosition + 'px'"
+                [style.top]="listTopPosition + 25 + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{'padding': itemHeight + 'px'}" (blur)="closeList($event)" tabindex="-1"
+                <li [ngStyle]="{
+                            'padding': itemHeight,
+                            'background': item?.selected ? selectedBackgroundColor : '#fff',
+                            'color': item?.selected ? selectedFontColor : '#7a838b'
+                        }"
+                    (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
@@ -59,7 +77,7 @@
                     <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
 
                     {{item[query]}}
-                    <small>{{item[detail]}}</small>
+                    <small [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}">{{item[detail]}}</small>
                 </li>
             </ul>
         </div>

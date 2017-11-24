@@ -20,12 +20,12 @@
     SOFTWARE.
 */
 
-import { ChangeDetectorRef, EventEmitter, Injectable, NgZone, SimpleChanges } from '@angular/core';
+import { EventEmitter, Injectable, SimpleChanges } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
-import { FilterEventMetadata } from '../metadatas/filter.metadata';
 import { DatasourceService } from '../interfaces/datasource.service';
 import { TlDatatableFilterService } from './datatable-filter.service';
+import { TlDatatableSortService } from './datatable-sort.service';
 
 @Injectable()
 export class TlDatatableDataSource implements DatasourceService {
@@ -36,7 +36,7 @@ export class TlDatatableDataSource implements DatasourceService {
 
     private datatable: TlDatatable;
 
-    constructor( private filterService: TlDatatableFilterService ) {}
+    constructor( private filterService: TlDatatableFilterService, private sortService: TlDatatableSortService ) {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
@@ -50,6 +50,9 @@ export class TlDatatableDataSource implements DatasourceService {
           this.loadMoreData(0, this.datatable.rowsPage);
         });
 
+      this.sortService.onSort().subscribe(() => {
+        this.loadMoreData(0, this.datatable.rowsPage);
+      });
     }
 
     onChangeDataSource( data: SimpleChanges ) {
@@ -62,9 +65,14 @@ export class TlDatatableDataSource implements DatasourceService {
 
     loadMoreData(skip: number, take: number, scrolling?: boolean): Promise<boolean> {
         return new Promise(( resolve ) => {
-            if (  this.datatable.allowLazy ) {
+            if (  this.datatable.rowModel === 'infinite' ) {
                this.datatable.loading = true;
-               this.datatable.lazyLoad.emit({ skip: skip,  take: take, filters: this.filterService.getFilter() });
+               this.datatable.loadData.emit({
+                 skip: skip,
+                 take: take,
+                 filters: this.filterService.getFilter(),
+                 sorts: this.sortService.getSort()
+               });
                return resolve();
             }
             this.getRowsInMemory( skip, take, scrolling ).then((res) => {
@@ -85,6 +93,7 @@ export class TlDatatableDataSource implements DatasourceService {
             let data: any;
             data = this.getData();
             data = this.filterService.filterWithData(data, scrolling);
+            data = this.sortService.sortWithData(data, scrolling);
             this.refreshTotalRows(data);
             data = this.sliceData(data, skip, take);
 

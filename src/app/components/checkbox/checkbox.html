@@ -6,14 +6,12 @@
             <div class="checkmark_kick" [style.background-color]="checkmarkColor"></div>
         </div>
     </div>
-    <input attr.id="{{id}}"
-           attr.name="{{name}}"
-           #checkbox
+    <input #checkbox
            type="checkbox"
            #model="ngModel"
            (focus)="focusCheckBox()"
            [checked]="toggle"
            [tabindex]="tabindex"
            [(ngModel)]="modelValue">
-    <label class="-label" (click)="check(checkbox.checked)" attr.for="{{id}}">{{label}}</label>
+    <label class="-label" (click)="check(checkbox.checked)">{{label}}</label>
 </div>

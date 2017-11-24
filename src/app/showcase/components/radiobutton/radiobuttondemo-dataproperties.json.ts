@@ -3,6 +3,36 @@
  */
 export const dataProperties = [
   {
+    name: 'nameGroup',
+    type: 'string',
+    default: 'null',
+    description: 'Name of Radio Group (Used as property [name])',
+    options: 'any text'
+  },
+  {
+    name: 'labelGroup',
+    type: 'string',
+    default: 'null',
+    description: 'Label of Radio Group',
+    options: 'any text'
+  },
+  {
+    name: 'orientation',
+    type: 'string',
+    default: 'horizontal',
+    description: 'Orientation of the Radios',
+    options: 'vertical | horizontal'
+  },
+  {
+    name: 'colorSelected',
+    type: 'string',
+    default: '#66CC99',
+    description: 'Sets Background Color',
+    options: 'Hex | RGBA'
+  }
+  ];
+export const dataPropertiesRadioButton = [
+  {
     name: 'label',
     type: 'string',
     default: 'null',
@@ -17,17 +47,17 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'nameGroup',
-    type: 'string',
-    default: 'null',
-    description: 'Name of group of Radio Button',
-    options: 'Any Text'
+    name: 'tabindex',
+    type: 'number',
+    default: '0',
+    description: 'Sets index tabbing',
+    options: 'any number'
   },
   {
-    name: 'orientation',
-    type: 'string',
-    default: 'horizontal',
-    description: 'Orientation of the Radios',
-    options: 'vertical | horizontal'
+    name: 'checked',
+    type: 'boolean',
+    default: 'false',
+    description: 'Define if the radios button initialize checked or not.',
+    options: 'true | false'
   }
   ];

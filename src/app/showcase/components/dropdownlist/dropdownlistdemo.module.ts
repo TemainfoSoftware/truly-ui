@@ -7,6 +7,9 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { DropDownListDemoComponent } from './dropdownlistdemo.component';
 import { DropDownListDemoRoutingModule } from './dropdownlistdemo-routing.module';
 import { DropDownListModule } from '../../../components/dropdownlist';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +18,9 @@ import { DropDownListModule } from '../../../components/dropdownlist';
   imports: [
     DropDownListDemoRoutingModule,
     DropDownListModule,
+    ShowcaseCardModule,
+    ShowcaseTableEventsModule,
+    ShowcaseTablePropertiesModule,
     CommonModule,
     FormsModule,
     HighlightJsModule

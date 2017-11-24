@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as json from './inputdemo-dataproperties.json';
 import { slideToLeft } from '../../shared/animations/router.animations';
+import * as jsonEvents from './inputdemo.dataevents.json';
 
 @Component( {
   selector: 'app-input',
@@ -12,6 +13,8 @@ export class InputDemoComponent {
 
   public dataTableProperties;
 
+  public dataTableEvents;
+
   public uppercase = '';
 
   public lowercase = '';
@@ -22,6 +25,7 @@ export class InputDemoComponent {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataTableEvents = jsonEvents.dataEvents;
   }
 
 }

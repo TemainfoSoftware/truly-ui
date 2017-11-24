@@ -2,8 +2,6 @@ import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 
 import * as json from './form-dataproperties.json';
 
-import * as jsonEvents from './form-dataevents.json';
-
 import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
 import { DumpDataService } from '../../shared/services/dumpdata';
@@ -32,8 +30,6 @@ export class FormDemoComponent {
 
   public formprop;
 
-  public formevts;
-
   public result;
 
   public data;
@@ -45,7 +41,6 @@ export class FormDemoComponent {
     this.data = this.dataDumpService.createRandomData( 100 );
 
     this.formprop = json.dataProperties;
-    this.formevts = jsonEvents.dataEvents;
 
     this.formOptions1 = {
       title: 'User Register',

@@ -1,0 +1,31 @@
+<div class="ui-datatable-header" #datatableHeader [resizer]="dt.allowResize" [datatable]="dt" >
+    <div class="ui-datatable-header-wrap">
+
+        <div class="ui-datatable-column-separator"></div>
+
+        <table #table class="ui-datatable-table" [colgroup]="dt.columns">
+            <thead class="ui-datatable-table-head">
+
+                <tr class="ui-row">
+                    <th *ngFor="let column of dt.columns;"
+                        (click)="onClick(column)"
+                        [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">
+
+                        <span>{{column.title}}</span>
+                        <div *ngIf="dt.allowSortColumn" class="ui-sort-indicator -push-{{column.alignment}}">
+                            <span
+                              [ngClass]="{
+                                      'ion-ios-arrow-thin-up': getSortOrder(column) == 1,
+                                      'ion-ios-arrow-thin-down': getSortOrder(column) == -1
+                              }"
+                            >
+                          </span>
+                        </div>
+                    </th>
+                </tr>
+
+                <tr *ngIf="dt.allowFilterColumn" class="ui-row" [tlColumnFilter]="dt.columns"></tr>
+            </thead>
+        </table>
+    </div>
+</div>

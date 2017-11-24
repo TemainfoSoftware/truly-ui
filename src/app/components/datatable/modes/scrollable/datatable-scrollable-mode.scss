@@ -42,7 +42,7 @@ $border-color : #DCDCDC;
   > .ui-row .ui-cel{
     border-right: 1px $border-color solid;
     box-sizing: border-box;
-    padding: 0;
+    padding: 0 5px;
     overflow: hidden;
     white-space: nowrap;
     align-items: center;

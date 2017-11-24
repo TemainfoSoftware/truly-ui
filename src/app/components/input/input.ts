@@ -85,7 +85,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     /**
      * Property to labelSize
      */
-    @Input() labelSize = 100;
+    @Input() labelSize = '100px';
 
     /**
      * Label of Input
@@ -177,7 +177,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Output() clear: EventEmitter<any> = new EventEmitter();
 
 
-    @Output() onClickAddon: EventEmitter<any> = new EventEmitter();
+    @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
 
     /**
@@ -225,8 +225,8 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         }
     }
 
-    clickAddon(MouseEvent, side) {
-        this.onClickAddon.emit({MouseEvent, side});
+    onClickAddon(MouseEvent, side) {
+        this.clickAddon.emit({MouseEvent, side});
     }
 
     /**

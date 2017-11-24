@@ -8,6 +8,9 @@ import { ButtonGroupDemoComponent } from './buttongroupdemo.component';
 import { ButtonGroupDemoRoutingModule } from './buttongroupdemo-routing.module';
 import { ButtonGroupModule } from '../../../components/buttongroup';
 import { ModalService } from '../../../components/modal';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 
 @NgModule( {
   declarations: [
@@ -18,7 +21,10 @@ import { ModalService } from '../../../components/modal';
     ButtonGroupDemoRoutingModule,
     ButtonGroupModule,
     FormsModule,
-    HighlightJsModule
+    HighlightJsModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule
   ],
   exports: [
     ButtonGroupDemoComponent

@@ -39,6 +39,11 @@
   border-collapse: inherit;
 }
 
+.spacer {
+  padding-bottom: 10px; height: 10px;
+}
+
+
 .router-outlet {
   padding: 20px;
 }
@@ -58,6 +63,7 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   background: #fff;
+  margin-bottom: 20px;
 }
 
 .link-copy {
@@ -191,6 +197,15 @@
 
 .alertDialog i {
   color: #fff !important;
+}
+
+.busy {
+  background-color: #b8c97c !important;
+  color: #fff !important;
+}
+
+.busy i {
+  color: #fff;
 }
 
 .confirmDialog {

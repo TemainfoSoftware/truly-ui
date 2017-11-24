@@ -12,6 +12,9 @@ import { DatatableModule } from '../../../components/datatable';
 import { InputModule } from '../../../components/input';
 import { ModalModule } from '../../../components/modal';
 import { DialogService } from '../../../components/dialog';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { DialogService } from '../../../components/dialog';
     DatatableModule,
     FormsModule,
     HighlightJsModule,
+    ShowcaseCardModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseTableEventsModule,
     InputModule,
     ModalModule,
     ModalDemoRoutingModule

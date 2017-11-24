@@ -1,248 +1,148 @@
 <div class="router-outlet">
-<div class="header-title-demo">
-  <h1 class="title">SplitButton <span class="module-name"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></span></h1>
-  <p class="module-name-top"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></p>
-  <p class="text-content">There's a lot of ways to create a splitbutton using Truly UI. Below, are some of those.</p>
-</div>
-
-  <hr>
-
-  <div class="showcase">
+  <div class="header-title-demo">
+    <h1 class="title">SplitButton <span class="module-name"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></p>
+    <p class="text-content">There's a lot of ways to create a splitbutton using Truly UI. Below, are some of those.</p>
+  </div>
     <div class="row">
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>Basic</h5>
-          <tl-split-button [text]="'Button'">
-            <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
-          </tl-split-button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>With Action Icons</h5>
-          <tl-split-button [text]="'Button'">
-            <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
-          </tl-split-button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>With Action Separator</h5>
-          <tl-split-button [text]="'Button'">
-            <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 3'" [separator]="true"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 4'"></tl-split-button-action>
-          </tl-split-button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>With Click Event</h5>
-          <tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
-            <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
-          </tl-split-button>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>Custom Style</h5>
-          <tl-split-button [text]="'Button'"
-                           [buttonClass]="'buttonClass3'"
-                           [iconAddonBefore]="'ion-printer'"
-                           [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
-                           [splitButtonClass]="'splitButtonClass3'"
-                           [actionMenuClass]="'actionMenuClass3'"
-                           [toggleClass]="'toggleClass3'"
-                           [height]="30">
-            <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-            <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
-          </tl-split-button>
-        </div>
-      </div>
-    </div>
-    <hr>
-</div>
-
-  <div class="setup">
-    <h3 class="title">Properties</h3>
-    <h5 class="title">tl-split-button</h5>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <h5 class="title">tl-split-button-action</h5>
-    <div class="table-box">
-      <table class="table table-truly">
-        <thead class="table-truly-head">
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Default</th>
-          <th>Description</th>
-          <th>Options</th>
-        </tr>
-        </thead>
-        <tbody class="table-truly-body" *ngFor="let item of dataTableProperties2; let i = index">
-        <tr>
-          <td><span>{{ item.name }}</span></td>
-          <td><span class="badge">{{ item.type }}</span></td>
-          <td><code>{{ item.default }}</code></td>
-          <td>{{ item.description }}</td>
-          <td><code> {{ item.options }} </code></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <hr>
-</div>
-
-  <div class="examples">
-    <h3 class="title">Examples</h3>
-    <div class="group-component">
-      <h5 class="title">Basic</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+        <div class="col-md-12">
+          <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+            <app-card>
+              <div class="col-md-6">
+                <h5>Basic</h5>
+                <tl-split-button [text]="'Button'">
+                  <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
 </tl-split-button>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">With Action Icons</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+</textarea>
+              </div>
+              <div class="col-md-6">
+                <h5>With Action Icons</h5>
+                <tl-split-button [text]="'Button'">
+                  <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'"
-                              [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
 </tl-split-button>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">With Action Sepator</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+</textarea>
+              </div>
+            </app-card>
+            <app-card>
+              <div class="col-md-6">
+                <h5>With Action Icons</h5>
+                <tl-split-button [text]="'Button'">
+                  <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-split-button [text]="'Button'">
+  <tl-split-button-action [label]="'Action 1'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'" [icon]="'ion-arrow-graph-down-right'"></tl-split-button-action>
+</tl-split-button>
+</textarea>
+              </div>
+              <div class="col-md-6">
+                <h5>With Action Separator</h5>
+                <tl-split-button [text]="'Button'">
+                  <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'" [separator]="true"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 4'"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-split-button [text]="'Button'">
-      <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 4'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'" [separator]="true"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 4'"></tl-split-button-action>
 </tl-split-button>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">With Click Event</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+</textarea>
+              </div>
+            </app-card>
+            <app-card>
+              <div class="col-md-12">
+                <h5>With Click Event</h5>
+                <tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
+                  <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
-      <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'" (click)="callBackDemo($event)"></tl-split-button-action>
 </tl-split-button>
-
-<!--
-* Click Event - Demo.
--->
-
-<script type="text/javascript">
-  callBackDemo(...) {
-     console.log(...);
-   }
-</script>
-  </textarea>
-    </div>
-    <div class="group-component">
-      <h5 class="title">Custom Style</h5>
-      <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+</textarea>
+              </div>
+            </app-card>
+            <app-card>
+              <div class="col-md-12">
+                <h5>Custom Style</h5>
+                <tl-split-button [text]="'Button'"
+                                 [buttonClass]="'buttonClass3'"
+                                 [iconAddonBefore]="'ion-printer'"
+                                 [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
+                                 [splitButtonClass]="'splitButtonClass3'"
+                                 [actionMenuClass]="'actionMenuClass3'"
+                                 [toggleClass]="'toggleClass3'"
+                                 [height]="30">
+                  <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+                  <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+                </tl-split-button>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-split-button [text]="'Button'"
-                 [buttonClass]="'buttonClass3'"
+                 [buttonClass]="'buttonClass3'" &#60;--Your Custom Class
                  [iconAddonBefore]="'ion-printer'"
-                 [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'"
-                 [splitButtonClass]="'splitButtonClass3'"
-                 [actionMenuClass]="'actionMenuClass3'"
-                 [toggleClass]="'toggleClass3'">
-      <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
-      <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
+                 [buttonAddonBeforeClass]="'buttonAddonBeforeClass3'" &#60;--Your Custom Class
+                 [splitButtonClass]="'splitButtonClass3'" &#60;--Your Custom Class
+                 [actionMenuClass]="'actionMenuClass3'" &#60;--Your Custom Class
+                 [toggleClass]="'toggleClass3'"  &#60;--Your Custom Class
+                 [height]="30">
+  <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 2'" [icon]="'fa fa-refresh'"></tl-split-button-action>
+  <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
 </tl-split-button>
-
-<!--
-* Required: !important;
-*
-* Custom Style Example - Global CSS.
--->
-
-<style type="text/css">
-    .buttonClass3 {
-      background-color: #e0e000 !important;
-      color: #5d1b00 !important;
-      font-size: 16px !important;
-      border: 1px solid #b9b900 !important;
-    }
-
-    .buttonClass3:hover {
-      background-color: #d6d600 !important;
-    }
-
-    .buttonClass3:active {
-      background-color: #d0d000 !important;
-    }
-
-    .buttonAddonBeforeClass3 {
-      border-right: 1px solid #b9b900 !important;
-    }
-
-    .splitButtonClass3, .actionMenuClass3 {
-      background-color: #e0e000 !important;
-      border-top: 1px solid #b9b900 !important;
-      border-right: 1px solid #b9b900 !important;
-      border-bottom: 1px solid #b9b900 !important;
-    }
-
-    .splitButtonClass3:hover, .splitButtonClass3.active, .actionMenuClass3 li:hover {
-      background-color: #d6d600 !important;
-    }
-
-    .splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3 {
-      background-color: #d0d000 !important;
-    }
-
-    .splitButtonClass3 i, .actionMenuClass3 li {
-      color: #5d1b00 !important;
-    }
-
-    .actionMenuClass3 li.separator {
-      border-bottom: 1px solid #b9b900 !important;
-    }
-</style>
-  </textarea>
-    </div>
-</div>
+</textarea>
+              </div>
+            </app-card>
+          </app-showcase-card>
+        </div>
+      </div>
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <h5>tl-split-button</h5>
+      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+    </app-card>
+    <app-card>
+      <h5>tl-split-button-action</h5>
+      <app-showcase-table-properties [data]="dataTableProperties2"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-card>
+      <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+    </app-card>
+  </app-showcase-card>
 </div>

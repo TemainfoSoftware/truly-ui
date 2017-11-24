@@ -1,5 +1,5 @@
 <div class="formBox" (keydown)="handleKeysForm($event)">
-    <div class="formContent" #content>
+    <div class="formContent" #content [style.padding]="padding">
         <ng-content></ng-content>
     </div>
     <div class="clearfix"></div>
@@ -9,6 +9,7 @@
                        [text]="'Ok'"
                        mdResult="MROK"
                        [disabled]="!validForm"
+                       [colorIconBefore]="'#24b959'"
                        (keyup)="onKeyDownButtonOk($event)"
                        [shortcut]="submitButtonShortcut"
                        [formResult]="formResult"
@@ -18,8 +19,8 @@
             <tl-button #buttonFormCancel
                        [text]="'Cancel'"
                        mdResult="MRCANCEL"
+                       [colorIconBefore]="'#e87272'"
                        [formResult]="formResult"
-                       [buttonClass]="'botao'"
                        [shortcut]="cancelButtonShortcut"
                        [buttonAddonBeforeClass]="'iconCadUsuario'"
                        [iconAddonBefore]="'ion-close-circled'">

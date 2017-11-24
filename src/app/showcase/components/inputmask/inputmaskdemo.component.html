@@ -4,120 +4,87 @@
   <p class="module-name-top"><code><u>Module Name</u>: <strong>InputModule</strong></code></p>
   <p class="text-content">Mask's are very common, that's why we bring it so easy to set up.</p>
 </div>
-<hr>
-
   <div class="showcase">
     <div class="row">
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>Basic</h5>
-          <tl-input [mask]="{mask: '00/00/0000'}"
-                    [(ngModel)]="basic"></tl-input>
-          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{basic}}</span>
-
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>Text + Number</h5>
-          <tl-input
-            [mask]="{mask: 'AAA-0000', uppercase: true}"
-            [(ngModel)]="textNumber"
-            [iconBefore]="'ion-printer'">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <span>Basic</span>
+              <tl-input [mask]="{mask: '00/00/0000'}"
+                        [(ngModel)]="basic"></tl-input>
+              <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{basic}}</span>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input [mask]="{mask: '00/00/0000'}"
+          [(ngModel)]="basic"></tl-input>
+<span style="font-size: 12px; color: #9d9d9d">Returned Value: {{basic}}</span>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>Text + Number</span>
+              <tl-input
+                [mask]="{mask: 'AAA-0000', uppercase: true}"
+                [(ngModel)]="textNumber"
+                [iconBefore]="'ion-printer'">
+              </tl-input>
+              <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{textNumber}}</span>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [mask]="{mask: 'AAA-0000', uppercase: true}"
+  [(ngModel)]="textNumber"
+  [iconBefore]="'ion-printer'">
           </tl-input>
-          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{textNumber}}</span>
-
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>Without Guides</h5>
-          <tl-input
-            [mask]="{mask: 'AAA-0000', guides: false}"
-            [(ngModel)]="sGuides"
-            [iconAfter]="'ion-printer'">
-          </tl-input>
-          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{sGuides}}</span>
-
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="group-component">
-          <h5>With Literal Chars</h5>
-          <tl-input
-            [mask]="{mask: '0000/00/00', withLiteralChar: true}"
-            [(ngModel)]="literal"
-            [iconAfter]="'ion-social-usd'"></tl-input>
-          <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{literal}}</span>
-        </div>
+<span style="font-size: 12px; color: #9d9d9d">Returned Value: {{textNumber}}</span>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Without Guides</span>
+              <tl-input
+                [mask]="{mask: 'AAA-0000', guides: false}"
+                [(ngModel)]="sGuides"
+                [iconAfter]="'ion-printer'">
+              </tl-input>
+              <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{sGuides}}</span>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [mask]="{mask: 'AAA-0000', guides: false}"
+  [(ngModel)]="sGuides"
+  [iconAfter]="'ion-printer'">
+              </tl-input>
+<span style="font-size: 12px; color: #9d9d9d">Returned Value: {{sGuides}}</span>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
       </div>
     </div>
 </div>
-<hr>
-<h3 class="title">Mask Pattern</h3>
-<div class="pattern">
-  <p>A - Alpha character (A-Z,a-z)</p>
-  <p>9 - Numeric character (0-9)</p>
-  <p>0 - Alpha numberic character (A-Z,a-z,0-9)</p>
-</div>
-<hr>
-<div class="setup">
-  <h3 class="title">Properties</h3>
-  <div class="table-box">
-    <table class="table table-truly">
-      <thead class="table-truly-head">
-      <tr>
-        <th>Name</th>
-        <th>Type</th>
-        <th>Default</th>
-        <th>Description</th>
-        <th>Options</th>
-      </tr>
-      </thead>
-      <tbody class="table-truly-body" *ngFor="let item of maskDemoProperties; let i = index">
-      <tr>
-        <td><span>{{ item.name }}</span></td>
-        <td><span class="badge">{{ item.type }}</span></td>
-        <td><code>{{ item.default }}</code></td>
-        <td>{{ item.description }}</td>
-        <td><code> {{ item.options }} </code></td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-12">
+      <app-showcase-card [title]="'Mask Pattern'" [icon]="'ion-android-bulb'">
+        <app-card>
+          <div class="pattern">
+            <p>A - Alpha character (A-Z,a-z)</p>
+            <p>9 - Numeric character (0-9)</p>
+            <p>0 - Alpha numberic character (A-Z,a-z,0-9)</p>
+          </div>
+        </app-card>
+      </app-showcase-card>
+    </div>
   </div>
-</div>
-<hr>
-<div class="examples">
-  <h3 class="title">Examples</h3>
-  <div class="group-component">
-    <h5 class="title">Basic</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input [mask]="{mask: '00/00/0000'}"></tl-input>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Text + Number + Uppercase</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input [mask]="{mask: 'AAA-0000', uppercase : true}" [iconBefore]="'ion-printer'"></tl-input>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">Without Guides</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input [mask]="{mask: '00/00/0000'}"></tl-input>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">With Literal Chars</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input [mask]="{mask: '0000/00/00', withLiteralChar: true}" [iconAfter]="'ion-social-usd'"></tl-input>
-  </textarea>
-  </div>
-  <div class="group-component">
-    <h5 class="title">By @Input String</h5>
-    <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-    <tl-input [mask]="'00/00/0000'"></tl-input>
-  </textarea>
-  </div>
-</div>
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <app-showcase-table-properties [data]="maskDemoProperties"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-card>
+      <h4><code>All <b>Angular Supported Events</b> and <b>TlInput Events</b> can be used on this Component.</code></h4>
+    </app-card>
+  </app-showcase-card>
 </div>

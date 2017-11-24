@@ -7,6 +7,9 @@ import { MultiSelectDemoRoutingModule } from './multiselectdemo-routing.module';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DialogModule } from '../../../components/dialog';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { DialogModule } from '../../../components/dialog';
     MultiSelectModule,
     FormsModule,
     DialogModule,
+    ShowcaseCardModule,
+    ShowcaseTableEventsModule,
+    ShowcaseTablePropertiesModule,
     HighlightJsModule,
     MultiSelectDemoRoutingModule,
   ],

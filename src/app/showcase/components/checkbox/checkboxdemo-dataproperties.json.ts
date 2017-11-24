@@ -13,7 +13,21 @@ export const dataProperties = [
     name: 'checked',
     type: 'boolean',
     default: 'false',
-    description: 'Define if the checkedbox initilize checked or not.',
+    description: 'Define if the checked box initialize checked or not.',
     options: 'true | false'
+  },
+  {
+    name: 'checkmarkColor',
+    type: 'string',
+    default: '#fff',
+    description: 'Sets the checkmark color.',
+    options: 'Hex | RGBA'
+  },
+  {
+    name: 'checkedColorBg',
+    type: 'string',
+    default: '#66CC99',
+    description: 'Sets the background color.',
+    options: 'Hex | RGBA'
   },
   ];

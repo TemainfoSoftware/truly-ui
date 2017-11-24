@@ -21,6 +21,65 @@
 */
 
 import { Injectable } from '@angular/core';
+import { TlDatatable } from '../';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
-export class TlDatatableSortService {}
+export class TlDatatableSortService {
+
+  private datatable: TlDatatable;
+
+  private subject = new Subject();
+
+  private sort;
+
+  private sortedData = [];
+
+  onInicializeSortService( datatable ) {
+    this.datatable = datatable;
+  }
+
+  onSort(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+
+  sortWithData(data, scrolling) {
+
+    if (! this.existsSort()) { return data; }
+    if ( scrolling ) { return this.sortedData; }
+
+    data.sort((a, b) => {
+      if (a[this.sort.sorts.column] > b[this.sort.sorts.column]) {
+        return 1;
+      }
+      if (a[this.sort.sorts.column] < b[this.sort.sorts.column]) {
+        return -1;
+      }
+      return 0;
+    });
+
+    if (this.sort.sorts.sortBy === -1) {
+      data.reverse();
+    }
+
+    this.sortedData = data;
+    return this.sortedData;
+  }
+
+  setSort(sort) {
+    this.sort = sort;
+    this.datatable.sortData.next(this.sort);
+    this.subject.next();
+  }
+
+  getSort() {
+    return this.existsSort() ? this.sort.sorts : {};
+  }
+
+  existsSort() {
+    return (this.sort !== undefined) && Object.keys(this.sort.sorts).length;
+  }
+
+}

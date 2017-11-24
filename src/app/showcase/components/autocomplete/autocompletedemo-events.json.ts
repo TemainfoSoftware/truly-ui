@@ -5,20 +5,20 @@ export const events = [
       { event: 'event.skip', description: 'First row offset ' },
       { event: 'event.take', description: 'Number of rows per page ' }
       ],
-    description: 'Callback to invoke when paging, sorting or filtering happens in lazy mode',
+    description: 'Callback to invoke when paging, sorting or filtering happens in lazy mode.',
   },
   {
-    name: 'onAddNew',
+    name: 'addNew',
     parameters: [
       { event: 'null', description: 'null' },
     ],
     description: 'Callback to invoke when user click on Add New item.',
   },
   {
-    name: 'onClickItem',
+    name: 'clickItem',
     parameters: [
       { event: 'event.item', description: 'Item selected ' },
     ],
-    description: 'Callback to invoke when user click on any item of the list',
+    description: 'Callback to invoke when user click on any item of the list.',
   },
 ];

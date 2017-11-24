@@ -5,6 +5,13 @@
 /tmp
 /out-tsc
 
+/src/app/showcase/**/*.map
+/src/app/components/**/*.map
+/src/app/showcase/**/*.js
+/src/app/components/**/*.js
+/src/app/showcase/**/*.css
+/src/app/components/**/*.css
+
 # dependencies
 /node_modules
 

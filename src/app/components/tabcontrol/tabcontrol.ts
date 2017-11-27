@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild,
+  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, AfterViewInit,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -34,7 +34,7 @@ import { TlTab } from './tab/tab';
     templateUrl: './tabcontrol.html',
     styleUrls: [ './tabcontrol.scss' ]
 } )
-export class TlTabControl extends ComponentDefaultBase implements AfterContentInit {
+export class TlTabControl extends ComponentDefaultBase implements AfterContentInit, AfterViewInit {
 
     @Input( 'height' ) height = 'auto';
 
@@ -44,11 +44,21 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     @ViewChild('tabsHeader') tabsHeader;
 
+    @ViewChild('wrapper') wrapper;
+
+    @ViewChild('line') line;
+
     @ContentChildren( forwardRef(() => TlTab )) tabs: QueryList<TlTab>;
 
     private elementListTabs;
 
     public widthSeparator = 0;
+
+    public widthTabs = 0;
+
+    public widthWrapper = 0;
+
+    public topPosition = 0;
 
     constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
@@ -61,6 +71,14 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       }
       this.setTabProperties();
       this.getElementList();
+    }
+
+    ngAfterViewInit() {
+      this.getWrapperWidth();
+    }
+
+    getWrapperWidth() {
+      this.widthWrapper = Math.round(this.wrapper.nativeElement.offsetWidth);
     }
 
     selectTab(tab: TlTab) {
@@ -89,8 +107,10 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     setWidthSeparator() {
       for (let i = 0; i < this.elementListTabs.length; i++) {
-        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth) - 1;
+        this.widthTabs = Math.round(this.widthTabs + Number(this.elementListTabs[i].offsetWidth));
+        this.topPosition = this.wrapper.nativeElement.offsetTop + (this.line.nativeElement.offsetHeight / 2) - 1;
       }
+      this.widthSeparator = this.widthWrapper - this.widthTabs;
     }
 
     get tabsContext() {

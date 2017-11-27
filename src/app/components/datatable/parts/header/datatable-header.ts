@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
@@ -38,6 +38,8 @@ export class TlDatatableHeader implements AfterViewInit {
 
     @ViewChild(TlDatatabaleColumnFilter) columnsFilter;
 
+    @ViewChild('datatableHeader') datatableHeader: ElementRef;
+
     private filderOrder = 1;
 
     private sortField;
@@ -54,6 +56,10 @@ export class TlDatatableHeader implements AfterViewInit {
             this.filterService.setFilter( value );
           } );
         }
+
+        this.dt.getScrollingHorizontal().subscribe((leftValue) => {
+          this.datatableHeader.nativeElement.firstElementChild.scrollLeft = leftValue;
+        });
     }
 
     onClick(column: TlDatatableColumn) {

@@ -69,11 +69,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowFilterColumn') allowFilterColumn = false;
 
-    @Input('rowsPage') rowsPage = 20;
+    @Input('rowsPage') rowsPage = 26;
 
     @Input('rowHeight') rowHeight = 25;
 
-    @Input('rowsClient') rowsClient = 10;
+    @Input('rowsClient') rowsClient = 12;
 
     @Input('height') height = 300;
 
@@ -112,6 +112,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     public globalFilterTimeout: any;
 
     public totalRows: number;
+
+    public scrollingHorizontalSubject = new Subject<any>();
 
     private loadingSubject = new Subject<any>();
 
@@ -169,6 +171,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     getLoading(): Observable<any> {
         return this.loadingSubject.asObservable();
+    }
+
+    getScrollingHorizontal(): Observable<any> {
+      return this.scrollingHorizontalSubject.asObservable();
     }
 
     getObjectRow( row , index ) {

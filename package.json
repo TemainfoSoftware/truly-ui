@@ -5,7 +5,7 @@
   "version": "0.0.0-development",
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
-  "homepage": "https://temainfosistemas.github.io/truly-ui/",
+  "homepage": "http://truly-ui.tk",
   "keywords": [
     "angular",
     "ui",
@@ -19,7 +19,7 @@
     "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=7.0.0"
   },
   "scripts": {
     "ng": "ng",
@@ -32,7 +32,7 @@
     "prebuild:library": "rimraf dist tmp",
     "build:library": "npm run compile",
     "build:showcase": "ng build --aot -prod",
-    "ci": "npm run lint && npm run test && npm run build:library",
+    "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
     "compile": "gulp inline-templates && ngc -p tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",

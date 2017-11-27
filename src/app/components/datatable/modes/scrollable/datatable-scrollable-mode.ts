@@ -49,6 +49,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
+    @ViewChild( 'datatableHeader' ) datatableHeader: ElementRef;
+
     public loading = false;
 
     public foundRecords = true;
@@ -165,7 +167,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.listComponent.nativeElement.addEventListener('scroll', ($event) => {
 
             if ( this.isScrollLeft() ) {
-                this.handleScrollLeft();
+                this.handleScrolHorizontal();
                 this.setLastScrollLeft();
                 return;
             }
@@ -179,8 +181,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     }
 
-    private handleScrollLeft() {
-        this.scrollBoxHeader[0].scrollLeft  = this.listComponent.nativeElement.scrollLeft;
+    private handleScrolHorizontal() {
+        this.dt.scrollingHorizontalSubject.next(this.listComponent.nativeElement.scrollLeft);
     }
 
     private firstRender() {
@@ -193,12 +195,16 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus(document.querySelector('tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]') );
+        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]';
+        const element = this.listBody.nativeElement.querySelector(elementToFind);
+        this.setFocus(element );
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
-        this.setFocus( document.querySelector('tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]') );
+        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]';
+        const element = this.listBody.nativeElement.querySelector(elementToFind);
+        this.setFocus( element );
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -423,23 +429,17 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private getFocusElementOnChangeData() {
-        // const rowNumber = this.activeElement.getAttribute('row');
-        // if (document.querySelector('tr[row="' + rowNumber + '"]')) {
-        //     console.log('Normal',this.lastRowViewport,this.quantityVisibleRows,rowNumber)
-        //     return document.querySelector('tr[row="' + rowNumber + '"]');
-        // }
-
         if (document.activeElement.nodeName === 'INPUT') {
             return document.activeElement;
         }
 
-
         if ( this.isScrollDown() ) {
-            return document.querySelector('tr[row="' + ( this.lastRowViewport - 1 ) + '"]');
+            const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
+            return this.listBody.nativeElement.querySelector(elementToFind);
         }else {
-            return document.querySelector('tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]');
+            const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]';
+            return this.listBody.nativeElement.querySelector(elementToFind);
         }
-
     }
 
     private setFocus( htmlElement ) {

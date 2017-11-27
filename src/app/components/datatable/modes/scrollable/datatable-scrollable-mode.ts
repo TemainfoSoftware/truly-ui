@@ -49,8 +49,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
-    @ViewChild( 'datatableHeader' ) datatableHeader: ElementRef;
-
     public loading = false;
 
     public foundRecords = true;
@@ -95,8 +93,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private elementTD: ElementRef;
 
-    private scrollBoxHeader: HTMLCollectionOf<Element>;
-
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
@@ -108,7 +104,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.addListenerToDataSource();
         this.addListenerToScroll();
         this.firstRender();
-        this.scrollBoxHeader = document.getElementsByClassName('ui-datatable-header-wrap');
     }
 
     onMouseDown() {
@@ -122,7 +117,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     onClick(event) {
         this.activeElement = event.target.parentElement;
-        const initRange = Math.floor( this.scrollTop / this.dt.rowHeight );
     }
 
     onKeydown( $event ) {
@@ -197,7 +191,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
         const elementToFind = 'tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]';
         const element = this.listBody.nativeElement.querySelector(elementToFind);
-        this.setFocus(element );
+        this.setFocus( element );
     }
 
     private handleKeyPageDown() {
@@ -412,9 +406,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private setFocusInNextElement() {
         if (this.activeElement.nextElementSibling) {
             if ( this.cursorViewPortPosition < this.quantityVisibleRows ) {
-                this.cursorViewPortPosition ++;
+                 this.cursorViewPortPosition ++;
             }else {
-                this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
+              this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
             }
             this.setFocus( this.activeElement.nextElementSibling );
         }
@@ -433,9 +427,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return document.activeElement;
         }
 
+        console.log(this.lastRowViewport);
+
         if ( this.isScrollDown() ) {
-            const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
-            return this.listBody.nativeElement.querySelector(elementToFind);
+             const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
+             return this.listBody.nativeElement.querySelector(elementToFind);
         }else {
             const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]';
             return this.listBody.nativeElement.querySelector(elementToFind);
@@ -443,7 +439,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setFocus( htmlElement ) {
-        if ( htmlElement !== null ) {
+        if ( this.mouseClicked ) {
+          return;
+        }
+
+        if ( ( htmlElement !== null ) && ( htmlElement !== undefined)) {
             ( htmlElement as HTMLElement ).focus();
             this.setActiveElement();
             this.getCursorViewPortPosition();

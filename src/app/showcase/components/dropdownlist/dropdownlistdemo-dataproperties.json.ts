@@ -50,10 +50,31 @@ export const dataProperties = [
   },
   {
     name: 'labelSize',
-    type: 'number',
+    type: 'string',
     default: '100',
     description: 'Sets the label width.',
-    options: 'any number'
+    options: 'px | % | em'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '37px',
+    description: 'Sets the height of Dropdown List.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'width',
+    type: 'string',
+    default: '87px',
+    description: 'Sets the width of Dropdown List.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'searchOnList',
+    type: 'boolean',
+    default: 'false',
+    description: 'Handle if will have input search or not',
+    options: 'true | false'
   },
   {
     name: 'placeholder',
@@ -61,6 +82,13 @@ export const dataProperties = [
     default: 'null',
     description: 'Display a help text on dropdown list.',
     options: 'any text'
+  },
+  {
+    name: 'preSelected',
+    type: 'string',
+    default: 'null',
+    description: 'Sets the option that will be initialize it',
+    options: 'Object Key'
   },
   {
     name: 'placeholderIcon',

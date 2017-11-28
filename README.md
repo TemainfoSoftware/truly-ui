@@ -37,7 +37,7 @@ Ex: Electron, App.js and NW.js
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
 * [NodeJS >= 7](https://nodejs.org)
-* [Angular Cli >= 1.2.0](https://cli.angular.io/)
+* [Angular Cli >= 1.5.0](https://cli.angular.io/)
 * [Angular >= 5.0.0](https://angular.io/)
 
 ## Installation
@@ -1422,7 +1422,7 @@ import { AppComponent } from './app.component';
 
 // Import your library, for example the InputComponent :
 import { InputModule } from 'truly-ui/truly-ui';         //Import of all Modules
-import { ButtonModule } from 'truly-ui/component/button';//Only the specific Module imports
+import { ButtonModule } from 'truly-ui/components/button';//Only the specific Module imports
 
 @NgModule({
   declarations: [

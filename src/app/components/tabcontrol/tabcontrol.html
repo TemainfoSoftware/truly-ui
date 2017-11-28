@@ -1,4 +1,4 @@
-<div class="wrapper-tabcontrol" #wrapper>
+<div class="wrapper-tabcontrol" #wrapperTab>
   <ng-template #tabsHeader let-tabs="tabs">
     <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
       <li *ngFor="let tab of tabs" [ngClass]="{selected: tab.selected}" [style.color]="titleColor"
@@ -8,15 +8,12 @@
     </ul>
   </ng-template>
 
-
   <div class="line-separator"
         #line
-        [style.width]="widthSeparator + 'px'"
+        [style.width]="widthSeparator"
         [style.top]="topPosition + 'px'"
-        [style.left]="(widthTabs + wrapper.offsetLeft) +'px'">
+        [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) +'px'">
   </div>
-
-
 
   <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
   <ng-content></ng-content>

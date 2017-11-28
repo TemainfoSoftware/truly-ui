@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, AfterViewInit,
+  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, AfterViewInit, Renderer2,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -28,6 +28,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlTab } from './tab/tab';
+import { TlModal } from '../modal/modal';
 
 @Component( {
     selector: 'tl-tabcontrol',
@@ -44,15 +45,17 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     @ViewChild('tabsHeader') tabsHeader;
 
-    @ViewChild('wrapper') wrapper;
+    @ViewChild('wrapperTab') wrapper;
 
     @ViewChild('line') line;
 
     @ContentChildren( forwardRef(() => TlTab )) tabs: QueryList<TlTab>;
 
+    @ViewChild( forwardRef(() => TlModal )) modal: QueryList<TlModal>;
+
     private elementListTabs;
 
-    public widthSeparator = 0;
+    public widthSeparator = '';
 
     public widthTabs = 0;
 
@@ -86,12 +89,12 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       tab.selected = true;
     }
 
-  setTabProperties() {
-    this.tabs.forEach( ( item, index, array ) => {
-      item.background = this.background;
-      item.height = this.height;
-    } );
-  }
+    setTabProperties() {
+      this.tabs.forEach( ( item, index, array ) => {
+        item.background = this.background;
+        item.height = this.height;
+      } );
+    }
 
     getElementList() {
       setTimeout(() => {
@@ -106,11 +109,13 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
     }
 
     setWidthSeparator() {
+      this.widthTabs = 0;
       for (let i = 0; i < this.elementListTabs.length; i++) {
-        this.widthTabs = Math.round(this.widthTabs + Number(this.elementListTabs[i].offsetWidth));
+        this.widthTabs = this.widthTabs + Number(this.elementListTabs[i].offsetWidth);
         this.topPosition = this.wrapper.nativeElement.offsetTop + (this.line.nativeElement.offsetHeight / 2) - 1;
       }
-      this.widthSeparator = this.widthWrapper - this.widthTabs;
+      this.widthSeparator = 'calc(100% - ' + (this.widthTabs + this.wrapper.nativeElement.offsetLeft +
+        this.line.nativeElement.offsetLeft) + 'px' + ' )';
     }
 
     get tabsContext() {

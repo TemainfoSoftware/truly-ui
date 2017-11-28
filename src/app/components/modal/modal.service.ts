@@ -107,7 +107,7 @@ export class ModalService implements OnDestroy {
         const modals = document.querySelectorAll( 'tl-modal' );
         for ( let index = 0; index < modals.length; index++ ) {
             const element: any = modals[ index ];
-            maxZIndex.push( element.firstChild.style.zIndex );
+            maxZIndex.push( element.firstElementChild.style.zIndex );
         }
         return maxZIndex;
     }

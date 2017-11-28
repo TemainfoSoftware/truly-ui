@@ -287,9 +287,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
     switch ( $event.keyCode ) {
       case KeyEvent.ARROWUP :
+        $event.preventDefault();
         this.backwardTabbing();
         break;
       case KeyEvent.ARROWDOWN:
+        $event.preventDefault();
         this.forwardTabbing();
         break;
       case KeyEvent.ARROWLEFT :

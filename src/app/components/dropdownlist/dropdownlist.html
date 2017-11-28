@@ -1,14 +1,13 @@
 <div class="tl-dropdown-list-box">
-    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
+    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}
         <b *ngIf="required" class="required">*</b>
     </label>
-
     <div class="wrapper" #wrapper (click)="changeShowStatus($event)">
         <div *ngIf="showOnlyIcon"
              class="ui-overlap"
              (keydown)="onListOpened($event)"
              tabindex="-1"
-             [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', width: 35 + 'px'}">
+             [ngStyle]="{'height' : height, 'line-height' : height, 'width': '35px'}">
             <i #dropdownShow class="{{placeholderIcon}}"></i>
         </div>
         <input #dropdown
@@ -26,36 +25,39 @@
                [required]="validations.required"
                [maxlength]="validations.maxLength"
                [minlength]="validations.minLength"
-               [ngStyle]="{'height' : height + 'px', 'line-height' : height + 'px', 'width': !showOnlyIcon ? width+'px' : '35px'}"
+               [ngStyle]="{'height' : height, 'line-height' : height, 'width': !showOnlyIcon ? width : '35px'}"
                [disabled]="disabled ? true : null"
                (keydown)="onListClosed($event)">
 
         <div *ngIf="!showOnlyIcon" class="dropdown-list-icon"
-             [ngStyle]="{'height' : (height + 2) + 'px', 'line-height' : (height + 2) + 'px'}"
+             [style.line-height]="height"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down"></i>
         </div>
     </div>
-
     <div class="wrapper">
         <div class="dropdown-list-wrapper-select"
              *ngIf="!disabled"
              [style.zIndex]="1000"
              [@enterAnimation]="showHide"
-             [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px', top: topPosition, left: leftPosition, position: position }">
+             [ngStyle]="{
+               'width': showOnlyIcon ? width: wrapper?.offsetWidth + 'px',
+               'left': listLeftPosition + 'px',
+               'top': listTopPosition + 'px'
+             }">
 
             <div class="search-input" *ngIf="searchOnList">
                 <i class="search-input-icon ion-ios-search-strong"></i>
                 <input #searchInput class="search-input-field"
                        (keyup)="onKeyDownSearchInput($event);onListOpened($event)"
-                       [ngStyle]="{'width': showOnlyIcon ? width+'px' : widthList+'px'}">
+                       [ngStyle]="{'width': showOnlyIcon ? width : (wrapper.offsetWidth - 22)+'px'}">
             </div>
 
             <div class="-placeholder"
                  [style.display]="placeholder && showHide ? 'block' : 'none'"
                 #defaultPlaceholder
                 [style.zIndex]="1000"
-                [ngStyle]="{'line-height' : height + 'px'}"
+                [ngStyle]="{'line-height' : height}"
                 (keydown)="placeholderEnter($event)"
                 (click)="selectPlaceholder()" tabindex="-1">
                <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i> <span> {{ placeholder }}</span>
@@ -69,11 +71,10 @@
                <li *ngFor="let item of datasource; let i = index"
                    (click)="selectOption(item, i)"
                    tabindex="{{ i }}"
-                   [ngStyle]="{'line-height' : height + 'px'}">
+                   [ngStyle]="{'line-height' : height}">
                    <i *ngIf="item[icon]" [class]="'ui-icon '+item[icon]"> </i> <span> {{ item[text] }}</span>
                </li>
            </ul>
        </div>
    </div>
-
 </div>

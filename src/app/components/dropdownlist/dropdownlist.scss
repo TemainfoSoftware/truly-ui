@@ -25,6 +25,7 @@ $success-background-color: #E3F5EC;
   box-sizing: unset;
   > .labeltext {
     font-family: $default-fontFamily;
+    box-sizing: border-box;
     font-size: $default-fontSize;
     color: #737373;
     font-weight: normal;
@@ -99,7 +100,6 @@ $success-background-color: #E3F5EC;
       position: absolute;
       display: table-cell;
       cursor: $default-cursorHover;
-      line-height: $default-height - 2;
       top: 0;
       right: 0;
     }
@@ -110,6 +110,7 @@ $success-background-color: #E3F5EC;
     }
     > .dropdown-list-wrapper-select {
       z-index: 10;
+      position: fixed;
       outline: $default-outline;
       cursor: $default-cursorHover;
       padding: 0;
@@ -182,6 +183,7 @@ $success-background-color: #E3F5EC;
 }
 
 .search-input {
+  box-sizing: border-box;
   >.search-input-icon {
     position: absolute;
     font-size: 1em;
@@ -191,7 +193,7 @@ $success-background-color: #E3F5EC;
   }
   >.search-input-field {
     padding-left: 20px;
-    height: 25px;
+    height: 23px;
     font-family: 'Lato', sans-serif;
     font-size: 1em;
     color: #737373;

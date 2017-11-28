@@ -427,8 +427,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             return document.activeElement;
         }
 
-        console.log(this.lastRowViewport);
-
         if ( this.isScrollDown() ) {
              const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
              return this.listBody.nativeElement.querySelector(elementToFind);

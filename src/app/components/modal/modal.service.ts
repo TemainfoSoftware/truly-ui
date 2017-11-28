@@ -226,7 +226,8 @@ export class ModalService implements OnDestroy {
 
     sortArrayByZIndex( array ) {
         return array.sort( ( a, b ) => {
-            return a.location.nativeElement.firstChild.style.zIndex - b.location.nativeElement.firstChild.style.zIndex;
+            return a.location.nativeElement.firstElementChild.style.zIndex -
+              b.location.nativeElement.firstElementChild.style.zIndex;
         } );
     }
 

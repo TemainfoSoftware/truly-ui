@@ -102,7 +102,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   ngAfterViewInit() {
     this.setInitialFocus();
     this.getElementsOfForm();
-    this.getTabsComponent();
     this.getComponentsWithValidations();
     this.validateElements();
     this.listenComponentWithValidations();
@@ -117,93 +116,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.getComponentValues( this.radioButtonList.toArray() );
     this.getComponentValues( this.checkboxList.toArray() );
     this.getAutoCompleteValues();
-  }
-
-  getTabsComponent() {
-    this.tabsList.forEach( ( item, index ) => {
-      this.listenLastElementTab( item.lastComponent, index );
-      this.listenPreviousElementTab( item.firstComponent, index );
-    } );
-  }
-
-  listenLastElementTab( last, index ) {
-    if (last) {
-      this.renderer.listen( last, 'keydown', ( $event ) => {
-        this.handleKeyDownLastElementTab( $event, index );
-      } );
-    }
-  }
-
-  listenPreviousElementTab( previous, index ) {
-    if (previous) {
-      this.renderer.listen( previous, 'keydown', ( $event ) => {
-        this.handleKeyDownFirstElementTab( $event, index );
-      } );
-    }
-  }
-
-  handleKeyDownLastElementTab( $event, index ) {
-    if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 && (!$event.shiftKey)) {
-      this.nextTabAndElement( index );
-    }
-    if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) ) {
-      this.nextTabAndElement( index );
-    }
-  }
-
-  getTabSelected() {
-    const tab = this.tabsList.toArray().find( item => item.selected );
-    return this.tabsList.toArray().indexOf( tab );
-  }
-
-  handleKeyDownFirstElementTab( $event, index ) {
-    if ( [ KeyEvent.ARROWUP, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 ) {
-      this.previousTabAndElement( index );
-    }
-    if (($event.keyCode === KeyEvent.TAB) && ($event.shiftKey)) {
-      this.previousTabAndElement( index );
-    }
-  }
-
-  nextTabAndElement( index ) {
-    if ( this.tabsList.toArray()[ index + 1 ] ) {
-      this.resetTabsSelected();
-      this.tabsList.toArray()[ index + 1 ].selected = true;
-      this.setFocusNext( index + 1 );
-    }
-  }
-
-  nextTab(index) {
-    this.resetTabsSelected();
-    this.tabsList.toArray()[ index + 1 ] ? this.tabsList.toArray()[ index + 1 ].selected = true :
-    this.tabsList.toArray()[0].selected = true;
-    this.cdr.detectChanges();
-  }
-
-  setFocusNext( index ) {
-    setTimeout( () => {
-      this.tabsList.toArray()[ index ].firstComponent.focus();
-    }, 1 );
-  }
-
-  previousTabAndElement( index ) {
-    if ( this.tabsList.toArray()[ index - 1 ] ) {
-      this.resetTabsSelected();
-      this.tabsList.toArray()[ index - 1 ].selected = true;
-      this.setFocusPrevious( index - 1 );
-    }
-  }
-
-  setFocusPrevious( index ) {
-    setTimeout( () => {
-      this.tabsList.toArray()[ index ].lastComponent.focus();
-    }, 1 );
-  }
-
-  resetTabsSelected() {
-    this.tabsList.forEach( ( item, index, array ) => {
-      item.selected = false;
-    } );
   }
 
   clickListener() {

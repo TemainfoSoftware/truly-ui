@@ -26,8 +26,7 @@
                [maxlength]="validations.maxLength"
                [minlength]="validations.minLength"
                [ngStyle]="{'height' : height, 'line-height' : height, 'width': !showOnlyIcon ? width : '35px'}"
-               [disabled]="disabled ? true : null"
-               (keydown)="onListClosed($event)">
+               [disabled]="disabled ? true : null">
 
         <div *ngIf="!showOnlyIcon" class="dropdown-list-icon"
              [style.line-height]="height"

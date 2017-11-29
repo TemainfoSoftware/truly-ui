@@ -149,13 +149,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
       this.listenerKeyDown();
       this.handleInitializeValues();
     }
-    
+
     listenerKeyDown() {
       this._renderer.listen(this.dropdown.nativeElement, 'keydown', ($event) => {
         this.onListClosed($event);
       });
     }
-    
+
     getTopPosition() {
       this.listLeftPosition = this.element.nativeElement.getBoundingClientRect().left;
       this.listTopPosition = (this.element.nativeElement.getBoundingClientRect().top) + (this.wrapper.nativeElement.offsetHeight);

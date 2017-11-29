@@ -390,7 +390,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   getAutoCompleteValues() {
     this.autoCompleteList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.input.componentModel.model;
+      this.formResult[ item.name.trim() ] = item.ngModel;
     } );
   }
 

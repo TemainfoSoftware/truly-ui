@@ -40,6 +40,7 @@ import { ListBoxDataSourceService } from './services/listbox-datasource.service'
 import { ListBoxListRenderService } from './parts/listbox-list-render';
 import { AddNewRenderService } from './parts/listbox-addnew-render';
 import { ListBoxTemplateRenderService } from './parts/listbox-template-render';
+import { Observable } from 'rxjs/Observable';
 
 @Component( {
     selector: 'tl-listbox',
@@ -182,7 +183,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     private isScrolling;
 
     private itemSelected;
-
+  
     constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
                  public dataService: ListBoxDataSourceService,
                  private addNewRenderService: AddNewRenderService,
@@ -200,7 +201,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             this.handleSearch( searchTextValue );
             this.removeSelected();
             this.setCursorsToInitialList();
-            this.addClassSelected( 0 );
         } );
     }
 
@@ -216,6 +216,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.validateProperties();
         this.addListenerOnTemplate();
         this.addListenersSearchElement();
+        this.addListenerFocusSearchElement();
         this.change.detectChanges();
     }
 
@@ -230,6 +231,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         for (let item = 0; item < data.length; item++) {
             if (typeof data[item] === 'object') { return true; }
         }
+    }
+  
+  addListenerFocusSearchElement() {
+      if (this.searchElement) {
+        this.renderer.listen(this.searchElement.input.nativeElement, 'focus', ($event) => {
+          this.addClassSelected( 0 );
+        });
+      }
     }
 
     subscribeClearButton() {
@@ -281,6 +290,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if ( this.searchElement ) {
             this.subscribeClearButton();
             this.listenerKeyDownSearchElement();
+            this.listenerKeyUpSearchElement();
         }
     }
 
@@ -288,6 +298,12 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
             this.handleEventKeyDown( $event );
         } );
+    }
+    
+    listenerKeyUpSearchElement() {
+      this.renderer.listen( this.searchElement.input.nativeElement, 'keyup', ( $event ) => {
+        this.handleEventKeyUp( $event );
+      } );
     }
 
     public detectChanges() {
@@ -359,25 +375,33 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
             case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
             case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
-            case KeyEvent.BACKSPACE: this.handleKeyBackspace( $event ); return;
+            case KeyEvent.BACKSPACE: $event.stopPropagation();return;
+            case KeyEvent.HOME: $event.stopPropagation();return;
+            case KeyEvent.SHIFT: $event.stopPropagation();return;
         }
-        this.subject.next( $event.target.value );
+        if (!($event.keyCode === 65 && $event.ctrlKey) && !($event.keyCode === 17)) {
+          this.subject.next( $event.target.value );
+        }
     }
-
+    
+    handleEventKeyUp( $event ) {
+        switch ( $event.keyCode ) {
+          case KeyEvent.BACKSPACE: this.handleKeyBackspace( $event ); return;
+        }
+    }
+    
     handleKeyBackspace( $event ) {
-        setTimeout( () => {
-            if ( $event.target.value.length === 0 ) {
-                if ( (this.skip !== 0) || (this.take !== this.rowsPage) ) {
-                    this.filtering = false;
-                    this.resetSkipAndTake();
-                    this.renderPageData();
-                    this.validateFilteredAsEmpty();
-                    this.handleScrollShowMore();
-                    this.removeSelected();
-                    return;
-                }
-            }
-        }, 1 );
+      if ( $event.target.value.length === 0 ) {
+          if ( (this.skip !== 0) || (this.take !== this.rowsPage) ) {
+              this.filtering = false;
+              this.resetSkipAndTake();
+              this.renderPageData();
+              this.validateFilteredAsEmpty();
+              this.handleScrollShowMore();
+              this.removeSelected();
+              return;
+          }
+      }
     }
 
     handleEscape( $event ) {
@@ -432,6 +456,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             return;
         }
         this.handleValueSearchElement();
+        $event.preventDefault();
         $event.stopPropagation();
         if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
@@ -518,17 +543,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleSearch( searchTerm ) {
-        if ( searchTerm ) {
-            this.showList = true;
-            this.detectChanges();
-            this.setScrollTopZero();
-            this.addScrollListListener();
-            this.resetCursors();
-            this.removeSelected();
-            this.isSearchTermLessThanCharsToSearch( searchTerm ) ?
-                this.handleSearchAsDefaultData() : this.handleSearchAsFoundData( searchTerm );
-            this.handleScrollShowMore();
-        }
+      if ( searchTerm ) {
+          this.showList = true;
+          this.detectChanges();
+          this.setScrollTopZero();
+          this.addScrollListListener();
+          this.resetCursors();
+          this.removeSelected();
+          this.isSearchTermLessThanCharsToSearch( searchTerm ) ?
+              this.handleSearchAsDefaultData() : this.handleSearchAsFoundData( searchTerm );
+          this.handleScrollShowMore();
+      }
     }
 
     handleSearchAsDefaultData() {

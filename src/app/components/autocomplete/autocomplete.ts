@@ -93,8 +93,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     private documentListener = [];
     
-    private inputHeight;
-
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -120,7 +118,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     listenerKeyDown() {
       this.renderer.listen(this.input.element.nativeElement, 'keydown', ($event) => {
-        this.onKeyDown($event);
+        this.handleKeyDown( $event );
       });
     }
     
@@ -166,10 +164,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     onFocusInput() {
         this.handleOpenOnFocus();
-    }
-
-    onKeyDown( $event ) {
-        this.handleKeyDown( $event );
     }
 
     handleOpenOnFocus() {

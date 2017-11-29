@@ -33,5 +33,6 @@ export enum KeyEvent {
     TAB = 9,
     SPACE = 32,
     DELETE = 46,
-    BACKSPACE = 8
+    BACKSPACE = 8,
+    SHIFT = 16
 }

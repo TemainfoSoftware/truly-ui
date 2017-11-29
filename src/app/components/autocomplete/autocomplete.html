@@ -2,7 +2,6 @@
     <div class="tl-autocomplete-wrapper" #autocompleteList>
         <tl-input #input
                 [label]="label"
-                (keydown)="onKeyDown($event)"
                 (focusout)="onInputFocusOut($event)"
                 (focus)="onFocusInput()"
                 [name]="name"
@@ -22,7 +21,8 @@
         </tl-input>
         <div class="autocomplete-listbox"
              [style.width]="getAutoCompleteWidth() + 'px'"
-             [style.left]="listPosition + 'px'">
+             [style.top]="listTopPosition + 'px'"
+             [style.left]="listLeftPosition + 'px'">
             <tl-listbox
                     [data]="data"
                     [id]="id"

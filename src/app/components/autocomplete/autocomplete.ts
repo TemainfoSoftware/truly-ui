@@ -51,7 +51,7 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
     providers : [ MakeProvider(TlAutoComplete) ]
 } )
 
-export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
 
     @Input() data: Array<any>;
 
@@ -87,9 +87,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-    public listPosition;
+    public listLeftPosition;
+    
+    public listTopPosition;
 
-    private documentListener;
+    private documentListener = [];
+    
+    private inputHeight;
 
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
@@ -104,14 +108,22 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     ngAfterViewInit() {
+        this.listenerKeyDown();
+        this.listenClickDocument();
+        this.listenScrollDocument();
         this.validationProperty();
-        this.createDocumentListener();
         this.handleAutoCompleteModel();
         this.listBox.showList = false;
         this.listBox.detectChanges();
         this.getAutoCompleteWidth();
     }
 
+    listenerKeyDown() {
+      this.renderer.listen(this.input.element.nativeElement, 'keydown', ($event) => {
+        this.onKeyDown($event);
+      });
+    }
+    
     handleCustom() {
         if (this.customTemplate) {
             this.listBox.customInput = true;
@@ -134,15 +146,22 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         }, 1 );
     }
 
-    createDocumentListener() {
-        this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
+    listenScrollDocument() {
+      this.documentListener.push(this.renderer.listen(document, 'scroll', ($event) => {
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
+      }));
+    }
+    
+    listenClickDocument() {
+        this.documentListener.push(this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
                 this.listBox.showList = false;
                 this.listBox.detectChanges();
                 return;
             }
             this.handleOpenOnFocus();
-        } );
+        } ));
     }
 
     onFocusInput() {
@@ -157,11 +176,11 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         if ( this.openFocus && !this.listBox.showList) {
             this.listBox.showList = true;
             this.listBox.detectChanges();
-            this.listPosition = document.activeElement.getBoundingClientRect().left;
+            this.setListPosition();
             this.change.detectChanges();
         }
     }
-
+  
     handleKeyDown($event) {
         if ( $event.keyCode === KeyEvent.ENTER ) {
             this.closeList( $event );
@@ -191,7 +210,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     onClickItemList($event) {
         if ($event) {
-          this.input.writeValue( $event );
           this.ngModel = $event;
           this.clickItem.emit($event);
           this.setInputValue( $event );
@@ -200,11 +218,14 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     setInputValue( $event ) {
-        setTimeout( () => {
-          this.input.element.nativeElement.value = $event[ this.labelName ];
-        }, 2 );
+        this.input.element.nativeElement.value = $event[ this.labelName ];
     }
-
+  
+    setListPosition() {
+      this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
+      this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.input.element.nativeElement.offsetHeight;
+    }
+    
     isNotRelatedWithAutocomplete( $event ) {
         if (this.isTargetEqualsClearButton($event)) {
             return false;
@@ -260,8 +281,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     getAutoCompleteWidth() {
-        return this.input.input.nativeElement.offsetWidth +
-            (this.input.input.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
+        return this.input.input.nativeElement.offsetWidth;
     }
 
 /*    highlight( text: string, search ): string {
@@ -280,11 +300,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }*/
 
     ngOnDestroy() {
-        this.documentListener();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-
+        this.documentListener.forEach((listener) => { listener() });
     }
 
 }

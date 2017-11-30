@@ -99,6 +99,10 @@ export class AutoCompleteDemoComponent {
     this.dataBasic.push(this.result);
   }*/
 
+  onSelectRow($event) {
+    console.log('Row', $event);
+  }
+
   getDataFromService( skip, take ) {
     return this.dataBasic.slice( skip, take );
   }

@@ -88,11 +88,11 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
     public listLeftPosition;
-    
+
     public listTopPosition;
 
     private documentListener = [];
-    
+
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -121,7 +121,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.handleKeyDown( $event );
       });
     }
-    
+
     handleCustom() {
         if (this.customTemplate) {
             this.listBox.customInput = true;
@@ -150,7 +150,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         this.listBox.detectChanges();
       }));
     }
-    
+
     listenClickDocument() {
         this.documentListener.push(this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
@@ -174,7 +174,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
             this.change.detectChanges();
         }
     }
-  
+
     handleKeyDown($event) {
         if ( $event.keyCode === KeyEvent.ENTER ) {
             this.closeList( $event );
@@ -214,12 +214,12 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     setInputValue( $event ) {
         this.input.element.nativeElement.value = $event[ this.labelName ];
     }
-  
+
     setListPosition() {
       this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
       this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.input.element.nativeElement.offsetHeight;
     }
-    
+
     isNotRelatedWithAutocomplete( $event ) {
         if (this.isTargetEqualsClearButton($event)) {
             return false;
@@ -294,7 +294,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }*/
 
     ngOnDestroy() {
-        this.documentListener.forEach((listener) => { listener() });
+        this.documentListener.forEach((listener) => { listener(); });
     }
 
 }

@@ -183,7 +183,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     private isScrolling;
 
     private itemSelected;
-  
+
     constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
                  public dataService: ListBoxDataSourceService,
                  private addNewRenderService: AddNewRenderService,
@@ -232,7 +232,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             if (typeof data[item] === 'object') { return true; }
         }
     }
-  
+
   addListenerFocusSearchElement() {
       if (this.searchElement) {
         this.renderer.listen(this.searchElement.input.nativeElement, 'focus', ($event) => {
@@ -299,7 +299,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             this.handleEventKeyDown( $event );
         } );
     }
-    
+
     listenerKeyUpSearchElement() {
       this.renderer.listen( this.searchElement.input.nativeElement, 'keyup', ( $event ) => {
         this.handleEventKeyUp( $event );
@@ -375,21 +375,21 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
             case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
             case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
-            case KeyEvent.BACKSPACE: $event.stopPropagation();return;
-            case KeyEvent.HOME: $event.stopPropagation();return;
-            case KeyEvent.SHIFT: $event.stopPropagation();return;
+            case KeyEvent.BACKSPACE: $event.stopPropagation(); return;
+            case KeyEvent.HOME: $event.stopPropagation(); return;
+            case KeyEvent.SHIFT: $event.stopPropagation(); return;
         }
         if (!($event.keyCode === 65 && $event.ctrlKey) && !($event.keyCode === 17)) {
           this.subject.next( $event.target.value );
         }
     }
-    
+
     handleEventKeyUp( $event ) {
         switch ( $event.keyCode ) {
           case KeyEvent.BACKSPACE: this.handleKeyBackspace( $event ); return;
         }
     }
-    
+
     handleKeyBackspace( $event ) {
       if ( $event.target.value.length === 0 ) {
           if ( (this.skip !== 0) || (this.take !== this.rowsPage) ) {

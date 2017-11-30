@@ -16,12 +16,12 @@ before_script:
 script:
   - npm run compile
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run semantic-release-pre; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run create:packagejson; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run copy:aotimports; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run publish; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run semantic-release-post; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" AND "TRAVIS_PULL_REQUEST" == "false" ]]; then npm run build:showcase; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run semantic-release-pre; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run create:packagejson; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run copy:aotimports; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run publish; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run semantic-release-post; fi
+  - if [[ ("$TRAVIS_BRANCH" == "master") && ("TRAVIS_PULL_REQUEST" == "false") ]]; then npm run build:showcase; fi
 deploy:
   - provider: s3
     local_dir: showcase

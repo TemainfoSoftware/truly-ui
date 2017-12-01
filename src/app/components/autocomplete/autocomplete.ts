@@ -132,7 +132,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     validationProperty() {
-        if (!this.labelName) {
+        if ((!this.labelName && !this.listBox.isDataArrayString())) {
             throw new Error('The [labelName] property is required to show the content on input while selecting');
         }
     }
@@ -165,16 +165,20 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     onFocusInput() {
-        this.handleOpenOnFocus();
+      this.setListPosition();
+      this.handleOpenOnFocus();
     }
 
     handleOpenOnFocus() {
-        if ( this.openFocus && !this.listBox.showList) {
+        if ( this.openFocus && !this.listBox.showList && this.isAvailableInput()) {
             this.listBox.showList = true;
             this.listBox.detectChanges();
-            this.setListPosition();
             this.change.detectChanges();
         }
+    }
+
+    isAvailableInput() {
+      return !this.input.disabled && !this.input.readonly;
     }
 
     handleKeyDown($event) {
@@ -214,7 +218,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     setInputValue( $event ) {
-        this.input.element.nativeElement.value = $event.row[ this.labelName ];
+      this.input.element.nativeElement.value =
+        !this.listBox.isDataArrayString() ? $event.row[ this.labelName ] : $event.row;
     }
 
     setListPosition() {

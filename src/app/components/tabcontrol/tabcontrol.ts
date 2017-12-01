@@ -98,9 +98,9 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       }
     }
 
-    listenPreviousElementTab( previous, index ) {
-      if ( previous ) {
-        this.renderer.listen( previous, 'keydown', ( $event ) => {
+    listenPreviousElementTab( first, index ) {
+      if ( first ) {
+        this.renderer.listen( first, 'keydown', ( $event ) => {
           this.handleKeyDownFirstElementTab( $event, index );
         } );
       }

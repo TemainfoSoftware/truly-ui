@@ -271,6 +271,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     addScrollListListener() {
         this.zone.run( () => {
             this.scrollListener = this.renderer.listen( this.itemContainer.nativeElement, 'scroll', ($event) => {
+              $event.preventDefault();
                 $event.stopPropagation();
                 clearTimeout( this.timeScroll );
                 this.onScroll();
@@ -541,14 +542,25 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleSearchAsFoundData( searchTerm ) {
-        this.itemSelected = null;
-        this.filteredData = this.filterData( searchTerm );
-        this.handleSkipAndTakeWhileSearching();
-        this.validateFilteredAsEmpty();
+      if ( this.lazyMode ) {
+        this.getDataLazy( searchTerm );
+        return;
+      }
+      this.itemSelected = null;
+      this.filteredData = !this.isDataArrayString() ? this.filterDataObject( searchTerm ) : this.filterDataString( searchTerm );
+      this.handleSkipAndTakeWhileSearching();
+      this.validateFilteredAsEmpty();
+    }
+
+    filterDataString( searchTerm ) {
+      this.filtering = true;
+      return this.data.filter( ( item ) => {
+        return item.toString().toLowerCase().includes( searchTerm.toString().toLowerCase() );
+      } );
     }
 
     handleSkipAndTakeWhileSearching() {
-        if (this.filteredData.length) {
+      if ( Array( this.filteredData ).length ) {
             this.setSkipAndTakeAsFilteredData();
             this.renderPageData();
         } else {
@@ -568,6 +580,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleSearchQuery() {
+      this.handleSearchQueryAsArrayString();
         const data = this.lazyMode ? this.data.data[ 0 ] : this.data[ 0 ];
         if ( this.searchQuery.length === 0 ) {
             Object.keys( data ).forEach( ( value ) => {
@@ -575,6 +588,16 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             } );
         }
     }
+
+  handleSearchQueryAsArrayString() {
+    if ( this.isDataArrayString() ) {
+      return this.searchQuery = this.data;
+    }
+  }
+
+  isDataArrayString() {
+    return this.typeOfData === 'ArrayString';
+  }
 
     handleScrollDown() {
         this.handleScrollFinish();
@@ -645,7 +668,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         return this.itemContainer.nativeElement.getBoundingClientRect();
     }
 
-    filterData( searchTerm ) {
+  filterDataObject( searchTerm ) {
         const filter = [];
         this.filtering = true;
         const data = this.lazyMode ? this.data.data : this.data;
@@ -677,9 +700,20 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.change.detectChanges();
     }
 
-    getDataLazy() {
-        this.loadingMoreData = true;
-        this.lazyLoad.emit( { skip: this.skip, take: this.take } );
+  getDataLazy( term? ) {
+      this.loadingMoreData = true;
+      const fields = {};
+      Object.keys(this.searchQuery).forEach((item) => {
+        const keyName = this.searchQuery[item];
+        fields[keyName] = { matchMode: 'contains', value: term };
+      });
+
+      const filter = {
+        fields: fields,
+        operator: 'or'
+      };
+
+      this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filter } );
     }
 
     renderList() {
@@ -749,7 +783,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     validateProperties() {
-        if ( (!this.existCustomTemplate()) && (!this.label) ) {
+      if ( (!this.existCustomTemplate()) && (!this.label) && (this.typeOfData !== 'ArrayString') ) {
             throw new EvalError( 'At least the property [label] is required when the Custom Template is not defined' );
         }
     }

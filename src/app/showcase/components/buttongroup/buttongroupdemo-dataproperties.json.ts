@@ -11,20 +11,13 @@ export const dataProperties = [
   },
   {
     name: 'height',
-    type: 'number',
+    type: 'string',
     default: 'null',
     description: 'Button group height.',
-    options: 'number | ex: 25'
+    options: 'px | % | em'
   }
   ];
 export const dataProperties2 = [
-  {
-    name: 'type',
-    type: 'string',
-    default: 'button',
-    description: 'Type of button.',
-    options: 'button | submit | reset'
-  },
   {
     name: 'text',
     type: 'string',
@@ -34,10 +27,10 @@ export const dataProperties2 = [
   },
   {
     name: 'width',
-    type: 'number',
+    type: 'string',
     default: '100 (min)',
     description: 'Button width.',
-    options: 'number | ex: 150'
+    options: 'px | % | em'
   },
   {
     name: 'disabled',

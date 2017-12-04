@@ -21,13 +21,6 @@
  */
 export const dataProperties = [
   {
-    name: 'type',
-    type: 'string',
-    default: 'button',
-    description: 'Type of button.',
-    options: 'button | submit | reset'
-  },
-  {
     name: 'text',
     type: 'string',
     default: 'null',
@@ -36,17 +29,17 @@ export const dataProperties = [
   },
   {
     name: 'width',
-    type: 'number',
+    type: 'string',
     default: '125 (min)',
     description: 'Button width.',
-    options: 'number | ex: 150'
+    options: 'px | % | em'
   },
   {
     name: 'height',
-    type: 'number',
+    type: 'string',
     default: '39',
     description: 'SplitButton height.',
-    options: 'number | ex: 30'
+    options: 'px | % | em'
   },
   {
     name: 'disabled',

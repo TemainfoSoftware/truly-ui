@@ -12,13 +12,17 @@
       font-size: 1em;
       font-weight: normal;
       line-height: 1.5em;
+      word-wrap: break-word;
+      word-break: break-all;
     }
   }
   > .header-controls {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 20px;
     text-align: center;
     float: left;
     width: 100%;
-    margin-bottom: 30px;
   }
 }
 

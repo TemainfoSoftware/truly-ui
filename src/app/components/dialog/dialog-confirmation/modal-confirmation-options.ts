@@ -24,7 +24,7 @@
     title: 'Confirmation',
     color: '#719CC9',
     width: '400px',
-    height: '200px',
+    height: 'auto',
     draggable: true,
     maximizable: false,
     minimizable: false,

@@ -24,7 +24,7 @@
     title: 'Alerta',
     color: '#FFC284',
     width: '400px',
-    height: '200px',
+    height: 'auto',
     draggable: true,
     maximizable: false,
     minimizable: false,

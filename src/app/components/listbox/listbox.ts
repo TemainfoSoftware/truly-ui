@@ -150,6 +150,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     public showMore = false;
 
+    public itemSelected;
+
     public scrollFinish = false;
 
     private subject = new Subject();
@@ -183,8 +185,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     private scrollByArrows;
 
     private isScrolling;
-
-    private itemSelected;
 
    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
                  public dataService: ListBoxDataSourceService,
@@ -371,7 +371,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           case KeyEvent.ARROWDOWN : this.handleKeyArrowDown( $event ); return;
           case KeyEvent.ARROWUP: this.handleKeyArrowUp( $event ); return;
           case KeyEvent.ESCAPE: this.handleEscape( $event ); return;
-          case KeyEvent.TAB: this.handleFilteredListNotSelected(); return;
           case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
           case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
           case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
@@ -380,26 +379,21 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     handleEscape( $event ) {
         $event.stopPropagation();
-        this.handleFilteredListNotSelected();
         this.handleOpenFocusList();
     }
 
     handleKeyEnter( $event ) {
+        if (this.itemSelected && this.dataService.datasource.indexOf(this.itemSelected) > -1) {
+          this.handleClickItem(this.itemSelected, this.dataService.datasource.indexOf(this.itemSelected));
+        }
         $event.preventDefault();
         this.addNewRenderService.handleAddNewSelected();
-        this.handleFilteredListNotSelected();
     }
 
     handleOpenFocusList() {
         if (this.dynamicShowHide) {
             this.showList = false;
             this.detectChanges();
-        }
-    }
-
-    handleFilteredListNotSelected() {
-        if (this.showList && this.filteredData.length > 0 && !this.itemSelected) {
-            this.handleClickItem( this.dataService.datasource[ 0 ], 0 );
         }
     }
 
@@ -875,10 +869,12 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     addClassSelected( index ) {
+        this.itemSelected = this.dataService.datasource[index];
         this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'selected' );
     }
 
     removeClassSelected( index ) {
+        this.itemSelected = null;
         this.renderer.removeClass( this.listBox.nativeElement.children[ index ], 'selected' );
     }
 

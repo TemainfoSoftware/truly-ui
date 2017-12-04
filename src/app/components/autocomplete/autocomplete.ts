@@ -191,9 +191,20 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     handleKeyDown($event) {
-        if ( $event.keyCode === KeyEvent.ENTER ) {
-            this.closeList( $event );
+        switch ($event.keyCode) {
+          case KeyEvent.ENTER: this.closeList($event); return;
+          case KeyEvent.ESCAPE: this.handleEscape(); return;
         }
+    }
+
+    handleEscape() {
+      this.handleFilteredListNotSelected();
+    }
+
+    handleFilteredListNotSelected() {
+      if (this.listBox.showList && this.listBox.filteredData.length > 0 && !this.listBox.itemSelected) {
+        this.listBox.handleClickItem( this.listBox.dataService.datasource[ 0 ], 0 );
+      }
     }
 
     closeList($event) {

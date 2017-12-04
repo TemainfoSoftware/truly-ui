@@ -22,7 +22,6 @@ $success-background-color: #E3F5EC;
 .tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
-  box-sizing: unset;
   > .labeltext {
     font-family: $default-fontFamily;
     box-sizing: border-box;
@@ -48,7 +47,6 @@ $success-background-color: #E3F5EC;
     padding: 5px 5px 5px 0;
   }
   > .wrapper {
-    box-sizing: unset;
     position: relative;
     display: table;
     margin: 0;
@@ -68,7 +66,6 @@ $success-background-color: #E3F5EC;
       box-sizing: border-box;
     }
     > .select.without-icon {
-      box-sizing: unset;
       padding-left: 10px;
       padding-right: 30px;
     }
@@ -96,7 +93,6 @@ $success-background-color: #E3F5EC;
       //outline: none;
     }
     > .dropdown-list-icon {
-      box-sizing: unset;
       position: absolute;
       display: table-cell;
       cursor: $default-cursorHover;
@@ -156,7 +152,6 @@ $success-background-color: #E3F5EC;
         background-color: #CCCCCC;
       }
       > .-placeholder {
-        box-sizing: unset;
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         font-weight: normal;

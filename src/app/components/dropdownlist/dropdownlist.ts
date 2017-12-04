@@ -75,11 +75,11 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'labelSize' ) labelSize = '100px';
 
-    @Input( 'height' ) height = '37px';
+    @Input( 'height' ) height = '23px';
 
     @Input( 'preSelected' ) preSelected = '';
 
-    @Input( 'width' ) width = '83px';
+    @Input( 'width' ) width = '120px';
 
     @Input( 'placeholder' ) placeholder = null;
 

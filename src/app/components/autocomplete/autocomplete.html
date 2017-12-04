@@ -3,7 +3,7 @@
         <tl-input #input
                 [label]="label"
                 (focusout)="onInputFocusOut($event)"
-                (focus)="onFocusInput()"
+                (focus)="onFocusInput($event)"
                 [name]="name"
                 [labelSize]="labelSize"
                 [iconBefore]="iconBefore"
@@ -15,6 +15,7 @@
                 [validations]="validations"
                 [readonly]="readonly ? true : null"
                 [disabled]="disabled ? true : null"
+                (keyup)="onKeyUp($event)"
                 [autocomplete]="autocomplete"
                 [placeholder]="placeholder"
                 [clearButton]="clearButton">

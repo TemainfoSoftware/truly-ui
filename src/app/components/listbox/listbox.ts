@@ -186,7 +186,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     private itemSelected;
 
-    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
+   constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
                  public dataService: ListBoxDataSourceService,
                  private addNewRenderService: AddNewRenderService,
                  private listRenderService: ListBoxListRenderService,
@@ -354,6 +354,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.clickItem.emit({'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet});
       this.itemSelected = item;
       this.updateLastSelect();
+      this.setInputFocus();
       this.getCursorViewPortPosition( indexDataSet );
     }
 
@@ -707,12 +708,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         const keyName = this.searchQuery[item];
         fields[keyName] = { matchMode: 'contains', value: term };
       });
-
       const filter = {
         fields: fields,
         operator: 'or'
       };
-
       this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filter } );
     }
 

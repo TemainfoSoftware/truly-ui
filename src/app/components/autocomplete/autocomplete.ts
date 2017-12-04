@@ -95,6 +95,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     private documentListener = [];
 
+    private initialModel;
+
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public change: ChangeDetectorRef,
@@ -140,6 +142,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     handleAutoCompleteModel() {
         setTimeout( () => {
             if ( this.ngModel ) {
+                this.initialModel = this.ngModel;
                 this.input.componentModel.model = this.ngModel;
                 this.setInputValue(this.ngModel);
             }
@@ -164,9 +167,15 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
         } ));
     }
 
-    onFocusInput() {
+    onFocusInput($event) {
       this.setListPosition();
       this.handleOpenOnFocus();
+    }
+
+    onKeyUp($event) {
+      if (JSON.stringify(this.initialModel) === JSON.stringify(this.ngModel)) {
+        $event.stopPropagation();
+      }
     }
 
     handleOpenOnFocus() {

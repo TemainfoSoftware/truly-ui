@@ -101,8 +101,8 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
           this.isNotOffline( value ) ?
               this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
       } );
-    this.chatListService.sortArray( this.chatListService.online );
-    this.chatListService.sortArray( this.chatListService.offline );
+    this.chatListService.sortArray( this.chatListService.online, this.searchQuery );
+    this.chatListService.sortArray( this.chatListService.offline, this.searchQuery );
   }
 
   listenInputSearch() {
@@ -143,6 +143,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   filterData(searchTerm) {
     this.filtering = true;
+    this.filteredData = [];
     this.data.forEach( ( item ) => {
       if (item[this.searchQuery].substr(0, searchTerm.length).toLowerCase().includes(searchTerm.toLowerCase())) {
         if (this.filteredData.indexOf(item) < 0) {
@@ -161,6 +162,13 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   onClickItemChat( $event ) {
       this.clickItem.emit( $event );
       this.selected = $event;
+      this.setInputFocus();
+  }
+
+  setInputFocus() {
+    setTimeout(() => {
+      this.searchInput.input.nativeElement.focus();
+    }, 1);
   }
 
   setScrollChat( $event ) {

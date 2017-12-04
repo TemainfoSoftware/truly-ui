@@ -63,10 +63,10 @@ export class ChatListService {
         this.sortArray(this.offline);
     }
 
-    sortArray(array: any[]) {
+    sortArray(array: any[], searchQuery?) {
         array.sort( ( a, b ) => {
-            const x = a.firstName.toLowerCase();
-            const y = b.firstName.toLowerCase();
+            const x = a[searchQuery].toLowerCase();
+            const y = b[searchQuery].toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         } );
     }

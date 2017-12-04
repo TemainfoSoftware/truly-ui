@@ -23,9 +23,9 @@
                [minlength]="validations?.minLength"
                [required]="validations?.required"
                [(ngModel)]="modelValue"
-               (blur)="onBlur()"
+               (blur)="onBlur($event)"
                [type]="type"
-               (focus)="onFocus()">
+               (focus)="onFocus($event)">
         <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
         <span *ngIf="textAfter" #afterText class="addon -borderright" [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
         <i *ngIf="clearButton && ngValue" (click)="clearInput()" class="addon -clearbutton ion-close-round" [style.right]="clearButtonPosition + 'px'"></i>

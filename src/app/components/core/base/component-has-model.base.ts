@@ -153,16 +153,16 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Function called when input lost it focus.
      */
-    onBlur() {
+    onBlur($event) {
         this.onTouchedCallback();
-        this.blur.emit();
+        this.blur.emit($event);
     }
 
     /**
      * Function called when input receive focus;
      */
-    onFocus() {
-        this.focus.emit();
+    onFocus($event) {
+        this.focus.emit($event);
     }
 
     /**

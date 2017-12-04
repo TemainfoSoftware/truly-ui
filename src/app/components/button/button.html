@@ -1,31 +1,25 @@
 <button #tlbutton
         attr.tabindex="-1"
-        [type]="type"
-        [ngStyle]="{'width': width + 'px', 'height': height + 'px', 'line-height': height - 2 + 'px', 'zIndex': zIndex}"
+        [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
         [class]="buttonClass + ' tl-button ' + toggleClassName"
         [disabled]="disabled ? true : null"
         (click)="clickToggle()"
         (keydown)="keydown($event)">
-
     <span *ngIf="iconAddonBefore"
           [ngClass]="iconAddonBefore"
           [class]="'iconAddonBefore ' + buttonAddonBeforeClass"
-          [style.color]="colorIconBefore"
-          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}">
+          [style.color]="colorIconBefore">
     </span>
-
-    <span class="textButton" [ngStyle]="{'line-height': height - 2 + 'px'}">
-        <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText" [class]="iconBeforeTextClass"></i>
-        {{ text }}
-        <i *ngIf="iconAfterText" [ngClass]="iconAfterText" [class]="iconAfterTextClass"></i>
-    </span>
-
     <span *ngIf="iconAddonAfter"
           [ngClass]="iconAddonAfter"
           [style.color]="colorIconAfter"
           [class]="'iconAddonAfter ' + buttonAddonAfterClass"
-          [ngStyle]="{'height': height - 2 + 'px', 'line-height': height - 2 + 'px'}">
+          [ngStyle]="{'height': height, 'line-height': height}">
     </span>
-
+    <span class="textButton" [ngStyle]="{'line-height': height}">
+          <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText" [class]="iconBeforeTextClass"></i>
+            {{text}}<ng-content></ng-content>
+          <i *ngIf="iconAfterText" [ngClass]="iconAfterText" [class]="iconAfterTextClass"></i>
+    </span>
 </button>

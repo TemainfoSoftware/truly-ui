@@ -31,8 +31,6 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 
-let zindex = 0;
-
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
@@ -40,45 +38,43 @@ let zindex = 0;
 } )
 export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
-    @Input() type: string;
+    @Input() text: string = '';
+    
+    @Input() iconAddonBefore: string = '';
 
-    @Input() text: string;
+    @Input() buttonAddonBeforeClass: string = '';
 
-    @Input() iconAddonBefore: string;
+    @Input() iconAddonAfter: string = '';
 
-    @Input() buttonAddonBeforeClass: string;
+    @Input() buttonAddonAfterClass: string = '';
 
-    @Input() iconAddonAfter: string;
+    @Input() iconBeforeText: string = '';
 
-    @Input() buttonAddonAfterClass: string;
+    @Input() iconBeforeTextClass: string = '';
 
-    @Input() iconBeforeText: string;
+    @Input() iconAfterText: string = '';
 
-    @Input() iconBeforeTextClass: string;
+    @Input() iconAfterTextClass: string = '';
 
-    @Input() iconAfterText: string;
+    @Input() height = '30px';
 
-    @Input() iconAfterTextClass: string;
+    @Input() width: string = '120px';
 
-    @Input() height: number;
+    @Input() defaultFocus: boolean = false;
 
-    @Input() width: number;
+    @Input() disabled: boolean = null;
 
-    @Input() defaultFocus: boolean;
+    @Input() toggle: boolean = false;
 
-    @Input() disabled: boolean;
+    @Input() toggleClass: string = '';
 
-    @Input() toggle: boolean;
+    @Input() toggleClassName: string = '';
 
-    @Input() toggleClass: string;
+    @Input() colorIconBefore: string = '';
 
-    @Input() toggleClassName: string;
+    @Input() colorIconAfter: string = '';
 
-    @Input() colorIconBefore: string;
-
-    @Input() colorIconAfter: string;
-
-    @Input() buttonClass: string;
+    @Input() buttonClass: string = '';
 
     @Input() mdResult: ModalResult;
 
@@ -88,8 +84,6 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
-    public zIndex;
-
     private _buttonSelected: boolean;
 
     @Input() set buttonSelected( value: boolean ) {
@@ -97,15 +91,11 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         this.executeToggle();
     }
 
-
     constructor( public button: ElementRef, public modalService: ModalService,
                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
-        this.zIndex = zindex++;
-        this.initializeDefaultInputValues();
     }
-
-
+  
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
         if ( this.defaultFocus ) {
@@ -114,40 +104,11 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
-        this.hasText();
-        this.checkWidthAndHeight();
-    }
-
-    initializeDefaultInputValues() {
-        this.type = 'button';
-        this.text = '';
-        this.toggleClass = '';
-        this.buttonAddonAfterClass = '';
-        this.buttonAddonBeforeClass = '';
-        this.iconAfterTextClass = '';
-        this.iconBeforeTextClass = '';
-        this.buttonClass = '';
-        this.iconAddonBefore = '';
-        this.iconAddonAfter = '';
-        this.iconAfterText = '';
-        this.iconBeforeText = '';
-        this.disabled = null;
-        this.toggle = false;
-        this._buttonSelected = true;
     }
 
     keydown( $event: KeyboardEvent ) {
         if ( $event.keyCode === KeyEvent.ENTER ) {
             this.clickToggle();
-        }
-    }
-
-    checkWidthAndHeight() {
-        if ( (typeof this.width !== 'number') && (typeof this.width !== 'undefined') ) {
-            throw new EvalError( 'You must pass some valid number value to the WIDTH property of the button element.' );
-        }
-        if ( (typeof this.height !== 'number') && (typeof this.height !== 'undefined') ) {
-            throw new EvalError( 'You must pass some valid number value to the HEIGHT property of the button element.' );
         }
     }
 
@@ -167,12 +128,6 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
                 this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = true;
             }
-        }
-    }
-
-    hasText() {
-        if ( !this.text ) {
-            throw new EvalError( 'You must pass some value to the text property of the button element.' );
         }
     }
 

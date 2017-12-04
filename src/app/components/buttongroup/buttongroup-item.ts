@@ -30,8 +30,6 @@ import { ButtonGroupService } from './buttongroup.service';
 } )
 export class TlButtonGroupItem implements AfterContentInit {
 
-    @Input() type;
-
     @Input() text;
 
     @Input() iconAddonBefore;
@@ -50,7 +48,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() iconAfterTextClass;
 
-    @Input() width = 125;
+    @Input() width = '125px';
 
     @Input() disabled;
 
@@ -60,7 +58,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() checkedItem = null;
 
-    public height: number;
+    public height: string;
 
     public index = -1;
 

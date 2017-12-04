@@ -17,7 +17,7 @@ $button-text-align: center;
   display: inline-block;
   cursor: pointer;
   border: 1px solid #C8C8C8;
-  box-sizing: content-box;
+  box-sizing: border-box;
   color: #616161;
 
   > .iconAddonBefore{
@@ -28,6 +28,7 @@ $button-text-align: center;
     border-right: 1px solid #C8C8C8;
   }
   > .iconAddonAfter{
+    box-sizing: border-box;
     float: right;
     font-weight: 400;
     padding: 0 15px;

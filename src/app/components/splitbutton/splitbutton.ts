@@ -51,8 +51,6 @@ let globalZindex = 1;
 } )
 export class TlSplitButton implements AfterContentInit {
 
-    @Input() type = 'button';
-
     @Input() text = '';
 
     @Input() iconAddonBefore = '';
@@ -73,7 +71,7 @@ export class TlSplitButton implements AfterContentInit {
 
     @Input() width;
 
-    @Input() height = 39;
+    @Input() height = '35px';
 
     @Input() disabled: boolean = null;
 

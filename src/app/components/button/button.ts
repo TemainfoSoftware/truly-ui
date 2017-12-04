@@ -38,43 +38,43 @@ import { KeyEvent } from '../core/enums/key-events';
 } )
 export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
-    @Input() text: string = '';
-    
-    @Input() iconAddonBefore: string = '';
+    @Input() text = '';
 
-    @Input() buttonAddonBeforeClass: string = '';
+    @Input() iconAddonBefore = '';
 
-    @Input() iconAddonAfter: string = '';
+    @Input() buttonAddonBeforeClass = '';
 
-    @Input() buttonAddonAfterClass: string = '';
+    @Input() iconAddonAfter = '';
 
-    @Input() iconBeforeText: string = '';
+    @Input() buttonAddonAfterClass = '';
 
-    @Input() iconBeforeTextClass: string = '';
+    @Input() iconBeforeText = '';
 
-    @Input() iconAfterText: string = '';
+    @Input() iconBeforeTextClass = '';
 
-    @Input() iconAfterTextClass: string = '';
+    @Input() iconAfterText = '';
+
+    @Input() iconAfterTextClass = '';
 
     @Input() height = '30px';
 
-    @Input() width: string = '120px';
+    @Input() width = '120px';
 
-    @Input() defaultFocus: boolean = false;
+    @Input() defaultFocus = false;
 
-    @Input() disabled: boolean = null;
+    @Input() disabled = null;
 
-    @Input() toggle: boolean = false;
+    @Input() toggle = false;
 
-    @Input() toggleClass: string = '';
+    @Input() toggleClass = '';
 
-    @Input() toggleClassName: string = '';
+    @Input() toggleClassName = '';
 
-    @Input() colorIconBefore: string = '';
+    @Input() colorIconBefore = '';
 
-    @Input() colorIconAfter: string = '';
+    @Input() colorIconAfter = '';
 
-    @Input() buttonClass: string = '';
+    @Input() buttonClass = '';
 
     @Input() mdResult: ModalResult;
 
@@ -95,7 +95,7 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
     }
-  
+
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
         if ( this.defaultFocus ) {

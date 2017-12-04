@@ -1,7 +1,6 @@
 <div class="tl-split-button-box">
 
     <tl-button [text]="text"
-               [type]="type"
                [width]="width"
                [height]="height"
                [disabled]="disabled"
@@ -21,7 +20,7 @@
     <div [ngClass]="{'active': showHide === true }"
          [class]="splitButtonClass + ' split-button-actions ' "
          (click)="changeShowStatus($event.stopPropagation())"
-         [ngStyle]="{'height': height + 'px', 'line-height': height - 2 + 'px'}">
+         [ngStyle]="{'height': height, 'line-height': height}">
 
         <i class="ion-chevron-up" *ngIf="showHide"></i>
         <i class="ion-chevron-down" *ngIf="!showHide"></i>
@@ -29,7 +28,7 @@
         <ul #lista
             *ngIf="showHide"
             [class]="actionMenuClass + ' actions-menu ' "
-            [ngStyle]="{'z-index': zIndex, 'top': height + 'px'}"
+            [ngStyle]="{'top': height}"
             [@enterAnimation]></ul>
 
     </div>

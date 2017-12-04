@@ -9,13 +9,14 @@
     <span *ngIf="iconAddonBefore"
           [ngClass]="iconAddonBefore"
           [class]="'iconAddonBefore ' + buttonAddonBeforeClass"
+          [ngStyle]="{'line-height' : 'calc('+height+' - 1px)'}"
           [style.color]="colorIconBefore">
     </span>
     <span *ngIf="iconAddonAfter"
           [ngClass]="iconAddonAfter"
           [style.color]="colorIconAfter"
           [class]="'iconAddonAfter ' + buttonAddonAfterClass"
-          [ngStyle]="{'height': height, 'line-height': height}">
+          [ngStyle]="{'height': height, 'line-height': 'calc('+height+' - 1px)'}">
     </span>
     <span class="textButton" [ngStyle]="{'line-height': height}">
           <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText" [class]="iconBeforeTextClass"></i>

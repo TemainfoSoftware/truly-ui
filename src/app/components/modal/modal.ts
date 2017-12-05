@@ -80,7 +80,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Input() restoreShortcut = '';
 
     @Input() maximizeShortcut = '';
-    
+
     @Input() parentElement;
 
     @ViewChild( 'modal' ) modal: ElementRef;
@@ -96,7 +96,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Output() maximize: EventEmitter<any> = new EventEmitter();
 
     @Output() close: EventEmitter<any> = new EventEmitter();
-  
+
     public componentRef: ComponentRef<TlModal>;
 
     public modalResult;
@@ -130,7 +130,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     private offsetLeftModal;
 
     private offsetTopModal;
-    
+
     private parent;
 
     private modalLeft;
@@ -172,7 +172,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     handleInitialPositionModal() {
       this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
     }
-    
+
     resizeListener() {
         this.subscribeResize = this.renderer.listen( window, 'resize', () => {
             this.getBoundingContent();
@@ -225,32 +225,38 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.maximizeModal();
         }
     }
-  
+
     validateMeasureParentAndModal() {
-      if ((this.parent.offsetWidth < this.modal.nativeElement.offsetWidth) || (this.parent.offsetHeight < this.modal.nativeElement.offsetHeight)) {
-        console.warn('The Width or Height of Parent Element are less than Width or Height of Modal, this could result in glitches and not working as expected.');
+      if ((this.parent.offsetWidth < this.modal.nativeElement.offsetWidth) ||
+        (this.parent.offsetHeight < this.modal.nativeElement.offsetHeight)) {
+        console.warn('The Width or Height of Parent Element are less than Width or Height of Modal, ' +
+          'this could result in glitches and not working as expected.');
       }
     }
-    
+
     getModalPosition() {
         this.modalLeft = this.modal.nativeElement.offsetLeft;
         this.modalTop = this.modal.nativeElement.offsetTop;
     }
 
     setModalCenterParent() {
-        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
-        this.modal.nativeElement.style.top = ((this.parent.offsetHeight / 2) + this.parent.offsetTop) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
+        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2)
+          - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+        this.modal.nativeElement.style.top = ((this.parent.offsetHeight / 2) + this.parent.offsetTop)
+          - (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
-  
+
     setModalCenterWindow() {
-      this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
-      this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
+      this.modal.nativeElement.style.left = this.parent.offsetLeft +
+        (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+      this.modal.nativeElement.style.top = (window.innerHeight / 2) -
+        (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {
         this.componentRef = component;
     }
-    
+
     setMousePressX( position ) {
         this.mousePressX = position;
     }

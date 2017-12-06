@@ -6,7 +6,7 @@
          class="ui-datatable-content-wrap"
          (keydown)="onKeydown($event)"
          [tlOverlay]="loading"
-         [ngStyle]="{'height': dt.height+'px' }">
+         [ngStyle]="{'height': dt.heightViewPort+'px' }">
 
         <div [ngClass]="{'ui-box-notfound-records':true, 'ui-show': !foundRecords,'ui-hide': foundRecords}" >
             <div class="ui-container" >

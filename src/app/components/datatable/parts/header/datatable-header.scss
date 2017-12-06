@@ -42,7 +42,11 @@ $border-color : #DCDCDC;
     background: #E9E9E9;
     height: 25px;
     margin: 0;
-    border-bottom: 1px $border-color solid;
+   // border-bottom: 1px $border-color solid;
+  }
+
+  > .ui-row-filter{
+    height: 32px;
   }
 
   > .ui-row .ui-sort-indicator {
@@ -65,10 +69,11 @@ $border-color : #DCDCDC;
   > .ui-row .ui-cel{
     box-sizing: border-box;
     border-right: 1px $border-color solid;
+    border-bottom: 1px $border-color solid;
     padding-left: 5px;
     padding-right: 5px;
-    line-height: 24px;
-    height: 25px;
+   // line-height: 24px;
+   // height: 25px;
     align-items: center;
     overflow: hidden;
     cursor: pointer;

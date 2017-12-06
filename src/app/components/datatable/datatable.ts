@@ -107,6 +107,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     public columns: any[] = [];
 
+    public heightViewPort = 0;
+
     public tabindex = 0;
 
     public globalFilterTimeout: any;
@@ -134,7 +136,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     ) {}
 
     ngAfterContentInit() {
-        this.setRowHeight();
+        this.calcDimensionsHeight();
         this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
@@ -148,8 +150,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         }
     }
 
-    setRowHeight() {
-        this.rowHeight = this.height / this.rowsClient;
+    calcDimensionsHeight() {
+        this.heightViewPort = this.allowFilterColumn ? this.height - 32 : this.height;
+        this.heightViewPort -= 25;
+        console.log(this.heightViewPort);
+        this.rowHeight = this.heightViewPort / this.rowsClient;
     }
 
     setTabIndex( value: number ) {

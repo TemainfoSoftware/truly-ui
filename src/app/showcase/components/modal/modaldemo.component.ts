@@ -41,7 +41,9 @@ export class ModalDemoComponent {
     };
   }
 
-  modal1() {
+  modal1(parent) {
+    console.log('parent', parent);
+    this.modalOptions['parentElement'] = parent;
     this.modalService.createModal(NewModalComponent, this.modalOptions, (modalResult) => {
         this.modalResult = modalResult;
     }).on('show', () => {

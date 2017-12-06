@@ -136,7 +136,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private setProprertiesFromTable() {
         this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
-        this.quantityVisibleRows = this.dt.height / this.dt.rowHeight;
+        this.quantityVisibleRows = this.dt.heightViewPort / this.dt.rowHeight;
         this.quantityInVisibleRows = Math.round( ( this.dt.rowsPage - this.quantityVisibleRows ) / 2 );
         this.setlastRowViewport();
 
@@ -336,7 +336,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setlastRowViewport() {
-        this.lastRowViewport = Math.round( ( this.dt.height + this.scrollTop  ) / this.dt.rowHeight );
+        this.lastRowViewport = Math.round( ( this.dt.heightViewPort + this.scrollTop  ) / this.dt.rowHeight );
         this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows + 1;
     }
 

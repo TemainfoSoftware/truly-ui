@@ -153,7 +153,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     calcDimensionsHeight() {
         this.heightViewPort = this.allowFilterColumn ? this.height - 32 : this.height;
         this.heightViewPort -= 25;
-        console.log(this.heightViewPort);
         this.rowHeight = this.heightViewPort / this.rowsClient;
     }
 

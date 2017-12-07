@@ -43,7 +43,7 @@ export class ModalService implements OnDestroy {
 
     public view: ViewContainerRef;
 
-    public minModals: any[] = [];
+    public modalOptions;
 
     private callBack = Function();
 
@@ -53,13 +53,13 @@ export class ModalService implements OnDestroy {
         this.view = view;
     }
 
-    createModal( component, modalOptions, callback ) {
-        if (modalOptions.backdrop) {
-            this.createBackdrop(TlBackdrop);
-        }
+    createModal( component, parentElement, callback ) {
         this.setComponentModal();
         this.setComponentInjected( component );
-        this.setGlobalSettings( modalOptions );
+        this.setGlobalSettings( parentElement );
+        if (this.modalOptions.backdrop) {
+          this.createBackdrop(TlBackdrop);
+        }
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
@@ -85,9 +85,12 @@ export class ModalService implements OnDestroy {
         this.addFormModalToList();
     }
 
-    setGlobalSettings( modalOptions ) {
+    setGlobalSettings( parentElement ) {
+        this.modalOptions = Reflect.getOwnMetadata('annotations',
+          Object.getPrototypeOf(this.componentInjected.instance).constructor);
+        this.modalOptions[0]['parentElement'] = parentElement;
         (<TlModal>this.component.instance).status = 'MAX';
-        (<TlModal>this.component.instance).setOptions( modalOptions );
+        (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
     }
 
     setInitialZIndex() {
@@ -140,18 +143,16 @@ export class ModalService implements OnDestroy {
         }, 280 );
     }
 
-    showModal( item, indexModal ) {
+    showModal( item ) {
         lastZIndex++;
-        item.location.nativeElement.firstChild.style.zIndex = lastZIndex;
+        console.log('item', item);
+        item.location.nativeElement.firstElementChild.style.zIndex = lastZIndex;
         item.instance.element.nativeElement.style.display = 'block';
-        this.minModals.splice( indexModal, 1 );
-
     }
 
     minimize( component ) {
         component.instance.status = 'MIN';
         component.instance.element.nativeElement.style.display = 'none';
-        this.minModals.push( component );
         this.handleActiveWindow();
     }
 

@@ -1,6 +1,3 @@
-/**
- * Created by William on 10/07/2017.
- */
 export interface ModalOptions {
     icon: string;
     title: string;
@@ -19,4 +16,11 @@ export interface ModalOptions {
     backdrop?: boolean;
 }
 
-
+export function Modal(metadata: ModalOptions) {
+  return function(cls: any) {
+    const annotations = Reflect.getMetadata('annotations', cls) || [];
+    annotations.push(metadata);
+    Reflect.defineMetadata('annotations', annotations, cls);
+    return cls;
+  };
+}

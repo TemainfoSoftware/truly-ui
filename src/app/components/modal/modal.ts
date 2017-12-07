@@ -20,8 +20,9 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
-    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
+  HostBinding,
+  Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -33,7 +34,6 @@ import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
     selector: 'tl-modal',
     templateUrl: './modal.html',
     styleUrls: [ './modal.scss' ],
-    encapsulation: ViewEncapsulation.None,
     animations: [
         trigger(
             'enterAnimation', [
@@ -110,7 +110,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     public colorHoverClose;
 
-    public maximized: boolean;
+    public maximized = false;
 
     private mousePressX;
 
@@ -163,13 +163,22 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngAfterViewInit() {
         this.getBoundingContent();
-        this.validateMeasureParentAndModal();
         this.setDefaultDimensions();
+        this.validateMeasureParentAndModal();
         this.handleInitialPositionModal();
+        this.handleFullscreen();
     }
 
     handleInitialPositionModal() {
       this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
+    }
+
+    handleFullscreen() {
+      setTimeout(() => {
+        if (this.fullscreen) {
+          this.maximizeModal();
+        }
+      }, 1);
     }
 
     resizeListener() {
@@ -219,9 +228,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     validateProperty () {
         if (!this.restoreMaximize && !this.fullscreen) {
             throw new EvalError( 'The [restoreMaximize] property require [fullscreen] property as TRUE.' );
-        }
-        if (this.fullscreen) {
-            this.maximizeModal();
         }
     }
 
@@ -340,7 +346,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setDefaultDimensions() {
-        if ( this.height && this.width ) {
+      if ( this.height && this.width ) {
             this.modal.nativeElement.style.height = this.height;
             this.modal.nativeElement.style.width = this.width;
         } else {
@@ -422,6 +428,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     restoreMaximizeModal() {
         if (this.restoreMaximize) {
+          console.log('restore');
             this.setDefaultDimensions();
             this.setCurrentPosition();
             this.maximized = false;

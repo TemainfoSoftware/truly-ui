@@ -32,7 +32,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss'],
-   changeDetection: ChangeDetectionStrategy.OnPush,
+     changeDetection: ChangeDetectionStrategy.OnPush,
      animations: [
          trigger(
              'onCreateElement', [
@@ -86,9 +86,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
        this.borderBoxColor = this.colorService.calculate(this.boxColor, -0.2);
      }
 
-     showWindow(item, i) {
+     showWindow(item) {
          this.modalService.activeModal = item;
-         this.modalService.showModal( item, i );
+         this.modalService.showModal( item );
      }
 
      validateScroll() {
@@ -135,7 +135,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
       ngDoCheck() {
          const changes = this.differ.diff( this.modalService.forms );
-         if ( changes ) {
+         const changeActive = this.differ.diff( this.modalService.activeModal );
+         if ( changes && changeActive) {
            this.change.detectChanges();
            this.validateScroll();
          }

@@ -15,23 +15,11 @@
                          mdResult="MRCUSTOM"
                          [iconAddonBefore]="'ion-ios-list-outline'"
                          [shortcut]="'CTRL + X'"
-                         (click)="form1()">
+                         (click)="form1(parent)">
               </tl-button>
             </div>
-            <div class="col-md-3">
-              <tl-button [text]="'Pacient Register'"
-                         [iconAddonBefore]="'ion-ios-list-outline'"
-                         [shortcut]="'F2'"
-                         mdResult="MRCUSTOM"
-                         (click)="form2()">
-              </tl-button>
-            </div>
-            <div class="col-md-3">
-              <tl-button [text]="'Count Register'"
-                         [iconAddonBefore]="'ion-ios-list-outline'"
-                         mdResult="MRCUSTOM"
-                         [shortcut]="'ctrl + alt + t'"
-                         (click)="form3()"></tl-button>
+            <div class="col-md-12" #parent style="height: 500px; background: #a0c4cb; margin-top: 10px; border: 1px solid #aeaeae">
+              <h5 style="text-align: center; color: #fff;">PARENT ELEMENT CONTAINER</h5>
             </div>
           </app-card>
         </app-showcase-card>

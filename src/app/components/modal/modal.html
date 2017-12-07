@@ -1,4 +1,4 @@
-<div #modal (mousedown)="setZIndex()" class="tl-modal-container">
+<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" class="tl-modal-container">
     <div class="header" [ngStyle]="{'background-color': color}">
         <div class="bar" [style.outline]="'1px solid ' + color" (mousedown)="mouseDown($event);" (dblclick)="maximizeModal()">
             <span class="icon"><i [style.color]="serviceControl.activeModal === componentRef ? fontColor : '#D9D9D9'" [ngClass]="icon"></i></span>

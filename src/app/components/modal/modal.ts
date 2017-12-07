@@ -30,6 +30,8 @@ import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 
+let subscribeMouseMove;
+
 @Component({
     selector: 'tl-modal',
     templateUrl: './modal.html',
@@ -142,8 +144,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     private subscribeResize;
 
-    private subscribeMouseMove;
-
     private subscribeMouseUp;
 
     private colorHoverMaximize;
@@ -155,14 +155,14 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     ngOnInit() {
         this.backToTop();
         this.resizeListener();
-        this.mousemoveListener();
-        this.mouseupListener();
         this.validateProperty();
         this.show.emit();
     }
 
     ngAfterViewInit() {
         this.getBoundingContent();
+      this.mousemoveListener();
+      this.mouseupListener();
         this.setDefaultDimensions();
         this.validateMeasureParentAndModal();
         this.handleInitialPositionModal();
@@ -189,7 +189,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     mousemoveListener() {
-        this.subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
+      subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
             event.preventDefault();
             if ( !( this.moving && this.draggable) ) {
                 return;
@@ -211,6 +211,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     mouseupListener() {
         this.subscribeMouseUp = this.renderer.listen( window, 'mouseup', () => {
+          subscribeMouseMove();
             this.moving = false;
         } );
     }
@@ -417,7 +418,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
             this.modal.nativeElement.style.top = this.getBoundingParentElement().top + 'px';
             this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
-            this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
+            this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 'px';
             this.maximized = true;
             this.moving = false;
             this.maximize.emit();
@@ -484,8 +485,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnDestroy() {
         this.subscribeResize();
-        this.subscribeMouseMove();
         this.subscribeMouseUp();
+      subscribeMouseMove();
     }
 
 }

@@ -187,7 +187,7 @@ export class ModalService implements OnDestroy {
     handleActiveWindow() {
         const visibleHighestZIndex = [];
         this.getVisibleModals().forEach( ( value, index2, array ) => {
-            visibleHighestZIndex.push( value.firstChild.style.zIndex );
+            visibleHighestZIndex.push( value.firstElementChild.style.zIndex );
         } );
 
         const highest = this.getHighestZIndexModals( visibleHighestZIndex );

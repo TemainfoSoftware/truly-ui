@@ -34,7 +34,7 @@ export class FormService {
         this.modalService.setView(view);
     }
 
-    createForm(component, options, callback) {
-        this.modalService.createModal( component, options, callback );
+    createForm(component, parent, callback) {
+        this.modalService.createModal( component, parent, callback );
     }
 }

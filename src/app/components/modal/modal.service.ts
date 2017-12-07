@@ -23,6 +23,7 @@ import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } fro
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
+import { Subject } from 'rxjs/Subject';
 
 let lastZIndex = 1;
 
@@ -44,6 +45,8 @@ export class ModalService implements OnDestroy {
     public view: ViewContainerRef;
 
     public modalOptions;
+
+    public subject = new Subject();
 
     private callBack = Function();
 
@@ -145,7 +148,6 @@ export class ModalService implements OnDestroy {
 
     showModal( item ) {
         lastZIndex++;
-        console.log('item', item);
         item.location.nativeElement.firstElementChild.style.zIndex = lastZIndex;
         item.instance.element.nativeElement.style.display = 'block';
     }
@@ -162,6 +164,7 @@ export class ModalService implements OnDestroy {
         }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
         this.handleModalForms( component );
+        this.subject.next(this.forms);
         this.removeOfTheList();
         this.removeBackdrop();
     }
@@ -234,6 +237,7 @@ export class ModalService implements OnDestroy {
 
     addFormModalToList() {
         this.forms.push( this.component );
+        this.subject.next(this.forms);
     }
 
     removeOfTheList() {

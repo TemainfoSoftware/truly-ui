@@ -21,7 +21,8 @@
  */
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, KeyValueDiffers, OnInit,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, KeyValueDiffers, OnChanges, OnInit,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { ModalService } from '../modal.service';
@@ -32,7 +33,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss'],
-     changeDetection: ChangeDetectionStrategy.OnPush,
      animations: [
          trigger(
              'onCreateElement', [
@@ -48,7 +48,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
          )
      ]
  })
- export class TlContainerModal implements OnInit, DoCheck {
+ export class TlContainerModal implements OnInit {
 
      @Input() containerColor = '#F2F2F2';
 
@@ -72,18 +72,16 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      private borderBoxColor = '#54a378';
 
-     private differ;
-
-   constructor( public modalService: ModalService,
-                private colorService: ToneColorGenerator,
-                private change: ChangeDetectorRef,
-                differs: KeyValueDiffers ) {
-         this.differ = differs.find( {} ).create();
+     constructor( public modalService: ModalService,
+                private colorService: ToneColorGenerator ) {
      }
 
      ngOnInit() {
        this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
        this.borderBoxColor = this.colorService.calculate(this.boxColor, -0.2);
+       this.modalService.subject.subscribe(() => {
+         this.validateScroll();
+       });
      }
 
      showWindow(item) {
@@ -117,29 +115,19 @@ import { animate, style, transition, trigger } from '@angular/animations';
          scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
      }
 
-   getTextContainerItem( value ) {
-     if ( value.length > this.limitStringBox ) {
-       let subStr = '';
-       const strArray = value.split( '' );
-       strArray.forEach( ( value2, index, array ) => {
-         if ( index <= this.limitStringBox ) {
-           subStr += value2;
-         }
-       } );
-       subStr += '...'.trim();
-       return subStr;
-     } else {
-       return value;
+     getTextContainerItem( value ) {
+       if ( value.length > this.limitStringBox ) {
+         let subStr = '';
+         const strArray = value.split( '' );
+         strArray.forEach( ( value2, index, array ) => {
+           if ( index <= this.limitStringBox ) {
+             subStr += value2;
+           }
+         } );
+         subStr += '...'.trim();
+         return subStr;
+       } else {
+         return value;
+       }
      }
-   }
-
-      ngDoCheck() {
-         const changes = this.differ.diff( this.modalService.forms );
-         const changeActive = this.differ.diff( this.modalService.activeModal );
-         if ( changes && changeActive) {
-           this.change.detectChanges();
-           this.validateScroll();
-         }
-     }
-
 }

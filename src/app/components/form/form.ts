@@ -315,12 +315,18 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     if ( this.isFirstTabIndexOfForm() ) {
       return this.focusElements[ this.lastTabIndex ].focus();
     }
-    const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
-    for ( let element = previousElement; element < this.focusElements.length; element-- ) {
-      if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
-        return this.focusElements[ element ].focus();
+    if (!this.validateFirstElement()) {
+      const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
+      for ( let element = previousElement; element < this.focusElements.length; element-- ) {
+        if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
+          return this.focusElements[ element ].focus();
+        }
       }
     }
+  }
+
+  validateFirstElement() {
+     return (this.focusElements[0].getAttribute('disabled')) && (this.focusElements[1] === document.activeElement);
   }
 
   forwardTabbing() {

@@ -22,7 +22,7 @@
 import {
   AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
   HostBinding,
-  Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -144,13 +144,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     private subscribeResize;
 
-    private subscribeMouseUp;
-
     private colorHoverMaximize;
 
     private colorHoverRestore;
 
-    constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator ) {}
+  constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator, private zone: NgZone ) {
+  }
 
     ngOnInit() {
         this.backToTop();
@@ -161,8 +160,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngAfterViewInit() {
         this.getBoundingContent();
-      this.mousemoveListener();
-      this.mouseupListener();
         this.setDefaultDimensions();
         this.validateMeasureParentAndModal();
         this.handleInitialPositionModal();
@@ -189,8 +186,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     mousemoveListener() {
+      this.zone.runOutsideAngular( () => {
       subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
-            event.preventDefault();
             if ( !( this.moving && this.draggable) ) {
                 return;
             }
@@ -207,13 +204,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.setPosition();
 
         } );
+      } );
     }
 
     mouseupListener() {
-        this.subscribeMouseUp = this.renderer.listen( window, 'mouseup', () => {
-          subscribeMouseMove();
-            this.moving = false;
-        } );
+      subscribeMouseMove();
+      this.moving = false;
     }
 
     mouseDown( $event ) {
@@ -485,8 +481,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnDestroy() {
         this.subscribeResize();
-        this.subscribeMouseUp();
-      subscribeMouseMove();
+        subscribeMouseMove();
     }
 
 }

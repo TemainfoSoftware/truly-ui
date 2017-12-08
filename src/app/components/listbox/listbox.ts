@@ -198,7 +198,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     ngOnInit() {
         this.validateDataType();
-        this.handleSearchQuery();
         this.subject
           .debounceTime( 200 )
           .distinctUntilChanged((oldValue, newValue) => oldValue === newValue)
@@ -981,6 +980,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then(value => {
             this.handleRenderList();
         });
+        this.handleSearchQuery();
         this.loadingMoreData = false;
         this.change.detectChanges();
     }

@@ -54,6 +54,7 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
+    "@types/reflect-metadata": "0.0.5",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
@@ -61,6 +62,7 @@
     "ionicons-npm": "^2.0.1",
     "jquery": "^3.2.1",
     "ngx-highlight-js": "^1.0.2",
+    "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },

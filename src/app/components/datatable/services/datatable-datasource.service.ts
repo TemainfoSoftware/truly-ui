@@ -20,7 +20,8 @@
     SOFTWARE.
 */
 
-import { EventEmitter, Injectable, SimpleChanges } from '@angular/core';
+import { Injectable, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
 import { DatasourceService } from '../interfaces/datasource.service';
@@ -30,36 +31,53 @@ import { TlDatatableSortService } from './datatable-sort.service';
 @Injectable()
 export class TlDatatableDataSource implements DatasourceService {
 
-    public onChangeDataSourceEmitter: EventEmitter<any> = new EventEmitter();
+    public  onChangeDataSourceEmitter = new Subject();
 
     public datasource: any;
 
     private datatable: TlDatatable;
 
-    constructor( private filterService: TlDatatableFilterService, private sortService: TlDatatableSortService ) {}
+    constructor( private cd: ChangeDetectorRef,
+                 private filterService: TlDatatableFilterService,
+                 private sortService: TlDatatableSortService ) {}
 
     onInitDataSource(datatableInstance) {
         this.datatable = datatableInstance;
-        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
-            this.datasource = res;
-            this.datatable.columnService.setColumns();
-        });
-        this.refreshTotalRows(this.datatable.data);
 
         this.filterService.onFilter().subscribe(() => {
           this.loadMoreData(0, this.datatable.rowsPage);
         });
 
-      this.sortService.onSort().subscribe(() => {
-        this.loadMoreData(0, this.datatable.rowsPage);
-      });
+        this.sortService.onSort().subscribe((sort) => {
+          this.loadMoreData(0, this.datatable.rowsPage);
+        });
+
+        //TODO CREATE rowModel 'direct'
+        if (this.datatable.data === undefined) {
+          return;
+        }
+
+        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
+          this.datasource = res;
+          this.refreshTotalRows(this.datatable.data);
+          this.datatable.columnService.setColumns();
+        });
+
     }
 
     onChangeDataSource( data: SimpleChanges ) {
         const dataChange = data['data'].currentValue;
         if ( ( !data['data'].firstChange ) && dataChange ) {
-            this.datasource = dataChange.data;
-            this.onChangeDataSourceEmitter.emit(this.datasource);
+            this.datasource = dataChange.data || dataChange;
+
+            if (  this.datatable.rowModel === 'inmemory' ) {
+              this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
+                this.datasource = res;
+                this.datatable.columnService.setColumns();
+              });
+            }
+            this.cd.detectChanges();
+            this.onChangeDataSourceEmitter.next(this.datasource);
         }
     }
 
@@ -77,7 +95,7 @@ export class TlDatatableDataSource implements DatasourceService {
             }
             this.getRowsInMemory( skip, take, scrolling ).then((res) => {
                this.datasource = res;
-               this.onChangeDataSourceEmitter.emit(this.datasource);
+               this.onChangeDataSourceEmitter.next(this.datasource);
                return resolve();
             });
         });

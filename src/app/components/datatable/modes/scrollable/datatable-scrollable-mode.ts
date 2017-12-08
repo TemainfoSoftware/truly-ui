@@ -147,7 +147,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private addListenerToDataSource() {
-        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
+        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource: any) => {
             this.foundRecords = dataSource.length > 0;
             this.renderList(this.skip, dataSource);
             this.dt.loading = false;

@@ -47,8 +47,7 @@ export class TlDatatableHeader implements AfterViewInit {
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  public helperService: DatatableHelpersService,
                  public filterService: TlDatatableFilterService,
-                 private sortService: TlDatatableSortService,
-    ) {}
+                 private sortService: TlDatatableSortService ) {}
 
     ngAfterViewInit() {
         if (this.columnsFilter !== undefined) {

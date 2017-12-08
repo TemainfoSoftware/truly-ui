@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { Injectable } from '@angular/core';
+import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { TlDatatable } from '../';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -30,11 +30,13 @@ export class TlDatatableSortService {
 
   private datatable: TlDatatable;
 
-  private subject = new Subject();
+  public subject = new Subject();
 
   private sort;
 
   private sortedData = [];
+
+  constructor(private cd: ChangeDetectorRef) {}
 
   onInicializeSortService( datatable ) {
     this.datatable = datatable;
@@ -43,7 +45,6 @@ export class TlDatatableSortService {
   onSort(): Observable<any> {
     return this.subject.asObservable();
   }
-
 
   sortWithData(data, scrolling) {
 
@@ -70,8 +71,9 @@ export class TlDatatableSortService {
 
   setSort(sort) {
     this.sort = sort;
+    this.subject.next(sort);
     this.datatable.sortData.next(this.sort);
-    this.subject.next();
+    this.cd.detectChanges();
   }
 
   getSort() {

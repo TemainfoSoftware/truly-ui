@@ -20,17 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    QueryList,
-    Renderer2,
-    ViewChild
+  AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList,
+  Renderer2, ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { DatatableFilterOptions } from './configs/datatable-filter-options';
@@ -142,6 +133,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.filterService.onInicializeFilterService(this);
         this.sortService.onInicializeSortService(this);
         this.inicializeGlobalFilter();
+        this.columnService.setColumns();
     }
 
     ngOnChanges(changes) {

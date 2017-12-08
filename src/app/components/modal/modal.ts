@@ -152,7 +152,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
     ngOnInit() {
-        this.backToTop();
         this.resizeListener();
         this.validateProperty();
         this.show.emit();
@@ -395,10 +394,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
      this.serviceControl.minimize( this.componentRef );
      this.minimize.emit(this.componentRef.instance);
      this.leaveMinimize();
-    }
-
-    backToTop() {
-        document.body.scrollTop = 0;
     }
 
     closeModal() {

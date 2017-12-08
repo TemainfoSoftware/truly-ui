@@ -52,7 +52,7 @@ export class TlDatatableDataSource implements DatasourceService {
           this.loadMoreData(0, this.datatable.rowsPage);
         });
 
-        //TODO CREATE rowModel 'direct'
+        // TODO CREATE rowModel 'direct'
         if (this.datatable.data === undefined) {
           return;
         }

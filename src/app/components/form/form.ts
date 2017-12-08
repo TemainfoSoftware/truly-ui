@@ -365,9 +365,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   setFocusOnFirstInput() {
-    if ( this.inputList.toArray().length > 0 ) {
-      this.inputList.toArray()[ 0 ].element.nativeElement.focus();
+    let element;
+    for (const item in this.inputList.toArray()) {
+      if (!(this.inputList.toArray()[item].disabled)) {
+        element = this.inputList.toArray()[item].element.nativeElement;
+        break;
+      }
     }
+    element.focus();
   }
 
   isActiveElementButtonOk() {

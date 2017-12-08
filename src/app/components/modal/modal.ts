@@ -389,11 +389,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     minimizeModal() {
-        if ( !(this.minimizable) ) {
-            return;
-        }
+      if ( !(this.minimizable) ) {
+          return;
+      }
      this.serviceControl.minimize( this.componentRef );
      this.minimize.emit(this.componentRef.instance);
+     this.leaveMinimize();
     }
 
     backToTop() {
@@ -403,12 +404,14 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     closeModal() {
         this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
         this.close.emit(this.componentRef.instance);
+        this.leaveClose();
     }
 
     maximizeModal() {
         if ( !(this.maximizable) ) {
             return;
         }
+        this.leaveMaximize();
         if ( !this.maximized ) {
             this.getModalPosition();
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
@@ -418,17 +421,17 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.maximized = true;
             this.moving = false;
             this.maximize.emit();
-        } else {
-            this.restoreMaximizeModal();
+            return;
         }
+        this.restoreMaximizeModal();
     }
 
     restoreMaximizeModal() {
         if (this.restoreMaximize) {
-          console.log('restore');
             this.setDefaultDimensions();
             this.setCurrentPosition();
             this.maximized = false;
+            this.leaveRestore();
         }
     }
 

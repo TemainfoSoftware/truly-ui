@@ -397,13 +397,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleKeyArrowDown( $event ) {
-        if (this.loadingMoreData) {
-            $event.stopPropagation();
-            return;
-        }
-        this.handleValueSearchElement();
+      if (this.loadingMoreData) {
+          $event.stopPropagation();
+          return;
+      }
+      this.handleValueSearchElement();
+      if ( this.showList ) {
+        $event.preventDefault();
         $event.stopPropagation();
-        this.handleShowList();
         if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
             this.scrollByArrows = true;
@@ -415,14 +416,16 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                 this.setLastScrollTopOnKey();
             }
         }
+      }
     }
 
     handleKeyArrowUp( $event ) {
-        if (this.loadingMoreData) {
-            $event.stopPropagation();
-            return;
-        }
-        this.handleValueSearchElement();
+      if ( this.loadingMoreData ) {
+        $event.stopPropagation();
+        return;
+      }
+      this.handleValueSearchElement();
+      if ( this.showList ) {
         $event.preventDefault();
         $event.stopPropagation();
         if ( this.existChildrenElements() ) {
@@ -436,6 +439,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                 this.setLastScrollTopOnKey();
             }
         }
+      }
     }
 
     setScrollTopAndFocusNext() {
@@ -499,13 +503,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             if (!this.filtering) {
                 this.itemContainer.nativeElement.scrollTop = this.lastScrollTopOnKey;
             }
-        }
-    }
-
-    handleShowList() {
-        if (!this.showList) {
-            this.showList = true;
-            this.detectChanges();
         }
     }
 

@@ -69,6 +69,7 @@ export class TlDatatableDataSource implements DatasourceService {
         const dataChange = data['data'].currentValue;
         if ( ( !data['data'].firstChange ) && dataChange ) {
             this.datasource = dataChange.data || dataChange;
+            this.refreshTotalRows(this.datatable.data);
 
             if (  this.datatable.rowModel === 'inmemory' ) {
               this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
@@ -76,6 +77,7 @@ export class TlDatatableDataSource implements DatasourceService {
                 this.datatable.columnService.setColumns();
               });
             }
+
             this.cd.detectChanges();
             this.onChangeDataSourceEmitter.next(this.datasource);
         }

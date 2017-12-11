@@ -189,16 +189,22 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
-        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]';
-        const element = this.listBody.nativeElement.querySelector(elementToFind);
-        this.setFocus( element );
+
+        let rowNumber =  ( this.lastRowViewport ) - (this.quantityVisibleRows * 2) ;
+        rowNumber = rowNumber < 0 ? 0 : rowNumber;
+        const queryElementBy = 'tr[row="' + rowNumber  + '"]';
+        const elementToFind = this.listBody.nativeElement.querySelector(queryElementBy);
+        this.setFocus( elementToFind );
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
-        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]';
-        const element = this.listBody.nativeElement.querySelector(elementToFind);
-        this.setFocus( element );
+
+        let rowNumber =  ( this.lastRowViewport - 1 ) + this.quantityVisibleRows;
+        rowNumber = rowNumber > this.dt.totalRows ? this.dt.totalRows - 1 : rowNumber;
+        const queryElementBy = 'tr[row="' + rowNumber + '"]';
+        const elementToFind = this.listBody.nativeElement.querySelector(queryElementBy);
+        this.setFocus( elementToFind );
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {

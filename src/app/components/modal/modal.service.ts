@@ -60,9 +60,6 @@ export class ModalService implements OnDestroy {
         this.setComponentModal();
         this.setComponentInjected( component );
         this.setGlobalSettings( parentElement );
-        if (this.modalOptions.backdrop) {
-          this.createBackdrop(TlBackdrop);
-        }
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
@@ -88,12 +85,25 @@ export class ModalService implements OnDestroy {
         this.addFormModalToList();
     }
 
-    setGlobalSettings( parentElement ) {
+    setGlobalSettings( settings ) {
         this.modalOptions = Reflect.getOwnMetadata('annotations',
           Object.getPrototypeOf(this.componentInjected.instance).constructor);
-        this.modalOptions[0]['parentElement'] = parentElement;
+        this.setParentElement(settings);
+        this.handleBackDrop(settings);
         (<TlModal>this.component.instance).status = 'MAX';
-        (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
+        (<TlModal>this.component.instance).setOptions( this.modalOptions ? this.modalOptions[0] : settings );
+    }
+
+    setParentElement(parent) {
+      if (this.modalOptions) {
+        this.modalOptions[0]['parentElement'] = parent;
+      }
+    }
+
+    handleBackDrop(settings) {
+      if (settings.backdrop) {
+        this.createBackdrop(TlBackdrop);
+      }
     }
 
     setInitialZIndex() {

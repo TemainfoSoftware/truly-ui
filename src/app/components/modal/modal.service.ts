@@ -48,6 +48,8 @@ export class ModalService implements OnDestroy {
 
     public subject = new Subject();
 
+    public head = new Subject();
+
     private callBack = Function();
 
     constructor( private compiler: ComponentFactoryResolver ) {}
@@ -76,7 +78,7 @@ export class ModalService implements OnDestroy {
         this.componentList.push(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
-        this.activeModal = this.component;
+        this.setActiveModal(this.component);
     }
 
     setComponentInjected( component ) {
@@ -115,10 +117,8 @@ export class ModalService implements OnDestroy {
         this.setActiveModal( componentRef );
         lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
         element.nativeElement.style.zIndex = lastZIndex + 1;
-        this.subject.next({changeIndex: true});
     }
-  
-  
+
     getZIndexModals() {
         const maxZIndex = [];
         const modals = document.querySelectorAll( 'tl-modal' );
@@ -135,6 +135,7 @@ export class ModalService implements OnDestroy {
 
     setActiveModal( componentRef? ) {
         this.activeModal = componentRef;
+        this.head.next({activeModal: this.activeModal});
     }
 
     createBackdrop( backdrop ) {
@@ -193,10 +194,10 @@ export class ModalService implements OnDestroy {
 
         this.forms.forEach( ( value, index2, array ) => {
             if ( this.getVisibleModals().length === 0 ) {
-                return this.activeModal = null;
+                return this.setActiveModal(null);
             }
             if ( Number( value.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
-                return this.activeModal = value;
+                return this.setActiveModal(value);
             }
         } );
     }
@@ -217,11 +218,11 @@ export class ModalService implements OnDestroy {
     setActiveWindow() {
         let maxZindex = [];
         if ( (this.getVisibleModals().length - 1) <= 0 ) {
-            return this.activeModal = null;
+            return this.setActiveModal(null);
         }
         maxZindex = this.forms;
         this.sortArrayByZIndex( maxZindex );
-        this.activeModal = maxZindex[ maxZindex.length - 1 ];
+        this.setActiveModal(maxZindex[ maxZindex.length - 1 ]);
     }
 
     sortArrayByZIndex( array ) {
@@ -237,8 +238,8 @@ export class ModalService implements OnDestroy {
     }
 
     removeOfTheList() {
-            this.componentList.splice( this.componentList.length - 1, 1 );
-            this.sortComponentsByZIndex();
+        this.componentList.splice( this.componentList.length - 1, 1 );
+        this.sortComponentsByZIndex();
     }
 
     removeBackdrop() {
@@ -255,7 +256,7 @@ export class ModalService implements OnDestroy {
 
     execCallBack( result: any, component? ): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.setMdResult( result.mdResult );
+            this.setMdResult( result );
             if ( this.isResultUndefined() ) {
                 return;
             }
@@ -275,7 +276,6 @@ export class ModalService implements OnDestroy {
 
     isResultUndefined() {
         return this.componentInjected.instance.modalResult === undefined;
-
     }
 
     setMdResult( mdResult: ModalResult ) {

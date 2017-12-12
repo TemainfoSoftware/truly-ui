@@ -479,7 +479,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnDestroy() {
         this.subscribeResize();
-        subscribeMouseMove();
     }
 
 }

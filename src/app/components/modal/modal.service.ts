@@ -115,9 +115,10 @@ export class ModalService implements OnDestroy {
         this.setActiveModal( componentRef );
         lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
         element.nativeElement.style.zIndex = lastZIndex + 1;
+        this.subject.next({changeIndex: true});
     }
-
-
+  
+  
     getZIndexModals() {
         const maxZIndex = [];
         const modals = document.querySelectorAll( 'tl-modal' );
@@ -139,21 +140,6 @@ export class ModalService implements OnDestroy {
     createBackdrop( backdrop ) {
         const backdropFactory = this.compiler.resolveComponentFactory( backdrop );
         this.backdrop = this.view.createComponent( backdropFactory );
-    }
-
-    setBackdropModalOverModal() {
-        setTimeout( () => {
-            this.backdrop.instance.backdrop.nativeElement.style.display = 'none';
-            this.setBackdropzIndex();
-        }, 1 );
-    }
-
-    setBackdropzIndex() {
-        this.backdrop.instance.backdrop.nativeElement.style.zIndex =
-            this.component.instance.element.nativeElement.firstChild.style.zIndex - 1;
-        setTimeout( () => {
-            this.backdrop.instance.backdrop.nativeElement.style.display = 'block';
-        }, 280 );
     }
 
     showModal( item ) {
@@ -269,7 +255,7 @@ export class ModalService implements OnDestroy {
 
     execCallBack( result: any, component? ): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.setMdResult( result );
+            this.setMdResult( result.mdResult );
             if ( this.isResultUndefined() ) {
                 return;
             }
@@ -297,7 +283,9 @@ export class ModalService implements OnDestroy {
     }
 
     resultCallback() {
+      if (this.componentInjected.instance.modalResult) {
         this.callBack( this.componentInjected.instance.modalResult );
+      }
     }
 
     ngOnDestroy() {

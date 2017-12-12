@@ -12,7 +12,6 @@
                        [disabled]="!validForm"
                        [colorIconBefore]="'#24b959'"
                        (keyup)="onKeyDownButtonOk($event)"
-                       [shortcut]="submitButtonShortcut"
                        [formResult]="formResult"
                        [buttonAddonBeforeClass]="'icon'"
                        [iconAddonBefore]="'ion-checkmark'">
@@ -20,9 +19,9 @@
             <tl-button #buttonFormCancel
                        [text]="'Cancel'"
                        mdResult="MRCANCEL"
+                       [shortcut]="closeShortcut"
                        [colorIconBefore]="'#e87272'"
                        [formResult]="formResult"
-                       [shortcut]="cancelButtonShortcut"
                        [buttonAddonBeforeClass]="'iconCadUsuario'"
                        [iconAddonBefore]="'ion-close-circled'">
             </tl-button>

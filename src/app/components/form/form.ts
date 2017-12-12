@@ -33,7 +33,6 @@ import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
 import { TlMultiSelect } from '../multiselect/multiselect';
 import { TlAutoComplete } from '../autocomplete/autocomplete';
-import { TlTab } from '../tabcontrol/tab/tab';
 
 let componentFormIndex;
 
@@ -51,9 +50,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() messageDialogConfirmation = 'Are you sure ?';
 
-  @Input() submitButtonShortcut = '';
+  @Input() submitShortcut = '';
 
-  @Input() cancelButtonShortcut = '';
+  @Input() closeShortcut = '';
 
   @Input() padding = '10px';
 
@@ -67,9 +66,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @ContentChildren( forwardRef(() => TlMultiSelect ), {descendants: true}) multiselectList: QueryList<TlMultiSelect>;
 
-  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true})autoCompleteList: QueryList<TlAutoComplete>;
-
-  @ContentChildren( forwardRef( () => TlTab ), { descendants: true } ) tabsList: QueryList<TlTab>;
+  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true}) autoCompleteList: QueryList<TlAutoComplete>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -93,7 +90,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   private time;
 
-  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {}
+  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {
+
+  }
 
   ngOnInit() {
     componentFormIndex = -1;

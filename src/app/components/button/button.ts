@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit,
+  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -34,9 +34,9 @@ import { KeyEvent } from '../core/enums/key-events';
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
-    styleUrls: [ './button.scss' ]
+    styleUrls: [ './button.scss' ],
 } )
-export class TlButton extends ComponentDefaultBase implements AfterViewInit {
+export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewInit {
 
     @Input() text = '';
 
@@ -84,7 +84,13 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
+    public shortcutManager = {};
+
     private _buttonSelected: boolean;
+
+    private listModals;
+
+    private parentElement;
 
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
@@ -96,6 +102,11 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         super( tabIndexService, idService, nameService );
     }
 
+    ngOnInit() {
+      this.getElementParentModal();
+      this.handleHeadElementButton();
+    }
+
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
         if ( this.defaultFocus ) {
@@ -104,6 +115,22 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
+    }
+
+    handleHeadElementButton() {
+      this.modalService.head.subscribe((element: any ) => {
+        if (!element.activeModal) {
+          return;
+        }
+        if (this.parentElement === element.activeModal.instance.element.nativeElement) {
+          this.shortcutManager = { 'activeModal': element.activeModal, 'button': this };
+        }
+      });
+    }
+
+    getElementParentModal() {
+      this.listModals = document.querySelectorAll( 'tl-modal' );
+      this.findParentOfChildren();
     }
 
     keydown( $event: KeyboardEvent ) {
@@ -133,28 +160,26 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     dispatchCallback(): Promise<any> {
         return new Promise((resolve, reject) => {
-            const listModals = document.querySelectorAll( 'tl-modal' );
             if ( !this.mdResult || ModalResult.MRCUSTOM ) {
                 return;
             }
-            if ( listModals.length > 0 ) {
+            if ( this.listModals.length > 0 ) {
                 this.modalService.execCallBack( {
                     mdResult : ModalResult[ this.mdResult ],
                     formResult : this.formResult
-                }, this.findParentOfChildren( listModals ) ).then(() => {
+                }, this.findParentOfChildren() ).then(() => {
                     resolve();
                 });
             }
         });
     }
 
-    findParentOfChildren( listModals ) {
-        let parent;
-        for ( let child = 0; child < listModals.length; child++ ) {
-            const listElements = listModals[ child ].querySelectorAll( '*' );
+    findParentOfChildren() {
+        for ( let child = 0; child < this.listModals.length; child++ ) {
+            const listElements = this.listModals[ child ].querySelectorAll( '*' );
             for ( let child2 = 0; child2 < listElements.length; child2++ ) {
                 if ( listElements[ child2 ] === this.button.nativeElement ) {
-                    return parent = listModals[ child ];
+                    return this.parentElement = this.listModals[ child ];
                 }
             }
         }

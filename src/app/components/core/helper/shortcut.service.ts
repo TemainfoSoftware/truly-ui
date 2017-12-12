@@ -22,6 +22,7 @@
 
 import { Injectable, Renderer2 } from '@angular/core';
 import { TlButton } from '../../button/button';
+import { ModalService } from '../../modal/modal.service';
 
 let listener;
 
@@ -38,12 +39,21 @@ export class ShortcutService {
 
     private highestZindexElement;
 
+    private headElement = {};
+
+    constructor(private modalService: ModalService) {
+
+    }
+
     setRenderer( renderer ) {
         this.renderer = renderer;
         this.createListener();
     }
 
     createListener() {
+        this.modalService.head.subscribe((component) => {
+          this.headElement = component;
+        });
         if ( !listener ) {
             listener = this.renderer.listen( document, 'keydown', ( $event: KeyboardEvent ) => {
                 if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
@@ -64,16 +74,13 @@ export class ShortcutService {
             this.handleEqualElement();
     }
 
-
     handleClickComponentWithoutEqualsKeys() {
         this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
             this.activeElementButton( this.elementIndex ) :
             this.elementsListener[ this.elementIndex ].element.nativeElement.click();
     }
 
-
     handleEqualButton() {
-        this.orderButtonsByZindex();
         if ( this.isButtonDisabled() ) {
             return;
         }
@@ -86,19 +93,27 @@ export class ShortcutService {
         this.handleElementsOfView();
     }
 
-
     activeHighestButtonElement() {
-        buttonElements[ buttonElements.length - 1 ].element.buttonElement.nativeElement.click();
-        buttonElements[ buttonElements.length - 1 ].element.dispatchCallback().then( () => {
-            this.handleElementsOfView();
-        } );
+        let buttonToClick = null;
+        buttonElements.forEach((value) => {
+          if (value.element.shortcutManager.activeModal === this.modalService.activeModal) {
+            buttonToClick = value.element.buttonElement.nativeElement;
+          }
+        });
+        console.log('buttonToClick', buttonToClick);
+        buttonToClick.click();
+        setTimeout(() => {
+          this.handleElementsOfView();
+        }, 520);
+
+
     }
 
     activeElementButton( element ) {
         this.elementsListener[ element ].element.buttonElement.nativeElement.click();
-        this.elementsListener[ element ].element.dispatchCallback().then( () => {
-            this.handleElementsOfView();
-        } );
+        setTimeout(() => {
+          this.handleElementsOfView();
+        }, 520);
     }
 
     filterButtons() {
@@ -128,8 +143,8 @@ export class ShortcutService {
             const tempArrayElements = this.elementsListener.slice( 0 );
             for ( let element = 0; element < tempArrayElements.length; element++ ) {
                 this.isElementInstanceOfButton( tempArrayElements[ element ] ) ?
-                    this.handleElementButton( tempArrayElements[ element ] ) :
-                    this.handleOtherElements( tempArrayElements[ element ] );
+                this.handleElementButton( tempArrayElements[ element ] ) :
+                this.handleOtherElements( tempArrayElements[ element ] );
             }
         }, 280 );
     }
@@ -141,13 +156,11 @@ export class ShortcutService {
         }
     }
 
-
     handleOtherElements( item ) {
          if ( !this.existElementOnView( item.element.nativeElement ) ) {
              this.deleteElementFromArray( item );
         }
     }
-
 
     isElementInstanceOfButton( value ) {
         return value.element instanceof TlButton;
@@ -232,19 +245,11 @@ export class ShortcutService {
             }
         } );
         this.highestZindexElement = tmpNormalElements[ tmpNormalElements.length - 1 ];
-
     }
 
     filterElementsNotEqualButton() {
         return this.elementsListener.filter( ( value, index, array ) => {
             return !this.isElementInstanceOfButton( value );
-        } );
-    }
-
-    orderButtonsByZindex() {
-        buttonElements.sort( ( a, b ) => {
-            return a.element.buttonElement.nativeElement.firstChild.zIndex -
-                b.element.buttonElement.nativeElement.firstChild.zIndex;
         } );
     }
 

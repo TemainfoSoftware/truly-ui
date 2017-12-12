@@ -186,7 +186,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
         this.widthTabs = this.widthTabs + Number(this.elementListTabs[i].offsetWidth);
         this.topPosition = this.wrapper.nativeElement.offsetTop + (this.line.nativeElement.offsetHeight / 2) - 1;
       }
-      this.widthSeparator = 'calc(100% - ' + (this.widthTabs + this.wrapper.nativeElement.offsetLeft +
+      this.widthSeparator = 'calc(100% - ' + ((this.widthTabs) + this.wrapper.nativeElement.offsetLeft +
         this.line.nativeElement.offsetLeft) + 'px' + ' )';
     }
 

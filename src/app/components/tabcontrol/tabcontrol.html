@@ -12,7 +12,7 @@
         #line
         [style.width]="widthSeparator"
         [style.top]="topPosition + 'px'"
-        [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) +'px'">
+        [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) - 1 +'px'">
   </div>
 
   <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>

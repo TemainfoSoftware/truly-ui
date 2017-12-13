@@ -101,8 +101,9 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
           this.isNotOffline( value ) ?
               this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
       } );
-    this.chatListService.sortArray( this.chatListService.online, this.searchQuery );
-    this.chatListService.sortArray( this.chatListService.offline, this.searchQuery );
+    this.chatListService.searchQuery = this.searchQuery;
+    this.chatListService.sortArray( this.chatListService.online );
+    this.chatListService.sortArray( this.chatListService.offline );
   }
 
   listenInputSearch() {

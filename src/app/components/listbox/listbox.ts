@@ -308,6 +308,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           case KeyEvent.ARROWUP: return;
           case KeyEvent.ENTER: return;
           case KeyEvent.ESCAPE: return;
+          case KeyEvent.PAGEDOWN: return;
+          case KeyEvent.PAGEUP: return;
+          case KeyEvent.HOME: return;
+          case KeyEvent.END: return;
         }
         if (!($event.keyCode === 65 && $event.ctrlKey)) {
           this.subject.next( $event.target.value );
@@ -373,7 +377,39 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
           case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
           case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
+          case KeyEvent.PAGEDOWN: this.handlePageDown( $event ); return;
+          case KeyEvent.PAGEUP: this.handlePageUp( $event ); return;
+          case KeyEvent.HOME: this.handleHome( $event ); return;
+          case KeyEvent.END: this.handleEnd( $event ); return;
         }
+    }
+    
+    handleHome($event) {
+      this.disableKeyEvent($event);
+      this.itemContainer.nativeElement.scrollTop = 0;
+    }
+    
+    handleEnd($event) {
+      this.disableKeyEvent($event);
+      if (this.isEndOfTheListScroll()) {
+        return;
+      }
+      this.itemContainer.nativeElement.scrollTop = this.listBox.nativeElement.offsetHeight;
+    }
+    
+    handlePageDown($event) {
+      this.disableKeyEvent($event);
+      if (this.isEndOfTheListScroll()) {
+         return;
+      }
+      this.itemContainer.nativeElement.scrollTop =
+        this.itemContainer.nativeElement.scrollTop + (this.rowHeight * this.rowsPage);
+    }
+  
+    handlePageUp($event) {
+      this.disableKeyEvent($event);
+      this.itemContainer.nativeElement.scrollTop =
+        this.itemContainer.nativeElement.scrollTop - (this.rowHeight * this.rowsPage);
     }
 
     handleEscape( $event ) {
@@ -442,6 +478,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       }
     }
 
+    disableKeyEvent($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+    
     setScrollTopAndFocusNext() {
         this.itemContainer.nativeElement.scrollTop += this.rowHeight;
         this.setFocusOnNextCursor();
@@ -908,6 +949,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     isDataSourceGreaterThanRowsPage() {
         return (this.lazyMode ? this.data.total : this.data.length) > this.rowsPage;
+    }
+    
+    isEndOfTheListScroll() {
+     console.log('scroll', this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight), 'list', this.listBox.nativeElement.offsetHeight);
+      return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) === this.listBox.nativeElement.offsetHeight);
     }
 
     existChildrenElements() {

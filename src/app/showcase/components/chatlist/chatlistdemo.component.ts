@@ -38,11 +38,9 @@ export class ChatListDemoComponent {
 
   public selected;
 
-
   constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataSource = this.dataDumpService.createRandomData( 100 );
-
   }
 
   clickChat( $event ) {
@@ -63,8 +61,8 @@ export class ChatListDemoComponent {
 
   changeOffline() {
     if ( this.selected ) {
+      this.chatListService.changeStatus( this.selected, 'Offline' );
     }
-    this.chatListService.changeStatus( this.selected, 'Offline' );
   }
 
   changeAway() {

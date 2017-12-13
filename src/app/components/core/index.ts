@@ -20,7 +20,9 @@
     SOFTWARE.
 */
 
-import { APP_INITIALIZER, InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import {
+  APP_INITIALIZER, InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf, ComponentFactoryResolver, Injector
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ApplicationConfig } from './configs/application.config';
@@ -29,45 +31,53 @@ import { TlCore } from './core';
 
 export * from './core';
 
-export function CoreServiceFactory(config: ApplicationConfig): Function {
-    return () => new CoreService(config);
+export function CoreServiceFactory( factory: ComponentFactoryResolver,
+                                    injector: Injector,
+                                    config: ApplicationConfig): Function {
+    return () => new CoreService(factory, injector, config);
 }
 
+export const COMPONENT_FACTORY_RESOLVER = new InjectionToken<ComponentFactoryResolver>('COMPONENT_FACTORY_RESOLVER');
 export const APPLICATION_CONFIGURATION = new InjectionToken<ApplicationConfig>('APPLICATION_CONFIGURATION');
+export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
 
 @NgModule( {
     imports: [
-        CommonModule,
+      CommonModule,
     ],
     declarations: [
-        TlCore,
+      TlCore,
     ],
     exports: [
-        TlCore,
+      TlCore,
+    ],
+    entryComponents: [
+      TlCore
     ]
 } )
 export class CoreModule {
 
     static forRoot( config: ApplicationConfig ): ModuleWithProviders {
-        return {
-            ngModule: CoreModule,
-            providers: [
-                CoreService,
-                {
-                    provide: APP_INITIALIZER,
-                    useFactory: CoreServiceFactory,
-                    deps: [APPLICATION_CONFIGURATION ],
-                    multi: true
-                },
-                {provide: APPLICATION_CONFIGURATION, useValue: config},
-            ]
-        };
+      return {
+        ngModule: CoreModule,
+        providers: [
+          CoreService,
+          {
+            provide: APP_INITIALIZER,
+            useFactory: CoreServiceFactory,
+            deps: [COMPONENT_FACTORY_RESOLVER, INJECTOR, APPLICATION_CONFIGURATION],
+            multi: true
+          },
+          {provide: COMPONENT_FACTORY_RESOLVER, useExisting: ComponentFactoryResolver},
+          {provide: INJECTOR, useExisting: Injector},
+          {provide: APPLICATION_CONFIGURATION, useValue: config},
+        ]
+      };
     }
 
     constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
         if (parentModule) {
-            throw new Error(
-                'CoreModule is already loaded. Import it in the AppModule only !!!!!!!!');
+            throw new Error( 'CoreModule is already loaded. Import it in the AppModule only !!!!!!!!');
         }
     }
 }

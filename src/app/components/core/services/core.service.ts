@@ -20,12 +20,28 @@
     SOFTWARE.
 */
 
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional, ComponentFactoryResolver, ApplicationRef, Injector } from '@angular/core';
 import { ApplicationConfig } from '../configs/application.config';
+import { TlCore } from '../core';
 
 @Injectable()
 export class CoreService {
-    constructor( @Optional() private config: ApplicationConfig ) {
-        console.log(this.config);
+
+    private applicationRef: ApplicationRef;
+
+    constructor( private compiler: ComponentFactoryResolver, private injector: Injector,
+                 @Optional() private config: ApplicationConfig) {
+
+       this.applicationRef = this.injector.get(ApplicationRef);
+       this.createCoreComponent();
+    }
+
+    createCoreComponent() {
+      setTimeout(() => {
+        const componentFactory = this.compiler.resolveComponentFactory( TlCore );
+        const ref = componentFactory.create(this.injector);
+        this.applicationRef.attachView(ref.hostView);
+        this.applicationRef.tick();
+      }, 1);
     }
 }

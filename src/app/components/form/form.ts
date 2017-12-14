@@ -24,7 +24,7 @@ import {
   OnInit,
   QueryList, Renderer2,
   ViewChild,
-  forwardRef, ElementRef,
+  forwardRef,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
@@ -43,7 +43,7 @@ let componentFormIndex;
   styleUrls: [ '../form/form.scss' ]
 } )
 export class TlForm implements AfterViewInit, OnDestroy, OnInit {
-  
+
   @Input() initialFocus: TlInput;
 
   @Input() showConfirmOnChange = false;
@@ -53,9 +53,9 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   @Input() submitShortcut = '';
 
   @Input() closeShortcut = '';
-  
+
   @Input() textConfirm = 'Ok';
-  
+
   @Input() textCancel = 'Cancel';
 
   @Input() padding = '10px';
@@ -77,24 +77,24 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
   @ViewChild( 'content' ) content;
-  
-  public validForm: boolean = true;
-  
+
+  public validForm = true;
+
   public formResult: {} = {};
-  
+
   private lastTabIndex: number;
 
   private focusElements = [];
 
   private elementsWithTabIndex = [];
-  
+
   private componentsWithValidations: Array<any> = [];
 
   private listeners = [];
 
   private time;
-  
-  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {
+
+  constructor( private renderer: Renderer2, private change: ChangeDetectorRef ) {
   }
 
   ngOnInit() {
@@ -109,7 +109,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.listenComponentWithValidations();
     this.clickListener();
   }
-  
+
   onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
     this.getComponentValues( this.inputList.toArray() );
@@ -181,7 +181,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.addButtonsOfFormToListElements();
     this.handleTabIndexComponentsOfForm();
   }
-  
+
   taggedNotForm( element: HTMLElement ) {
     for ( let item = 0; item < element.attributes.length; item++ ) {
       if ( element.attributes[ item ].name === 'notform' ) {
@@ -195,10 +195,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.time = setTimeout( () => {
       for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
         this.validForm = true;
-        this.cdr.detectChanges();
-        if ( this.componentsWithValidations[ item ].componentModel.valid === false ) {
+        this.change.detectChanges();
+        if ( this.isNotValidAndRequired( item ) ) {
           this.validForm = false;
-          this.cdr.detectChanges();
+          this.change.detectChanges();
           return;
         }
       }
@@ -218,7 +218,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       this.validateTabIndexByElements();
     }, 10 );
   }
-  
+
   setTabIndex( element: HTMLElement ) {
     if ( !element.tabIndex ) {
       componentFormIndex++;
@@ -226,7 +226,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
         : this.setTabIndex( element );
     }
   }
-  
+
   isLastTabIndexElement( element: HTMLElement, index, array ) {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
@@ -249,7 +249,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       }
     } );
   }
-  
+
   validateDuplicatedTabIndex( element: HTMLElement ) {
     if ( this.existTabIndexInserted( element ) ) {
       throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + element.tabIndex );
@@ -267,7 +267,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   notExistTabIndexInserted() {
     return this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0;
   }
-  
+
   existTabIndexInserted( element: HTMLElement ) {
     return this.elementsWithTabIndex.indexOf( element.tabIndex ) >= 0;
   }
@@ -295,6 +295,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       case KeyEvent.ARROWDOWN:
         $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
       case KeyEvent.ARROWRIGHT :
         this.setFocusOK();
@@ -305,10 +306,12 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       case KeyEvent.TAB:
         $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
       case KeyEvent.ENTER:
         $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
     }
   }
@@ -353,6 +356,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   isElementDisabled( element ) {
     return element.disabled;
+  }
+
+  isNotValidAndRequired( item ) {
+    return (this.componentsWithValidations[ item ].componentModel.valid === false) &&
+      (this.componentsWithValidations[ item ].required);
   }
 
   setInitialFocus() {
@@ -410,7 +418,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   ngOnDestroy() {
     clearTimeout( this.time );
     this.destroyListeners();
-    this.cdr.detach();
+    this.change.detach();
   }
 
   destroyListeners() {

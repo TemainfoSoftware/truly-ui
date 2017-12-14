@@ -8,6 +8,7 @@
             <tl-button #buttonFormCancel
                        [text]="textCancel"
                        mdResult="MRCANCEL"
+                       [style.padding-right]="'5px'"
                        [shortcut]="closeShortcut"
                        [colorIconBefore]="'#e87272'"
                        [formResult]="formResult"
@@ -15,7 +16,6 @@
                        [iconAddonBefore]="'ion-close-circled'">
             </tl-button>
             <tl-button #buttonFormOk
-                       [style.padding-right]="'5px'"
                        [text]="textConfirm"
                        mdResult="MROK"
                        [shortcut]="submitShortcut"

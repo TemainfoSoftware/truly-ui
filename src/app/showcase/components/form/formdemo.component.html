@@ -10,17 +10,19 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <div class="col-md-3">
               <tl-button [text]="'User Register'"
                          mdResult="MRCUSTOM"
                          [iconAddonBefore]="'ion-ios-list-outline'"
                          [shortcut]="'CTRL + X'"
                          (click)="form1(parent)">
               </tl-button>
-            </div>
-            <div class="col-md-12" #parent style="height: 500px; background: #a0c4cb; margin-top: 10px; border: 1px solid #aeaeae">
+            <div class="col-md-12 parentElementContainer" #parent>
               <h5 style="text-align: center; color: #fff;">PARENT ELEMENT CONTAINER</h5>
+              <pre class="result">
+                {{result | json}}
+              </pre>
             </div>
+            <tl-container-modal [boxColor]="'#656565'"></tl-container-modal>
           </app-card>
         </app-showcase-card>
       </div>
@@ -48,9 +50,6 @@
             <h4>Form Result</h4>
             <p>The Form Result is a JSON of values of all components with <code>[ngModel]</code> in the form. The form gets
               these values and return to the origin component.</p>
-            <pre>
-              {{result | json}}
-            </pre>
           </app-card>
       </app-showcase-card>
       </div>

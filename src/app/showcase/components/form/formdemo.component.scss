@@ -12,3 +12,40 @@
   padding: 10px;
   border-right:  1px solid #BABABA;
 }
+
+.result {
+  background: #8eb7da;
+  overflow: auto;
+  height: 440px;
+  border: 0;
+}
+
+.result::-webkit-scrollbar{
+  background: #F1F1F1;
+  width: 7px;
+}
+
+.result::-webkit-scrollbar-corner{
+  background: #F1F1F1;
+}
+
+.result::-webkit-scrollbar-track{
+  background: #F6F6F6;
+  border-left: 1px solid #CACACA;
+}
+
+.result::-webkit-scrollbar-thumb{
+  background: #4b7280;
+}
+
+.spacer {
+  margin-top: 10px;
+}
+
+.parentElementContainer {
+  height: 500px;
+  background: #82a8cb;
+  margin-top: 10px;
+  border: 1px solid #aeaeae;
+  margin-bottom: 10px
+}

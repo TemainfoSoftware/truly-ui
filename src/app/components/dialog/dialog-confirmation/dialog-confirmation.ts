@@ -21,7 +21,19 @@
  */
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
+import { Modal } from '../../modal/modal-options';
 
+@Modal({
+  icon: 'ion-information-circled',
+  title: 'Confirmation',
+  color: '#719CC9',
+  width: '400px',
+  height: 'auto',
+  draggable: true,
+  maximizable: false,
+  minimizable: false,
+  backdrop: false
+})
 @Component({
     selector: 'tl-dialog-confirmation',
     templateUrl: './dialog-confirmation.html',

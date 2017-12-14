@@ -19,7 +19,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } from '@angular/core';
+import {
+  ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
+  ComponentRef
+} from '@angular/core';
+
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
@@ -30,46 +34,50 @@ let lastZIndex = 1;
 @Injectable()
 export class ModalService implements OnDestroy {
 
-    public component;
+    public component: ComponentRef<any>;
 
-    public componentList: any[] = [];
+    public componentList: Array<ComponentRef<any>> = [];
 
-    public componentInjected;
+    public componentInjected: ComponentRef<any>;
 
-    public backdrop;
+    public forms: Array<ComponentRef<any>> = [];
 
-    public forms = [];
-
-    public activeModal;
+    public activeModal: ComponentRef<any>;
 
     public view: ViewContainerRef;
-
-    public modalOptions;
 
     public subject = new Subject();
 
     public head = new Subject();
 
+    public modalOptions;
+
+    public backdrop;
+
     private callBack = Function();
 
     constructor( private compiler: ComponentFactoryResolver ) {}
 
-    setView( view ) {
+    setView( view: ViewContainerRef ) {
         this.view = view;
     }
 
-    createModal( component, parentElement, callback ) {
+    createModalDialog(component: Type<any>, callback) {
+      this.setComponentModal();
+      this.setComponentInjected( component );
+      this.setGlobalSettings();
+      this.setInitialZIndex();
+      this.callBack = callback;
+      return this;
+    }
+
+    createModal( component: Type<any>, parentElement: ElementRef, callback ) {
         this.setComponentModal();
         this.setComponentInjected( component );
         this.setGlobalSettings( parentElement );
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
-    }
-
-    on(event, callback) {
-      this.component.instance[event].subscribe(callback);
-      return this;
     }
 
     setComponentModal() {
@@ -81,29 +89,29 @@ export class ModalService implements OnDestroy {
         this.setActiveModal(this.component);
     }
 
-    setComponentInjected( component ) {
+    setComponentInjected( component: Type<any> ) {
         const factoryInject = this.compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
         this.addFormModalToList();
     }
 
-    setGlobalSettings( settings ) {
+    setGlobalSettings( parent?: ElementRef ) {
         this.modalOptions = Reflect.getOwnMetadata('annotations',
           Object.getPrototypeOf(this.componentInjected.instance).constructor);
-        this.setParentElement(settings);
-        this.handleBackDrop(settings);
+        this.setParentElement(parent);
+        this.handleBackDrop();
         (<TlModal>this.component.instance).status = 'MAX';
-        (<TlModal>this.component.instance).setOptions( this.modalOptions ? this.modalOptions[0] : settings );
+        (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
     }
 
-    setParentElement(parent) {
-      if (this.modalOptions) {
+    setParentElement(parent: ElementRef) {
+      if (this.modalOptions && parent) {
         this.modalOptions[0]['parentElement'] = parent;
       }
     }
 
-    handleBackDrop(settings) {
-      if (settings.backdrop) {
+    handleBackDrop() {
+      if (this.modalOptions[0].backdrop) {
         this.createBackdrop(TlBackdrop);
       }
     }
@@ -113,7 +121,7 @@ export class ModalService implements OnDestroy {
         (<TlModal>this.component.instance).modal.nativeElement.style.zIndex = lastZIndex;
     }
 
-    setZIndex( componentRef?, element? ) {
+    setZIndex( componentRef?: ComponentRef<any>, element?: ElementRef ) {
         this.setActiveModal( componentRef );
         lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
         element.nativeElement.style.zIndex = lastZIndex + 1;
@@ -129,11 +137,11 @@ export class ModalService implements OnDestroy {
         return maxZIndex;
     }
 
-    getHighestZIndexModals( arrayModals ) {
+    getHighestZIndexModals( arrayModals: Array<any> ) {
         return Math.max.apply( Math, arrayModals );
     }
 
-    setActiveModal( componentRef? ) {
+    setActiveModal( componentRef?: ComponentRef<any> ) {
         this.activeModal = componentRef;
         this.head.next({activeModal: this.activeModal});
     }
@@ -143,19 +151,19 @@ export class ModalService implements OnDestroy {
         this.backdrop = this.view.createComponent( backdropFactory );
     }
 
-    showModal( item ) {
+    showModal( item: ComponentRef<any> ) {
         lastZIndex++;
         item.location.nativeElement.firstElementChild.style.zIndex = lastZIndex;
         item.instance.element.nativeElement.style.display = 'block';
     }
 
-    minimize( component ) {
+    minimize( component: ComponentRef<any> ) {
         component.instance.status = 'MIN';
         component.instance.element.nativeElement.style.display = 'none';
         this.handleActiveWindow();
     }
 
-    close( component ) {
+    close( component: ComponentRef<any> ) {
         if ( this.view === undefined || component === undefined ) {
             return;
         }
@@ -176,7 +184,7 @@ export class ModalService implements OnDestroy {
         return comp;
     }
 
-    handleModalForms( component ) {
+    handleModalForms( component: ComponentRef<any> ) {
         if ( this.forms.length > 0 ) {
             const index = this.forms.indexOf( component );
             this.forms.splice( index, 1 );
@@ -225,7 +233,7 @@ export class ModalService implements OnDestroy {
         this.setActiveModal(maxZindex[ maxZindex.length - 1 ]);
     }
 
-    sortArrayByZIndex( array ) {
+    sortArrayByZIndex( array: Array<any> ) {
         return array.sort( ( a, b ) => {
             return a.location.nativeElement.firstElementChild.style.zIndex -
               b.location.nativeElement.firstElementChild.style.zIndex;
@@ -286,6 +294,11 @@ export class ModalService implements OnDestroy {
       if (this.componentInjected.instance.modalResult) {
         this.callBack( this.componentInjected.instance.modalResult );
       }
+    }
+
+    on(event, callback) {
+      this.component.instance[event].subscribe(callback);
+      return this;
     }
 
     ngOnDestroy() {

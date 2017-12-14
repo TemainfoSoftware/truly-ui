@@ -21,7 +21,19 @@
  */
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
+import { Modal } from '../../modal/modal-options';
 
+@Modal({
+  icon: 'ion-alert-circled',
+  title: 'Alerta',
+  color: '#FFC284',
+  width: '400px',
+  height: 'auto',
+  draggable: true,
+  maximizable: false,
+  minimizable: false,
+  backdrop: false
+})
 @Component({
     selector: 'tl-dialog-alert',
     templateUrl: './dialog-alert.html',

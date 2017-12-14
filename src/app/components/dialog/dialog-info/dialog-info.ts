@@ -21,7 +21,19 @@
  */
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
+import { Modal } from '../../modal/modal-options';
 
+@Modal({
+  icon: 'ion-information-circled',
+  title: 'Information',
+  color: '#0090D9',
+  width: 'auto',
+  height: 'auto',
+  draggable: false,
+  maximizable: false,
+  minimizable: false,
+  backdrop: false,
+})
 @Component({
     selector: 'tl-dialog-info',
     templateUrl: './dialog-info.html',

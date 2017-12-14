@@ -655,6 +655,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleScrollUp() {
+        this.handleScrollFinish();
         if ( this.firstChildElement() ) {
             if ( ( this.firstChildElement().offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                 if ( this.firstChildElement().getBoundingClientRect().top > this.parentElement().top - (5 * this.rowHeight) ) {
@@ -952,7 +953,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
     
     isEndOfTheListScroll() {
-     console.log('scroll', this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight), 'list', this.listBox.nativeElement.offsetHeight);
       return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) === this.listBox.nativeElement.offsetHeight);
     }
 

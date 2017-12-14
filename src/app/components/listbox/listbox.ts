@@ -383,12 +383,12 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           case KeyEvent.END: this.handleEnd( $event ); return;
         }
     }
-    
+
     handleHome($event) {
       this.disableKeyEvent($event);
       this.itemContainer.nativeElement.scrollTop = 0;
     }
-    
+
     handleEnd($event) {
       this.disableKeyEvent($event);
       if (this.isEndOfTheListScroll()) {
@@ -396,7 +396,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       }
       this.itemContainer.nativeElement.scrollTop = this.listBox.nativeElement.offsetHeight;
     }
-    
+
     handlePageDown($event) {
       this.disableKeyEvent($event);
       if (this.isEndOfTheListScroll()) {
@@ -405,7 +405,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.itemContainer.nativeElement.scrollTop =
         this.itemContainer.nativeElement.scrollTop + (this.rowHeight * this.rowsPage);
     }
-  
+
     handlePageUp($event) {
       this.disableKeyEvent($event);
       this.itemContainer.nativeElement.scrollTop =
@@ -482,7 +482,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       $event.preventDefault();
       $event.stopPropagation();
     }
-    
+
     setScrollTopAndFocusNext() {
         this.itemContainer.nativeElement.scrollTop += this.rowHeight;
         this.setFocusOnNextCursor();
@@ -951,9 +951,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     isDataSourceGreaterThanRowsPage() {
         return (this.lazyMode ? this.data.total : this.data.length) > this.rowsPage;
     }
-    
+
     isEndOfTheListScroll() {
-      return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) === this.listBox.nativeElement.offsetHeight);
+      return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) ===
+      this.listBox.nativeElement.offsetHeight);
     }
 
     existChildrenElements() {

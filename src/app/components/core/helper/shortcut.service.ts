@@ -100,13 +100,10 @@ export class ShortcutService {
             buttonToClick = value.element.buttonElement.nativeElement;
           }
         });
-        console.log('buttonToClick', buttonToClick);
         buttonToClick.click();
         setTimeout(() => {
           this.handleElementsOfView();
         }, 520);
-
-
     }
 
     activeElementButton( element ) {

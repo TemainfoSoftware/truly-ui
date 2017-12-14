@@ -42,15 +42,14 @@ export class TlOverlay implements OnChanges, AfterViewInit {
 
     @Input() overlayConfig: OverlayConfig = new OverlayConfig();
 
-    private overalyElement: ElementRef;
+    private overlayElement: ElementRef;
 
-    private overalyElementInstance: ComponentRef<TlOverlayComponent>;
+    private overlayElementInstance: ComponentRef<TlOverlayComponent>;
 
     constructor( private elementRef: ElementRef,
                  private viewContainerRef: ViewContainerRef,
                  private renderer: Renderer2,
-                 private compiler: ComponentFactoryResolver
-    ) {}
+                 private compiler: ComponentFactoryResolver ) {}
 
     ngOnChanges(changes) {
         if (changes['tlOverlay'] && (!changes['tlOverlay'].firstChange) ) {
@@ -67,11 +66,11 @@ export class TlOverlay implements OnChanges, AfterViewInit {
 
     private createElementInstance() {
         const componentFactory = this.compiler.resolveComponentFactory( TlOverlayComponent );
-        this.overalyElementInstance = this.viewContainerRef.createComponent( componentFactory );
+        this.overlayElementInstance = this.viewContainerRef.createComponent( componentFactory );
     }
 
     private setConfigToElement() {
-        this.overalyElementInstance.instance.config = this.overlayConfig;
+        this.overlayElementInstance.instance.config = this.overlayConfig;
     }
 
     private troggleLoader(showLoading: boolean) {
@@ -83,29 +82,29 @@ export class TlOverlay implements OnChanges, AfterViewInit {
            this.buildLoadingElement();
         }
         this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'blur(1px)');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'table');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'display', 'table');
     }
 
     private getElementRefFromInstance() {
-        this.overalyElement = this.overalyElementInstance.instance.element;
+        this.overlayElement = this.overlayElementInstance.instance.element;
     }
 
     private hide() {
         this.renderer.setStyle(this.elementRef.nativeElement, 'filter', 'blur(0px)');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'display', 'none');
     }
 
     private happenedResize() {
-        if (this.overalyElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
-        if (this.overalyElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
+        if (this.overlayElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px') { return true; }
+        if (this.overlayElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px') { return true; }
     }
 
    private buildLoadingElement() {
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'position', 'absolute');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'display', 'none');
-        this.renderer.setStyle(this.overalyElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'position', 'absolute');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.overlayElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)');
     }
 }

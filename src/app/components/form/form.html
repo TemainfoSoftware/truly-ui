@@ -5,25 +5,26 @@
     <div class="clearfix"></div>
     <div class="forFooter">
         <div class="controls">
-            <tl-button #buttonFormOk
-                       [style.padding-right]="'5px'"
-                       [text]="'Ok'"
-                       mdResult="MROK"
-                       [disabled]="!validForm"
-                       [colorIconBefore]="'#24b959'"
-                       (keyup)="onKeyDownButtonOk($event)"
-                       [formResult]="formResult"
-                       [buttonAddonBeforeClass]="'icon'"
-                       [iconAddonBefore]="'ion-checkmark'">
-            </tl-button>
             <tl-button #buttonFormCancel
-                       [text]="'Cancel'"
+                       [text]="textCancel"
                        mdResult="MRCANCEL"
                        [shortcut]="closeShortcut"
                        [colorIconBefore]="'#e87272'"
                        [formResult]="formResult"
                        [buttonAddonBeforeClass]="'iconCadUsuario'"
                        [iconAddonBefore]="'ion-close-circled'">
+            </tl-button>
+            <tl-button #buttonFormOk
+                       [style.padding-right]="'5px'"
+                       [text]="textConfirm"
+                       mdResult="MROK"
+                       [shortcut]="submitShortcut"
+                       [disabled]="!validForm"
+                       [colorIconBefore]="'#24b959'"
+                       (keyup)="onKeyDownButtonOk($event)"
+                       [formResult]="formResult"
+                       [buttonAddonBeforeClass]="'icon'"
+                       [iconAddonBefore]="'ion-checkmark'">
             </tl-button>
         </div>
     </div>

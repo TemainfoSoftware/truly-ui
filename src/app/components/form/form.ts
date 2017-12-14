@@ -53,6 +53,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   @Input() submitShortcut = '';
 
   @Input() closeShortcut = '';
+  
+  @Input() textConfirm = 'Ok';
+  
+  @Input() textCancel = 'Cancel';
 
   @Input() padding = '10px';
 
@@ -90,9 +94,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   private time;
 
-  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {
-
-  }
+  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {}
 
   ngOnInit() {
     componentFormIndex = -1;
@@ -107,7 +109,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.clickListener();
   }
 
-  onKeyDownButtonOk( $event ) {
+  onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
     this.getComponentValues( this.inputList.toArray() );
     this.getComponentValues( this.multiselectList.toArray() );
@@ -179,7 +181,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.handleTabIndexComponentsOfForm();
   }
 
-  taggedNotForm( element ) {
+  taggedNotForm( element: HTMLElement ) {
     for ( let item = 0; item < element.attributes.length; item++ ) {
       if ( element.attributes[ item ].name === 'notform' ) {
         return true;
@@ -216,7 +218,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }, 10 );
   }
 
-  setTabIndex( element ) {
+  setTabIndex( element: HTMLElement ) {
     if ( !element.tabIndex ) {
       componentFormIndex++;
       this.notExistTabIndexInserted() ? element.setAttribute( 'tabIndex', componentFormIndex )
@@ -224,14 +226,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
   }
 
-  isLastTabIndexElement( element, index, array ) {
+  isLastTabIndexElement( element: HTMLElement, index, array ) {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
     }
   }
 
   generateTabIndexOfElements() {
-    this.focusElements.forEach( ( element, index, array ) => {
+    this.focusElements.forEach( ( element: HTMLElement, index, array ) => {
         this.setTabIndex( element );
         this.isLastTabIndexElement( element, index, array );
       }
@@ -239,7 +241,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   getElementsWithTabIndex() {
-    this.focusElements.forEach( ( element ) => {
+    this.focusElements.forEach( ( element: HTMLElement ) => {
       if ( element.tabIndex ) {
         this.validateDuplicatedTabIndex( element );
         this.elementsWithTabIndex.push( element.tabIndex );
@@ -247,7 +249,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     } );
   }
 
-  validateDuplicatedTabIndex( element ) {
+  validateDuplicatedTabIndex( element: HTMLElement ) {
     if ( this.existTabIndexInserted( element ) ) {
       throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + element.tabIndex );
     }
@@ -265,7 +267,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0;
   }
 
-  existTabIndexInserted( element ) {
+  existTabIndexInserted( element: HTMLElement ) {
     return this.elementsWithTabIndex.indexOf( element.tabIndex ) >= 0;
   }
 

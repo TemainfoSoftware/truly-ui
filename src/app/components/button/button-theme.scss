@@ -1,17 +1,19 @@
 @mixin tl-button-theme($theme) {
 
-  $background: map-get($theme,background);
-  $hover: map_get($theme,hover);
-  $dividers: map_get($theme,dividers);
-  $active: map_get($theme,active);
-  $text: map_get($theme,text);
+
+  $hover: map_get(map_get($theme,hover),background);
+  $borders: map_get($theme,borders);
+  $active: map_get(map_get($theme,active),background);
+
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
   $divider: map_get($theme,divider);
-  $disable: map_get($theme,disable);
+  $disable:  map_get(map_get($theme,disable),background);
 
   .tl-button{
-    background-color: $background;
-    border: 1px solid $dividers;
-    color: $text;
+    background-color: $base-background;
+    border: 1px solid $borders;
+    color: $base-text;
   }
   .tl-button:hover{
     outline: none;

@@ -1,22 +1,28 @@
 @import "../../core/main";
 
 $theme: (
-  hover: #DEDEDE,
-  selected: #AAA,
-  focused: #AAA,
-  disable: #000000,
-  active: #D8D8D8,
 
-  text: #616161,
-  secondary-text: #AAA,
-  icons: #AAA,
-  hint-text: #AAA,
+  //STATS AND BASES\\
+  active:   (text: #AAAAAA, background: #d8d8d8),
+  base:     (text: #616161, background: #E8E8E8),
+  checked:  (text: #616161, background: #E8E8E8),
+  disable:  (text: #AAAAAA, background: #000000),
+  focused:  (text: #AAAAAA, background: #AAAAAA),
+  hint:     (text: #616161, background: #E8E8E8),
+  hover:    (text: #DEDEDE, background: #DEDEDE),
+  icons:    (text: #616161, background: #E8E8E8),
+  selected: (text: #AAAAAA, background: #AAAAAA),
 
-  background:#E8E8E8,
-  foreground: #AAA,
+  //BRAND COLORS\\
+  accent:  #FF6358,
+  info:    #3E80ED,
+  success: #5EC232,
+  warning: #FDCE3E,
+  error:   #D51923,
 
+  //OTHERS\\
   divider: #C8C8C8,
-  dividers: #C8C8C8
+  borders: #C8C8C8
 );
 
 .tl-default-theme{

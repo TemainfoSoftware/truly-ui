@@ -1,15 +1,7 @@
 @mixin tl-checkbox-theme($theme) {
 
-
-  $hover: map_get(map_get($theme,hover),background);
   $borders: map_get($theme,borders);
-  $active: map_get(map_get($theme,active),background);
-
   $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
-  $divider: map_get($theme,divider);
-  $disable:  map_get(map_get($theme,disable),background);
-
   $selected-background: map_get(map_get($theme,selected),background);
   $selected-text:  map_get(map_get($theme,selected),text);
 

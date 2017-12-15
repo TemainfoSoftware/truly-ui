@@ -21,9 +21,8 @@
                                 <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
                                 <span class="ui-chat-sector">{{item.lastName}}</span>
                             </div>
-                            <span class="ui-chat-bagde"
-                                  [style.margin-top]="((50 / 2) - 4) + 'px'"
-                                  [style.background-color]="getColorByStatus(item)">
+                            <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status)"
+                                  [style.margin-top]="((50 / 2) - 4) + 'px'">
                              </span>
                         </li>
                     </ng-template>
@@ -48,9 +47,8 @@
                                 <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
                                 <span class="ui-chat-sector">{{item.lastName}}</span>
                             </div>
-                            <span class="ui-chat-bagde"
-                                  [style.margin-top]="((50 / 2) - 4) + 'px'"
-                                  [style.background-color]="getColorByStatus(item)">
+                            <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status) "
+                                  [style.margin-top]="((50 / 2) - 4) + 'px'">
                              </span>
                         </li>
                     </ng-template>

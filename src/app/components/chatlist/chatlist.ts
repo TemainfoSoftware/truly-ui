@@ -30,15 +30,11 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlListBox } from '../listbox/listbox';
+import { ChatListStatus } from './chatlist-status';
 import { ChatListService } from './chatlist.service';
 import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
-
-const Away = 'Away';
-const Online = 'Online';
-const Offline = 'Offline';
-const Busy = 'Busy';
 
 @Component( {
     selector: 'tl-chatlist',
@@ -54,6 +50,8 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   @Input() searchQuery;
 
   @Input() itemsToShow = 5;
+
+  @Input() statusConfig: ChatListStatus;
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
@@ -112,17 +110,8 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
     });
   }
 
-  getColorByStatus( item ) {
-      switch ( item.status ) {
-          case 'Busy':
-              return '#f77171';
-          case 'Online':
-              return '#81e2b2';
-          case 'Offline':
-              return '#d8d8d8';
-          case 'Away':
-              return '#fcb27e';
-      }
+  getStatus(item) {
+    return Object.keys(this.statusConfig).find((key => this.statusConfig[key] === item));
   }
 
   handleScrollChat( $event ) {
@@ -189,7 +178,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   isNotOffline( value ) {
-      return value.status.toLowerCase() !== Offline.toLowerCase();
+      return value.status.toLowerCase() !== this.statusConfig['offline'].toLowerCase();
   }
 
   ngDoCheck() {

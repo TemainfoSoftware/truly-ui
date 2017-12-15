@@ -31,7 +31,12 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <tl-chatlist [itemsToShow]="3" (clickItem)="clickChat($event)" [searchQuery]="'firstName'" [searchInput]="input" [data]="dataSource"></tl-chatlist>
+              <tl-chatlist [itemsToShow]="3"
+                           (clickItem)="clickChat($event)"
+                           [searchQuery]="'firstName'"
+                           [searchInput]="input"
+                           [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                           [data]="dataSource"></tl-chatlist>
               <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
             </div>
             <div class="col-md-6">

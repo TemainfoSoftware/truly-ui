@@ -143,6 +143,10 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
       return this.validations && Object.keys( this.validations ).length > 0;
     }
 
+    isRequired() {
+      return this.validations && this.validations.required;
+    }
+
     handleNameComponent() {
         if (!this.name) {
             this.name = this.nameService.name;

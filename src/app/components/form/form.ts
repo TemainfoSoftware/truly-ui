@@ -196,7 +196,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
         this.validForm = true;
         this.change.detectChanges();
-        if ( this.isNotValidAndRequired( item ) ) {
+        if ( this.hasErrors( this.componentsWithValidations[item] ) &&
+          this.isRequired(this.componentsWithValidations[item])) {
           this.validForm = false;
           this.change.detectChanges();
           return;
@@ -231,6 +232,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
     }
+  }
+
+  isRequired(item) {
+    return item.validations.required;
   }
 
   generateTabIndexOfElements() {
@@ -358,9 +363,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return element.disabled;
   }
 
-  isNotValidAndRequired( item ) {
-    return (this.componentsWithValidations[ item ].componentModel.valid === false) &&
-      (this.componentsWithValidations[ item ].required);
+  hasErrors( item ) {
+    if (!item.componentModel.errors) {
+      return false;
+    }
+    return (Object.keys(item.componentModel.errors).length > 0);
   }
 
   setInitialFocus() {

@@ -1,0 +1,24 @@
+@import "../../core/main";
+
+$theme: (
+  hover: #DEDEDE,
+  selected: #AAA,
+  focused: #AAA,
+  disable: #000000,
+  active: #D8D8D8,
+
+  text: #616161,
+  secondary-text: #AAA,
+  icons: #AAA,
+  hint-text: #AAA,
+
+  background:#E8E8E8,
+  foreground: #AAA,
+
+  divider: #C8C8C8,
+  dividers: #C8C8C8
+);
+
+.tl-default-theme{
+  @include theme-builder($theme)
+}

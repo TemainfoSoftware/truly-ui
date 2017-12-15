@@ -21,15 +21,15 @@ $theme: (
   error:   #f77171,
 
   //STATUS COLORS\\
-  online: #81e2b2,
+  online:  #81e2b2,
   offline: #d8d8d8,
-  busy: #f77171,
-  away: #fcb27e,
+  busy:    #f77171,
+  away:    #fcb27e,
 
   //OTHERS\\
   divider: #f1f1f1,
   borders: #C8C8C8,
-  scrollbar:(background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99 ),
+  scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99 ),
 );
 
 .tl-default-theme{

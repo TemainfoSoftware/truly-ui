@@ -45,9 +45,9 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() checked = false;
 
-    @Input() checkmarkColor = '#fff';
+    @Input() checkmarkColor = '';
 
-    @Input() checkedColorBg = '#66CC99';
+    @Input() checkedColorBg = '';
 
     @Input() tabindex = '0';
 

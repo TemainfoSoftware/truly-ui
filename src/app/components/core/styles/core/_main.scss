@@ -1,9 +1,11 @@
 @import "../../../button/button-theme";
 @import "../../../chatlist/chatlist-theme";
+@import "../../../checkbox/checkbox-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
   @include tl-chatlist-theme($theme);
+  @include tl-checkbox-theme($theme);
 }
 
 

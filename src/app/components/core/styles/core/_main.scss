@@ -1,7 +1,9 @@
 @import "../../../button/button-theme";
+@import "../../../chatlist/chatlist-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
+  @include tl-chatlist-theme($theme);
 }
 
 

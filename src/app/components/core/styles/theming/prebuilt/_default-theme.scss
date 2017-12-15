@@ -11,18 +11,25 @@ $theme: (
   hint:     (text: #616161, background: #E8E8E8),
   hover:    (text: #DEDEDE, background: #DEDEDE),
   icons:    (text: #616161, background: #E8E8E8),
-  selected: (text: #AAAAAA, background: #AAAAAA),
+  selected: (text: #FFF, background: #66CC99),
 
   //BRAND COLORS\\
-  accent:  #FF6358,
+  accent:  #f77171,
   info:    #3E80ED,
-  success: #5EC232,
-  warning: #FDCE3E,
-  error:   #D51923,
+  success: #81e2b2,
+  warning: #fcb27e,
+  error:   #f77171,
+
+  //STATUS COLORS\\
+  online: #81e2b2,
+  offline: #d8d8d8,
+  busy: #f77171,
+  away: #fcb27e,
 
   //OTHERS\\
-  divider: #C8C8C8,
-  borders: #C8C8C8
+  divider: #f1f1f1,
+  borders: #C8C8C8,
+  scrollbar:(background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99 ),
 );
 
 .tl-default-theme{

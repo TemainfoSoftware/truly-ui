@@ -143,13 +143,16 @@ $success-background-color: #E3F5EC;
     background-color: #E8E8E8;
     color: #707070;
   }
+
   > .field.-readonly {
     background-color: $background-gray;
   }
-  > .field.-hasValidation.ng-touched.ng-invalid::placeholder {
+
+  > .field.-hasValidation.-isRequired.ng-touched.ng-invalid::placeholder {
     color: $error-placeholder;
   }
-  > .field.-hasValidation.ng-touched.ng-invalid {
+
+  > .field.-hasValidation.-isRequired.ng-touched.ng-invalid {
     border: 1px solid $error-field;
     background-color: $error-background-color;
     outline: none;

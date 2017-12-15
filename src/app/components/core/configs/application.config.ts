@@ -21,5 +21,5 @@
 */
 
 export class  ApplicationConfig {
-  theme: string;
+  theme = 'default';
 }

@@ -1,3 +1,8 @@
-@import '../settings/_palette.scss';
+@import "../../../button/button-theme";
+
+@mixin theme-builder($theme){
+  @include tl-button-theme($theme);
+
+}
 
 

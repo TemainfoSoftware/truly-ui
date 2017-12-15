@@ -29,9 +29,11 @@ export class CoreService {
 
     private applicationRef: ApplicationRef;
 
-    constructor( private compiler: ComponentFactoryResolver, private injector: Injector,
-                 @Optional() private config: ApplicationConfig) {
+    private coreInstance: TlCore;
 
+    constructor( private compiler: ComponentFactoryResolver,
+                 private injector: Injector,
+     @Optional() private config: ApplicationConfig) {
        this.applicationRef = this.injector.get(ApplicationRef);
        this.createCoreComponent();
     }
@@ -40,8 +42,11 @@ export class CoreService {
       setTimeout(() => {
         const componentFactory = this.compiler.resolveComponentFactory( TlCore );
         const ref = componentFactory.create(this.injector);
+        this.coreInstance = ref.instance;
+        this.coreInstance.setTheme( this.config.theme );
         this.applicationRef.attachView(ref.hostView);
         this.applicationRef.tick();
       }, 1);
     }
+
 }

@@ -20,12 +20,21 @@
     SOFTWARE.
 */
 
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ApplicationRef, Renderer2 } from '@angular/core';
 
 @Component({
     selector: 'tl-core',
     template: '',
-    styleUrls: ['./styles/theming/prebuilt/agua-marine.scss'],
+    styleUrls: ['./styles/theming/_all-theme.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class TlCore {}
+export class TlCore {
+  private theme = 'default';
+
+  constructor(private app: ApplicationRef, private renderer: Renderer2) {}
+
+  setTheme(theme) {
+    this.theme = `tl-${theme}-theme`;
+    this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
+  }
+}

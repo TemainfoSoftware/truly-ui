@@ -51,13 +51,16 @@ export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
     exports: [
       TlCore,
     ],
+    providers: [
+      CoreService
+    ],
     entryComponents: [
       TlCore
     ]
 } )
 export class CoreModule {
 
-    static forRoot( config: ApplicationConfig ): ModuleWithProviders {
+    static forRoot( config: ApplicationConfig = new ApplicationConfig() ): ModuleWithProviders {
       return {
         ngModule: CoreModule,
         providers: [

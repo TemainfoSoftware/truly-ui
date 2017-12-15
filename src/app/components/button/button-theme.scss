@@ -1,0 +1,36 @@
+@mixin tl-button-theme($theme) {
+
+  $background: map-get($theme,background);
+  $hover: map_get($theme,hover);
+  $dividers: map_get($theme,dividers);
+  $active: map_get($theme,active);
+  $text: map_get($theme,text);
+  $divider: map_get($theme,divider);
+  $disable: map_get($theme,disable);
+
+  .tl-button{
+    background-color: $background;
+    border: 1px solid $dividers;
+    color: $text;
+  }
+  .tl-button:hover{
+    outline: none;
+    background-color: $hover;
+  }
+  .tl-button:active, .-toggle{
+    outline: none;
+    background-color: $active;
+  }
+
+  .iconAddonBefore{
+    border-right: 1px solid $divider;
+  }
+
+  .iconAddonAfter{
+    border-left: 1px solid $divider;
+  }
+
+  .disabled{
+    color: $disable;
+  }
+}

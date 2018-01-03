@@ -12,14 +12,15 @@ $theme: (
   hover:    (text: #DEDEDE, background: #DEDEDE),
   icons:    (text: #616161, background: #E8E8E8),
   odd:      (text: #7A838B, background: #FFFFFF),
+  even:     (text: #7A838B, background: #E8E8E8),
   selected: (text: #FFFFFF, background: #66CC99),
 
   //BRAND COLORS\\
   accent:  #F77171,
   info:    #3E80ED,
-  success: #81E2B2,
+  success: #66CC99,
   warning: #FCB27E,
-  error:   #f77171,
+  error:   #F77171,
 
   //STATUS COLORS\\
   online:  #81E2B2,
@@ -30,6 +31,7 @@ $theme: (
   //OTHERS\\
   divider: #F1F1F1,
   borders: #C8C8C8,
+  box:       (text: #616161, background: #FFFFFF, icons: #FFFFFF, hover: #4FBC85, inactive: #d9d9d9),
   scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99),
 );
 

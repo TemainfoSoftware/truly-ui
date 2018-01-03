@@ -4,6 +4,9 @@
   $base-text: map_get(map_get($theme,base),text);
   $base-background: map_get(map_get($theme,base),background);
 
+  $box-text: map_get(map_get($theme,box),text);
+  $box-background: map_get(map_get($theme,box),background);
+
   $odd-text: map_get(map_get($theme,odd),text);
   $odd-background: map_get(map_get($theme,odd),background);
 
@@ -49,7 +52,8 @@
 
   .ui-box-notfound-records{
     >.ui-container{
-      color: $base-text;
+      background: $box-background;
+      color: $box-text;
     }
   }
 

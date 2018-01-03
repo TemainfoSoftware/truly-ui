@@ -1,12 +1,16 @@
 <div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" class="tl-modal-container">
-    <div class="header" [ngStyle]="{'background-color': color}">
-        <div class="bar" [style.outline]="'1px solid ' + color" (mousedown)="mouseDown($event);" (dblclick)="maximizeModal()">
-            <span class="icon"><i [style.color]="serviceControl.activeModal === componentRef ? fontColor : '#D9D9D9'" [ngClass]="icon"></i></span>
-            <span class="title" [style.color]="serviceControl.activeModal === componentRef ? fontColor : '#D9D9D9'">{{title}}</span>
+    <div class="header" #headerBox [ngStyle]="{'background-color': color}">
+        <div class="bar"
+             [ngStyle]="{outline: color ? '1px solid ' + color:'' }"
+             [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
+             (mousedown)="mouseDown($event);"
+             (dblclick)="maximizeModal()">
+            <span class="ui-icon"><i [ngClass]="icon"></i></span>
+            <span class="ui-title">{{title}}</span>
         </div>
-        <div class="controls">
+        <div class="controls" [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'">
             <div class="control-item"
-                 [ngStyle]="{'background-color': colorHoverMinimize}"
+                 [ngStyle]="{'background-color': colorHoverMinimize }"
                  (mouseover)="hoverMinimize()"
                  (mouseleave)="leaveMinimize()"
                  (click)="minimizeModal()">

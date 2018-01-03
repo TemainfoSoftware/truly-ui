@@ -62,9 +62,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() title = 'My Modal';
 
-    @Input() color = '#53C68C';
+    @Input() color = '';
 
-    @Input() fontColor = '#fff';
+    @Input() fontColor = '';
 
     @Input() height = '500px';
 
@@ -83,6 +83,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Input() maximizeShortcut = '';
 
     @Input() parentElement;
+
+    @ViewChild('headerBox') headerBox: ElementRef;
 
     @ViewChild( 'modal' ) modal: ElementRef;
 
@@ -163,6 +165,10 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.validateMeasureParentAndModal();
         this.handleInitialPositionModal();
         this.handleFullscreen();
+
+        console.log(window.getComputedStyle(this.headerBox.nativeElement));
+
+
     }
 
     handleInitialPositionModal() {
@@ -442,7 +448,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     getColorHover() {
+      if (this.color) {
         return this.colorService.calculate(this.color, -0.05);
+      }
     }
 
     hoverMinimize() {

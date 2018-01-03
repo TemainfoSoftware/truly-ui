@@ -1,0 +1,59 @@
+@mixin tl-container-modal-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
+  $base-icons:  map_get(map_get($theme,base),text);
+  $selected-text:  map_get(map_get($theme,selected),text);
+  $selected-background:  map_get(map_get($theme,selected),background);
+
+  $box-text: map_get(map_get($theme,box),text);
+  $box-background: map_get(map_get($theme,box),background);
+  $box-icons: map_get(map_get($theme,box), icons);
+  $box-hover: map_get(map_get($theme,box), hover);
+  $box-inactive: map_get(map_get($theme,box), inactive);
+  $success: map_get($theme,success);
+
+  $scrollbar-background: map_get(map_get($theme, scrollbar), background);
+  $scrollbar-track: map_get(map_get($theme, scrollbar), track);
+  $scrollbar-thumb: map_get(map_get($theme, scrollbar), thumb);
+  $scrollbar-arrow: map_get(map_get($theme, scrollbar), arrow);
+
+  .container-wrapper {
+    > .arrow-right {
+      background: $scrollbar-arrow;
+      border: 1px solid $borders;
+      color: $box-icons;
+    }
+    > .arrow-left {
+      background: $scrollbar-arrow;
+      border: 1px solid $borders;
+      color: $box-icons;
+    }
+  }
+
+  .container-modals {
+    background-color: $base-background;
+    border: 1px solid $borders;
+    > .wrapper-container-modals {
+      > .container-modal-box {
+        color: $selected-text;
+        background: $selected-background;
+      }
+    }
+  }
+  .container-modals::-webkit-scrollbar {
+    background: $scrollbar-background;
+  }
+  .container-modals::-webkit-scrollbar-corner {
+    background: $scrollbar-background;
+  }
+  .container-modals::-webkit-scrollbar-track {
+    background: $scrollbar-track;
+    border-left: 1px solid $borders;
+  }
+  .container-modals::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb;
+  }
+
+}

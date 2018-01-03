@@ -50,15 +50,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
  })
  export class TlContainerModal implements OnInit {
 
-     @Input() containerColor = '#F2F2F2';
+     @Input() containerColor = '';
 
      @Input() height = '40px';
 
-     @Input() boxColor = '#66cc99';
+     @Input() boxColor = '';
 
      @Input() modalBoxWidth = 150;
 
-     @Input() arrowsColor = '#797979';
+     @Input() arrowsColor = '';
 
      @Input() limitStringBox = 12;
 
@@ -68,17 +68,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      public isScrolling = false;
 
-     private boxColorInactive = '#6da78d';
-
-     private borderBoxColor = '#54a378';
-
-     constructor( public modalService: ModalService,
-                private colorService: ToneColorGenerator ) {
-     }
+     constructor( public modalService: ModalService ) {}
 
      ngOnInit() {
-       this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
-       this.borderBoxColor = this.colorService.calculate(this.boxColor, -0.2);
        this.modalService.subject.subscribe(() => {
          this.validateScroll();
        });

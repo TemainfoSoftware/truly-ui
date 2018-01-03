@@ -6,8 +6,7 @@
     {position: 'absolute'}">
         <div class="container-modal-box"
              [style.width]="modalBoxWidth + 'px'"
-             [style.background]="item === modalService.activeModal ? boxColor  : boxColorInactive"
-             [style.border]="'1px solid ' + borderBoxColor"
+             [style.background]="boxColor"
              [style.opacity]="item === modalService.activeModal ? 1 : 0.7"
              *ngFor="let item of modalService.forms; let i = index" (click)="showWindow(item)">
             <span class="item"><i [ngClass]="item.instance.icon"></i></span>

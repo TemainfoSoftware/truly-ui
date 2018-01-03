@@ -20,9 +20,9 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
+  AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter,
   HostBinding,
-  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -165,10 +165,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.validateMeasureParentAndModal();
         this.handleInitialPositionModal();
         this.handleFullscreen();
-
-        console.log(window.getComputedStyle(this.headerBox.nativeElement));
-
-
     }
 
     handleInitialPositionModal() {

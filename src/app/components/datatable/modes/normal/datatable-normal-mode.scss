@@ -1,8 +1,5 @@
-$border-color : #DCDCDC;
-
 .ui-datatable-normal{
   overflow: hidden;
-  border-right: 1px #DCDCDC solid
 }
 
 .ui-datatable-content-wrap{
@@ -14,13 +11,10 @@ $border-color : #DCDCDC;
 .ui-datatable-content-body{
   > .ui-row{
     font-size: 13px;
-    background: #E9E9E9;
     outline: none;
-    color: #7a838b;
     margin: 0;
   }
   > .ui-row .ui-cel{
-    border-right: 1px $border-color solid;
     box-sizing: border-box;
     padding: 0;
     align-items: center;
@@ -35,16 +29,6 @@ $border-color : #DCDCDC;
   }
   >.ui-row .ui-cel.-textcenter{
     text-align: center;
-  }
-  > .ui-row .ui-cel:last-child{
-    border-right: 1px $border-color solid;
-  }
-  > .ui-row:nth-child(odd){
-    background: #FFFFFF;
-  }
-  > .ui-row:focus{
-    background: #66CC99 !important;
-    color: #FFF;
   }
 }
 

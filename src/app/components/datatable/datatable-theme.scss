@@ -1,0 +1,81 @@
+@mixin tl-datatable-theme($theme) {
+
+  $border-color: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background: map_get(map_get($theme,base),background);
+
+  $odd-text: map_get(map_get($theme,odd),text);
+  $odd-background: map_get(map_get($theme,odd),background);
+
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+  $icons-text:  map_get(map_get($theme,icons),text);
+
+
+  //ALL
+  .tl-datatable-box{
+    border-left: 1px $border-color solid;
+    border-top: 1px $border-color solid;
+    border-bottom: 1px $border-color solid;
+  }
+
+  .ui-cel{
+    border-right: 1px $border-color solid;
+  }
+
+  //HEADER
+  .ui-datatable-header-wrap{
+    border-right: 1px $border-color solid;
+  }
+
+  .ui-datatable-table-head{
+    color: $base-text;
+    > .ui-row{
+      background: $base-background;
+    }
+    > .ui-row .ui-sort-indicator {
+      color: $icons-text;
+    }
+    > .ui-row .ui-cel{
+      border-right: 1px $border-color solid;
+      border-bottom: 1px $border-color solid;
+    }
+  }
+
+  //SCROLLABLE MODE
+  .ui-datatable-scrollable{
+    border-right: 1px $border-color solid
+  }
+
+  .ui-box-notfound-records{
+    >.ui-container{
+      color: $base-text;
+    }
+  }
+
+  .ui-datatable-content-body{
+    > .ui-row{
+      background: $base-background;
+      color: $odd-text;
+    }
+    > .ui-row .ui-cel{
+      border-right: 1px $border-color solid;
+    }
+    > .ui-row .ui-cel:last-child{
+      border-right: 1px $border-color solid;
+    }
+    > .ui-row:nth-child(odd){
+      background: $odd-background;
+      color: $odd-text;
+    }
+    > .ui-row:focus{
+      background: $selected-background;
+      color: $selected-text;
+    }
+  }
+
+  //NORMAL MODE
+  .ui-datatable-normal{
+    border-right: 1px $border-color solid
+  }
+}

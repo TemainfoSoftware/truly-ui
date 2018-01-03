@@ -3,7 +3,7 @@
 $theme: (
 
   //STATS AND BASES\\
-  active:   (text: #AAAAAA, background: #d8d8d8),
+  active:   (text: #AAAAAA, background: #D8D8D8),
   base:     (text: #616161, background: #E8E8E8),
   checked:  (text: #616161, background: #E8E8E8),
   disable:  (text: #AAAAAA, background: #000000),
@@ -11,25 +11,26 @@ $theme: (
   hint:     (text: #616161, background: #E8E8E8),
   hover:    (text: #DEDEDE, background: #DEDEDE),
   icons:    (text: #616161, background: #E8E8E8),
-  selected: (text: #FFF, background: #66CC99),
+  odd:      (text: #7A838B, background: #FFFFFF),
+  selected: (text: #FFFFFF, background: #66CC99),
 
   //BRAND COLORS\\
-  accent:  #f77171,
+  accent:  #F77171,
   info:    #3E80ED,
-  success: #81e2b2,
-  warning: #fcb27e,
+  success: #81E2B2,
+  warning: #FCB27E,
   error:   #f77171,
 
   //STATUS COLORS\\
-  online:  #81e2b2,
-  offline: #d8d8d8,
-  busy:    #f77171,
-  away:    #fcb27e,
+  online:  #81E2B2,
+  offline: #D8D8D8,
+  busy:    #F77171,
+  away:    #FCB27E,
 
   //OTHERS\\
-  divider: #f1f1f1,
+  divider: #F1F1F1,
   borders: #C8C8C8,
-  scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99 ),
+  scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99),
 );
 
 .tl-default-theme{

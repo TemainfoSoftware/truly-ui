@@ -22,6 +22,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'
       },
       {
+        path: 'shortcut',
+        loadChildren: './components/shortcut/shortcutdemo.module#ShortcutDemoModule'
+      },
+      {
         path: 'button',
         loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
       },

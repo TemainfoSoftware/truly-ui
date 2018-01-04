@@ -157,6 +157,12 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() type = 'text';
 
     /**
+     * Height of input field
+     * @type {string}
+     */
+     @Input() height = '23px';
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;

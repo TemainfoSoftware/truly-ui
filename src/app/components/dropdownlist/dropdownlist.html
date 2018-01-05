@@ -48,8 +48,8 @@
             <div class="search-input" *ngIf="searchOnList">
                 <i class="search-input-icon ion-ios-search-strong"></i>
                 <input #searchInput class="search-input-field"
-                       (keyup)="onKeyDownSearchInput($event);onListOpened($event)"
-                       [ngStyle]="{'width': showOnlyIcon ? width : (wrapper.offsetWidth - 22)+'px'}">
+                       (keyup)="onKeyDownSearchInput($event); onListOpened($event)"
+                       [ngStyle]="{'width': showOnlyIcon ? width : (wrapper.offsetWidth) + 'px'}">
             </div>
 
             <div class="-placeholder"
@@ -59,7 +59,7 @@
                 [ngStyle]="{'line-height' : height}"
                 (keydown)="placeholderEnter($event)"
                 (click)="selectPlaceholder()" tabindex="-1">
-               <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i> <span> {{ placeholder }}</span>
+               <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i><span> {{ placeholder }}</span>
            </div>
 
            <ul class="dropdown-list-select"

@@ -42,6 +42,8 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
+let documentListener;
+
 @Component( {
     selector: 'tl-dropdown-list',
     templateUrl: './dropdownlist.html',
@@ -188,12 +190,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     listenerMouseDown() {
-        this.arraylisteners.push(this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
-                this.showHide = false;
-                this.cd.markForCheck();
-            }
+      if ( !documentListener ) {
+        documentListener = this.arraylisteners.push( this._renderer.listen( document, 'mousedown', ( event ) => {
+          if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
+            this.showHide = false;
+            this.cd.markForCheck();
+          }
         } ));
+      }
     }
 
     isSearchInput( event ) {
@@ -236,8 +240,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     handleFocusSearchInput() {
         if ( this.searchInput ) {
-            this.searchInput.nativeElement.focus();
+          return this.searchInput.nativeElement.focus();
         }
+      this.setWrapperFocus();
+    }
+
+  setWrapperFocus() {
+      this.dropdown.nativeElement.focus();
     }
 
     hasModel() {
@@ -446,8 +455,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 this.onEscape( $event );
                 break;
             case KeyEvent.ESCAPE:
-                this.onEscape( $event );
-                break;
+                  this.onEscape( $event );
+                  break;
         }
     }
 
@@ -472,9 +481,28 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.removeSelectedClass();
             this.handleSelectedAsPlaceholder();
             this.addSelectedClass( index );
+            this.handleArrowDownWithOverflowY();
             this.onChangeItem();
         }
     }
+
+  handleUpDownWithOverflowY() {
+      if (this.children >= 0) {
+        const limit = (this.list.nativeElement.children[ this.children ].offsetTop +
+          this.list.nativeElement.children[ this.children ].offsetHeight) - this.list.nativeElement.scrollTop;
+        if ( limit < this.list.nativeElement.children[ this.children ].offsetHeight ) {
+          this.list.nativeElement.scrollTop -= this.list.nativeElement.children[ 0 ].offsetHeight;
+        }
+      }
+  }
+
+  handleArrowDownWithOverflowY() {
+    const limit = this.list.nativeElement.children[ this.children ].offsetTop +
+      this.list.nativeElement.children[ this.children ].offsetHeight;
+    if ( limit > this.list.nativeElement.offsetHeight ) {
+      this.list.nativeElement.scrollTop += this.list.nativeElement.children[ 0 ].offsetHeight;
+    }
+  }
 
     addSelectedClass( index ) {
         this._renderer.addClass( this.list.nativeElement.children[ index ], 'selected' );
@@ -499,6 +527,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.setPlaceholderIcon();
         }
         this.handleSelectItemArrowUP();
+      this.handleUpDownWithOverflowY();
     }
 
     handleSelectItemArrowUP() {
@@ -574,6 +603,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     selectPlaceholder() {
         this.showHide = false;
         this.dropdown.nativeElement.value = this.placeholder;
+      this.removeSelectedClass();
         this.setPlaceholderIcon();
         this.clearModelComponent();
         this.placeholderDiv.nativeElement.focus();

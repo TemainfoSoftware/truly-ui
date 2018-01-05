@@ -8,7 +8,7 @@
   $base-text: map_get(map_get($theme,base),text);
   $base-background:  map_get(map_get($theme,base),background);
   $divider: map_get($theme,divider);
-  $disable:  map_get(map_get($theme,disable),background);
+  $disable:  map_get(map_get($theme,disable),text);
 
   .tl-button{
     background-color: $base-background;

@@ -52,7 +52,7 @@ export class TypeFactory {
 
     static setCpfMask(tlinput) {
         if (tlinput) {
-          if (!tlinput.validations.required) {
+          if (!tlinput.validations.required && ( tlinput.modelValue !== null)) {
             tlinput.validations.required = tlinput.modelValue.length > 0;
           }
           tlinput.mask = '999.999.999-99';

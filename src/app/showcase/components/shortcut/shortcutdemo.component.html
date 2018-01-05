@@ -14,7 +14,7 @@
             <tl-button (click)="showDialog('You Pressed the Shortcut [ K ]')" [text]="'Press K'" [shortcut]="'k'"></tl-button>
             <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Press K'" [shortcut]="'k'"></tl-button>
+<tl-button [shortcut]="'k'" [text]="'Press K'" (click)="showDialog('You Pressed the Shortcut [ K ]')" ></tl-button>
 </textarea>
 
 
@@ -24,7 +24,7 @@
             <tl-button (click)="showDialog('You Pressed the Shortcut [ CTRL + B ]')" [text]="'Press CTRL + B'" [shortcut]="'ctrl + b'"></tl-button>
             <div class="spacer"></div>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'CTRL + B'" [shortcut]="'ctrl + b'"></tl-button>
+ <tl-button [shortcut]="'ctrl + b'" [text]="'Press CTRL + B'" (click)="showDialog('You Pressed the Shortcut [ CTRL + B ]')"></tl-button>
 </textarea>
           </div>
         </app-card>
@@ -34,7 +34,7 @@
             <tl-button [text]="'Press CTRL + ALT + P'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + P ]')" [shortcut]="'ctrl + alt + p'"></tl-button>
             <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Press K'" [shortcut]="'k'"></tl-button>
+ <tl-button [shortcut]="'ctrl + alt + p'" [text]="'Press CTRL + ALT + P'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + P ]')"></tl-button>
 </textarea>
           </div>
           <div class="col-md-6">
@@ -42,7 +42,7 @@
             <a class="badge" style="color: #ececec; line-height: 20px; padding: 5px" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + K ]')" [shortcut]="'ctrl + alt + k'">Press CTRL + ALT + K</a>
             <div class="spacer"></div>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<a [shortcut]="'ctrl + alt + k'">Press CTRL + ALT + K</a>
+ <a [shortcut]="'ctrl + alt + k'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + K ]')">Press CTRL + ALT + K</a>
 </textarea>
           </div>
         </app-card>

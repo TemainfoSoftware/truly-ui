@@ -6,8 +6,11 @@
   $icon-text:  map_get(map_get($theme,icons),text);
   $border:  map_get($theme,borders);
 
-  $error:  map_get($theme,error);
-  $success:  map_get($theme,success);
+  $error-text: map_get(map_get($theme,error),text);
+  $error-border: map_get(map_get($theme,error),border);
+  $error-background: map_get(map_get($theme,error),background);
+  $success-border: map_get(map_get($theme,success),border);
+  $success-background: map_get(map_get($theme,success),background);
 
   $disable-text:  map_get(map_get($theme,disable),text);
   $disable-background:  map_get(map_get($theme,disable),background);
@@ -16,26 +19,18 @@
   $select-background: map_get(map_get($theme,selected),background);
   $scroll-thumb: map_get(map_get($theme,scrollbar),thumb);
 
-
-  $default-fontSize: 0.9em;
-  $default-fontFamily: 'Segoe UI', sans-serif;
-  $default-height: 39px;
-  $default-cursorHover: pointer;
-  $default-cursor: default;
-  $default-outline: none;
-
-
   .tl-dropdown-list-box {
     > .labeltext {
       color: $base-text;
       > b.required {
-        color: $error;
+        color: $error-text;
       }
     }
     > .wrapper {
       > .select {
         background: $base-background;
         color: $base-text;
+        border: 1px solid $border;
       }
       > .select:hover {
         background-color: $base-background;
@@ -44,18 +39,20 @@
         background-color: $base-background;
       }
       > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-        border: 1px solid $error;
+        border: 1px solid $error-border;
         background-color: #FFF1F1;
       }
       > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-        border: 1px solid $success;
-        background-color: #E3F5EC;
+        border: 1px solid $success-border;
+        background-color: $success-background;
       }
       > .dropdown-list-icon i {
         color: $icon-text;
       }
       > .dropdown-list-wrapper-select {
+        border: 1px solid $border;
         > .dropdown-list-select {
+          border: 1px solid $border;
           background-color: $base-background;
           color: $base-text;
           > li {
@@ -80,6 +77,7 @@
         > .-placeholder {
           color: $base-text;
           background-color: $base-background;
+          border: 1px solid $border;
         }
         .-placeholder:focus {
           background-color: $select-background;
@@ -99,6 +97,7 @@
     }
     >.search-input-field {
       color: $icon-text;
+      border: 1px solid $border;
     }
   }
 
@@ -109,6 +108,7 @@
 
   .ui-overlap{
     color: $base-text;
+    border: 1px solid $border;
     background-color: $base-background;
   }
 }

@@ -9,7 +9,7 @@
   $box-icons: map_get(map_get($theme,box), icons);
   $box-hover: map_get(map_get($theme,box), hover);
   $box-inactive: map_get(map_get($theme,box), inactive);
-  $success: map_get($theme,success);
+  $success-bar: map_get(map_get($theme,success),bar);
 
 
   .tl-modal-container {
@@ -17,10 +17,10 @@
     color: $box-text;
     border: 1px solid $borders;
     > .header {
-      background-color: $success;
+      background-color: $success-bar;
     }
     > .header .bar {
-      outline: 1px solid $success;
+      outline: 1px solid $success-bar;
     }
     > .header .-active {
       color: $box-icons;

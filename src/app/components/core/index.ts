@@ -60,7 +60,7 @@ export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
 } )
 export class CoreModule {
 
-    static forRoot( config: ApplicationConfig = new ApplicationConfig() ): ModuleWithProviders {
+    static forRoot( config: ApplicationConfig ): ModuleWithProviders {
       return {
         ngModule: CoreModule,
         providers: [

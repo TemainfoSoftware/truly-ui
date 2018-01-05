@@ -1,0 +1,11 @@
+@mixin tl-form-theme($theme) {
+
+  $bars:    map_get($theme,bars);
+  $borders: map_get($theme,borders);
+
+  .forFooter {
+    background-color: $bars;
+    border-top: 1px solid $borders;
+  }
+
+}

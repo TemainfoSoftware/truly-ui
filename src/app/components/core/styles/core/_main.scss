@@ -4,6 +4,7 @@
 @import "../../../datatable/datatable-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../form/form-theme";
+@import "../../../input/input-theme";
 @import "../../../modal/modal-theme";
 @import "../../../modal/container-modal/container-modal-theme";
 
@@ -14,6 +15,7 @@
   @include tl-datatable-theme($theme);
   @include tl-dropdonwlist-theme($theme);
   @include tl-form-theme($theme);
+  @include tl-input-theme($theme);
   @include tl-modal-theme($theme);
   @include tl-container-modal-theme($theme);
 }

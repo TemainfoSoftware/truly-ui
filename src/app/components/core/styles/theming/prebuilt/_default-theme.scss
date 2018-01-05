@@ -3,24 +3,26 @@
 $theme: (
 
   //STATS AND BASES\\
-  active:   (text: #AAAAAA, background: #D8D8D8),
-  base:     (text: #616161, background: #E8E8E8),
-  checked:  (text: #616161, background: #E8E8E8),
-  disable:  (text: #616161, background: #F7F7F7),
-  focused:  (text: #AAAAAA, background: #AAAAAA),
-  hint:     (text: #616161, background: #E8E8E8),
-  hover:    (text: #DEDEDE, background: #DEDEDE),
-  icons:    (text: #616161, background: #E8E8E8),
-  odd:      (text: #7A838B, background: #FFFFFF),
-  even:     (text: #7A838B, background: #E8E8E8),
-  selected: (text: #FFFFFF, background: #66CC99),
+  active:      (text: #AAAAAA, background: #D8D8D8),
+  base:        (text: #616161, background: #E8E8E8),
+  checked:     (text: #616161, background: #E8E8E8),
+  disable:     (text: #707070, background: #E8E8E8),
+  focused:     (text: #AAAAAA, background: #66CC99),
+  hint:        (text: #616161, background: #E8E8E8),
+  hover:       (text: #DEDEDE, background: #DEDEDE),
+  icons:       (text: #616161, background: #E8E8E8),
+  odd:         (text: #7A838B, background: #FFFFFF),
+  even:        (text: #7A838B, background: #E8E8E8),
+  placeholder: (text: #CACACA, background: #E8E8E8),
+  readonly:    (text: #CACACA, background: #EEEEEE),
+  selected:    (text: #FFFFFF, background: #66CC99),
 
   //BRAND COLORS\\
+  success: (text: #66CC99, bar:#66CC99, background: #E3F5EC, border: #66CC99),
   accent:  #F77171,
   info:    #3E80ED,
-  success: #66CC99,
-  warning: #FCB27E,
-  error:   #F77171,
+  warning: (text: #ffcf94, bar:#ffcf94, background: #fffbe9, border: #FCB27E),
+  error:   (text: #FFB9B9, bar:#F77171, background: #fff1f1, border: #F77171),
 
   //STATUS COLORS\\
   online:  #81E2B2,

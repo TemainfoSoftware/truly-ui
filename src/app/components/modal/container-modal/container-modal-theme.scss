@@ -12,7 +12,6 @@
   $box-icons: map_get(map_get($theme,box), icons);
   $box-hover: map_get(map_get($theme,box), hover);
   $box-inactive: map_get(map_get($theme,box), inactive);
-  $success: map_get($theme,success);
 
   $scrollbar-background: map_get(map_get($theme, scrollbar), background);
   $scrollbar-track: map_get(map_get($theme, scrollbar), track);

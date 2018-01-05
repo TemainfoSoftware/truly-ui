@@ -52,6 +52,7 @@ export class TypeFactory {
 
     static setCpfMask(tlinput) {
         if (tlinput) {
+          tlinput.validations.required = Object.keys(tlinput.modelValue).length > 0;
           if (!tlinput.validations.required && ( tlinput.modelValue !== null)) {
             tlinput.validations.required = tlinput.modelValue.length > 0;
           }

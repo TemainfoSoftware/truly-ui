@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
-    CoreModule.forRoot(),
+    CoreModule.forRoot({theme: 'default'}),
     GettingStartedModule,
     HomeModule,
     HttpClientModule

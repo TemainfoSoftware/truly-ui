@@ -20,7 +20,13 @@
  SOFTWARE.
  */
 import {
-  AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, Renderer2,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
   ViewChild
 } from '@angular/core';
 

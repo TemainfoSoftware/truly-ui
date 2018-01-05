@@ -2,15 +2,16 @@
 @import "../../../chatlist/chatlist-theme";
 @import "../../../checkbox/checkbox-theme";
 @import "../../../datatable/datatable-theme";
+@import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../modal/modal-theme";
 @import "../../../modal/container-modal/container-modal-theme";
-
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-datatable-theme($theme);
+  @include tl-dropdonwlist-theme($theme);
   @include tl-modal-theme($theme);
   @include tl-container-modal-theme($theme);
 }

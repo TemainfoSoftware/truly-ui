@@ -26,14 +26,11 @@ $success-background-color: #E3F5EC;
     font-family: $default-fontFamily;
     box-sizing: border-box;
     font-size: $default-fontSize;
-    color: #737373;
     font-weight: normal;
     line-height: 1;
-
     white-space: nowrap;
     vertical-align: middle;
     > b.required {
-      color: #FF6666;
     }
   }
   > .labeltext.-labeltop {
@@ -53,10 +50,8 @@ $success-background-color: #E3F5EC;
     padding: 0;
     > .select {
       overflow: hidden;
-      background: $default-backgroundColor;
       font-family: $default-fontFamily;
       font-size: $default-fontSize;
-      color: $default-color;
       cursor: $default-cursorHover;
       border: $default-border;
       margin: 0;
@@ -69,29 +64,12 @@ $success-background-color: #E3F5EC;
       padding-left: 10px;
       padding-right: 30px;
     }
-    > .select:hover {
-      background-color: $default-backgroundHoverColor;
-    }
-    > .select:active {
-      background-color: $default-backgroundActiveColor;
-    }
     > .select:focus {
       outline: -webkit-focus-ring-color auto 5px;
       outline-color: -webkit-focus-ring-color;
       outline-style: auto;
     }
 
-    > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-      border: 1px solid $error-field;
-      background-color: $error-background-color;
-      //outline: none;
-    }
-
-    > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-      border: 1px solid $success-field;
-      background-color: $success-background-color;
-      //outline: none;
-    }
     > .dropdown-list-icon {
       position: absolute;
       display: table-cell;
@@ -101,7 +79,6 @@ $success-background-color: #E3F5EC;
     }
     > .dropdown-list-icon i {
       font-size: $default-fontSize;
-      color: $default-iconColor;
       padding: 0 9.3px;
     }
     > .dropdown-list-wrapper-select {
@@ -116,9 +93,7 @@ $success-background-color: #E3F5EC;
       border-top: $default-border;
       text-align: left;
       > .dropdown-list-select {
-        background-color: $default-backgroundColor;
         border: $default-border;
-        color: $default-color;
         border-top: 0;
         padding: 0;
         margin: 0;
@@ -126,20 +101,8 @@ $success-background-color: #E3F5EC;
         > li {
           font-family: $default-fontFamily;
           font-size: $default-fontSize;
-          color: $default-color;
           outline: $default-outline;
           padding: 0 10px;
-        }
-        > li:hover {
-          background-color: $default-backgroundHoverColor;
-        }
-        > li:focus {
-          background-color: $default-backgroundFocusColor;
-          color: $default-focusColor;
-        }
-        > li:active {
-          background-color: $default-backgroundActiveColor;
-          color: $default-color;
         }
         > li span {
           font-weight: normal;
@@ -148,15 +111,10 @@ $success-background-color: #E3F5EC;
       > .dropdown-list-select::-webkit-scrollbar {
         width: 0.4em;
       }
-      > .dropdown-list-select::-webkit-scrollbar-thumb {
-        background-color: #CCCCCC;
-      }
       > .-placeholder {
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         font-weight: normal;
-        color: $default-color;
-        background-color: $default-backgroundColor;
         cursor: $default-cursor;
         outline: $default-outline;
         border: $default-border;
@@ -164,15 +122,6 @@ $success-background-color: #E3F5EC;
         border-top: 0;
         padding: 0 10px;
       }
-      .-placeholder:focus {
-        background-color: $default-backgroundFocusColor;
-        color: $default-focusColor;
-      }
-    }
-    > .disabled::placeholder, .disabled {
-      opacity: 0.45;
-      color: #000000;
-      cursor: $default-cursor;
     }
   }
 }
@@ -184,23 +133,16 @@ $success-background-color: #E3F5EC;
     font-size: 1em;
     line-height: 25px;
     padding-left: 7px;
-    color: #737373;
   }
   >.search-input-field {
     padding-left: 20px;
     height: 23px;
     font-family: 'Lato', sans-serif;
     font-size: 1em;
-    color: #737373;
     border: $default-border;
     border-bottom: 0;
     border-top: 0;
   }
-}
-
-.selected {
-  background: $default-backgroundFocusColor !important;
-  color: #fff !important;
 }
 
 .ui-icon{
@@ -212,11 +154,9 @@ $success-background-color: #E3F5EC;
 
 .ui-overlap{
   position: absolute;
-  color: $default-color;
   cursor: pointer;
   padding: 0px;
   text-align: center;
   border: $default-border;
   box-sizing: border-box;
-  background-color: #E8E8E8;
 }

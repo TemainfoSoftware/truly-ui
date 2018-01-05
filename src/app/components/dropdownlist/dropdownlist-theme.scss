@@ -1,0 +1,114 @@
+@mixin tl-dropdonwlist-theme($theme) {
+
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
+
+  $icon-text:  map_get(map_get($theme,icons),text);
+  $border:  map_get($theme,borders);
+
+  $error:  map_get($theme,error);
+  $success:  map_get($theme,success);
+
+  $disable-text:  map_get(map_get($theme,disable),text);
+  $disable-background:  map_get(map_get($theme,disable),background);
+
+  $select-text: map_get(map_get($theme,selected),text);
+  $select-background: map_get(map_get($theme,selected),background);
+  $scroll-thumb: map_get(map_get($theme,scrollbar),thumb);
+
+
+  $default-fontSize: 0.9em;
+  $default-fontFamily: 'Segoe UI', sans-serif;
+  $default-height: 39px;
+  $default-cursorHover: pointer;
+  $default-cursor: default;
+  $default-outline: none;
+
+
+  .tl-dropdown-list-box {
+    > .labeltext {
+      color: $base-text;
+      > b.required {
+        color: $error;
+      }
+    }
+    > .wrapper {
+      > .select {
+        background: $base-background;
+        color: $base-text;
+      }
+      > .select:hover {
+        background-color: $base-background;
+      }
+      > .select:active {
+        background-color: $base-background;
+      }
+      > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
+        border: 1px solid $error;
+        background-color: #FFF1F1;
+      }
+      > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
+        border: 1px solid $success;
+        background-color: #E3F5EC;
+      }
+      > .dropdown-list-icon i {
+        color: $icon-text;
+      }
+      > .dropdown-list-wrapper-select {
+        > .dropdown-list-select {
+          background-color: $base-background;
+          color: $base-text;
+          > li {
+            color: $base-text;
+          }
+          > li:hover {
+            background-color: $select-background;
+            color: $select-text;
+          }
+          > li:focus {
+            background-color: $select-background;
+            color: $select-text;
+          }
+          > li:active {
+            background-color: $base-background;
+            color: $base-text;
+          }
+        }
+        > .dropdown-list-select::-webkit-scrollbar-thumb {
+          background-color: $scroll-thumb;
+        }
+        > .-placeholder {
+          color: $base-text;
+          background-color: $base-background;
+        }
+        .-placeholder:focus {
+          background-color: $select-background;
+          color: $select-text;
+        }
+      }
+      > .disabled::placeholder, .disabled {
+        opacity: 0.45;
+        color: #000000;
+      }
+    }
+  }
+
+  .search-input {
+    >.search-input-icon {
+      color: $icon-text;
+    }
+    >.search-input-field {
+      color: $icon-text;
+    }
+  }
+
+  .selected {
+    background: $select-background;
+    color: $select-text;
+  }
+
+  .ui-overlap{
+    color: $base-text;
+    background-color: $base-background;
+  }
+}

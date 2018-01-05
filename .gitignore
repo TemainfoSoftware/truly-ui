@@ -4,7 +4,6 @@
 /dist
 /tmp
 /out-tsc
-showcase
 
 /src/app/showcase/**/*.map
 /src/app/components/**/*.map

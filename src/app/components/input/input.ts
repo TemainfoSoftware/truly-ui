@@ -20,12 +20,12 @@
  SOFTWARE.
  */
 import {
-    Component,
-    Input,
-    ViewChild,
-    AfterViewInit,
-    Output,
-    EventEmitter, Renderer2,
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  Output,
+  EventEmitter, Renderer2, ChangeDetectorRef,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -197,7 +197,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Constructor
      */
     constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public change?: ChangeDetectorRef) {
         super(tabIndexService, idService, nameService);
     }
 
@@ -208,8 +208,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         this.setElement( this.input, 'input' );
         this.validateClearButtonPosition();
         this.hasMask();
-
-
     }
 
     hasMask() {

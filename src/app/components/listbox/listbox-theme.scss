@@ -1,0 +1,79 @@
+@mixin tl-listbox-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $divider: map_get($theme,divider);
+  $base-text: map_get(map_get($theme,base),text);
+
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+
+  $box-background: map_get(map_get($theme,box),background);
+  $box-text: map_get(map_get($theme,box),text);
+
+  $odd-background: map_get(map_get($theme,odd),background);
+  $even-background: map_get(map_get($theme,even),background);
+
+  $scrollbar-background: map_get(map_get($theme,scrollbar),background);
+  $scrollbar-corner: map_get(map_get($theme,scrollbar),corner);
+  $scrollbar-track: map_get(map_get($theme,scrollbar),track);
+  $scrollbar-thumb: map_get(map_get($theme,scrollbar),thumb);
+  $scrollbar-icon: map_get(map_get($theme,scrollbar),icon);
+
+
+  .list-box-container {
+    background: $box-background;
+    border: 1px solid $borders;
+  }
+
+  .list-box-container::-webkit-scrollbar{
+    background: $scrollbar-background;
+  }
+  .list-box-container::-webkit-scrollbar-corner{
+    background: $scrollbar-corner;
+  }
+
+  .list-box-container::-webkit-scrollbar-track{
+    background: $scrollbar-track;
+    border-left: 1px solid $borders;
+  }
+
+  .list-box-container::-webkit-scrollbar-thumb{
+    background: $scrollbar-thumb;
+  }
+
+  .item {
+    border-bottom: 1px solid $divider;
+    color: $box-text;
+  }
+
+  .selected {
+    background: $selected-background;
+    color: $selected-text;
+  }
+
+  .item.stripped:nth-of-type(odd){
+    background: $odd-background;
+  }
+
+  .item.stripped:nth-of-type(even){
+    background: $even-background;
+  }
+
+  .nothingToShow {
+    color: $box-text;
+  }
+
+  .showmore {
+    background-color: $scrollbar-thumb;
+  }
+
+  .showmore i {
+    color: $scrollbar-icon;
+  }
+
+  .list li:focus {
+    background-color: $selected-background;
+    color: $selected-text;
+  }
+
+}

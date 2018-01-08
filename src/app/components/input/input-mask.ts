@@ -69,10 +69,10 @@ export class InputMask {
         this.initializeOnFocus();
         this.generateMaskGuideExpression();
         this.applyMaskOnInit();
-  
+
         this.setPlaceholder();
         this.setValidation();
-  
+
         this.onKeyPressInputListener();
         this.onMouseUpInputListener();
         this.onKeyDownInputListener();
@@ -438,14 +438,14 @@ export class InputMask {
       this.setModelValue();
       this.setPosition( endPosition );
     }
-  
+
     setModelValue() {
         setTimeout( () => {
           this.tlInput.componentModel.model = this.clearMask( this.value );
           this.tlInput.change.detectChanges();
         }, 0 );
       }
-    
+
     private setValidation() {
         this.input.nativeElement.maxLength = this.maskExpression.length;
         this.input.nativeElement.minLength = this.maskExpression.length;

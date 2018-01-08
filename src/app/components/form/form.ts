@@ -24,7 +24,7 @@ import {
   OnInit,
   QueryList, Renderer2,
   ViewChild,
-  forwardRef,
+  forwardRef, SimpleChanges, OnChanges,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
@@ -121,7 +121,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   clickListener() {
-    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
+    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'mousedown', $event => {
       $event.stopPropagation();
       this.onClickButtonOk();
     } );
@@ -134,6 +134,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.getComponentValues( this.radioButtonList.toArray() );
     this.getComponentValues( this.checkboxList.toArray() );
     this.getAutoCompleteValues();
+    this.validateElements();
   }
 
   getComponentValues( array ) {
@@ -427,7 +428,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.destroyListeners();
     this.change.detach();
   }
-
+  
   destroyListeners() {
     this.listeners.forEach( ( value ) => {
       value();

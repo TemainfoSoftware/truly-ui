@@ -66,20 +66,6 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
-    name: 'selectedBackgroundColor',
-    type: 'string',
-    default: '#66CC99',
-    description: 'Color of list selected item',
-    options: 'Hex | RGB'
-  },
-  {
-    name: 'selectedFontColor',
-    type: 'string',
-    default: '#fff',
-    description: 'Font Color of list selected item',
-    options: 'Hex | RGB'
-  },
-  {
     name: 'itemAmount',
     type: 'number',
     default: '5',

@@ -77,10 +77,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     @Input() minLengthSearch = 2;
 
-    @Input() selectedFontColor = '#fff';
-
-    @Input() selectedBackgroundColor = '#66CC99';
-
     @Input() sortAlphabetically = false;
 
     @Output() getSelecteds: EventEmitter<any> = new EventEmitter();

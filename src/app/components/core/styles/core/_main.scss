@@ -8,6 +8,7 @@
 @import "../../../listbox/listbox-theme";
 @import "../../../modal/modal-theme";
 @import "../../../modal/container-modal/container-modal-theme";
+@import "../../../multiselect/multiselect-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
@@ -20,6 +21,7 @@
   @include tl-input-theme($theme);
   @include tl-listbox-theme($theme);
   @include tl-modal-theme($theme);
+  @include tl-multiselect-theme($theme);
 }
 
 

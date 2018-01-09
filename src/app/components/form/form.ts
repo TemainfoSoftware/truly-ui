@@ -428,7 +428,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.destroyListeners();
     this.change.detach();
   }
-  
+
   destroyListeners() {
     this.listeners.forEach( ( value ) => {
       value();

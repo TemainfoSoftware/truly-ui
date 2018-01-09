@@ -20,5 +20,5 @@
  SOFTWARE.
  */
 export const dataProperties = [
- 
+
   ];

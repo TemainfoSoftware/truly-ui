@@ -10,6 +10,7 @@
 @import "../../../modal/container-modal/container-modal-theme";
 @import "../../../multiselect/multiselect-theme";
 @import "../../../panelgroup/panelgroup-theme";
+@import "../../../radiobutton/radiobutton-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
@@ -24,6 +25,7 @@
   @include tl-modal-theme($theme);
   @include tl-multiselect-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-radiobutton-theme($theme);
 }
 
 

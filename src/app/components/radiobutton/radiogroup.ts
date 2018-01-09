@@ -56,7 +56,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
 
     @Input() orientation = Orientation.HORIZONTAL;
 
-    @Input() colorSelected = '#66CC99';
+    @Input() colorSelected = '';
 
     @ViewChild( 'radiobutton' ) radiobutton;
 
@@ -113,7 +113,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
     }
 
     handleChecked() {
-        this.listRadioButton.toArray().forEach((item, index, array) => {
+        this.listRadioButton.toArray().forEach(( item ) => {
             setTimeout( () => {
                 this.setItemChecked( item );
             }, 1 );
@@ -132,7 +132,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
     }
 
     setInitialSettings() {
-        this.listRadioButton.toArray().forEach( ( item, index, array ) => {
+        this.listRadioButton.toArray().forEach( ( item ) => {
             this.setNameRadioButton( item );
         } );
     }
@@ -154,7 +154,7 @@ export class TlRadioGroup extends ComponentHasModelBase implements AfterContentI
     }
 
     getCheckedRadios() {
-        return this.listRadioButton.filter( ( item, index, array ) => {
+        return this.listRadioButton.filter( ( item ) => {
             return item.checked;
         } );
     }

@@ -1,13 +1,14 @@
-<div class="wrapper-calendar">
+<div #wrapper class="wrapper-calendar" tabindex="-1">
   <div class="header-calendar">
-    <span>{{months[month].name}}  {{year}}</span>
+    <span *ngIf="!displayMonths" (click)="changeYear()">{{months[month].name}}  {{year}}</span>
+    <span *ngIf="displayMonths">{{year}}</span>
     <span (click)="getToday()">TODAY</span>
   </div>
-  <table class="ui-calendar" border="0">
-    <thead>
-    <tr>
-      <th *ngFor="let item of dayOfWeek">{{item}}</th>
-    </tr>
+  <table #table class="ui-calendar" border="0">
+    <thead *ngIf="!displayMonths">
+      <tr>
+        <th *ngFor="let item of dayOfWeek">{{item}}</th>
+      </tr>
     </thead>
     <tbody #tbody align="right"></tbody>
   </table>

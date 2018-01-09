@@ -24,6 +24,12 @@
     background-color: $active;
   }
 
+  .tl-button:focus {
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+  }
+
   .iconAddonBefore{
     border-right: 1px solid $borders;
   }

@@ -33,11 +33,6 @@ $button-text-align: center;
     width: 500px !important;
   }
 }
-.tl-button:focus {
-  outline: -webkit-focus-ring-color auto 5px;
-  outline-color: -webkit-focus-ring-color;
-  outline-style: auto;
-}
 .disabled{
   opacity: 0.45;
   cursor: default;

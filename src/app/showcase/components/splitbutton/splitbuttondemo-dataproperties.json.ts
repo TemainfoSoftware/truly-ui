@@ -49,25 +49,11 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
-    name: 'buttonClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the button.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAddonBefore',
     type: 'string',
     default: 'null',
     description: 'Creates an icon in the addon before the text button.',
     options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'buttonAddonBeforeClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon before.',
-    options: 'CSS class'
   },
   {
     name: 'iconAddonAfter',
@@ -77,13 +63,6 @@ export const dataProperties = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'buttonAddonAfterClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon after.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconBeforeText',
     type: 'string',
     default: 'null',
@@ -91,46 +70,11 @@ export const dataProperties = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'iconBeforeTextClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the icon before the text button.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAfterText',
     type: 'string',
     default: 'null',
     description: 'Creates an icon after the text button.',
     options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterTextClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the icon after the text button.',
-    options: 'CSS class'
-  },
-  {
-    name: 'toggleClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the toggle button.',
-    options: 'CSS class'
-  },
-  {
-    name : 'splitButtonClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the splitbutton.',
-    options: 'CSS class'
-  },
-  {
-    name : 'actionMenuClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the action menu.',
-    options: 'CSS class'
   }
   ];
 export const dataProperties2 = [

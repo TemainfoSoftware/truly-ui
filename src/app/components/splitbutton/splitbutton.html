@@ -4,21 +4,15 @@
                [width]="width"
                [height]="height"
                [disabled]="disabled"
-               [buttonClass]="buttonClass"
                [iconAddonBefore]="iconAddonBefore"
-               [buttonAddonBeforeClass]="buttonAddonBeforeClass"
                [iconAddonAfter]="iconAddonAfter"
-               [buttonAddonAfterClass]="buttonAddonAfterClass"
                [iconBeforeText]="iconBeforeText"
-               [iconBeforeTextClass]="iconBeforeTextClass"
                [iconAfterText]="iconAfterText"
-               [iconAfterTextClass]="iconAfterTextClass"
-               [toggle]="false"
-               [toggleClass]="toggleClass">
+               [toggle]="false">
     </tl-button>
 
     <div [ngClass]="{'active': showHide === true }"
-         [class]="splitButtonClass + ' split-button-actions ' "
+         [class]="' split-button-actions ' "
          (click)="changeShowStatus($event.stopPropagation())"
          [ngStyle]="{'height': height, 'line-height': height}">
 
@@ -27,7 +21,7 @@
 
         <ul #lista
             *ngIf="showHide"
-            [class]="actionMenuClass + ' actions-menu ' "
+            [class]="' actions-menu ' "
             [ngStyle]="{'top': height}"
             [@enterAnimation]></ul>
 

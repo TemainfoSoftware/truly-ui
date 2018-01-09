@@ -42,19 +42,11 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
 
     @Input() iconAddonBefore = '';
 
-    @Input() buttonAddonBeforeClass = '';
-
     @Input() iconAddonAfter = '';
-
-    @Input() buttonAddonAfterClass = '';
 
     @Input() iconBeforeText = '';
 
-    @Input() iconBeforeTextClass = '';
-
     @Input() iconAfterText = '';
-
-    @Input() iconAfterTextClass = '';
 
     @Input() height = '30px';
 
@@ -66,15 +58,9 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
 
     @Input() toggle = false;
 
-    @Input() toggleClass = '';
-
-    @Input() toggleClassName = '';
-
     @Input() colorIconBefore = '';
 
     @Input() colorIconAfter = '';
-
-    @Input() buttonClass = '';
 
     @Input() mdResult: ModalResult;
 
@@ -85,6 +71,8 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
     public shortcutManager = {};
+
+    public toggleClassName = '';
 
     private _buttonSelected: boolean;
 
@@ -147,7 +135,7 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
     executeToggle() {
         if ( this.toggle ) {
             if ( this._buttonSelected ) {
-                this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
+                this.toggleClassName = '-toggle';
                 this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = false;
             } else {
@@ -159,7 +147,7 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
     }
 
     dispatchCallback(): Promise<any> {
-        return new Promise((resolve, reject) => {
+        return new Promise(( resolve ) => {
             if ( !this.mdResult || ModalResult.MRCUSTOM ) {
                 return;
             }

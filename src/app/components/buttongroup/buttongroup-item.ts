@@ -34,27 +34,15 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() iconAddonBefore;
 
-    @Input() buttonAddonBeforeClass;
-
     @Input() iconAddonAfter;
-
-    @Input() buttonAddonAfterClass;
 
     @Input() iconBeforeText;
 
-    @Input() iconBeforeTextClass;
-
     @Input() iconAfterText;
-
-    @Input() iconAfterTextClass;
 
     @Input() width = '125px';
 
     @Input() disabled;
-
-    @Input() toggleClass;
-
-    @Input() buttonClass;
 
     @Input() checkedItem = null;
 

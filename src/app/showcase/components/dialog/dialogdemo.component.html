@@ -12,24 +12,20 @@
             <app-card>
               <div class="col-md-3">
                   <h5>Show Dialog Info</h5>
-                  <tl-button [text]="'Show Dialog Info'" [iconAddonBefore]="'ion-information-circled'"
-                             [buttonClass]="'infoDialog'" (click)="info()"></tl-button>
+                  <tl-button [text]="'Show Dialog Info'" [iconAddonBefore]="'ion-information-circled'" (click)="info()"></tl-button>
               </div>
               <div class="col-md-3">
                   <h5>Show Dialog Confirmation</h5>
-                  <tl-button [text]="'Show Dialog Confirmation'" [iconAddonBefore]="'ion-checkmark'"
-                             [buttonClass]="'confirmDialog'" (click)="confirmation()"></tl-button>
+                  <tl-button [text]="'Show Dialog Confirmation'" [iconAddonBefore]="'ion-checkmark'" (click)="confirmation()"></tl-button>
               </div>
               <div class="col-md-3">
                   <h5>Show Dialog Alert</h5>
                   <tl-button [text]="'Show Dialog Alert'" [iconAddonBefore]="'ion-alert-circled'"
-                             [buttonClass]="'alertDialog'"
                              (click)="alert()"></tl-button>
               </div>
               <div class="col-md-3">
                   <h5>Show Dialog Error</h5>
                   <tl-button [text]="'Show Dialog Error'" [iconAddonBefore]="'ion-close-circled'"
-                             [buttonClass]="'errorDialog'"
                              (click)="error()"></tl-button>
               </div>
             </app-card>

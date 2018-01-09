@@ -142,13 +142,6 @@ export const dataProperties2 = [
     options: 'true | false'
   },
   {
-    name: 'buttonClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the button.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAddonBefore',
     type: 'string',
     default: 'null',
@@ -156,25 +149,11 @@ export const dataProperties2 = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'buttonAddonBeforeClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon before.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAddonAfter',
     type: 'string',
     default: 'null',
     description: 'Creates an icon in the addon after the button.',
     options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'buttonAddonAfterClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon after.',
-    options: 'CSS class'
   },
   {
     name: 'iconLeftTextButton',
@@ -189,13 +168,6 @@ export const dataProperties2 = [
     default : 'null',
     description : 'Creates an icon on the right side of the text button.',
     options : 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'toggleClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the toggle button.',
-    options: 'CSS class'
   },
   {
     name: 'checkedItem',

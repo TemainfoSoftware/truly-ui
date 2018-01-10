@@ -40,10 +40,6 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     @Input( 'height' ) height = 'auto';
 
-    @Input( 'background' ) background = '#fff';
-
-    @Input( 'titleColor' ) titleColor = '#848484';
-
     @ViewChild('tabsHeader') tabsHeader;
 
     @ViewChild('wrapperTab') wrapper;
@@ -174,7 +170,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
     }
 
     setTabProperties() {
-      this.tabs.forEach( ( item, index, array ) => {
+      this.tabs.forEach( ( item ) => {
         item.background = this.background;
         item.height = this.height;
       } );
@@ -191,7 +187,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
     }
 
     resetTabsSelected() {
-      this.tabs.forEach( ( item, index, array ) => {
+      this.tabs.forEach( ( item ) => {
         item.selected = false;
       } );
     }

@@ -59,15 +59,15 @@
     }
   }
 
-  .selected {
-    background-color: $selected-bg;
-    outline: none;
-    opacity: 1;
-  }
-  .selected span {
-    color: $selected-text !important;
-  }
+  .item-selected-listbox {
+    & .ui-chat-name{
+      color: $selected-text;
+    }
 
+    & .ui-chat-sector {
+      color: $selected-text;
+    }
+  }
 
   .ui-chat-overflow::-webkit-scrollbar {
     background: $scrollbar;

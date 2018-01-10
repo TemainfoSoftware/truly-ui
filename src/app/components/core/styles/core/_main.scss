@@ -12,6 +12,7 @@
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
+@import "../../../tabcontrol/tabcontrol-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
@@ -27,7 +28,8 @@
   @include tl-multiselect-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-radiobutton-theme($theme);
-  @include tl-splitbutton-theme($theme)
+  @include tl-splitbutton-theme($theme);
+  @include tl-tabcontrol-theme($theme);
 }
 
 

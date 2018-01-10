@@ -1,6 +1,7 @@
 .wrapper-calendar {
   width: 260px;
   border: 1px solid #d6d6d6;
+  outline: none;
 }
 
 .decrease {
@@ -47,13 +48,18 @@
 
 .today {
   color: #66CC99 !important;
-  -webkit-border-radius: 25%;
+  font-weight: bold;
+}
+
+.navigator {
+  outline: 2px solid #d6d6d6;
+  font-weight: 700;
 }
 
 .selected {
   background-color: #66CC99;
   color: #fff !important;
-  -webkit-border-radius: 25%;
+  font-weight: normal !important;
 }
 
 table {
@@ -73,7 +79,11 @@ table td {
 table td:hover {
   cursor: pointer;
   outline: 1px solid #e2e2e2;
-  -webkit-border-radius: 25%;
+}
+
+table td:focus {
+  cursor: pointer;
+  background-color: #00c0ef;
 }
 
 thead th {

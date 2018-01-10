@@ -57,6 +57,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   private todayIndex;
 
+  private keyboardNavLine;
+
+  private lineIndex;
+
+  private navigator;
+
   private months =
     [
       { name: 'January', initials: 'jan' },
@@ -145,9 +151,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       }
       const td = new ElementRef( this.renderer.createElement('td'));
       td.nativeElement.innerHTML = dayOfMonth[day].day;
-      this.markToday(dayOfMonth[day].day, td);
       this.createClickListenerDay(td, dayOfMonth[day].day);
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
+      this.markToday( dayOfMonth[ day ].day, td );
     }
 
     for (let i = dayOfMonth[dayOfMonth.length - 1].dayOfWeek; i < 6; i++) {
@@ -169,25 +175,209 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   createClickListenerDay(cell, day) {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
       this.selectDay.emit({'year': this.year, 'month': this.month, 'day': day});
-      this.renderer.removeClass(this.todayIndex.nativeElement, 'selected');
-      this.setSelectedDay(cell, $event.target);
+      this.removeTodaySelected();
+      this.setSelectedDay( cell.nativeElement, $event.target );
     });
   }
 
   createKeyboardListenerDay() {
     this.renderer.listen(this.wrapper.nativeElement, 'keydown', $event => {
-      // this.handleKeyDown($event);
+      this.handleKeyDown( $event );
     });
   }
 
-/*  handleKeyDown($event) {
-    switch ($event.keyCode) {
-      case KeyEvent.ARROWRIGHT:
-        this.handleArrowRight();
-        break;
+  removeTodaySelected() {
+    if ( this.todayIndex.nativeElement.className.includes( 'selected' ) ) {
+      this.renderer.removeClass( this.todayIndex.nativeElement, 'selected' );
     }
   }
-  */
+
+  handleKeyDown( $event ) {
+    switch ($event.keyCode) {
+      case KeyEvent.ARROWRIGHT: this.handleArrowRight(); break;
+      case KeyEvent.ARROWLEFT: this.handleArrowLeft(); break;
+      case KeyEvent.ARROWUP: this.handleArrowUp(); break;
+      case KeyEvent.ARROWDOWN: this.handleArrowDown(); break;
+      case KeyEvent.ENTER: this.handleKeyEnter(); break;
+    }
+  }
+
+  handleArrowDown() {
+      if (!this.hasContentOnNextLine()) {
+        return;
+      }
+      if ( this.lineIndex !== this.tbody.nativeElement.children.length - 1 ) {
+        this.handleKeyBoardNav();
+        this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
+        this.navigateDown();
+      }
+  }
+
+  handleArrowUp() {
+    if (!this.hasContentOnPreviousLine()) {
+      return;
+    }
+    if ( this.lineIndex !== 0 ) {
+      this.handleKeyBoardNav();
+      this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
+      this.navigateUp();
+    }
+  }
+
+  handleArrowLeft() {
+    if (this.hasContentOnPreviousCellFirstLine()) {
+      if ( this.isFirstCell() ) {
+        return this.setNavigatorToNewLineBackward();
+      }
+      this.handleKeyBoardNav();
+      this.navigateLeft();
+    }
+  }
+
+  hasContentOnNextLine() {
+    const line = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
+    return (line.children[ this.navigator ].innerHTML.trim().length > 0) &&
+      (line.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+  }
+
+  hasContentOnPreviousLine() {
+    const line = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
+    return (line.children[ this.navigator ].innerHTML.trim().length > 0) &&
+      (line.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+  }
+
+  hasContentOnPreviousCellFirstLine() {
+    if ( this.lineIndex === 0 ) {
+      return this.keyboardNavLine.children[ this.navigator - 1 ].innerHTML.trim().length > 0;
+    }
+    return true;
+  }
+
+  hasContentOnNextCell() {
+    if (!this.keyboardNavLine.children[ this.navigator + 1 ]) {
+      return true;
+    }
+    return this.keyboardNavLine.children[ this.navigator + 1 ].innerHTML.trim().length > 0;
+  }
+
+  handleArrowRight() {
+    if (this.hasContentOnNextCell()) {
+      if ( this.isLastCell() ) {
+        return this.setNavigatorToNewLineForward();
+      }
+      this.handleKeyBoardNav();
+      this.navigateRight();
+    }
+  }
+
+  navigateLeft() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex;
+    const currentCell = this.getCellSelected();
+    const indexNav = (this.navigator !== undefined) ? this.navigator - 1 : currentCell - 1;
+    this.setNavigator( indexNav, 'left' );
+  }
+
+  navigateUp() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex;
+    this.setNavigator( this.navigator, 'up' );
+  }
+
+  navigateDown() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex;
+    this.setNavigator( this.navigator, 'down' );
+  }
+
+  navigateRight() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex;
+    const currentCell = this.getCellSelected();
+    const indexNav = (this.navigator !== undefined) ? this.navigator + 1 : currentCell + 1;
+    this.setNavigator( indexNav, 'right' );
+  }
+
+  handleKeyBoardNav() {
+    if ( !this.keyboardNavLine ) {
+      this.keyboardNavLine = !this.selectedDay ? this.todayIndex.nativeElement.parentElement :
+        this.selectedDay.nativeElement.parentElement;
+    }
+  }
+
+  setNavigatorToNewLineForward() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex + 1;
+    this.renderer.removeClass( this.keyboardNavLine.children[ this.keyboardNavLine.children.length - 1 ], 'navigator' );
+    this.keyboardNavLine = this.tbody.nativeElement.children[ this.lineIndex ];
+    this.setNavigator( 0 );
+  }
+
+  setNavigatorToNewLineBackward() {
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex - 1;
+    this.renderer.removeClass( this.keyboardNavLine.children[ 0 ], 'navigator' );
+    this.keyboardNavLine = this.tbody.nativeElement.children[ this.lineIndex ];
+    this.setNavigator( this.keyboardNavLine.children.length - 1 );
+  }
+
+  handleKeyEnter() {
+    this.removeTodaySelected();
+    this.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
+  }
+
+  getCellSelected() {
+    for ( let i = 0; i < this.keyboardNavLine.children.length; i++ ) {
+      if ( this.keyboardNavLine.children[ i ].className.includes( 'selected' ) ) {
+        return i;
+      }
+    }
+  }
+
+  setNavigator( index, direction? ) {
+    if ( this.keyboardNavLine.children[ index ] ) {
+      this.removeClass( index, direction );
+      this.renderer.addClass( this.keyboardNavLine.children[ index ], 'navigator' );
+      this.navigator = index;
+    }
+  }
+
+  removeClass( index, direction ) {
+    let operator;
+    switch ( direction ) {
+      case 'right': operator = index - 1; break;
+      case 'left': operator = index + 1; break;
+      case 'up': this.handleRemoveClassNavigateGoingUp( index ); return;
+      case 'down': this.handleRemoveClassNavigateGoingDown( index ); return;
+    }
+    if ( (this.keyboardNavLine.children[ operator ]) && this.hasNavigator( this.keyboardNavLine.children[ operator ] ) ) {
+      this.renderer.removeClass( this.keyboardNavLine.children[ operator ], 'navigator' );
+    }
+  }
+
+  handleRemoveClassNavigateGoingUp( index ) {
+    const previousLine = this.tbody.nativeElement.children[ this.lineIndex + 1 ];
+    if ( (previousLine.children[ index ]) && this.hasNavigator( previousLine.children[ index ] ) ) {
+      this.renderer.removeClass( previousLine.children[ index ], 'navigator' );
+    }
+  }
+
+  handleRemoveClassNavigateGoingDown( index ) {
+    const nextLine = this.tbody.nativeElement.children[ this.lineIndex - 1 ];
+    if ( (nextLine.children[ index ]) && this.hasNavigator( nextLine.children[ index ] ) ) {
+      this.renderer.removeClass( nextLine.children[ index ], 'navigator' );
+    }
+  }
+
+  hasNavigator( element ) {
+    return element.className.includes( 'navigator' );
+  }
+
+  isLastCell() {
+    if ( this.keyboardNavLine ) {
+      return this.navigator === this.keyboardNavLine.children.length - 1;
+    }
+  }
+
+  isFirstCell() {
+    if ( this.keyboardNavLine ) {
+      return this.navigator === 0;
+    }
+  }
 
   createClickListenerMonth(cell, index) {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
@@ -196,12 +386,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     });
   }
 
-
   markToday(day, cell) {
     if ((day === this.today) && (this.month === new Date().getMonth())) {
       this.renderer.addClass(cell.nativeElement, 'today');
       this.renderer.addClass(cell.nativeElement, 'selected');
       this.todayIndex = cell;
+      this.loadNavigator();
     }
     this.removeSelectedDay();
   }
@@ -223,18 +413,46 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.renderer.appendChild(line.nativeElement, cell.nativeElement);
       this.renderer.appendChild(this.tbody.nativeElement, line.nativeElement);
     }
-
   }
 
-  setSelectedDay(cell, target) {
-    this.renderer.addClass(cell.nativeElement, 'selected');
+  setSelectedDay( cell, target? ) {
+    this.renderer.addClass( cell, 'selected' );
     this.removeSelectedDay();
-    this.selectedDay = target;
+    this.removeNavigator( cell );
+    this.selectedDay = target ? target : cell;
   }
 
   removeSelectedDay() {
     if (this.selectedDay) {
       this.renderer.removeClass(this.selectedDay, 'selected');
+    }
+  }
+
+  removeNavigator( cell ) {
+    this.loadNavigator( cell );
+    const cells = this.tbody.nativeElement.querySelectorAll( 'td' );
+    for ( let i = 0; i < cells.length; i++ ) {
+      if ( cells[ i ].className.includes( 'navigator' ) ) {
+        this.renderer.removeClass( cells[ i ], 'navigator' );
+        return;
+      }
+    }
+  }
+
+  loadNavigator( cell? ) {
+    if ( cell ) {
+      this.keyboardNavLine = cell.parentElement;
+      this.navigator = cell.cellIndex;
+      return;
+    }
+
+    const listTd = this.tbody.nativeElement.querySelectorAll( 'td' );
+    for ( let i = 0; i < listTd.length; i++ ) {
+      if ( listTd[ i ].className.includes( 'selected' ) ) {
+        this.keyboardNavLine = listTd[ i ].parentElement;
+        this.navigator = listTd[ i ].cellIndex;
+        return;
+      }
     }
   }
 

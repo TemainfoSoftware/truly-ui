@@ -63,6 +63,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   private navigator;
 
+  private initNavigator;
+
   private months =
     [
       { name: 'January', initials: 'jan' },
@@ -92,29 +94,38 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.createKeyboardListenerDay();
     this.today = new Date().getDate();
     this.generateDays();
+    this.initiliazeNavigator();
     setTimeout(() => {
       this.wrapper.nativeElement.focus();
     }, 1);
   }
 
-  decreaseYear() {
+  decreaseDate() {
+    this.handleChangeDateValuesDecrease();
+    this.generateDays( 'up' );
+  }
+
+  increaseDate() {
+    this.handleChangeDateValuesIncrease();
+    this.generateDays( 'down' );
+  }
+
+  handleChangeDateValuesDecrease() {
     if (this.month === 0) {
       this.month = 11;
       this.year--;
     }else {
       this.month--;
     }
-    this.generateDays();
   }
 
-  increaseYear() {
-    if (this.month === 11) {
+  handleChangeDateValuesIncrease() {
+    if ( this.month === 11 ) {
       this.month = 0;
       this.year++;
-    }else  {
+    } else {
       this.month++;
     }
-    this.generateDays();
   }
 
   getToday() {
@@ -122,10 +133,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.month = new Date().getMonth();
     this.today = new Date().getDate();
     this.generateDays();
+    this.loadNavigator();
   }
 
-  generateDays() {
+  generateDays( direction?: string ) {
     this.clearBody();
+
     this.displayMonths = false;
     const dayOfMonth = [];
 
@@ -170,6 +183,96 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
         this.renderer.appendChild(another.nativeElement, td.nativeElement);
       }
     }
+
+    for (let i = 0; i < this.tbody.nativeElement.children.length; i++) {
+      for (let j = 0; j < this.tbody.nativeElement.children[i].children.length; j++) {
+        this.renderer.setStyle(this.tbody.nativeElement.children[i].children[0], 'color', '#fc6262');
+      }
+    }
+
+    this.handleScrolling( direction );
+  }
+
+  handleScrolling( direction ) {
+    if ( direction ) {
+      setTimeout( () => {
+        switch (direction) {
+          case 'down': this.setNavigatorWhileDown(); break;
+          case 'up': this.setNavigatorWhileUp(); break;
+          case 'right': this.setNavigatorWhileRight(); break;
+          case 'left': this.setNavigatorWhileLeft(); break;
+        }
+      }, 10 );
+    }
+  }
+
+  setNavigatorWhileDown() {
+    for ( let i = 0; i < this.tbody.nativeElement.children.length; i++ ) {
+      this.keyboardNavLine = this.tbody.nativeElement.children[ i ];
+      if ( this.hasContentOnCurrentLine() && this.hasContentOnCurrentLineInNavigatorPosition()) {
+        this.setNavigator( this.navigator );
+        return;
+      }
+    }
+  }
+
+  hasContentOnCurrentLineInNavigatorPosition() {
+    const next = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex ];
+    return (next.children[ this.navigator ].innerHTML.trim().length > 0) &&
+      (next.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+  }
+
+  setNavigatorWhileUp() {
+    for ( let i = this.tbody.nativeElement.children.length - 1; i >= 0; i-- ) {
+      this.keyboardNavLine = this.tbody.nativeElement.children[ i ];
+      if ( this.hasContentOnCurrentLine() && this.hasContentOnCurrentLineInNavigatorPosition() ) {
+        this.setNavigator( this.navigator );
+        return;
+      }
+    }
+  }
+
+  setNavigatorWhileRight() {
+    this.keyboardNavLine = this.tbody.nativeElement.children[ 0 ];
+    for ( let i = 0; i < this.keyboardNavLine.children.length; i++) {
+      if (this.hasContentOnCell(this.keyboardNavLine.children[i])) {
+        this.navigator = i;
+        this.setNavigator(this.navigator);
+        return;
+      }
+    }
+  }
+
+  setNavigatorWhileLeft() {
+    let index = this.tbody.nativeElement.children.length - 1;
+    this.keyboardNavLine = this.tbody.nativeElement.children[this.tbody.nativeElement.children.length - 1];
+
+    while (this.hasContentOnCurrentLine() === false) {
+      this.keyboardNavLine = this.tbody.nativeElement.children[ index ];
+      index--;
+    }
+
+    for ( let i = this.keyboardNavLine.children.length - 1; i >= 0; i--) {
+      if (this.hasContentOnCell(this.keyboardNavLine.children[i])) {
+        this.navigator = i;
+        this.setNavigator(this.navigator);
+        return;
+      }
+    }
+  }
+
+  hasContentOnCell(cell) {
+    return (cell.innerHTML.trim().length > 0) && (cell.innerHTML.trim() !== '&nbsp;');
+  }
+
+  hasContentInSomeItemOfLine( line ) {
+    for (let i = 0; i < line.children.length; i++) {
+      if ((line.children[ i ].innerHTML.trim().length > 0) && (line.children[ i ].innerHTML.trim() !== '&nbsp;')) {
+        this.initNavigator = i;
+        return true;
+      }
+    }
+    return false;
   }
 
   createClickListenerDay(cell, day) {
@@ -193,6 +296,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleKeyDown( $event ) {
+    $event.preventDefault();
     switch ($event.keyCode) {
       case KeyEvent.ARROWRIGHT: this.handleArrowRight(); break;
       case KeyEvent.ARROWLEFT: this.handleArrowLeft(); break;
@@ -203,71 +307,104 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleArrowDown() {
-      if (!this.hasContentOnNextLine()) {
-        return;
-      }
-      if ( this.lineIndex !== this.tbody.nativeElement.children.length - 1 ) {
-        this.handleKeyBoardNav();
-        this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
-        this.navigateDown();
-      }
+    if (!this.hasContentOnNextLine() || !this.hasContentOnNextLineInNavigatorPosition()) {
+      this.increaseDate();
+      return;
+    }
+    this.handleKeyBoardNav();
+    this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
+    this.navigateDown();
   }
 
   handleArrowUp() {
-    if (!this.hasContentOnPreviousLine()) {
+    if (!this.hasContentOnPreviousLine() || !this.hasContentOnPreviousLineInNavigatorPosition()) {
+      this.decreaseDate();
       return;
     }
-    if ( this.lineIndex !== 0 ) {
-      this.handleKeyBoardNav();
-      this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
-      this.navigateUp();
-    }
+    this.handleKeyBoardNav();
+    this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
+    this.navigateUp();
+  }
+
+  hasContentOnNextLineInNavigatorPosition() {
+    const next = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
+    return (next.children[ this.navigator ].innerHTML.trim().length > 0) &&
+      (next.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+  }
+
+  hasContentOnPreviousLineInNavigatorPosition() {
+    const next = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
+    return (next.children[ this.navigator ].innerHTML.trim().length > 0) &&
+      (next.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
   }
 
   handleArrowLeft() {
-    if (this.hasContentOnPreviousCellFirstLine()) {
-      if ( this.isFirstCell() ) {
-        return this.setNavigatorToNewLineBackward();
-      }
-      this.handleKeyBoardNav();
-      this.navigateLeft();
+    if (!this.hasContentOnPreviousCellFirstLine()) {
+      this.handleChangeDateValuesDecrease();
+      this.generateDays('left');
+      return;
     }
+    if ( this.isFirstCell() ) {
+      return this.setNavigatorToNewLineBackward();
+    }
+    this.handleKeyBoardNav();
+    this.navigateLeft();
+  }
+
+  handleArrowRight() {
+    if ( (!this.hasContentOnNextCell())) {
+      this.handleChangeDateValuesIncrease();
+      this.generateDays('right');
+      return;
+    }
+    if ( this.isLastCell() ) {
+      return this.setNavigatorToNewLineForward();
+    }
+    this.handleKeyBoardNav();
+    this.navigateRight();
   }
 
   hasContentOnNextLine() {
+    if ( (this.keyboardNavLine.sectionRowIndex === this.tbody.nativeElement.children.length - 1) ) {
+      return false;
+    }
     const line = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex + 1 ];
-    return (line.children[ this.navigator ].innerHTML.trim().length > 0) &&
-      (line.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+    return this.hasContentInSomeItemOfLine( line );
   }
 
   hasContentOnPreviousLine() {
+    if ( (this.keyboardNavLine.sectionRowIndex === 0) ) {
+      return false;
+    }
     const line = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
-    return (line.children[ this.navigator ].innerHTML.trim().length > 0) &&
-      (line.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+    return this.hasContentInSomeItemOfLine( line );
+  }
+
+  hasContentOnCurrentLine() {
+    const line = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex];
+    return this.hasContentInSomeItemOfLine( line );
   }
 
   hasContentOnPreviousCellFirstLine() {
-    if ( this.lineIndex === 0 ) {
+    if ((this.keyboardNavLine.sectionRowIndex === 0) && (this.navigator === 0)) {
+      return false;
+    }
+    if ( this.keyboardNavLine.sectionRowIndex === 0 ) {
       return this.keyboardNavLine.children[ this.navigator - 1 ].innerHTML.trim().length > 0;
     }
     return true;
   }
 
   hasContentOnNextCell() {
+    if ( this.navigator === this.keyboardNavLine.children.length - 1 ) {
+      if (!this.hasContentOnNextLine()) {
+        return false;
+      }
+    }
     if (!this.keyboardNavLine.children[ this.navigator + 1 ]) {
       return true;
     }
     return this.keyboardNavLine.children[ this.navigator + 1 ].innerHTML.trim().length > 0;
-  }
-
-  handleArrowRight() {
-    if (this.hasContentOnNextCell()) {
-      if ( this.isLastCell() ) {
-        return this.setNavigatorToNewLineForward();
-      }
-      this.handleKeyBoardNav();
-      this.navigateRight();
-    }
   }
 
   navigateLeft() {
@@ -383,15 +520,16 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
       this.month = index;
       this.generateDays();
+      this.initiliazeNavigator();
     });
   }
 
   markToday(day, cell) {
-    if ((day === this.today) && (this.month === new Date().getMonth())) {
+    if ( (day === this.today) && (this.month === new Date().getMonth() )
+      && (this.year === new Date().getFullYear()) ) {
       this.renderer.addClass(cell.nativeElement, 'today');
       this.renderer.addClass(cell.nativeElement, 'selected');
       this.todayIndex = cell;
-      this.loadNavigator();
     }
     this.removeSelectedDay();
   }
@@ -407,11 +545,21 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
         line = new ElementRef( this.renderer.createElement('tr'));
       }
       const cell = new ElementRef(this.renderer.createElement('td'));
+      this.handleSelectedMonth(i, line, cell);
       this.createClickListenerMonth(cell, i);
       cell.nativeElement.innerHTML = this.months[i].initials;
+
       this.renderer.setStyle(line.nativeElement, 'height', '65px');
       this.renderer.appendChild(line.nativeElement, cell.nativeElement);
       this.renderer.appendChild(this.tbody.nativeElement, line.nativeElement);
+    }
+  }
+
+  handleSelectedMonth(index, line, cell) {
+    if (index === this.month) {
+      this.keyboardNavLine = line.nativeElement;
+      this.navigator = index;
+      this.renderer.addClass(cell.nativeElement, 'selected');
     }
   }
 
@@ -437,6 +585,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
         return;
       }
     }
+  }
+
+  initiliazeNavigator() {
+    this.keyboardNavLine = this.tbody.nativeElement.children[0];
+    this.hasContentOnCurrentLine();
+    this.setNavigator(this.initNavigator);
   }
 
   loadNavigator( cell? ) {

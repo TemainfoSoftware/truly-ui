@@ -1,8 +1,15 @@
 <div #wrapper class="wrapper-calendar" tabindex="-1">
   <div class="header-calendar">
-    <span *ngIf="!displayMonths" (click)="changeYear()">{{months[month].name}}  {{year}}</span>
-    <span *ngIf="displayMonths">{{year}}</span>
-    <span (click)="getToday()">TODAY</span>
+    <div class="date">
+      <div *ngIf="!displayMonths">
+        <span (click)="changeYear()">{{months[month].name}}  {{year}}</span>
+      </div>
+      <div *ngIf="displayMonths"><span>{{year}}</span></div>
+    </div>
+    <div class="arrows">
+      <label  (click)="decreaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-up"></i></label>
+      <label  (click)="increaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-down"></i></label>
+    </div>
   </div>
   <table #table class="ui-calendar" border="0">
     <thead *ngIf="!displayMonths">
@@ -12,4 +19,7 @@
     </thead>
     <tbody #tbody align="right"></tbody>
   </table>
+  <div class="footer-calendar" (click)="getToday()">
+    <span>TODAY</span>
+  </div>
 </div>

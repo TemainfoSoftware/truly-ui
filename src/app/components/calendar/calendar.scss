@@ -1,6 +1,7 @@
 .wrapper-calendar {
   width: 260px;
   border: 1px solid #d6d6d6;
+  outline: none;
 }
 
 .decrease {
@@ -21,6 +22,17 @@
   color: #7a7a7a;
 }
 
+.header-calendar span:first-child {
+  padding: 5px;
+  transition: background ease-in-out 100ms;
+}
+
+.header-calendar span:first-child:hover {
+  background-color: #e3e3e3;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+}
+
 .header-calendar span:last-child {
   position: relative;
   float: right;
@@ -31,31 +43,48 @@
 
 .ui-calendar {
   position: relative;
-  padding: 20px;
+  padding: 2.5px;
 }
 
 .today {
+  color: #66CC99 !important;
+  font-weight: bold;
+}
+
+.navigator {
+  outline: 2px solid #d6d6d6;
+  font-weight: 700;
+}
+
+.selected {
   background-color: #66CC99;
   color: #fff !important;
-  -webkit-border-radius: 25%;
+  font-weight: normal !important;
 }
 
 table {
   width: 100%;
   position: absolute;
+  border-collapse: separate;
+  table-layout:fixed
 }
 
 table td {
   font-family: 'Lato', sans-serif;
   font-size: 1em;
   color: #616161;
+  overflow: hidden;
 }
 
-/*table td:hover {
+table td:hover {
   cursor: pointer;
-  -webkit-border-radius: 25%;
-  border: 1px solid #d6d6d6;
-}*/
+  outline: 1px solid #e2e2e2;
+}
+
+table td:focus {
+  cursor: pointer;
+  background-color: #00c0ef;
+}
 
 thead th {
   text-align: center;

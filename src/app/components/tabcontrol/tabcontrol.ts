@@ -171,7 +171,6 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     setTabProperties() {
       this.tabs.forEach( ( item ) => {
-        item.background = this.background;
         item.height = this.height;
       } );
     }

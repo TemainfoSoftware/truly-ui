@@ -21,7 +21,7 @@
               </div>
               <div class="col-md-6">
               <h5>Today Button</h5>
-              <tl-calendar [todayButton]="true"></tl-calendar>
+              <tl-calendar (selectDay)="onSelect($event)" [todayButton]="true"></tl-calendar>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-calendar [todayButton]="true"></tl-calendar>

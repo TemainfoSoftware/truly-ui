@@ -20,15 +20,6 @@
   user-select: none;
 }
 
-
-.decrease {
-  float: left;
-}
-
-.increase {
-  float: right;
-}
-
 .header-calendar {
   position: relative;
   display: -webkit-inline-box;
@@ -40,48 +31,73 @@
   line-height: 45px;
   color: #7a7a7a;
   border-bottom: 1px solid #d6d6d6;
-}
 
-.header-calendar .date {
-  width: 200px;
-  & span {
-    padding: 5px;
+  >.date {
+    width: 200px;
+    & span {
+      padding: 5px;
+      transition: background ease-in-out 100ms;
+    }
+    & span:hover {
+      background: #e3e3e3;
+      cursor: pointer;
+    }
+    &:first-child {
+      padding-left: 5px;
+    }
+  }
+
+  > .arrows {
+    user-select: none;
+    text-align: center;
+    position: absolute;
+    width: 60px;
     transition: background ease-in-out 100ms;
-  }
-  & span:hover {
-    background: #e3e3e3;
-  }
-  &:first-child {
-    padding-left: 5px;
-  }
-}
-
-.header-calendar span {
-  &:hover {
-    cursor: pointer;
+    > label {
+      &:first-child {
+        padding-right: 5px;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 }
 
-.header-calendar .arrows {
-  user-select: none;
-  text-align: center;
-  position: absolute;
-  width: 60px;
-  transition: background ease-in-out 100ms;
-}
-
-.header-calendar .arrows label{
-  &:first-child {
-    padding-right: 5px;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.ui-calendar {
+table {
+  width: 100%;
+  border-collapse: separate;
+  table-layout:fixed;
   position: relative;
   padding: 2.5px;
+
+   thead {
+    width: 100%;
+    font-size: 0.8em;
+    th {
+      text-align: center;
+      color: #a6a6a6;
+      &:first-child {
+        color: #fc6262;
+      }
+    }
+  }
+
+  tr td {
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+    color: #616161;
+    text-align: center;
+    padding: 5px;
+    overflow: hidden;
+    &:first-child {
+      color: #fc6262;
+    }
+    &:hover {
+      cursor: pointer;
+      outline: 1px solid #e2e2e2;
+    }
+  }
 }
 
 .today {
@@ -98,46 +114,4 @@
   background-color: #66CC99;
   color: #fff !important;
   font-weight: normal !important;
-}
-
-table {
-  width: 100%;
-  position: absolute;
-  border-collapse: separate;
-  table-layout:fixed
-}
-
-table td {
-  font-family: 'Lato', sans-serif;
-  font-size: 1em;
-  color: #616161;
-  overflow: hidden;
-}
-
-table td:hover {
-  cursor: pointer;
-  outline: 1px solid #e2e2e2;
-}
-
-table td:focus {
-  cursor: pointer;
-  background-color: #00c0ef;
-}
-
-thead th {
-  text-align: center;
-  color: #a6a6a6;
-  &:first-child {
-    color: #fc6262;
-  }
-}
-
-thead {
-  width: 100%;
-  font-size: 0.8em;
-}
-
-td {
-  text-align: center;
-  padding: 5px;
 }

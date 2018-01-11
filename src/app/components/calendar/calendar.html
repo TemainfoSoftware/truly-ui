@@ -1,18 +1,28 @@
 <div #wrapper class="wrapper-calendar" tabindex="-1">
   <div class="header-calendar">
     <div class="date">
-      <div *ngIf="!displayMonths">
-        <span (click)="changeYear()">{{months[month].name}}  {{year}}</span>
+      <div *ngIf="!displayMonths && !displayYears">
+        <span (click)="changeMonth()">{{months[month].name}}  {{year}}</span>
       </div>
-      <div *ngIf="displayMonths"><span>{{year}}</span></div>
+      <div *ngIf="displayMonths && !displayYears"><span (click)="changeYear()">{{year}}</span></div>
+      <div *ngIf="displayYears"><span>{{rangeYear[0]}} - {{rangeYear[1]}}</span></div>
     </div>
     <div class="arrows">
       <label  (click)="decreaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-up"></i></label>
       <label  (click)="increaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-down"></i></label>
     </div>
+    <div class="arrows">
+      <label  (click)="decreaseYearRange()" *ngIf="displayYears"><i class="ion-chevron-up"></i></label>
+      <label  (click)="increaseYearRange()" *ngIf="displayYears"><i class="ion-chevron-down"></i></label>
+    </div>
+    <div class="arrows">
+      <label  (click)="decreaseYear()" *ngIf="displayMonths"><i class="ion-chevron-up"></i></label>
+      <label  (click)="increaseYear()" *ngIf="displayMonths"><i class="ion-chevron-down"></i></label>
+    </div>
   </div>
-  <table #table class="ui-calendar" border="0">
-    <thead *ngIf="!displayMonths">
+
+  <table #table border="0">
+    <thead *ngIf="!displayMonths && !displayYears">
       <tr>
         <th *ngFor="let item of dayOfWeek">{{item}}</th>
       </tr>

@@ -20,5 +20,8 @@
  SOFTWARE.
  */
 export const dataEvents = [
-
+  {
+    name: 'selectDay',
+    description: 'Dispatched when day cell is clicked.',
+  },
 ];

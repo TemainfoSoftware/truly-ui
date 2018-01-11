@@ -20,5 +20,11 @@
  SOFTWARE.
  */
 export const dataProperties = [
-
-  ];
+  {
+    name: 'todayButton',
+    type: 'boolean',
+    default: 'false',
+    description: 'Displays a footer with a today button.',
+    options: 'true | false'
+  },
+];

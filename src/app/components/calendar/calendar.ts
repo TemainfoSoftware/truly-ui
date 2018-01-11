@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, AfterViewInit, Renderer2, ViewChild, ChangeDetectorRef, Output,
+  Component, ElementRef, AfterViewInit, Renderer2, ViewChild, Output,
   EventEmitter, Input,
 } from '@angular/core';
 
@@ -172,7 +172,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       }
       const td = new ElementRef( this.renderer.createElement('td'));
       td.nativeElement.innerHTML = dayOfMonth[day].day;
-      this.createClickListenerDay(td, dayOfMonth[day].day);
+      this.createClickListenerDay(td);
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
       this.markToday( dayOfMonth[ day ].day, td );
     }
@@ -277,9 +277,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     return false;
   }
 
-  createClickListenerDay(cell, day) {
+  createClickListenerDay(cell) {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.selectDay.emit({'year': this.year, 'month': this.month, 'day': day});
       this.removeTodaySelected();
       this.setSelectedDay( cell.nativeElement, $event.target );
     });
@@ -688,6 +687,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.removeSelectedDay();
     this.removeNavigator( cell );
     this.selectedDay = target ? target : cell;
+    this.selectDay.emit({'year': this.year, 'month': this.month, 'day': parseInt(cell.innerHTML, 10)});
   }
 
   removeSelectedDay() {

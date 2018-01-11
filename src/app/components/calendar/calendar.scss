@@ -90,6 +90,8 @@ table {
     text-align: center;
     padding: 5px;
     overflow: hidden;
+    animation-name: creating;
+    animation-duration: 200ms;
     &:first-child:not(.notDay) {
       color: #fc6262;
     }
@@ -98,6 +100,14 @@ table {
       outline: 1px solid #e2e2e2;
     }
   }
+}
+
+@keyframes creating {
+  0%   {opacity:0; transform: scale(0);}
+  25%  {opacity:0.25; transform: scale(0.25);}
+  50%  {opacity:0.5; transform: scale(0.5);}
+  75%  {opacity:0.75; transform: scale(0.75);}
+  100% {opacity:1; transform: scale(1);}
 }
 
 .today {

@@ -600,10 +600,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   increaseYear() {
     this.year++;
+    this.changeMonth();
   }
 
   decreaseYear() {
     this.year--;
+    this.changeMonth();
   }
 
   increaseYearRange() {

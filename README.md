@@ -59,7 +59,30 @@ We assume that you have already installed the following packages at least and ar
     ]
     ```
     
+3. Configure CoreModule on your AppModule:
+
+   ```typescript
+   import { BrowserModule } from '@angular/platform-browser';
+   import { FormsModule } from '@angular/forms';
+   import { NgModule } from '@angular/core';
+   
+   import { AppComponent } from './app.component';
+   
+   import { CoreModule } from 'truly-ui/components/core'; //CoreModule
     
+   @NgModule({
+     declarations: [
+       AppComponent
+     ],
+     imports: [
+       BrowserModule,
+       CoreModule.forRoot({theme: 'default'}) // Configurations
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+   })
+   export class AppModule { }
+   ```  
     
     
     

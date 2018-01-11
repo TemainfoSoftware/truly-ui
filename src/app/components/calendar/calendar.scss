@@ -90,7 +90,7 @@ table {
     text-align: center;
     padding: 5px;
     overflow: hidden;
-    &:first-child {
+    &:first-child:not(.notDay) {
       color: #fc6262;
     }
     &:hover {

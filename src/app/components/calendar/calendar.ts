@@ -49,7 +49,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   public displayYears = false;
 
-  private year = 2018;
+  private year;
 
   private month = 0;
 
@@ -91,12 +91,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   constructor( public calendar: ElementRef, private renderer: Renderer2, private change: ChangeDetectorRef,
                tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
     super( tabIndexService, idService, nameService );
+    this.today = new Date().getDate();
+    this.year = new Date().getFullYear();
   }
 
   ngAfterViewInit() {
     this.setElement( this.calendar, 'calendar' );
     this.createKeyboardListenerDay();
-    this.today = new Date().getDate();
     this.generateDays();
     this.initializeNavigator();
     setTimeout(() => {
@@ -580,6 +581,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
       cell.nativeElement.innerHTML = this.months[i].initials;
       this.renderer.setAttribute(cell.nativeElement, 'cell', '' + i);
+      this.renderer.addClass(cell.nativeElement, 'notDay');
       this.createClickListenerMonth(cell, i);
       this.handleSelectedMonth(i, line, cell);
       this.renderer.setStyle(line.nativeElement, 'height', '65px');
@@ -629,6 +631,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       cell.nativeElement.innerHTML = previous ? (this.year - 11) + i : this.year + i;
       this.createClickListenerYear( cell );
       this.renderer.setStyle( line.nativeElement, 'height', '65px' );
+      this.renderer.addClass(cell.nativeElement, 'notDay');
       this.renderer.appendChild( line.nativeElement, cell.nativeElement );
       this.renderer.appendChild( this.tbody.nativeElement, line.nativeElement );
       this.handleRangeYear(i, previous);

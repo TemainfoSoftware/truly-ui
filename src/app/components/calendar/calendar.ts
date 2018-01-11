@@ -38,7 +38,7 @@ import { KeyEvent } from '../core/enums/key-events';
 export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   @Input() todayButton = false;
-  
+
   @ViewChild('tbody') tbody;
 
   @ViewChild('table') table;
@@ -90,7 +90,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   private dayOfWeek =
     ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  constructor( public calendar: ElementRef, private renderer: Renderer2, private change: ChangeDetectorRef,
+  constructor( public calendar: ElementRef, private renderer: Renderer2,
                tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
     super( tabIndexService, idService, nameService );
     this.today = new Date().getDate();

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, AfterViewInit, Renderer2, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, Output,
-  EventEmitter,
+  Component, ElementRef, AfterViewInit, Renderer2, ViewChild, ChangeDetectorRef, Output,
+  EventEmitter, Input,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -37,6 +37,8 @@ import { KeyEvent } from '../core/enums/key-events';
 } )
 export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
+  @Input() todayButton = false;
+  
   @ViewChild('tbody') tbody;
 
   @ViewChild('table') table;

@@ -29,7 +29,7 @@
     </thead>
     <tbody #tbody align="right"></tbody>
   </table>
-  <div class="footer-calendar" (click)="getToday()">
+  <div *ngIf="todayButton" class="footer-calendar" (click)="getToday()">
     <span>TODAY</span>
   </div>
 </div>

@@ -12,6 +12,7 @@ export * from './components/input/index';
 export * from './components/listbox/index';
 export * from './components/modal/index';
 export * from './components/multiselect/index';
+export * from './components/navigator/index';
 export * from './components/overlay/index';
 export * from './components/panelgroup/index';
 export * from './components/radiobutton/index';

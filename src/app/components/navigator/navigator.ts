@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 
 @Component( {
@@ -30,7 +30,7 @@ import { NavigatorManagerService } from './services/navigator-manager.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [NavigatorManagerService]
 } )
-export class TlNavigator {
+export class TlNavigator implements OnInit{
 
   @Input('width') width = '125px';
 
@@ -50,10 +50,12 @@ export class TlNavigator {
 
   public description = '';
 
-  constructor(private navigatorManager: NavigatorManagerService) {
-    this.navigatorManager.setDate(this.date);
+  constructor(private navigatorManager: NavigatorManagerService) {}
+
+  ngOnInit() {
     this.navigatorManager.setType(this.type);
     this.navigatorManager.setRange(this.range);
+    this.navigatorManager.setDate(this.date);
     this.setDescription();
   }
 

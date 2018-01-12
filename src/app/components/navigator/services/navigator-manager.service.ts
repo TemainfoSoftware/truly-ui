@@ -20,14 +20,11 @@
     SOFTWARE.
 */
 
-import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Injectable } from '@angular/core';
 import { MonthsDescription } from '../consts/months-description';
 
 @Injectable()
-export class NavigatorManagerService implements OnInit {
-
-  public descriptionEmitter = new BehaviorSubject(this.getDescription());
+export class NavigatorManagerService {
 
   private currentMonth: number;
 
@@ -39,15 +36,9 @@ export class NavigatorManagerService implements OnInit {
 
   private date = new Date();
 
-  private type = 'monthyear';
+  private type: string;
 
-  private range = 11;
-
-  constructor() {}
-
-  ngOnInit() {
-    this.descriptionEmitter.next( this.getDescription() );
-  }
+  private range: number;
 
   previous() {
     this.managerPreviousAction();
@@ -98,7 +89,6 @@ export class NavigatorManagerService implements OnInit {
       case 'year': { this.yearTypePrevious(); break; }
       case 'rangeyear': { this.rangeYearTypePrevious(); break; }
     }
-    this.descriptionEmitter.next( this.getDescription() );
   }
 
   private managerNextAction() {
@@ -107,8 +97,6 @@ export class NavigatorManagerService implements OnInit {
       case 'year': { this.yearTypeNext(); break; }
       case 'rangeyear': { this.rangeYearTypeNext(); break; }
     }
-
-    this.descriptionEmitter.next( this.getDescription() );
   }
 
   private getYearDescription() {

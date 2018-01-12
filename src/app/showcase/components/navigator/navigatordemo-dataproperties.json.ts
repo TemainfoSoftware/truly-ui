@@ -33,5 +33,12 @@ export const dataProperties = [
     default: '11',
     description: 'Range of values for range types.',
     options: 'any number'
+  },
+  {
+    name: 'withBorder',
+    type: 'boolean',
+    default: 'true',
+    description: 'Completely removes the navigator borders.',
+    options: 'true | false'
   }
 ];

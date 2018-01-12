@@ -37,6 +37,16 @@
             </div>
 
           </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Without Border</h5>
+              <tl-navigator [withBorder]="false"></tl-navigator>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-navigator [withBorder]="false"></tl-navigator>
+</textarea>
+            </div>
+          </app-card>
 
         </app-showcase-card>
         <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">

@@ -25,3 +25,4 @@ export * from './components/core/directives/index';
 export * from './components/modal/modal.service';
 export * from './components/dialog/dialog.service';
 export * from './components/form/form.service';
+export * from './components/navigator/services/navigator.service';

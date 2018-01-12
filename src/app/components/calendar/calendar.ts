@@ -40,7 +40,7 @@ import { NavigatorService } from '../navigator/services/navigator.service';
 } )
 export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
-  @Input() todayButton = false;
+  @Input() todayButton = true;
 
   @ViewChild('tbody') tbody;
 
@@ -130,10 +130,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleChangeDateValuesDecrease() {
+    this.navigatorService.setNavigator(this.tlnavigator.toArray()[0]);
     this.navigatorService.previous();
   }
 
   handleChangeDateValuesIncrease() {
+    this.navigatorService.setNavigator(this.tlnavigator.toArray()[0]);
     this.navigatorService.next();
   }
 
@@ -553,7 +555,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleRemoveClassNavigateGoingUp( index ) {
-    console.log('lineIndex', this.lineIndex);
     const previousLine = this.tbody.nativeElement.children[ this.lineIndex + 1 ];
     if ( (previousLine.children[ index ]) && this.hasNavigator( previousLine.children[ index ] ) ) {
       this.renderer.removeClass( previousLine.children[ index ], 'navigator' );
@@ -561,7 +562,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleRemoveClassNavigateGoingDown( index ) {
-    console.log('lineIndex', this.lineIndex);
     const nextLine = this.tbody.nativeElement.children[ this.lineIndex - 1 ];
     if ( (nextLine.children[ index ]) && this.hasNavigator( nextLine.children[ index ] ) ) {
       this.renderer.removeClass( nextLine.children[ index ], 'navigator' );
@@ -590,6 +590,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.renderer.addClass(cell.nativeElement, 'today');
       this.renderer.addClass(cell.nativeElement, 'selected');
       this.todayIndex = cell;
+      this.selectDay.emit(
+        {
+          'year': this.year,
+          'month': this.month,
+          'day': this.today,
+          'fullDate': new Date(this.year, this.month, this.today)
+      });
     }
     this.removeSelectedDay();
   }
@@ -704,7 +711,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.removeSelectedDay();
     this.removeNavigator( cell );
     this.selectedDay = target ? target : cell;
-    this.selectDay.emit({'year': this.year, 'month': this.month, 'day': parseInt(cell.innerHTML, 10)});
+    this.selectDay.emit(
+      {
+        'year': this.year,
+        'month': this.month,
+        'day': parseInt(cell.innerHTML, 10),
+        'fullDate': new Date(this.year, this.month, parseInt(cell.innerHTML, 10))
+      });
   }
 
   removeSelectedDay() {

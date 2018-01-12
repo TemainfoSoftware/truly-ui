@@ -31,6 +31,7 @@ export class NavigatorService {
   private currentNavigator: TlNavigator;
 
   setNavigator(navigator: TlNavigator) {
+    this.navigatorList = [];
     this.navigatorList.push(navigator);
     this.navigator(0);
   }
@@ -48,7 +49,7 @@ export class NavigatorService {
     if (!this.hasItemInNavigatorList()) {
       return new Error( 'There are no navigators.' );
     }
-
+    
     this.currentNavigator.onClickNext();
   }
 

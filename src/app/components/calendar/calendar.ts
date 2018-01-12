@@ -76,6 +76,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   private initNavigator;
 
+  private direction;
+
   private rangeYear = {};
 
   private months =
@@ -119,12 +121,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   decreaseDate($event?) {
     this.setDateOfNavigator($event);
-    this.generateDays( 'up' );
+    this.generateDays();
   }
 
   increaseDate($event?) {
     this.setDateOfNavigator($event);
-    this.generateDays( 'down' );
+    this.generateDays();
   }
 
   handleChangeDateValuesDecrease() {
@@ -145,12 +147,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth();
     this.today = new Date().getDate();
+    this.direction = 'none';
     this.setDateNavigator();
     this.generateDays();
     this.loadNavigator();
   }
 
-  generateDays( direction?: string ) {
+  generateDays() {
     this.clearBody();
 
     this.displayMonths = false;
@@ -198,13 +201,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       }
     }
 
-    this.handleScrolling( direction );
+    this.handleScrolling();
   }
 
-  handleScrolling( direction ) {
-    if ( direction ) {
+  handleScrolling() {
+    if ( this.direction ) {
       setTimeout( () => {
-        switch (direction) {
+        switch (this.direction) {
           case 'down': this.setNavigatorWhileDown(); break;
           case 'up': this.setNavigatorWhileUp(); break;
           case 'right': this.setNavigatorWhileRight(); break;
@@ -320,6 +323,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   handleArrowDown() {
     if ( !this.hasContentOnNextLine() || !this.hasContentOnNextLineInNavigatorPosition() ) {
       if (!this.displayYearOrMonths()) {
+        this.direction = 'down';
+        this.lineIndex = this.keyboardNavLine.sectionRowIndex;
         this.handleChangeDateValuesIncrease();
       }
       this.handleChangeYearWhileMonths(this.year + 1);
@@ -334,6 +339,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   handleArrowUp() {
     if (!this.hasContentOnPreviousLine() || !this.hasContentOnPreviousLineInNavigatorPosition()) {
       if (!this.displayYearOrMonths()) {
+        this.direction = 'up';
+        this.lineIndex = this.keyboardNavLine.sectionRowIndex;
         this.handleChangeDateValuesDecrease();
       }
       this.handleChangeYearWhileMonths(this.year - 1);
@@ -341,7 +348,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       return;
     }
     this.handleKeyBoardNav();
-    this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1 ];
+    this.keyboardNavLine = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex - 1  ];
     this.navigateUp();
   }
 
@@ -372,8 +379,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   handleArrowLeft() {
     if (!this.hasContentOnPreviousCellFirstLine() && !this.displayYearOrMonths()) {
+      this.direction = 'left';
       this.handleChangeDateValuesDecrease();
-      this.generateDays('left');
       return;
     }
     if ( this.isFirstCell()) {
@@ -389,8 +396,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   handleArrowRight() {
     if ( !this.hasContentOnNextCell() && !this.displayYearOrMonths()) {
+      this.direction = 'right';
       this.handleChangeDateValuesIncrease();
-      this.generateDays('right');
       return;
     }
     if ( this.isLastCell()) {
@@ -447,24 +454,28 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.lineIndex = this.keyboardNavLine.sectionRowIndex;
     const currentCell = this.getCellSelected();
     const indexNav = (this.navigator !== undefined) ? this.navigator - 1 : currentCell - 1;
-    this.setNavigator( indexNav, 'left' );
+    this.direction = 'left';
+    this.setNavigator( indexNav );
   }
 
   navigateUp() {
     this.lineIndex = this.keyboardNavLine.sectionRowIndex;
-    this.setNavigator( this.navigator, 'up' );
+    this.direction = 'up';
+    this.setNavigator( this.navigator );
   }
 
   navigateDown() {
     this.lineIndex = this.keyboardNavLine.sectionRowIndex;
-    this.setNavigator( this.navigator, 'down' );
+    this.direction = 'down';
+    this.setNavigator( this.navigator );
   }
 
   navigateRight() {
     this.lineIndex = this.keyboardNavLine.sectionRowIndex;
     const currentCell = this.getCellSelected();
     const indexNav = (this.navigator !== undefined) ? this.navigator + 1 : currentCell + 1;
-    this.setNavigator( indexNav, 'right' );
+    this.direction = 'right';
+    this.setNavigator( indexNav );
   }
 
   handleKeyBoardNav() {
@@ -520,17 +531,17 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     }
   }
 
-  setNavigator( index, direction? ) {
+  setNavigator( index ) {
     if ( this.keyboardNavLine.children[ index ] ) {
-      this.removeClass( index, direction );
+      this.removeClass( index );
       this.renderer.addClass( this.keyboardNavLine.children[ index ], 'navigator' );
       this.navigator = index;
     }
   }
 
-  removeClass( index, direction ) {
+  removeClass( index ) {
     let operator;
-    switch ( direction ) {
+    switch ( this.direction ) {
       case 'right': operator = index - 1; break;
       case 'left': operator = index + 1; break;
       case 'up': this.handleRemoveClassNavigateGoingUp( index ); return;
@@ -542,6 +553,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleRemoveClassNavigateGoingUp( index ) {
+    console.log('lineIndex', this.lineIndex);
     const previousLine = this.tbody.nativeElement.children[ this.lineIndex + 1 ];
     if ( (previousLine.children[ index ]) && this.hasNavigator( previousLine.children[ index ] ) ) {
       this.renderer.removeClass( previousLine.children[ index ], 'navigator' );
@@ -549,6 +561,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   handleRemoveClassNavigateGoingDown( index ) {
+    console.log('lineIndex', this.lineIndex);
     const nextLine = this.tbody.nativeElement.children[ this.lineIndex - 1 ];
     if ( (nextLine.children[ index ]) && this.hasNavigator( nextLine.children[ index ] ) ) {
       this.renderer.removeClass( nextLine.children[ index ], 'navigator' );
@@ -729,6 +742,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       if ( listTd[ i ].className.includes( 'selected' ) ) {
         this.keyboardNavLine = listTd[ i ].parentElement;
         this.navigator = listTd[ i ].cellIndex;
+        this.setNavigator(this.navigator);
         return;
       }
     }

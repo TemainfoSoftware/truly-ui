@@ -22,6 +22,12 @@
 export const dataEvents = [
   {
     name: 'selectDay',
+    parameters: [
+      { event: 'year', description: 'Full Year selected' },
+      { event: 'month', description: 'Number of month selected' },
+      { event: 'day', description: 'Number of day selected' },
+      { event: 'fullDate', description: 'Default format date' },
+    ],
     description: 'Dispatched when day cell is clicked.',
   },
 ];

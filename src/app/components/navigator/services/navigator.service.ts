@@ -49,7 +49,7 @@ export class NavigatorService {
     if (!this.hasItemInNavigatorList()) {
       return new Error( 'There are no navigators.' );
     }
-    
+
     this.currentNavigator.onClickNext();
   }
 

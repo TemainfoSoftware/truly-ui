@@ -1,0 +1,19 @@
+@mixin tl-navigator-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $divider: map_get($theme,divider);
+  $base-text: map_get(map_get($theme,base),text);
+  $hover-background: map_get(map_get($theme,hover),background);
+  $placeholder-text: map_get(map_get($theme,placeholder),text);
+
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+
+  $box-background: map_get(map_get($theme,box),background);
+  $box-text: map_get(map_get($theme,box),text);
+
+  $scrollbar-thumb: map_get(map_get($theme,scrollbar),thumb);
+  $warning-background:  map_get(map_get($theme,warning),background);
+
+
+}

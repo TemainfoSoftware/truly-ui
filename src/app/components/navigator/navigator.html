@@ -1,0 +1,20 @@
+<div class="tl-navigator">
+  <div class="ui-button"
+       tabindex="-1"
+       (click)="onClickPrevious()"
+       [ngStyle]="{height:height,lineHeight: height}">
+    <i class="ion-chevron-left"></i>
+  </div>
+  <div class="ui-navigator"
+       tabindex="-1"
+       (click)="onClickNavigator()"
+       [ngStyle]="{'max-width':width,height:height,lineHeight: height, width: width}">
+    {{description}}
+  </div>
+  <div class="ui-button"
+       tabindex="-1"
+       (click)="onClickNext()"
+       [ngStyle]="{height:height, lineHeight: height}">
+    <i class="ion-chevron-right"></i>
+  </div>
+</div>

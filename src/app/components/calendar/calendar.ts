@@ -21,7 +21,7 @@
  */
 import {
   Component, ElementRef, AfterViewInit, Renderer2, ViewChild, Output,
-  EventEmitter, Input,
+  EventEmitter, Input, QueryList, ViewChildren,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -29,6 +29,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
+import { TlNavigator } from '../navigator/navigator';
 
 @Component( {
   selector: 'tl-calendar',
@@ -47,9 +48,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChildren( TlNavigator ) tlnavigator: QueryList<TlNavigator>;
+
   public displayMonths = false;
 
   public displayYears = false;
+
+  public dateNavigator;
 
   private year;
 
@@ -69,7 +74,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   private initNavigator;
 
-  private rangeYear = [];
+  private rangeYear = {};
 
   private months =
     [
@@ -93,6 +98,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   constructor( public calendar: ElementRef, private renderer: Renderer2,
                tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
     super( tabIndexService, idService, nameService );
+    this.dateNavigator = new Date();
     this.today = new Date().getDate();
     this.year = new Date().getFullYear();
   }
@@ -107,32 +113,27 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     }, 1);
   }
 
-  decreaseDate() {
-    this.handleChangeDateValuesDecrease();
+  decreaseDate($event?) {
+    this.setDateOfNavigator($event);
     this.generateDays( 'up' );
   }
 
-  increaseDate() {
-    this.handleChangeDateValuesIncrease();
+  increaseDate($event?) {
+    this.setDateOfNavigator($event);
     this.generateDays( 'down' );
   }
 
   handleChangeDateValuesDecrease() {
-    if (this.month === 0) {
-      this.month = 11;
-      this.year--;
-    }else {
-      this.month--;
-    }
+    this.tlnavigator.toArray()[0].previous();
   }
 
   handleChangeDateValuesIncrease() {
-    if ( this.month === 11 ) {
-      this.month = 0;
-      this.year++;
-    } else {
-      this.month++;
-    }
+    this.tlnavigator.toArray()[0].next();
+  }
+
+  setDateOfNavigator(date) {
+    this.year = date.year;
+    this.month = date.month;
   }
 
   getToday() {
@@ -140,6 +141,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.year = new Date().getFullYear();
     this.month = new Date().getMonth();
     this.today = new Date().getDate();
+    this.setDateNavigator();
     this.generateDays();
     this.loadNavigator();
   }
@@ -222,6 +224,10 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     const next = this.tbody.nativeElement.children[ this.keyboardNavLine.sectionRowIndex ];
     return (next.children[ this.navigator ].innerHTML.trim().length > 0) &&
       (next.children[ this.navigator ].innerHTML.trim() !== '&nbsp;');
+  }
+
+  setDateNavigator() {
+    this.dateNavigator = new Date(this.year, this.month);
   }
 
   setNavigatorWhileUp() {
@@ -310,7 +316,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   handleArrowDown() {
     if ( !this.hasContentOnNextLine() || !this.hasContentOnNextLineInNavigatorPosition() ) {
       if (!this.displayYearOrMonths()) {
-        this.increaseDate();
+        this.handleChangeDateValuesIncrease();
       }
       this.handleChangeYearWhileMonths(this.year + 1);
       this.handleChangeRangeYearWhileYears('down');
@@ -324,7 +330,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   handleArrowUp() {
     if (!this.hasContentOnPreviousLine() || !this.hasContentOnPreviousLineInNavigatorPosition()) {
       if (!this.displayYearOrMonths()) {
-        this.decreaseDate();
+        this.handleChangeDateValuesDecrease();
       }
       this.handleChangeYearWhileMonths(this.year - 1);
       this.handleChangeRangeYearWhileYears('up');
@@ -337,13 +343,14 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   handleChangeRangeYearWhileYears(direction) {
     if (this.displayYears) {
-      direction === 'down' ? this.increaseYear() : this.decreaseYear();
+      direction === 'down' ? this.handleChangeDateValuesIncrease() : this.handleChangeDateValuesDecrease();
     }
   }
 
   handleChangeYearWhileMonths(year) {
     if (this.displayMonths) {
       this.year = year;
+      this.setDateNavigator();
     }
   }
 
@@ -484,6 +491,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   handleKeyEnter() {
     if (this.displayMonths) {
       this.month = parseInt(this.keyboardNavLine.children[ this.navigator ].getAttribute('cell'), 10);
+      this.setDateNavigator();
       this.generateDays();
       this.initializeNavigator();
       return;
@@ -492,6 +500,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     if (this.displayYears) {
       this.year = parseInt(this.keyboardNavLine.children[ this.navigator ].innerHTML, 10);
       this.changeMonth();
+      this.setDateNavigator();
       return;
     }
 
@@ -594,6 +603,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   createClickListenerMonth(cell, index) {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
       this.month = index;
+      this.setDateNavigator();
       this.generateDays();
       this.initializeNavigator();
     });
@@ -602,24 +612,26 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   increaseYear() {
     this.year++;
     this.changeMonth();
+    this.setDateNavigator();
   }
 
   decreaseYear() {
     this.year--;
     this.changeMonth();
+    this.setDateNavigator();
   }
 
-  increaseYearRange() {
-    this.year = this.rangeYear[1];
-    this.changeYear();
+  increaseYearRange($event) {
+    this.year = $event.rangeYear.end;
+    this.changeYear($event);
   }
 
-  decreaseYearRange() {
-    this.year = this.rangeYear[0];
-    this.changeYear('old');
+  decreaseYearRange($event) {
+    this.year = $event.rangeYear.start;
+    this.changeYear($event);
   }
 
-  changeYear(previous?) {
+  changeYear(range) {
     this.displayYears = true;
     this.displayMonths = false;
     this.tbody.nativeElement.innerHTML = '';
@@ -631,32 +643,20 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
         line = new ElementRef( this.renderer.createElement( 'tr' ) );
       }
       const cell = new ElementRef( this.renderer.createElement( 'td' ) );
-      cell.nativeElement.innerHTML = previous ? (this.year - 11) + i : this.year + i;
+      cell.nativeElement.innerHTML = range.rangeYear.start + i;
       this.createClickListenerYear( cell );
       this.renderer.setStyle( line.nativeElement, 'height', '65px' );
       this.renderer.addClass(cell.nativeElement, 'notDay');
       this.renderer.appendChild( line.nativeElement, cell.nativeElement );
       this.renderer.appendChild( this.tbody.nativeElement, line.nativeElement );
-      this.handleRangeYear(i, previous);
       this.handleSelectedYear(line, cell);
-    }
-  }
-
-  handleRangeYear(index, previous) {
-    if (index === 11) {
-      if (previous) {
-        this.rangeYear[0] = this.year - 11;
-        this.rangeYear[1] = this.year;
-      }else {
-        this.rangeYear[0] = this.year;
-        this.rangeYear[1] = this.year + 11;
-      }
     }
   }
 
   createClickListenerYear(cell) {
     this.renderer.listen(cell.nativeElement, 'click', event => {
       this.year = parseInt(cell.nativeElement.innerHTML, 10);
+      this.setDateNavigator();
       this.changeMonth();
     });
   }

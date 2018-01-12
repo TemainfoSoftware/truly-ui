@@ -1,26 +1,36 @@
 <div #wrapper class="wrapper-calendar" tabindex="-1">
   <div class="header-calendar">
     <div class="date">
-      <div *ngIf="!displayMonths && !displayYears">
-        <span (click)="changeMonth()">{{months[month].name}}  {{year}}</span>
-      </div>
-      <div *ngIf="displayMonths && !displayYears"><span (click)="changeYear()">{{year}}</span></div>
-      <div *ngIf="displayYears"><span>{{rangeYear[0]}} - {{rangeYear[1]}}</span></div>
+      <tl-navigator [type]="'monthyear'"
+                    *ngIf="!displayMonths && !displayYears"
+                    (clickPrevious)="decreaseDate($event)"
+                    (clickNext)="increaseDate($event)"
+                    [withBorder]="false"
+                    [date]="dateNavigator"
+                    (clickNavigator)="changeMonth()"
+                    [width]="'100px'">
+      </tl-navigator>
+      <tl-navigator [type]="'year'"
+                    [date]="dateNavigator"
+                    *ngIf="displayMonths && !displayYears"
+                    (clickPrevious)="decreaseYear($event)"
+                    [withBorder]="false"
+                    (clickNext)="increaseYear($event)"
+                    (clickNavigator)="changeYear($event)"
+                    [width]="'100px'">
+      </tl-navigator>
+      <tl-navigator [type]="'rangeyear'"
+                    *ngIf="displayYears"
+                    [date]="dateNavigator"
+                    [withBorder]="false"
+                    [range]="11"
+                    (clickPrevious)="decreaseYearRange($event)"
+                    (clickNext)="increaseYearRange($event)"
+                    [width]="'100px'">
+      </tl-navigator>
     </div>
-    <div class="arrows">
-      <label  (click)="decreaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-up"></i></label>
-      <label  (click)="increaseDate()" *ngIf="!displayMonths"><i class="ion-chevron-down"></i></label>
-    </div>
-    <div class="arrows">
-      <label  (click)="decreaseYearRange()" *ngIf="displayYears"><i class="ion-chevron-up"></i></label>
-      <label  (click)="increaseYearRange()" *ngIf="displayYears"><i class="ion-chevron-down"></i></label>
-    </div>
-    <div class="arrows">
-      <label  (click)="decreaseYear()" *ngIf="displayMonths"><i class="ion-chevron-up"></i></label>
-      <label  (click)="increaseYear()" *ngIf="displayMonths"><i class="ion-chevron-down"></i></label>
-    </div>
+    <span style="color: #66cc99; font-size: 1.2em; cursor:pointer;" (click)="getToday()">TODAY</span>
   </div>
-
   <table #table border="0">
     <thead *ngIf="!displayMonths && !displayYears">
       <tr>
@@ -29,7 +39,4 @@
     </thead>
     <tbody #tbody align="right"></tbody>
   </table>
-  <div *ngIf="todayButton" class="footer-calendar" (click)="getToday()">
-    <span>TODAY</span>
-  </div>
 </div>

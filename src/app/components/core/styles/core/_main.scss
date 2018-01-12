@@ -9,6 +9,7 @@
 @import "../../../modal/modal-theme";
 @import "../../../modal/container-modal/container-modal-theme";
 @import "../../../multiselect/multiselect-theme";
+@import "../../../navigator/navigator-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
@@ -26,6 +27,7 @@
   @include tl-listbox-theme($theme);
   @include tl-modal-theme($theme);
   @include tl-multiselect-theme($theme);
+  @include tl-navigator-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);

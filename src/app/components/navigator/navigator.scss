@@ -4,50 +4,35 @@ $border-radius: 3px;
 .tl-navigator{
   display: inline-flex;
   > .ui-navigator{
-    background-color: #FFFFFF;
     text-align: center;
     cursor: pointer;
-    color: #656565;
     font-weight: 500;
     font-size: 1.0em;
     font-family: 'Lato', sans-serif;
     transition: background-color 100ms linear;
     user-select: none;
-    &.ui-with-border{
-      border: 1px solid #C8C8C8;
-    }
     &.ui-with-border:hover, &.ui-with-border:focus{
       border-radius: 0;
     }
     &:hover, &:focus{
-      background-color: #F5F5F5;
       border-radius: $border-radius;
       outline: none;
     }
   }
   > .ui-button{
     width: 30px;
-    background-color: #FFFFFF;
     text-align: center;
     cursor: pointer;
-    color: #7A7A7A;
     transition: background-color 100ms linear;
     user-select: none;
-    &.ui-with-border{
-      border-top: 1px solid #C8C8C8;
-      border-bottom: 1px solid #C8C8C8;
-    }
     &:hover, &:focus{
-      background-color: #F5F5F5;
       outline: none;
     }
     &.ui-with-border:first-child {
-      border-left: 1px solid #C8C8C8;
       border-top-left-radius: $border-radius;
       border-bottom-left-radius: $border-radius;
     }
     &.ui-with-border:last-child{
-      border-right: 1px solid #C8C8C8;
       border-top-right-radius: $border-radius;
       border-bottom-right-radius: $border-radius;
     }

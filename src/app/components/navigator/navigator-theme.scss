@@ -1,19 +1,40 @@
 @mixin tl-navigator-theme($theme) {
 
   $borders: map_get($theme,borders);
-  $divider: map_get($theme,divider);
-  $base-text: map_get(map_get($theme,base),text);
   $hover-background: map_get(map_get($theme,hover),background);
-  $placeholder-text: map_get(map_get($theme,placeholder),text);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-
   $box-background: map_get(map_get($theme,box),background);
+  $box-hover: map_get(map_get($theme,box),hover);
   $box-text: map_get(map_get($theme,box),text);
 
-  $scrollbar-thumb: map_get(map_get($theme,scrollbar),thumb);
-  $warning-background:  map_get(map_get($theme,warning),background);
 
-
+  .tl-navigator{
+    > .ui-navigator{
+      background-color:  $box-background;
+      color: $box-text;
+      &.ui-with-border{
+        border: 1px solid $borders;
+      }
+      &:hover, &:focus{
+        background-color: $hover-background;
+      }
+    }
+    > .ui-button{
+      background-color: $box-background;
+      color: $box-text;
+      &.ui-with-border{
+        border-top: 1px solid $borders;
+        border-bottom: 1px solid $borders;
+      }
+      &:hover, &:focus{
+        background-color: $hover-background;
+        outline: none;
+      }
+      &.ui-with-border:first-child {
+        border-left: 1px solid $borders;
+      }
+      &.ui-with-border:last-child{
+        border-right: 1px solid $borders;
+      }
+    }
+  }
 }

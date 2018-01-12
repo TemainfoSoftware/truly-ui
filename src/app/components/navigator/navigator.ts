@@ -20,7 +20,10 @@
  SOFTWARE.
  */
 
-import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import {
+  Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit, SimpleChanges,
+  OnChanges, ChangeDetectorRef
+} from '@angular/core';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 
 @Component( {
@@ -50,7 +53,7 @@ export class TlNavigator implements OnInit {
 
   public description = '';
 
-  constructor(private navigatorManager: NavigatorManagerService) {}
+  constructor(public navigatorManager: NavigatorManagerService, public change: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.navigatorManager.setType(this.type);
@@ -58,7 +61,7 @@ export class TlNavigator implements OnInit {
     this.navigatorManager.setDate(this.date);
     this.setDescription();
   }
-
+  
   onClickPrevious() {
     this.navigatorManager.previous();
     this.setDescription();
@@ -74,10 +77,18 @@ export class TlNavigator implements OnInit {
   onClickNavigator() {
     this.clickNavigator.emit('');
   }
+  
+  next() {
+    this.onClickNext();
+  }
+  
+  previous() {
+    this.onClickPrevious();
+  }
 
   private setDescription() {
     this.description = this.navigatorManager.getDescription();
+    this.change.detectChanges();
   }
-
 }
 

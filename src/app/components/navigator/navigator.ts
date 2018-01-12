@@ -21,13 +21,7 @@
  */
 
 import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  ChangeDetectionStrategy,
-  OnInit,
-  ChangeDetectorRef
+  Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, SimpleChanges, OnChanges
 } from '@angular/core';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 
@@ -38,7 +32,7 @@ import { NavigatorManagerService } from './services/navigator-manager.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [NavigatorManagerService]
 } )
-export class TlNavigator implements OnInit {
+export class TlNavigator implements OnInit, OnChanges {
 
   @Input('width') width = '125px';
 
@@ -82,13 +76,19 @@ export class TlNavigator implements OnInit {
   }
 
   onClickNavigator() {
-    this.clickNavigator.emit('');
+    this.clickNavigator.emit(this.navigatorManager.getDataObject());
   }
-
 
   private setDescription() {
     this.description = this.navigatorManager.getDescription();
     this.change.detectChanges();
+  }
+
+  ngOnChanges(change: SimpleChanges) {
+    this.navigatorManager.setType(this.type);
+    this.navigatorManager.setRange(this.range);
+    this.navigatorManager.setDate(this.date);
+    this.setDescription();
   }
 }
 

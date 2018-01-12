@@ -6,6 +6,7 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DirectiveModule } from '../core/directives/index';
+import { NavigatorModule } from '../navigator/index';
 
 export * from './calendar';
 
@@ -13,6 +14,7 @@ export * from './calendar';
     imports: [
         CommonModule,
         DirectiveModule,
+        NavigatorModule
     ],
     declarations: [
         TlCalendar,

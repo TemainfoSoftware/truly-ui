@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./components/autocomplete/index"));
 __export(require("./components/button/index"));
 __export(require("./components/buttongroup/index"));
+__export(require("./components/calendar/index"));
 __export(require("./components/checkbox/index"));
 __export(require("./components/chatlist/index"));
 __export(require("./components/datatable/index"));

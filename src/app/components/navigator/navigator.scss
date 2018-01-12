@@ -7,7 +7,8 @@ $border-radius: 3px;
     background-color: #FFFFFF;
     text-align: center;
     cursor: pointer;
-    color: #7A7A7A;
+    color: #656565;
+    font-weight: 500;
     font-size: 1.0em;
     font-family: 'Lato', sans-serif;
     transition: background-color 100ms linear;
@@ -19,7 +20,7 @@ $border-radius: 3px;
       border-radius: 0;
     }
     &:hover, &:focus{
-      background-color: #e3e3e3;
+      background-color: #F5F5F5;
       border-radius: $border-radius;
       outline: none;
     }
@@ -37,7 +38,7 @@ $border-radius: 3px;
       border-bottom: 1px solid #C8C8C8;
     }
     &:hover, &:focus{
-      background-color: #e3e3e3;
+      background-color: #F5F5F5;
       outline: none;
     }
     &.ui-with-border:first-child {

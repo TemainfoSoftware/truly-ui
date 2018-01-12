@@ -42,6 +42,8 @@ export class TlNavigator implements OnInit {
 
   @Input('range') range = 11;
 
+  @Input('withBorder') withBorder = true;
+
   @Output() clickPrevious: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() clickNext: EventEmitter<any> = new EventEmitter<any>();

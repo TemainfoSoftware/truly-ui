@@ -30,7 +30,7 @@ import { NavigatorManagerService } from './services/navigator-manager.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [NavigatorManagerService]
 } )
-export class TlNavigator implements OnInit{
+export class TlNavigator implements OnInit {
 
   @Input('width') width = '125px';
 

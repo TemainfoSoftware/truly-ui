@@ -39,7 +39,7 @@ export class CalendarDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
-  
+
   onSelect($event) {
     console.log($event);
   }

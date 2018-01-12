@@ -23,7 +23,7 @@ export const dataProperties = [
   {
     name: 'todayButton',
     type: 'boolean',
-    default: 'false',
+    default: 'true',
     description: 'Displays a footer with a today button.',
     options: 'true | false'
   },

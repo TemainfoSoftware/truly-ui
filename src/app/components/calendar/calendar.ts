@@ -173,6 +173,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       for (let i = 0; i < dayOfMonth[0].dayOfWeek; i++) {
         const td = new ElementRef( this.renderer.createElement('td'));
         this.renderer.addClass(td.nativeElement, 'ui-table-cell');
+        this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
         this.renderer.appendChild(week.nativeElement, td.nativeElement);
       }
     }
@@ -186,28 +187,32 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       const td = new ElementRef( this.renderer.createElement('td'));
       this.renderer.addClass(td.nativeElement, 'ui-table-cell');
       td.nativeElement.innerHTML = dayOfMonth[day].day;
+      this.markToday( dayOfMonth[ day ].day, td );
       this.createClickListenerDay(td);
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
-      this.markToday( dayOfMonth[ day ].day, td );
     }
 
     for (let i = dayOfMonth[dayOfMonth.length - 1].dayOfWeek; i < 6; i++) {
       const td = new ElementRef( this.renderer.createElement('td'));
       this.renderer.addClass(td.nativeElement, 'ui-table-cell');
+      this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
     }
 
     for (let line = this.tbody.nativeElement.children.length; line < 6; line++) {
       const another = new ElementRef( this.renderer.createElement('tr'));
+      this.renderer.addClass( another.nativeElement, 'ui-table-line' );
+
       for (let col = 0; col < 7; col++) {
         const td = new ElementRef(this.renderer.createElement('td'));
         this.renderer.addClass(td.nativeElement, 'ui-table-cell');
+        this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
+
         td.nativeElement.innerHTML = '&nbsp';
         this.renderer.appendChild(this.tbody.nativeElement, another.nativeElement);
         this.renderer.appendChild(another.nativeElement, td.nativeElement);
       }
     }
-
     this.handleScrolling();
   }
 
@@ -288,6 +293,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   hasContentInSomeItemOfLine( line ) {
+    if ( line === undefined ) {
+      return false;
+    }
     for (let i = 0; i < line.children.length; i++) {
       if ((line.children[ i ].innerHTML.trim().length > 0) && (line.children[ i ].innerHTML.trim() !== '&nbsp;')) {
         this.initNavigator = i;
@@ -299,7 +307,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   createClickListenerDay(cell) {
     this.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.removeTodaySelected();
       this.setSelectedDay( cell.nativeElement, $event.target );
     });
   }
@@ -308,12 +315,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.renderer.listen(this.wrapper.nativeElement, 'keydown', $event => {
       this.handleKeyDown( $event );
     });
-  }
-
-  removeTodaySelected() {
-    if ( this.todayIndex.nativeElement.className.includes( 'selected' ) ) {
-      this.renderer.removeClass( this.todayIndex.nativeElement, 'selected' );
-    }
   }
 
   handleKeyDown( $event ) {
@@ -526,8 +527,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.initializeNavigator();
       return;
     }
-
-    this.removeTodaySelected();
     this.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
   }
 
@@ -562,6 +561,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   handleRemoveClassNavigateGoingUp( index ) {
     const previousLine = this.tbody.nativeElement.children[ this.lineIndex + 1 ];
+    if ( previousLine === undefined ) {
+      return false;
+    }
     if ( (previousLine.children[ index ]) && this.hasNavigator( previousLine.children[ index ] ) ) {
       this.renderer.removeClass( previousLine.children[ index ], 'navigator' );
     }
@@ -569,6 +571,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   handleRemoveClassNavigateGoingDown( index ) {
     const nextLine = this.tbody.nativeElement.children[ this.lineIndex - 1 ];
+    if ( nextLine === undefined ) {
+      return false;
+    }
     if ( (nextLine.children[ index ]) && this.hasNavigator( nextLine.children[ index ] ) ) {
       this.renderer.removeClass( nextLine.children[ index ], 'navigator' );
     }
@@ -596,6 +601,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.renderer.addClass(cell.nativeElement, 'today');
       this.renderer.addClass(cell.nativeElement, 'selected');
       this.todayIndex = cell;
+      this.selectedDay = cell.nativeElement;
       this.selectDay.emit(
         {
           'year': this.year,
@@ -604,10 +610,10 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
           'fullDate': new Date(this.year, this.month, this.today)
       });
     }
-    this.removeSelectedDay();
   }
 
   changeMonth() {
+    this.setWrapperFocus();
     this.displayMonths = true;
     this.displayYears = false;
     this.tbody.nativeElement.innerHTML = '';
@@ -665,6 +671,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   changeYear(range) {
+    this.setWrapperFocus();
     this.displayYears = true;
     this.displayMonths = false;
     this.tbody.nativeElement.innerHTML = '';
@@ -687,6 +694,14 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.renderer.appendChild( this.tbody.nativeElement, line.nativeElement );
       this.handleSelectedYear(line, cell);
     }
+  }
+
+  clickNavigatorRange() {
+    this.setWrapperFocus();
+  }
+
+  setWrapperFocus() {
+    this.wrapper.nativeElement.focus();
   }
 
   createClickListenerYear(cell) {
@@ -719,23 +734,30 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   setSelectedDay( cell, target? ) {
+    this.emitSelectedDay( cell );
+    if ( cell.getAttribute( 'class' ).includes( 'selected' ) ) {
+      return;
+    }
     this.renderer.addClass( cell, 'selected' );
-    this.removeSelectedDay();
     this.removeNavigator( cell );
+    this.removeSelectedDay( cell );
     this.selectedDay = target ? target : cell;
+  }
+
+  removeSelectedDay( cell ) {
+    if ( (this.selectedDay !== cell) ) {
+      this.renderer.removeClass( this.selectedDay, 'selected' );
+    }
+  }
+
+  emitSelectedDay( cell ) {
     this.selectDay.emit(
       {
         'year': this.year,
         'month': this.month,
-        'day': parseInt(cell.innerHTML, 10),
-        'fullDate': new Date(this.year, this.month, parseInt(cell.innerHTML, 10))
-      });
-  }
-
-  removeSelectedDay() {
-    if (this.selectedDay) {
-      this.renderer.removeClass(this.selectedDay, 'selected');
-    }
+        'day': parseInt( cell.innerHTML, 10 ),
+        'fullDate': new Date( this.year, this.month, parseInt( cell.innerHTML, 10 ) )
+      } );
   }
 
   removeNavigator( cell ) {

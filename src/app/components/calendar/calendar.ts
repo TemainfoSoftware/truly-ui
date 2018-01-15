@@ -523,6 +523,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.year = parseInt(this.keyboardNavLine.children[ this.navigator ].innerHTML, 10);
       this.changeMonth();
       this.setDateNavigator();
+      this.initializeNavigator();
       return;
     }
 
@@ -749,7 +750,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   initializeNavigator() {
+    this.direction = '';
     this.keyboardNavLine = this.tbody.nativeElement.children[0];
+    this.lineIndex = this.keyboardNavLine.sectionRowIndex;
     this.hasContentOnCurrentLine();
     this.setNavigator(this.initNavigator);
   }

@@ -31,10 +31,10 @@
     </div>
     <span *ngIf="todayButton" class="todayButton" (click)="getToday()">TODAY</span>
   </div>
-  <table #table border="0">
-    <thead *ngIf="!displayMonths && !displayYears">
+  <table #table border="0" class="ui-table-calendar">
+    <thead class="ui-table-thead" *ngIf="!displayMonths && !displayYears">
       <tr>
-        <th *ngFor="let item of dayOfWeek">{{item}}</th>
+        <th class="ui-table-th" *ngFor="let item of dayOfWeek">{{item}}</th>
       </tr>
     </thead>
     <tbody #tbody align="right"></tbody>

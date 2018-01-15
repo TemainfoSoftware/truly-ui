@@ -105,7 +105,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.dateNavigator = new Date();
     this.today = new Date().getDate();
     this.year = new Date().getFullYear();
-
   }
 
   ngAfterViewInit() {
@@ -169,9 +168,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
     if (dayOfMonth[0].dayOfWeek !== 0) {
       week = new ElementRef( this.renderer.createElement('tr'));
+      this.renderer.addClass(week.nativeElement, 'ui-table-line');
       this.renderer.appendChild(this.tbody.nativeElement, week.nativeElement);
       for (let i = 0; i < dayOfMonth[0].dayOfWeek; i++) {
         const td = new ElementRef( this.renderer.createElement('td'));
+        this.renderer.addClass(td.nativeElement, 'ui-table-cell');
         this.renderer.appendChild(week.nativeElement, td.nativeElement);
       }
     }
@@ -179,9 +180,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     for (let day = 0; day < dayOfMonth.length; day++) {
       if (dayOfMonth[day].dayOfWeek === 0) {
         week = new ElementRef( this.renderer.createElement('tr'));
+        this.renderer.addClass(week.nativeElement, 'ui-table-line');
         this.renderer.appendChild(this.tbody.nativeElement, week.nativeElement);
       }
       const td = new ElementRef( this.renderer.createElement('td'));
+      this.renderer.addClass(td.nativeElement, 'ui-table-cell');
       td.nativeElement.innerHTML = dayOfMonth[day].day;
       this.createClickListenerDay(td);
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
@@ -190,6 +193,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
     for (let i = dayOfMonth[dayOfMonth.length - 1].dayOfWeek; i < 6; i++) {
       const td = new ElementRef( this.renderer.createElement('td'));
+      this.renderer.addClass(td.nativeElement, 'ui-table-cell');
       this.renderer.appendChild(week.nativeElement, td.nativeElement);
     }
 
@@ -197,6 +201,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       const another = new ElementRef( this.renderer.createElement('tr'));
       for (let col = 0; col < 7; col++) {
         const td = new ElementRef(this.renderer.createElement('td'));
+        this.renderer.addClass(td.nativeElement, 'ui-table-cell');
         td.nativeElement.innerHTML = '&nbsp';
         this.renderer.appendChild(this.tbody.nativeElement, another.nativeElement);
         this.renderer.appendChild(another.nativeElement, td.nativeElement);
@@ -607,11 +612,14 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.tbody.nativeElement.innerHTML = '';
 
     let line = new ElementRef( this.renderer.createElement('tr'));
+    this.renderer.addClass(line.nativeElement, 'ui-table-line');
     for (let i = 0; i < 12; i++) {
       if (i % 4 === 0) {
         line = new ElementRef( this.renderer.createElement('tr'));
+        this.renderer.addClass(line.nativeElement, 'ui-table-line');
       }
       const cell = new ElementRef(this.renderer.createElement('td'));
+      this.renderer.addClass(cell.nativeElement, 'ui-table-cell');
 
       cell.nativeElement.innerHTML = this.months[i].initials;
       this.renderer.setAttribute(cell.nativeElement, 'cell', '' + i);
@@ -661,12 +669,15 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.tbody.nativeElement.innerHTML = '';
 
     let line = new ElementRef( this.renderer.createElement('tr'));
-
+    this.renderer.addClass(line.nativeElement, 'ui-table-line');
     for (let i = 0; i < 12; i++) {
       if ( i % 4 === 0 ) {
         line = new ElementRef( this.renderer.createElement( 'tr' ) );
+        this.renderer.addClass(line.nativeElement, 'ui-table-line');
       }
       const cell = new ElementRef( this.renderer.createElement( 'td' ) );
+      this.renderer.addClass(cell.nativeElement, 'ui-table-cell');
+
       cell.nativeElement.innerHTML = range.rangeYear.start + i;
       this.createClickListenerYear( cell );
       this.renderer.setStyle( line.nativeElement, 'height', '65px' );

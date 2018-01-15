@@ -1,0 +1,35 @@
+@mixin tl-modal-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
+
+  $box-text: map_get(map_get($theme,box),text);
+  $box-background: map_get(map_get($theme,box),background);
+  $box-icons: map_get(map_get($theme,box), icons);
+  $box-hover: map_get(map_get($theme,box), hover);
+  $box-inactive: map_get(map_get($theme,box), inactive);
+  $success-bar: map_get(map_get($theme,success),bar);
+
+
+  .tl-modal-container {
+    background-color: $box-background;
+    color: $box-text;
+    border: 1px solid $borders;
+    > .header {
+      background-color: $success-bar;
+    }
+    > .header .bar {
+      outline: 1px solid $success-bar;
+    }
+    > .header .-active {
+      color: $box-icons;
+    }
+    > .header .-inactive {
+      color: $box-inactive;
+    }
+    > .header .controls .control-item:hover {
+      background-color: $box-hover;
+    }
+  }
+}

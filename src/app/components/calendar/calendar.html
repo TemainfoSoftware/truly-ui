@@ -1,0 +1,43 @@
+<div #wrapper class="wrapper-calendar" tabindex="-1">
+  <div class="header-calendar">
+    <div class="date">
+      <tl-navigator [type]="'monthyear'"
+                    *ngIf="!displayMonths && !displayYears"
+                    (clickPrevious)="decreaseDate($event)"
+                    (clickNext)="increaseDate($event)"
+                    [withBorder]="false"
+                    [date]="dateNavigator"
+                    (clickNavigator)="changeMonth()"
+                    [width]="todayButton ? '100px' : '187px'">
+      </tl-navigator>
+      <tl-navigator [type]="'year'"
+                    [date]="dateNavigator"
+                    *ngIf="displayMonths && !displayYears"
+                    (clickPrevious)="decreaseYear($event)"
+                    [withBorder]="false"
+                    (clickNext)="increaseYear($event)"
+                    (clickNavigator)="changeYear($event)"
+                    [width]="todayButton ? '100px' : '187px'">
+      </tl-navigator>
+      <tl-navigator [type]="'rangeyear'"
+                    *ngIf="displayYears"
+                    [date]="dateNavigator"
+                    [withBorder]="false"
+                    [range]="11"
+                    (clickNavigator)="clickNavigatorRange()"
+                    (clickPrevious)="decreaseYearRange($event)"
+                    (clickNext)="increaseYearRange($event)"
+                    [width]="todayButton ? '100px' : '187px'">
+      </tl-navigator>
+    </div>
+    <div *ngIf="todayButton" class="todayButton" (click)="getToday()">TODAY</div>
+  </div>
+  <table #table border="0" class="ui-table-calendar">
+    <thead class="ui-table-thead" *ngIf="!displayMonths && !displayYears">
+      <tr>
+        <th class="ui-table-th" *ngFor="let item of dayOfWeek">{{item}}</th>
+      </tr>
+    </thead>
+    <tbody #tbody align="right"></tbody>
+  </table>
+</div>

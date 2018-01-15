@@ -1,3 +1,39 @@
-@import '../settings/_palette.scss';
+@import "../../../button/button-theme";
+@import "../../../calendar/calendar-theme";
+@import "../../../chatlist/chatlist-theme";
+@import "../../../checkbox/checkbox-theme";
+@import "../../../datatable/datatable-theme";
+@import "../../../dropdownlist/dropdownlist-theme";
+@import "../../../form/form-theme";
+@import "../../../input/input-theme";
+@import "../../../listbox/listbox-theme";
+@import "../../../modal/modal-theme";
+@import "../../../modal/container-modal/container-modal-theme";
+@import "../../../multiselect/multiselect-theme";
+@import "../../../navigator/navigator-theme";
+@import "../../../panelgroup/panelgroup-theme";
+@import "../../../radiobutton/radiobutton-theme";
+@import "../../../splitbutton/splitbutton-theme";
+@import "../../../tabcontrol/tabcontrol-theme";
+
+@mixin theme-builder($theme){
+  @include tl-button-theme($theme);
+  @include tl-calendar-theme($theme);
+  @include tl-chatlist-theme($theme);
+  @include tl-checkbox-theme($theme);
+  @include tl-container-modal-theme($theme);
+  @include tl-datatable-theme($theme);
+  @include tl-dropdonwlist-theme($theme);
+  @include tl-form-theme($theme);
+  @include tl-input-theme($theme);
+  @include tl-listbox-theme($theme);
+  @include tl-modal-theme($theme);
+  @include tl-multiselect-theme($theme);
+  @include tl-navigator-theme($theme);
+  @include tl-panelgroup-theme($theme);
+  @include tl-radiobutton-theme($theme);
+  @include tl-splitbutton-theme($theme);
+  @include tl-tabcontrol-theme($theme);
+}
 
 

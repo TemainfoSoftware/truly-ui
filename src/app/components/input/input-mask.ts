@@ -1,5 +1,6 @@
 import { Renderer2 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
+import set = Reflect.set;
 
 export class InputMask {
 
@@ -122,13 +123,15 @@ export class InputMask {
     }
 
     private applyMaskOnInit() {
+      setTimeout(() => {
         if ( this.value !== this.maskGuideExpression ) {
-            if ( this.value.length > 0 ) {
-                this.setValueOnInitialize();
-                this.applyGuides();
-                this.applyMask();
-            }
+          if ( this.value.length > 0 ) {
+            this.setValueOnInitialize();
+            this.applyGuides();
+            this.applyMask();
+          }
         }
+      }, 10);
     }
 
     private getPosition() {
@@ -141,7 +144,8 @@ export class InputMask {
             this.onFocus();
         } );
         this.renderer.listen( this.input.nativeElement, 'focusout', () => {
-            this.onFocusOut();
+          this.handleNotMath();
+          this.tlInput.change.detectChanges();
         } );
     }
 
@@ -156,12 +160,12 @@ export class InputMask {
         }, 0 );
     }
 
-    private onFocusOut() {
+    private handleNotMath() {
         if ( !this.isTextLengthMatchWithExpressionLength() ) {
             this.value = '';
-            this.tlInput.ngValue = '';
             this.updateModel();
-            this.onComplete();
+            this.tlInput.modelValue = '';
+            this.tlInput.change.detectChanges();
         }
     }
 
@@ -346,7 +350,6 @@ export class InputMask {
                 valueResult = valueResult + myValue;
             }
         } );
-
         return valueResult;
     }
 
@@ -407,11 +410,9 @@ export class InputMask {
     }
 
     private onComplete() {
-        if (this.tlInput.validations['required']) {
-            this.tlInput.validations['validMask'] = !this.isTextLengthMatchWithExpressionLength();
-        }
         if ( this.isTextLengthMatchWithExpressionLength() ) {
-            this.tlInput.writeValue( this.value );
+          this.tlInput.modelValue = this.value;
+          this.tlInput.change.detectChanges();
         }
     }
 
@@ -427,7 +428,6 @@ export class InputMask {
         }
         return ( inputSymbol === maskSymbolChar || this.maskAwaliablePatterns[ maskSymbolChar ] )
             && (this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol ));
-
     }
 
     private updateModel(): void {
@@ -435,13 +435,16 @@ export class InputMask {
         if ( this.valueUppercase ) {
             this.value = this.value.toUpperCase();
         }
-        setTimeout( () => {
-            this.tlInput.onChangeCallback( this.clearMask( this.value ) );
-            this.tlInput.componentModel.model = this.clearMask( this.value );
-        }, 0 );
-        this.setPosition( endPosition );
+      this.setModelValue();
+      this.setPosition( endPosition );
     }
 
+    setModelValue() {
+        setTimeout( () => {
+          this.tlInput.componentModel.model = this.clearMask( this.value );
+          this.tlInput.change.detectChanges();
+        }, 0 );
+      }
 
     private setValidation() {
         this.input.nativeElement.maxLength = this.maskExpression.length;
@@ -513,6 +516,6 @@ export class InputMask {
     }
 
     private cleanValue( value ) {
-        return value.replace( /([\/.-_():+])/gi, '' );
+      return value.replace( /[^\d]+/g, '' );
     }
 }

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +45,9 @@ export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
 
     @Input() checked = false;
 
-    @Input() checkmarkColor = '#fff';
+    @Input() checkmarkColor = '';
 
-    @Input() checkedColorBg = '#66CC99';
+    @Input() checkedColorBg = '';
 
     @Input() tabindex = '0';
 

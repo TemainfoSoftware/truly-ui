@@ -1,9 +1,7 @@
 .list-box-container {
   position: relative;
   width: auto;
-  background: #fff;
   overflow-y: auto;
-  border: 1px solid #CACACA;
 }
 
 .listbox-wrapper {
@@ -16,43 +14,16 @@
 }
 
 .list-box-container::-webkit-scrollbar{
-  background: #F1F1F1;
   width: 13px;
 }
-.list-box-container::-webkit-scrollbar-corner{
-  background: #F1F1F1;
-}
 
-.list-box-container::-webkit-scrollbar-track{
-  background: #F6F6F6;
-  border-left: 1px solid #CACACA;
-}
-
-.list-box-container::-webkit-scrollbar-thumb{
-  background: #66CC99;
-}
 
 .item {
   width: inherit;
-  border-bottom: 1px solid #eeeeee;
   padding: 5px;
   box-sizing: border-box;
   font-family: 'Lato', sans-serif;
   list-style: none;
-  color: #7a838b;
-}
-
-.selected {
-  background: #66CC99;
-  color: #fff;
-}
-
-.item.stripped:nth-of-type(odd){
-  background: #fff;
-}
-
-.item.stripped:nth-of-type(even){
-  background: #E9E9E9;
 }
 
 .item:focus {
@@ -78,7 +49,6 @@
   text-align: center;
   top: calc(50% - 40px);
   padding: 10px;
-  color: #b1b1b1;
   z-index: 100;
 }
 
@@ -93,7 +63,6 @@
   width: 50px;
   z-index: 100;
   text-align: center;
-  background-color: #80d6ab;
   line-height: 17px;
 }
 
@@ -112,11 +81,5 @@
 }
 
 .showmore i {
-  color: #fff;
   z-index: 150;
-}
-
-.list li:focus {
-  background-color: #66CC99;
-  color: #fff;
 }

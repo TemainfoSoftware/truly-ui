@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017 Temainfo Sistemas
+    Copyright (c) 2018 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,33 @@
     SOFTWARE.
 */
 
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional, ComponentFactoryResolver, ApplicationRef, Injector } from '@angular/core';
 import { ApplicationConfig } from '../configs/application.config';
+import { TlCore } from '../core';
 
 @Injectable()
 export class CoreService {
-    constructor( @Optional() private config: ApplicationConfig ) {
-        console.log(this.config);
+
+    private applicationRef: ApplicationRef;
+
+    private coreInstance: TlCore;
+
+    constructor( private compiler: ComponentFactoryResolver,
+                 private injector: Injector,
+     @Optional() private config: ApplicationConfig) {
+       this.applicationRef = this.injector.get(ApplicationRef);
+       this.createCoreComponent();
     }
+
+    createCoreComponent() {
+      setTimeout(() => {
+        const componentFactory = this.compiler.resolveComponentFactory( TlCore );
+        const ref = componentFactory.create(this.injector);
+        this.coreInstance = ref.instance;
+        this.coreInstance.setTheme( this.config.theme );
+        this.applicationRef.attachView(ref.hostView);
+        this.applicationRef.tick();
+      }, 1);
+    }
+
 }

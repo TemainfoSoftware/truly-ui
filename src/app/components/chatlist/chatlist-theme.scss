@@ -1,0 +1,88 @@
+@mixin tl-chatlist-theme($theme) {
+
+
+  $hover: map_get(map_get($theme,hover),background);
+  $borders: map_get($theme,borders);
+  $active: map_get(map_get($theme,active),background);
+
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
+  $divider: map_get($theme,divider);
+  $disable:  map_get(map_get($theme,disable),background);
+  $divider: map_get($theme,divider);
+
+  $selected-bg: map_get(map_get($theme,selected),background);
+  $selected-text:map_get(map_get($theme,selected),text);
+
+  $status-online: map_get($theme, online);
+  $status-offline: map_get($theme, offline);
+  $status-busy: map_get($theme, busy);
+  $status-away: map_get($theme, away);
+
+  $scrollbar:  map_get(map_get($theme,scrollbar),background);
+  $scrollbar-corner:  map_get(map_get($theme,scrollbar),corner);
+  $scrollbar-track:  map_get(map_get($theme,scrollbar),track);
+  $scrollbar-thumb:  map_get(map_get($theme,scrollbar),thumb);
+
+  .ui-chat-overflow {
+    border-top: 1px solid $borders;
+  }
+
+  .ui-status {
+    background: $base-background;
+    color: $base-text;
+    border-left: 1px solid $borders;
+    border-right: 1px solid $borders;
+  }
+
+  .ui-chat-template{
+    border-bottom: 1px solid $divider;
+    .ui-chat-name{
+      color: $base-text;
+      opacity: 0.8;
+    }
+    .ui-chat-sector {
+      color: $base-text;
+      opacity: 0.8;
+    }
+    .ui-status-online {
+      background: $status-online;
+    }
+    .ui-status-offline {
+      background: $status-offline;
+    }
+    .ui-status-busy {
+      background: $status-busy;
+    }
+    .ui-status-away {
+      background: $status-away;
+    }
+  }
+
+  .item-selected-listbox {
+    & .ui-chat-name{
+      color: $selected-text;
+    }
+
+    & .ui-chat-sector {
+      color: $selected-text;
+    }
+  }
+
+  .ui-chat-overflow::-webkit-scrollbar {
+    background: $scrollbar;
+  }
+
+  .ui-chat-overflow::-webkit-scrollbar-corner {
+    background: $scrollbar-corner;
+  }
+
+  .ui-chat-overflow::-webkit-scrollbar-track {
+    background: $scrollbar-track;
+    border-right: 1px solid $borders;
+  }
+
+  .ui-chat-overflow::-webkit-scrollbar-thumb {
+    background: $scrollbar-thumb;
+  }
+}

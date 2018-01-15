@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,8 @@
  */
 
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, KeyValueDiffers, OnInit,
+  ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, KeyValueDiffers, OnChanges, OnInit,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 import { ModalService } from '../modal.service';
@@ -32,7 +33,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
      selector: 'tl-container-modal',
      templateUrl: './container-modal.html',
      styleUrls: ['./container-modal.scss'],
-   changeDetection: ChangeDetectionStrategy.OnPush,
      animations: [
          trigger(
              'onCreateElement', [
@@ -48,17 +48,17 @@ import { animate, style, transition, trigger } from '@angular/animations';
          )
      ]
  })
- export class TlContainerModal implements OnInit, DoCheck {
+ export class TlContainerModal implements OnInit {
 
-     @Input() containerColor = '#F2F2F2';
+     @Input() containerColor = '';
 
      @Input() height = '40px';
 
-     @Input() boxColor = '#66cc99';
+     @Input() boxColor = '';
 
      @Input() modalBoxWidth = 150;
 
-     @Input() arrowsColor = '#797979';
+     @Input() arrowsColor = '';
 
      @Input() limitStringBox = 12;
 
@@ -68,27 +68,17 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      public isScrolling = false;
 
-     private boxColorInactive = '#6da78d';
-
-     private borderBoxColor = '#54a378';
-
-     private differ;
-
-   constructor( public modalService: ModalService,
-                private colorService: ToneColorGenerator,
-                private change: ChangeDetectorRef,
-                differs: KeyValueDiffers ) {
-         this.differ = differs.find( {} ).create();
-     }
+     constructor( public modalService: ModalService ) {}
 
      ngOnInit() {
-       this.boxColorInactive = this.colorService.calculate(this.boxColor, -0.12);
-       this.borderBoxColor = this.colorService.calculate(this.boxColor, -0.2);
+       this.modalService.subject.subscribe(() => {
+         this.validateScroll();
+       });
      }
 
-     showWindow(item, i) {
+     showWindow(item) {
          this.modalService.activeModal = item;
-         this.modalService.showModal( item, i );
+         this.modalService.showModal( item );
      }
 
      validateScroll() {
@@ -117,28 +107,19 @@ import { animate, style, transition, trigger } from '@angular/animations';
          scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
      }
 
-   getTextContainerItem( value ) {
-     if ( value.length > this.limitStringBox ) {
-       let subStr = '';
-       const strArray = value.split( '' );
-       strArray.forEach( ( value2, index, array ) => {
-         if ( index <= this.limitStringBox ) {
-           subStr += value2;
-         }
-       } );
-       subStr += '...'.trim();
-       return subStr;
-     } else {
-       return value;
+     getTextContainerItem( value ) {
+       if ( value.length > this.limitStringBox ) {
+         let subStr = '';
+         const strArray = value.split( '' );
+         strArray.forEach( ( value2, index, array ) => {
+           if ( index <= this.limitStringBox ) {
+             subStr += value2;
+           }
+         } );
+         subStr += '...'.trim();
+         return subStr;
+       } else {
+         return value;
+       }
      }
-   }
-
-      ngDoCheck() {
-         const changes = this.differ.diff( this.modalService.forms );
-         if ( changes ) {
-           this.change.detectChanges();
-           this.validateScroll();
-         }
-     }
-
 }

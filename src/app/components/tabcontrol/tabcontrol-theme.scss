@@ -1,0 +1,48 @@
+@mixin tl-tabcontrol-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $divider: map_get($theme,divider);
+  $base-text: map_get(map_get($theme,base),text);
+
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+
+  $box-background: map_get(map_get($theme,box),background);
+  $box-inactive: map_get(map_get($theme,box),inactive);
+  $box-text: map_get(map_get($theme,box),text);
+
+
+  .wrapper-tabcontrol {
+
+    >.line-separator:after {
+      background: $borders !important;
+    }
+
+    >.tab-panel-buttons li {
+      color: $box-text;
+      background:  $box-inactive;
+      border: 1px solid $borders;
+      border-right: 0;
+    }
+
+    >.tab-panel-buttons li:last-child {
+      border-right: 1px solid $borders;
+    }
+  }
+
+  .tab-wrapper {
+    background:  $box-inactive;
+    border-left: 1px solid $borders;
+    border-right: 1px solid $borders;
+    border-bottom: 1px solid $borders;
+  }
+  .tab-selected {
+    border-bottom: 0 !important;
+    background: $box-background !important;
+  }
+
+  .tab-wrapper-selected{
+    background: $box-background;
+  }
+
+}

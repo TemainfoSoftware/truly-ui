@@ -3,10 +3,7 @@
   > .arrow-right {
     position: absolute;
     line-height: 28px;
-    background: #797979;
-    border: 1px solid #C8C8C8;
     border-left: 0;
-    color: #fff;
     top: 0;
     right: 0;
     padding: 5px;
@@ -17,10 +14,7 @@
   > .arrow-left {
     position: absolute;
     line-height: 28px;
-    background: #797979;
-    border: 1px solid #C8C8C8;
     border-right: 0;
-    color: #fff;
     top: 0;
     left: 0;
     padding: 5px;
@@ -37,24 +31,20 @@
   overflow: auto;
   overflow-y: hidden;
   min-height: 40px;
-  border: 1px solid #C8C8C8;
   > .wrapper-container-modals {
     display: inline-flex;
     > .container-modal-box {
       cursor: pointer;
-      color: #fff;
-      background: #66CC99;
       margin: 5px;
       height: 28px;
       line-height: 28px;
       margin-right: 0;
-      border: 1px solid #54a378;
-      > .item {
+      > .ui-container-item {
         padding: 10px;
         font-family: "Segoe UI";
         font-size: 13px;
       }
-      > .item:first-child {
+      > .ui-container-item:first-child {
         padding: 0 0 0 10px;
       }
     }
@@ -62,22 +52,8 @@
       margin-right: 5px;
     }
   }
-
 }
 
 .container-modals::-webkit-scrollbar{
-  background: #F1F1F1;
   height: 0;
-}
-.container-modals::-webkit-scrollbar-corner{
-  background: #F1F1F1;
-}
-
-.container-modals::-webkit-scrollbar-track{
-  background: #F6F6F6;
-  border-left: 1px solid #CACACA;
-}
-
-.container-modals::-webkit-scrollbar-thumb{
-  background: #327168;
 }

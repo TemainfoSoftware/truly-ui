@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,14 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, Renderer2,
-    ViewChild
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  ViewChild
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
@@ -35,6 +41,8 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
 
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
+
+let documentListener;
 
 @Component( {
     selector: 'tl-dropdown-list',
@@ -55,7 +63,7 @@ import 'rxjs/add/operator/debounceTime';
     ]
 } )
 
-export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, AfterContentInit, OnInit {
+export class TlDropDownList extends ComponentHasModelBase implements AfterViewInit, OnInit, OnDestroy {
 
     @Input( 'data' ) data: any[] = [];
 
@@ -73,13 +81,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     @Input( 'labelPlacement' ) labelPlacement = 'left';
 
-    @Input( 'labelSize' ) labelSize: string;
+    @Input( 'labelSize' ) labelSize = '100px';
 
-    @Input( 'height' ) height = 37;
+    @Input( 'height' ) height = '23px';
 
     @Input( 'preSelected' ) preSelected = '';
 
-    @Input( 'width' ) width = 83;
+    @Input( 'width' ) width = '120px';
 
     @Input( 'placeholder' ) placeholder = null;
 
@@ -113,11 +121,15 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     private children = -1;
 
-    private itemSelected: any[];
+    private itemSelected = [];
 
-    private datasource: any[] = [];
+    private datasource = [];
 
-    private widthList = 0;
+    private listTopPosition = 0;
+
+    private listLeftPosition = 0;
+
+    private arraylisteners = [];
 
     private subject = new Subject();
 
@@ -125,8 +137,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                  public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
                  public nameService: NameGeneratorService,
-                 private cd: ChangeDetectorRef,
-    ) {
+                 private cd: ChangeDetectorRef) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -137,17 +148,32 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         } );
     }
 
-    ngAfterContentInit() {
-        setTimeout(() => {
-            this.widthList = this.wrapper.nativeElement.clientWidth;
-        } );
+    ngAfterViewInit() {
+      this.getTopPosition();
+      this.validateData();
+      this.updateDataSource( this.getData() );
+      this.listenerMouseDown();
+      this.listenerDocumentScroll();
+      this.listenerKeyDown();
+      this.handleInitializeValues();
     }
 
-    ngAfterViewInit() {
-        this.validateData();
-        this.updateDataSource( this.getData() );
-        this.listenerMouseDown();
-        this.handleInitializeValues();
+    listenerKeyDown() {
+      this._renderer.listen(this.dropdown.nativeElement, 'keydown', ($event) => {
+        this.onListClosed($event);
+      });
+    }
+
+    getTopPosition() {
+      this.listLeftPosition = this.element.nativeElement.getBoundingClientRect().left;
+      this.listTopPosition = (this.element.nativeElement.getBoundingClientRect().top) + (this.wrapper.nativeElement.offsetHeight);
+      this.cd.detectChanges();
+    }
+
+    listenerDocumentScroll() {
+      this.arraylisteners.push(this._renderer.listen(document, 'scroll', ($event) => {
+        this.showHide = false;
+      }));
     }
 
     validateData() {
@@ -164,12 +190,14 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     listenerMouseDown() {
-        this._renderer.listen( document, 'mousedown', ( event ) => {
-            if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
-                this.showHide = false;
-                this.cd.markForCheck();
-            }
-        } );
+      if ( !documentListener ) {
+        documentListener = this.arraylisteners.push( this._renderer.listen( document, 'mousedown', ( event ) => {
+          if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
+            this.showHide = false;
+            this.cd.markForCheck();
+          }
+        } ));
+      }
     }
 
     isSearchInput( event ) {
@@ -212,8 +240,13 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     handleFocusSearchInput() {
         if ( this.searchInput ) {
-            this.searchInput.nativeElement.focus();
+          return this.searchInput.nativeElement.focus();
         }
+      this.setWrapperFocus();
+    }
+
+  setWrapperFocus() {
+      this.dropdown.nativeElement.focus();
     }
 
     hasModel() {
@@ -252,12 +285,12 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         if ( this.showHide && !this.disabled ) {
             if ( !this.scroll ) {
                 if ( (this.datasource.length > 10) ) {
-                    return { 'height' : (10 * this.height) + 'px', 'overflow-y' : 'scroll' };
+                    return { 'height' : (10 * parseInt(this.height, 10)) + 'px', 'overflow-y' : 'scroll' };
                 }
                 return { 'height': 'auto', 'overflow-y': 'visible' };
             }
             this.scroll = this.scroll > this.datasource.length ? this.datasource.length : this.scroll;
-            return { 'height': (this.scroll * this.height) + 'px', 'overflow-y': 'scroll' };
+            return { 'height': (this.scroll * parseInt(this.height, 10)) + 'px', 'overflow-y': 'scroll' };
         }
     }
 
@@ -273,6 +306,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     onListOpened( $event ) {
+        this.getTopPosition();
         switch ( $event.keyCode ) {
             case KeyEvent.ARROWDOWN:
                 this.stopPropagationAndPreventDefault( $event );
@@ -300,6 +334,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     }
 
     onListClosed( $event ) {
+        this.getTopPosition();
         if ( !this.disabled ) {
             switch ( $event.keyCode ) {
                 case KeyEvent.ARROWDOWN:
@@ -420,8 +455,8 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
                 this.onEscape( $event );
                 break;
             case KeyEvent.ESCAPE:
-                this.onEscape( $event );
-                break;
+                  this.onEscape( $event );
+                  break;
         }
     }
 
@@ -446,9 +481,28 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.removeSelectedClass();
             this.handleSelectedAsPlaceholder();
             this.addSelectedClass( index );
+            this.handleArrowDownWithOverflowY();
             this.onChangeItem();
         }
     }
+
+  handleUpDownWithOverflowY() {
+      if (this.children >= 0) {
+        const limit = (this.list.nativeElement.children[ this.children ].offsetTop +
+          this.list.nativeElement.children[ this.children ].offsetHeight) - this.list.nativeElement.scrollTop;
+        if ( limit < this.list.nativeElement.children[ this.children ].offsetHeight ) {
+          this.list.nativeElement.scrollTop -= this.list.nativeElement.children[ 0 ].offsetHeight;
+        }
+      }
+  }
+
+  handleArrowDownWithOverflowY() {
+    const limit = this.list.nativeElement.children[ this.children ].offsetTop +
+      this.list.nativeElement.children[ this.children ].offsetHeight;
+    if ( limit > this.list.nativeElement.offsetHeight ) {
+      this.list.nativeElement.scrollTop += this.list.nativeElement.children[ 0 ].offsetHeight;
+    }
+  }
 
     addSelectedClass( index ) {
         this._renderer.addClass( this.list.nativeElement.children[ index ], 'selected' );
@@ -473,6 +527,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
             this.setPlaceholderIcon();
         }
         this.handleSelectItemArrowUP();
+      this.handleUpDownWithOverflowY();
     }
 
     handleSelectItemArrowUP() {
@@ -486,6 +541,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
 
     changeShowStatus(event) {
         event.stopPropagation();
+        this.getTopPosition();
         this.setPositionListItens(event);
         this.showHide = !this.showHide;
         if ( this.disabled ) {
@@ -547,6 +603,7 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
     selectPlaceholder() {
         this.showHide = false;
         this.dropdown.nativeElement.value = this.placeholder;
+      this.removeSelectedClass();
         this.setPlaceholderIcon();
         this.clearModelComponent();
         this.placeholderDiv.nativeElement.focus();
@@ -603,6 +660,10 @@ export class TlDropDownList extends ComponentHasModelBase implements AfterViewIn
         if (this.showOnlyIcon) {
             this.setIconClass(this.placeholderIcon);
         }
+    }
+
+    ngOnDestroy() {
+      this.arraylisteners.forEach((listener) => listener());
     }
 
 }

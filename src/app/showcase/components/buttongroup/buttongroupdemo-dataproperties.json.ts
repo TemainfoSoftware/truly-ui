@@ -11,20 +11,13 @@ export const dataProperties = [
   },
   {
     name: 'height',
-    type: 'number',
+    type: 'string',
     default: 'null',
     description: 'Button group height.',
-    options: 'number | ex: 25'
+    options: 'px | % | em'
   }
   ];
 export const dataProperties2 = [
-  {
-    name: 'type',
-    type: 'string',
-    default: 'button',
-    description: 'Type of button.',
-    options: 'button | submit | reset'
-  },
   {
     name: 'text',
     type: 'string',
@@ -34,10 +27,10 @@ export const dataProperties2 = [
   },
   {
     name: 'width',
-    type: 'number',
+    type: 'string',
     default: '100 (min)',
     description: 'Button width.',
-    options: 'number | ex: 150'
+    options: 'px | % | em'
   },
   {
     name: 'disabled',
@@ -47,25 +40,11 @@ export const dataProperties2 = [
     options: 'true | false'
   },
   {
-    name: 'buttonClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the button.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAddonBefore',
     type: 'string',
     default: 'null',
     description: 'Creates an icon in the addon before the button.',
     options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'buttonAddonBeforeClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon before.',
-    options: 'CSS class'
   },
   {
     name: 'iconAddonAfter',
@@ -75,13 +54,6 @@ export const dataProperties2 = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'buttonAddonAfterClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the addon after.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconBeforeText',
     type: 'string',
     default: 'null',
@@ -89,32 +61,11 @@ export const dataProperties2 = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'iconBeforeTextClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the icon before the text button.',
-    options: 'CSS class'
-  },
-  {
     name: 'iconAfterText',
     type: 'string',
     default: 'null',
     description: 'Creates an icon after the text button.',
     options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterTextClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the icon after the text button.',
-    options: 'CSS class'
-  },
-  {
-    name: 'toggleClass',
-    type: 'string',
-    default: 'null',
-    description: 'Style class of the toggle button.',
-    options: 'CSS class'
   },
   {
     name: 'checkedItem',

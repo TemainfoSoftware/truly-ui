@@ -63,60 +63,6 @@
 </textarea>
             </div>
           </app-card>
-          <app-card>
-      <div class="col-md-6">
-        <h5>Stylized Background</h5>
-        <div class="form-group">
-          <tl-tabcontrol [height]="'160px'" [background]="'#f4f6f6'">
-            <tl-tab [title]="'Profile'">
-              <div class="form-group">
-                <tl-input [label]="'FirstName'" [readonly]="true" ngModel="James"></tl-input>
-              </div>
-              <div class="form-group">
-                <tl-input [label]="'LastName'" ngModel="Bond" [readonly]="true"></tl-input>
-              </div>
-              <div class="form-group">
-                <tl-input [label]="'Birthday'" ngModel="12/05/1971" [mask]="{mask: '00/00/0000'}" [readonly]="true"></tl-input>
-              </div>
-              <div class="form-group">
-                <tl-input [label]="'Phone'" ngModel="0007-007-0017" [mask]="{mask: '000-000-0000'}" [readonly]="true"></tl-input>
-              </div>
-            </tl-tab>
-            <tl-tab [title]="'Account'">
-              <div class="form-group">
-                <span style="color: #737373">Client: James Bond</span>
-              </div>
-              <div class="form-group">
-                <span style="color: #737373">Account Number: 151848</span>
-              </div>
-              <div class="form-group">
-                <span style="color: #737373">Balance: $ 12.503</span>
-              </div>
-              <div class="form-group">
-                <span style="color: #737373">Last Query: {{today | date:'MM/dd/yy - HH:mm:ss '}}</span>
-              </div>
-            </tl-tab>
-          </tl-tabcontrol>
-        </div>
-      </div>
-            <div class="col-md-6">
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-tabcontrol [height]="'160px'" [background]="'#f4f6f6'">
-  <tl-tab [title]="'Profile'">
-      <tl-input [label]="'FirstName'" [readonly]="true" ngModel="James"></tl-input>
-      <tl-input [label]="'LastName'" ngModel="Bond" [readonly]="true"></tl-input>
-      <tl-input [label]="'Birthday'" ngModel="12/05/1971" [mask]="{mask: '00/00/0000'}" [readonly]="true"></tl-input>
-      <tl-input [label]="'Phone'" ngModel="0007-007-0017" [mask]="{mask: '000-000-0000'}" [readonly]="true"></tl-input>
-  </tl-tab>
-  <tl-tab [title]="'Account'">
-      <span>Client: James Bond</span>
-      <span>Account Number: 151848</span>
-      <span>Balance: $ 12.503</span>
-  </tl-tab>
-</tl-tabcontrol>
-    </textarea>
-            </div>
-          </app-card>
         </app-showcase-card>
      </div>
     </div>

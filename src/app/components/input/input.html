@@ -7,25 +7,27 @@
                attr.name="{{name}}"
                class="field"
                [style.padding-right]="clearButton ? '20px' : '12px'"
+               [style.height]="height"
                [ngClass]="{
                    '-cursorblocked' : readonly || disabled,
                    '-disabled': disabled,
                    '-readonly': readonly,
-                   '-hasValidation': hasValidation()
+                   '-hasValidation': hasValidation(),
+                   '-isRequired': isRequired()
                }"
                [tabindex]="tabindex"
                [style.text-align]="textAlign"
-               [readonly]="readonly ? true : null"
-               [disabled]="disabled ? true : null"
+               [attr.readonly]="readonly ? true : null"
+               [attr.disabled]="disabled ? true : null"
                [autocomplete]="autocomplete"
                [placeholder]="placeholder"
                [maxlength]="validations?.maxLength"
                [minlength]="validations?.minLength"
                [required]="validations?.required"
                [(ngModel)]="modelValue"
-               (blur)="onBlur()"
+               (blur)="onBlur($event)"
                [type]="type"
-               (focus)="onFocus()">
+               (focus)="onFocus($event)">
         <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
         <span *ngIf="textAfter" #afterText class="addon -borderright" [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
         <i *ngIf="clearButton && ngValue" (click)="clearInput()" class="addon -clearbutton ion-close-round" [style.right]="clearButtonPosition + 'px'"></i>

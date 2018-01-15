@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -38,11 +38,9 @@ export class ChatListDemoComponent {
 
   public selected;
 
-
   constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataSource = this.dataDumpService.createRandomData( 100 );
-
   }
 
   clickChat( $event ) {
@@ -63,8 +61,8 @@ export class ChatListDemoComponent {
 
   changeOffline() {
     if ( this.selected ) {
+      this.chatListService.changeStatus( this.selected, 'Offline' );
     }
-    this.chatListService.changeStatus( this.selected, 'Offline' );
   }
 
   changeAway() {

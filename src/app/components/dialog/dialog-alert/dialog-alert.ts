@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,19 @@
  */
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
+import { Modal } from '../../modal/modal-options';
 
+@Modal({
+  icon: 'ion-alert-circled',
+  title: 'Alerta',
+  color: '#FFC284',
+  width: '400px',
+  height: 'auto',
+  draggable: true,
+  maximizable: false,
+  minimizable: false,
+  backdrop: false
+})
 @Component({
     selector: 'tl-dialog-alert',
     templateUrl: './dialog-alert.html',

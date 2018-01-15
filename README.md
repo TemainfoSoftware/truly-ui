@@ -37,7 +37,7 @@ Ex: Electron, App.js and NW.js
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
 * [NodeJS >= 7](https://nodejs.org)
-* [Angular Cli >= 1.2.0](https://cli.angular.io/)
+* [Angular Cli >= 1.5.0](https://cli.angular.io/)
 * [Angular >= 5.0.0](https://angular.io/)
 
 ## Installation
@@ -59,7 +59,30 @@ We assume that you have already installed the following packages at least and ar
     ]
     ```
     
+3. Configure CoreModule on your AppModule:
+
+   ```typescript
+   import { BrowserModule } from '@angular/platform-browser';
+   import { FormsModule } from '@angular/forms';
+   import { NgModule } from '@angular/core';
+   
+   import { AppComponent } from './app.component';
+   
+   import { CoreModule } from 'truly-ui/components/core'; //CoreModule
     
+   @NgModule({
+     declarations: [
+       AppComponent
+     ],
+     imports: [
+       BrowserModule,
+       CoreModule.forRoot({theme: 'default'}) // Configurations
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+   })
+   export class AppModule { }
+   ```  
     
     
     
@@ -1422,7 +1445,7 @@ import { AppComponent } from './app.component';
 
 // Import your library, for example the InputComponent :
 import { InputModule } from 'truly-ui/truly-ui';         //Import of all Modules
-import { ButtonModule } from 'truly-ui/component/button';//Only the specific Module imports
+import { ButtonModule } from 'truly-ui/components/button';//Only the specific Module imports
 
 @NgModule({
   declarations: [

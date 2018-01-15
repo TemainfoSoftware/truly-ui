@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -55,6 +55,7 @@ export class ListBoxTemplateRenderService {
                             this.listBox.renderer.setStyle( element, 'position', 'absolute' );
                             this.listBox.renderer.setStyle( element, 'width', '100%' );
                             this.listBox.renderer.setStyle( element, 'height', this.listBox.rowHeight + 'px' );
+                            this.addClickEventToCustomTemplate(element, row);
                         }
                     }
                 }
@@ -69,5 +70,26 @@ export class ListBoxTemplateRenderService {
             item: item,
             index: index
         } );
+    }
+
+    addClickEventToCustomTemplate(element, row) {
+      element.addEventListener( 'mousedown', ( $event ) => {
+        this.listBox.setInputFocus();
+
+        this.listBox.handleClickItem(  this.dataService.datasource[ row ],
+          this.listBox.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ),
+          this.getElementListOfCustomTemplate( $event ).indexDataGlobal );
+      } );
+    }
+
+    getElementListOfCustomTemplate( $event ): { indexDataGlobal: string; listElement: string } {
+      const item = { indexDataGlobal: '', listElement: '' };
+      for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
+        if ( $event.path[ pathElement ].localName === 'li' ) {
+          item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
+          item.listElement = $event.path[ pathElement ];
+          return item;
+        }
+      }
     }
 }

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,15 +30,11 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlListBox } from '../listbox/listbox';
+import { ChatListStatus } from './chatlist-status';
 import { ChatListService } from './chatlist.service';
 import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
-
-const Away = 'Away';
-const Online = 'Online';
-const Offline = 'Offline';
-const Busy = 'Busy';
 
 @Component( {
     selector: 'tl-chatlist',
@@ -54,6 +50,8 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   @Input() searchQuery;
 
   @Input() itemsToShow = 5;
+
+  @Input() statusConfig: ChatListStatus;
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
@@ -101,6 +99,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
           this.isNotOffline( value ) ?
               this.chatListService.online.push( value ) : this.chatListService.offline.push( value );
       } );
+    this.chatListService.searchQuery = this.searchQuery;
     this.chatListService.sortArray( this.chatListService.online );
     this.chatListService.sortArray( this.chatListService.offline );
   }
@@ -111,17 +110,8 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
     });
   }
 
-  getColorByStatus( item ) {
-      switch ( item.status ) {
-          case 'Busy':
-              return '#f77171';
-          case 'Online':
-              return '#81e2b2';
-          case 'Offline':
-              return '#d8d8d8';
-          case 'Away':
-              return '#fcb27e';
-      }
+  getStatus(item) {
+    return Object.keys(this.statusConfig).find((key => this.statusConfig[key] === item));
   }
 
   handleScrollChat( $event ) {
@@ -143,6 +133,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
 
   filterData(searchTerm) {
     this.filtering = true;
+    this.filteredData = [];
     this.data.forEach( ( item ) => {
       if (item[this.searchQuery].substr(0, searchTerm.length).toLowerCase().includes(searchTerm.toLowerCase())) {
         if (this.filteredData.indexOf(item) < 0) {
@@ -161,6 +152,13 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   onClickItemChat( $event ) {
       this.clickItem.emit( $event );
       this.selected = $event;
+      this.setInputFocus();
+  }
+
+  setInputFocus() {
+    setTimeout(() => {
+      this.searchInput.input.nativeElement.focus();
+    }, 1);
   }
 
   setScrollChat( $event ) {
@@ -180,7 +178,7 @@ export class TlChatList extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   isNotOffline( value ) {
-      return value.status.toLowerCase() !== Offline.toLowerCase();
+      return value.status.toLowerCase() !== this.statusConfig['offline'].toLowerCase();
   }
 
   ngDoCheck() {

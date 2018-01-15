@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017 Temainfo Sistemas
+    Copyright (c) 2018 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -37,11 +37,15 @@ export class TlDatatableColumnService {
         this.exitsColumns() ? this.getColumnsFromContentChild() : this.getColumnsFromDataSource();
     }
 
-    exitsColumns() {
+    private exitsColumns() {
         return ( ( this.dt.datatableColumns.length ) && ( this.dt.datatableColumns.first.field ) );
     }
 
-    getColumnsFromDataSource() {
+    private getColumnsFromDataSource() {
+        if (this.dt.columns.length) {
+          return;
+        }
+
         if (this.dt.dataSourceService.datasource) {
             Object.keys( this.dt.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
                 this.dt.columns.push( this.buildNewDataTableColumn( columnField ) );
@@ -49,7 +53,7 @@ export class TlDatatableColumnService {
         }
     }
 
-    buildNewDataTableColumn(field) {
+    private buildNewDataTableColumn(field) {
         const column = new TlDatatableColumn();
         column.title = field.toUpperCase();
         column.field = field;
@@ -57,13 +61,16 @@ export class TlDatatableColumnService {
         return column;
     }
 
-    getWidthColumn() {
+    private getWidthColumn() {
         const columnsTotal = Object.keys( this.dt.dataSourceService.datasource[0] ).length;
         const widthScrollbar = 10;
         return (this.dt.datatableBox.nativeElement.clientWidth - widthScrollbar) / columnsTotal;
     }
 
-    getColumnsFromContentChild() {
+    private getColumnsFromContentChild() {
+        if (this.dt.columns.length) {
+          return;
+        }
         this.dt.datatableColumns.map( column => {
             this.dt.columns.push( column );
         } );

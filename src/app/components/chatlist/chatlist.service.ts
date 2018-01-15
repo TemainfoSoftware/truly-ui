@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -31,32 +31,36 @@ export class ChatListService {
 
     public offline = [];
 
+    public searchQuery = '';
+
     constructor() {}
 
     changeStatus(item, newstatus) {
-        item.status = newstatus;
+        item.row.status = newstatus;
         this.handleChangeOffline(item, newstatus);
     }
 
     handleChangeOffline(item, newstatus) {
         if (newstatus === 'Offline') {
-          if (this.offline.indexOf(item) > 0) {
+          if (this.offline.indexOf(item.row) > 0) {
             return;
           }
-          this.online.splice(this.online.indexOf( item ), 1);
-          this.offline.push(item);
+          this.online.splice(this.online.indexOf( item.row ), 1);
+          this.offline.push(item.row);
           this.sortArraysStatus();
           return;
         }
-
-        if (item.status !== 'Offline') {
-            if (this.online.indexOf(item) < 0) {
-                this.offline.splice(this.offline.indexOf( item ), 1);
-                this.online.push(item);
-            }
-        }
+        this.handleNotOffline(item);
     }
 
+    handleNotOffline(item) {
+      if (item.status !== 'Offline') {
+        if (this.online.indexOf(item.row) < 0) {
+          this.offline.splice(this.offline.indexOf( item.row ), 1);
+          this.online.push(item.row);
+        }
+      }
+    }
 
     sortArraysStatus() {
         this.sortArray(this.online);
@@ -65,8 +69,8 @@ export class ChatListService {
 
     sortArray(array: any[]) {
         array.sort( ( a, b ) => {
-            const x = a.firstName.toLowerCase();
-            const y = b.firstName.toLowerCase();
+            const x = a[this.searchQuery].toLowerCase();
+            const y = b[this.searchQuery].toLowerCase();
             return x < y ? -1 : x > y ? 1 : 0;
         } );
     }

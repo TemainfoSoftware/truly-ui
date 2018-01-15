@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -113,7 +113,7 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
      * @param value Value received to write value on ngModel
      */
     writeValue( value: any ) {
-        if ( this.element ) {
+        if ( ( this.element) && (value !== undefined)) {
             this.ngValue = value;
             this.onChangeCallback( value );
             this.element.nativeElement.value = value;
@@ -143,6 +143,10 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
       return this.validations && Object.keys( this.validations ).length > 0;
     }
 
+    isRequired() {
+      return this.validations && this.validations.required;
+    }
+
     handleNameComponent() {
         if (!this.name) {
             this.name = this.nameService.name;
@@ -153,16 +157,16 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Function called when input lost it focus.
      */
-    onBlur() {
+    onBlur($event) {
         this.onTouchedCallback();
-        this.blur.emit();
+        this.blur.emit($event);
     }
 
     /**
      * Function called when input receive focus;
      */
-    onFocus() {
-        this.focus.emit();
+    onFocus($event) {
+        this.focus.emit($event);
     }
 
     /**

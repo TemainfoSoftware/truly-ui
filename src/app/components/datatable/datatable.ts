@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,8 @@
  SOFTWARE.
  */
 import {
-    AfterContentInit,
-    Component,
-    ContentChildren,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    Output,
-    QueryList,
-    Renderer2,
-    ViewChild
+  AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList,
+  Renderer2, ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { DatatableFilterOptions } from './configs/datatable-filter-options';
@@ -69,7 +60,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowFilterColumn') allowFilterColumn = false;
 
-    @Input('rowsPage') rowsPage = 26;
+    @Input('rowsPage') rowsPage = 30;
 
     @Input('rowHeight') rowHeight = 25;
 
@@ -107,6 +98,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     public columns: any[] = [];
 
+    public heightViewPort = 0;
+
     public tabindex = 0;
 
     public globalFilterTimeout: any;
@@ -134,12 +127,13 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     ) {}
 
     ngAfterContentInit() {
-        this.setRowHeight();
+        this.calcDimensionsHeight();
         this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
         this.sortService.onInicializeSortService(this);
         this.inicializeGlobalFilter();
+        this.columnService.setColumns();
     }
 
     ngOnChanges(changes) {
@@ -148,8 +142,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         }
     }
 
-    setRowHeight() {
-        this.rowHeight = this.height / this.rowsClient;
+    calcDimensionsHeight() {
+        this.heightViewPort = this.allowFilterColumn ? this.height - 32 : this.height;
+        this.heightViewPort -= 25;
+        this.rowHeight = this.heightViewPort / this.rowsClient;
     }
 
     setTabIndex( value: number ) {

@@ -11,27 +11,26 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Online'"
-                         [buttonClass]="'infoDialog'" (click)="changeOnline()"></tl-button>
+              <tl-button [text]="'Change to Online'" (click)="changeOnline()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Busy'"
-                         [buttonClass]="'busy'" (click)="changeBusy()"></tl-button>
+              <tl-button [text]="'Change to Busy'" (click)="changeBusy()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Away'"
-                         [buttonClass]="'alertDialog'"
-                         (click)="changeAway()"></tl-button>
+              <tl-button [text]="'Change to Away'" (click)="changeAway()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Offline'"
-                         [buttonClass]="'errorDialog'"
-                         (click)="changeOffline()"></tl-button>
+              <tl-button [text]="'Change to Offline'" (click)="changeOffline()"></tl-button>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <tl-chatlist [itemsToShow]="3" (clickItem)="clickChat($event)" [searchQuery]="'firstName'" [searchInput]="input" [data]="dataSource"></tl-chatlist>
+              <tl-chatlist [itemsToShow]="3"
+                           (clickItem)="clickChat($event)"
+                           [searchQuery]="'firstName'"
+                           [searchInput]="input"
+                           [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                           [data]="dataSource"></tl-chatlist>
               <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
             </div>
             <div class="col-md-6">

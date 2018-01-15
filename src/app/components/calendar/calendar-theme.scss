@@ -1,0 +1,68 @@
+@mixin tl-calendar-theme($theme) {
+
+  $hover: map_get(map_get($theme, hover), background);
+  $borders: map_get($theme, borders);
+  $accent-color: map_get($theme, accent);
+
+  $background-box: map_get(map_get($theme, box), background);
+  $selected: map_get(map_get($theme, selected), text);
+  $contrast-color: map_get(map_get($theme, success), bar);
+
+  $base-text: map_get(map_get($theme, base), text);
+  $base-background: map_get(map_get($theme, base), background);
+
+  .wrapper-calendar {
+    border: 1px solid $borders;
+    background-color: $background-box;
+
+    >.header-calendar {
+      color: $base-text;
+      border-bottom: 1px solid $borders;
+
+      >.date {
+        & span:hover {
+          background: $hover;
+        }
+      }
+      >.todayButton {
+        color: $contrast-color;
+        &:hover{
+          background-color: $hover;
+        }
+      }
+    }
+
+    & .ui-table-calendar {
+      & .ui-table-thead {
+        & .ui-table-th {
+          color: $base-text;
+          &:first-child {
+            color: $accent-color;
+          }
+        }
+      }
+
+      & .ui-table-line .ui-table-cell {
+        color: $base-text;
+        &:first-child:not(.notDay) {
+          color: $accent-color;
+        }
+        &:hover:not(.ui-table-cell-empty) {
+          outline: 1px solid $borders;
+        }
+      }
+    }
+    & .today {
+      color: $contrast-color !important;
+    }
+
+    & .navigator {
+      outline: 2px solid $borders;
+    }
+
+    & .selected {
+      background-color: $contrast-color;
+      color: $selected !important;
+    }
+  }
+}

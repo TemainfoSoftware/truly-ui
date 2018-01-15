@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -27,42 +27,46 @@ export class CpfType implements CustomType {
 
     validate(): ValidatorFn {
         return ( c: AbstractControl ) => {
-            let sum;
+          let sum;
 
-            let leftover;
+          let leftover;
 
-            sum = 0;
+          sum = 0;
 
-            if ((this.cpfUnmasked( c ) === null) || (this.cpfUnmasked( c ).length < 9)) {
-                return {cpf: false};
-            }
+          if (c.touched) {
 
-            if ( this.isAllCharacteresEquals(c) ) {
-                return {cpf: false};
-            }
+          if ( (this.cpfUnmasked( c ) === null) || (this.cpfUnmasked( c ).length < 9) ) {
+            return { cpf: false };
+          }
 
-            for ( let i = 1; i <= 9; i++ ) {
-                sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (11 - i);
-            }
+          if ( this.isAllCharacteresEquals( c ) ) {
+            return { cpf: false };
+          }
 
-            leftover = (sum * 10) % 11;
-            if ( (leftover === 10) || (leftover === 11) ) {
-                leftover = 0;
-            }
-            if ( leftover !== Number( this.cpfUnmasked( c ).substring( 9, 10 ) ) ) {
-                return {cpf: false};
-            }
-            sum = 0;
-            for ( let i = 1; i <= 10; i++ ) {
-                sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (12 - i);
-            }
-            leftover = (sum * 10) % 11;
-            if ( (leftover === 10) || (leftover === 11) ) {
-                leftover = 0;
-            }
-            if ( leftover !== Number( this.cpfUnmasked( c ).substring( 10, 11 ) ) ) {
-                return {cpf: false};
-            }
+          for ( let i = 1; i <= 9; i++ ) {
+            sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (11 - i);
+          }
+
+          leftover = (sum * 10) % 11;
+          if ( (leftover === 10) || (leftover === 11) ) {
+            leftover = 0;
+          }
+          if ( leftover !== Number( this.cpfUnmasked( c ).substring( 9, 10 ) ) ) {
+            return { cpf: false };
+          }
+          sum = 0;
+          for ( let i = 1; i <= 10; i++ ) {
+            sum = sum + Number( this.cpfUnmasked( c ).substring( i - 1, i ) ) * (12 - i);
+          }
+          leftover = (sum * 10) % 11;
+          if ( (leftover === 10) || (leftover === 11) ) {
+            leftover = 0;
+          }
+          if ( leftover !== Number( this.cpfUnmasked( c ).substring( 10, 11 ) ) ) {
+            return { cpf: false };
+          }
+
+        }
             return null;
 
         };

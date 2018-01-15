@@ -2,7 +2,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -27,12 +27,15 @@ import {
     OnChanges,
     ContentChild, TemplateRef, OnDestroy, SimpleChanges
 } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { Subject } from 'rxjs/Subject';
 
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/map';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/catch';
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
@@ -81,7 +84,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     @Input() searchElement;
 
-    @Input() charsToSearch = 3;
+    @Input() charsToSearch = 2;
 
     @Input() addNew = false;
 
@@ -129,7 +132,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     public  showList = true;
 
-    public cursor = -1;
+    public cursor = 0;
 
     public skip = 0;
 
@@ -146,6 +149,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     public filteredData = [];
 
     public showMore = false;
+
+    public itemSelected;
 
     public scrollFinish = false;
 
@@ -169,7 +174,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     private firstRow;
 
-    private cursorViewPortPosition = -1;
+    private cursorViewPortPosition = 0;
 
     private lastSelected;
 
@@ -181,9 +186,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     private isScrolling;
 
-    private itemSelected;
-
-    constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
+   constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
                  public dataService: ListBoxDataSourceService,
                  private addNewRenderService: AddNewRenderService,
                  private listRenderService: ListBoxListRenderService,
@@ -195,13 +198,24 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     ngOnInit() {
         this.validateDataType();
-        this.handleSearchQuery();
-        this.subject.debounceTime( 500 ).subscribe( searchTextValue => {
+        this.subject
+          .debounceTime( 200 )
+          .distinctUntilChanged((oldValue, newValue) => oldValue === newValue)
+          .filter((searchTerm) => {
+              if (String(searchTerm).length >= this.charsToSearch) {
+                return true;
+              }
+              this.handleSearchAsDefaultData();
+              return false;
+          })
+          .subscribe(searchTextValue => {
             this.handleSearch( searchTextValue );
-            this.removeSelected();
-            this.setCursorsToInitialList();
-            this.addClassSelected( 0 );
-        } );
+            setTimeout(() => {
+              this.removeSelected();
+              this.resetCursors();
+              this.addClassSelected(0);
+            }, 1);
+          } );
     }
 
     ngAfterViewInit() {
@@ -214,8 +228,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.handleScrollShowMore();
         this.addScrollListListener();
         this.validateProperties();
-        this.addListenerOnTemplate();
         this.addListenersSearchElement();
+        this.addListenerFocusSearchElement();
         this.change.detectChanges();
     }
 
@@ -232,20 +246,31 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         }
     }
 
+  addListenerFocusSearchElement() {
+      if (this.searchElement) {
+        this.renderer.listen(this.searchElement.input.nativeElement, 'focus', ($event) => {
+          if (this.filtering) {
+            this.addClassSelected( 0 );
+          }
+        });
+      }
+    }
+
     subscribeClearButton() {
         this.searchElement.clear.subscribe( () => {
             this.filtering = false;
             this.resetSkipAndTake();
-            this.renderPageData();
             this.validateFilteredAsEmpty();
             this.handleScrollShowMore();
             this.removeSelected();
+            this.renderPageData();
         } );
     }
 
     addScrollListListener() {
         this.zone.run( () => {
             this.scrollListener = this.renderer.listen( this.itemContainer.nativeElement, 'scroll', ($event) => {
+              $event.preventDefault();
                 $event.stopPropagation();
                 clearTimeout( this.timeScroll );
                 this.onScroll();
@@ -262,25 +287,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         } );
     }
 
-    addListenerOnTemplate() {
-        if ( this.existCustomTemplate() ) {
-            this.addClickEventToCustomTemplate();
-        }
-    }
-
-    addClickEventToCustomTemplate() {
-        this.listBox.nativeElement.addEventListener( 'mousedown', ( $event ) => {
-            const array = !this.filtering ? this.data : this.dataService.datasource;
-            this.setInputFocus();
-            this.handleClickItem(  array[ this.getElementListOfCustomTemplate( $event ).indexDataGlobal ],
-                this.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ) );
-        } );
-    }
-
     addListenersSearchElement() {
         if ( this.searchElement ) {
             this.subscribeClearButton();
             this.listenerKeyDownSearchElement();
+            this.listenerKeyUpSearchElement();
         }
     }
 
@@ -288,6 +299,24 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
             this.handleEventKeyDown( $event );
         } );
+    }
+
+    listenerKeyUpSearchElement() {
+      this.renderer.listen( this.searchElement.input.nativeElement, 'keyup', ( $event ) => {
+        switch ($event.keyCode) {
+          case KeyEvent.ARROWDOWN: return;
+          case KeyEvent.ARROWUP: return;
+          case KeyEvent.ENTER: return;
+          case KeyEvent.ESCAPE: return;
+          case KeyEvent.PAGEDOWN: return;
+          case KeyEvent.PAGEUP: return;
+          case KeyEvent.HOME: return;
+          case KeyEvent.END: return;
+        }
+        if (!($event.keyCode === 65 && $event.ctrlKey)) {
+          this.subject.next( $event.target.value );
+        }
+      } );
     }
 
     public detectChanges() {
@@ -300,17 +329,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         const calcLines = (this.getScrollPositionByContainer() * this.rowHeight);
         if ( (this.itemContainer.nativeElement.scrollTop % calcLines) ) {
             this.itemContainer.nativeElement.scrollTop = calcLines;
-        }
-    }
-
-    getElementListOfCustomTemplate( $event ): { indexDataGlobal: string; listElement: string } {
-    const item = { indexDataGlobal: '', listElement: '' };
-        for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
-            if ( $event.path[ pathElement ].localName === 'li' ) {
-                item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
-                item.listElement = $event.path[ pathElement ];
-                return item;
-            }
         }
     }
 
@@ -333,18 +351,19 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.lastScrollTopOnKey = this.itemContainer.nativeElement.scrollTop;
     }
 
-    handleClickItem( item, index ) {
-        this.removeSelected();
-        this.cursor = index;
-        this.clickItem.emit( item );
-        this.itemSelected = item;
-        this.updateLastSelect();
-        this.getCursorViewPortPosition( index );
+    handleClickItem( item, indexDataSet, indexGlobal? ) {
+      this.removeSelected();
+      this.cursor = indexDataSet;
+      this.clickItem.emit({'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet});
+      this.itemSelected = item;
+      this.updateLastSelect();
+      this.setInputFocus();
+      this.getCursorViewPortPosition( indexDataSet );
     }
 
     removeSelected() {
         for ( let element = 0; element < this.listBox.nativeElement.children.length; element++ ) {
-            if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'selected' ) ) {
+            if ( this.listBox.nativeElement.children[ element ].getAttribute( 'class' ).includes( 'item-selected-listbox' ) ) {
                 return this.removeClassSelected( element );
             }
         }
@@ -352,44 +371,58 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     handleEventKeyDown( $event ) {
         switch ( $event.keyCode ) {
-            case KeyEvent.ESCAPE: this.handleEscape( $event ); return;
-            case KeyEvent.ARROWDOWN : this.handleKeyArrowDown( $event ); return;
-            case KeyEvent.ARROWUP: this.handleKeyArrowUp( $event ); return;
-            case KeyEvent.TAB: this.handleFilteredListNotSelected(); return;
-            case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
-            case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
-            case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
-            case KeyEvent.BACKSPACE: this.handleKeyBackspace( $event ); return;
+          case KeyEvent.ARROWDOWN : this.handleKeyArrowDown( $event ); return;
+          case KeyEvent.ARROWUP: this.handleKeyArrowUp( $event ); return;
+          case KeyEvent.ESCAPE: this.handleEscape( $event ); return;
+          case KeyEvent.ENTER: this.handleKeyEnter( $event ); return;
+          case KeyEvent.ARROWLEFT: $event.stopPropagation(); return;
+          case KeyEvent.ARROWRIGHT: $event.stopPropagation(); return;
+          case KeyEvent.PAGEDOWN: this.handlePageDown( $event ); return;
+          case KeyEvent.PAGEUP: this.handlePageUp( $event ); return;
+          case KeyEvent.HOME: this.handleHome( $event ); return;
+          case KeyEvent.END: this.handleEnd( $event ); return;
         }
-        this.subject.next( $event.target.value );
     }
 
-    handleKeyBackspace( $event ) {
-        setTimeout( () => {
-            if ( $event.target.value.length === 0 ) {
-                if ( (this.skip !== 0) || (this.take !== this.rowsPage) ) {
-                    this.filtering = false;
-                    this.resetSkipAndTake();
-                    this.renderPageData();
-                    this.validateFilteredAsEmpty();
-                    this.handleScrollShowMore();
-                    this.removeSelected();
-                    return;
-                }
-            }
-        }, 1 );
+    handleHome($event) {
+      this.disableKeyEvent($event);
+      this.itemContainer.nativeElement.scrollTop = 0;
+    }
+
+    handleEnd($event) {
+      this.disableKeyEvent($event);
+      if (this.isEndOfTheListScroll()) {
+        return;
+      }
+      this.itemContainer.nativeElement.scrollTop = this.listBox.nativeElement.offsetHeight;
+    }
+
+    handlePageDown($event) {
+      this.disableKeyEvent($event);
+      if (this.isEndOfTheListScroll()) {
+         return;
+      }
+      this.itemContainer.nativeElement.scrollTop =
+        this.itemContainer.nativeElement.scrollTop + (this.rowHeight * this.rowsPage);
+    }
+
+    handlePageUp($event) {
+      this.disableKeyEvent($event);
+      this.itemContainer.nativeElement.scrollTop =
+        this.itemContainer.nativeElement.scrollTop - (this.rowHeight * this.rowsPage);
     }
 
     handleEscape( $event ) {
         $event.stopPropagation();
-        this.handleFilteredListNotSelected();
         this.handleOpenFocusList();
     }
 
     handleKeyEnter( $event ) {
+        if (this.itemSelected && this.dataService.datasource.indexOf(this.itemSelected) > -1) {
+          this.handleClickItem(this.itemSelected, this.dataService.datasource.indexOf(this.itemSelected));
+        }
         $event.preventDefault();
         this.addNewRenderService.handleAddNewSelected();
-        this.handleFilteredListNotSelected();
     }
 
     handleOpenFocusList() {
@@ -399,20 +432,15 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         }
     }
 
-    handleFilteredListNotSelected() {
-        if (this.showList && this.filteredData.length > 0 && !this.itemSelected) {
-            this.handleClickItem( this.dataService.datasource[ 0 ], 0 );
-        }
-    }
-
     handleKeyArrowDown( $event ) {
-        if (this.loadingMoreData) {
-            $event.stopPropagation();
-            return;
-        }
-        this.handleValueSearchElement();
+      if (this.loadingMoreData) {
+          $event.stopPropagation();
+          return;
+      }
+      this.handleValueSearchElement();
+      if ( this.showList ) {
+        $event.preventDefault();
         $event.stopPropagation();
-        this.handleShowList();
         if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
             this.scrollByArrows = true;
@@ -424,14 +452,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                 this.setLastScrollTopOnKey();
             }
         }
+      }
     }
 
     handleKeyArrowUp( $event ) {
-        if (this.loadingMoreData) {
-            $event.stopPropagation();
-            return;
-        }
-        this.handleValueSearchElement();
+      if ( this.loadingMoreData ) {
+        $event.stopPropagation();
+        return;
+      }
+      this.handleValueSearchElement();
+      if ( this.showList ) {
+        $event.preventDefault();
         $event.stopPropagation();
         if ( this.existChildrenElements() ) {
             this.handleLastScrollTopOnKey();
@@ -444,6 +475,12 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                 this.setLastScrollTopOnKey();
             }
         }
+      }
+    }
+
+    disableKeyEvent($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
     }
 
     setScrollTopAndFocusNext() {
@@ -510,25 +547,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         }
     }
 
-    handleShowList() {
-        if (!this.showList) {
-            this.showList = true;
-            this.detectChanges();
-        }
-    }
-
     handleSearch( searchTerm ) {
-        if ( searchTerm ) {
-            this.showList = true;
-            this.detectChanges();
-            this.setScrollTopZero();
-            this.addScrollListListener();
-            this.resetCursors();
-            this.removeSelected();
-            this.isSearchTermLessThanCharsToSearch( searchTerm ) ?
-                this.handleSearchAsDefaultData() : this.handleSearchAsFoundData( searchTerm );
-            this.handleScrollShowMore();
-        }
+      if ( searchTerm ) {
+          this.showList = true;
+          this.detectChanges();
+          this.setScrollTopZero();
+          this.addScrollListListener();
+          this.resetCursors();
+          this.removeSelected();
+          this.handleSearchAsFoundData( searchTerm );
+          this.handleScrollShowMore();
+      }
     }
 
     handleSearchAsDefaultData() {
@@ -537,17 +566,33 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.validateFilteredAsEmpty();
         this.resetSkipAndTake();
         this.renderPageData();
+        setTimeout(() => {
+          this.removeSelected();
+          this.resetCursors();
+          this.addClassSelected(0);
+        }, 1);
     }
 
     handleSearchAsFoundData( searchTerm ) {
-        this.itemSelected = null;
-        this.filteredData = this.filterData( searchTerm );
-        this.handleSkipAndTakeWhileSearching();
-        this.validateFilteredAsEmpty();
+      if ( this.lazyMode ) {
+        this.getDataLazy( searchTerm );
+        return;
+      }
+      this.itemSelected = null;
+      this.filteredData = !this.isDataArrayString() ? this.filterDataObject( searchTerm ) : this.filterDataString( searchTerm );
+      this.handleSkipAndTakeWhileSearching();
+      this.validateFilteredAsEmpty();
+    }
+
+    filterDataString( searchTerm ) {
+      this.filtering = true;
+      return this.data.filter( ( item ) => {
+        return item.toString().toLowerCase().includes( searchTerm.toString().toLowerCase() );
+      } );
     }
 
     handleSkipAndTakeWhileSearching() {
-        if (this.filteredData.length) {
+      if ( Array( this.filteredData ).length ) {
             this.setSkipAndTakeAsFilteredData();
             this.renderPageData();
         } else {
@@ -567,6 +612,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleSearchQuery() {
+      this.handleSearchQueryAsArrayString();
         const data = this.lazyMode ? this.data.data[ 0 ] : this.data[ 0 ];
         if ( this.searchQuery.length === 0 ) {
             Object.keys( data ).forEach( ( value ) => {
@@ -574,6 +620,16 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             } );
         }
     }
+
+  handleSearchQueryAsArrayString() {
+    if ( this.isDataArrayString() ) {
+      return this.searchQuery = this.data;
+    }
+  }
+
+  isDataArrayString() {
+    return this.typeOfData === 'ArrayString';
+  }
 
     handleScrollDown() {
         this.handleScrollFinish();
@@ -599,6 +655,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleScrollUp() {
+        this.handleScrollFinish();
         if ( this.firstChildElement() ) {
             if ( ( this.firstChildElement().offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
                 if ( this.firstChildElement().getBoundingClientRect().top > this.parentElement().top - (5 * this.rowHeight) ) {
@@ -644,12 +701,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         return this.itemContainer.nativeElement.getBoundingClientRect();
     }
 
-    setCursorsToInitialList() {
-        this.cursor = 0;
-        this.cursorViewPortPosition = 0;
-    }
-
-    filterData( searchTerm ) {
+  filterDataObject( searchTerm ) {
         const filter = [];
         this.filtering = true;
         const data = this.lazyMode ? this.data.data : this.data;
@@ -681,9 +733,18 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.change.detectChanges();
     }
 
-    getDataLazy() {
-        this.loadingMoreData = true;
-        this.lazyLoad.emit( { skip: this.skip, take: this.take } );
+  getDataLazy( term? ) {
+      this.loadingMoreData = true;
+      const fields = {};
+      Object.keys(this.searchQuery).forEach((item) => {
+        const keyName = this.searchQuery[item];
+        fields[keyName] = { matchMode: 'contains', value: term };
+      });
+      const filter = {
+        fields: fields,
+        operator: 'or'
+      };
+      this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filter } );
     }
 
     renderList() {
@@ -753,7 +814,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     validateProperties() {
-        if ( (!this.existCustomTemplate()) && (!this.label) ) {
+      if ( (!this.existCustomTemplate()) && (!this.label) && (this.typeOfData !== 'ArrayString') ) {
             throw new EvalError( 'At least the property [label] is required when the Custom Template is not defined' );
         }
     }
@@ -846,11 +907,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     addClassSelected( index ) {
-        this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'selected' );
+        this.itemSelected = this.dataService.datasource[index];
+        this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
     }
 
     removeClassSelected( index ) {
-        this.renderer.removeClass( this.listBox.nativeElement.children[ index ], 'selected' );
+        this.itemSelected = null;
+        this.renderer.removeClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
     }
 
     setFocusOnPreviousCursor() {
@@ -889,8 +952,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         return (this.lazyMode ? this.data.total : this.data.length) > this.rowsPage;
     }
 
-    isSearchTermLessThanCharsToSearch( searchTerm ) {
-        return searchTerm.length < this.charsToSearch;
+    isEndOfTheListScroll() {
+      return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) ===
+      this.listBox.nativeElement.offsetHeight);
     }
 
     existChildrenElements() {
@@ -942,8 +1006,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     public resetCursors() {
         this.itemContainer.nativeElement.scrollTop = 0;
-        this.cursor = -1;
-        this.cursorViewPortPosition = -1;
+        this.cursor = 0;
+        this.cursorViewPortPosition = 0;
     }
 
     removeChildren() {
@@ -960,6 +1024,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then(value => {
             this.handleRenderList();
         });
+        this.handleSearchQuery();
         this.loadingMoreData = false;
         this.change.detectChanges();
     }

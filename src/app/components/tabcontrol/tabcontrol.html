@@ -1,13 +1,20 @@
-<div class="wrapper">
+<div class="wrapper-tabcontrol" #wrapperTab>
   <ng-template #tabsHeader let-tabs="tabs">
     <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
-      <li *ngFor="let tab of tabs" [ngClass]="{selected: tab.selected}" [style.color]="titleColor"
-          [style.background]="tab.selected ? background: '#f1f1f1'" (click)="selectTab(tab)">
+      <li *ngFor="let tab of tabs"
+          [ngClass]="{'tab-selected': tab.selected}" (click)="selectTab(tab)">
         {{tab.title}}
       </li>
     </ul>
   </ng-template>
-  <span class="line-separator" [style.width]="'calc(100% '+'- '+ widthSeparator + 'px)'" [style.left]="widthSeparator + 1 +'px'"></span>
+
+  <div class="line-separator"
+        #line
+        [style.width]="widthSeparator"
+        [style.top]="topPosition + 'px'"
+        [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) - 1 +'px'">
+  </div>
+
   <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
   <ng-content></ng-content>
 </div>

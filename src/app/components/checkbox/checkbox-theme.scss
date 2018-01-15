@@ -1,0 +1,46 @@
+@mixin tl-checkbox-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+
+  @mixin checkbox-color() {
+    background-color: $selected-text;
+    border: 1px solid $borders;
+  }
+
+  input[type='checkbox']:checked:before {
+    @include checkbox-color();
+  }
+
+  input[type='checkbox']:after {
+    @include checkbox-color();
+  }
+
+  input[type='checkbox']:checked:after {
+    @include checkbox-color();
+  }
+
+  input[type='checkbox']:checked:before {
+    @include checkbox-color();
+  }
+
+  .-label {
+    color: $base-text;
+  }
+
+  .checkmark-wrapper{
+    border-color: $selected-background;
+    background-color: $selected-background;
+  }
+
+  .checkmark_stem{
+    background-color: $selected-text;
+  }
+
+  .checkmark_kick{
+    background-color: $selected-text;
+  }
+
+}

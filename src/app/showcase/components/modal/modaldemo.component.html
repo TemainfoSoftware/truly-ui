@@ -9,8 +9,9 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <div class="col-md-2">
-              <tl-button [text]="'Show Modal'" [iconAddonBefore]="'ion-monitor'" (click)="modal1()"></tl-button>
+            <tl-button [text]="'Show Modal'" [iconAddonBefore]="'ion-monitor'" (click)="modal1(parent)"></tl-button>
+            <div class="col-md-12" #parent style="height: 500px; background: #cbcbcb; margin-top: 10px; border: 1px solid #aeaeae">
+                <h5 style="text-align: center; color: #fff;">PARENT ELEMENT CONTAINER</h5>
             </div>
           </app-card>
         </app-showcase-card>

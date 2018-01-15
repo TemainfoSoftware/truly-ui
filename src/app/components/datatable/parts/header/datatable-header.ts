@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017 Temainfo Sistemas
+    Copyright (c) 2018 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -47,8 +47,7 @@ export class TlDatatableHeader implements AfterViewInit {
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  public helperService: DatatableHelpersService,
                  public filterService: TlDatatableFilterService,
-                 private sortService: TlDatatableSortService,
-    ) {}
+                 private sortService: TlDatatableSortService ) {}
 
     ngAfterViewInit() {
         if (this.columnsFilter !== undefined) {

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -98,6 +98,10 @@ export class AutoCompleteDemoComponent {
     this.result['id'] = this.dataBasic.length + 1;
     this.dataBasic.push(this.result);
   }*/
+
+  onSelectRow($event) {
+    console.log('Row', $event);
+  }
 
   getDataFromService( skip, take ) {
     return this.dataBasic.slice( skip, take );

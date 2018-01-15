@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,12 @@
  SOFTWARE.
  */
 import {
-    Component,
-    Input,
-    ViewChild,
-    AfterViewInit,
-    Output,
-    EventEmitter, Renderer2,
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  Output,
+  EventEmitter, Renderer2, ChangeDetectorRef,
 } from '@angular/core';
 import { ComponentHasModelBase } from '../core/base/component-has-model.base';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -157,6 +157,12 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
     @Input() type = 'text';
 
     /**
+     * Height of input field
+     * @type {string}
+     */
+     @Input() height = '23px';
+
+    /**
      * The element itself to be manipulated
      */
     @ViewChild( 'input' ) public input;
@@ -191,7 +197,7 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
      * Constructor
      */
     constructor(tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                public renderer: Renderer2) {
+                public renderer: Renderer2, public change?: ChangeDetectorRef) {
         super(tabIndexService, idService, nameService);
     }
 
@@ -202,8 +208,6 @@ export class TlInput extends ComponentHasModelBase implements AfterViewInit {
         this.setElement( this.input, 'input' );
         this.validateClearButtonPosition();
         this.hasMask();
-
-
     }
 
     hasMask() {

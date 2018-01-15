@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2017 Temainfo Sistemas
+    Copyright (c) 2018 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -19,6 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+
 export class  ApplicationConfig {
-    theme: string;
+  theme = 'default';
 }

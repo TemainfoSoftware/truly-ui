@@ -1,8 +1,5 @@
 //Default
-$button-height: 37px;
-$button-min-width: 125px;
 $button-icon-padding: 15px;
-$button-icon-color: #6A6A6A;
 $button-addon-padding: 0 7px;
 $button-display: inline-block;
 $button-font-size: 0.9em;
@@ -11,53 +8,32 @@ $button-text-align: center;
 
 .tl-button{
   font-family: $button-font-family;
-  line-height: $button-height;
   font-size: $button-font-size;
-  background-color:#E8E8E8;
-  min-width: $button-min-width;
   padding: 0;
   margin: 0;
   outline: none;
   display: inline-block;
   cursor: pointer;
-  border: 1px solid #C8C8C8;
-  color: #616161;
-
+  box-sizing: border-box;
   > .iconAddonBefore{
+    box-sizing: border-box;
     float: left;
-    line-height: $button-height;
     font-weight: 400;
     padding: 0 15px;
-    border-right: 1px solid #C8C8C8;
   }
   > .iconAddonAfter{
+    box-sizing: border-box;
     float: right;
-    line-height: $button-height;
     font-weight: 400;
     padding: 0 15px;
-    border-left: 1px solid #C8C8C8;
   }
   > .textButton{
     padding: 0 15px;
+    margin: 0;
     width: 500px !important;
-    line-height: $button-height;
   }
-}
-.tl-button:focus {
-  outline: -webkit-focus-ring-color auto 5px;
-  outline-color: -webkit-focus-ring-color;
-  outline-style: auto;
-}
-.tl-button:hover{
-  outline: none;
-  background-color: #dedede;
-}
-.tl-button:active, .-toggle{
-  outline: none;
-  background-color: #d8d8d8;
 }
 .disabled{
   opacity: 0.45;
-  color: #000000;
   cursor: default;
 }

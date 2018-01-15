@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,22 +19,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable, Type, ViewContainerRef } from '@angular/core';
 import { ModalService } from '../modal/modal.service';
 
 @Injectable()
 export class FormService {
 
-    public viewForm;
+    public viewForm: ViewContainerRef;
 
     constructor(public modalService: ModalService) {}
 
-    setView(view) {
+    setView(view: ViewContainerRef) {
         this.viewForm = view;
         this.modalService.setView(view);
     }
 
-    createForm(component, options, callback) {
-        this.modalService.createModal( component, options, callback );
+    createForm(component: Type<any>, parent: ElementRef, callback: Function) {
+        this.modalService.createModal( component, parent, callback );
     }
 }

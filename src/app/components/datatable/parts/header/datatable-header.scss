@@ -1,5 +1,3 @@
-$border-color : #DCDCDC;
-
 .ui-datatable-header{
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -16,7 +14,6 @@ $border-color : #DCDCDC;
 
 .ui-datatable-header-wrap{
   overflow: hidden;
-  border-right: 1px #DCDCDC solid;
   //position: relative;
 }
 
@@ -36,18 +33,18 @@ $border-color : #DCDCDC;
 }
 
 .ui-datatable-table-head{
-  color: #7A838B;
   font-size: 13px;
   > .ui-row{
-    background: #E9E9E9;
     height: 25px;
     margin: 0;
-    border-bottom: 1px $border-color solid;
+  }
+
+  > .ui-row-filter{
+    height: 32px;
   }
 
   > .ui-row .ui-sort-indicator {
     font-size: 15px;
-    color: #7a838b;
     width: 5.65px;
     height: 17px;
     font-weight: 600;
@@ -64,11 +61,10 @@ $border-color : #DCDCDC;
   }
   > .ui-row .ui-cel{
     box-sizing: border-box;
-    border-right: 1px $border-color solid;
     padding-left: 5px;
     padding-right: 5px;
-    line-height: 24px;
-    height: 25px;
+   // line-height: 24px;
+   // height: 25px;
     align-items: center;
     overflow: hidden;
     cursor: pointer;

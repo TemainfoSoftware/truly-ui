@@ -5,6 +5,8 @@
 /tmp
 /out-tsc
 
+/showcase
+
 /src/app/showcase/**/*.map
 /src/app/components/**/*.map
 /src/app/showcase/**/*.js

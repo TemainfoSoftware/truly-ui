@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -51,8 +51,11 @@ export class TypeFactory {
     }
 
     static setCpfMask(tlinput) {
-        if (tlinput) {
-          tlinput.validations.cpf = false;
+        if (tlinput && tlinput.modelValue) {
+          tlinput.validations.required = Object.keys(tlinput.modelValue).length > 0;
+          if (!tlinput.validations.required && ( tlinput.modelValue !== null)) {
+            tlinput.validations.required = tlinput.modelValue.length > 0;
+          }
           tlinput.mask = '999.999.999-99';
         }
     }

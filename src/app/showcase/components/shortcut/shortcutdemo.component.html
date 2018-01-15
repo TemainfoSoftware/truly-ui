@@ -1,0 +1,58 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Shortcut Directive <span class="module-name"><code><u>Module Name</u>: <strong>DirectiveModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>DirectiveModule</strong></code></p>
+    <p class="text-content">The shortcut directive is used to attach an shortcut to an Action Component (such as tl-button) or link, usually all combinations of keys are supported.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+    <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-card>
+          <div class="col-md-6">
+            <span>Single Key</span><br>
+            <tl-button (click)="showDialog('You Pressed the Shortcut [ K ]')" [text]="'Press K'" [shortcut]="'k'"></tl-button>
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-button [shortcut]="'k'" [text]="'Press K'" (click)="showDialog('You Pressed the Shortcut [ K ]')" ></tl-button>
+</textarea>
+
+
+          </div>
+          <div class="col-md-6">
+            <span>Using CTRL</span><br>
+            <tl-button (click)="showDialog('You Pressed the Shortcut [ CTRL + B ]')" [text]="'Press CTRL + B'" [shortcut]="'ctrl + b'"></tl-button>
+            <div class="spacer"></div>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-button [shortcut]="'ctrl + b'" [text]="'Press CTRL + B'" (click)="showDialog('You Pressed the Shortcut [ CTRL + B ]')"></tl-button>
+</textarea>
+          </div>
+        </app-card>
+        <app-card>
+          <div class="col-md-6">
+            <span>Using CTRL and ALT</span><br>
+            <tl-button [text]="'Press CTRL + ALT + P'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + P ]')" [shortcut]="'ctrl + alt + p'"></tl-button>
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-button [shortcut]="'ctrl + alt + p'" [text]="'Press CTRL + ALT + P'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + P ]')"></tl-button>
+</textarea>
+          </div>
+          <div class="col-md-6">
+            <span style="margin-bottom: 5px">Using it in any element</span><br>
+            <a class="badge" style="color: #ececec; line-height: 20px; padding: 5px" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + K ]')" [shortcut]="'ctrl + alt + k'">Press CTRL + ALT + K</a>
+            <div class="spacer"></div>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <a [shortcut]="'ctrl + alt + k'" (click)="showDialog('You Pressed the Shortcut [ CTRL + ALT + K ]')">Press CTRL + ALT + K</a>
+</textarea>
+          </div>
+        </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

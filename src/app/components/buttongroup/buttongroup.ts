@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
 
     @Input() index: number;
 
-    @Input() height: number;
+    @Input() height = '25px';
 
     @Output( 'itemSelect' ) itemSelect: EventEmitter<any> = new EventEmitter();
 
@@ -73,7 +73,7 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
         item._element.nativeElement.style.position = 'absolute';
         if (index2 >= 1) {
           item._element.nativeElement.style.left =
-            array[index2 - 1]._element.nativeElement.offsetLeft + array[index2 - 1].width + 'px';
+            array[index2 - 1]._element.nativeElement.offsetLeft + parseInt(array[index2 - 1].width, 10) + 'px';
         }
       });
     }
@@ -152,7 +152,7 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
     setItems() {
         this.buttonGroupItem.toArray().forEach( ( item, index ) => {
             item.index = index;
-            item.height = this.height;
+            item.height = parseInt(this.height, 10) + 'px';
             this.list.nativeElement.appendChild( item._element.nativeElement );
         } );
     }

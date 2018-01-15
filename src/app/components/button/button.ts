@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-    Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit,
+  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -31,54 +31,36 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 
-let zindex = 0;
-
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
-    styleUrls: [ './button.scss' ]
+    styleUrls: [ './button.scss' ],
 } )
-export class TlButton extends ComponentDefaultBase implements AfterViewInit {
+export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewInit {
 
-    @Input() type: string;
+    @Input() text = '';
 
-    @Input() text: string;
+    @Input() iconAddonBefore = '';
 
-    @Input() iconAddonBefore: string;
+    @Input() iconAddonAfter = '';
 
-    @Input() buttonAddonBeforeClass: string;
+    @Input() iconBeforeText = '';
 
-    @Input() iconAddonAfter: string;
+    @Input() iconAfterText = '';
 
-    @Input() buttonAddonAfterClass: string;
+    @Input() height = '30px';
 
-    @Input() iconBeforeText: string;
+    @Input() width = '120px';
 
-    @Input() iconBeforeTextClass: string;
+    @Input() defaultFocus = false;
 
-    @Input() iconAfterText: string;
+    @Input() disabled = null;
 
-    @Input() iconAfterTextClass: string;
+    @Input() toggle = false;
 
-    @Input() height: number;
+    @Input() colorIconBefore = '';
 
-    @Input() width: number;
-
-    @Input() defaultFocus: boolean;
-
-    @Input() disabled: boolean;
-
-    @Input() toggle: boolean;
-
-    @Input() toggleClass: string;
-
-    @Input() toggleClassName: string;
-
-    @Input() colorIconBefore: string;
-
-    @Input() colorIconAfter: string;
-
-    @Input() buttonClass: string;
+    @Input() colorIconAfter = '';
 
     @Input() mdResult: ModalResult;
 
@@ -88,23 +70,30 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
-    public zIndex;
+    public shortcutManager = {};
+
+    public toggleClassName = '';
 
     private _buttonSelected: boolean;
+
+    private listModals;
+
+    private parentElement;
 
     @Input() set buttonSelected( value: boolean ) {
         this._buttonSelected = value;
         this.executeToggle();
     }
 
-
     constructor( public button: ElementRef, public modalService: ModalService,
                  tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
         super( tabIndexService, idService, nameService );
-        this.zIndex = zindex++;
-        this.initializeDefaultInputValues();
     }
 
+    ngOnInit() {
+      this.getElementParentModal();
+      this.handleHeadElementButton();
+    }
 
     ngAfterViewInit() {
         this.setElement( this.buttonElement, 'button' );
@@ -114,40 +103,27 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
-        this.hasText();
-        this.checkWidthAndHeight();
     }
 
-    initializeDefaultInputValues() {
-        this.type = 'button';
-        this.text = '';
-        this.toggleClass = '';
-        this.buttonAddonAfterClass = '';
-        this.buttonAddonBeforeClass = '';
-        this.iconAfterTextClass = '';
-        this.iconBeforeTextClass = '';
-        this.buttonClass = '';
-        this.iconAddonBefore = '';
-        this.iconAddonAfter = '';
-        this.iconAfterText = '';
-        this.iconBeforeText = '';
-        this.disabled = null;
-        this.toggle = false;
-        this._buttonSelected = true;
+    handleHeadElementButton() {
+      this.modalService.head.subscribe((element: any ) => {
+        if (!element.activeModal) {
+          return;
+        }
+        if (this.parentElement === element.activeModal.instance.element.nativeElement) {
+          this.shortcutManager = { 'activeModal': element.activeModal, 'button': this };
+        }
+      });
+    }
+
+    getElementParentModal() {
+      this.listModals = document.querySelectorAll( 'tl-modal' );
+      this.findParentOfChildren();
     }
 
     keydown( $event: KeyboardEvent ) {
         if ( $event.keyCode === KeyEvent.ENTER ) {
             this.clickToggle();
-        }
-    }
-
-    checkWidthAndHeight() {
-        if ( (typeof this.width !== 'number') && (typeof this.width !== 'undefined') ) {
-            throw new EvalError( 'You must pass some valid number value to the WIDTH property of the button element.' );
-        }
-        if ( (typeof this.height !== 'number') && (typeof this.height !== 'undefined') ) {
-            throw new EvalError( 'You must pass some valid number value to the HEIGHT property of the button element.' );
         }
     }
 
@@ -159,7 +135,7 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
     executeToggle() {
         if ( this.toggle ) {
             if ( this._buttonSelected ) {
-                this.toggleClassName = this.toggleClass ? this.toggleClass : '-toggle';
+                this.toggleClassName = '-toggle';
                 this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = false;
             } else {
@@ -170,36 +146,28 @@ export class TlButton extends ComponentDefaultBase implements AfterViewInit {
         }
     }
 
-    hasText() {
-        if ( !this.text ) {
-            throw new EvalError( 'You must pass some value to the text property of the button element.' );
-        }
-    }
-
     dispatchCallback(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            const listModals = document.querySelectorAll( 'tl-modal' );
+        return new Promise(( resolve ) => {
             if ( !this.mdResult || ModalResult.MRCUSTOM ) {
                 return;
             }
-            if ( listModals.length > 0 ) {
+            if ( this.listModals.length > 0 ) {
                 this.modalService.execCallBack( {
                     mdResult : ModalResult[ this.mdResult ],
                     formResult : this.formResult
-                }, this.findParentOfChildren( listModals ) ).then(() => {
+                }, this.findParentOfChildren() ).then(() => {
                     resolve();
                 });
             }
         });
     }
 
-    findParentOfChildren( listModals ) {
-        let parent;
-        for ( let child = 0; child < listModals.length; child++ ) {
-            const listElements = listModals[ child ].querySelectorAll( '*' );
+    findParentOfChildren() {
+        for ( let child = 0; child < this.listModals.length; child++ ) {
+            const listElements = this.listModals[ child ].querySelectorAll( '*' );
             for ( let child2 = 0; child2 < listElements.length; child2++ ) {
                 if ( listElements[ child2 ] === this.button.nativeElement ) {
-                    return parent = listModals[ child ];
+                    return this.parentElement = this.listModals[ child ];
                 }
             }
         }

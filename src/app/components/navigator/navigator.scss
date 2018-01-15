@@ -1,0 +1,40 @@
+
+$border-radius: 3px;
+
+.tl-navigator{
+  display: inline-flex;
+  > .ui-navigator{
+    text-align: center;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1.0em;
+    font-family: 'Lato', sans-serif;
+    transition: background-color 100ms linear;
+    user-select: none;
+    &.ui-with-border:hover, &.ui-with-border:focus{
+      border-radius: 0;
+    }
+    &:hover, &:focus{
+      border-radius: $border-radius;
+      outline: none;
+    }
+  }
+  > .ui-button{
+    width: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 100ms linear;
+    user-select: none;
+    &:hover, &:focus{
+      outline: none;
+    }
+    &.ui-with-border:first-child {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+    &.ui-with-border:last-child{
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+}

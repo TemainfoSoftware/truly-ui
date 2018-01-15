@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild,
+  Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, AfterViewInit, Renderer2,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -28,31 +28,42 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlTab } from './tab/tab';
+import { TlModal } from '../modal/modal';
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
     selector: 'tl-tabcontrol',
     templateUrl: './tabcontrol.html',
     styleUrls: [ './tabcontrol.scss' ]
 } )
-export class TlTabControl extends ComponentDefaultBase implements AfterContentInit {
+export class TlTabControl extends ComponentDefaultBase implements AfterContentInit, AfterViewInit {
 
     @Input( 'height' ) height = 'auto';
 
-    @Input( 'background' ) background = '#fff';
-
-    @Input( 'titleColor' ) titleColor = '#848484';
-
     @ViewChild('tabsHeader') tabsHeader;
+
+    @ViewChild('wrapperTab') wrapper;
+
+    @ViewChild('line') line;
 
     @ContentChildren( forwardRef(() => TlTab )) tabs: QueryList<TlTab>;
 
+    @ViewChild( forwardRef(() => TlModal )) modal: QueryList<TlModal>;
+
     private elementListTabs;
 
-    public widthSeparator = 0;
+    public widthSeparator = '';
 
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
-        super( tabIndexService, idService, nameService );
-    }
+    public widthTabs = 0;
+
+    public widthWrapper = 0;
+
+    public topPosition = 0;
+
+    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                 private renderer: Renderer2 ) {
+          super( tabIndexService, idService, nameService );
+      }
 
     ngAfterContentInit() {
       const selectedTab = this.tabs.find(tab => tab.selected);
@@ -63,17 +74,76 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       this.getElementList();
     }
 
+    ngAfterViewInit() {
+      this.getWrapperWidth();
+      this.getTabsComponent();
+    }
+
+    getTabsComponent() {
+      this.tabs.forEach( ( item, index ) => {
+        this.listenLastElementTab( item.lastComponent, index );
+        this.listenPreviousElementTab( item.firstComponent, index );
+      } );
+    }
+
+    listenLastElementTab( last, index ) {
+      if ( last ) {
+        this.renderer.listen( last, 'keydown', ( $event ) => {
+          this.handleKeyDownLastElementTab( $event, index );
+        } );
+      }
+    }
+
+    listenPreviousElementTab( first, index ) {
+      if ( first ) {
+        this.renderer.listen( first, 'keydown', ( $event ) => {
+          this.handleKeyDownFirstElementTab( $event, index );
+        } );
+      }
+    }
+
+    handleKeyDownLastElementTab( $event, index ) {
+      if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 && (!$event.shiftKey) ) {
+        this.nextTabAndElement( index );
+      }
+      if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) ) {
+        this.nextTabAndElement( index );
+      }
+    }
+
+    handleKeyDownFirstElementTab( $event, index ) {
+      if ( [ KeyEvent.ARROWUP ].indexOf( $event.keyCode ) >= 0 ) {
+        this.previousTabAndElement( index );
+      }
+      if ( ($event.keyCode === KeyEvent.TAB) && ($event.shiftKey) ) {
+        this.previousTabAndElement( index );
+      }
+    }
+
+    nextTabAndElement( index ) {
+      if ( this.tabs.toArray()[ index + 1 ] ) {
+        this.resetTabsSelected();
+        this.tabs.toArray()[ index + 1 ].selected = true;
+        this.setFocusNext( index + 1 );
+      }
+    }
+
+    previousTabAndElement( index ) {
+      if ( this.tabs.toArray()[ index - 1 ] ) {
+        this.resetTabsSelected();
+        this.tabs.toArray()[ index - 1 ].selected = true;
+        this.setFocusPrevious( index - 1 );
+      }
+    }
+
     selectTab(tab: TlTab) {
       this.tabs.forEach(item => item.selected = false);
       tab.selected = true;
     }
 
-  setTabProperties() {
-    this.tabs.forEach( ( item, index, array ) => {
-      item.background = this.background;
-      item.height = this.height;
-    } );
-  }
+    getWrapperWidth() {
+      this.widthWrapper = Math.round( this.wrapper.nativeElement.offsetWidth );
+    }
 
     getElementList() {
       setTimeout(() => {
@@ -87,10 +157,38 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       }, 1);
     }
 
+    setFocusNext( index ) {
+      setTimeout( () => {
+        this.tabs.toArray()[ index ].firstComponent.focus();
+      }, 1 );
+    }
+
+    setFocusPrevious( index ) {
+      setTimeout( () => {
+        this.tabs.toArray()[ index ].lastComponent.focus();
+      }, 1 );
+    }
+
+    setTabProperties() {
+      this.tabs.forEach( ( item ) => {
+        item.height = this.height;
+      } );
+    }
+
     setWidthSeparator() {
+      this.widthTabs = 0;
       for (let i = 0; i < this.elementListTabs.length; i++) {
-        this.widthSeparator = this.widthSeparator + Number(this.elementListTabs[i].offsetWidth) - 1;
+        this.widthTabs = this.widthTabs + Number(this.elementListTabs[i].offsetWidth);
+        this.topPosition = this.wrapper.nativeElement.offsetTop + (this.line.nativeElement.offsetHeight / 2) - 1;
       }
+      this.widthSeparator = 'calc(100% - ' + ((this.widthTabs) + this.wrapper.nativeElement.offsetLeft +
+        this.line.nativeElement.offsetLeft) + 'px' + ' )';
+    }
+
+    resetTabsSelected() {
+      this.tabs.forEach( ( item ) => {
+        item.selected = false;
+      } );
     }
 
     get tabsContext() {

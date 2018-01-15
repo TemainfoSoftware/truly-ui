@@ -1,0 +1,25 @@
+@mixin tl-radiobutton-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $selected-background: map_get(map_get($theme,selected),background);
+  $box-background: map_get(map_get($theme,box),background);
+
+
+  .radio-ring {
+    background: $box-background;
+  }
+
+  input[type='radio']:after {
+    background-color: $borders;
+  }
+
+  .-label {
+    color: $base-text;
+  }
+
+  .radio-selected{
+    background-color: $selected-background;
+  }
+
+}

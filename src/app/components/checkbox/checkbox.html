@@ -1,9 +1,11 @@
 <div class="check-container">
-    <div (click)="check(checkbox.checked)" *ngIf="modelValue" [style.background-color]="checkedColorBg"
-         [style.border]="'1px solid ' + checkedColorBg" class="checkmark-wrapper">
+    <div (click)="check(checkbox.checked)"
+         *ngIf="modelValue"
+         [ngStyle]="{'border-width':'1px','border-style':'solid', 'border-color':checkedColorBg,'background-color':checkedColorBg }"
+         class="checkmark-wrapper">
         <div class="checkmark">
-            <div class="checkmark_stem" [style.background-color]="checkmarkColor"></div>
-            <div class="checkmark_kick" [style.background-color]="checkmarkColor"></div>
+            <div class="checkmark_stem" [ngStyle]="{'background-color':checkmarkColor}"></div>
+            <div class="checkmark_kick" [ngStyle]="{'background-color':checkmarkColor}"></div>
         </div>
     </div>
     <input #checkbox

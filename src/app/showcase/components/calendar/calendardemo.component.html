@@ -1,0 +1,43 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Calendar <span class="module-name"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></p>
+    <p class="text-content">The Calendar is a form component that represents a graphical Gregorian calendar..</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+            <app-card>
+              <div class="col-md-6">
+                <h5>Basic</h5>
+                <tl-calendar></tl-calendar>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-calendar></tl-calendar>
+</textarea>
+              </div>
+              <div class="col-md-6">
+              <h5>Without Today Button</h5>
+              <tl-calendar (selectDay)="onSelect($event)" [todayButton]="false"></tl-calendar>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-calendar [todayButton]="false"></tl-calendar>
+</textarea>
+              </div>
+            </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

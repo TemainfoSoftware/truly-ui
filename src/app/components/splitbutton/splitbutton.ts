@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -51,39 +51,21 @@ let globalZindex = 1;
 } )
 export class TlSplitButton implements AfterContentInit {
 
-    @Input() type = 'button';
-
     @Input() text = '';
 
     @Input() iconAddonBefore = '';
 
-    @Input() buttonAddonBeforeClass;
-
     @Input() iconAddonAfter = '';
-
-    @Input() buttonAddonAfterClass;
 
     @Input() iconBeforeText;
 
-    @Input() iconBeforeTextClass;
-
     @Input() iconAfterText;
 
-    @Input() iconAfterTextClass;
+    @Input() width = '125px';
 
-    @Input() width;
-
-    @Input() height = 39;
+    @Input() height = '35px';
 
     @Input() disabled: boolean = null;
-
-    @Input() toggleClass: string;
-
-    @Input() buttonClass = '';
-
-    @Input() splitButtonClass;
-
-    @Input() actionMenuClass;
 
     @ViewChild( 'lista' ) lista: ElementRef;
 

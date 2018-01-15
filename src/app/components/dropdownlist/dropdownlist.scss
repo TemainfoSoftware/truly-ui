@@ -1,39 +1,24 @@
 //Default
-$default-backgroundColor: #E8E8E8;
-$default-backgroundHoverColor: #dedede;
-$default-backgroundActiveColor: #d8d8d8;
-$default-backgroundFocusColor: #53C68C;
-$default-color: #616161;
-$default-focusColor: #FFFFFF;
 $default-fontSize: 0.9em;
 $default-fontFamily: 'Segoe UI', sans-serif;
 $default-height: 39px;
-$default-border: 1px solid #C8C8C8;
 $default-cursorHover: pointer;
 $default-cursor: default;
-$default-iconColor: #6A6A6A;
 $default-outline: none;
-$error-field: #FF6666;
-$error-placeholder: #FFB9B9;
-$error-background-color: #FFF1F1;
-$success-field: #66CC99;
-$success-background-color: #E3F5EC;
+
 
 .tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
-  box-sizing: unset;
   > .labeltext {
     font-family: $default-fontFamily;
+    box-sizing: border-box;
     font-size: $default-fontSize;
-    color: #737373;
     font-weight: normal;
     line-height: 1;
-
     white-space: nowrap;
     vertical-align: middle;
     > b.required {
-      color: #FF6666;
     }
   }
   > .labeltext.-labeltop {
@@ -47,19 +32,15 @@ $success-background-color: #E3F5EC;
     padding: 5px 5px 5px 0;
   }
   > .wrapper {
-    box-sizing: unset;
     position: relative;
     display: table;
     margin: 0;
     padding: 0;
     > .select {
       overflow: hidden;
-      background: $default-backgroundColor;
       font-family: $default-fontFamily;
       font-size: $default-fontSize;
-      color: $default-color;
       cursor: $default-cursorHover;
-      border: $default-border;
       margin: 0;
       padding: 0;
       vertical-align: middle;
@@ -67,15 +48,8 @@ $success-background-color: #E3F5EC;
       box-sizing: border-box;
     }
     > .select.without-icon {
-      box-sizing: unset;
       padding-left: 10px;
       padding-right: 30px;
-    }
-    > .select:hover {
-      background-color: $default-backgroundHoverColor;
-    }
-    > .select:active {
-      background-color: $default-backgroundActiveColor;
     }
     > .select:focus {
       outline: -webkit-focus-ring-color auto 5px;
@@ -83,45 +57,28 @@ $success-background-color: #E3F5EC;
       outline-style: auto;
     }
 
-    > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-      border: 1px solid $error-field;
-      background-color: $error-background-color;
-      //outline: none;
-    }
-
-    > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-      border: 1px solid $success-field;
-      background-color: $success-background-color;
-      //outline: none;
-    }
     > .dropdown-list-icon {
-      box-sizing: unset;
       position: absolute;
       display: table-cell;
       cursor: $default-cursorHover;
-      line-height: $default-height - 2;
       top: 0;
       right: 0;
     }
     > .dropdown-list-icon i {
       font-size: $default-fontSize;
-      color: $default-iconColor;
       padding: 0 9.3px;
     }
     > .dropdown-list-wrapper-select {
       z-index: 10;
+      position: fixed;
       outline: $default-outline;
       cursor: $default-cursorHover;
       padding: 0;
       left: 0;
       margin: 0;
       width: 100%;
-      border-top: $default-border;
       text-align: left;
       > .dropdown-list-select {
-        background-color: $default-backgroundColor;
-        border: $default-border;
-        color: $default-color;
         border-top: 0;
         padding: 0;
         margin: 0;
@@ -129,81 +86,46 @@ $success-background-color: #E3F5EC;
         > li {
           font-family: $default-fontFamily;
           font-size: $default-fontSize;
-          color: $default-color;
           outline: $default-outline;
           padding: 0 10px;
-        }
-        > li:hover {
-          background-color: $default-backgroundHoverColor;
-        }
-        > li:focus {
-          background-color: $default-backgroundFocusColor;
-          color: $default-focusColor;
-        }
-        > li:active {
-          background-color: $default-backgroundActiveColor;
-          color: $default-color;
         }
         > li span {
           font-weight: normal;
         }
       }
       > .dropdown-list-select::-webkit-scrollbar {
-        width: 0.4em;
-      }
-      > .dropdown-list-select::-webkit-scrollbar-thumb {
-        background-color: #CCCCCC;
+        width: 0.5em;
       }
       > .-placeholder {
-        box-sizing: unset;
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         font-weight: normal;
-        color: $default-color;
-        background-color: $default-backgroundColor;
         cursor: $default-cursor;
         outline: $default-outline;
-        border: $default-border;
         border-bottom: 0;
         border-top: 0;
         padding: 0 10px;
       }
-      .-placeholder:focus {
-        background-color: $default-backgroundFocusColor;
-        color: $default-focusColor;
-      }
-    }
-    > .disabled::placeholder, .disabled {
-      opacity: 0.45;
-      color: #000000;
-      cursor: $default-cursor;
     }
   }
 }
 
 .search-input {
+  box-sizing: border-box;
   >.search-input-icon {
     position: absolute;
     font-size: 1em;
     line-height: 25px;
     padding-left: 7px;
-    color: #737373;
   }
   >.search-input-field {
     padding-left: 20px;
-    height: 25px;
+    height: 23px;
     font-family: 'Lato', sans-serif;
     font-size: 1em;
-    color: #737373;
-    border: $default-border;
     border-bottom: 0;
     border-top: 0;
   }
-}
-
-.selected {
-  background: $default-backgroundFocusColor !important;
-  color: #fff !important;
 }
 
 .ui-icon{
@@ -215,11 +137,8 @@ $success-background-color: #E3F5EC;
 
 .ui-overlap{
   position: absolute;
-  color: $default-color;
   cursor: pointer;
   padding: 0px;
   text-align: center;
-  border: $default-border;
   box-sizing: border-box;
-  background-color: #E8E8E8;
 }

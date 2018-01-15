@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,55 +19,65 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy } from '@angular/core';
+import {
+  ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
+  ComponentRef
+} from '@angular/core';
+
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
+import { Subject } from 'rxjs/Subject';
 
 let lastZIndex = 1;
 
 @Injectable()
 export class ModalService implements OnDestroy {
 
-    public component;
+    public component: ComponentRef<any>;
 
-    public componentList: any[] = [];
+    public componentList: Array<ComponentRef<any>> = [];
 
-    public componentInjected;
+    public componentInjected: ComponentRef<any>;
 
-    public backdrop;
+    public forms: Array<ComponentRef<any>> = [];
 
-    public forms = [];
-
-    public activeModal;
+    public activeModal: ComponentRef<any>;
 
     public view: ViewContainerRef;
 
-    public minModals: any[] = [];
+    public subject = new Subject();
+
+    public head = new Subject();
+
+    public modalOptions;
+
+    public backdrop;
 
     private callBack = Function();
 
     constructor( private compiler: ComponentFactoryResolver ) {}
 
-    setView( view ) {
+    setView( view: ViewContainerRef ) {
         this.view = view;
     }
 
-    createModal( component, modalOptions, callback ) {
-        if (modalOptions.backdrop) {
-            this.createBackdrop(TlBackdrop);
-        }
+    createModalDialog(component: Type<any>, callback) {
+      this.setComponentModal();
+      this.setComponentInjected( component );
+      this.setGlobalSettings();
+      this.setInitialZIndex();
+      this.callBack = callback;
+      return this;
+    }
+
+    createModal( component: Type<any>, parentElement: ElementRef, callback ) {
         this.setComponentModal();
         this.setComponentInjected( component );
-        this.setGlobalSettings( modalOptions );
+        this.setGlobalSettings( parentElement );
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
-    }
-
-    on(event, callback) {
-      this.component.instance[event].subscribe(callback);
-      return this;
     }
 
     setComponentModal() {
@@ -76,18 +86,34 @@ export class ModalService implements OnDestroy {
         this.componentList.push(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
-        this.activeModal = this.component;
+        this.setActiveModal(this.component);
     }
 
-    setComponentInjected( component ) {
+    setComponentInjected( component: Type<any> ) {
         const factoryInject = this.compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
         this.addFormModalToList();
     }
 
-    setGlobalSettings( modalOptions ) {
+    setGlobalSettings( parent?: ElementRef ) {
+        this.modalOptions = Reflect.getOwnMetadata('annotations',
+          Object.getPrototypeOf(this.componentInjected.instance).constructor);
+        this.setParentElement(parent);
+        this.handleBackDrop();
         (<TlModal>this.component.instance).status = 'MAX';
-        (<TlModal>this.component.instance).setOptions( modalOptions );
+        (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
+    }
+
+    setParentElement(parent: ElementRef) {
+      if (this.modalOptions && parent) {
+        this.modalOptions[0]['parentElement'] = parent;
+      }
+    }
+
+    handleBackDrop() {
+      if (this.modalOptions[0].backdrop) {
+        this.createBackdrop(TlBackdrop);
+      }
     }
 
     setInitialZIndex() {
@@ -95,29 +121,29 @@ export class ModalService implements OnDestroy {
         (<TlModal>this.component.instance).modal.nativeElement.style.zIndex = lastZIndex;
     }
 
-    setZIndex( componentRef?, element? ) {
+    setZIndex( componentRef?: ComponentRef<any>, element?: ElementRef ) {
         this.setActiveModal( componentRef );
         lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
         element.nativeElement.style.zIndex = lastZIndex + 1;
     }
-
 
     getZIndexModals() {
         const maxZIndex = [];
         const modals = document.querySelectorAll( 'tl-modal' );
         for ( let index = 0; index < modals.length; index++ ) {
             const element: any = modals[ index ];
-            maxZIndex.push( element.firstChild.style.zIndex );
+            maxZIndex.push( element.firstElementChild.style.zIndex );
         }
         return maxZIndex;
     }
 
-    getHighestZIndexModals( arrayModals ) {
+    getHighestZIndexModals( arrayModals: Array<any> ) {
         return Math.max.apply( Math, arrayModals );
     }
 
-    setActiveModal( componentRef? ) {
+    setActiveModal( componentRef?: ComponentRef<any> ) {
         this.activeModal = componentRef;
+        this.head.next({activeModal: this.activeModal});
     }
 
     createBackdrop( backdrop ) {
@@ -125,42 +151,25 @@ export class ModalService implements OnDestroy {
         this.backdrop = this.view.createComponent( backdropFactory );
     }
 
-    setBackdropModalOverModal() {
-        setTimeout( () => {
-            this.backdrop.instance.backdrop.nativeElement.style.display = 'none';
-            this.setBackdropzIndex();
-        }, 1 );
-    }
-
-    setBackdropzIndex() {
-        this.backdrop.instance.backdrop.nativeElement.style.zIndex =
-            this.component.instance.element.nativeElement.firstChild.style.zIndex - 1;
-        setTimeout( () => {
-            this.backdrop.instance.backdrop.nativeElement.style.display = 'block';
-        }, 280 );
-    }
-
-    showModal( item, indexModal ) {
+    showModal( item: ComponentRef<any> ) {
         lastZIndex++;
-        item.location.nativeElement.firstChild.style.zIndex = lastZIndex;
+        item.location.nativeElement.firstElementChild.style.zIndex = lastZIndex;
         item.instance.element.nativeElement.style.display = 'block';
-        this.minModals.splice( indexModal, 1 );
-
     }
 
-    minimize( component ) {
+    minimize( component: ComponentRef<any> ) {
         component.instance.status = 'MIN';
         component.instance.element.nativeElement.style.display = 'none';
-        this.minModals.push( component );
         this.handleActiveWindow();
     }
 
-    close( component ) {
+    close( component: ComponentRef<any> ) {
         if ( this.view === undefined || component === undefined ) {
             return;
         }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
         this.handleModalForms( component );
+        this.subject.next(this.forms);
         this.removeOfTheList();
         this.removeBackdrop();
     }
@@ -175,7 +184,7 @@ export class ModalService implements OnDestroy {
         return comp;
     }
 
-    handleModalForms( component ) {
+    handleModalForms( component: ComponentRef<any> ) {
         if ( this.forms.length > 0 ) {
             const index = this.forms.indexOf( component );
             this.forms.splice( index, 1 );
@@ -186,17 +195,17 @@ export class ModalService implements OnDestroy {
     handleActiveWindow() {
         const visibleHighestZIndex = [];
         this.getVisibleModals().forEach( ( value, index2, array ) => {
-            visibleHighestZIndex.push( value.firstChild.style.zIndex );
+            visibleHighestZIndex.push( value.firstElementChild.style.zIndex );
         } );
 
         const highest = this.getHighestZIndexModals( visibleHighestZIndex );
 
         this.forms.forEach( ( value, index2, array ) => {
             if ( this.getVisibleModals().length === 0 ) {
-                return this.activeModal = null;
+                return this.setActiveModal(null);
             }
             if ( Number( value.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
-                return this.activeModal = value;
+                return this.setActiveModal(value);
             }
         } );
     }
@@ -217,26 +226,28 @@ export class ModalService implements OnDestroy {
     setActiveWindow() {
         let maxZindex = [];
         if ( (this.getVisibleModals().length - 1) <= 0 ) {
-            return this.activeModal = null;
+            return this.setActiveModal(null);
         }
         maxZindex = this.forms;
         this.sortArrayByZIndex( maxZindex );
-        this.activeModal = maxZindex[ maxZindex.length - 1 ];
+        this.setActiveModal(maxZindex[ maxZindex.length - 1 ]);
     }
 
-    sortArrayByZIndex( array ) {
+    sortArrayByZIndex( array: Array<any> ) {
         return array.sort( ( a, b ) => {
-            return a.location.nativeElement.firstChild.style.zIndex - b.location.nativeElement.firstChild.style.zIndex;
+            return a.location.nativeElement.firstElementChild.style.zIndex -
+              b.location.nativeElement.firstElementChild.style.zIndex;
         } );
     }
 
     addFormModalToList() {
         this.forms.push( this.component );
+        this.subject.next(this.forms);
     }
 
     removeOfTheList() {
-            this.componentList.splice( this.componentList.length - 1, 1 );
-            this.sortComponentsByZIndex();
+        this.componentList.splice( this.componentList.length - 1, 1 );
+        this.sortComponentsByZIndex();
     }
 
     removeBackdrop() {
@@ -273,7 +284,6 @@ export class ModalService implements OnDestroy {
 
     isResultUndefined() {
         return this.componentInjected.instance.modalResult === undefined;
-
     }
 
     setMdResult( mdResult: ModalResult ) {
@@ -281,7 +291,14 @@ export class ModalService implements OnDestroy {
     }
 
     resultCallback() {
+      if (this.componentInjected.instance.modalResult) {
         this.callBack( this.componentInjected.instance.modalResult );
+      }
+    }
+
+    on(event, callback) {
+      this.component.instance[event].subscribe(callback);
+      return this;
     }
 
     ngOnDestroy() {

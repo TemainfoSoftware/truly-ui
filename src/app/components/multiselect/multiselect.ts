@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -76,10 +76,6 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     @Input() itemAmount = 5;
 
     @Input() minLengthSearch = 2;
-
-    @Input() selectedFontColor = '#fff';
-
-    @Input() selectedBackgroundColor = '#66CC99';
 
     @Input() sortAlphabetically = false;
 
@@ -476,14 +472,18 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     addClassSelected( index ) {
       if (this.existChildren()) {
-        this.filteredItens[index].selected = true;
+        if ( this.filteredItens[index] !== undefined ) {
+          this.filteredItens[index].selected = true;
+        }
         this.change.detectChanges();
       }
     }
 
     removeClassSelected( index ) {
       if (this.existChildren()) {
-        this.filteredItens[index].selected = false;
+        if ( this.filteredItens[index] !== undefined ) {
+          this.filteredItens[ index ].selected = false;
+        }
         this.change.detectChanges();
       }
     }
@@ -498,7 +498,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         this.selectTag = this.tags.length;
         this.getSelecteds.emit( this.tags );
         this.setModelValue();
-      this.getTopPosition();
+        this.getTopPosition();
         this.cleanTagSelected();
         this.removeTagOfFilter(item);
         this.removeElementsForFilter();
@@ -523,7 +523,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
     setModelValue() {
         const modeltemp = [];
-        this.tags.forEach((value, index, array) => {
+        this.tags.forEach((value) => {
            modeltemp.push(this.getValue(value));
         });
         this.modelValue = modeltemp;
@@ -536,7 +536,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
     addTagSelectedToFiltered() {
-        this.tags.forEach((value, index, array) => {
+        this.tags.forEach((value) => {
             if (value.selected) {
                 this.filteredItens.push( value );
             }
@@ -570,7 +570,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     }
 
 
-    filterOfData(inputed) {
+    filterOfData( inputed ) {
         this.filteredItens = this.dataSource.filter( ( value ) => {
             return this.getValue(value)[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
         } );
@@ -582,7 +582,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
         } );
     }
 
-    isValueMoreOrEqualThanMinLengthSearch(value) {
+    isValueMoreOrEqualThanMinLengthSearch( value ) {
         return value.length >= this.minLengthSearch;
     }
 
@@ -593,7 +593,7 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
 
   selectTagClick( event, index, item? ) {
         this.tagClick.emit( item );
-    this.selectTag = index;
+        this.selectTag = index;
         if (item.selected) {
             return item.selected = false;
         }

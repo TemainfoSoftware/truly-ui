@@ -1,0 +1,21 @@
+@mixin tl-panelgroup-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $base-text: map_get(map_get($theme,base),text);
+  $box-background: map_get(map_get($theme,box),background);
+
+  .panelgroup-container {
+    border: 1px solid $borders;
+    background-color: $box-background;
+  }
+
+  .header-group span {
+    color: $base-text;
+  }
+
+  .header-group span.spacer:after {
+    color: transparent;
+    background: $borders;
+  }
+
+}

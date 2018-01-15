@@ -1,6 +1,19 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DataFormService } from './dataform.service';
 import { DumpDataService } from '../../../shared/services/dumpdata';
+import { Modal } from '../../../../components/modal/modal-options';
+
+@Modal({
+  title: 'New Form',
+  icon: 'ion-stats-bars',
+  draggable: true,
+  width: '500px',
+  color: '#5bbcf2',
+  height: 'auto',
+  maximizable: true,
+  minimizable: true,
+  fullscreen: false
+})
 
 @Component( {
   selector: 'app-new-person',

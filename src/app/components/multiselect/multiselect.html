@@ -4,7 +4,7 @@
         <div [ngClass]="{'inputFormOpenFilter': isOpen && filteredItens.length !== 0}"
              class="input-wrapper-multiselect" #element (click)="setInputFocus()">
           <span class="tags" *ngIf="hasKeySource">
-              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, tag)"
+              <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event,i, tag)"
                     [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
 
                   <small *ngIf="detailOnTag && detail !== undefined"
@@ -39,21 +39,23 @@
                 [style.top]="listTopPosition + 25 + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
                 <li
-                  [ngStyle]=" {
-                      'padding': itemHeight,
-                      'background': item?.selected ? selectedBackgroundColor : '#fff',
-                      'color': item?.selected ? selectedFontColor : '#7a838b'
-                      }"
+                  [ngStyle]=" {'padding': itemHeight }"
+                  [ngClass]="{selectedItem:item?.selected}"
                     (blur)="closeList($event)"
                     tabindex="-1"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
 
-                    <i *ngIf="defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}" ngClass="{{defaultIconTag}}"></i>
-                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}" ngClass="{{item?.effect[icon]}}"></i>
+                    <i *ngIf="defaultIconTag" style="padding: 0 10px"
+                       [ngClass]="{selectedItem:item?.selected}"
+                       class="{{defaultIconTag}}"></i>
+                    <i *ngIf="showIcon && !defaultIconTag"
+                       style="padding: 0 10px"
+                       [ngClass]="{selectedItem:item?.selected}"
+                       class="{{item?.effect[icon]}}"></i>
 
                     {{item?.source[query]}}
-                    <small [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}">{{item?.source[detail]}}</small>
+                    <small [ngClass]="{selectedItem:item?.selected}" >{{item?.source[detail]}}</small>
                 </li>
             </ul>
         </div>
@@ -63,21 +65,26 @@
                 [style.left]="listPosition + 'px'"
                 [style.top]="listTopPosition + 25 + 'px'"
                 [ngStyle]="calcHeightWidthItem()">
-                <li [ngStyle]="{
-                            'padding': itemHeight,
-                            'background': item?.selected ? selectedBackgroundColor : '#fff',
-                            'color': item?.selected ? selectedFontColor : '#7a838b'
-                        }"
+                <li [ngStyle]="{'padding': itemHeight}"
+                    [ngClass]="{selectedItem:item?.selected}"
                     (blur)="closeList($event)" tabindex="-1"
                     (keydown)="handleKeyDown($event, item)"
                     *ngFor="let item of filteredItens; let i = index"
                     class="itens" (click)="addTag(item)">
 
-                    <i *ngIf="defaultIconTag" style="padding: 10px" ngClass="{{defaultIconTag}}"></i>
-                    <i *ngIf="showIcon && !defaultIconTag" style="padding: 10px" ngClass="{{item?.effect[icon]}}"></i>
+                    <i *ngIf="defaultIconTag"
+                       style="padding: 0 10px"
+                       [ngClass]="{selectedItem:item?.selected}"
+                       class="{{defaultIconTag}}">
+                    </i>
+                    <i *ngIf="showIcon && !defaultIconTag"
+                       style="padding: 0 10px"
+                       [ngClass]="{selectedItem:item?.selected}"
+                       class="{{item?.effect[icon]}}">
+                    </i>
 
                     {{item[query]}}
-                    <small [ngStyle]="{'color': item?.selected ? selectedFontColor : '#7a838b'}">{{item[detail]}}</small>
+                    <small [ngClass]="{selectedItem:item?.selected}">{{item[detail]}}</small>
                 </li>
             </ul>
         </div>

@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ import {
   OnInit,
   QueryList, Renderer2,
   ViewChild,
-  forwardRef,
+  forwardRef, SimpleChanges, OnChanges,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
@@ -33,7 +33,6 @@ import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
 import { TlMultiSelect } from '../multiselect/multiselect';
 import { TlAutoComplete } from '../autocomplete/autocomplete';
-import { TlTab } from '../tabcontrol/tab/tab';
 
 let componentFormIndex;
 
@@ -45,15 +44,19 @@ let componentFormIndex;
 } )
 export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
-  @Input() initialFocus;
+  @Input() initialFocus: TlInput;
 
   @Input() showConfirmOnChange = false;
 
   @Input() messageDialogConfirmation = 'Are you sure ?';
 
-  @Input() submitButtonShortcut = '';
+  @Input() submitShortcut = '';
 
-  @Input() cancelButtonShortcut = '';
+  @Input() closeShortcut = '';
+
+  @Input() textConfirm = 'Ok';
+
+  @Input() textCancel = 'Cancel';
 
   @Input() padding = '10px';
 
@@ -67,9 +70,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @ContentChildren( forwardRef(() => TlMultiSelect ), {descendants: true}) multiselectList: QueryList<TlMultiSelect>;
 
-  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true})autoCompleteList: QueryList<TlAutoComplete>;
-
-  @ContentChildren( forwardRef( () => TlTab ), { descendants: true } ) tabsList: QueryList<TlTab>;
+  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true}) autoCompleteList: QueryList<TlAutoComplete>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -79,21 +80,22 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   public validForm = true;
 
-  public formResult = {};
+  public formResult: {} = {};
 
-  private lastTabIndex;
+  private lastTabIndex: number;
 
   private focusElements = [];
 
   private elementsWithTabIndex = [];
 
-  private componentsWithValidations = [];
+  private componentsWithValidations: Array<any> = [];
 
   private listeners = [];
 
   private time;
 
-  constructor( private renderer: Renderer2, private cdr: ChangeDetectorRef ) {}
+  constructor( private renderer: Renderer2, private change: ChangeDetectorRef ) {
+  }
 
   ngOnInit() {
     componentFormIndex = -1;
@@ -102,14 +104,13 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   ngAfterViewInit() {
     this.setInitialFocus();
     this.getElementsOfForm();
-    this.getTabsComponent();
     this.getComponentsWithValidations();
     this.validateElements();
     this.listenComponentWithValidations();
     this.clickListener();
   }
 
-  onKeyDownButtonOk( $event ) {
+  onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
     this.getComponentValues( this.inputList.toArray() );
     this.getComponentValues( this.multiselectList.toArray() );
@@ -119,95 +120,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.getAutoCompleteValues();
   }
 
-  getTabsComponent() {
-    this.tabsList.forEach( ( item, index ) => {
-      this.listenLastElementTab( item.lastComponent, index );
-      this.listenPreviousElementTab( item.firstComponent, index );
-    } );
-  }
-
-  listenLastElementTab( last, index ) {
-    if (last) {
-      this.renderer.listen( last, 'keydown', ( $event ) => {
-        this.handleKeyDownLastElementTab( $event, index );
-      } );
-    }
-  }
-
-  listenPreviousElementTab( previous, index ) {
-    if (previous) {
-      this.renderer.listen( previous, 'keydown', ( $event ) => {
-        this.handleKeyDownFirstElementTab( $event, index );
-      } );
-    }
-  }
-
-  handleKeyDownLastElementTab( $event, index ) {
-    if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 && (!$event.shiftKey)) {
-      this.nextTabAndElement( index );
-    }
-    if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) ) {
-      this.nextTabAndElement( index );
-    }
-  }
-
-  getTabSelected() {
-    const tab = this.tabsList.toArray().find( item => item.selected );
-    return this.tabsList.toArray().indexOf( tab );
-  }
-
-  handleKeyDownFirstElementTab( $event, index ) {
-    if ( [ KeyEvent.ARROWUP, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 ) {
-      this.previousTabAndElement( index );
-    }
-    if (($event.keyCode === KeyEvent.TAB) && ($event.shiftKey)) {
-      this.previousTabAndElement( index );
-    }
-  }
-
-  nextTabAndElement( index ) {
-    if ( this.tabsList.toArray()[ index + 1 ] ) {
-      this.resetTabsSelected();
-      this.tabsList.toArray()[ index + 1 ].selected = true;
-      this.setFocusNext( index + 1 );
-    }
-  }
-
-  nextTab(index) {
-    this.resetTabsSelected();
-    this.tabsList.toArray()[ index + 1 ] ? this.tabsList.toArray()[ index + 1 ].selected = true :
-    this.tabsList.toArray()[0].selected = true;
-    this.cdr.detectChanges();
-  }
-
-  setFocusNext( index ) {
-    setTimeout( () => {
-      this.tabsList.toArray()[ index ].firstComponent.focus();
-    }, 1 );
-  }
-
-  previousTabAndElement( index ) {
-    if ( this.tabsList.toArray()[ index - 1 ] ) {
-      this.resetTabsSelected();
-      this.tabsList.toArray()[ index - 1 ].selected = true;
-      this.setFocusPrevious( index - 1 );
-    }
-  }
-
-  setFocusPrevious( index ) {
-    setTimeout( () => {
-      this.tabsList.toArray()[ index ].lastComponent.focus();
-    }, 1 );
-  }
-
-  resetTabsSelected() {
-    this.tabsList.forEach( ( item, index, array ) => {
-      item.selected = false;
-    } );
-  }
-
   clickListener() {
-    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
+    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'mousedown', $event => {
       $event.stopPropagation();
       this.onClickButtonOk();
     } );
@@ -220,6 +134,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.getComponentValues( this.radioButtonList.toArray() );
     this.getComponentValues( this.checkboxList.toArray() );
     this.getAutoCompleteValues();
+    this.validateElements();
   }
 
   getComponentValues( array ) {
@@ -230,7 +145,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   listenComponentWithValidations() {
-    this.componentsWithValidations.forEach( ( item, index, array ) => {
+    this.componentsWithValidations.forEach( ( item ) => {
       const listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
         this.validateElements();
       } );
@@ -239,17 +154,17 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   getComponentsWithValidations() {
-    this.inputList.toArray().forEach( ( item, index, array ) => {
+    this.inputList.toArray().forEach( ( item ) => {
       if ( Object.keys( item.validations ).length > 0 ) {
         this.componentsWithValidations.push( item );
       }
     } );
-    this.dropdownList.toArray().forEach( ( item, index, array ) => {
+    this.dropdownList.toArray().forEach( ( item ) => {
       if ( Object.keys( item.validations ).length > 0 ) {
         this.componentsWithValidations.push( item );
       }
     } );
-    this.autoCompleteList.toArray().forEach((item, index, array) => {
+    this.autoCompleteList.toArray().forEach( ( item ) => {
       if (Object.keys( item.input.validations ).length > 0) {
         this.componentsWithValidations.push( item.input );
       }
@@ -268,7 +183,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.handleTabIndexComponentsOfForm();
   }
 
-  taggedNotForm( element ) {
+  taggedNotForm( element: HTMLElement ) {
     for ( let item = 0; item < element.attributes.length; item++ ) {
       if ( element.attributes[ item ].name === 'notform' ) {
         return true;
@@ -281,10 +196,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     this.time = setTimeout( () => {
       for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
         this.validForm = true;
-        this.cdr.detectChanges();
-        if ( this.componentsWithValidations[ item ].componentModel.valid === false ) {
+        this.change.detectChanges();
+        if ( this.hasErrors( this.componentsWithValidations[item] ) &&
+          this.isRequired(this.componentsWithValidations[item])) {
           this.validForm = false;
-          this.cdr.detectChanges();
+          this.change.detectChanges();
           return;
         }
       }
@@ -305,7 +221,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }, 10 );
   }
 
-  setTabIndex( element ) {
+  setTabIndex( element: HTMLElement ) {
     if ( !element.tabIndex ) {
       componentFormIndex++;
       this.notExistTabIndexInserted() ? element.setAttribute( 'tabIndex', componentFormIndex )
@@ -313,14 +229,18 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
   }
 
-  isLastTabIndexElement( element, index, array ) {
+  isLastTabIndexElement( element: HTMLElement, index, array ) {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
     }
   }
 
+  isRequired(item) {
+    return item.validations.required;
+  }
+
   generateTabIndexOfElements() {
-    this.focusElements.forEach( ( element, index, array ) => {
+    this.focusElements.forEach( ( element: HTMLElement, index, array ) => {
         this.setTabIndex( element );
         this.isLastTabIndexElement( element, index, array );
       }
@@ -328,7 +248,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   getElementsWithTabIndex() {
-    this.focusElements.forEach( ( element ) => {
+    this.focusElements.forEach( ( element: HTMLElement ) => {
       if ( element.tabIndex ) {
         this.validateDuplicatedTabIndex( element );
         this.elementsWithTabIndex.push( element.tabIndex );
@@ -336,7 +256,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     } );
   }
 
-  validateDuplicatedTabIndex( element ) {
+  validateDuplicatedTabIndex( element: HTMLElement ) {
     if ( this.existTabIndexInserted( element ) ) {
       throw new EvalError( 'Exist an element with tabIndex duplicated! TabIndex : ' + element.tabIndex );
     }
@@ -354,7 +274,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return this.elementsWithTabIndex.indexOf( componentFormIndex ) < 0;
   }
 
-  existTabIndexInserted( element ) {
+  existTabIndexInserted( element: HTMLElement ) {
     return this.elementsWithTabIndex.indexOf( element.tabIndex ) >= 0;
   }
 
@@ -375,24 +295,29 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     }
     switch ( $event.keyCode ) {
       case KeyEvent.ARROWUP :
+        $event.preventDefault();
         this.backwardTabbing();
         break;
       case KeyEvent.ARROWDOWN:
+        $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
-      case KeyEvent.ARROWLEFT :
+      case KeyEvent.ARROWRIGHT :
         this.setFocusOK();
         break;
-      case KeyEvent.ARROWRIGHT:
+      case KeyEvent.ARROWLEFT:
         this.setFocusCancel();
         break;
       case KeyEvent.TAB:
         $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
       case KeyEvent.ENTER:
         $event.preventDefault();
         this.forwardTabbing();
+        this.change.detectChanges();
         break;
     }
   }
@@ -401,12 +326,18 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     if ( this.isFirstTabIndexOfForm() ) {
       return this.focusElements[ this.lastTabIndex ].focus();
     }
-    const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
-    for ( let element = previousElement; element < this.focusElements.length; element-- ) {
-      if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
-        return this.focusElements[ element ].focus();
+    if (!this.validateFirstElement()) {
+      const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
+      for ( let element = previousElement; element < this.focusElements.length; element-- ) {
+        if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
+          return this.focusElements[ element ].focus();
+        }
       }
     }
+  }
+
+  validateFirstElement() {
+     return (this.focusElements[0].getAttribute('disabled')) && (this.focusElements[1] === document.activeElement);
   }
 
   forwardTabbing() {
@@ -433,6 +364,13 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return element.disabled;
   }
 
+  hasErrors( item ) {
+    if (!item.componentModel.errors) {
+      return false;
+    }
+    return (Object.keys(item.componentModel.errors).length > 0);
+  }
+
   setInitialFocus() {
     this.initialFocus ? this.initialFocus.element.nativeElement.focus()
       : this.setFocusOnFirstInput();
@@ -451,9 +389,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   setFocusOnFirstInput() {
-    if ( this.inputList.toArray().length > 0 ) {
-      this.inputList.toArray()[ 0 ].element.nativeElement.focus();
+    let element;
+    for (const item in this.inputList.toArray()) {
+      if (!(this.inputList.toArray()[item].disabled)) {
+        element = this.inputList.toArray()[item].element.nativeElement;
+        break;
+      }
     }
+    element.focus();
   }
 
   isActiveElementButtonOk() {
@@ -476,14 +419,14 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   getAutoCompleteValues() {
     this.autoCompleteList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.input.componentModel.model;
+      this.formResult[ item.name.trim() ] = item.ngModel;
     } );
   }
 
   ngOnDestroy() {
     clearTimeout( this.time );
     this.destroyListeners();
-    this.cdr.detach();
+    this.change.detach();
   }
 
   destroyListeners() {

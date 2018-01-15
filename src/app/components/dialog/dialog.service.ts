@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,18 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from '@angular/core';
+import { Injectable, ViewContainerRef } from '@angular/core';
 import { ModalService } from '../modal/modal.service';
 
 import { TlDialogInfo } from './dialog-info/dialog-info';
 import { TlDialogAlert } from './dialog-alert/dialog-alert';
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
-
-import { ModalInfoOptions } from './dialog-info/modal-info-options';
-import { ModalAlertOptions } from './dialog-alert/modal-alert-options';
-import { ModalErrorOptions } from './dialog-error/modal-error-options';
-import { ModalConfirmationOptions } from './dialog-confirmation/modal-confirmation-options';
 
 import { ConfirmationOptions } from './dialog-confirmation/confirmation-options';
 import { ErrorOptions } from './dialog-error/error-options';
@@ -45,22 +40,20 @@ export class DialogService {
 
     constructor( public modalService: ModalService ) {}
 
-    setView(view) {
+    setView(view: ViewContainerRef) {
         this.modalService.setView(view);
     }
 
-    info( message, callback, options?: InfoOptions ) {
-        this.setModalOptions( ModalInfoOptions, options );
+    info( message: string, callback: Function, options?: InfoOptions ) {
         this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModal( TlDialogInfo, ModalInfoOptions,  callback );
+        this.modalService.createModalDialog( TlDialogInfo,  callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
-    confirmation( message, callback, options?: ConfirmationOptions) {
-        this.setModalOptions( ModalConfirmationOptions, options );
+    confirmation( message: string, callback: Function, options?: ConfirmationOptions) {
         this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModal( TlDialogConfirmation, ModalConfirmationOptions, callback );
+        this.modalService.createModalDialog( TlDialogConfirmation, callback );
         if (options) {
             this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
         }
@@ -68,30 +61,18 @@ export class DialogService {
         this.setDialogOptions( options );
     }
 
-    alert( message, callback, options?: AlertOptions ) {
-        this.setModalOptions( ModalAlertOptions, options );
+    alert( message: string, callback: Function, options?: AlertOptions ) {
         this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModal( TlDialogAlert, ModalAlertOptions, callback );
+        this.modalService.createModalDialog( TlDialogAlert, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
-    error( message, callback, options?: ErrorOptions ) {
-        this.setModalOptions( ModalErrorOptions, options );
+    error( message: string, callback: Function, options?: ErrorOptions ) {
         this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModal( TlDialogError, ModalErrorOptions, callback );
+        this.modalService.createModalDialog( TlDialogError, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
-    }
-
-    setModalOptions( typeModal, options ) {
-        if ( !this.existOptions( options ) ) {
-            return;
-        }
-        Object.keys( options ).forEach( ( value ) => {
-            typeModal[ value ] = options[ value ];
-        } );
-
     }
 
     setDialogOptions( options ) {

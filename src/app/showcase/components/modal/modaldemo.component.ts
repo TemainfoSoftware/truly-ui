@@ -26,23 +26,12 @@ export class ModalDemoComponent {
 
   constructor(public view: ViewContainerRef, public modalService: ModalService) {
     this.modalService.setView(this.view);
-
     this.modalevts = jsonEvt.dataEvents;
     this.modalprop = json.dataProperties;
-
-    this.modalOptions = {
-      title: 'New Modal',
-      icon: 'ion-monitor',
-      draggable: true,
-      width: '500px',
-      height: 'auto',
-      maximizable: true,
-      minimizable: true,
-    };
   }
 
-  modal1() {
-    this.modalService.createModal(NewModalComponent, this.modalOptions, (modalResult) => {
+  modal1(parent) {
+    this.modalService.createModal(NewModalComponent, parent, (modalResult) => {
         this.modalResult = modalResult;
     }).on('show', () => {
       console.log('Show Modal');

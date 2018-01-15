@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,37 +30,23 @@ import { ButtonGroupService } from './buttongroup.service';
 } )
 export class TlButtonGroupItem implements AfterContentInit {
 
-    @Input() type;
-
     @Input() text;
 
     @Input() iconAddonBefore;
 
-    @Input() buttonAddonBeforeClass;
-
     @Input() iconAddonAfter;
-
-    @Input() buttonAddonAfterClass;
 
     @Input() iconBeforeText;
 
-    @Input() iconBeforeTextClass;
-
     @Input() iconAfterText;
 
-    @Input() iconAfterTextClass;
-
-    @Input() width = 125;
+    @Input() width = '125px';
 
     @Input() disabled;
 
-    @Input() toggleClass;
-
-    @Input() buttonClass;
-
     @Input() checkedItem = null;
 
-    public height: number;
+    public height: string;
 
     public index = -1;
 

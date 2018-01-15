@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
     providers : [ MakeProvider(TlAutoComplete) ]
 } )
 
-export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
 
     @Input() data: Array<any>;
 
@@ -66,6 +66,8 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     @Input() ngModel = '';
 
     @Input() lazyMode = false;
+
+    @Input() searchQuery = [];
 
     @Input() rowHeight = 30;
 
@@ -87,9 +89,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-    public listPosition;
+    public listLeftPosition;
 
-    private documentListener;
+    public listTopPosition;
+
+    private documentListener = [];
+
+    private initialModel;
 
     constructor( public tabIndexService: TabIndexService,
                  public idService: IdGeneratorService,
@@ -104,12 +110,20 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     ngAfterViewInit() {
+        this.listenerKeyDown();
+        this.listenClickDocument();
+        this.listenScrollDocument();
         this.validationProperty();
-        this.createDocumentListener();
         this.handleAutoCompleteModel();
         this.listBox.showList = false;
         this.listBox.detectChanges();
         this.getAutoCompleteWidth();
+    }
+
+    listenerKeyDown() {
+      this.renderer.listen(this.input.element.nativeElement, 'keydown', ($event) => {
+        this.handleKeyDown( $event );
+      });
     }
 
     handleCustom() {
@@ -120,7 +134,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     validationProperty() {
-        if (!this.labelName) {
+        if ((!this.labelName && !this.listBox.isDataArrayString())) {
             throw new Error('The [labelName] property is required to show the content on input while selecting');
         }
     }
@@ -128,44 +142,69 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     handleAutoCompleteModel() {
         setTimeout( () => {
             if ( this.ngModel ) {
+                this.initialModel = this.ngModel;
                 this.input.componentModel.model = this.ngModel;
                 this.setInputValue(this.ngModel);
             }
         }, 1 );
     }
 
-    createDocumentListener() {
-        this.documentListener = this.renderer.listen( document, 'click', ( $event ) => {
+    listenScrollDocument() {
+      this.documentListener.push(this.renderer.listen(document, 'scroll', ($event) => {
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
+      }));
+    }
+
+    listenClickDocument() {
+        this.documentListener.push(this.renderer.listen( document, 'click', ( $event ) => {
             if ( this.isNotRelatedWithAutocomplete( $event ) ) {
                 this.listBox.showList = false;
                 this.listBox.detectChanges();
                 return;
             }
             this.handleOpenOnFocus();
-        } );
+        } ));
     }
 
-    onFocusInput() {
-        this.handleOpenOnFocus();
+    onFocusInput($event) {
+      this.setListPosition();
+      this.handleOpenOnFocus();
     }
 
-    onKeyDown( $event ) {
-        this.handleKeyDown( $event );
+    onKeyUp($event) {
+      if (JSON.stringify(this.initialModel) === JSON.stringify(this.ngModel)) {
+        $event.stopPropagation();
+      }
     }
 
     handleOpenOnFocus() {
-        if ( this.openFocus && !this.listBox.showList) {
+        if ( this.openFocus && !this.listBox.showList && this.isAvailableInput()) {
             this.listBox.showList = true;
             this.listBox.detectChanges();
-            this.listPosition = document.activeElement.getBoundingClientRect().left;
             this.change.detectChanges();
         }
     }
 
+    isAvailableInput() {
+      return !this.input.disabled && !this.input.readonly;
+    }
+
     handleKeyDown($event) {
-        if ( $event.keyCode === KeyEvent.ENTER ) {
-            this.closeList( $event );
+        switch ($event.keyCode) {
+          case KeyEvent.ENTER: this.closeList($event); return;
+          case KeyEvent.ESCAPE: this.handleEscape(); return;
         }
+    }
+
+    handleEscape() {
+      this.handleFilteredListNotSelected();
+    }
+
+    handleFilteredListNotSelected() {
+      if (this.listBox.showList && this.listBox.filteredData.length > 0 && !this.listBox.itemSelected) {
+        this.listBox.handleClickItem( this.listBox.dataService.datasource[ 0 ], 0 );
+      }
     }
 
     closeList($event) {
@@ -191,7 +230,6 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
 
     onClickItemList($event) {
         if ($event) {
-          this.input.writeValue( $event );
           this.ngModel = $event;
           this.clickItem.emit($event);
           this.setInputValue( $event );
@@ -200,9 +238,13 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     setInputValue( $event ) {
-        setTimeout( () => {
-          this.input.element.nativeElement.value = $event[ this.labelName ];
-        }, 2 );
+      this.input.element.nativeElement.value =
+        !this.listBox.isDataArrayString() ? $event.row[ this.labelName ] : $event.row;
+    }
+
+    setListPosition() {
+      this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
+      this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.input.element.nativeElement.offsetHeight;
     }
 
     isNotRelatedWithAutocomplete( $event ) {
@@ -260,8 +302,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }
 
     getAutoCompleteWidth() {
-        return this.input.input.nativeElement.offsetWidth +
-            (this.input.input.nativeElement.offsetLeft - parseInt(this.input.labelSize, 10));
+        return this.input.input.nativeElement.offsetWidth;
     }
 
 /*    highlight( text: string, search ): string {
@@ -280,11 +321,7 @@ export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, On
     }*/
 
     ngOnDestroy() {
-        this.documentListener();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-
+        this.documentListener.forEach((listener) => { listener(); });
     }
 
 }

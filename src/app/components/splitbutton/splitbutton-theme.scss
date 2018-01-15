@@ -1,0 +1,58 @@
+@mixin tl-splitbutton-theme($theme) {
+
+  $borders: map_get($theme,borders);
+  $divider: map_get($theme,divider);
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background: map_get(map_get($theme,base),background);
+
+  $selected-background: map_get(map_get($theme,selected),background);
+  $selected-text:  map_get(map_get($theme,selected),text);
+
+  $hover-background:  map_get(map_get($theme,hover),text);
+  $hover-text:  map_get(map_get($theme,hover),background);
+
+  $active-text:  map_get(map_get($theme,active),text);
+  $active-background:  map_get(map_get($theme,active),background);
+
+  $icons-text:  map_get(map_get($theme,active),icons);
+  $icons-background:  map_get(map_get($theme,active),icons);
+
+  $box-background: map_get(map_get($theme,box),background);
+  $box-text: map_get(map_get($theme,box),text);
+
+  .tl-split-button-box{
+    > .split-button-actions{
+      background-color: $base-background;
+      border-top: 1px solid $borders;
+      border-right: 1px solid $borders;
+      border-bottom: 1px solid $borders;
+      color: $base-text;
+      >.actions-menu{
+        background-color: $base-background;
+        border: 1px solid $borders;
+      }
+    }
+    > .split-button-actions:hover, .split-button-actions.active{
+      background-color: $hover-background;
+    }
+    > .split-button-actions:active{
+      background-color: $active-background;
+    }
+    > .split-button-actions i{
+      color: $icons-text;
+    }
+  }
+
+  tl-split-button-action li{
+    color: $base-text;
+  }
+  tl-split-button-action li:hover{
+    background-color: $hover-background;
+  }
+  tl-split-button-action li.separator{
+    border-bottom: 1px solid $borders;
+  }
+  tl-split-button-action li .icon-action{
+    color: $icons-text;
+  }
+}

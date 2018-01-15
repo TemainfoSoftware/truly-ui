@@ -1,7 +1,6 @@
 
 //Default
 $button-height: 37px;
-$border-default: 1px solid #C8C8C8;
 $button-font-family: 'Segoe UI', sans-serif;
 $button-font-size: 0.9em;
 
@@ -14,11 +13,6 @@ $button-font-size: 0.9em;
   > .split-button-actions{
     margin: 0;
     padding: 0;
-    background-color:#E8E8E8;
-    border-top: $border-default;
-    border-right: $border-default;
-    border-bottom: $border-default;
-    color: #6A6A6A;
     line-height: $button-height;
     cursor: pointer;
     float: right;
@@ -33,23 +27,15 @@ $button-font-size: 0.9em;
       display:inline;
       padding: 0;
       list-style: none;
-      background-color: #E8E8E8;
       min-width: 125px;
-      border: $border-default;
       border-top: 0 !important;
       z-index: 1;
       cursor: auto;
     }
   }
-  > .split-button-actions:hover, .split-button-actions.active{
-    background-color: #dedede;
-  }
-  > .split-button-actions:active{
-    background-color: #d8d8d8;
-  }
   > .split-button-actions i{
-    color: #6A6A6A;
     padding: 0 15px;
   }
 }
+
 

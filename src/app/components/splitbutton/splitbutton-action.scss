@@ -2,18 +2,10 @@
 //Default
 :host li{
   padding: 0 10px;
-  color: #616161;
   text-decoration: none;
   display: block;
   cursor: pointer;
 }
-:host li:hover{
-  background-color: #dedede;
-}
-:host li.separator{
-  border-bottom: 1px solid #C8C8C8;
-}
 :host li .icon-action{
-  color: #6A6A6A;
   padding: 0 5px 0 0;
 }

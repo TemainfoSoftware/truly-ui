@@ -2,7 +2,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -49,8 +49,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     @ViewChild( 'listBody' ) listBody: ElementRef;
 
-    @ViewChild( 'datatableHeader' ) datatableHeader: ElementRef;
-
     public loading = false;
 
     public foundRecords = true;
@@ -95,8 +93,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private elementTD: ElementRef;
 
-    private scrollBoxHeader: HTMLCollectionOf<Element>;
-
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
@@ -108,7 +104,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         this.addListenerToDataSource();
         this.addListenerToScroll();
         this.firstRender();
-        this.scrollBoxHeader = document.getElementsByClassName('ui-datatable-header-wrap');
     }
 
     onMouseDown() {
@@ -122,7 +117,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     onClick(event) {
         this.activeElement = event.target.parentElement;
-        const initRange = Math.floor( this.scrollTop / this.dt.rowHeight );
     }
 
     onKeydown( $event ) {
@@ -142,7 +136,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private setProprertiesFromTable() {
         this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
-        this.quantityVisibleRows = this.dt.height / this.dt.rowHeight;
+        this.quantityVisibleRows = this.dt.heightViewPort / this.dt.rowHeight;
         this.quantityInVisibleRows = Math.round( ( this.dt.rowsPage - this.quantityVisibleRows ) / 2 );
         this.setlastRowViewport();
 
@@ -153,7 +147,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private addListenerToDataSource() {
-        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource) => {
+        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource: any) => {
             this.foundRecords = dataSource.length > 0;
             this.renderList(this.skip, dataSource);
             this.dt.loading = false;
@@ -195,16 +189,22 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private handleKeyPageUp() {
         this.listComponent.nativeElement.scrollTop -= this.quantityVisibleRows * this.dt.rowHeight;
-        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport ) - this.quantityVisibleRows * 2 ) + '"]';
-        const element = this.listBody.nativeElement.querySelector(elementToFind);
-        this.setFocus(element );
+
+        let rowNumber =  ( this.lastRowViewport ) - (this.quantityVisibleRows * 2) ;
+        rowNumber = rowNumber < 0 ? 0 : rowNumber;
+        const queryElementBy = 'tr[row="' + rowNumber  + '"]';
+        const elementToFind = this.listBody.nativeElement.querySelector(queryElementBy);
+        this.setFocus( elementToFind );
     }
 
     private handleKeyPageDown() {
         this.listComponent.nativeElement.scrollTop += this.quantityVisibleRows * this.dt.rowHeight;
-        const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - 1 ) + this.quantityVisibleRows ) + '"]';
-        const element = this.listBody.nativeElement.querySelector(elementToFind);
-        this.setFocus( element );
+
+        let rowNumber =  ( this.lastRowViewport - 1 ) + this.quantityVisibleRows;
+        rowNumber = rowNumber > this.dt.totalRows ? this.dt.totalRows - 1 : rowNumber;
+        const queryElementBy = 'tr[row="' + rowNumber + '"]';
+        const elementToFind = this.listBody.nativeElement.querySelector(queryElementBy);
+        this.setFocus( elementToFind );
     }
 
     private handleKeyEnd( event: KeyboardEvent  ) {
@@ -342,7 +342,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setlastRowViewport() {
-        this.lastRowViewport = Math.round( ( this.dt.height + this.scrollTop  ) / this.dt.rowHeight );
+        this.lastRowViewport = Math.round( ( this.dt.heightViewPort + this.scrollTop  ) / this.dt.rowHeight );
         this.firstRowViewport = this.lastRowViewport - this.quantityVisibleRows + 1;
     }
 
@@ -412,9 +412,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private setFocusInNextElement() {
         if (this.activeElement.nextElementSibling) {
             if ( this.cursorViewPortPosition < this.quantityVisibleRows ) {
-                this.cursorViewPortPosition ++;
+                 this.cursorViewPortPosition ++;
             }else {
-                this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
+              this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
             }
             this.setFocus( this.activeElement.nextElementSibling );
         }
@@ -434,8 +434,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         }
 
         if ( this.isScrollDown() ) {
-            const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
-            return this.listBody.nativeElement.querySelector(elementToFind);
+             const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
+             return this.listBody.nativeElement.querySelector(elementToFind);
         }else {
             const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]';
             return this.listBody.nativeElement.querySelector(elementToFind);
@@ -443,7 +443,11 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setFocus( htmlElement ) {
-        if ( htmlElement !== null ) {
+        if ( this.mouseClicked ) {
+          return;
+        }
+
+        if ( ( htmlElement !== null ) && ( htmlElement !== undefined)) {
             ( htmlElement as HTMLElement ).focus();
             this.setActiveElement();
             this.getCursorViewPortPosition();

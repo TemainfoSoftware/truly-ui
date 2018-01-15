@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
     title: 'Confirmation',
     color: '#719CC9',
     width: '400px',
-    height: '200px',
+    height: 'auto',
     draggable: true,
     maximizable: false,
     minimizable: false,

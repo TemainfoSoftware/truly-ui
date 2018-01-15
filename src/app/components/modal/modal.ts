@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,22 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter, HostBinding,
-    Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef, ViewEncapsulation
+  AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter,
+  HostBinding,
+  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { KeyEvent } from '../core/enums/key-events';
+
+let subscribeMouseMove;
 
 @Component({
     selector: 'tl-modal',
     templateUrl: './modal.html',
     styleUrls: [ './modal.scss' ],
-    encapsulation: ViewEncapsulation.None,
     animations: [
         trigger(
             'enterAnimation', [
@@ -61,9 +62,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() title = 'My Modal';
 
-    @Input() color = '#53C68C';
+    @Input() color = '';
 
-    @Input() fontColor = '#fff';
+    @Input() fontColor = '';
 
     @Input() height = '500px';
 
@@ -80,6 +81,10 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     @Input() restoreShortcut = '';
 
     @Input() maximizeShortcut = '';
+
+    @Input() parentElement;
+
+    @ViewChild('headerBox') headerBox: ElementRef;
 
     @ViewChild( 'modal' ) modal: ElementRef;
 
@@ -109,7 +114,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     public colorHoverClose;
 
-    public maximized: boolean;
+    public maximized = false;
 
     private mousePressX;
 
@@ -141,21 +146,15 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     private subscribeResize;
 
-    private subscribeMouseMove;
-
-    private subscribeMouseUp;
-
     private colorHoverMaximize;
 
     private colorHoverRestore;
 
-    constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator ) {}
+  constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator, private zone: NgZone ) {
+  }
 
     ngOnInit() {
-        this.backToTop();
         this.resizeListener();
-        this.mousemoveListener();
-        this.mouseupListener();
         this.validateProperty();
         this.show.emit();
     }
@@ -163,7 +162,21 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     ngAfterViewInit() {
         this.getBoundingContent();
         this.setDefaultDimensions();
-        this.setModalCenterParent();
+        this.validateMeasureParentAndModal();
+        this.handleInitialPositionModal();
+        this.handleFullscreen();
+    }
+
+    handleInitialPositionModal() {
+      this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
+    }
+
+    handleFullscreen() {
+      setTimeout(() => {
+        if (this.fullscreen) {
+          this.maximizeModal();
+        }
+      }, 1);
     }
 
     resizeListener() {
@@ -174,8 +187,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     mousemoveListener() {
-        this.subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
-            event.preventDefault();
+      this.zone.runOutsideAngular( () => {
+      subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
             if ( !( this.moving && this.draggable) ) {
                 return;
             }
@@ -192,18 +205,18 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.setPosition();
 
         } );
+      } );
     }
 
     mouseupListener() {
-        this.subscribeMouseUp = this.renderer.listen( window, 'mouseup', () => {
-            this.moving = false;
-        } );
+      subscribeMouseMove();
+      this.moving = false;
     }
 
     mouseDown( $event ) {
         if ( !this.maximized ) {
-            this.setOffsetLeftModal( this.modal.nativeElement.offsetLeft );
-            this.setOffsetTopModal( this.modal.nativeElement.offsetTop );
+            this.setOffsetLeftModal( this.modal.nativeElement.getBoundingClientRect().left );
+            this.setOffsetTopModal( this.modal.nativeElement.getBoundingClientRect().top );
             this.setMousePressX( $event.clientX );
             this.setMousePressY( $event.clientY );
             this.moving = true;
@@ -214,9 +227,14 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         if (!this.restoreMaximize && !this.fullscreen) {
             throw new EvalError( 'The [restoreMaximize] property require [fullscreen] property as TRUE.' );
         }
-        if (this.fullscreen) {
-            this.maximizeModal();
-        }
+    }
+
+    validateMeasureParentAndModal() {
+      if ((this.parent.offsetWidth < this.modal.nativeElement.offsetWidth) ||
+        (this.parent.offsetHeight < this.modal.nativeElement.offsetHeight)) {
+        console.warn('The Width or Height of Parent Element are less than Width or Height of Modal, ' +
+          'this could result in glitches and not working as expected.');
+      }
     }
 
     getModalPosition() {
@@ -225,15 +243,22 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setModalCenterParent() {
-        this.modal.nativeElement.style.left = this.parent.offsetLeft + (this.parent.offsetWidth / 2) -
-            (this.modal.nativeElement.offsetWidth / 2) + 'px';
-        this.modal.nativeElement.style.top = (window.innerHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
+      this.modal.nativeElement.style.left = this.offsetLeftContent + (this.parent.offsetWidth / 2)
+        - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+      this.modal.nativeElement.style.top = (this.offsetTopContent)
+        + (this.parent.offsetHeight / 2)  - (this.modal.nativeElement.offsetHeight / 2) + 'px';
+    }
+
+    setModalCenterWindow() {
+      this.modal.nativeElement.style.left = this.parent.offsetLeft +
+        (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+      this.modal.nativeElement.style.top = (window.innerHeight / 2) -
+        (this.modal.nativeElement.offsetHeight / 2) + 'px';
     }
 
     setComponentRef( component: ComponentRef<TlModal> ) {
         this.componentRef = component;
     }
-
 
     setMousePressX( position ) {
         this.mousePressX = position;
@@ -267,7 +292,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         }
 
         if ( this.isOutOfWindowOnTop() ) {
-            return this.setContentTopPositon();
+            return this.setContentTopPosition();
         }
 
         this.setNewTopPosition();
@@ -281,11 +306,13 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setLeftLimitOfArea() {
-        return this.modal.nativeElement.style.left = window.innerWidth - this.modal.nativeElement.offsetWidth + 'px';
+        return this.modal.nativeElement.style.left =
+          (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent + 'px';
     }
 
     setTopLimitOfArea() {
-        return this.modal.nativeElement.style.top = window.innerHeight - this.modal.nativeElement.offsetHeight + 'px';
+        return this.modal.nativeElement.style.top =
+          (this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + (this.offsetTopContent) + 'px';
     }
 
     setOffsetLeftModal( offset ) {
@@ -296,7 +323,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.offsetTopModal = offset;
     }
 
-    setContentTopPositon() {
+    setContentTopPosition() {
         this.modal.nativeElement.style.top = this.offsetTopContent + 'px';
     }
 
@@ -317,7 +344,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     setDefaultDimensions() {
-        if ( this.height && this.width ) {
+      if ( this.height && this.width ) {
             this.modal.nativeElement.style.height = this.height;
             this.modal.nativeElement.style.width = this.width;
         } else {
@@ -354,47 +381,46 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     isOutOfWindowX() {
         this.positionX = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX;
-        return this.positionX >= (window.innerWidth - this.modal.nativeElement.offsetWidth);
+        return this.positionX >= (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent;
     }
 
     isOutOfWindowY() {
-        this.positionY = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY;
-        return this.positionY >= (window.innerHeight - this.modal.nativeElement.offsetHeight);
+      this.positionY = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY;
+      return this.positionY >= ((this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + this.offsetTopContent);
     }
 
     minimizeModal() {
-        if ( !(this.minimizable) ) {
-            return;
-        }
+      if ( !(this.minimizable) ) {
+          return;
+      }
      this.serviceControl.minimize( this.componentRef );
      this.minimize.emit(this.componentRef.instance);
-    }
-
-    backToTop() {
-        document.body.scrollTop = 0;
+     this.leaveMinimize();
     }
 
     closeModal() {
         this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
         this.close.emit(this.componentRef.instance);
+        this.leaveClose();
     }
 
     maximizeModal() {
         if ( !(this.maximizable) ) {
             return;
         }
+        this.leaveMaximize();
         if ( !this.maximized ) {
             this.getModalPosition();
             this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
             this.modal.nativeElement.style.top = this.getBoundingParentElement().top + 'px';
             this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
-            this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 20 + 'px';
+            this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 'px';
             this.maximized = true;
             this.moving = false;
             this.maximize.emit();
-        } else {
-            this.restoreMaximizeModal();
+            return;
         }
+        this.restoreMaximizeModal();
     }
 
     restoreMaximizeModal() {
@@ -402,21 +428,25 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
             this.setDefaultDimensions();
             this.setCurrentPosition();
             this.maximized = false;
+            this.leaveRestore();
         }
     }
 
     getBoundingParentElement() {
-        return this.element.nativeElement.parentElement.getBoundingClientRect();
+        return this.parent.getBoundingClientRect();
     }
 
     getBoundingContent() {
-        this.parent = this.componentRef.instance.element.nativeElement.parentElement;
-        this.offsetLeftContent = this.parent.offsetLeft;
-        this.offsetTopContent = this.parent.offsetTop;
+        this.parent = this.parentElement ? this.parentElement :
+          this.componentRef.instance.element.nativeElement.parentElement;
+        this.offsetLeftContent = this.parent.getBoundingClientRect().left;
+        this.offsetTopContent = this.parent.getBoundingClientRect().top;
     }
 
     getColorHover() {
+      if (this.color) {
         return this.colorService.calculate(this.color, -0.05);
+      }
     }
 
     hoverMinimize() {
@@ -453,8 +483,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     ngOnDestroy() {
         this.subscribeResize();
-        this.subscribeMouseMove();
-        this.subscribeMouseUp();
     }
 
 }

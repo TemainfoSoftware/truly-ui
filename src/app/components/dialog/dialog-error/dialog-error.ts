@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,18 @@
 import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
-
+import { Modal } from '../../modal/modal-options';
+@Modal({
+  icon: 'ion-close-circled',
+  title: 'Error',
+  color: '#F25757',
+  width: '400px',
+  height: 'auto',
+  draggable: true,
+  maximizable: false,
+  minimizable: false,
+  backdrop: false
+})
 @Component({
     selector: 'tl-dialog-error',
     templateUrl: './dialog-error.html',

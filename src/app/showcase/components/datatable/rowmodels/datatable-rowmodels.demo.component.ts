@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 
 import * as json from './datatable-rowmodels.demo.dataproperties.json';
@@ -11,11 +12,11 @@ import * as jsonEvents from './datatable-rowmodels.demo.dataevents.json';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DumpDataService]
 } )
-export class DatatableRowModelsDemoComponent {
+export class DatatableRowModelsDemoComponent implements OnInit {
 
-  public dataInMemory: Array<any> = this.dumpDataService.createRandomData(1000);
+  public dataInMemory;
 
-  public data = this.dumpDataService.createRandomData(5000);
+  public data = this.dumpDataService.createRandomData(1000);
 
   public dataInfinite: any;
 
@@ -27,20 +28,29 @@ export class DatatableRowModelsDemoComponent {
 
   public timeout;
 
-  constructor( private dumpDataService: DumpDataService, private cd: ChangeDetectorRef ) {
+  constructor(private httpCliente: HttpClient, private dumpDataService: DumpDataService, private cd: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
-    this.dataInfinite = {
-        'data' : this.getDataFromService(0, this.take),
-        'total' : this.data.length
-    };
+  }
+
+  ngOnInit() {
+    this.getDataForInifinit(0, this.take);
+    this.httpCliente.get('http://trulyui.getsandbox.com/pacientes').subscribe((data: any) => {
+      this.dataInMemory = data.data;
+      this.cd.detectChanges();
+    });
   }
 
   onLoadData(event) {
+    console.log(event);
+    this.getDataForInifinit(event.skip, event.take);
+  }
+
+  private getDataForInifinit(skip, take) {
     clearTimeout(this.timeout );
     this.timeout = setTimeout(() => {
       this.dataInfinite = {
-        'data' : this.getDataFromService(event.skip, event.take),
+        'data' : this.getDataFromService(skip, take),
         'total' : this.data.length
       };
       this.cd.markForCheck();

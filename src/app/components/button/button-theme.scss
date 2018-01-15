@@ -1,0 +1,44 @@
+@mixin tl-button-theme($theme) {
+
+
+  $hover: map_get(map_get($theme,hover),background);
+  $borders: map_get($theme,borders);
+  $active: map_get(map_get($theme,active),background);
+
+  $base-text: map_get(map_get($theme,base),text);
+  $base-background:  map_get(map_get($theme,base),background);
+  $divider: map_get($theme,divider);
+  $disable:  map_get(map_get($theme,disable),text);
+
+  .tl-button{
+    background-color: $base-background;
+    border: 1px solid $borders;
+    color: $base-text;
+  }
+  .tl-button:hover{
+    outline: none;
+    background-color: $hover;
+  }
+  .tl-button:active, .-toggle{
+    outline: none;
+    background-color: $active;
+  }
+
+  .tl-button:focus {
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+  }
+
+  .iconAddonBefore{
+    border-right: 1px solid $borders;
+  }
+
+  .iconAddonAfter{
+    border-left: 1px solid $borders;
+  }
+
+  .disabled{
+    color: $disable;
+  }
+}

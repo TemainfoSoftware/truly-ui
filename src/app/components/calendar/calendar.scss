@@ -13,7 +13,7 @@
     line-height: 45px;
 
     >.date {
-      width: 200px;
+      width: 170px;
       & span {
         padding: 5px;
         transition: background ease-in-out 100ms;
@@ -43,12 +43,11 @@
     }
     >.todayButton {
       font-size: 1.2em;
-      cursor:pointer;
-      padding: 5px;
+      cursor: pointer;
+      text-align: center;
+      width: 88px;
       font-weight: 600;
-      &:hover{
-        border-radius: 5px;
-      }
+      user-select: none;
     }
   }
 
@@ -73,6 +72,7 @@
       text-align: center;
       padding: 5px;
       overflow: hidden;
+      user-select: none;
       animation-name: creating;
       animation-duration: 200ms;
       &:hover {

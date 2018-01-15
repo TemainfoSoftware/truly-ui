@@ -13,8 +13,6 @@
 
   .wrapper-calendar {
     border: 1px solid $borders;
-    -webkit-box-shadow: 0 0 20px 1px $borders;
-    box-shadow: 0 0 20px 1px $borders;
     background-color: $background-box;
 
     >.header-calendar {
@@ -49,7 +47,7 @@
         &:first-child:not(.notDay) {
           color: $accent-color;
         }
-        &:hover {
+        &:hover:not(.ui-table-cell-empty) {
           outline: 1px solid $borders;
         }
       }

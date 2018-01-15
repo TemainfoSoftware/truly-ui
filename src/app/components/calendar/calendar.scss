@@ -1,7 +1,7 @@
 .wrapper-calendar {
   width: 260px;
   outline: none;
-
+  box-sizing: content-box;
   >.header-calendar {
     position: relative;
     display: -webkit-inline-box;

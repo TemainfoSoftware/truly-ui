@@ -4,6 +4,7 @@ export * from './components/buttongroup/index';
 export * from './components/checkbox/index';
 export * from './components/chatlist/index';
 export * from './components/calendar/index';
+export * from './components/core/index';
 export * from './components/datatable/index';
 export * from './components/dialog/index';
 export * from './components/dropdownlist/index';

@@ -10,6 +10,7 @@ __export(require("./components/buttongroup/index"));
 __export(require("./components/calendar/index"));
 __export(require("./components/checkbox/index"));
 __export(require("./components/chatlist/index"));
+__export(require("./components/core/index"));
 __export(require("./components/datatable/index"));
 __export(require("./components/dialog/index"));
 __export(require("./components/dropdownlist/index"));

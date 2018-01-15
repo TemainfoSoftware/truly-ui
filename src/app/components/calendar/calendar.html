@@ -24,12 +24,13 @@
                     [date]="dateNavigator"
                     [withBorder]="false"
                     [range]="11"
+                    (clickNavigator)="clickNavigatorRange()"
                     (clickPrevious)="decreaseYearRange($event)"
                     (clickNext)="increaseYearRange($event)"
                     [width]="todayButton ? '100px' : '187px'">
       </tl-navigator>
     </div>
-    <span *ngIf="todayButton" class="todayButton" (click)="getToday()">TODAY</span>
+    <div *ngIf="todayButton" class="todayButton" (click)="getToday()">TODAY</div>
   </div>
   <table #table border="0" class="ui-table-calendar">
     <thead class="ui-table-thead" *ngIf="!displayMonths && !displayYears">

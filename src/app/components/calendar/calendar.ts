@@ -21,7 +21,7 @@
  */
 import {
   Component, ElementRef, AfterViewInit, Renderer2, ViewChild, Output,
-  EventEmitter, Input, QueryList, ViewChildren,
+  EventEmitter, Input, QueryList, ViewChildren, ViewContainerRef,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -31,12 +31,13 @@ import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlNavigator } from '../navigator/navigator';
 import { NavigatorService } from '../navigator/services/navigator.service';
+import { CalendarService } from './services/calendar.service';
 
 @Component( {
   selector: 'tl-calendar',
   templateUrl: './calendar.html',
   styleUrls: [ './calendar.scss' ],
-  providers: [NavigatorService]
+  providers: [NavigatorService, CalendarService]
 } )
 export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
@@ -58,15 +59,15 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   public dateNavigator;
 
-  private year;
+  public year;
 
-  private month = 0;
+  public month = 0;
 
-  private today;
+  public today;
 
-  private selectedDay;
+  public selectedDay;
 
-  private todayIndex;
+  public todayIndex;
 
   private keyboardNavLine;
 
@@ -100,6 +101,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
   constructor( public calendar: ElementRef, private renderer: Renderer2, private navigatorService: NavigatorService,
+               private calendarService: CalendarService, private view: ViewContainerRef,
                tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
     super( tabIndexService, idService, nameService );
     this.dateNavigator = new Date();
@@ -108,9 +110,12 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.calendarService.setView(this.view);
+    this.calendarService.setConfigCalendar(this);
     this.navigatorService.setNavigator(this.tlnavigator.toArray()[0]);
+
     this.setElement( this.calendar, 'calendar' );
-    this.createKeyboardListenerDay();
+    this.createKeyboardListener();
     this.generateDays();
     this.initializeNavigator();
     setTimeout(() => {
@@ -155,64 +160,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   generateDays() {
-    this.clearBody();
-
     this.displayMonths = false;
-    const dayOfMonth = [];
-
-    for (let i = 1; i <= new Date(this.year, this.month + 1, 0).getDate(); i++) {
-      dayOfMonth.push({dayOfWeek: new Date( this.year, this.month, i ).getDay(), day: new Date( this.year, 0, i ).getDate()});
-    }
-
-    let week;
-
-    if (dayOfMonth[0].dayOfWeek !== 0) {
-      week = new ElementRef( this.renderer.createElement('tr'));
-      this.renderer.addClass(week.nativeElement, 'ui-table-line');
-      this.renderer.appendChild(this.tbody.nativeElement, week.nativeElement);
-      for (let i = 0; i < dayOfMonth[0].dayOfWeek; i++) {
-        const td = new ElementRef( this.renderer.createElement('td'));
-        this.renderer.addClass(td.nativeElement, 'ui-table-cell');
-        this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
-        this.renderer.appendChild(week.nativeElement, td.nativeElement);
-      }
-    }
-
-    for (let day = 0; day < dayOfMonth.length; day++) {
-      if (dayOfMonth[day].dayOfWeek === 0) {
-        week = new ElementRef( this.renderer.createElement('tr'));
-        this.renderer.addClass(week.nativeElement, 'ui-table-line');
-        this.renderer.appendChild(this.tbody.nativeElement, week.nativeElement);
-      }
-      const td = new ElementRef( this.renderer.createElement('td'));
-      this.renderer.addClass(td.nativeElement, 'ui-table-cell');
-      td.nativeElement.innerHTML = dayOfMonth[day].day;
-      this.markToday( dayOfMonth[ day ].day, td );
-      this.createClickListenerDay(td);
-      this.renderer.appendChild(week.nativeElement, td.nativeElement);
-    }
-
-    for (let i = dayOfMonth[dayOfMonth.length - 1].dayOfWeek; i < 6; i++) {
-      const td = new ElementRef( this.renderer.createElement('td'));
-      this.renderer.addClass(td.nativeElement, 'ui-table-cell');
-      this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
-      this.renderer.appendChild(week.nativeElement, td.nativeElement);
-    }
-
-    for (let line = this.tbody.nativeElement.children.length; line < 6; line++) {
-      const another = new ElementRef( this.renderer.createElement('tr'));
-      this.renderer.addClass( another.nativeElement, 'ui-table-line' );
-
-      for (let col = 0; col < 7; col++) {
-        const td = new ElementRef(this.renderer.createElement('td'));
-        this.renderer.addClass(td.nativeElement, 'ui-table-cell');
-        this.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
-
-        td.nativeElement.innerHTML = '&nbsp';
-        this.renderer.appendChild(this.tbody.nativeElement, another.nativeElement);
-        this.renderer.appendChild(another.nativeElement, td.nativeElement);
-      }
-    }
+    this.calendarService.generateDays();
     this.handleScrolling();
   }
 
@@ -305,13 +254,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     return false;
   }
 
-  createClickListenerDay(cell) {
-    this.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.setSelectedDay( cell.nativeElement, $event.target );
-    });
-  }
 
-  createKeyboardListenerDay() {
+
+  createKeyboardListener() {
     this.renderer.listen(this.wrapper.nativeElement, 'keydown', $event => {
       this.handleKeyDown( $event );
     });
@@ -527,7 +472,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
       this.initializeNavigator();
       return;
     }
-    this.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
+
+    this.calendarService.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
+
   }
 
   getCellSelected() {
@@ -595,57 +542,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     }
   }
 
-  markToday(day, cell) {
-    if ( (day === this.today) && (this.month === new Date().getMonth() )
-      && (this.year === new Date().getFullYear()) ) {
-      this.renderer.addClass(cell.nativeElement, 'today');
-      this.renderer.addClass(cell.nativeElement, 'selected');
-      this.todayIndex = cell;
-      this.selectedDay = cell.nativeElement;
-      this.selectDay.emit(
-        {
-          'year': this.year,
-          'month': this.month,
-          'day': this.today,
-          'fullDate': new Date(this.year, this.month, this.today)
-      });
-    }
-  }
-
   changeMonth() {
     this.setWrapperFocus();
     this.displayMonths = true;
     this.displayYears = false;
-    this.tbody.nativeElement.innerHTML = '';
-
-    let line = new ElementRef( this.renderer.createElement('tr'));
-    this.renderer.addClass(line.nativeElement, 'ui-table-line');
-    for (let i = 0; i < 12; i++) {
-      if (i % 4 === 0) {
-        line = new ElementRef( this.renderer.createElement('tr'));
-        this.renderer.addClass(line.nativeElement, 'ui-table-line');
-      }
-      const cell = new ElementRef(this.renderer.createElement('td'));
-      this.renderer.addClass(cell.nativeElement, 'ui-table-cell');
-
-      cell.nativeElement.innerHTML = this.months[i].initials;
-      this.renderer.setAttribute(cell.nativeElement, 'cell', '' + i);
-      this.renderer.addClass(cell.nativeElement, 'notDay');
-      this.createClickListenerMonth(cell, i);
-      this.handleSelectedMonth(i, line, cell);
-      this.renderer.setStyle(line.nativeElement, 'height', '65px');
-      this.renderer.appendChild(line.nativeElement, cell.nativeElement);
-      this.renderer.appendChild(this.tbody.nativeElement, line.nativeElement);
-    }
-  }
-
-  createClickListenerMonth(cell, index) {
-    this.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.month = index;
-      this.setDateNavigator();
-      this.generateDays();
-      this.initializeNavigator();
-    });
+    this.calendarService.generateMonths();
   }
 
   increaseYear() {
@@ -674,26 +575,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.setWrapperFocus();
     this.displayYears = true;
     this.displayMonths = false;
-    this.tbody.nativeElement.innerHTML = '';
-
-    let line = new ElementRef( this.renderer.createElement('tr'));
-    this.renderer.addClass(line.nativeElement, 'ui-table-line');
-    for (let i = 0; i < 12; i++) {
-      if ( i % 4 === 0 ) {
-        line = new ElementRef( this.renderer.createElement( 'tr' ) );
-        this.renderer.addClass(line.nativeElement, 'ui-table-line');
-      }
-      const cell = new ElementRef( this.renderer.createElement( 'td' ) );
-      this.renderer.addClass(cell.nativeElement, 'ui-table-cell');
-
-      cell.nativeElement.innerHTML = range.rangeYear.start + i;
-      this.createClickListenerYear( cell );
-      this.renderer.setStyle( line.nativeElement, 'height', '65px' );
-      this.renderer.addClass(cell.nativeElement, 'notDay');
-      this.renderer.appendChild( line.nativeElement, cell.nativeElement );
-      this.renderer.appendChild( this.tbody.nativeElement, line.nativeElement );
-      this.handleSelectedYear(line, cell);
-    }
+    this.calendarService.generateYears(range);
   }
 
   clickNavigatorRange() {
@@ -704,50 +586,10 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.wrapper.nativeElement.focus();
   }
 
-  createClickListenerYear(cell) {
-    this.renderer.listen(cell.nativeElement, 'click', event => {
-      this.year = parseInt(cell.nativeElement.innerHTML, 10);
-      this.setDateNavigator();
-      this.changeMonth();
-    });
-  }
-
-  handleSelectedYear(line, cell) {
-    const yearOfCell = parseInt(cell.nativeElement.innerHTML, 10);
-    if (yearOfCell === this.year) {
-      this.renderer.addClass(cell.nativeElement, 'selected');
-      this.setKeyBoardLineIndex(line, cell);
-    }
-  }
-
-  handleSelectedMonth(index, line, cell) {
-    if (index === this.month) {
-      this.renderer.addClass(cell.nativeElement, 'selected');
-      this.setKeyBoardLineIndex(line, cell);
-    }
-  }
-
   setKeyBoardLineIndex(line, cell) {
     this.keyboardNavLine = line.nativeElement;
     this.lineIndex = line.nativeElement.sectionRowIndex;
     setTimeout(() => {this.navigator = cell.nativeElement.cellIndex; }, 1);
-  }
-
-  setSelectedDay( cell, target? ) {
-    this.emitSelectedDay( cell );
-    if ( cell.getAttribute( 'class' ).includes( 'selected' ) ) {
-      return;
-    }
-    this.renderer.addClass( cell, 'selected' );
-    this.removeNavigator( cell );
-    this.removeSelectedDay( cell );
-    this.selectedDay = target ? target : cell;
-  }
-
-  removeSelectedDay( cell ) {
-    if ( (this.selectedDay !== cell) ) {
-      this.renderer.removeClass( this.selectedDay, 'selected' );
-    }
   }
 
   emitSelectedDay( cell ) {
@@ -795,10 +637,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
         return;
       }
     }
-  }
-
-  clearBody() {
-    this.tbody.nativeElement.innerHTML = '';
   }
 
 }

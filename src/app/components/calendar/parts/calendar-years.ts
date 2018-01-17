@@ -22,6 +22,7 @@
 
 import { NavigatorService } from '../../navigator/services/navigator.service';
 import { Component, ElementRef } from '@angular/core';
+import { TlCalendar } from '../calendar';
 
 @Component( {
   selector: 'tl-calendar-years',
@@ -30,7 +31,7 @@ import { Component, ElementRef } from '@angular/core';
 } )
 export class TlCalendarYears {
 
-  private calendar;
+  private calendar: TlCalendar;
 
   private range;
 

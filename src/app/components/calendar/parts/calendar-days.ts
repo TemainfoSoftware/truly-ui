@@ -22,6 +22,7 @@
 
 import { NavigatorService } from '../../navigator/services/navigator.service';
 import { Component, ElementRef } from '@angular/core';
+import { TlCalendar } from '../calendar';
 
 @Component( {
   selector: 'tl-calendar-days',
@@ -30,7 +31,7 @@ import { Component, ElementRef } from '@angular/core';
 } )
 export class TlCalendarDays {
 
-  private calendar;
+  private calendar: TlCalendar;
 
   private week;
 
@@ -86,6 +87,7 @@ export class TlCalendarDays {
 
       for ( let col = 0; col < 7; col++ ) {
         const td = new ElementRef( this.calendar.renderer.createElement( 'td' ) );
+
         this.calendar.renderer.addClass( td.nativeElement, 'ui-table-cell' );
         this.calendar.renderer.addClass( td.nativeElement, 'ui-table-cell-empty' );
 

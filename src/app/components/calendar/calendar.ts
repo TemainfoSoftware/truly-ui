@@ -53,6 +53,22 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   @ViewChildren( TlNavigator ) tlnavigator: QueryList<TlNavigator>;
 
+  public months =
+    [
+      { name: 'January', initials: 'jan' },
+      { name: 'February', initials: 'feb' },
+      { name: 'March', initials: 'mar' },
+      { name: 'April', initials: 'apr' },
+      { name: 'May', initials: 'may' },
+      { name: 'June', initials: 'jun' },
+      { name: 'July', initials: 'jul' },
+      { name: 'August', initials: 'aug' },
+      { name: 'September', initials: 'sept' },
+      { name: 'October', initials: 'oct' },
+      { name: 'November', initials: 'nov' },
+      { name: 'December', initials: 'dec' }
+    ];
+
   public displayMonths = false;
 
   public displayYears = false;
@@ -81,26 +97,10 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
 
   private rangeYear = {};
 
-  private months =
-    [
-      { name: 'January', initials: 'jan' },
-      { name: 'February', initials: 'feb' },
-      { name: 'March', initials: 'mar' },
-      { name: 'April', initials: 'apr' },
-      { name: 'May', initials: 'may' },
-      { name: 'June', initials: 'jun' },
-      { name: 'July', initials: 'jul' },
-      { name: 'August', initials: 'aug' },
-      { name: 'September', initials: 'sept' },
-      { name: 'October', initials: 'oct' },
-      { name: 'November', initials: 'nov' },
-      { name: 'December', initials: 'dec' }
-    ];
-
   private dayOfWeek =
     ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-  constructor( public calendar: ElementRef, private renderer: Renderer2, private navigatorService: NavigatorService,
+  constructor( public calendar: ElementRef, public renderer: Renderer2, private navigatorService: NavigatorService,
                private calendarService: CalendarService, private view: ViewContainerRef,
                tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
     super( tabIndexService, idService, nameService );
@@ -124,11 +124,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
   }
 
   decreaseDate($event?) {
+    this.direction = 'left';
     this.setDateOfNavigator($event);
     this.generateDays();
   }
 
   increaseDate($event?) {
+    this.direction = 'right';
     this.setDateOfNavigator($event);
     this.generateDays();
   }
@@ -253,8 +255,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     }
     return false;
   }
-
-
 
   createKeyboardListener() {
     this.renderer.listen(this.wrapper.nativeElement, 'keydown', $event => {
@@ -474,7 +474,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     }
 
     this.calendarService.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
-
   }
 
   getCellSelected() {
@@ -621,23 +620,33 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.setNavigator(this.initNavigator);
   }
 
+  setNavitorIndex(cell) {
+    this.navigator = cell.cellIndex;
+  }
+
+  setCurrentLine(cell) {
+    this.keyboardNavLine = cell;
+  }
+
   loadNavigator( cell? ) {
     if ( cell ) {
-      this.keyboardNavLine = cell.parentElement;
-      this.navigator = cell.cellIndex;
+      this.setCurrentLine(cell.parentElement);
+      this.setNavitorIndex(cell);
       return;
     }
+    this.getSomeCellSelected();
+  }
 
-    const listTd = this.tbody.nativeElement.querySelectorAll( 'td' );
-    for ( let i = 0; i < listTd.length; i++ ) {
-      if ( listTd[ i ].className.includes( 'selected' ) ) {
-        this.keyboardNavLine = listTd[ i ].parentElement;
-        this.navigator = listTd[ i ].cellIndex;
+  getSomeCellSelected() {
+    const listCell = this.tbody.nativeElement.querySelectorAll( 'td' );
+    for (const cell of listCell) {
+      if ( cell.className.includes( 'selected' ) ) {
+        this.setCurrentLine(cell.parentElement);
+        this.setNavitorIndex(cell);
         this.setNavigator(this.navigator);
         return;
       }
     }
   }
-
 }
 

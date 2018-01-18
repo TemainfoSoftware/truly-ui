@@ -83,7 +83,7 @@
     "gulp-inline-ng2-template": "^4.0.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
-    "jest": "^20.0.4",
+    "jest": "^22.1.0",
     "jest-preset-angular": "^4.0.0",
     "node-sass": "^4.6.0",
     "pre-commit": "^1.2.2",

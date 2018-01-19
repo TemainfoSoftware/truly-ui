@@ -98,7 +98,13 @@
       background-color: $readonly-background;
     }
 
-    > .field.ng-valid.ng-touched:not(.invalid) {
+    > .field.ng-valid.ng-touched:not(.invalid):not(.withValidators) {
+      border: 1px solid $borders;
+      background-color: $box-background;
+      color: $box-text;
+    }
+
+    > .field.ng-valid.ng-touched:not(.invalid):not(.withoutValidators) {
       border: 1px solid $success-border;
       background-color: $success-background;
       outline: none;

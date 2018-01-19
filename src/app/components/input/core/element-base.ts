@@ -12,7 +12,7 @@ import { ValueAccessorBase } from './value-accessor';
 export abstract class ElementBase<T> extends ValueAccessorBase<T> {
   protected abstract model: NgModel;
 
-  constructor( private validators: ValidatorArray,
+  constructor( public validators: ValidatorArray,
                private asyncValidators: AsyncValidatorArray,
                private injector: Injector ) {
     super( injector );

@@ -23,7 +23,7 @@
 
 import {
     Component, Input, AfterViewInit, OnInit, Output, EventEmitter, Renderer2,
-    ViewChild, ChangeDetectionStrategy, ChangeDetectorRef, NgZone,
+    ViewChild, ChangeDetectorRef, NgZone,
     OnChanges,
     ContentChild, TemplateRef, OnDestroy, SimpleChanges
 } from '@angular/core';
@@ -47,7 +47,6 @@ import { ListBoxTemplateRenderService } from './parts/listbox-template-render';
 @Component( {
     selector: 'tl-listbox',
     templateUrl: './listbox.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: [ './listbox.scss' ],
     animations: [
         trigger(
@@ -510,7 +509,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
 
     handleValueSearchElement() {
-        if ( (this.searchElement.componentModel.model) && (!this.showList) ) {
+        if ( (this.searchElement.model) && (!this.showList) ) {
             return;
         }
     }

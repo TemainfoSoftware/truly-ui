@@ -1,6 +1,8 @@
 <div class="formBox" (keydown)="handleKeysForm($event)">
     <div class="formContent" #content [style.padding]="padding">
+      <form novalidate #form="ngForm">
         <ng-content></ng-content>
+      </form>
     </div>
     <div class="clearfix"></div>
     <div class="forFooter">
@@ -18,7 +20,7 @@
                        [text]="textConfirm"
                        mdResult="MROK"
                        [shortcut]="submitShortcut"
-                       [disabled]="!validForm"
+                       [disabled]="!form.valid"
                        [colorIconBefore]="'#24b959'"
                        (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"

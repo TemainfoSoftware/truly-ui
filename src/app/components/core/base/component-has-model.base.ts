@@ -139,9 +139,6 @@ export class ComponentHasModelBase extends ComponentDefaultBase implements OnIni
     /**
      * Method that validate if has Validations;
      */
-    hasValidation() {
-      return this.validations && Object.keys( this.validations ).length > 0;
-    }
 
     isRequired() {
       return this.validations && this.validations.required;

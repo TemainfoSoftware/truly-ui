@@ -20,17 +20,32 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import {
+  AfterViewInit,
+  Input,
+  ContentChild, Directive, forwardRef
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { DateFactory } from './number.factory';
+import { TlInput } from '../../input';
 
-export class IntegerNumberType implements CustomType {
+@Directive( {
+    selector: '[number][ngModel],[number][formControl],[number][formControlName]',
+    providers: [
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => NumberDirective),
+      }
+    ]
+} )
+export class NumberDirective implements Validator {
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            if (c.value !== null && c.value.length >= 1) {
-                return null;
-            }
-            return { int: false };
-        };
+    @ContentChild(TlInput) tlinput;
+
+    constructor() {}
+
+    validate( c: FormControl ) {
+      return DateFactory.getInstance( this.tlinput ).validate()( c );
     }
 }

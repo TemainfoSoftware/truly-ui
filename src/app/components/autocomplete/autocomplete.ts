@@ -20,308 +20,321 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, EventEmitter,
-    forwardRef, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, TemplateRef, ViewChild
+  ChangeDetectionStrategy, Component, ContentChild, EventEmitter,
+  Injector, Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
+  Optional, Inject, OnInit, AfterViewInit
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { TabIndexService } from '../form/tabIndex.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
-import { TlInput } from '../input/input';
 import { MakeProvider } from '../core/base/value-accessor-provider';
+import { ElementBase } from '../input/core/element-base';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 
 @Component( {
-    selector: 'tl-autocomplete',
-    templateUrl: './autocomplete.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    styleUrls: [ './autocomplete.scss' ],
-    animations: [
-        trigger(
-            'enterAnimation', [
-                state( 'true', style( { opacity : 1, transform : 'translate(0%,0%)' } ) ),
-                state( 'false', style( { opacity : 0, transform : 'translate(0%,-3%)', flex : '0' } ) ),
-                transition( '1 => 0', animate( '100ms' ) ),
-                transition( '0 => 1', animate( '100ms' ) ),
-            ]
-        )
-    ],
-    providers : [ MakeProvider(TlAutoComplete) ]
+  selector: 'tl-autocomplete',
+  templateUrl: './autocomplete.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: [ './autocomplete.scss' ],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        state( 'true', style( { opacity: 1, transform: 'translate(0%,0%)' } ) ),
+        state( 'false', style( { opacity: 0, transform: 'translate(0%,-3%)', flex: '0' } ) ),
+        transition( '1 => 0', animate( '100ms' ) ),
+        transition( '0 => 1', animate( '100ms' ) ),
+      ]
+    )
+  ],
+  providers: [ MakeProvider( TlAutoComplete ) ]
 } )
 
-export class TlAutoComplete extends TlInput implements AfterViewInit, OnInit, OnDestroy {
+export class TlAutoComplete extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy {
 
-    @Input() data: Array<any>;
+  @Input() data: Array<any>;
 
-    @Input() id = '';
+  @Input() label = 'AutoComplete 1';
 
-    @Input() labelDetail = '';
+  @Input() labelSize;
 
-    @Input() labelName = '';
+  @Input() iconBefore;
 
-    @Input() openFocus = false;
+  @Input() iconAfter;
 
-    @Input() ngModel = '';
+  @Input() textBefore;
 
-    @Input() lazyMode = false;
+  @Input() textAfter;
 
-    @Input() searchQuery = [];
+  @Input() textAlign = 'left';
 
-    @Input() rowHeight = 30;
+  @Input() labelPlacement = 'left';
 
-    @Input() listStripped = false;
+  @Input() readonly = false;
 
-    @ViewChild( 'input' ) input;
+  @Input() disabled = false;
 
-    @ViewChild( 'autoComplete' ) autoComplete;
+  @Input() autocomplete = 'off';
 
-    @ViewChild( 'autocompleteList' ) list;
+  @Input() placeholder;
 
-    @ViewChild(TlListBox) listBox: TlListBox;
+  @Input() clearButton = false;
 
-    @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
+  @Input() id = '';
 
-    @Output() addNew: EventEmitter<any> = new EventEmitter();
+  @Input() labelDetail = '';
 
-    @Output() clickItem: EventEmitter<any> = new EventEmitter();
+  @Input() labelName = '';
 
-    @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+  @Input() openFocus = false;
 
-    public listLeftPosition;
+  @Input() lazyMode = false;
 
-    public listTopPosition;
+  @Input() searchQuery = [];
 
-    private documentListener = [];
+  @Input() rowHeight = 30;
 
-    private initialModel;
+  @Input() listStripped = false;
 
-    constructor( public tabIndexService: TabIndexService,
-                 public idService: IdGeneratorService,
-                 public change: ChangeDetectorRef,
-                 public nameService: NameGeneratorService, public renderer: Renderer2, ) {
-        super( tabIndexService, idService, nameService, renderer );
+  @ViewChild( NgModel ) model: NgModel;
+
+  @ViewChild( 'input' ) tlinput;
+
+  @ViewChild( 'autoComplete' ) autoComplete;
+
+  @ViewChild( 'autocompleteList' ) list;
+
+  @ViewChild( TlListBox ) listBox: TlListBox;
+
+  @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
+
+  @Output() addNew: EventEmitter<any> = new EventEmitter();
+
+  @Output() clickItem: EventEmitter<any> = new EventEmitter();
+
+  @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+
+  public listLeftPosition;
+
+  public listTopPosition;
+
+  private documentListener = [];
+
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
+    asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2 ) {
+    super( validators, asyncValidators, injector );
+  }
+
+  ngOnInit() {
+    this.handleCustom();
+  }
+
+  ngAfterViewInit() {
+    this.listenerKeyDown();
+    this.listenClickDocument();
+    this.listenScrollDocument();
+    this.validationProperty();
+    this.listBox.showList = false;
+    this.listBox.detectChanges();
+    this.getAutoCompleteWidth();
+  }
+
+  listenerKeyDown() {
+    this.renderer.listen( this.tlinput.input.nativeElement, 'keydown', ( $event ) => {
+      this.handleKeyDown( $event );
+    } );
+  }
+
+  handleCustom() {
+    if ( this.customTemplate ) {
+      this.listBox.customInput = true;
+      this.listBox.template = this.customTemplate;
     }
+  }
 
-    ngOnInit() {
-        this.setElement( this.autoComplete, 'autocomplete' );
-        this.handleCustom();
+  validationProperty() {
+    if ( (!this.labelName && !this.listBox.isDataArrayString()) ) {
+      throw new Error( 'The [labelName] property is required to show the content on input while selecting' );
     }
+  }
 
-    ngAfterViewInit() {
-        this.listenerKeyDown();
-        this.listenClickDocument();
-        this.listenScrollDocument();
-        this.validationProperty();
-        this.handleAutoCompleteModel();
+  listenScrollDocument() {
+    this.documentListener.push( this.renderer.listen( document, 'scroll', ( $event ) => {
+      this.listBox.showList = false;
+      this.listBox.detectChanges();
+    } ) );
+  }
+
+  listenClickDocument() {
+    this.documentListener.push( this.renderer.listen( document, 'click', ( $event ) => {
+      if ( this.isNotRelatedWithAutocomplete( $event ) ) {
         this.listBox.showList = false;
         this.listBox.detectChanges();
-        this.getAutoCompleteWidth();
-    }
-
-    listenerKeyDown() {
-      this.renderer.listen(this.input.element.nativeElement, 'keydown', ($event) => {
-        this.handleKeyDown( $event );
-      });
-    }
-
-    handleCustom() {
-        if (this.customTemplate) {
-            this.listBox.customInput = true;
-            this.listBox.template = this.customTemplate;
-        }
-    }
-
-    validationProperty() {
-        if ((!this.labelName && !this.listBox.isDataArrayString())) {
-            throw new Error('The [labelName] property is required to show the content on input while selecting');
-        }
-    }
-
-    handleAutoCompleteModel() {
-        setTimeout( () => {
-            if ( this.ngModel ) {
-                this.initialModel = this.ngModel;
-                this.input.componentModel.model = this.ngModel;
-                this.setInputValue(this.ngModel);
-            }
-        }, 1 );
-    }
-
-    listenScrollDocument() {
-      this.documentListener.push(this.renderer.listen(document, 'scroll', ($event) => {
-        this.listBox.showList = false;
-        this.listBox.detectChanges();
-      }));
-    }
-
-    listenClickDocument() {
-        this.documentListener.push(this.renderer.listen( document, 'click', ( $event ) => {
-            if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-                this.listBox.showList = false;
-                this.listBox.detectChanges();
-                return;
-            }
-            this.handleOpenOnFocus();
-        } ));
-    }
-
-    onFocusInput($event) {
-      this.setListPosition();
+        return;
+      }
       this.handleOpenOnFocus();
-    }
+    } ) );
+  }
 
-    onKeyUp($event) {
-      if (JSON.stringify(this.initialModel) === JSON.stringify(this.ngModel)) {
-        $event.stopPropagation();
-      }
-    }
+  onFocusInput( $event ) {
+    this.setListPosition();
+    this.handleOpenOnFocus();
+  }
 
-    handleOpenOnFocus() {
-        if ( this.openFocus && !this.listBox.showList && this.isAvailableInput()) {
-            this.listBox.showList = true;
-            this.listBox.detectChanges();
-            this.change.detectChanges();
-        }
-    }
+  /*  onKeyUp( $event ) {
+   if ( JSON.stringify( this.initialModel ) === JSON.stringify( this.model ) ) {
+   $event.stopPropagation();
+   }
+   }*/
 
-    isAvailableInput() {
-      return !this.input.disabled && !this.input.readonly;
+  handleOpenOnFocus() {
+    if ( this.openFocus && !this.listBox.showList && this.isAvailableInput() ) {
+      this.listBox.showList = true;
+      this.listBox.detectChanges();
     }
+  }
 
-    handleKeyDown($event) {
-        switch ($event.keyCode) {
-          case KeyEvent.ENTER: this.closeList($event); return;
-          case KeyEvent.ESCAPE: this.handleEscape(); return;
-        }
+  isAvailableInput() {
+    return !this.tlinput.disabled && !this.tlinput.readonly;
+  }
+
+  handleKeyDown( $event ) {
+    switch ( $event.keyCode ) {
+      case KeyEvent.ENTER:
+        this.closeList( $event );
+        return;
+      case KeyEvent.ESCAPE:
+        this.handleEscape();
+        return;
     }
+  }
 
-    handleEscape() {
-      this.handleFilteredListNotSelected();
+  handleEscape() {
+    this.handleFilteredListNotSelected();
+  }
+
+  handleFilteredListNotSelected() {
+    if ( this.listBox.showList && this.listBox.filteredData.length > 0 && !this.listBox.itemSelected ) {
+      this.listBox.handleClickItem( this.listBox.dataService.datasource[ 0 ], 0 );
     }
+  }
 
-    handleFilteredListNotSelected() {
-      if (this.listBox.showList && this.listBox.filteredData.length > 0 && !this.listBox.itemSelected) {
-        this.listBox.handleClickItem( this.listBox.dataService.datasource[ 0 ], 0 );
-      }
+  closeList( $event ) {
+    $event.preventDefault();
+    if ( this.listBox.showList ) {
+      $event.stopPropagation();
     }
+    this.listBox.showList = false;
+    this.listBox.resetCursors();
+    this.listBox.detectChanges();
+  }
 
-    closeList($event) {
-        $event.preventDefault();
-        if (this.listBox.showList) {
-            $event.stopPropagation();
-        }
-        this.listBox.showList = false;
-        this.listBox.resetCursors();
-        this.listBox.detectChanges();
+  onAddNew() {
+    this.addNew.emit();
+  }
+
+  onInputFocusOut( $event ) {
+    if ( !this.isRelatedTargetLi( $event ) ) {
+      this.listBox.showList = false;
+      this.listBox.detectChanges();
     }
+  }
 
-    onAddNew() {
-        this.addNew.emit();
+  onClickItemList( $event ) {
+    if ( $event ) {
+      this.clickItem.emit( $event );
+      this.setInputValue( $event );
+      this.tlinput.input.nativeElement.focus();
     }
+  }
 
-    onInputFocusOut($event) {
-        if (!this.isRelatedTargetLi($event)) {
-            this.listBox.showList = false;
-            this.listBox.detectChanges();
-        }
-    }
-
-    onClickItemList($event) {
-        if ($event) {
-          this.ngModel = $event;
-          this.clickItem.emit($event);
-          this.setInputValue( $event );
-          this.input.element.nativeElement.focus();
-        }
-    }
-
-    setInputValue( $event ) {
-      this.input.element.nativeElement.value =
+  setInputValue( $event ) {
+    this.value =
         !this.listBox.isDataArrayString() ? $event.row[ this.labelName ] : $event.row;
+  }
+
+  setListPosition() {
+    this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
+    this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
+  }
+
+  isNotRelatedWithAutocomplete( $event ) {
+    if ( this.isTargetEqualsClearButton( $event ) ) {
+      return false;
     }
-
-    setListPosition() {
-      this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
-      this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.input.element.nativeElement.offsetHeight;
+    if ( !this.existAutocompleteInputInPath( $event ) ) {
+      return true;
     }
-
-    isNotRelatedWithAutocomplete( $event ) {
-        if (this.isTargetEqualsClearButton($event)) {
-            return false;
-        }
-        if (!this.existAutocompleteInputInPath($event)) {
-            return true;
-        }
-        if ( this.isTargetEqualsLi ) {
-            return false;
-        }
-        return  !this.isTargetEqualsListBox( $event ) &&
-                !this.isTargetParentEqualsLi( $event ) &&
-                !this.isTargetEqualsInputSearch( $event );
+    if ( this.isTargetEqualsLi ) {
+      return false;
     }
+    return !this.isTargetEqualsListBox( $event ) &&
+      !this.isTargetParentEqualsLi( $event ) &&
+      !this.isTargetEqualsInputSearch( $event );
+  }
 
-    isTargetEqualsListBox( $event ) {
-        return $event.target.className === 'list-box-container';
+  isTargetEqualsListBox( $event ) {
+    return $event.target.className === 'list-box-container';
+  }
+
+  isTargetEqualsLi( $event ) {
+    return $event.target.nodeName === 'LI';
+  }
+
+  isTargetParentEqualsLi( $event ) {
+    return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
+  }
+
+  isTargetEqualsClearButton( $event ) {
+    return $event.target.className.includes( '-clearbutton' );
+  }
+
+  isRelatedTargetLi( $event ) {
+    if ( $event.relatedTarget ) {
+      return $event.relatedTarget.nodeName === 'LI';
     }
+  }
 
-    isTargetEqualsLi( $event ) {
-        return $event.target.nodeName === 'LI';
+  isTargetEqualsInputSearch( $event ) {
+    return $event.target === this.tlinput.input.nativeElement;
+  }
+
+  onLazyLoadAutocomplete( $event ) {
+    this.lazyLoad.emit( $event );
+  }
+
+  existAutocompleteInputInPath( $event ) {
+    for ( let input = 0; input < $event.path.length; input++ ) {
+      if ( this.tlinput.input.nativeElement === $event.path[ input ] ) {
+        return true;
+      }
     }
+    return false;
+  }
 
-    isTargetParentEqualsLi( $event ) {
-        return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
-    }
+  getAutoCompleteWidth() {
+    return this.tlinput.input.nativeElement.offsetWidth;
+  }
 
-    isTargetEqualsClearButton( $event ) {
-        return $event.target.className.includes('-clearbutton');
-    }
+  /*    highlight( text: string, search ): string {
+   if ( typeof search !== 'object' ) {
+   if ( search && text ) {
+   let pattern = search.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
+   pattern = pattern.split( ' ' ).filter( ( t ) => {
+   return t.length > 0;
+   } ).join( '|' );
+   const regex = new RegExp( pattern, 'gi' );
 
-    isRelatedTargetLi($event) {
-        if ($event.relatedTarget) {
-            return $event.relatedTarget.nodeName === 'LI';
-        }
-    }
+   return text.replace( regex, ( match ) => `<strong>${match}</strong>` );
+   }
+   return text;
+   }
+   }*/
 
-    isTargetEqualsInputSearch( $event ) {
-        return $event.target === this.input.element.nativeElement;
-    }
-
-    onLazyLoadAutocomplete($event) {
-        this.lazyLoad.emit($event);
-    }
-
-    existAutocompleteInputInPath($event) {
-        for (let element = 0; element < $event.path.length; element++) {
-            if (this.input.element.nativeElement === $event.path[element]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    getAutoCompleteWidth() {
-        return this.input.input.nativeElement.offsetWidth;
-    }
-
-/*    highlight( text: string, search ): string {
-        if ( typeof search !== 'object' ) {
-            if ( search && text ) {
-                let pattern = search.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
-                pattern = pattern.split( ' ' ).filter( ( t ) => {
-                    return t.length > 0;
-                } ).join( '|' );
-                const regex = new RegExp( pattern, 'gi' );
-
-                return text.replace( regex, ( match ) => `<strong>${match}</strong>` );
-            }
-            return text;
-        }
-    }*/
-
-    ngOnDestroy() {
-        this.documentListener.forEach((listener) => { listener(); });
-    }
+  ngOnDestroy() {
+    this.documentListener.forEach( ( listener ) => {
+      listener();
+    } );
+  }
 
 }

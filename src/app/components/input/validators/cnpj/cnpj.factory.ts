@@ -20,38 +20,19 @@
  SOFTWARE.
  */
 
-import {
-    AfterViewInit, ContentChild, Directive, ElementRef, forwardRef, Input
-} from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { TypeFactory } from '../types/type.factory';
-import { TlInput } from '../input';
+import { CustomType } from '../../core/custom-type';
+import { CNPJ } from './cnpj.validator';
 
-@Directive( {
-    selector: '[type][ngModel]',
-    providers: [
-        {
-            multi: true,
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef( () => TypeDirective )
-        }
-    ]
-} )
-export class TypeDirective implements Validator, AfterViewInit {
+export class CNPJFactory {
 
-    @Input() type = '';
+  static getInstance( tlinput ): CustomType {
+    this.setCNPJMask( tlinput );
+    return new CNPJ();
+  }
 
-    @Input() decimals = 2;
-
-    @ContentChild( TlInput ) input;
-
-    constructor( private element: ElementRef) {}
-
-    ngAfterViewInit() {
-        this.element.nativeElement.setAttribute( 'type', this.type );
+  static setCNPJMask( tlinput ) {
+    if ( tlinput ) {
+      tlinput.mask = '99.999.999/9999-99';
     }
-
-    validate( c: FormControl ) {
-        return TypeFactory.getInstance( this.type, this.input, this.decimals ).validate()( c );
-    }
+  }
 }

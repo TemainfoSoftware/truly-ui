@@ -9,7 +9,10 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { TlInput } from './input';
 
 import { CharcaseDirective } from './directives/charcase.directive';
-import { TypeDirective } from './directives/type.directive';
+import { CPFDirective } from './validators/cpf/cpf.directive';
+import { CNPJDirective } from './validators/cnpj/cnpj.directive';
+import { DateDirective } from './validators/date/date.directive';
+import { NumberDirective } from './validators/number/number.directive';
 
 export * from './input';
 
@@ -21,12 +24,18 @@ export * from './input';
     declarations: [
         TlInput,
         CharcaseDirective,
-        TypeDirective
+        CPFDirective,
+        CNPJDirective,
+        DateDirective,
+        NumberDirective
     ],
     exports: [
         TlInput,
         CharcaseDirective,
-        TypeDirective
+        CPFDirective,
+        CNPJDirective,
+        DateDirective,
+        NumberDirective
     ],
     providers: [
         IdGeneratorService,

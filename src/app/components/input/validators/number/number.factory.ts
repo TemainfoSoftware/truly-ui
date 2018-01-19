@@ -20,15 +20,13 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { CustomType } from '../../core/custom-type';
+import { NumberTl } from './number.validator';
 
+export class DateFactory {
 
-export class NullType implements CustomType {
+  static getInstance( tlinput ): CustomType {
+    return new NumberTl();
+  }
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            return null;
-        };
-    }
 }

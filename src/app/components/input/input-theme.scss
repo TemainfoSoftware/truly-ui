@@ -84,21 +84,21 @@
       color: $disable-text
     }
 
-    > .field.-readonly {
-      background-color: $readonly-background;
-    }
-
-    > .field.-hasValidation.-isRequired.ng-touched.ng-invalid::placeholder {
-      color: $error-text;
-    }
-
-    > .field.-hasValidation.-isRequired.ng-touched.ng-invalid {
+    > .field.ng-touched.invalid {
       border: 1px solid $error-border;
       background-color: $error-background;
       outline: none;
     }
 
-    > .field.-hasValidation.ng-valid.ng-touched {
+    > .field.ng-touched.invalid::placeholder {
+      color: $error-text;
+    }
+
+    > .field.-readonly {
+      background-color: $readonly-background;
+    }
+
+    > .field.ng-valid.ng-touched:not(.invalid) {
       border: 1px solid $success-border;
       background-color: $success-background;
       outline: none;

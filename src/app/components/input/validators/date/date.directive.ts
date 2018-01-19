@@ -20,18 +20,36 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import {
+  AfterViewInit,
+  Input,
+  ContentChild, Directive, forwardRef
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { DateFactory } from './date.factory';
+import { TlInput } from '../../input';
 
-export class FloatNumberType implements CustomType {
+@Directive( {
+    selector: '[date][ngModel],[date][formControl],[date][formControlName]',
+    providers: [
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => DateDirective),
+      }
+    ]
+} )
+export class DateDirective implements Validator, AfterViewInit {
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            if (c.value !== null && c.value.length >= 1) {
-                return null;
-            }
-            return { float: false };
-        };
+    @Input() formatDate = '';
+
+    @ContentChild(TlInput) tlinput;
+
+    constructor() {}
+
+    ngAfterViewInit() {}
+
+    validate( c: FormControl ) {
+      return DateFactory.getInstance(  this.tlinput, this.formatDate ).validate()( c );
     }
-
 }

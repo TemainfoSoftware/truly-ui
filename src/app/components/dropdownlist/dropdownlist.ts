@@ -82,6 +82,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'height' ) height = '23px';
 
+  @Input( 'valueItem' ) valueItem = '';
+
   @Input( 'preSelected' ) preSelected = '';
 
   @Input( 'width' ) width = '120px';
@@ -407,7 +409,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
       if ( (value[ this.text ]).trim() === this.getSelectedItem().textContent.trim() ) {
         this.itemSelected = value;
         this.handleItemSelectedAsNull();
-        this.setModelComponent( this.itemSelected[ this.value ] );
+        this.setModelComponent( this.itemSelected[ this.valueItem ] );
         this.setValueInputAsLabel( this.itemSelected );
       }
     } );
@@ -446,7 +448,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     this.setInitialChildren();
     this.itemSelected = this.datasource[ this.children ];
     this.handleItemSelectedAsNull();
-    this.setModelComponent( this.itemSelected[ this.value ] );
+    this.setModelComponent( this.itemSelected[ this.valueItem ] );
     this.setValueInputAsLabel( this.itemSelected );
   }
 
@@ -577,7 +579,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     this.showHide = false;
     this.itemSelected = item;
     this.children = index;
-    this.setModelComponent( item.valueItem );
+    this.setModelComponent( item[ this.valueItem ] );
     this.setValueInputAsLabel( item );
     this.dropdown.nativeElement.focus();
   }

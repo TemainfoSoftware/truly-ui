@@ -26,7 +26,7 @@ import {
   AfterViewInit,
   Output,
   Inject,
-  EventEmitter, Renderer2, Optional, Injector, ElementRef,
+  EventEmitter, Renderer2, Optional, Injector, ElementRef, HostListener, OnInit,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import { ElementBase } from './core/element-base';
@@ -65,7 +65,7 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '
       multi: true,
     }],
 } )
-export class TlInput extends ElementBase<string> implements AfterViewInit {
+export class TlInput extends ElementBase<string> implements OnInit, AfterViewInit {
 
     @Input() textBefore = '';
 
@@ -86,6 +86,8 @@ export class TlInput extends ElementBase<string> implements AfterViewInit {
     @Input() readonly: boolean = null;
 
     @Input() autocomplete = 'off';
+
+    @Input() maxlength = -1;
 
     @Input() tabindex = 0;
 
@@ -134,9 +136,14 @@ export class TlInput extends ElementBase<string> implements AfterViewInit {
       super(validators, asyncValidators, injector);
     }
 
-    ngAfterViewInit() {
+    ngOnInit() {
       this.setRequired();
-      setTimeout(() => { this.validateClearButtonPosition(); }, 1);
+      this.validateClearButtonPosition();
+    }
+
+    ngAfterViewInit() {
+      console.log('model', this);
+
       this.hasMask();
     }
 

@@ -23,10 +23,17 @@
 import { CustomType } from '../../core/custom-type';
 import { NumberTl } from './number.validator';
 
-export class DateFactory {
+export class NumberFactory {
 
   static getInstance( tlinput ): CustomType {
-    return new NumberTl();
+    return this.validateInput(tlinput);
   }
 
+  static validateInput( tlinput ) {
+    const regex = new RegExp( '^[0-9]*$' );
+    if ( regex.test( tlinput.input.nativeElement.value ) ) {
+      return new NumberTl();
+    }
+    tlinput.input.nativeElement.value = '';
+  }
 }

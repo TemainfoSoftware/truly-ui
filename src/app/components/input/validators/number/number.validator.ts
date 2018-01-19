@@ -26,10 +26,7 @@ export class NumberTl implements CustomType {
 
   validate(): ValidatorFn {
     return ( c: AbstractControl ) => {
-      if (c.value !== null && c.value.length >= 1) {
         return null;
-      }
-      return { int: false };
     };
   }
 

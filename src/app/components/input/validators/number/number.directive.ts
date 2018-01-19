@@ -26,7 +26,7 @@ import {
   ContentChild, Directive, forwardRef
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { DateFactory } from './number.factory';
+import { NumberFactory } from './number.factory';
 import { TlInput } from '../../input';
 
 @Directive( {
@@ -46,6 +46,6 @@ export class NumberDirective implements Validator {
     constructor() {}
 
     validate( c: FormControl ) {
-      return DateFactory.getInstance( this.tlinput ).validate()( c );
+      return NumberFactory.getInstance( this.tlinput ).validate()( c );
     }
 }

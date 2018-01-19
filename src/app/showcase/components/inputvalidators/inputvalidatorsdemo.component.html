@@ -11,7 +11,8 @@
           <app-card>
             <div class="col-md-6">
               <span>CPF</span>
-              <tl-input name="cpf" cpf [(ngModel)]="basicDate"></tl-input>
+              <tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
+              <div class="returned-value">Returned Value: {{cpf}}</div>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input></tl-input>
@@ -20,6 +21,7 @@
             <div class="col-md-6">
               <span>CNPJ</span>
               <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+              <div class="returned-value">Returned Value: {{cnpj}}</div>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input></tl-input>
@@ -30,6 +32,7 @@
             <div class="col-md-6">
               <span>DATE</span>
               <tl-input name="cpf" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
+              <div class="returned-value">Returned Value: {{date}}</div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input></tl-input>
@@ -37,7 +40,15 @@
             </div>
             <div class="col-md-6">
               <span>NUMBER</span>
-              <tl-input name="cpf" number required [(ngModel)]="number"></tl-input>
+              <tl-input
+                name="cpf"
+                type="number"
+                number
+                required
+                maxlength="5"
+                [(ngModel)]="number">
+              </tl-input>
+              <div class="returned-value">Returned Value: {{number}}</div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input></tl-input>

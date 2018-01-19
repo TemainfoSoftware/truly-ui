@@ -14,7 +14,7 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'value',
+    name: 'valueItem',
     type: 'string',
     default: 'value',
     description: 'Sets the data item field that represents the item value.',

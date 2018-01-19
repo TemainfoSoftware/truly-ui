@@ -80,6 +80,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/input/inputdemo.module#InputDemoModule'
       },
       {
+        path: 'inputvalidators',
+        loadChildren: './components/inputvalidators/inputvalidatorsdemo.module#InputValidatorsDemoModule'
+      },
+      {
         path: 'inputmask',
         loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'
       },

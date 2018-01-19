@@ -1,0 +1,63 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Input Validators<span class="module-name"><code><u>Module Name</u>: <strong>InputModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>InputModule</strong></code></p>
+    <p class="text-content">There's a lot of ways to set up an input validator using Truly UI. Below, are some of those.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <span>CPF</span>
+              <tl-input name="cpf" cpf [(ngModel)]="basicDate"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>CNPJ</span>
+              <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>DATE</span>
+              <tl-input name="cpf" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>NUMBER</span>
+              <tl-input name="cpf" number required [(ngModel)]="number"></tl-input>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input></tl-input>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+<!--<app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+  <app-card>
+    <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+  </app-card>
+</app-showcase-card>
+<app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+  <app-card>
+    <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+    <app-showcase-table-events [data]="dataTableEvents"></app-showcase-table-events>
+  </app-card>
+</app-showcase-card>-->
+</div>
+

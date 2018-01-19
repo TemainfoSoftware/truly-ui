@@ -4,14 +4,14 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input [name]="'name'" [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+                <tl-input [name]="'name'" required [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input [name]="'lastname'" [labelSize]="100" [validations]="{required: true}"
+                <tl-input name="lastname" required [labelSize]="100"
                           [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
             </div>
           </div>
@@ -41,63 +41,8 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'birthday'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.birthday"
-                          [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
-            </div>
-          </div>
-        </div>
-      </tl-tab>
-      <tl-tab [title]="'Person Information 2'">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <tl-input [name]="'state'" [labelSize]="100" [ngModel]="person?.state" [label]="'State'"></tl-input>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <tl-checkbox [name]="'notification'" [label]="'Notify ?'" [ngModel]="person?.notification"></tl-checkbox>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <tl-multiselect
-                  [data]="dataBasic"
-                  [ngModel]="person?.dependents"
-                  [labelSize]="100"
-                  [defaultColorTag]="'#8EC2F4'"
-                  [name]="'dependents'"
-                  [placeholder]="'Select...'"
-                  [label]="'Dependents'"
-                  [openFocus]="false"
-                  [labelTag]="'firstName'"
-                  [detail]="'email'"
-                  [query]="'firstName'">
-                </tl-multiselect>
-            </div>
-      </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <tl-autocomplete [data]="dataAuto"
-                                 [name]="'clients'"
-                                 [label]="'Clients'"
-                                 [labelName]="'firstName'"
-                                 [clearButton]="true"
-                                 [rowHeight]="35"
-                                 [placeholder]="'Search...'"
-                                 [ngModel]="person?.clients">
-                </tl-autocomplete>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
+                <tl-input [name]="'birthday'" required [labelSize]="100" [ngModel]="person?.birthday"
+                          [label]="'Birthday'" date [formatDate]="'dd.mm.yyyy'" ></tl-input>
             </div>
           </div>
         </div>

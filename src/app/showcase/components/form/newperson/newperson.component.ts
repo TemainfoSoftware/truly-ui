@@ -18,7 +18,6 @@ import { Modal } from '../../../../components/modal/modal-options';
 @Component( {
   selector: 'app-new-person',
   templateUrl: './newperson.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './newperson.component.scss' ]
 } )
 export class NewPersonComponent implements OnInit, OnChanges {

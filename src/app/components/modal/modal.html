@@ -1,4 +1,4 @@
-<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" [class]="'tl-modal-container ' + color">
+<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" [ngClass]="{'tl-modal-container':true}" [class]="color">
     <div class="header" #headerBox>
         <div class="bar"
 

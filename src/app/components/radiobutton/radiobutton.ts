@@ -20,37 +20,31 @@
  SOFTWARE.
  */
 import {
-    AfterViewInit,
-    Component, Input,
+  AfterViewInit,
+  Component, Input,
 } from '@angular/core';
 
 @Component( {
-    selector: 'tl-radiobutton',
-    template: '',
+  selector: 'tl-radiobutton',
+  template: '',
 } )
 export class TlRadioButton implements AfterViewInit {
 
-    @Input() label = '';
+  @Input() label = '';
 
-    @Input() name = '';
+  @Input() value = '';
 
-    @Input() value = '';
+  @Input() tabindex = 0;
 
-    @Input() tabindex = 0;
+  @Input() checked = false;
 
-    @Input() checked = false;
-
-    ngAfterViewInit() {
-        if (!this.name) {
-            throw new EvalError( 'The [name] property is required!' );
-        }
-        if (!this.value) {
-            throw new EvalError( 'The [value] property is required!' );
-        }
-        if (!this.label) {
-            throw new EvalError( 'The [label] property is required!' );
-        }
+  ngAfterViewInit() {
+    if ( !this.value ) {
+      throw new EvalError( 'The [value] property is required!' );
     }
-
+    if ( !this.label ) {
+      throw new EvalError( 'The [label] property is required!' );
+    }
+  }
 }
 

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, Optional, Inject, ContentChildren, QueryList, Input, AfterContentInit, ViewChild, AfterViewInit, Output,
-  EventEmitter, Injector,
+  Component, Optional, Inject, ContentChildren, QueryList, Input, ViewChild, AfterViewInit, Output,
+  EventEmitter, Injector, OnInit,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
@@ -43,7 +43,7 @@ const Orientation = {
     [ MakeProvider( TlRadioGroup ) ]
   ]
 } )
-export class TlRadioGroup extends ElementBase<string> implements AfterContentInit, AfterViewInit {
+export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   public itemSelected;
 
@@ -70,14 +70,12 @@ export class TlRadioGroup extends ElementBase<string> implements AfterContentIni
     super( validators, asyncValidators, injector );
   }
 
-  ngAfterContentInit() {
-    this.handleInitialValue();
-    this.setInitialSettings();
-  }
-
   ngAfterViewInit() {
-    this.validateProperty();
-    this.validateCheckedRadios();
+    setTimeout( () => {
+      this.handleInitialValue();
+      this.validateProperty();
+      this.validateCheckedRadios();
+    }, 1 );
   }
 
   validateProperty() {
@@ -87,12 +85,12 @@ export class TlRadioGroup extends ElementBase<string> implements AfterContentIni
   }
 
   handleInitialValue() {
-      if ( this.value ) {
-        this.handleModelValue();
-      } else {
-        this.checkFirstItem();
-        this.handleChecked();
-      }
+    if ( this.value ) {
+      this.handleModelValue();
+    } else {
+      this.checkFirstItem();
+      this.handleChecked();
+    }
   }
 
   handleModelValue() {
@@ -105,7 +103,7 @@ export class TlRadioGroup extends ElementBase<string> implements AfterContentIni
 
   handleChecked() {
     this.listRadioButton.toArray().forEach( ( item ) => {
-        this.setItemChecked( item );
+      this.setItemChecked( item );
     } );
   }
 
@@ -118,16 +116,6 @@ export class TlRadioGroup extends ElementBase<string> implements AfterContentIni
         $event.preventDefault();
         break;
     }
-  }
-
-  setInitialSettings() {
-    this.listRadioButton.toArray().forEach( ( item ) => {
-      this.setNameRadioButton( item );
-    } );
-  }
-
-  setNameRadioButton( item ) {
-    item.name = this.nameGroup;
   }
 
   setItemChecked( item ) {

@@ -103,6 +103,8 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   public hasKeySource: boolean;
 
+  public focused = false;
+
   private showIcon = true;
 
   private cursor = -1;
@@ -118,6 +120,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   private dataSource = [];
 
   private scrollDocument;
+
 
   constructor( @Optional() @Inject(NG_VALIDATORS) validators: Array<any>, @Optional() @Inject(NG_ASYNC_VALIDATORS)
     asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2, private change: ChangeDetectorRef) {
@@ -343,12 +346,12 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   }
 
   activeInputText() {
-    this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
+  //  this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
   }
 
   deActiveInputText() {
     if ( this.isOpen ) {
-      this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+  // /    this.input.nativeElement.style.webkitTextFillColor = 'transparent';
     }
   }
 
@@ -442,8 +445,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   setOutlineMultiSelect() {
     if ( this.wrapperTags ) {
-      this.wrapperTags.nativeElement.style.background = '#fffbe9';
-      this.wrapperTags.nativeElement.style.border = '1px solid #ffcf94';
+      this.focused = true;
     }
   }
 
@@ -678,8 +680,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   clearOutlineMultiSelect() {
     if ( this.wrapperTags ) {
-      this.wrapperTags.nativeElement.style.background = '#fff';
-      this.wrapperTags.nativeElement.style.border = '1px solid #CACACA';
+      this.focused = false;
     }
   }
 

@@ -17,8 +17,8 @@
 
     >.multiselect-wrapper{
       & .selectedItem {
-        background-color: map-deep-get($primary, "default", "background");
-        color: map-deep-get($primary, "default", "foreground");
+        background-color: map-deep-get($primary, "default", "background") !important;
+        color: map-deep-get($primary, "default", "foreground")  !important;
       }
 
       & .input-wrapper-multiselect {
@@ -34,15 +34,22 @@
       }
 
       //& .input:focus {
-      //  background:map-deep-get($warning, "default", "background");
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
       //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
       //}
-
+      //
       //& .input-empty:focus {
-      //  background: map-deep-get($warning, "default", "background");
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
       //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
       //}
-
+      //
+      //& .focused{
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.1);
+      //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
+      //}
       & .input {
         background: map-deep-get($light, "default", "background");
         color: map-deep-get($light, "default", "foreground");
@@ -61,7 +68,7 @@
       }
 
       & .select-options {
-        border: 1px solid  map-deep-get($basic, "default", "border")
+        //border: 1px solid  map-deep-get($basic, "default", "border")
       }
       & .select-options::-webkit-scrollbar-thumb {
         background-color: map-deep-get($primary, "default", "background");
@@ -73,7 +80,7 @@
       }
 
       & .tags span b {
-        border-left: 1px solid map-deep-get($light, "default", "border");
+        border-left: 1px solid map-deep-get($primary, "default", "foreground");
       }
 
       & .select-options .itens {

@@ -5,8 +5,8 @@
   $light:   map-deep-get($theme, 'light');
   $dark:    map-deep-get($theme, 'dark');
   $danger:  map-deep-get($theme, 'danger');
-  $success: map-deep-get($theme, 'success2');
-  $warning: map-deep-get($theme, 'warning2');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
 
   .ui-chat-overflow {
     border-top: 1px solid map-deep-get($basic, "default", "border");

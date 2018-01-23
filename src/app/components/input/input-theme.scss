@@ -5,8 +5,8 @@
   $basic:   map-deep-get($theme, 'basic');
   $light:   map-deep-get($theme, 'light');
   $danger:  map-deep-get($theme, 'danger');
-  $success: map-deep-get($theme, 'success2');
-  $warning: map-deep-get($theme, 'warning2');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
 
   .tl-input-box {
     // Addon Element

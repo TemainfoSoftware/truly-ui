@@ -2,48 +2,7 @@
 
 $theme: (
 
-  //STATS AND BASES\\
-  active:      (text: #AAAAAA, background: #D8D8D8),
-  base:        (text: #616161, background: #E8E8E8),
-  checked:     (text: #616161, background: #E8E8E8),
-  disable:     (text: #707070, background: #E8E8E8),
-  focused:     (text: #AAAAAA, background: #66CC99),
-  hint:        (text: #616161, background: #E8E8E8),
-  hover:       (text: #DEDEDE, background: #F2F2F2),
-  icons:       (text: #616161, background: #E8E8E8),
-  odd:         (text: #7A838B, background: #FFFFFF),
-  even:        (text: #7A838B, background: #E8E8E8),
-  placeholder: (text: #CACACA, background: #E8E8E8),
-  readonly:    (text: #CACACA, background: #EEEEEE),
-  selected:    (text: #FFFFFF, background: #66CC99),
-
-  //BRAND COLORS\\
-  success: (text: #66CC99, bar:#66CC99, background: #E3F5EC, border: #66CC99),
-  accent:  #F77171,
-  info:    #3E80ED,
-  warning: (text: #FFCF94, bar:#FFCF94, background: #FFFBE9, border: #FCB27E),
-  error:   (text: #FFB9B9, bar:#F77171, background: #FFF1F1, border: #F77171),
-
-
-
-  //STATUS COLORS\\
-  online:  #81E2B2,
-  offline: #D8D8D8,
-  busy:    #F77171,
-  away:    #FCB27E,
-
-  //OTHERS\\
-  divider: #F1F1F1,
-  borders: #C8C8C8,
-  bars:    #F2F2F2,
-  box:       (text: #616161, background: #FAFAFA, icons: #FFFFFF, hover: #4FBC85, inactive: #d9d9d9),
-  scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99, arrow: #797979, icon: #FFFFFF),
-
-
-
-  //// NEW VERSION
-  // ||||
-  basic:   (
+  basic: (
     default:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
     active:   ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
     checked:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
@@ -52,7 +11,7 @@ $theme: (
     hover:    ( foreground: #616161, background: #F0F0F0, border: #C8C8C8 ),
   ),
 
-  primary:   (
+  primary: (
     default:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     active:   ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     checked:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
@@ -70,7 +29,7 @@ $theme: (
   //  hover:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
   //),
 
-  success2: (
+  success: (
     default:  ( foreground: #FFFFFF, background: #62C390, border: #58AF7F ),
     active:   ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
     checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
@@ -79,7 +38,7 @@ $theme: (
     hover:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
   ),
 
-  danger:  (
+  danger: (
     default:  ( foreground: #FFFFFF, background: #F77171, border: #F07072 ),
     active:   ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     checked:  ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
@@ -88,7 +47,7 @@ $theme: (
     hover:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
   ),
 
-  warning2: (
+  warning: (
     default:  ( foreground: #FFFFFF, background: #F5D240, border: #f5d240 ),
     active:   ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
     checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
@@ -97,7 +56,7 @@ $theme: (
     hover:    ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
   ),
 
-  information2: (
+  information: (
     default:  ( foreground: #FFFFFF, background: #0090D9, border: #0090D9 ),
     active:   ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
     checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),

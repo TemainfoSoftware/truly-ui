@@ -16,7 +16,7 @@
 
   $basic:   map-deep-get($theme, 'basic');
   $dark:    map-deep-get($theme, 'dark');
-  $success: map-deep-get($theme, 'success2');
+  $success: map-deep-get($theme, 'success');
 
 
   .container-wrapper {
@@ -63,20 +63,20 @@
     //  @include _tl-button-theme-schema($theme,'secondary')
     //}
 
-    &.success2 {
-      @include _tl-container-modal-theme-scheme($theme, 'success2')
+    &.success {
+      @include _tl-container-modal-theme-scheme($theme, 'success')
     }
 
     &.danger {
       @include _tl-container-modal-theme-scheme($theme, 'danger')
     }
 
-    &.warning2 {
-      @include _tl-container-modal-theme-scheme($theme, 'warning2')
+    &.warning {
+      @include _tl-container-modal-theme-scheme($theme, 'warning')
     }
 
-    &.information2 {
-      @include _tl-container-modal-theme-scheme($theme, 'information2')
+    &.information {
+      @include _tl-container-modal-theme-scheme($theme, 'information')
     }
 
     &.light {

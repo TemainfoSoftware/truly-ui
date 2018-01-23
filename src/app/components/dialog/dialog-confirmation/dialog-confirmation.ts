@@ -26,7 +26,7 @@ import { Modal } from '../../modal/modal-options';
 @Modal({
   icon: 'ion-information-circled',
   title: 'Confirmation',
-  color: 'success2',
+  color: 'success',
   width: '400px',
   height: 'auto',
   draggable: true,

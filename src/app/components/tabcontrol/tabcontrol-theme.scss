@@ -1,48 +1,41 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-tabcontrol-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $divider: map_get($theme,divider);
-  $base-text: map_get(map_get($theme,base),text);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-
-  $box-background: map_get(map_get($theme,box),background);
-  $box-inactive: map_get(map_get($theme,box),inactive);
-  $box-text: map_get(map_get($theme,box),text);
-
+  $basic:   map-deep-get($theme, 'basic');
+  $light:   map-deep-get($theme, 'light');
 
   .wrapper-tabcontrol {
 
     >.line-separator:after {
-      background: $borders !important;
+      background: map-deep-get($basic, "default", "border") !important;
     }
 
     >.tab-panel-buttons li {
-      color: $box-text;
-      background:  $box-inactive;
-      border: 1px solid $borders;
+      color: map-deep-get($basic, "default", "foreground");
+      background: map-deep-get($basic, "default", "background");
+      border: 1px solid map-deep-get($basic, "default", "border");
       border-right: 0;
     }
 
     >.tab-panel-buttons li:last-child {
-      border-right: 1px solid $borders;
+      border-right: 1px solid map-deep-get($basic, "default", "border");
     }
   }
 
   .tab-wrapper {
-    background:  $box-inactive;
-    border-left: 1px solid $borders;
-    border-right: 1px solid $borders;
-    border-bottom: 1px solid $borders;
+    background: map-deep-get($basic, "default", "background");
+    border-left: 1px solid map-deep-get($basic, "default", "border");
+    border-right: 1px solid map-deep-get($basic, "default", "border");
+    border-bottom: 1px solid map-deep-get($basic, "default", "border");
   }
   .tab-selected {
     border-bottom: 0 !important;
-    background: $box-background !important;
+    background: map-deep-get($light, "default", "background") !important;
   }
 
   .tab-wrapper-selected{
-    background: $box-background;
+    background: map-deep-get($light, "default", "background");
   }
 
 }

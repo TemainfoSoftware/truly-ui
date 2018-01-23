@@ -2,60 +2,42 @@
 
 @mixin tl-splitbutton-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $divider: map_get($theme,divider);
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background: map_get(map_get($theme,base),background);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-
-  $hover-background:  map_get(map_get($theme,hover),text);
-  $hover-text:  map_get(map_get($theme,hover),background);
-
-  $active-text:  map_get(map_get($theme,active),text);
-  $active-background:  map_get(map_get($theme,active),background);
-
-  $icons-text:  map_get(map_get($theme,active),icons);
-  $icons-background:  map_get(map_get($theme,active),icons);
-
-  $box-background: map_get(map_get($theme,box),background);
-  $box-text: map_get(map_get($theme,box),text);
+  $basic: map-deep-get($theme, 'basic');
 
   .tl-split-button-box{
     > .split-button-actions{
-      background-color: $base-background;
-      border-top: 1px solid $borders;
-      border-right: 1px solid $borders;
-      border-bottom: 1px solid $borders;
-      color: $base-text;
+      background-color: map-deep-get($basic, "default", "background");
+      border-top: 1px solid  map-deep-get($basic, "default", "border");
+      border-right: 1px solid  map-deep-get($basic, "default", "border");
+      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
+      color: map-deep-get($basic, "default", "foreground");
       >.actions-menu{
-        background-color: $base-background;
-        border: 1px solid $borders;
+        background-color: map-deep-get($basic, "default", "background");
+        border: 1px solid  map-deep-get($basic, "default", "border");
       }
     }
     > .split-button-actions:hover, .split-button-actions.active{
-      background-color: $hover-background;
+      background-color: map-deep-get($basic, "hover", "background");
     }
     > .split-button-actions:active{
-      background-color: $active-background;
+      background-color: map-deep-get($basic, "active", "background");;
     }
     > .split-button-actions i{
-      color: $icons-text;
+      color: map-deep-get($basic, "default", "foreground");
     }
   }
 
   tl-split-button-action li{
-    color: $base-text;
+    color: map-deep-get($basic, "default", "foreground");
 
     &:hover{
-      background-color: $hover-background;
+      background-color: map-deep-get($basic, "hover", "background");
     }
     &.separator{
-      border-bottom: 1px solid $borders;
+      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
     }
-    & .icon-action{
-      color: $icons-text;
+    &.icon-action{
+      color: map-deep-get($basic, "default", "foreground");
     }
   }
 }

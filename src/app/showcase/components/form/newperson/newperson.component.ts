@@ -8,7 +8,7 @@ import { Modal } from '../../../../components/modal/modal-options';
   icon: 'ion-stats-bars',
   draggable: true,
   width: '500px',
-  color: 'success2',
+  color: 'success',
   height: 'auto',
   maximizable: true,
   minimizable: true,

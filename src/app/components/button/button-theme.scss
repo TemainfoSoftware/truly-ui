@@ -52,20 +52,20 @@
     //  @include _tl-button-theme-schema($theme,'secondary')
     //}
 
-    &.success2 {
-      @include _tl-button-theme-schema($theme, 'success2')
+    &.success {
+      @include _tl-button-theme-schema($theme, 'success')
     }
 
     &.danger {
       @include _tl-button-theme-schema($theme, 'danger')
     }
 
-    &.warning2 {
-      @include _tl-button-theme-schema($theme, 'warning2')
+    &.warning {
+      @include _tl-button-theme-schema($theme, 'warning')
     }
 
-    &.information2 {
-      @include _tl-button-theme-schema($theme, 'information2')
+    &.information {
+      @include _tl-button-theme-schema($theme, 'information')
     }
 
     &.light {

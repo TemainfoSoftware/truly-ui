@@ -59,20 +59,20 @@
     //  @include _tl-checkbox-theme-schema($theme,'secondary')
     //}
 
-    &.success2 {
-      @include _tl-checkbox-theme-schema($theme, 'success2')
+    &.success {
+      @include _tl-checkbox-theme-schema($theme, 'success')
     }
 
     &.danger {
       @include _tl-checkbox-theme-schema($theme, 'danger')
     }
 
-    &.warning2 {
-      @include _tl-checkbox-theme-schema($theme, 'warning2')
+    &.warning {
+      @include _tl-checkbox-theme-schema($theme, 'warning')
     }
 
-    &.information2 {
-      @include _tl-checkbox-theme-schema($theme, 'information2')
+    &.information {
+      @include _tl-checkbox-theme-schema($theme, 'information')
     }
 
     &.light {

@@ -25,7 +25,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <div class="col-md-6">
-                  <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
+                  <tl-radio-group [name]="'gender'" [ngModel]="person?.gender">
                     <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                     <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
                   </tl-radio-group>
@@ -45,6 +45,30 @@
                           [label]="'Birthday'" date [formatDate]="'DD.MM.YYYY'" ></tl-input>
             </div>
           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <tl-checkbox [label]="'Notification'" [name]="'notification'" [ngModel]="person?.notification"></tl-checkbox>
+            </div>
+          </div>
+          <!--<div class="col-md-8">
+            <div class="form-group">
+              <tl-autocomplete [data]="dataAuto"
+                               [id]="'id'"
+                               [labelSize]="'10px'"
+                               [openFocus]="true"
+                               [name]="'clients'"
+                               [label]="'Clients'"
+                               [clearButton]="true"
+                               [searchQuery]="['firstName']"
+                               [rowHeight]="35"
+                               [placeholder]="'Search...'"
+                               [labelName]="'firstName'"
+                               [(ngModel)]="result">
+              </tl-autocomplete>
+            </div>
+          </div>-->
         </div>
       </tl-tab>
     </tl-tabcontrol>

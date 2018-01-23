@@ -32,6 +32,7 @@ export class DataClientService {
         city: '',
         title: '',
         status: '',
+        notification: '',
       };
 
   constructor() {}

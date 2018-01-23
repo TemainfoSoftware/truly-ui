@@ -57,7 +57,7 @@
       }
 
       &:focus {
-        background-color: rgba(map-deep-get($warning, "default", "background"),0.2);
+        background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
         outline: none;
         border: 1px solid map-deep-get($warning, "default", "border");
       }
@@ -74,17 +74,23 @@
         background-color: map-deep-get($basic, "default", "background");
       }
 
-      &.-hasValidation.-isRequired.ng-touched.ng-invalid::placeholder {
+      &.ng-touched.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color:rgba(map-deep-get($danger, "default", "background"),0.2);
+        outline: none;
+      }
+
+      &.ng-touched.invalid::placeholder {
         color: rgba(map-deep-get($danger, "default", "background"),0.8);
       }
 
-      &.-hasValidation.-isRequired.ng-touched.ng-invalid {
+      &.ng-valid.ng-touched:not(.invalid):not(.withValidators) {
         border: 1px solid map-deep-get($danger,"default", "border");
         background-color: rgba(map-deep-get($danger, "default", "background"),0.2);
         outline: none;
       }
 
-      &.field.-hasValidation.ng-valid.ng-touched {
+      &.ng-valid.ng-touched:not(.invalid):not(.withoutValidators) {
         border: 1px solid map-deep-get($success, "default", "border");
         background-color: rgba(map-deep-get($success, "default", "background"),0.2);
         outline: none;

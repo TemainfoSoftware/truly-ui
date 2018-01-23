@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Sistemas
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { CustomType } from './custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { CustomType } from '../../core/custom-type';
 
+export class NumberTl implements CustomType {
 
-export class NullType implements CustomType {
+  validate(): ValidatorFn {
+    return ( c: AbstractControl ) => {
+        return null;
+    };
+  }
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            return null;
-        };
-    }
 }

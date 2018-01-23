@@ -20,17 +20,19 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { CustomType } from '../../core/custom-type';
+import { CNPJ } from './cnpj.validator';
 
-export class IntegerNumberType implements CustomType {
+export class CNPJFactory {
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            if (c.value !== null && c.value.length >= 1) {
-                return null;
-            }
-            return { int: false };
-        };
+  static getInstance( tlinput ): CustomType {
+    this.setCNPJMask( tlinput );
+    return new CNPJ();
+  }
+
+  static setCNPJMask( tlinput ) {
+    if ( tlinput ) {
+      tlinput.mask = '99.999.999/9999-99';
     }
+  }
 }

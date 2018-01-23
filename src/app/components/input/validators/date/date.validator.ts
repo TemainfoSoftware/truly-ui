@@ -19,12 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { CustomType } from './custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { CustomType } from '../../core/custom-type';
 
 let formatDate;
 
-export class DateType implements CustomType {
+export class DateTl implements CustomType {
 
   private date: Date;
 
@@ -44,7 +44,8 @@ export class DateType implements CustomType {
   validate(): ValidatorFn {
     return ( c: AbstractControl ) => {
 
-      if ( c.value && c.touched) {
+      if ( this.stringUnmasked(c) && c.touched) {
+
 
         formatDate = formatDate.toLowerCase();
         const formatTmp = formatDate.replace( /[a-z]/gi, '' );
@@ -56,21 +57,16 @@ export class DateType implements CustomType {
           switch ( pattern[ i ] ) {
             case 'dd':
 
-              this.day = c.value.substr( formatDate.indexOf( 'd' ),
-                (c.value.length - formatDate.length) + pattern[ i ].length );
-
+              this.day = this.stringUnmasked(c).substr( formatDate.indexOf( 'd' ),
+                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
               break;
             case 'mm':
-
-              this.month = c.value.substr( formatDate.indexOf( 'm' ),
-                (c.value.length - formatDate.length) + pattern[ i ].length );
-
+              this.month = this.stringUnmasked(c).substr( formatDate.indexOf( 'm' ),
+                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
               break;
             case 'yyyy':
-
-              this.year = c.value.substr( formatDate.indexOf( 'y' ),
-                (c.value.length - formatDate.length) + pattern[ i ].length );
-
+              this.year = this.stringUnmasked(c).substr( formatDate.indexOf( 'y' ),
+                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
               break;
           }
         }
@@ -81,8 +77,6 @@ export class DateType implements CustomType {
 
         this.date = new Date( this.year + '-' + this.month + '-' + this.day );
 
-        console.log('ts', c);
-
         if ( this.date.toDateString() === 'Invalid Date' ) {
           return { date: false };
         }
@@ -92,4 +86,8 @@ export class DateType implements CustomType {
     };
   }
 
+
+  stringUnmasked( c ) {
+    return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
+  }
 }

@@ -20,18 +20,33 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import {
+  AfterViewInit,
+  ContentChild, Directive, forwardRef
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { TlInput } from '../../input';
+import { CNPJFactory } from './cnpj.factory';
 
-export class FloatNumberType implements CustomType {
+@Directive( {
+    selector: '[cnpj][ngModel],[cnpj][formControl],[cnpj][formControlName]',
+    providers: [
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => CNPJDirective),
+      }
+    ]
+} )
+export class CNPJDirective implements Validator, AfterViewInit {
 
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-            if (c.value !== null && c.value.length >= 1) {
-                return null;
-            }
-            return { float: false };
-        };
+    @ContentChild(TlInput) tlinput;
+
+    constructor() {}
+
+    ngAfterViewInit() {}
+
+    validate( c: FormControl ) {
+      return CNPJFactory.getInstance(  this.tlinput ).validate()( c );
     }
-
 }

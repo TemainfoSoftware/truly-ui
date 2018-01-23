@@ -33,6 +33,8 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
 import { DirectiveModule } from '../core/directives/index';
+import { FormsModule } from '@angular/forms';
+import { InputModule } from '../input/index';
 
 export * from './form.service';
 export * from './form';
@@ -42,6 +44,8 @@ export * from './form';
         CommonModule,
         ModalModule,
         ButtonModule,
+        FormsModule,
+        InputModule,
         DropDownListModule,
         DirectiveModule
     ],

@@ -13,18 +13,9 @@
         <input #dropdown
                class="select"
                attr.tabindex="-1"
-               placeholder="{{ placeholder?.valueOf() }}"
-               #model="ngModel"
                readonly
-               [ngClass]="{
-                   'disabled': disabled,
-                   'without-icon':!showOnlyIcon,
-                   '-hasValidation': hasValidation()
-               }"
-               [(ngModel)]="modelValue"
-               [required]="validations.required"
-               [maxlength]="validations.maxLength"
-               [minlength]="validations.minLength"
+               placeholder="{{ placeholder?.valueOf() }}"
+               [(ngModel)]="value"
                [ngStyle]="{'height' : height, 'line-height' : height, 'width': !showOnlyIcon ? width : '35px'}"
                [disabled]="disabled ? true : null">
 

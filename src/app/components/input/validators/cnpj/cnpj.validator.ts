@@ -20,10 +20,10 @@
  SOFTWARE.
  */
 
-import { CustomType } from './custom-type';
+import { CustomType } from '../../core/custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export class CnpjType implements CustomType {
+export class CNPJ implements CustomType {
 
     validate(): ValidatorFn {
         return ( c: AbstractControl ) => {

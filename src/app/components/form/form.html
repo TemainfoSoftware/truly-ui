@@ -1,6 +1,8 @@
 <div class="formBox" (keydown)="handleKeysForm($event)">
     <div class="formContent" #content [style.padding]="padding">
+      <form novalidate #form="ngForm">
         <ng-content></ng-content>
+      </form>
     </div>
     <div class="clearfix"></div>
     <div class="forFooter">
@@ -19,7 +21,7 @@
                        mdResult="MROK"
                        [color]="'success2'"
                        [shortcut]="submitShortcut"
-                       [disabled]="!validForm"
+                       [disabled]="!form.valid"
                        (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-checkmark'">

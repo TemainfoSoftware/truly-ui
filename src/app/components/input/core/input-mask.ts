@@ -1,6 +1,5 @@
 import { Renderer2 } from '@angular/core';
-import { KeyEvent } from '../core/enums/key-events';
-import set = Reflect.set;
+import { KeyEvent } from '../../core/enums/key-events';
 
 export class InputMask {
 
@@ -145,7 +144,6 @@ export class InputMask {
         } );
         this.renderer.listen( this.input.nativeElement, 'focusout', () => {
           this.handleNotMath();
-          this.tlInput.change.detectChanges();
         } );
     }
 
@@ -164,8 +162,7 @@ export class InputMask {
         if ( !this.isTextLengthMatchWithExpressionLength() ) {
             this.value = '';
             this.updateModel();
-            this.tlInput.modelValue = '';
-            this.tlInput.change.detectChanges();
+            this.tlInput.value = '';
         }
     }
 
@@ -411,8 +408,7 @@ export class InputMask {
 
     private onComplete() {
         if ( this.isTextLengthMatchWithExpressionLength() ) {
-          this.tlInput.modelValue = this.value;
-          this.tlInput.change.detectChanges();
+          this.tlInput.value = this.value;
         }
     }
 
@@ -441,8 +437,7 @@ export class InputMask {
 
     setModelValue() {
         setTimeout( () => {
-          this.tlInput.componentModel.model = this.clearMask( this.value );
-          this.tlInput.change.detectChanges();
+          this.tlInput.value = this.value;
         }, 0 );
       }
 

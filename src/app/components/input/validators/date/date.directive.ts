@@ -21,37 +21,35 @@
  */
 
 import {
-    AfterViewInit, ContentChild, Directive, ElementRef, forwardRef, Input
+  AfterViewInit,
+  Input,
+  ContentChild, Directive, forwardRef
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { TypeFactory } from '../types/type.factory';
-import { TlInput } from '../input';
+import { DateFactory } from './date.factory';
+import { TlInput } from '../../input';
 
 @Directive( {
-    selector: '[type][ngModel]',
+    selector: '[date][ngModel],[date][formControl],[date][formControlName]',
     providers: [
-        {
-            multi: true,
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef( () => TypeDirective )
-        }
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => DateDirective),
+      }
     ]
 } )
-export class TypeDirective implements Validator, AfterViewInit {
+export class DateDirective implements Validator, AfterViewInit {
 
-    @Input() type = '';
+    @Input() formatDate = '';
 
-    @Input() decimals = 2;
+    @ContentChild(TlInput) tlinput;
 
-    @ContentChild( TlInput ) input;
+    constructor() {}
 
-    constructor( private element: ElementRef) {}
-
-    ngAfterViewInit() {
-        this.element.nativeElement.setAttribute( 'type', this.type );
-    }
+    ngAfterViewInit() {}
 
     validate( c: FormControl ) {
-        return TypeFactory.getInstance( this.type, this.input, this.decimals ).validate()( c );
+      return DateFactory.getInstance(  this.tlinput, this.formatDate ).validate()( c );
     }
 }

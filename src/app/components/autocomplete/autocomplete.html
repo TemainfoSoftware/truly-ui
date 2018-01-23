@@ -4,7 +4,6 @@
                 [label]="label"
                 (focusout)="onInputFocusOut($event)"
                 (focus)="onFocusInput($event)"
-                [name]="name"
                 [labelSize]="labelSize"
                 [iconBefore]="iconBefore"
                 [iconAfter]="iconAfter"
@@ -12,11 +11,10 @@
                 [textBefore]="textBefore"
                 [textAlign]="textAlign"
                 [labelPlacement]="labelPlacement"
-                [validations]="validations"
                 [readonly]="readonly ? true : null"
                 [disabled]="disabled ? true : null"
-                (keyup)="onKeyUp($event)"
                 [autocomplete]="autocomplete"
+                [(ngModel)]="value"
                 [placeholder]="placeholder"
                 [clearButton]="clearButton">
         </tl-input>

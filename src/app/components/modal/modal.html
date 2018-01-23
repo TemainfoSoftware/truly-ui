@@ -1,7 +1,7 @@
-<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" class="tl-modal-container">
-    <div class="header" #headerBox [ngStyle]="{'background-color': color}">
+<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" [class]="'tl-modal-container ' + color">
+    <div class="header" #headerBox>
         <div class="bar"
-             [ngStyle]="{outline: color ? '1px solid ' + color:'' }"
+
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
              (mousedown)="mouseDown($event);"
              (dblclick)="maximizeModal()">
@@ -10,41 +10,41 @@
         </div>
         <div class="controls" [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'">
             <div class="control-item"
-                 [ngStyle]="{'background-color': colorHoverMinimize }"
+
                  (mouseover)="hoverMinimize()"
                  (mouseleave)="leaveMinimize()"
                  (click)="minimizeModal()">
-                <i [style.color]="fontColor" class="ion-android-remove" [class.disabled]="!minimizable"></i>
+                <i  class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </div>
 
             <div class="control-item" *ngIf="!maximized"
-                 [ngStyle]="{'background-color': colorHoverMaximize,
+                 [ngStyle]="{
                  'zIndex': modal.style.zIndex}"
                  (mouseover)="hoverMaximize()"
                  (mouseleave)="leaveMaximize()"
                  [shortcut]="maximizeShortcut"
                  (click)="maximizeModal()">
-                <i [style.color]="fontColor" ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
+                <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </div>
 
             <div class="control-item" *ngIf="maximized"
-                 [ngStyle]="{'background-color': colorHoverRestore,
+                 [ngStyle]="{
                  'zIndex': modal.style.zIndex}"
                  (mouseover)="hoverRestore()"
                  (mouseleave)="leaveRestore()"
                  [shortcut]="restoreShortcut"
                  (click)="restoreMaximizeModal()">
-                <i [style.color]="fontColor" ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
+                <i ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
             </div>
 
             <div class="control-item"
-                 [ngStyle]="{'background-color': colorHoverClose,
+                 [ngStyle]="{
                   'zIndex': modal.style.zIndex}"
                  [shortcut]="closeShortcut"
                  (mouseover)="hoverClose()"
                  (mouseleave)="leaveClose()"
                  (click)="closeModal()">
-                <i [style.color]="fontColor" class="ion-close"></i>
+                <i class="ion-close"></i>
             </div>
         </div>
     </div>

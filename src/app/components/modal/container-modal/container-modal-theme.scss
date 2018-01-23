@@ -1,58 +1,90 @@
-@mixin tl-container-modal-theme($theme) {
+@import "../../core/styles/theming/theming";
 
-  $borders: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
-  $base-icons:  map_get(map_get($theme,base),text);
-  $selected-text:  map_get(map_get($theme,selected),text);
-  $selected-background:  map_get(map_get($theme,selected),background);
-
-  $box-text: map_get(map_get($theme,box),text);
-  $box-background: map_get(map_get($theme,box),background);
-  $box-icons: map_get(map_get($theme,box), icons);
-  $box-hover: map_get(map_get($theme,box), hover);
-  $box-inactive: map_get(map_get($theme,box), inactive);
-
-  $scrollbar-background: map_get(map_get($theme, scrollbar), background);
-  $scrollbar-track: map_get(map_get($theme, scrollbar), track);
-  $scrollbar-thumb: map_get(map_get($theme, scrollbar), thumb);
-  $scrollbar-arrow: map_get(map_get($theme, scrollbar), arrow);
-
-  .container-wrapper {
-    > .arrow-right {
-      background: $scrollbar-arrow;
-      border: 1px solid $borders;
-      color: $box-icons;
-    }
-    > .arrow-left {
-      background: $scrollbar-arrow;
-      border: 1px solid $borders;
-      color: $box-icons;
-    }
-  }
-
+@mixin _tl-container-modal-theme-scheme( $theme, $action ){
   .container-modals {
-    background-color: $base-background;
-    border: 1px solid $borders;
     > .wrapper-container-modals {
       > .container-modal-box {
-        color: $selected-text;
-        background: $selected-background;
+        background-color: map-deep-get($theme, $action, "default", "background");
+        border: 1px solid map-deep-get($theme, $action, "default", "border");
+        color:  map-deep-get($theme, $action, "default", "foreground");
       }
     }
   }
-  .container-modals::-webkit-scrollbar {
-    background: $scrollbar-background;
-  }
-  .container-modals::-webkit-scrollbar-corner {
-    background: $scrollbar-background;
-  }
-  .container-modals::-webkit-scrollbar-track {
-    background: $scrollbar-track;
-    border-left: 1px solid $borders;
-  }
-  .container-modals::-webkit-scrollbar-thumb {
-    background: $scrollbar-thumb;
-  }
+}
 
+@mixin tl-container-modal-theme($theme) {
+
+  $basic:   map-deep-get($theme, 'basic');
+  $dark:    map-deep-get($theme, 'dark');
+  $success: map-deep-get($theme, 'success2');
+
+
+  .container-wrapper {
+
+    > .arrow-right {
+      background:map-deep-get($success, "default", "background");
+      border: 1px solid map-deep-get($success, "default", "border");
+      color: map-deep-get($success, "default", "foreground");
+    }
+    > .arrow-left {
+      background: map-deep-get($success, "default", "background");
+      border: 1px solid map-deep-get($success, "default", "border");
+      color: map-deep-get($success, "default", "foreground");
+    }
+
+    .container-modals {
+      background-color: map-deep-get($dark, 'default', "background");
+      border: 1px solid map-deep-get($dark, 'default', "border");
+      //
+      //&::-webkit-scrollbar {
+      //  background: $scrollbar-background;
+      //}
+      //&::-webkit-scrollbar-corner {
+      //  background: $scrollbar-background;
+      //}
+      //&::-webkit-scrollbar-track {
+      //  background: $scrollbar-track;
+      //  border-left: 1px solid $borders;
+      //}
+      //&::-webkit-scrollbar-thumb {
+      //  background: $scrollbar-thumb;
+      //}
+    }
+
+    &.basic {
+      @include _tl-container-modal-theme-scheme($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-container-modal-theme-scheme($theme, 'primary')
+    }
+
+    //&.secondary {
+    //  @include _tl-button-theme-schema($theme,'secondary')
+    //}
+
+    &.success2 {
+      @include _tl-container-modal-theme-scheme($theme, 'success2')
+    }
+
+    &.danger {
+      @include _tl-container-modal-theme-scheme($theme, 'danger')
+    }
+
+    &.warning2 {
+      @include _tl-container-modal-theme-scheme($theme, 'warning2')
+    }
+
+    &.information2 {
+      @include _tl-container-modal-theme-scheme($theme, 'information2')
+    }
+
+    &.light {
+      @include _tl-container-modal-theme-scheme($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-container-modal-theme-scheme($theme, 'dark')
+    }
+  }
 }

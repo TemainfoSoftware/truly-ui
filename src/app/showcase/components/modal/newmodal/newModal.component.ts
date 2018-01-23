@@ -6,6 +6,7 @@ import { Modal } from '../../../../components/modal/modal-options';
   draggable: true,
   width: '500px',
   height: 'auto',
+  color: 'success2',
   maximizable: true,
   minimizable: true,
 })

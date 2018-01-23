@@ -1,33 +1,26 @@
 @mixin tl-calendar-theme($theme) {
 
-  $hover: map_get(map_get($theme, hover), background);
-  $borders: map_get($theme, borders);
-  $accent-color: map_get($theme, accent);
-
-  $background-box: map_get(map_get($theme, box), background);
-  $selected: map_get(map_get($theme, selected), text);
-  $contrast-color: map_get(map_get($theme, success), bar);
-
-  $base-text: map_get(map_get($theme, base), text);
-  $base-background: map_get(map_get($theme, base), background);
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $danger:  map-deep-get($theme, 'danger');
 
   .wrapper-calendar {
-    border: 1px solid $borders;
-    background-color: $background-box;
+    border: 1px solid map-deep-get($basic, "default", "border");
+    background-color: map-deep-get($basic, "default", "background");
 
     >.header-calendar {
-      color: $base-text;
-      border-bottom: 1px solid $borders;
+      color: map-deep-get($basic, "default", "foreground");
+      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
 
       >.date {
         & span:hover {
-          background: $hover;
+          background: map-deep-get($basic, "hover", "background");
         }
       }
       >.todayButton {
-        color: $contrast-color;
+        color: map-deep-get($primary, "default", "background");;
         &:hover{
-          background-color: $hover;
+          background-color: map-deep-get($basic, "hover", "background");
         }
       }
     }
@@ -35,34 +28,34 @@
     & .ui-table-calendar {
       & .ui-table-thead {
         & .ui-table-th {
-          color: $base-text;
+          color: map-deep-get($basic, "default", "foreground");
           &:first-child {
-            color: $accent-color;
+            color: map-deep-get($danger, "default", "background");
           }
         }
       }
 
       & .ui-table-line .ui-table-cell {
-        color: $base-text;
+        color: map-deep-get($basic, "default", "foreground");
         &:first-child:not(.notDay) {
-          color: $accent-color;
+          color: map-deep-get($danger, "default", "background");
         }
         &:hover:not(.ui-table-cell-empty) {
-          outline: 1px solid $borders;
+          outline: 1px solid map-deep-get($basic, "default", "border");
         }
       }
     }
     & .today {
-      color: $contrast-color !important;
+      color: map-deep-get($primary, "default", "background") !important;
     }
 
     & .navigator {
-      outline: 2px solid $borders;
+      outline: 2px solid map-deep-get($basic, "default", "border");
     }
 
     & .selected {
-      background-color: $contrast-color;
-      color: $selected !important;
+      background-color: map-deep-get($primary, "default", "background");
+      color: map-deep-get($primary, "default", "foreground") !important;
     }
   }
 }

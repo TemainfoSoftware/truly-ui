@@ -62,9 +62,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() title = 'My Modal';
 
-    @Input() color = '';
-
-    @Input() fontColor = '';
+    @Input() color = 'basic';
 
     @Input() height = '500px';
 
@@ -86,7 +84,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @ViewChild('headerBox') headerBox: ElementRef;
 
-    @ViewChild( 'modal' ) modal: ElementRef;
+    @ViewChild('modal') modal: ElementRef;
 
     @ViewChild('body', {read: ViewContainerRef}) body;
 

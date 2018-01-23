@@ -69,6 +69,7 @@ input[type=checkbox]:hover {
   position: relative;
   left: 25px;
   margin: 0 !important;
+  user-select: none;
 }
 
 .-label:hover {

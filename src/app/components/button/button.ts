@@ -66,6 +66,8 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
 
     @Input() formResult;
 
+    @Input() color = 'basic';
+
     @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;

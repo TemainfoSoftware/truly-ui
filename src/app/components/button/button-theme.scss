@@ -1,44 +1,95 @@
-@mixin tl-button-theme($theme) {
+@import "../core/styles/theming/theming";
+
+@mixin _tl-button-theme-schema( $theme, $action ){
+
+  background-color: map-deep-get($theme, $action, "default", "background");
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+  color:  map-deep-get($theme, $action, "default", "foreground");
+
+  & .iconAddonAfter {
+    border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
+  & .iconAddonBefore {
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
 
 
-  $hover: map_get(map_get($theme,hover),background);
-  $borders: map_get($theme,borders);
-  $active: map_get(map_get($theme,active),background);
+  &:hover{
+    background-color: map-deep-get($theme, $action, "hover", "background");
+    border: 1px solid map-deep-get($theme, $action, "hover", "border");
+    color: map-deep-get($theme, $action, "hover", "foreground");
 
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
-  $divider: map_get($theme,divider);
-  $disable:  map_get(map_get($theme,disable),text);
+    & .iconAddonAfter{
+      border-left: 1px solid map-deep-get($theme, $action, "hover", "border");
+    }
+    & .iconAddonBefore {
+      border-right: 1px solid map-deep-get($theme, $action,"hover", "border");
+    }
+  }
+
+  &.disabled{
+    background-color: map-deep-get($theme, $action, "hover", "background");
+    border: 1px solid map-deep-get($theme, $action, "hover", "border");
+    color: map-deep-get($theme, $action, "hover", "foreground");
+    opacity: 0.45;
+    cursor: default;
+  }
+}
+
+@mixin tl-button-theme( $theme ) {
 
   .tl-button{
-    background-color: $base-background;
-    border: 1px solid $borders;
-    color: $base-text;
-  }
-  .tl-button:hover{
-    outline: none;
-    background-color: $hover;
-  }
-  .tl-button:active, .-toggle{
-    outline: none;
-    background-color: $active;
+
+    &.basic {
+      @include _tl-button-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-button-theme-schema($theme, 'primary')
+    }
+
+    //&.secondary {
+    //  @include _tl-button-theme-schema($theme,'secondary')
+    //}
+
+    &.success2 {
+      @include _tl-button-theme-schema($theme, 'success2')
+    }
+
+    &.danger {
+      @include _tl-button-theme-schema($theme, 'danger')
+    }
+
+    &.warning2 {
+      @include _tl-button-theme-schema($theme, 'warning2')
+    }
+
+    &.information2 {
+      @include _tl-button-theme-schema($theme, 'information2')
+    }
+
+    &.light {
+      @include _tl-button-theme-schema($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-button-theme-schema($theme, 'dark')
+    }
+
+    &:focus {
+      outline: -webkit-focus-ring-color auto 5px;
+      outline-color: -webkit-focus-ring-color;
+      outline-style: auto;
+    }
+
+    &:active, .-toggle {
+      //  outline: none;
+      // background-color: $active !important;
+    }
+
+  //  &.disabled{
+  ////   color: $disable;
+  //  }
   }
 
-  .tl-button:focus {
-    outline: -webkit-focus-ring-color auto 5px;
-    outline-color: -webkit-focus-ring-color;
-    outline-style: auto;
-  }
-
-  .iconAddonBefore{
-    border-right: 1px solid $borders;
-  }
-
-  .iconAddonAfter{
-    border-left: 1px solid $borders;
-  }
-
-  .disabled{
-    color: $disable;
-  }
 }

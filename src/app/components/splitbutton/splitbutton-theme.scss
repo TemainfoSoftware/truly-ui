@@ -1,3 +1,5 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-splitbutton-theme($theme) {
 
   $borders: map_get($theme,borders);
@@ -45,14 +47,15 @@
 
   tl-split-button-action li{
     color: $base-text;
-  }
-  tl-split-button-action li:hover{
-    background-color: $hover-background;
-  }
-  tl-split-button-action li.separator{
-    border-bottom: 1px solid $borders;
-  }
-  tl-split-button-action li .icon-action{
-    color: $icons-text;
+
+    &:hover{
+      background-color: $hover-background;
+    }
+    &.separator{
+      border-bottom: 1px solid $borders;
+    }
+    & .icon-action{
+      color: $icons-text;
+    }
   }
 }

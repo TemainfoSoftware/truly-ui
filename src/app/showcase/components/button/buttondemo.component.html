@@ -8,10 +8,11 @@
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
-              <tl-button [text]="'Button'"></tl-button>
+              <tl-button  [text]="'Button'"></tl-button><br>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-button [text]="'Button'"></tl-button>
@@ -25,6 +26,23 @@
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'"></tl-button>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Color</h5>
+              <tl-button [text]="'Basic'" [color]="'basic'"></tl-button>
+              <tl-button [text]="'Primary'" [color]="'primary'"></tl-button>
+              <tl-button [text]="'Success'" [color]="'success2'"></tl-button>
+              <tl-button [text]="'Danger'" [color]="'danger'"></tl-button>
+              <tl-button [text]="'Warning'" [color]="'warning2'"></tl-button>
+              <tl-button [text]="'Information'" [color]="'information2'"></tl-button>
+              <tl-button [text]="'Light'" [color]="'light'"></tl-button>
+              <tl-button [text]="'Light'" [color]="'dark'"></tl-button>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-button [text]="'Button'"[color]="'basic'"></tl-button>
 </textarea>
             </div>
           </app-card>

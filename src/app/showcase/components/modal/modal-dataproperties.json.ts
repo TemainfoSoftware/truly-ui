@@ -19,16 +19,9 @@ export const dataProperties = [
   {
     name: 'color',
     type: 'string',
-    default: '#53C68C',
-    description: 'Color of window dialog header',
-    options: 'Hex | RGBA'
-  },
-  {
-    name: 'fontColor',
-    type: 'string',
-    default: '#fff',
-    description: 'Font Color of window dialog header',
-    options: 'Hex | RGBA'
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
   },
   {
     name: 'width',

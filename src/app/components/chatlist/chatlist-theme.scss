@@ -1,88 +1,71 @@
 @mixin tl-chatlist-theme($theme) {
 
-
-  $hover: map_get(map_get($theme,hover),background);
-  $borders: map_get($theme,borders);
-  $active: map_get(map_get($theme,active),background);
-
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
-  $divider: map_get($theme,divider);
-  $disable:  map_get(map_get($theme,disable),background);
-  $divider: map_get($theme,divider);
-
-  $selected-bg: map_get(map_get($theme,selected),background);
-  $selected-text:map_get(map_get($theme,selected),text);
-
-  $status-online: map_get($theme, online);
-  $status-offline: map_get($theme, offline);
-  $status-busy: map_get($theme, busy);
-  $status-away: map_get($theme, away);
-
-  $scrollbar:  map_get(map_get($theme,scrollbar),background);
-  $scrollbar-corner:  map_get(map_get($theme,scrollbar),corner);
-  $scrollbar-track:  map_get(map_get($theme,scrollbar),track);
-  $scrollbar-thumb:  map_get(map_get($theme,scrollbar),thumb);
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $light:   map-deep-get($theme, 'light');
+  $dark:    map-deep-get($theme, 'dark');
+  $danger:  map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success2');
+  $warning: map-deep-get($theme, 'warning2');
 
   .ui-chat-overflow {
-    border-top: 1px solid $borders;
+    border-top: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-status {
-    background: $base-background;
-    color: $base-text;
-    border-left: 1px solid $borders;
-    border-right: 1px solid $borders;
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+    border-left: 1px solid map-deep-get($basic, "default", "border");
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-chat-template{
-    border-bottom: 1px solid $divider;
+    border-bottom: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
     .ui-chat-name{
-      color: $base-text;
-      opacity: 0.8;
+      color: map-deep-get($basic, "default", "foreground");
     }
     .ui-chat-sector {
-      color: $base-text;
-      opacity: 0.8;
+      color: rgba(map-deep-get($basic, "default", "foreground"),0.6);
+
     }
     .ui-status-online {
-      background: $status-online;
+      background: map-deep-get($success, "default", "background");
     }
     .ui-status-offline {
-      background: $status-offline;
+      background: map-deep-get($dark, "default", "background");
     }
     .ui-status-busy {
-      background: $status-busy;
+      background: map-deep-get($danger, "default", "background");
     }
     .ui-status-away {
-      background: $status-away;
+      background: map-deep-get($warning, "default", "background");
     }
   }
 
   .item-selected-listbox {
     & .ui-chat-name{
-      color: $selected-text;
+      color: map-deep-get($primary, "default", "foreground");
     }
 
     & .ui-chat-sector {
-      color: $selected-text;
+      color: rgba(map-deep-get($primary, "default", "foreground"), 0.7);
     }
   }
 
   .ui-chat-overflow::-webkit-scrollbar {
-    background: $scrollbar;
+    background: map-deep-get($primary, "default", "foreground");
   }
 
   .ui-chat-overflow::-webkit-scrollbar-corner {
-    background: $scrollbar-corner;
+    background: map-deep-get($primary, "default", "foreground");
   }
 
   .ui-chat-overflow::-webkit-scrollbar-track {
-    background: $scrollbar-track;
-    border-right: 1px solid $borders;
+    background: map-deep-get($basic, "default", "background");
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-chat-overflow::-webkit-scrollbar-thumb {
-    background: $scrollbar-thumb;
+    background: map-deep-get($primary, "default", "background");
   }
 }

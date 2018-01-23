@@ -1,13 +1,10 @@
-@mixin tl-checkbox-theme($theme) {
+@import "../core/styles/theming/theming";
 
-  $borders: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
+@mixin _tl-checkbox-theme-schema( $theme, $action ){
 
   @mixin checkbox-color() {
-    background-color: $selected-text;
-    border: 1px solid $borders;
+    background-color: map-deep-get($theme, $action, "checked", "background");
+    border: 1px solid map-deep-get($theme, $action, "checked", "border");
   }
 
   input[type='checkbox']:checked:before {
@@ -15,7 +12,8 @@
   }
 
   input[type='checkbox']:after {
-    @include checkbox-color();
+    background-color: map-deep-get($theme, $action, "default", "background");
+    border: 1px solid map-deep-get($theme, $action, "default", "border");
   }
 
   input[type='checkbox']:checked:after {
@@ -27,20 +25,62 @@
   }
 
   .-label {
-    color: $base-text;
+    color: map-deep-get($theme, 'basic', "default", "foreground");
   }
 
   .checkmark-wrapper{
-    border-color: $selected-background;
-    background-color: $selected-background;
+    border-color: map-deep-get($theme, $action, "checked", "border");
+    background-color: map-deep-get($theme, $action, "checked", "background");
   }
 
   .checkmark_stem{
-    background-color: $selected-text;
+    background-color: map-deep-get($theme, $action, "checked", "foreground");
   }
 
   .checkmark_kick{
-    background-color: $selected-text;
+    background-color: map-deep-get($theme, $action, "checked", "foreground");
   }
 
+}
+
+
+@mixin tl-checkbox-theme($theme) {
+
+  .check-container{
+    &.basic {
+      @include _tl-checkbox-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-checkbox-theme-schema($theme, 'primary')
+    }
+
+    //&.secondary {
+    //  @include _tl-checkbox-theme-schema($theme,'secondary')
+    //}
+
+    &.success2 {
+      @include _tl-checkbox-theme-schema($theme, 'success2')
+    }
+
+    &.danger {
+      @include _tl-checkbox-theme-schema($theme, 'danger')
+    }
+
+    &.warning2 {
+      @include _tl-checkbox-theme-schema($theme, 'warning2')
+    }
+
+    &.information2 {
+      @include _tl-checkbox-theme-schema($theme, 'information2')
+    }
+
+    &.light {
+      @include _tl-checkbox-theme-schema($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-checkbox-theme-schema($theme, 'dark')
+    }
+  }
 }

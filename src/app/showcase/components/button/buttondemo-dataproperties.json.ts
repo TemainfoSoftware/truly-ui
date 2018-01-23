@@ -28,6 +28,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
     name: 'width',
     type: 'string',
     default: '125px',

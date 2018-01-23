@@ -1,79 +1,67 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-listbox-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $divider: map_get($theme,divider);
-  $base-text: map_get(map_get($theme,base),text);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-
-  $box-background: map_get(map_get($theme,box),background);
-  $box-text: map_get(map_get($theme,box),text);
-
-  $odd-background: map_get(map_get($theme,odd),background);
-  $even-background: map_get(map_get($theme,even),background);
-
-  $scrollbar-background: map_get(map_get($theme,scrollbar),background);
-  $scrollbar-corner: map_get(map_get($theme,scrollbar),corner);
-  $scrollbar-track: map_get(map_get($theme,scrollbar),track);
-  $scrollbar-thumb: map_get(map_get($theme,scrollbar),thumb);
-  $scrollbar-icon: map_get(map_get($theme,scrollbar),icon);
-
+  $basic:   map-deep-get($theme, 'basic');
+  $light:   map-deep-get($theme, 'light');
+  $primary: map-deep-get($theme, 'primary');
 
   .list-box-container {
-    background: $box-background;
-    border: 1px solid $borders;
+    background: map-deep-get($light, "default", "background");
+
+    border: 1px solid  map-deep-get($basic, "default", "border");
+    &::-webkit-scrollbar{
+      background:  map-deep-get($light, "default", "background");
+    }
+    &::-webkit-scrollbar-corner{
+      background: map-deep-get($primary, "default", "foreground");
+    }
+
+    &::-webkit-scrollbar-track{
+      background: map-deep-get($basic, "default", "background");
+      border-left: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &::-webkit-scrollbar-thumb{
+      background: map-deep-get($primary, "default", "background");
+    }
   }
 
-  .list-box-container::-webkit-scrollbar{
-    background: $scrollbar-background;
-  }
-  .list-box-container::-webkit-scrollbar-corner{
-    background: $scrollbar-corner;
-  }
+  .listbox-wrapper{
+    > .showmore {
+      background-color: map-deep-get($primary, "default", "background");
+    }
 
-  .list-box-container::-webkit-scrollbar-track{
-    background: $scrollbar-track;
-    border-left: 1px solid $borders;
-  }
-
-  .list-box-container::-webkit-scrollbar-thumb{
-    background: $scrollbar-thumb;
+    > .showmore i {
+      color: map-deep-get($primary, "default", "foreground");
+    }
   }
 
   .item {
-    border-bottom: 1px solid $divider;
-    color: $box-text;
+    border-bottom: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
+    color: map-deep-get($basic, "default", "foreground");
   }
 
   .item-selected-listbox {
-    background: $selected-background;
-    color: $selected-text;
+    background-color: map-deep-get($primary, "default", "background");
+    color: map-deep-get($primary, "default", "foreground");
   }
 
   .item.stripped:nth-of-type(odd){
-    background: $odd-background;
+    background: map-deep-get($basic, "default", "background");
   }
 
   .item.stripped:nth-of-type(even){
-    background: $even-background;
+    background: map-deep-get($light, "default", "background");
   }
 
   .nothingToShow {
-    color: $box-text;
-  }
-
-  .showmore {
-    background-color: $scrollbar-thumb;
-  }
-
-  .showmore i {
-    color: $scrollbar-icon;
+    color: map-deep-get($basic, "default", "foreground");
   }
 
   .list li:focus {
-    background-color: $selected-background;
-    color: $selected-text;
+    background-color: map-deep-get($primary, "default", "background");
+    color: map-deep-get($primary, "default", "foreground");
   }
 
 }

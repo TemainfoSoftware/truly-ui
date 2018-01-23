@@ -1,19 +1,18 @@
-<div class="container-wrapper">
+<div [class]="'container-wrapper '+ color">
      <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left"><i
              class="ion-chevron-left"></i></span>
-<div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
-    <div #wrapper class="wrapper-container-modals" [style.line-height]="height" [ngStyle]="
-    {position: 'absolute'}">
-        <div class="container-modal-box"
-             [style.width]="modalBoxWidth + 'px'"
-             [style.background]="boxColor"
-             [style.opacity]="item === modalService.activeModal ? 1 : 0.7"
-             *ngFor="let item of modalService.forms; let i = index" (click)="showWindow(item)">
-            <span class="ui-container-item"><i [ngClass]="item.instance.icon"></i></span>
-            <span class="ui-container-item">{{getTextContainerItem(item.instance.title)}}</span>
-        </div>
+    <div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
+      <div #wrapper class="wrapper-container-modals" [style.line-height]="height" [ngStyle]="
+      {position: 'absolute'}">
+          <div class="container-modal-box"
+               [style.width]="modalBoxWidth + 'px'"
+               [style.opacity]="item === modalService.activeModal ? 1 : 0.7"
+               *ngFor="let item of modalService.forms; let i = index" (click)="showWindow(item)">
+              <span class="ui-container-item"><i [ngClass]="item.instance.icon"></i></span>
+              <span class="ui-container-item">{{getTextContainerItem(item.instance.title)}}</span>
+          </div>
+      </div>
     </div>
-</div>
     <span [style.background]="arrowsColor" [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
       <i class="ion-chevron-right"></i>
     </span>

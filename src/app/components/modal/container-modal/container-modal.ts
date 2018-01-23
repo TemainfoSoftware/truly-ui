@@ -54,7 +54,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      @Input() height = '40px';
 
-     @Input() boxColor = '';
+     @Input() color = 'basic';
 
      @Input() modalBoxWidth = 150;
 

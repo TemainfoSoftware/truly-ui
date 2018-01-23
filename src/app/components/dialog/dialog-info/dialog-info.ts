@@ -26,7 +26,7 @@ import { Modal } from '../../modal/modal-options';
 @Modal({
   icon: 'ion-information-circled',
   title: 'Information',
-  color: '#0090D9',
+  color: 'information2',
   width: 'auto',
   height: 'auto',
   draggable: false,

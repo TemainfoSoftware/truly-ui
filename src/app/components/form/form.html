@@ -8,18 +8,18 @@
             <tl-button #buttonFormCancel
                        [text]="textCancel"
                        mdResult="MRCANCEL"
+                       [color]="'dark'"
                        [style.padding-right]="'5px'"
                        [shortcut]="closeShortcut"
-                       [colorIconBefore]="'#e87272'"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-close-circled'">
             </tl-button>
             <tl-button #buttonFormOk
                        [text]="textConfirm"
                        mdResult="MROK"
+                       [color]="'success2'"
                        [shortcut]="submitShortcut"
                        [disabled]="!validForm"
-                       [colorIconBefore]="'#24b959'"
                        (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-checkmark'">

@@ -20,78 +20,75 @@
  SOFTWARE.
  */
 import {
-    Component, Input, ViewChild, AfterViewInit, Output, EventEmitter, ChangeDetectionStrategy,
-    ChangeDetectorRef
+  Component, Input, ViewChild, Output, EventEmitter,
+  Optional, Inject, Injector, OnInit
 } from '@angular/core';
 
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { TabIndexService } from '../form/tabIndex.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { MakeProvider } from '../core/base/value-accessor-provider';
+import { ElementBase } from '../input/core/element-base';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 
 @Component( {
-    selector: 'tl-checkbox',
-    templateUrl: './checkbox.html',
-    styleUrls: [ './checkbox.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        [ MakeProvider(TlCheckBox) ]
-    ]
+  selector: 'tl-checkbox',
+  templateUrl: './checkbox.html',
+  styleUrls: [ './checkbox.scss' ],
+  providers: [
+    [ MakeProvider( TlCheckBox ) ]
+  ]
 } )
-export class TlCheckBox extends ComponentHasModelBase implements AfterViewInit {
+export class TlCheckBox extends ElementBase<boolean> implements OnInit {
 
-    @Input() label = '';
+  @Input() label = '';
 
-    @Input() checked = false;
+  @Input() checked = false;
 
-    @Input() checkmarkColor = '';
+  @Input() checkmarkColor = '';
 
-    @Input() checkedColorBg = '';
+  @Input() checkedColorBg = '';
 
-    @Input() tabindex = '0';
+  @Input() tabindex = '0';
 
-    @ViewChild( 'checkbox' ) checkbox;
+  @ViewChild( 'checkbox' ) checkbox;
 
-    @Output() checkBox: EventEmitter<any> = new EventEmitter();
+  @ViewChild( NgModel ) model: NgModel;
 
-    @Output() focusBox: EventEmitter<any> = new EventEmitter();
+  @Output() checkBox: EventEmitter<any> = new EventEmitter();
 
-    public toggle = false;
+  @Output() focusBox: EventEmitter<any> = new EventEmitter();
 
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService,
-                 nameService: NameGeneratorService, private change: ChangeDetectorRef ) {
-        super( tabIndexService, idService, nameService );
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
+    asyncValidators: Array<any>, injector: Injector ) {
+    super( validators, asyncValidators, injector );
+  }
+
+  ngOnInit() {
+    this.value = false;
+    if ( this.checked ) {
+      this.value = true;
     }
-
-    ngAfterViewInit() {
-        this.setElement( this.checkbox, 'checkbox' );
-        if ( this.checked ) {
-            this.modelValue = true;
-        }
-        if (!this.label) {
-            throw new EvalError( 'The [label] property is required!' );
-        }
-        setTimeout( () => {
-            this.change.markForCheck();
-        }, 1 );
+    if ( !this.label ) {
+      throw new EvalError( 'The [label] property is required!' );
     }
+  }
 
-    check( boolean ) {
-        this.modelValue = boolean ? (this.toggle = false) : (this.toggle = true);
-        this.change.markForCheck();
-        this.emitEvent();
-    }
+  check( boolean ) {
+    this.value = !boolean;
+    this.emitEvent();
+  }
 
-    emitEvent() {
-        setTimeout( () => {
-            this.checkBox.emit( this.modelValue );
-        }, 1 );
-    }
+  async emitEvent() {
+    await this.value;
+    this.checkBox.emit( this.value );
+  }
 
-    focusCheckBox() {
-        this.focusBox.emit( this.modelValue );
-    }
+  onChangeCheck($event) {
+    this.value = $event.returnValue;
+    this.emitEvent();
+  }
+
+  focusCheckBox() {
+    this.focusBox.emit( this.value );
+  }
 
 }
 

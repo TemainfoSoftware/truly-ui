@@ -142,8 +142,6 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
     }
 
     ngAfterViewInit() {
-      console.log('model', this);
-
       this.hasMask();
     }
 

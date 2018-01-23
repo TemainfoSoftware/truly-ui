@@ -1,6 +1,6 @@
 <div [class]="'check-container '+ color ">
     <div (click)="check(checkbox.checked)"
-         *ngIf="modelValue"
+         *ngIf="value"
          [ngStyle]="{'border-width':'1px','border-style':'solid'}"
          class="checkmark-wrapper">
         <div class="checkmark">
@@ -12,8 +12,9 @@
            type="checkbox"
            #model="ngModel"
            (focus)="focusCheckBox()"
-           [checked]="toggle"
+           (change)="onChangeCheck($event)"
+           [checked]="value"
            [tabindex]="tabindex"
-           [(ngModel)]="modelValue">
+           [(ngModel)]="value">
     <label class="-label" (click)="check(checkbox.checked)">{{label}}</label>
 </div>

@@ -24,7 +24,7 @@
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
                    #model="ngModel"
                    #input width="300"
-                   [(ngModel)]="modelValue"
+                   [(ngModel)]="value"
                    (blur)="closeList($event, element)"
                    (focus)="handleInputFocus()"
                    [attr.placeholder]="placeholder"

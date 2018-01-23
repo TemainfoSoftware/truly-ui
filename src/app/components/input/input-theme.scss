@@ -85,8 +85,8 @@
       }
 
       &.ng-valid.ng-touched:not(.invalid):not(.withValidators) {
-        border: 1px solid map-deep-get($danger,"default", "border");
-        background-color: rgba(map-deep-get($danger, "default", "background"),0.2);
+        border: 1px solid map-deep-get($basic,"default", "border");
+        background-color: rgba(map-deep-get($basic, "default", "background"),0.2);
         outline: none;
       }
 

@@ -23,28 +23,22 @@ import {
     AfterViewInit,
     Component, Input,
 } from '@angular/core';
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 @Component( {
     selector: 'tl-radiobutton',
     template: '',
 } )
-export class TlRadioButton extends ComponentHasModelBase implements AfterViewInit {
+export class TlRadioButton implements AfterViewInit {
 
     @Input() label = '';
+
+    @Input() name = '';
 
     @Input() value = '';
 
     @Input() tabindex = 0;
 
     @Input() checked = false;
-
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
-        super( tabIndexService, idService, nameService );
-    }
 
     ngAfterViewInit() {
         if (!this.name) {

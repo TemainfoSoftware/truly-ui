@@ -907,12 +907,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     addClassSelected( index ) {
         this.itemSelected = this.dataService.datasource[index];
-        this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
+        if ( this.listBox.nativeElement.children[ index ] !== undefined) {
+          console.log(typeof this.listBox.nativeElement.children[ index ]);
+          this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
+        }
     }
 
     removeClassSelected( index ) {
         this.itemSelected = null;
-        this.renderer.removeClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
+        if (this.listBox.nativeElement.children[ index ] !== undefined) {
+          this.renderer.removeClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
+        }
     }
 
     setFocusOnPreviousCursor() {

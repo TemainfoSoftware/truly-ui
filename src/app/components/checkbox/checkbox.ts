@@ -21,7 +21,7 @@
  */
 import {
   Component, Input, ViewChild, Output, EventEmitter,
-  Optional, Inject, Injector, OnInit
+  Optional, Inject, Injector, OnInit, ChangeDetectorRef
 } from '@angular/core';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
@@ -74,14 +74,8 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
     this.emitEvent();
   }
 
-  async emitEvent() {
-    await this.value;
+  emitEvent() {
     this.checkBox.emit( this.value );
-  }
-
-  onChangeCheck($event) {
-    this.value = $event.returnValue;
-    this.emitEvent();
   }
 
   focusCheckBox() {

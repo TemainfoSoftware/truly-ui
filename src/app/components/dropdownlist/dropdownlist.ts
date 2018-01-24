@@ -82,7 +82,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'height' ) height = '23px';
 
-  @Input( 'valueItem' ) valueItem = '';
+  @Input( 'valueItem' ) valueItem = 'value';
 
   @Input( 'preSelected' ) preSelected = '';
 
@@ -180,13 +180,11 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   }
 
   listenerMouseDown() {
-    if ( !documentListener ) {
-      documentListener = this.arraylisteners.push( this.renderer.listen( document, 'mousedown', ( event ) => {
-        if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
-          this.showHide = false;
-        }
-      } ) );
-    }
+    documentListener = this.arraylisteners.push( this.renderer.listen( document, 'mousedown', ( event ) => {
+      if ( this.isNotListDropdown( event ) && !this.isSearchInput( event ) ) {
+        this.showHide = false;
+      }
+    } ) );
   }
 
   isSearchInput( event ) {
@@ -209,6 +207,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     } );
     this.datasource = filter;
   }
+
+
 
   handleInitializeValues() {
     setTimeout( () => {

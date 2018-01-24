@@ -5,11 +5,13 @@
     <div class="header-controls">
         <tl-button #buttonDialogOk [text]="textOk"
                    mdResult="MRYES"
+                   [color]="'success'"
                    [iconAddonBefore]="'ion-checkmark'">
         </tl-button>
         &nbsp;&nbsp;&nbsp;
         <tl-button #buttonDialogCancel [text]="textCancel"
                    mdResult="MRNO"
+                   [color]="'dark'"
                    [iconAddonBefore]="'ion-close-round'">
         </tl-button>
     </div>

@@ -25,7 +25,7 @@ import { Modal } from '../../modal/modal-options';
 
 @Modal({
   icon: 'ion-alert-circled',
-  title: 'Alerta',
+  title: 'Alert',
   color: 'warning',
   width: '400px',
   height: 'auto',

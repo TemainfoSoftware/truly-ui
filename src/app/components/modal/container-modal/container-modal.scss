@@ -1,5 +1,6 @@
 .container-wrapper {
   position: relative;
+  user-select: none;
   > .arrow-right {
     position: absolute;
     line-height: 28px;

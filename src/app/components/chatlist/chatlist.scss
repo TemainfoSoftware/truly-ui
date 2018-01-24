@@ -1,5 +1,6 @@
 .ui-chat-wrapper {
   position: relative;
+  user-select: none;
   > .ui-chat-overflow {
     position: relative;
     overflow: auto;

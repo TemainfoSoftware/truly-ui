@@ -10,6 +10,7 @@ $default-outline: none;
 .tl-dropdown-list-box {
   display: table;
   border-collapse: separate;
+  user-select: none;
   > .labeltext {
     font-family: $default-fontFamily;
     box-sizing: border-box;

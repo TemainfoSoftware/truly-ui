@@ -24,9 +24,22 @@ import { CustomType } from '../../core/custom-type';
 
 export class NumberTl implements CustomType {
 
+  private tlinput;
+
+  constructor(input) {
+    this.tlinput = input;
+  }
+
   validate(): ValidatorFn {
     return ( c: AbstractControl ) => {
-        return null;
+      const regex = new RegExp( '^[0-9]*$' );
+      if (c.touched) {
+        if ( regex.test( this.tlinput.input.nativeElement.value )) {
+          return null;
+        }
+        return {number: false};
+      }
+      return null;
     };
   }
 

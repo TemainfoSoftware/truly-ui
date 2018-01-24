@@ -22,18 +22,12 @@
 
 import { CustomType } from '../../core/custom-type';
 import { NumberTl } from './number.validator';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class NumberFactory {
 
   static getInstance( tlinput ): CustomType {
-    return this.validateInput(tlinput);
-  }
-
-  static validateInput( tlinput ) {
-    const regex = new RegExp( '^[0-9]*$' );
-    if ( regex.test( tlinput.input.nativeElement.value ) ) {
-      return new NumberTl();
-    }
-    tlinput.input.nativeElement.value = '';
+    return new NumberTl(tlinput);
   }
 }
+

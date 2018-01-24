@@ -23,7 +23,7 @@
 import {
   AfterViewInit,
   Input,
-  ContentChild, Directive, forwardRef
+  ContentChild, Directive, forwardRef, HostListener
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { NumberFactory } from './number.factory';
@@ -41,11 +41,22 @@ import { TlInput } from '../../input';
 } )
 export class NumberDirective implements Validator {
 
+    private regex = new RegExp( '^[0-9]*$' );
+
     @ContentChild(TlInput) tlinput;
 
     constructor() {}
 
+    @HostListener('keypress', ['$event'])
+    onKeyDown($event) {
+      if (!this.regex.test($event.key)) {
+        $event.preventDefault();
+      }
+    }
+
     validate( c: FormControl ) {
-      return NumberFactory.getInstance( this.tlinput ).validate()( c );
+      if (this.tlinput.input.nativeElement.value.length > 0) {
+        return NumberFactory.getInstance( this.tlinput ).validate()( c );
+      }
     }
 }

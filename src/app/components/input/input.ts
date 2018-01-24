@@ -138,10 +138,11 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
     ngOnInit() {
       this.setRequired();
-      this.validateClearButtonPosition();
+
     }
 
     ngAfterViewInit() {
+      this.validateClearButtonPosition();
       this.hasMask();
     }
 

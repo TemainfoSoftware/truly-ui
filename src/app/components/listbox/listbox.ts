@@ -263,6 +263,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
             this.handleScrollShowMore();
             this.removeSelected();
             this.renderPageData();
+            this.setNothingToShow(false);
         } );
     }
 
@@ -908,7 +909,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     addClassSelected( index ) {
         this.itemSelected = this.dataService.datasource[index];
         if ( this.listBox.nativeElement.children[ index ] !== undefined) {
-          console.log(typeof this.listBox.nativeElement.children[ index ]);
           this.renderer.addClass( this.listBox.nativeElement.children[ index ], 'item-selected-listbox' );
         }
     }

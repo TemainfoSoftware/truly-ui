@@ -8,7 +8,7 @@ $theme: (
     checked:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
     disabled: ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
     focus:    ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
-    hover:    ( foreground: #616161, background: #F0F0F0, border: #C8C8C8 ),
+    hover:    ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
   ),
 
   primary: (
@@ -17,7 +17,7 @@ $theme: (
     checked:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     disabled: ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     focus:    ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    hover:    ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    hover:    ( foreground: #FFFFFF, background: #5DBA8C, border: #58AF7F ),
   ),
 
   //secondary: (
@@ -30,39 +30,39 @@ $theme: (
   //),
 
   success: (
-    default:  ( foreground: #FFFFFF, background: #62C390, border: #58AF7F ),
-    active:   ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-    checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-    disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-    focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-    hover:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+    default:  ( foreground: #FFFFFF, background: #62C390, border: #9BD8B8 ),
+    active:   ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    hover:    ( foreground: #FFFFFF, background: #5AB283, border: #9BD8B8 ),
   ),
 
   danger: (
-    default:  ( foreground: #FFFFFF, background: #F77171, border: #F07072 ),
+    default:  ( foreground: #FFFFFF, background: #F77171, border: #F98D8D ),
     active:   ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     checked:  ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     disabled: ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     focus:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
-    hover:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
+    hover:    ( foreground: #FFFFFF, background: #eb6767, border: #F98D8D ),
   ),
 
   warning: (
-    default:  ( foreground: #FFFFFF, background: #F5D240, border: #f5d240 ),
-    active:   ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
-    checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
-    disabled: ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
-    focus:    ( foreground: #FFFFFF, background: #FFFBE9, border: #FFCF94 ),
-    hover:    ( foreground: #FFFFFF, background: #FFD8A9, border: #FFD8A9 ),
+    default:  ( foreground: #FFFFFF, background: #F5D240, border: #F8E285 ),
+    active:   ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    disabled: ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    focus:    ( foreground: #FFFFFF, background: #FFFBE9, border: #F8E285 ),
+    hover:    ( foreground: #FFFFFF, background: #e6c63c, border: #F8E285 ),
   ),
 
   information: (
-    default:  ( foreground: #FFFFFF, background: #0090D9, border: #0090D9 ),
-    active:   ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
-    checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
-    disabled: ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
-    focus:    ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
-    hover:    ( foreground: #FFFFFF, background: #31A5E0, border: #0090D9 ),
+    default:  ( foreground: #FFFFFF, background: #0090D9, border: #5CB8E6 ),
+    active:   ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    disabled: ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    focus:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    hover:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
   ),
 
   light: (
@@ -71,16 +71,16 @@ $theme: (
     checked:  ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
     disabled: ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
     focus:    ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    hover:    ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    hover:    ( foreground: #616161, background: #f1f1f1, border: #C8C8C8 ),
   ),
 
   dark: (
     default:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    active:   ( foreground: #FFFFFF, background: #E8E8E8, border: #BFBFBF ),
-    checked:  ( foreground: #FFFFFF, background: #E8E8E8, border: #BFBFBF ),
-    disabled: ( foreground: #FFFFFF, background: #E8E8E8, border: #BFBFBF ),
-    focus:    ( foreground: #FFFFFF, background: #E8E8E8, border: #BFBFBF ),
-    hover:    ( foreground: #FFFFFF, background: #E8E8E8, border: #BFBFBF ),
+    active:   ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    checked:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    disabled: ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    focus:    ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    hover:    ( foreground: #616161, background: #dadada, border: #BFBFBF ),
   )
 );
 

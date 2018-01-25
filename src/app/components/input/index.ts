@@ -13,34 +13,38 @@ import { CPFDirective } from './validators/cpf/cpf.directive';
 import { CNPJDirective } from './validators/cnpj/cnpj.directive';
 import { DateDirective } from './validators/date/date.directive';
 import { NumberDirective } from './validators/number/number.directive';
+import { EmailDirective } from './validators/email/email.directive';
 
 export * from './input';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-    ],
-    declarations: [
-        TlInput,
-        CharcaseDirective,
-        CPFDirective,
-        CNPJDirective,
-        DateDirective,
-        NumberDirective
-    ],
-    exports: [
-        TlInput,
-        CharcaseDirective,
-        CPFDirective,
-        CNPJDirective,
-        DateDirective,
-        NumberDirective
-    ],
-    providers: [
-        IdGeneratorService,
-        NameGeneratorService,
-        TabIndexService
-    ]
-})
-export class InputModule {}
+@NgModule( {
+  imports: [
+    CommonModule,
+    FormsModule,
+  ],
+  declarations: [
+    TlInput,
+    CharcaseDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    NumberDirective,
+    EmailDirective
+  ],
+  exports: [
+    TlInput,
+    CharcaseDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    NumberDirective,
+    EmailDirective
+  ],
+  providers: [
+    IdGeneratorService,
+    NameGeneratorService,
+    TabIndexService
+  ]
+} )
+export class InputModule {
+}

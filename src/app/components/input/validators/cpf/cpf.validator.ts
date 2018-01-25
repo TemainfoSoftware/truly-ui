@@ -33,40 +33,37 @@ export class CPF implements CustomType {
 
       sum = 0;
 
-      if ( control.touched ) {
-
-        if ( (this.cpfUnmasked( control ) === null) || (this.cpfUnmasked( control ).length < 9) ) {
-          return { cpf: false };
-        }
-
-        if ( this.isAllCharacteresEquals( control ) ) {
-          return { cpf: false };
-        }
-
-        for ( let i = 1; i <= 9; i++ ) {
-          sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (11 - i);
-        }
-
-        leftover = (sum * 10) % 11;
-        if ( (leftover === 10) || (leftover === 11) ) {
-          leftover = 0;
-        }
-        if ( leftover !== Number( this.cpfUnmasked( control ).substring( 9, 10 ) ) ) {
-          return { cpf: false };
-        }
-        sum = 0;
-        for ( let i = 1; i <= 10; i++ ) {
-          sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (12 - i);
-        }
-        leftover = (sum * 10) % 11;
-        if ( (leftover === 10) || (leftover === 11) ) {
-          leftover = 0;
-        }
-        if ( leftover !== Number( this.cpfUnmasked( control ).substring( 10, 11 ) ) ) {
-          return { cpf: false };
-        }
-
+      if ( (this.cpfUnmasked( control ) === null) || (this.cpfUnmasked( control ).length < 9) ) {
+        return { cpf: 'Invalid CPF' };
       }
+
+      if ( this.isAllCharacteresEquals( control ) ) {
+        return { cpf: 'Invalid CPF' };
+      }
+
+      for ( let i = 1; i <= 9; i++ ) {
+        sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (11 - i);
+      }
+
+      leftover = (sum * 10) % 11;
+      if ( (leftover === 10) || (leftover === 11) ) {
+        leftover = 0;
+      }
+      if ( leftover !== Number( this.cpfUnmasked( control ).substring( 9, 10 ) ) ) {
+        return { cpf: 'Invalid CPF' };
+      }
+      sum = 0;
+      for ( let i = 1; i <= 10; i++ ) {
+        sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (12 - i);
+      }
+      leftover = (sum * 10) % 11;
+      if ( (leftover === 10) || (leftover === 11) ) {
+        leftover = 0;
+      }
+      if ( leftover !== Number( this.cpfUnmasked( control ).substring( 10, 11 ) ) ) {
+        return { cpf: 'Invalid CPF' };
+      }
+
       return null;
     };
   }

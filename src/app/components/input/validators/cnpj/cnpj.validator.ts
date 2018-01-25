@@ -1,8 +1,8 @@
 /*
  MIT License
-
+ 
  Copyright (c) 2018 Temainfo Sistemas
-
+ 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -24,69 +24,71 @@ import { CustomType } from '../../core/custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class CNPJ implements CustomType {
-
-    validate(): ValidatorFn {
-        return ( c: AbstractControl ) => {
-
-            if ( (this.cnpjUnmasked( c ) === null) || (this.cnpjUnmasked( c ).length < 14) ) {
-                return { cnpj: false };
-            }
-
-            if ( this.isAllCharacteresEquals( c ) ) {
-                return { cnpj: false };
-            }
-
-            let size: any = this.cnpjUnmasked( c ).length - 2;
-            let numbers: any = this.cnpjUnmasked( c ).substring( 0, size );
-            const digits: any = this.cnpjUnmasked( c ).substring( size );
-
-            let sum = 0;
-            let pos = size - 7;
-
-            for ( let i = size; i >= 1; i-- ) {
-                sum += numbers.charAt( size - i ) * pos--;
-                if ( pos < 2 ) {
-                    pos = 9;
-                }
-            }
-
-            let result = sum % 11 < 2 ? 0 : 11 - sum % 11;
-            if ( result !== digits.charAt( 0 ) ) {
-                return { cnpj: false };
-            }
-
-            size = size + 1;
-            numbers = this.cnpjUnmasked( c ).substring( 0, size );
-            sum = 0;
-            pos = size - 7;
-            for ( let i = size; i >= 1; i-- ) {
-                sum += numbers.charAt( size - i ) * pos--;
-                if ( pos < 2 ) {
-                    pos = 9;
-                }
-            }
-            result = sum % 11 < 2 ? 0 : 11 - sum % 11;
-            if ( result !== digits.charAt( 1 ) ) {
-                return { cnpj: false };
-            }
-            return null;
-        };
-    }
-
-    cnpjUnmasked( c ) {
-        return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-    }
-
-
-    isAllCharacteresEquals( c ) {
-        let result = true;
-        for ( let i = 1; i <= 9; i++ ) {
-            if ( this.cnpjUnmasked( c ).substring( i - 1, i ) !== this.cnpjUnmasked( c )[ 0 ] ) {
-                result = false;
-                break;
-            }
+  
+  validate(): ValidatorFn {
+    return ( c: AbstractControl ) => {
+      
+      if ( (this.cnpjUnmasked( c ) === null) || (this.cnpjUnmasked( c ).length < 14) ) {
+        return { cnpj: 'Invalid CNPJ' };
+      }
+      
+      if ( this.isAllCharacteresEquals( c ) ) {
+        return { cnpj: 'Invalid CNPJ' };
+      }
+      
+      let size: any = this.cnpjUnmasked( c ).length - 2;
+      let numbers: any = this.cnpjUnmasked( c ).substring( 0, size );
+      const digits: any = this.cnpjUnmasked( c ).substring( size );
+      
+      let sum = 0;
+      let pos = size - 7;
+      let result;
+      
+      for ( let i = size; i >= 1; i-- ) {
+        sum += numbers.charAt( size - i ) * pos--;
+        if ( pos < 2 ) {
+          pos = 9;
         }
-        return result;
+      }
+      result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+      if ( result !== parseInt( digits.charAt( 0 ), 10 ) ) {
+        return { cnpj: 'Invalid CNPJ' };
+      }
+      
+      size = size + 1;
+      numbers = this.cnpjUnmasked( c ).substring( 0, size );
+      sum = 0;
+      pos = size - 7;
+      for ( let i = size; i >= 1; i-- ) {
+        sum += numbers.charAt( size - i ) * pos--;
+        if ( pos < 2 ) {
+          pos = 9;
+        }
+      }
+      result = sum % 11 < 2 ? 0 : 11 - sum % 11;
+      
+      if ( result !== parseInt( digits.charAt( 1 ), 10 ) ) {
+        return { cnpj: 'Invalid CNPJ' };
+      }
+      
+      return null;
+    };
+  }
+  
+  cnpjUnmasked( c ) {
+    return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+  }
+  
+  
+  isAllCharacteresEquals( c ) {
+    let result = true;
+    for ( let i = 1; i <= 9; i++ ) {
+      if ( this.cnpjUnmasked( c ).substring( i - 1, i ) !== this.cnpjUnmasked( c )[ 0 ] ) {
+        result = false;
+        break;
+      }
     }
-
+    return result;
+  }
+  
 }

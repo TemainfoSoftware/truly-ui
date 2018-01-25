@@ -61,7 +61,6 @@ export class DateTl implements CustomType {
       for ( let i = 0; i < pattern.length; i++ ) {
         switch ( pattern[ i ] ) {
           case 'dd':
-
             this.day = this.stringUnmasked( c ).substr( formatDate.indexOf( 'd' ),
               (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
             break;

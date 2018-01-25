@@ -65,9 +65,11 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   @Output() private onFocusRadio: EventEmitter<any> = new EventEmitter();
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, injector: Injector ) {
-    super( validators, asyncValidators, injector );
+  constructor(
+    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
+  ) {
+    super(validators, asyncValidators);
   }
 
   ngAfterViewInit() {

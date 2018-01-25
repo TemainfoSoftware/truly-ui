@@ -115,30 +115,24 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
     @Output() focus: EventEmitter<any> = new EventEmitter();
 
+    public disabled: boolean;
+
+    public required = false;
+
     private clearButtonPosition;
 
     private fieldMask: InputMask;
 
-    private _disabled: boolean;
-
-    public required = false;
-
-    @Input() get disabled() {
-      return this.control ? this.control.disabled : this._disabled;
-    }
-
-    set disabled(value: boolean) {
-      this._disabled = value;
-    }
-
-    constructor( @Optional() @Inject(NG_VALIDATORS) validators: Array<any>, @Optional() @Inject(NG_ASYNC_VALIDATORS)
-      asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2, private tlInput: ElementRef) {
-      super(validators, asyncValidators, injector);
+    constructor(
+      @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+      @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
+      private tlInput: ElementRef, private renderer: Renderer2
+    ) {
+      super(validators, asyncValidators);
     }
 
     ngOnInit() {
       this.setRequired();
-
     }
 
     ngAfterViewInit() {

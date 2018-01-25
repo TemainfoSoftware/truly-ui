@@ -1,32 +1,10 @@
-import { Injector } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {ControlValueAccessor} from '@angular/forms';
 
 export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;
 
   private changed = new Array<(value: T) => void>();
   private touched = new Array<() => void>();
-
-  private _control: NgControl;
-
-  constructor(private _injector: Injector) { }
-
-  /**
-   * The control (NgModel or FormControl) that exists on our custom component.
-   * Lazy loaded.
-   * @readonly
-   * @protected
-   * @type {NgControl}
-   * @memberof ValueAccessorBase
-   */
-  protected get control(): NgControl {
-    if (this._control !== null) {
-      return this._control;
-    }
-
-    this._control = <NgControl>this._injector.get( NgControl, null ).control;
-    return this._control;
-  }
 
   get value(): T {
     return this.innerValue;

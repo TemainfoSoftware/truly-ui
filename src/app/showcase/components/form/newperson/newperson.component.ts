@@ -34,6 +34,8 @@ export class NewPersonComponent implements OnInit, OnChanges {
 
   public result;
 
+  public birthday;
+
   constructor(public formDataService: DataFormService,  public dataDumpService: DumpDataService) {
     this.dataAuto = this.dataDumpService.createRandomData( 200 );
   }

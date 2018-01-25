@@ -121,8 +121,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   private documentListener = [];
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2 ) {
-    super( validators, asyncValidators, injector );
+    asyncValidators: Array<any>, private renderer: Renderer2 ) {
+    super( validators, asyncValidators );
   }
 
   ngOnInit() {

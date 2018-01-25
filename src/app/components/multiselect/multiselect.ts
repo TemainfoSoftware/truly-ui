@@ -121,12 +121,13 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   private scrollDocument;
 
-
-  constructor( @Optional() @Inject(NG_VALIDATORS) validators: Array<any>, @Optional() @Inject(NG_ASYNC_VALIDATORS)
-    asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2, private change: ChangeDetectorRef) {
-    super(validators, asyncValidators, injector);
+  constructor(
+    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
+    private change: ChangeDetectorRef, private renderer: Renderer2
+  ) {
+    super(validators, asyncValidators);
   }
-
 
   ngOnInit() {
     this.placeholderMessage = this.placeholder;

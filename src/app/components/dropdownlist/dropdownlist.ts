@@ -135,8 +135,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   private subject = new Subject();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, injector: Injector, private renderer: Renderer2, private element: ElementRef ) {
-    super( validators, asyncValidators, injector );
+    asyncValidators: Array<any>, private renderer: Renderer2, private element: ElementRef ) {
+    super( validators, asyncValidators );
   }
 
   ngOnInit() {

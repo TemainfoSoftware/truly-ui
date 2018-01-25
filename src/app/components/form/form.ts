@@ -60,17 +60,7 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
   @Input() padding = '10px';
 
   @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
-
-  @ContentChildren( forwardRef(() => TlDropDownList ), {descendants: true}) dropdownList: QueryList<TlDropDownList>;
-
-  @ContentChildren( forwardRef(() => TlRadioGroup ), {descendants: true}) radioButtonList: QueryList<TlRadioGroup>;
-
-  @ContentChildren( forwardRef(() => TlCheckBox ), {descendants: true}) checkboxList: QueryList<TlCheckBox>;
-
-  @ContentChildren( forwardRef(() => TlMultiSelect ), {descendants: true}) multiselectList: QueryList<TlMultiSelect>;
-
-  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true}) autoCompleteList: QueryList<TlAutoComplete>;
-
+  
   @ContentChildren(NgModel, {descendants: true}) models: QueryList<NgModel>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
@@ -127,7 +117,7 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getFormValues() {
-     this.formResult = this.form.value;
+     this.formResult = this.form;
   }
 
   getElementsOfForm() {

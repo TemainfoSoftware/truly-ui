@@ -33,9 +33,11 @@ export class FormDemoComponent {
   }
 
   form1(parent) {
-    this.formService.createForm(NewPersonComponent, parent, (modalResult) => {
-      this.dataFormService.saveDataForm(modalResult.formResult);
-      this.result = this.dataFormService.getDataForm();
+    this.formService.createForm(NewPersonComponent, parent, (form) => {
+      if (form.formResult.value) {
+        this.dataFormService.saveDataForm(form.formResult.value);
+        this.result = this.dataFormService.getDataForm();
+      }
     });
   }
 

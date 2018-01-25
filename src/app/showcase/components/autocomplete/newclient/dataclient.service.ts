@@ -33,6 +33,8 @@ export class DataClientService {
         title: '',
         status: '',
         notification: '',
+        value: '',
+        cnpj: '',
       };
 
   constructor() {}

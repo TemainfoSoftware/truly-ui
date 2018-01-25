@@ -44,45 +44,49 @@ export class DateTl implements CustomType {
   validate(): ValidatorFn {
     return ( c: AbstractControl ) => {
 
-      if ( this.stringUnmasked(c) && c.touched) {
-
-
-        formatDate = formatDate.toLowerCase();
-        const formatTmp = formatDate.replace( /[a-z]/gi, '' );
-        const formatArray = formatTmp.split( '' );
-
-        const pattern = formatDate.split( formatArray[ 0 ] );
-
-        for ( let i = 0; i < pattern.length; i++ ) {
-          switch ( pattern[ i ] ) {
-            case 'dd':
-
-              this.day = this.stringUnmasked(c).substr( formatDate.indexOf( 'd' ),
-                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
-              break;
-            case 'mm':
-              this.month = this.stringUnmasked(c).substr( formatDate.indexOf( 'm' ),
-                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
-              break;
-            case 'yyyy':
-              this.year = this.stringUnmasked(c).substr( formatDate.indexOf( 'y' ),
-                (this.stringUnmasked(c).length - formatDate.length) + pattern[ i ].length );
-              break;
-          }
-        }
-
-        this.year = parseInt( this.year, 10 );
-        this.month = parseInt( this.month, 10 );
-        this.day = parseInt( this.day, 10 );
-
-        this.date = new Date( this.year + '-' + this.month + '-' + this.day );
-
-        if ( this.date.toDateString() === 'Invalid Date' ) {
-          return { date: false };
-        }
-
-        return null;
+      if ( !this.stringUnmasked( c ) && c.touched ) {
+        return { date: 'Invalid Date' };
       }
+
+      if ( (this.stringUnmasked( c ).length) !== formatDate.length ) {
+        return { date: 'Invalid Date' };
+      }
+
+      formatDate = formatDate.toLowerCase();
+      const formatTmp = formatDate.replace( /[a-z]/gi, '' );
+      const formatArray = formatTmp.split( '' );
+
+      const pattern = formatDate.split( formatArray[ 0 ] );
+
+      for ( let i = 0; i < pattern.length; i++ ) {
+        switch ( pattern[ i ] ) {
+          case 'dd':
+
+            this.day = this.stringUnmasked( c ).substr( formatDate.indexOf( 'd' ),
+              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
+            break;
+          case 'mm':
+            this.month = this.stringUnmasked( c ).substr( formatDate.indexOf( 'm' ),
+              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
+            break;
+          case 'yyyy':
+            this.year = this.stringUnmasked( c ).substr( formatDate.indexOf( 'y' ),
+              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
+            break;
+        }
+      }
+
+      this.year = parseInt( this.year, 10 );
+      this.month = parseInt( this.month, 10 );
+      this.day = parseInt( this.day, 10 );
+
+      this.date = new Date( this.year + '-' + this.month + '-' + this.day );
+
+      if ( this.date.toDateString() === 'Invalid Date' ) {
+        return { date: 'Invalid Date' };
+      }
+
+      return null;
     };
   }
 

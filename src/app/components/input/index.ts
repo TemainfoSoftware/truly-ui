@@ -14,6 +14,7 @@ import { CNPJDirective } from './validators/cnpj/cnpj.directive';
 import { DateDirective } from './validators/date/date.directive';
 import { NumberDirective } from './validators/number/number.directive';
 import { EmailDirective } from './validators/email/email.directive';
+import { CreditCardDirective } from './validators/creditcard/creditcard.directive';
 
 export * from './input';
 
@@ -29,7 +30,8 @@ export * from './input';
     CNPJDirective,
     DateDirective,
     NumberDirective,
-    EmailDirective
+    EmailDirective,
+    CreditCardDirective
   ],
   exports: [
     TlInput,
@@ -38,7 +40,8 @@ export * from './input';
     CNPJDirective,
     DateDirective,
     NumberDirective,
-    EmailDirective
+    EmailDirective,
+    CreditCardDirective
   ],
   providers: [
     IdGeneratorService,

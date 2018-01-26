@@ -35,7 +35,6 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 @Component( {
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './autocomplete.scss' ],
   animations: [
     trigger(
@@ -118,6 +117,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   public listTopPosition;
 
+  public widthInput;
+
   private documentListener = [];
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
@@ -136,7 +137,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.validationProperty();
     this.listBox.showList = false;
     this.listBox.detectChanges();
-    this.getAutoCompleteWidth();
   }
 
   listenerKeyDown() {
@@ -256,6 +256,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   setListPosition() {
     this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
     this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
+    this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
   }
 
   isNotRelatedWithAutocomplete( $event ) {
@@ -310,10 +311,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
       }
     }
     return false;
-  }
-
-  getAutoCompleteWidth() {
-    return this.tlinput.input.nativeElement.offsetWidth;
   }
 
   /*    highlight( text: string, search ): string {

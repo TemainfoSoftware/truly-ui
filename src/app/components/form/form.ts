@@ -60,7 +60,7 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
   @Input() padding = '10px';
 
   @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
-  
+
   @ContentChildren(NgModel, {descendants: true}) models: QueryList<NgModel>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;

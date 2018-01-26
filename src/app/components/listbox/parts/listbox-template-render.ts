@@ -28,68 +28,67 @@ import { TlListBox } from '../listbox';
 @Injectable()
 export class ListBoxTemplateRenderService {
 
-    private listBox: TlListBox;
+  private listBox: TlListBox;
 
-    constructor( private dataService: ListBoxDataSourceService,
-                 private zone: NgZone ) {
-    }
+  constructor( private dataService: ListBoxDataSourceService,
+               private zone: NgZone ) {
+  }
 
-    setInstanceListBox( listbox: TlListBox ) {
-        this.listBox = listbox;
-    }
+  setInstanceListBox( listbox: TlListBox ) {
+    this.listBox = listbox;
+  }
 
-    createCustomTemplate() {
-        if ( this.dataService.datasource ) {
-            this.zone.runOutsideAngular( () => {
-                this.listBox.handleRemoveListChildren();
-                for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
-                    const nodes = this.createViewTemplate( this.dataService.datasource[ row ], row );
-                    this.listBox.listTemplateContainer.viewList.insert( nodes );
+  createCustomTemplate() {
+    if ( this.dataService.datasource ) {
+      this.zone.runOutsideAngular( () => {
+        this.listBox.handleRemoveListChildren();
+        for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
+          const nodes = this.createViewTemplate( this.dataService.datasource[ row ], row );
+          this.listBox.listTemplateContainer.viewList.insert( nodes );
 
-                    for ( const element of nodes.rootNodes ) {
-                        if ( element.nodeName === 'LI' ) {
-                            this.listBox.renderer.appendChild( this.listBox.listBox.nativeElement, element );
-                            this.listBox.renderer.setAttribute( element, 'data-indexnumber', String( (row + this.listBox.skip) ) );
-                            this.listBox.renderer.setAttribute( element, 'tabindex', '-1' );
-                            this.listBox.renderer.setStyle( element, 'top', (row + this.listBox.skip) * this.listBox.rowHeight + 'px' );
-                            this.listBox.renderer.setStyle( element, 'position', 'absolute' );
-                            this.listBox.renderer.setStyle( element, 'width', '100%' );
-                            this.listBox.renderer.setStyle( element, 'height', this.listBox.rowHeight + 'px' );
-                            this.addClickEventToCustomTemplate(element, row);
-                        }
-                    }
-                }
-                this.listBox.handleCreateAddNew();
-            } );
-            this.listBox.getElementOfList();
+          for ( const element of nodes.rootNodes ) {
+            if ( element.nodeName === 'LI' ) {
+              this.listBox.renderer.appendChild( this.listBox.listBox.nativeElement, element );
+              this.listBox.renderer.setAttribute( element, 'data-indexnumber', String( (row + this.listBox.skip) ) );
+              this.listBox.renderer.setAttribute( element, 'tabindex', '-1' );
+              this.listBox.renderer.setStyle( element, 'top', (row + this.listBox.skip) * this.listBox.rowHeight + 'px' );
+              this.listBox.renderer.setStyle( element, 'position', 'absolute' );
+              this.listBox.renderer.setStyle( element, 'width', '100%' );
+              this.listBox.renderer.setStyle( element, 'height', this.listBox.rowHeight + 'px' );
+              this.addClickEventToCustomTemplate( element, row );
+            }
+          }
         }
-    }
-
-    createViewTemplate( item, index ): EmbeddedViewRef<any> {
-        return this.listBox.template.createEmbeddedView( {
-            item: item,
-            index: index
-        } );
-    }
-
-    addClickEventToCustomTemplate(element, row) {
-      element.addEventListener( 'mousedown', ( $event ) => {
-        this.listBox.setInputFocus();
-
-        this.listBox.handleClickItem(  this.dataService.datasource[ row ],
-          this.listBox.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ),
-          this.getElementListOfCustomTemplate( $event ).indexDataGlobal );
+        this.listBox.handleCreateAddNew();
       } );
+      this.listBox.getElementOfList();
     }
+  }
 
-    getElementListOfCustomTemplate( $event ): { indexDataGlobal: string; listElement: string } {
-      const item = { indexDataGlobal: '', listElement: '' };
-      for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
-        if ( $event.path[ pathElement ].localName === 'li' ) {
-          item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
-          item.listElement = $event.path[ pathElement ];
-          return item;
-        }
+  createViewTemplate( item, index ): EmbeddedViewRef<any> {
+    return this.listBox.template.createEmbeddedView( {
+      item: item,
+      index: index
+    } );
+  }
+
+  addClickEventToCustomTemplate( element, row ) {
+    element.addEventListener( 'mousedown', ( $event ) => {
+      this.listBox.setInputFocus();
+      this.listBox.handleClickItem( this.dataService.datasource[ row ],
+        this.listBox.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ),
+        this.getElementListOfCustomTemplate( $event ).indexDataGlobal );
+    } );
+  }
+
+  getElementListOfCustomTemplate( $event ): { indexDataGlobal: string; listElement: string } {
+    const item = { indexDataGlobal: '', listElement: '' };
+    for ( let pathElement = 0; pathElement < $event.path.length; pathElement++ ) {
+      if ( $event.path[ pathElement ].localName === 'li' ) {
+        item.indexDataGlobal = $event.path[ pathElement ].dataset.indexnumber;
+        item.listElement = $event.path[ pathElement ];
+        return item;
       }
     }
+  }
 }

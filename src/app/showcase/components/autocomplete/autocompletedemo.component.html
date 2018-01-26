@@ -24,7 +24,6 @@
                                [labelName]="'firstName'"
                                [(ngModel)]="result">
               </tl-autocomplete>
-              {{result | json}}
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-autocomplete
@@ -60,7 +59,7 @@
                                [placeholder]="'Search...'"
                                [labelName]="'firstName'"
                                [rowHeight]="35"
-                               [(ngModel)]="result">
+                               [(ngModel)]="result2">
                 <ng-template let-item="item" let-index="index">
                   <li class="list-template-demo">
                     <img class="img-circle" src="../assets/img/avatar.png"
@@ -84,7 +83,7 @@
   [placeholder]="'Search...'"
   [labelName]="'firstName'"
   [rowHeight]="35"
-  [(ngModel)]="result">
+  [(ngModel)]="result2">
 <ng-template let-item="item" let-index="index">
   <li class="list-template-demo">
     <img class="img-circle" src="../assets/img/avatar.png"

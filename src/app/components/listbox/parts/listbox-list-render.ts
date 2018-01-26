@@ -28,130 +28,132 @@ import { AddNewRenderService } from './listbox-addnew-render';
 @Injectable()
 export class ListBoxListRenderService {
 
-    private listBox: TlListBox;
+  private listBox: TlListBox;
 
-    private listElement;
+  private listElement;
 
-    private spanElementLabel;
+  private spanElementLabel;
 
-    private spanElementId;
+  private spanElementId;
 
-    constructor(  private dataService: ListBoxDataSourceService,
-                  private addNewRenderService: AddNewRenderService,
-                 private zone: NgZone) {
-    }
+  constructor( private dataService: ListBoxDataSourceService,
+               private addNewRenderService: AddNewRenderService,
+               private zone: NgZone ) {
+  }
 
-    setInstanceListBox(listbox: TlListBox) {
-        this.listBox = listbox;
-    }
+  setInstanceListBox( listbox: TlListBox ) {
+    this.listBox = listbox;
+  }
 
-    createList() {
-        if ( this.dataService.datasource ) {
-            requestAnimationFrame( () => {
-                this.zone.runOutsideAngular( () => {
-                    this.listBox.handleRemoveListChildren();
-                    for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
-                        this.createElementList( row );
-                        this.addEventClickToListElement( row );
-                        this.appendListElementToListBox();
-                        this.createElementSpanLabel( row );
-                        this.listBox.renderer.appendChild( this.listElement.nativeElement,
-                            this.spanElementLabel.nativeElement );
-                        this.handleCreationIdElement( row );
-                    }
-                    this.listBox.handleCreateAddNew();
-                } );
-                if ( this.listBox.cursor > -1 ) {
-                    this.listBox.getElementOfList();
-                }
-            } );
-        }
-    }
-
-    createElementList(row) {
-        this.listElement = new ElementRef( this.listBox.renderer.createElement( 'li' ) );
-        this.listBox.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( (row + this.listBox.skip) ) );
-        this.listBox.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.listBox.skip) * this.listBox.rowHeight + 'px' );
-        this.listBox.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
-        this.listBox.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
-        this.listBox.renderer.setStyle( this.listElement.nativeElement, 'height', this.listBox.rowHeight + 'px' );
-        this.listBox.renderer.addClass( this.listElement.nativeElement, 'item' );
-        this.handleListStripped();
-    }
-
-    createElementSpanId(row) {
-        if ( this.isTypeArrayObject() ) {
-            const padding = 10;
-            this.spanElementId = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
-            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.listBox.labelSize );
-            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.listBox.rowHeight - padding) + 'px' );
-            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
-            this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
-            this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.id ] );
-        }
-    }
-
-    createElementSpanLabel(row) {
-        this.spanElementLabel = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
-        this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.listBox.labelSize );
-        this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'position', 'absolute' );
-
-        const spanLabel = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
-        spanLabel.nativeElement.append( this.isTypeArrayObject() ?
-            this.listBox.dataService.datasource[ row ][ this.listBox.label ] : this.listBox.dataService.datasource[ row ]);
-        this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
-
-        this.createElementSpanLabelDetail( row );
-        this.handleAlignmentLine();
-    }
-
-    handleAlignmentLine() {
-        if (!this.listBox.labelDetail || !this.isTypeArrayObject()) {
-            const padding = 10;
-            this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
-        }
-    }
-
-    createElementSpanLabelDetail( row ) {
-        if ( (this.listBox.labelDetail) && (this.isTypeArrayObject()) ) {
-            const spanLabelDetail = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
-            this.listBox.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
-            spanLabelDetail.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.labelDetail ] );
-            this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabelDetail.nativeElement );
-        }
-    }
-
-    handleCreationIdElement( row ) {
-        if ( (this.listBox.id) && (this.isTypeArrayObject()) ) {
-            this.createElementSpanId( row );
-            this.listBox.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
-        }
-    }
-
-
-    isTypeArrayObject() {
-        return this.listBox.typeOfData === 'object';
-    }
-
-    addEventClickToListElement(row) {
-        this.zone.run( () => {
-            this.listBox.renderer.listen( this.listElement.nativeElement, 'mousedown', ( $event ) => {
-                $event.stopPropagation();
-                this.listBox.handleClickItem( this.dataService.datasource[ row ], row );
-                this.listBox.handleOpenFocusList();
-                this.listBox.setInputFocus();
-            } );
+  createList() {
+    if ( this.dataService.datasource ) {
+      requestAnimationFrame( () => {
+        this.zone.runOutsideAngular( () => {
+          this.listBox.handleRemoveListChildren();
+          for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
+            this.createElementList( row );
+            this.addEventClickToListElement( row );
+            this.appendListElementToListBox();
+            this.createElementSpanLabel( row );
+            this.listBox.renderer.appendChild( this.listElement.nativeElement,
+              this.spanElementLabel.nativeElement );
+            this.handleCreationIdElement( row );
+          }
+          this.listBox.handleCreateAddNew();
         } );
-    }
-
-    appendListElementToListBox() {
-        this.listBox.renderer.appendChild( this.listBox.listBox.nativeElement, this.listElement.nativeElement );
-    }
-
-
-    handleListStripped() {
-        if (this.listBox.listStripped) {
-            this.listBox.renderer.addClass( this.listElement.nativeElement, 'stripped' );
+        if ( this.listBox.cursor > -1 ) {
+          this.listBox.getElementOfList();
         }
+      } );
     }
+  }
+
+  createElementList( row ) {
+    this.listElement = new ElementRef( this.listBox.renderer.createElement( 'li' ) );
+    this.listBox.renderer.setAttribute( this.listElement.nativeElement, 'data-indexnumber', String( (row + this.listBox.skip) ) );
+    this.listBox.renderer.setStyle( this.listElement.nativeElement, 'top', (row + this.listBox.skip) * this.listBox.rowHeight + 'px' );
+    this.listBox.renderer.setStyle( this.listElement.nativeElement, 'position', 'absolute' );
+    this.listBox.renderer.setStyle( this.listElement.nativeElement, 'width', '100%' );
+    this.listBox.renderer.setStyle( this.listElement.nativeElement, 'height', this.listBox.rowHeight + 'px' );
+    this.listBox.renderer.addClass( this.listElement.nativeElement, 'item' );
+    this.handleListStripped();
+  }
+
+  createElementSpanId( row ) {
+    if ( this.isTypeArrayObject() ) {
+      const padding = 10;
+      this.spanElementId = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
+      this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'font-size', this.listBox.labelSize );
+      this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.listBox.rowHeight - padding) + 'px' );
+      this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
+      this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
+      this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.id ] );
+    }
+  }
+
+  createElementSpanLabel( row ) {
+    this.spanElementLabel = new ElementRef( this.listBox.renderer.createElement( 'div' ) );
+    this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'font-size', this.listBox.labelSize );
+    this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'position', 'absolute' );
+
+    const spanLabel = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
+    spanLabel.nativeElement.append( this.isTypeArrayObject() ?
+      this.listBox.dataService.datasource[ row ][ this.listBox.label ] : this.listBox.dataService.datasource[ row ] );
+    this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
+
+    this.createElementSpanLabelDetail( row );
+    this.handleAlignmentLine();
+  }
+
+  handleAlignmentLine() {
+    if ( !this.listBox.labelDetail || !this.isTypeArrayObject() ) {
+      const padding = 10;
+      this.listBox.renderer.setStyle( this.spanElementLabel.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
+    }
+  }
+
+  createElementSpanLabelDetail( row ) {
+    if ( (this.listBox.labelDetail) && (this.isTypeArrayObject()) ) {
+      const spanLabelDetail = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
+      this.listBox.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
+      spanLabelDetail.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.labelDetail ] );
+      this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabelDetail.nativeElement );
+    }
+  }
+
+  handleCreationIdElement( row ) {
+    if ( (this.listBox.id) && (this.isTypeArrayObject()) ) {
+      this.createElementSpanId( row );
+      this.listBox.renderer.appendChild( this.listElement.nativeElement, this.spanElementId.nativeElement );
+    }
+  }
+
+
+  isTypeArrayObject() {
+    return this.listBox.typeOfData === 'object';
+  }
+
+  addEventClickToListElement( row ) {
+    this.zone.run( () => {
+      this.listBox.renderer.listen( this.listElement.nativeElement, 'mousedown', ( $event ) => {
+        $event.stopPropagation();
+        if ($event.target.localName === 'li') {
+          this.listBox.handleClickItem( this.dataService.datasource[ row ], row );
+          this.listBox.handleOpenFocusList();
+          this.listBox.setInputFocus();
+        }
+      } );
+    } );
+  }
+
+  appendListElementToListBox() {
+    this.listBox.renderer.appendChild( this.listBox.listBox.nativeElement, this.listElement.nativeElement );
+  }
+
+
+  handleListStripped() {
+    if ( this.listBox.listStripped ) {
+      this.listBox.renderer.addClass( this.listElement.nativeElement, 'stripped' );
+    }
+  }
 }

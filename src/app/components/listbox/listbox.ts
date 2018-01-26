@@ -854,8 +854,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.addClassSelected( indexElementDataSource );
       this.setCursorsWhileScrolling( element );
       this.setInputFocus();
-      // this.handleClickItem( this.data[ end ], indexElementDataSource );
-
     }
   }
 
@@ -878,7 +876,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.addClassSelected( indexElementDataSource );
       this.setCursorsWhileScrolling( element );
       this.setInputFocus();
-      // this.handleClickItem( this.data[ this.getScrollPositionByContainer() ], indexElementDataSource );
     }
   }
 

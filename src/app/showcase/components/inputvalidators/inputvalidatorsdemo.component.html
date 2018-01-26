@@ -15,7 +15,7 @@
               <div class="returned-value">Returned Value: {{cpf}}</div>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input></tl-input>
+<tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
@@ -24,36 +24,72 @@
               <div class="returned-value">Returned Value: {{cnpj}}</div>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input></tl-input>
+<tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>DATE</span>
-              <tl-input name="cpf" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
+              <tl-input name="date" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
               <div class="returned-value">Returned Value: {{date}}</div>
               <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input></tl-input>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="date" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
               <span>NUMBER</span>
               <tl-input
-                name="cpf"
-                type="number"
+                name="number"
                 number
                 required
+                [clearButton]="true"
                 maxlength="5"
                 [(ngModel)]="number">
               </tl-input>
               <div class="returned-value">Returned Value: {{number}}</div>
               <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="number" number required maxlength="5" [(ngModel)]="number"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>EMAIL</span>
+              <tl-input name="email" email [(ngModel)]="email"></tl-input>
+              <div class="returned-value">Returned Value: {{email}}</div>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="email" email [(ngModel)]="email"></tl-input>
+</textarea>
+            </div>
+            <!--<div class="col-md-6">
+              <span>CREDIT CARD</span>
+              <tl-input name="creditcard" creditCard [(ngModel)]="creditCard"></tl-input>
+              <div class="returned-value">Returned Value: {{creditCard}}</div>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input></tl-input>
 </textarea>
+            </div>-->
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Available Validators'" [icon]="'ion-android-bulb'">
+          <app-card>
+            <div class="pattern">
+              <p><code>cpf</code> - Validate Individual Registration. [Brazil]</p>
+              <p><code>date</code> - Validate Date Format - <code>formatDate</code> - dd.mm.yyyy or mm.dd.yyyy with any mask.</p>
+              <p><code>email</code> - Validate Email expression.</p>
+              <p><code>cnpj</code> - Validate employer code. [Brazil]</p>
+              <p><code>number</code> - Field allowed only numbers.</p>
             </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <h4><code>All <b>Angular Input Events</b> can be used too.</code></h4>
           </app-card>
         </app-showcase-card>
       </div>

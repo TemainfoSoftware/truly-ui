@@ -18,19 +18,19 @@ export class InputValidatorsDemoComponent {
 
   public uppercase = '';
 
-  public lowercase = '';
-
   public readonly = 'I\'m an Truly Ui Input (Selectable)';
 
   public disabled = 'I\'m an Truly Ui Input (Not Selectable)';
 
   public cpf;
 
-  public basicDate;
-
   public cnpj;
 
+  public email;
+
   public date;
+
+  public creditCard;
 
   public number;
 

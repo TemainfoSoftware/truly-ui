@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  ChangeDetectionStrategy, Component, ContentChild, EventEmitter,
-  Injector, Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
+  Component, ContentChild, EventEmitter,
+  Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
   Optional, Inject, OnInit, AfterViewInit
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -131,6 +131,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   ngAfterViewInit() {
+    console.log('listBox', this.listBox);
     this.listenerKeyDown();
     this.listenClickDocument();
     this.listenScrollDocument();
@@ -177,7 +178,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   onFocusInput( $event ) {
-    this.setListPosition();
+    this.setListPosition($event);
     this.handleOpenOnFocus();
   }
 
@@ -253,9 +254,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
         !this.listBox.isDataArrayString() ? $event.row[ this.labelName ] : $event.row;
   }
 
-  setListPosition() {
-    this.listLeftPosition = document.activeElement.getBoundingClientRect().left;
-    this.listTopPosition = document.activeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
+  setListPosition($event) {
+    this.listLeftPosition = $event.target.getBoundingClientRect().left;
+    this.listTopPosition = $event.target.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
     this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
   }
 

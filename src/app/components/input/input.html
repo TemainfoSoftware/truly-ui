@@ -16,7 +16,7 @@
              [attr.autocomplete]="autocomplete"
              [attr.maxlength]="maxlength"
              [placeholder]="placeholder"
-             (focus)="onInputFocus()"
+             (focus)="onInputFocus($event)"
              [(ngModel)]="value">
       <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i [ngClass]="iconAfter"></i></span>
       <span *ngIf="textAfter" #afterText class="addon -borderright" [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>

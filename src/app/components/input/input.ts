@@ -173,8 +173,8 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
         this.clickAddon.emit({MouseEvent, side});
     }
 
-    onInputFocus() {
-      this.focus.emit();
+    onInputFocus($event) {
+      this.focus.emit($event);
     }
 
     clearInput() {

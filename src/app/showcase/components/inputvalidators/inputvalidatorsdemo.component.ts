@@ -30,7 +30,7 @@ export class InputValidatorsDemoComponent {
 
   public date;
 
-  public creditCard;
+  public pattern;
 
   public number;
 

@@ -24,17 +24,13 @@ import { CustomType } from '../../core/custom-type';
 
 export class NumberTl implements CustomType {
 
-  private tlinput;
-
-  constructor(input) {
-    this.tlinput = input;
-  }
+  constructor() {}
 
   validate(): ValidatorFn {
-    return ( c: AbstractControl ) => {
-      const regex = new RegExp( '^[0-9]*$' );
-      if (c.touched) {
-        if ( regex.test( this.tlinput.input.nativeElement.value )) {
+    return ( control: AbstractControl ) => {
+      const regex = new RegExp( '^(-|[0-9])[0-9]+|[0-9]' );
+      if (control.touched) {
+        if ( regex.test(control.value )) {
           return null;
         }
         return {number: false};

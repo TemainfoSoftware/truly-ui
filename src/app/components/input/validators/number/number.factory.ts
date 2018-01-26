@@ -26,8 +26,8 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class NumberFactory {
 
-  static getInstance( tlinput ): CustomType {
-    return new NumberTl(tlinput);
+  static getInstance(): CustomType {
+    return new NumberTl();
   }
 }
 

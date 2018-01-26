@@ -49,14 +49,18 @@ export class NumberDirective implements Validator {
 
     @HostListener('keypress', ['$event'])
     onKeyDown($event) {
-      if (!this.regex.test($event.key)) {
+      if (!this.regex.test($event.key) && (!this.handleNegativeNumber($event))) {
         $event.preventDefault();
       }
     }
 
+    handleNegativeNumber($event) {
+      return ($event.keyCode === 45) && ($event.target.selectionStart === 0);
+    }
+
     validate( c: FormControl ) {
       if (this.tlinput.input.nativeElement.value.length > 0) {
-        return NumberFactory.getInstance( this.tlinput ).validate()( c );
+        return NumberFactory.getInstance().validate()( c );
       }
     }
 }

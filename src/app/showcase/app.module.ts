@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '../components/core';
-
+import { ContainerModalModule } from '../components/modal/addons/container-modal';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { GettingStartedModule } from './getting-started/getting-started.module';
@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     BrowserModule,
     CoreModule.forRoot({theme: 'default'}),
+    ContainerModalModule,
     GettingStartedModule,
     HomeModule,
     HttpClientModule

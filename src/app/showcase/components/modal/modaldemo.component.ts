@@ -25,13 +25,13 @@ export class ModalDemoComponent {
 
 
   constructor(public view: ViewContainerRef, public modalService: ModalService) {
-    this.modalService.setView(this.view);
+  //  this.modalService.setView(this.view);
     this.modalevts = jsonEvt.dataEvents;
     this.modalprop = json.dataProperties;
   }
 
   modal1(parent) {
-    this.modalService.createModal(NewModalComponent, parent, (modalResult) => {
+    this.modalService.createModal(NewModalComponent, null, (modalResult) => {
         this.modalResult = modalResult;
     }).on('show', () => {
       console.log('Show Modal');

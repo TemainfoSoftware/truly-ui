@@ -57,7 +57,6 @@ export * from './form';
         TabIndexService,
         IdGeneratorService,
         NameGeneratorService,
-        ModalService,
         FormService,
     ],
     exports: [

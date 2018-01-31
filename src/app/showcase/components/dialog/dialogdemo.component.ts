@@ -20,7 +20,7 @@ export class DialogDemoComponent {
   public dialogProp;
 
   constructor( public view: ViewContainerRef, public dialogService: DialogService ) {
-    this.dialogService.setView(this.view);
+
     this.dialogProp = json.dataProperties;
   }
 

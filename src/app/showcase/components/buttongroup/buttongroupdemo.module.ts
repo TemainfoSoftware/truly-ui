@@ -28,9 +28,6 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
   ],
   exports: [
     ButtonGroupDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class ButtonGroupDemoModule {}

@@ -29,9 +29,6 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
   ],
   exports: [
     SplitButtonDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class SplitButtonDemoModule { }

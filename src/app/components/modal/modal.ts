@@ -24,6 +24,7 @@ import {
   HostBinding,
   Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
+import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { ModalService } from './modal.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
@@ -148,7 +149,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     private colorHoverRestore;
 
-  constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator, private zone: NgZone ) {
+  constructor( private element: ElementRef, private renderer: Renderer2,
+               private containerService: ContainerModalService,
+               private colorService: ToneColorGenerator, private zone: NgZone ) {
   }
 
     ngOnInit() {
@@ -435,8 +438,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
 
     getBoundingContent() {
-        this.parent = this.parentElement ? this.parentElement :
-          this.componentRef.instance.element.nativeElement.parentElement;
+        this.parent = this.parentElement ? this.parentElement : this.containerService.getView().element.nativeElement;
         this.offsetLeftContent = this.parent.getBoundingClientRect().left;
         this.offsetTopContent = this.parent.getBoundingClientRect().top;
     }

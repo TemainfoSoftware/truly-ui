@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
+import { MimimizedModalModule } from '../../../components/modal/addons/minimized-modal';
 
 import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
@@ -50,6 +51,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     FormsModule,
     PanelGroupModule,
     ModalModule,
+    MimimizedModalModule,
     HighlightJsModule,
     TooltipModule,
     MultiSelectModule,

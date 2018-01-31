@@ -28,9 +28,6 @@ import { CalendarModule } from '../../../components/calendar/index';
   ],
   exports: [
     CalendarDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class CalendarDemoModule {}

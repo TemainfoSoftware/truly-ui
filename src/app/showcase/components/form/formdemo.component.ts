@@ -27,14 +27,14 @@ export class FormDemoComponent {
 
   constructor(public view: ViewContainerRef, public formService: FormService,
               public dataFormService: DataFormService,  public dataDumpService: DumpDataService) {
-    this.formService.setView(view);
+
     this.data = this.dataDumpService.createRandomData( 100 );
     this.formprop = json.dataProperties;
   }
 
   form1(parent) {
-    this.formService.createForm(NewPersonComponent, parent, (form) => {
-      if (form.formResult.value) {
+    this.formService.createForm(NewPersonComponent, null, (form) => {
+      if (form.formResult) {
         this.dataFormService.saveDataForm(form.formResult.value);
         this.result = this.dataFormService.getDataForm();
       }

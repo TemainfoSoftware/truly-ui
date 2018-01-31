@@ -29,11 +29,6 @@ export class FormService {
 
     constructor(public modalService: ModalService) {}
 
-    setView(view: ViewContainerRef) {
-        this.viewForm = view;
-        this.modalService.setView(view);
-    }
-
     createForm(component: Type<any>, parent: ElementRef, callback: Function) {
         this.modalService.createModal( component, parent, callback );
     }

@@ -26,8 +26,7 @@ export * from './button';
     providers: [
         TabIndexService,
         IdGeneratorService,
-        NameGeneratorService,
-        ModalService
+        NameGeneratorService
     ]
 })
 export class ButtonModule {}

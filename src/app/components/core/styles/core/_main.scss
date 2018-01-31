@@ -8,7 +8,7 @@
 @import "../../../input/input-theme";
 @import "../../../listbox/listbox-theme";
 @import "../../../modal/modal-theme";
-@import "../../../modal/container-modal/container-modal-theme";
+@import "../../../modal/addons/minimized-modal/minimized-modal-theme";
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
 @import "../../../panelgroup/panelgroup-theme";
@@ -21,7 +21,7 @@
   @include tl-calendar-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
-  @include tl-container-modal-theme($theme);
+  @include tl-minimized-modal-theme($theme);
   @include tl-datatable-theme($theme);
   @include tl-dropdonwlist-theme($theme);
   @include tl-form-theme($theme);

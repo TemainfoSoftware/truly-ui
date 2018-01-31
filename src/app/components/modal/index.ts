@@ -25,41 +25,37 @@ import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { TlContainerModal } from './container-modal/container-modal';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { DirectiveModule } from '../core/directives/index';
 import { ShortcutService } from '../core/helper/shortcut.service';
-import { ContainerModalModule } from './container-modal';
 
 export * from './modal';
 export * from './modal.service';
 export * from './modal-options';
-export * from './container-modal/container-modal';
 
 @NgModule( {
     imports: [
-        CommonModule,
-        DirectiveModule,
-        ContainerModalModule,
+      CommonModule,
+      DirectiveModule,
     ],
     declarations: [
-        TlModal,
-        TlBackdrop,
-        LimitStringPipe
+      TlModal,
+      TlBackdrop,
+      LimitStringPipe
     ],
     exports: [
-        TlModal,
-        TlContainerModal,
-    ],
-    entryComponents: [
-        TlModal,
-        TlBackdrop
+      TlModal,
     ],
     providers: [
-        ToneColorGenerator,
-        ShortcutService,
-        ModalService
+      ModalService,
+      ToneColorGenerator,
+      ShortcutService,
+    ],
+    entryComponents: [
+      TlModal,
+      TlBackdrop
     ]
 } )
 export class ModalModule {
+
 }

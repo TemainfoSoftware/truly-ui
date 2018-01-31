@@ -32,9 +32,6 @@ import { DialogModule } from '../../../components/dialog/index';
   ],
   exports: [
     ShortcutDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class ShortcutDemoModule {}

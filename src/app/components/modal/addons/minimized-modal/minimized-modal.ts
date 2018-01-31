@@ -20,19 +20,14 @@
  SOFTWARE.
  */
 
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, DoCheck, Input, KeyValueDiffers, OnChanges, OnInit,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
-import { ModalService } from '../modal.service';
-import { ToneColorGenerator } from '../../core/helper/tonecolor-generator';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalService } from '../../modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 
  @Component({
-     selector: 'tl-container-modal',
-     templateUrl: './container-modal.html',
-     styleUrls: ['./container-modal.scss'],
+     selector: 'tl-minimized-modal',
+     templateUrl: './minimized-modal.html',
+     styleUrls: ['./minimized-modal.scss'],
      animations: [
          trigger(
              'onCreateElement', [
@@ -48,7 +43,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
          )
      ]
  })
- export class TlContainerModal implements OnInit {
+ export class TlMinimizedModal implements OnInit {
 
      @Input() containerColor = '';
 

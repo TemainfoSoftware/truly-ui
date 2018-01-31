@@ -40,9 +40,6 @@ export class DialogService {
 
     constructor( public modalService: ModalService ) {}
 
-    setView(view: ViewContainerRef) {
-        this.modalService.setView(view);
-    }
 
     info( message: string, callback: Function, options?: InfoOptions ) {
         this.modalService.createBackdrop( TlBackdrop );

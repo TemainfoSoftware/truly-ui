@@ -28,7 +28,7 @@ export class MultiSelectDemoComponent implements OnChanges {
   public dataCustomDetail = [];
 
   constructor(public view: ViewContainerRef, public dialogService: DialogService) {
-    this.dialogService.setView(this.view);
+
 
     this.dataTableProperties = jsonProp.dataProperties;
 

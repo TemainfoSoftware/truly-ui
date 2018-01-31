@@ -23,7 +23,7 @@ import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
   ComponentRef
 } from '@angular/core';
-
+import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
@@ -56,15 +56,13 @@ export class ModalService implements OnDestroy {
 
     private callBack = Function();
 
-    constructor( private compiler: ComponentFactoryResolver ) {}
-
-    setView( view: ViewContainerRef ) {
-        this.view = view;
+    constructor( private compiler: ComponentFactoryResolver, private containerModal: ContainerModalService) {
     }
 
     createModalDialog(component: Type<any>, callback) {
+      this.view = this.containerModal.getView();
       this.setComponentModal();
-      this.setComponentInjected( component );
+      this.injectComponentToModal( component );
       this.setGlobalSettings();
       this.setInitialZIndex();
       this.callBack = callback;
@@ -72,8 +70,9 @@ export class ModalService implements OnDestroy {
     }
 
     createModal( component: Type<any>, parentElement: ElementRef, callback ) {
+        this.view = this.containerModal.getView();
         this.setComponentModal();
-        this.setComponentInjected( component );
+        this.injectComponentToModal( component );
         this.setGlobalSettings( parentElement );
         this.setInitialZIndex();
         this.callBack = callback;
@@ -89,7 +88,7 @@ export class ModalService implements OnDestroy {
         this.setActiveModal(this.component);
     }
 
-    setComponentInjected( component: Type<any> ) {
+    injectComponentToModal( component: Type<any> ) {
         const factoryInject = this.compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
         this.addFormModalToList();
@@ -147,6 +146,7 @@ export class ModalService implements OnDestroy {
     }
 
     createBackdrop( backdrop ) {
+      this.view = this.containerModal.getView();
         const backdropFactory = this.compiler.resolveComponentFactory( backdrop );
         this.backdrop = this.view.createComponent( backdropFactory );
     }

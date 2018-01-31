@@ -41,7 +41,6 @@ export * from './dialog.service';
         TlDialogConfirmation
     ],
     providers: [
-        ModalService,
         DialogService,
         TabIndexService,
         IdGeneratorService,

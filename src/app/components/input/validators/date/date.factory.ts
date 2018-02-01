@@ -42,7 +42,7 @@ export class DateFactory {
       }
       const strFormat = formatArray.toString().replace( /,/gi, '' );
       tlinput.mask = strFormat;
-      tlinput.input.nativeElement.setAttribute('placeholder', format);
+      tlinput.input.nativeElement.setAttribute('placeholder', format.toUpperCase());
     }
   }
 }

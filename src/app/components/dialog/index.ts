@@ -5,8 +5,6 @@ import { ButtonModule } from '../button/index';
 import { DialogService } from './dialog.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { ModalModule } from '../modal/index';
-import { ModalService } from '../modal/modal.service';
 import { TabIndexService } from '../form/tabIndex.service';
 
 import { TlDialogAlert } from './dialog-alert/dialog-alert';
@@ -19,8 +17,7 @@ export * from './dialog.service';
 @NgModule( {
     imports: [
         CommonModule,
-        ButtonModule,
-        ModalModule
+        ButtonModule
     ],
     declarations: [
         TlDialogInfo,

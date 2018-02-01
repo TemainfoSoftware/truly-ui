@@ -63,9 +63,4 @@ export class NewPersonComponent implements OnInit, OnChanges {
     console.log(data);
   }
 
-
-  changess() {
-    console.log('add');
-  }
-
 }

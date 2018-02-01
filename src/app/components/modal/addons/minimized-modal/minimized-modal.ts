@@ -63,7 +63,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      public isScrolling = false;
 
-     constructor( public modalService: ModalService ) {}
+     constructor( public modalService: ModalService ) {
+     }
 
      ngOnInit() {
        this.modalService.subject.subscribe(() => {

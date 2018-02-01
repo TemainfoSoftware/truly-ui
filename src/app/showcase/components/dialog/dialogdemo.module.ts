@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
+import { ModalModule } from '../../../components/modal';
 
 import { DialogDemoComponent } from './dialogdemo.component';
 import { DialogDemoRoutingModule } from './dialogdemo-routing.module';

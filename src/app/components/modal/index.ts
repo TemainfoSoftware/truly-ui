@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
@@ -46,16 +46,20 @@ export * from './modal-options';
     exports: [
       TlModal,
     ],
-    providers: [
-      ModalService,
-      ToneColorGenerator,
-      ShortcutService,
-    ],
     entryComponents: [
       TlModal,
       TlBackdrop
     ]
 } )
 export class ModalModule {
-
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ModalModule,
+      providers: [
+        ToneColorGenerator,
+        ModalService,
+        ShortcutService,
+      ],
+    };
+  }
 }

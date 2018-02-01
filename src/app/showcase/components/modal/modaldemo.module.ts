@@ -9,9 +9,7 @@ import { NewModalComponent } from './newmodal/newModal.component';
 import { ModalDemoComponent } from './modaldemo.component';
 import { ModalDemoRoutingModule } from './modaldemo-routing.module';
 import { ButtonModule } from '../../../components/button';
-import { DatatableModule } from '../../../components/datatable';
 import { InputModule } from '../../../components/input';
-import { DialogService } from '../../../components/dialog';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
@@ -24,7 +22,6 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
   imports: [
     ButtonModule,
     CommonModule,
-    DatatableModule,
     FormsModule,
     HighlightJsModule,
     ShowcaseCardModule,
@@ -38,9 +35,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     ModalDemoComponent,
     NewModalComponent
   ],
-  providers: [
-    DialogService
-  ],
+
   entryComponents: [
     NewModalComponent
   ]

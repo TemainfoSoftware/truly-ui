@@ -1,4 +1,4 @@
-import { Component, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 
 import * as json from './form-dataproperties.json';
 
@@ -26,14 +26,16 @@ export class FormDemoComponent {
   public data;
 
   constructor(public view: ViewContainerRef, public formService: FormService,
-              public dataFormService: DataFormService,  public dataDumpService: DumpDataService) {
+              public dataFormService: DataFormService,  public dataDumpService: DumpDataService,
+              private compiler: ComponentFactoryResolver
+  ) {
 
     this.data = this.dataDumpService.createRandomData( 100 );
     this.formprop = json.dataProperties;
   }
 
   form1(parent) {
-    this.formService.createForm(NewPersonComponent, null, (form) => {
+    this.formService.createForm(NewPersonComponent, this.compiler, null, (form) => {
       if (form.formResult) {
         this.dataFormService.saveDataForm(form.formResult.value);
         this.result = this.dataFormService.getDataForm();

@@ -26,7 +26,7 @@ import {
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { ModalService } from './modal.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';

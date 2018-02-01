@@ -131,7 +131,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   ngAfterViewInit() {
-    console.log('listBox', this.listBox);
     this.listenerKeyDown();
     this.listenClickDocument();
     this.listenScrollDocument();

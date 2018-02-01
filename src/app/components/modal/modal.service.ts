@@ -56,31 +56,30 @@ export class ModalService implements OnDestroy {
 
     private callBack = Function();
 
-    constructor( private compiler: ComponentFactoryResolver, private containerModal: ContainerModalService) {
-    }
+    constructor(private containerModal: ContainerModalService) {}
 
-    createModalDialog(component: Type<any>, callback) {
+    createModalDialog(component: Type<any>, factoryResolver, callback) {
       this.view = this.containerModal.getView();
-      this.setComponentModal();
-      this.injectComponentToModal( component );
-      this.setGlobalSettings();
+      this.setComponentModal(factoryResolver);
+      this.injectComponentToModal( component, factoryResolver );
+      this.setGlobalSettings(factoryResolver);
       this.setInitialZIndex();
       this.callBack = callback;
       return this;
     }
 
-    createModal( component: Type<any>, parentElement: ElementRef, callback ) {
+    createModal( component: Type<any>, factoryResolver,  parentElement: ElementRef, callback ) {
         this.view = this.containerModal.getView();
-        this.setComponentModal();
-        this.injectComponentToModal( component );
-        this.setGlobalSettings( parentElement );
+        this.setComponentModal(factoryResolver);
+        this.injectComponentToModal( component, factoryResolver );
+        this.setGlobalSettings( factoryResolver, parentElement );
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
     }
 
-    setComponentModal() {
-        const componentFactory = this.compiler.resolveComponentFactory( TlModal );
+    setComponentModal(compiler) {
+        const componentFactory = compiler.resolveComponentFactory( TlModal );
         this.component = this.view.createComponent( componentFactory );
         this.componentList.push(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
@@ -88,17 +87,17 @@ export class ModalService implements OnDestroy {
         this.setActiveModal(this.component);
     }
 
-    injectComponentToModal( component: Type<any> ) {
-        const factoryInject = this.compiler.resolveComponentFactory( component );
+    injectComponentToModal( component: Type<any>, compiler ) {
+        const factoryInject = compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
         this.addFormModalToList();
     }
 
-    setGlobalSettings( parent?: ElementRef ) {
+    setGlobalSettings( factoryResolver,  parent?: ElementRef, ) {
         this.modalOptions = Reflect.getOwnMetadata('annotations',
           Object.getPrototypeOf(this.componentInjected.instance).constructor);
         this.setParentElement(parent);
-        this.handleBackDrop();
+        this.handleBackDrop(factoryResolver);
         (<TlModal>this.component.instance).status = 'MAX';
         (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
     }
@@ -109,9 +108,9 @@ export class ModalService implements OnDestroy {
       }
     }
 
-    handleBackDrop() {
+    handleBackDrop(factoryResolver) {
       if (this.modalOptions[0].backdrop) {
-        this.createBackdrop(TlBackdrop);
+        this.createBackdrop(TlBackdrop, factoryResolver);
       }
     }
 
@@ -145,9 +144,9 @@ export class ModalService implements OnDestroy {
         this.head.next({activeModal: this.activeModal});
     }
 
-    createBackdrop( backdrop ) {
+    createBackdrop( backdrop, factoryResolver ) {
       this.view = this.containerModal.getView();
-        const backdropFactory = this.compiler.resolveComponentFactory( backdrop );
+        const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
         this.backdrop = this.view.createComponent( backdropFactory );
     }
 

@@ -24,7 +24,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlForm } from './form';
 import { FormService } from './form.service';
-import { ModalService } from '../modal/modal.service';
 import { ModalModule } from '../modal/index';
 import { ButtonModule } from '../button/index';
 import { DialogService } from '../dialog/dialog.service';
@@ -42,7 +41,6 @@ export * from './form';
 @NgModule( {
     imports: [
         CommonModule,
-        ModalModule,
         ButtonModule,
         FormsModule,
         InputModule,

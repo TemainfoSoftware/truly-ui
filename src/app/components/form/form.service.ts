@@ -19,17 +19,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef, Injectable, Type, ViewContainerRef } from '@angular/core';
+import { ElementRef, Injectable, Type } from '@angular/core';
 import { ModalService } from '../modal/modal.service';
 
 @Injectable()
 export class FormService {
 
-    public viewForm: ViewContainerRef;
-
     constructor(public modalService: ModalService) {}
 
-    createForm(component: Type<any>, parent: ElementRef, callback: Function) {
-        this.modalService.createModal( component, parent, callback );
+    createForm(component: Type<any>, compiler, parent: ElementRef, callback: Function) {
+        this.modalService.createModal( component, compiler, parent, callback );
     }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { NewModalComponent } from './newmodal/newModal.component';
 
 import * as json from './modal-dataproperties.json';
@@ -16,7 +16,6 @@ import { ModalOptions, ModalService } from '../../../components/modal';
 export class ModalDemoComponent {
 
   public index: number;
-  public modals;
   public modalOptions: ModalOptions;
 
   public modalprop;
@@ -24,14 +23,13 @@ export class ModalDemoComponent {
   public modalResult;
 
 
-  constructor(public view: ViewContainerRef, public modalService: ModalService) {
-  //  this.modalService.setView(this.view);
+  constructor(public view: ViewContainerRef, private modalService: ModalService, private compiler: ComponentFactoryResolver) {
     this.modalevts = jsonEvt.dataEvents;
     this.modalprop = json.dataProperties;
   }
 
   modal1(parent) {
-    this.modalService.createModal(NewModalComponent, null, (modalResult) => {
+    this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResult) => {
         this.modalResult = modalResult;
     }).on('show', () => {
       console.log('Show Modal');

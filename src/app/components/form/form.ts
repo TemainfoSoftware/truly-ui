@@ -240,7 +240,6 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
       case KeyEvent.TAB:
         $event.preventDefault();
         this.forwardTabbing();
-        console.log('form', this.form);
         break;
       case KeyEvent.ENTER:
         $event.preventDefault();

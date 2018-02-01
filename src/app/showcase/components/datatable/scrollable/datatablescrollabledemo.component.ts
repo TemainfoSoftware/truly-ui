@@ -55,10 +55,6 @@ export class DataTableScrollableDemoComponent {
     }, 2000);
   }
 
-  onPageChange(event) {
-   // console.log(event);
-  }
-
   onRowSelect( row ) {
     this.rowSelected = row;
   }

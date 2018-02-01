@@ -24,7 +24,7 @@ import { Component, ViewEncapsulation, ApplicationRef, Renderer2 } from '@angula
 
 @Component({
     selector: 'tl-core',
-    template: '',
+    template: '<span></span>',
     styleUrls: ['./styles/theming/_all-theme.scss'],
     encapsulation: ViewEncapsulation.None
 })

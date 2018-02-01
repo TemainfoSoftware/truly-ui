@@ -20,7 +20,7 @@ import { CheckBoxModule } from '../../../components/checkbox';
 import { FormModule } from '../../../components/form';
 import { DialogModule } from '../../../components/dialog';
 import { AutoCompleteModule } from '../../../components/autocomplete';
-import { ModalModule } from '../../../components/modal';
+import { ModalModule, ModalService } from '../../../components/modal';
 import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
@@ -50,7 +50,6 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     AutoCompleteModule,
     FormsModule,
     PanelGroupModule,
-    ModalModule,
     MimimizedModalModule,
     HighlightJsModule,
     TooltipModule,
@@ -66,7 +65,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
   ],
   providers: [
     DumpDataService,
-    DataFormService
+    DataFormService,
   ],
   entryComponents: [
     NewPersonComponent

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Modal } from '../../../../components/modal/modal-options';
+
 @Modal({
   title: 'New Modal',
   icon: 'ion-monitor',
@@ -8,14 +9,11 @@ import { Modal } from '../../../../components/modal/modal-options';
   height: 'auto',
   color: 'success',
   maximizable: true,
-  minimizable: true,
+  minimizable: true
 })
 @Component( {
   selector: 'app-new-modal',
   templateUrl: './newModal.html',
   styleUrls: [ './newModal.component.scss' ]
 } )
-export class NewModalComponent {
-
-
-}
+export class NewModalComponent {}

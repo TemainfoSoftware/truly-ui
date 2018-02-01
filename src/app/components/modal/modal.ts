@@ -75,7 +75,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
     @Input() backdrop = false;
 
-    @Input() closeShortcut = '';
+    @Input() closeShortcut = 'escape';
 
     @Input() restoreShortcut = '';
 

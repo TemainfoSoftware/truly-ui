@@ -41,7 +41,7 @@ import { PasswordRule } from './passwordrule.interface';
 } )
 export class PasswordDirective implements Validator, AfterViewInit {
 
-    @Input('passwordRule') passwordRule: PasswordRule;
+    @Input('passwordRule') passwordRule: PasswordRule = {digits: false, uppercase: false, specials: false };
 
     @ContentChild(TlInput) tlinput;
 

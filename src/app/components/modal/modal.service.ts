@@ -40,8 +40,6 @@ export class ModalService implements OnDestroy {
 
     public componentInjected: ComponentRef<any>;
 
-    public forms: Array<ComponentRef<any>> = [];
-
     public activeModal: ComponentRef<any>;
 
     public view: ViewContainerRef;
@@ -56,8 +54,7 @@ export class ModalService implements OnDestroy {
 
     private callBack = Function();
 
-    constructor( private compiler: ComponentFactoryResolver, private containerModal: ContainerModalService) {
-    }
+    constructor( private compiler: ComponentFactoryResolver, private containerModal: ContainerModalService) {}
 
     createModalDialog(component: Type<any>, callback) {
       this.view = this.containerModal.getView();
@@ -83,6 +80,7 @@ export class ModalService implements OnDestroy {
         const componentFactory = this.compiler.resolveComponentFactory( TlModal );
         this.component = this.view.createComponent( componentFactory );
         this.componentList.push(this.component);
+        this.subject.next(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
         this.setActiveModal(this.component);
@@ -91,7 +89,6 @@ export class ModalService implements OnDestroy {
     injectComponentToModal( component: Type<any> ) {
         const factoryInject = this.compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
-        this.addFormModalToList();
     }
 
     setGlobalSettings( parent?: ElementRef ) {
@@ -168,8 +165,7 @@ export class ModalService implements OnDestroy {
             return;
         }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
-        this.handleModalForms( component );
-        this.subject.next(this.forms);
+        this.subject.next(this.componentList);
         this.removeOfTheList();
         this.removeBackdrop();
     }
@@ -184,14 +180,6 @@ export class ModalService implements OnDestroy {
         return comp;
     }
 
-    handleModalForms( component: ComponentRef<any> ) {
-        if ( this.forms.length > 0 ) {
-            const index = this.forms.indexOf( component );
-            this.forms.splice( index, 1 );
-        }
-        this.setActiveWindow();
-    }
-
     handleActiveWindow() {
         const visibleHighestZIndex = [];
         this.getVisibleModals().forEach( ( value, index2, array ) => {
@@ -200,7 +188,7 @@ export class ModalService implements OnDestroy {
 
         const highest = this.getHighestZIndexModals( visibleHighestZIndex );
 
-        this.forms.forEach( ( value, index2, array ) => {
+        this.componentList.forEach( ( value, index2, array ) => {
             if ( this.getVisibleModals().length === 0 ) {
                 return this.setActiveModal(null);
             }
@@ -221,28 +209,6 @@ export class ModalService implements OnDestroy {
             }
         }
         return visibleModals;
-    }
-
-    setActiveWindow() {
-        let maxZindex = [];
-        if ( (this.getVisibleModals().length - 1) <= 0 ) {
-            return this.setActiveModal(null);
-        }
-        maxZindex = this.forms;
-        this.sortArrayByZIndex( maxZindex );
-        this.setActiveModal(maxZindex[ maxZindex.length - 1 ]);
-    }
-
-    sortArrayByZIndex( array: Array<any> ) {
-        return array.sort( ( a, b ) => {
-            return a.location.nativeElement.firstElementChild.style.zIndex -
-              b.location.nativeElement.firstElementChild.style.zIndex;
-        } );
-    }
-
-    addFormModalToList() {
-        this.forms.push( this.component );
-        this.subject.next(this.forms);
     }
 
     removeOfTheList() {
@@ -273,6 +239,7 @@ export class ModalService implements OnDestroy {
             }
             setTimeout(() => {
                 this.resultCallback();
+                this.handleActiveWindow();
                 resolve();
             }, 500);
         });

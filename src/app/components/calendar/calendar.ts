@@ -107,6 +107,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit {
     this.dateNavigator = new Date();
     this.today = new Date().getDate();
     this.year = new Date().getFullYear();
+    this.month = new Date().getMonth();
   }
 
   ngAfterViewInit() {

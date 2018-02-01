@@ -123,7 +123,6 @@ export class TlCalendarDays {
       this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.todayIndex = cell;
       this.calendar.selectedDay = cell.nativeElement;
-
       this.calendar.selectDay.emit(
         {
           'year': this.calendar.year,
@@ -152,7 +151,7 @@ export class TlCalendarDays {
   }
 
   removeSelectedDay( cell ) {
-    if ( (this.calendar.selectedDay !== cell) ) {
+    if ( (this.calendar.selectedDay !== cell) && (this.calendar.selectedDay !== undefined) ) {
       this.calendar.renderer.removeClass( this.calendar.selectedDay, 'selected' );
     }
   }

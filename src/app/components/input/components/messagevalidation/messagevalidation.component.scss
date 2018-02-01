@@ -1,0 +1,48 @@
+.ui-wrapper-messages {
+  position: fixed;
+  z-index: 1000;
+  width: calc(100% - 30px);
+  background: rgba(#F77171, 0.9);
+  border-left: 1px solid #F77171;
+  border-right: 1px solid #F77171;
+  animation-name: creating;
+  animation-duration: 200ms;
+  > ul {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+  }
+  > ul li {
+    color: #fff;
+    padding: 5px 10px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1em;
+  }
+  > ul li i {
+    font-size: 1.2em;
+    padding-right: 5px;
+  }
+}
+
+@keyframes creating {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  25% {
+    opacity: 0.25;
+    transform: translateY(0.25);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(0.5);
+  }
+  75% {
+    opacity: 0.75;
+    transform: translateY(0.75);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(1);
+  }
+}

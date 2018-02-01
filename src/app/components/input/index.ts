@@ -15,6 +15,9 @@ import { DateDirective } from './validators/date/date.directive';
 import { NumberDirective } from './validators/number/number.directive';
 import { EmailDirective } from './validators/email/email.directive';
 import { CreditCardDirective } from './validators/creditcard/creditcard.directive';
+import { PasswordDirective } from './validators/password/password.directive';
+import { MessageValidationDirective } from './directives/messagevalidation.directive';
+import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 
 export * from './input';
 
@@ -25,13 +28,16 @@ export * from './input';
   ],
   declarations: [
     TlInput,
+    TlMessageValidationComponent,
     CharcaseDirective,
     CPFDirective,
     CNPJDirective,
     DateDirective,
     NumberDirective,
     EmailDirective,
-    CreditCardDirective
+    CreditCardDirective,
+    MessageValidationDirective,
+    PasswordDirective
   ],
   exports: [
     TlInput,
@@ -41,13 +47,16 @@ export * from './input';
     DateDirective,
     NumberDirective,
     EmailDirective,
-    CreditCardDirective
+    CreditCardDirective,
+    MessageValidationDirective,
+    PasswordDirective
   ],
   providers: [
     IdGeneratorService,
     NameGeneratorService,
     TabIndexService
-  ]
+  ],
+  entryComponents: [TlMessageValidationComponent]
 } )
 export class InputModule {
 }

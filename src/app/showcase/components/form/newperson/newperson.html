@@ -4,14 +4,14 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input [name]="'name'" required [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+                <tl-input [name]="'name'" minlength="3" messageValidation required [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input name="lastname" required [labelSize]="100"
+                <tl-input name="lastname" minlength="3" messageValidation required [labelSize]="100"
                           [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
             </div>
           </div>
@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'city'" [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
+                <tl-input [name]="'city'" minlength="3" messageValidation [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
             </div>
           </div>
           <div class="col-md-6">
@@ -41,7 +41,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'birthday'" required [labelSize]="100" [(ngModel)]="birthday"
+                <tl-input [name]="'birthday'" messageValidation required [labelSize]="100" [(ngModel)]="birthday"
                           [label]="'Birthday'" date [formatDate]="'dd.mm.yyyy'"></tl-input>
             </div>
           </div>
@@ -49,7 +49,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <tl-checkbox [label]="'Notification'" [name]="'notification'" [ngModel]="person?.notification"></tl-checkbox>
+              <tl-input [name]="'country'" messageValidation [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
             </div>
           </div>
           <!--<div class="col-md-8">

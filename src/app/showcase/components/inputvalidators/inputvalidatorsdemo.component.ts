@@ -34,6 +34,8 @@ export class InputValidatorsDemoComponent {
 
   public number;
 
+  public password;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataEvents;

@@ -21,28 +21,12 @@
  */
 
 import { CustomType } from '../../core/custom-type';
-import { DateTl } from './date.validator';
+import { Password } from './password.validator';
 
-export class DateFactory {
+export class PasswordFactory {
 
-  static getInstance( tlinput, format ): CustomType {
-    this.setDateMask( tlinput, format );
-    return new DateTl(tlinput, format);
-  }
-
-  static setDateMask( tlinput, format ) {
-    if ( tlinput ) {
-      const formatTmp = format.replace( /[a-z]/gi, '' );
-      const formatArray = format.split( '' );
-
-      for ( let i = 0; i < formatArray.length; i++ ) {
-        if ( formatArray[ i ] !== formatTmp[ 0 ] ) {
-          formatArray[ i ] = '9';
-        }
-      }
-      const strFormat = formatArray.toString().replace( /,/gi, '' );
-      tlinput.mask = strFormat;
-      tlinput.input.nativeElement.setAttribute('placeholder', format.toUpperCase());
-    }
+  static getInstance(passwordRule): CustomType {
+    return new Password(passwordRule);
   }
 }
+

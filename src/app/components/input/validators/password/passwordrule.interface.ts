@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Sistemas
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,30 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { CustomType } from '../../core/custom-type';
-import { DateTl } from './date.validator';
-
-export class DateFactory {
-
-  static getInstance( tlinput, format ): CustomType {
-    this.setDateMask( tlinput, format );
-    return new DateTl(tlinput, format);
-  }
-
-  static setDateMask( tlinput, format ) {
-    if ( tlinput ) {
-      const formatTmp = format.replace( /[a-z]/gi, '' );
-      const formatArray = format.split( '' );
-
-      for ( let i = 0; i < formatArray.length; i++ ) {
-        if ( formatArray[ i ] !== formatTmp[ 0 ] ) {
-          formatArray[ i ] = '9';
-        }
-      }
-      const strFormat = formatArray.toString().replace( /,/gi, '' );
-      tlinput.mask = strFormat;
-      tlinput.input.nativeElement.setAttribute('placeholder', format.toUpperCase());
-    }
-  }
-}
+ export interface PasswordRule {
+   digits: boolean;
+   uppercase: boolean;
+   specials: boolean;
+ }

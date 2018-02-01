@@ -31,7 +31,7 @@
           <app-card>
             <div class="col-md-6">
               <span>DATE</span>
-              <tl-input name="date" date formatDate="DD/MM/YYYY" [(ngModel)]="date"></tl-input>
+              <tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
               <div class="returned-value">Returned Value: {{date}}</div>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -66,12 +66,33 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <span>PATTERN<code>(Math: Tacomah1, ab2cdefH, 123Abcde)</code></span>
-              <tl-input name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
+              <span>PATTERN<code>(ex: Tacomah1, ab2cdefH, 123Abcde)</code></span>
+              <tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
               <div class="returned-value">Returned Value: {{pattern}}</div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>PASSWORD</span>
+              <tl-input
+                name="password"
+                minlength="5"
+                required
+                messageValidation
+                password
+                [passwordRule]="{
+                  digits: true,
+                  special: true }"
+                [(ngModel)]="password">
+              </tl-input>
+              <div class="returned-value">Returned Value: {{password}}</div>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="password" password [(ngModel)]="password"></tl-input>
 </textarea>
             </div>
           </app-card>

@@ -45,11 +45,11 @@ export class DateTl implements CustomType {
     return ( c: AbstractControl ) => {
 
       if ( !this.stringUnmasked( c ) && c.touched ) {
-        return { date: 'Invalid Date' };
+        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       if ( (this.stringUnmasked( c ).length) !== formatDate.length ) {
-        return { date: 'Invalid Date' };
+        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       formatDate = formatDate.toLowerCase();
@@ -82,7 +82,7 @@ export class DateTl implements CustomType {
       this.date = new Date( this.year + '-' + this.month + '-' + this.day );
 
       if ( this.date.toDateString() === 'Invalid Date' ) {
-        return { date: 'Invalid Date' };
+        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       return null;

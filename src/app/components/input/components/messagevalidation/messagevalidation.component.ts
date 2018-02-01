@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { TlInput } from '../../input';
 
 @Component({
@@ -14,6 +14,8 @@ export class TlMessageValidationComponent {
 
   public hide;
 
+  public top;
+
   public left;
 
   constructor() { }
@@ -23,6 +25,7 @@ export class TlMessageValidationComponent {
   }
 
   setInput(tlinput: TlInput) {
+    this.top = tlinput.input.nativeElement.getBoundingClientRect().top + tlinput.input.nativeElement.offsetHeight + 'px';
     this.width = tlinput.input.nativeElement.offsetWidth + 'px';
     this.left = tlinput.labelSize + 'px';
   }

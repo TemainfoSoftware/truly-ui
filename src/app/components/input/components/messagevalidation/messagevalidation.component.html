@@ -1,4 +1,4 @@
-<div *ngIf="messages.length > 0 && !hide" [style.width]="width" [style.margin-left]="left" class="ui-wrapper-messages">
+<div *ngIf="messages.length > 0 && !hide" [style.top]="top" [style.width]="width" [style.margin-left]="left" class="ui-wrapper-messages">
   <ul>
     <li *ngFor="let item of messages"><i class="ion-android-cancel"></i>{{item}}</li>
   </ul>

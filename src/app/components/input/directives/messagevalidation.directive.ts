@@ -21,7 +21,7 @@
  */
 
 import {
-  ComponentFactoryResolver, ContentChild, Directive, OnInit, Renderer2,
+  ComponentFactoryResolver, ContentChild, Directive, OnDestroy, OnInit, Renderer2,
   ViewContainerRef
 } from '@angular/core';
 import { NgModel } from '@angular/forms';
@@ -31,7 +31,7 @@ import { TlInput } from '../input';
 @Directive( {
   selector: '[messageValidation]'
 } )
-export class MessageValidationDirective implements OnInit {
+export class MessageValidationDirective implements OnInit, OnDestroy {
 
   @ContentChild( NgModel ) model;
 
@@ -39,24 +39,33 @@ export class MessageValidationDirective implements OnInit {
 
   private component;
 
+  private listeners = [];
+
   constructor( private compiler: ComponentFactoryResolver, private view: ViewContainerRef, private renderer: Renderer2 ) {}
 
   ngOnInit() {
     this.listenFocus();
     this.listenFocusOut();
     this.listenChanges();
+    this.listenScrollDocument();
+  }
+
+  listenScrollDocument() {
+    this.listeners.push(this.renderer.listen(document, 'scroll', () => {
+      this.setDisplayMessages(true);
+    }));
   }
 
   listenFocus() {
-    this.renderer.listen(this.tlinput.input.nativeElement, 'focus', () => {
+    this.listeners.push(this.renderer.listen(this.tlinput.input.nativeElement, 'focus', () => {
       this.setDisplayMessages(false);
-    });
+    }));
   }
 
   listenFocusOut() {
-    this.renderer.listen(this.tlinput.input.nativeElement, 'focusout', () => {
+    this.listeners.push(this.renderer.listen(this.tlinput.input.nativeElement, 'focusout', () => {
       this.setDisplayMessages(true);
-    });
+    }));
   }
 
   listenChanges() {
@@ -93,4 +102,11 @@ export class MessageValidationDirective implements OnInit {
       this.component = null;
     }
   }
+
+  ngOnDestroy() {
+    this.listeners.forEach((item) => {
+      item();
+    });
+  }
+
 }

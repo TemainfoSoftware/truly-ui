@@ -27,6 +27,12 @@
     }
   }
 
+  &:active{
+    background-color: map-deep-get($theme, $action, "active", "background");
+
+    color: map-deep-get($theme, $action, "active", "foreground");
+  }
+
   &.disabled{
     background-color: map-deep-get($theme, $action, "hover", "background");
     border: 1px solid map-deep-get($theme, $action, "hover", "border");

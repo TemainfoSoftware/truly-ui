@@ -13,7 +13,7 @@ $theme: (
 
   primary: (
     default:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    active:   ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    active:   ( foreground: #FFFFFF, background: #5ebc8a, border: #58AF7F ),
     checked:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     disabled: ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
     focus:    ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
@@ -31,7 +31,7 @@ $theme: (
 
   success: (
     default:  ( foreground: #FFFFFF, background: #62C390, border: #9BD8B8 ),
-    active:   ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    active:   ( foreground: #FFFFFF, background: #69a588, border: #9BD8B8 ),
     checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
     disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
     focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
@@ -40,7 +40,7 @@ $theme: (
 
   danger: (
     default:  ( foreground: #FFFFFF, background: #F77171, border: #F98D8D ),
-    active:   ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
+    active:   ( foreground: #FFFFFF, background: #e17a7a, border: #F98D8D ),
     checked:  ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     disabled: ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
     focus:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
@@ -49,7 +49,7 @@ $theme: (
 
   warning: (
     default:  ( foreground: #FFFFFF, background: #F5D240, border: #F8E285 ),
-    active:   ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    active:   ( foreground: #FFFFFF, background: #d7b43d, border: #F8E285 ),
     checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
     disabled: ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
     focus:    ( foreground: #FFFFFF, background: #FFFBE9, border: #F8E285 ),
@@ -58,7 +58,7 @@ $theme: (
 
   information: (
     default:  ( foreground: #FFFFFF, background: #0090D9, border: #5CB8E6 ),
-    active:   ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    active:   ( foreground: #FFFFFF, background: #3191cc, border: #5CB8E6 ),
     checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
     disabled: ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
     focus:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),

@@ -18,7 +18,6 @@ import { CreditCardDirective } from './validators/creditcard/creditcard.directiv
 import { PasswordDirective } from './validators/password/password.directive';
 import { MessageValidationDirective } from './directives/messagevalidation.directive';
 import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
-import { ModalContentDirective } from '../modal/modalcontent/modal-content.directive';
 
 export * from './input';
 
@@ -38,7 +37,6 @@ export * from './input';
     EmailDirective,
     CreditCardDirective,
     MessageValidationDirective,
-    ModalContentDirective,
     PasswordDirective
   ],
   exports: [
@@ -51,7 +49,6 @@ export * from './input';
     EmailDirective,
     CreditCardDirective,
     MessageValidationDirective,
-    ModalContentDirective,
     PasswordDirective
   ],
   providers: [

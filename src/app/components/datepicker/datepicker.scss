@@ -1,13 +1,14 @@
+.ui-wrapper-calendar-content {
+  position: fixed;
+  z-index: 1000;
+}
+
 .ui-calendar-content {
   position: fixed;
   padding: 10px;
   background: #fff;
   margin-top: 9px;
   border: 1px solid #C8C8C8;
-}
-
-.ui-wrapper-calendar-content {
-  position: fixed;
 }
 
 .ui-arrow {

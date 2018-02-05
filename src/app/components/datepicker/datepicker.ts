@@ -21,8 +21,8 @@
  */
 import {
   Component,
-  Optional, Inject, ViewChild,
-  Input, Renderer2, OnInit,
+  Optional, Inject, ViewChild, Output,
+  Input, Renderer2, OnInit, EventEmitter,
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
@@ -44,6 +44,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
 
   @Input() label = '';
 
+  @Input() name = '';
+
   @Input() labelSize = '';
 
   @Input() textAlign = 'left';
@@ -64,6 +66,16 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
 
   @Input() formatDate = 'dd/mm/yyyy';
 
+  @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild( NgModel ) model: NgModel;
+
+  @ViewChild( TlCalendar ) calendar;
+
+  @ViewChild( TlInput ) tlinput;
+
+  @ViewChild( 'calendarContent' ) calendarContent;
+
   public open = false;
 
   public iconAfter = '';
@@ -74,14 +86,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
 
   public day = new Date().getDate();
 
-  @ViewChild( NgModel ) model: NgModel;
-
-  @ViewChild( TlCalendar ) calendar;
-
-  @ViewChild( TlInput ) tlinput;
-
-  @ViewChild( 'calendarContent' ) calendarContent;
-
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
@@ -89,14 +93,15 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
 
   ngOnInit() {
     this.listenDocument();
+    this.handleDateChange();
     if ( this.iconCalendar ) {
       this.iconAfter = 'ion-calendar';
     }
   }
 
-  onDateInputFocus() {
+  onDateInputFocus($event) {
     this.open = true;
-    this.setWrapperCalendarPosition();
+    this.setWrapperCalendarPosition($event);
     if ( this.value ) {
       const inputDate = ReverseFormatDate( this.stringUnmasked( this.value ), this.formatDate );
       this.day = inputDate[ 'day' ];
@@ -106,6 +111,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
   }
 
   onSelectDay( $event ) {
+    this.selectDay.emit($event);
     this.setValue( $event );
     this.handleAutoClose();
   }
@@ -119,10 +125,21 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
     this.tlinput.input.nativeElement.focus();
   }
 
-  setWrapperCalendarPosition() {
+  setWrapperCalendarPosition($event) {
+    this.setTopPosition($event);
+    this.setLeftPosition($event);
+  }
+
+  setTopPosition($event) {
     this.calendarContent.nativeElement.style.top =
-      this.tlinput.input.nativeElement.getBoundingClientRect().top +
+      $event.target.getBoundingClientRect().top +
       this.tlinput.input.nativeElement.offsetHeight + 'px';
+  }
+
+  setLeftPosition($event) {
+    this.calendarContent.nativeElement.style.left =
+      $event.target.getBoundingClientRect().left -
+      this.tlinput.labelSize + 'px';
   }
 
   listenDocument() {
@@ -185,14 +202,16 @@ export class TlDatePicker extends ElementBase<string> implements OnInit {
   }
 
   handleDateChange() {
-    const inputDate = ReverseFormatDate( this.value, this.formatDate );
-    const dateKeys = Object.keys( inputDate );
-    for ( let key = 0; key < dateKeys.length; key++ ) {
-      if ( inputDate[ dateKeys[ key ] ] ) {
-        if ( dateKeys[ key ] === 'month' ) {
-          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ] - 1;
-        } else {
-          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ];
+    if (this.value) {
+      const inputDate = ReverseFormatDate( this.value, this.formatDate );
+      const dateKeys = Object.keys( inputDate );
+      for ( let key = 0; key < dateKeys.length; key++ ) {
+        if ( inputDate[ dateKeys[ key ] ] ) {
+          if ( dateKeys[ key ] === 'month' ) {
+            this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ] - 1;
+          } else {
+            this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ];
+          }
         }
       }
     }

@@ -21,12 +21,13 @@
  */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'selectDay',
     parameters: [
-      {
-        event: 'selected', description: 'Button Selected'
-      }
+      { event: 'year', description: 'Full Year selected' },
+      { event: 'month', description: 'Number of month selected' },
+      { event: 'day', description: 'Number of day selected' },
+      { event: 'fullDate', description: 'Default format date' },
     ],
-    description: 'Callback to invoke when toogle button.',
+    description: 'Dispatched when day cell is clicked.',
   },
 ];

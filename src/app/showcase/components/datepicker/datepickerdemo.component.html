@@ -11,10 +11,36 @@
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
-              <tl-datepicker [iconCalendar]="true"></tl-datepicker>
+              <tl-datepicker></tl-datepicker>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'"></tl-button>
+<tl-datepicker></tl-datepicker>
+</textarea>
+            </div>
+            <div class="col-md-6">
+            <h5>Icon Calendar</h5>
+            <tl-datepicker [iconCalendar]="true"></tl-datepicker>
+            <div class="spacer"></div>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-datepicker [iconCalendar]="true"></tl-datepicker>
+</textarea>
+          </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>AutoClose</h5>
+              <tl-datepicker [autoClose]="true"></tl-datepicker>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-datepicker [autoClose]="true"></tl-datepicker>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Different Formats</h5>
+              <tl-datepicker [formatDate]="'mm.dd.yyyy'"></tl-datepicker>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-datepicker [formatDate]="'mm.dd.yyyy'"></tl-datepicker>
 </textarea>
             </div>
           </app-card>

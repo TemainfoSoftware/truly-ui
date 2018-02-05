@@ -21,80 +21,80 @@
  */
 export const dataProperties = [
   {
-    name: 'text',
+    name: 'iconAfter',
     type: 'string',
     default: 'null',
-    description: 'Displays a text button.',
+    description: 'Create an icon After the Input.',
+    options: 'ion-printer | fa fa-home | any'
+  },
+  {
+    name: 'label',
+    type: 'string',
+    default: 'null',
+    description: 'Create a label together with Input Element',
     options: 'any text'
   },
   {
-    name: 'color',
+    name: 'labelSize',
     type: 'string',
-    default: 'basic',
-    description: 'Changes the default color of the button.',
-    options: 'basic | primary | success | information | warning | danger | light | dark'
-  },
-  {
-    name: 'width',
-    type: 'string',
-    default: '125px',
-    description: 'Button width.',
+    default: '100px',
+    description: 'Width of label text',
     options: 'px | % | em'
   },
   {
-    name: 'height',
+    name: 'labelPlacement',
     type: 'string',
-    default: '39',
-    description: 'Button height.',
-    options: 'px | % | em'
+    default: 'left',
+    description: 'Label Position',
+    options: 'top | left'
+  },
+  {
+    name: 'clearButton',
+    type: 'boolean',
+    default: 'false',
+    description: 'Display an icon to clear any Input Value',
+    options: 'true | false'
   },
   {
     name: 'disabled',
     type: 'boolean',
     default: 'false',
-    description: 'Disables the button if set to true.',
+    description: 'Display an input with not selectable text (disabled)',
     options: 'true | false'
   },
   {
-    name: 'iconAddonBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAddonAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconBeforeText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'toggle',
+    name: 'readonly',
     type: 'boolean',
     default: 'false',
-    description: 'Change the button to toggle button if set to true.',
+    description: 'Display an input with selectable text (only read)',
     options: 'true | false'
   },
   {
-    name: 'mdResult',
+    name: 'placeholder',
     type: 'string',
     default: 'null',
-    description: 'Return value class when set inside a Modal Component.',
-    options: 'MRFREE | MRCUSTOM | MROK | MRCANCEL | MRABORT | MRRETRY | MRIGNORE | MRYES | MRNO | MRCLOSE'
+    description: 'Display a help text on Input',
+    options: 'any text'
+  },
+  {
+    name: 'iconCalendar',
+    type: 'boolean',
+    default: 'false',
+    description: 'Display an calendar icon after input.',
+    options: 'true | false'
+  },
+  {
+    name: 'formatDate',
+    type: 'string',
+    default: 'dd/mm/yyyy',
+    description: 'Define the date format of datepicker.',
+    options: 'any format with dd, mm, and yyyy'
+  },
+  {
+    name: 'textAlign',
+    type: 'string',
+    default: 'left',
+    description: 'Define the alignment of the text inside of the input. (css text-align)',
+    options: 'left|right|center|justify|initial|inherit'
   }
-  ];
+];

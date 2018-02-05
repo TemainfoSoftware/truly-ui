@@ -33,7 +33,8 @@ export class DataClientService {
         title: '',
         status: '',
         notification: '',
-        value: '',
+        birthday: '',
+        date: '',
         cnpj: '',
       };
 

@@ -41,15 +41,15 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'birthday'" messageValidation required [labelSize]="100" [(ngModel)]="birthday"
+                <tl-input [name]="'birthday'" messageValidation required [labelSize]="100" [ngModel]="person?.birthday"
                           [label]="'Birthday'" date [formatDate]="'dd.mm.yyyy'"></tl-input>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-12">
             <div class="form-group">
-              <tl-input [name]="'country'" messageValidation [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
+              <tl-datepicker [name]="'date'" [label]="'Date'" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
             </div>
           </div>
           <!--<div class="col-md-8">

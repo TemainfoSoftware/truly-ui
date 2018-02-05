@@ -21,18 +21,13 @@
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { CustomType } from '../../core/custom-type';
+import { ReverseFormatDate } from '../../../core/helper/reverseformatdate';
 
 let formatDate;
 
 export class DateTl implements CustomType {
 
   private date: Date;
-
-  private day;
-
-  private month;
-
-  private year;
 
   private tlinput;
 
@@ -52,34 +47,8 @@ export class DateTl implements CustomType {
         return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
-      formatDate = formatDate.toLowerCase();
-      const formatTmp = formatDate.replace( /[a-z]/gi, '' );
-      const formatArray = formatTmp.split( '' );
-
-      const pattern = formatDate.split( formatArray[ 0 ] );
-
-      for ( let i = 0; i < pattern.length; i++ ) {
-        switch ( pattern[ i ] ) {
-          case 'dd':
-            this.day = this.stringUnmasked( c ).substr( formatDate.indexOf( 'd' ),
-              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
-            break;
-          case 'mm':
-            this.month = this.stringUnmasked( c ).substr( formatDate.indexOf( 'm' ),
-              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
-            break;
-          case 'yyyy':
-            this.year = this.stringUnmasked( c ).substr( formatDate.indexOf( 'y' ),
-              (this.stringUnmasked( c ).length - formatDate.length) + pattern[ i ].length );
-            break;
-        }
-      }
-
-      this.year = parseInt( this.year, 10 );
-      this.month = parseInt( this.month, 10 );
-      this.day = parseInt( this.day, 10 );
-
-      this.date = new Date( this.year + '-' + this.month + '-' + this.day );
+      const formattedDate = ReverseFormatDate(this.stringUnmasked(c), formatDate);
+      this.date = new Date( formattedDate['year'] + '-' + formattedDate['month'] + '-' + formattedDate['day'] );
 
       if ( this.date.toDateString() === 'Invalid Date' ) {
         return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };

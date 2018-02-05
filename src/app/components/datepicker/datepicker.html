@@ -1,0 +1,27 @@
+<div class="ui-datepicker-wrapper">
+  <tl-input #input
+            [label]="label"
+            [labelSize]="labelSize"
+            (focus)="onDateInputFocus()"
+            (keyup)="onInputKeyUp($event)"
+            (focusout)="onDateInputFocusOut($event)"
+            (clear)="onClearInput()"
+            (clickAddon)="onClickCalendar()"
+            [iconAfter]="iconAfter"
+            date
+            [formatDate]="formatDate"
+            [textAlign]="textAlign"
+            [labelPlacement]="labelPlacement"
+            [readonly]="readonly ? true : null"
+            [disabled]="disabled ? true : null"
+            [(ngModel)]="value"
+            [placeholder]="placeholder"
+            [clearButton]="clearButton">
+  </tl-input>
+  <div class="ui-wrapper-calendar-content" #calendarContent>
+    <div class="ui-arrow" [style.display]="open ? 'block' : 'none'"></div>
+    <div class="ui-calendar-content" [style.display]="open ? 'block' : 'none'">
+      <tl-calendar [day]="day" (focusout)="onDateInputFocusOut($event)" [typingDay]="true" [month]="month" [year]="year" [inputControlFocus]="input" (selectDay)="onSelectDay($event)"></tl-calendar>
+    </div>
+  </div>
+</div>

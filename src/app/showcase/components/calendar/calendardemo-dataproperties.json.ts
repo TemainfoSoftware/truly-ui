@@ -27,4 +27,32 @@ export const dataProperties = [
     description: 'Displays a footer with a today button.',
     options: 'true | false'
   },
+  {
+    name: 'typingDay',
+    type: 'boolean',
+    default: 'true',
+    description: 'Used on datepicker, this property is used to control change of Date Object while typing.',
+    options: 'true | false'
+  },
+  {
+    name: 'day',
+    type: 'number',
+    default: 'Current Day',
+    description: 'Property to set Day of calendar will initiate.',
+    options: 'true | false'
+  },
+  {
+    name: 'month',
+    type: 'number',
+    default: 'Current Month',
+    description: 'Property to set Month of calendar will initiate.',
+    options: 'true | false'
+  },
+  {
+    name: 'year',
+    type: 'number',
+    default: 'Current Year',
+    description: 'Property to set Year of calendar will initiate.',
+    options: 'true | false'
+  },
 ];

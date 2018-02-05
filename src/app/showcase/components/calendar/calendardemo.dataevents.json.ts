@@ -30,4 +30,11 @@ export const dataEvents = [
     ],
     description: 'Dispatched when day cell is clicked.',
   },
+  {
+    name: 'focusout',
+    parameters: [
+      { event: 'FocusEvent', description: 'The Object FocusEvent itself' },
+    ],
+    description: 'Dispatched when calendar lost focus.',
+  },
 ];

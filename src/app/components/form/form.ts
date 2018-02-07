@@ -51,8 +51,6 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() submitShortcut = '';
 
-  @Input() closeShortcut = '';
-
   @Input() textConfirm = 'Ok';
 
   @Input() textCancel = 'Cancel';

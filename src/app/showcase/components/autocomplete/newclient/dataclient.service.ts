@@ -30,6 +30,7 @@ export class DataClientService {
         firstName: '',
         lastName: '',
         city: '',
+        clients: '',
         title: '',
         status: '',
         notification: '',

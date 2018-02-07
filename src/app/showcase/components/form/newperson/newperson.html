@@ -1,5 +1,5 @@
 <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
-    <tl-tabcontrol [height]="'200px'">
+    <tl-tabcontrol [height]="'250px'">
       <tl-tab [title]="'Person Information'">
         <div class="row">
           <div class="col-md-12">
@@ -36,7 +36,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'country'" [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
+                <tl-input [name]="'country'" [disabled]="true" [labelSize]="100" [ngModel]="person?.country" [label]="'Country'"></tl-input>
             </div>
           </div>
           <div class="col-md-6">
@@ -49,14 +49,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <tl-datepicker [name]="'date'" [label]="'Date'" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
-            </div>
-          </div>
-          <!--<div class="col-md-8">
-            <div class="form-group">
               <tl-autocomplete [data]="dataAuto"
                                [id]="'id'"
-                               [labelSize]="'10px'"
+                               [labelSize]="100"
+                               required
                                [openFocus]="true"
                                [name]="'clients'"
                                [label]="'Clients'"
@@ -65,10 +61,16 @@
                                [rowHeight]="35"
                                [placeholder]="'Search...'"
                                [labelName]="'firstName'"
-                               [(ngModel)]="result">
+                               [disabled]="true"
+                               [ngModel]="person?.clients">
               </tl-autocomplete>
             </div>
-          </div>-->
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <tl-datepicker [name]="'date'" [label]="'Date'" [autoClose]="true" [disabled]="true" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
+            </div>
+          </div>
         </div>
       </tl-tab>
     </tl-tabcontrol>

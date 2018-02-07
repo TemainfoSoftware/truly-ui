@@ -3,11 +3,11 @@
             [label]="label"
             [labelSize]="labelSize"
             [name]="name"
-            (focus)="onDateInputFocus($event)"
-            (keyup)="onInputKeyUp($event)"
-            (focusout)="onDateInputFocusOut($event)"
-            (clear)="onClearInput()"
-            (clickAddon)="onClickCalendar()"
+            (focus)="onDateInputFocus()"
+            (keydown)="onInputKeyUp($event)"
+            (keypress)="handleDateChange()"
+            (click)="onClickInput()"
+            (clear)="onClearInput($event)"
             [iconAfter]="iconAfter"
             date
             [formatDate]="formatDate"
@@ -20,10 +20,11 @@
             [clearButton]="clearButton">
   </tl-input>
   <div class="ui-wrapper-calendar-content" #calendarContent>
-    <div class="ui-arrow" [style.display]="open ? 'block' : 'none'"></div>
-    <div class="ui-calendar-content" [style.display]="open ? 'block' : 'none'">
-      <tl-calendar [day]="day" (focusout)="onDateInputFocusOut($event)" [typingDay]="true" [month]="month" [year]="year"
+    <div class="ui-arrow-up" #arrow [style.display]="open && !isCalendarAbove ? 'block' : 'none'"></div>
+    <div class="ui-calendar-content" #calendar [style.display]="open ? 'block' : 'none'">
+      <tl-calendar [day]="day" [typingDay]="true" (click)="onClickCalendar()" [month]="month" [year]="year"
                    [inputControlFocus]="input" (selectDay)="onSelectDay($event)"></tl-calendar>
     </div>
+    <div class="ui-arrow-down" [style.display]="open && isCalendarAbove ? 'block' : 'none'"></div>
   </div>
 </div>

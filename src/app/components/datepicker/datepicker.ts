@@ -32,7 +32,6 @@ import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { KeyEvent } from '../core/enums/key-events';
-import set = Reflect.set;
 
 @Component( {
   selector: 'tl-datepicker',
@@ -133,7 +132,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   }
   
   handleOpen() {
-    if ( !this.open ) {
+    if ( !this.open && !this.tlinput.disabled ) {
       this.open = true;
     }
   }

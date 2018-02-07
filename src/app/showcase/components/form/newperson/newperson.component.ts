@@ -12,7 +12,7 @@ import { Modal } from '../../../../components/modal/modal-options';
   height: 'auto',
   maximizable: true,
   minimizable: true,
-  fullscreen: false
+  fullscreen: false,
 })
 
 @Component( {

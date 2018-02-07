@@ -20,386 +20,392 @@
  SOFTWARE.
  */
 import {
-    Component,
-    EventEmitter,
-    Input,
-    OnInit,
-    Output,
-    ViewChild,
-    ChangeDetectionStrategy, Renderer2, OnDestroy, ChangeDetectorRef, AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Optional,
+  ViewChild,
+  ChangeDetectionStrategy, Renderer2, OnDestroy, Inject, AfterViewInit, Injector, ChangeDetectorRef,
 } from '@angular/core';
-import { ComponentHasModelBase } from '../core/base/component-has-model.base';
-import { TabIndexService } from '../form/tabIndex.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-
+import { ElementBase } from '../input/core/element-base';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 
 @Component( {
-    selector: 'tl-multiselect',
-    templateUrl: './multiselect.html',
-    styleUrls: [ './multiselect.scss' ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        [ MakeProvider(TlMultiSelect) ]
-    ]
+  selector: 'tl-multiselect',
+  templateUrl: './multiselect.html',
+  styleUrls: [ './multiselect.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    [ MakeProvider( TlMultiSelect ) ]
+  ]
 } )
-export class TlMultiSelect extends ComponentHasModelBase implements OnInit, AfterViewInit, OnDestroy {
+export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, AfterViewInit, OnDestroy {
 
-    @Input() color: string;
+  @Input() color: string;
 
-    @Input() data = [];
+  @Input() data = [];
 
-    @Input() query: string;
+  @Input() query: string;
 
-    @Input() label: string;
+  @Input() label: string;
 
-    @Input() labelSize = '120px';
+  @Input() labelSize = '120px';
 
-    @Input() labelTag: string;
+  @Input() labelTag: string;
 
-    @Input() detail: string;
+  @Input() detail: string;
 
-    @Input() icon: string;
+  @Input() icon: string;
 
-    @Input() defaultColorTag = '#66CC99';
+  @Input() defaultColorTag = '#66CC99';
 
-    @Input() defaultIconTag = null;
+  @Input() defaultIconTag = null;
 
-    @Input() openFocus = true;
+  @Input() openFocus = true;
 
-    @Input() detailOnTag = null;
+  @Input() detailOnTag = null;
 
-    @Input() itemHeight = '7px';
+  @Input() itemHeight = '7px';
 
-    @Input() itemAmount = 5;
+  @Input() itemAmount = 5;
 
-    @Input() minLengthSearch = 2;
+  @Input() minLengthSearch = 2;
 
-    @Input() sortAlphabetically = false;
+  @Input() placeholder = '';
 
-    @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
+  @Input() sortAlphabetically = false;
 
-    @Output() tagClick: EventEmitter<any> = new EventEmitter();
+  @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
-    @Output() tagRemove: EventEmitter<any> = new EventEmitter();
+  @Output() tagClick: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild( 'input' ) input;
+  @Output() tagRemove: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild( 'ul' ) ul;
+  @ViewChild( 'input' ) input;
 
-    @ViewChild( 'element' ) wrapperTags;
+  @ViewChild( 'ul' ) ul;
 
-    public isOpen = false;
+  @ViewChild(NgModel) model: NgModel;
 
-    public filteredItens = [];
+  @ViewChild( 'element' ) wrapperTags;
 
-    public listPosition;
+  public isOpen = false;
 
-    public listTopPosition;
+  public filteredItens = [];
 
-    public hasKeySource: boolean;
+  public listPosition;
 
-    private showIcon = true;
+  public listTopPosition;
 
-    private cursor = -1;
+  public hasKeySource: boolean;
 
-    private selectTag: number;
+  public focused = false;
 
-    private placeholderMessage: string;
+  private showIcon = true;
 
-    private documentListener;
+  private cursor = -1;
 
-    private tags = [];
+  private selectTag: number;
 
-    private dataSource = [];
+  private placeholderMessage: string;
 
-    private scrollDocument;
+  private documentListener;
 
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                 private renderer: Renderer2, private change: ChangeDetectorRef ) {
-        super( tabIndexService, idService, nameService );
-    }
+  private tags = [];
 
-    ngOnInit() {
-        this.placeholderMessage = this.placeholder;
-        this.dataSource = this.data;
-        this.validateKeySource();
-        this.setFilteredItens();
-        this.validationProperty();
-        this.setElement( this.input, 'multiselect' );
-        this.createDocumentListener();
-      this.documentScrollListener();
-    }
+  private dataSource = [];
 
-    ngAfterViewInit() {
-        this.validateHasModel();
-    }
+  private scrollDocument;
 
-    validateKeySource() {
-        this.dataSource[0].source ? this.hasKeySource = true : this.hasKeySource = false;
-    }
+  constructor(
+    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
+    private change: ChangeDetectorRef, private renderer: Renderer2
+  ) {
+    super(validators, asyncValidators);
+  }
 
-    createDocumentListener() {
-        this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
-            this.toogleOpen( true );
-            if ( !this.isTargetElementEqualActiveElement( $event ) && !this.isTargetNodeNameEqualLi( $event ) ) {
-                this.toogleOpen( false );
-            }
-        } );
-    }
+  ngOnInit() {
+    this.placeholderMessage = this.placeholder;
+    this.dataSource = this.data;
+    this.validateKeySource();
+    this.setFilteredItens();
+    this.validationProperty();
+    this.createDocumentListener();
+    this.documentScrollListener();
+  }
 
-    isTargetElementEqualActiveElement( $event ) {
-        return $event.target === document.activeElement;
-    }
+  ngAfterViewInit() {
+    this.validateHasModel();
+  }
 
-    isTargetNodeNameEqualLi( $event ) {
-        return $event.target.nodeName === 'LI';
-    }
+  validateKeySource() {
+    this.dataSource[ 0 ].source ? this.hasKeySource = true : this.hasKeySource = false;
+  }
 
-    validateHasModel() {
-        setTimeout( () => {
-            if ( this.modelValue ) {
-                this.handleModelValueAsTags();
-                this.cleanInput();
-                this.removeElementsForFilter();
-                this.change.detectChanges();
-            }
-        }, 1 );
-    }
-
-    handleModelValueAsTags() {
-        this.setModelValueWithSourceKey();
-        let modeltemp;
-        modeltemp = this.modelValue;
-        modeltemp.forEach((value, index, array) => {
-            this.dataSource.forEach( ( value2, index2, array2 ) => {
-                if (JSON.stringify(value) === JSON.stringify(this.getValue(value2))) {
-                    this.tags.push(value2);
-                }
-            });
-        });
-    }
-
-    setModelValueWithSourceKey() {
-       for (let item = 0; item < this.modelValue.length; item++) {
-           if (this.modelValue[item].source) {
-               return this.tags = this.modelValue;
-           }
-       }
-    }
-
-    sortFilteredItens() {
-        if ( this.sortAlphabetically ) {
-            this.filteredItens.sort( ( a, b ) => {
-                const x = this.getValue(a)[ this.query ].toLowerCase();
-                const y = this.getValue(b)[ this.query ].toLowerCase();
-                return x < y ? -1 : x > y ? 1 : 0;
-            } );
-        }
-    }
-
-    removeElementsForFilter() {
-        this.tags.forEach((value) => {
-            this.dataSource.forEach( ( value2, index, array ) => {
-                if (JSON.stringify(this.getValue(value)) === JSON.stringify(this.getValue(value2))) {
-                    this.dataSource.splice( index, 1 );
-                }
-            });
-        });
-        this.filteredItens = this.dataSource;
-        this.sortFilteredItens();
-    }
-
-    validationProperty() {
-        if ( !this.icon ) {
-            this.showIcon = false;
-        }
-        if ( this.data === undefined || this.query === undefined ) {
-            throw new Error( 'The property [data] and property [query] are Required ' + '' +
-                'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
-        }
-        if ( !this.labelTag ) {
-            this.labelTag = this.query;
-        }
-        if ( this.detail === undefined && this.detailOnTag !== null ) {
-            throw new Error( 'You have to declare the [detail] property' );
-        }
-    }
-
-    validateEmptySearch() {
-        setTimeout( () => {
-            if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
-                return this.filteredItens = this.dataSource;
-            }
-        }, 1 );
-        this.sortFilteredItens();
-    }
-
-    validateOpenOnFocus() {
-        if ( this.openFocus ) {
-            this.toogleOpen( true );
-        }
-    }
-
-    validateEventOnKeyEnter( $event ) {
-        if ( this.tags.length === 0 ) {
-            this.stopEventKeyDown( $event );
-            this.setInputFocus();
-        }
-        this.stopEventKeyDown( $event );
-        this.setInputFocus();
-    }
-
-    addTagOnKeyEnter() {
-      for ( let item = 0; item < this.filteredItens.length; item++ ) {
-        if ( this.filteredItens[ item ].selected ) {
-          return this.addTag( this.filteredItens[ item ] );
-        }
+  createDocumentListener() {
+    this.documentListener = this.renderer.listen( document, 'mousedown', ( $event ) => {
+      this.toogleOpen( true );
+      if ( !this.isTargetElementEqualActiveElement( $event ) && !this.isTargetNodeNameEqualLi( $event ) ) {
+        this.toogleOpen( false );
       }
-    }
+    } );
+  }
 
-    removeAllSelectedClasses() {
-      for ( let item = 0; item < this.filteredItens.length; item++ ) {
-        this.filteredItens[ item ].selected = false;
-        }
-    }
+  isTargetElementEqualActiveElement( $event ) {
+    return $event.target === document.activeElement;
+  }
 
-    handleKeyDown( $event ) {
-        this.activeInputText();
-        switch ( $event.keyCode ) {
-            case KeyEvent.ENTER:
-                this.handleKeyEnter( $event );
-                break;
-            case KeyEvent.ARROWDOWN:
-                if ( this.isOpen ) {
-                    this.stopEventKeyDown( $event );
-                }
-                this.toogleOpen( true );
-                this.handleArrowDown();
-                break;
-            case KeyEvent.ARROWUP:
-                if ( this.isOpen ) {
-                    this.stopEventKeyDown( $event );
-                }
-                this.handleArrowUp();
-                break;
-            case KeyEvent.DELETE:
-                this.handleKeyDelete( $event );
-                break;
-            case KeyEvent.BACKSPACE:
-                this.handleKeyBackspace();
-                break;
-            case KeyEvent.TAB:
-                this.toogleOpen( false );
-                break;
-            case KeyEvent.ARROWLEFT:
-                this.stopEventKeyDown( $event );
-                if (!this.isTagsEqualsZero()) {
-                    this.handleArrowLeft();
-                }
-                break;
-            case KeyEvent.ARROWRIGHT:
-                this.stopEventKeyDown($event);
-                if (!this.isTagsEqualsZero()) {
-                    this.handleArrowRight();
-                }
-                break;
-            case KeyEvent.ESCAPE:
-                if ( this.isOpen ) {
-                    this.stopEventKeyDown( $event );
-                    this.toogleOpen( false );
-                }
-                break;
-        }
-    }
+  isTargetNodeNameEqualLi( $event ) {
+    return $event.target.nodeName === 'LI';
+  }
 
-    handleKeyEnter( $event ) {
-        if ( this.isOpen ) {
-            this.validateEventOnKeyEnter( $event );
-            this.addTagOnKeyEnter();
-            this.addClassSelected( 0 );
-            this.cursor = 0;
-        }
-    }
-
-    handleKeyDelete( $event ) {
-        this.stopEventKeyDown( $event );
-        this.deleteTagSelected();
-        this.removeAllSelectedClasses();
-        this.addClassSelected( 0 );
-        this.cursor = 0;
-    }
-
-    handleKeyBackspace() {
-      this.getTopPosition();
-        this.removeAllSelectedClasses();
-        this.removeTagOnBackspace();
-        this.addClassSelected( 0 );
-        this.cursor = 0;
-    }
-
-    activeInputText() {
-        this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
-    }
-
-    deActiveInputText() {
-      if (this.isOpen) {
-        this.input.nativeElement.style.webkitTextFillColor = 'transparent';
-      }
-    }
-
-    handleArrowRight() {
-        this.cleanTagSelected();
-        if (this.selectTag !== this.tags.length - 1) {
-            this.selectTag++;
-            this.setSelectTagAsTrue();
-        }
-    }
-
-    handleArrowLeft() {
-        this.cleanTagSelected();
-        if (this.selectTag !== 0 && this.tags.length !== 0) {
-            this.selectTag--;
-            this.setSelectTagAsTrue();
-        }
-    }
-
-    handleArrowDown() {
-        if ( !this.isOpen ) {
-            return;
-        }
-        if ( this.cursor < this.ul.nativeElement.children.length - 1 ) {
-            this.setFocusOnNextElement();
-            this.cursor = this.cursor + 1;
-        }
-    }
-
-    handleArrowUp() {
-        if ( !this.isOpen ) {
-            return;
-        }
-        if ( !this.isChildrenEqualsZero() && !this.isChildrenEqualsNegativeOne() ) {
-            this.setFocusOnPreviousElement();
-            this.cursor = this.cursor - 1;
-        } else {
-            this.setInputFocus();
-        }
-    }
-
-    handleInputFocus() {
-        this.validateOpenOnFocus();
-        this.setOutlineMultiSelect();
-        this.deActiveInputText();
-        this.sortFilteredItens();
-        this.listPosition = this.element.nativeElement.getBoundingClientRect() - 5;
-      this.getTopPosition();
+  validateHasModel() {
+    setTimeout( () => {
+      if ( this.value ) {
+        this.handleModelValueAsTags();
+        this.cleanInput();
+        this.removeElementsForFilter();
         this.change.detectChanges();
+      }
+    }, 1 );
+  }
+
+  handleModelValueAsTags() {
+    this.setModelValueWithSourceKey();
+    let modeltemp;
+    modeltemp = this.value;
+    modeltemp.forEach( ( value, index, array ) => {
+      this.dataSource.forEach( ( value2, index2, array2 ) => {
+        if ( JSON.stringify( value ) === JSON.stringify( this.getValue( value2 ) ) ) {
+          this.tags.push( value2 );
+        }
+      } );
+    } );
+  }
+
+  setModelValueWithSourceKey() {
+    for ( let item = 0; item < this.value.length; item++ ) {
+      if ( this.value[ item ].source ) {
+        return this.tags = this.value;
+      }
     }
+  }
+
+  sortFilteredItens() {
+    if ( this.sortAlphabetically ) {
+      this.filteredItens.sort( ( a, b ) => {
+        const x = this.getValue( a )[ this.query ].toLowerCase();
+        const y = this.getValue( b )[ this.query ].toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      } );
+    }
+  }
+
+  removeElementsForFilter() {
+    this.tags.forEach( ( value ) => {
+      this.dataSource.forEach( ( value2, index, array ) => {
+        if ( JSON.stringify( this.getValue( value ) ) === JSON.stringify( this.getValue( value2 ) ) ) {
+          this.dataSource.splice( index, 1 );
+        }
+      } );
+    } );
+    this.filteredItens = this.dataSource;
+    this.sortFilteredItens();
+  }
+
+  validationProperty() {
+    if ( !this.icon ) {
+      this.showIcon = false;
+    }
+    if ( this.data === undefined || this.query === undefined ) {
+      throw new Error( 'The property [data] and property [query] are Required ' + '' +
+        'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
+    }
+    if ( !this.labelTag ) {
+      this.labelTag = this.query;
+    }
+    if ( this.detail === undefined && this.detailOnTag !== null ) {
+      throw new Error( 'You have to declare the [detail] property' );
+    }
+  }
+
+  validateEmptySearch() {
+    setTimeout( () => {
+      if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
+        return this.filteredItens = this.dataSource;
+      }
+    }, 1 );
+    this.sortFilteredItens();
+  }
+
+  validateOpenOnFocus() {
+    if ( this.openFocus ) {
+      this.toogleOpen( true );
+    }
+  }
+
+  validateEventOnKeyEnter( $event ) {
+    if ( this.tags.length === 0 ) {
+      this.stopEventKeyDown( $event );
+      this.setInputFocus();
+    }
+    this.stopEventKeyDown( $event );
+    this.setInputFocus();
+  }
+
+  addTagOnKeyEnter() {
+    for ( let item = 0; item < this.filteredItens.length; item++ ) {
+      if ( this.filteredItens[ item ].selected ) {
+        return this.addTag( this.filteredItens[ item ] );
+      }
+    }
+  }
+
+  removeAllSelectedClasses() {
+    for ( let item = 0; item < this.filteredItens.length; item++ ) {
+      this.filteredItens[ item ].selected = false;
+    }
+  }
+
+  handleKeyDown( $event ) {
+    this.activeInputText();
+    switch ( $event.keyCode ) {
+      case KeyEvent.ENTER:
+        this.handleKeyEnter( $event );
+        break;
+      case KeyEvent.ARROWDOWN:
+        if ( this.isOpen ) {
+          this.stopEventKeyDown( $event );
+        }
+        this.toogleOpen( true );
+        this.handleArrowDown();
+        break;
+      case KeyEvent.ARROWUP:
+        if ( this.isOpen ) {
+          this.stopEventKeyDown( $event );
+        }
+        this.handleArrowUp();
+        break;
+      case KeyEvent.DELETE:
+        this.handleKeyDelete( $event );
+        break;
+      case KeyEvent.BACKSPACE:
+        this.handleKeyBackspace();
+        break;
+      case KeyEvent.TAB:
+        this.toogleOpen( false );
+        break;
+      case KeyEvent.ARROWLEFT:
+        this.stopEventKeyDown( $event );
+        if ( !this.isTagsEqualsZero() ) {
+          this.handleArrowLeft();
+        }
+        break;
+      case KeyEvent.ARROWRIGHT:
+        this.stopEventKeyDown( $event );
+        if ( !this.isTagsEqualsZero() ) {
+          this.handleArrowRight();
+        }
+        break;
+      case KeyEvent.ESCAPE:
+        if ( this.isOpen ) {
+          this.stopEventKeyDown( $event );
+          this.toogleOpen( false );
+        }
+        break;
+    }
+  }
+
+  handleKeyEnter( $event ) {
+    if ( this.isOpen ) {
+      this.validateEventOnKeyEnter( $event );
+      this.addTagOnKeyEnter();
+      this.addClassSelected( 0 );
+      this.cursor = 0;
+    }
+  }
+
+  handleKeyDelete( $event ) {
+    this.stopEventKeyDown( $event );
+    this.deleteTagSelected();
+    this.removeAllSelectedClasses();
+    this.addClassSelected( 0 );
+    this.cursor = 0;
+  }
+
+  handleKeyBackspace() {
+    this.getTopPosition();
+    this.removeAllSelectedClasses();
+    this.removeTagOnBackspace();
+    this.addClassSelected( 0 );
+    this.cursor = 0;
+  }
+
+  activeInputText() {
+  //  this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
+  }
+
+  deActiveInputText() {
+    if ( this.isOpen ) {
+  // /    this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+    }
+  }
+
+  handleArrowRight() {
+    this.cleanTagSelected();
+    if ( this.selectTag !== this.tags.length - 1 ) {
+      this.selectTag++;
+      this.setSelectTagAsTrue();
+    }
+  }
+
+  handleArrowLeft() {
+    this.cleanTagSelected();
+    if ( this.selectTag !== 0 && this.tags.length !== 0 ) {
+      this.selectTag--;
+      this.setSelectTagAsTrue();
+    }
+  }
+
+  handleArrowDown() {
+    if ( !this.isOpen ) {
+      return;
+    }
+    if ( this.cursor < this.ul.nativeElement.children.length - 1 ) {
+      this.setFocusOnNextElement();
+      this.cursor = this.cursor + 1;
+    }
+  }
+
+  handleArrowUp() {
+    if ( !this.isOpen ) {
+      return;
+    }
+    if ( !this.isChildrenEqualsZero() && !this.isChildrenEqualsNegativeOne() ) {
+      this.setFocusOnPreviousElement();
+      this.cursor = this.cursor - 1;
+    } else {
+      this.setInputFocus();
+    }
+  }
+
+  handleInputFocus() {
+    this.validateOpenOnFocus();
+    this.setOutlineMultiSelect();
+    this.deActiveInputText();
+    this.sortFilteredItens();
+    this.listPosition = this.wrapperTags.nativeElement.getBoundingClientRect() - 5;
+    this.getTopPosition();
+    this.change.detectChanges();
+  }
 
   getTopPosition() {
-    this.listTopPosition = this.element.nativeElement.getBoundingClientRect().top;
+    this.listTopPosition = this.wrapperTags.nativeElement.getBoundingClientRect().top;
   }
 
   documentScrollListener() {
@@ -410,319 +416,320 @@ export class TlMultiSelect extends ComponentHasModelBase implements OnInit, Afte
     } );
   }
 
-    setFilteredItens() {
-        this.validateEmptySearch();
-        if ( !this.isTagsLengthMoreThanZero() ) {
-            if ( this.isFilteredLengthEqualsDataLength() ) {
-                this.filteredItens = this.dataSource;
-                this.sortFilteredItens();
-            }
-        }
-    }
-
-    toogleOpen( opened ) {
-        this.isOpen = opened;
-    }
-
-    removeTagOfFilter( tag? ) {
-        this.cursor = -1;
-        this.filteredItens.forEach( ( item, index, array2 ) => {
-            if (JSON.stringify(this.getValue(tag)) === JSON.stringify(this.getValue(item))) {
-                this.filteredItens.splice( index, 1 );
-            }
-        });
+  setFilteredItens() {
+    this.validateEmptySearch();
+    if ( !this.isTagsLengthMoreThanZero() ) {
+      if ( this.isFilteredLengthEqualsDataLength() ) {
+        this.filteredItens = this.dataSource;
         this.sortFilteredItens();
-    }
-
-    getValue(value) {
-        return this.hasKeySource ? value.source : value;
-    }
-
-    setOutlineMultiSelect() {
-        if ( this.wrapperTags ) {
-            this.wrapperTags.nativeElement.style.background = '#fffbe9';
-            this.wrapperTags.nativeElement.style.border = '1px solid #ffcf94';
-        }
-    }
-
-    setSelectTagAsTrue() {
-        this.tags[ this.selectTag ][ 'selected' ] = true;
-    }
-
-    setInputFocus() {
-        this.input.nativeElement.focus();
-        this.cursor = -1;
-    }
-
-    setFocusOnNextElement() {
-        const nextCursor = this.cursor + 1;
-        if ( this.cursor >= 0 ) {
-            this.removeClassSelected( this.cursor );
-        }
-        this.addClassSelected( nextCursor );
-    }
-
-    setFocusOnPreviousElement() {
-        const previousCursor = this.cursor - 1;
-        if ( this.cursor >= 0 ) {
-            this.removeClassSelected( this.cursor );
-        }
-        this.addClassSelected( previousCursor );
-    }
-
-    addClassSelected( index ) {
-      if (this.existChildren()) {
-        if ( this.filteredItens[index] !== undefined ) {
-          this.filteredItens[index].selected = true;
-        }
-        this.change.detectChanges();
       }
     }
+  }
 
-    removeClassSelected( index ) {
-      if (this.existChildren()) {
-        if ( this.filteredItens[index] !== undefined ) {
-          this.filteredItens[ index ].selected = false;
-        }
-        this.change.detectChanges();
+  toogleOpen( opened ) {
+    this.isOpen = opened;
+  }
+
+  removeTagOfFilter( tag? ) {
+    this.cursor = -1;
+    this.filteredItens.forEach( ( item, index, array2 ) => {
+      if ( JSON.stringify( this.getValue( tag ) ) === JSON.stringify( this.getValue( item ) ) ) {
+        this.filteredItens.splice( index, 1 );
       }
+    } );
+    this.sortFilteredItens();
+  }
+
+  getValue( value ) {
+    return this.hasKeySource ? value.source : value;
+  }
+
+  setOutlineMultiSelect() {
+    if ( this.wrapperTags ) {
+      this.focused = true;
     }
+  }
 
-    existChildren() {
-      return this.ul.nativeElement.children.length > 0;
+  setSelectTagAsTrue() {
+    this.tags[ this.selectTag ][ 'selected' ] = true;
+  }
+
+  setInputFocus() {
+    this.input.nativeElement.focus();
+    this.cursor = -1;
+  }
+
+  setFocusOnNextElement() {
+    const nextCursor = this.cursor + 1;
+    if ( this.cursor >= 0 ) {
+      this.removeClassSelected( this.cursor );
     }
+    this.addClassSelected( nextCursor );
+  }
 
-    addTag( item ) {
-        this.tags.push( item );
-        this.placeholder = '';
-        this.selectTag = this.tags.length;
-        this.getSelecteds.emit( this.tags );
-        this.setModelValue();
-        this.getTopPosition();
-        this.cleanTagSelected();
-        this.removeTagOfFilter(item);
-        this.removeElementsForFilter();
-        this.setInputFocus();
-        this.cleanInput();
-        this.toogleOpen( true );
-        this.change.detectChanges();
-        this.handleSelectTagOnFirst();
+  setFocusOnPreviousElement() {
+    const previousCursor = this.cursor - 1;
+    if ( this.cursor >= 0 ) {
+      this.removeClassSelected( this.cursor );
     }
+    this.addClassSelected( previousCursor );
+  }
 
-    handleSelectTagOnFirst() {
-        if ( this.ul.nativeElement.children[ 0 ] ) {
-            this.addClassSelected( 0 );
-            this.cursor = 0;
-        }
+  addClassSelected( index ) {
+    if ( this.existChildren() ) {
+      if ( this.filteredItens[ index ] !== undefined ) {
+        this.filteredItens[ index ].selected = true;
+      }
+      this.change.detectChanges();
     }
+  }
 
-    stopEventKeyDown( $event ) {
-        $event.preventDefault();
-        $event.stopPropagation();
+  removeClassSelected( index ) {
+    if ( this.existChildren() ) {
+      if ( this.filteredItens[ index ] !== undefined ) {
+        this.filteredItens[ index ].selected = false;
+      }
+      this.change.detectChanges();
     }
+  }
 
-    setModelValue() {
-        const modeltemp = [];
-        this.tags.forEach((value) => {
-           modeltemp.push(this.getValue(value));
-        });
-        this.modelValue = modeltemp;
+  existChildren() {
+    return this.ul.nativeElement.children.length > 0;
+  }
+
+  addTag( item ) {
+    this.tags.push( item );
+    this.placeholder = '';
+    this.selectTag = this.tags.length;
+    this.getSelecteds.emit( this.tags );
+    this.setModelValue();
+    this.getTopPosition();
+    this.cleanTagSelected();
+    this.removeTagOfFilter( item );
+    this.removeElementsForFilter();
+    this.setInputFocus();
+    this.cleanInput();
+    this.toogleOpen( true );
+    this.change.detectChanges();
+    this.handleSelectTagOnFirst();
+  }
+
+  handleSelectTagOnFirst() {
+    if ( this.ul.nativeElement.children[ 0 ] ) {
+      this.addClassSelected( 0 );
+      this.cursor = 0;
     }
+  }
 
-    deleteTagSelected() {
-        this.addTagSelectedToFiltered();
-        this.filterTagsNotSelected();
-        this.sortFilteredItens();
+  stopEventKeyDown( $event ) {
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
+  setModelValue() {
+    const modeltemp = [];
+    this.tags.forEach( ( value ) => {
+      modeltemp.push( this.getValue( value ) );
+    } );
+    this.value = modeltemp;
+  }
+
+  deleteTagSelected() {
+    this.addTagSelectedToFiltered();
+    this.filterTagsNotSelected();
+    this.sortFilteredItens();
+  }
+
+  addTagSelectedToFiltered() {
+    this.tags.forEach( ( value ) => {
+      if ( value.selected ) {
+        this.filteredItens.push( value );
+      }
+    } );
+  }
+
+  filterTagsNotSelected() {
+    this.tags = this.tags.filter( function ( value ) {
+      return !value.selected;
+    } );
+  }
+
+
+  searchItem( inputed, $event ) {
+    this.closeFilterOnEscape( $event );
+    if ( this.isValueMoreOrEqualThanMinLengthSearch( inputed ) ) {
+      this.toogleOpen( true );
+      !this.isTagsLengthMoreThanZero() ? this.filterOfData( inputed ) : this.filterOfFilteredItens( inputed );
+    } else {
+      this.removeElementsForFilter();
     }
+    this.setNewSelected( inputed );
+  }
 
-    addTagSelectedToFiltered() {
-        this.tags.forEach((value) => {
-            if (value.selected) {
-                this.filteredItens.push( value );
-            }
-        });
+  setNewSelected( value ) {
+    if ( value ) {
+      this.removeAllSelectedClasses();
+      this.addClassSelected( 0 );
+      this.cursor = 0;
     }
-
-    filterTagsNotSelected() {
-        this.tags = this.tags.filter( function ( value ) {
-            return !value.selected;
-        } );
-    }
+  }
 
 
-    searchItem( inputed, $event ) {
-        this.closeFilterOnEscape( $event );
-        if ( this.isValueMoreOrEqualThanMinLengthSearch(inputed)  ) {
-            this.toogleOpen( true );
-            !this.isTagsLengthMoreThanZero() ? this.filterOfData( inputed ) : this.filterOfFilteredItens( inputed );
-        } else {
-            this.removeElementsForFilter();
-        }
-        this.setNewSelected( inputed );
-    }
+  filterOfData( inputed ) {
+    this.filteredItens = this.dataSource.filter( ( value ) => {
+      return this.getValue( value )[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+    } );
+  }
 
-    setNewSelected( value ) {
-        if ( value ) {
-            this.removeAllSelectedClasses();
-            this.addClassSelected( 0 );
-            this.cursor = 0;
-        }
-    }
+  filterOfFilteredItens( inputed ) {
+    this.filteredItens = this.filteredItens.filter( ( value ) => {
+      return this.getValue( value )[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
+    } );
+  }
 
+  isValueMoreOrEqualThanMinLengthSearch( value ) {
+    return value.length >= this.minLengthSearch;
+  }
 
-    filterOfData( inputed ) {
-        this.filteredItens = this.dataSource.filter( ( value ) => {
-            return this.getValue(value)[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-        } );
-    }
-
-    filterOfFilteredItens( inputed ) {
-        this.filteredItens = this.filteredItens.filter( ( value ) => {
-            return this.getValue(value)[ this.query ].toString().toUpperCase().includes( inputed.toUpperCase().trim() );
-        } );
-    }
-
-    isValueMoreOrEqualThanMinLengthSearch( value ) {
-        return value.length >= this.minLengthSearch;
-    }
-
-    selectTagCtrlBindClick( item ) {
-        item.selected = true;
-        this.setInputFocus();
-    }
+  selectTagCtrlBindClick( item ) {
+    item.selected = true;
+    this.setInputFocus();
+  }
 
   selectTagClick( event, index, item? ) {
-        this.tagClick.emit( item );
-        this.selectTag = index;
-        if (item.selected) {
-            return item.selected = false;
-        }
-        if (event.ctrlKey) {
-            return this.selectTagCtrlBindClick( item );
-        }
-        this.cleanTagSelected();
-        item.selected = true;
-        this.setInputFocus();
+    this.tagClick.emit( item );
+    this.selectTag = index;
+    if ( item.selected ) {
+      return item.selected = false;
     }
+    if ( event.ctrlKey ) {
+      return this.selectTagCtrlBindClick( item );
+    }
+    this.cleanTagSelected();
+    item.selected = true;
+    this.setInputFocus();
+  }
 
-    calcHeightWidthItem() {
-        if ( this.itemAmount >= this.filteredItens.length ) {
-            return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
-        } else {
-            return { 'height': (parseInt(this.itemHeight, 10) * 3.6) * this.itemAmount + 'px',
-                'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
-        }
+  calcHeightWidthItem() {
+    if ( this.itemAmount >= this.filteredItens.length ) {
+      return { 'height': 'auto', 'width': this.wrapperTags.nativeElement.offsetWidth + 'px' };
+    } else {
+      return {
+        'height': (parseInt( this.itemHeight, 10 ) * 3.6) * this.itemAmount + 'px',
+        'width': this.wrapperTags.nativeElement.offsetWidth + 'px'
+      };
     }
+  }
 
-    changeColorTag( tag ) {
-        if ( (this.color) && (tag.effect)) {
-            if ( !tag.selected ) {
-                return { 'background': tag.effect[this.color] };
-            }
-            return { 'background': tag.effect[this.color], 'opacity': 0.8 };
-        } else {
-            if ( tag.selected ) {
-                return { 'background': this.defaultColorTag, 'opacity': 0.8 };
-            }
-            return { 'background': this.defaultColorTag };
-        }
+  changeColorTag( tag ) {
+    if ( (this.color) && (tag.effect) ) {
+      if ( !tag.selected ) {
+        return { 'background': tag.effect[ this.color ] };
+      }
+      return { 'background': tag.effect[ this.color ], 'opacity': 0.8 };
+    } else {
+      if ( tag.selected ) {
+        return { 'background': this.defaultColorTag, 'opacity': 0.8 };
+      }
+      return { 'background': this.defaultColorTag };
     }
+  }
 
-    changePlaceholder() {
-        if ( this.tags.length === 0 ) {
-            this.placeholder = this.placeholderMessage;
-        }
+  changePlaceholder() {
+    if ( this.tags.length === 0 ) {
+      this.placeholder = this.placeholderMessage;
     }
+  }
 
-    removeTagOnBackspace() {
-        if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
-            this.removeTag( this.tags.length - 1 );
-            this.setInputFocus();
-        } else {
-            this.setFilteredItens();
-        }
-        this.toogleOpen( true );
+  removeTagOnBackspace() {
+    if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
+      this.removeTag( this.tags.length - 1 );
+      this.setInputFocus();
+    } else {
+      this.setFilteredItens();
     }
+    this.toogleOpen( true );
+  }
 
-    removeTag( index, item? ) {
-        item ? this.filteredItens.push( item ) : this.filteredItens.push( this.tags[ index ] );
-        this.tagRemove.emit( item ? item : this.tags[ index ] );
-        this.getSelecteds.emit( this.tags );
-        this.tags.splice( index, 1 );
-        this.changePlaceholder();
-        this.setInputFocus();
-        this.setModelValue();
-        this.sortFilteredItens();
-        this.cleanInput();
-        this.toogleOpen(true);
-        this.change.detectChanges();
-        this.handleSelectTagOnFirst();
-    }
+  removeTag( index, item? ) {
+    item ? this.filteredItens.push( item ) : this.filteredItens.push( this.tags[ index ] );
+    this.tagRemove.emit( item ? item : this.tags[ index ] );
+    this.getSelecteds.emit( this.tags );
+    this.tags.splice( index, 1 );
+    this.changePlaceholder();
+    this.setInputFocus();
+    this.setModelValue();
+    this.sortFilteredItens();
+    this.cleanInput();
+    this.toogleOpen( true );
+    this.change.detectChanges();
+    this.removeAllSelectedClasses();
+    this.handleSelectTagOnFirst();
+  }
 
-    cleanInput() {
-        setTimeout( () => {
-            this.input.nativeElement.value = '';
-        }, 1 );
-    }
+  cleanInput() {
+    setTimeout( () => {
+      this.input.nativeElement.value = '';
+    }, 1 );
+  }
 
-    cleanTagSelected() {
-        this.tags.forEach( function ( value ) {
-            value.selected = false;
-        } );
-    }
+  cleanTagSelected() {
+    this.tags.forEach( function ( value ) {
+      value.selected = false;
+    } );
+  }
 
-    clearOutlineMultiSelect() {
-        if ( this.wrapperTags ) {
-            this.wrapperTags.nativeElement.style.background = '#fff';
-            this.wrapperTags.nativeElement.style.border = '1px solid #CACACA';
-        }
+  clearOutlineMultiSelect() {
+    if ( this.wrapperTags ) {
+      this.focused = false;
     }
+  }
 
-    closeFilterOnEscape( $event ) {
-        if ( this.isKeyEventEqualsEscape( $event ) ) {
-            this.toogleOpen( false );
-        }
+  closeFilterOnEscape( $event ) {
+    if ( this.isKeyEventEqualsEscape( $event ) ) {
+      this.toogleOpen( false );
     }
+  }
 
-    isKeyEventEqualsEscape( $event ) {
-        return $event.keyCode === KeyEvent.ESCAPE;
-    }
+  isKeyEventEqualsEscape( $event ) {
+    return $event.keyCode === KeyEvent.ESCAPE;
+  }
 
-    isTagsEqualsZero() {
-        return this.tags.length === 0;
-    }
+  isTagsEqualsZero() {
+    return this.tags.length === 0;
+  }
 
-    isChildrenEqualsZero() {
-        return this.cursor === 0;
-    }
+  isChildrenEqualsZero() {
+    return this.cursor === 0;
+  }
 
-    isChildrenEqualsNegativeOne() {
-        return this.cursor === -1;
-    }
+  isChildrenEqualsNegativeOne() {
+    return this.cursor === -1;
+  }
 
-    isInputValueEqualsEmpty() {
-        return this.input.nativeElement.value === '';
-    }
+  isInputValueEqualsEmpty() {
+    return this.input.nativeElement.value === '';
+  }
 
-    isTagsLengthMoreThanZero() {
-        return this.tags.length > 0;
-    }
+  isTagsLengthMoreThanZero() {
+    return this.tags.length > 0;
+  }
 
-    isFilteredLengthEqualsDataLength() {
-        return this.filteredItens.length === this.dataSource.length;
-    }
+  isFilteredLengthEqualsDataLength() {
+    return this.filteredItens.length === this.dataSource.length;
+  }
 
-    closeList( event, element ) {
-        this.clearOutlineMultiSelect();
-        if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
-            this.toogleOpen( false );
-        }
+  closeList( event, element ) {
+    this.clearOutlineMultiSelect();
+    if ( event.relatedTarget === null || (event.relatedTarget as HTMLElement).nodeName !== 'LI' ) {
+      this.toogleOpen( false );
     }
+  }
 
-    ngOnDestroy() {
-        this.documentListener();
-        this.scrollDocument();
-        this.change.detach();
-    }
+  ngOnDestroy() {
+    this.documentListener();
+    this.scrollDocument();
+    this.change.detach();
+  }
 }
 

@@ -8,17 +8,16 @@ import { Modal } from '../../../../components/modal/modal-options';
   icon: 'ion-stats-bars',
   draggable: true,
   width: '500px',
-  color: '#5bbcf2',
+  color: 'success',
   height: 'auto',
   maximizable: true,
   minimizable: true,
-  fullscreen: false
+  fullscreen: false,
 })
 
 @Component( {
   selector: 'app-new-person',
   templateUrl: './newperson.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ './newperson.component.scss' ]
 } )
 export class NewPersonComponent implements OnInit, OnChanges {
@@ -34,6 +33,8 @@ export class NewPersonComponent implements OnInit, OnChanges {
   public dataAuto;
 
   public result;
+
+  public birthday;
 
   constructor(public formDataService: DataFormService,  public dataDumpService: DumpDataService) {
     this.dataAuto = this.dataDumpService.createRandomData( 200 );
@@ -60,11 +61,6 @@ export class NewPersonComponent implements OnInit, OnChanges {
 
   ngOnChanges(data: SimpleChanges) {
     console.log(data);
-  }
-
-
-  changess() {
-    console.log('add');
   }
 
 }

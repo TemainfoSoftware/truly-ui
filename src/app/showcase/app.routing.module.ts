@@ -72,12 +72,20 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },
       {
+        path: 'datepicker',
+        loadChildren: './components/datepicker/datepickerdemo.module#DatePickerDemoModule'
+      },
+      {
         path: 'form',
         loadChildren: './components/form/formdemo.module#FormDemoModule'
       },
       {
         path: 'input',
         loadChildren: './components/input/inputdemo.module#InputDemoModule'
+      },
+      {
+        path: 'inputvalidators',
+        loadChildren: './components/inputvalidators/inputvalidatorsdemo.module#InputValidatorsDemoModule'
       },
       {
         path: 'inputmask',

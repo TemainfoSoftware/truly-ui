@@ -1,25 +1,24 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-radiobutton-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $selected-background: map_get(map_get($theme,selected),background);
-  $box-background: map_get(map_get($theme,box),background);
-
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
 
   .radio-ring {
-    background: $box-background;
+    background: map-deep-get($basic, "default", "background");
   }
 
   input[type='radio']:after {
-    background-color: $borders;
+    background-color: map-deep-get($basic, "default", "border");
   }
 
   .-label {
-    color: $base-text;
+    color: map-deep-get($basic, "default", "foreground");
   }
 
   .radio-selected{
-    background-color: $selected-background;
+    background-color: map-deep-get($primary, "default", "background");
   }
 
 }

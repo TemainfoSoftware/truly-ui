@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable, ViewContainerRef } from '@angular/core';
+import { Injectable, ComponentFactoryResolver } from '@angular/core';
 import { ModalService } from '../modal/modal.service';
 
 import { TlDialogInfo } from './dialog-info/dialog-info';
@@ -38,22 +38,19 @@ export class DialogService {
 
     public modalResult;
 
-    constructor( public modalService: ModalService ) {}
+    constructor( public modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {}
 
-    setView(view: ViewContainerRef) {
-        this.modalService.setView(view);
-    }
 
     info( message: string, callback: Function, options?: InfoOptions ) {
-        this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModalDialog( TlDialogInfo,  callback );
+        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
+        this.modalService.createModalDialog( TlDialogInfo, this.factoryResolver,  callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
     confirmation( message: string, callback: Function, options?: ConfirmationOptions) {
-        this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModalDialog( TlDialogConfirmation, callback );
+        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
+        this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, callback );
         if (options) {
             this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
         }
@@ -62,15 +59,15 @@ export class DialogService {
     }
 
     alert( message: string, callback: Function, options?: AlertOptions ) {
-        this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModalDialog( TlDialogAlert, callback );
+        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
+        this.modalService.createModalDialog( TlDialogAlert, this.factoryResolver, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
     error( message: string, callback: Function, options?: ErrorOptions ) {
-        this.modalService.createBackdrop( TlBackdrop );
-        this.modalService.createModalDialog( TlDialogError, callback );
+        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
+        this.modalService.createModalDialog( TlDialogError, this.factoryResolver, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }

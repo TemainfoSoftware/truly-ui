@@ -3,7 +3,7 @@
  */
 export const dataProperties = [
   {
-    name: 'nameGroup',
+    name: 'name',
     type: 'string',
     default: 'null',
     description: 'Name of Radio Group (Used as property [name])',

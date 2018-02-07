@@ -7,7 +7,6 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { SplitButtonDemoComponent } from './splitbuttondemo.component';
 import { SplitButtonDemoRoutingModule } from './splitbuttondemo-routing.module';
 import { SplitButtonModule } from '../../../components/splitbutton';
-import { ModalService } from '../../../components/modal';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
@@ -29,9 +28,6 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
   ],
   exports: [
     SplitButtonDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class SplitButtonDemoModule { }

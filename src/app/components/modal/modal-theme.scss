@@ -1,35 +1,69 @@
+@import "../core/styles/theming/theming";
+
+
+@mixin _tl-modal-theme-scheme( $theme, $action ){
+
+  & .header {
+    background-color: map-deep-get($theme, $action, "default", "background");
+  }
+  & .header .bar {
+    outline: 1px solid map-deep-get($theme, $action, "default", "background");
+  }
+  & .header .-active {
+    color:  map-deep-get($theme, $action, "default", "foreground");
+  }
+  > .header .-inactive {
+    color: rgba( map-deep-get($theme, $action, "default", "foreground"), 0.5);
+  }
+  & .header .controls .control-item:hover {
+    background-color: map-deep-get($theme, $action, "hover", "background");
+    color:  map-deep-get($theme, $action, "hover", "foreground");
+    border-color: map-deep-get($theme, $action, 'hover', "border");
+  }
+}
+
+
 @mixin tl-modal-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
-
-  $box-text: map_get(map_get($theme,box),text);
-  $box-background: map_get(map_get($theme,box),background);
-  $box-icons: map_get(map_get($theme,box), icons);
-  $box-hover: map_get(map_get($theme,box), hover);
-  $box-inactive: map_get(map_get($theme,box), inactive);
-  $success-bar: map_get(map_get($theme,success),bar);
-
-
   .tl-modal-container {
-    background-color: $box-background;
-    color: $box-text;
-    border: 1px solid $borders;
-    > .header {
-      background-color: $success-bar;
+    background-color: map-deep-get($theme, 'basic', "default", "background");
+    color: map-deep-get($theme,'basic', "default", "foreground");
+    border: 1px solid map-deep-get($theme, 'basic', "default", "border");
+
+    &.basic {
+      @include _tl-modal-theme-scheme($theme, 'basic')
     }
-    > .header .bar {
-      outline: 1px solid $success-bar;
+
+    &.primary {
+      @include _tl-modal-theme-scheme($theme, 'primary')
     }
-    > .header .-active {
-      color: $box-icons;
+
+    //&.secondary {
+    //  @include _tl-button-theme-schema($theme,'secondary')
+    //}
+
+    &.success {
+      @include _tl-modal-theme-scheme($theme, 'success')
     }
-    > .header .-inactive {
-      color: $box-inactive;
+
+    &.danger {
+      @include _tl-modal-theme-scheme($theme, 'danger')
     }
-    > .header .controls .control-item:hover {
-      background-color: $box-hover;
+
+    &.warning {
+      @include _tl-modal-theme-scheme($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-modal-theme-scheme($theme, 'information')
+    }
+
+    &.light {
+      @include _tl-modal-theme-scheme($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-modal-theme-scheme($theme, 'dark')
     }
   }
 }

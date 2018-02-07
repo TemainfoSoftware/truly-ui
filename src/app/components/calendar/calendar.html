@@ -1,4 +1,4 @@
-<div #wrapper class="wrapper-calendar" tabindex="-1">
+<div #wrapper class="wrapper-calendar" (focusout)="focusOut($event)" tabindex="-1">
   <div class="header-calendar">
     <div class="date">
       <tl-navigator [type]="'monthyear'"

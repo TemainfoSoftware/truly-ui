@@ -20,7 +20,7 @@ export * from './components/radiobutton/index';
 export * from './components/splitbutton/index';
 export * from './components/tabcontrol/index';
 export * from './components/tooltip/index';
-export * from './components/core/directives/index';
+export * from './components/core/cpf/index';
 
 // Services..
 export * from './components/modal/modal.service';

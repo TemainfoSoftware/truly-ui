@@ -1,39 +1,36 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-navigator-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $hover-background: map_get(map_get($theme,hover),background);
-  $box-background: map_get(map_get($theme,box),background);
-  $box-hover: map_get(map_get($theme,box),hover);
-  $box-text: map_get(map_get($theme,box),text);
-
+  $basic:   map-deep-get($theme, 'basic');
 
   .tl-navigator{
     > .ui-navigator{
-      background-color:  $box-background;
-      color: $box-text;
+      background-color: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
       &.ui-with-border{
-        border: 1px solid $borders;
+        border: 1px solid map-deep-get($basic, "default", "border");
       }
       &:hover, &:focus{
-        background-color: $hover-background;
+        background-color: map-deep-get($basic, "hover", "background");
       }
     }
     > .ui-button{
-      background-color: $box-background;
-      color: $box-text;
+      background-color: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
       &.ui-with-border{
-        border-top: 1px solid $borders;
-        border-bottom: 1px solid $borders;
+        border-top: 1px solid map-deep-get($basic, "default", "border");
+        border-bottom: 1px solid map-deep-get($basic, "default", "border");
       }
       &:hover, &:focus{
-        background-color: $hover-background;
+        background-color: map-deep-get($basic, "hover", "background");
         outline: none;
       }
       &.ui-with-border:first-child {
-        border-left: 1px solid $borders;
+        border-left: 1px solid map-deep-get($basic, "default", "border");;
       }
       &.ui-with-border:last-child{
-        border-right: 1px solid $borders;
+        border-right: 1px solid map-deep-get($basic, "default", "border");;
       }
     }
   }

@@ -1,21 +1,21 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-panelgroup-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $box-background: map_get(map_get($theme,box),background);
+  $basic:   map-deep-get($theme, 'basic');
 
   .panelgroup-container {
-    border: 1px solid $borders;
-    background-color: $box-background;
+    border: 1px solid map-deep-get($basic, "default", "border");
+    background-color: map-deep-get($basic, "default", "background");
   }
 
   .header-group span {
-    color: $base-text;
+    color:  map-deep-get($basic, "default", "foreground");
   }
 
   .header-group span.spacer:after {
     color: transparent;
-    background: $borders;
+    background:  map-deep-get($basic, "default", "border");
   }
 
 }

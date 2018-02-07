@@ -1,17 +1,17 @@
-<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'" [closeShortcut]="'escape'">
+<tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
     <tl-tabcontrol [height]="'200px'">
       <tl-tab [title]="'Person Information'">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input [name]="'name'" [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
+                <tl-input [name]="'name'" minlength="3" messageValidation required [labelSize]="100" [ngModel]="person?.name" [label]="'Name'"></tl-input>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-input [name]="'lastname'" [labelSize]="100" [validations]="{required: true}"
+                <tl-input name="lastname" minlength="3" messageValidation required [labelSize]="100"
                           [ngModel]="person?.lastname" [label]="'LastName'"></tl-input>
             </div>
           </div>
@@ -19,13 +19,13 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'city'" [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
+                <tl-input [name]="'city'" minlength="3" messageValidation [labelSize]="100" [ngModel]="person?.city" [label]="'City'"></tl-input>
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <div class="col-md-6">
-                  <tl-radio-group [nameGroup]="'gender'" [ngModel]="person?.gender">
+                  <tl-radio-group [name]="'gender'" [ngModel]="person?.gender">
                     <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                     <tl-radiobutton [label]="'Female'" [value]="'F'" [checked]="true"></tl-radiobutton>
                   </tl-radio-group>
@@ -41,65 +41,34 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-                <tl-input [name]="'birthday'" [labelSize]="100" [validations]="{required: true}" [ngModel]="person?.birthday"
-                          [label]="'Birthday'" [mask]="{mask: '00/00/0000', withLiteralChar: false }" ></tl-input>
-            </div>
-          </div>
-        </div>
-      </tl-tab>
-      <tl-tab [title]="'Person Information 2'">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <tl-input [name]="'state'" [labelSize]="100" [ngModel]="person?.state" [label]="'State'"></tl-input>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <tl-checkbox [name]="'notification'" [label]="'Notify ?'" [ngModel]="person?.notification"></tl-checkbox>
+                <tl-input [name]="'birthday'" messageValidation required [labelSize]="100" [ngModel]="person?.birthday"
+                          [label]="'Birthday'" date [formatDate]="'dd.mm.yyyy'"></tl-input>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-                <tl-multiselect
-                  [data]="dataBasic"
-                  [ngModel]="person?.dependents"
-                  [labelSize]="100"
-                  [defaultColorTag]="'#8EC2F4'"
-                  [name]="'dependents'"
-                  [placeholder]="'Select...'"
-                  [label]="'Dependents'"
-                  [openFocus]="false"
-                  [labelTag]="'firstName'"
-                  [detail]="'email'"
-                  [query]="'firstName'">
-                </tl-multiselect>
-            </div>
-      </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-                <tl-autocomplete [data]="dataAuto"
-                                 [name]="'clients'"
-                                 [label]="'Clients'"
-                                 [labelName]="'firstName'"
-                                 [clearButton]="true"
-                                 [rowHeight]="35"
-                                 [placeholder]="'Search...'"
-                                 [ngModel]="person?.clients">
-                </tl-autocomplete>
+              <tl-datepicker [name]="'date'" [label]="'Date'" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
+          <!--<div class="col-md-8">
             <div class="form-group">
-                <tl-input [name]="'cpf'" [label]="'CPF'" [type]="'cpf'" [ngModel]="person?.cpf"></tl-input>
+              <tl-autocomplete [data]="dataAuto"
+                               [id]="'id'"
+                               [labelSize]="'10px'"
+                               [openFocus]="true"
+                               [name]="'clients'"
+                               [label]="'Clients'"
+                               [clearButton]="true"
+                               [searchQuery]="['firstName']"
+                               [rowHeight]="35"
+                               [placeholder]="'Search...'"
+                               [labelName]="'firstName'"
+                               [(ngModel)]="result">
+              </tl-autocomplete>
             </div>
-          </div>
+          </div>-->
         </div>
       </tl-tab>
     </tl-tabcontrol>

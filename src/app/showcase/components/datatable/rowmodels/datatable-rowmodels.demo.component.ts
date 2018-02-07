@@ -42,7 +42,6 @@ export class DatatableRowModelsDemoComponent implements OnInit {
   }
 
   onLoadData(event) {
-    console.log(event);
     this.getDataForInifinit(event.skip, event.take);
   }
 

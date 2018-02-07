@@ -1,85 +1,81 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-datatable-theme($theme) {
 
-  $border-color: map_get($theme,borders);
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background: map_get(map_get($theme,base),background);
-
-  $box-text: map_get(map_get($theme,box),text);
-  $box-background: map_get(map_get($theme,box),background);
-
-  $odd-text: map_get(map_get($theme,odd),text);
-  $odd-background: map_get(map_get($theme,odd),background);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-  $icons-text:  map_get(map_get($theme,icons),text);
-
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $light:   map-deep-get($theme, 'light');
+  $dark:    map-deep-get($theme, 'dark');
 
   //ALL
   .tl-datatable-box{
-    border-left: 1px $border-color solid;
-    border-top: 1px $border-color solid;
-    border-bottom: 1px $border-color solid;
+    border-left: 1px solid map-deep-get($basic, "default", "border");
+    border-top: 1px solid map-deep-get($basic, "default", "border");
+    border-bottom: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-cel{
-    border-right: 1px $border-color solid;
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
   //HEADER
   .ui-datatable-header-wrap{
-    border-right: 1px $border-color solid;
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-datatable-table-head{
-    color: $base-text;
+    color: map-deep-get($dark, "default", "foreground");
     > .ui-row{
-      background: $base-background;
+      background: map-deep-get($dark, "default", "background");
     }
     > .ui-row .ui-sort-indicator {
-      color: $icons-text;
+      color: map-deep-get($basic, "default", "foreground");
     }
     > .ui-row .ui-cel{
-      border-right: 1px $border-color solid;
-      border-bottom: 1px $border-color solid;
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
     }
   }
 
   //SCROLLABLE MODE
   .ui-datatable-scrollable{
-    border-right: 1px $border-color solid
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-box-notfound-records{
     >.ui-container{
-      background: $box-background;
-      color: $box-text;
+      background: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
     }
   }
 
   .ui-datatable-content-body{
     > .ui-row{
-      background: $base-background;
-      color: $odd-text;
+      background:  map-deep-get($dark, "default", "background");
+      color: rgba( map-deep-get($dark, "default", "foreground"),0.8);
     }
-    > .ui-row .ui-cel{
-      border-right: 1px $border-color solid;
-    }
-    > .ui-row .ui-cel:last-child{
-      border-right: 1px $border-color solid;
-    }
+
     > .ui-row:nth-child(odd){
-      background: $odd-background;
-      color: $odd-text;
+      background: map-deep-get($light, "default", "background");
+      color: rgba(map-deep-get($light, "default", "foreground"),0.8);
     }
+
+    > .ui-row .ui-cel{
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    > .ui-row .ui-cel:last-child{
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+    }
+
     > .ui-row:focus{
-      background: $selected-background;
-      color: $selected-text;
+      background: map-deep-get($primary, "default", "background");
+      color: map-deep-get($primary, "default", "foreground");
     }
   }
 
   //NORMAL MODE
   .ui-datatable-normal{
-    border-right: 1px $border-color solid
+    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 }

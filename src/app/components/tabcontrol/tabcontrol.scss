@@ -7,6 +7,8 @@
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  user-select: none;
+
   >.line-separator {
     box-sizing: border-box;
     font-size: 12px;

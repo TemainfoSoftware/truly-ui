@@ -20,11 +20,10 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy,
-  OnInit,
+  Component, ContentChildren, Input,
   QueryList, Renderer2,
   ViewChild,
-  forwardRef, SimpleChanges, OnChanges,
+  forwardRef, OnDestroy, OnInit, AfterViewInit,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
@@ -33,16 +32,16 @@ import { TlRadioGroup } from '../radiobutton/radiogroup';
 import { TlCheckBox } from '../checkbox/checkbox';
 import { TlMultiSelect } from '../multiselect/multiselect';
 import { TlAutoComplete } from '../autocomplete/autocomplete';
+import { NgForm, NgModel } from '@angular/forms';
 
 let componentFormIndex;
 
 @Component( {
   selector: 'tl-form',
   templateUrl: '../form/form.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [ '../form/form.scss' ]
 } )
-export class TlForm implements AfterViewInit, OnDestroy, OnInit {
+export class TlForm implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() initialFocus: TlInput;
 
@@ -52,8 +51,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @Input() submitShortcut = '';
 
-  @Input() closeShortcut = '';
-
   @Input() textConfirm = 'Ok';
 
   @Input() textCancel = 'Cancel';
@@ -62,15 +59,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
 
-  @ContentChildren( forwardRef(() => TlDropDownList ), {descendants: true}) dropdownList: QueryList<TlDropDownList>;
-
-  @ContentChildren( forwardRef(() => TlRadioGroup ), {descendants: true}) radioButtonList: QueryList<TlRadioGroup>;
-
-  @ContentChildren( forwardRef(() => TlCheckBox ), {descendants: true}) checkboxList: QueryList<TlCheckBox>;
-
-  @ContentChildren( forwardRef(() => TlMultiSelect ), {descendants: true}) multiselectList: QueryList<TlMultiSelect>;
-
-  @ContentChildren( forwardRef(() => TlAutoComplete ), {descendants: true}) autoCompleteList: QueryList<TlAutoComplete>;
+  @ContentChildren(NgModel, {descendants: true}) models: QueryList<NgModel>;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -78,7 +67,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   @ViewChild( 'content' ) content;
 
-  public validForm = true;
+  @ViewChild(NgForm) public form: NgForm;
 
   public formResult: {} = {};
 
@@ -88,36 +77,30 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
 
   private elementsWithTabIndex = [];
 
-  private componentsWithValidations: Array<any> = [];
-
   private listeners = [];
 
-  private time;
-
-  constructor( private renderer: Renderer2, private change: ChangeDetectorRef ) {
-  }
+  constructor( private renderer: Renderer2 ) {}
 
   ngOnInit() {
     componentFormIndex = -1;
   }
 
   ngAfterViewInit() {
+    this.addControls();
     this.setInitialFocus();
     this.getElementsOfForm();
-    this.getComponentsWithValidations();
-    this.validateElements();
-    this.listenComponentWithValidations();
     this.clickListener();
+  }
+
+  addControls() {
+    this.models.toArray().forEach((control, index, array) => {
+      this.form.addControl(control);
+    });
   }
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
-    this.getComponentValues( this.inputList.toArray() );
-    this.getComponentValues( this.multiselectList.toArray() );
-    this.getComponentValues( this.dropdownList.toArray() );
-    this.getComponentValues( this.radioButtonList.toArray() );
-    this.getComponentValues( this.checkboxList.toArray() );
-    this.getAutoCompleteValues();
+    this.getFormValues();
   }
 
   clickListener() {
@@ -128,47 +111,11 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   onClickButtonOk() {
-    this.getComponentValues( this.inputList.toArray() );
-    this.getComponentValues( this.multiselectList.toArray() );
-    this.getComponentValues( this.dropdownList.toArray() );
-    this.getComponentValues( this.radioButtonList.toArray() );
-    this.getComponentValues( this.checkboxList.toArray() );
-    this.getAutoCompleteValues();
-    this.validateElements();
+    this.getFormValues();
   }
 
-  getComponentValues( array ) {
-    array.forEach( ( item ) => {
-      this.formResult[ item instanceof TlRadioGroup ? item.nameGroup.trim() :
-        item.name.trim() ] = item.componentModel.model;
-    } );
-  }
-
-  listenComponentWithValidations() {
-    this.componentsWithValidations.forEach( ( item ) => {
-      const listener = this.renderer.listen( item.element.nativeElement, 'blur', $event => {
-        this.validateElements();
-      } );
-      this.listeners.push( listener );
-    } );
-  }
-
-  getComponentsWithValidations() {
-    this.inputList.toArray().forEach( ( item ) => {
-      if ( Object.keys( item.validations ).length > 0 ) {
-        this.componentsWithValidations.push( item );
-      }
-    } );
-    this.dropdownList.toArray().forEach( ( item ) => {
-      if ( Object.keys( item.validations ).length > 0 ) {
-        this.componentsWithValidations.push( item );
-      }
-    } );
-    this.autoCompleteList.toArray().forEach( ( item ) => {
-      if (Object.keys( item.input.validations ).length > 0) {
-        this.componentsWithValidations.push( item.input );
-      }
-    });
+  getFormValues() {
+     this.formResult = this.form;
   }
 
   getElementsOfForm() {
@@ -190,21 +137,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       }
     }
     return false;
-  }
-
-  validateElements() {
-    this.time = setTimeout( () => {
-      for ( let item = 0; item < this.componentsWithValidations.length; item++ ) {
-        this.validForm = true;
-        this.change.detectChanges();
-        if ( this.hasErrors( this.componentsWithValidations[item] ) &&
-          this.isRequired(this.componentsWithValidations[item])) {
-          this.validForm = false;
-          this.change.detectChanges();
-          return;
-        }
-      }
-    }, 100 );
   }
 
   addButtonsOfFormToListElements() {
@@ -233,10 +165,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     if ( index === array.length - 1 ) {
       this.lastTabIndex = element.tabIndex;
     }
-  }
-
-  isRequired(item) {
-    return item.validations.required;
   }
 
   generateTabIndexOfElements() {
@@ -287,7 +215,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
   }
 
   handleKeysForm( $event: KeyboardEvent ) {
-    this.inputHasChanged();
     if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
       $event.preventDefault();
       this.backwardTabbing();
@@ -301,7 +228,6 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       case KeyEvent.ARROWDOWN:
         $event.preventDefault();
         this.forwardTabbing();
-        this.change.detectChanges();
         break;
       case KeyEvent.ARROWRIGHT :
         this.setFocusOK();
@@ -312,12 +238,10 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
       case KeyEvent.TAB:
         $event.preventDefault();
         this.forwardTabbing();
-        this.change.detectChanges();
         break;
       case KeyEvent.ENTER:
         $event.preventDefault();
         this.forwardTabbing();
-        this.change.detectChanges();
         break;
     }
   }
@@ -364,15 +288,8 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return element.disabled;
   }
 
-  hasErrors( item ) {
-    if (!item.componentModel.errors) {
-      return false;
-    }
-    return (Object.keys(item.componentModel.errors).length > 0);
-  }
-
   setInitialFocus() {
-    this.initialFocus ? this.initialFocus.element.nativeElement.focus()
+    this.initialFocus ? this.initialFocus.input.nativeElement.focus()
       : this.setFocusOnFirstInput();
   }
 
@@ -392,7 +309,7 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     let element;
     for (const item in this.inputList.toArray()) {
       if (!(this.inputList.toArray()[item].disabled)) {
-        element = this.inputList.toArray()[item].element.nativeElement;
+        element = this.inputList.toArray()[item].input.nativeElement;
         break;
       }
     }
@@ -407,33 +324,16 @@ export class TlForm implements AfterViewInit, OnDestroy, OnInit {
     return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
   }
 
-  inputHasChanged() {
-    let inputDirty = false;
-    this.inputList.toArray().forEach( ( value ) => {
-      if ( value.componentModel.dirty ) {
-        inputDirty = true;
-      }
-    } );
-    return inputDirty;
-  }
-
-  getAutoCompleteValues() {
-    this.autoCompleteList.forEach( ( item ) => {
-      this.formResult[ item.name.trim() ] = item.ngModel;
-    } );
-  }
-
-  ngOnDestroy() {
-    clearTimeout( this.time );
-    this.destroyListeners();
-    this.change.detach();
-  }
-
   destroyListeners() {
     this.listeners.forEach( ( value ) => {
       value();
     } );
   }
+
+  ngOnDestroy() {
+    this.destroyListeners();
+  }
+
 
 }
 

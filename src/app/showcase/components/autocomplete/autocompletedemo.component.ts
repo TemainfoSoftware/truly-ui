@@ -49,6 +49,8 @@ export class AutoCompleteDemoComponent {
 
   public result;
 
+  public result2;
+
   public example = '{{item.firstName}}';
 
   constructor( public dataDumpService: DumpDataService, ) {

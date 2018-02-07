@@ -9,29 +9,54 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { TlInput } from './input';
 
 import { CharcaseDirective } from './directives/charcase.directive';
-import { TypeDirective } from './directives/type.directive';
+import { CPFDirective } from './validators/cpf/cpf.directive';
+import { CNPJDirective } from './validators/cnpj/cnpj.directive';
+import { DateDirective } from './validators/date/date.directive';
+import { NumberDirective } from './validators/number/number.directive';
+import { EmailDirective } from './validators/email/email.directive';
+import { CreditCardDirective } from './validators/creditcard/creditcard.directive';
+import { PasswordDirective } from './validators/password/password.directive';
+import { MessageValidationDirective } from './directives/messagevalidation.directive';
+import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 
 export * from './input';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-    ],
-    declarations: [
-        TlInput,
-        CharcaseDirective,
-        TypeDirective
-    ],
-    exports: [
-        TlInput,
-        CharcaseDirective,
-        TypeDirective
-    ],
-    providers: [
-        IdGeneratorService,
-        NameGeneratorService,
-        TabIndexService
-    ]
-})
-export class InputModule {}
+@NgModule( {
+  imports: [
+    CommonModule,
+    FormsModule,
+  ],
+  declarations: [
+    TlInput,
+    TlMessageValidationComponent,
+    CharcaseDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    NumberDirective,
+    EmailDirective,
+    CreditCardDirective,
+    MessageValidationDirective,
+    PasswordDirective
+  ],
+  exports: [
+    TlInput,
+    CharcaseDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    NumberDirective,
+    EmailDirective,
+    CreditCardDirective,
+    MessageValidationDirective,
+    PasswordDirective
+  ],
+  providers: [
+    IdGeneratorService,
+    NameGeneratorService,
+    TabIndexService
+  ],
+  entryComponents: [TlMessageValidationComponent]
+} )
+export class InputModule {
+}

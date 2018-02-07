@@ -2,40 +2,86 @@
 
 $theme: (
 
-  //STATS AND BASES\\
-  active:      (text: #AAAAAA, background: #D8D8D8),
-  base:        (text: #616161, background: #E8E8E8),
-  checked:     (text: #616161, background: #E8E8E8),
-  disable:     (text: #707070, background: #E8E8E8),
-  focused:     (text: #AAAAAA, background: #66CC99),
-  hint:        (text: #616161, background: #E8E8E8),
-  hover:       (text: #DEDEDE, background: #F2F2F2),
-  icons:       (text: #616161, background: #E8E8E8),
-  odd:         (text: #7A838B, background: #FFFFFF),
-  even:        (text: #7A838B, background: #E8E8E8),
-  placeholder: (text: #CACACA, background: #E8E8E8),
-  readonly:    (text: #CACACA, background: #EEEEEE),
-  selected:    (text: #FFFFFF, background: #66CC99),
+  basic: (
+    default:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
+    active:   ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
+    checked:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
+    disabled: ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
+    focus:    ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
+    hover:    ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
+  ),
 
-  //BRAND COLORS\\
-  success: (text: #66CC99, bar:#66CC99, background: #E3F5EC, border: #66CC99),
-  accent:  #F77171,
-  info:    #3E80ED,
-  warning: (text: #FFCF94, bar:#FFCF94, background: #FFFBE9, border: #FCB27E),
-  error:   (text: #FFB9B9, bar:#F77171, background: #FFF1F1, border: #F77171),
+  primary: (
+    default:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    active:   ( foreground: #FFFFFF, background: #5ebc8a, border: #58AF7F ),
+    checked:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    disabled: ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    focus:    ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
+    hover:    ( foreground: #FFFFFF, background: #5DBA8C, border: #58AF7F ),
+  ),
 
-  //STATUS COLORS\\
-  online:  #81E2B2,
-  offline: #D8D8D8,
-  busy:    #F77171,
-  away:    #FCB27E,
+  //secondary: (
+  //  default:  ( foreground: #FFFFFF, background: #4E9C71, border: #58AF7F ),
+  //  active:   ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+  //  checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+  //  disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+  //  focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+  //  hover:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
+  //),
 
-  //OTHERS\\
-  divider: #F1F1F1,
-  borders: #C8C8C8,
-  bars:    #F2F2F2,
-  box:       (text: #616161, background: #FAFAFA, icons: #FFFFFF, hover: #4FBC85, inactive: #d9d9d9),
-  scrollbar: (background: #F1F1F1, corner: #F1F1F1, track: #E8E8E8, thumb: #66CC99, arrow: #797979, icon: #FFFFFF),
+  success: (
+    default:  ( foreground: #FFFFFF, background: #62C390, border: #9BD8B8 ),
+    active:   ( foreground: #FFFFFF, background: #69a588, border: #9BD8B8 ),
+    checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
+    hover:    ( foreground: #FFFFFF, background: #5AB283, border: #9BD8B8 ),
+  ),
+
+  danger: (
+    default:  ( foreground: #FFFFFF, background: #F77171, border: #F98D8D ),
+    active:   ( foreground: #FFFFFF, background: #e17a7a, border: #F98D8D ),
+    checked:  ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
+    disabled: ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
+    focus:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
+    hover:    ( foreground: #FFFFFF, background: #eb6767, border: #F98D8D ),
+  ),
+
+  warning: (
+    default:  ( foreground: #FFFFFF, background: #F5D240, border: #F8E285 ),
+    active:   ( foreground: #FFFFFF, background: #d7b43d, border: #F8E285 ),
+    checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    disabled: ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
+    focus:    ( foreground: #FFFFFF, background: #FFFBE9, border: #F8E285 ),
+    hover:    ( foreground: #FFFFFF, background: #e6c63c, border: #F8E285 ),
+  ),
+
+  information: (
+    default:  ( foreground: #FFFFFF, background: #0090D9, border: #5CB8E6 ),
+    active:   ( foreground: #FFFFFF, background: #3191cc, border: #5CB8E6 ),
+    checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    disabled: ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    focus:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+    hover:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
+  ),
+
+  light: (
+    default:  ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    active:   ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    checked:  ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    disabled: ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    focus:    ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
+    hover:    ( foreground: #616161, background: #f1f1f1, border: #C8C8C8 ),
+  ),
+
+  dark: (
+    default:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    active:   ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    checked:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    disabled: ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    focus:    ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
+    hover:    ( foreground: #616161, background: #dadada, border: #BFBFBF ),
+  )
 );
 
 .tl-default-theme{

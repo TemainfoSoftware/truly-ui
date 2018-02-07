@@ -24,466 +24,493 @@ import {
   HostBinding,
   Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
+import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { ModalService } from './modal.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 
 let subscribeMouseMove;
 
-@Component({
-    selector: 'tl-modal',
-    templateUrl: './modal.html',
-    styleUrls: [ './modal.scss' ],
-    animations: [
-        trigger(
-            'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity: 0 } ),
-                ] ),
-                transition( ':leave', [
-                    style( { opacity: 1 } ),
-                    animate( '100ms', style( { opacity: 0 } ) )
-                ] )
-            ]
-        )
-    ]
-})
+@Component( {
+  selector: 'tl-modal',
+  templateUrl: './modal.html',
+  styleUrls: [ './modal.scss' ],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition( ':enter', [
+          style( { opacity: 0 } ),
+        ] ),
+        transition( ':leave', [
+          style( { opacity: 1 } ),
+          animate( '100ms', style( { opacity: 0 } ) )
+        ] )
+      ]
+    )
+  ]
+} )
 export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
-    @Input() draggable = true;
+  @Input() draggable = true;
 
-    @Input() minimizable = true;
+  @Input() minimizable = true;
 
-    @Input() maximizable = true;
+  @Input() maximizable = true;
 
-    @Input() icon = '';
+  @Input() icon = '';
 
-    @Input() title = 'My Modal';
+  @Input() title = 'My Modal';
 
-    @Input() color = '';
+  @Input() color = 'basic';
 
-    @Input() fontColor = '';
+  @Input() height = '500px';
 
-    @Input() height = '500px';
+  @Input() width = '500px';
 
-    @Input() width = '500px';
+  @Input() fullscreen = false;
 
-    @Input() fullscreen = false;
+  @Input() restoreMaximize = true;
 
-    @Input() restoreMaximize = true;
+  @Input() backdrop = false;
 
-    @Input() backdrop = false;
+  @Input() closeShortcut = 'escape';
 
-    @Input() closeShortcut = '';
+  @Input() restoreShortcut = '';
 
-    @Input() restoreShortcut = '';
+  @Input() maximizeShortcut = '';
 
-    @Input() maximizeShortcut = '';
+  @Input() parentElement;
 
-    @Input() parentElement;
+  @ViewChild( 'headerBox' ) headerBox: ElementRef;
 
-    @ViewChild('headerBox') headerBox: ElementRef;
+  @ViewChild( 'modal' ) modal: ElementRef;
 
-    @ViewChild( 'modal' ) modal: ElementRef;
+  @ViewChild( 'body', { read: ViewContainerRef } ) body;
 
-    @ViewChild('body', {read: ViewContainerRef}) body;
+  @HostBinding( '@enterAnimation' ) public animation;
 
-    @HostBinding( '@enterAnimation' ) public animation;
+  @Output() show: EventEmitter<any> = new EventEmitter();
 
-    @Output() show: EventEmitter<any> = new EventEmitter();
+  @Output() minimize: EventEmitter<any> = new EventEmitter();
 
-    @Output() minimize: EventEmitter<any> = new EventEmitter();
+  @Output() maximize: EventEmitter<any> = new EventEmitter();
 
-    @Output() maximize: EventEmitter<any> = new EventEmitter();
+  @Output() close: EventEmitter<any> = new EventEmitter();
 
-    @Output() close: EventEmitter<any> = new EventEmitter();
+  public componentRef: ComponentRef<TlModal>;
 
-    public componentRef: ComponentRef<TlModal>;
+  public modalResult;
 
-    public modalResult;
+  public status = '';
 
-    public status = '';
+  public index;
 
-    public index;
+  public serviceControl: ModalService;
 
-    public serviceControl: ModalService;
+  public colorHoverMinimize;
 
-    public colorHoverMinimize;
+  public colorHoverClose;
 
-    public colorHoverClose;
+  public maximized = false;
 
-    public maximized = false;
+  private mousePressX;
 
-    private mousePressX;
+  private mousePressY;
 
-    private mousePressY;
+  private positionMouseMoveX;
 
-    private positionMouseMoveX;
+  private positionMouseMoveY;
 
-    private positionMouseMoveY;
+  private moving = false;
 
-    private moving = false;
+  private offsetLeftContent;
 
-    private offsetLeftContent;
+  private offsetTopContent;
 
-    private offsetTopContent;
+  private offsetLeftModal;
 
-    private offsetLeftModal;
+  private offsetTopModal;
 
-    private offsetTopModal;
+  private parent;
 
-    private parent;
+  private modalLeft;
 
-    private modalLeft;
+  private modalTop;
 
-    private modalTop;
+  private positionX;
 
-    private positionX;
+  private positionY;
 
-    private positionY;
+  private subscribeResize;
 
-    private subscribeResize;
+  private colorHoverMaximize;
 
-    private colorHoverMaximize;
+  private colorHoverRestore;
 
-    private colorHoverRestore;
-
-  constructor( private element: ElementRef, private renderer: Renderer2, private colorService: ToneColorGenerator, private zone: NgZone ) {
+  constructor( private element: ElementRef, private renderer: Renderer2,
+               private containerService: ContainerModalService,
+               private colorService: ToneColorGenerator, private zone: NgZone ) {
   }
 
-    ngOnInit() {
-        this.resizeListener();
-        this.validateProperty();
-        this.show.emit();
-    }
+  ngOnInit() {
+    this.resizeListener();
+    this.validateProperty();
+    this.show.emit();
+  }
 
-    ngAfterViewInit() {
-        this.getBoundingContent();
-        this.setDefaultDimensions();
-        this.validateMeasureParentAndModal();
-        this.handleInitialPositionModal();
-        this.handleFullscreen();
-    }
+  ngAfterViewInit() {
+    this.getBoundingContent();
+    this.setDefaultDimensions();
+    this.validateMeasureParentAndModal();
+    this.handleInitialPositionModal();
+    this.handleFullscreen();
+  }
 
-    handleInitialPositionModal() {
-      this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
-    }
+  handleInitialPositionModal() {
+    this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
+  }
 
-    handleFullscreen() {
-      setTimeout(() => {
-        if (this.fullscreen) {
-          this.maximizeModal();
-        }
-      }, 1);
-    }
+  handleFullscreen() {
+    setTimeout( () => {
+      if ( this.fullscreen ) {
+        this.maximizeModal();
+      }
+    }, 1 );
+  }
 
-    resizeListener() {
-        this.subscribeResize = this.renderer.listen( window, 'resize', () => {
-            this.getBoundingContent();
-            this.maximizeModal();
-        } );
-    }
+  resizeListener() {
+    this.subscribeResize = this.renderer.listen( window, 'resize', () => {
+      this.getBoundingContent();
+      this.maximizeModal();
+    } );
+  }
 
-    mousemoveListener() {
-      this.zone.runOutsideAngular( () => {
+  mousemoveListener() {
+    this.zone.runOutsideAngular( () => {
       subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
-            if ( !( this.moving && this.draggable) ) {
-                return;
-            }
-            if ( this.isMouseOutOfTheWindowRight( event ) ) {
-                this.setOffsetLeftModal( window.innerWidth - this.modal.nativeElement.offsetWidth );
-                this.setMousePressX( window.innerWidth );
-            }
-            if ( this.isMouseOutOfTheWindowLeft( event ) ) {
-                this.setOffsetLeftModal( this.getBoundingParentElement().left );
-                this.setMousePressX( this.getBoundingParentElement().left );
-            }
-            this.positionMouseMoveX = event.clientX;
-            this.positionMouseMoveY = event.clientY;
-            this.setPosition();
-
-        } );
-      } );
-    }
-
-    mouseupListener() {
-      subscribeMouseMove();
-      this.moving = false;
-    }
-
-    mouseDown( $event ) {
-        if ( !this.maximized ) {
-            this.setOffsetLeftModal( this.modal.nativeElement.getBoundingClientRect().left );
-            this.setOffsetTopModal( this.modal.nativeElement.getBoundingClientRect().top );
-            this.setMousePressX( $event.clientX );
-            this.setMousePressY( $event.clientY );
-            this.moving = true;
-        }
-    }
-
-    validateProperty () {
-        if (!this.restoreMaximize && !this.fullscreen) {
-            throw new EvalError( 'The [restoreMaximize] property require [fullscreen] property as TRUE.' );
-        }
-    }
-
-    validateMeasureParentAndModal() {
-      if ((this.parent.offsetWidth < this.modal.nativeElement.offsetWidth) ||
-        (this.parent.offsetHeight < this.modal.nativeElement.offsetHeight)) {
-        console.warn('The Width or Height of Parent Element are less than Width or Height of Modal, ' +
-          'this could result in glitches and not working as expected.');
-      }
-    }
-
-    getModalPosition() {
-        this.modalLeft = this.modal.nativeElement.offsetLeft;
-        this.modalTop = this.modal.nativeElement.offsetTop;
-    }
-
-    setModalCenterParent() {
-      this.modal.nativeElement.style.left = this.offsetLeftContent + (this.parent.offsetWidth / 2)
-        - (this.modal.nativeElement.offsetWidth / 2) + 'px';
-      this.modal.nativeElement.style.top = (this.offsetTopContent)
-        + (this.parent.offsetHeight / 2)  - (this.modal.nativeElement.offsetHeight / 2) + 'px';
-    }
-
-    setModalCenterWindow() {
-      this.modal.nativeElement.style.left = this.parent.offsetLeft +
-        (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
-      this.modal.nativeElement.style.top = (window.innerHeight / 2) -
-        (this.modal.nativeElement.offsetHeight / 2) + 'px';
-    }
-
-    setComponentRef( component: ComponentRef<TlModal> ) {
-        this.componentRef = component;
-    }
-
-    setMousePressX( position ) {
-        this.mousePressX = position;
-    }
-
-    setMousePressY( position ) {
-        this.mousePressY = position;
-    }
-
-    setPosition() {
-        this.setLeftPosition();
-        this.setTopPosition();
-        this.setDefaultDimensions();
-    }
-
-    setLeftPosition() {
-        if ( this.isOutOfWindowX() ) {
-            return this.setLeftLimitOfArea();
-        }
-
-        if ( this.isOutOfWindowOnLeft() ) {
-            return this.setContentLeftPosition();
-        }
-
-        this.setNewLeftPosition();
-    }
-
-    setTopPosition() {
-        if ( this.isOutOfWindowY() ) {
-            return this.setTopLimitOfArea();
-        }
-
-        if ( this.isOutOfWindowOnTop() ) {
-            return this.setContentTopPosition();
-        }
-
-        this.setNewTopPosition();
-    }
-
-    setOptions( options: Array<ModalOptions> ) {
-        const self = this;
-        Object.keys( options ).forEach(function (key) {
-            self[ key ] = options[ key ];
-        } );
-    }
-
-    setLeftLimitOfArea() {
-        return this.modal.nativeElement.style.left =
-          (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent + 'px';
-    }
-
-    setTopLimitOfArea() {
-        return this.modal.nativeElement.style.top =
-          (this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + (this.offsetTopContent) + 'px';
-    }
-
-    setOffsetLeftModal( offset ) {
-        this.offsetLeftModal = offset;
-    }
-
-    setOffsetTopModal( offset ) {
-        this.offsetTopModal = offset;
-    }
-
-    setContentTopPosition() {
-        this.modal.nativeElement.style.top = this.offsetTopContent + 'px';
-    }
-
-    setContentLeftPosition() {
-        this.modal.nativeElement.style.left = this.offsetLeftContent + 'px';
-    }
-
-    setNewTopPosition() {
-        this.modal.nativeElement.style.top = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY + 'px';
-    }
-
-    setNewLeftPosition() {
-        this.modal.nativeElement.style.left = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX + 'px';
-    }
-
-    setServiceControl( service ) {
-        this.serviceControl = service;
-    }
-
-    setDefaultDimensions() {
-      if ( this.height && this.width ) {
-            this.modal.nativeElement.style.height = this.height;
-            this.modal.nativeElement.style.width = this.width;
-        } else {
-            this.modal.nativeElement.style.height = '500px';
-            this.modal.nativeElement.style.width = '500px';
-        }
-    }
-
-    setCurrentPosition() {
-        this.modal.nativeElement.style.left = this.modalLeft + 'px';
-        this.modal.nativeElement.style.top = this.modalTop + 'px';
-    }
-
-    isMouseOutOfTheWindowLeft( event ) {
-        return event.clientX < this.offsetLeftContent;
-    }
-
-    setZIndex() {
-        this.serviceControl.setZIndex( this.componentRef, this.modal );
-        this.serviceControl.sortComponentsByZIndex();
-    }
-
-    isMouseOutOfTheWindowRight( event ) {
-        return event.clientX >= window.innerWidth - 1;
-    }
-
-    isOutOfWindowOnLeft() {
-        return this.positionX < this.offsetLeftContent;
-    }
-
-    isOutOfWindowOnTop() {
-        return this.positionY < this.offsetTopContent;
-    }
-
-    isOutOfWindowX() {
-        this.positionX = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX;
-        return this.positionX >= (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent;
-    }
-
-    isOutOfWindowY() {
-      this.positionY = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY;
-      return this.positionY >= ((this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + this.offsetTopContent);
-    }
-
-    minimizeModal() {
-      if ( !(this.minimizable) ) {
+        if ( !( this.moving && this.draggable) ) {
           return;
-      }
-     this.serviceControl.minimize( this.componentRef );
-     this.minimize.emit(this.componentRef.instance);
-     this.leaveMinimize();
-    }
-
-    closeModal() {
-        this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
-        this.close.emit(this.componentRef.instance);
-        this.leaveClose();
-    }
-
-    maximizeModal() {
-        if ( !(this.maximizable) ) {
-            return;
         }
-        this.leaveMaximize();
-        if ( !this.maximized ) {
-            this.getModalPosition();
-            this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
-            this.modal.nativeElement.style.top = this.getBoundingParentElement().top + 'px';
-            this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
-            this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 'px';
-            this.maximized = true;
-            this.moving = false;
-            this.maximize.emit();
-            return;
+        if ( this.isMouseOutOfTheWindowRight( event ) ) {
+          this.setOffsetLeftModal( window.innerWidth - this.modal.nativeElement.offsetWidth );
+          this.setMousePressX( window.innerWidth );
         }
-        this.restoreMaximizeModal();
-    }
-
-    restoreMaximizeModal() {
-        if (this.restoreMaximize) {
-            this.setDefaultDimensions();
-            this.setCurrentPosition();
-            this.maximized = false;
-            this.leaveRestore();
+        if ( this.isMouseOutOfTheWindowLeft( event ) ) {
+          this.setOffsetLeftModal( this.getBoundingParentElement().left );
+          this.setMousePressX( this.getBoundingParentElement().left );
         }
+        this.positionMouseMoveX = event.clientX;
+        this.positionMouseMoveY = event.clientY;
+        this.setPosition();
+
+      } );
+    } );
+  }
+
+  mouseupListener() {
+    subscribeMouseMove();
+    this.moving = false;
+  }
+
+  mouseDown( $event ) {
+    if ( !this.maximized ) {
+      this.setOffsetLeftModal( this.modal.nativeElement.getBoundingClientRect().left );
+      this.setOffsetTopModal( this.modal.nativeElement.getBoundingClientRect().top );
+      this.setMousePressX( $event.clientX );
+      this.setMousePressY( $event.clientY );
+      this.moving = true;
+    }
+  }
+
+  validateProperty() {
+    if ( !this.restoreMaximize && !this.fullscreen ) {
+      throw new EvalError( 'The [restoreMaximize] property require [fullscreen] property as TRUE.' );
+    }
+  }
+
+  validateMeasureParentAndModal() {
+    if ( (this.parent.offsetWidth < this.modal.nativeElement.offsetWidth) ||
+      (this.parent.offsetHeight < this.modal.nativeElement.offsetHeight) ) {
+      console.warn( 'The Width or Height of Parent Element are less than Width or Height of Modal, ' +
+        'this could result in glitches and not working as expected.' );
+    }
+  }
+
+  getModalPosition() {
+    this.modalLeft = this.modal.nativeElement.offsetLeft;
+    this.modalTop = this.modal.nativeElement.offsetTop;
+  }
+
+  setModalCenterParent() {
+    this.modal.nativeElement.style.left = this.offsetLeftContent + (this.parent.offsetWidth / 2)
+      - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+    this.modal.nativeElement.style.top = (this.offsetTopContent)
+      + (this.parent.offsetHeight / 2) - (this.modal.nativeElement.offsetHeight / 2) + 'px';
+  }
+
+  setModalCenterWindow() {
+    this.modal.nativeElement.style.left = this.parent.offsetLeft +
+      (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+    this.modal.nativeElement.style.top = (window.innerHeight / 2) -
+      (this.modal.nativeElement.offsetHeight / 2) + 'px';
+  }
+
+  setComponentRef( component: ComponentRef<TlModal> ) {
+    this.componentRef = component;
+  }
+
+  setMousePressX( position ) {
+    this.mousePressX = position;
+  }
+
+  setMousePressY( position ) {
+    this.mousePressY = position;
+  }
+
+  setPosition() {
+    this.setLeftPosition();
+    this.setTopPosition();
+    this.setDefaultDimensions();
+  }
+
+  setLeftPosition() {
+    if ( this.isOutOfWindowX() ) {
+      return this.setLeftLimitOfArea();
     }
 
-    getBoundingParentElement() {
-        return this.parent.getBoundingClientRect();
+    if ( this.isOutOfWindowOnLeft() ) {
+      return this.setContentLeftPosition();
     }
 
-    getBoundingContent() {
-        this.parent = this.parentElement ? this.parentElement :
-          this.componentRef.instance.element.nativeElement.parentElement;
-        this.offsetLeftContent = this.parent.getBoundingClientRect().left;
-        this.offsetTopContent = this.parent.getBoundingClientRect().top;
+    this.setNewLeftPosition();
+  }
+
+  setTopPosition() {
+    if ( this.isOutOfWindowY() ) {
+      return this.setTopLimitOfArea();
     }
 
-    getColorHover() {
-      if (this.color) {
-        return this.colorService.calculate(this.color, -0.05);
-      }
+    if ( this.isOutOfWindowOnTop() ) {
+      return this.setContentTopPosition();
     }
 
-    hoverMinimize() {
-        this.colorHoverMinimize = this.getColorHover();
-    }
+    this.setNewTopPosition();
+  }
 
-    leaveMinimize() {
-        this.colorHoverMinimize = this.color;
-    }
+  setOptions( options: Array<ModalOptions> ) {
+    const self = this;
+    Object.keys( options ).forEach( function ( key ) {
+      self[ key ] = options[ key ];
+    } );
+  }
 
-    hoverMaximize() {
-        this.colorHoverMaximize = this.getColorHover();
-    }
+  setLeftLimitOfArea() {
+    return this.modal.nativeElement.style.left =
+      (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent + 'px';
+  }
 
-    leaveMaximize() {
-        this.colorHoverMaximize = this.color;
-    }
+  setTopLimitOfArea() {
+    return this.modal.nativeElement.style.top =
+      (this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + (this.offsetTopContent) + 'px';
+  }
 
-    hoverRestore() {
-        this.colorHoverRestore = this.getColorHover();
-    }
+  setOffsetLeftModal( offset ) {
+    this.offsetLeftModal = offset;
+  }
 
-    leaveRestore() {
-        this.colorHoverRestore = this.color;
-    }
+  setOffsetTopModal( offset ) {
+    this.offsetTopModal = offset;
+  }
 
-    hoverClose() {
-        this.colorHoverClose = this.getColorHover();
-    }
+  setContentTopPosition() {
+    this.modal.nativeElement.style.top = this.offsetTopContent + 'px';
+  }
 
-    leaveClose() {
-        this.colorHoverClose = this.color;
-    }
+  setContentLeftPosition() {
+    this.modal.nativeElement.style.left = this.offsetLeftContent + 'px';
+  }
 
-    ngOnDestroy() {
-        this.subscribeResize();
+  setNewTopPosition() {
+    this.modal.nativeElement.style.top = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY + 'px';
+  }
+
+  setNewLeftPosition() {
+    this.modal.nativeElement.style.left = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX + 'px';
+  }
+
+  setServiceControl( service ) {
+    this.serviceControl = service;
+  }
+
+  setDefaultDimensions() {
+    if ( this.height && this.width ) {
+      this.modal.nativeElement.style.height = this.height;
+      this.modal.nativeElement.style.width = this.width;
+    } else {
+      this.modal.nativeElement.style.height = '500px';
+      this.modal.nativeElement.style.width = '500px';
     }
+  }
+
+  setCurrentPosition() {
+    this.modal.nativeElement.style.left = this.modalLeft + 'px';
+    this.modal.nativeElement.style.top = this.modalTop + 'px';
+  }
+
+  isMouseOutOfTheWindowLeft( event ) {
+    return event.clientX < this.offsetLeftContent;
+  }
+
+  setZIndex() {
+    this.serviceControl.setZIndex( this.componentRef, this.modal );
+    this.serviceControl.sortComponentsByZIndex();
+  }
+
+  isMouseOutOfTheWindowRight( event ) {
+    return event.clientX >= window.innerWidth - 1;
+  }
+
+  isOutOfWindowOnLeft() {
+    return this.positionX < this.offsetLeftContent;
+  }
+
+  isOutOfWindowOnTop() {
+    return this.positionY < this.offsetTopContent;
+  }
+
+  isOutOfWindowX() {
+    this.positionX = this.offsetLeftModal + this.positionMouseMoveX - this.mousePressX;
+    return this.positionX >= (this.parent.offsetWidth - this.modal.nativeElement.offsetWidth) + this.offsetLeftContent;
+  }
+
+  isOutOfWindowY() {
+    this.positionY = this.offsetTopModal + this.positionMouseMoveY - this.mousePressY;
+    return this.positionY >= ((this.parent.offsetHeight - this.modal.nativeElement.offsetHeight) + this.offsetTopContent);
+  }
+
+  minimizeModal() {
+    if ( !(this.minimizable) ) {
+      return;
+    }
+    this.serviceControl.minimize( this.componentRef );
+    this.minimize.emit( this.componentRef.instance );
+    this.leaveMinimize();
+  }
+
+  closeModal() {
+    this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
+    this.close.emit( this.componentRef.instance );
+    this.leaveClose();
+  }
+
+  maximizeModal() {
+    if ( !(this.maximizable) ) {
+      return;
+    }
+    this.leaveMaximize();
+    if ( !this.maximized ) {
+      this.getModalPosition();
+      this.setModalLeftPosition();
+      this.setModalTopPosition();
+      this.setModalWidth();
+      this.setModalHeight();
+      this.maximized = true;
+      this.moving = false;
+      this.maximize.emit();
+      return;
+    }
+    this.restoreMaximizeModal();
+  }
+
+
+  setModalLeftPosition() {
+    this.modal.nativeElement.style.left = this.getBoundingParentElement().left + 'px';
+  }
+
+  setModalTopPosition() {
+    this.modal.nativeElement.style.top = this.getBoundingParentElement().top +
+      (this.hasScroll() ? window.scrollY : 0) + 'px';
+  }
+
+  setModalWidth() {
+    this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
+  }
+
+  setModalHeight() {
+    this.modal.nativeElement.style.height = this.hasScroll() ? this.getHeightOfWindow() :
+      this.getBoundingParentElement().height + 'px';
+  }
+
+  getHeightOfWindow() {
+    return (window.innerHeight - this.modal.nativeElement.offsetTop) + 'px';
+  }
+
+  hasScroll() {
+    return (!this.parentElement) && (this.parent.offsetHeight > window.innerHeight);
+  }
+
+  restoreMaximizeModal() {
+    if ( this.restoreMaximize ) {
+      this.setDefaultDimensions();
+      this.setCurrentPosition();
+      this.maximized = false;
+      this.leaveRestore();
+    }
+  }
+
+  getBoundingParentElement() {
+    return this.parent.getBoundingClientRect();
+  }
+
+  getBoundingContent() {
+    this.parent = this.parentElement ? this.parentElement : this.containerService.getView().element.nativeElement;
+    this.offsetLeftContent = this.parent.getBoundingClientRect().left;
+    this.offsetTopContent = this.parent.getBoundingClientRect().top;
+  }
+
+  getColorHover() {
+    if ( this.color ) {
+      return this.colorService.calculate( this.color, -0.05 );
+    }
+  }
+
+  hoverMinimize() {
+    this.colorHoverMinimize = this.getColorHover();
+  }
+
+  leaveMinimize() {
+    this.colorHoverMinimize = this.color;
+  }
+
+  hoverMaximize() {
+    this.colorHoverMaximize = this.getColorHover();
+  }
+
+  leaveMaximize() {
+    this.colorHoverMaximize = this.color;
+  }
+
+  hoverRestore() {
+    this.colorHoverRestore = this.getColorHover();
+  }
+
+  leaveRestore() {
+    this.colorHoverRestore = this.color;
+  }
+
+  hoverClose() {
+    this.colorHoverClose = this.getColorHover();
+  }
+
+  leaveClose() {
+    this.colorHoverClose = this.color;
+  }
+
+  ngOnDestroy() {
+    this.subscribeResize();
+  }
 
 }
 

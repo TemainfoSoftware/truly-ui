@@ -23,7 +23,7 @@ import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
   ComponentRef
 } from '@angular/core';
-
+import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
@@ -40,8 +40,6 @@ export class ModalService implements OnDestroy {
 
     public componentInjected: ComponentRef<any>;
 
-    public forms: Array<ComponentRef<any>> = [];
-
     public activeModal: ComponentRef<any>;
 
     public view: ViewContainerRef;
@@ -56,50 +54,48 @@ export class ModalService implements OnDestroy {
 
     private callBack = Function();
 
-    constructor( private compiler: ComponentFactoryResolver ) {}
+    constructor(private containerModal: ContainerModalService) {}
 
-    setView( view: ViewContainerRef ) {
-        this.view = view;
-    }
-
-    createModalDialog(component: Type<any>, callback) {
-      this.setComponentModal();
-      this.setComponentInjected( component );
-      this.setGlobalSettings();
+    createModalDialog(component: Type<any>, factoryResolver, callback) {
+      this.view = this.containerModal.getView();
+      this.setComponentModal(factoryResolver);
+      this.injectComponentToModal( component, factoryResolver );
+      this.setGlobalSettings(factoryResolver);
       this.setInitialZIndex();
       this.callBack = callback;
       return this;
     }
 
-    createModal( component: Type<any>, parentElement: ElementRef, callback ) {
-        this.setComponentModal();
-        this.setComponentInjected( component );
-        this.setGlobalSettings( parentElement );
+    createModal( component: Type<any>, factoryResolver,  parentElement: ElementRef, callback ) {
+        this.view = this.containerModal.getView();
+        this.setComponentModal(factoryResolver);
+        this.injectComponentToModal( component, factoryResolver );
+        this.setGlobalSettings( factoryResolver, parentElement );
         this.setInitialZIndex();
         this.callBack = callback;
         return this;
     }
 
-    setComponentModal() {
-        const componentFactory = this.compiler.resolveComponentFactory( TlModal );
+    setComponentModal(compiler) {
+        const componentFactory = compiler.resolveComponentFactory( TlModal );
         this.component = this.view.createComponent( componentFactory );
         this.componentList.push(this.component);
+        this.subject.next(this.component);
         (<TlModal>this.component.instance).setServiceControl( this );
         (<TlModal>this.component.instance).setComponentRef( this.component );
         this.setActiveModal(this.component);
     }
 
-    setComponentInjected( component: Type<any> ) {
-        const factoryInject = this.compiler.resolveComponentFactory( component );
+    injectComponentToModal( component: Type<any>, compiler ) {
+        const factoryInject = compiler.resolveComponentFactory( component );
         this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
-        this.addFormModalToList();
     }
 
-    setGlobalSettings( parent?: ElementRef ) {
+    setGlobalSettings( factoryResolver,  parent?: ElementRef, ) {
         this.modalOptions = Reflect.getOwnMetadata('annotations',
           Object.getPrototypeOf(this.componentInjected.instance).constructor);
         this.setParentElement(parent);
-        this.handleBackDrop();
+        this.handleBackDrop(factoryResolver);
         (<TlModal>this.component.instance).status = 'MAX';
         (<TlModal>this.component.instance).setOptions( this.modalOptions[0] );
     }
@@ -110,9 +106,9 @@ export class ModalService implements OnDestroy {
       }
     }
 
-    handleBackDrop() {
+    handleBackDrop(factoryResolver) {
       if (this.modalOptions[0].backdrop) {
-        this.createBackdrop(TlBackdrop);
+        this.createBackdrop(TlBackdrop, factoryResolver);
       }
     }
 
@@ -146,8 +142,9 @@ export class ModalService implements OnDestroy {
         this.head.next({activeModal: this.activeModal});
     }
 
-    createBackdrop( backdrop ) {
-        const backdropFactory = this.compiler.resolveComponentFactory( backdrop );
+    createBackdrop( backdrop, factoryResolver ) {
+      this.view = this.containerModal.getView();
+        const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
         this.backdrop = this.view.createComponent( backdropFactory );
     }
 
@@ -168,8 +165,7 @@ export class ModalService implements OnDestroy {
             return;
         }
         this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
-        this.handleModalForms( component );
-        this.subject.next(this.forms);
+        this.subject.next(this.componentList);
         this.removeOfTheList();
         this.removeBackdrop();
     }
@@ -184,14 +180,6 @@ export class ModalService implements OnDestroy {
         return comp;
     }
 
-    handleModalForms( component: ComponentRef<any> ) {
-        if ( this.forms.length > 0 ) {
-            const index = this.forms.indexOf( component );
-            this.forms.splice( index, 1 );
-        }
-        this.setActiveWindow();
-    }
-
     handleActiveWindow() {
         const visibleHighestZIndex = [];
         this.getVisibleModals().forEach( ( value, index2, array ) => {
@@ -200,7 +188,7 @@ export class ModalService implements OnDestroy {
 
         const highest = this.getHighestZIndexModals( visibleHighestZIndex );
 
-        this.forms.forEach( ( value, index2, array ) => {
+        this.componentList.forEach( ( value, index2, array ) => {
             if ( this.getVisibleModals().length === 0 ) {
                 return this.setActiveModal(null);
             }
@@ -221,28 +209,6 @@ export class ModalService implements OnDestroy {
             }
         }
         return visibleModals;
-    }
-
-    setActiveWindow() {
-        let maxZindex = [];
-        if ( (this.getVisibleModals().length - 1) <= 0 ) {
-            return this.setActiveModal(null);
-        }
-        maxZindex = this.forms;
-        this.sortArrayByZIndex( maxZindex );
-        this.setActiveModal(maxZindex[ maxZindex.length - 1 ]);
-    }
-
-    sortArrayByZIndex( array: Array<any> ) {
-        return array.sort( ( a, b ) => {
-            return a.location.nativeElement.firstElementChild.style.zIndex -
-              b.location.nativeElement.firstElementChild.style.zIndex;
-        } );
-    }
-
-    addFormModalToList() {
-        this.forms.push( this.component );
-        this.subject.next(this.forms);
     }
 
     removeOfTheList() {
@@ -273,6 +239,7 @@ export class ModalService implements OnDestroy {
             }
             setTimeout(() => {
                 this.resultCallback();
+                this.handleActiveWindow();
                 resolve();
             }, 500);
         });

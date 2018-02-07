@@ -37,7 +37,6 @@ export class ShortcutDemoComponent {
   public dataEvents;
 
   constructor( public view: ViewContainerRef, public dialogService: DialogService ) {
-    this.dialogService.setView(this.view);
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }

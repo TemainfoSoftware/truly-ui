@@ -11,16 +11,16 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Online'" (click)="changeOnline()"></tl-button>
+              <tl-button [text]="'Change to Online'" [color]="'success'" (click)="changeOnline()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Busy'" (click)="changeBusy()"></tl-button>
+              <tl-button [text]="'Change to Busy'" [color]="'danger'" (click)="changeBusy()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Away'" (click)="changeAway()"></tl-button>
+              <tl-button [text]="'Change to Away'" [color]="'warning'" (click)="changeAway()"></tl-button>
             </div>
             <div class="col-md-3">
-              <tl-button [text]="'Change to Offline'" (click)="changeOffline()"></tl-button>
+              <tl-button [text]="'Change to Offline'" [color]="'dark'" (click)="changeOffline()"></tl-button>
             </div>
           </app-card>
           <app-card>

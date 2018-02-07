@@ -1,0 +1,90 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin _tl-minimized-modal-theme-scheme( $theme, $action ){
+  .container-modals {
+    > .wrapper-container-modals {
+      > .container-modal-box {
+        background-color: map-deep-get($theme, $action, "default", "background");
+        border: 1px solid map-deep-get($theme, $action, "default", "border");
+        color:  map-deep-get($theme, $action, "default", "foreground");
+      }
+    }
+  }
+}
+
+@mixin tl-minimized-modal-theme($theme) {
+
+  $basic:   map-deep-get($theme, 'basic');
+  $dark:    map-deep-get($theme, 'dark');
+  $success: map-deep-get($theme, 'success');
+
+
+  .container-wrapper {
+
+    > .arrow-right {
+      background:map-deep-get($success, "default", "background");
+      border: 1px solid map-deep-get($success, "default", "border");
+      color: map-deep-get($success, "default", "foreground");
+    }
+    > .arrow-left {
+      background: map-deep-get($success, "default", "background");
+      border: 1px solid map-deep-get($success, "default", "border");
+      color: map-deep-get($success, "default", "foreground");
+    }
+
+    .container-modals {
+      background-color: map-deep-get($dark, 'default', "background");
+      border: 1px solid map-deep-get($dark, 'default', "border");
+      //
+      //&::-webkit-scrollbar {
+      //  background: $scrollbar-background;
+      //}
+      //&::-webkit-scrollbar-corner {
+      //  background: $scrollbar-background;
+      //}
+      //&::-webkit-scrollbar-track {
+      //  background: $scrollbar-track;
+      //  border-left: 1px solid $borders;
+      //}
+      //&::-webkit-scrollbar-thumb {
+      //  background: $scrollbar-thumb;
+      //}
+    }
+
+    &.basic {
+      @include _tl-minimized-modal-theme-scheme($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-minimized-modal-theme-scheme($theme, 'primary')
+    }
+
+    //&.secondary {
+    //  @include _tl-button-theme-schema($theme,'secondary')
+    //}
+
+    &.success {
+      @include _tl-minimized-modal-theme-scheme($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-minimized-modal-theme-scheme($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-minimized-modal-theme-scheme($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-minimized-modal-theme-scheme($theme, 'information')
+    }
+
+    &.light {
+      @include _tl-minimized-modal-theme-scheme($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-minimized-modal-theme-scheme($theme, 'dark')
+    }
+  }
+}

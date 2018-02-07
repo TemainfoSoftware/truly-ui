@@ -29,11 +29,12 @@ export class DialogDefaultBehavior {
     constructor() {}
 
     onKeyDown( $event: KeyboardEvent ) {
-        $event.stopPropagation();
         switch ( $event.keyCode ) {
             case KeyEvent.TAB:
                 $event.preventDefault();
+                $event.stopPropagation();
                 break;
         }
+
     }
 }

@@ -1,19 +1,20 @@
-<div class="check-container">
-    <div (click)="check(checkbox.checked)"
-         *ngIf="modelValue"
-         [ngStyle]="{'border-width':'1px','border-style':'solid', 'border-color':checkedColorBg,'background-color':checkedColorBg }"
+<div [class]="'check-container '+ color ">
+    <div (click)="check(value)"
+         *ngIf="value"
+         [ngStyle]="{'border-width':'1px','border-style':'solid'}"
          class="checkmark-wrapper">
         <div class="checkmark">
-            <div class="checkmark_stem" [ngStyle]="{'background-color':checkmarkColor}"></div>
-            <div class="checkmark_kick" [ngStyle]="{'background-color':checkmarkColor}"></div>
+            <div class="checkmark_stem"></div>
+            <div class="checkmark_kick"></div>
         </div>
     </div>
     <input #checkbox
            type="checkbox"
            #model="ngModel"
            (focus)="focusCheckBox()"
-           [checked]="toggle"
+           (change)="emitEvent()"
+           [checked]="value"
            [tabindex]="tabindex"
-           [(ngModel)]="modelValue">
-    <label class="-label" (click)="check(checkbox.checked)">{{label}}</label>
+           [(ngModel)]="value">
+    <label class="-label" (click)="check(value)">{{label}}</label>
 </div>

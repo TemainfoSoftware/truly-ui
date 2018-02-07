@@ -22,8 +22,8 @@
                 {{result | json}}
               </pre>
             </div>
+            <tl-minimized-modal [color]="'success'"></tl-minimized-modal>
           </app-card>
-          <tl-container-modal></tl-container-modal>
         </app-showcase-card>
       </div>
     </div>
@@ -110,26 +110,29 @@
         </textarea>
             <hr>
             <h4>Step Five</h4>
-            <h5>Set the form options <code>object</code> used on form creation described on <b>Final Step</b>.</h5>
+            <h5>Set the modal options object by <code>@Modal</code> decorator on actual Form Component</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-    this.formOptions = {
-    title: 'New Modal',
-    icon: 'ion-monitor',
-    draggable: true,
-    width: '500px',
-    height: 'auto',
-    maximizable: true,
-    minimizable: true
-};
+@Modal({
+  title: 'New Form',
+  icon: 'ion-stats-bars',
+  draggable: true,
+  width: '500px',
+  color: 'success',
+  height: 'auto',
+  maximizable: true,
+  minimizable: true,
+  fullscreen: false
+})
             </textarea>
             <hr>
             <h4>Final Step</h4>
             <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-this.formService.createForm(NewPerson, this.formOptions, (modalResult) => {
-      this.dataFormService.saveDataForm(modalResult.formResult);
-      this.result = this.dataFormService.getDataForm();
-  });
+this.formService.createForm(NewPersonComponent, parent, (form) => {
+  if (form.formResult.value) {
+    this.dataFormService.saveDataForm(form.formResult.value);
+    this.result = this.dataFormService.getDataForm();
+  }
 });
         </textarea>
           </app-card>

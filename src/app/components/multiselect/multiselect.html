@@ -1,7 +1,7 @@
-<div class="wrapper-container">
+<div class="tl-multiselect-container">
     <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
     <div class="multiselect-wrapper">
-        <div [ngClass]="{'inputFormOpenFilter': isOpen && filteredItens.length !== 0}"
+        <div [ngClass]="{'focused':focused, 'noFocused':!focused,'inputFormOpenFilter': isOpen && filteredItens.length !== 0}"
              class="input-wrapper-multiselect" #element (click)="setInputFocus()">
           <span class="tags" *ngIf="hasKeySource">
               <span *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event,i, tag)"
@@ -24,7 +24,7 @@
             <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
                    #model="ngModel"
                    #input width="300"
-                   [(ngModel)]="modelValue"
+                   [(ngModel)]="value"
                    (blur)="closeList($event, element)"
                    (focus)="handleInputFocus()"
                    [attr.placeholder]="placeholder"

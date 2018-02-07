@@ -2,7 +2,6 @@ export interface ModalOptions {
     icon: string;
     title: string;
     color?: string;
-    fontColor?: string;
     height?: string;
     width?: string;
     closeShortcut?: string;

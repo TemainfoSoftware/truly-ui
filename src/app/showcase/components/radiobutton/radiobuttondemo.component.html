@@ -12,13 +12,14 @@
           <app-card>
             <div class="col-md-12">
               <h5>Orientation Horizontal</h5>
-              <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
+              <tl-radio-group [name]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
                 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
               </tl-radio-group>
+              <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{radio}}</span>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
+<tl-radio-group [name]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
 </tl-radio-group>
@@ -28,13 +29,14 @@
           <app-card>
             <div class="col-md-12">
               <h5>Orientation Vertical</h5>
-              <tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
+              <tl-radio-group [name]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
                 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
               </tl-radio-group>
+              <span style="font-size: 12px; color: #9d9d9d">Returned Value: {{radio2}}</span>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-radio-group [nameGroup]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
+<tl-radio-group [name]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
 </tl-radio-group>

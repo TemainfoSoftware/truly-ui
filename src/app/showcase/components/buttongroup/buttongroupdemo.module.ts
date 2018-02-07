@@ -7,7 +7,6 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { ButtonGroupDemoComponent } from './buttongroupdemo.component';
 import { ButtonGroupDemoRoutingModule } from './buttongroupdemo-routing.module';
 import { ButtonGroupModule } from '../../../components/buttongroup';
-import { ModalService } from '../../../components/modal';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
@@ -28,9 +27,6 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
   ],
   exports: [
     ButtonGroupDemoComponent
-  ],
-  providers: [
-    ModalService
   ]
 })
 export class ButtonGroupDemoModule {}

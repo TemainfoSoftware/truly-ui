@@ -1,87 +1,75 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-dropdonwlist-theme($theme) {
 
-  $base-text: map_get(map_get($theme,base),text);
-  $base-background:  map_get(map_get($theme,base),background);
+  $basic:   map-deep-get($theme, 'basic');
+  $danger:  map-deep-get($theme, 'danger');
+  $primary: map-deep-get($theme, 'primary');
 
-  $icon-text:  map_get(map_get($theme,icons),text);
-  $border:  map_get($theme,borders);
-
-  $error-text: map_get(map_get($theme,error),text);
-  $error-border: map_get(map_get($theme,error),border);
-  $error-background: map_get(map_get($theme,error),background);
-  $success-border: map_get(map_get($theme,success),border);
-  $success-background: map_get(map_get($theme,success),background);
-
-  $disable-text:  map_get(map_get($theme,disable),text);
-  $disable-background:  map_get(map_get($theme,disable),background);
-
-  $select-text: map_get(map_get($theme,selected),text);
-  $select-background: map_get(map_get($theme,selected),background);
-  $scroll-thumb: map_get(map_get($theme,scrollbar),thumb);
 
   .tl-dropdown-list-box {
     > .labeltext {
-      color: $base-text;
+      color: map-deep-get($basic, "default", "foreground");
       > b.required {
-        color: $error-text;
+        color: map-deep-get($danger, "default", "foreground");
       }
     }
     > .wrapper {
       > .select {
-        background: $base-background;
-        color: $base-text;
-        border: 1px solid $border;
+        background: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+        border: 1px solid map-deep-get($basic, "default", "border");
       }
       > .select:hover {
-        background-color: $base-background;
+        background-color: map-deep-get($basic, "default", "background");
       }
       > .select:active {
-        background-color: $base-background;
+        background-color: map-deep-get($basic, "default", "background");
       }
       > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-        border: 1px solid $error-border;
+        border: 1px solid map-deep-get($danger, "default", "border");
         background-color: #FFF1F1;
       }
       > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-        border: 1px solid $success-border;
-        background-color: $success-background;
+        border: 1px solid  map-deep-get($primary, "default", "border");
+        background-color: map-deep-get($primary, "default", "background");
       }
       > .dropdown-list-icon i {
-        color: $icon-text;
+        color: map-deep-get($basic, "default", "foreground");
       }
       > .dropdown-list-wrapper-select {
-        border: 1px solid $border;
+        border: 1px solid map-deep-get($basic, "default", "border");
         > .dropdown-list-select {
-          border: 1px solid $border;
-          background-color: $base-background;
-          color: $base-text;
+          border: 1px solid map-deep-get($basic, "default", "border");
+          background-color: map-deep-get($basic, "default", "background");
+          color: map-deep-get($basic, "default", "foreground");
           > li {
-            color: $base-text;
+            color: map-deep-get($basic, "default", "foreground");
           }
           > li:hover {
-            background-color: $select-background;
-            color: $select-text;
+            background-color: map-deep-get($primary, "default", "background");
+            color: map-deep-get($primary, "default", "foreground");
           }
           > li:focus {
-            background-color: $select-background;
-            color: $select-text;
+            background-color: map-deep-get($primary, "default", "background");
+            color: map-deep-get($primary, "default", "foreground");
           }
           > li:active {
-            background-color: $base-background;
-            color: $base-text;
+            background-color: map-deep-get($basic, "default", "background");
+            color: map-deep-get($basic, "default", "foreground");
           }
         }
         > .dropdown-list-select::-webkit-scrollbar-thumb {
-          background-color: $scroll-thumb;
+          background-color: map-deep-get($primary, "default", "background");
         }
         > .-placeholder {
-          color: $base-text;
-          background-color: $base-background;
-          border: 1px solid $border;
+          color: map-deep-get($basic, "default", "foreground");
+          background-color: map-deep-get($basic, "default", "background");
+          border: 1px solid map-deep-get($basic, "default", "border");
         }
         .-placeholder:focus {
-          background-color: $select-background;
-          color: $select-text;
+          background-color: map-deep-get($primary, "default", "background");
+          color: map-deep-get($primary, "default", "foreground");
         }
       }
       > .disabled::placeholder, .disabled {
@@ -93,22 +81,22 @@
 
   .search-input {
     >.search-input-icon {
-      color: $icon-text;
+      color:  map-deep-get($basic, "default", "foreground");
     }
     >.search-input-field {
-      color: $icon-text;
-      border: 1px solid $border;
+      color:  map-deep-get($basic, "default", "foreground");
+      border: 1px solid  map-deep-get($basic, "default", "border");
     }
   }
 
   .selected {
-    background: $select-background;
-    color: $select-text;
+    background-color: map-deep-get($primary, "default", "background") !important;
+    color: map-deep-get($primary, "default", "foreground") !important;
   }
 
   .ui-overlap{
-    color: $base-text;
-    border: 1px solid $border;
-    background-color: $base-background;
+    color: map-deep-get($basic, "default", "foreground");
+    border: 1px solid map-deep-get($basic, "default", "border");
+    background-color: map-deep-get($basic, "default", "background");
   }
 }

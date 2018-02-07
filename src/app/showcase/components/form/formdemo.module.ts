@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
+import { MimimizedModalModule } from '../../../components/modal/addons/minimized-modal';
 
 import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
@@ -19,7 +20,6 @@ import { CheckBoxModule } from '../../../components/checkbox';
 import { FormModule } from '../../../components/form';
 import { DialogModule } from '../../../components/dialog';
 import { AutoCompleteModule } from '../../../components/autocomplete';
-import { ModalModule } from '../../../components/modal';
 import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
 import { DirectiveModule } from '../../../components/core/directives';
@@ -28,6 +28,7 @@ import { TabControlModule } from '../../../components/tabcontrol/index';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { DatePickerModule } from '../../../components/datepicker/index';
 
 @NgModule({
   declarations: [
@@ -48,8 +49,9 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     DialogModule,
     AutoCompleteModule,
     FormsModule,
+    DatePickerModule,
     PanelGroupModule,
-    ModalModule,
+    MimimizedModalModule,
     HighlightJsModule,
     TooltipModule,
     MultiSelectModule,
@@ -64,7 +66,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
   ],
   providers: [
     DumpDataService,
-    DataFormService
+    DataFormService,
   ],
   entryComponents: [
     NewPersonComponent

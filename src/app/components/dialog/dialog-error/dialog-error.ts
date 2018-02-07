@@ -26,7 +26,7 @@ import { Modal } from '../../modal/modal-options';
 @Modal({
   icon: 'ion-close-circled',
   title: 'Error',
-  color: '#F25757',
+  color: 'danger',
   width: '400px',
   height: 'auto',
   draggable: true,

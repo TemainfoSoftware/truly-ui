@@ -1,104 +1,108 @@
+@import "../core/styles/theming/theming";
+
 @mixin tl-multiselect-theme($theme) {
 
-  $borders: map_get($theme,borders);
-  $divider: map_get($theme,divider);
-  $base-text: map_get(map_get($theme,base),text);
-  $hover-background: map_get(map_get($theme,hover),background);
-  $placeholder-text: map_get(map_get($theme,placeholder),text);
-
-  $selected-background: map_get(map_get($theme,selected),background);
-  $selected-text:  map_get(map_get($theme,selected),text);
-
-  $box-background: map_get(map_get($theme,box),background);
-  $box-text: map_get(map_get($theme,box),text);
-
-  $scrollbar-thumb: map_get(map_get($theme,scrollbar),thumb);
-  $warning-background:  map_get(map_get($theme,warning),background);
+  $basic:   map-deep-get($theme, 'basic');
+  $light:   map-deep-get($theme, 'light');
+  $primary:   map-deep-get($theme, 'primary');
+  $warning:   map-deep-get($theme, 'warning');
 
 
-  .-labelTag {
-    color: $base-text;
+
+  .tl-multiselect-container {
+
+    > .-labelTag {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    >.multiselect-wrapper{
+      & .selectedItem {
+        background-color: map-deep-get($primary, "default", "background") !important;
+        color: map-deep-get($primary, "default", "foreground")  !important;
+      }
+
+      & .input-wrapper-multiselect {
+        border: 1px solid  map-deep-get($basic, "default", "border");
+        background:  map-deep-get($light, "default", "background");
+        -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+        -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+        box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      }
+
+      & .input-wrapper-multiselect input::placeholder {
+        color:map-deep-get($basic, "default", "foreground");
+      }
+
+      //& .input:focus {
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
+      //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
+      //}
+      //
+      //& .input-empty:focus {
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
+      //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
+      //}
+      //
+      //& .focused{
+      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.1);
+      //  outline: none;
+      //  border: 1px solid map-deep-get($warning, "default", "border");
+      //}
+      & .input {
+        background: map-deep-get($light, "default", "background");
+        color: map-deep-get($light, "default", "foreground");
+      }
+
+      & .input-empty {
+        background: map-deep-get($light, "default", "background");
+        color: map-deep-get($light, "default", "foreground");
+      }
+
+      & .inputFormOpenFilter {
+        border-top: 1px solid  map-deep-get($basic, "default", "border");
+        border-left: 1px solid  map-deep-get($basic, "default", "border");
+        border-right: 1px solid  map-deep-get($basic, "default", "border");
+        border-bottom: 0 !important;
+      }
+
+      & .select-options {
+        //border: 1px solid  map-deep-get($basic, "default", "border")
+      }
+      & .select-options::-webkit-scrollbar-thumb {
+        background-color: map-deep-get($primary, "default", "background");
+        outline: 1px solid map-deep-get($primary, "default", "background");
+      }
+
+      & .tags span {
+        color: map-deep-get($primary, "default", "foreground");
+      }
+
+      & .tags span b {
+        border-left: 1px solid map-deep-get($primary, "default", "foreground");
+      }
+
+      & .select-options .itens {
+        color: map-deep-get($light, "default", "foreground");
+        background: map-deep-get($light, "default", "background");
+        border-top:1px solid rgba( map-deep-get($basic, "default", "border"),0.3);
+        border-left: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
+        border-right: 1px solid  rgba(map-deep-get($basic, "default", "border"),0.3);
+      }
+
+      & .select-options small {
+        color: map-deep-get($light, "default", "foreground");
+      }
+
+      & .select-options .itens:last-child {
+        border-bottom: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
+      }
+
+      & .select-options .itens:hover {
+        background: map-deep-get($basic, "hover", "background");
+        outline: none;
+      }
+    }
   }
-
-  .selectedItem {
-    background-color: $selected-background !important;
-    color: $selected-text !important;
-  }
-
-  .input-wrapper-multiselect {
-    border: 1px solid $borders;
-    background: $box-background;
-    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-  }
-
-  .input-wrapper-multiselect input::placeholder {
-    color: $placeholder-text;
-  }
-
-  .input:focus {
-    background: $warning-background;
-    outline: none;
-  }
-
-  .input-empty:focus {
-    background: $warning-background;
-    outline: none;
-  }
-
-  .input {
-    background: $box-background;
-    color: $box-text;
-  }
-
-  .input-empty {
-    background: $box-background;
-    color: $box-text;
-  }
-
-  .inputFormOpenFilter {
-    border-top: 1px solid $borders !important;
-    border-left: 1px solid $borders !important;
-    border-right: 1px solid $borders !important;
-    border-bottom: 0 !important;
-  }
-
-  .select-options {
-    border: 1px solid $borders;
-  }
-  .select-options::-webkit-scrollbar-thumb {
-    background-color: $scrollbar-thumb;
-    outline: 1px solid $scrollbar-thumb;
-  }
-
-  .tags span {
-   color: $box-background;
-  }
-
-  .tags span b {
-    border-left: 1px solid $box-background;
-  }
-
-  .select-options .itens {
-    color: $box-text;
-    background: $box-background;
-    border-top: 1px solid $divider;
-    border-left: 1px solid $divider;
-    border-right: 1px solid $divider
-  }
-
-  .select-options small {
-    color: $box-text;
-  }
-
-  .select-options .itens:last-child {
-    border-bottom: 1px solid $divider;
-  }
-
-  .select-options .itens:hover {
-    background: $hover-background;
-    outline: none;
-  }
-
 }

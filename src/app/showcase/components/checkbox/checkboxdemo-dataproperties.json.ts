@@ -17,17 +17,10 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
-    name: 'checkmarkColor',
+    name: 'color',
     type: 'string',
-    default: '#fff',
-    description: 'Sets the checkmark color.',
-    options: 'Hex | RGBA'
-  },
-  {
-    name: 'checkedColorBg',
-    type: 'string',
-    default: '#66CC99',
-    description: 'Sets the background color.',
-    options: 'Hex | RGBA'
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
   },
   ];

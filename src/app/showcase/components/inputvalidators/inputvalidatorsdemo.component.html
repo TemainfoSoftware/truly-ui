@@ -1,0 +1,128 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Input Validators<span class="module-name"><code><u>Module Name</u>: <strong>InputModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>InputModule</strong></code></p>
+    <p class="text-content">Improve overall data quality by validating user input for accuracy and completeness. Truly has several validations that makes easy to use and control the data of your form application</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <span>CPF</span>
+              <tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
+              <div class="returned-value">Returned Value: {{cpf}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>CNPJ</span>
+              <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+              <div class="returned-value">Returned Value: {{cnpj}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>DATE</span>
+              <tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
+              <div class="returned-value">Returned Value: {{date}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>NUMBER</span>
+              <tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+              <div class="returned-value">Returned Value: {{number}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>EMAIL</span>
+              <tl-input name="email" email [(ngModel)]="email"></tl-input>
+              <div class="returned-value">Returned Value: {{email}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="email" email [(ngModel)]="email"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>PATTERN<code>(ex: Tacomah1, ab2cdefH, 123Abcde)</code></span>
+              <tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
+              <div class="returned-value">Returned Value: {{pattern}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>PASSWORD</span>
+              <tl-input name="password" minlength="5" required messageValidation password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>
+              <div class="returned-value">Returned Value: {{password}}</div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="password" minlength="5" required messageValidation password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+
+<!--        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+  <app-card>
+    <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+  </app-card>
+</app-showcase-card>-->
+
+        <app-showcase-card [title]="'Available Validators'" [icon]="'ion-android-bulb'">
+          <app-card>
+            <div class="pattern" style="line-height: 20px">
+              <p><code>required</code> - Validate if the field has value.</p>
+              <p><code>minlength</code> - Value field must have the length specified of characters.</p>
+              <p><code>pattern</code> - Value field must match with expression (Regex) specified.</p>
+              <p><code>cpf</code> - Validate Individual Registration. [Brazil]</p>
+              <p><code>date</code> - Validate Date Format.</p>
+              <p style="padding-left: 10px"><code>[formatDate]</code> - dd.mm.yyyy or mm.dd.yyyy with any mask.</p>
+              <p><code>email</code> - Validate Email expression.</p>
+              <p><code>cnpj</code> - Validate employer code. [Brazil]</p>
+              <p><code>number</code> - Field allowed only numbers.</p>
+              <p><code>password</code> - Validate password field type.</p>
+              <p style="padding-left: 10px"><code>[passwordRule]</code> - Object of boolean properties to set rules - <code>digits | uppercase | specials</code></p>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Message Validation Directive'" [icon]="'ion-settings'">
+          <app-card>
+            <div class="pattern" style="line-height: 20px">
+              <p style="font-size: 1.2em; line-height: 1.5em">The <code>messageValidation</code> is used on <code>tl-input</code> to show error messages. The box of errors messages only will appears
+                if the input is <code>dirty</code> and that has validation error.</p>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input name="password" minlength="5" required messageValidation password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>
+</textarea>
+              <img src="assets/images/messagevalidation.png">
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <h4><code>All <b>Angular Input Events</b> can be used too.</code></h4>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>
+

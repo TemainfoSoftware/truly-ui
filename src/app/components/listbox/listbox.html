@@ -1,26 +1,32 @@
 <div class="wrapper-display" [style.display]="showList ? 'block' : 'none'" [@enterAnimation]="showList"
-     [tlOverlay]="nothingToShow && fixedHeight" [overlayConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
-    <div class="listbox-wrapper">
+     [tlOverlay]="nothingToShow && fixedHeight"
+     (mouseup)="mouseUpList($event)"
+     [overlayConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+  <div class="listbox-wrapper">
 
-        <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
-             (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
-            <i class="ion-chevron-up"></i>
-        </div>
-
-        <div #itemContainer class="list-box-container"
-             [tlOverlay]="loadingMoreData"
-             [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
-             [style.height]="fixedHeight ? (itemsToShow * rowHeight) + 'px' : getListBoxHeight() + 'px'">
-            <ul containerDirective #list class="list" [style.position]="'relative'"
-                [style.height]="filtering ? (filteredData.length * rowHeight) + 'px' : ((lazyMode ? data.total : data.length) * rowHeight) + 'px'">
-                <div #customTemplate><ng-content></ng-content></div>
-            </ul>
-        </div>
-
-        <div [@enterAnimation]="true" *ngIf="showMore && !scrollFinish && showArrows" (mouseleave)="onShowMoreMouseOut()" (mouseup)="onShowMoreMouseOut()"
-             (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
-            <i class="ion-chevron-down"></i>
-        </div>
-
+    <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows" (mouseleave)="onShowMoreMouseOut()"
+         (mouseup)="onShowMoreMouseOut()"
+         (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
+      <i class="ion-chevron-up"></i>
     </div>
+
+    <div #itemContainer class="list-box-container"
+         [tlOverlay]="loadingMoreData"
+         [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
+         [style.height]="fixedHeight ? (itemsToShow * rowHeight) + 'px' : getListBoxHeight() + 'px'">
+      <ul containerDirective #list class="list" [style.position]="'relative'"
+          [style.height]="filtering ? (filteredData.length * rowHeight) + 'px' : ((lazyMode ? data.total : data.length) * rowHeight) + 'px'">
+        <div #customTemplate>
+          <ng-content></ng-content>
+        </div>
+      </ul>
+    </div>
+
+    <div [@enterAnimation]="true" *ngIf="showMore && !scrollFinish && showArrows" (mouseleave)="onShowMoreMouseOut()"
+         (mouseup)="onShowMoreMouseOut()"
+         (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
+      <i class="ion-chevron-down"></i>
+    </div>
+
+  </div>
 </div>

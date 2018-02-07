@@ -19,47 +19,47 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { TlContainerModal } from './container-modal/container-modal';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { DirectiveModule } from '../core/directives/index';
 import { ShortcutService } from '../core/helper/shortcut.service';
-import { ContainerModalModule } from './container-modal';
 
 export * from './modal';
 export * from './modal.service';
 export * from './modal-options';
-export * from './container-modal/container-modal';
 
 @NgModule( {
     imports: [
-        CommonModule,
-        DirectiveModule,
-        ContainerModalModule,
+      CommonModule,
+      DirectiveModule,
     ],
     declarations: [
-        TlModal,
-        TlBackdrop,
-        LimitStringPipe
+      TlModal,
+      TlBackdrop,
+      LimitStringPipe
     ],
     exports: [
-        TlModal,
-        TlContainerModal,
+      TlModal,
     ],
     entryComponents: [
-        TlModal,
-        TlBackdrop
-    ],
-    providers: [
-        ToneColorGenerator,
-        ShortcutService,
-        ModalService
+      TlModal,
+      TlBackdrop
     ]
 } )
 export class ModalModule {
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: ModalModule,
+      providers: [
+        ToneColorGenerator,
+        ModalService,
+        ShortcutService,
+      ],
+    };
+  }
 }

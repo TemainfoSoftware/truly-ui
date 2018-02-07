@@ -137,12 +137,12 @@ export class TlCalendarDays {
 
   createClickListenerDay(cell) {
     this.calendar.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.setSelectedDay( cell.nativeElement, $event.target );
+      this.setSelectedDay( cell.nativeElement, $event, $event.target );
     });
   }
 
-  setSelectedDay( cell, target? ) {
-    this.calendar.emitSelectedDay( cell );
+  setSelectedDay( cell, $event, target? ) {
+    this.calendar.emitSelectedDay( cell, $event );
     if ( cell.getAttribute( 'class' ).includes( 'selected' ) ) {
       return;
     }

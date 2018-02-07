@@ -156,8 +156,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.month = date.month;
   }
 
-  focusOut($event) {
-    this.focusout.emit($event);
+  focusOut( $event ) {
+    this.focusout.emit( $event );
   }
 
   getToday() {
@@ -285,11 +285,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   handleKeyDown( $event ) {
     switch ( $event.keyCode ) {
       case KeyEvent.ARROWRIGHT:
-        $event.preventDefault();
         this.handleArrowRight();
         break;
       case KeyEvent.ARROWLEFT:
-        $event.preventDefault();
         this.handleArrowLeft();
         break;
       case KeyEvent.ARROWUP:
@@ -302,7 +300,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
         break;
       case KeyEvent.ENTER:
         $event.preventDefault();
-        this.handleKeyEnter();
+        this.handleKeyEnter($event);
         break;
     }
   }
@@ -490,7 +488,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     }
   }
 
-  handleKeyEnter() {
+  handleKeyEnter($event) {
     if ( this.displayMonths ) {
       this.month = parseInt( this.keyboardNavLine.children[ this.navigator ].getAttribute( 'cell' ), 10 );
       this.setDateNavigator();
@@ -507,7 +505,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
       return;
     }
 
-    this.calendarService.setSelectedDay( this.keyboardNavLine.children[ this.navigator ] );
+    this.calendarService.setSelectedDay( this.keyboardNavLine.children[ this.navigator ], $event );
   }
 
   getCellSelected() {
@@ -635,14 +633,15 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     }, 1 );
   }
 
-  emitSelectedDay( cell ) {
+  emitSelectedDay( cell, $event ) {
     this.selectDay.emit(
       {
         'year': this.year,
         'month': this.month + 1,
         'day': parseInt( cell.innerHTML, 10 ),
-        'fullDate': new Date( this.year, this.month, parseInt( cell.innerHTML, 10 ) )
-      } );
+        'fullDate': new Date( this.year, this.month, parseInt( cell.innerHTML, 10 ) ),
+        'event': $event
+      }, );
   }
 
   removeNavigator( cell ) {
@@ -664,7 +663,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.setNavigator( this.initNavigator );
   }
 
-  setNavitorIndex( cell ) {
+  setNavigatorIndex( cell ) {
     this.navigator = cell.cellIndex;
   }
 
@@ -675,7 +674,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   loadNavigator( cell? ) {
     if ( cell ) {
       this.setCurrentLine( cell.parentElement );
-      this.setNavitorIndex( cell );
+      this.setNavigatorIndex( cell );
       return;
     }
     this.getSomeCellSelected();
@@ -686,28 +685,28 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     for ( const cell of listCell ) {
       if ( cell.className.includes( 'selected' ) ) {
         this.setCurrentLine( cell.parentElement );
-        this.setNavitorIndex( cell );
+        this.setNavigatorIndex( cell );
         this.setNavigator( this.navigator );
         return;
       }
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.day) {
-      if (!changes.day.firstChange) {
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes.day ) {
+      if ( !changes.day.firstChange ) {
         this.setDateNavigator();
         this.generateDays();
       }
     }
-    if (changes.month) {
-      if (!changes.month.firstChange) {
+    if ( changes.month ) {
+      if ( !changes.month.firstChange ) {
         this.setDateNavigator();
         this.generateDays();
       }
     }
-    if (changes.year) {
-      if (!changes.year.firstChange) {
+    if ( changes.year ) {
+      if ( !changes.year.firstChange ) {
         this.setDateNavigator();
         this.generateDays();
       }

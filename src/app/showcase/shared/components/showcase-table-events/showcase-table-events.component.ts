@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-showcase-table-events',
@@ -6,7 +6,7 @@ import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, I
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./showcase-table-events.component.scss'],
 })
-export class ShowcaseTableEventsComponent implements AfterViewInit {
+export class ShowcaseTableEventsComponent implements AfterViewInit, OnInit {
 
   @Input('data') data = [];
 
@@ -14,6 +14,18 @@ export class ShowcaseTableEventsComponent implements AfterViewInit {
 
   constructor(private change: ChangeDetectorRef) { }
 
+  ngOnInit() {
+    this.data.sort(function (a, b) {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
+  }
+  
   ngAfterViewInit() {
     this.hasParams();
   }

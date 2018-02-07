@@ -19,33 +19,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TlDatePicker } from './datepicker';
+import { InputModule } from '../input/index';
+import { FormsModule } from '@angular/forms';
+import { CalendarModule } from '../calendar/index';
+import { TlCalendar } from '../calendar/calendar';
 
-import { Injectable } from '@angular/core';
+export * from './datepicker';
 
-@Injectable()
-export class DataClientService {
-
-  public dataForm =
-      {
-        firstName: '',
-        lastName: '',
-        city: '',
-        title: '',
-        status: '',
-        notification: '',
-        birthday: '',
-        date: '',
-        cnpj: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
-
-}
+@NgModule( {
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputModule,
+    CalendarModule
+  ],
+  declarations: [
+    TlDatePicker
+  ],
+  exports: [
+    TlDatePicker
+  ],
+  entryComponents: [ TlCalendar ]
+} )
+export class DatePickerModule {}

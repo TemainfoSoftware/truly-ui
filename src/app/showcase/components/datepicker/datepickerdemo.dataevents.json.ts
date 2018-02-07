@@ -19,33 +19,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class DataClientService {
-
-  public dataForm =
-      {
-        firstName: '',
-        lastName: '',
-        city: '',
-        title: '',
-        status: '',
-        notification: '',
-        birthday: '',
-        date: '',
-        cnpj: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
-
-}
+export const dataEvents = [
+  {
+    name: 'selectDay',
+    parameters: [
+      { event: 'year', description: 'Full Year selected' },
+      { event: 'month', description: 'Number of month selected' },
+      { event: 'day', description: 'Number of day selected' },
+      { event: 'fullDate', description: 'Default format date' },
+    ],
+    description: 'Dispatched when day cell is clicked.',
+  },
+];

@@ -110,37 +110,39 @@ export class TlCalendarDays {
       td.nativeElement.innerHTML = this.dayOfMonth[ day ].day;
 
       this.markToday( this.dayOfMonth[ day ].day, td );
+      this.selectDay( this.dayOfMonth[ day ].day, td );
+
       this.createClickListenerDay( td );
 
       this.calendar.renderer.appendChild( this.week.nativeElement, td.nativeElement );
     }
   }
 
+  selectDay(day, cell) {
+    if ((this.calendar.typingDay) && (day === this.calendar.day)) {
+      this.calendar.renderer.addClass(cell.nativeElement, 'selected');
+      this.calendar.selectedDay = cell.nativeElement;
+    }
+  }
+
   markToday(day, cell) {
-    if ( (day === this.calendar.today) && (this.calendar.month === new Date().getMonth() )
+    if ( (day === this.calendar.day) && (this.calendar.month === new Date().getMonth() )
       && (this.calendar.year === new Date().getFullYear()) ) {
       this.calendar.renderer.addClass(cell.nativeElement, 'today');
       this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.todayIndex = cell;
       this.calendar.selectedDay = cell.nativeElement;
-      this.calendar.selectDay.emit(
-        {
-          'year': this.calendar.year,
-          'month': this.calendar.month,
-          'day': this.calendar.today,
-          'fullDate': new Date(this.calendar.year, this.calendar.month, this.calendar.today)
-        });
     }
   }
 
   createClickListenerDay(cell) {
     this.calendar.renderer.listen(cell.nativeElement, 'click', $event => {
-      this.setSelectedDay( cell.nativeElement, $event.target );
+      this.setSelectedDay( cell.nativeElement, $event, $event.target );
     });
   }
 
-  setSelectedDay( cell, target? ) {
-    this.calendar.emitSelectedDay( cell );
+  setSelectedDay( cell, $event, target? ) {
+    this.calendar.emitSelectedDay( cell, $event );
     if ( cell.getAttribute( 'class' ).includes( 'selected' ) ) {
       return;
     }

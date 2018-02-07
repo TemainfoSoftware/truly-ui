@@ -177,11 +177,10 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
       this.focus.emit($event);
     }
 
-    clearInput() {
+    clearInput($event) {
       this.value = '';
       this.input.nativeElement.focus();
-      this.clear.emit();
+      this.clear.emit($event);
     }
-
 
 }

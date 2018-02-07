@@ -16,6 +16,15 @@ export class ShowcaseTablePropertiesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.data.sort(function (a, b) {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return -1;
+      }
+      return 0;
+    });
     this.environment = environment;
   }
 

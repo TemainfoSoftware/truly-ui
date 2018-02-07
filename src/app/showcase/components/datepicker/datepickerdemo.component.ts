@@ -19,33 +19,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { Component } from '@angular/core';
 
-import { Injectable } from '@angular/core';
+import * as json from './datepickerdemo-dataproperties.json';
+import * as jsonEvts from './datepickerdemo.dataevents.json';
 
-@Injectable()
-export class DataClientService {
+@Component( {
+  selector : 'app-datepicker',
+  templateUrl : './datepickerdemo.component.html',
+  styleUrls : [ './datepickerdemo.component.scss' ]
+} )
+export class DatePickerDemoComponent {
 
-  public dataForm =
-      {
-        firstName: '',
-        lastName: '',
-        city: '',
-        title: '',
-        status: '',
-        notification: '',
-        birthday: '',
-        date: '',
-        cnpj: '',
-      };
+  public dataTableProperties;
 
-  constructor() {}
+  public dataEvents;
 
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
+  constructor() {
+    this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvts.dataEvents;
   }
 
 }
+

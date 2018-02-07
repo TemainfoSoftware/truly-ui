@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Sistemas
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,33 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+export function ReverseFormatDate( value, formatDate ): Object {
+  formatDate = formatDate.toLowerCase();
+  const formatTmp = formatDate.replace( /[a-z]/gi, '' );
+  const formatArray = formatTmp.split( '' );
+  let day;
+  let month;
+  let year;
+  const pattern = formatDate.split( formatArray[ 0 ] );
 
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class DataClientService {
-
-  public dataForm =
-      {
-        firstName: '',
-        lastName: '',
-        city: '',
-        title: '',
-        status: '',
-        notification: '',
-        birthday: '',
-        date: '',
-        cnpj: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
+  if ( value ) {
+    for ( let i = 0; i < pattern.length; i++ ) {
+      switch ( pattern[ i ] ) {
+        case 'dd':
+          day = value.substr( formatDate.indexOf( 'd' ),
+            (value.length - formatDate.length) + pattern[ i ].length );
+          break;
+        case 'mm':
+          month = value.substr( formatDate.indexOf( 'm' ),
+            (value.length - formatDate.length) + pattern[ i ].length );
+          break;
+        case 'yyyy':
+          year = value.substr( formatDate.indexOf( 'y' ),
+            (value.length - formatDate.length) + pattern[ i ].length );
+          break;
+      }
+    }
   }
 
-  getDataForm() {
-    return this.dataForm;
-  }
+  return { 'day': parseInt( day, 10 ), 'month': parseInt( month, 10 ), 'year': parseInt( year, 10 ) };
 
 }

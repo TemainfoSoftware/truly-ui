@@ -105,8 +105,8 @@ export class CalendarService {
     this.calendar.tbody.nativeElement.innerHTML = '';
   }
 
-  setSelectedDay(cell) {
-    (<TlCalendarDays>this.component.instance).setSelectedDay(cell);
+  setSelectedDay(cell, $event) {
+    (<TlCalendarDays>this.component.instance).setSelectedDay(cell, $event);
   }
 
 }

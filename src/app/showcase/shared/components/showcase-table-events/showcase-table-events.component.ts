@@ -25,7 +25,7 @@ export class ShowcaseTableEventsComponent implements AfterViewInit, OnInit {
       return 0;
     });
   }
-  
+
   ngAfterViewInit() {
     this.hasParams();
   }

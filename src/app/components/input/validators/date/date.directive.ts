@@ -41,7 +41,7 @@ import { TlInput } from '../../input';
 } )
 export class DateDirective implements Validator, AfterViewInit {
 
-    @Input() formatDate = '';
+    @Input() formatDate = 'dd.mm.yyyy';
 
     @ContentChild(TlInput) tlinput;
 

@@ -1,8 +1,8 @@
 /*
  MIT License
- 
+
  Copyright (c) 2018 Temainfo Sistemas
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -66,78 +66,78 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '
   } ],
 } )
 export class TlInput extends ElementBase<string> implements OnInit, AfterViewInit {
-  
+
   @Input() textBefore = '';
-  
+
   @Input() textAfter = '';
-  
+
   @Input() labelPlacement = 'left';
-  
+
   @Input() labelSize = '100px';
-  
+
   @Input() label = '';
-  
+
   @Input() iconBefore = '';
-  
+
   @Input() iconAfter = '';
-  
+
   @Input() clearButton: boolean;
-  
+
   @Input() readonly: boolean = null;
-  
+
   @Input() disabled: boolean = null;
-  
+
   @Input() autocomplete = 'off';
-  
+
   @Input() maxlength = -1;
-  
+
   @Input() tabindex = 0;
-  
+
   @Input() textAlign;
-  
+
   @Input() mask;
-  
+
   @Input() placeholder = ' ';
-  
+
   @Input() type = 'text';
-  
+
   @Input() height = '23px';
-  
+
   @ViewChild( 'afterText' ) public textClearButton;
-  
+
   @ViewChild( 'afterIcon' ) public iconClearButton;
-  
+
   @ViewChild( NgModel ) model: NgModel;
-  
+
   @ViewChild( 'input' ) input;
-  
+
   @Output() clear: EventEmitter<any> = new EventEmitter();
-  
+
   @Output() clickAddon: EventEmitter<any> = new EventEmitter();
-  
+
   @Output() focus: EventEmitter<any> = new EventEmitter();
-  
+
   public required = false;
-  
+
   private clearButtonPosition;
-  
+
   private fieldMask: InputMask;
-  
+
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
                private tlInput: ElementRef, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
   }
-  
+
   ngOnInit() {
     this.setRequired();
   }
-  
+
   ngAfterViewInit() {
     this.validateClearButtonPosition();
     this.hasMask();
   }
-  
+
   setRequired() {
     const attributes = Array( this.tlInput.nativeElement.attributes )[ 0 ];
     for ( let item = 0; item < attributes.length; item++ ) {
@@ -147,13 +147,13 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
       }
     }
   }
-  
+
   hasMask() {
     if ( this.mask ) {
       this.fieldMask = new InputMask( this, this.renderer, this.mask );
     }
   }
-  
+
   validateClearButtonPosition() {
     if ( this.textClearButton ) {
       this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
@@ -166,19 +166,19 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
         (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
     }
   }
-  
+
   onClickAddon( MouseEvent, side ) {
     this.clickAddon.emit( { MouseEvent, side } );
   }
-  
+
   onInputFocus( $event ) {
     this.focus.emit( $event );
   }
-  
+
   clearInput( $event ) {
     this.value = '';
     this.input.nativeElement.focus();
     this.clear.emit( $event );
   }
-  
+
 }

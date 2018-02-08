@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ShortcutDirective } from './shortcut.directive';
 import { ShortcutService } from '../helper/shortcut.service';
+import { DateDirective } from '../../input/validators/date/date.directive';
 
 @NgModule({
     imports: [
@@ -11,8 +12,10 @@ import { ShortcutService } from '../helper/shortcut.service';
     ],
     declarations: [
         ShortcutDirective,
+        DateDirective
     ],
     exports: [
+        DateDirective,
         ShortcutDirective,
     ],
     providers: [

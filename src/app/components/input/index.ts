@@ -18,13 +18,15 @@ import { CreditCardDirective } from './validators/creditcard/creditcard.directiv
 import { PasswordDirective } from './validators/password/password.directive';
 import { MessageValidationDirective } from './directives/messagevalidation.directive';
 import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
+import { DirectiveModule } from '../core/directives/index';
 
 export * from './input';
 
 @NgModule( {
   imports: [
+    DirectiveModule,
     CommonModule,
-    FormsModule,
+    FormsModule
   ],
   declarations: [
     TlInput,
@@ -32,7 +34,6 @@ export * from './input';
     CharcaseDirective,
     CPFDirective,
     CNPJDirective,
-    DateDirective,
     NumberDirective,
     EmailDirective,
     CreditCardDirective,
@@ -44,7 +45,6 @@ export * from './input';
     CharcaseDirective,
     CPFDirective,
     CNPJDirective,
-    DateDirective,
     NumberDirective,
     EmailDirective,
     CreditCardDirective,

@@ -28,6 +28,7 @@ import {
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
 import { DateFactory } from './date.factory';
 import { TlInput } from '../../input';
+import { TlDatePicker } from '../../../datepicker/datepicker';
 
 @Directive( {
     selector: '[date][ngModel],[date][formControl],[date][formControlName]',
@@ -45,11 +46,22 @@ export class DateDirective implements Validator, AfterViewInit {
 
     @ContentChild(TlInput) tlinput;
 
+    @ContentChild(TlDatePicker) tldatepicker;
+
     constructor() {}
 
     ngAfterViewInit() {}
 
     validate( c: FormControl ) {
+      this.getInput();
       return DateFactory.getInstance(  this.tlinput, this.formatDate ).validate()( c );
     }
+
+    getInput() {
+      if (!this.tlinput) {
+        this.tldatepicker.formatDate = this.formatDate;
+        this.tlinput = this.tldatepicker.tlinput;
+      }
+    }
+
 }

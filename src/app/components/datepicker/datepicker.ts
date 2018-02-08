@@ -1,8 +1,8 @@
 /*
  MIT License
- 
+
  Copyright (c) 2018 Temainfo Sistemas
- 
+
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -22,7 +22,7 @@
 import {
   Component,
   Optional, Inject, ViewChild, Output,
-  Input, Renderer2, OnInit, EventEmitter, OnDestroy
+  Input, Renderer2, OnInit, EventEmitter, OnDestroy, ElementRef, AfterViewInit
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
@@ -40,63 +40,64 @@ import { KeyEvent } from '../core/enums/key-events';
   providers: [ MakeProvider( TlDatePicker ) ]
 } )
 
-export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestroy {
-  
+export class TlDatePicker extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy {
+
   @Input() label = '';
-  
+
   @Input() name = '';
-  
+
   @Input() labelSize = '';
-  
+
   @Input() textAlign = 'left';
-  
+
   @Input() labelPlacement = 'left';
-  
+
   @Input() readonly = false;
-  
+
   @Input() disabled = false;
-  
+
   @Input() placeholder = 'Datepicker Field';
-  
+
   @Input() clearButton = true;
-  
+
   @Input() autoClose = false;
-  
+
   @Input() iconCalendar = false;
-  
-  @Input() formatDate = 'dd/mm/yyyy';
-  
+
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
-  
+
   @ViewChild( NgModel ) model: NgModel;
-  
+
   @ViewChild( TlCalendar ) calendar;
-  
+
   @ViewChild( TlInput ) tlinput;
-  
+
   @ViewChild( 'calendarContent' ) calendarContent;
-  
+
   @ViewChild( 'arrow' ) arrow;
-  
+
   public open = false;
-  
+
   public iconAfter = '';
-  
+
+  public formatDate = '';
+
   public listeners = [];
-  
+
   public isCalendarAbove = false;
-  
+
   public year = new Date().getFullYear();
-  
+
   public month = new Date().getMonth();
-  
+
   public day = new Date().getDate();
-  
+
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private datePicker: ElementRef, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
   }
-  
+
   ngOnInit() {
     this.listenDocumentScroll();
     this.listenDocumentMouseDown();
@@ -106,7 +107,23 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
       this.iconAfter = 'ion-calendar';
     }
   }
-  
+
+  ngAfterViewInit() {
+    this.validateDateDirective();
+  }
+
+  validateDateDirective() {
+    let hasDate = false;
+    for ( const item of this.datePicker.nativeElement.attributes ) {
+      if ( item.localName === 'date' ) {
+        return hasDate = true;
+      }
+    }
+    if ( !hasDate ) {
+      throw new Error( 'The Directive [date] must be specified' );
+    }
+  }
+
   onDateInputFocus() {
     this.handleOpen();
     this.handleCalendarPosition();
@@ -117,30 +134,32 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
       this.year = inputDate[ 'year' ];
     }
   }
-  
+
   onSelectDay( $event ) {
-    $event.event.stopPropagation();
+    if (this.open) {
+      $event.event.stopPropagation();
+    }
     this.selectDay.emit( $event );
     this.setValue( $event );
     this.tlinput.input.nativeElement.focus();
     this.handleAutoClose();
   }
-  
+
   onClickInput() {
     this.handleOpen();
     this.handleCalendarPosition();
   }
-  
+
   handleOpen() {
     if ( !this.open && !this.tlinput.disabled ) {
       this.open = true;
     }
   }
-  
+
   onClickCalendar() {
     this.setInputFocus();
   }
-  
+
   handleCalendarPosition() {
     const calendarHeight = 270;
     const totalHeight = (this.tlinput.input.nativeElement.getBoundingClientRect().top ) + calendarHeight;
@@ -151,8 +170,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
     }
     this.setWrapperCalendarPositionBottom();
   }
-  
-  
+
+
   setTopPositionTop() {
     this.isCalendarAbove = true;
     const calendarHeight = 270;
@@ -160,54 +179,54 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
       ( this.tlinput.input.nativeElement.getBoundingClientRect().top - this.tlinput.input.nativeElement.offsetHeight )
       - calendarHeight + 'px';
   }
-  
+
   setWrapperCalendarPositionBottom() {
     this.setTopPositionBottom();
     this.setLeftPosition();
   }
-  
+
   setInputFocus() {
     setTimeout( () => {
       this.tlinput.input.nativeElement.focus();
     }, 0 );
   }
-  
+
   setTopPositionBottom() {
     this.isCalendarAbove = false;
     this.calendarContent.nativeElement.style.top =
       ( this.tlinput.input.nativeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight ) + 'px';
   }
-  
+
   setLeftPosition() {
     this.calendarContent.nativeElement.style.left =
       this.tlinput.input.nativeElement.getBoundingClientRect().left -
       this.tlinput.labelSize + 'px';
   }
-  
+
   listenWindowResize() {
     this.listeners.push( this.renderer.listen( window, 'resize', ( $event ) => {
       this.open = false;
     } ) );
   }
-  
+
   listenDocumentScroll() {
     this.listeners.push( this.renderer.listen( document, 'scroll', ( $event ) => {
       this.open = false;
     } ) );
   }
-  
+
   listenDocumentMouseDown() {
     this.listeners.push( this.renderer.listen( document, 'mousedown', ( $event ) => {
       this.isElementInPath( $event );
     } ) );
   }
-  
+
   isElementInPath( $event ) {
     if ( $event.path.indexOf( this.calendarContent.nativeElement ) < 0 ) {
       this.open = false;
     }
   }
-  
+
   getFormattedDate( $event ) {
     const date = this.formatDate;
     let strDate;
@@ -216,30 +235,30 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
     strDate = strDate.replace( 'yyyy', $event.year );
     return strDate;
   }
-  
+
   setValue( $event ) {
     setTimeout( () => {
       this.value = this.getFormattedDate( $event );
     }, 0 );
   }
-  
+
   onClearInput( $event ) {
     $event.stopPropagation();
   }
-  
+
   handleAutoClose() {
     if ( this.autoClose ) {
       this.open = false;
     }
   }
-  
+
   formatDayAndMonth( value ) {
     if ( String( value ).length === 1 ) {
       return '0' + value;
     }
     return value;
   }
-  
+
   onInputKeyUp( $event ) {
     switch ( $event.keyCode ) {
       case KeyEvent.ARROWRIGHT:
@@ -255,7 +274,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
         this.handleEvent( $event );
         return;
       case KeyEvent.ENTER:
-        $event.preventDefault();
+        this.handleEvent( $event );
         return;
       case KeyEvent.TAB:
         this.open = false;
@@ -269,14 +288,14 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
     }
     this.handleOpenWhileTyping();
   }
-  
+
   handleEvent( $event ) {
     if ( this.open ) {
       $event.preventDefault();
       $event.stopPropagation();
     }
   }
-  
+
   handleDateChange() {
     if ( this.value ) {
       const inputDate = ReverseFormatDate( this.value, this.formatDate );
@@ -292,19 +311,19 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
       }
     }
   }
-  
+
   handleOpenWhileTyping() {
     this.handleOpen();
   }
-  
+
   stringUnmasked( value ) {
     return String( value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
   }
-  
+
   ngOnDestroy() {
     this.listeners.forEach( ( item ) => {
       item();
     } );
   }
-  
+
 }

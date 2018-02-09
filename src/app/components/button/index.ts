@@ -6,14 +6,14 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ModalModule } from '../modal/index';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 
 export * from './button';
 
 @NgModule({
     imports: [
         CommonModule,
-        DirectiveModule,
+        MiscModule,
         ModalModule
     ],
     declarations: [

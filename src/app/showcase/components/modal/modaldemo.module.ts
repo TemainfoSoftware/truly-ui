@@ -3,7 +3,7 @@ import { CommonModule  } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { MimimizedModalModule } from '../../../components/modal/addons/minimized-modal';
+import { ModalToolbarModule } from '../../../components/modal/addons/modal-toolbar';
 
 import { NewModalComponent } from './newmodal/newModal.component';
 import { ModalDemoComponent } from './modaldemo.component';
@@ -28,7 +28,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
     InputModule,
-    MimimizedModalModule,
+    ModalToolbarModule,
     ModalDemoRoutingModule
   ],
   exports: [

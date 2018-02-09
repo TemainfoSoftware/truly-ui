@@ -35,6 +35,8 @@ export class DatePickerDemoComponent {
 
   public dataEvents;
 
+  date;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;

@@ -31,7 +31,7 @@ import { TabIndexService } from './tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { DropDownListModule } from '../dropdownlist/index';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 import { FormsModule } from '@angular/forms';
 import { InputModule } from '../input/index';
 
@@ -45,7 +45,7 @@ export * from './form';
         FormsModule,
         InputModule,
         DropDownListModule,
-        DirectiveModule
+        MiscModule
     ],
     declarations: [
         TlForm

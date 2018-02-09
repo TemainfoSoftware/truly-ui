@@ -22,7 +22,7 @@
 import {
   Component,
   Optional, Inject, ViewChild, Output,
-  Input, Renderer2, OnInit, EventEmitter, OnDestroy
+  Input, Renderer2, OnInit, EventEmitter, OnDestroy, ElementRef, AfterViewInit
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
@@ -32,7 +32,6 @@ import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { KeyEvent } from '../core/enums/key-events';
-import set = Reflect.set;
 
 @Component( {
   selector: 'tl-datepicker',
@@ -41,7 +40,7 @@ import set = Reflect.set;
   providers: [ MakeProvider( TlDatePicker ) ]
 } )
 
-export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestroy {
+export class TlDatePicker extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() label = '';
 
@@ -65,8 +64,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
 
   @Input() iconCalendar = false;
 
-  @Input() formatDate = 'dd/mm/yyyy';
-
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild( NgModel ) model: NgModel;
@@ -83,6 +80,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
 
   public iconAfter = '';
 
+  public formatDate = '';
+
   public listeners = [];
 
   public isCalendarAbove = false;
@@ -94,7 +93,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   public day = new Date().getDate();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private datePicker: ElementRef, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
   }
 
@@ -105,6 +105,22 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
     this.handleDateChange();
     if ( this.iconCalendar ) {
       this.iconAfter = 'ion-calendar';
+    }
+  }
+
+  ngAfterViewInit() {
+    this.validateDateDirective();
+  }
+
+  validateDateDirective() {
+    let hasDate = false;
+    for ( const item of this.datePicker.nativeElement.attributes ) {
+      if ( item.localName === 'date' ) {
+        return hasDate = true;
+      }
+    }
+    if ( !hasDate ) {
+      throw new Error( 'The Directive [date] must be specified' );
     }
   }
 
@@ -120,11 +136,13 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   }
 
   onSelectDay( $event ) {
-    $event.event.stopPropagation();
+    if ( this.open ) {
+      $event.event.stopPropagation();
+    }
     this.selectDay.emit( $event );
     this.setValue( $event );
+    this.tlinput.input.nativeElement.focus();
     this.handleAutoClose();
-    this.setInputFocus();
   }
 
   onClickInput() {
@@ -133,7 +151,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   }
 
   handleOpen() {
-    if ( !this.open) {
+    if ( !this.open && !this.tlinput.disabled ) {
       this.open = true;
     }
   }
@@ -186,21 +204,21 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   }
 
   listenWindowResize() {
-    this.listeners.push(this.renderer.listen( window, 'resize', ( $event ) => {
+    this.listeners.push( this.renderer.listen( window, 'resize', ( $event ) => {
       this.open = false;
-    } ));
+    } ) );
   }
 
   listenDocumentScroll() {
-    this.listeners.push(this.renderer.listen( document, 'scroll', ( $event ) => {
+    this.listeners.push( this.renderer.listen( document, 'scroll', ( $event ) => {
       this.open = false;
-    } ));
+    } ) );
   }
 
   listenDocumentMouseDown() {
-    this.listeners.push(this.renderer.listen( document, 'mousedown', ( $event ) => {
+    this.listeners.push( this.renderer.listen( document, 'mousedown', ( $event ) => {
       this.isElementInPath( $event );
-    } ));
+    } ) );
   }
 
   isElementInPath( $event ) {
@@ -256,13 +274,14 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
         this.handleEvent( $event );
         return;
       case KeyEvent.ENTER:
-        $event.preventDefault();
+        this.handleEvent( $event );
         return;
       case KeyEvent.TAB:
-        return this.open = false;
+        this.open = false;
+        return;
       case KeyEvent.ESCAPE:
-        $event.preventDefault();
         if ( this.open ) {
+          $event.preventDefault();
           $event.stopPropagation();
         }
         return this.open = false;
@@ -302,9 +321,9 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, OnDestr
   }
 
   ngOnDestroy() {
-    this.listeners.forEach((item) => {
+    this.listeners.forEach( ( item ) => {
       item();
-    });
+    } );
   }
 
 }

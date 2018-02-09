@@ -5,7 +5,7 @@ import { TlCalendar } from './calendar';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
 import { TlCalendarDays } from './parts/calendar-days';
 import { TlCalendarMonths } from './parts/calendar-months';
@@ -16,7 +16,7 @@ export * from './calendar';
 @NgModule({
     imports: [
         CommonModule,
-        DirectiveModule,
+      MiscModule,
         NavigatorModule
     ],
     declarations: [

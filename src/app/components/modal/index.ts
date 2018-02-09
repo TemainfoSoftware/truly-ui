@@ -26,7 +26,7 @@ import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 import { ShortcutService } from '../core/helper/shortcut.service';
 
 export * from './modal';
@@ -36,7 +36,7 @@ export * from './modal-options';
 @NgModule( {
     imports: [
       CommonModule,
-      DirectiveModule,
+      MiscModule,
     ],
     declarations: [
       TlModal,

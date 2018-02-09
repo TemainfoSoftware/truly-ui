@@ -10,7 +10,7 @@ import { ButtonModule } from '../../../components/button';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { DirectiveModule } from '../../../components/core/directives/index';
+import { MiscModule } from '../../../components/misc/index';
 import { DialogModule } from '../../../components/dialog/index';
 
 @NgModule({
@@ -22,7 +22,7 @@ import { DialogModule } from '../../../components/dialog/index';
     ButtonModule,
     CommonModule,
     FormsModule,
-    DirectiveModule,
+    MiscModule,
     DialogModule,
     HighlightJsModule,
     ShowcaseCardModule,

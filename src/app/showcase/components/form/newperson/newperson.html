@@ -1,5 +1,5 @@
 <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
-    <tl-tabcontrol [height]="'200px'">
+    <tl-tabcontrol [height]="'300px'">
       <tl-tab [title]="'Person Information'">
         <div class="row">
           <div class="col-md-12">
@@ -49,14 +49,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <tl-datepicker [name]="'date'" [label]="'Date'" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
-            </div>
-          </div>
-          <!--<div class="col-md-8">
-            <div class="form-group">
               <tl-autocomplete [data]="dataAuto"
                                [id]="'id'"
-                               [labelSize]="'10px'"
+                               [labelSize]="100"
+                               required
                                [openFocus]="true"
                                [name]="'clients'"
                                [label]="'Clients'"
@@ -65,10 +61,15 @@
                                [rowHeight]="35"
                                [placeholder]="'Search...'"
                                [labelName]="'firstName'"
-                               [(ngModel)]="result">
+                               [ngModel]="person?.clients">
               </tl-autocomplete>
             </div>
-          </div>-->
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <tl-datepicker [name]="'date'" [label]="'Date'" date [formatDate]="'dd/mm/yyyy'" [autoClose]="true" [ngModel]="person?.date" [iconCalendar]="true"></tl-datepicker>
+            </div>
+          </div>
         </div>
       </tl-tab>
     </tl-tabcontrol>

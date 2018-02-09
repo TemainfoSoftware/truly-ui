@@ -11,7 +11,12 @@
              [style.text-align]="textAlign"
              [disabled]="disabled"
              class="field"
-             [ngClass]="{invalid: (invalid | async), withValidators: validators?.length > 0, withoutValidators: validators === null}"
+             [ngClass]="{
+             'invalid': (invalid | async),
+             'withValidators': validators?.length > 0, withoutValidators: validators === null,
+             '-disabled': disabled,
+             '-readonly': readonly
+             }"
              [attr.readonly]="readonly ? true : null"
              [attr.autocomplete]="autocomplete"
              [attr.maxlength]="maxlength"

@@ -56,131 +56,129 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '
  * })
  */
 @Component( {
-    selector: 'tl-input',
-    templateUrl: './input.html',
-    styleUrls: [ './input.scss' ],
-    providers: [{
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: TlInput,
-      multi: true,
-    }],
+  selector: 'tl-input',
+  templateUrl: './input.html',
+  styleUrls: [ './input.scss' ],
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: TlInput,
+    multi: true,
+  } ],
 } )
 export class TlInput extends ElementBase<string> implements OnInit, AfterViewInit {
 
-    @Input() textBefore = '';
+  @Input() textBefore = '';
 
-    @Input() textAfter = '';
+  @Input() textAfter = '';
 
-    @Input() labelPlacement = 'left';
+  @Input() labelPlacement = 'left';
 
-    @Input() labelSize = '100px';
+  @Input() labelSize = '100px';
 
-    @Input() label = '';
+  @Input() label = '';
 
-    @Input() iconBefore = '';
+  @Input() iconBefore = '';
 
-    @Input() iconAfter = '';
+  @Input() iconAfter = '';
 
-    @Input() clearButton: boolean;
+  @Input() clearButton: boolean;
 
-    @Input() readonly: boolean = null;
+  @Input() readonly: boolean = null;
 
-    @Input() autocomplete = 'off';
+  @Input() disabled: boolean = null;
 
-    @Input() maxlength = -1;
+  @Input() autocomplete = 'off';
 
-    @Input() tabindex = 0;
+  @Input() maxlength = -1;
 
-    @Input() textAlign;
+  @Input() tabindex = 0;
 
-    @Input() mask;
+  @Input() textAlign;
 
-    @Input() placeholder = ' ';
+  @Input() mask;
 
-    @Input() type = 'text';
+  @Input() placeholder = ' ';
 
-    @Input() height = '23px';
+  @Input() type = 'text';
 
-    @ViewChild('afterText') public textClearButton;
+  @Input() height = '23px';
 
-    @ViewChild('afterIcon') public iconClearButton;
+  @ViewChild( 'afterText' ) public textClearButton;
 
-    @ViewChild(NgModel) model: NgModel;
+  @ViewChild( 'afterIcon' ) public iconClearButton;
 
-    @ViewChild('input') input;
+  @ViewChild( NgModel ) model: NgModel;
 
-    @Output() clear: EventEmitter<any> = new EventEmitter();
+  @ViewChild( 'input' ) input;
 
-    @Output() clickAddon: EventEmitter<any> = new EventEmitter();
+  @Output() clear: EventEmitter<any> = new EventEmitter();
 
-    @Output() focus: EventEmitter<any> = new EventEmitter();
+  @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
-    public disabled: boolean;
+  @Output() focus: EventEmitter<any> = new EventEmitter();
 
-    public required = false;
+  public required = false;
 
-    private clearButtonPosition;
+  private clearButtonPosition;
 
-    private fieldMask: InputMask;
+  private fieldMask: InputMask;
 
-    constructor(
-      @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-      @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-      private tlInput: ElementRef, private renderer: Renderer2
-    ) {
-      super(validators, asyncValidators);
-    }
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private tlInput: ElementRef, private renderer: Renderer2 ) {
+    super( validators, asyncValidators );
+  }
 
-    ngOnInit() {
-      this.setRequired();
-    }
+  ngOnInit() {
+    this.setRequired();
+  }
 
-    ngAfterViewInit() {
-      this.validateClearButtonPosition();
-      this.hasMask();
-    }
+  ngAfterViewInit() {
+    this.validateClearButtonPosition();
+    this.hasMask();
+  }
 
-    setRequired() {
-      const attributes = Array(this.tlInput.nativeElement.attributes)[0];
-      for (let item = 0; item < attributes.length; item++) {
-        if (attributes[item].nodeName === 'required') {
-           this.required = true;
-           break;
-        }
+  setRequired() {
+    const attributes = Array( this.tlInput.nativeElement.attributes )[ 0 ];
+    for ( let item = 0; item < attributes.length; item++ ) {
+      if ( attributes[ item ].nodeName === 'required' ) {
+        this.required = true;
+        break;
       }
     }
+  }
 
-    hasMask() {
-        if (this.mask) {
-            this.fieldMask = new InputMask(this, this.renderer, this.mask );
-        }
+  hasMask() {
+    if ( this.mask ) {
+      this.fieldMask = new InputMask( this, this.renderer, this.mask );
     }
+  }
 
-    validateClearButtonPosition() {
-        if (this.textClearButton) {
-            this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
-        }
-        if (this.iconClearButton) {
-            this.clearButtonPosition = this.iconClearButton.nativeElement.offsetWidth + 5;
-        }
-        if (this.textClearButton && this.iconClearButton) {
-            this.clearButtonPosition =
-                (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
-        }
+  validateClearButtonPosition() {
+    if ( this.textClearButton ) {
+      this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
     }
+    if ( this.iconClearButton ) {
+      this.clearButtonPosition = this.iconClearButton.nativeElement.offsetWidth + 5;
+    }
+    if ( this.textClearButton && this.iconClearButton ) {
+      this.clearButtonPosition =
+        (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
+    }
+  }
 
-    onClickAddon(MouseEvent, side) {
-        this.clickAddon.emit({MouseEvent, side});
-    }
+  onClickAddon( MouseEvent, side ) {
+    this.clickAddon.emit( { MouseEvent, side } );
+  }
 
-    onInputFocus($event) {
-      this.focus.emit($event);
-    }
+  onInputFocus( $event ) {
+    this.focus.emit( $event );
+  }
 
-    clearInput($event) {
-      this.value = '';
-      this.input.nativeElement.focus();
-      this.clear.emit($event);
-    }
+  clearInput( $event ) {
+    this.value = '';
+    this.input.nativeElement.focus();
+    this.clear.emit( $event );
+  }
 
 }

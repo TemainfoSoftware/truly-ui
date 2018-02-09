@@ -10,7 +10,8 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DatePickerModule } from '../../../components/datepicker/index';
 import { FormsModule } from '@angular/forms';
-import { DirectiveModule } from '../../../components/core/directives/index';
+import { MiscModule } from '../../../components/misc/index';
+import { ValidatorsModule } from '../../../components/validators/index';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,10 @@ import { DirectiveModule } from '../../../components/core/directives/index';
   ],
   imports: [
     DatePickerModule,
-    DirectiveModule,
+    MiscModule,
     HighlightJsModule,
     FormsModule,
+    ValidatorsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     DatePickerDemoRoutingModule,

@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { MimimizedModalModule } from '../../../components/modal/addons/minimized-modal';
+import { ModalToolbarModule } from '../../../components/modal/addons/modal-toolbar';
 
 import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
@@ -22,13 +22,14 @@ import { DialogModule } from '../../../components/dialog';
 import { AutoCompleteModule } from '../../../components/autocomplete';
 import { TooltipModule } from '../../../components/tooltip';
 import { MultiSelectModule } from '../../../components/multiselect';
-import { DirectiveModule } from '../../../components/core/directives';
+import { MiscModule } from '../../../components/misc';
 import { PanelGroupModule } from '../../../components/panelgroup/index';
 import { TabControlModule } from '../../../components/tabcontrol/index';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DatePickerModule } from '../../../components/datepicker/index';
+import { ValidatorsModule } from '../../../components/validators/index';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DatePickerModule } from '../../../components/datepicker/index';
     DatatableModule,
     DropDownListModule,
     InputModule,
+    ValidatorsModule,
     CheckBoxModule,
     FormDemoRoutingModule,
     FormModule,
@@ -51,11 +53,11 @@ import { DatePickerModule } from '../../../components/datepicker/index';
     FormsModule,
     DatePickerModule,
     PanelGroupModule,
-    MimimizedModalModule,
+    ModalToolbarModule,
     HighlightJsModule,
     TooltipModule,
     MultiSelectModule,
-    DirectiveModule,
+    MiscModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule

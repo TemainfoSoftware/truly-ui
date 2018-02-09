@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TlChatList } from './chatlist';
 import { ListBoxModule } from '../listbox/index';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -16,7 +16,7 @@ export * from './chatlist';
     imports: [
         CommonModule,
         FormsModule,
-        DirectiveModule,
+        MiscModule,
         ListBoxModule
     ],
     declarations: [

@@ -19,47 +19,30 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
-import { ShortcutService } from '../core/helper/shortcut.service';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+import { CustomType } from '../../input/core/custom-type';
+import { DateTl } from './date.validator';
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
-    ]
-} )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
-    };
+export class DateFactory {
+
+  static getInstance( tlinput, format ): CustomType {
+    this.setDateMask( tlinput, format );
+    return new DateTl(tlinput, format);
+  }
+
+  static setDateMask( tlinput, format ) {
+    if ( tlinput ) {
+      const formatTmp = format.replace( /[a-z]/gi, '' );
+      const formatArray = format.split( '' );
+
+      for ( let i = 0; i < formatArray.length; i++ ) {
+        if ( formatArray[ i ] !== formatTmp[ 0 ] ) {
+          formatArray[ i ] = '9';
+        }
+      }
+      const strFormat = formatArray.toString().replace( /,/gi, '' );
+      tlinput.mask = strFormat;
+      tlinput.input.nativeElement.setAttribute('placeholder', format.toUpperCase());
+    }
   }
 }

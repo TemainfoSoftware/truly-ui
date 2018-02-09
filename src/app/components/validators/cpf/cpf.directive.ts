@@ -19,47 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
-import { ShortcutService } from '../core/helper/shortcut.service';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+import {
+  AfterViewInit,
+  ContentChild, Directive, forwardRef
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { CPFFactory } from './cpf.factory';
+import { TlInput } from '../../input/input';
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
+@Directive( {
+    selector: '[cpf][ngModel],[cpf][formControl],[cpf][formControlName]',
+    providers: [
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => CPFDirective),
+      }
     ]
 } )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
-    };
-  }
+export class CPFDirective implements Validator, AfterViewInit {
+
+    @ContentChild(TlInput) tlinput;
+
+    constructor() {}
+
+    ngAfterViewInit() {}
+
+    validate( c: FormControl ) {
+      return CPFFactory.getInstance(  this.tlinput ).validate()( c );
+    }
 }

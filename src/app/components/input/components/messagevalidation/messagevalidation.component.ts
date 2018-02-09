@@ -27,7 +27,7 @@ export class TlMessageValidationComponent {
   setInput(tlinput: TlInput) {
     this.top = tlinput.input.nativeElement.getBoundingClientRect().top + tlinput.input.nativeElement.offsetHeight + 'px';
     this.width = tlinput.input.nativeElement.offsetWidth + 'px';
-    this.left = tlinput.labelSize + 'px';
+    this.left = parseInt(tlinput.labelSize, 10) + 'px';
   }
 
   setMessages(messages: Object) {

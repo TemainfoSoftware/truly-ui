@@ -19,47 +19,37 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
+
+import { ContentChild, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { ShortcutService } from '../core/helper/shortcut.service';
+import { TlButton } from '../button/button';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+const elements = [];
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
-    ]
+@Directive( {
+    selector: '[shortcut]'
 } )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
-    };
-  }
+export class ShortcutDirective implements OnInit {
+
+    @Input() shortcut = '';
+
+    @ContentChild( TlButton ) tlbutton;
+
+    private component;
+
+    constructor( private element: ElementRef, private shortcutService: ShortcutService, private renderer: Renderer2 ) {
+        this.shortcutService.setRenderer( this.renderer );
+    }
+
+    ngOnInit() {
+        this.component = { shortcut: this.shortcut, element: this.tlbutton ? this.tlbutton : this.element };
+        this.addElement();
+    }
+
+    addElement() {
+        elements.push(this.component);
+        this.shortcutService.elementsListener = elements;
+        this.shortcutService.filterButtons();
+    }
+
 }

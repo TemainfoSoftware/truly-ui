@@ -36,12 +36,12 @@ import { TlBackdrop } from '../core/components/backdrop/backdrop';
 @Injectable()
 export class DialogService {
 
-    public modalResult;
+    private modalResult;
 
-    constructor( public modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {}
+    constructor( private modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {}
 
 
-    info( message: string, callback: Function, options?: InfoOptions ) {
+    info( message: string, callback?: Function, options?: InfoOptions ) {
         this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogInfo, this.factoryResolver,  callback );
         this.modalService.componentInjected.instance.message = message;
@@ -65,14 +65,14 @@ export class DialogService {
         this.setDialogOptions( options );
     }
 
-    error( message: string, callback: Function, options?: ErrorOptions ) {
+    error( message: string, callback?: Function, options?: ErrorOptions ) {
         this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogError, this.factoryResolver, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
-    setDialogOptions( options ) {
+    private setDialogOptions( options ) {
         if ( !this.existOptions( options ) ) {
             return;
         }
@@ -81,7 +81,7 @@ export class DialogService {
         } );
     }
 
-    existOptions( options ) {
+    private existOptions( options ) {
         if (options === undefined) {
             return false;
         }

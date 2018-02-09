@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2018 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,46 +19,47 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlForm } from './form';
-import { FormService } from './form.service';
-import { ModalModule } from '../modal/index';
-import { ButtonModule } from '../button/index';
-import { DialogService } from '../dialog/dialog.service';
-import { TabIndexService } from './tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { DropDownListModule } from '../dropdownlist/index';
-import { MiscModule } from '../misc/index';
 import { FormsModule } from '@angular/forms';
-import { InputModule } from '../input/index';
+import { CPFDirective } from './cpf/cpf.directive';
+import { CNPJDirective } from './cnpj/cnpj.directive';
+import { NumberDirective } from './number/number.directive';
+import { EmailDirective } from './email/email.directive';
+import { CreditCardDirective } from './creditcard/creditcard.directive';
+import { PasswordDirective } from './password/password.directive';
+import { DateDirective } from './date/date.directive';
 
-export * from './form.service';
-export * from './form';
+export * from './creditcard/creditcard.directive';
+export * from './cpf/cpf.directive';
+export * from './cnpj/cnpj.directive';
+export * from './date/date.directive';
+export * from './email/email.directive';
+export * from './number/number.directive';
+export * from './password/password.directive';
 
 @NgModule( {
-    imports: [
-        CommonModule,
-        ButtonModule,
-        FormsModule,
-        InputModule,
-        DropDownListModule,
-        MiscModule
-    ],
-    declarations: [
-        TlForm
-    ],
-    providers: [
-        DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService,
-        FormService,
-    ],
-    exports: [
-        TlForm
-    ]
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
+  declarations: [
+    CreditCardDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    EmailDirective,
+    NumberDirective,
+    PasswordDirective
+  ],
+  exports: [
+    CreditCardDirective,
+    CPFDirective,
+    CNPJDirective,
+    DateDirective,
+    EmailDirective,
+    NumberDirective,
+    PasswordDirective
+  ]
 } )
-export class FormModule {}
+export class ValidatorsModule {}

@@ -2,59 +2,32 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { TabIndexService } from '../form/tabIndex.service';
-
 import { TlInput } from './input';
 
-import { CharcaseDirective } from './directives/charcase.directive';
-import { CPFDirective } from './validators/cpf/cpf.directive';
-import { CNPJDirective } from './validators/cnpj/cnpj.directive';
-import { DateDirective } from './validators/date/date.directive';
-import { NumberDirective } from './validators/number/number.directive';
-import { EmailDirective } from './validators/email/email.directive';
-import { CreditCardDirective } from './validators/creditcard/creditcard.directive';
-import { PasswordDirective } from './validators/password/password.directive';
 import { MessageValidationDirective } from './directives/messagevalidation.directive';
 import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
-import { DirectiveModule } from '../core/directives/index';
+import { CharcaseDirective } from './directives/charcase.directive';
+import { ValidatorsModule } from '../validators/index';
 
 export * from './input';
 
 @NgModule( {
   imports: [
-    DirectiveModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    ValidatorsModule
   ],
   declarations: [
     TlInput,
-    TlMessageValidationComponent,
     CharcaseDirective,
-    CPFDirective,
-    CNPJDirective,
-    NumberDirective,
-    EmailDirective,
-    CreditCardDirective,
     MessageValidationDirective,
-    PasswordDirective
+    TlMessageValidationComponent,
   ],
   exports: [
     TlInput,
     CharcaseDirective,
-    CPFDirective,
-    CNPJDirective,
-    NumberDirective,
-    EmailDirective,
-    CreditCardDirective,
+    TlMessageValidationComponent,
     MessageValidationDirective,
-    PasswordDirective
-  ],
-  providers: [
-    IdGeneratorService,
-    NameGeneratorService,
-    TabIndexService
   ],
   entryComponents: [TlMessageValidationComponent]
 } )

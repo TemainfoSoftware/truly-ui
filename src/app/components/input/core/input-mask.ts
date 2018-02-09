@@ -223,6 +223,8 @@ export class InputMask {
     if ( this.maskGuides ) {
       this.getPosition();
       this.replaceValidChar( charInputted, this.getCursorPosition( this.endPosition ), inputArray );
+      event.preventDefault();
+
     } else {
       this.applyMask( charInputted );
       event.preventDefault();

@@ -19,47 +19,39 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
-import { ShortcutService } from '../core/helper/shortcut.service';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+import { CustomType } from '../../input/core/custom-type';
+import { CreditCard } from './creditcard.validator';
+import * as cards from './creditcards';
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
-    ]
-} )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
-    };
+const creditCard = 0;
+
+export class CreditCardFactory {
+
+  static getInstance( tlinput ): CustomType {
+    // this.setMIICreditCardLogo( tlinput );
+    this.setCreditCardMask( tlinput );
+    return new CreditCard(creditCard);
   }
+
+  static setCreditCardMask( tlinput ) {
+    tlinput.mask = '9999.9999.9999.9999';
+  }
+
+  /* static setMIICreditCardLogo( tlinput ) {
+    if ( tlinput.input.nativeElement.value.length >= 2 ) {
+      const digits = this.creditNumberUnmasked( tlinput.input.nativeElement.value ).substr( 0, 2 );
+      Object.values( cards.list ).forEach( ( item, index, array ) => {
+        if ( item.id.includes( digits ) ) {
+          creditCard = item;
+        }
+      } );
+    }
+  } */
+
+  static creditNumberUnmasked( value ) {
+    return String( value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+  }
+
 }
+

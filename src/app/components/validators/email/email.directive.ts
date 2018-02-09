@@ -19,47 +19,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
-import { ShortcutService } from '../core/helper/shortcut.service';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+import {
+  ContentChild, Directive, forwardRef,
+} from '@angular/core';
+import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { EmailFactory } from './email.factory';
+import { TlInput } from '../../input/input';
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
+@Directive( {
+    selector: '[email][ngModel],[email][formControl],[email][formControlName]',
+    providers: [
+      {
+        multi: true,
+        provide: NG_VALIDATORS,
+        useExisting: forwardRef( () => EmailDirective),
+      }
     ]
 } )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
-    };
-  }
+export class EmailDirective implements Validator {
+
+    @ContentChild(TlInput) tlinput;
+
+    validate( c: FormControl ) {
+      if (this.tlinput.input.nativeElement.value.length > 0) {
+        return EmailFactory.getInstance().validate()( c );
+      }
+    }
 }

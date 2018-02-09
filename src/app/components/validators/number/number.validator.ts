@@ -19,47 +19,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ModalService } from './modal.service';
-import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
-import { ShortcutService } from '../core/helper/shortcut.service';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { CustomType } from '../../input/core/custom-type';
 
-export * from './modal';
-export * from './modal.service';
-export * from './modal-options';
+export class NumberTl implements CustomType {
 
-@NgModule( {
-    imports: [
-      CommonModule,
-      MiscModule,
-    ],
-    declarations: [
-      TlModal,
-      TlBackdrop,
-      LimitStringPipe
-    ],
-    exports: [
-      TlModal,
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
-    ]
-} )
-export class ModalModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: ModalModule,
-      providers: [
-        ToneColorGenerator,
-        ModalService,
-        ShortcutService,
-      ],
+  constructor() {}
+
+  validate(): ValidatorFn {
+    return ( control: AbstractControl ) => {
+      const regex = new RegExp( '^(-|[0-9])[0-9]+|[0-9]' );
+      if (control.touched) {
+        if ( regex.test(control.value )) {
+          return null;
+        }
+        return {number: false};
+      }
+      return null;
     };
   }
+
 }

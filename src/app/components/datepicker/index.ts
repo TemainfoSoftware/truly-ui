@@ -26,14 +26,14 @@ import { InputModule } from '../input/index';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from '../calendar/index';
 import { TlCalendar } from '../calendar/calendar';
-import { DirectiveModule } from '../core/directives/index';
+import { MiscModule } from '../misc/index';
 
 export * from './datepicker';
 
 @NgModule( {
   imports: [
     CommonModule,
-    DirectiveModule,
+    MiscModule,
     CalendarModule,
     FormsModule,
     InputModule

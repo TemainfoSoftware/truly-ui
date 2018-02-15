@@ -97,7 +97,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @ViewChild( NgModel ) model: NgModel;
 
-  @ViewChild( 'input' ) tlinput;
+  @ViewChild( 'inputFake' ) tlinput;
 
   @ViewChild( 'autoComplete' ) autoComplete;
 
@@ -177,15 +177,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   onFocusInput( $event ) {
-    this.setListPosition($event);
+    this.setListPosition( $event );
     this.handleOpenOnFocus();
   }
-
-  /*  onKeyUp( $event ) {
-   if ( JSON.stringify( this.initialModel ) === JSON.stringify( this.model ) ) {
-   $event.stopPropagation();
-   }
-   }*/
 
   handleOpenOnFocus() {
     if ( this.openFocus && !this.listBox.showList && this.isAvailableInput() ) {
@@ -249,11 +243,11 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   setInputValue( $event ) {
-    this.value =
-        !this.listBox.isDataArrayString() ? $event.row[ this.labelName ] : $event.row;
+    this.tlinput.input.nativeElement.value = $event.row[ this.labelName ];
+    this.value = !this.listBox.isDataArrayString() ? $event.row[ this.id ] : $event.row;
   }
 
-  setListPosition($event) {
+  setListPosition( $event ) {
     this.listLeftPosition = $event.target.getBoundingClientRect().left;
     this.listTopPosition = $event.target.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
     this.widthInput = this.tlinput.input.nativeElement.offsetWidth;

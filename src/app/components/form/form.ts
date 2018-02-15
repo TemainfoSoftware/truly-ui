@@ -21,18 +21,13 @@
  */
 import {
   Component, ContentChildren, Input,
-  QueryList, Renderer2,
+  QueryList, Renderer2, Output,
   ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit,
+  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
-import { TlDropDownList } from '../dropdownlist/dropdownlist';
-import { TlRadioGroup } from '../radiobutton/radiogroup';
-import { TlCheckBox } from '../checkbox/checkbox';
-import { TlMultiSelect } from '../multiselect/multiselect';
-import { TlAutoComplete } from '../autocomplete/autocomplete';
-import { NgForm, NgModel } from '@angular/forms';
+import { FormGroup, NgForm, NgModel } from '@angular/forms';
 
 let componentFormIndex;
 
@@ -41,7 +36,7 @@ let componentFormIndex;
   templateUrl: '../form/form.html',
   styleUrls: [ '../form/form.scss' ]
 } )
-export class TlForm implements OnInit, AfterViewInit, OnDestroy {
+export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
   @Input() initialFocus: TlInput;
 
@@ -56,6 +51,8 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
   @Input() textCancel = 'Cancel';
 
   @Input() padding = '10px';
+
+  @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
   @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
 
@@ -85,11 +82,16 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
     componentFormIndex = -1;
   }
 
-  ngAfterViewInit() {
+  ngAfterContentInit() {
     this.addControls();
+    this.form.form.disable();
+  }
+
+  ngAfterViewInit() {
     this.setInitialFocus();
     this.getElementsOfForm();
     this.clickListener();
+    this.formLoaded.emit(this.form.form);
   }
 
   addControls() {
@@ -97,6 +99,8 @@ export class TlForm implements OnInit, AfterViewInit, OnDestroy {
       this.form.addControl(control);
     });
   }
+
+
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();

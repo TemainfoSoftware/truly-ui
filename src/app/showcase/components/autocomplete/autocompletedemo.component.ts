@@ -19,17 +19,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
 import * as jsonEvt from './autocompletedemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
+import { TlAutoComplete } from '../../../components/autocomplete/autocomplete';
 
 @Component( {
-  selector : 'app-autocomplete',
-  templateUrl : './autocompletedemo.component.html',
-  styleUrls : [ './autocompletedemo.component.scss' ],
-  providers : [ DumpDataService ]
+  selector: 'app-autocomplete',
+  templateUrl: './autocompletedemo.component.html',
+  styleUrls: [ './autocompletedemo.component.scss' ],
+  providers: [ DumpDataService ]
 } )
 export class AutoCompleteDemoComponent {
 
@@ -53,10 +54,18 @@ export class AutoCompleteDemoComponent {
 
   public example = '{{item.firstName}}';
 
+  @ViewChild( TlAutoComplete ) autocomplete;
+
   constructor( public dataDumpService: DumpDataService, ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
-    this.dataBasic = this.dataDumpService.createRandomData( 1000 );
+    setTimeout( () => {
+      this.dataBasic = this.dataDumpService.createRandomData( 1000 );
+      this.dataLazy = {
+        'data': this.getDataFromService( 0, this.take ),
+        'total': this.dataBasic.length
+      };
+    }, 2000 );
 
     this.formOptions1 = {
       title: 'New Client',
@@ -69,11 +78,14 @@ export class AutoCompleteDemoComponent {
       fullscreen: false
     };
 
+  }
 
-    this.dataLazy = {
-      'data': this.getDataFromService( 0, this.take ),
-      'total': this.dataBasic.length
-    };
+  onClickItem($event) {
+    console.log('click', $event);
+  }
+
+  onSelectItem($event) {
+    console.log('select', $event);
   }
 
   onLazyLoad( event ) {
@@ -85,25 +97,7 @@ export class AutoCompleteDemoComponent {
       };
     }, 200 );
   }
-/*
-  newClient() {
-    this.formService.createForm(NewClient, this.formOptions1, (modalResult) => {
-      if (modalResult.formResult) {
-        this.handleSaveClient(modalResult.formResult);
-      }
-    });
-  }
 
-  handleSaveClient(result) {
-    this.dataFormService.saveDataForm(result);
-    this.result = this.dataFormService.getDataForm();
-    this.result['id'] = this.dataBasic.length + 1;
-    this.dataBasic.push(this.result);
-  }*/
-
-  onSelectRow($event) {
-    console.log('Row', $event);
-  }
 
   getDataFromService( skip, take ) {
     return this.dataBasic.slice( skip, take );

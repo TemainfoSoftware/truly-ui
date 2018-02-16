@@ -84,7 +84,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   ngAfterContentInit() {
     this.addControls();
-    this.form.form.disable();
   }
 
   ngAfterViewInit() {
@@ -99,8 +98,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
       this.form.addControl(control);
     });
   }
-
-
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
@@ -136,7 +133,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   taggedNotForm( element: HTMLElement ) {
     for ( let item = 0; item < element.attributes.length; item++ ) {
-      if ( element.attributes[ item ].name === 'notform' ) {
+      if ( element.attributes[ item ].nodeValue === 'notform' ) {
         return true;
       }
     }

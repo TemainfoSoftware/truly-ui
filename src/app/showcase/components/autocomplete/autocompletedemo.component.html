@@ -12,7 +12,7 @@
             <div class="col-md-12">
               <h5>Normal Usage</h5>
               <tl-autocomplete [data]="dataBasic"
-                               [id]="'id'"
+                               [modelValue]="'firstName'"
                                [labelSize]="'10px'"
                                [openFocus]="true"
                                [name]="'clients'"
@@ -35,7 +35,6 @@
   [labelSize]="'10px'"
   [openFocus]="true"
   [name]="'clients'"
-  (onAddNew)="newClient()"
   [label]="'Clients'"
   [clearButton]="true"
   [rowHeight]="35"
@@ -53,7 +52,7 @@
                                [openFocus]="true"
                                [lazyMode]="true"
                                [clearButton]="true"
-                               [id]="'id'"
+                               [modelValue]="'firstName'"
                                [labelSize]="'10px'"
                                [name]="'clients'"
                                [label]="'Clients'"

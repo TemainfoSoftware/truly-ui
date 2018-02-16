@@ -81,6 +81,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() id = '';
 
+  @Input() modelValue = '';
+
   @Input() labelDetail = '';
 
   @Input() labelName = '';
@@ -135,6 +137,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   ngAfterViewInit() {
+    this.validateModelValueProperty();
     this.listenerKeyDown();
     this.listenClickDocument();
     this.listenScrollDocument();
@@ -267,7 +270,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   setInputValue( $event ) {
     this.tlinput.value = $event.row[ this.labelName ];
-    this.value = !this.listBox.isDataArrayString() ? $event.row[ this.id ] : $event.row;
+    this.value = !this.listBox.isDataArrayString() ? $event.row[ this.modelValue ] : $event.row;
     this.listBox.detectChanges();
   }
 
@@ -345,6 +348,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
    return text;
    }
    }*/
+
+  validateModelValueProperty() {
+    if (!this.modelValue) {
+      throw new Error('The [modelValue] property must be specified.');
+    }
+  }
 
   ngOnDestroy() {
     this.documentListener.forEach( ( listener ) => {

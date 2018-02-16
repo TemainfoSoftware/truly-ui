@@ -115,6 +115,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
+  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+
   @Output() clickAddNew: EventEmitter<any> = new EventEmitter();
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
@@ -194,7 +196,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.validateDataType();
     this.subject
       .debounceTime( 200 )
       .distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue )
@@ -222,7 +223,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     this.lastRow = this.quantityVisibleRows - 1;
     this.firstRow = 0;
     this.renderPageData();
-    this.handleScrollShowMore();
     this.addScrollListListener();
     this.validateProperties();
     this.addListenersSearchElement();
@@ -350,9 +350,18 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleClickItem( item, indexDataSet, indexGlobal? ) {
+    this.handleSelectItemList(item, indexDataSet);
+    this.clickItem.emit( { 'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet } );
+  }
+
+  handleSelectItem( item, indexDataSet, indexGlobal? ) {
+    this.handleSelectItemList(item, indexDataSet);
+    this.selectItem.emit( { 'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet } );
+  }
+
+  handleSelectItemList(item, indexDataSet) {
     this.removeSelected();
     this.cursor = indexDataSet;
-    this.clickItem.emit( { 'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet } );
     this.itemSelected = item;
     this.updateLastSelect();
     this.setInputFocus();
@@ -738,6 +747,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.handleRenderList();
       this.change.detectChanges();
     } else {
+      if ( !this.data ) {
+        return;
+      }
       this.lazyMode ? this.getDataLazy() : this.getDataMemory();
     }
   }
@@ -857,9 +869,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  mouseUpList($event) {
+  mouseUpList( $event ) {
     $event.stopPropagation();
-    if ($event.target === this.itemContainer.nativeElement) {
+    if ( $event.target === this.itemContainer.nativeElement ) {
       this.snapScreenScroll();
       this.removeSelected();
       this.isScrolling === 'DOWN' ? this.setFocusOnLast() : this.setFocusOnFirst();
@@ -955,7 +967,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleSelectItemWhileNavigating( index ) {
     if ( (this.searchElement) && (!this.isElementAddNew( index )) ) {
-      return this.handleClickItem( this.dataService.datasource[ index ], index );
+      return this.handleSelectItem( this.dataService.datasource[ index ], index );
     }
     this.cursor++;
   }
@@ -1049,10 +1061,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges( change: SimpleChanges ) {
-    this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
-      this.handleRenderList();
-    } );
-    if (this.data) {
+    if ( this.data ) {
+      this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
+        this.handleRenderList();
+      } );
       this.handleSearchQuery();
       this.loadingMoreData = false;
       this.change.detectChanges();

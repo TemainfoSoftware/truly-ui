@@ -75,6 +75,8 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @Input() labelSize = '100px';
 
+  @Input() name = '';
+
   @Input() label = '';
 
   @Input() iconBefore = '';
@@ -175,7 +177,7 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
     this.focus.emit( $event );
   }
 
-  clearInput( $event ) {
+  clearInput( $event? ) {
     this.value = '';
     this.input.nativeElement.focus();
     this.clear.emit( $event );

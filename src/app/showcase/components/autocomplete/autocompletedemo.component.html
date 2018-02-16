@@ -26,7 +26,7 @@
                                [labelName]="'firstName'"
                                [(ngModel)]="result">
               </tl-autocomplete>
-              <span class="returned-value">Returned Value: {{result}}</span>
+              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-autocomplete

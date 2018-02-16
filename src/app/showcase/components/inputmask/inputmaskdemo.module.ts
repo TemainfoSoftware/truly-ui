@@ -11,6 +11,7 @@ import { TooltipModule } from '../../../components/tooltip';
 import {ShowcaseCardModule} from '../../shared/components/showcase-card/showcase-card.module';
 import {ShowcaseTablePropertiesModule} from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import {ShowcaseTableEventsModule} from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {ShowcaseTableEventsModule} from '../../shared/components/showcase-table-
     TooltipModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseReturnedValueModule
   ],
   exports: [
     InputMaskDemoComponent

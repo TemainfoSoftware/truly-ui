@@ -12,7 +12,7 @@
             <div class="col-md-6">
               <span>CPF</span>
               <tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
-              <div class="returned-value">Returned Value: {{cpf}}</div>
+              <app-showcase-returned-value [value]="cpf"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
@@ -21,7 +21,7 @@
             <div class="col-md-6">
               <span>CNPJ</span>
               <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
-              <div class="returned-value">Returned Value: {{cnpj}}</div>
+              <app-showcase-returned-value [value]="cnpj"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
@@ -32,7 +32,7 @@
             <div class="col-md-6">
               <span>DATE</span>
               <tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
-              <div class="returned-value">Returned Value: {{date}}</div>
+              <app-showcase-returned-value [value]="date"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
@@ -41,7 +41,7 @@
             <div class="col-md-6">
               <span>NUMBER</span>
               <tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
-              <div class="returned-value">Returned Value: {{number}}</div>
+              <app-showcase-returned-value [value]="number"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
@@ -52,7 +52,7 @@
             <div class="col-md-6">
               <span>EMAIL</span>
               <tl-input name="email" email [(ngModel)]="email"></tl-input>
-              <div class="returned-value">Returned Value: {{email}}</div>
+              <app-showcase-returned-value [value]="email"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="email" email [(ngModel)]="email"></tl-input>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
               <span>PATTERN<code>(ex: Tacomah1, ab2cdefH, 123Abcde)</code></span>
               <tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
-              <div class="returned-value">Returned Value: {{pattern}}</div>
+              <app-showcase-returned-value [value]="pattern"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
@@ -72,7 +72,7 @@
             <div class="col-md-6">
               <span>PASSWORD</span>
               <tl-input name="password" minlength="5" required messageValidation password [(ngModel)]="password"></tl-input>
-              <div class="returned-value">Returned Value: {{password}}</div>
+              <app-showcase-returned-value [value]="password"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="password" minlength="5" required messageValidation password [(ngModel)]="password"></tl-input>
@@ -80,13 +80,6 @@
             </div>
           </app-card>
         </app-showcase-card>
-
-<!--        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
-  <app-card>
-    <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-  </app-card>
-</app-showcase-card>-->
-
         <app-showcase-card [title]="'Available Validators'" [icon]="'ion-android-bulb'">
           <app-card>
             <div class="pattern" style="line-height: 20px">

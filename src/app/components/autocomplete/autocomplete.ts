@@ -22,7 +22,7 @@
 import {
   Component, ContentChild, EventEmitter,
   Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit
+  Optional, Inject, OnInit, AfterViewInit, OnChanges
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -49,7 +49,7 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
   providers: [ MakeProvider( TlAutoComplete ) ]
 } )
 
-export class TlAutoComplete extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy {
+export class TlAutoComplete extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() data: Array<any>;
 
@@ -71,7 +71,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() readonly = false;
 
-  @Input() disabled = false;
+  @Input() disabled = true;
 
   @Input() autocomplete = 'off';
 
@@ -97,7 +97,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @ViewChild( NgModel ) model: NgModel;
 
-  @ViewChild( 'inputFake' ) tlinput;
+  @ViewChild( 'inputWriter' ) tlinput;
 
   @ViewChild( 'autoComplete' ) autoComplete;
 
@@ -111,6 +111,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
+  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
   public listLeftPosition;
@@ -118,6 +120,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   public listTopPosition;
 
   public widthInput;
+
+  public loading = true;
 
   private documentListener = [];
 
@@ -145,6 +149,15 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     } );
   }
 
+  onClearInput() {
+    this.value = '';
+  }
+
+  clear() {
+    this.tlinput.clearInput();
+    this.value = '';
+  }
+
   handleCustom() {
     if ( this.customTemplate ) {
       this.listBox.customInput = true;
@@ -166,14 +179,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenClickDocument() {
-    this.documentListener.push( this.renderer.listen( document, 'click', ( $event ) => {
-      if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-        this.listBox.showList = false;
-        this.listBox.detectChanges();
-        return;
-      }
-      this.handleOpenOnFocus();
-    } ) );
+    if ( !this.documentListener ) {
+      this.documentListener.push( this.renderer.listen( document, 'click', ( $event ) => {
+        if ( this.isNotRelatedWithAutocomplete( $event ) ) {
+          this.listBox.showList = false;
+          this.listBox.detectChanges();
+          return;
+        }
+        this.handleOpenOnFocus();
+      } ) );
+    }
   }
 
   onFocusInput( $event ) {
@@ -242,9 +257,18 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     }
   }
 
+  onSelectItemList( $event ) {
+    if ( $event ) {
+      this.selectItem.emit( $event );
+      this.setInputValue( $event );
+      this.tlinput.input.nativeElement.focus();
+    }
+  }
+
   setInputValue( $event ) {
-    this.tlinput.input.nativeElement.value = $event.row[ this.labelName ];
+    this.tlinput.value = $event.row[ this.labelName ];
     this.value = !this.listBox.isDataArrayString() ? $event.row[ this.id ] : $event.row;
+    this.listBox.detectChanges();
   }
 
   setListPosition( $event ) {
@@ -326,6 +350,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.documentListener.forEach( ( listener ) => {
       listener();
     } );
+  }
+
+  ngOnChanges( changes ) {
+    if ( (!changes.data.previousValue) && (changes.data.currentValue) ) {
+      this.loading = false;
+      this.disabled = false;
+    }
   }
 
 }

@@ -1,10 +1,12 @@
-<div class="tl-autocomplete-box" #autoComplete>
-  <div class="tl-autocomplete-wrapper" #autocompleteList>
-    <tl-input style="display: none" #input [(ngModel)]="value"></tl-input>
-    <tl-input #inputFake
+<div class="ui-autocomplete-box" #autoComplete>
+  <div class="ui-autocomplete-wrapper" #autocompleteList>
+    <div *ngIf="loading" class="ui-loader"><div></div><div></div><div></div><div></div></div>
+    <tl-input class="ui-autocomplete-model" #input [name]="'notform'" [(ngModel)]="value"></tl-input>
+    <tl-input #inputWriter
               [label]="label"
               (focusout)="onInputFocusOut($event)"
               (focus)="onFocusInput($event)"
+              (clear)="onClearInput($event)"
               [labelSize]="labelSize"
               [iconBefore]="iconBefore"
               [iconAfter]="iconAfter"
@@ -34,7 +36,8 @@
         (clickAddNew)="onAddNew()"
         (lazyLoad)="onLazyLoadAutocomplete($event)"
         (clickItem)="onClickItemList($event)"
-        [searchElement]="inputFake"
+        (selectItem)="onSelectItemList($event)"
+        [searchElement]="inputWriter"
         [listStripped]="listStripped"
         [showArrows]="false"
         [fixedHeight]="false"

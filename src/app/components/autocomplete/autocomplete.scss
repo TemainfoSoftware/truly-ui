@@ -3,6 +3,50 @@
   z-index: 1000;
 }
 
-.autocomplete-model {
+.ui-autocomplete-model {
   display: none;
 }
+
+.ui-autocomplete-wrapper {
+  position: relative;
+}
+
+.ui-loader {
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  width: 18px;
+  z-index: 200;
+  height: 18px;
+  padding-top: 2px;
+}
+.ui-loader div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  margin: 2px;
+  border: 2px solid #b6b6b6;
+  border-radius: 50%;
+  animation: ui-loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #b6b6b6 transparent transparent transparent;
+}
+.ui-loader div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.ui-loader div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.ui-loader div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes ui-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

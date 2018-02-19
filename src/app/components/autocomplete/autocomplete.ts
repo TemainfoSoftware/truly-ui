@@ -97,6 +97,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() listStripped = false;
 
+  @Input() charsToSearch = 2;
+
   @ViewChild( NgModel ) model: NgModel;
 
   @ViewChild( 'inputWriter' ) tlinput;
@@ -142,7 +144,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listenClickDocument();
     this.listenScrollDocument();
     this.validationProperty();
-    this.handleModelInit();
     this.listBox.showList = false;
     this.listBox.detectChanges();
   }
@@ -152,6 +153,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
       if ( this.model.model ) {
         for ( let item = 0; item < this.data.length; item++ ) {
           if ( String( this.data[ item ][ this.modelValue ] ) === String( this.model.viewModel ) ) {
+            this.clickItem.emit({index: item, row: this.data[item]});
             return this.tlinput.value = this.data[ item ][ this.labelName ];
           }
         }
@@ -213,7 +215,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   handleOpenOnFocus() {
-    if ( this.openFocus && !this.listBox.showList && this.isAvailableInput() ) {
+    if ( (this.openFocus) && (!this.listBox.showList) && (this.isAvailableInput()) ) {
       this.listBox.showList = true;
       this.listBox.detectChanges();
     }
@@ -378,6 +380,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     if ( (!changes.data.previousValue) && (changes.data.currentValue) ) {
       this.loading = false;
       this.disabled = false;
+      this.handleModelInit();
     }
   }
 

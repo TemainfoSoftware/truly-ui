@@ -78,6 +78,7 @@ export class ListBoxTemplateRenderService {
       this.listBox.handleClickItem( this.dataService.datasource[ row ],
         this.listBox.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ),
         this.getElementListOfCustomTemplate( $event ).indexDataGlobal );
+      this.listBox.handleOpenFocusList();
     } );
   }
 

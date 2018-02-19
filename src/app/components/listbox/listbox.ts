@@ -363,9 +363,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     this.removeSelected();
     this.cursor = indexDataSet;
     this.itemSelected = item;
+    this.getCursorViewPortPosition( indexDataSet );
     this.updateLastSelect();
     this.setInputFocus();
-    this.getCursorViewPortPosition( indexDataSet );
   }
 
   removeSelected() {
@@ -516,7 +516,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   setInputFocus() {
-    if ( this.searchElement && !this.dynamicShowHide ) {
+    if ( this.searchElement ) {
       setTimeout( () => {
         this.searchElement.input.nativeElement.focus();
       }, 1 );
@@ -668,7 +668,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
           this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
           this.take = this.lastRowViewport + this.quantityInVisibleRows;
-          const dataLength = this.lazyMode ? this.data.total : this.data.length;
+          const data = this.filtering ? this.filteredData : this.data;
+          const dataLength = this.lazyMode ? data.total : data.length;
           this.take = this.take > dataLength ? dataLength : this.take;
           this.renderPageData();
         }
@@ -989,7 +990,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   isDataSourceGreaterThanRowsPage() {
-    return (this.lazyMode ? this.data.total : this.data.length) > this.rowsPage;
+    const data = this.filtering ? this.filteredData : this.data;
+    return (this.lazyMode ? data.total : data.length) > this.rowsPage;
   }
 
   isEndOfTheListScroll() {

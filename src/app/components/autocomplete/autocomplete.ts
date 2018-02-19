@@ -142,8 +142,21 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listenClickDocument();
     this.listenScrollDocument();
     this.validationProperty();
+    this.handleModelInit();
     this.listBox.showList = false;
     this.listBox.detectChanges();
+  }
+
+  handleModelInit() {
+    setTimeout( () => {
+      if ( this.model.model ) {
+        for ( let item = 0; item < this.data.length; item++ ) {
+          if ( String( this.data[ item ][ this.modelValue ] ) === String( this.model.viewModel ) ) {
+            return this.tlinput.value = this.data[ item ][ this.labelName ];
+          }
+        }
+      }
+    }, 1 );
   }
 
   listenerKeyDown() {
@@ -350,8 +363,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
    }*/
 
   validateModelValueProperty() {
-    if (!this.modelValue) {
-      throw new Error('The [modelValue] property must be specified.');
+    if ( !this.modelValue ) {
+      throw new Error( 'The [modelValue] property must be specified.' );
     }
   }
 

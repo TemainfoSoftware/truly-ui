@@ -446,7 +446,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleKeyEnter( $event ) {
     if ( this.itemSelected && this.dataService.datasource.indexOf( this.itemSelected ) > -1 ) {
-      this.handleClickItem( this.itemSelected, this.dataService.datasource.indexOf( this.itemSelected ) );
+      const index = this.dataService.datasource.indexOf( this.itemSelected );
+      this.handleSelectItem( this.itemSelected, index,
+        this.listBox.nativeElement.children[ index ].getAttribute('data-indexnumber') );
     }
     $event.preventDefault();
     this.addNewRenderService.handleAddNewSelected();
@@ -516,7 +518,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   setInputFocus() {
-    if ( this.searchElement ) {
+    if ( this.searchElement && !this.dynamicShowHide) {
       setTimeout( () => {
         this.searchElement.input.nativeElement.focus();
       }, 1 );
@@ -863,7 +865,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     if ( element ) {
       const indexElementDataSource = this.getIndexOnList( element );
       this.handleScrollWhileChangingCursor();
-
       this.addClassSelected( indexElementDataSource );
       this.setCursorsWhileScrolling( element );
       this.setInputFocus();
@@ -968,7 +969,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleSelectItemWhileNavigating( index ) {
     if ( (this.searchElement) && (!this.isElementAddNew( index )) ) {
-      return this.handleSelectItem( this.dataService.datasource[ index ], index );
+      return this.handleSelectItem( this.dataService.datasource[ index ], index,
+        this.listBox.nativeElement.children[ index ].getAttribute('data-indexnumber') );
     }
     this.cursor++;
   }

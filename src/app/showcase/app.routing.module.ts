@@ -130,6 +130,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'tooltip',
         loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
+      },
+      {
+        path: 'overlaypanel',
+        loadChildren: './components/overlay-panel/overlay-paneldemo.module#OverlayPanelDemoModule'
       }
     ])
   ],

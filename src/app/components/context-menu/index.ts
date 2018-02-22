@@ -2,23 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TlContextMenu } from './context-menu';
-import { TlContextMenuItem } from './parts/context-menu-item';
+import { MenuModule } from '../menu/index';
+import { TlMenuItem } from '../menu/menu-item';
 
 export * from './context-menu';
 
 @NgModule( {
   imports: [
     CommonModule,
+    MenuModule
   ],
   declarations: [
     TlContextMenu,
-    TlContextMenuItem,
   ],
   exports: [
     TlContextMenu,
-    TlContextMenuItem
   ],
-  entryComponents: [TlContextMenuItem]
+  entryComponents: [TlMenuItem]
 } )
 export class ContextMenuModule {
 }

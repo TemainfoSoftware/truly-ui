@@ -1,0 +1,18 @@
+<div class="ui-wrapper-item" #wrapperItem
+     (click)="dispatchCallback($event)"
+     [ngStyle]="
+     {
+       position: styleConfig.position,
+       left: styleConfig.left - 1 + 'px',
+       top: styleConfig.top + 'px'
+     }
+">
+  <div class="ui-menu-item"
+       [style.paddingRight]="!subItem ? '5px' : '10px'"
+       [style.paddingLeft]="!icon ? '2px' : '15px'">
+    <span><i [class]="'ui-icon-left ' + icon"></i></span>
+    <span class="ui-label">{{label}}</span>
+    <span><i *ngIf="subItem" class="ui-icon-right ion-chevron-right"></i></span>
+  </div>
+</div>
+

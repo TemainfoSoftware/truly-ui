@@ -134,6 +134,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'overlaypanel',
         loadChildren: './components/overlay-panel/overlay-paneldemo.module#OverlayPanelDemoModule'
+      },
+      {
+        path: 'contextmenu',
+        loadChildren: './components/context-menu/context-menudemo.module#ContextMenuDemoModule'
       }
     ])
   ],

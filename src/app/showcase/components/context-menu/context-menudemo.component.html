@@ -1,0 +1,33 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">ContextMenu <span
+      class="module-name"><code><u>Module Name</u>: <strong>ContextMenuModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ContextMenuModule</strong></code></p>
+    <p class="text-content">The ContextMenu is used to show some content as 'Menu Modal' relative with target clicked and as context menu.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6 target" #target1 style="background: #5796c3">
+              <span>TARGET 1</span>
+            </div>
+            <div class="col-md-6 target" #target2 style="background: #c37f7a">
+              <span>TARGET 2</span>
+            </div>
+            <tl-context-menu [items]="itemsContextGlobal" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+            <tl-context-menu [items]="itemsContext" [target]="target1" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+            <tl-context-menu [items]="itemsContext2" [target]="target2" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+            <div class="spacer"></div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

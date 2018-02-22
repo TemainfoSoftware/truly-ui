@@ -25,11 +25,11 @@ const allSubs = [];
 let highestWidth = 0;
 
 @Component( {
-  selector: 'tl-context-menu-item',
-  templateUrl: './context-menu-item.html',
-  styleUrls: [ './context-menu-item.scss' ],
+  selector: 'tl-menu-item',
+  templateUrl: './menu-item.html',
+  styleUrls: [ './menu-item.scss' ],
 } )
-export class TlContextMenuItem implements AfterViewInit, OnDestroy {
+export class TlMenuItem implements AfterViewInit, OnDestroy {
 
   public icon = '';
 
@@ -69,7 +69,9 @@ export class TlContextMenuItem implements AfterViewInit, OnDestroy {
   }
 
   dispatchCallback(MouseEvent: MouseEvent) {
-    this.callBack(MouseEvent);
+    if (this.callBack) {
+      this.callBack(MouseEvent);
+    }
   }
 
   setMaxWidth() {

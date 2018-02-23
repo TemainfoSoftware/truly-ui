@@ -19,12 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Directive( {
   selector: '[fixedPosition]'
 } )
-export class FixedPositionDirective {
+export class FixedPositionDirective implements AfterViewInit {
 
   @Input() positionY = 'above';
 

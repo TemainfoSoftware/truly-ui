@@ -36,45 +36,45 @@ let documentClick;
   providers: [MenuService]
 } )
 export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
-  
+
   @Input() items = [];
-  
+
   @Input() label = '';
-  
+
   @Input() icon = '';
-  
+
   @Input() subItem = '';
 
   @Input() trigger;
-  
+
   @Input() target;
-  
+
   @Input() positionY = 'bellow';
-  
+
   @Input() overlapTrigger = false;
-  
+
   @Input() positionX = 'after';
-  
+
   @Input() hover = false;
-  
+
   @ViewChild( 'wrapperMenuItem', { read: ViewContainerRef } ) wrapperMenuItem: ViewContainerRef;
-  
+
   @ViewChild( FixedPositionDirective ) fixedPos: FixedPositionDirective;
-  
+
   constructor(private menuService: MenuService, private renderer: Renderer2) {}
-  
+
   ngOnInit() {
     this.listenDocumentClick();
   }
-  
+
   ngAfterViewInit() {
     this.validateTarget();
     this.listenTrigger();
     this.listenTriggerMouseLeave();
     this.menuService.setMenuConfig({ label: this.label, icon: this.icon, items: this.items, subItem: this.subItem},
-      this.wrapperMenuItem, this.renderer)
+      this.wrapperMenuItem, this.renderer);
   }
-  
+
   validateTarget() {
     if (this.target instanceof TlButton) {
       this.target = this.target['button'].nativeElement;
@@ -86,7 +86,7 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
       throw new Error('The [target] property is required');
     }
   }
-  
+
   listenDocumentClick() {
     documentClick = this.renderer.listen( document, 'click', ( $event ) => {
       if (($event.path.indexOf(this.target) < 0) && ($event.path.indexOf(this.trigger) < 0)) {
@@ -94,7 +94,7 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
       }
     } );
   }
-  
+
   listenTrigger() {
     const element = this.trigger ? this.trigger : this.target;
     const eventType = this.hover ? 'mouseenter' : 'click';
@@ -107,7 +107,7 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
       this.fixedPos.setPositioning();
     });
   }
-  
+
   listenTriggerMouseLeave() {
     if (this.hover) {
       const element = this.trigger ? this.trigger : this.target;
@@ -118,7 +118,7 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
       });
     }
   }
-  
+
   ngOnDestroy() {
     documentClick();
   }

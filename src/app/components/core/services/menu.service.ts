@@ -51,9 +51,9 @@ export class MenuService {
   private renderer: Renderer2;
 
   private callBack = Function();
-  
+
   public created = false;
-  
+
   constructor(private componentResolver: ComponentFactoryResolver) {}
 
   setMenuConfig( menuConfig: MenuConfig, view: ViewContainerRef, renderer: Renderer2 ) {
@@ -76,7 +76,7 @@ export class MenuService {
       }
     }
   }
-  
+
   private handleSubItems( item, componentSubItem, list? ) {
     const items = list ? list : this.items;
     if ( items[ item ][ this.subItem ] ) {
@@ -87,7 +87,7 @@ export class MenuService {
       this.handleMouseLeave( object );
     }
   }
-  
+
   private handleMouseHover( items, item, object ) {
     this.listeners.push( this.renderer.listen( object.anchor.location.nativeElement, 'mouseover', () => {
       if ( object.children.length === 0 ) {
@@ -95,20 +95,20 @@ export class MenuService {
       }
     } ) );
   }
-  
+
   private handleMouseLeave( componentSubItem ) {
     this.listeners.push( this.renderer.listen( componentSubItem.anchor.location.nativeElement, 'mouseleave', () => {
       this.removeChildren( componentSubItem );
     } ) );
   }
-  
+
   private removeChildren( related ) {
     related.children.forEach( ( item ) => {
       this.menuList.remove( this.menuList.indexOf( item ) );
     } );
     related.children = [];
   }
-  
+
   private createSubItemList( list, parentElement ) {
     for ( let index = 0; index < list.length; index++ ) {
       const factory = this.componentResolver.resolveComponentFactory( TlMenuItem );
@@ -119,7 +119,7 @@ export class MenuService {
       this.handleSubItems( index, subItem, list );
     }
   }
-  
+
   private setProperties( index, subItem, parentElement, list? ) {
     const items = list ? list : this.items;
     this.setPositionChildElement( subItem, index, items.length - 1, parentElement );
@@ -128,7 +128,7 @@ export class MenuService {
     (<TlMenuItem>subItem.instance).subItem = items[ index ][ this.subItem ];
     (<TlMenuItem>subItem.instance).callBack = items[ index ].callBack;
   }
-  
+
   private setPositionChildElement( subItem, index, lastIndex, anchor ) {
     if ( anchor ) {
       (<TlMenuItem>subItem.instance).fitWidth();
@@ -140,17 +140,17 @@ export class MenuService {
       };
     }
   }
-  
+
   private getAnchorLeftPosition(anchor) {
     return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().left
     + anchor.location.nativeElement.firstElementChild.offsetWidth;
   }
-  
+
   private getAnchorTopPosition(anchor, index) {
     return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().top
       + anchor.location.nativeElement.firstElementChild.offsetHeight * index;
   }
-  
+
   resetMenu() {
     this.menuList.clear();
     this.mainList = null;

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TlContextMenu } from './context-menu';
 import { MenuModule } from '../menu/index';
-import { TlMenuItem } from '../menu/menu-item';
+import { TlMenuItem } from '../menu/parts/menu-item';
 
 export * from './context-menu';
 

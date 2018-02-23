@@ -1,18 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlMenuItem } from './menu-item';
+import { TlMenu } from './menu';
+import { TlMenuItem } from './parts/menu-item';
+import { MiscModule } from '../misc/index';
 
-export * from './menu-item';
+export * from './menu';
 
 @NgModule( {
   imports: [
     CommonModule,
+    MiscModule
   ],
   declarations: [
-    TlMenuItem,
+    TlMenu,
+    TlMenuItem
   ],
   exports: [
+    TlMenu,
     TlMenuItem
-  ]
+  ],
+  entryComponents: [TlMenuItem]
 } )
 export class MenuModule {}

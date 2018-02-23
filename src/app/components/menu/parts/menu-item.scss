@@ -7,22 +7,24 @@
   width: auto;
   animation-name: creating;
   animation-duration: 200ms;
-  height: 30px;
   box-sizing: border-box;
 }
 
 .ui-menu-item {
   position: relative;
   width: 100%;
-  font-family: 'Lato', sans-serif;
-  color: #a2a2a2;
-  font-size: 1em;
+  height: 35px;
+  min-width: 220px;
   margin-right: 10px;
+  padding: 0 15px;
+  font-family: 'Lato', sans-serif;
+  line-height: 35px;
+  font-size: 1em;
+  color: #6b6b6b;
   background: #fff;
-  padding: 5px 15px;
   @include borderSide;
   &:hover {
-    background: #f5f5f5;
+    background: #e2e2e2;
     cursor: pointer;
   }
   &:first-child {
@@ -36,7 +38,6 @@
     position: absolute;
     padding-right: 5px;
     font-size: 0.7em;
-    padding-top: 5px;
     right: 0;
   }
 
@@ -53,11 +54,11 @@
 }
 
 .borderTop {
-  border-top: 1px solid #c3c3c3;;
+  border-top: 1px solid #c3c3c3;
 }
 
 .borderBottom {
-  border-bottom: 1px solid #c3c3c3;;
+  border-bottom: 1px solid #c3c3c3;
 }
 
 @keyframes creating {

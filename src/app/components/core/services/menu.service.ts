@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { ComponentFactoryResolver, Injectable, Renderer2, ViewContainerRef } from '@angular/core';
-import { TlMenuItem } from '../../menu/menu-item';
+import { TlMenuItem } from '../../menu/parts/menu-item';
 
 export interface MenuConfig {
   label: string;
@@ -51,7 +51,9 @@ export class MenuService {
   private renderer: Renderer2;
 
   private callBack = Function();
-
+  
+  public created = false;
+  
   constructor(private componentResolver: ComponentFactoryResolver) {}
 
   setMenuConfig( menuConfig: MenuConfig, view: ViewContainerRef, renderer: Renderer2 ) {
@@ -65,6 +67,7 @@ export class MenuService {
 
   createList() {
     if ( !this.mainList ) {
+      this.created = true;
       for ( let item = 0; item < this.items.length; item++ ) {
         const factory = this.componentResolver.resolveComponentFactory( TlMenuItem );
         this.mainList = this.menuList.createComponent( factory );
@@ -73,8 +76,8 @@ export class MenuService {
       }
     }
   }
-
-  handleSubItems( item, componentSubItem, list? ) {
+  
+  private handleSubItems( item, componentSubItem, list? ) {
     const items = list ? list : this.items;
     if ( items[ item ][ this.subItem ] ) {
       this.renderer.setAttribute( componentSubItem.location.nativeElement, 'anchor', 'true' );
@@ -84,29 +87,29 @@ export class MenuService {
       this.handleMouseLeave( object );
     }
   }
-
-  handleMouseHover( items, item, object ) {
+  
+  private handleMouseHover( items, item, object ) {
     this.listeners.push( this.renderer.listen( object.anchor.location.nativeElement, 'mouseover', () => {
       if ( object.children.length === 0 ) {
         this.createSubItemList( items[ item ][ this.subItem ], object );
       }
     } ) );
   }
-
-  handleMouseLeave( componentSubItem ) {
+  
+  private handleMouseLeave( componentSubItem ) {
     this.listeners.push( this.renderer.listen( componentSubItem.anchor.location.nativeElement, 'mouseleave', () => {
       this.removeChildren( componentSubItem );
     } ) );
   }
-
-  removeChildren( related ) {
+  
+  private removeChildren( related ) {
     related.children.forEach( ( item ) => {
       this.menuList.remove( this.menuList.indexOf( item ) );
     } );
     related.children = [];
   }
-
-  createSubItemList( list, parentElement ) {
+  
+  private createSubItemList( list, parentElement ) {
     for ( let index = 0; index < list.length; index++ ) {
       const factory = this.componentResolver.resolveComponentFactory( TlMenuItem );
       const subItem = this.menuList.createComponent( factory );
@@ -116,8 +119,8 @@ export class MenuService {
       this.handleSubItems( index, subItem, list );
     }
   }
-
-  setProperties( index, subItem, parentElement, list? ) {
+  
+  private setProperties( index, subItem, parentElement, list? ) {
     const items = list ? list : this.items;
     this.setPositionChildElement( subItem, index, items.length - 1, parentElement );
     (<TlMenuItem>subItem.instance).label = items[ index ][ this.label ];
@@ -125,24 +128,33 @@ export class MenuService {
     (<TlMenuItem>subItem.instance).subItem = items[ index ][ this.subItem ];
     (<TlMenuItem>subItem.instance).callBack = items[ index ].callBack;
   }
-
-  setPositionChildElement( subItem, index, lastIndex, parentElement ) {
-    if ( parentElement ) {
+  
+  private setPositionChildElement( subItem, index, lastIndex, anchor ) {
+    if ( anchor ) {
       (<TlMenuItem>subItem.instance).fitWidth();
       (<TlMenuItem>subItem.instance).setBorders( index, lastIndex );
       (<TlMenuItem>subItem.instance).styleConfig = {
         'position': 'fixed',
-        'left': parentElement.location.nativeElement.firstElementChild.getBoundingClientRect().left
-        + parentElement.location.nativeElement.firstElementChild.offsetWidth,
-        'top': parentElement.location.nativeElement.firstElementChild.getBoundingClientRect().top
-        + parentElement.location.nativeElement.firstElementChild.offsetHeight * index
+        'left': this.getAnchorLeftPosition(anchor),
+        'top': this.getAnchorTopPosition(anchor, index)
       };
     }
   }
-
+  
+  private getAnchorLeftPosition(anchor) {
+    return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().left
+    + anchor.location.nativeElement.firstElementChild.offsetWidth;
+  }
+  
+  private getAnchorTopPosition(anchor, index) {
+    return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().top
+      + anchor.location.nativeElement.firstElementChild.offsetHeight * index;
+  }
+  
   resetMenu() {
     this.menuList.clear();
     this.mainList = null;
+    this.created = false;
     this.anchors = [];
   }
 

@@ -1,0 +1,23 @@
+.menubar {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menubar li {
+  padding: 2.5px 10px;
+  border: 1px solid #c3c3c3;
+  background: #fafafa;
+  color: #424242;
+  border-right: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: #e9e9e9;
+  }
+}
+
+.menubar li:last-child {
+  border-right: 1px solid #c3c3c3;
+}

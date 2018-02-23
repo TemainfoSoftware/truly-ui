@@ -138,6 +138,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'contextmenu',
         loadChildren: './components/context-menu/context-menudemo.module#ContextMenuDemoModule'
+      },
+      {
+        path: 'menu',
+        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
       }
     ])
   ],

@@ -53,7 +53,7 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() overlapTrigger = false;
 
-  @Input() positionX = 'after';
+  @Input() positionX = 'before';
 
   @Input() hover = false;
 

@@ -17,7 +17,7 @@
                 accompanied by English versions from the 1914 translation by H. Rackham.
               </p>
             </tl-overlay-panel>
-            <tl-button [text]="'Show Panel'" #button (click)="panel.showPanel($event, button)"></tl-button>
+            <tl-button [text]="'Show Panel'" #button (click)="panel.toggle($event, button)"></tl-button>
             <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-overlay-panel #panel>
@@ -27,8 +27,13 @@
     accompanied by English versions from the 1914 translation by H. Rackham.
   </p>
 </tl-overlay-panel>
-<tl-button [text]="'Show Panel'" #button (click)="panel.showPanel($event, button)"></tl-button>
+<tl-button [text]="'Show Panel'" #button (click)="panel.toggle($event, button)"></tl-button>
 </textarea>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Methods'" [icon]="'ion-wand'">
+          <app-card>
+            <app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>
           </app-card>
         </app-showcase-card>
         <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">

@@ -1,0 +1,36 @@
+.menubar {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menubar li {
+  padding: 2.5px 10px;
+  border: 1px solid #c3c3c3;
+  background: #fafafa;
+  color: #424242;
+  border-right: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: #e9e9e9;
+  }
+}
+
+.trigger-element {
+  background: #6497e2;
+  color: #fff;
+  padding: 7px 20px;
+  margin-right: 50px;
+  cursor: pointer;
+  transition: background 300ms linear;
+  -webkit-border-radius: 2px;
+  &:hover {
+    background: #1a65e2;
+  }
+}
+
+.menubar li:last-child {
+  border-right: 1px solid #c3c3c3;
+}

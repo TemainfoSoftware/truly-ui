@@ -21,6 +21,7 @@
  */
 import { ComponentFactoryResolver, Injectable, Renderer2, ViewContainerRef } from '@angular/core';
 import { TlMenuItem } from '../../menu/parts/menu-item';
+import { RelativeWindowPosition } from '../../misc/relative-window-position.directive';
 
 export interface MenuConfig {
   label: string;
@@ -47,6 +48,8 @@ export class MenuService {
   private listeners = [];
 
   private menuList: ViewContainerRef;
+
+  private relativeWindowPosition = new RelativeWindowPosition();
 
   private renderer: Renderer2;
 
@@ -133,22 +136,22 @@ export class MenuService {
     if ( anchor ) {
       (<TlMenuItem>subItem.instance).fitWidth();
       (<TlMenuItem>subItem.instance).setBorders( index, lastIndex );
-      (<TlMenuItem>subItem.instance).styleConfig = {
-        'position': 'fixed',
-        'left': this.getAnchorLeftPosition(anchor),
-        'top': this.getAnchorTopPosition(anchor, index)
-      };
+      this.setAnchorLeftPosition(subItem, anchor);
+      this.setAnchorTopPosition(subItem, anchor, index);
     }
   }
 
-  private getAnchorLeftPosition(anchor) {
-    return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().left
-    + anchor.location.nativeElement.firstElementChild.offsetWidth;
+  private setAnchorLeftPosition(subItem, anchor) {
+    this.relativeWindowPosition.setRenderer(this.renderer);
+    this.relativeWindowPosition.anchorElement = anchor.location.nativeElement.firstElementChild;
+    this.relativeWindowPosition.relativeElement = (<TlMenuItem>subItem.instance).wrapperItem.nativeElement;
+    this.relativeWindowPosition.setPosition();
   }
 
-  private getAnchorTopPosition(anchor, index) {
-    return anchor.location.nativeElement.firstElementChild.getBoundingClientRect().top
-      + anchor.location.nativeElement.firstElementChild.offsetHeight * index;
+  private setAnchorTopPosition(subItem, anchor, index) {
+    this.renderer.setStyle((<TlMenuItem>subItem.instance).wrapperItem.nativeElement, 'top',
+      anchor.location.nativeElement.firstElementChild.getBoundingClientRect().top
+      + anchor.location.nativeElement.firstElementChild.offsetHeight * index + 'px');
   }
 
   resetMenu() {

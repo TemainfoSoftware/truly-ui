@@ -21,80 +21,73 @@
  */
 export const dataProperties = [
   {
-    name: 'text',
-    type: 'string',
+    name: 'items',
+    type: 'Array<Object>',
     default: 'null',
-    description: 'Displays a text button.',
-    options: 'any text'
+    description: 'List of items that will fill menu.',
+    options: 'Array<Object>'
   },
   {
-    name: 'color',
+    name: 'label',
     type: 'string',
     default: 'basic',
-    description: 'Changes the default color of the button.',
-    options: 'basic | primary | success | information | warning | danger | light | dark'
+    description: 'Key that will display menu label.',
+    options: 'string'
   },
   {
-    name: 'width',
+    name: 'icon',
     type: 'string',
-    default: '125px',
-    description: 'Button width.',
-    options: 'px | % | em'
+    default: 'null',
+    description: 'Key that will display menu icon.',
+    options: 'string'
   },
   {
-    name: 'height',
+    name: 'subItem',
     type: 'string',
-    default: '39',
-    description: 'Button height.',
-    options: 'px | % | em'
+    default: 'null',
+    description: 'Key that will display subItem.',
+    options: 'string'
   },
   {
-    name: 'disabled',
+    name: 'trigger',
+    type: 'HTMLElement',
+    default: 'null',
+    description: 'Element that will trigger menu to the Target.',
+    options: 'HTMLElement'
+  },
+  {
+    name: 'target',
+    type: 'HTMLElement',
+    default: 'null',
+    description: 'The Element target.',
+    options: 'HTMLElement'
+  },
+  {
+    name: 'positionY',
+    type: 'string',
+    default: 'bellow',
+    description: 'Position Y of menu.',
+    options: 'bellow | above'
+  },
+  {
+    name: 'positionX',
+    type: 'string',
+    default: 'before',
+    description: 'Position X of menu.',
+    options: 'after | before'
+  },
+  {
+    name: 'overlapTrigger',
     type: 'boolean',
     default: 'false',
-    description: 'Disables the button if set to true.',
+    description: 'Property to control overlapping of target/trigger.',
     options: 'true | false'
   },
   {
-    name: 'iconAddonBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAddonAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconBeforeText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'toggle',
+    name: 'hover',
     type: 'boolean',
     default: 'false',
-    description: 'Change the button to toggle button if set to true.',
+    description: 'Property to control if will trigger menu on hover.',
     options: 'true | false'
   },
-  {
-    name: 'mdResult',
-    type: 'string',
-    default: 'null',
-    description: 'Return value class when set inside a Modal Component.',
-    options: 'MRFREE | MRCUSTOM | MROK | MRCANCEL | MRABORT | MRRETRY | MRIGNORE | MRYES | MRNO | MRCLOSE'
-  }
   ];

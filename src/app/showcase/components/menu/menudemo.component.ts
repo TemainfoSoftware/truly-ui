@@ -25,9 +25,9 @@ import * as json from './menudemo-dataproperties.json';
 import * as jsonEvts from './menudemo.dataevents.json';
 
 @Component( {
-  selector : 'app-menu',
-  templateUrl : './menudemo.component.html',
-  styleUrls : [ './menudemo.component.scss' ]
+  selector: 'app-menu',
+  templateUrl: './menudemo.component.html',
+  styleUrls: [ './menudemo.component.scss' ]
 } )
 export class MenuDemoComponent {
 
@@ -37,58 +37,40 @@ export class MenuDemoComponent {
 
   public menuItems = [];
 
-  public menuItems2 = [];
-
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
 
-    this.menuItems2 = [
-      {
-        label: 'The Target 1',
-        icon: '',
-        callBack: ($event) => {
-          console.log('$event', $event);
-        }
-      },
-      {
-        label: 'The Item 2',
-        icon: '',
-      },
-    ];
-
     this.menuItems = [
       {
-        label: 'The Target 1',
+        label: 'Home',
         icon: '',
-        callBack: ($event) => {
-          console.log('$event', $event);
+        callBack: ( $event ) => {
+          console.log( '$event', $event );
         }
       },
       {
-        label: 'The Item 2',
+        label: 'Input',
         icon: '',
       },
       {
-        label: 'The Menu Item 3',
-        icon: '',
-        subMenu: [
-          {
-            label: 'The Item 2',
-            icon: '',
-          },
-          {
-            label: 'The Item 2',
-            icon: '',
-          },
-        ]
-      },
-      {
-        label: 'The Context Menu Item 4',
+        label: 'Button',
         icon: '',
       },
       {
-        label: 'The Target 1 Item 5',
+        label: 'Panels',
+        icon: '',
+      },
+      {
+        label: 'Pickers',
+        icon: '',
+      },
+      {
+        label: 'Menu',
+        icon: '',
+      },
+      {
+        label: 'Overlay',
         icon: '',
       },
     ];

@@ -18,6 +18,19 @@
   }
 }
 
+.trigger-element {
+  background: #6497e2;
+  color: #fff;
+  padding: 7px 20px;
+  margin-right: 50px;
+  cursor: pointer;
+  transition: background 300ms linear;
+  -webkit-border-radius: 2px;
+  &:hover {
+    background: #1a65e2;
+  }
+}
+
 .menubar li:last-child {
   border-right: 1px solid #c3c3c3;
 }

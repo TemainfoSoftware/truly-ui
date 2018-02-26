@@ -21,12 +21,12 @@
  */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'callBack',
     parameters: [
       {
-        event: 'selected', description: 'Button Selected'
+        event: 'MouseEvent', description: 'Native Mouse Event'
       }
     ],
-    description: 'Callback to invoke when toogle button.',
+    description: 'Callback to invoke when a menu item is clicked, used on object of Items',
   },
 ];

@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { ContextMenuDemoComponent } from './context-menudemo.component';
 import { ContextMenuDemoRoutingModule } from './context-menudemo-routing.module';
-import { ContextMenuModule } from '../../../components/context-menu/index';
+import { ContextMenuModule } from '../../../components/contextmenu/index';
 import { ButtonModule } from '../../../components/button/index';
 import { HighlightJsModule } from 'ngx-highlight-js';
 import { PanelGroupModule } from '../../../components/panelgroup';

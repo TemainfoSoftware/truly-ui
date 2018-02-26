@@ -32,7 +32,7 @@ let windowListener;
   selector: 'tl-context-menu',
   templateUrl: './context-menu.html',
   styleUrls: [ './context-menu.scss' ],
-  providers: [MenuService]
+  providers: [ MenuService ]
 } )
 export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
@@ -50,13 +50,16 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
 
+  @ViewChild( 'wrapperContextMenu' ) wrapperContextMenu;
+
   public position = { left: 0, top: 0 };
 
   public globalListeners = [];
 
   public open = false;
 
-  constructor( private renderer: Renderer2, private menuService: MenuService ) {}
+  constructor( private renderer: Renderer2, private menuService: MenuService ) {
+  }
 
   ngOnInit() {
     this.listenDocument();
@@ -65,7 +68,7 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.menuService.setMenuConfig({
+    this.menuService.setMenuConfig( {
       label: this.label,
       subItem: this.subItem,
       icon: this.icon,
@@ -98,9 +101,14 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
   setContextMenuPosition( $event ) {
     $event.preventDefault();
-    this.position.left = $event.x;
     this.position.top = $event.y;
+    if ( ($event.clientX + this.wrapperContextMenu.nativeElement.offsetWidth) >= window.innerWidth ) {
+      this.position.left = $event.x - this.wrapperContextMenu.nativeElement.offsetWidth;
+    } else {
+      this.position.left = $event.x;
+    }
     this.open = true;
+
   }
 
   listenDocument() {

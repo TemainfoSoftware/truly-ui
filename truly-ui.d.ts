@@ -12,6 +12,7 @@ export * from './components/dropdownlist/index';
 export * from './components/form/index';
 export * from './components/input/index';
 export * from './components/listbox/index';
+export * from './components/menu/index';
 export * from './components/misc/index';
 export * from './components/modal/addons/container-modal/index';
 export * from './components/modal/addons/modal-toolbar/index';

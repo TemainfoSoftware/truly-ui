@@ -59,6 +59,7 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   public open = false;
 
   constructor( private renderer: Renderer2, private menuService: MenuService ) {
+    windowListener = undefined;
   }
 
   ngOnInit() {
@@ -79,17 +80,18 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   listenContextMenu() {
     if ( !windowListener ) {
       windowListener = this.renderer.listen( window, 'contextmenu', ( $event ) => {
+        $event.preventDefault();
         for ( const item of allContextMenu ) {
           if ( $event.target === item.target ) {
             item.resetProperties();
             item.menuService.createList();
             item.setContextMenuPosition( $event );
-          } else if ( !item.target ) {
-            this.resetProperties();
-            this.menuService.createList();
-            this.setContextMenuPosition( $event );
+            return;
           }
         }
+        this.resetProperties();
+        this.menuService.createList();
+        this.setContextMenuPosition( $event );
       } );
     }
   }
@@ -100,21 +102,30 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setContextMenuPosition( $event ) {
-    $event.preventDefault();
-    this.position.top = $event.y;
-    if ( ($event.clientX + this.wrapperContextMenu.nativeElement.offsetWidth) >= window.innerWidth ) {
-      this.position.left = $event.x - this.wrapperContextMenu.nativeElement.offsetWidth;
-    } else {
-      this.position.left = $event.x;
-    }
     this.open = true;
+    this.position.top = $event.y;
+    !this.fitsOnScreen( $event ) ? this.setContextMenuAfterMouse( $event ) :
+      this.setContextMenuBeforeMouse( $event );
+  }
 
+  setContextMenuBeforeMouse( $event ) {
+    const minWidthWrapperContextMenu  = 250;
+    this.position.left = $event.x - minWidthWrapperContextMenu;
+  }
+
+  setContextMenuAfterMouse( $event ) {
+    this.position.left = $event.x;
   }
 
   listenDocument() {
     this.globalListeners.push( this.renderer.listen( document, 'click', ( $event ) => {
       this.open = false;
     } ) );
+  }
+
+  fitsOnScreen( $event ) {
+    const minWidthWrapperContextMenu  = 250;
+    return ($event.clientX + minWidthWrapperContextMenu) >= window.innerWidth;
   }
 
   ngOnDestroy() {

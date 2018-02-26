@@ -1,12 +1,5 @@
 <div class="ui-wrapper-item" #wrapperItem
-     (click)="dispatchCallback($event)"
-     [ngStyle]="
-     {
-       position: styleConfig.position,
-       left: styleConfig.left - 1 + 'px',
-       top: styleConfig.top + 'px'
-     }
-">
+     (click)="dispatchCallback($event)">
   <div class="ui-menu-item"
        [attr.menuItem]="true"
        [style.paddingRight]="!subItem ? '5px' : '10px'"

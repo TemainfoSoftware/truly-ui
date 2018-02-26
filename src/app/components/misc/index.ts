@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ShortcutDirective } from './shortcut.directive';
 import { ShortcutService } from '../core/helper/shortcut.service';
 import { FixedPositionDirective } from './fixed-position.directive';
+import { RelativeWindowPosition } from './relative-window-position.directive';
 
 @NgModule( {
   imports: [
@@ -12,10 +13,12 @@ import { FixedPositionDirective } from './fixed-position.directive';
   ],
   declarations: [
     ShortcutDirective,
+    RelativeWindowPosition,
     FixedPositionDirective
   ],
   exports: [
     ShortcutDirective,
+    RelativeWindowPosition,
     FixedPositionDirective
   ],
   providers: [

@@ -21,10 +21,38 @@
  */
 export const dataProperties = [
   {
-    name: 'labelGroup',
+    name: 'items',
+    type: 'Array<Object>',
+    default: 'null',
+    description: 'List of items that will fill menu.',
+    options: 'Array<Object>'
+  },
+  {
+    name: 'label',
     type: 'string',
-    default: 'Panel Group',
-    description: 'Label of PanelGroup',
-    options: 'any text'
-  }
+    default: 'basic',
+    description: 'Key that will display menu label.',
+    options: 'string'
+  },
+  {
+    name: 'icon',
+    type: 'string',
+    default: 'null',
+    description: 'Key that will display menu icon.',
+    options: 'string'
+  },
+  {
+    name: 'subItem',
+    type: 'string',
+    default: 'null',
+    description: 'Key that will display subItem.',
+    options: 'string'
+  },
+  {
+    name: 'target',
+    type: 'HTMLElement',
+    default: 'null',
+    description: 'The Element target.',
+    options: 'HTMLElement'
+  },
   ];

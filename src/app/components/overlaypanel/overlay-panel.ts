@@ -70,7 +70,7 @@ export class TlOverlayPanel implements OnInit, OnDestroy {
     }
   }
 
-  showPanel( $event, target? ) {
+  toggle( $event, target? ) {
     this.target = target ? target : $event.target;
     this.handleTarget( target );
     this.setPositionElement();

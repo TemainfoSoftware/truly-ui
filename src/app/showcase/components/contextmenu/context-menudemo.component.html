@@ -33,6 +33,24 @@
             </div>
           </app-card>
         </app-showcase-card>
+        <app-showcase-card [title]="'Menu Configuration'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.items = [
+  { label: 'The Target 2 Context Menu Item 1', icon: '', callBack: this.functionContext2 },
+  { label: 'The Target 2 Context Menu Item 2', icon: '',
+  subMenu: [
+      { label: 'The Target 2 Context Menu Item 3', icon: '' },
+      { label: 'The Target 2 Context Menu Item 4', icon: '' },
+      { label: 'The Target 2 Context Menu Item 5', icon: '' }
+    ]
+  },
+];
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
         <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
           <app-card>
             <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>

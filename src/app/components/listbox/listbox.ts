@@ -133,7 +133,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   public showList = true;
 
-  public cursor = 0;
+  public cursor = -1;
 
   public skip = 0;
 

@@ -21,7 +21,7 @@
  */
 import {
   Component, Optional, Inject, ContentChildren, QueryList, Input, ViewChild, AfterViewInit, Output,
-  EventEmitter, Injector, OnInit,
+  EventEmitter, OnChanges,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
@@ -47,8 +47,6 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   public itemSelected;
 
-  @Input() nameGroup = '';
-
   @Input() labelGroup = '';
 
   @Input() orientation = Orientation.HORIZONTAL;
@@ -67,8 +65,7 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   constructor(
     @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-  ) {
+    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>) {
     super(validators, asyncValidators);
   }
 
@@ -78,6 +75,13 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
       this.validateProperty();
       this.validateCheckedRadios();
     }, 1 );
+    this.listenModelChange();
+  }
+
+  listenModelChange() {
+    this.model.valueChanges.subscribe((value) => {
+      this.handleModelValue();
+    });
   }
 
   validateProperty() {
@@ -145,13 +149,17 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
   }
 
   checkRadio( item ) {
-    this.value = item.value;
-    this.itemSelected = item;
-    this.onCheckRadio.emit( this.itemSelected );
+    if (!item.disabled) {
+      this.value = item.value;
+      this.itemSelected = item;
+      this.onCheckRadio.emit( this.itemSelected );
+    }
   }
 
   focusRadio( item ) {
     this.onFocusRadio.emit( item );
   }
+
+
 }
 

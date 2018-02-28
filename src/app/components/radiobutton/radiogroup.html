@@ -6,11 +6,12 @@
                [attr.name]="name"
                (click)="checkRadio(item)"
                [tabindex]="tabindex"
+               [attr.disabled]="item.disabled"
                [value]="item.value"
                (keydown)="handleKeyDown($event)"
                (focus)="focusRadio(item)"
                [(ngModel)]="value">
-        <span class="radio-ring"></span>
+        <span class="radio-ring" [ngClass]="{'disabled': item.disabled }"></span>
         <span
           [style.top]="orientation == 'vertical' ? '13px' : '3px'"
           *ngIf="itemSelected === item"

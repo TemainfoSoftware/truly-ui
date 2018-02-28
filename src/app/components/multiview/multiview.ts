@@ -1,0 +1,261 @@
+/*
+ MIT License
+
+ Copyright (c) 2018 Temainfo Software
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+import {
+  Input, ContentChildren, Component, QueryList, forwardRef, AfterContentInit, Renderer2,
+  ViewChild, AfterViewInit, Output, OnDestroy, EventEmitter
+} from '@angular/core';
+
+import { TlView } from './view/view';
+
+const globalListeners = [];
+
+@Component( {
+  selector: 'tl-multiview',
+  templateUrl: './multiview.html',
+  styleUrls: [ './multiview.scss' ],
+} )
+export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
+
+  _modelValue: any;
+  get modelValue() {
+    return this._modelValue;
+  }
+
+  @Input() set modelValue( value: string) {
+    this._modelValue = value;
+    this.selectedChange.emit(this._modelValue);
+    this.changeViewSelected( value );
+  }
+
+  @Input() transitionTime = '300ms';
+
+  @ContentChildren( forwardRef( () => TlView ) ) views: QueryList<TlView>;
+
+  @ViewChild( 'multiViewContainer' ) multiViewContainer;
+
+  @ViewChild( 'multiViewTranslate' ) multiViewTranslate;
+
+  @Output() private selectedChange: EventEmitter<any> = new EventEmitter();
+
+  private moving = false;
+
+  private viewBounding = [];
+
+  private mouseClickPositionX;
+
+  private selectedView;
+
+  private currentTranslatePosition = 0;
+
+  private translateAreaWidth;
+
+  private movement = '';
+
+  constructor( private renderer: Renderer2 ) {}
+
+  ngAfterContentInit() {
+    this.listenMouseDown();
+    this.listenMouseUp();
+    this.listenMouseMove();
+    const selectedView = this.views.find( tab => tab.selected );
+    if ( !selectedView && this.views.first ) {
+      this.views.first.selected = true;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.setWidthMultiView();
+    this.setWidthEachView();
+    this.handleViewBounding();
+    this.selectedView = this.viewBounding[ 0 ];
+  }
+
+  setWidthEachView() {
+    this.views.forEach( ( item, index ) => {
+      item.viewComponents.nativeElement.style.width = this.multiViewContainer.nativeElement.offsetWidth + 'px';
+      if ( index > 0 ) {
+        item.viewComponents.nativeElement.style.left = this.multiViewContainer.nativeElement.offsetWidth + 'px';
+      }
+    } );
+  }
+
+  handleViewBounding() {
+    this.views.forEach( ( item, index ) => {
+      this.viewBounding.push(
+        {
+          viewItem: item,
+          viewPosition: Math.round( this.multiViewContainer.nativeElement.offsetWidth * (index) )
+        } );
+    } );
+  }
+
+  setWidthMultiView() {
+    this.renderer.setStyle( this.multiViewTranslate.nativeElement, 'width',
+      this.multiViewContainer.nativeElement.offsetWidth * this.views.toArray().length + 'px' );
+  }
+
+  listenMouseDown() {
+    globalListeners.push(this.renderer.listen( document, 'mousedown', ( $event ) => {
+      this.mouseClickPositionX = $event.clientX;
+      this.moving = true;
+    } ));
+  }
+
+  listenMouseUp() {
+    globalListeners.push(this.renderer.listen( document, 'mouseup', () => {
+      this.moving = false;
+      this.snapViewPosition();
+    } ));
+  }
+
+  snapViewPosition() {
+    const translateSnap = this.multiViewTranslate.nativeElement.offsetWidth / this.views.length;
+    this.translateAreaWidth = translateSnap * (this.views.length - 1);
+    if ( (this.currentTranslatePosition < 0) && (this.currentTranslatePosition < (translateSnap / 2)) ) {
+      if ( this.selectedView ) {
+        this.movement === 'forward' ? this.handleDragForward() : this.handleDragBackward();
+      }
+    }
+  }
+
+  handleDragForward() {
+    const translatePos = parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
+    if ( (translatePos > this.selectedView.viewPosition) ) {
+      const index = this.viewBounding.indexOf( this.selectedView ) + 1;
+      if (this.viewBounding[ index ]) {
+        this.modelValue = this.viewBounding[ index ].viewItem.value;
+      }
+    }
+  }
+
+  handleDragBackward() {
+    const translatePos = parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
+    if ( translatePos < this.selectedView.viewPosition ) {
+      const index = this.viewBounding.indexOf( this.selectedView ) - 1;
+      if (this.viewBounding[ index ]) {
+        this.modelValue = this.viewBounding[ index ].viewItem.value;
+      }
+    }
+  }
+
+  listenMouseMove() {
+    globalListeners.push(this.renderer.listen( window, 'mousemove', ( $event ) => {
+      if ( this.moving ) {
+        this.translateMove( $event );
+      }
+    } ));
+  }
+
+  translateSection(translate: any, time: string) {
+    this.currentTranslatePosition = translate;
+    this.handleDuration( time );
+    this.setTranslate(this.currentTranslatePosition);
+  }
+
+  translateMove( $event, time? ) {
+    let movement = this.getMousePosition($event);
+    const translatePos = this.getTranslateCurrentPosition();
+    this.setMoveDirection( $event );
+
+    if ( this.isMoving(translatePos) ) {
+      movement = $event.movementX - translatePos;
+    }
+    if ( this.isFirstAndFinished( $event, translatePos ) ) {
+      this.setTranslate( '-' + this.viewBounding[0].viewPosition );
+      return;
+    }
+    if ( this.isLastAndFinished( $event, translatePos ) ) {
+      this.setTranslate( '-' + this.viewBounding[this.viewBounding.length - 1].viewPosition );
+      return;
+    }
+    this.handleMovingSlow(time, movement);
+  }
+
+  getTranslateCurrentPosition() {
+    return parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
+  }
+
+  handleMovingSlow(time, movement) {
+    this.handleDuration( time );
+    this.setTranslate(movement);
+    this.currentTranslatePosition = movement;
+  }
+
+  getMousePosition($event) {
+    return ($event.clientX - this.mouseClickPositionX) - this.multiViewTranslate.nativeElement.offsetLeft;
+  }
+
+  setTranslate(value: any) {
+    this.renderer.setStyle( this.multiViewTranslate.nativeElement, 'transform', 'translateX(' + value + 'px)' );
+  }
+
+  isLastAndFinished( $event: MouseEvent, translatePos: number ) {
+    return ($event.movementX <= 0) && (translatePos >= this.translateAreaWidth);
+  }
+
+  isMoving(translatePos: number) {
+    return translatePos > 0;
+  }
+
+  isFirstAndFinished( $event: MouseEvent, translatePos: number ) {
+    return (translatePos === 0) && ( $event.movementX >= 0 );
+  }
+
+  setMoveDirection( $event: MouseEvent ) {
+    $event.movementX < 0 ? this.movement = 'forward' : this.movement = 'backward';
+  }
+
+  handleDuration( time: string ) {
+    time ? this.setTransitionStyle( time ) : this.removeTransitionStyle();
+  }
+
+  setTransitionStyle( time: string ) {
+    this.renderer.setStyle( this.multiViewTranslate.nativeElement, 'transition', 'all ' + time );
+  }
+
+  removeTransitionStyle() {
+    this.renderer.removeStyle( this.multiViewTranslate.nativeElement, 'transition' );
+  }
+
+  selectView( view: TlView ) {
+    if ( !view ) {
+      return console.warn( 'TlView with value [' + this.modelValue + '] not found.' );
+    }
+    this.viewBounding.forEach( item => item.viewItem.selected = false );
+    this.selectedView = view;
+    view.selected = true;
+  }
+
+  changeViewSelected( value: string ) {
+    if ( this.viewBounding && value ) {
+      const view = this.viewBounding.filter(( item ) => item.viewItem.value === value);
+      this.selectView( view[ 0 ] );
+      this.translateSection('-' + view[ 0 ].viewPosition, this.transitionTime);
+    }
+  }
+
+  ngOnDestroy() {
+    globalListeners.forEach((value) => { value(); });
+  }
+
+}
+

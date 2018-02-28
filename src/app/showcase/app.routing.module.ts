@@ -142,6 +142,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'menu',
         loadChildren: './components/menu/menudemo.module#MenuDemoModule'
+      },
+      {
+        path: 'multiview',
+        loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
       }
     ])
   ],

@@ -42,9 +42,4 @@ export class MultiViewDemoComponent {
     this.dataEvents = jsonEvents.events;
   }
 
-
-  setRadio( $event ) {
-    this.radio = $event;
-  }
-
 }

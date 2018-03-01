@@ -24,21 +24,21 @@ export const dataProperties = [
     name: 'modelValue',
     type: 'any',
     default: 'null',
-    description: 'Any value to be compared with view value',
+    description: 'Any value to be compared with view [value] property, can be used with a bindable property.',
     options: 'any text'
   },
   {
     name: 'transitionTime',
     type: 'string',
     default: '300ms',
-    description: 'Time of transition between views',
+    description: 'Time of transition between views.',
     options: 's | ms'
   },
   {
     name: 'value',
     type: 'string',
     default: 'null',
-    description: 'Define the value of view.)',
+    description: 'Required property to define the value of view.',
     options: 'any text'
   }
 ];

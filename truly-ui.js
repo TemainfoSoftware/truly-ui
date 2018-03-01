@@ -25,6 +25,7 @@ __export(require("./components/modal/addons/container-modal/index"));
 __export(require("./components/modal/addons/modal-toolbar/index"));
 __export(require("./components/modal/index"));
 __export(require("./components/multiselect/index"));
+__export(require("./components/multiview/index"));
 __export(require("./components/navigator/index"));
 __export(require("./components/overlay/index"));
 __export(require("./components/overlaypanel/index"));

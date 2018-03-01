@@ -19,35 +19,26 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-  AfterViewInit,
-  Component, Input, OnChanges,
-} from '@angular/core';
-
-@Component( {
-  selector: 'tl-radiobutton',
-  template: '',
-} )
-export class TlRadioButton implements AfterViewInit {
-
-  @Input() label = '';
-
-  @Input() value = '';
-
-  @Input() tabindex = 0;
-
-  @Input() disabled = null;
-
-  @Input() checked = false;
-
-  ngAfterViewInit() {
-    if ( !this.value ) {
-      throw new EvalError( 'The [value] property is required!' );
-    }
-    if ( !this.label ) {
-      throw new EvalError( 'The [label] property is required!' );
-    }
+export const dataProperties = [
+  {
+    name: 'modelValue',
+    type: 'any',
+    default: 'null',
+    description: 'Any value to be compared with view [value] property, can be used with a bindable property.',
+    options: 'any text'
+  },
+  {
+    name: 'transitionTime',
+    type: 'string',
+    default: '300ms',
+    description: 'Time of transition between views.',
+    options: 's | ms'
+  },
+  {
+    name: 'value',
+    type: 'string',
+    default: 'null',
+    description: 'Required property to define the value of view.',
+    options: 'any text'
   }
-
-}
-
+];

@@ -19,35 +19,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-  AfterViewInit,
-  Component, Input, OnChanges,
-} from '@angular/core';
+import { Component } from '@angular/core';
+
+import * as json from './multiviewdemo-dataproperties.json';
+import * as jsonEvents from './multiviewdemo-events.json';
 
 @Component( {
-  selector: 'tl-radiobutton',
-  template: '',
+  selector: 'app-multi-view',
+  templateUrl: './multiviewdemo.component.html',
+  styleUrls: [ './multiviewdemo.component.scss' ],
 } )
-export class TlRadioButton implements AfterViewInit {
+export class MultiViewDemoComponent {
 
-  @Input() label = '';
+  public dataTableProperties;
 
-  @Input() value = '';
+  public dataEvents;
 
-  @Input() tabindex = 0;
+  public radio;
 
-  @Input() disabled = null;
-
-  @Input() checked = false;
-
-  ngAfterViewInit() {
-    if ( !this.value ) {
-      throw new EvalError( 'The [value] property is required!' );
-    }
-    if ( !this.label ) {
-      throw new EvalError( 'The [label] property is required!' );
-    }
+  constructor() {
+    this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvents.events;
   }
 
 }
-

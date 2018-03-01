@@ -1,0 +1,136 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">MultiView <span
+      class="module-name"><code><u>Module Name</u>: <strong>MultiViewModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>MultiViewModule</strong></code></p>
+    <p class="text-content">The MultiView widget contains several views and allows an end user to switch between them.
+      In this demo, all views are defined using a custom template.
+      You can navigate through the views by swiping them in the horizontal direction.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <tl-radio-group [name]="'radio'" [(ngModel)]="radio" [orientation]="'horizontal'">
+                <tl-radiobutton [label]="'View 1'" [value]="'1'"></tl-radiobutton>
+                <tl-radiobutton [label]="'View 2'" [value]="'2'"></tl-radiobutton>
+                <tl-radiobutton [label]="'View 3'" [value]="'3'"></tl-radiobutton>
+              </tl-radio-group>
+              <div class="spacer"></div>
+              <div class="multiview-box">
+                <tl-multiview [modelValue]="radio" (selectedChange)="radio = $event">
+                  <tl-view [value]="'1'">
+                    <div style="padding: 10px">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>First View</h1>
+                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </tl-view>
+                  <tl-view [value]="'2'">
+                    <div style="padding: 10px">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>Second View</h1>
+                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </tl-view>
+                  <tl-view [value]="'3'">
+                    <div style="padding: 10px">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <h1>Third View</h1>
+                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                            It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                            and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </tl-view>
+                </tl-multiview>
+              </div>
+              <div class="spacer"></div>
+ <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-radio-group [name]="'radio'" [(ngModel)]="radio" [orientation]="'horizontal'">
+  <tl-radiobutton [label]="'View 1'" [value]="'1'"></tl-radiobutton>
+  <tl-radiobutton [label]="'View 2'" [value]="'2'"></tl-radiobutton>
+  <tl-radiobutton [label]="'View 3'" [value]="'3'"></tl-radiobutton>
+</tl-radio-group>
+
+<div class="multiview-box">
+  <tl-multiview [modelValue]="radio" (selectedChange)="radio = $event">
+
+    <tl-view [value]="'1'">
+      <div style="padding: 10px">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>First View</h1>
+            <p>Content</p>
+          </div>
+        </div>
+      </div>
+    </tl-view>
+
+    <tl-view [value]="'2'">
+      <div style="padding: 10px">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Second View</h1>
+            <p>Content</p>
+          </div>
+        </div>
+      </div>
+    </tl-view>
+
+    <tl-view [value]="'3'">
+      <div style="padding: 10px">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Third View</h1>
+            <p>Content</p>
+          </div>
+        </div>
+      </div>
+    </tl-view>
+
+  </tl-multiview>
+</div>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <div class="setup">
+      <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+        <app-card>
+          <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        </app-card>
+      </app-showcase-card>
+      <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+        <app-card>
+          <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+        </app-card>
+      </app-showcase-card>
+    </div>
+  </div>
+</div>

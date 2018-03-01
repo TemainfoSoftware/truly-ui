@@ -19,35 +19,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-  AfterViewInit,
-  Component, Input, OnChanges,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { MultiViewDemoComponent } from './multiviewdemo.component';
 
-@Component( {
-  selector: 'tl-radiobutton',
-  template: '',
+@NgModule( {
+  imports: [
+    RouterModule.forChild( [
+      { path: '', component: MultiViewDemoComponent }
+    ] )
+  ],
+  exports: [
+    RouterModule
+  ]
 } )
-export class TlRadioButton implements AfterViewInit {
-
-  @Input() label = '';
-
-  @Input() value = '';
-
-  @Input() tabindex = 0;
-
-  @Input() disabled = null;
-
-  @Input() checked = false;
-
-  ngAfterViewInit() {
-    if ( !this.value ) {
-      throw new EvalError( 'The [value] property is required!' );
-    }
-    if ( !this.label ) {
-      throw new EvalError( 'The [label] property is required!' );
-    }
-  }
-
+export class MultiViewDemoRoutingModule {
 }
-

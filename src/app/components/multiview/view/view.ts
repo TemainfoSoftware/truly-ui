@@ -19,35 +19,28 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-  AfterViewInit,
-  Component, Input, OnChanges,
-} from '@angular/core';
 
-@Component( {
-  selector: 'tl-radiobutton',
-  template: '',
-} )
-export class TlRadioButton implements AfterViewInit {
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
-  @Input() label = '';
+@Component({
+  selector: 'tl-view',
+  templateUrl: './view.html',
+  styleUrls: [ './view.scss' ],
+})
+export class TlView implements OnInit {
 
-  @Input() value = '';
+  @Input() value;
 
-  @Input() tabindex = 0;
+  @ViewChild( 'viewComponents' ) viewComponents: ElementRef;
 
-  @Input() disabled = null;
+  public height = 'auto';
 
-  @Input() checked = false;
+  public background;
 
-  ngAfterViewInit() {
-    if ( !this.value ) {
-      throw new EvalError( 'The [value] property is required!' );
-    }
-    if ( !this.label ) {
-      throw new EvalError( 'The [label] property is required!' );
-    }
-  }
+  public selected;
+
+  constructor() {}
+
+  ngOnInit() {}
 
 }
-

@@ -1,0 +1,46 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Toolbar <span
+      class="module-name"><code><u>Module Name</u>: <strong>ToolbarModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ToolbarModule</strong></code></p>
+    <p class="text-content">The Toolbar is a container for headers, titles and actions.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <tl-toolbar [height]="'60px'"><span>Toolbar Basic</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'primary'"><span>Toolbar Primary</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'information'"><span>Toolbar Information</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'warning'"><span>Toolbar Warning</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'danger'"><span>Toolbar Danger</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'dark'"><span>Toolbar Dark</span></tl-toolbar>
+            <div class="spacer"></div>
+            <tl-toolbar [color]="'light'"><span>Toolbar Light</span></tl-toolbar>
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-toolbar><span>Toolbar Basic</span></tl-toolbar>
+<tl-toolbar [color]="'primary'"><span>Toolbar Primary</span></tl-toolbar>
+<tl-toolbar [color]="'information'"><span>Toolbar Information</span></tl-toolbar>
+<tl-toolbar [color]="'warning'"><span>Toolbar Warning</span></tl-toolbar>
+<tl-toolbar [color]="'danger'"><span>Toolbar Danger</span></tl-toolbar>
+<tl-toolbar [color]="'dark'"><span>Toolbar Dark</span></tl-toolbar>
+<tl-toolbar [color]="'light'"><span>Toolbar Light</span></tl-toolbar>
+</textarea>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+          <app-card>
+            <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

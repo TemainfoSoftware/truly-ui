@@ -19,6 +19,7 @@ export * from './components/modal/addons/container-modal/index';
 export * from './components/modal/addons/modal-toolbar/index';
 export * from './components/modal/index';
 export * from './components/multiselect/index';
+export * from './components/multiview/index';
 export * from './components/navigator/index';
 export * from './components/overlay/index';
 export * from './components/overlaypanel/index';

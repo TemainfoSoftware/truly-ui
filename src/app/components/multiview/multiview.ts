@@ -40,9 +40,9 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     return this._modelValue;
   }
 
-  @Input() set modelValue( value: string) {
+  @Input() set modelValue( value: string ) {
     this._modelValue = value;
-    this.selectedChange.emit(this._modelValue);
+    this.selectedChange.emit( this._modelValue );
     this.changeViewSelected( value );
   }
 
@@ -70,13 +70,16 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
 
   private movement = '';
 
+  private movementPosition;
+
   constructor( private renderer: Renderer2 ) {}
 
   ngAfterContentInit() {
     this.listenMouseDown();
     this.listenMouseUp();
     this.listenMouseMove();
-    const selectedView = this.views.find( tab => tab.selected );
+    this.listenMouseLeave();
+    const selectedView = this.views.find( view => view.selected );
     if ( !selectedView && this.views.first ) {
       this.views.first.selected = true;
     }
@@ -100,11 +103,13 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
 
   handleViewBounding() {
     this.views.forEach( ( item, index ) => {
-      this.viewBounding.push(
-        {
-          viewItem: item,
-          viewPosition: Math.round( this.multiViewContainer.nativeElement.offsetWidth * (index) )
-        } );
+      if ( !item.value ) {
+        item.value = index + 1;
+      }
+      this.viewBounding.push( {
+        viewItem: item,
+        viewPosition: Math.round( this.multiViewContainer.nativeElement.offsetWidth * (index) )
+      } );
     } );
   }
 
@@ -114,34 +119,63 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
   }
 
   listenMouseDown() {
-    globalListeners.push(this.renderer.listen( document, 'mousedown', ( $event ) => {
+    globalListeners.push( this.renderer.listen( this.multiViewContainer.nativeElement, 'mousedown', ( $event ) => {
       this.mouseClickPositionX = $event.clientX;
       this.moving = true;
-    } ));
+    } ) );
+  }
+
+  listenMouseLeave() {
+    this.renderer.listen( this.multiViewContainer.nativeElement, 'mouseleave', () => {
+      this.moving = false;
+      this.snapViewPosition();
+    } );
   }
 
   listenMouseUp() {
-    globalListeners.push(this.renderer.listen( document, 'mouseup', () => {
+    globalListeners.push( this.renderer.listen( document, 'mouseup', () => {
       this.moving = false;
       this.snapViewPosition();
-    } ));
+    } ) );
   }
 
   snapViewPosition() {
     const translateSnap = this.multiViewTranslate.nativeElement.offsetWidth / this.views.length;
     this.translateAreaWidth = translateSnap * (this.views.length - 1);
-    if ( (this.currentTranslatePosition < 0) && (this.currentTranslatePosition < (translateSnap / 2)) ) {
-      if ( this.selectedView ) {
-        this.movement === 'forward' ? this.handleDragForward() : this.handleDragBackward();
-      }
+    if ( this.isDistanceMovedEnoughToSnap(this.getDistanceMoved(), translateSnap) ) {
+       this.isForwardMove() ? this.handleDragForward() : this.handleDragBackward();
+    } else {
+      this.translateSection( '-' + this.selectedView.viewPosition, this.transitionTime );
     }
+  }
+
+  getDistanceMoved() {
+    let distanceMoved = parseInt( String( this.movementPosition ).replace( '-', '' ), 10 );
+    if ( !this.isSelectedViewIndexGreaterThanZero() ) {
+      return distanceMoved;
+    }
+    distanceMoved = this.isForwardMove() ? (distanceMoved - this.selectedView.viewPosition) :
+      (this.selectedView.viewPosition - distanceMoved);
+    return distanceMoved;
+  }
+
+  isSelectedViewIndexGreaterThanZero() {
+    return this.viewBounding.indexOf( this.selectedView ) > 0;
+  }
+
+  isDistanceMovedEnoughToSnap(distanceMoved, translateSnap) {
+    return distanceMoved > (translateSnap / 3);
+  }
+
+  isForwardMove() {
+    return this.movement === 'forward';
   }
 
   handleDragForward() {
     const translatePos = parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
     if ( (translatePos > this.selectedView.viewPosition) ) {
       const index = this.viewBounding.indexOf( this.selectedView ) + 1;
-      if (this.viewBounding[ index ]) {
+      if ( this.viewBounding[ index ] ) {
         this.modelValue = this.viewBounding[ index ].viewItem.value;
       }
     }
@@ -151,60 +185,60 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     const translatePos = parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
     if ( translatePos < this.selectedView.viewPosition ) {
       const index = this.viewBounding.indexOf( this.selectedView ) - 1;
-      if (this.viewBounding[ index ]) {
+      if ( this.viewBounding[ index ] ) {
         this.modelValue = this.viewBounding[ index ].viewItem.value;
       }
     }
   }
 
   listenMouseMove() {
-    globalListeners.push(this.renderer.listen( window, 'mousemove', ( $event ) => {
+    globalListeners.push( this.renderer.listen( window, 'mousemove', ( $event ) => {
       if ( this.moving ) {
         this.translateMove( $event );
       }
-    } ));
+    } ) );
   }
 
-  translateSection(translate: any, time: string) {
+  translateSection( translate: any, time: string ) {
     this.currentTranslatePosition = translate;
     this.handleDuration( time );
-    this.setTranslate(this.currentTranslatePosition);
+    this.setTranslate( this.currentTranslatePosition );
   }
 
   translateMove( $event, time? ) {
-    let movement = this.getMousePosition($event);
+    this.movementPosition = this.getMousePosition( $event );
     const translatePos = this.getTranslateCurrentPosition();
     this.setMoveDirection( $event );
 
-    if ( this.isMoving(translatePos) ) {
-      movement = $event.movementX - translatePos;
+    if ( this.isMoving( translatePos ) ) {
+      this.movementPosition = $event.movementX - translatePos;
     }
     if ( this.isFirstAndFinished( $event, translatePos ) ) {
-      this.setTranslate( '-' + this.viewBounding[0].viewPosition );
+      this.setTranslate( '-' + this.viewBounding[ 0 ].viewPosition );
       return;
     }
     if ( this.isLastAndFinished( $event, translatePos ) ) {
-      this.setTranslate( '-' + this.viewBounding[this.viewBounding.length - 1].viewPosition );
+      this.setTranslate( '-' + this.viewBounding[ this.viewBounding.length - 1 ].viewPosition );
       return;
     }
-    this.handleMovingSlow(time, movement);
+    this.handleMovingSlow( time );
   }
 
   getTranslateCurrentPosition() {
     return parseInt( String( this.currentTranslatePosition ).replace( '-', '' ), 10 );
   }
 
-  handleMovingSlow(time, movement) {
+  handleMovingSlow( time ) {
     this.handleDuration( time );
-    this.setTranslate(movement);
-    this.currentTranslatePosition = movement;
+    this.setTranslate( this.movementPosition );
+    this.currentTranslatePosition = this.movementPosition;
   }
 
-  getMousePosition($event) {
-    return ($event.clientX - this.mouseClickPositionX) - this.multiViewTranslate.nativeElement.offsetLeft;
+  getMousePosition( $event ) {
+    return this.multiViewTranslate.nativeElement.offsetLeft + $event.clientX - this.mouseClickPositionX;
   }
 
-  setTranslate(value: any) {
+  setTranslate( value: any ) {
     this.renderer.setStyle( this.multiViewTranslate.nativeElement, 'transform', 'translateX(' + value + 'px)' );
   }
 
@@ -212,7 +246,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     return ($event.movementX <= 0) && (translatePos >= this.translateAreaWidth);
   }
 
-  isMoving(translatePos: number) {
+  isMoving( translatePos: number ) {
     return translatePos > 0;
   }
 
@@ -247,14 +281,16 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
 
   changeViewSelected( value: string ) {
     if ( this.viewBounding && value ) {
-      const view = this.viewBounding.filter(( item ) => item.viewItem.value === value);
+      const view = this.viewBounding.filter( ( item ) => item.viewItem.value === value );
       this.selectView( view[ 0 ] );
-      this.translateSection('-' + view[ 0 ].viewPosition, this.transitionTime);
+      this.translateSection( '-' + view[ 0 ].viewPosition, this.transitionTime );
     }
   }
 
   ngOnDestroy() {
-    globalListeners.forEach((value) => { value(); });
+    globalListeners.forEach( ( value ) => {
+      value();
+    } );
   }
 
 }

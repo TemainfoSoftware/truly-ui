@@ -37,9 +37,7 @@ export class ListBoxListRenderService {
   private spanElementId;
 
   constructor( private dataService: ListBoxDataSourceService,
-               private addNewRenderService: AddNewRenderService,
-               private zone: NgZone ) {
-  }
+               private zone: NgZone ) {}
 
   setInstanceListBox( listbox: TlListBox ) {
     this.listBox = listbox;
@@ -137,8 +135,9 @@ export class ListBoxListRenderService {
     this.zone.run( () => {
       this.listBox.renderer.listen( this.listElement.nativeElement, 'mousedown', ( $event ) => {
         $event.stopPropagation();
-        if ($event.target.localName === 'li') {
-          this.listBox.handleClickItem( this.dataService.datasource[ row ], row );
+        if ($event.currentTarget.localName === 'li') {
+          this.listBox.handleClickItem( this.dataService.datasource[ row ], row,
+            this.listElement.nativeElement.getAttribute('data-indexnumber'));
           this.listBox.handleOpenFocusList();
           this.listBox.setInputFocus();
         }

@@ -12,6 +12,7 @@ import { DatePickerModule } from '../../../components/datepicker/index';
 import { FormsModule } from '@angular/forms';
 import { MiscModule } from '../../../components/misc/index';
 import { ValidatorsModule } from '../../../components/validators/index';
+import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +22,14 @@ import { ValidatorsModule } from '../../../components/validators/index';
     DatePickerModule,
     MiscModule,
     HighlightJsModule,
+    CommonModule,
     FormsModule,
     ValidatorsModule,
+    DatePickerDemoRoutingModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    DatePickerDemoRoutingModule,
     ShowcaseTableEventsModule,
-    CommonModule
+    ShowcaseReturnedValueModule
   ],
   exports: [
     DatePickerDemoComponent

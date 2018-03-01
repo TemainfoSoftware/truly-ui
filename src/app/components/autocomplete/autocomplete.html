@@ -1,47 +1,51 @@
-<div class="tl-autocomplete-box" #autoComplete>
-    <div class="tl-autocomplete-wrapper" #autocompleteList>
-        <tl-input #input
-                [label]="label"
-                (focusout)="onInputFocusOut($event)"
-                (focus)="onFocusInput($event)"
-                [labelSize]="labelSize"
-                [iconBefore]="iconBefore"
-                [iconAfter]="iconAfter"
-                [textAfter]="textAfter"
-                [textBefore]="textBefore"
-                [textAlign]="textAlign"
-                [labelPlacement]="labelPlacement"
-                [readonly]="readonly ? true : null"
-                [disabled]="disabled ? true : null"
-                [autocomplete]="autocomplete"
-                [(ngModel)]="value"
-                [placeholder]="placeholder"
-                [clearButton]="clearButton">
-        </tl-input>
-        <div class="autocomplete-listbox"
-             [style.width]="widthInput + 'px'"
-             [style.top]="listTopPosition + 'px'"
-             [style.left]="listLeftPosition + 'px'">
-            <tl-listbox
-                    [data]="data"
-                    [id]="id"
-                    [label]="labelName"
-                    [labelDetail]="labelDetail"
-                    [lazyMode]="lazyMode"
-                    [itemsToShow]="5"
-                    [searchQuery]="searchQuery"
-                    [dynamicShowHide]="true"
-                    (clickAddNew)="onAddNew()"
-                    (lazyLoad)="onLazyLoadAutocomplete($event)"
-                    (clickItem)="onClickItemList($event)"
-                    [searchElement]="input"
-                    [listStripped]="listStripped"
-                    [showArrows]="false"
-                    [fixedHeight]="false"
-                    [addNew]="true"
-                    [rowHeight]="rowHeight">
-            </tl-listbox>
-        </div>
+<div class="ui-autocomplete-box" #autoComplete>
+  <div class="ui-autocomplete-wrapper" #autocompleteList>
+    <div *ngIf="loading" class="ui-loader"><div></div><div></div><div></div><div></div></div>
+    <tl-input class="ui-autocomplete-model" #input [name]="'notform'" [(ngModel)]="value"></tl-input>
+    <tl-input #inputWriter
+              [label]="label"
+              (focusout)="onInputFocusOut($event)"
+              (focus)="onFocusInput($event)"
+              (clear)="onClearInput()"
+              [labelSize]="labelSize"
+              [iconBefore]="iconBefore"
+              [iconAfter]="iconAfter"
+              [textAfter]="textAfter"
+              [textBefore]="textBefore"
+              [textAlign]="textAlign"
+              [labelPlacement]="labelPlacement"
+              [readonly]="readonly ? true : null"
+              [disabled]="disabled ? true : null"
+              [autocomplete]="autocomplete"
+              [placeholder]="placeholder"
+              [clearButton]="clearButton">
+    </tl-input>
+    <div class="autocomplete-listbox"
+         [style.width]="widthInput + 'px'"
+         [style.top]="listTopPosition + 'px'"
+         [style.left]="listLeftPosition + 'px'">
+      <tl-listbox
+        [data]="data"
+        [id]="id"
+        [label]="labelName"
+        [labelDetail]="labelDetail"
+        [lazyMode]="lazyMode"
+        [itemsToShow]="5"
+        [searchQuery]="searchQuery"
+        [dynamicShowHide]="true"
+        [charsToSearch]="charsToSearch"
+        (clickAddNew)="onAddNew()"
+        (lazyLoad)="onLazyLoadAutocomplete($event)"
+        (clickItem)="onClickItemList($event)"
+        (selectItem)="onSelectItemList($event)"
+        [searchElement]="inputWriter"
+        [listStripped]="listStripped"
+        [showArrows]="false"
+        [fixedHeight]="false"
+        [addNew]="true"
+        [rowHeight]="rowHeight">
+      </tl-listbox>
     </div>
-    <ng-content></ng-content>
+  </div>
+  <ng-content></ng-content>
 </div>

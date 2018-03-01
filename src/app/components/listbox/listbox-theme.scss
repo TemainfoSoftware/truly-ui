@@ -43,8 +43,8 @@
   }
 
   .item-selected-listbox {
-    background-color: map-deep-get($primary, "default", "background");
-    color: map-deep-get($primary, "default", "foreground");
+    background-color: map-deep-get($primary, "default", "background") !important;
+    color: map-deep-get($primary, "default", "foreground") !important;
   }
 
   .item.stripped:nth-of-type(odd){

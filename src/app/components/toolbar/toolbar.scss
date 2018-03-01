@@ -1,0 +1,26 @@
+
+
+
+.ui-toolbar-wrapper {
+
+  * {
+    font-size: 20px !important;
+    font-family: 'Lato', sans-serif;
+  }
+
+  width: 100%;
+  overflow: hidden;
+
+
+  .ui-toolbar-content {
+    display: flex;
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+}
+

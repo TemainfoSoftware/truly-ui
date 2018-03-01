@@ -39,6 +39,7 @@ import { ModalModule } from '../../../components/modal';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     HighlightJsModule,
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseReturnedValueModule
   ],
   exports: [
     AutoCompleteDemoComponent,

@@ -1,0 +1,47 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">OverlayPanel <span
+      class="module-name"><code><u>Module Name</u>: <strong>OverlayPanelModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>OverlayPanelModule</strong></code></p>
+    <p class="text-content">The Overlay Panel is used to show some content as 'Modal' relative with target clicked.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <tl-overlay-panel #panel>
+              <p style="word-wrap: break-word">
+                The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
+                accompanied by English versions from the 1914 translation by H. Rackham.
+              </p>
+            </tl-overlay-panel>
+            <tl-button [text]="'Show Panel'" #button (click)="panel.toggle($event, button)"></tl-button>
+            <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-overlay-panel #panel>
+  <p style="word-wrap: break-word">
+    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form,
+    accompanied by English versions from the 1914 translation by H. Rackham.
+  </p>
+</tl-overlay-panel>
+<tl-button [text]="'Show Panel'" #button (click)="panel.toggle($event, button)"></tl-button>
+</textarea>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Methods'" [icon]="'ion-wand'">
+          <app-card>
+            <app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

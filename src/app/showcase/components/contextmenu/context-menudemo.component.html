@@ -1,0 +1,67 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">ContextMenu <span
+      class="module-name"><code><u>Module Name</u>: <strong>ContextMenuModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ContextMenuModule</strong></code></p>
+    <p class="text-content">The ContextMenu is used to show some content as 'Menu Modal' relative with target clicked and as context menu.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <tl-context-menu [items]="itemsContextGlobal" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+          <tl-context-menu [items]="itemsContext" [target]="target1" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+          <tl-context-menu [items]="itemsContext2" [target]="target2" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+          <app-card>
+            <div class="col-md-6">
+              <div class="target" #target1 style="background: #5796c3">
+                <span>TARGET 1</span>
+              </div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-context-menu [items]="itemsContext" [target]="target1" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <div class="target" #target2 style="background: #c37f7a">
+                <span>TARGET 2</span>
+              </div>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-context-menu [items]="itemsContext2" [target]="target2" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Menu Configuration'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.items = [
+  { label: 'The Target 2 Context Menu Item 1', icon: '', callBack: this.functionContext2 },
+  { label: 'The Target 2 Context Menu Item 2', icon: '',
+  subMenu: [
+      { label: 'The Target 2 Context Menu Item 3', icon: '' },
+      { label: 'The Target 2 Context Menu Item 4', icon: '' },
+      { label: 'The Target 2 Context Menu Item 5', icon: '' }
+    ]
+  },
+];
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+          <app-card>
+            <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+          <app-card>
+            <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

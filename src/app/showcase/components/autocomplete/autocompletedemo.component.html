@@ -12,18 +12,21 @@
             <div class="col-md-12">
               <h5>Normal Usage</h5>
               <tl-autocomplete [data]="dataBasic"
-                               [id]="'id'"
+                               [modelValue]="'firstName'"
                                [labelSize]="'10px'"
                                [openFocus]="true"
                                [name]="'clients'"
                                [label]="'Clients'"
                                [clearButton]="true"
+                               (clickItem)="onClickItem($event)"
+                               (selectItem)="onSelectItem($event)"
                                [searchQuery]="['firstName']"
                                [rowHeight]="35"
                                [placeholder]="'Search...'"
                                [labelName]="'firstName'"
                                [(ngModel)]="result">
               </tl-autocomplete>
+              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-autocomplete
@@ -32,7 +35,6 @@
   [labelSize]="'10px'"
   [openFocus]="true"
   [name]="'clients'"
-  (onAddNew)="newClient()"
   [label]="'Clients'"
   [clearButton]="true"
   [rowHeight]="35"
@@ -50,12 +52,12 @@
                                [openFocus]="true"
                                [lazyMode]="true"
                                [clearButton]="true"
-                               [id]="'id'"
+                               [modelValue]="'firstName'"
                                [labelSize]="'10px'"
                                [name]="'clients'"
                                [label]="'Clients'"
                                (lazyLoad)="onLazyLoad($event)"
-                               (clickItem)="onSelectRow($event)"
+                               (clickItem)="onClickItem($event)"
                                [placeholder]="'Search...'"
                                [labelName]="'firstName'"
                                [rowHeight]="35"
@@ -68,6 +70,7 @@
                   </li>
                 </ng-template>
               </tl-autocomplete>
+              <span class="returned-value">Returned Value: {{result2}}</span>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-autocomplete

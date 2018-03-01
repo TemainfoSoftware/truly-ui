@@ -21,7 +21,7 @@
  */
 import {
   AfterViewInit,
-  Component, Input,
+  Component, Input, OnChanges,
 } from '@angular/core';
 
 @Component( {
@@ -36,6 +36,8 @@ export class TlRadioButton implements AfterViewInit {
 
   @Input() tabindex = 0;
 
+  @Input() disabled = null;
+
   @Input() checked = false;
 
   ngAfterViewInit() {
@@ -46,5 +48,6 @@ export class TlRadioButton implements AfterViewInit {
       throw new EvalError( 'The [label] property is required!' );
     }
   }
+
 }
 

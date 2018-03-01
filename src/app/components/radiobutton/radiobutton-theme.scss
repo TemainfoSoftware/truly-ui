@@ -13,8 +13,13 @@
     background-color: map-deep-get($basic, "default", "border");
   }
 
+
   .-label {
     color: map-deep-get($basic, "default", "foreground");
+  }
+
+  .disabled {
+    background: map-deep-get($basic, "disabled", "background");
   }
 
   .radio-selected{

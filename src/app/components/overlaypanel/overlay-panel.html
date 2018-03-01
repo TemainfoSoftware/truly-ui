@@ -1,0 +1,5 @@
+<div [ngStyle]="{'left': position.left + 'px', 'top': position.top + 'px'}" class="ui-wrapper-overlay-panel" *ngIf="open">
+  <div class="ui-overlay-panel">
+    <ng-content></ng-content>
+  </div>
+</div>

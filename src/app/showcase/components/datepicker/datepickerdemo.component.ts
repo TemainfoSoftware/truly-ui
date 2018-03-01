@@ -35,7 +35,13 @@ export class DatePickerDemoComponent {
 
   public dataEvents;
 
-  date;
+  public dateBasic;
+
+  public dateCalendar;
+
+  public dateAutoclose;
+
+  public dateFormats;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

@@ -130,6 +130,26 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'tooltip',
         loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
+      },
+      {
+        path: 'overlaypanel',
+        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
+      },
+      {
+        path: 'contextmenu',
+        loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
+      },
+      {
+        path: 'menu',
+        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
+      },
+      {
+        path: 'multiview',
+        loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
+      },
+      {
+        path: 'toolbar',
+        loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
       }
     ])
   ],

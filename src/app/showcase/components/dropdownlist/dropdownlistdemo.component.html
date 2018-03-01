@@ -17,7 +17,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected">
               </tl-dropdown-list>
-              <span class="returned-value"> Returned Value: {{ itemSelected | json }}</span>
+              <app-showcase-returned-value [value]="itemSelected | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -34,7 +34,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected4">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected4 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected4 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -55,7 +55,7 @@
                                 [valueItem]="'value'"
                                 [scroll]="3">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected3 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected3 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -75,7 +75,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected2">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected2 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected2 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -98,7 +98,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected5">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected5 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected5 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -120,7 +120,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected6">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected6 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected6 | json"></app-showcase-returned-value>
               <div class="spacer" style="padding: 13px"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -145,7 +145,7 @@
                                 [valueItem]="'value'"
                                 [(ngModel)]="itemSelected7">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected7 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected7 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -170,7 +170,7 @@
                                 required
                                 [(ngModel)]="itemSelected9">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected9 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected9 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
@@ -201,9 +201,8 @@
             </div>
             <div class="col-md-6">
               <h5>Simple Data</h5>
-              <tl-dropdown-list [data]="simpleData"
-                                [(ngModel)]="itemSelected8">
-              </tl-dropdown-list>
+              <tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
+              <app-showcase-returned-value [value]="itemSelected8 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
@@ -223,7 +222,7 @@
                                 [showOnlyIcon]="true"
                                 [(ngModel)]="itemSelected9">
               </tl-dropdown-list>
-              <span class="returned-value">Returned Value: {{ itemSelected9 | json  }}</span>
+              <app-showcase-returned-value [value]="itemSelected9 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list

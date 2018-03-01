@@ -11,6 +11,7 @@ import { InputModule } from '../../../components/input';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { FormModule } from '../../../components/form/index';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     CommonModule,
     PanelGroupModule,
     FormsModule,
+    FormModule,
     RadioButtonModule,
     InputModule,
     PanelDemoRoutingModule,

@@ -16,6 +16,7 @@
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
 @import "../../../tabcontrol/tabcontrol-theme";
+@import "../../../toolbar/toolbar-theme";
 
 @mixin theme-builder($theme){
   @include tl-button-theme($theme);
@@ -36,6 +37,7 @@
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
   @include tl-tabcontrol-theme($theme);
+  @include tl-toolbar-theme($theme);
 }
 
 

@@ -1,0 +1,61 @@
+@import "../core/styles/theming/theming";
+
+
+@mixin _tl-toolbar-theme-schema($theme, $action) {
+
+    background: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+
+}
+
+
+@mixin tl-toolbar-theme($theme) {
+
+
+  .ui-toolbar-wrapper {
+
+    &.basic {
+      @include _tl-toolbar-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-toolbar-theme-schema($theme, 'primary')
+    }
+
+    //&.secondary {
+    //  @include _tl-toolbar-theme-schema($theme,'secondary')
+    //}
+
+    &.success {
+      @include _tl-toolbar-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-toolbar-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-toolbar-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-toolbar-theme-schema($theme, 'information')
+    }
+
+    &.light {
+      @include _tl-toolbar-theme-schema($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-toolbar-theme-schema($theme, 'dark')
+    }
+
+  }
+
+
+}
+
+
+
+
+

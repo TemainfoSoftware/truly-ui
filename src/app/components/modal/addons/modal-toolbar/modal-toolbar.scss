@@ -32,6 +32,7 @@
   overflow: auto;
   overflow-y: hidden;
   min-height: 40px;
+  box-sizing: border-box;
   > .wrapper-container-modals {
     display: inline-flex;
     > .container-modal-box {

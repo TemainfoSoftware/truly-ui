@@ -44,6 +44,8 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
 
   @Input() tabindex = '0';
 
+  @Input() disabled = null;
+
   @Input() color = 'basic';
 
   @ViewChild( 'checkbox' ) checkbox;
@@ -62,18 +64,17 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
   }
 
   ngOnInit() {
-    this.value = false;
-    if ( this.checked ) {
-      this.value = true;
-    }
+    this.value = this.checked;
     if ( !this.label ) {
       throw new EvalError( 'The [label] property is required!' );
     }
   }
 
   check( boolean ) {
-    this.value = !boolean;
-    this.emitEvent();
+    if (!this.disabled) {
+      this.value = !boolean;
+      this.emitEvent();
+    }
   }
 
   emitEvent() {

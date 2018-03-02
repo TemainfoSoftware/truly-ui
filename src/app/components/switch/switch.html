@@ -10,7 +10,7 @@
              [attr.disabled]="disabled"
              [tabindex]="tabindex"
              [(ngModel)]="value">
-      <span class="slider round"></span>
+      <span class="slider round" [ngClass]="{'disabled': disabled}"></span>
       <label (click)="switchToggle(value)" class="label">{{label}}</label>
     </label>
   </div>

@@ -31,6 +31,11 @@
       background-color: map-deep-get($light, "default", "background");
     }
 
+    .disabled:before {
+      background-color: map-deep-get($basic, "disabled", "foreground");
+      opacity: 0.1;
+    }
+
     &.basic {
       @include _tl-switch-theme-schema($theme, 'basic');
     }

@@ -150,6 +150,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'toolbar',
         loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
+      },
+      {
+        path: 'switch',
+        loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
       }
     ])
   ],

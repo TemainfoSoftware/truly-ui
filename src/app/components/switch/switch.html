@@ -1,0 +1,17 @@
+<div class="ui-wrapper-switch" [ngClass]="color">
+  <div class="ui-switch">
+    <label class="switch">
+      <input #checkbox
+             type="checkbox"
+             #model="ngModel"
+             (focus)="focusCheckBox()"
+             (change)="emitEvent()"
+             [checked]="value"
+             [attr.disabled]="disabled"
+             [tabindex]="tabindex"
+             [(ngModel)]="value">
+      <span class="slider round"></span>
+      <label (click)="switchToggle(value)" class="label">{{label}}</label>
+    </label>
+  </div>
+</div>

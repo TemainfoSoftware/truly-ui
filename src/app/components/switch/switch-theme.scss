@@ -1,0 +1,68 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-switch-theme-schema( $theme, $action ){
+
+  @mixin switch-color() {
+    background-color: map-deep-get($theme, $action, "checked", "background");
+    border: 1px solid map-deep-get($theme, $action, "checked", "border");
+  }
+
+  input:checked + .slider {
+    background-color: map-deep-get($theme, $action, "checked", "background");
+    border: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
+
+}
+
+
+@mixin tl-switch-theme($theme) {
+
+  $basic:   map-deep-get($theme, 'basic');
+  $light:   map-deep-get($theme, 'light');
+  $dark:   map-deep-get($theme, 'dark');
+
+  .ui-wrapper-switch {
+
+    .slider {
+      background-color: map-deep-get($dark, "default", "background");
+    }
+
+    .slider:before {
+      background-color: map-deep-get($light, "default", "background");
+    }
+
+    &.basic {
+      @include _tl-switch-theme-schema($theme, 'basic');
+    }
+
+    &.primary {
+      @include _tl-switch-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-switch-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-switch-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-switch-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-switch-theme-schema($theme, 'information')
+    }
+
+    &.light {
+      @include _tl-switch-theme-schema($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-switch-theme-schema($theme, 'dark')
+    }
+
+  }
+
+}

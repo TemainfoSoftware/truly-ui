@@ -22,8 +22,12 @@
     background: map-deep-get($basic, "disabled", "background");
   }
 
-  .radio-selected{
+  .radio-selected {
     background-color: map-deep-get($primary, "default", "background");
+    &.disabled {
+      background: map-deep-get($basic, "disabled", "foreground");
+      opacity: 0.2;
+    }
   }
 
 }

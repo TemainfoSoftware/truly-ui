@@ -100,7 +100,7 @@
     "test"
   ],
   "release": {
-    "verifyConditions": ["@semantic-release/npm", "@semantic-release/git", "@semantic-release/github"],
+    "verifyConditions": ["@semantic-release/npm", "@semantic-release/github"],
     "publish": [
       {
         "path": "@semantic-release/npm",

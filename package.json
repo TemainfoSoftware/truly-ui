@@ -30,7 +30,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prebuild:library": "rimraf dist tmp",
-    "build:library": "npm run inline-template && npm run compile",
+    "build:library": "npm run inline-template && npm run compile && npm run clean",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
     "release":"ngc -p tsconfig-release.json && npm run clean",
@@ -98,5 +98,22 @@
   "pre-commit": [
     "lint",
     "test"
-  ]
+  ],
+  "release": {
+    "verifyConditions": ["@semantic-release/npm", "@semantic-release/git", "@semantic-release/github"],
+    "publish": [
+      {
+        "path": "@semantic-release/npm",
+        "npmPublish": true,
+        "pkgRoot": "dist",
+        "tarballDir": "dist"
+      },
+      {
+        "path": "@semantic-release/github",
+        "assets": "dist/*.tgz"
+      }
+    ],
+    "analyzeCommits": ["@semantic-release/commit-analyzer"],
+    "generateNotes": ["@semantic-release/release-notes-generator"]
+  }
 }

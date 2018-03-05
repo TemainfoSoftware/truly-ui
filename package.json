@@ -104,8 +104,7 @@
       {
         "path": "@semantic-release/npm",
         "npmPublish": true,
-        "pkgRoot": "dist",
-        "tarballDir": "dist"
+        "pkgRoot": "dist"
       },
       {
         "path": "@semantic-release/github",

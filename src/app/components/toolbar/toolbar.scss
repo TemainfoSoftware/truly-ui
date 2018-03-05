@@ -2,7 +2,6 @@
 
 
 .ui-toolbar-wrapper {
-
   * {
     font-size: 20px !important;
     font-family: 'Lato', sans-serif;
@@ -10,7 +9,7 @@
 
   width: 100%;
   overflow: hidden;
-
+  box-sizing: border-box;
 
   .ui-toolbar-content {
     display: flex;

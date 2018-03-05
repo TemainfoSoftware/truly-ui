@@ -33,16 +33,15 @@
     "build:library": "npm run inline-template && npm run compile",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
-    "release":"ngc -p tsconfig-release.json && npm run clean",
+    "release":"ngc -p ./tsconfig-release.json && npm run clean",
     "inline-template":"gulp inline-templates",
-    "compile": "ngc -p tsconfig-release.json",
+    "compile": "ngc -p ./tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
-    "semantic-release": " semantic-release",
-    "publish": "npm publish dist/ --access public"
+    "semantic-release": " semantic-release"
   },
   "private": false,
   "dependencies": {

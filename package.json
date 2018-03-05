@@ -30,7 +30,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prebuild:library": "rimraf dist tmp",
-    "build:library": "npm run inline-template && ls && npm run compile",
+    "build:library": "npm run inline-template && npm run compile",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
     "release":"ngc -p tsconfig-release.json && npm run clean",

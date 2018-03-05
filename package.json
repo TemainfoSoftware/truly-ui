@@ -99,5 +99,14 @@
   "pre-commit": [
     "lint",
     "test"
-  ]
+  ],
+  "release": {
+    "verifyConditions": ["@semantic-release/npm"],
+    "publish": [
+      {
+        "path": "@semantic-release/npm",
+        "tarballDir": "dist"
+      }
+    ]
+  }
 }

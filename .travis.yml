@@ -21,24 +21,24 @@ after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run copy:aotimports; fi
 #  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run publish; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run semantic-release; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run build:showcase; fi
-deploy:
-  - provider: s3
-    local_dir: showcase
-    skip_cleanup: true
-    access_key_id: $ACCESS_KEY_ID
-    secret_access_key: $SECRET_ACCESS_KEY
-    bucket: "www.truly-ui.io"
-    region: sa-east-1
-    acl: public_read
-  - provider: s3
-    local_dir: showcase
-    skip_cleanup: true
-    access_key_id: $ACCESS_KEY_ID
-    secret_access_key: $SECRET_ACCESS_KEY
-    bucket: "truly-ui.tk"
-    region: us-east-1
-    acl: public_read
+#  - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run build:showcase; fi
+#deploy:
+#  - provider: s3
+#    local_dir: showcase
+#    skip_cleanup: true
+#    access_key_id: $ACCESS_KEY_ID
+#    secret_access_key: $SECRET_ACCESS_KEY
+#    bucket: "www.truly-ui.io"
+#    region: sa-east-1
+#    acl: public_read
+#  - provider: s3
+#    local_dir: showcase
+#    skip_cleanup: true
+#    access_key_id: $ACCESS_KEY_ID
+#    secret_access_key: $SECRET_ACCESS_KEY
+#    bucket: "truly-ui.tk"
+#    region: us-east-1
+#    acl: public_read
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

@@ -100,7 +100,6 @@
     "test"
   ],
   "release": {
-    "verifyConditions": ["@semantic-release/npm", "@semantic-release/github"],
     "publish": [
       {
         "path": "@semantic-release/npm",
@@ -112,8 +111,6 @@
         "path": "@semantic-release/github",
         "assets": "dist/*.tgz"
       }
-    ],
-    "analyzeCommits": ["@semantic-release/commit-analyzer"],
-    "generateNotes": ["@semantic-release/release-notes-generator"]
+    ]
   }
 }

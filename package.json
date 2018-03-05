@@ -41,6 +41,7 @@
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
     "semantic-release-pre": "semantic-release pre",
     "semantic-release-post": " semantic-release post",
+    "semantic-release": " semantic-release",
     "publish": "npm publish dist/ --access public"
   },
   "private": false,
@@ -90,7 +91,7 @@
     "pre-commit": "^1.2.2",
     "protractor": "~5.1.2",
     "rimraf": "^2.6.2",
-    "semantic-release": "^6.3.6",
+    "semantic-release": "^12.4.1",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"

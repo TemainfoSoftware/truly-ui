@@ -41,7 +41,7 @@
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
-    "semantic-release": " semantic-release"
+    "semantic-release": "semantic-release"
   },
   "private": false,
   "dependencies": {
@@ -98,15 +98,5 @@
   "pre-commit": [
     "lint",
     "test"
-  ],
-  "release": {
-    "verifyConditions": ["@semantic-release/npm"],
-    "publish": [
-      {
-        "path": "@semantic-release/npm",
-        "tarballDir": "dist",
-        "pkgRoot": "dist"
-      }
-    ]
-  }
+  ]
 }

@@ -75,6 +75,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
   constructor( private renderer: Renderer2 ) {}
 
   ngAfterContentInit() {
+    this.handleViewBounding();
     this.listenMouseDown();
     this.listenMouseUp();
     this.listenMouseMove();
@@ -88,8 +89,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
   ngAfterViewInit() {
     this.setWidthMultiView();
     this.setWidthEachView();
-    this.handleViewBounding();
-    this.selectedView = this.viewBounding[ 0 ];
+    this.handleSelectedView();
   }
 
   setWidthEachView() {
@@ -99,6 +99,12 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
         item.viewComponents.nativeElement.style.left = this.multiViewContainer.nativeElement.offsetWidth + 'px';
       }
     } );
+  }
+
+  handleSelectedView() {
+    if (!this.selectedView) {
+      this.selectedView = this.viewBounding[ 0 ];
+    }
   }
 
   handleViewBounding() {
@@ -111,6 +117,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
         viewPosition: Math.round( this.multiViewContainer.nativeElement.offsetWidth * (index) )
       } );
     } );
+    this.changeViewSelected(this.modelValue);
   }
 
   setWidthMultiView() {
@@ -280,7 +287,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
   }
 
   changeViewSelected( value: string ) {
-    if ( this.viewBounding && value ) {
+    if ( (this.viewBounding.length > 0) && (value) ) {
       const view = this.viewBounding.filter( ( item ) => item.viewItem.value === value );
       this.selectView( view[ 0 ] );
       this.translateSection( '-' + view[ 0 ].viewPosition, this.transitionTime );

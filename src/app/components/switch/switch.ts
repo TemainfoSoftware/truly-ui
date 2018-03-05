@@ -21,7 +21,7 @@
  */
 import {
   Component, Input, ViewChild, Output, EventEmitter,
-  Optional, Inject, Injector, OnInit, ChangeDetectorRef
+  Optional, Inject, OnInit
 } from '@angular/core';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
@@ -29,14 +29,14 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 
 @Component( {
-  selector: 'tl-checkbox',
-  templateUrl: './checkbox.html',
-  styleUrls: [ './checkbox.scss' ],
+  selector: 'tl-switch',
+  templateUrl: './switch.html',
+  styleUrls: [ './switch.scss' ],
   providers: [
-    [ MakeProvider( TlCheckBox ) ]
+    [ MakeProvider( TlSwitch ) ]
   ]
 } )
-export class TlCheckBox extends ElementBase<boolean> implements OnInit {
+export class TlSwitch extends ElementBase<boolean> implements OnInit {
 
   @Input() label = '';
 
@@ -46,15 +46,13 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
 
   @Input() disabled = null;
 
-  @Input() color = 'basic';
-
-  @ViewChild( 'checkbox' ) checkbox;
+  @Input() color = 'primary';
 
   @ViewChild( NgModel ) model: NgModel;
 
-  @Output() checkBox: EventEmitter<any> = new EventEmitter();
+  @Output() toggle: EventEmitter<any> = new EventEmitter();
 
-  @Output() focusBox: EventEmitter<any> = new EventEmitter();
+  @Output() focus: EventEmitter<any> = new EventEmitter();
 
   constructor(
     @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
@@ -70,7 +68,7 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
     }
   }
 
-  check( boolean ) {
+  switchToggle( boolean ) {
     if (!this.disabled) {
       this.value = !boolean;
       this.emitEvent();
@@ -78,11 +76,11 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
   }
 
   emitEvent() {
-    this.checkBox.emit( this.value );
+    this.toggle.emit( this.value );
   }
 
   focusCheckBox() {
-    this.focusBox.emit( this.value );
+    this.focus.emit( this.value );
   }
 
 }

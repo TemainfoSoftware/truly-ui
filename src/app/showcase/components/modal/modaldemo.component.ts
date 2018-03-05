@@ -28,7 +28,7 @@ export class ModalDemoComponent {
     this.modalprop = json.dataProperties;
   }
 
-  modal1(parent) {
+  modal1() {
     this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResult) => {
         this.modalResult = modalResult;
     }).on('show', () => {

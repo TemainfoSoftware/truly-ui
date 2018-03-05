@@ -148,12 +148,13 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
     }
   }
 
-  checkRadio( item ) {
-    if (!item.disabled) {
-      this.value = item.value;
-      this.itemSelected = item;
-      this.onCheckRadio.emit( this.itemSelected );
+  checkRadio( item, $event? ) {
+    if ($event && item.disabled) {
+      return;
     }
+    this.value = item.value;
+    this.itemSelected = item;
+    this.onCheckRadio.emit( this.itemSelected );
   }
 
   focusRadio( item ) {

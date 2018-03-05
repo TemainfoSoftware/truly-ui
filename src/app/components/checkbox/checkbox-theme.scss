@@ -16,6 +16,11 @@
     border: 1px solid map-deep-get($theme, $action, "default", "border");
   }
 
+  input[type='checkbox']:disabled:after {
+    background-color: map-deep-get($theme, $action, "disabled", "background");
+    border: 1px solid map-deep-get($theme, $action, "disabled", "border");
+  }
+
   input[type='checkbox']:checked:after {
     @include checkbox-color();
   }
@@ -28,17 +33,22 @@
     color: map-deep-get($theme, 'basic', "default", "foreground");
   }
 
-  .checkmark-wrapper{
+  .checkmark-wrapper {
     border-color: map-deep-get($theme, $action, "checked", "border");
     background-color: map-deep-get($theme, $action, "checked", "background");
   }
 
-  .checkmark_stem{
+  .checkmark_stem:not(.disabled) {
     background-color: map-deep-get($theme, $action, "checked", "foreground");
   }
 
-  .checkmark_kick{
+  .checkmark_kick:not(.disabled) {
     background-color: map-deep-get($theme, $action, "checked", "foreground");
+  }
+
+  .disabled {
+    background-color: map-deep-get($theme, $action, "checked", "foreground");
+    opacity: 0.5;
   }
 
 }

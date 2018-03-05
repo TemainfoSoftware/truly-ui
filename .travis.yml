@@ -14,7 +14,7 @@ before_script:
 #  - npm run lint
 #  - npm run test
 script:
-  - ls
+  - npm run inline-template 
   - npm run release
 after_success:
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run create:packagejson; fi

@@ -30,19 +30,18 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prebuild:library": "rimraf dist tmp",
-    "build:library": "npm run compile",
+    "build:library": "npm run inline-template && npm run compile && npm run clean",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
-    "compile": "gulp inline-templates && ngc -p tsconfig-release.json",
+    "release":"ngc -p tsconfig-release.json && npm run clean",
+    "inline-template":"gulp inline-templates",
+    "compile": "ngc -p tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
-    "semantic-release-pre": "semantic-release pre",
-    "semantic-release-post": " semantic-release post",
-    "semantic-release": " semantic-release",
-    "publish": "npm publish dist/ --access public"
+    "semantic-release": "semantic-release"
   },
   "private": false,
   "dependencies": {
@@ -99,5 +98,18 @@
   "pre-commit": [
     "lint",
     "test"
-  ]
+  ],
+  "release": {
+    "publish": [
+      {
+        "path": "@semantic-release/npm",
+        "npmPublish": true,
+        "pkgRoot": "dist"
+      },
+      {
+        "path": "@semantic-release/github",
+        "assets": "dist/*.tgz"
+      }
+    ]
+  }
 }

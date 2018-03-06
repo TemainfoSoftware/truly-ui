@@ -15,6 +15,10 @@ delete basePkgJson.devDependencies;
 // remove the private option
 delete basePkgJson.private;
 
+// remove others options
+delete basePkgJson.release;
+delete basePkgJson['pre-commit'];
+
 // remove dependencies for safety reasons as we use peerDependencies
 basePkgJson.dependencies = {};
 

@@ -3,7 +3,7 @@
   user-select: none;
   > .ui-chat-overflow {
     position: relative;
-    overflow: auto;
+    overflow: hidden;
     > .ui-chat-lists {
       position: relative;
       width: 100%;
@@ -11,7 +11,9 @@
         > .ui-status {
           height: 25px;
           padding-left: 10px;
-          font-family: "Segoe UI", Helvetica;
+          font-size: 0.8em;
+          color: #aaaaaa;
+          font-family: 'Lato', sans-serif;
           line-height: 25px;
         }
         > .ui-status:first-child {

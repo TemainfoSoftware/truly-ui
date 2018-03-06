@@ -17,7 +17,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataBasic"
-                [itemsToShow]="5"
+                [rowsClient]="5"
                 [searchElement]="inputBasic"
                 [addNew]="true"
                 [id]="'id'"
@@ -29,7 +29,7 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-listbox
   [data]="dataBasic"
-  [itemsToShow]="5"
+  [rowsClient]="5"
   [searchElement]="inputBasic"
   [id]="'id'"
   [label]="'firstName'"
@@ -45,7 +45,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataLazy"
-                [itemsToShow]="5"
+                [rowsClient]="5"
                 [lazyMode]="true"
                 (lazyLoad)="onLazyLoad($event)"
                 [searchElement]="inputBasicLazy"
@@ -58,7 +58,7 @@
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-listbox
   [data]="dataLazy"
-  [itemsToShow]="5"
+  [rowsClient]="5"
   [lazyMode]="true"
   (lazyLoad)="onLazyLoad($event)"
   [searchElement]="inputBasicLazy"
@@ -78,7 +78,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataCustom"
-                [itemsToShow]="5"
+                [rowsClient]="5"
                 [searchElement]="inputCustomNormal"
                 [id]="'id'"
                 [label]="'firstName'"
@@ -98,7 +98,7 @@
 <tl-listbox
   [data]="data"
   (onClickItem)="onClickNoItem($event)"
-  [itemsToShow]="10"
+  [rowsClient]="10"
   [searchElement]="input"
   [id]="'id'"
   [label]="'firstName'"
@@ -121,7 +121,7 @@
                         [placeholder]="'Search...'"></tl-input>
               <tl-listbox
                 [data]="dataLazy"
-                [itemsToShow]="5"
+                [rowsClient]="5"
                 [searchElement]="inputCustomLazy"
                 [id]="'id'"
                 [lazyMode]="true"
@@ -142,7 +142,7 @@
               <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-listbox
   [data]="dataLazy"
-  [itemsToShow]="5"
+  [rowsClient]="5"
   [searchElement]="inputCustomLazy"
   [id]="'id'"
   [lazyMode]="true"

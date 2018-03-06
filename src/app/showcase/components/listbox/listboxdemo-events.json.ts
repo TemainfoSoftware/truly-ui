@@ -11,4 +11,13 @@ export const events = [
     name: 'lazyLoad',
     description: 'Dispatched when listBox in LazyMode and tries to get more data.',
   },
+  {
+    name: 'filterData',
+    parameters: [
+      {
+        event: 'Array<Data>', description: 'Filtered data',
+      },
+    ],
+    description: 'Dispatched when listBox is filtered.',
+  },
 ];

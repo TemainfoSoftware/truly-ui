@@ -38,7 +38,7 @@ export const dataProperties = [
     name: 'label',
     type: 'string',
     default: 'null',
-    description: 'The text which will display front of checkbox',
+    description: 'The text which will display on line when using the default list',
     options: 'any text'
   },
   {
@@ -84,7 +84,14 @@ export const dataProperties = [
     options: 'any number'
   },
   {
-    name: 'itemsToShow',
+    name: 'dynamicFocus',
+    type: 'boolean',
+    default: 'true',
+    description: 'Property to work with focus and class selected.',
+    options: 'true | false'
+  },
+  {
+    name: 'rowsClient',
     type: 'number',
     default: '10',
     description: 'Number of lines that going to be shown on list',

@@ -29,6 +29,7 @@
                            (clickItem)="clickChat($event)"
                            [searchQuery]="'firstName'"
                            [searchInput]="input"
+                           [avatar]="'avatar'"
                            [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
                            [data]="dataSource"></tl-chatlist>
               <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
@@ -36,13 +37,26 @@
             <div class="col-md-6">
 <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-chatlist
-  [data]="dataSource"
   [itemsToShow]="3"
-  (clickItem)="clickChat($event)"
-  [searchQuery]="'firstName'"
-  [searchInput]="input">
+ (clickItem)="clickChat($event)"
+ [searchQuery]="'firstName'"
+ [searchInput]="input"
+ [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+ [data]="dataSource">
 </tl-chatlist>
 <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+</textarea>
+<textarea highlight-js [options]="{}" [lang]="'typescript'">
+  constructor( public chatListService: ChatListService ) {}
+
+  setOffline() {
+     this.chatListService.changeStatus( this.selected, 'Offline' );
+  }
+
+  setOnline() {
+     this.chatListService.changeStatus( this.selected, 'Online' );
+  }
+
 </textarea>
             </div>
           </app-card>
@@ -50,6 +64,11 @@
       </div>
     </div>
   </div>
+  <app-showcase-card [title]="'Methods'" [icon]="'ion-wand'">
+    <app-card>
+      <app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>
+    </app-card>
+  </app-showcase-card>
   <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
     <app-card>
       <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>

@@ -28,6 +28,34 @@ export const dataProperties = [
     options: 'Array'
   },
   {
+    name: 'label',
+    type: 'string',
+    default: 'null',
+    description: 'The text which will display on line.',
+    options: 'any text'
+  },
+  {
+    name: 'avatar',
+    type: 'string',
+    default: 'null',
+    description: 'Key of object that going to be used as avatar.',
+    options: 'any text'
+  },
+  {
+    name: 'labelDetail',
+    type: 'string',
+    default: 'null',
+    description: 'The text of labelDetail shown just above of label.',
+    options: 'any text'
+  },
+  {
+    name: 'height',
+    type: 'number',
+    default: '300',
+    description: 'Height(In Pixel) of the scroll viewport.',
+    options: 'any number'
+  },
+  {
     name: 'searchQuery',
     type: 'string',
     default: 'null',
@@ -35,11 +63,18 @@ export const dataProperties = [
     options: 'any key'
   },
   {
-    name: 'itemsToShow',
+    name: 'rowsClient',
     type: 'number',
     default: '5',
     description: 'Number of lines of each box (Online | Offline)',
     options: 'any number'
+  },
+  {
+    name: 'statusConfig',
+    type: 'Object',
+    default: 'null',
+    description: 'Object required to set up keys of chat status',
+    options: 'object'
   },
   {
     name: 'searchInput',

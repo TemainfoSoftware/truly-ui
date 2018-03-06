@@ -22,6 +22,9 @@
 import { Component } from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
+import * as jsonMethods from './chatlistdemo-methods.json';
+
+
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { ChatListService } from '../../../components/chatlist/chatlist.service';
 
@@ -36,10 +39,13 @@ export class ChatListDemoComponent {
 
   public dataSource = [];
 
+  public dataMethods = [];
+
   public selected;
 
   constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
     this.dataTableProperties = json.dataProperties;
+    this.dataMethods = jsonMethods.dataMethods;
     this.dataSource = this.dataDumpService.createRandomData( 100 );
   }
 

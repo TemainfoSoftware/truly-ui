@@ -87,7 +87,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() addNew = false;
 
-  @Input() itemsToShow = 10;
+  @Input() rowsClient = 10;
 
   @Input() searchQuery = [];
 
@@ -96,6 +96,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() filterEmptyMessage = 'Nothing to Show';
 
   @Input() rowsPage = 50;
+
+  @Input() height = 300;
 
   @Input() showArrows = true;
 
@@ -113,6 +115,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() focusOnScroll = true;
 
+  @Input() dynamicFocus = true;
+
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
   @Output() selectItem: EventEmitter<any> = new EventEmitter();
@@ -120,6 +124,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Output() clickAddNew: EventEmitter<any> = new EventEmitter();
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+
+  @Output() filterData: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'list' ) listBox;
 
@@ -208,6 +214,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       } )
       .subscribe( searchTextValue => {
         this.handleSearch( searchTextValue );
+        this.filterData.emit( this.filteredData );
         setTimeout( () => {
           this.removeSelected();
           this.resetCursors();
@@ -222,6 +229,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     this.lastRow = this.quantityVisibleRows - 1;
     this.firstRow = 0;
+    this.validateDataType();
     this.renderPageData();
     this.addScrollListListener();
     this.validateProperties();
@@ -248,7 +256,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   addListenerFocusSearchElement() {
     if ( this.searchElement ) {
       this.renderer.listen( this.searchElement.input.nativeElement, 'focus', ( $event ) => {
-        if ( this.filtering ) {
+        if ( this.filtering && this.dynamicShowHide ) {
           this.addClassSelected( 0 );
         }
       } );
@@ -280,15 +288,21 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   addListenersSearchElement() {
     if ( this.searchElement ) {
       this.subscribeClearButton();
-      this.listenerKeyDownSearchElement();
+      this.listenerHandlerElement();
       this.listenerKeyUpSearchElement();
     }
   }
 
-  listenerKeyDownSearchElement() {
-    this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
-      this.handleEventKeyDown( $event );
-    } );
+  listenerHandlerElement() {
+    if (this.dynamicFocus) {
+      this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
+        this.handleEventKeyDown( $event );
+      } );
+    } else {
+      this.renderer.listen( this.itemContainer.nativeElement, 'keydown', ( $event ) => {
+        this.handleEventKeyDown( $event );
+      } );
+    }
   }
 
   listenerKeyUpSearchElement() {
@@ -350,22 +364,22 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleClickItem( item, indexDataSet, indexGlobal? ) {
-    this.handleSelectItemList(item, indexDataSet);
+    this.handleSelectItemList( item, indexDataSet );
     this.clickItem.emit( { 'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet } );
   }
 
   handleSelectItem( item, indexDataSet, indexGlobal? ) {
-    this.handleSelectItemList(item, indexDataSet);
+    this.handleSelectItemList( item, indexDataSet );
     this.selectItem.emit( { 'row': item, 'index': indexGlobal ? indexGlobal : indexDataSet } );
   }
 
-  handleSelectItemList(item, indexDataSet) {
+  handleSelectItemList( item, indexDataSet ) {
     this.removeSelected();
     this.cursor = indexDataSet;
     this.itemSelected = item;
     this.getCursorViewPortPosition( indexDataSet );
     this.updateLastSelect();
-    this.setInputFocus();
+    this.setHandlerFocus();
   }
 
   removeSelected() {
@@ -448,7 +462,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     if ( this.itemSelected && this.dataService.datasource.indexOf( this.itemSelected ) > -1 ) {
       const index = this.dataService.datasource.indexOf( this.itemSelected );
       this.handleSelectItem( this.itemSelected, index,
-        this.listBox.nativeElement.children[ index ].getAttribute('data-indexnumber') );
+        this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) );
     }
     $event.preventDefault();
     this.addNewRenderService.handleAddNewSelected();
@@ -517,11 +531,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     this.setFocusOnNextCursor();
   }
 
-  setInputFocus() {
-    if ( this.searchElement && !this.dynamicShowHide) {
-      setTimeout( () => {
-        this.searchElement.input.nativeElement.focus();
-      }, 1 );
+  setHandlerFocus() {
+    if (this.dynamicFocus && !this.dynamicShowHide) {
+      setTimeout( () => {this.searchElement.input.nativeElement.focus(); }, 1);
+    } else if (!this.dynamicShowHide) {
+      setTimeout( () => {this.itemContainer.nativeElement.focus(); }, 1);
     }
   }
 
@@ -591,6 +605,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleSearchAsDefaultData() {
     this.filtering = false;
+    this.filterData.emit( this.data );
     this.dataService.updateDataSource( this.data );
     this.validateFilteredAsEmpty();
     this.resetSkipAndTake();
@@ -800,11 +815,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   getListBoxHeight() {
-    if ( (this.filteredData.length < this.itemsToShow) && this.filtering ) {
+    if ( (this.filteredData.length < this.rowsClient) && this.filtering ) {
       return this.addNew ? (this.filteredData.length * this.rowHeight) + (this.rowHeight) :
         (this.filteredData.length * this.rowHeight);
     }
-    return this.addNew ? (this.itemsToShow * this.rowHeight) : this.itemsToShow * this.rowHeight;
+    return this.addNew ? (this.rowsClient * this.rowHeight) : this.rowsClient * this.rowHeight;
   }
 
   getElementOfList() {
@@ -867,7 +882,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.handleScrollWhileChangingCursor();
       this.addClassSelected( indexElementDataSource );
       this.setCursorsWhileScrolling( element );
-      this.setInputFocus();
+      this.setHandlerFocus();
     }
   }
 
@@ -889,7 +904,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
       this.addClassSelected( indexElementDataSource );
       this.setCursorsWhileScrolling( element );
-      this.setInputFocus();
+      this.setHandlerFocus();
     }
   }
 
@@ -970,7 +985,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   handleSelectItemWhileNavigating( index ) {
     if ( (this.searchElement) && (!this.isElementAddNew( index )) ) {
       return this.handleSelectItem( this.dataService.datasource[ index ], index,
-        this.listBox.nativeElement.children[ index ].getAttribute('data-indexnumber') );
+        this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) );
     }
     this.cursor++;
   }
@@ -997,7 +1012,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   isEndOfTheListScroll() {
-    return ((this.itemContainer.nativeElement.scrollTop + (this.itemsToShow * this.rowHeight)) ===
+    return ((this.itemContainer.nativeElement.scrollTop + (this.rowsClient * this.rowHeight)) ===
     this.listBox.nativeElement.offsetHeight);
   }
 

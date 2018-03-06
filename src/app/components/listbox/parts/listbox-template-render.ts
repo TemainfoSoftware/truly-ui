@@ -74,7 +74,6 @@ export class ListBoxTemplateRenderService {
 
   addClickEventToCustomTemplate( element, row ) {
     element.addEventListener( 'mousedown', ( $event ) => {
-      this.listBox.setInputFocus();
       this.listBox.handleClickItem( this.dataService.datasource[ row ],
         this.listBox.getIndexOnList( this.getElementListOfCustomTemplate( $event ).listElement ),
         this.getElementListOfCustomTemplate( $event ).indexDataGlobal );

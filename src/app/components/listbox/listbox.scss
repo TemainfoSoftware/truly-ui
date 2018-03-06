@@ -3,6 +3,7 @@
   width: auto;
   overflow-y: auto;
   user-select: none;
+  outline: none;
 }
 
 .listbox-wrapper {
@@ -15,9 +16,8 @@
 }
 
 .list-box-container::-webkit-scrollbar{
-  width: 13px;
+  width: 10px;
 }
-
 
 .item {
   width: inherit;

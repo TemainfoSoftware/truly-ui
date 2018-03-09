@@ -43,4 +43,11 @@ export class SidebarDemoComponent {
     this.dataEvents = jsonEvt.events;
   }
 
+
+  toggleDock(sidebar, value) {
+    if (!value) {
+      sidebar.toggle();
+    }
+  }
+
 }

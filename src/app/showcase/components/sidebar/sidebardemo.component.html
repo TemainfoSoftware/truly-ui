@@ -1,0 +1,82 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Sidebar <span class="module-name"><code><u>Module Name</u>: <strong>SidebarModule</strong></code></span>
+    </h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>SidebarModule</strong></code></p>
+    <p class="text-content">There's a lot of ways to create a Sidebar using Truly UI. Below, are some of those.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Normal Usage</h5>
+              <!--sidebar-->
+              <div style="display: -webkit-inline-box">
+                <div class="trigger" (click)="sidebarLeft.toggle()"><i class="ion-android-menu"></i></div>
+                <div class="trigger" style="background-color: #e25667" (click)="sidebarRight.toggle()"><i class="ion-android-menu"></i></div>
+              </div>
+
+
+              <tl-sidebar-container>
+                <tl-sidebar [position]="'start'" [mode]="'slide'" #sidebarLeft>
+                  <ul class="list-sidebar">
+                    <li><i class="ion-coffee"></i>Home</li>
+                    <li><i class="ion-icecream"></i>Input</li>
+                    <li><i class="ion-chatboxes"></i>Button</li>
+                    <li><i class="ion-images"></i>Panels</li>
+                    <li><i class="ion-aperture"></i>Pickers</li>
+                    <li><i class="ion-usb"></i>Navigation</li>
+                  </ul>
+                </tl-sidebar>
+                <tl-sidebar-content style="background-color: #5c94e2;">
+                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                  </p>
+                </tl-sidebar-content>
+                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarRight>
+                  <h1 style="padding-left: 20px;">Sidebar End</h1>
+                </tl-sidebar>
+              </tl-sidebar-container>
+
+
+              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>With Template</h5>
+              <span class="returned-value">Returned Value: {{result2}}</span>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{}" [lang]="'html'">
+
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <div class="setup">
+      <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+        <app-card>
+          <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        </app-card>
+      </app-showcase-card>
+      <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+        <app-card>
+          <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+        </app-card>
+      </app-showcase-card>
+    </div>
+  </div>
+</div>

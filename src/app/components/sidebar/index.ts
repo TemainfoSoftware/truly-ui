@@ -28,6 +28,7 @@ import { TlSidebar } from './parts/sidebar/sidebar';
 import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { BackdropModule } from '../core/components/backdrop/index';
+import { TlSidebarDock } from './parts/sidebar-dock/sidebar-dock';
 
 export * from './sidebar-container';
 
@@ -40,11 +41,13 @@ export * from './sidebar-container';
   declarations: [
     TlSidebar,
     TlSidebarContainer,
+    TlSidebarDock,
     TlSidebarContent
   ],
   exports: [
     TlSidebar,
     TlSidebarContainer,
+    TlSidebarDock,
     TlSidebarContent
   ],
   entryComponents: [ TlBackdrop ]

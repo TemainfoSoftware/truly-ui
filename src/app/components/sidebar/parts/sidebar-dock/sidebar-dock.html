@@ -1,12 +1,12 @@
-<div class="sidebar-wrapper">
-  <div class="ui-sidebar"
-       [style.width]="width + 'px'"
+<div class="sidebar-wrapper-dock">
+  <div class="ui-sidebar-dock"
+       [style.width]="width"
+       [style.transform]="transform"
        [ngClass]="{
        'start': position === 'start',
        'end': position === 'end',
        'animate-start': opened && position === 'start',
-       'animate-end': opened && position === 'end',
-       'animate-dock': dock && docked
+       'animate-end': opened && position === 'end'
        }">
     <ng-content></ng-content>
   </div>

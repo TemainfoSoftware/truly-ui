@@ -34,7 +34,7 @@ import { TlBackdrop } from '../../../core/components/backdrop/backdrop';
 export class TlSidebarContent implements OnInit {
 
   @HostBinding( 'style.height' )
-  public height = '500px';
+  public height = '400px';
 
   @HostBinding( 'style.width' )
   public width = '100%';
@@ -43,7 +43,7 @@ export class TlSidebarContent implements OnInit {
 
   public innerWidth = '';
 
-  public start = { width: 0, mode: '', opened: false };
+  public start = { width: 0, mode: '', docked: false, opened: false, dockWidth: 0 };
 
   public end = { width: 0, mode: '', opened: false };
 
@@ -61,7 +61,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   setMovement( value ) {
-    switch ( value.position ) {
+    switch ( value.sidebar.position ) {
       case 'start':
         this.moveSidebarStart( value );
         break;
@@ -71,9 +71,14 @@ export class TlSidebarContent implements OnInit {
     }
   }
 
+  setMovementInitialDock() {
+    this.innerWidth = (this.element.nativeElement.offsetWidth - this.start.dockWidth + 'px');
+    this.transform = 'translateX(' + this.start.dockWidth + 'px)';
+  }
+
   moveSidebarStart( value ) {
     this.setStart( value );
-    switch ( value.mode ) {
+    switch ( this.start.mode ) {
       case 'over':
         this.createBackdrop( value );
         break;
@@ -88,7 +93,7 @@ export class TlSidebarContent implements OnInit {
 
   moveSidebarEnd( value ) {
     this.setEnd( value );
-    switch ( value.mode ) {
+    switch ( this.end.mode ) {
       case 'over':
         this.createBackdrop( value );
         break;
@@ -101,6 +106,10 @@ export class TlSidebarContent implements OnInit {
   }
 
   handleSlideStart() {
+    if ( this.start.opened && this.start.docked) {
+      return this.setMovementInitialDock();
+    }
+
     if ( this.start.opened ) {
       this.setTransformStartWidth();
       this.setWidthWrapperStart();
@@ -110,7 +119,7 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
-    if (this.end.opened && this.end.mode === 'push') {
+    if ( this.end.opened && this.end.mode === 'push' ) {
       this.innerWidth = this.width;
       this.transform = 'translateX( -' + this.end.width + 'px)';
       return;
@@ -143,7 +152,7 @@ export class TlSidebarContent implements OnInit {
   handleSlideEnd() {
     if ( this.isNotOverAndOpened() ) {
       this.setWidthWrapperStartAndEnd();
-      this.setTransformEndWidth();
+      this.setTransformStartWidth();
       return;
     }
 
@@ -153,14 +162,18 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
-    if (this.start.opened && this.start.mode === 'push') {
+    if ( this.start.opened && this.start.mode === 'push' ) {
       this.innerWidth = this.width;
       return this.setTransformStartWidth();
     }
 
+    if (this.start.docked) {
+      return;
+    }
+
     if ( this.start.opened ) {
-      this.setWidthWrapperStart();
-      this.setTransformStartWidth();
+      this.setWidthWrapperEnd();
+      this.setTransformEndWidth();
       return;
     }
 
@@ -233,18 +246,6 @@ export class TlSidebarContent implements OnInit {
     this.innerWidth = (this.element.nativeElement.offsetWidth - this.end.width) + 'px';
   }
 
-  isEndOpenedAndSlide() {
-    return this.end.opened && this.end.mode === 'slide';
-  }
-
-  isEndOpenedAndPush() {
-    return this.end.opened && this.end.mode === 'push';
-  }
-
-  isStartOpenedAndSlide() {
-    return this.start.opened && this.start.mode === 'slide';
-  }
-
   handlePushEnd() {
     if ( this.end.opened && !this.start.opened ) {
       return this.transform = 'translateX( -' + this.end.width + 'px)';
@@ -264,23 +265,20 @@ export class TlSidebarContent implements OnInit {
 
     this.transform = 'translateX( -' + this.end.width + 'px)';
     this.innerWidth = this.width;
-
   }
 
   setEnd( value ) {
-    this.end.opened = value.opened;
-    this.end.mode = value.mode;
-    this.end.width = this.formatNumber( value.width );
+    this.end.opened = value.sidebar.opened;
+    this.end.mode = value.sidebar.mode;
+    this.end.width = value.sidebar.width;
   }
 
   setStart( value ) {
-    this.start.opened = value.opened;
-    this.start.mode = value.mode;
-    this.start.width = this.formatNumber( value.width );
-  }
-
-  formatNumber( value ) {
-    return parseInt( value, 10 );
+    this.start.opened = value.sidebar.opened;
+    this.start.mode = value.sidebar.mode;
+    this.start.dockWidth = value.sidebar.dockWidth;
+    this.start.docked = value.sidebar.docked;
+    this.start.width = value.sidebar.width;
   }
 
 }

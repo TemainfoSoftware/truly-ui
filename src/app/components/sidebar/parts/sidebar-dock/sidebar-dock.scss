@@ -1,14 +1,10 @@
-:host {
-  position: relative;
-}
-
-.sidebar-wrapper {
+.sidebar-wrapper-dock {
   position: relative;
   height: 100%;
   width: 100%;
 }
 
-.ui-sidebar {
+.ui-sidebar-dock {
   background-color: #f3f3f3;
   position: absolute;
   top: 0;
@@ -31,12 +27,8 @@
   right: 0;
 }
 
-.animate-start {
-  visibility: visible;
-  transform: translate3d(0, 0, 0);
-}
 
-.animate-dock {
+.animate-start {
   visibility: visible;
   transform: translate3d(0, 0, 0);
 }

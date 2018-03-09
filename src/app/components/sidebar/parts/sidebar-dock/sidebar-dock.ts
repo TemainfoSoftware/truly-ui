@@ -19,68 +19,43 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Input, Component, OnInit, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component( {
-  selector: 'tl-sidebar',
-  templateUrl: './sidebar.html',
-  styleUrls: [ './sidebar.scss' ],
+  selector: 'tl-sidebar-dock',
+  templateUrl: './sidebar-dock.html',
+  styleUrls: [ './sidebar-dock.scss' ],
 } )
 
-export class TlSidebar implements OnInit, AfterContentChecked {
+export class TlSidebarDock implements OnInit {
 
   @Input() opened = false;
 
   @Input() mode: 'push' | 'over' | 'slide' = 'push';
 
-  @Input() width = 300;
+  @Input() width = '80px';
 
   @Input() position = 'start';
 
-  @Input() dockWidth = 80;
-
-  @Input() dock = false;
-
-  public docked = false;
-
   public toggleChange = new Subject();
+
+  public transform = '';
 
   constructor() {}
 
-  ngOnInit() {
-    if (this.dock && this.position === 'end') {
-      throw Error('The Dock property is unavailable in [end] position');
-    }
-    if (this.dock) {
-      this.opened = true;
-      this.docked = true;
-      this.width = this.dockWidth;
-    }
-  }
-
-  ngAfterContentChecked() {
-    this.toggleChangeEmitter();
-  }
+  ngOnInit() {}
 
   toggle() {
-    if (this.docked && this.opened) {
-      this.width = 300;
-      this.docked = false;
-      return;
-    }
-
-    if (this.dock && this.opened) {
-      this.width = this.dockWidth;
-      return this.docked = true;
-    }
-
     this.opened = !this.opened;
-    this.toggleChangeEmitter();
-  }
-
-  toggleChangeEmitter() {
-    this.toggleChange.next( { 'sidebar': this }
+    this.toggleChange.next(
+      {
+        'opened': this.opened,
+        'width': this.width,
+        'mode': this.mode,
+        'position': this.position,
+        'sidebar': this
+      }
     );
   }
 

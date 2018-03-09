@@ -28,6 +28,7 @@ import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { MiscModule } from '../misc/index';
 import { ShortcutService } from '../core/helper/shortcut.service';
+import { BackdropModule } from '../core/components/backdrop/index';
 
 export * from './modal';
 export * from './modal.service';
@@ -36,11 +37,11 @@ export * from './modal-options';
 @NgModule( {
     imports: [
       CommonModule,
-      MiscModule,
+      BackdropModule,
+      MiscModule
     ],
     declarations: [
       TlModal,
-      TlBackdrop,
       LimitStringPipe
     ],
     exports: [

@@ -23,6 +23,7 @@ export * from './components/multiview/index';
 export * from './components/navigator/index';
 export * from './components/overlay/index';
 export * from './components/overlaypanel/index';
+export * from './components/sidebar/index';
 export * from './components/panelgroup/index';
 export * from './components/radiobutton/index';
 export * from './components/splitbutton/index';

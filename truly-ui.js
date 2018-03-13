@@ -29,6 +29,7 @@ __export(require("./components/multiview/index"));
 __export(require("./components/navigator/index"));
 __export(require("./components/overlay/index"));
 __export(require("./components/overlaypanel/index"));
+__export(require("./components/sidebar/index"));
 __export(require("./components/panelgroup/index"));
 __export(require("./components/radiobutton/index"));
 __export(require("./components/splitbutton/index"));

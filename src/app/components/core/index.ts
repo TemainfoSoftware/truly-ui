@@ -23,7 +23,6 @@
 import {
   APP_INITIALIZER, InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf, ComponentFactoryResolver, Injector
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ModalModule } from '../modal';
 import { ApplicationConfig } from './configs/application.config';
 import { CoreService } from './services/core.service';
@@ -43,7 +42,6 @@ export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
 
 @NgModule( {
     imports: [
-      CommonModule,
       ModalModule.forRoot()
     ],
     declarations: [

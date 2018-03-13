@@ -39,14 +39,12 @@ export class CoreService {
     }
 
     createCoreComponent() {
-      setTimeout(() => {
-        const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-        const ref = componentFactory.create(this.injector);
-        this.coreInstance = ref.instance;
-        this.coreInstance.setTheme( this.config.theme );
-        this.applicationRef.attachView(ref.hostView);
-        this.applicationRef.tick();
-      }, 1);
+      const componentFactory = this.compiler.resolveComponentFactory( TlCore );
+      const ref = componentFactory.create(this.injector);
+      this.coreInstance = ref.instance;
+      this.coreInstance.setTheme( this.config.theme );
+      this.applicationRef.attachView(ref.hostView);
+      this.applicationRef.tick();
     }
 
 }

@@ -34,7 +34,11 @@ export class TlCore {
   constructor(private app: ApplicationRef, private renderer: Renderer2) {}
 
   setTheme(theme) {
-    this.theme = `tl-${theme}-theme`;
-    this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
+    setTimeout(() => {
+      this.theme = `tl-${theme}-theme`;
+      if (this.app.components.length ) {
+        this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
+      }
+    }, 200);
   }
 }

@@ -21,58 +21,62 @@
  */
 
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class ChatListService {
 
-    public data = [];
+  public data = [];
 
-    public online = [];
+  public online = [];
 
-    public offline = [];
+  public offline = [];
 
-    public searchQuery = '';
+  public searchQuery = '';
 
-    constructor() {}
+  public subjectStatus = new Subject();
 
-    changeStatus(item, newstatus) {
-        item.row.status = newstatus;
-        this.handleChangeOffline(item, newstatus);
+  constructor() {}
+
+  changeStatus( item, newstatus ) {
+    item.row.status = newstatus;
+    this.handleChangeOffline( item, newstatus );
+    this.subjectStatus.next({'online': this.online, 'offline': this.offline});
+  }
+
+  private handleChangeOffline( item, newstatus ) {
+    if ( newstatus === 'Offline' ) {
+      if ( this.offline.indexOf( item.row ) > 0 ) {
+        return;
+      }
+      this.online.splice( this.online.indexOf( item.row ), 1 );
+      this.offline.push( item.row );
+      this.sortArraysStatus();
+      return;
     }
+    this.handleNotOffline( item );
+  }
 
-    handleChangeOffline(item, newstatus) {
-        if (newstatus === 'Offline') {
-          if (this.offline.indexOf(item.row) > 0) {
-            return;
-          }
-          this.online.splice(this.online.indexOf( item.row ), 1);
-          this.offline.push(item.row);
-          this.sortArraysStatus();
-          return;
-        }
-        this.handleNotOffline(item);
-    }
-
-    handleNotOffline(item) {
-      if (item.status !== 'Offline') {
-        if (this.online.indexOf(item.row) < 0) {
-          this.offline.splice(this.offline.indexOf( item.row ), 1);
-          this.online.push(item.row);
-        }
+  private handleNotOffline( item ) {
+    if ( item.status !== 'Offline' ) {
+      if ( this.online.indexOf( item.row ) < 0 ) {
+        this.offline.splice( this.offline.indexOf( item.row ), 1 );
+        this.online.push( item.row );
       }
     }
+  }
 
-    sortArraysStatus() {
-        this.sortArray(this.online);
-        this.sortArray(this.offline);
-    }
+  sortArraysStatus() {
+    this.sortArray( this.online );
+    this.sortArray( this.offline );
+  }
 
-    sortArray(array: any[]) {
-        array.sort( ( a, b ) => {
-            const x = a[this.searchQuery].toLowerCase();
-            const y = b[this.searchQuery].toLowerCase();
-            return x < y ? -1 : x > y ? 1 : 0;
-        } );
-    }
+  sortArray( array: any[] ) {
+    array.sort( ( a, b ) => {
+      const x = a[ this.searchQuery ].toLowerCase();
+      const y = b[ this.searchQuery ].toLowerCase();
+      return x < y ? -1 : x > y ? 1 : 0;
+    } );
+  }
 
 }

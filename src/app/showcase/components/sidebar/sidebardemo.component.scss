@@ -1,0 +1,99 @@
+.sidebar {
+  width: 600px;
+}
+
+.bar-buttons {
+  display: -webkit-inline-box;
+  width: 100%;
+  position: relative;
+}
+
+.left-right {
+  background-color: #66cc99;
+}
+
+.right-button {
+  background-color: #66cc99;
+  right: 0;
+  position: absolute;
+}
+
+.trigger {
+  width: 50px;
+  height: 50px;
+  background: #66cc99;
+  border: 0.5px solid #458966;
+  color: #fff;
+  text-align: center;
+  line-height: 50px;
+  font-size: 2em;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.list-sidebar:not(.notDocket) {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.list-sidebar:not(.notDocket) li {
+  display: grid;
+  padding: 10px;
+  border-bottom: 1px solid #dfdfdf;
+  font-size: 1em;
+  text-align: center;
+  color: #878787;
+  width: 80px;
+}
+
+.list-sidebar:not(.notDocket) li i {
+  text-align: center;
+  padding: 0;
+  font-size: 1.5em;
+}
+
+tl-sidebar {
+  background-color: #66CC99;
+}
+
+.list-sidebar li {
+  &:hover {
+    background-color: #e3e3e3;
+    transition: all 200ms;
+    cursor: pointer;
+  }
+}
+
+.notDocket {
+  padding: 0;
+  display: grid;
+  list-style: none !important;
+}
+
+.notDocket li {
+  padding: 10px;
+  display: grid;
+  grid-template-areas:
+    'icon label';
+  font-size: 1em;
+  color: #878787;
+  border-bottom: 1px solid #dfdfdf;
+  & i {
+    grid-area: icon;
+    grid-column-end: 1;
+    text-align: center;
+    width: 60px;
+    height: 30px;
+    font-size: 1.5em;
+  }
+  & span {
+    grid-area: label;
+    line-height: 30px;
+  }
+}
+
+

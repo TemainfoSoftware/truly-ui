@@ -41,7 +41,8 @@ export class DumpDataService {
         city: cities[Math.floor(Math.random() * cities.length)],
         title: titles[Math.floor(Math.random() * titles.length)],
         year: year[Math.floor(Math.random() * year.length)],
-        status: status[Math.floor(Math.random() * status.length)]
+        status: status[Math.floor(Math.random() * status.length)],
+        avatar: 'https://cdn2.iconfinder.com/data/icons/avatar-2/512/oscar_boy-256.png'
       })
     );
   }

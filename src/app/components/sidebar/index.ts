@@ -19,39 +19,35 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { Input, Component, HostBinding, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { TlSidebarContainer } from './sidebar-container';
+import { TlSidebar } from './parts/sidebar/sidebar';
+import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
+import { TlBackdrop } from '../core/components/backdrop/backdrop';
+import { BackdropModule } from '../core/components/backdrop/index';
 
+export * from './sidebar-container';
 
-@Component( {
-    selector: 'tl-backdrop',
-    templateUrl: './backdrop.html',
-    styleUrls: [ './backdrop.scss' ],
+@NgModule( {
+  imports: [
+    BackdropModule,
+    CommonModule,
+    FormsModule
+  ],
+  declarations: [
+    TlSidebar,
+    TlSidebarContainer,
+    TlSidebarContent
+  ],
+  exports: [
+    TlSidebar,
+    TlSidebarContainer,
+    TlSidebarContent
+  ],
+  entryComponents: [ TlBackdrop ]
 } )
-export class TlBackdrop {
-
-    @ViewChild('backdrop') backdrop;
-
-    @Input() position = {left: '0', top: '0'};
-
-    @Input() width = '100%';
-
-    @Input() height = '100%';
-
-    @Output() click = new EventEmitter();
-
-    constructor() {}
-
-    setBackdropOptions(object) {
-      this.width = object.width;
-      this.height = object.height;
-      this.position.left = object.left;
-      this.position.top = object.top;
-    }
-
-    clickBackdrop($event) {
-      this.click.emit($event);
-    }
-
+export class SidebarModule {
 }

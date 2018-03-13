@@ -1,0 +1,48 @@
+:host {
+  position: relative;
+}
+
+.sidebar-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.ui-sidebar {
+  background-color: #f3f3f3;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+
+.start {
+  transition: all 200ms;
+  transform: translate3d(-100%, 0, 0);
+  visibility: hidden;
+  left: 0;
+}
+
+.end {
+  transition: all 200ms;
+  transform: translate3d(100%, 0, 0);
+  visibility: hidden;
+  right: 0;
+}
+
+.animate-start {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-dock {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-end {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+

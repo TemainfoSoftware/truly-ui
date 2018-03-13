@@ -1,51 +1,52 @@
 <div class="ui-chat-wrapper">
-    <div class="ui-chat-overflow" (scroll)="handleScrollChat($event)" #overflow [style.height]="(((itemsToShow * 2) * 50) + (50)) + 'px'">
-        <div class="ui-chat-lists" [style.height]="!filtering ? (data.length * 50) + (300) + 'px' : filteredData.length + (300) + 'px'">
-
-            <div class="ui-chat-content" [style.transform]="'translateY(' + scrollChat + 'px)'">
-
-                <div class="ui-status">Online ({{chatListService.online.length}})</div>
+    <div class="ui-chat-overflow">
+        <div class="ui-chat-lists">
+            <div class="ui-chat-content">
+                <div class="ui-status">ONLINE ({{filteredOnline.length}})</div>
                 <tl-listbox
-                        [data]="chatListService.online"
-                        [itemsToShow]="itemsToShow"
-                        (clickItem)="onClickItemChat($event)"
-                        [showArrows]="false"
-                        [hiddenScroll]="true"
-                        [focusOnScroll]="false"
-                        [rowHeight]="50">
-
-                    <ng-template let-item="item" let-index="index">
+                  [data]="chatListService.online"
+                  [rowsClient]="itemsToShow"
+                  (clickItem)="onClickItemChat($event, 'list1')"
+                  (filterData)="onFilterData($event, 'list1')"
+                  [label]="label"
+                  [searchElement]="searchInput"
+                  [height]="height / 2"
+                  [showArrows]="false"
+                  [dynamicFocus]="false"
+                  [focusOnScroll]="false"
+                  [rowHeight]="50">
+                  <ng-template let-item="item" let-index="index">
                         <li class="ui-chat-template">
-                            <img class="img-circle" src="../assets/img/avatar.png" width="30">
+                            <img class="img-circle" src="{{item[avatar]}}" width="30">
                             <div class="ui-chat-infowrapper">
-                                <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
-                                <span class="ui-chat-sector">{{item.lastName}}</span>
+                                <span class="ui-chat-name">{{item[label]}}</span>
+                                <span class="ui-chat-sector">{{item[labelDetail]}}</span>
                             </div>
                             <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status)"
                                   [style.margin-top]="((50 / 2) - 4) + 'px'">
                              </span>
                         </li>
                     </ng-template>
-
                 </tl-listbox>
-
-                <div class="ui-status">Offline ({{chatListService.offline.length}})</div>
-
+                <div class="ui-status">OFFLINE ({{filteredOffline.length}})</div>
                 <tl-listbox
-                        [data]="chatListService.offline"
-                        [itemsToShow]="itemsToShow"
-                        (clickItem)="onClickItemChat($event)"
-                        [showArrows]="false"
-                        [hiddenScroll]="true"
-                        [focusOnScroll]="false"
-                        [rowHeight]="50">
-
+                  [data]="chatListService.offline"
+                  [rowsClient]="itemsToShow"
+                  (clickItem)="onClickItemChat($event, 'list2')"
+                  (filterData)="onFilterData($event, 'list2')"
+                  [label]="labelDetail"
+                  [height]="height / 2"
+                  [searchElement]="searchInput"
+                  [showArrows]="false"
+                  [dynamicFocus]="false"
+                  [focusOnScroll]="false"
+                  [rowHeight]="50">
                     <ng-template let-item="item" let-index="index">
                         <li class="ui-chat-template">
-                            <img class="img-circle" src="../assets/img/avatar.png" width="30">
+                            <img class="img-circle" src="{{item[avatar]}}" width="30">
                             <div class="ui-chat-infowrapper">
-                                <span class="ui-chat-name">{{item.firstName}} - ({{item.id}})</span>
-                                <span class="ui-chat-sector">{{item.lastName}}</span>
+                                <span class="ui-chat-name">{{item[label]}}</span>
+                                <span class="ui-chat-sector">{{item[labelDetail]}}</span>
                             </div>
                             <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status) "
                                   [style.margin-top]="((50 / 2) - 4) + 'px'">
@@ -53,9 +54,7 @@
                         </li>
                     </ng-template>
                 </tl-listbox>
-
             </div>
-
         </div>
     </div>
 </div>

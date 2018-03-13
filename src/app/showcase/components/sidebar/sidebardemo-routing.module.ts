@@ -19,39 +19,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SidebarDemoComponent } from './sidebardemo.component';
 
-import { Input, Component, HostBinding, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-
-
-@Component( {
-    selector: 'tl-backdrop',
-    templateUrl: './backdrop.html',
-    styleUrls: [ './backdrop.scss' ],
+@NgModule( {
+  imports: [
+    RouterModule.forChild( [
+      { path: '', component: SidebarDemoComponent }
+    ] )
+  ],
+  exports: [
+    RouterModule
+  ]
 } )
-export class TlBackdrop {
-
-    @ViewChild('backdrop') backdrop;
-
-    @Input() position = {left: '0', top: '0'};
-
-    @Input() width = '100%';
-
-    @Input() height = '100%';
-
-    @Output() click = new EventEmitter();
-
-    constructor() {}
-
-    setBackdropOptions(object) {
-      this.width = object.width;
-      this.height = object.height;
-      this.position.left = object.left;
-      this.position.top = object.top;
-    }
-
-    clickBackdrop($event) {
-      this.click.emit($event);
-    }
-
+export class SidebarDemoRoutingModule {
 }

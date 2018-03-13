@@ -20,61 +20,58 @@
  SOFTWARE.
  */
 import { Component } from '@angular/core';
-
-import * as json from './chatlistdemo-dataproperties.json';
-import * as jsonMethods from './chatlistdemo-methods.json';
+import * as json from './sidebardemo-dataproperties.json';
+import * as jsonContent from './sidebardemo-dataproperties-sidebar-content.json';
+import * as jsonEvt from './sidebardemo-events.json';
+import * as jsonMethods from './sidebardemo-methods.json';
 
 
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { ChatListService } from '../../../components/chatlist/chatlist.service';
 
 @Component( {
-  selector : 'app-chat',
-  templateUrl : './chatlistdemo.component.html',
-  styleUrls : [ './chatlistdemo.component.scss' ]
+  selector: 'app-sidebar',
+  templateUrl: './sidebardemo.component.html',
+  styleUrls: [ './sidebardemo.component.scss' ],
 } )
-export class ChatListDemoComponent {
+export class SidebarDemoComponent {
 
   public dataTableProperties;
 
+  public dataEvents;
+
+  public dataTablePropertiesContent;
+
+  public result;
+
+  public openedDemo = false;
+
+  public dataMethods;
+
   public dataSource = [];
 
-  public dataMethods = [];
-
-  public selected;
-
-  constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
+  constructor( private dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
+    this.dataTablePropertiesContent = jsonContent.dataProperties;
     this.dataMethods = jsonMethods.dataMethods;
+    this.dataEvents = jsonEvt.events;
     this.dataSource = this.dataDumpService.createRandomData( 100 );
+
   }
 
-  clickChat( $event ) {
-    this.selected = $event;
+  onToggle($event) {
+    console.log('Opened Change', $event);
   }
 
-  changeBusy() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Busy' );
-    }
+  onClose() {
+    console.log('Closed');
   }
 
-  changeOnline() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Online' );
-    }
+  onOpen() {
+    console.log('Opened');
   }
 
-  changeOffline() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Offline' );
-    }
+  changeOpened() {
+    this.openedDemo = !this.openedDemo;
   }
 
-  changeAway() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Away' );
-    }
-  }
 }
-

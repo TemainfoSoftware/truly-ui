@@ -19,39 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { Input, Component, HostBinding, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-
+import {
+  AfterContentInit,
+  Component, ContentChild, ContentChildren, forwardRef, OnInit, QueryList, ViewChild,
+} from '@angular/core';
+import { TlSidebar } from './parts/sidebar/sidebar';
+import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
 
 @Component( {
-    selector: 'tl-backdrop',
-    templateUrl: './backdrop.html',
-    styleUrls: [ './backdrop.scss' ],
+  selector: 'tl-sidebar-container',
+  templateUrl: './sidebar-container.html',
+  styleUrls: [ './sidebar-container.scss' ],
 } )
-export class TlBackdrop {
 
-    @ViewChild('backdrop') backdrop;
+export class TlSidebarContainer implements OnInit, AfterContentInit {
 
-    @Input() position = {left: '0', top: '0'};
+  @ContentChildren(forwardRef(() => TlSidebar )  ) sidebar: QueryList<TlSidebar>;
 
-    @Input() width = '100%';
+  @ContentChild( TlSidebarContent ) sidebarContent;
 
-    @Input() height = '100%';
+  constructor() {}
 
-    @Output() click = new EventEmitter();
+  ngOnInit() {}
 
-    constructor() {}
-
-    setBackdropOptions(object) {
-      this.width = object.width;
-      this.height = object.height;
-      this.position.left = object.left;
-      this.position.top = object.top;
-    }
-
-    clickBackdrop($event) {
-      this.click.emit($event);
-    }
-
+  ngAfterContentInit() {
+    this.sidebar.forEach((item) => {
+      item.toggleChange.subscribe((value) => {
+        this.sidebarContent.setMovement( value );
+      });
+    });
+  }
 }

@@ -10,6 +10,7 @@
 
   .tl-input-box {
     // Addon Element
+    background-color: #FFFFFF;
     > .addon {
       border-top: 1px solid map-deep-get($basic, "default", "border");
       border-bottom: 1px solid map-deep-get($basic, "default", "border");

@@ -21,66 +21,45 @@
  */
 export const dataProperties = [
   {
-    name: 'data',
-    type: 'Array<Object>',
-    default: 'null',
-    description: 'Array of data to shown on list',
-    options: 'Array'
+    name: 'opened',
+    type: 'boolean',
+    default: 'false',
+    description: 'Property that sets opened sidebar.',
+    options: 'true | false'
   },
   {
-    name: 'label',
+    name: 'mode',
     type: 'string',
-    default: 'null',
-    description: 'The text which will display on line.',
-    options: 'any text'
+    default: 'push',
+    description: 'The mode of sidebar animation.',
+    options: 'push | over | slide'
   },
   {
-    name: 'avatar',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object that going to be used as avatar.',
-    options: 'any text'
-  },
-  {
-    name: 'labelDetail',
-    type: 'string',
-    default: 'null',
-    description: 'The text of labelDetail shown just above of label.',
-    options: 'any text'
-  },
-  {
-    name: 'height',
+    name: 'width',
     type: 'number',
     default: '300',
-    description: 'Height(In Pixel) of the scroll viewport.',
+    description: 'Width of sidebar box.',
     options: 'any number'
   },
   {
-    name: 'searchQuery',
+    name: 'position',
     type: 'string',
-    default: 'null',
-    description: 'Key of object that going to be used to search on list',
-    options: 'any key'
+    default: 'start',
+    description: 'Horizontal Position of sidebar.',
+    options: 'start | end'
   },
   {
-    name: 'rowsClient',
+    name: 'dockWidth',
     type: 'number',
-    default: '5',
-    description: 'Number of lines of each box (Online | Offline)',
+    default: '80',
+    description: 'Width of docked sidebar.',
     options: 'any number'
   },
   {
-    name: 'statusConfig',
-    type: 'Object',
-    default: 'null',
-    description: 'Object required to set up keys of chat status',
-    options: 'object'
-  },
-  {
-    name: 'searchInput',
-    type: 'ElementRef<TlInput>',
-    default: 'null',
-    description: 'Variable of element TlInput',
-    options: 'ElementRef<TlInput>'
+    name: 'dock',
+    type: 'boolean',
+    default: 'false',
+    description: 'Property to set if sidebar will be "docked" or not;',
+    options: 'true | false'
   },
 ];

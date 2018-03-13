@@ -124,6 +124,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
       },
       {
+        path: 'sidebar',
+        loadChildren: './components/sidebar/sidebardemo.module#SidebarDemoModule'
+      },
+      {
         path: 'tabcontrol',
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
       },

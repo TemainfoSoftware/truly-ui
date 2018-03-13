@@ -1,0 +1,13 @@
+<div class="sidebar-wrapper">
+  <div class="ui-sidebar"
+       [style.width]="width + 'px'"
+       [ngClass]="{
+       'start': position === 'start',
+       'end': position === 'end',
+       'animate-start': opened && position === 'start',
+       'animate-end': opened && position === 'end',
+       'animate-dock': dock && docked
+       }">
+    <ng-content></ng-content>
+  </div>
+</div>

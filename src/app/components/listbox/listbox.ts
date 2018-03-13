@@ -245,10 +245,12 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   hasComplexObject() {
-    const data = this.lazyMode ? this.data.data : this.data;
-    for ( let item = 0; item < data.length; item++ ) {
-      if ( typeof data[ item ] === 'object' ) {
-        return true;
+    if ( this.data ) {
+      const data = this.lazyMode ? this.data[ 'data' ] : this.data;
+      for ( let item = 0; item < data.length; item++ ) {
+        if ( typeof data[ item ] === 'object' ) {
+          return true;
+        }
       }
     }
   }
@@ -294,7 +296,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   listenerHandlerElement() {
-    if (this.dynamicFocus) {
+    if ( this.dynamicFocus ) {
       this.renderer.listen( this.searchElement.input.nativeElement, 'keydown', ( $event ) => {
         this.handleEventKeyDown( $event );
       } );
@@ -532,10 +534,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   setHandlerFocus() {
-    if (this.dynamicFocus && !this.dynamicShowHide) {
-      setTimeout( () => {this.searchElement.input.nativeElement.focus(); }, 1);
-    } else if (!this.dynamicShowHide) {
-      setTimeout( () => {this.itemContainer.nativeElement.focus(); }, 1);
+    if ( this.dynamicFocus && !this.dynamicShowHide ) {
+      setTimeout( () => {
+        this.searchElement.input.nativeElement.focus();
+      }, 1 );
+    } else if ( !this.dynamicShowHide ) {
+      setTimeout( () => {
+        this.itemContainer.nativeElement.focus();
+      }, 1 );
     }
   }
 

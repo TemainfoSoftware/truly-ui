@@ -21,7 +21,7 @@
  */
 import {
   Component, OnInit, HostBinding, ElementRef, ComponentFactoryResolver, ViewContainerRef,
-  Renderer2
+  Renderer2, Input, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 import { TlBackdrop } from '../../../core/components/backdrop/backdrop';
 
@@ -29,12 +29,14 @@ import { TlBackdrop } from '../../../core/components/backdrop/backdrop';
   selector: 'tl-sidebar-content',
   templateUrl: './sidebar-content.html',
   styleUrls: [ './sidebar-content.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 
 export class TlSidebarContent implements OnInit {
 
+  @Input()
   @HostBinding( 'style.height' )
-  public height = '400px';
+  public height = '100%';
 
   @HostBinding( 'style.width' )
   public width = '100%';
@@ -50,6 +52,7 @@ export class TlSidebarContent implements OnInit {
   public backdrop;
 
   constructor( private element: ElementRef,
+               private change: ChangeDetectorRef,
                private renderer: Renderer2,
                private factory: ComponentFactoryResolver,
                private view: ViewContainerRef ) {
@@ -74,6 +77,7 @@ export class TlSidebarContent implements OnInit {
   setMovementInitialDock() {
     this.innerWidth = (this.element.nativeElement.offsetWidth - this.start.dockWidth + 'px');
     this.transform = 'translateX(' + this.start.dockWidth + 'px)';
+    this.change.detectChanges();
   }
 
   moveSidebarStart( value ) {
@@ -89,6 +93,7 @@ export class TlSidebarContent implements OnInit {
         this.handleSlideStart();
         break;
     }
+    this.change.detectChanges();
   }
 
   moveSidebarEnd( value ) {
@@ -102,7 +107,9 @@ export class TlSidebarContent implements OnInit {
         break;
       case 'slide':
         this.handleSlideEnd();
+        break;
     }
+    this.change.detectChanges();
   }
 
   handleSlideStart() {
@@ -176,12 +183,11 @@ export class TlSidebarContent implements OnInit {
       this.setTransformEndWidth();
       return;
     }
-
     this.innerWidth = this.width;
   }
 
   createBackdrop( value ) {
-    if ( !this.backdrop ) {
+    if ( (!this.backdrop) && (value.sidebar.mode === 'over')) {
       const componentFactory = this.factory.resolveComponentFactory( TlBackdrop );
       this.backdrop = this.view.createComponent( componentFactory );
       this.setBackdropOptions();
@@ -248,6 +254,7 @@ export class TlSidebarContent implements OnInit {
 
   handlePushEnd() {
     if ( this.end.opened && !this.start.opened ) {
+      this.innerWidth = this.width;
       return this.transform = 'translateX( -' + this.end.width + 'px)';
     }
 

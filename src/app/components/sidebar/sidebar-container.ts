@@ -43,15 +43,10 @@ export class TlSidebarContainer implements OnInit, AfterContentInit {
   ngOnInit() {}
 
   ngAfterContentInit() {
-    this.sidebar.forEach((item, index, array) => {
+    this.sidebar.forEach((item) => {
       item.toggleChange.subscribe((value) => {
-        this.moveSidebarContent(value);
+        this.sidebarContent.setMovement( value );
       });
     });
   }
-
-  moveSidebarContent(value) {
-    this.sidebarContent.setMovement( value );
-  }
-
 }

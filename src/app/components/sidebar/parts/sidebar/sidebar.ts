@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Input, Component, OnInit, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Input, Component, OnInit, AfterContentChecked } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component( {
@@ -60,7 +60,9 @@ export class TlSidebar implements OnInit, AfterContentChecked {
   }
 
   ngAfterContentChecked() {
-    this.toggleChangeEmitter();
+    if (this.mode !== 'over') {
+      this.toggleChangeEmitter();
+    }
   }
 
   toggle() {

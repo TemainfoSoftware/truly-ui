@@ -59,8 +59,9 @@ export class AutoCompleteDemoComponent {
   constructor( public dataDumpService: DumpDataService, ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
+    this.dataBasic = this.dataDumpService.createRandomData( 1000 );
+
     setTimeout( () => {
-      this.dataBasic = this.dataDumpService.createRandomData( 1000 );
       this.dataLazy = {
         'data': this.getDataFromService( 0, this.take ),
         'total': this.dataBasic.length

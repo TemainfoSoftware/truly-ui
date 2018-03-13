@@ -21,136 +21,52 @@
  */
 export const dataProperties = [
   {
-    name: 'data',
-    type: 'Array<Object>',
-    default: 'null',
-    description: 'Array of object used to populate the list.',
-    options: 'Array<Object>'
-  },
-  {
-    name: 'id',
+    name: 'sidebar-content - [height]',
     type: 'string',
-    default: 'null',
-    description: 'Key of object used to describe the ID on list (Normal Usage)',
-    options: 'any text'
+    default: '100%',
+    description: 'Height of sidebar content.',
+    options: 'px | %'
   },
   {
-    name: 'labelDetail',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object used to describe the labelDetail on list (Normal Usage)',
-    options: 'any text'
-  },
-  {
-    name: 'labelName',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object used to describe the labelName on list (Normal Usage)',
-    options: 'any text'
-  },
-  {
-    name: 'openFocus',
+    name: 'sidebar - [opened]',
     type: 'boolean',
     default: 'false',
-    description: 'Handle of show list when input receives focus',
+    description: 'Property that sets opened sidebar.',
     options: 'true | false'
   },
   {
-    name: 'rowHeight',
+    name: 'sidebar - [mode]',
+    type: 'string',
+    default: 'push',
+    description: 'The mode of sidebar animation.',
+    options: 'push | over | slide'
+  },
+  {
+    name: 'sidebar - [width]',
     type: 'number',
-    default: '30',
-    description: 'Value rowHeight of the list element',
+    default: '300',
+    description: 'Width of sidebar box.',
     options: 'any number'
   },
   {
-    name: 'listStripped',
+    name: 'sidebar - [position]',
+    type: 'string',
+    default: 'start',
+    description: 'Horizontal Position of sidebar.',
+    options: 'start | end'
+  },
+  {
+    name: 'sidebar - [dockWidth]',
+    type: 'number',
+    default: '80',
+    description: 'Width of docked sidebar.',
+    options: 'any number'
+  },
+  {
+    name: 'sidebar - [dock]',
     type: 'boolean',
     default: 'false',
-    description: 'Handle to show list stripped',
+    description: 'Property to set if sidebar will be "docked" or not;',
     options: 'true | false'
   },
-  {
-    name: 'iconBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Create an icon Before the Input.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Create an icon After the Input.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'label',
-    type: 'string',
-    default: 'null',
-    description: 'Create a label together with Input Element',
-    options: 'any text'
-  },
-  {
-    name: 'labelPlacement',
-    type: 'string',
-    default: 'left',
-    description: 'Label Position',
-    options: 'top | left'
-  },
-  {
-    name: 'clearButton',
-    type: 'boolean',
-    default: 'false',
-    description: 'Display an icon to clear any Input Value',
-    options: 'true | false'
-  },
-  {
-    name: 'disabled',
-    type: 'boolean',
-    default: 'false',
-    description: 'Display an input with not selectable text (disabled)',
-    options: 'true | false'
-  },
-  {
-    name: 'readonly',
-    type: 'boolean',
-    default: 'false',
-    description: 'Display an input with selectable text (only read)',
-    options: 'true | false'
-  },
-  {
-    name: 'placeholder',
-    type: 'string',
-    default: 'null',
-    description: 'Display a help text on Input',
-    options: 'any text'
-  },
-  {
-    name: 'textBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Display a text Before the Input',
-    options: 'any text'
-  },
-  {
-    name: 'textAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Display a text After the Input',
-    options: 'any text'
-  },
-  {
-    name: 'autocomplete',
-    type: 'string',
-    default: 'off',
-    description: 'Define the autocomplete of the input',
-    options: 'on | off'
-  },
-  {
-    name: 'textAlign',
-    type: 'string',
-    default: 'left',
-    description: 'Define the alignment of the text inside of the input. (css text-align)',
-    options: 'left|right|center|justify|initial|inherit'
-  }
 ];

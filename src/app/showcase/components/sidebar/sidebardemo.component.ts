@@ -22,6 +22,7 @@
 import { Component } from '@angular/core';
 import * as json from './sidebardemo-dataproperties.json';
 import * as jsonEvt from './sidebardemo-events.json';
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 @Component( {
   selector: 'app-sidebar',
@@ -38,9 +39,13 @@ export class SidebarDemoComponent {
 
   public result2;
 
-  constructor() {
+  public dataSource = [];
+
+  constructor( private dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
+    this.dataSource = this.dataDumpService.createRandomData( 100 );
+
   }
 
 

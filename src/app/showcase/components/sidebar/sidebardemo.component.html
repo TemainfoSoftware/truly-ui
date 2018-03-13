@@ -10,52 +10,237 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <div class="col-md-12">
-              <h5>Normal Usage</h5>
+            <div class="col-md-6">
+              <h5>Push Usage</h5>
               <!--sidebar-->
-              <div style="display: -webkit-inline-box; width: 100%; position: relative;">
-                <div class="trigger" style="background-color: #66cc99;" (click)="sidebarLeft.toggle()">
-                  <i [class]="sidebar.docked ? 'ion-android-menu' : 'ion-chevron-right'"></i></div>
-                <div class="trigger" style="background-color: #66cc99; right: 0; position: absolute;"
-                     (click)="sidebarRight.toggle(); toggleDock(sidebarLeft, sidebar.docked)"><i class="ion-ios-chatboxes"></i></div>
+              <div class="sidebar-demo">
+                <div class="bar-buttons">
+                  <div class="trigger left-right" (click)="sidebarLeft.toggle()">
+                    <i [class]="'ion-android-menu'"></i></div>
+                  <div class="trigger right-button"
+                       (click)="sidebarRight.toggle();"><i
+                    class="ion-ios-chatboxes"></i></div>
+                </div>
+                <tl-sidebar-container>
+                  <tl-sidebar #sidebar [position]="'start'" #sidebarLeft>
+                    <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebar.docked}">
+                      <li><i class="ion-coffee"></i><span *ngIf="!sidebar.docked">Home</span></li>
+                      <li><i class="ion-icecream"></i><span *ngIf="!sidebar.docked">Input</span></li>
+                      <li><i class="ion-chatboxes"></i><span *ngIf="!sidebar.docked">Button</span></li>
+                      <li><i class="ion-images"></i><span *ngIf="!sidebar.docked">Panels</span></li>
+                    </ul>
+                  </tl-sidebar>
+                  <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
+                    <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                      when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                      It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                      essentially unchanged.
+                      It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                      passages,
+                      and more recently with desktop publishing software like Aldus PageMaker including versions of
+                      Lorem Ipsum.
+                    </p>
+                  </tl-sidebar-content>
+                  <tl-sidebar [position]="'end'" #sidebarRight>
+                    <tl-chatlist [itemsToShow]="4"
+                                 [height]="325"
+                                 [searchQuery]="'firstName'"
+                                 [searchInput]="input"
+                                 [avatar]="'avatar'"
+                                 [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                                 [data]="dataSource">
+                    </tl-chatlist>
+                    <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                  </tl-sidebar>
+                </tl-sidebar-container>
+              </div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  <tl-sidebar-container>
+    <tl-sidebar [position]="'start'">
+      <!-- Sidebar Start Content -->
+    </tl-sidebar>
+    <tl-sidebar-content [height]="'300px'">
+      <!-- Content -->
+    </tl-sidebar-content>
+    <tl-sidebar [position]="'end'">
+      <!-- Sidebar End Content -->
+    </tl-sidebar>
+</tl-sidebar-container>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Slide Usage</h5>
+              <div class="bar-buttons">
+                <div class="trigger left-right" (click)="sidebarSlide.toggle()">
+                  <i [class]="'ion-android-menu'"></i></div>
+                <div class="trigger right-button"
+                     (click)="sidebarRightSlide.toggle();"><i
+                  class="ion-ios-chatboxes"></i></div>
               </div>
               <tl-sidebar-container>
-                <tl-sidebar #sidebar [position]="'start'" [mode]="'slide'" [dock]="true" #sidebarLeft>
-                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebar.docked}">
-                    <li><i class="ion-coffee"></i><span *ngIf="!sidebar.docked">Home</span></li>
-                    <li><i class="ion-icecream"></i><span *ngIf="!sidebar.docked">Input</span></li>
-                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebar.docked">Button</span></li>
-                    <li><i class="ion-images"></i><span *ngIf="!sidebar.docked">Panels</span></li>
+                <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'">
+                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarSlide.docked}">
+                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
+                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
+                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarSlide.docked">Button</span></li>
+                    <li><i class="ion-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
-                <tl-sidebar-content style="background-color: #5c94e2;">
+                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
                   <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                    essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                    passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of
+                    Lorem Ipsum.
                   </p>
                 </tl-sidebar-content>
-                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarRight>
-                  <h1 style="padding-left: 20px;">Sidebar End</h1>
+                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarRightSlide>
+                  <tl-chatlist [itemsToShow]="4"
+                               [height]="325"
+                               [searchQuery]="'firstName'"
+                               [searchInput]="input"
+                               [avatar]="'avatar'"
+                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                               [data]="dataSource">
+                  </tl-chatlist>
+                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
                 </tl-sidebar>
               </tl-sidebar-container>
-              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+<tl-sidebar-container>
+  <tl-sidebar [position]="'start'" [mode]="'slide'">
+    <!-- Sidebar Start Content -->
+  </tl-sidebar>
+  <tl-sidebar-content [height]="'300px'">
+    <!-- Content -->
+  </tl-sidebar-content>
+  <tl-sidebar [position]="'end'" [mode]="'slide'">
+    <!-- Sidebar End Content -->
+  </tl-sidebar>
+</tl-sidebar-container>
 </textarea>
             </div>
           </app-card>
           <app-card>
-            <div class="col-md-12">
-              <h5>With Template</h5>
-              <span class="returned-value">Returned Value: {{result2}}</span>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{}" [lang]="'html'">
-
+            <div class="col-md-6">
+              <h5>Dock Usage</h5>
+              <div class="bar-buttons">
+                <div class="trigger left-right" (click)="sidebarDock.toggle()">
+                  <i [class]="sidebarDock.docked ? 'ion-android-menu' : 'ion-chevron-right'"></i></div>
+                <div class="trigger right-button"
+                     (click)="sidebarDockRight.toggle();"><i
+                  class="ion-ios-chatboxes"></i></div>
+              </div>
+              <tl-sidebar-container>
+                <tl-sidebar #sidebarDock [position]="'start'" [mode]="'slide'" [dock]="true">
+                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarDock.docked}">
+                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
+                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>
+                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarDock.docked">Button</span></li>
+                    <li><i class="ion-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
+                  </ul>
+                </tl-sidebar>
+                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
+                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                    essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                    passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of
+                    Lorem Ipsum.
+                  </p>
+                </tl-sidebar-content>
+                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarDockRight>
+                  <tl-chatlist [itemsToShow]="4"
+                               [height]="325"
+                               [searchQuery]="'firstName'"
+                               [searchInput]="input"
+                               [avatar]="'avatar'"
+                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                               [data]="dataSource">
+                  </tl-chatlist>
+                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                </tl-sidebar>
+              </tl-sidebar-container>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+<tl-sidebar-container>
+  <tl-sidebar [position]="'start'" [mode]="'slide'" [dock]="true">
+    <!-- Sidebar Start Content -->
+  </tl-sidebar>
+  <tl-sidebar-content [height]="'300px'">
+    <!-- Content -->
+  </tl-sidebar-content>
+  <tl-sidebar [position]="'end'" [mode]="'slide'">
+    <!-- Sidebar End Content -->
+  </tl-sidebar>
+</tl-sidebar-container>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Over Usage</h5>
+              <div class="bar-buttons">
+                <div class="trigger left-right" (click)="sidebarOver.toggle()">
+                  <i [class]="'ion-android-menu'"></i></div>
+                <div class="trigger right-button"
+                     (click)="sidebarOverRight.toggle();"><i
+                  class="ion-ios-chatboxes"></i></div>
+              </div>
+              <tl-sidebar-container>
+                <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'">
+                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarOver.docked}">
+                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
+                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
+                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarOver.docked">Button</span></li>
+                    <li><i class="ion-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
+                  </ul>
+                </tl-sidebar>
+                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
+                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                    essentially unchanged.
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                    passages,
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of
+                    Lorem Ipsum.
+                  </p>
+                </tl-sidebar-content>
+                <tl-sidebar [position]="'end'" [mode]="'over'" #sidebarOverRight>
+                  <tl-chatlist [itemsToShow]="4"
+                               [height]="325"
+                               [searchQuery]="'firstName'"
+                               [searchInput]="input"
+                               [avatar]="'avatar'"
+                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                               [data]="dataSource">
+                  </tl-chatlist>
+                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                </tl-sidebar>
+              </tl-sidebar-container>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+<tl-sidebar-container>
+  <tl-sidebar [position]="'start'" [mode]="'over'">
+    <!--Sidebar Start Content-->
+  </tl-sidebar>
+  <tl-sidebar-content [height]="'300px'">
+    <!-- Content-->
+  </tl-sidebar-content>
+  <tl-sidebar [position]="'end'" [mode]="'over'">
+   <!-- Sidebar End Content-->
+  </tl-sidebar>
+</tl-sidebar-container>
 </textarea>
             </div>
           </app-card>
@@ -66,11 +251,6 @@
       <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
         <app-card>
           <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-        </app-card>
-      </app-showcase-card>
-      <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
-        <app-card>
-          <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
         </app-card>
       </app-showcase-card>
     </div>

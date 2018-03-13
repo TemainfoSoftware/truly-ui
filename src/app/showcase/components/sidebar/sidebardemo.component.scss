@@ -1,7 +1,28 @@
+.sidebar {
+  width: 600px;
+}
+
+.bar-buttons {
+  display: -webkit-inline-box;
+  width: 100%;
+  position: relative;
+}
+
+.left-right {
+  background-color: #66cc99;
+}
+
+.right-button {
+  background-color: #66cc99;
+  right: 0;
+  position: absolute;
+}
+
 .trigger {
   width: 50px;
   height: 50px;
-  background: black;
+  background: #66cc99;
+  border: 0.5px solid #458966;
   color: #fff;
   text-align: center;
   line-height: 50px;

@@ -32,6 +32,8 @@ import { SidebarDemoRoutingModule } from './sidebardemo-routing.module';
 import { SidebarDemoComponent } from './sidebardemo.component';
 import { SidebarModule } from '../../../components/sidebar/index';
 import { InputModule } from '../../../components/input/index';
+import { ChatListModule } from '../../../components/chatlist/index';
+import { DumpDataService } from '../../shared/services/dumpdata';
 
 
 @NgModule({
@@ -43,6 +45,7 @@ import { InputModule } from '../../../components/input/index';
     SidebarModule,
     InputModule,
     HighlightJsModule,
+    ChatListModule,
     SidebarDemoRoutingModule,
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
@@ -52,5 +55,8 @@ import { InputModule } from '../../../components/input/index';
   exports: [
     SidebarDemoComponent,
   ],
+  providers: [
+    DumpDataService
+  ]
 })
 export class SidebarDemoModule { }

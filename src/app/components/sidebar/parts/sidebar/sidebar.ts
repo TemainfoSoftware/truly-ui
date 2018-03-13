@@ -19,8 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Input, Component, OnInit, AfterContentChecked } from '@angular/core';
+import {
+  Input, Component, OnInit, AfterContentChecked, Output, EventEmitter,
+  SimpleChanges, OnChanges
+} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+
+let SIDEBAR_WIDTH;
 
 @Component( {
   selector: 'tl-sidebar',
@@ -28,7 +33,7 @@ import { Subject } from 'rxjs/Subject';
   styleUrls: [ './sidebar.scss' ],
 } )
 
-export class TlSidebar implements OnInit, AfterContentChecked {
+export class TlSidebar implements OnInit, AfterContentChecked, OnChanges {
 
   @Input() opened = false;
 
@@ -46,9 +51,16 @@ export class TlSidebar implements OnInit, AfterContentChecked {
 
   public toggleChange = new Subject();
 
+  @Output() openedChange: EventEmitter<boolean> = new EventEmitter();
+
+  @Output() open: EventEmitter<any> = new EventEmitter();
+
+  @Output() close: EventEmitter<any> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {
+    SIDEBAR_WIDTH = this.width;
     if (this.dock && this.position === 'end') {
       throw Error('The Dock property is unavailable in [end] position');
     }
@@ -67,7 +79,7 @@ export class TlSidebar implements OnInit, AfterContentChecked {
 
   toggle() {
     if (this.docked && this.opened) {
-      this.width = 300;
+      this.width = SIDEBAR_WIDTH;
       this.docked = false;
       return;
     }
@@ -82,8 +94,15 @@ export class TlSidebar implements OnInit, AfterContentChecked {
   }
 
   toggleChangeEmitter() {
+    this.opened ? this.open.emit() : this.close.emit();
     this.toggleChange.next( { 'sidebar': this }
     );
+  }
+
+  ngOnChanges( change: SimpleChanges ) {
+    if (change['opened']) {
+      this.openedChange.emit(change['opened'].currentValue);
+    }
   }
 
 }

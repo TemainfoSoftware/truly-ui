@@ -1,24 +1,16 @@
 export const events = [
   {
-    name: 'lazyLoad',
+    name: 'openedChange',
     parameters: [
-      { event: 'event.skip', description: 'First row offset ' },
-      { event: 'event.take', description: 'Number of rows per page ' }
-      ],
-    description: 'Callback to invoke when paging, sorting or filtering happens in lazy mode.',
+      { event: 'event.opened', description: 'Opened property, true | false' } ],
+    description: 'Returns the value of property [opened] changed by two-way data binding.',
   },
   {
-    name: 'addNew',
-    parameters: [
-      { event: 'null', description: 'null' },
-    ],
-    description: 'Callback to invoke when user click on Add New item.',
+    name: 'open',
+    description: 'Returned when sidebar is opened.',
   },
   {
-    name: 'clickItem',
-    parameters: [
-      { event: 'event.item', description: 'Item selected ' },
-    ],
-    description: 'Callback to invoke when user click on any item of the list.',
+    name: 'close',
+    description: 'Returned when sidebar is closed.',
   },
 ];

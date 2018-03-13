@@ -21,45 +21,10 @@
  */
 export const dataProperties = [
   {
-    name: 'opened',
-    type: 'boolean',
-    default: 'false',
-    description: 'Property that sets opened sidebar.',
-    options: 'true | false'
-  },
-  {
-    name: 'mode',
+    name: 'height',
     type: 'string',
-    default: 'push',
-    description: 'The mode of sidebar animation.',
-    options: 'push | over | slide'
-  },
-  {
-    name: 'width',
-    type: 'number',
-    default: '300',
-    description: 'Width of sidebar box.',
-    options: 'any number'
-  },
-  {
-    name: 'position',
-    type: 'string',
-    default: 'start',
-    description: 'Horizontal Position of sidebar.',
-    options: 'start | end'
-  },
-  {
-    name: 'dockWidth',
-    type: 'number',
-    default: '80',
-    description: 'Width of docked sidebar.',
-    options: 'any number'
-  },
-  {
-    name: 'dock',
-    type: 'boolean',
-    default: 'false',
-    description: 'Property to set if sidebar will be "docked" or not;',
-    options: 'true | false'
+    default: '100%',
+    description: 'Height of sidebar content.',
+    options: 'px | %'
   },
 ];

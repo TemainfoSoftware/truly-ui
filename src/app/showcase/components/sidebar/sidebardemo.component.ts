@@ -21,7 +21,11 @@
  */
 import { Component } from '@angular/core';
 import * as json from './sidebardemo-dataproperties.json';
+import * as jsonContent from './sidebardemo-dataproperties-sidebar-content.json';
 import * as jsonEvt from './sidebardemo-events.json';
+import * as jsonMethods from './sidebardemo-methods.json';
+
+
 import { DumpDataService } from '../../shared/services/dumpdata';
 
 @Component( {
@@ -35,24 +39,39 @@ export class SidebarDemoComponent {
 
   public dataEvents;
 
+  public dataTablePropertiesContent;
+
   public result;
 
-  public result2;
+  public openedDemo = false;
+
+  public dataMethods;
 
   public dataSource = [];
 
   constructor( private dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
+    this.dataTablePropertiesContent = jsonContent.dataProperties;
+    this.dataMethods = jsonMethods.dataMethods;
     this.dataEvents = jsonEvt.events;
     this.dataSource = this.dataDumpService.createRandomData( 100 );
 
   }
 
+  onToggle($event) {
+    console.log('Opened Change', $event);
+  }
 
-  toggleDock(sidebar, value) {
-    if (!value) {
-      sidebar.toggle();
-    }
+  onClose() {
+    console.log('Closed');
+  }
+
+  onOpen() {
+    console.log('Opened');
+  }
+
+  changeOpened() {
+    this.openedDemo = !this.openedDemo;
   }
 
 }

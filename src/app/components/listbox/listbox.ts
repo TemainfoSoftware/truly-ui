@@ -229,7 +229,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
     this.lastRow = this.quantityVisibleRows - 1;
     this.firstRow = 0;
-    this.validateDataType();
     this.renderPageData();
     this.addScrollListListener();
     this.validateProperties();
@@ -252,6 +251,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           return true;
         }
       }
+      return false;
     }
   }
 
@@ -1086,6 +1086,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges( change: SimpleChanges ) {
+    this.validateDataType();
     if ( this.data ) {
       this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
         this.handleRenderList();

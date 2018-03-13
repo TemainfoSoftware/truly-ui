@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Input, Component, HostBinding, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Input, Component, HostBinding, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
@@ -28,22 +28,10 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     selector: 'tl-backdrop',
     templateUrl: './backdrop.html',
     styleUrls: [ './backdrop.scss' ],
-    animations: [
-        trigger(
-            'enterAnimation', [
-                state('enter', style({ transform: 'none', opacity: 1 })),
-                state('void', style({ transform: 'translate3d(0, 25%, 0) scale(0.9)', opacity: 0 })),
-                state('exit', style({ transform: 'translate3d(0, 25%, 0)', opacity: 0 })),
-                transition('* => *', animate('50ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
-            ]
-        )
-    ]
 } )
 export class TlBackdrop {
 
     @ViewChild('backdrop') backdrop;
-
-    @HostBinding( '@enterAnimation' ) public animation;
 
     @Input() position = {left: '0', top: '0'};
 
@@ -52,6 +40,8 @@ export class TlBackdrop {
     @Input() height = '100%';
 
     @Output() click = new EventEmitter();
+
+    constructor() {}
 
     setBackdropOptions(object) {
       this.width = object.width;

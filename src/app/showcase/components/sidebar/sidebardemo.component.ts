@@ -58,10 +58,6 @@ export class SidebarDemoComponent {
 
   }
 
-  onToggle($event) {
-    console.log('Opened Change', $event);
-  }
-
   onClose() {
     console.log('Closed');
   }
@@ -70,7 +66,11 @@ export class SidebarDemoComponent {
     console.log('Opened');
   }
 
-  changeOpened() {
+  changeOpened(param) {
+    console.log('change', param);
+  }
+
+  toggleSidebar() {
     this.openedDemo = !this.openedDemo;
   }
 

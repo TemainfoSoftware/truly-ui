@@ -132,14 +132,23 @@
             <div class="col-md-6">
               <h5>Dock Usage</h5>
               <div class="bar-buttons">
-                <div class="trigger left-right" (click)="sidebarDock.toggle()">
+                <div class="trigger left-right" (click)="toggleSidebar()">
                   <i [class]="sidebarDock.docked ? 'ion-android-menu' : 'ion-chevron-right'"></i></div>
                 <div class="trigger right-button"
                      (click)="sidebarDockRight.toggle();"><i
                   class="ion-ios-chatboxes"></i></div>
               </div>
               <tl-sidebar-container>
-                <tl-sidebar #sidebarDock [position]="'start'" [mode]="'slide'" [dock]="true">
+                <tl-sidebar
+                  (open)="onOpen()"
+                  (close)="onClose()"
+                  (openedChange)="changeOpened($event)"
+                  [opened]="openedDemo"
+                  #sidebarDock
+                  [position]="'start'"
+                  [width]="200"
+                  [mode]="'slide'"
+                  [dock]="true">
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarDock.docked}">
                     <li><i class="ion-coffee"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
                     <li><i class="ion-icecream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>

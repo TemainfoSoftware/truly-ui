@@ -20,12 +20,10 @@
  SOFTWARE.
  */
 import {
-  Input, Component, OnInit, AfterContentChecked, Output, EventEmitter,
-  SimpleChanges, OnChanges
+  Input, Component, OnInit, Output, EventEmitter,
+  SimpleChanges, OnChanges, AfterContentInit, AfterViewInit
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
-let SIDEBAR_WIDTH;
 
 @Component( {
   selector: 'tl-sidebar',
@@ -33,7 +31,7 @@ let SIDEBAR_WIDTH;
   styleUrls: [ './sidebar.scss' ],
 } )
 
-export class TlSidebar implements OnInit, AfterContentChecked, OnChanges {
+export class TlSidebar implements OnInit, AfterContentInit, OnChanges {
 
   @Input() opened = false;
 
@@ -47,61 +45,116 @@ export class TlSidebar implements OnInit, AfterContentChecked, OnChanges {
 
   @Input() dock = false;
 
-  public docked = false;
-
-  public toggleChange = new Subject();
-
   @Output() openedChange: EventEmitter<boolean> = new EventEmitter();
 
   @Output() open: EventEmitter<any> = new EventEmitter();
 
   @Output() close: EventEmitter<any> = new EventEmitter();
 
+  public docked = false;
+
+  public toggleChange = new Subject();
+
+  private sidebarWidth;
+
   constructor() {}
 
   ngOnInit() {
-    SIDEBAR_WIDTH = this.width;
-    if (this.dock && this.position === 'end') {
-      throw Error('The Dock property is unavailable in [end] position');
-    }
-    if (this.dock) {
-      this.opened = true;
-      this.docked = true;
-      this.width = this.dockWidth;
-    }
+    this.sidebarWidth = this.width;
+    this.handleDockAndPosition();
+    this.handleDockSidebar();
   }
 
-  ngAfterContentChecked() {
-    if (this.mode !== 'over') {
-      this.toggleChangeEmitter();
-    }
+  ngAfterContentInit() {
+    setTimeout( () => {
+      if ( this.mode !== 'over' ) {
+        this.toggleChangeEmitter();
+      }
+    }, 1 );
   }
 
   toggle() {
-    if (this.docked && this.opened) {
-      this.width = SIDEBAR_WIDTH;
-      this.docked = false;
+    if ( this.docked ) {
+      this.openDockSidebar();
       return;
     }
 
-    if (this.dock && this.opened) {
-      this.width = this.dockWidth;
-      return this.docked = true;
+    if ( this.dock && !this.docked ) {
+      this.closeDockSidebar();
+      return;
     }
 
     this.opened = !this.opened;
     this.toggleChangeEmitter();
   }
 
+  openDockSidebar() {
+    this.setDockOpened();
+    this.opened = true;
+    this.emitOpenClose();
+    this.toggleChangeEmitter();
+  }
+
+  closeDockSidebar() {
+    this.setDockClosed();
+    this.opened = false;
+    this.emitOpenClose();
+    this.toggleChangeEmitter();
+  }
+
+  handleDockAndPosition() {
+    if ( this.dock && this.position === 'end' ) {
+      throw Error( 'The Dock property is unavailable in [end] position' );
+    }
+  }
+
+  handleDockSidebar() {
+    if ( this.dock && !this.opened ) {
+      this.docked = true;
+      this.width = this.dockWidth;
+      this.opened = false;
+    }
+  }
+
   toggleChangeEmitter() {
+    this.toggleChange.next( { 'sidebar': this } );
+  }
+
+  emitOpenClose() {
     this.opened ? this.open.emit() : this.close.emit();
-    this.toggleChange.next( { 'sidebar': this }
-    );
+  }
+
+  isChangeDockOpen( change ) {
+    return !change[ 'opened' ].currentValue && this.dock && !change[ 'opened' ].firstChange;
+  }
+
+  isChangeDockClose( change ) {
+    return change[ 'opened' ].currentValue && this.dock && !change[ 'opened' ].firstChange;
+  }
+
+  setDockClosed() {
+    this.docked = true;
+    this.width = this.dockWidth;
+  }
+
+  setDockOpened() {
+    this.docked = false;
+    this.width = this.sidebarWidth;
   }
 
   ngOnChanges( change: SimpleChanges ) {
-    if (change['opened']) {
-      this.openedChange.emit(change['opened'].currentValue);
+    if ( change[ 'opened' ] ) {
+      this.openedChange.emit( change[ 'opened' ].currentValue );
+      if ( this.isChangeDockOpen( change ) ) {
+        this.setDockClosed();
+        this.emitOpenClose();
+        this.toggleChangeEmitter();
+      }
+      if ( this.isChangeDockClose( change ) ) {
+        this.setDockOpened();
+        this.emitOpenClose();
+        this.toggleChangeEmitter();
+      }
     }
   }
 

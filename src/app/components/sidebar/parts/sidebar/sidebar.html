@@ -6,7 +6,7 @@
        'end': position === 'end',
        'animate-start': opened && position === 'start',
        'animate-end': opened && position === 'end',
-       'animate-dock': dock && docked
+       'animate-dock': dock && docked && !opened
        }">
     <ng-content></ng-content>
   </div>

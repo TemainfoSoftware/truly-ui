@@ -45,7 +45,7 @@ export class TlSidebarContent implements OnInit {
 
   public innerWidth = '';
 
-  public start = { width: 0, mode: '', docked: false, opened: false, dockWidth: 0 };
+  public start = { width: 0, mode: '', docked: false, opened: false, dockWidth: 0, dock: false };
 
   public end = { width: 0, mode: '', opened: false };
 
@@ -64,6 +64,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   setMovement( value ) {
+    this.setOptionsMovement(value);
     switch ( value.sidebar.position ) {
       case 'start':
         this.moveSidebarStart( value );
@@ -74,14 +75,25 @@ export class TlSidebarContent implements OnInit {
     }
   }
 
+  setOptionsMovement(value) {
+    if (value.sidebar.position === 'start') {
+      this.setStart(value);
+    } else {
+      this.setEnd(value);
+    }
+  }
+
   setMovementInitialDock() {
     this.innerWidth = (this.element.nativeElement.offsetWidth - this.start.dockWidth + 'px');
-    this.transform = 'translateX(' + this.start.dockWidth + 'px)';
+    this.setTransformDock();
     this.change.detectChanges();
   }
 
+  setTransformDock() {
+    this.transform = 'translateX(' + this.start.dockWidth + 'px)';
+  }
+
   moveSidebarStart( value ) {
-    this.setStart( value );
     switch ( this.start.mode ) {
       case 'over':
         this.createBackdrop( value );
@@ -97,7 +109,6 @@ export class TlSidebarContent implements OnInit {
   }
 
   moveSidebarEnd( value ) {
-    this.setEnd( value );
     switch ( this.end.mode ) {
       case 'over':
         this.createBackdrop( value );
@@ -113,7 +124,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   handleSlideStart() {
-    if ( this.start.opened && this.start.docked) {
+    if ( !this.start.opened && this.start.docked ) {
       return this.setMovementInitialDock();
     }
 
@@ -138,6 +149,10 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
+    if ((!this.start.opened) && (this.start.dock)) {
+      return this.setMovementInitialDock();
+    }
+
     this.transform = 'translateX(0)';
     this.innerWidth = this.width;
   }
@@ -157,9 +172,24 @@ export class TlSidebarContent implements OnInit {
   }
 
   handleSlideEnd() {
+
+    if ( this.start.opened && this.start.docked ) {
+      return;
+    }
+
+    if ( !this.start.opened && this.start.docked && !this.end.opened ) {
+      return this.setMovementInitialDock();
+    }
+
     if ( this.isNotOverAndOpened() ) {
       this.setWidthWrapperStartAndEnd();
       this.setTransformStartWidth();
+      return;
+    }
+
+    if (this.start.docked && this.end.opened) {
+      this.setWidthWrapperDockEnd();
+      this.setTransformDock();
       return;
     }
 
@@ -174,20 +204,17 @@ export class TlSidebarContent implements OnInit {
       return this.setTransformStartWidth();
     }
 
-    if (this.start.docked) {
+    if ( this.start.opened ) {
+      this.setWidthWrapperStart();
+      this.setTransformStartWidth();
       return;
     }
 
-    if ( this.start.opened ) {
-      this.setWidthWrapperEnd();
-      this.setTransformEndWidth();
-      return;
-    }
     this.innerWidth = this.width;
   }
 
   createBackdrop( value ) {
-    if ( (!this.backdrop) && (value.sidebar.mode === 'over')) {
+    if ( (!this.backdrop) && (value.sidebar.mode === 'over') ) {
       const componentFactory = this.factory.resolveComponentFactory( TlBackdrop );
       this.backdrop = this.view.createComponent( componentFactory );
       this.setBackdropOptions();
@@ -197,6 +224,10 @@ export class TlSidebarContent implements OnInit {
       return;
     }
     this.removeBackdrop();
+  }
+
+  setWidthWrapperDockEnd() {
+    this.innerWidth = (this.element.nativeElement.offsetWidth - this.end.width - this.start.dockWidth) + 'px';
   }
 
   isNotOverAndOpened() {
@@ -223,6 +254,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   closeSidebar( value ) {
+    console.log('CLOSE SIDEBAR');
     value.sidebar.opened = false;
     this.removeBackdrop();
   }
@@ -282,6 +314,7 @@ export class TlSidebarContent implements OnInit {
 
   setStart( value ) {
     this.start.opened = value.sidebar.opened;
+    this.start.dock = value.sidebar.dock;
     this.start.mode = value.sidebar.mode;
     this.start.dockWidth = value.sidebar.dockWidth;
     this.start.docked = value.sidebar.docked;

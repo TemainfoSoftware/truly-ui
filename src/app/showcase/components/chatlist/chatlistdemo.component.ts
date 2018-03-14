@@ -31,7 +31,8 @@ import { ChatListService } from '../../../components/chatlist/chatlist.service';
 @Component( {
   selector : 'app-chat',
   templateUrl : './chatlistdemo.component.html',
-  styleUrls : [ './chatlistdemo.component.scss' ]
+  styleUrls : [ './chatlistdemo.component.scss' ],
+  providers: [ChatListService]
 } )
 export class ChatListDemoComponent {
 

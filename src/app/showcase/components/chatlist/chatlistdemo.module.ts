@@ -36,7 +36,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     ChatListDemoComponent
   ],
   providers: [
-    DumpDataService
+    DumpDataService,
   ]
 } )
 export class ChatListDemoModule {

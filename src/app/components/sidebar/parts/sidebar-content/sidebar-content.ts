@@ -20,10 +20,9 @@
  SOFTWARE.
  */
 import {
-  Component, OnInit, HostBinding, ElementRef, ComponentFactoryResolver, ViewContainerRef,
+  Component, OnInit, HostBinding, ElementRef,
   Renderer2, Input, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
-import { TlBackdrop } from '../../../core/components/backdrop/backdrop';
 
 @Component( {
   selector: 'tl-sidebar-content',
@@ -49,37 +48,31 @@ export class TlSidebarContent implements OnInit {
 
   public end = { width: 0, mode: '', opened: false };
 
-  public backdrop;
-
   constructor( private element: ElementRef,
-               private change: ChangeDetectorRef,
-               private renderer: Renderer2,
-               private factory: ComponentFactoryResolver,
-               private view: ViewContainerRef ) {
+               private change: ChangeDetectorRef ) {
   }
 
   ngOnInit() {
     this.innerWidth = this.width;
-    this.listenScroll();
   }
 
   setMovement( value ) {
-    this.setOptionsMovement(value);
+    this.setOptionsMovement( value );
     switch ( value.sidebar.position ) {
       case 'start':
-        this.moveSidebarStart( value );
+        this.moveSidebarStart();
         break;
       case 'end':
-        this.moveSidebarEnd( value );
+        this.moveSidebarEnd();
         break;
     }
   }
 
-  setOptionsMovement(value) {
-    if (value.sidebar.position === 'start') {
-      this.setStart(value);
+  setOptionsMovement( value ) {
+    if ( value.sidebar.position === 'start' ) {
+      this.setStart( value );
     } else {
-      this.setEnd(value);
+      this.setEnd( value );
     }
   }
 
@@ -93,10 +86,12 @@ export class TlSidebarContent implements OnInit {
     this.transform = 'translateX(' + this.start.dockWidth + 'px)';
   }
 
-  moveSidebarStart( value ) {
+  moveSidebarStart() {
     switch ( this.start.mode ) {
       case 'over':
-        this.createBackdrop( value );
+        if ( this.start.dock ) {
+          this.setMovementInitialDock();
+        }
         break;
       case 'push':
         this.handlePushStart();
@@ -108,11 +103,8 @@ export class TlSidebarContent implements OnInit {
     this.change.detectChanges();
   }
 
-  moveSidebarEnd( value ) {
+  moveSidebarEnd() {
     switch ( this.end.mode ) {
-      case 'over':
-        this.createBackdrop( value );
-        break;
       case 'push':
         this.handlePushEnd();
         break;
@@ -149,7 +141,7 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
-    if ((!this.start.opened) && (this.start.dock)) {
+    if ( (!this.start.opened) && (this.start.dock) ) {
       return this.setMovementInitialDock();
     }
 
@@ -158,6 +150,10 @@ export class TlSidebarContent implements OnInit {
   }
 
   handlePushStart() {
+    if ( this.start.dock && this.start.docked ) {
+      return this.setMovementInitialDock();
+    }
+
     if ( this.start.opened ) {
       return this.setTransformStartWidth();
     }
@@ -172,7 +168,6 @@ export class TlSidebarContent implements OnInit {
   }
 
   handleSlideEnd() {
-
     if ( this.start.opened && this.start.docked ) {
       return;
     }
@@ -187,7 +182,7 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
-    if (this.start.docked && this.end.opened) {
+    if ( this.start.docked && this.end.opened ) {
       this.setWidthWrapperDockEnd();
       this.setTransformDock();
       return;
@@ -213,19 +208,6 @@ export class TlSidebarContent implements OnInit {
     this.innerWidth = this.width;
   }
 
-  createBackdrop( value ) {
-    if ( (!this.backdrop) && (value.sidebar.mode === 'over') ) {
-      const componentFactory = this.factory.resolveComponentFactory( TlBackdrop );
-      this.backdrop = this.view.createComponent( componentFactory );
-      this.setBackdropOptions();
-      (<TlBackdrop>this.backdrop.instance).click.subscribe( () => {
-        this.closeSidebar( value );
-      } );
-      return;
-    }
-    this.removeBackdrop();
-  }
-
   setWidthWrapperDockEnd() {
     this.innerWidth = (this.element.nativeElement.offsetWidth - this.end.width - this.start.dockWidth) + 'px';
   }
@@ -234,42 +216,13 @@ export class TlSidebarContent implements OnInit {
     return ((this.start.opened) && (this.start.mode !== 'over')) && ((this.end.opened) && (this.end.mode !== 'over'));
   }
 
-  listenScroll() {
-    this.renderer.listen( document, 'scroll', () => {
-      this.setBackdropOptions();
-    } );
-  }
-
-  setBackdropOptions() {
-    if ( this.backdrop ) {
-      (<TlBackdrop>this.backdrop.instance).setBackdropOptions(
-        {
-          'width': this.element.nativeElement.offsetWidth + 'px',
-          'height': this.element.nativeElement.offsetHeight + 'px',
-          'top': this.element.nativeElement.getBoundingClientRect().top + 'px',
-          'left': this.element.nativeElement.getBoundingClientRect().left + 'px'
-        }
-      );
-    }
-  }
-
-  closeSidebar( value ) {
-    console.log('CLOSE SIDEBAR');
-    value.sidebar.opened = false;
-    this.removeBackdrop();
-  }
-
-  removeBackdrop() {
-    this.view.remove( this.view.indexOf( this.backdrop ) );
-    this.backdrop = undefined;
-  }
-
   setTransformEndWidth() {
     this.transform = 'translateX( ' + this.end.width + 'px)';
   }
 
   setTransformStartWidth() {
     this.transform = 'translateX( ' + this.start.width + 'px)';
+    this.change.detectChanges();
   }
 
   setWidthWrapperStartAndEnd() {
@@ -290,7 +243,7 @@ export class TlSidebarContent implements OnInit {
       return this.transform = 'translateX( -' + this.end.width + 'px)';
     }
 
-    if ( !this.start.opened ) {
+    if ( !this.start.opened && !this.start.dock ) {
       this.transform = 'translateX(0)';
       this.innerWidth = this.width;
       return;
@@ -302,8 +255,13 @@ export class TlSidebarContent implements OnInit {
       return;
     }
 
+    if ( this.start.dock && !this.end.opened ) {
+      return this.setMovementInitialDock();
+    }
+
     this.transform = 'translateX( -' + this.end.width + 'px)';
     this.innerWidth = this.width;
+
   }
 
   setEnd( value ) {

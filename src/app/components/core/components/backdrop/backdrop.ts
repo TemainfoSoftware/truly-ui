@@ -33,7 +33,7 @@ export class TlBackdrop {
 
     @ViewChild('backdrop') backdrop;
 
-    @Input() position = {left: '0', top: '0'};
+    @Input() position = {left: '0', top: '0', zIndex: 0};
 
     @Input() width = '100%';
 
@@ -48,6 +48,7 @@ export class TlBackdrop {
       this.height = object.height;
       this.position.left = object.left;
       this.position.top = object.top;
+      this.position.zIndex = object.zIndex;
     }
 
     clickBackdrop($event) {

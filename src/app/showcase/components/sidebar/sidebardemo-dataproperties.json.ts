@@ -30,7 +30,7 @@ export const dataProperties = [
   {
     name: 'mode',
     type: 'string',
-    default: 'push',
+    default: 'slide',
     description: 'The mode of sidebar animation.',
     options: 'push | over | slide'
   },

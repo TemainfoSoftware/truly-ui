@@ -1,6 +1,7 @@
-import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
 
 import * as json from './form-dataproperties.json';
+import * as jsonEvents from './form-dataevent.json';
 
 import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
@@ -13,7 +14,7 @@ import { FormService } from '../../../components/form';
   animations: [ slideToLeft() ],
   styleUrls: [ './formdemo.component.scss' ]
 } )
-export class FormDemoComponent {
+export class FormDemoComponent implements OnInit {
 
   @ViewChild( 'containerModal' ) containerModal;
 
@@ -21,26 +22,40 @@ export class FormDemoComponent {
 
   public formprop;
 
-  public result;
+  public dataEvents;
+
+  public person;
+
+  public formModal;
+
+  public formInline;
 
   public data;
 
-  constructor(public view: ViewContainerRef, public formService: FormService,
-              public dataFormService: DataFormService,  public dataDumpService: DumpDataService,
-              private compiler: ComponentFactoryResolver
-  ) {
+  constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: FormService,
+               public dataFormService: DataFormService, public dataDumpService: DumpDataService,
+               private compiler: ComponentFactoryResolver ) {
 
     this.data = this.dataDumpService.createRandomData( 100 );
     this.formprop = json.dataProperties;
+    this.dataEvents = jsonEvents.dataEvents;
   }
 
-  form1(parent) {
-    this.formService.createForm(NewPersonComponent, this.compiler, null, (form) => {
-      if (form.formResult) {
-        this.dataFormService.saveDataForm(form.formResult.value);
-        this.result = this.dataFormService.getDataForm();
+  ngOnInit() {
+    this.person = this.formDataService.getDataForm();
+  }
+
+  form1() {
+    this.formService.createForm( NewPersonComponent, this.compiler, null, ( form ) => {
+      if ( form.formResult ) {
+        this.dataFormService.saveDataForm( form.formResult.value );
+        this.formModal = this.dataFormService.getDataForm();
       }
-    });
+    } );
+  }
+
+  onSubmitForm( $event ) {
+    this.formInline = $event;
   }
 
 }

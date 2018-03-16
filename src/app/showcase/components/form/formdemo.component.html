@@ -1,57 +1,114 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span></h1>
+    <h1 class="title">Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span>
+    </h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
-    <p class="text-content">The form component uses Modal, the difference between them is tabbing, and the default buttons that act as a submit form.</p>
-    <p class="text-content">The way of the form appears (fullscreen) on window is relative with the parent HTML element.</p>
+    <p class="text-content">The form component uses Modal, the difference between them is tabbing, and the default
+      buttons that act as a submit form.</p>
+    <p class="text-content">The way of the form appears (fullscreen) on window is relative with the parent HTML
+      element.</p>
   </div>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-              <tl-button [text]="'User Register'"
-                         mdResult="MRCUSTOM"
-                         [iconAddonBefore]="'ion-ios-list-outline'"
-                         [shortcut]="'CTRL + X'"
-                         (click)="form1(parent)">
-              </tl-button>
-            <div class="col-md-12 parentElementContainer" #parent>
-              <h5 style="text-align: center; color: #fff;">PARENT ELEMENT CONTAINER</h5>
+            <h5>Modal Form</h5>
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="form1()">
+            </tl-button>
+            <!--<div class="parentElementContainer" *ngIf="formModal">
               <pre class="result">
-                {{result | json}}
+                {{formModal | json}}
               </pre>
+            </div>-->
+            <div class="spacer"></div>
+            <div highlight="all" *ngIf="formModal">
+              <pre><code [textContent]="formModal | json"></code></pre>
             </div>
-            <tl-modal-toolbar [color]="'success'"></tl-modal-toolbar>
           </app-card>
+          <app-card>
+            <h5>Inline Form</h5>
+            <tl-form #form (submitForm)="onSubmitForm($event)" [showConfirmOnChange]="true" [textConfirm]="'Login'"
+                     [messageDialogConfirmation]="'Are you sure ?'">
+              <tl-tabcontrol>
+                <tl-tab [title]="'Login'">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <tl-input [name]="'name'" minlength="3" messageValidation required [labelSize]="100"
+                                  [ngModel]="person?.name" [label]="'User'"></tl-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <tl-input name="password" password messageValidation required [labelSize]="100"
+                                  [ngModel]="person?.password" [label]="'Password'"></tl-input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2 pull-right">
+                      <div class="form-group">
+                        <tl-checkbox name="remember"
+                                     [ngModel]="person?.remember" [label]="'Remember Password'"></tl-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </tl-tab>
+                <div class="spacer"></div>
+                <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.form.valid"
+                           [text]="'Login'"></tl-button>
+              </tl-tabcontrol>
+            </tl-form>
+            <div highlight="all" *ngIf="formInline">
+              <pre><code [textContent]="formInline | json"></code></pre>
+            </div>
+            <!--<div class="col-md-12 parentElementContainer" *ngIf="formInline">
+              <pre class="result">
+                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+                    {{formInline | json}}
+                 </textarea>
+              </pre>
+            </div>-->
+          </app-card>
+          <tl-modal-toolbar [color]="'success'"></tl-modal-toolbar>
         </app-showcase-card>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Form Features'" [icon]="'ion-android-bulb'">
-        <app-card>
-          <h4>Intelligence Tabbing</h4>
-          <p>The Form identifies all components that CAN receive focus and create a map for tabbing, even the components
-            are with the <code>[tabindex]</code> set, the form will respect the <code>tabindex</code> of the component and
-            will organize the others components based on user's component config.</p>
-        </app-card>
-        <app-card>
-          <h4>Form Validation</h4>
-          <p>The Form validations works together with the <code>[validations]</code> of others truly components,
-            identifying the components that have validation to enable or not the <b>confirm</b> button. </p>
-        </app-card>
-        <app-card>
-          <h4>Keyboard Navigation</h4>
-          <p>The Form allow users to control tabbing by key <code>Enter</code>, <code>ArrowUp</code> and
-            <code>ArrowDown</code> to navigation through components.</p>
-        </app-card>
+          <app-card>
+            <h4>Intelligence Tabbing</h4>
+            <p>The Form identifies all components that CAN receive focus and create a map for tabbing, even the
+              components
+              are with the <code>[tabindex]</code> set, the form will respect the <code>tabindex</code> of the component
+              and
+              will organize the others components based on user's component config.</p>
+          </app-card>
+          <app-card>
+            <h4>Form Validation</h4>
+            <p>The Form validations works together with the <code>[validations]</code> of others truly components,
+              identifying the components that have validation to enable or not the <b>confirm</b> button. </p>
+          </app-card>
+          <app-card>
+            <h4>Keyboard Navigation</h4>
+            <p>The Form allow users to control tabbing by key <code>Enter</code>, <code>ArrowUp</code> and
+              <code>ArrowDown</code> to navigation through components.</p>
+          </app-card>
           <app-card>
             <h4>Form Result</h4>
-            <p>The Form Result is a JSON of values of all components with <code>[ngModel]</code> in the form. The form gets
+            <p>The Form Result is a JSON of values of all components with <code>[ngModel]</code> in the form. The form
+              gets
               these values and return to the origin component.</p>
           </app-card>
-      </app-showcase-card>
+        </app-showcase-card>
       </div>
     </div>
     <div class="row">
@@ -59,7 +116,8 @@
         <app-showcase-card [title]="'Making it work'" [icon]="'ion-hammer'">
           <app-card>
             <h4>Step One</h4>
-            <p>Declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>
+            <p>Declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your
+              <code>constructor</code>
             </p>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   constructor(public view: ViewContainerRef, public formService: FormService) {}
@@ -74,15 +132,25 @@
         </textarea>
             <hr>
             <h4>Step Tree</h4>
-            <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
+            <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside
+              the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-form [showConfirmOnChange]="true" [messageDialogConfirmation]="'Are you sure ?'">
     <!--Your Content Here-->
 </tl-form>
-        </textarea>
+                      </textarea>
+
+            <h4>Inline Form</h4>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-form #form (submitForm)="onSubmitForm($event)" [textConfirm]="'Login'" [messageDialogConfirmation]="'Are you sure ?'">
+   <!--Your Content Here-->
+   Button Submit -> <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.form.valid" [text]="'Login'"></tl-button>
+</tl-form>
+</textarea>
             <hr>
             <h4>Step Four</h4>
-            <h5>Import your custom component that will be inside the form as entry component the property ( <code>entryComponents</code> ) in your module. In this case is <code>NewPerson</code></h5>
+            <h5>Import your custom component that will be inside the form as entry component the property ( <code>entryComponents</code>
+              ) in your module. In this case is <code>NewPerson</code></h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 
   @NgModule({
@@ -126,7 +194,8 @@
             </textarea>
             <hr>
             <h4>Final Step</h4>
-            <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For example:</h5>
+            <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For
+              example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 this.formService.createForm(NewPersonComponent, parent, (form) => {
   if (form.formResult.value) {
@@ -146,7 +215,7 @@ this.formService.createForm(NewPersonComponent, parent, (form) => {
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
       <app-card>
-        <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
       </app-card>
     </app-showcase-card>
   </div>

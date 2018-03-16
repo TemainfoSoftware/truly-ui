@@ -89,10 +89,10 @@ export class TlSidebarContent implements OnInit {
   moveSidebarStart() {
     switch ( this.start.mode ) {
       case 'over':
-        if ( this.start.dock ) {
-          this.setMovementInitialDock();
-        }
-        break;
+       if ( this.start.dock ) {
+       this.setMovementInitialDock();
+       }
+       break;
       case 'push':
         this.handlePushStart();
         break;
@@ -168,6 +168,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   handleSlideEnd() {
+
     if ( this.start.opened && this.start.docked ) {
       return;
     }
@@ -199,13 +200,14 @@ export class TlSidebarContent implements OnInit {
       return this.setTransformStartWidth();
     }
 
-    if ( this.start.opened ) {
+    if ( this.start.opened && this.start.mode !== 'over') {
       this.setWidthWrapperStart();
       this.setTransformStartWidth();
       return;
     }
 
     this.innerWidth = this.width;
+
   }
 
   setWidthWrapperDockEnd() {
@@ -238,6 +240,10 @@ export class TlSidebarContent implements OnInit {
   }
 
   handlePushEnd() {
+    if ( this.start.dock && !this.end.opened ) {
+      return this.setMovementInitialDock();
+    }
+
     if ( this.end.opened && !this.start.opened ) {
       this.innerWidth = this.width;
       return this.transform = 'translateX( -' + this.end.width + 'px)';

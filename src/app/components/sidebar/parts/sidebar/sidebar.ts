@@ -41,7 +41,7 @@ export class TlSidebar implements OnInit, AfterContentInit, OnChanges {
 
   @Input() width = 300;
 
-  @Input() position = 'start';
+  @Input() position: 'start' | 'end' = 'start';
 
   @Input() dockWidth = 80;
 
@@ -147,11 +147,11 @@ export class TlSidebar implements OnInit, AfterContentInit, OnChanges {
   }
 
   isChangeDockOpen( change ) {
-    return !change[ 'opened' ].currentValue && this.dock;
+    return (!change[ 'opened' ].currentValue) && (this.dock);
   }
 
   isChangeDockClose( change ) {
-    return change[ 'opened' ].currentValue && this.dock;
+    return (change[ 'opened' ].currentValue) && (this.dock);
   }
 
   setDockClosed() {
@@ -199,7 +199,7 @@ export class TlSidebar implements OnInit, AfterContentInit, OnChanges {
       this.backdrop = this.view.createComponent( componentFactory );
       this.setBackdropOptions();
       (<TlBackdrop>this.backdrop.instance).click.subscribe( () => {
-        this.closeDockSidebar();
+        this.dock ? this.setDockClosed() : this.opened = false;
         this.removeBackdrop();
         this.openedChange.emit( this.opened );
       } );
@@ -208,24 +208,31 @@ export class TlSidebar implements OnInit, AfterContentInit, OnChanges {
     this.handleRemoveBackdrop();
   }
 
+
+
   removeBackdrop() {
-    this.view.remove( this.view.indexOf( this.backdrop ) );
-    this.backdrop = undefined;
+    if (this.backdrop) {
+      this.view.remove( this.view.indexOf( this.backdrop ) );
+      this.backdrop = undefined;
+    }
   }
 
   ngOnChanges( change: SimpleChanges ) {
     if ( change[ 'opened' ] ) {
       this.openedChange.emit( change[ 'opened' ].currentValue );
+      if ( this.isModeOver() && !this.opened ) {
+        this.removeBackdrop();
+      }
       if ( this.isModeOver() && this.opened ) {
         this.createBackdrop();
       }
-      if ( this.isChangeDockOpen( change ) && !this.isFirstChange( change ) ) {
+      if ( this.isChangeDockOpen( change ) && (!this.isFirstChange( change )) ) {
         this.setDockClosed();
         this.emitOpenClose();
         this.toggleChangeEmitter();
         return;
       }
-      if ( this.isChangeDockClose( change ) && !this.isFirstChange( change ) ) {
+      if ( this.isChangeDockClose( change ) && (!this.isFirstChange( change )) ) {
         this.setDockOpened();
         this.emitOpenClose();
         this.toggleChangeEmitter();

@@ -33,8 +33,8 @@
     "build:library": "npm run inline-template && npm run compile && npm run clean",
     "build:showcase": "ng build --aot -prod",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase",
-    "release":"ngc -p tsconfig-release.json && npm run clean",
-    "inline-template":"gulp inline-templates",
+    "release": "ngc -p tsconfig-release.json && npm run clean",
+    "inline-template": "gulp inline-templates",
     "compile": "ngc -p tsconfig-release.json",
     "postcompile": "npm run clean && npm run copy:marckdowns && npm run create:packagejson && npm run copy:aotimports",
     "clean": "rimraf tmp coverage",
@@ -62,6 +62,7 @@
     "ionicons-npm": "^2.0.1",
     "jquery": "^3.2.1",
     "ngx-highlight-js": "^1.0.2",
+    "ngx-highlightjs": "^1.4.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"

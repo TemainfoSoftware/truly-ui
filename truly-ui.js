@@ -31,6 +31,7 @@ __export(require("./components/overlay/index"));
 __export(require("./components/overlaypanel/index"));
 __export(require("./components/sidebar/index"));
 __export(require("./components/panelgroup/index"));
+__export(require("./components/progressbar/index"));
 __export(require("./components/radiobutton/index"));
 __export(require("./components/splitbutton/index"));
 __export(require("./components/tabcontrol/index"));

@@ -1,0 +1,27 @@
+.list-template-demo {
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.list-template-demo:focus {
+  background-color: #7598a6;
+  outline: none;
+  color: #fff;
+}
+
+.selected {
+  background-color: #7598a6;
+  outline: none;
+  color: #fff;
+}
+
+.list-template-demo img {
+  margin: 10px
+}
+
+.list-bagde {
+  float: right;
+  margin: 7px
+}
+
+

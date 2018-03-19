@@ -59,6 +59,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() maximizable = true;
 
+  @Input() closable = true;
+
   @Input() icon = '';
 
   @Input() title = 'My Modal';
@@ -400,9 +402,11 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   closeModal() {
-    this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
-    this.close.emit( this.componentRef.instance );
-    this.leaveClose();
+    if (this.closable) {
+      this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
+      this.close.emit( this.componentRef.instance );
+      this.leaveClose();
+    }
   }
 
   maximizeModal() {
@@ -477,7 +481,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   hoverMinimize() {
-    this.colorHoverMinimize = this.getColorHover();
+    if (this.minimizable) {
+      this.colorHoverMinimize = this.getColorHover();
+    }
   }
 
   leaveMinimize() {
@@ -485,7 +491,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   hoverMaximize() {
-    this.colorHoverMaximize = this.getColorHover();
+    if (this.maximizable) {
+      this.colorHoverMaximize = this.getColorHover();
+    }
   }
 
   leaveMaximize() {
@@ -493,15 +501,19 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   hoverRestore() {
-    this.colorHoverRestore = this.getColorHover();
+    if (this.restoreMaximize) {
+      this.colorHoverRestore = this.getColorHover();
+    }
   }
 
   leaveRestore() {
-    this.colorHoverRestore = this.color;
+      this.colorHoverRestore = this.color;
   }
 
   hoverClose() {
-    this.colorHoverClose = this.getColorHover();
+    if (this.closable) {
+      this.colorHoverClose = this.getColorHover();
+    }
   }
 
   leaveClose() {

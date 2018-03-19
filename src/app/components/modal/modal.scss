@@ -51,7 +51,7 @@
       opacity: 0.4;
     }
 
-    > .header .controls .control-item:hover {
+    > .header .controls .control-item:hover:not(.disabled) {
       cursor: pointer;
     }
 

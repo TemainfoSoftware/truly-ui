@@ -116,6 +116,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
       },
       {
+        path: 'progressbar',
+        loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
+      },
+      {
         path: 'radiobutton',
         loadChildren: './components/radiobutton/radiobuttondemo.module#RadioButtonDemoModule'
       },

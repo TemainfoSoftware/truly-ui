@@ -398,14 +398,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     }
     this.serviceControl.minimize( this.componentRef );
     this.minimize.emit( this.componentRef.instance );
-    this.leaveMinimize();
   }
 
   closeModal() {
     if (this.closable) {
       this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
       this.close.emit( this.componentRef.instance );
-      this.leaveClose();
     }
   }
 
@@ -413,7 +411,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     if ( !(this.maximizable) ) {
       return;
     }
-    this.leaveMaximize();
     if ( !this.maximized ) {
       this.getModalPosition();
       this.setModalLeftPosition();
@@ -460,7 +457,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
       this.setDefaultDimensions();
       this.setCurrentPosition();
       this.maximized = false;
-      this.leaveRestore();
     }
   }
 
@@ -472,52 +468,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     this.parent = this.parentElement ? this.parentElement : this.containerService.getView().element.nativeElement;
     this.offsetLeftContent = this.parent.getBoundingClientRect().left;
     this.offsetTopContent = this.parent.getBoundingClientRect().top;
-  }
-
-  getColorHover() {
-    if ( this.color ) {
-      return this.colorService.calculate( this.color, -0.05 );
-    }
-  }
-
-  hoverMinimize() {
-    if (this.minimizable) {
-      this.colorHoverMinimize = this.getColorHover();
-    }
-  }
-
-  leaveMinimize() {
-    this.colorHoverMinimize = this.color;
-  }
-
-  hoverMaximize() {
-    if (this.maximizable) {
-      this.colorHoverMaximize = this.getColorHover();
-    }
-  }
-
-  leaveMaximize() {
-    this.colorHoverMaximize = this.color;
-  }
-
-  hoverRestore() {
-    if (this.restoreMaximize) {
-      this.colorHoverRestore = this.getColorHover();
-    }
-  }
-
-  leaveRestore() {
-      this.colorHoverRestore = this.color;
-  }
-
-  hoverClose() {
-    if (this.closable) {
-      this.colorHoverClose = this.getColorHover();
-    }
-  }
-
-  leaveClose() {
-    this.colorHoverClose = this.color;
   }
 
   ngOnDestroy() {

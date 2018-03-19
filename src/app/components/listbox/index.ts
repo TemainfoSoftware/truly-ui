@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlListBox } from './listbox';
-import { OverlayModule } from '../overlay/index';
+import { BlockUIModule } from '../blockui/index';
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 
 export * from './listbox';
@@ -12,7 +12,7 @@ export * from './listbox';
     imports: [
         CommonModule,
         FormsModule,
-        OverlayModule
+        BlockUIModule
     ],
     declarations: [
         TlListBox,

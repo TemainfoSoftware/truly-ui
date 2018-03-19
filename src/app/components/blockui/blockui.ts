@@ -30,21 +30,21 @@ import {
     Renderer2,
     ViewContainerRef
 } from '@angular/core';
-import { OverlayConfig } from './overlay-config';
-import { TlOverlayComponent } from './overlay.component';
+import { BlockUIConfig } from './blockui-config';
+import { TlBlockUIComponent } from './blockui.component';
 
 @Directive({
     selector: '[tlOverlay]'
 })
-export class TlOverlay implements OnChanges, AfterViewInit {
+export class TlBlockUI implements OnChanges, AfterViewInit {
 
     @Input() tlOverlay: boolean;
 
-    @Input() overlayConfig: OverlayConfig = new OverlayConfig();
+    @Input() overlayConfig: BlockUIConfig = new BlockUIConfig();
 
     private overlayElement: ElementRef;
 
-    private overlayElementInstance: ComponentRef<TlOverlayComponent>;
+    private overlayElementInstance: ComponentRef<TlBlockUIComponent>;
 
     constructor( private elementRef: ElementRef,
                  private viewContainerRef: ViewContainerRef,
@@ -53,7 +53,7 @@ export class TlOverlay implements OnChanges, AfterViewInit {
 
     ngOnChanges(changes) {
         if (changes['tlOverlay'] && (!changes['tlOverlay'].firstChange) ) {
-            this.troggleLoader( changes['tlOverlay'].currentValue );
+            this.toggleLoader( changes['tlOverlay'].currentValue );
         }
     }
 
@@ -65,7 +65,7 @@ export class TlOverlay implements OnChanges, AfterViewInit {
     }
 
     private createElementInstance() {
-        const componentFactory = this.compiler.resolveComponentFactory( TlOverlayComponent );
+        const componentFactory = this.compiler.resolveComponentFactory( TlBlockUIComponent );
         this.overlayElementInstance = this.viewContainerRef.createComponent( componentFactory );
     }
 
@@ -73,7 +73,7 @@ export class TlOverlay implements OnChanges, AfterViewInit {
         this.overlayElementInstance.instance.config = this.overlayConfig;
     }
 
-    private troggleLoader(showLoading: boolean) {
+    private toggleLoader( showLoading: boolean) {
         showLoading ? this.show() : this.hide();
     }
 

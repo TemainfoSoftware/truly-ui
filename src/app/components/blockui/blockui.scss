@@ -1,4 +1,4 @@
-#overlay {
+#blockui {
   position: absolute;
   top: calc(50% - 75px);
   left: calc(50% - 75px);
@@ -10,18 +10,18 @@
   justify-content: center;
 }
 
-.overlay-content {
+.blockui-content {
   display: inline-block;
   text-align: center;
 }
 
-.overlay-content span {
+.blockui-content span {
   position: relative;
   font-family: 'Lato', sans-serif;
   color: #a5a3a2;
 }
 
-.overlay-content i {
+.blockui-content i {
   display: flex;
   font-size: 3em;
   width: 150px;

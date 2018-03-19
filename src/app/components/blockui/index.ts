@@ -16,8 +16,7 @@ export * from './blockui';
     TlBlockUIComponent
   ],
   exports: [
-    TlBlockUI,
-    TlBlockUIComponent
+    TlBlockUI
   ],
   entryComponents: [
     TlBlockUIComponent

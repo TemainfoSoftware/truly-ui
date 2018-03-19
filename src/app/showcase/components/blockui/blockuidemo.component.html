@@ -1,0 +1,110 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">BlockUI <span
+      class="module-name"><code><u>Module Name</u>: <strong>BlockUIModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>OverlayPanelModule</strong></code></p>
+    <p class="text-content">The BlockUI is used to block some content for a time determined.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <span>Basic</span>
+              </div>
+              <div class="col-md-3 pull-right">
+                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleBasic()"></tl-switch>
+              </div>
+              <div class="blockui" [tlBlockui]="basic">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries,
+                  but also the leap into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+              </div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <div class="blockui" [tlBlockui]="basic"></div>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <span>With Message</span>
+              </div>
+              <div class="col-md-3 pull-right">
+                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleMessage()"></tl-switch>
+              </div>
+              <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion-load-c', 'message': 'Loading...'}">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries,
+                  but also the leap into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+              </div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                 <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion-load-c', 'message': 'Loading...'}"></div>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <span>Spin OFF</span>
+              </div>
+              <div class="col-md-3 pull-right">
+                <tl-switch  [label]="'Toggle Visibility'" (toggle)="toggleSpinOff()"></tl-switch>
+              </div>
+              <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'ion-close-circled'}">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries,
+                  but also the leap into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+              </div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                 <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'ion-close-circled'}"></div>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-3">
+                <span>Message & Spin false</span>
+              </div>
+              <div class="col-md-3 pull-right">
+                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleSpinOffMessage()"></tl-switch>
+              </div>
+
+              <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'ion-alert-circled', 'message': 'Content Blocked'}">
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                  when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                  It has survived not only five centuries,
+                  but also the leap into electronic typesetting, remaining essentially unchanged.
+                  It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p>
+              </div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                 <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'ion-alert-circled', 'message': 'Content Blocked'}"></div>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Properties'" [icon]="'ion-wand'">
+          <app-card>
+            <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

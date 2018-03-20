@@ -1,12 +1,11 @@
 .ui-progressbar-wrapper {
   overflow: hidden;
   width: 100%;
-  height: 100%;
+  position: relative;
 }
 
 .ui-progressbar {
   width: 100%;
-  height: 15px;
 }
 
 .determinate-progress {
@@ -26,9 +25,8 @@
 
 .ui-progress-description {
   user-select: none;
+  width: 100%;
   position: absolute;
-  line-height: 15px;
-  width: 100px;
   opacity: 0.5;
   font-family: 'Lato', sans-serif;
   font-size: 1em;
@@ -41,7 +39,6 @@
   font-size: 0.7em;
   font-style: italic;
   font-weight: normal;
-  line-height: 15px;
 }
 
 @keyframes indeterminate {

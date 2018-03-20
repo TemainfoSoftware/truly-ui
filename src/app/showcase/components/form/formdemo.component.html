@@ -30,6 +30,7 @@
               <pre><code [textContent]="formModal | json"></code></pre>
             </div>
           </app-card>
+          <tl-modal-toolbar [color]="'success'"></tl-modal-toolbar>
           <app-card>
             <h5>Inline Form</h5>
             <tl-form #form (submitForm)="onSubmitForm($event)" [showConfirmOnChange]="true" [textConfirm]="'Login'"
@@ -77,7 +78,6 @@
               </pre>
             </div>-->
           </app-card>
-          <tl-modal-toolbar [color]="'success'"></tl-modal-toolbar>
         </app-showcase-card>
       </div>
     </div>
@@ -115,23 +115,20 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Making it work'" [icon]="'ion-hammer'">
           <app-card>
-            <h4>Step One</h4>
-            <p>Declare the <code>FormService</code> and the <code>ViewContainerRef</code> in your
-              <code>constructor</code>
-            </p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public formService: FormService) {}
-        </textarea>
-            <hr>
-            <h4>Step Two</h4>
+            <h4>Inline Form</h4>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-form #form (submitForm)="onSubmitForm($event)" [textConfirm]="'Login'" [messageDialogConfirmation]="'Are you sure ?'">
+   <!--Your Content Here-->
+   Button Submit -> <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.form.valid" [text]="'Login'"></tl-button>
+</tl-form>
+</textarea>
+            <h4>Step One<span class="modalMode"> - (Only Modal Mode)</span></h4>
             <h5>Inside of your <code>constructor</code>, set your view calling the method of the Form Service.</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public formService: FormService) {
-   this.formService.setView(this.view);
-}
+  constructor(public compiler: ComponentFactoryResolver, public formService: FormService) {}
         </textarea>
             <hr>
-            <h4>Step Tree</h4>
+            <h4>Step Two<span class="modalMode"> - (Only Modal Mode)</span></h4>
             <h5>Inside of your <strong>Custom Component</strong>, in the HTML file, you have to pass the content inside
               the <code>&#60;tl-form&#62;&#60;/tl-form&#62;</code> tags. Like Below</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -139,16 +136,8 @@
     <!--Your Content Here-->
 </tl-form>
                       </textarea>
-
-            <h4>Inline Form</h4>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-form #form (submitForm)="onSubmitForm($event)" [textConfirm]="'Login'" [messageDialogConfirmation]="'Are you sure ?'">
-   <!--Your Content Here-->
-   Button Submit -> <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.form.valid" [text]="'Login'"></tl-button>
-</tl-form>
-</textarea>
             <hr>
-            <h4>Step Four</h4>
+            <h4>Step Tree<span class="modalMode"> - (Only Modal Mode)</span></h4>
             <h5>Import your custom component that will be inside the form as entry component the property ( <code>entryComponents</code>
               ) in your module. In this case is <code>NewPerson</code></h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
@@ -177,7 +166,7 @@
   export class FormDemoModule {}
         </textarea>
             <hr>
-            <h4>Step Five</h4>
+            <h4>Step Five<span class="modalMode"> - (Only Modal Mode)</span></h4>
             <h5>Set the modal options object by <code>@Modal</code> decorator on actual Form Component</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 @Modal({
@@ -193,11 +182,11 @@
 })
             </textarea>
             <hr>
-            <h4>Final Step</h4>
+            <h4>Final Step<span class="modalMode"> - (Only Modal Mode)</span></h4>
             <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For
               example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-this.formService.createForm(NewPersonComponent, parent, (form) => {
+this.formService.createForm(NewPersonComponent, this.compiler, null (form) => {
   if (form.formResult.value) {
     this.dataFormService.saveDataForm(form.formResult.value);
     this.result = this.dataFormService.getDataForm();

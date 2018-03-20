@@ -24,7 +24,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlForm } from './form';
 import { FormService } from './form.service';
-import { ModalModule } from '../modal/index';
 import { ButtonModule } from '../button/index';
 import { DialogService } from '../dialog/dialog.service';
 import { TabIndexService } from './tabIndex.service';
@@ -34,6 +33,7 @@ import { DropDownListModule } from '../dropdownlist/index';
 import { MiscModule } from '../misc/index';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputModule } from '../input/index';
+import { FormSubmitDirective } from './form-submit.directive';
 
 export * from './form.service';
 export * from './form';
@@ -49,7 +49,8 @@ export * from './form';
         MiscModule
     ],
     declarations: [
-        TlForm
+        TlForm,
+        FormSubmitDirective,
     ],
     providers: [
         DialogService,
@@ -59,7 +60,8 @@ export * from './form';
         FormService,
     ],
     exports: [
-        TlForm
+        TlForm,
+        FormSubmitDirective
     ]
 } )
 export class FormModule {}

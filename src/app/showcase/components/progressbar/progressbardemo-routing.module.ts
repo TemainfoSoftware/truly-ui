@@ -19,37 +19,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { ProgressBarComponent } from './progressbardemo.component';
 
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class DataFormService {
-
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
-
+@NgModule( {
+  imports: [
+    RouterModule.forChild( [
+      { path: '', component: ProgressBarComponent }
+    ] )
+  ],
+  exports: [
+    RouterModule
+  ]
+} )
+export class ProgressBarDemoRoutingModule {
 }

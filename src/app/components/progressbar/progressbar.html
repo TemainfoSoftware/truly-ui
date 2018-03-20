@@ -1,0 +1,13 @@
+<div class="ui-progressbar-wrapper" [ngClass]="color">
+  <div class="ui-progressbar">
+    <div [style.left]="'calc(50% - 50px)'" *ngIf="mode === 'determinate'" class="ui-progress-description">{{getProgressDescription()}} %
+      <span class="ui-progress-detail">({{progress}} / {{end}})</span></div>
+    <div *ngIf="mode === 'determinate'" [style.transformOrigin]="'left'"
+         [style.transform]="'scaleX(' + progress / end + ')'"
+         class="determinate-progress">
+    </div>
+    <div *ngIf="mode === 'indeterminate'" [style.transform]="'translate3d(' + (progress / 100) + ', 0, 0)'"
+         class="indeterminate-progress">
+    </div>
+  </div>
+</div>

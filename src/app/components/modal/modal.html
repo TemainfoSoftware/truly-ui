@@ -1,7 +1,6 @@
 <div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" [ngClass]="{'tl-modal-container':true}" [class]="color">
     <div class="header" #headerBox>
         <div class="bar"
-
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
              (mousedown)="mouseDown($event);"
              (dblclick)="maximizeModal()">
@@ -10,41 +9,33 @@
         </div>
         <div class="controls" [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'">
             <div class="control-item"
-
-                 (mouseover)="hoverMinimize()"
-                 (mouseleave)="leaveMinimize()"
+                 [ngClass]="{'disabled': !minimizable}"
                  (click)="minimizeModal()">
                 <i  class="ion-android-remove" [class.disabled]="!minimizable"></i>
             </div>
 
             <div class="control-item" *ngIf="!maximized"
-                 [ngStyle]="{
-                 'zIndex': modal.style.zIndex}"
-                 (mouseover)="hoverMaximize()"
-                 (mouseleave)="leaveMaximize()"
+                 [ngClass]="{'disabled': !maximizable}"
+                 [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="maximizeShortcut"
                  (click)="maximizeModal()">
                 <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
             </div>
 
             <div class="control-item" *ngIf="maximized"
-                 [ngStyle]="{
-                 'zIndex': modal.style.zIndex}"
-                 (mouseover)="hoverRestore()"
-                 (mouseleave)="leaveRestore()"
+                 [ngClass]="{'disabled': !restoreMaximize}"
+                 [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="restoreShortcut"
                  (click)="restoreMaximizeModal()">
-                <i ngClass="ion-android-contract"  [class.disabled]="!restoreMaximize"></i>
+                <i ngClass="ion-android-contract" [class.disabled]="!restoreMaximize"></i>
             </div>
 
             <div class="control-item"
-                 [ngStyle]="{
-                  'zIndex': modal.style.zIndex}"
+                 [ngClass]="{'disabled': !closable}"
+                 [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="closeShortcut"
-                 (mouseover)="hoverClose()"
-                 (mouseleave)="leaveClose()"
                  (click)="closeModal()">
-                <i class="ion-close"></i>
+                <i class="ion-close" [class.disabled]="!closable"></i>
             </div>
         </div>
     </div>

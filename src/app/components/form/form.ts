@@ -23,11 +23,13 @@ import {
   Component, ContentChildren, Input,
   QueryList, Renderer2, Output,
   ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter,
+  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
+import { TlButton } from '../button/button';
+import { FormSubmitDirective } from './form-submit.directive';
 
 let componentFormIndex;
 
@@ -46,6 +48,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() submitShortcut = '';
 
+  @Input() mode: 'inline' | 'modal' = 'inline';
+
   @Input() textConfirm = 'Ok';
 
   @Input() textCancel = 'Cancel';
@@ -54,9 +58,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
-  @ContentChildren( forwardRef(() => TlInput ), {descendants: true}) inputList: QueryList<TlInput>;
+  @Output() submitForm: EventEmitter<NgForm> = new EventEmitter();
 
-  @ContentChildren(NgModel, {descendants: true}) models: QueryList<NgModel>;
+  @ContentChildren( forwardRef( () => TlInput ), { descendants: true } ) inputList: QueryList<TlInput>;
+
+  @ContentChildren( forwardRef( () => TlButton ), { descendants: true } ) buttonList: QueryList<TlButton>;
+
+  @ContentChildren( NgModel, { descendants: true } ) models: QueryList<NgModel>;
+
+  @ContentChild( FormSubmitDirective ) submitDirective;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
@@ -64,7 +74,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ViewChild( 'content' ) content;
 
-  @ViewChild(NgForm) public form: NgForm;
+  @ViewChild( NgForm ) public form: NgForm;
 
   public formResult: {} = {};
 
@@ -76,7 +86,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  constructor( private renderer: Renderer2 ) {}
+  constructor( private renderer: Renderer2 ) {
+  }
 
   ngOnInit() {
     componentFormIndex = -1;
@@ -90,13 +101,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.setInitialFocus();
     this.getElementsOfForm();
     this.clickListener();
-    this.formLoaded.emit(this.form.form);
+    this.formLoaded.emit( this.form.form );
   }
 
   addControls() {
-    this.models.toArray().forEach((control, index, array) => {
-      this.form.addControl(control);
-    });
+    this.models.toArray().forEach( ( control, index, array ) => {
+      this.form.addControl( control );
+    } );
   }
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
@@ -105,7 +116,30 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   clickListener() {
+    if ( this.mode === 'modal' ) {
+      this.listenMouseDownButtonForm();
+    } else {
+      this.listenKeyDownSubmitButton();
+      this.listenMouseDownSubmitButton();
+    }
+  }
+
+  listenMouseDownButtonForm() {
     this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'mousedown', $event => {
+      $event.stopPropagation();
+      this.onClickButtonOk();
+    } );
+  }
+
+  listenKeyDownSubmitButton() {
+    this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'keydown', $event => {
+      $event.stopPropagation();
+      this.onClickButtonOk();
+    } );
+  }
+
+  listenMouseDownSubmitButton() {
+    this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'mousedown', $event => {
       $event.stopPropagation();
       this.onClickButtonOk();
     } );
@@ -116,7 +150,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
-     this.formResult = this.form;
+    this.formResult = this.form;
+    this.submitForm.emit( this.form.value );
   }
 
   getElementsOfForm() {
@@ -141,8 +176,18 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   addButtonsOfFormToListElements() {
-    this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
-    this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
+    if ( this.mode === 'inline' ) {
+      this.buttonList.forEach( ( item, index, array ) => {
+        index === 0 ? this.buttonFormOk = item : this.buttonFormCancel = item;
+      } );
+    }
+
+    if (this.buttonFormOk) {
+      this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
+    }
+    if (this.buttonFormCancel) {
+      this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
+    }
   }
 
   handleTabIndexComponentsOfForm() {
@@ -251,7 +296,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     if ( this.isFirstTabIndexOfForm() ) {
       return this.focusElements[ this.lastTabIndex ].focus();
     }
-    if (!this.validateFirstElement()) {
+    if ( !this.validateFirstElement() ) {
       const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
       for ( let element = previousElement; element < this.focusElements.length; element-- ) {
         if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
@@ -262,7 +307,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   validateFirstElement() {
-     return (this.focusElements[0].getAttribute('disabled')) && (this.focusElements[1] === document.activeElement);
+    return (this.focusElements[ 0 ].getAttribute( 'disabled' )) && (this.focusElements[ 1 ] === document.activeElement);
   }
 
   forwardTabbing() {
@@ -308,9 +353,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   setFocusOnFirstInput() {
     let element;
-    for (const item in this.inputList.toArray()) {
-      if (!(this.inputList.toArray()[item].disabled)) {
-        element = this.inputList.toArray()[item].input.nativeElement;
+    for ( const item in this.inputList.toArray() ) {
+      if ( !(this.inputList.toArray()[ item ].disabled) ) {
+        element = this.inputList.toArray()[ item ].input.nativeElement;
         break;
       }
     }

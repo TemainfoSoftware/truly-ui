@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,37 +21,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+ import { AfterContentInit, ContentChild, Directive } from '@angular/core';
+ import { TlButton } from '../button/button';
 
-import { Injectable } from '@angular/core';
+@Directive({
+  selector: '[formSubmit]'
+})
+ export class FormSubmitDirective implements  AfterContentInit {
 
-@Injectable()
-export class DataFormService {
-
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
+  @ContentChild( TlButton ) public button;
 
   constructor() {}
 
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
+  ngAfterContentInit() {}
 
 }

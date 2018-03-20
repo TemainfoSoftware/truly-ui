@@ -30,6 +30,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DatePickerModule } from '../../../components/datepicker/index';
 import { ValidatorsModule } from '../../../components/validators/index';
+import { HighlightModule } from 'ngx-highlightjs';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ValidatorsModule } from '../../../components/validators/index';
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
+    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,

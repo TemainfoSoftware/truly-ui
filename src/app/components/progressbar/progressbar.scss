@@ -1,0 +1,55 @@
+.ui-progressbar-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.ui-progressbar {
+  width: 100%;
+  height: 15px;
+}
+
+.determinate-progress {
+  width: 100%;
+  height: inherit;
+  transition: all ease-in-out 200ms;
+}
+
+.indeterminate-progress {
+  width: 50%;
+  height: inherit;
+  animation-duration: 2s;
+  animation-name: indeterminate;
+  animation-iteration-count: infinite;
+  animation-direction: normal ;
+}
+
+.ui-progress-description {
+  user-select: none;
+  position: absolute;
+  line-height: 15px;
+  width: 100px;
+  opacity: 0.5;
+  font-family: 'Lato', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  z-index: 1000;
+  text-align: center;
+}
+
+.ui-progress-detail {
+  font-size: 0.7em;
+  font-style: italic;
+  font-weight: normal;
+  line-height: 15px;
+}
+
+@keyframes indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(210%);
+  }
+}

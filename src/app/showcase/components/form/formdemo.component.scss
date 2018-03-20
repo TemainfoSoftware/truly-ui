@@ -14,9 +14,9 @@
 }
 
 .result {
-  background: #8eb7da;
+  background: #f5f5f5;
   overflow: auto;
-  height: 140px;
+  height: 100%;
   border: 0;
 }
 
@@ -43,9 +43,10 @@
 }
 
 .parentElementContainer {
-  height: 200px;
-  background: #82a8cb;
+  height: 150px;
+  background: #e4e4e4;
   margin-top: 10px;
   border: 1px solid #aeaeae;
-  margin-bottom: 10px
+  margin-bottom: 10px;
+  padding: 10px;
 }

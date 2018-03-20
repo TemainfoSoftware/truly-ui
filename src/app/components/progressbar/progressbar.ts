@@ -19,37 +19,45 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import {
+  Component, OnInit, Input, SimpleChanges, OnChanges,
+} from '@angular/core';
 
-import { Injectable } from '@angular/core';
 
-@Injectable()
-export class DataFormService {
+@Component( {
+  selector: 'tl-progressbar',
+  templateUrl: './progressbar.html',
+  styleUrls: [ './progressbar.scss' ],
+} )
+export class TlProgressBar implements OnInit, OnChanges {
 
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
+  @Input() start = 0;
+
+  @Input() end = 100;
+
+  @Input() progress = 0;
+
+  @Input() mode: 'determinate' | 'indeterminate' = 'determinate';
+
+  @Input() color: 'basic' | 'primary' | 'success' | 'danger' | 'warning' | 'information' | 'light' | 'dark' = 'primary';
 
   constructor() {}
 
-  saveDataForm(result) {
-    this.dataForm = result;
+  ngOnInit() {
+    this.progress = this.start;
   }
 
-  getDataForm() {
-    return this.dataForm;
+  getProgressDescription() {
+    return Math.round( (this.progress / this.end) * 100 );
+  }
+
+  ngOnChanges( change: SimpleChanges ) {
+    if ( change.progress ) {
+      if ( (!change.progress.firstChange) && isNaN( change.progress.currentValue ) ) {
+        this.progress = 0;
+      }
+    }
   }
 
 }
+

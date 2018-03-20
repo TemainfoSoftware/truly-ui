@@ -10,16 +10,13 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <h5>Push Usage</h5>
               <!--sidebar-->
               <div class="sidebar-demo">
-                <div class="bar-buttons">
-                  <div class="trigger left-right" (click)="sidebarLeft.toggle()">
-                    <i [class]="'ion-android-menu'"></i></div>
-                  <div class="trigger right-button"
-                       (click)="sidebarRight.toggle();"><i
-                    class="ion-ios-chatboxes"></i></div>
+                <div class="buttons">
+                  <div class="trigger" (click)="sidebarLeft.toggle()">Toggle Left</div>
+                  <div class="trigger" (click)="sidebarRight.toggle();">Toggle Right</div>
                 </div>
                 <tl-sidebar-container>
                   <tl-sidebar [position]="'start'" #sidebarLeft [mode]="'push'">
@@ -30,8 +27,8 @@
                       <li><i class="ion-images"></i><span *ngIf="!sidebarLeft.docked">Panels</span></li>
                     </ul>
                   </tl-sidebar>
-                  <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
-                    <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                  <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                    <p class="content-text">
                       Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                       Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                       when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -56,6 +53,7 @@
                   </tl-sidebar>
                 </tl-sidebar-container>
               </div>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   <tl-sidebar-container>
     <tl-sidebar [position]="'start'" [mode]="'push'">
@@ -70,17 +68,16 @@
 </tl-sidebar-container>
 </textarea>
             </div>
-            <div class="col-md-6">
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
               <h5>Slide Usage</h5>
-              <div class="bar-buttons">
-                <div class="trigger left-right" (click)="sidebarSlide.toggle()">
-                  <i [class]="'ion-android-menu'"></i></div>
-                <div class="trigger right-button"
-                     (click)="sidebarRightSlide.toggle();"><i
-                  class="ion-ios-chatboxes"></i></div>
+              <div class="buttons">
+                <div class="trigger" (click)="sidebarSlide.toggle()">Toggle Left</div>
+                <div class="trigger" (click)="sidebarRightSlide.toggle();">Toggle Right</div>
               </div>
               <tl-sidebar-container>
-                <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'">
+                <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'" >
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarSlide.docked}">
                     <li><i class="ion-coffee"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
                     <li><i class="ion-icecream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
@@ -88,8 +85,8 @@
                     <li><i class="ion-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
-                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                  <p class="content-text">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -113,6 +110,7 @@
                   <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
                 </tl-sidebar>
               </tl-sidebar-container>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <tl-sidebar-container>
   <tl-sidebar [position]="'start'" [mode]="'slide'">
@@ -129,14 +127,11 @@
             </div>
           </app-card>
           <app-card>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <h5>Dock Usage</h5>
-              <div class="bar-buttons">
-                <div class="trigger left-right" (click)="toggleSidebar()">
-                  <i [class]="sidebarDock.docked ? 'ion-android-menu' : 'ion-chevron-right'"></i></div>
-                <div class="trigger right-button"
-                     (click)="sidebarDockRight.toggle();"><i
-                  class="ion-ios-chatboxes"></i></div>
+              <div class="buttons">
+                <div class="trigger" (click)="sidebarDock.toggle()">Toggle Left</div>
+                <div class="trigger" (click)="sidebarDockRight.toggle();">Toggle Right</div>
               </div>
               <tl-sidebar-container>
                 <tl-sidebar
@@ -156,8 +151,8 @@
                     <li><i class="ion-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
-                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                  <p class="content-text">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -181,6 +176,7 @@
                   <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
                 </tl-sidebar>
               </tl-sidebar-container>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <div class="trigger left-right" (click)="sidebar.toggle()"></div>
 <tl-sidebar-container #sidebar>
@@ -196,17 +192,16 @@
 </tl-sidebar-container>
 </textarea>
             </div>
-            <div class="col-md-6">
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
               <h5>Over Usage</h5>
-              <div class="bar-buttons">
-                <div class="trigger left-right" (click)="sidebarOver.toggle()">
-                  <i [class]="'ion-android-menu'"></i></div>
-                <div class="trigger right-button"
-                     (click)="sidebarOverRight.toggle()"><i
-                  class="ion-ios-chatboxes"></i></div>
+              <div class="buttons">
+                <div class="trigger" (click)="sidebarOver.toggle()">Toggle Left</div>
+                <div class="trigger" (click)="sidebarOverRight.toggle()">Toggle Right</div>
               </div>
               <tl-sidebar-container>
-                <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'" [dock]="true">
+                <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'">
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarOver.docked}">
                     <li><i class="ion-coffee"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
                     <li><i class="ion-icecream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
@@ -214,8 +209,8 @@
                     <li><i class="ion-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent style="background-color: #5c94e2;">
-                  <p style="padding: 20px; color: #fff; font-size: 20px; line-height: 30px; text-align: justify">
+                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                  <p class="content-text">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                     Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                     when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -227,7 +222,7 @@
                     Lorem Ipsum.
                   </p>
                 </tl-sidebar-content>
-                <tl-sidebar [position]="'end'" [mode]="'over'" #sidebarOverRight>
+                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarOverRight>
                   <tl-chatlist [itemsToShow]="4"
                                [height]="225"
                                [searchQuery]="'firstName'"
@@ -239,6 +234,7 @@
                   <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
                 </tl-sidebar>
               </tl-sidebar-container>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <tl-sidebar-container>
   <tl-sidebar [position]="'start'" [mode]="'over'" [dock]="true">
@@ -247,7 +243,7 @@
   <tl-sidebar-content [height]="'300px'">
     <!-- Content-->
   </tl-sidebar-content>
-  <tl-sidebar [position]="'end'" [mode]="'over'">
+  <tl-sidebar [position]="'end'" [mode]="'slide'">
    <!-- Sidebar End Content-->
   </tl-sidebar>
 </tl-sidebar-container>

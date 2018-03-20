@@ -20,23 +20,8 @@
     SOFTWARE.
 */
 
-import { Component, ElementRef } from '@angular/core';
-import { OverlayConfig } from './overlay-config';
-
-@Component({
-    selector: 'tl-overlay-component',
-    template: `
-        <div id="overlay">
-            <div class="overlay-content">
-                <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
-                <span *ngIf="config.message">{{config.message}}</span>
-            </div>
-        </div>`,
-    styleUrls: ['./overlay.scss']
-})
-export class TlOverlayComponent {
-
-    public config: OverlayConfig = new OverlayConfig();
-
-    constructor( public element: ElementRef) {}
+export class BlockUIConfig {
+    public icon = 'fa-refresh';
+    public spin = true;
+    public message = '';
 }

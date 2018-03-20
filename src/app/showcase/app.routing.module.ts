@@ -32,6 +32,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'
       },
       {
+        path: 'blockui',
+        loadChildren: './components/blockui/blockuidemo.module#BlockUIDemoModule'
+      },
+      {
         path: 'calendar',
         loadChildren: './components/calendar/calendardemo.module#CalendarDemoModule'
       },
@@ -110,6 +114,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'panelgroup',
         loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
+      },
+      {
+        path: 'progressbar',
+        loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
       },
       {
         path: 'radiobutton',

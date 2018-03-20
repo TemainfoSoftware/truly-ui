@@ -19,37 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class DataFormService {
-
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
-
-}
+export const dataEvents = [
+  {
+    name: 'submitForm',
+    parameters: [
+      { event: 'NgForm Value', description: 'Value form' },
+    ],
+    description: 'Returns the value form.',
+  },
+];

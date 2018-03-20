@@ -70,7 +70,7 @@ export class SidebarDemoComponent {
     console.log('change', param);
   }
 
-  toggleSidebar() {
+  toggle() {
     this.openedDemo = !this.openedDemo;
   }
 

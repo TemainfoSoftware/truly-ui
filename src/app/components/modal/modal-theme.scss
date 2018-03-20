@@ -15,7 +15,7 @@
   > .header .-inactive {
     color: rgba( map-deep-get($theme, $action, "default", "foreground"), 0.5);
   }
-  & .header .controls .control-item:hover {
+  & .header .controls .control-item:hover:not(.disabled) {
     background-color: map-deep-get($theme, $action, "hover", "background");
     color:  map-deep-get($theme, $action, "hover", "foreground");
     border-color: map-deep-get($theme, $action, 'hover', "border");

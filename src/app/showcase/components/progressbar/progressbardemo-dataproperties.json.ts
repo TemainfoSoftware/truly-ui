@@ -19,37 +19,40 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class DataFormService {
-
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
-
-  constructor() {}
-
-  saveDataForm(result) {
-    this.dataForm = result;
-  }
-
-  getDataForm() {
-    return this.dataForm;
-  }
-
-}
+export const dataProperties = [
+  {
+    name: 'color',
+    type: 'string',
+    default: 'primary',
+    description: 'Changes the default color of the progress bar.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
+    name: 'progress',
+    type: 'number',
+    default: '0',
+    description: 'Number of current value progress.',
+    options: 'any number'
+  },
+  {
+    name: 'start',
+    type: 'number',
+    default: '0',
+    description: 'Value that represents the start of progress bar.',
+    options: 'any number'
+  },
+  {
+    name: 'end',
+    type: 'number',
+    default: '100',
+    description: 'Value that represents the end of progress bar',
+    options: 'any number'
+  },
+  {
+    name: 'mode',
+    type: 'string',
+    default: 'determinate',
+    description: 'The mode of progress bar works, with determinate value (start and end) or infinite progress bar (loader).',
+    options: 'determinate | indeterminate'
+  },
+];

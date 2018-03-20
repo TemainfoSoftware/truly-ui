@@ -1,0 +1,65 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-progressbar-theme-schema( $theme, $action ){
+  $basic: map-deep-get($theme, 'basic');
+  $dark: map_deep-get($theme, 'dark');
+
+  outline: 1px solid map-deep-get($basic, "default", "border");
+
+  .ui-progressbar {
+    background-color: map-deep-get($basic, "default", "background");
+  }
+
+  .determinate-progress {
+    background-color: map-deep-get($theme, $action, "default", "background");
+  }
+
+  .indeterminate-progress {
+    background-color: map-deep-get($theme, $action, "default", "background");
+  }
+
+  .ui-progress-description {
+    color: map-deep-get($dark, "default", "foreground");
+  }
+
+}
+
+@mixin tl-progressbar-theme( $theme ) {
+
+  .ui-progressbar-wrapper {
+
+    &.basic {
+      @include _tl-progressbar-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-progressbar-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-progressbar-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-progressbar-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-progressbar-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-progressbar-theme-schema($theme, 'information')
+    }
+
+    &.light {
+      @include _tl-progressbar-theme-schema($theme, 'light')
+    }
+
+    &.dark {
+      @include _tl-progressbar-theme-schema($theme, 'dark')
+    }
+
+  }
+
+}

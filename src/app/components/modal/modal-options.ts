@@ -10,6 +10,7 @@ export interface ModalOptions {
     draggable?: boolean;
     maximizable?: boolean;
     minimizable?: boolean;
+    closable?: boolean;
     fullscreen?: boolean;
     restoreMaximize?: boolean;
     backdrop?: boolean;

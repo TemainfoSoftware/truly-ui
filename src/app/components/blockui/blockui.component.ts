@@ -20,8 +20,23 @@
     SOFTWARE.
 */
 
-export class OverlayConfig {
-    public icon = 'fa-refresh';
-    public spin = true;
-    public message = '';
+import { Component, ElementRef } from '@angular/core';
+import { BlockUIConfig } from './blockui-config';
+
+@Component({
+    selector: 'tl-blockui-component',
+    template: `
+      <div id="blockui">
+        <div class="blockui-content">
+          <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
+          <span *ngIf="config.message">{{config.message}}</span>
+        </div>
+      </div>`,
+    styleUrls: ['./blockui.scss']
+})
+export class TlBlockUIComponent {
+
+    public config: BlockUIConfig = new BlockUIConfig();
+
+    constructor( public element: ElementRef) {}
 }

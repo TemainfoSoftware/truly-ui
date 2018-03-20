@@ -19,37 +19,29 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { Component, OnInit } from '@angular/core';
 
-import { Injectable } from '@angular/core';
+import * as json from './progressbardemo-dataproperties.json';
 
-@Injectable()
-export class DataFormService {
+@Component( {
+  selector: 'app-progressbar',
+  templateUrl: './progressbardemo.component.html',
+  styleUrls: [ './progressbardemo.component.scss' ],
+} )
+export class ProgressBarComponent implements OnInit {
 
-  public dataForm =
-      {
-        name: '',
-        lastname: '',
-        birthday: '',
-        city: '',
-        country: '',
-        state: '',
-        gender: '',
-        notification: '',
-        remember: false,
-        dependents: '',
-        clients: '',
-        password: '',
-        cpf: '',
-      };
+  public startValue = 160;
+
+  public dataTableProperties;
 
   constructor() {}
 
-  saveDataForm(result) {
-    this.dataForm = result;
+  ngOnInit() {
+    this.dataTableProperties = json.dataProperties;
   }
 
-  getDataForm() {
-    return this.dataForm;
+  increase(value) {
+    this.startValue = parseInt(value.target.value, 10);
   }
 
 }

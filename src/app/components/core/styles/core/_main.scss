@@ -13,6 +13,7 @@
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
 @import "../../../panelgroup/panelgroup-theme";
+@import "../../../progressbar/progressbar-theme";
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
 @import "../../../switch/switch-theme";
@@ -35,6 +36,7 @@
   @include tl-multiselect-theme($theme);
   @include tl-navigator-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
   @include tl-switch-theme($theme);

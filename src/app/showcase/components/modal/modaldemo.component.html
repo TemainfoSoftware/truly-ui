@@ -46,17 +46,22 @@
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
           <app-card>
             <h4>Step One</h4>
-            <h5>Declare the <code>ModalService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>.</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public modalService: ModalService) {}
-        </textarea>
+            <h5>Declare the <code>ModalService</code> and set the <code>tlContainerModal</code> Directive on a HTML Element root, where modal going to be on it.
+            For Example: </h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<div class="content-wrapper" tlContainerModal>
+  <!-- Main content -->
+  <section class="content">
+    <router-outlet></router-outlet>
+  </section>
+ <!-- /.content -->
+</div>
+            </textarea>
             <hr>
             <h4>Step Two</h4>
-            <h5>Inside of your <code>constructor</code>, set your view calling the method of the Modal Service.</h5>
+            <h5>Inside of your <code>constructor</code>, you have to declare <code>ComponentFactoryResolver</code> and <code>ModalService</code>.</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public modalService: ModalService) {
-       this.modalService.setView(this.view);
-  }
+  constructor(public compiler: ComponentFactoryResolver, public modalService: ModalService) {}
         </textarea>
             <hr>
             <h4>Step Tree</h4>
@@ -90,11 +95,11 @@
             <h4>Final Step</h4>
             <h5>Create an function to call the function <code>createModal</code> passing the following parameters. For example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  this.modalService.createModal(NewModal, this.modalOptions, (modalResult) => {
-        console.log('Return',modalResult);
-  }).on('show', () => {
-    console.log('Show Modal');
-  })
+this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResult) => {
+  this.modalResult = modalResult;
+}).on('show', () => {
+  console.log('Show Modal');
+});
         </textarea>
           </app-card>
         </app-showcase-card>

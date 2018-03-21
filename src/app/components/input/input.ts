@@ -113,6 +113,8 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @ViewChild( 'input' ) input;
 
+  @ViewChild( 'inputBox' ) inputBox;
+
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
   @Output() clickAddon: EventEmitter<any> = new EventEmitter();

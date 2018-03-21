@@ -23,8 +23,8 @@ export class TlMessageValidationComponent {
   }
 
   setInput(tlinput: TlInput) {
-    this.width = tlinput.input.nativeElement.offsetWidth + 'px';
-    this.left = tlinput.label ? parseInt(tlinput.labelSize, 10) + 'px' : 0;
+    this.left  = (tlinput.label && tlinput.labelPlacement === 'left') ? parseInt(tlinput.labelSize, 10) + 'px' : 0;
+    this.width = (tlinput.inputBox.nativeElement.offsetWidth - parseInt(this.left, 10)) + 'px';
   }
 
   setMessages(messages: Object) {

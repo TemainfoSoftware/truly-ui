@@ -132,17 +132,21 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   listenKeyDownSubmitButton() {
-    this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'keydown', $event => {
-      $event.stopPropagation();
-      this.onClickButtonOk();
-    } );
+    if ( this.submitDirective ) {
+      this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'keydown', $event => {
+        $event.stopPropagation();
+        this.onClickButtonOk();
+      } );
+    }
   }
 
   listenMouseDownSubmitButton() {
-    this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'mousedown', $event => {
-      $event.stopPropagation();
-      this.onClickButtonOk();
-    } );
+    if ( this.submitDirective ) {
+      this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'mousedown', $event => {
+        $event.stopPropagation();
+        this.onClickButtonOk();
+      } );
+    }
   }
 
   onClickButtonOk() {
@@ -182,10 +186,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
       } );
     }
 
-    if (this.buttonFormOk) {
+    if ( this.buttonFormOk ) {
       this.focusElements.push( this.buttonFormOk.buttonElement.nativeElement );
     }
-    if (this.buttonFormCancel) {
+    if ( this.buttonFormCancel ) {
       this.focusElements.push( this.buttonFormCancel.buttonElement.nativeElement );
     }
   }

@@ -24,35 +24,42 @@ export const dataProperties = [
     name: 'color',
     type: 'string',
     default: 'primary',
-    description: 'Changes the default color of the progress bar.',
+    description: 'Changes the default color of the position bar.',
     options: 'basic | primary | success | information | warning | danger | light | dark'
   },
   {
-    name: 'progress',
+    name: 'position',
     type: 'number',
     default: '0',
-    description: 'Number of current value progress.',
+    description: 'Number of current value position.',
     options: 'any number'
   },
   {
-    name: 'start',
+    name: 'min',
     type: 'number',
     default: '0',
-    description: 'Value that represents the start of progress bar.',
+    description: 'Value that represents the min of position bar.',
     options: 'any number'
   },
   {
-    name: 'end',
+    name: 'max',
     type: 'number',
     default: '100',
-    description: 'Value that represents the end of progress bar',
+    description: 'Value that represents the max of position bar.',
     options: 'any number'
+  },
+  {
+    name: 'progressInfo',
+    type: 'string',
+    default: 'percentage',
+    description: 'Type of info shown.',
+    options: 'percentage | detailed | none'
   },
   {
     name: 'mode',
     type: 'string',
     default: 'determinate',
-    description: 'The mode of progress bar works, with determinate value (start and end) or infinite progress bar (loader).',
+    description: 'The mode of position bar works, with determinate value (min and max) or infinite position bar (loader).',
     options: 'determinate | indeterminate'
   },
 ];

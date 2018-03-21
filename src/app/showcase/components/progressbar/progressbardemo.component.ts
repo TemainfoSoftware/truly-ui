@@ -30,7 +30,7 @@ import * as json from './progressbardemo-dataproperties.json';
 } )
 export class ProgressBarComponent implements OnInit {
 
-  public startValue = 160;
+  public progress = 50;
 
   public dataTableProperties;
 
@@ -41,7 +41,7 @@ export class ProgressBarComponent implements OnInit {
   }
 
   increase(value) {
-    this.startValue = parseInt(value.target.value, 10);
+    this.progress = parseInt(value.target.value, 10);
   }
 
 }

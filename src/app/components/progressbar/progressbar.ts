@@ -23,7 +23,6 @@ import {
   Component, OnInit, Input, SimpleChanges, OnChanges,
 } from '@angular/core';
 
-
 @Component( {
   selector: 'tl-progressbar',
   templateUrl: './progressbar.html',
@@ -31,11 +30,17 @@ import {
 } )
 export class TlProgressBar implements OnInit, OnChanges {
 
-  @Input() start = 0;
+  @Input() min = 0;
 
-  @Input() end = 100;
+  @Input() max = 100;
 
-  @Input() progress = 0;
+  @Input() position = 0;
+
+  @Input() unit = 'MB';
+
+  @Input() height = '15px';
+
+  @Input() progressInfo: 'none' | 'percentage' | 'detailed' = 'percentage';
 
   @Input() mode: 'determinate' | 'indeterminate' = 'determinate';
 
@@ -43,18 +48,19 @@ export class TlProgressBar implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
-    this.progress = this.start;
-  }
+  ngOnInit() {}
 
   getProgressDescription() {
-    return Math.round( (this.progress / this.end) * 100 );
+    return Math.round( ((this.position - this.min) / (this.max - this.min)) * 100 );
   }
 
   ngOnChanges( change: SimpleChanges ) {
     if ( change.progress ) {
+      if (this.position < this.min) {
+        this.position = this.min;
+      }
       if ( (!change.progress.firstChange) && isNaN( change.progress.currentValue ) ) {
-        this.progress = 0;
+        this.position = 0;
       }
     }
   }

@@ -85,6 +85,7 @@ export class MessageValidationDirective implements OnInit, OnDestroy {
     if (this.component) {
       (<TlMessageValidationComponent>this.component.instance).hideMessages( value );
       (<TlMessageValidationComponent>this.component.instance).setInput( this.tlinput );
+      this.replacePositionTree();
     }
   }
 
@@ -94,6 +95,10 @@ export class MessageValidationDirective implements OnInit, OnDestroy {
       this.component = this.view.createComponent( componentFactory );
       (<TlMessageValidationComponent>this.component.instance).setInput( this.tlinput );
     }
+  }
+
+  replacePositionTree() {
+    this.tlinput.tlInput.nativeElement.appendChild( (<TlMessageValidationComponent>this.component.instance).element.nativeElement );
   }
 
   removeMessageValidation() {

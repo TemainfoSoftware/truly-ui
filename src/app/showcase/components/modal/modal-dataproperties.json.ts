@@ -77,6 +77,13 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'closable',
+    type: 'boolean',
+    default: 'true',
+    description: 'Control if window dialog is closable or not',
+    options: 'true | false'
+  },
+  {
     name: 'restoreMaximize',
     type: 'boolean',
     default: 'true',

@@ -104,5 +104,12 @@ export const dataProperties = [
     description: 'Control if window dialog is minimizable or not.',
     options: 'true | false'
   },
+  {
+    name: 'modalOptions.closable',
+    type: 'boolean',
+    default: 'true',
+    description: 'Control if window dialog is closable or not.',
+    options: 'true | false'
+  },
 
   ];

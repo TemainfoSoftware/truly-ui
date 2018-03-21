@@ -10,17 +10,48 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <span>Determinate</span>
-            <input type="range" min="0" [value]="startValue" (input)="increase($event)" max="500" step="0.01">
+            <input type="range" min="50" [value]="progress" (input)="increase($event)" max="500" step="0.01">
             <div class="spacer"></div>
-            <tl-progressbar [mode]="'determinate'" [color]="'information'" [end]="500" [start]="startValue" [progress]="startValue"></tl-progressbar>
+            <tl-progressbar [mode]="'determinate'" [color]="'danger'" [max]="500" [min]="50" [position]="progress"></tl-progressbar>
             <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-progressbar [mode]="'determinate'" [color]="'information'" [end]="500" [start]="startValue" [progress]="startValue"></tl-progressbar>
+<tl-progressbar [mode]="'determinate'" [color]="'danger'" [max]="500" [min]="50" [position]="progress"></tl-progressbar>
 </textarea>
+            <div class="spacer"></div>
+            <span>Determinate Detailed Info</span>
+
+            <tl-progressbar
+              [mode]="'determinate'"
+              [progressInfo]="'detailed'"
+              [color]="'information'"
+              [max]="500"
+              [min]="50"
+              [position]="progress">
+            </tl-progressbar>
 
             <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-progressbar [mode]="'determinate'" [color]="'information'" [progressInfo]="'detailed'" [max]="500" [min]="50" [position]="progress"></tl-progressbar>
+</textarea>
+            <div class="spacer"></div>
+            <span>Determinate None Info</span>
+
+            <tl-progressbar
+              [mode]="'determinate'"
+              [progressInfo]="'none'"
+              [color]="'success'"
+              [max]="500"
+              [min]="50"
+              [position]="progress">
+            </tl-progressbar>
+
+            <div class="spacer"></div>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-progressbar [mode]="'determinate'" [color]="'success'" [progressInfo]="'none'" [max]="500" [min]="50" [position]="progress"></tl-progressbar>
+</textarea>
+            <div class="spacer"></div>
             <span>Indeterminate</span>
-            <tl-progressbar [mode]="'indeterminate'"></tl-progressbar>
+            <tl-progressbar [mode]="'indeterminate'" [height]="'10px'"></tl-progressbar>
             <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-progressbar [mode]="'indeterminate'"></tl-progressbar>

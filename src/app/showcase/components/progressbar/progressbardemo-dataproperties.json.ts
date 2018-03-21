@@ -42,6 +42,13 @@ export const dataProperties = [
     options: 'any number'
   },
   {
+    name: 'unit',
+    type: 'string',
+    default: 'null',
+    description: 'Unit of value shown.',
+    options: 'any string'
+  },
+  {
     name: 'max',
     type: 'number',
     default: '100',

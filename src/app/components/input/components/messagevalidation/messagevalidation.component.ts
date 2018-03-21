@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { TlInput } from '../../input';
 
 @Component({
@@ -14,18 +14,15 @@ export class TlMessageValidationComponent {
 
   public hide;
 
-  public top;
-
   public left;
 
-  constructor() { }
+  constructor( public element: ElementRef ) { }
 
   hideMessages(value) {
     this.hide = value;
   }
 
   setInput(tlinput: TlInput) {
-    this.top = tlinput.input.nativeElement.getBoundingClientRect().top + tlinput.input.nativeElement.offsetHeight + 'px';
     this.width = tlinput.input.nativeElement.offsetWidth + 'px';
     this.left = tlinput.label ? parseInt(tlinput.labelSize, 10) + 'px' : 0;
   }

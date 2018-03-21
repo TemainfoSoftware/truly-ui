@@ -150,10 +150,15 @@ export class ModalService implements OnDestroy {
     (<TlBackdrop>this.backdrop.instance).setBackdropOptions( {
       'width': this.view.element.nativeElement.offsetWidth + 'px',
       'height': this.view.element.nativeElement.offsetHeight + 'px',
-      'left': this.view.element.nativeElement.getBoundingClientRect().left + 'px',
-      'top': this.view.element.nativeElement.getBoundingClientRect().top + 'px'
+      'zIndex': 1
     } );
 
+    this.reallocateBackdrop();
+
+  }
+
+  reallocateBackdrop() {
+    this.view.element.nativeElement.insertAdjacentElement('afterbegin', (<TlBackdrop>this.backdrop.instance).backdrop.nativeElement );
   }
 
   showModal( item: ComponentRef<any> ) {

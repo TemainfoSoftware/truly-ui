@@ -36,7 +36,7 @@ export class TlProgressBar implements OnInit, OnChanges {
 
   @Input() position = 0;
 
-  @Input() unit = 'MB';
+  @Input() unit = '';
 
   @Input() height = '15px';
 

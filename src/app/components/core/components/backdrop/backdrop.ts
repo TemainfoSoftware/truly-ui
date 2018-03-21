@@ -20,8 +20,10 @@
  SOFTWARE.
  */
 
-import { Input, Component, HostBinding, ViewChild, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  Input, Component, Output, EventEmitter,
+  ElementRef
+} from '@angular/core';
 
 
 @Component( {
@@ -31,9 +33,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 } )
 export class TlBackdrop {
 
-    @ViewChild('backdrop') backdrop;
-
-    @Input() position = {left: '0', top: '0', zIndex: 0};
+    @Input() position = { zIndex: 0 };
 
     @Input() width = '100%';
 
@@ -41,13 +41,11 @@ export class TlBackdrop {
 
     @Output() click = new EventEmitter();
 
-    constructor() {}
+    constructor( public backdrop: ElementRef) {}
 
     setBackdropOptions(object) {
       this.width = object.width;
       this.height = object.height;
-      this.position.left = object.left;
-      this.position.top = object.top;
       this.position.zIndex = object.zIndex;
     }
 

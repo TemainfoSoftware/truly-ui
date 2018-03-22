@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Input, ContentChildren, Component, QueryList, forwardRef, AfterContentInit, Renderer2, ViewChild, AfterViewInit,
-  Output, OnDestroy, EventEmitter, OnChanges, SimpleChanges
+  Input, ContentChildren, Component, QueryList, forwardRef, AfterContentInit, Renderer2,
+  ViewChild, AfterViewInit, Output, OnDestroy, EventEmitter
 } from '@angular/core';
 
 import { TlView } from './view/view';
@@ -33,9 +33,18 @@ const globalListeners = [];
   templateUrl: './multiview.html',
   styleUrls: [ './multiview.scss' ],
 } )
-export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, OnChanges {
+export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
 
-  @Input() modelValue: string;
+  _modelValue: any;
+  get modelValue() {
+    return this._modelValue;
+  }
+
+  @Input() set modelValue( value: string ) {
+    this._modelValue = value;
+    this.selectedChange.emit( this._modelValue );
+    this.changeViewSelected( value );
+  }
 
   @Input() transitionTime = '300ms';
 
@@ -64,20 +73,6 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, 
   private movementPosition;
 
   constructor( private renderer: Renderer2 ) {}
-
-
-  ngOnChanges( changes: SimpleChanges ) {
-    if (  !( changes['modelValue'].firstChange)) {
-      this.changeModelValue( changes['modelValue'].currentValue );
-    }
-  }
-
-  changeModelValue( value ) {
-    this.modelValue = value;
-    this.selectedChange.emit( value );
-    this.changeViewSelected( value );
-  }
-
 
   ngAfterContentInit() {
     this.handleViewBounding();
@@ -188,7 +183,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, 
     if ( (translatePos > this.selectedView.viewPosition) ) {
       const index = this.viewBounding.indexOf( this.selectedView ) + 1;
       if ( this.viewBounding[ index ] ) {
-        this.changeModelValue(this.viewBounding[ index ].viewItem.value);
+        this.modelValue = this.viewBounding[ index ].viewItem.value;
       }
     }
   }
@@ -198,7 +193,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, 
     if ( translatePos < this.selectedView.viewPosition ) {
       const index = this.viewBounding.indexOf( this.selectedView ) - 1;
       if ( this.viewBounding[ index ] ) {
-        this.changeModelValue( this.viewBounding[ index ].viewItem.value );
+        this.modelValue = this.viewBounding[ index ].viewItem.value;
       }
     }
   }

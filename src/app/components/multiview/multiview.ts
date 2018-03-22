@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Input, ContentChildren, Component, QueryList, forwardRef, AfterContentInit, Renderer2,
-  ViewChild, AfterViewInit, Output, OnDestroy, EventEmitter
+  Input, ContentChildren, Component, QueryList, forwardRef, AfterContentInit, Renderer2, ViewChild, AfterViewInit,
+  Output, OnDestroy, EventEmitter, OnChanges, SimpleChanges
 } from '@angular/core';
 
 import { TlView } from './view/view';
@@ -33,18 +33,9 @@ const globalListeners = [];
   templateUrl: './multiview.html',
   styleUrls: [ './multiview.scss' ],
 } )
-export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
+export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, OnChanges {
 
-  _modelValue: any;
-  get modelValue() {
-    return this._modelValue;
-  }
-
-  @Input() set modelValue( value: string ) {
-    this._modelValue = value;
-    this.selectedChange.emit( this._modelValue );
-    this.changeViewSelected( value );
-  }
+  @Input() modelValue: string;
 
   @Input() transitionTime = '300ms';
 
@@ -73,6 +64,20 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
   private movementPosition;
 
   constructor( private renderer: Renderer2 ) {}
+
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if (  !( changes['modelValue'].firstChange)) {
+      this.changeModelValue( changes['modelValue'].currentValue );
+    }
+  }
+
+  changeModelValue( value ) {
+    this.modelValue = value;
+    this.selectedChange.emit( value );
+    this.changeViewSelected( value );
+  }
+
 
   ngAfterContentInit() {
     this.handleViewBounding();
@@ -150,7 +155,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     const translateSnap = this.multiViewTranslate.nativeElement.offsetWidth / this.views.length;
     this.translateAreaWidth = translateSnap * (this.views.length - 1);
     if ( this.isDistanceMovedEnoughToSnap(this.getDistanceMoved(), translateSnap) ) {
-       this.isForwardMove() ? this.handleDragForward() : this.handleDragBackward();
+      this.isForwardMove() ? this.handleDragForward() : this.handleDragBackward();
     } else {
       this.translateSection( '-' + this.selectedView.viewPosition, this.transitionTime );
     }
@@ -183,7 +188,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     if ( (translatePos > this.selectedView.viewPosition) ) {
       const index = this.viewBounding.indexOf( this.selectedView ) + 1;
       if ( this.viewBounding[ index ] ) {
-        this.modelValue = this.viewBounding[ index ].viewItem.value;
+        this.changeModelValue(this.viewBounding[ index ].viewItem.value);
       }
     }
   }
@@ -193,7 +198,7 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy {
     if ( translatePos < this.selectedView.viewPosition ) {
       const index = this.viewBounding.indexOf( this.selectedView ) - 1;
       if ( this.viewBounding[ index ] ) {
-        this.modelValue = this.viewBounding[ index ].viewItem.value;
+        this.changeModelValue( this.viewBounding[ index ].viewItem.value );
       }
     }
   }

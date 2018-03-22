@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnChanges, ChangeDetectorRef } from '@angular/core';
 
 import * as json from './multiviewdemo-dataproperties.json';
 import * as jsonEvents from './multiviewdemo-events.json';
@@ -27,7 +27,7 @@ import * as jsonEvents from './multiviewdemo-events.json';
 @Component( {
   selector: 'app-multi-view',
   templateUrl: './multiviewdemo.component.html',
-  styleUrls: [ './multiviewdemo.component.scss' ],
+  styleUrls: [ './multiviewdemo.component.scss' ]
 } )
 export class MultiViewDemoComponent {
 
@@ -37,9 +37,14 @@ export class MultiViewDemoComponent {
 
   public radio;
 
-  constructor() {
+  constructor( private changeDetection: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvents.events;
+  }
+
+  selectedChange($event) {
+    this.radio = $event;
+    this.changeDetection.detectChanges();
   }
 
 }

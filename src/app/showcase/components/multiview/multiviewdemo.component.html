@@ -20,7 +20,7 @@
               </tl-radio-group>
               <div class="spacer"></div>
               <div class="multiview-box">
-                <tl-multiview [modelValue]="radio" (selectedChange)="radio = $event">
+                <tl-multiview [modelValue]="radio" (selectedChange)="selectedChange($event)">
                   <tl-view [value]="'1'">
                     <div style="padding: 10px">
                       <div class="row">

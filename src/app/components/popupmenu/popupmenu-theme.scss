@@ -1,6 +1,6 @@
 @import "../core/styles/theming/theming";
 
-@mixin tl-menu-theme($theme) {
+@mixin tl-popupmenu-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
   $danger:  map-deep-get($theme, 'danger');

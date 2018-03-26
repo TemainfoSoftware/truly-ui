@@ -30,12 +30,12 @@ import { FixedPositionDirective } from '../misc/fixed-position.directive';
 let documentClick;
 
 @Component( {
-  selector: 'tl-menu',
-  templateUrl: './menu.html',
-  styleUrls: [ './menu.scss' ],
+  selector: 'tl-popupmenu',
+  templateUrl: './popupmenu.html',
+  styleUrls: [ './popupmenu.scss' ],
   providers: [MenuService]
 } )
-export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
+export class TlPopupMenu implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() items = [];
 

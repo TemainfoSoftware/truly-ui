@@ -21,15 +21,15 @@
  */
 import { Component } from '@angular/core';
 
-import * as json from './menudemo-dataproperties.json';
-import * as jsonEvts from './menudemo.dataevents.json';
+import * as json from './popupmenudemo-dataproperties.json';
+import * as jsonEvts from './popupmenudemo.dataevents.json';
 
 @Component( {
-  selector: 'app-menu',
-  templateUrl: './menudemo.component.html',
-  styleUrls: [ './menudemo.component.scss' ]
+  selector: 'app-popupmenu',
+  templateUrl: './popupmenudemo.component.html',
+  styleUrls: [ './popupmenudemo.component.scss' ]
 } )
-export class MenuDemoComponent {
+export class PopupMenuDemoComponent {
 
   public dataTableProperties;
 

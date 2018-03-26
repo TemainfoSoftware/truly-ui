@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MenuDemoComponent } from './menudemo.component';
+import { PopupMenuDemoComponent } from './popupmenudemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: MenuDemoComponent }
+      { path: '', component: PopupMenuDemoComponent }
     ] )
   ],
   exports: [
     RouterModule
   ]
 } )
-export class MenuDemoRoutingModule {
+export class PopupMenuDemoRoutingModule {
 }

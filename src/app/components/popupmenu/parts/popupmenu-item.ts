@@ -25,11 +25,11 @@ const allSubs = [];
 let highestWidth = 0;
 
 @Component( {
-  selector: 'tl-menu-item',
-  templateUrl: './menu-item.html',
-  styleUrls: [ './menu-item.scss' ],
+  selector: 'tl-popupmenu-item',
+  templateUrl: './popupmenu-item.html',
+  styleUrls: [ './popupmenu-item.scss' ],
 } )
-export class TlMenuItem implements AfterViewInit, OnDestroy {
+export class TlPopupMenuItem implements AfterViewInit, OnDestroy {
 
   public icon = '';
 

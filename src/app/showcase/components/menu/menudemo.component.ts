@@ -21,15 +21,15 @@
  */
 import { Component } from '@angular/core';
 
-import * as json from './menulistdemo-dataproperties.json';
-import * as jsonEvts from './menulistdemo.dataevents.json';
+import * as json from './menudemo-dataproperties.json';
+import * as jsonEvts from './menudemo.dataevents.json';
 
 @Component( {
-  selector: 'app-menulist',
-  templateUrl: './menulistdemo.component.html',
-  styleUrls: [ './menulistdemo.component.scss' ]
+  selector: 'app-menu',
+  templateUrl: './menudemo.component.html',
+  styleUrls: [ './menudemo.component.scss' ]
 } )
-export class MenuListDemoComponent {
+export class MenuDemoComponent {
 
   public dataTableProperties;
 

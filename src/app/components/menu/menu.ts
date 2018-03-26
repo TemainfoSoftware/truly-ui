@@ -26,11 +26,11 @@ import {
 import { Router } from '@angular/router';
 
 @Component( {
-  selector: 'tl-menulist',
-  templateUrl: './menulist.html',
-  styleUrls: [ './menulist.scss' ],
+  selector: 'tl-menu',
+  templateUrl: './menu.html',
+  styleUrls: [ './menu.scss' ],
 } )
-export class TlMenuList implements OnInit, OnChanges, OnDestroy {
+export class TlMenu implements OnInit, OnChanges, OnDestroy {
 
   @Input() items = [];
 

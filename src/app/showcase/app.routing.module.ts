@@ -108,8 +108,8 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/multiselect/multiselectdemo.module#MultiSelectDemoModule'
       },
       {
-        path: 'menulist',
-        loadChildren: './components/menulist/menulistdemo.module#MenuListDemoModule'
+        path: 'menu',
+        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
       },
       {
         path: 'navigator',

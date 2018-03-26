@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MiscModule } from '../misc/index';
-import { TlMenuList } from './menulist';
+import { TlMenu } from './menu';
 
-export * from './menulist';
+export * from './menu';
 
 @NgModule( {
   imports: [
@@ -11,10 +11,10 @@ export * from './menulist';
     MiscModule
   ],
   declarations: [
-    TlMenuList,
+    TlMenu,
   ],
   exports: [
-    TlMenuList,
+    TlMenu,
   ],
 } )
-export class MenuListModule {}
+export class MenuModule {}

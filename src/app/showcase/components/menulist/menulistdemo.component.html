@@ -1,0 +1,96 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">MenuList <span class="module-name"><code><u>Module Name</u>: <strong>MenuListModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>MenuListModule</strong></code></p>
+    <p class="text-content">Menu's can be pretty fancy and TrulyUI have a few options to set up.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <span>Basic</span>
+              <tl-menulist [items]="menuItems" [link]="'link'" [dockWith]="'40px'" [label]="'label'" [subItem]="'subItem'" [icon]="'icon'"></tl-menulist>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menulist [items]="menuItems" [link]="'link'" [dockWith]="'40px'" [label]="'label'" [subItem]="'subItem'" [icon]="'icon'"></tl-menulist>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Dock</span>
+              <div class="col-md-3" style="float: right">
+                <tl-switch  [label]="'Toggle Dock'" [color]="'primary'" (toggle)="toggle()" [checked]="dock"></tl-switch>
+              </div>
+              <tl-menulist [items]="menuItems" [link]="'link'" [dockWith]="'40px'" [docked]="dock" [label]="'label'" [subItem]="'subItem'" [icon]="'icon'"></tl-menulist>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menulist [items]="menuItems" [link]="'link'" [dockWith]="'40px'" [docked]="dock" [label]="'label'" [subItem]="'subItem'" [icon]="'icon'"></tl-menulist>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Menu Configuration'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.menuItems = [
+  {
+    label: 'Home',
+    icon: 'ion-gear-a',
+    callBack: ( $event ) => {
+      console.log( '$event', $event );
+   }
+   {
+    label: 'Pickers',
+    icon: 'ion-heart',
+    subItem: [
+      {
+        label: 'Button',
+        icon: 'ion-document-text',
+      },
+      {
+        label: 'Overlay',
+        icon: 'ion-gear-a',
+      },
+      {
+        label: 'Menu Item 3',
+        icon: 'ion-gear-a',
+        subItem: [
+          {
+            label: 'Menu Item 3',
+            icon: 'ion-gear-a',
+          },
+        ]
+      },
+    ]
+  },
+  {
+    label: 'Menu',
+    icon: 'ion-document-text',
+  },
+  {
+    label: 'Overlay',
+    alwaysActive: true,
+    icon: 'ion-navicon',
+  },
+];
+
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+    </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

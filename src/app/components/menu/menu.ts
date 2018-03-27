@@ -21,16 +21,18 @@
  */
 import {
   Input, Component, OnDestroy,
-  OnInit, Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges,
+  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { SubMenuService } from './services/submenu.service';
 
 @Component( {
   selector: 'tl-menu',
   templateUrl: './menu.html',
   styleUrls: [ './menu.scss' ],
+  providers: [ SubMenuService ],
 } )
-export class TlMenu implements OnInit, OnChanges, OnDestroy {
+export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() items = [];
 
@@ -48,7 +50,7 @@ export class TlMenu implements OnInit, OnChanges, OnDestroy {
 
   @Input() link = 'sidebar';
 
-  @ViewChild( 'menuList' ) menuList: ElementRef;
+  @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
 
   private listElement;
 
@@ -56,27 +58,28 @@ export class TlMenu implements OnInit, OnChanges, OnDestroy {
 
   private labelElement;
 
-  private listMainUl;
-
   private iconSubElement;
 
   private indexSubMenu = 0;
 
-  constructor( private renderer: Renderer2, private router: Router ) {
+  constructor( private renderer: Renderer2, private router: Router, private subMenuService: SubMenuService ) {
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
+    this.subMenuService.setRenderer( this.renderer );
+    this.subMenuService.setRootMenu( this.menuList );
+    this.subMenuService.setViewContainerRef( this.menuList );
     this.createList();
   }
 
-  createList( subItem? ) {
-    const list = subItem ? subItem : this.items;
+  createList() {
+    const list = this.items;
     for ( let item = 0; item < list.length; item++ ) {
       this.createElementList( list[ item ][ this.link ] );
       this.addRootClass();
       this.handleDockedClass();
       this.handleAlwaysActive( list[ item ][ 'alwaysActive' ] );
-      this.insertListElementToList( subItem );
+      this.insertListElementToList();
       this.createElementIcon( list[ item ][ this.icon ] );
       this.createElementLabel( list[ item ][ this.label ] );
       this.orderElements();
@@ -104,23 +107,11 @@ export class TlMenu implements OnInit, OnChanges, OnDestroy {
 
   handleSubItems( item ) {
     if ( item[ this.subItem ] ) {
-      this.createListUl();
-      this.renderer.appendChild( this.listElement.nativeElement, this.listMainUl.nativeElement );
-      this.createList( item[ this.subItem ] );
+      this.subMenuService.setAnchorElement( this.listElement.nativeElement );
+      this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+      this.subMenuService.createSimpleSubMenu();
+      this.subMenuService.handleDockedMenu();
     }
-  }
-
-  createListUl() {
-    this.listMainUl = new ElementRef( this.renderer.createElement( 'ul' ) );
-    this.renderer.addClass( this.listMainUl.nativeElement, 'ui-submenu' );
-    this.renderer.setStyle( this.listMainUl.nativeElement, 'width', this.width );
-    this.renderer.setStyle( this.listMainUl.nativeElement, 'left', this.width );
-    this.renderer.setStyle( this.listMainUl.nativeElement, 'top', '-' + this.dockWith );
-    if ( this.docked && this.indexSubMenu === 0 ) {
-      this.renderer.addClass( this.listMainUl.nativeElement, 'docked' );
-      this.renderer.setStyle( this.listMainUl.nativeElement, 'left', this.dockWith );
-    }
-    this.indexSubMenu++;
   }
 
   createElementList( value ) {
@@ -189,20 +180,13 @@ export class TlMenu implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  insertListElementToList( sub ) {
-    const list = sub ? this.listMainUl.nativeElement : this.menuList.nativeElement;
-    this.renderer.appendChild( list, this.listElement.nativeElement );
-    if ( sub ) {
-      this.renderer.removeClass( this.listElement.nativeElement, 'root-list' );
-      this.renderer.removeClass( this.listElement.nativeElement, 'docked' );
-      this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
-        this.dockWith + ' 1fr ' + this.dockWith );
-      this.renderer.addClass( this.listElement.nativeElement, 'ui-submenu-item' );
-    }
+  insertListElementToList() {
+    this.renderer.appendChild( this.menuList.element.nativeElement, this.listElement.nativeElement );
   }
 
   resetList() {
-    this.menuList.nativeElement.innerHTML = '';
+    this.subMenuService.clearView();
+    this.menuList.element.nativeElement.innerHTML = '';
     this.indexSubMenu = 0;
   }
 
@@ -215,7 +199,6 @@ export class TlMenu implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 
 }

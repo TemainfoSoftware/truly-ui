@@ -26,11 +26,11 @@
       &.always-active {
         background: map-deep-get($primary, "default", "background");
 
-        .icon {
+        > .icon {
           color: #FFFFFF;
         }
 
-        .label {
+        > .label {
           color: #FFFFFF !important;
         }
 

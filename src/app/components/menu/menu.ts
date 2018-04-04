@@ -42,11 +42,17 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() subItem = '';
 
-  @Input() dockWith = '40px';
+  @Input() dockWidth = '30px';
 
   @Input() width = '200px';
 
   @Input() docked = false;
+
+  @Input() group = '';
+
+  @Input() titleMenu = 'Menu Principal';
+
+  @Input() mode: 'simple' | 'advanced' = 'simple';
 
   @Input() link = 'sidebar';
 
@@ -62,20 +68,22 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   private indexSubMenu = 0;
 
-  constructor( private renderer: Renderer2, private router: Router, private subMenuService: SubMenuService ) {
-  }
+  private callBack = Function();
+
+  constructor( private renderer: Renderer2, private router: Router, private subMenuService: SubMenuService ) {}
 
   ngAfterContentInit() {
     this.subMenuService.setRenderer( this.renderer );
     this.subMenuService.setRootMenu( this.menuList );
     this.subMenuService.setViewContainerRef( this.menuList );
     this.createList();
+    this.listenDocumentClick();
   }
 
   createList() {
     const list = this.items;
     for ( let item = 0; item < list.length; item++ ) {
-      this.createElementList( list[ item ][ this.link ] );
+      this.createElementList( list[ item ] );
       this.addRootClass();
       this.handleDockedClass();
       this.handleAlwaysActive( list[ item ][ 'alwaysActive' ] );
@@ -84,6 +92,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
       this.createElementLabel( list[ item ][ this.label ] );
       this.orderElements();
       this.createElementIconSubMenu( list[ item ][ this.subItem ] );
+      this.handleListenerSubMenu( list[ item ][ this.subItem ] );
       this.handleSubItems( list[ item ] );
     }
   }
@@ -95,7 +104,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   handleDockedClass() {
     if ( this.docked ) {
       this.renderer.addClass( this.listElement.nativeElement, 'docked' );
-      this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns', this.dockWith );
+      this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns', this.dockWidth );
     }
   }
 
@@ -107,62 +116,113 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   handleSubItems( item ) {
     if ( item[ this.subItem ] ) {
-      this.subMenuService.setAnchorElement( this.listElement.nativeElement );
-      this.subMenuService.setSubMenuData( item[ this.subItem ], this );
-      this.subMenuService.createSimpleSubMenu();
-      this.subMenuService.handleDockedMenu();
+      if ( this.mode === 'simple' ) {
+        this.subMenuService.setAnchorRootElement( this.listElement.nativeElement );
+        this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+        this.subMenuService.createSimpleSubMenu();
+        this.subMenuService.handleDockedMenu();
+      } else {
+        this.subMenuService.setAnchorRootElement( this.menuList.element.nativeElement.children[ 0 ] );
+        this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+        this.subMenuService.createAdvancedMenu();
+        this.subMenuService.handleDockedMenu();
+      }
     }
   }
 
-  createElementList( value ) {
+  handleListenerSubMenu( item ) {
+    if ( item ) {
+      this.listenClickListElement();
+    }
+  }
+
+  createElementList( item ) {
     this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
     this.renderer.addClass( this.listElement.nativeElement, 'ui-menulist-item' );
-    this.listenClickElementList( value );
+    this.listenClickElementList( item );
     this.setStyleListElement();
   }
 
-  listenClickElementList( value ) {
-    if ( value ) {
-      this.renderer.listen( this.listElement.nativeElement, 'click', () => {
-        this.router.navigate( [ value ] );
-      } );
-    }
+  listenDocumentClick() {
+    this.renderer.listen(document, 'click', ($event) => {
+      this.subMenuService.closeMenu();
+    });
+  }
+
+  listenClickElementList( item ) {
+    this.renderer.listen( this.listElement.nativeElement, 'click', (MouseEvent) => {
+      if ( item[ this.link ] ) {
+        this.router.navigate( [ item[ this.link ] ] );
+        return;
+      }
+      if (item['callback']) {
+        this.callBack = item['callback'];
+        this.callBack(MouseEvent);
+      }
+    } );
   }
 
   setStyleListElement() {
     this.renderer.setStyle( this.listElement.nativeElement, 'max-width', this.width );
-    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.dockWith );
-    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.dockWith );
+    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.dockWidth );
+    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.dockWidth );
     this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
-      this.dockWith + ' 1fr ' + this.dockWith );
+      this.dockWidth + ' 1fr ' + this.dockWidth );
   }
 
   createElementIcon( icon ) {
     this.iconElement = new ElementRef( this.renderer.createElement( 'i' ) );
     this.renderer.addClass( this.iconElement.nativeElement, icon );
     this.renderer.addClass( this.iconElement.nativeElement, 'icon' );
-    this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.dockWith );
-    this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.dockWith );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.dockWidth );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.dockWidth );
   }
 
   createElementIconSubMenu( subItem ) {
     if ( !this.isDocked() ) {
       this.iconSubElement = new ElementRef( this.renderer.createElement( 'i' ) );
+      this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
+      this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
       if ( subItem ) {
         this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-right' );
       }
-      this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
-      this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
     }
+  }
 
+  listenClickListElement() {
+    if (this.mode === 'advanced') {
+      this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
+        if ( this.isTargetOnListElement( $event ) ) {
+          this.subMenuService.getListComponents()[ 0 ].instance.toggleVisibility();
+          this.handleVisibilitySubMenu();
+        }
+      } );
+    }
+  }
+
+  handleVisibilitySubMenu() {
+    this.subMenuService.getListComponents().forEach( ( value, index ) => {
+      if ( (index > 0) && (value.instance.visibilitySubMenu) ) {
+        value.instance.toggleVisibility();
+      }
+    } );
+  }
+
+  isTargetOnListElement( $event ) {
+    for ( const item of $event.currentTarget.children ) {
+      if ( item === $event.target ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   createElementLabel( label ) {
     if ( !this.isDocked() ) {
       this.labelElement = new ElementRef( this.renderer.createElement( 'span' ) );
       this.renderer.addClass( this.labelElement.nativeElement, 'label' );
-      this.renderer.setStyle( this.labelElement.nativeElement, 'height', this.dockWith );
-      this.renderer.setStyle( this.labelElement.nativeElement, 'line-height', this.dockWith );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'height', this.dockWidth );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'line-height', this.dockWidth );
       this.labelElement.nativeElement.innerHTML = label;
       return;
     }
@@ -199,6 +259,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
 }

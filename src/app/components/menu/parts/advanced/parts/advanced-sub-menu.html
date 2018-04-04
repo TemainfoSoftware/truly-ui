@@ -1,0 +1,36 @@
+<ul class="ui-advanced-sub-menu-list"
+    [style.visibility]="visibilitySubMenu ? 'visible' : 'hidden'"
+    [style.opacity]="visibilitySubMenu ? '1' : '0'"
+    [ngClass]="{'docked': docked}"
+    [style.width]="width"
+    [style.left]="leftPosition"
+    [style.top]="topPosition" #subMenuList>
+  <div class="header-advanced-submenu" (click)="toggleVisibility()">
+    <div class="ui-hide-button">
+      <i class="ion-chevron-left icon-header"></i>
+      <span class="title-header">Esconder</span>
+    </div>
+  </div>
+  <li #elementList
+      [ngClass]="
+      {'ui-advanced-submenu-selected': nextSubMenu?.visibilitySubMenu && item[subItem] }"
+      class="ui-advanced-list-item"
+      tabindex="-1"
+      (keydown.arrowdown)="onArrowDown($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowup)="onArrowUp($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowleft)="onArrowLeft($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowright)="onArrowRight($event.preventDefault())"
+      (keydown.enter)="callbackListElement($event, item)"
+      (click)="toggleSubMenu(elementList, item[subItem], $event); callbackListElement($event, item)"
+      [style.height]="dockWidth" [style.line-height]="dockWidth" *ngFor="let item of items">
+    <i [style.height]="dockWidth" [style.line-height]="dockWidth" [class]="'icon ' + item[icon]"></i>
+    <span [style.height]="dockWidth" [style.line-height]="dockWidth" class="label">{{item[label]}}</span>
+
+    <div class="icon-sub-menu" *ngIf="item[subItem]"
+         [ngClass]="{'ui-advanced-submenu-opened' : nextSubMenu?.visibilitySubMenu}">
+      <i [style.height]="dockWidth" [style.line-height]="dockWidth" *ngIf="item[subItem]"
+         [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
+         class="ion-ios-arrow-right icon"></i>
+    </div>
+  </li>
+</ul>

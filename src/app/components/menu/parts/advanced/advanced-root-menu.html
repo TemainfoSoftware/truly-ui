@@ -1,0 +1,55 @@
+<ul #list class="ui-advanced-sub-menu-list" [@rootElementList]="true"
+    [style.visibility]="visibilityMenu ? 'visible' : 'hidden'"
+    [style.opacity]="visibilityMenu ? '1' : '0'"
+    (click)="$event.stopPropagation()"
+    [ngClass]="{'docked': docked}"
+    [style.left]="getWidth()"
+    [style.width]="width"
+    [style.top]="topPosition" #subMenuList>
+
+  <div class="header-advanced-menu">
+    <div class="ui-header-title">
+      <i class="ion-navicon icon-header"></i>
+      <span class="title-header">{{titleMenu}}</span>
+    </div>
+    <div class="wrapper-search-input">
+      <span><i class="ion-ios-search-strong"></i></span>
+      <input #input type="text"
+             (keydown.arrowdown)="onArrowDown($event)"
+             (keydown.arrowup)="onArrowUp($event)"
+             [ngModel]="model" (ngModelChange)="changeInputValue($event)" placeholder="Procure...">
+    </div>
+  </div>
+
+  <label class="ui-label-nothing-found" *ngIf="nothingFound"> Nenhum Menu Encontrado </label>
+
+  <div class="ui-wrapper-items" (scroll)="onScrollWrapper()" #wrapperItemsList>
+    <div class="ui-sub-item-group" *ngFor="let itemGroup of groups">
+      <label class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="itemGroup.group">{{itemGroup.group}}</label>
+      <label class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="!itemGroup.group">Outros</label>
+      <li #elementList
+          [@rootElementList]="true"
+          (keydown.arrowdown)="onArrowDown($event)"
+          (keydown.arrowup)="onArrowUp($event)"
+          (keydown.arrowleft)="onArrowLeft($event)"
+          (keydown.arrowright)="onArrowRight($event)"
+          tabindex="-1"
+          [ngClass]="
+        {'ui-advanced-submenu-selected': nextSubMenu?.visibilitySubMenu && item[subItem] }"
+          class="ui-advanced-list-item"
+          (keydown.enter)="callbackListElement($event, item)"
+          (click)="toggleSubMenu(elementList, item[subItem], $event); callbackListElement($event, item)"
+          [style.height]="dockWidth" [style.line-height]="dockWidth" *ngFor="let item of itemGroup.items">
+        <i [style.height]="dockWidth" [style.line-height]="dockWidth" [class]="'icon ' + item[icon]"></i>
+        <span [style.height]="dockWidth" [style.line-height]="dockWidth" class="label">{{item[label]}}</span>
+
+        <div class="icon-sub-menu" *ngIf="item[subItem]"
+             [ngClass]="{'ui-advanced-submenu-opened' : nextSubMenu?.visibilitySubMenu}">
+          <i [style.height]="dockWidth" [style.line-height]="dockWidth" *ngIf="item[subItem]"
+             [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
+             class="ion-ios-arrow-right icon"></i>
+        </div>
+      </li>
+    </div>
+  </div>
+</ul>

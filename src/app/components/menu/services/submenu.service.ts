@@ -21,6 +21,8 @@
  */
 import { ComponentFactoryResolver, ComponentRef, Injectable, Renderer2, ViewContainerRef } from '@angular/core';
 import { TlSimpleSubMenu } from '../parts/simple/simple-sub-menu';
+import { TlAdvancedSubMenu } from '../parts/advanced/parts/advanced-sub-menu';
+import { TlAdvancedRootMenu } from '../parts/advanced/advanced-root-menu';
 
 @Injectable()
 export class SubMenuService {
@@ -31,13 +33,21 @@ export class SubMenuService {
 
   private view: ViewContainerRef;
 
-  private component: ComponentRef<any>;
+  private menu: ComponentRef<any>;
+
+  private subMenuItem: ComponentRef<any>;
+
+  private listComponents = [];
 
   private subMenuData: any;
 
   private properties;
 
   private anchorElement: HTMLElement;
+
+  private anchorRootElement;
+
+  private subMenuDataSource;
 
   constructor( private compiler: ComponentFactoryResolver ) {
   }
@@ -59,50 +69,140 @@ export class SubMenuService {
     this.properties = properties;
   }
 
+  setAnchorRootElement( anchorRoot: HTMLElement ) {
+    this.anchorRootElement = anchorRoot;
+  }
+
   setAnchorElement( anchor: HTMLElement ) {
     this.anchorElement = anchor;
   }
 
+  createAdvancedMenu() {
+    if ( !this.menu ) {
+      this.subMenuDataSource = this.subMenuData;
+      const componentFactory = this.compiler.resolveComponentFactory( TlAdvancedRootMenu );
+      this.menu = this.view.createComponent( componentFactory );
+      (<TlAdvancedRootMenu>this.menu.instance).setProperties( this.properties );
+      (<TlAdvancedRootMenu>this.menu.instance).setDataSubMenu( this.subMenuData ? this.subMenuData : this.subMenuDataSource );
+      (<TlAdvancedRootMenu>this.menu.instance).setMenuServiceInstance( this );
+      this.listComponents.push( this.menu );
+    }
+    this.renderer.appendChild( this.anchorRootElement, this.menu.location.nativeElement );
+    this.handleSubItemsAdvancedMenu();
+  }
+
   createSimpleSubMenu() {
     const componentFactory = this.compiler.resolveComponentFactory( TlSimpleSubMenu );
-    this.component = this.view.createComponent( componentFactory );
-    (<TlSimpleSubMenu>this.component.instance).setProperties( this.properties );
-    (<TlSimpleSubMenu>this.component.instance).setDataSubMenu( this.subMenuData );
-    this.appendSubMenuAnchor();
-    this.hasMoreSubItems();
+    const subMenu = this.view.createComponent( componentFactory );
+    (<TlSimpleSubMenu>subMenu.instance).setProperties( this.properties );
+    (<TlSimpleSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
+    this.appendSubMenuAnchor( subMenu );
+    this.handleSubItemsSimpleSubMenu( subMenu );
+  }
+
+  createAdvancedSubMenu( nestedMenu? ) {
+    const componentFactory = this.compiler.resolveComponentFactory( TlAdvancedSubMenu );
+    const subMenu = this.view.createComponent( componentFactory );
+    this.handleNextSubMenu(subMenu);
+    this.handlePreviousSubMenu(subMenu, nestedMenu);
+    (<TlAdvancedSubMenu>subMenu.instance).setProperties( this.properties );
+    (<TlAdvancedSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
+    this.subMenuItem = subMenu;
+    this.listComponents.push( subMenu );
+    this.appendSubMenuAnchor( subMenu );
+    this.handleSubItemsAdvancedSubMenu( subMenu );
+  }
+
+  handlePreviousSubMenu(subMenu, nestedMenu) {
+    if (!nestedMenu) {
+      return subMenu.instance.previousMenu = this.menu.instance;
+    }
+    subMenu.instance.previousMenu = this.subMenuItem ? this.subMenuItem.instance : this.menu.instance;
+  }
+
+  handleNextSubMenu(subMenu) {
+    if (this.subMenuItem) {
+      this.subMenuItem.instance.nextSubMenu = subMenu.instance;
+    }
   }
 
   handleDockedMenu() {
-    setTimeout(() => {
-      if (this.properties.docked) {
-        this.renderer.setStyle(this.view.get(0)['rootNodes'][0].firstElementChild,
-          'left', (parseInt(this.properties.dockWith, 10) + 1) + 'px');
+    setTimeout( () => {
+      if ( this.properties.docked ) {
+        this.renderer.setStyle( this.view.get( 0 )[ 'rootNodes' ][ 0 ].firstElementChild,
+          'left', (parseInt( this.properties.dockWidth, 10 ) + 1) + 'px' );
       }
-    }, 1);
+    }, 1 );
   }
 
-  hasMoreSubItems() {
+  handleSubItemsAdvancedSubMenu( subMenu ) {
     setTimeout(() => {
-      if ((<TlSimpleSubMenu>this.component.instance).anchorElements.length > 0) {
-        this.createNewSubItems((<TlSimpleSubMenu>this.component.instance).anchorElements);
+      if ( subMenu.instance.anchorElements.length > 0 ) {
+        this.createNewSubItems( subMenu, 'advanced', true );
       }
-    }, 1);
+    }, 100);
   }
 
-  createNewSubItems( subItem ) {
-    subItem.forEach((item) => {
-      this.setAnchorElement(item.rootElement);
+  handleSubItemsAdvancedMenu() {
+    setTimeout( () => {
+      if ( this.menu.instance.anchorElements.length > 0 ) {
+        this.createNewSubItems( this.menu, 'advanced' );
+      }
+    }, 1 );
+  }
+
+  handleSubItemsSimpleSubMenu( subMenu ) {
+    setTimeout( () => {
+      if ( subMenu.instance.anchorElements.length > 0 ) {
+        this.createNewSubItems( subMenu, 'simple' );
+      }
+    }, 1 );
+  }
+
+  createNewSubItems( menu, type, nestedMenu? ) {
+    menu.instance.anchorElements.forEach( ( item, index ) => {
+      this.setAnchorElement( item.rootElement );
       this.subMenuData = item.subItems;
-      this.createSimpleSubMenu();
-    });
+      type === 'simple' ? this.createSimpleSubMenu() : this.createAdvancedSubMenu( nestedMenu );
+      this.setParentNodeSubMenu( item );
+      this.handleSubMenuAnchor( menu, index );
+    } );
   }
 
-  appendSubMenuAnchor() {
-    this.renderer.appendChild( this.anchorElement, this.component.location.nativeElement );
+  setParentNodeSubMenu( item ) {
+    if ( this.subMenuItem ) {
+      this.subMenuItem.instance.parentNode = item.rootElement;
+    }
+  }
+
+  handleSubMenuAnchor( subMenu, index ) {
+    subMenu.instance.anchorElements[ index ][ 'subMenu' ] = this.subMenuItem.instance;
+  }
+
+  appendSubMenuAnchor( subMenu ) {
+    if ( !this.anchorElement ) {
+      this.anchorElement = this.anchorRootElement;
+    }
+    this.renderer.appendChild( this.anchorElement, subMenu.location.nativeElement );
+  }
+
+  getListComponents() {
+    return this.listComponents;
+  }
+
+  resetAdvancedMenu() {
+    this.anchorElement = null;
+    this.subMenuData = null;
+  }
+
+  closeMenu() {
+    this.menu.instance.toggleVisibility();
   }
 
   clearView() {
     this.view.clear();
+    this.menu = null;
+    this.listComponents = [];
   }
 
 }

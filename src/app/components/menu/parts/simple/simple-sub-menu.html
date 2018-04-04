@@ -2,7 +2,11 @@
     [style.left]="getWidth()"
     [style.width]="width"
     [style.top]="'-' + dockWidth" #subMenuList>
-  <li #elementList class="ui-simple-list-item" [style.height]="dockWidth" [style.line-height]="dockWidth" *ngFor="let item of items">
+  <li #elementList class="ui-simple-list-item" [style.height]="dockWidth"
+      [style.line-height]="dockWidth"
+      (keydown.enter)="callbackListElement($event, item)"
+      (click)="callbackListElement($event, item)"
+      *ngFor="let item of items">
     <i [style.height]="dockWidth" [style.line-height]="dockWidth" [class]="'icon ' + item[icon]"></i>
     <span [style.height]="dockWidth" [style.line-height]="dockWidth" class="label">{{item[label]}}</span>
     <i [style.height]="dockWidth" [style.line-height]="dockWidth" *ngIf="item[subItem]" [ngClass]="{'anchor': setAnchorElement(item, elementList)}"

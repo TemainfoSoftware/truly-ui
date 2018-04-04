@@ -21,6 +21,7 @@
  */
 import {
   Input, Component, OnDestroy, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'tl-simple-sub-menu',
@@ -43,9 +44,15 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
 
   public dockWidth;
 
+  public link;
+
   public anchorElements = [];
 
   @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
+
+  private callBack = Function();
+
+  constructor( private router: Router) {}
 
   setDataSubMenu( items ) {
     this.items = items;
@@ -57,7 +64,8 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
     this.subItem = properties.subItem;
     this.docked = properties.docked;
     this.width = properties.width;
-    this.dockWidth = properties.dockWith;
+    this.dockWidth = properties.dockWidth;
+    this.link = properties.link;
   }
 
   setAnchorElement( item, element ) {
@@ -72,6 +80,18 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
     });
     return anchor;
   }
+
+  callbackListElement( $event, item ) {
+    $event.stopPropagation();
+    if ( item[ this.link ] ) {
+      return this.router.navigate( [ item[ this.link ] ] );
+    }
+    if ( item[ 'callback' ] ) {
+      this.callBack = item[ 'callback' ];
+      this.callBack( $event );
+    }
+  }
+
 
   getWidth() {
     return Math.round(parseInt(this.width, 10) + 1) + 'px';

@@ -48,9 +48,9 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
 
   public anchorElements = [];
 
-  @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
-
   private callBack = Function();
+
+  @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
 
   constructor( private router: Router) {}
 

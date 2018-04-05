@@ -31,9 +31,11 @@ export class SubMenuService {
 
   private rootMenu;
 
-  private view: ViewContainerRef;
+  private viewSubMenu: ViewContainerRef;
 
-  private menu: ComponentRef<any>;
+  private viewRootMenu: ViewContainerRef;
+
+  private menu:  ComponentRef<any>;
 
   private subMenuItem: ComponentRef<any>;
 
@@ -42,6 +44,8 @@ export class SubMenuService {
   private subMenuData: any;
 
   private properties;
+
+  private factoryMenu;
 
   private anchorElement: HTMLElement;
 
@@ -60,8 +64,12 @@ export class SubMenuService {
     this.rootMenu = menu.element;
   }
 
-  setViewContainerRef( view: ViewContainerRef ) {
-    this.view = view;
+  setViewSubMenu( view: ViewContainerRef ) {
+    this.viewSubMenu = view;
+  }
+
+  setViewRootMenu( view: ViewContainerRef ) {
+    this.viewRootMenu = view;
   }
 
   setSubMenuData( data, properties ) {
@@ -80,8 +88,8 @@ export class SubMenuService {
   createAdvancedMenu() {
     if ( !this.menu ) {
       this.subMenuDataSource = this.subMenuData;
-      const componentFactory = this.compiler.resolveComponentFactory( TlAdvancedRootMenu );
-      this.menu = this.view.createComponent( componentFactory );
+      this.factoryMenu = this.compiler.resolveComponentFactory( TlAdvancedRootMenu );
+      this.menu = this.viewRootMenu.createComponent( this.factoryMenu );
       (<TlAdvancedRootMenu>this.menu.instance).setProperties( this.properties );
       (<TlAdvancedRootMenu>this.menu.instance).setDataSubMenu( this.subMenuData ? this.subMenuData : this.subMenuDataSource );
       (<TlAdvancedRootMenu>this.menu.instance).setMenuServiceInstance( this );
@@ -93,18 +101,18 @@ export class SubMenuService {
 
   createSimpleSubMenu() {
     const componentFactory = this.compiler.resolveComponentFactory( TlSimpleSubMenu );
-    const subMenu = this.view.createComponent( componentFactory );
+    const subMenu = this.viewSubMenu.createComponent( componentFactory );
     (<TlSimpleSubMenu>subMenu.instance).setProperties( this.properties );
     (<TlSimpleSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
+    this.subMenuItem = subMenu;
     this.appendSubMenuAnchor( subMenu );
     this.handleSubItemsSimpleSubMenu( subMenu );
   }
 
   createAdvancedSubMenu( nestedMenu? ) {
     const componentFactory = this.compiler.resolveComponentFactory( TlAdvancedSubMenu );
-    const subMenu = this.view.createComponent( componentFactory );
-    this.handleNextSubMenu(subMenu);
-    this.handlePreviousSubMenu(subMenu, nestedMenu);
+    const subMenu = this.viewSubMenu.createComponent( componentFactory );
+    this.handlePreviousSubMenu( subMenu, nestedMenu );
     (<TlAdvancedSubMenu>subMenu.instance).setProperties( this.properties );
     (<TlAdvancedSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
     this.subMenuItem = subMenu;
@@ -113,34 +121,27 @@ export class SubMenuService {
     this.handleSubItemsAdvancedSubMenu( subMenu );
   }
 
-  handlePreviousSubMenu(subMenu, nestedMenu) {
-    if (!nestedMenu) {
+  handlePreviousSubMenu( subMenu, nestedMenu ) {
+    if ( !nestedMenu ) {
       return subMenu.instance.previousMenu = this.menu.instance;
-    }
-    subMenu.instance.previousMenu = this.subMenuItem ? this.subMenuItem.instance : this.menu.instance;
-  }
-
-  handleNextSubMenu(subMenu) {
-    if (this.subMenuItem) {
-      this.subMenuItem.instance.nextSubMenu = subMenu.instance;
     }
   }
 
   handleDockedMenu() {
     setTimeout( () => {
       if ( this.properties.docked ) {
-        this.renderer.setStyle( this.view.get( 0 )[ 'rootNodes' ][ 0 ].firstElementChild,
+        this.renderer.setStyle( this.viewRootMenu.get( 0 )[ 'rootNodes' ][ 0 ].firstElementChild,
           'left', (parseInt( this.properties.dockWidth, 10 ) + 1) + 'px' );
       }
     }, 1 );
   }
 
   handleSubItemsAdvancedSubMenu( subMenu ) {
-    setTimeout(() => {
+    setTimeout( () => {
       if ( subMenu.instance.anchorElements.length > 0 ) {
         this.createNewSubItems( subMenu, 'advanced', true );
       }
-    }, 100);
+    }, 100 );
   }
 
   handleSubItemsAdvancedMenu() {
@@ -177,6 +178,7 @@ export class SubMenuService {
 
   handleSubMenuAnchor( subMenu, index ) {
     subMenu.instance.anchorElements[ index ][ 'subMenu' ] = this.subMenuItem.instance;
+    this.subMenuItem.instance.previousMenu = subMenu.instance;
   }
 
   appendSubMenuAnchor( subMenu ) {
@@ -190,17 +192,25 @@ export class SubMenuService {
     return this.listComponents;
   }
 
+  getSubMenus() {
+    return this.listComponents.filter( ( value, index, array ) => {
+      return value.instance instanceof TlAdvancedSubMenu;
+    } );
+  }
+
   resetAdvancedMenu() {
     this.anchorElement = null;
     this.subMenuData = null;
+    this.viewSubMenu.clear();
   }
 
   closeMenu() {
-    this.menu.instance.toggleVisibility();
+    (<TlAdvancedRootMenu>this.menu.instance).close();
   }
 
   clearView() {
-    this.view.clear();
+    this.viewRootMenu.clear();
+    this.viewSubMenu.clear();
     this.menu = null;
     this.listComponents = [];
   }

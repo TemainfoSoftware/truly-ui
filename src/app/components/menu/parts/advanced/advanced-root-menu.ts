@@ -20,14 +20,15 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ViewChild, ChangeDetectorRef, AfterContentInit,
+  Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectorRef,
 } from '@angular/core';
 
-import { trigger, transition, style, animate } from '@angular/animations';
+import { trigger, transition, style } from '@angular/animations';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { Router } from '@angular/router';
+import { TlAdvancedSubMenu } from './parts/advanced-sub-menu';
 
 @Component( {
   selector: 'tl-advanced-root-menu',
@@ -38,11 +39,9 @@ import { Router } from '@angular/router';
       'rootElementList', [
         transition( ':enter', [
           style( { transform: 'translateY(5%)', opacity: 0 } ),
-          animate( '500ms', style( { transform: 'translateY(0)', opacity: 1 } ) )
         ] ),
         transition( ':leave', [
           style( { transform: 'translateY(0)', opacity: 1 } ),
-          animate( '500ms', style( { transform: 'translateY(5%)', opacity: 0 } ) )
         ] )
       ]
     )
@@ -60,11 +59,11 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public docked = false;
 
-  public width;
+  public width = '';
 
-  public dockWidth;
+  public dockWidth = '';
 
-  public group;
+  public group = '';
 
   public titleMenu = '';
 
@@ -72,15 +71,17 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public visibilityMenu = false;
 
-  public nextSubMenu;
+  public operationMode = '';
 
-  public topPosition;
+  public topPosition = '';
 
   public groups = [];
 
   public model: string;
 
   public innerScrollWrapper = 0;
+
+  public maxHeight = '';
 
   public callBack = Function();
 
@@ -94,9 +95,9 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   private index = 0;
 
-  private listMenuElements;
+  private link = '';
 
-  private link;
+  private listMenuElements;
 
   @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
 
@@ -107,6 +108,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   constructor( private change: ChangeDetectorRef, private router: Router ) {
     this.modelChanged
       .debounceTime( 200 )
+      .distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue )
       .subscribe( model => this.filterMenuItem( model ) );
   }
 
@@ -122,15 +124,9 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   setProperties( properties ) {
-    this.icon = properties.icon;
-    this.label = properties.label;
-    this.subItem = properties.subItem;
-    this.docked = properties.docked;
-    this.width = properties.width;
-    this.dockWidth = properties.dockWidth;
-    this.group = properties.group;
-    this.titleMenu = properties.titleMenu;
-    this.link = properties.link;
+    Object.keys( properties ).forEach( ( item ) => {
+      this[ item ] = properties[ item ];
+    } );
   }
 
   getListMenuElements() {
@@ -147,7 +143,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   changeInputValue( value ) {
-    value ? this.modelChanged.next( value ) : this.rebuildMenu();
+    value ? this.modelChanged.next( value.trim() ) : this.rebuildMenu();
   }
 
   filterMenuItem( value ) {
@@ -177,6 +173,10 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     return this.filteredMenu.length === 0;
   }
 
+  close() {
+    this.visibilityMenu = false;
+  }
+
   rebuildMenu() {
     this.subMenuService.resetAdvancedMenu();
     this.subMenuService.createAdvancedMenu();
@@ -184,7 +184,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     this.setInputFocus();
   }
 
-  onArrowDown($event) {
+  onArrowDown( $event ) {
     $event.preventDefault();
     if ( this.isFocusInput() ) {
       this.index = 0;
@@ -197,26 +197,18 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     }
   }
 
-  onArrowLeft($event) {
+  onArrowLeft( $event ) {
     $event.preventDefault();
-    const elementFocused = document.activeElement;
-    const children = Array( elementFocused.getElementsByTagName( 'li' ) );
-    if ( children[ 0 ].length > 0 && this.nextSubMenu.visibilitySubMenu ) {
-      return this.nextSubMenu.toggleVisibility();
-    }
-    this.toggleVisibility();
   }
 
-  onArrowRight($event) {
-    $event.preventDefault();
-    const elementFocused = document.activeElement;
-    const children = Array( elementFocused.getElementsByTagName( 'li' ) );
-    if ( children[ 0 ].length > 0 && !this.nextSubMenu.visibilitySubMenu ) {
-      this.nextSubMenu.toggleVisibility();
+  onArrowRight( $event, element ) {
+    $event.stopPropagation();
+    if ( this.isContentMath( element ).length > 0 ) {
+      this.isContentMath( element )[ 0 ].subMenu.toggleVisibility();
     }
   }
 
-  onArrowUp($event) {
+  onArrowUp( $event ) {
     $event.preventDefault();
     if ( this.isFocusInput() ) {
       return;
@@ -230,6 +222,39 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   onScrollWrapper() {
     this.innerScrollWrapper = this.wrapperItemsList.nativeElement.scrollTop;
+    this.closeAllSubMenus();
+  }
+
+  onHoverSubMenu( element ) {
+    if (!this.isOperationModeHover()) {
+      return;
+    }
+    const mathContent = this.isContentMath( element );
+    if ( mathContent.length > 0 ) {
+      mathContent[ 0 ].subMenu.setTopPosition();
+      mathContent[ 0 ].subMenu.visibilitySubMenu = true;
+    }
+  }
+
+  onLeaveSubMenu( element ) {
+    if (!this.isOperationModeHover()) {
+      return;
+    }
+    const mathContent = this.isContentMath( element );
+    if ( mathContent.length > 0 ) {
+      mathContent[ 0 ].subMenu.setTopPosition();
+      mathContent[ 0 ].subMenu.visibilitySubMenu = false;
+    }
+  }
+
+  isOperationModeHover() {
+    return this.operationMode === 'hover';
+  }
+
+  closeAllSubMenus() {
+    this.subMenuService.getSubMenus().forEach( ( item ) => {
+      (<TlAdvancedSubMenu>item.instance).close();
+    } );
   }
 
   setFocusElement() {
@@ -249,6 +274,10 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     if ( item[ this.link ] ) {
       return this.router.navigate( [ item[ this.link ] ] );
     }
+    this.handleCallbackItem( item, $event );
+  }
+
+  handleCallbackItem( item, $event ) {
     if ( item[ 'callback' ] ) {
       this.callBack = item[ 'callback' ];
       this.callBack( $event );
@@ -295,8 +324,9 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     if ( !subItem ) {
       return;
     }
-    if ( this.isTargetEqualsElement(element, $event.target) || this.isTargetListElement( element, $event.target ) ) {
-      this.isContentMath(element)[0].subMenu.toggleVisibility();
+    if ( this.isTargetEqualsElement( element, $event.target )
+      || this.isTargetListElement( element, $event.target ) ) {
+      this.isContentMath( element )[ 0 ].subMenu.toggleVisibility();
     }
   }
 
@@ -304,10 +334,10 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     return element === target;
   }
 
-  isContentMath(element) {
-    return this.anchorElements.filter((value, index, array) => {
-      return value['rootElement'] === element;
-    });
+  isContentMath( element ) {
+    return this.anchorElements.filter( ( value, index, array ) => {
+      return value[ 'rootElement' ] === element;
+    } );
   }
 
   isTargetListElement( element, target ) {
@@ -342,7 +372,6 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   toggleVisibility() {
     this.visibilityMenu = !this.visibilityMenu;
-    console.log('LIST-Components', this.subMenuService.getListComponents());
     if ( this.visibilityMenu ) {
       this.setInputFocus();
     }

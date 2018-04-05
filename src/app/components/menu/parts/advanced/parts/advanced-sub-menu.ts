@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ViewChild, OnInit, AfterViewInit
+  Component, ElementRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TlAdvancedRootMenu } from '../advanced-root-menu';
@@ -42,21 +42,19 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
 
   public docked = false;
 
-  public width;
+  public width = '';
 
-  public dockWidth;
+  public dockWidth = '';
 
-  public group;
+  public group = '';
 
-  public titleMenu = '';
+  public operationMode = '';
 
   public anchorElements = [];
 
   public parentNode;
 
   public callBack = Function();
-
-  public nextSubMenu: TlAdvancedSubMenu;
 
   public previousMenu;
 
@@ -72,11 +70,11 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
 
   private index = 0;
 
-  private link;
+  private link = '';
 
   @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
 
-  constructor( private router: Router ) {
+  constructor( private router: Router, private change: ChangeDetectorRef ) {
   }
 
   ngOnInit() {
@@ -92,41 +90,62 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
   }
 
   setProperties( properties ) {
-    this.icon = properties.icon;
-    this.label = properties.label;
-    this.subItem = properties.subItem;
-    this.docked = properties.docked;
-    this.width = properties.width;
-    this.dockWidth = properties.dockWidth;
-    this.group = properties.group;
-    this.titleMenu = properties.titleMenu;
-    this.link = properties.link;
+    Object.keys( properties ).forEach( ( item ) => {
+      this[ item ] = properties[ item ];
+    } );
   }
 
   setAnchorElement( item, element ) {
     if ( item[ this.subItem ] && this.alreadyTaken( element ).length === 0 ) {
-      this.anchorElements.push( { 'rootElement': element, 'subItems': item[ this.subItem ], 'subMenu': null } );
+      this.anchorElements.push( {
+        'rootElement': element,
+        'subItems': item[ this.subItem ],
+        'subMenu': null
+      } );
     }
   }
 
-  toggleSubMenu( element, subItem, $event ) {
-    if ( subItem ) {
-      if ( this.isTargetListElement( element, $event.target ) ) {
-        this.isContentMath(element)[0].subMenu.toggleVisibility();
-      }
+  toggleSubMenu( element ) {
+    const mathContent = this.isContentMath( element );
+    if ( mathContent.length > 0 ) {
+      mathContent[ 0 ].subMenu.toggleVisibility( element );
     }
   }
 
-  isContentMath(element) {
-    return this.anchorElements.filter((value, index, array) => {
-      return value['rootElement'] === element;
-    });
+  onHoverSubMenu( element ) {
+    if (!this.isOperationModeHover()) {
+      return;
+    }
+    const mathContent = this.isContentMath( element );
+    if ( mathContent.length > 0 ) {
+      mathContent[ 0 ].subMenu.visibilitySubMenu = true;
+    }
   }
 
-  toggleVisibility() {
+  onLeaveSubMenu( element ) {
+    if (!this.isOperationModeHover()) {
+      return;
+    }
+    const mathContent = this.isContentMath( element );
+    if ( mathContent.length > 0 ) {
+      mathContent[ 0 ].subMenu.visibilitySubMenu = false;
+    }
+  }
+
+  isOperationModeHover() {
+    return this.operationMode === 'hover';
+  }
+
+  isContentMath( element ) {
+    return this.anchorElements.filter( ( value, index, array ) => {
+      return value[ 'rootElement' ] === element;
+    } );
+  }
+
+  toggleVisibility( element? ) {
     this.visibilitySubMenu = !this.visibilitySubMenu;
     this.getListMenuElements();
-    this.handleNextSubMenuVisibility();
+    this.handleNextSubMenuVisibility( element );
     this.setTopPosition();
   }
 
@@ -135,17 +154,23 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     if ( item[ this.link ] ) {
       return this.router.navigate( [ item[ this.link ] ] );
     }
+    this.handleCallbackItem( item, $event );
+  }
+
+  handleCallbackItem( item, $event ) {
     if ( item[ 'callback' ] ) {
       this.callBack = item[ 'callback' ];
       this.callBack( $event );
     }
   }
 
-  handleNextSubMenuVisibility() {
-    if ( this.nextSubMenu ) {
-      if ( this.nextSubMenu.visibilitySubMenu ) {
-        this.nextSubMenu.toggleVisibility();
-      }
+  handleNextSubMenuVisibility( element ) {
+    const nestedSubMenu = this.isContentMath( element )[ 0 ];
+    if ( !element || !nestedSubMenu ) {
+      return;
+    }
+    if ( nestedSubMenu.subItem.visibilitySubMenu ) {
+      nestedSubMenu.subItem.toggleVisibility();
     }
   }
 
@@ -180,14 +205,12 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
       }, 100 );
     }
     this.previousMenu.setFocusElement();
-
   }
 
-  onArrowRight() {
-    const elementFocused = document.activeElement;
-    const children = Array( elementFocused.getElementsByTagName( 'li' ) );
-    if ( children[ 0 ].length > 0 && !this.nextSubMenu.visibilitySubMenu ) {
-      this.nextSubMenu.toggleVisibility();
+  onArrowRight( $event, element ) {
+    $event.stopPropagation();
+    if ( this.isContentMath( element ).length > 0 ) {
+      this.isContentMath( element )[ 0 ].subMenu.toggleVisibility();
     }
   }
 
@@ -202,31 +225,26 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     this.listMenuElements[ this.index ].focus();
   }
 
-  isTargetListElement( element, target ) {
-    for ( const item of element.children ) {
-      if ( item === target ) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   alreadyTaken( element ) {
     return this.anchorElements.filter( ( value ) => {
       return value.rootElement === element;
     } );
   }
 
+  close() {
+    this.visibilitySubMenu = false;
+  }
+
   setLeftPosition() {
     const border = 1;
-    const padding = this.isPreviousRootMenu() ? 0 : 10;
-    this.leftPosition = parseInt( this.width, 10 ) + padding + border + 'px';
+    this.leftPosition = parseInt( this.width, 10 ) + border + 'px';
   }
 
   setTopPosition() {
     const position = this.isPreviousRootMenu() ?
-      this.parentNode.offsetTop - this.previousMenu.innerScrollWrapper + 5 : this.parentNode.offsetTop;
+      this.parentNode.offsetTop - this.previousMenu.innerScrollWrapper : this.parentNode.offsetTop;
     this.topPosition = position + 'px';
+    this.change.detectChanges();
   }
 
   isPreviousRootMenu() {

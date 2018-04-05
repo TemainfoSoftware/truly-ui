@@ -6,7 +6,8 @@
 
 .header-advanced-menu {
   color: #5c5c5c;
-  padding-bottom: 10px;
+  height: 100px;
+  padding: 5px;
   .ui-header-title {
     display: grid;
     grid-template-columns: 40px 1fr 40px;
@@ -58,19 +59,18 @@
   font-family: 'Lato', sans-serif;
   list-style: none;
   margin: 0;
+  padding: 0;
   position: relative;
   outline: 1px solid #C8C8C8;
   z-index: 100;
   background: #FFFFFF;
-  padding: 5px;
+  box-sizing: content-box;
   user-select: none;
   transition: all 150ms ease-in-out;
 
   > .ui-wrapper-items {
     overflow-x: hidden;
     overflow-y: auto;
-    width: 240px;
-    max-height: 350px;
     &::-webkit-scrollbar {
       width: 7px;
     }
@@ -78,6 +78,7 @@
       background: #66CC99;
       -webkit-border-radius: 5px;
     }
+
   }
 
   > .ui-label-nothing-found {
@@ -99,25 +100,6 @@
 
 }
 
-.ui-list-category {
-  height: 30px !important;
-  line-height: 30px !important;
-  color: #66cc99;
-  padding-left: 10px;
-  border-bottom: 1px solid #66cc99;
-  font-weight: 800;
-  > .icon {
-    height: 30px !important;
-    line-height: 30px !important;
-  }
-
-  > .label {
-    height: 30px !important;
-    line-height: 30px !important;
-  }
-
-}
-
 .ui-advanced-list-item {
   position: static;
   font-family: 'Lato', sans-serif;
@@ -128,8 +110,10 @@
   background: #FFFFFF;
   height: 40px;
   line-height: 40px;
+  padding: 0 5px;
   grid-template-columns: 40px 1fr 40px;
-  border-top: 0.5px solid #e2e2e2;
+  border-top: 1px solid #e2e2e2;
+  box-sizing: content-box;
 
   > .icon {
     text-align: center;
@@ -143,6 +127,7 @@
     left: 30px;
     position: relative;
     color: #5c5c5c;
+
     &.ui-advanced-submenu-opened {
       background: #66cc99;
       color: #ffff;
@@ -176,7 +161,34 @@
     outline: none;
   }
 
-  /*  &:hover > ::ng-deep tl-advanced-sub-menu {
-      visibility: visible;
-    }*/
+  &:last-child {
+    margin-bottom: 1px;
+  }
+
+}
+
+.ui-list-category {
+  height: 30px !important;
+  line-height: 30px !important;
+  color: #66cc99;
+  padding-left: 10px;
+  border-bottom: 1px solid #66cc99;
+  font-weight: 800;
+  > .icon {
+    height: 30px !important;
+    line-height: 30px !important;
+  }
+
+  > .label {
+    height: 30px !important;
+    line-height: 30px !important;
+  }
+}
+
+.ui-subitem-group {
+  .ui-advanced-list-item {
+    &:first-of-type {
+      border-top: 0;
+    }
+  }
 }

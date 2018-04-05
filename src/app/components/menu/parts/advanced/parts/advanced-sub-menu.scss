@@ -33,7 +33,6 @@
   }
 }
 
-
 .ui-advanced-sub-menu-list {
   position: absolute;
   font-family: 'Lato', sans-serif;
@@ -42,7 +41,7 @@
   outline: 1px solid #C8C8C8;
   z-index: 100;
   background: #FFFFFF;
-  padding: 5px;
+  padding: 0;
   transition: all 150ms ease-in-out;
   box-sizing: content-box;
 }
@@ -56,10 +55,11 @@
   text-decoration: none;
   background: #FFFFFF;
   height: 40px;
+  padding: 0 5px;
   line-height: 40px;
   grid-template-columns: 40px 1fr 40px;
   border-bottom: 1px solid #fafafa;
-
+  box-sizing: content-box;
 
   > .icon {
     text-align: center;
@@ -100,4 +100,5 @@
     background: #E3F5EC;
     outline: none;
   }
+
 }

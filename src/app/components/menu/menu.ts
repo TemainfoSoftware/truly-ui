@@ -50,7 +50,11 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() group = '';
 
+  @Input() maxHeight = '800px';
+
   @Input() titleMenu = 'Menu Principal';
+
+  @Input() operationMode: 'click' | 'hover' = 'hover';
 
   @Input() mode: 'simple' | 'advanced' = 'simple';
 
@@ -70,12 +74,17 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   private callBack = Function();
 
-  constructor( private renderer: Renderer2, private router: Router, private subMenuService: SubMenuService ) {}
+  constructor( private renderer: Renderer2,
+               private router: Router,
+               private subMenuService: SubMenuService,
+               private viewRoot: ViewContainerRef ) {
+  }
 
   ngAfterContentInit() {
     this.subMenuService.setRenderer( this.renderer );
     this.subMenuService.setRootMenu( this.menuList );
-    this.subMenuService.setViewContainerRef( this.menuList );
+    this.subMenuService.setViewRootMenu(this.viewRoot);
+    this.subMenuService.setViewSubMenu( this.menuList );
     this.createList();
     this.listenDocumentClick();
   }

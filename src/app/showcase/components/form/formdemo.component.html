@@ -186,12 +186,17 @@
             <h5>Create an function to call the function <code>createForm</code> passing the following parameters. For
               example:</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-this.formService.createForm(NewPersonComponent, this.compiler, null (form) => {
-  if (form.formResult.value) {
-    this.dataFormService.saveDataForm(form.formResult.value);
-    this.result = this.dataFormService.getDataForm();
+
+ constructor(
+    private formService: FormService,
+    private componentFactory: ComponentFactoryResolver,
+  ) {}
+
+  openForm(){
+    this.formService.createForm(NewPersonComponent, this.componentFactory, null (form) => {
+      console.log(form)
+    });
   }
-});
         </textarea>
           </app-card>
         </app-showcase-card>

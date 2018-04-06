@@ -1,10 +1,10 @@
 <div class="ui-toolbar-wrapper"
      [ngClass]="color"
      [ngStyle]="
-     {'height': 'calc(' + height + ' - 10px' + ')',
-     'line-height': 'calc(' + height + ' - 10px' + ')'
+     {'height': height,
+     'line-height': height
      }">
   <div class="ui-toolbar-content">
-    <ng-content></ng-content>
+      <ng-content></ng-content>
   </div>
 </div>

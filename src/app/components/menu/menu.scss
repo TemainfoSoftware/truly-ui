@@ -1,3 +1,4 @@
+
 .ui-wrapper-menulist {
   box-sizing: content-box;
 
@@ -11,13 +12,14 @@
   .ui-menulist-item {
     position: relative;
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-    font-size: 14px;
+    font-size: 1em;
     display: grid;
     height: 50px;
     cursor: pointer;
     line-height: 50px;
     text-decoration: none;
     grid-template-columns: 50px;
+    user-select: none;
 
     > .icon {
       text-align: center;
@@ -27,24 +29,19 @@
     > .label {
       padding: 0;
       font-style: normal;
-      font-size: 1.1em;
+      font-size: 1em;
       text-align: left;
       font-weight: normal;
       height: 50px;
       line-height: 50px;
     }
 
+    &:hover > ::ng-deep tl-simple-sub-menu {
+      visibility: visible;
+    }
   }
-
-  .ui-submenu {
-    visibility: hidden;
-    box-sizing: content-box;
-    margin: 0;
-    padding: 0;
-    z-index: 100;
-  }
-
 }
+
 
 .ui-hidden-icon {
   visibility: hidden;
@@ -54,7 +51,6 @@
   visibility: visible;
   display: grid;
   position: relative;
-  transition: all 200ms ease-in;
 }
 
 .ui-wrapper-menulist li:hover li {

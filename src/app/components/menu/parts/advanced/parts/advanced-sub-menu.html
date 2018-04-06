@@ -1,0 +1,31 @@
+<ul class="ui-advanced-sub-menu-list"
+    [style.visibility]="visibilitySubMenu ? 'visible' : 'hidden'"
+    [style.opacity]="visibilitySubMenu ? '1' : '0'"
+    [ngClass]="{'docked': docked}"
+    [style.width]="width"
+    [style.left]="leftPosition" #subMenuList>
+  <li #elementList
+      [ngClass]="
+      {'ui-advanced-submenu-selected': isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu && item[subItem] }"
+      class="ui-advanced-list-item"
+      tabindex="-1"
+      (keydown.arrowdown)="onArrowDown($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowup)="onArrowUp($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowleft)="onArrowLeft($event.preventDefault(), $event.stopPropagation())"
+      (keydown.arrowright)="onArrowRight($event, elementList)"
+      (keydown.enter)="callbackListElement($event, item)"
+      (mouseover)="onHoverSubMenu(elementList)"
+      (mouseleave)="onLeaveSubMenu(elementList)"
+      (click)="toggleSubMenu(elementList, item[subItem], $event); callbackListElement($event, item)"
+      [style.height]="dockWidth" [style.line-height]="dockWidth" *ngFor="let item of items">
+    <i [style.height]="dockWidth" [style.line-height]="dockWidth" [class]="'icon ' + item[icon]"></i>
+    <span [style.height]="dockWidth" [style.line-height]="dockWidth" class="label">{{item[label]}}</span>
+
+    <div class="icon-sub-menu" *ngIf="item[subItem]"
+         [ngClass]="{'ui-advanced-submenu-opened' : isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu }">
+      <i [style.height]="dockWidth" [style.line-height]="dockWidth" *ngIf="item[subItem]"
+         [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
+         class="ion-ios-arrow-right icon"></i>
+    </div>
+  </li>
+</ul>

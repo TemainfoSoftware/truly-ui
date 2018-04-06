@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Input, Directive, Renderer2 } from '@angular/core';
+import { Input, Directive, Renderer2, ElementRef } from '@angular/core';
 
 @Directive( {
   selector: '[relativeWindowPosition]'
@@ -32,30 +32,54 @@ export class RelativeWindowPosition {
 
   private renderer: Renderer2;
 
-  constructor() {}
+  constructor() {
+  }
 
   setRenderer( renderer ) {
     this.renderer = renderer;
   }
 
+  setAnchorElement( anchorElement: ElementRef ) {
+    this.anchorElement = anchorElement;
+  }
+
+  setRelativeElement( relativeElement: ElementRef ) {
+    this.relativeElement = relativeElement;
+  }
+
   setPosition() {
-    this.renderer.setStyle( this.relativeElement, 'position', 'fixed' );
-    this.fitInWindowX() ? this.setRelativeElementToLeftAnchor() : this.setRelativeElementToRightAnchor();
+    this.fitInWindowX() ? this.setRelativeElementToRightAnchor() : this.setRelativeElementToLeftAnchor();
+    this.fitInWindowY() ? this.setRelativeElementToTopAnchor() : this.setRelativeToBottomAnchor();
   }
 
-  private fitInWindowX() {
-    const totalWidth = Math.round( this.anchorElement.getBoundingClientRect().left + this.anchorElement.offsetWidth );
-    return (window.innerWidth - totalWidth) < this.relativeElement.offsetWidth;
+  private setRelativeElementToTopAnchor() {
+    this.renderer.setStyle( this.relativeElement, 'top',
+     + this.anchorElement.offsetTop + 1 + 'px' );
   }
 
-  private setRelativeElementToLeftAnchor() {
-    this.renderer.setStyle( this.relativeElement, 'left',
-      this.anchorElement.getBoundingClientRect().left - this.relativeElement.offsetWidth + 1 + 'px' );
+  private setRelativeToBottomAnchor() {
+    this.renderer.setStyle( this.relativeElement, 'top',
+      this.anchorElement.offsetTop - (this.relativeElement.offsetHeight) + this.anchorElement.offsetHeight + 'px' );
   }
 
   private setRelativeElementToRightAnchor() {
     this.renderer.setStyle( this.relativeElement, 'left',
-      this.anchorElement.getBoundingClientRect().left + this.anchorElement.offsetWidth - 1 + 'px' );
+      this.anchorElement.offsetLeft + this.anchorElement.offsetWidth + 1 + 'px' );
+  }
+
+  private setRelativeElementToLeftAnchor() {
+    this.renderer.setStyle( this.relativeElement, 'left',
+      this.anchorElement.offsetLeft - this.anchorElement.offsetWidth + 'px' );
+  }
+
+  private fitInWindowY() {
+    const rest = Math.round( this.anchorElement.getBoundingClientRect().top + this.relativeElement.offsetHeight );
+    return rest < window.innerHeight;
+  }
+
+  private fitInWindowX() {
+    const rest = Math.round( this.anchorElement.getBoundingClientRect().right + this.relativeElement.offsetWidth );
+    return rest < window.innerWidth;
   }
 
 }

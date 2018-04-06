@@ -326,6 +326,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     }
     if ( this.isTargetEqualsElement( element, $event.target )
       || this.isTargetListElement( element, $event.target ) ) {
+      this.closeAllSubMenus();
       this.isContentMath( element )[ 0 ].subMenu.toggleVisibility();
     }
   }

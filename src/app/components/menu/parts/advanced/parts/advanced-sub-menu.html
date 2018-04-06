@@ -3,8 +3,7 @@
     [style.opacity]="visibilitySubMenu ? '1' : '0'"
     [ngClass]="{'docked': docked}"
     [style.width]="width"
-    [style.left]="leftPosition"
-    [style.top]="topPosition" #subMenuList>
+    [style.left]="leftPosition" #subMenuList>
   <li #elementList
       [ngClass]="
       {'ui-advanced-submenu-selected': isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu && item[subItem] }"

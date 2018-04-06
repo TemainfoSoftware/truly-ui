@@ -20,10 +20,11 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef
+  Component, ElementRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef, Renderer2
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TlAdvancedRootMenu } from '../advanced-root-menu';
+import { RelativeWindowPosition } from '../../../../misc/relative-window-position.directive';
 
 @Component( {
   selector: 'tl-advanced-sub-menu',
@@ -72,9 +73,11 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
 
   private link = '';
 
+  private relativeWindowPosition: RelativeWindowPosition = new RelativeWindowPosition();
+
   @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
 
-  constructor( private router: Router, private change: ChangeDetectorRef ) {
+  constructor( private router: Router, private change: ChangeDetectorRef, private renderer: Renderer2 ) {
   }
 
   ngOnInit() {
@@ -119,6 +122,7 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     const mathContent = this.isContentMath( element );
     if ( mathContent.length > 0 ) {
       mathContent[ 0 ].subMenu.visibilitySubMenu = true;
+      mathContent[ 0 ].subMenu.setTopPosition();
     }
   }
 
@@ -241,10 +245,17 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
   }
 
   setTopPosition() {
-    const position = this.isPreviousRootMenu() ?
+    this.relativeWindowPosition.setRenderer(this.renderer);
+    this.relativeWindowPosition.setAnchorElement( this.parentNode );
+    this.relativeWindowPosition.setRelativeElement( this.subMenuList.nativeElement );
+    this.relativeWindowPosition.setPosition();
+
+   /* const position = this.isPreviousRootMenu() ?
       this.parentNode.offsetTop - this.previousMenu.innerScrollWrapper : this.parentNode.offsetTop;
     this.topPosition = position + 'px';
-    this.change.detectChanges();
+    this.change.detectChanges();*/
+
+
   }
 
   isPreviousRootMenu() {

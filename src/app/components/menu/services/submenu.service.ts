@@ -102,6 +102,10 @@ export class SubMenuService {
       this.handleSubItemsAdvancedMenu();
       return;
     } );
+    this.handleLoadRootChangeItems();
+  }
+
+  handleLoadRootChangeItems() {
     this.subscription = this.menu.instance.onChangeItems.subscribe( () => {
       this.renderer.appendChild( this.anchorRootElement, this.menu.location.nativeElement );
       this.handleSubItemsAdvancedMenu();
@@ -127,6 +131,10 @@ export class SubMenuService {
     this.subMenuItem = subMenu;
     this.listComponents.push( subMenu );
     this.appendSubMenuAnchor( subMenu );
+    this.handleLoadSubMenu( subMenu );
+  }
+
+  handleLoadSubMenu( subMenu ) {
     subMenu.instance.onSubMenuLoad.subscribe( () => {
       this.handleSubItemsAdvancedSubMenu( subMenu );
     } );
@@ -201,7 +209,7 @@ export class SubMenuService {
   }
 
   getSubMenus() {
-    return this.listComponents.filter( ( value, index, array ) => {
+    return this.listComponents.filter( ( value ) => {
       return value.instance instanceof TlAdvancedSubMenu;
     } );
   }
@@ -219,8 +227,8 @@ export class SubMenuService {
   clearView() {
     this.viewRootMenu.clear();
     this.viewSubMenu.clear();
-    this.menu = null;
     this.listComponents = [];
+    this.menu = null;
   }
 
 }

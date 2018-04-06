@@ -52,7 +52,11 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() group = '';
 
+  @Input() filterEmptyMessage = 'Nothing to Show';
+
   @Input() maxHeight = '800px';
+
+  @Input() inputPlaceholder = '';
 
   @Input() titleMenu = 'Menu Principal';
 

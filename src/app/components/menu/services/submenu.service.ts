@@ -35,7 +35,7 @@ export class SubMenuService {
 
   private viewRootMenu: ViewContainerRef;
 
-  private menu:  ComponentRef<any>;
+  private menu: ComponentRef<any>;
 
   private subMenuItem: ComponentRef<any>;
 
@@ -46,6 +46,8 @@ export class SubMenuService {
   private properties;
 
   private factoryMenu;
+
+  private subscription;
 
   private anchorElement: HTMLElement;
 
@@ -95,8 +97,15 @@ export class SubMenuService {
       (<TlAdvancedRootMenu>this.menu.instance).setMenuServiceInstance( this );
       this.listComponents.push( this.menu );
     }
-    this.renderer.appendChild( this.anchorRootElement, this.menu.location.nativeElement );
-    this.handleSubItemsAdvancedMenu();
+    this.menu.instance.onRootMenuLoad.subscribe( () => {
+      this.renderer.appendChild( this.anchorRootElement, this.menu.location.nativeElement );
+      this.handleSubItemsAdvancedMenu();
+      return;
+    } );
+    this.subscription = this.menu.instance.onChangeItems.subscribe( () => {
+      this.renderer.appendChild( this.anchorRootElement, this.menu.location.nativeElement );
+      this.handleSubItemsAdvancedMenu();
+    } );
   }
 
   createSimpleSubMenu() {
@@ -118,7 +127,9 @@ export class SubMenuService {
     this.subMenuItem = subMenu;
     this.listComponents.push( subMenu );
     this.appendSubMenuAnchor( subMenu );
-    this.handleSubItemsAdvancedSubMenu( subMenu );
+    subMenu.instance.onSubMenuLoad.subscribe( () => {
+      this.handleSubItemsAdvancedSubMenu( subMenu );
+    } );
   }
 
   handlePreviousSubMenu( subMenu, nestedMenu ) {
@@ -137,19 +148,16 @@ export class SubMenuService {
   }
 
   handleSubItemsAdvancedSubMenu( subMenu ) {
-    setTimeout( () => {
-      if ( subMenu.instance.anchorElements.length > 0 ) {
-        this.createNewSubItems( subMenu, 'advanced', true );
-      }
-    }, 100 );
+    if ( subMenu.instance.anchorElements.length > 0 ) {
+      this.createNewSubItems( subMenu, 'advanced', true );
+    }
   }
 
   handleSubItemsAdvancedMenu() {
-    setTimeout( () => {
-      if ( this.menu.instance.anchorElements.length > 0 ) {
-        this.createNewSubItems( this.menu, 'advanced' );
-      }
-    }, 1 );
+    if ( this.menu.instance.anchorElements.length > 0 ) {
+      this.createNewSubItems( this.menu, 'advanced' );
+      this.subscription.unsubscribe();
+    }
   }
 
   handleSubItemsSimpleSubMenu( subMenu ) {

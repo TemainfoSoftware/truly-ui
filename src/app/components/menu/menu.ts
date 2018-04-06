@@ -48,6 +48,8 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() docked = false;
 
+  @Input() charsToSearch = 2;
+
   @Input() group = '';
 
   @Input() maxHeight = '800px';

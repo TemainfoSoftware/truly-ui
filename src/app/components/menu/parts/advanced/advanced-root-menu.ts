@@ -27,6 +27,7 @@ import { trigger, transition, style } from '@angular/animations';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/filter';
 import { Router } from '@angular/router';
 import { TlAdvancedSubMenu } from './parts/advanced-sub-menu';
 
@@ -65,6 +66,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public group = '';
 
+  public charsToSearch = 0;
+
   public titleMenu = '';
 
   public anchorElements = [];
@@ -86,6 +89,10 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   public callBack = Function();
 
   public nothingFound = false;
+
+  public onRootMenuLoad: Subject<boolean> = new Subject<boolean>();
+
+  public onChangeItems: Subject<boolean> = new Subject<boolean>();
 
   private modelChanged: Subject<string> = new Subject<string>();
 
@@ -109,10 +116,19 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     this.modelChanged
       .debounceTime( 200 )
       .distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue )
+      .filter( ( searchTerm ) => {
+        if ( this.isTermGreaterThanChars( searchTerm ) ) { return true;
+        } else if ( this.isTermLengthEqualsZero( searchTerm ) ) {
+          this.rebuildMenu();
+          return false;
+        }
+        return false;
+      } )
       .subscribe( model => this.filterMenuItem( model ) );
   }
 
   ngAfterContentInit() {
+    this.onRootMenuLoad.next( true );
     this.setTopPosition();
     this.getListMenuElements();
   }
@@ -133,6 +149,14 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     this.listMenuElements = this.subMenuList.nativeElement.getElementsByClassName( 'ng-trigger-rootElementList' );
   }
 
+  isTermLengthEqualsZero( searchTerm ) {
+    return String( searchTerm ).length === 0;
+  }
+
+  isTermGreaterThanChars( searchTerm ) {
+    return String( searchTerm ).length >= this.charsToSearch;
+  }
+
   filterCategory( array ) {
     this.groups = [];
     array.forEach( ( value ) => {
@@ -143,7 +167,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   changeInputValue( value ) {
-    value ? this.modelChanged.next( value.trim() ) : this.rebuildMenu();
+    this.modelChanged.next( value.trim() );
   }
 
   filterMenuItem( value ) {
@@ -178,9 +202,11 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   rebuildMenu() {
+    this.nothingFound = false;
     this.subMenuService.resetAdvancedMenu();
     this.subMenuService.createAdvancedMenu();
     this.setDataSubMenu( this.items );
+    this.onChangeItems.next( true );
     this.setInputFocus();
   }
 
@@ -226,23 +252,23 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   onHoverSubMenu( element ) {
-    if (!this.isOperationModeHover()) {
+    if ( !this.isOperationModeHover() ) {
       return;
     }
     const mathContent = this.isContentMath( element );
     if ( mathContent.length > 0 ) {
-      mathContent[ 0 ].subMenu.setTopPosition();
+      mathContent[ 0 ].subMenu.setPosition();
       mathContent[ 0 ].subMenu.visibilitySubMenu = true;
     }
   }
 
   onLeaveSubMenu( element ) {
-    if (!this.isOperationModeHover()) {
+    if ( !this.isOperationModeHover() ) {
       return;
     }
     const mathContent = this.isContentMath( element );
     if ( mathContent.length > 0 ) {
-      mathContent[ 0 ].subMenu.setTopPosition();
+      mathContent[ 0 ].subMenu.setPosition();
       mathContent[ 0 ].subMenu.visibilitySubMenu = false;
     }
   }
@@ -362,6 +388,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   setInputFocus() {
     setTimeout( () => {
+      console.log( 'TimeoutInput' );
       this.inputElement.nativeElement.focus();
     }, 100 );
   }

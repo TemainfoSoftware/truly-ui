@@ -18,7 +18,7 @@
       <input #input type="text"
              (keydown.arrowdown)="onArrowDown($event)"
              (keydown.arrowup)="onArrowUp($event)"
-             [ngModel]="model" (ngModelChange)="changeInputValue($event)" placeholder="Procure...">
+             [ngModel]="model" (keyup)="changeInputValue($event.target.value)" placeholder="Procure...">
     </div>
   </div>
 

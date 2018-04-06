@@ -20,18 +20,19 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, ViewChild, OnInit, AfterViewInit, ChangeDetectorRef, Renderer2
+  Component, ElementRef, ViewChild, AfterViewInit, ChangeDetectorRef, Renderer2
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TlAdvancedRootMenu } from '../advanced-root-menu';
 import { RelativeWindowPosition } from '../../../../misc/relative-window-position.directive';
+import { Subject } from 'rxjs/Subject';
 
 @Component( {
   selector: 'tl-advanced-sub-menu',
   templateUrl: './advanced-sub-menu.html',
   styleUrls: [ './advanced-sub-menu.scss' ],
 } )
-export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
+export class TlAdvancedSubMenu implements AfterViewInit {
 
   public icon = '';
 
@@ -61,13 +62,13 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
 
   public visibilitySubMenu = false;
 
-  public topPosition = '';
-
   public leftPosition = '';
 
   public listMenuElements = [];
 
   public fixed = false;
+
+  public onSubMenuLoad: Subject<boolean> = new Subject<boolean>();
 
   private index = 0;
 
@@ -80,12 +81,9 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
   constructor( private router: Router, private change: ChangeDetectorRef, private renderer: Renderer2 ) {
   }
 
-  ngOnInit() {
-    this.setLeftPosition();
-    this.setTopPosition();
-  }
-
   ngAfterViewInit() {
+    this.onSubMenuLoad.next(true);
+    this.change.detectChanges();
   }
 
   setDataSubMenu( items ) {
@@ -122,7 +120,7 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     const mathContent = this.isContentMath( element );
     if ( mathContent.length > 0 ) {
       mathContent[ 0 ].subMenu.visibilitySubMenu = true;
-      mathContent[ 0 ].subMenu.setTopPosition();
+      mathContent[ 0 ].subMenu.setPosition();
     }
   }
 
@@ -150,7 +148,7 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     this.visibilitySubMenu = !this.visibilitySubMenu;
     this.getListMenuElements();
     this.handleNextSubMenuVisibility( element );
-    this.setTopPosition();
+    this.setPosition();
   }
 
   callbackListElement( $event, item ) {
@@ -189,6 +187,7 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
 
   setFocusFirstElement() {
     setTimeout( () => {
+      console.log('TimeoutFirst');
       this.listMenuElements[ 0 ].focus();
     }, 100 );
   }
@@ -239,23 +238,11 @@ export class TlAdvancedSubMenu implements OnInit, AfterViewInit {
     this.visibilitySubMenu = false;
   }
 
-  setLeftPosition() {
-    const border = 1;
-    this.leftPosition = parseInt( this.width, 10 ) + border + 'px';
-  }
-
-  setTopPosition() {
+  setPosition() {
     this.relativeWindowPosition.setRenderer(this.renderer);
     this.relativeWindowPosition.setAnchorElement( this.parentNode );
     this.relativeWindowPosition.setRelativeElement( this.subMenuList.nativeElement );
     this.relativeWindowPosition.setPosition();
-
-   /* const position = this.isPreviousRootMenu() ?
-      this.parentNode.offsetTop - this.previousMenu.innerScrollWrapper : this.parentNode.offsetTop;
-    this.topPosition = position + 'px';
-    this.change.detectChanges();*/
-
-
   }
 
   isPreviousRootMenu() {

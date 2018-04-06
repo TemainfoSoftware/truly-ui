@@ -18,11 +18,15 @@
       <input #input type="text"
              (keydown.arrowdown)="onArrowDown($event)"
              (keydown.arrowup)="onArrowUp($event)"
-             [ngModel]="model" (keyup)="changeInputValue($event.target.value)" placeholder="Procure...">
+             [ngModel]="model" (keyup)="changeInputValue($event.target.value)" [placeholder]="inputPlaceholder">
     </div>
   </div>
 
-  <label class="ui-label-nothing-found" *ngIf="nothingFound"> Nenhum Menu Encontrado </label>
+  <div class="ui-wrapper-not-found"
+       *ngIf="nothingFound"
+       [tlBlockui]="nothingFound"
+       [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+  </div>
 
   <div class="ui-wrapper-items"
        [style.width]="width"

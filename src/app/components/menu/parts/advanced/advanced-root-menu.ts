@@ -23,7 +23,7 @@ import {
   Component, ElementRef, ViewChild, AfterContentInit, ChangeDetectorRef,
 } from '@angular/core';
 
-import { trigger, transition, style } from '@angular/animations';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -40,9 +40,11 @@ import { TlAdvancedSubMenu } from './parts/advanced-sub-menu';
       'rootElementList', [
         transition( ':enter', [
           style( { transform: 'translateY(5%)', opacity: 0 } ),
+          animate('250ms', style({transform: 'translateY(0)', opacity: 1}))
         ] ),
         transition( ':leave', [
           style( { transform: 'translateY(0)', opacity: 1 } ),
+          animate('250ms', style({transform: 'translateY(100%)', opacity: 0}))
         ] )
       ]
     )
@@ -77,6 +79,10 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   public operationMode = '';
 
   public topPosition = '';
+
+  public filterEmptyMessage = '';
+
+  public inputPlaceholder = '';
 
   public groups = [];
 
@@ -388,7 +394,6 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   setInputFocus() {
     setTimeout( () => {
-      console.log( 'TimeoutInput' );
       this.inputElement.nativeElement.focus();
     }, 100 );
   }

@@ -6,6 +6,7 @@ import { TlSimpleSubMenu } from './parts/simple/simple-sub-menu';
 import { TlAdvancedSubMenu } from './parts/advanced/parts/advanced-sub-menu';
 import { TlAdvancedRootMenu } from './parts/advanced/advanced-root-menu';
 import { FormsModule } from '@angular/forms';
+import { BlockUIModule } from '../blockui/index';
 
 export * from './menu';
 
@@ -13,6 +14,7 @@ export * from './menu';
   imports: [
     CommonModule,
     MiscModule,
+    BlockUIModule,
     FormsModule
   ],
   declarations: [

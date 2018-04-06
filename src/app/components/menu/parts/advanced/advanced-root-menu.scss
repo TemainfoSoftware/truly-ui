@@ -55,6 +55,11 @@
 
 }
 
+.ui-wrapper-not-found {
+  width: 100%;
+  height: 250px;
+}
+
 .ui-advanced-sub-menu-list {
   font-family: 'Lato', sans-serif;
   list-style: none;
@@ -96,6 +101,7 @@
     padding-left: 15px;
     border-bottom: 1px solid #66cc99;
     width: 100%;
+    font-weight: normal;
   }
 
 }

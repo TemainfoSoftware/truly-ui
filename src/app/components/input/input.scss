@@ -6,12 +6,12 @@
 }
 
 @mixin textInput {
-  font-family: 'Lato', sans-serif;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   font-size: 0.9em;
 }
 
 @mixin actionButtons {
-  font-family: 'Lato', sans-serif;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   cursor: pointer;
 }
 
@@ -48,7 +48,7 @@
     cursor: pointer;
   }
   > .addon.-predefined {
-    font-family: 'Lato', sans-serif;
+    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   }
 
   > .addon:hover {
@@ -62,7 +62,7 @@
     white-space: nowrap;
     vertical-align: middle;
     font-weight: normal;
-    font-family: 'Lato', sans-serif;
+    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     font-size: 0.9em;
   }
   > .label.-labeltop {
@@ -90,7 +90,7 @@
     width: 100%;
     float: right;
     font-weight: normal;
-    font-family: 'Lato', sans-serif;
+    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   }
   > .field::placeholder {
     @include textInput;

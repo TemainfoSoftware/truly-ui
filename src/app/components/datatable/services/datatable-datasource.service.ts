@@ -130,6 +130,10 @@ export class TlDatatableDataSource implements DatasourceService {
     }
 
     private getData() {
+        if (this.datatable.data === null ) {
+          this.datatable.data = [];
+          return [];
+        }
         return this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
     }
 

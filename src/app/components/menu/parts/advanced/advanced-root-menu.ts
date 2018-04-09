@@ -310,8 +310,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   handleCallbackItem( item, $event ) {
-    if ( item[ 'callback' ] ) {
-      this.callBack = item[ 'callback' ];
+    if ( item[ 'callBack' ] ) {
+      this.callBack = item[ 'callBack' ];
       this.callBack( $event );
     }
   }

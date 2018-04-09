@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-  Input, Component, OnDestroy, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+  Input, Component, OnDestroy, OnChanges, SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component( {
@@ -52,20 +53,17 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
 
   @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
 
-  constructor( private router: Router) {}
+  constructor( private router: Router, private change: ChangeDetectorRef ) {}
 
   setDataSubMenu( items ) {
     this.items = items;
+    this.change.detectChanges();
   }
 
   setProperties( properties ) {
-    this.icon = properties.icon;
-    this.label = properties.label;
-    this.subItem = properties.subItem;
-    this.docked = properties.docked;
-    this.width = properties.width;
-    this.dockWidth = properties.dockWidth;
-    this.link = properties.link;
+    Object.keys( properties ).forEach( ( item ) => {
+      this[ item ] = properties[ item ];
+    } );
   }
 
   setAnchorElement( item, element ) {
@@ -86,12 +84,11 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
     if ( item[ this.link ] ) {
       return this.router.navigate( [ item[ this.link ] ] );
     }
-    if ( item[ 'callback' ] ) {
-      this.callBack = item[ 'callback' ];
+    if ( item[ 'callBack' ] ) {
+      this.callBack = item[ 'callBack' ];
       this.callBack( $event );
     }
   }
-
 
   getWidth() {
     return Math.round(parseInt(this.width, 10) + 1) + 'px';

@@ -114,7 +114,7 @@ export class SubMenuService {
 
   createSimpleSubMenu() {
     const componentFactory = this.compiler.resolveComponentFactory( TlSimpleSubMenu );
-    const subMenu = this.viewSubMenu.createComponent( componentFactory );
+    const subMenu = this.viewRootMenu.createComponent( componentFactory );
     (<TlSimpleSubMenu>subMenu.instance).setProperties( this.properties );
     (<TlSimpleSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
     this.subMenuItem = subMenu;
@@ -221,7 +221,9 @@ export class SubMenuService {
   }
 
   closeMenu() {
-    (<TlAdvancedRootMenu>this.menu.instance).close();
+    if (this.menu) {
+      (<TlAdvancedRootMenu>this.menu.instance).close();
+    }
   }
 
   clearView() {

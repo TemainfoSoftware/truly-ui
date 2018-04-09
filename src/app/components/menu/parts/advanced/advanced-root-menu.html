@@ -17,6 +17,7 @@
       <span><i class="ion-ios-search-strong"></i></span>
       <input #input type="text"
              (keydown.arrowdown)="onArrowDown($event)"
+             (keydown.escape)="close()"
              (keydown.arrowup)="onArrowUp($event)"
              [ngModel]="model" (keyup)="changeInputValue($event.target.value)" [placeholder]="inputPlaceholder">
     </div>

@@ -42,7 +42,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() subItem = '';
 
-  @Input() dockWidth = '30px';
+  @Input() dockWidth = '40px';
 
   @Input() width = '200px';
 
@@ -56,15 +56,15 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() maxHeight = '800px';
 
-  @Input() inputPlaceholder = '';
+  @Input() inputPlaceholder = 'Search...';
 
-  @Input() titleMenu = 'Menu Principal';
+  @Input() titleMenu = 'Main Menu';
 
   @Input() operationMode: 'click' | 'hover' = 'hover';
 
   @Input() mode: 'simple' | 'advanced' = 'simple';
 
-  @Input() link = 'sidebar';
+  @Input() link = '';
 
   @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
 

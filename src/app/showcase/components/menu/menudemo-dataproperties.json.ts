@@ -91,13 +91,6 @@ export const dataProperties = [
     options: 'simple | advanced'
   },
   {
-    name: 'link',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object router links',
-    options: 'string'
-  },
-  {
     name: 'subItem',
     type: 'string',
     default: 'null',
@@ -138,6 +131,27 @@ export const dataProperties = [
     default: 'null',
     description: 'Router link string used to navigate.',
     options: 'string [routerLink]'
+  },
+  {
+    name: 'itemHeight',
+    type: 'string',
+    default: '30px',
+    description: 'Line item height',
+    options: 'string'
+  },
+  {
+    name: 'widthRootMenu',
+    type: 'string',
+    default: '250px',
+    description: 'Width of root menu',
+    options: 'px | %'
+  },
+  {
+    name: 'outsideBorder',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls if the menu box will show border or not',
+    options: 'true | false'
   },
   {
     name: 'alwaysActive (object)',

@@ -21,8 +21,7 @@
   display: table;
   border-collapse: separate;
 
-  // Addon Element
-  > .addon {
+  .addon {
     display: table-cell;
     padding: 3px 12px;
     font-size: 14px;
@@ -33,13 +32,13 @@
     white-space: nowrap;
     vertical-align: middle;
   }
-  > .addon.-borderleft {
+  .addon.-borderleft {
     border-radius: 2px 0 0 2px;
   }
-  > .addon.-borderright {
+  .addon.-borderright {
     border-radius: 0 2px 2px 0;
   }
-  > .addon.-clearbutton {
+  .addon.-clearbutton {
     font-size: 11px;
     position: absolute;
     border: 0;
@@ -47,16 +46,14 @@
     right: 4px;
     cursor: pointer;
   }
-  > .addon.-predefined {
+  .addon.-predefined {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   }
-
-  > .addon:hover {
+  .addon:hover {
     cursor: pointer;
   }
 
-  //Label
-  > .label {
+  .label {
     line-height: 1;
     width: 100px;
     white-space: nowrap;
@@ -65,40 +62,40 @@
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     font-size: 0.9em;
   }
-  > .label.-labeltop {
+  .label.-labeltop {
     text-align: left;
     padding: 0 0 5px 0;
     display: table-caption;
   }
-  > .label.-labelleft {
+  .label.-labelleft {
     text-align: right;
     padding: 4px 4px 4px 0;
     display: table-cell;
   }
-
-  > .label.-validation {
+  .label.-validation {
     font-size: 0.7em;
   }
 
-  // Field Element
-  > .field {
-    display: table-cell;
-    height: 23px;
-    padding: 4px 6px;
-    padding-right: 20px;
-    font-size: 10pt;
-    width: 100%;
-    float: right;
-    font-weight: normal;
-    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  }
-  > .field::placeholder {
-    @include textInput;
-  }
-  > .field.-cursorblocked {
-    cursor: not-allowed;
-  }
-  > .field.-disabled {
-    cursor: default !important;
+  > .ui-wrapper-input {
+    > .field {
+      display: table-cell;
+      height: 23px;
+      padding: 4px 6px;
+      padding-right: 20px;
+      font-size: 10pt;
+      width: 100%;
+      float: right;
+      font-weight: normal;
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+    }
+    > .field::placeholder {
+      @include textInput;
+    }
+    > .field.-cursorblocked {
+      cursor: not-allowed;
+    }
+    > .field.-disabled {
+      cursor: default !important;
+    }
   }
 }

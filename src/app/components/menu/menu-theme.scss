@@ -9,7 +9,6 @@
   $border-basic: 1px solid map-deep-get($basic, "default", "border");
 
   .ui-wrapper-menulist {
-    border: 1px solid map-deep-get($basic, "default", "border");
 
     .ui-menulist-item {
       color: map-deep-get($basic, "default", "foreground");
@@ -39,6 +38,10 @@
     }
 
     .ui-submenu {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &.ui-menu-bordered {
       border: 1px solid map-deep-get($basic, "default", "border");
     }
 

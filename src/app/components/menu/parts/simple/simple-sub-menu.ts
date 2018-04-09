@@ -42,6 +42,8 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
   public docked = false;
 
   public width;
+  
+  public itemHeight;
 
   public dockWidth;
 

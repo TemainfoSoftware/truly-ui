@@ -48,6 +48,8 @@ export class TlAdvancedSubMenu implements AfterViewInit {
 
   public dockWidth = '';
 
+  public itemHeight = '';
+
   public group = '';
 
   public operationMode = '';

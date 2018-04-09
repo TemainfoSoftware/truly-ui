@@ -56,6 +56,12 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() maxHeight = '800px';
 
+  @Input() itemHeight = '30px';
+
+  @Input() widthRootMenu = '350px';
+
+  @Input() outsideBorder = false;
+
   @Input() inputPlaceholder = 'Search...';
 
   @Input() titleMenu = 'Main Menu';
@@ -179,8 +185,8 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   setStyleListElement() {
     this.renderer.setStyle( this.listElement.nativeElement, 'max-width', this.width );
-    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.dockWidth );
-    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.dockWidth );
+    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight );
+    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.itemHeight );
     this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
       this.dockWidth + ' 1fr ' + this.dockWidth );
   }
@@ -189,8 +195,8 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.iconElement = new ElementRef( this.renderer.createElement( 'i' ) );
     this.renderer.addClass( this.iconElement.nativeElement, icon );
     this.renderer.addClass( this.iconElement.nativeElement, 'icon' );
-    this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.dockWidth );
-    this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.dockWidth );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.itemHeight );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.itemHeight );
   }
 
   createElementIconSubMenu( subItem ) {
@@ -236,8 +242,8 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     if ( !this.isDocked() ) {
       this.labelElement = new ElementRef( this.renderer.createElement( 'span' ) );
       this.renderer.addClass( this.labelElement.nativeElement, 'label' );
-      this.renderer.setStyle( this.labelElement.nativeElement, 'height', this.dockWidth );
-      this.renderer.setStyle( this.labelElement.nativeElement, 'line-height', this.dockWidth );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'height', this.itemHeight );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'line-height', this.itemHeight );
       this.labelElement.nativeElement.innerHTML = label;
       return;
     }

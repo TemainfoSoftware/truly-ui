@@ -5,7 +5,7 @@
     [ngClass]="{'docked': docked}"
     [style.left]="getWidth()"
     [style.maxHeight]="maxHeight"
-    [style.width]="width"
+    [style.width]="widthRootMenu"
     [style.top]="topPosition" #subMenuList>
 
   <div class="header-advanced-menu">
@@ -30,7 +30,7 @@
   </div>
 
   <div class="ui-wrapper-items"
-       [style.width]="width"
+       [style.width]="widthRootMenu"
        [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'"
        (scroll)="onScrollWrapper()" #wrapperItemsList>
     <div class="ui-subitem-group" *ngFor="let itemGroup of groups">
@@ -50,13 +50,13 @@
           (mouseover)="onHoverSubMenu(elementList)"
           (mouseleave)="onLeaveSubMenu(elementList)"
           (click)="toggleSubMenu(elementList, item[subItem], $event); callbackListElement($event, item)"
-          [style.height]="dockWidth" [style.line-height]="dockWidth" *ngFor="let item of itemGroup.items">
-        <i [style.height]="dockWidth" [style.line-height]="dockWidth" [class]="'icon ' + item[icon]"></i>
-        <span [style.height]="dockWidth" [style.line-height]="dockWidth" class="label">{{item[label]}}</span>
+          [style.height]="itemHeight" [style.line-height]="itemHeight" *ngFor="let item of itemGroup.items">
+        <i [style.height]="itemHeight" [style.line-height]="itemHeight" [class]="'icon ' + item[icon]"></i>
+        <span [style.height]="itemHeight" [style.line-height]="itemHeight" class="label">{{item[label]}}</span>
 
         <div class="icon-sub-menu" *ngIf="item[subItem]"
              [ngClass]="{'ui-advanced-submenu-opened' : isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu }">
-          <i [style.height]="dockWidth" [style.line-height]="dockWidth" *ngIf="item[subItem]"
+          <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]"
              [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
              class="ion-ios-arrow-right icon"></i>
         </div>

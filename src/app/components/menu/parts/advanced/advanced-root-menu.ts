@@ -74,6 +74,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public anchorElements = [];
 
+  public widthRootMenu = '';
+
   public visibilityMenu = false;
 
   public operationMode = '';
@@ -83,6 +85,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   public filterEmptyMessage = '';
 
   public inputPlaceholder = '';
+
+  public itemHeight = '';
 
   public groups = [];
 
@@ -411,7 +415,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   setTopPosition() {
-    this.topPosition = '-' + parseInt( this.dockWidth, 10 ) + 'px';
+    this.topPosition = '-' + parseInt( this.itemHeight, 10 ) + 'px';
   }
 
 

@@ -45,69 +45,131 @@ export class MenuDemoComponent {
 
     this.menuItems = [
       {
-        label: 'Home',
+        label: 'First Menu',
         icon: 'ion-gear-a',
-        callBack: ( $event ) => {
-          console.log( '$event', $event );
-        }
       },
       {
-        label: 'Input',
-        link: 'sidebar',
+        label: 'Second Menu',
         icon: 'ion-heart',
       },
       {
-        label: 'Button',
+        label: 'Third Menu',
         icon: 'ion-document-text',
       },
       {
-        label: 'Panels',
+        label: 'Fourth Menu',
         icon: 'ion-gear-a',
       },
       {
-        label: 'Pickers',
+        label: 'Fifth Menu',
         icon: 'ion-heart',
+      },
+      {
+        label: 'Sixth Menu',
+        icon: 'ion-document-text',
+      },
+      {
+        label: 'Main Menu',
+        icon: 'ion-navicon',
+        alwaysActive: true,
         subItem: [
           {
-            label: 'Button',
-            icon: 'ion-document-text',
+            label: 'Alabama',
+            icon: 'ion-earth',
+            category: 'United States',
           },
           {
-            label: 'Overlay',
-            icon: 'ion-gear-a',
+            label: 'Alaska',
+            icon: 'ion-earth',
+            category: 'United States',
           },
           {
-            label: 'Menu Item 3',
-            icon: 'ion-gear-a',
+            label: 'Arizona',
+            icon: 'ion-earth',
+            category: 'United States',
+          },
+          {
+            label: 'Arkansas',
+            icon: 'ion-earth',
+            category: 'United States',
+          },
+          {
+            label: 'California',
+            icon: 'ion-earth',
+            category: 'United States',
             subItem: [
               {
-                label: 'Menu Item 3',
-                icon: 'ion-gear-a',
+                label: 'Acton',
+                icon: 'ion-earth',
+                category: 'United States',
               },
               {
-                label: 'Menu Item 3',
-                icon: 'ion-gear-a',
+                label: 'Adelanto',
+                icon: 'ion-earth',
+                category: 'United States',
               },
               {
-                label: 'Menu Item 3',
-                icon: 'ion-gear-a',
+                label: 'Agoura Hills',
+                icon: 'ion-earth',
+                category: 'United States',
+                subItem: [
+                  {
+                    label: 'Agoura Hills',
+                    icon: 'ion-earth',
+                    category: 'United States',
+                  },
+                ]
               },
+              {
+                label: 'Alameda',
+                icon: 'ion-earth',
+                category: 'United States',
+              },
+              {
+                label: 'Alamo',
+                icon: 'ion-earth',
+                category: 'United States',
+              },
+              {
+                label: 'Albany',
+                icon: 'ion-earth',
+                category: 'United States',
+              }
             ]
           },
-
+          {
+            label: 'Alsace',
+            icon: 'ion-earth',
+            category: 'France',
+          },
+          {
+            label: 'Aquitaine',
+            icon: 'ion-earth',
+            category: 'France',
+          },
+          {
+            label: 'Lorraine',
+            icon: 'ion-earth',
+            category: 'France',
+          },
+          {
+            label: 'New South Wales',
+            icon: 'ion-earth',
+            category: 'Australia',
+          },
+          {
+            label: 'Queensland',
+            icon: 'ion-earth',
+            category: 'Australia',
+          },
+          {
+            label: 'South Australia',
+            icon: 'ion-earth',
+            category: 'Australia',
+          },
         ]
       },
-      {
-        label: 'Menu',
-        icon: 'ion-document-text',
-      },
-      {
-        label: 'Overlay',
-        alwaysActive: true,
-        icon: 'ion-navicon',
-      },
     ];
-
   }
 
   toggle() {

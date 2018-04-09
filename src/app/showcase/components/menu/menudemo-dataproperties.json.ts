@@ -42,6 +42,62 @@ export const dataProperties = [
     options: 'string'
   },
   {
+    name: 'group',
+    type: 'string',
+    default: 'null',
+    description: 'Key that will display menu group.',
+    options: 'string'
+  },
+  {
+    name: 'filterEmptyMessage',
+    type: 'string',
+    default: 'Nothing to Show',
+    description: 'Text that will display when the search return null.',
+    options: 'string'
+  },
+  {
+    name: 'maxHeight',
+    type: 'string',
+    default: '800px',
+    description: 'Max height of menu box.',
+    options: 'px | %'
+  },
+  {
+    name: 'inputPlaceholder',
+    type: 'string',
+    default: 'Search...',
+    description: 'Text of input search placeholder',
+    options: 'string'
+  },
+  {
+    name: 'titleMenu',
+    type: 'string',
+    default: 'Main Menu',
+    description: 'Text of menu title',
+    options: 'string'
+  },
+  {
+    name: 'operationMode',
+    type: 'string',
+    default: 'hover',
+    description: 'Mode that menu operates',
+    options: 'click | hover'
+  },
+  {
+    name: 'mode',
+    type: 'string',
+    default: 'simple',
+    description: 'Type of menu',
+    options: 'simple | advanced'
+  },
+  {
+    name: 'link',
+    type: 'string',
+    default: 'null',
+    description: 'Key of object router links',
+    options: 'string'
+  },
+  {
     name: 'subItem',
     type: 'string',
     default: 'null',
@@ -49,7 +105,7 @@ export const dataProperties = [
     options: 'string'
   },
   {
-    name: 'dockWith',
+    name: 'dockWidth',
     type: 'string',
     default: '40px',
     description: 'Width of menu when menu is docked.',
@@ -68,6 +124,13 @@ export const dataProperties = [
     default: 'false',
     description: 'Property to toggle bind docked menu.',
     options: 'px | %'
+  },
+  {
+    name: 'charsToSearch',
+    type: 'number',
+    default: '2',
+    description: 'Determine number of chars that going to be used to search on AdvancedMenu.',
+    options: 'number'
   },
   {
     name: 'link',

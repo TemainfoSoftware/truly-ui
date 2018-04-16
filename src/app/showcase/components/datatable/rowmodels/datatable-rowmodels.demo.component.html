@@ -71,6 +71,7 @@ export class DatatableColumnFeaturesDemoComponent {
               [rowsClient]="12"
               [rowsPage]="100"
               (loadData)="onLoadData($event)"
+              (rowSelect)="onRowSelect($event)"
               [allowFilterColumn]="true"
             >
               <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>

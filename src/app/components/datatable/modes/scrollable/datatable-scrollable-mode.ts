@@ -377,9 +377,22 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private addEventEnterClickToListElement( row, dataSource , lastRow ) {
       this.elementTR.nativeElement.addEventListener( 'keydown', (event) => {
         if ( event.keyCode === KeyEvent.ENTER ) {
-          this.handleRowSelectItem( dataSource[ row ], row + lastRow );
+          return this.handleRowSelectItem( dataSource[ row ], row + lastRow );
         }
-      } );
+
+        if ( event.keyCode === KeyEvent.ARROWDOWN ) {
+          let rowNumber = row + 1;
+          rowNumber = (rowNumber + lastRow) > ( row + lastRow) ? row  : rowNumber;
+          return this.handleRowSelectItem( dataSource[ rowNumber ], rowNumber + lastRow );
+        }
+
+        if ( event.keyCode === KeyEvent.ARROWUP ) {
+          let rowNumber = row - 1;
+          rowNumber = rowNumber < 0 ? 0 : rowNumber;
+          return this.handleRowSelectItem( dataSource[ rowNumber ], rowNumber + lastRow );
+        }
+
+      });
     }
 
     private addEventClickToListElement( row, dataSource , lastRow ) {

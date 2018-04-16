@@ -382,7 +382,10 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
         if ( event.keyCode === KeyEvent.ARROWDOWN ) {
           let rowNumber = row + 1;
-          rowNumber = (rowNumber + lastRow) > ( row + lastRow) ? row  : rowNumber;
+          if (( (rowNumber + lastRow) >= this.dt.totalRows)) {
+            rowNumber = row;
+          }
+
           return this.handleRowSelectItem( dataSource[ rowNumber ], rowNumber + lastRow );
         }
 
@@ -449,7 +452,10 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setActiveElement() {
-        this.activeElement = document.activeElement;
+       this.renderer.removeClass(this.activeElement, 'ui-selected-row');
+       this.activeElement = document.activeElement;
+       this.renderer.addClass(this.activeElement, 'ui-selected-row');
+
     }
 
     private setFocusWhenChangeData() {

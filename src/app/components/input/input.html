@@ -5,7 +5,7 @@
     [ngClass]="iconBefore"></i></span>
   <span *ngIf="textBefore" class="addon -borderleft" [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
 
-  <div class="ui-wrapper-input">
+  <div class="ui-wrapper-input" [style.height]="height">
     <input [style.padding-right]="clearButton ? '20px' : '12px'"
            [style.height]="height"
            #input

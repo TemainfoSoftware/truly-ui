@@ -83,7 +83,7 @@ export class TlSidebarContent implements OnInit {
   }
 
   setTransformDock() {
-    this.transform = 'translateX(' + this.start.dockWidth + 'px)';
+    this.transform = this.start.dockWidth + 'px';
   }
 
   moveSidebarStart() {
@@ -131,12 +131,12 @@ export class TlSidebarContent implements OnInit {
 
     if ( this.end.opened && this.end.mode === 'push' ) {
       this.innerWidth = this.width;
-      this.transform = 'translateX( -' + this.end.width + 'px)';
+      this.transform = '-' + this.end.width + 'px';
       return;
     }
 
     if ( this.end.opened ) {
-      this.transform = 'translateX(0)';
+      this.transform = '0';
       this.setWidthWrapperEnd();
       return;
     }
@@ -145,7 +145,7 @@ export class TlSidebarContent implements OnInit {
       return this.setMovementInitialDock();
     }
 
-    this.transform = 'translateX(0)';
+    this.transform = '0';
     this.innerWidth = this.width;
   }
 
@@ -159,11 +159,11 @@ export class TlSidebarContent implements OnInit {
     }
 
     if ( this.end.opened ) {
-      this.transform = 'translateX(0)';
+      this.transform = '0';
       return this.setWidthWrapperEnd();
     }
 
-    this.transform = 'translateX(0)';
+    this.transform = '0';
     this.innerWidth = this.width;
   }
 
@@ -190,7 +190,7 @@ export class TlSidebarContent implements OnInit {
     }
 
     if ( this.end.opened ) {
-      this.transform = 'translateX(0)';
+      this.transform = '0';
       this.setWidthWrapperEnd();
       return;
     }
@@ -219,11 +219,11 @@ export class TlSidebarContent implements OnInit {
   }
 
   setTransformEndWidth() {
-    this.transform = 'translateX( ' + this.end.width + 'px)';
+    this.transform = this.end.width + 'px';
   }
 
   setTransformStartWidth() {
-    this.transform = 'translateX( ' + this.start.width + 'px)';
+    this.transform = this.start.width + 'px';
     this.change.detectChanges();
   }
 
@@ -246,11 +246,11 @@ export class TlSidebarContent implements OnInit {
 
     if ( this.end.opened && !this.start.opened ) {
       this.innerWidth = this.width;
-      return this.transform = 'translateX( -' + this.end.width + 'px)';
+      return this.transform = '-' + this.end.width + 'px';
     }
 
     if ( !this.start.opened && !this.start.dock ) {
-      this.transform = 'translateX(0)';
+      this.transform = '0';
       this.innerWidth = this.width;
       return;
     }
@@ -265,7 +265,7 @@ export class TlSidebarContent implements OnInit {
       return this.setMovementInitialDock();
     }
 
-    this.transform = 'translateX( -' + this.end.width + 'px)';
+    this.transform = '-' + this.end.width + 'px';
     this.innerWidth = this.width;
 
   }

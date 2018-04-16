@@ -70,7 +70,7 @@
     }
 
     > .ui-selected-row{
-      background: map-deep-get($primary, "default", "background")+AD !important; //AD = Quantiade da Opacidade em HEXADECIMAL
+      background: rgba(map-deep-get($primary, "default", "background"),0.6) !important;
       color: map-deep-get($primary, "default", "foreground") !important;
     }
 

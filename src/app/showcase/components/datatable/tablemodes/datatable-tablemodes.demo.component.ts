@@ -25,4 +25,11 @@ export class DatatableTableModesDemoComponent {
     this.dataNormal = this.dumpDataService.createRandomData(20);
   }
 
+  onSelectRow($event) {
+    console.log($event);
+  }
+
+  onClickRow($event) {
+    console.log($event);
+  }
 }

@@ -452,7 +452,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setActiveElement() {
-       if (this.activeElement){
+       if (this.activeElement) {
          this.renderer.removeClass(this.activeElement, 'ui-selected-row');
        }
        this.activeElement = document.activeElement;

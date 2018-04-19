@@ -156,6 +156,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   ngAfterViewInit() {
+    this.addTransitionModal();
     this.getBoundingContent();
     this.setDefaultDimensions();
     this.validateMeasureParentAndModal();
@@ -203,7 +204,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     } );
   }
 
+  addTransitionModal() {
+    this.renderer.setStyle(this.modal.nativeElement, 'transition', 'all 150ms ease-in-out');
+  }
+
   mousemoveListener() {
+    this.removeTransitionModal();
     this.zone.runOutsideAngular( () => {
       subscribeMouseMove = this.renderer.listen( window, 'mousemove', ( event ) => {
         if ( !( this.moving && this.draggable) ) {
@@ -220,14 +226,18 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
         this.positionMouseMoveX = event.clientX;
         this.positionMouseMoveY = event.clientY;
         this.setPosition();
-
       } );
     } );
   }
 
   mouseupListener() {
     subscribeMouseMove();
+    this.addTransitionModal();
     this.moving = false;
+  }
+
+  removeTransitionModal() {
+    this.renderer.removeStyle(this.modal.nativeElement, 'transition');
   }
 
   mouseDown( $event ) {

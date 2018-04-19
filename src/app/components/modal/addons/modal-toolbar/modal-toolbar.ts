@@ -47,7 +47,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 
      @Input() containerColor = '';
 
-     @Input() height = '40px';
+     @Input() height = '30px';
 
      @Input() color = 'basic';
 

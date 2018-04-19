@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,36 +21,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import {
-  AfterContentInit,
-  Component, ContentChild, ContentChildren, forwardRef, OnInit, QueryList, ViewChild,
-} from '@angular/core';
-import { TlSidebar } from './parts/sidebar/sidebar';
-import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
-import { SidebarService } from '../modal/sidebar.service';
+import { Injectable } from '@angular/core';
+ import { Subject } from 'rxjs/Subject';
 
-@Component( {
-  selector: 'tl-sidebar-container',
-  templateUrl: './sidebar-container.html',
-  styleUrls: [ './sidebar-container.scss' ],
-} )
+@Injectable()
+export class SidebarService {
 
-export class TlSidebarContainer implements OnInit, AfterContentInit {
+  public sidebarChange: Subject<string> = new Subject();
 
-  @ContentChildren(forwardRef(() => TlSidebar )  ) sidebar: QueryList<TlSidebar>;
+  constructor() {}
 
-  @ContentChild( TlSidebarContent ) sidebarContent;
-
-  constructor( private sidebarService: SidebarService ) {}
-
-  ngOnInit() {}
-
-  ngAfterContentInit() {
-    this.sidebar.forEach((item) => {
-      item.toggleChange.subscribe((value) => {
-        this.sidebarContent.setMovement( value );
-        this.sidebarService.setChange(value);
-      });
-    });
+  setChange(value) {
+    this.sidebarChange.next(value);
   }
+
 }

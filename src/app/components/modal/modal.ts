@@ -29,7 +29,7 @@ import { ModalService } from './modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
+import { SidebarService } from './sidebar.service';
 
 let subscribeMouseMove;
 
@@ -111,10 +111,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   public serviceControl: ModalService;
 
-  public colorHoverMinimize;
-
-  public colorHoverClose;
-
   public maximized = false;
 
   private mousePressX;
@@ -147,16 +143,13 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   private subscribeResize;
 
-  private colorHoverMaximize;
-
-  private colorHoverRestore;
-
   constructor( private element: ElementRef, private renderer: Renderer2,
                private containerService: ContainerModalService,
-               private colorService: ToneColorGenerator, private zone: NgZone ) {
+               private sidebarService: SidebarService, private zone: NgZone ) {
   }
 
   ngOnInit() {
+    this.listenSidebarChange();
     this.resizeListener();
     this.validateProperty();
     this.show.emit();
@@ -170,8 +163,28 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     this.handleFullscreen();
   }
 
+  listenSidebarChange() {
+    this.sidebarService.sidebarChange.subscribe(() => {
+      this.handleChangeSidebarWhenMaximized();
+    });
+  }
+
+  handleChangeSidebarWhenMaximized() {
+    setTimeout( () => {
+      this.getBoundingContent();
+      this.setPosition();
+      this.handleInitialPositionModal();
+      this.setOffsetLeftModal( this.modal.nativeElement.getBoundingClientRect().left );
+      this.setOffsetTopModal( this.modal.nativeElement.getBoundingClientRect().top );
+      if ( this.maximized ) {
+        this.maximized = false;
+        this.maximizeModal();
+      }
+    }, 250 );
+  }
+
   handleInitialPositionModal() {
-    this.parentElement ? this.setModalCenterParent() : this.setModalCenterWindow();
+    this.setModalCenterWindow();
   }
 
   handleFullscreen() {
@@ -185,6 +198,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   resizeListener() {
     this.subscribeResize = this.renderer.listen( window, 'resize', () => {
       this.getBoundingContent();
+      this.setModalCenterWindow();
       this.maximizeModal();
     } );
   }
@@ -253,8 +267,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   setModalCenterWindow() {
-    this.modal.nativeElement.style.left = this.parent.offsetLeft +
-      (this.parent.offsetWidth / 2) - (this.modal.nativeElement.offsetWidth / 2) + 'px';
+    this.modal.nativeElement.style.left = (window.innerWidth / 2) -
+      (this.modal.nativeElement.offsetWidth / 2) + 'px';
     this.modal.nativeElement.style.top = (window.innerHeight / 2) -
       (this.modal.nativeElement.offsetHeight / 2) + 'px';
   }
@@ -401,7 +415,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   closeModal() {
-    if (this.closable) {
+    if ( this.closable ) {
       this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
       this.close.emit( this.componentRef.instance );
     }
@@ -465,9 +479,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   getBoundingContent() {
-    this.parent = this.parentElement ? this.parentElement : this.containerService.getView().element.nativeElement;
+    this.parent = this.containerService.getView().element.nativeElement;
     this.offsetLeftContent = this.parent.getBoundingClientRect().left;
     this.offsetTopContent = this.parent.getBoundingClientRect().top;
+
+    console.log( 'parent left ', this.offsetLeftContent );
+    console.log( 'parent top ', this.offsetTopContent );
   }
 
   ngOnDestroy() {

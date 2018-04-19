@@ -58,6 +58,8 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() itemHeight = '30px';
 
+  @Input() topDislocation = 0;
+
   @Input() widthRootMenu = '250px';
 
   @Input() outsideBorder = false;

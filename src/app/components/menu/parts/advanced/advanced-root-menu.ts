@@ -70,6 +70,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public charsToSearch = 0;
 
+  public topDislocation = 0;
+
   public titleMenu = '';
 
   public anchorElements = [];
@@ -415,7 +417,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   setTopPosition() {
-    this.topPosition = '-' + parseInt( this.itemHeight, 10 ) + 'px';
+    const totalValue = (parseInt( this.itemHeight, 10 )) + (this.topDislocation);
+    this.topPosition = '-' + totalValue + 'px';
   }
 
 

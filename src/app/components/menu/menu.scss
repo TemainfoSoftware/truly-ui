@@ -1,6 +1,7 @@
 
 .ui-wrapper-menulist {
   box-sizing: content-box;
+  transition: all 150ms ease-in-out;
 
   .ui-menulist {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";

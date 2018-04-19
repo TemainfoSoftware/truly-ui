@@ -22,7 +22,7 @@ $border-color : #DCDCDC;
 }
 
 .ui-input {
-  display: table-cell;
+  width: 100%;
   padding-left: 1px;
 }
 
@@ -32,5 +32,5 @@ $border-color : #DCDCDC;
 
 .ui-filter{
   width: 100%;
-  display: table;
+  display: flex;
 }

@@ -188,7 +188,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight );
     this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.itemHeight );
     this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
-      this.dockWidth + ' 1fr ' + this.dockWidth );
+      this.dockWidth + ' 1fr ' + '25px' );
   }
 
   createElementIcon( icon ) {

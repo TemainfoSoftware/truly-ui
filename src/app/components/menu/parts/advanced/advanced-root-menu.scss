@@ -22,13 +22,14 @@
     > .title-header {
       line-height: 50px;
       padding: 2px;
+      font-size: 1.1em;
     }
 
   }
 
   .wrapper-search-input {
     display: grid;
-    grid-template-columns: 40px 1fr;
+    grid-template-columns: 25px 1fr;
     height: 30px;
 
     span {
@@ -42,11 +43,12 @@
     input {
       height: 30px;
       line-height: 30px;
-      border: 1px solid #cccc;
+      border: 1px solid #66cc99;
       font-family: 'Lato', sans-serif;
       padding-left: 5px;
       outline: none;
       width: 100%;
+      box-sizing: border-box;
       &::placeholder {
         color: #ccc;
         font-size: 0.9em;
@@ -99,6 +101,7 @@
     font-size: 1em;
     margin: 0;
     color: #66cc99;
+    height: 30px;
     padding-left: 15px;
     border-bottom: 1px solid #66cc99;
     width: 100%;
@@ -118,7 +121,7 @@
   height: 40px;
   line-height: 40px;
   padding: 0 5px;
-  grid-template-columns: 40px 1fr 40px;
+  grid-template-columns: 40px 1fr 25px;
   border-top: 1px solid #e2e2e2;
   box-sizing: content-box;
 
@@ -131,7 +134,7 @@
   > .icon-sub-menu {
     text-align: center;
     width: 10px;
-    left: 30px;
+    left: 15px;
     position: relative;
     color: #5c5c5c;
 

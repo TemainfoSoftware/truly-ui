@@ -57,7 +57,7 @@
   height: 40px;
   padding: 0 5px;
   line-height: 40px;
-  grid-template-columns: 40px 1fr 40px;
+  grid-template-columns: 40px 1fr 25px;
   border-bottom: 1px solid #fafafa;
   box-sizing: content-box;
 
@@ -70,7 +70,7 @@
   > .icon-sub-menu {
     text-align: center;
     width: 10px;
-    left: 30px;
+    left: 15px;
     position: relative;
     color: #5c5c5c;
 

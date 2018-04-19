@@ -34,9 +34,9 @@
        [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'"
        (scroll)="onScrollWrapper()" #wrapperItemsList>
     <div class="ui-subitem-group" *ngFor="let itemGroup of groups">
-      <label class="ui-label-group" (click)="$event.stopPropagation()"
-             *ngIf="itemGroup.group">{{itemGroup.group}}</label>
-      <label class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="!itemGroup.group">Outros</label>
+      <div class="ui-label-group" (click)="$event.stopPropagation()"
+             *ngIf="itemGroup.group">{{itemGroup.group}}</div>
+      <div class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="!itemGroup.group">Outros</div>
       <li #elementList
           [@rootElementList]="true"
           (keydown.arrowdown)="onArrowDown($event)"

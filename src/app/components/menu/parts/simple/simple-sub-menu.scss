@@ -24,7 +24,7 @@
   background: #f2f2f2;
   height: 40px;
   line-height: 40px;
-  grid-template-columns: 40px 1fr 40px;
+  grid-template-columns: 20px 1fr 20px;
 
   > .icon {
     text-align: center;
@@ -41,6 +41,10 @@
     height: 40px;
     line-height: 40px;
     color: #5c5c5c;
+  }
+
+  &:hover {
+    background: #EDEDED;
   }
 
   &:hover > ::ng-deep tl-simple-sub-menu {

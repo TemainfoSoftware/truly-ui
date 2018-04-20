@@ -156,7 +156,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.addTransitionModal();
     this.getBoundingContent();
     this.setDefaultDimensions();
     this.validateMeasureParentAndModal();

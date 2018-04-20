@@ -36,6 +36,7 @@
       cursor: pointer;
       margin: 2px 2px;
       margin-right: 0;
+      box-sizing: border-box;
       > .ui-container-item {
         padding: 10px;
         font-family: "Segoe UI", Lato, 'sans-serif', "Arial";

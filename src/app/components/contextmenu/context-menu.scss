@@ -4,8 +4,6 @@
   z-index: 1000;
   border: 1px solid #c3c3c3;
   min-width: 250px;
-  border-right: 0;
-  border-left: 0;
 }
 
 .ui-menu-list {
@@ -19,4 +17,23 @@
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+.ui-context-item {
+  display: grid;
+
+  .ui-icon {
+    text-align: center;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #66CC99;
+    color: #fff;
+  }
+
+  &:hover > ::ng-deep tl-simple-sub-menu {
+    visibility: visible;
+  }
+
 }

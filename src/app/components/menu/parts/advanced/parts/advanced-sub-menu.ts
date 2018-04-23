@@ -249,10 +249,16 @@ export class TlAdvancedSubMenu implements AfterViewInit {
   }
 
   setPosition() {
+    const dislocation = this.isPreviousRootMenu() ?
+      this.menuService.menu.instance.innerScrollWrapper : 0;
     this.relativeWindowPosition.setRenderer(this.renderer);
     this.relativeWindowPosition.setAnchorElement( this.parentNode );
     this.relativeWindowPosition.setRelativeElement( this.subMenuList.nativeElement );
-    this.relativeWindowPosition.setPosition(this.menuService.menu.instance.innerScrollWrapper);
+    this.relativeWindowPosition.setPosition(dislocation);
+  }
+
+  isPreviousRootMenu() {
+    return this.previousMenu instanceof TlAdvancedRootMenu;
   }
 
 }

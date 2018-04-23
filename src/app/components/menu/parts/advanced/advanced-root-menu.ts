@@ -423,8 +423,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   }
 
   setTopPosition() {
-    const totalValue = (parseInt( this.itemHeight, 10 )) + (this.topDislocation);
-    this.topPosition = '-' + totalValue + 'px';
+    this.topPosition = '-' + this.topDislocation + 'px';
   }
 
 

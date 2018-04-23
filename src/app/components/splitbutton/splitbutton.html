@@ -14,7 +14,7 @@
     <div [ngClass]="{'active': showHide === true }"
          [class]="' split-button-actions ' "
          (click)="changeShowStatus($event.stopPropagation())"
-         [ngStyle]="{'height': height, 'line-height': height}">
+         [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
 
         <i class="ion-chevron-up" *ngIf="showHide"></i>
         <i class="ion-chevron-down" *ngIf="!showHide"></i>

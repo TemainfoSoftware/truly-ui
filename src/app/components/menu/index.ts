@@ -1,24 +1,35 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlMenu } from './menu';
-import { TlMenuItem } from './parts/menu-item';
 import { MiscModule } from '../misc/index';
+import { TlMenu } from './menu';
+import { TlSimpleSubMenu } from './parts/simple/simple-sub-menu';
+import { TlAdvancedSubMenu } from './parts/advanced/parts/advanced-sub-menu';
+import { TlAdvancedRootMenu } from './parts/advanced/advanced-root-menu';
+import { FormsModule } from '@angular/forms';
+import { BlockUIModule } from '../blockui/index';
 
 export * from './menu';
 
 @NgModule( {
   imports: [
     CommonModule,
-    MiscModule
+    MiscModule,
+    BlockUIModule,
+    FormsModule
   ],
   declarations: [
     TlMenu,
-    TlMenuItem
+    TlAdvancedRootMenu,
+    TlAdvancedSubMenu,
+    TlSimpleSubMenu
   ],
   exports: [
     TlMenu,
-    TlMenuItem
+    TlAdvancedRootMenu,
+    TlAdvancedSubMenu,
+    TlSimpleSubMenu
   ],
-  entryComponents: [TlMenuItem]
+  entryComponents: [ TlSimpleSubMenu, TlAdvancedSubMenu, TlAdvancedRootMenu ]
 } )
-export class MenuModule {}
+export class MenuModule {
+}

@@ -42,6 +42,55 @@ export const dataProperties = [
     options: 'string'
   },
   {
+    name: 'group',
+    type: 'string',
+    default: 'null',
+    description: 'Key that will display menu group.',
+    options: 'string'
+  },
+  {
+    name: 'filterEmptyMessage',
+    type: 'string',
+    default: 'Nothing to Show',
+    description: 'Text that will display when the search return null.',
+    options: 'string'
+  },
+  {
+    name: 'maxHeight',
+    type: 'string',
+    default: '800px',
+    description: 'Max height of menu box.',
+    options: 'px | %'
+  },
+  {
+    name: 'inputPlaceholder',
+    type: 'string',
+    default: 'Search...',
+    description: 'Text of input search placeholder',
+    options: 'string'
+  },
+  {
+    name: 'titleMenu',
+    type: 'string',
+    default: 'Main Menu',
+    description: 'Text of menu title',
+    options: 'string'
+  },
+  {
+    name: 'operationMode',
+    type: 'string',
+    default: 'hover',
+    description: 'Mode that menu operates',
+    options: 'click | hover'
+  },
+  {
+    name: 'mode',
+    type: 'string',
+    default: 'simple',
+    description: 'Type of menu',
+    options: 'simple | advanced'
+  },
+  {
     name: 'subItem',
     type: 'string',
     default: 'null',
@@ -49,45 +98,67 @@ export const dataProperties = [
     options: 'string'
   },
   {
-    name: 'trigger',
-    type: 'HTMLElement',
-    default: 'null',
-    description: 'Element that will trigger menu to the Target.',
-    options: 'HTMLElement'
-  },
-  {
-    name: 'target',
-    type: 'HTMLElement',
-    default: 'null',
-    description: 'The Element target.',
-    options: 'HTMLElement'
-  },
-  {
-    name: 'positionY',
+    name: 'dockWidth',
     type: 'string',
-    default: 'bellow',
-    description: 'Position Y of menu.',
-    options: 'bellow | above'
+    default: '40px',
+    description: 'Width of menu when menu is docked.',
+    options: 'px | %'
   },
   {
-    name: 'positionX',
+    name: 'width',
     type: 'string',
-    default: 'before',
-    description: 'Position X of menu.',
-    options: 'after | before'
+    default: '200px',
+    description: 'Width of menu when not docked.',
+    options: 'px | %'
   },
   {
-    name: 'overlapTrigger',
+    name: 'docked',
     type: 'boolean',
     default: 'false',
-    description: 'Property to control overlapping of target/trigger.',
+    description: 'Property to toggle bind docked menu.',
+    options: 'px | %'
+  },
+  {
+    name: 'charsToSearch',
+    type: 'number',
+    default: '2',
+    description: 'Determine number of chars that going to be used to search on AdvancedMenu.',
+    options: 'number'
+  },
+  {
+    name: 'link',
+    type: 'string',
+    default: 'null',
+    description: 'Router link string used to navigate.',
+    options: 'string [routerLink]'
+  },
+  {
+    name: 'itemHeight',
+    type: 'string',
+    default: '30px',
+    description: 'Line item height',
+    options: 'string'
+  },
+  {
+    name: 'widthRootMenu',
+    type: 'string',
+    default: '250px',
+    description: 'Width of root menu',
+    options: 'px | %'
+  },
+  {
+    name: 'outsideBorder',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls if the menu box will show border or not',
     options: 'true | false'
   },
   {
-    name: 'hover',
+    name: 'alwaysActive (object)',
     type: 'boolean',
     default: 'false',
-    description: 'Property to control if will trigger menu on hover.',
+    description: 'Object key to set colorized item',
     options: 'true | false'
   },
-  ];
+
+ ];

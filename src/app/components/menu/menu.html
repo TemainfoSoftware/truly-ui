@@ -1,6 +1,3 @@
-<div class="ui-wrapper-menu" fixedPosition [target]="target"
-     [positionY]="positionY" [overlapTrigger]="overlapTrigger" [positionX]="positionX">
-   <div class="wrapper-menu-item" #wrapperMenuItem></div>
-</div>
-
-
+<nav class="ui-wrapper-menulist" [ngClass]="{'ui-menu-bordered': outsideBorder }" (click)="$event.stopPropagation()" [style.width]="!docked ? width : dockWidth">
+  <ul class="ui-menulist" #menuList></ul>
+</nav>

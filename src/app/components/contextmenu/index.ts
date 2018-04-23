@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TlContextMenu } from './context-menu';
-import { MenuModule } from '../menu/index';
-import { TlMenuItem } from '../menu/parts/menu-item';
+import { PopupMenuModule } from '../popupmenu/index';
+import { TlSimpleSubMenu } from '../menu/parts/simple/simple-sub-menu';
 
 export * from './context-menu';
 
 @NgModule( {
   imports: [
     CommonModule,
-    MenuModule
+    PopupMenuModule
   ],
   declarations: [
     TlContextMenu,
@@ -18,7 +18,9 @@ export * from './context-menu';
   exports: [
     TlContextMenu,
   ],
-  entryComponents: [TlMenuItem]
+  entryComponents: [
+    TlSimpleSubMenu
+  ]
 } )
 export class ContextMenuModule {
 }

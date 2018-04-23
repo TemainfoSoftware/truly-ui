@@ -308,6 +308,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         for ( let row = 0; row < dataSource.length; row++ ) {
             this.createElementTR( row, lastRow);
             this.createElementsTD( row, dataSource );
+            this.addEventEnterClickToListElement( row, dataSource, lastRow );
             this.addEventClickToListElement( row, dataSource, lastRow );
         }
     }
@@ -373,14 +374,44 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         return this.lastScrollLeft !== this.listComponent.nativeElement.scrollLeft;
     }
 
+    private addEventEnterClickToListElement( row, dataSource , lastRow ) {
+      this.elementTR.nativeElement.addEventListener( 'keydown', (event) => {
+        if ( event.keyCode === KeyEvent.ENTER ) {
+          return this.handleRowSelectItem( dataSource[ row ], row + lastRow );
+        }
+
+        if ( event.keyCode === KeyEvent.ARROWDOWN ) {
+          let rowNumber = row + 1;
+          if (( (rowNumber + lastRow) >= this.dt.totalRows)) {
+            rowNumber = row;
+          }
+
+          return this.handleRowSelectItem( dataSource[ rowNumber ], rowNumber + lastRow );
+        }
+
+        if ( event.keyCode === KeyEvent.ARROWUP ) {
+          let rowNumber = row - 1;
+          rowNumber = rowNumber < 0 ? 0 : rowNumber;
+          return this.handleRowSelectItem( dataSource[ rowNumber ], rowNumber + lastRow );
+        }
+
+      });
+    }
+
     private addEventClickToListElement( row, dataSource , lastRow ) {
         this.elementTR.nativeElement.addEventListener( 'click', () => {
             this.handleClickItem( dataSource[ row ], row + lastRow );
         } );
     }
 
+    private handleRowSelectItem( item, index ) {
+      this.dt.onRowSelect( item, index );
+      this.setActiveElement();
+      this.getCursorViewPortPosition();
+    }
+
     private handleClickItem( item, index ) {
-        this.dt.onRowSelect( item, index );
+        this.dt.onRowClick( item, index );
         this.setActiveElement();
         this.getCursorViewPortPosition();
     }
@@ -421,7 +452,12 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private setActiveElement() {
-        this.activeElement = document.activeElement;
+       if (this.activeElement) {
+         this.renderer.removeClass(this.activeElement, 'ui-selected-row');
+       }
+       this.activeElement = document.activeElement;
+       this.renderer.addClass(this.activeElement, 'ui-selected-row');
+
     }
 
     private setFocusWhenChangeData() {

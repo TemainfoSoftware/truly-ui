@@ -108,6 +108,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/multiselect/multiselectdemo.module#MultiSelectDemoModule'
       },
       {
+        path: 'menu',
+        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
+      },
+      {
         path: 'navigator',
         loadChildren: './components/navigator/navigatordemo.module#NavigatorDemoModule'
       },
@@ -152,8 +156,8 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
       },
       {
-        path: 'menu',
-        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
+        path: 'popupmenu',
+        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
       },
       {
         path: 'multiview',

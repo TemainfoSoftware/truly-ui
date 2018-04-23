@@ -1,0 +1,35 @@
+@import "../core/styles/theming/theming";
+
+@mixin tl-popupmenu-theme($theme) {
+
+  $basic:   map-deep-get($theme, 'basic');
+  $danger:  map-deep-get($theme, 'danger');
+  $primary: map-deep-get($theme, 'primary');
+
+  $border-basic: 1px solid map-deep-get($basic, "default", "border");
+
+  .ui-wrapper-menu {
+    border-top: $border-basic;
+    border-bottom: $border-basic;
+  }
+
+  .ui-menu-item {
+    color: map-deep-get($basic, "default", "foreground");
+    background: map-deep-get($basic, "default", "background");
+    border-left: $border-basic;
+    border-right: $border-basic;
+    &:hover {
+      background: map-deep-get($primary, "default", "background");
+      color: map-deep-get($primary, "default", "foreground");
+    }
+  }
+
+  .borderTop {
+    border-top: $border-basic;
+  }
+
+  .borderBottom {
+    border-bottom: $border-basic;
+  }
+
+}

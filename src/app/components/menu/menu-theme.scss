@@ -8,28 +8,58 @@
 
   $border-basic: 1px solid map-deep-get($basic, "default", "border");
 
-  .ui-wrapper-menu {
-    border-top: $border-basic;
-    border-bottom: $border-basic;
-  }
+  .ui-wrapper-menulist {
 
-  .ui-menu-item {
-    color: map-deep-get($basic, "default", "foreground");
-    background: map-deep-get($basic, "default", "background");
-    border-left: $border-basic;
-    border-right: $border-basic;
-    &:hover {
-      background: map-deep-get($primary, "default", "background");
-      color: map-deep-get($primary, "default", "foreground");
+    .ui-menulist-item {
+      color: map-deep-get($basic, "default", "foreground");
+      background: map-deep-get($basic, "default", "background");
+
+      > .icon {
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      > .label {
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &.always-active {
+        background: map-deep-get($primary, "default", "background");
+
+        > .icon {
+          color: #FFFFFF;
+        }
+
+        > .label {
+          color: #FFFFFF !important;
+        }
+
+      }
+
     }
+
+    .ui-submenu {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &.ui-menu-bordered {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
   }
 
-  .borderTop {
-    border-top: $border-basic;
+  .ui-wrapper-menulist ul li:hover {
+    background:  map-deep-get($basic, "hover", "background");
+    color: #FFF;
   }
 
-  .borderBottom {
-    border-bottom: $border-basic;
+  .ui-wrapper-menulist li:hover {
+    background: map-deep-get($basic, "hover", "background");
+    color: #FFF;
   }
+
+  .ui-wrapper-menulist li:hover li:hover {
+    background: map-deep-get($basic, "hover", "background");
+  }
+
 
 }

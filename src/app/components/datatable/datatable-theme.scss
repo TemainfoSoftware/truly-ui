@@ -60,6 +60,10 @@
       color: rgba(map-deep-get($light, "default", "foreground"),0.8);
     }
 
+    > .ui-row:last-child{
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
+    }
+
     > .ui-row .ui-cel{
       border-right: 1px solid map-deep-get($basic, "default", "border");
     }
@@ -68,9 +72,14 @@
       border-right: 1px solid map-deep-get($basic, "default", "border");
     }
 
+    > .ui-selected-row{
+      background: rgba(map-deep-get($primary, "default", "background"),0.6) !important;
+      color: map-deep-get($primary, "default", "foreground") !important;
+    }
+
     > .ui-row:focus{
-      background: map-deep-get($primary, "default", "background");
-      color: map-deep-get($primary, "default", "foreground");
+      background: map-deep-get($primary, "default", "background") !important;
+      color: map-deep-get($primary, "default", "foreground") !important;
     }
   }
 
@@ -79,3 +88,5 @@
     border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 }
+
+

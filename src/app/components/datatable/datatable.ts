@@ -50,9 +50,9 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
-    @Input('mode') mode = 'normal';
+    @Input('mode') mode: 'normal' | 'scrollable' | 'paginator' = 'normal';
 
-    @Input('rowModel') rowModel = 'inmemory';
+    @Input('rowModel') rowModel: 'inmemory' | 'infinite' = 'inmemory';
 
     @Input('allowResize') allowResize = false;
 

@@ -18,30 +18,27 @@
 
 .start {
   transition: all 200ms;
-  transform: translate3d(-100%, 0, 0);
+  left: -1000px;
   visibility: hidden;
-  left: 0;
 }
 
 .end {
   transition: all 200ms;
-  transform: translate3d(100%, 0, 0);
   visibility: hidden;
-  right: 0;
 }
 
 .animate-start {
   visibility: visible;
-  transform: translate3d(0, 0, 0);
+  left: 0;
 }
 
 .animate-dock {
   visibility: visible;
-  transform: translate3d(0, 0, 0);
+  left: 0;
 }
 
 .animate-end {
   visibility: visible;
-  transform: translate3d(0, 0, 0);
+  right: 0;
 }
 

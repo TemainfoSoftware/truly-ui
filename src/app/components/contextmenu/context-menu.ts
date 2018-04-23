@@ -20,10 +20,10 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit,
-  Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef,
+  Component, EventEmitter, Input, OnDestroy, OnInit, Output, ElementRef, Renderer2, ViewChild, ViewContainerRef,
+  AfterContentInit,
 } from '@angular/core';
-import { MenuService } from '../core/services/menu.service';
+import { SubMenuService } from '../menu/services/submenu.service';
 
 const allContextMenu = [];
 let windowListener;
@@ -32,9 +32,9 @@ let windowListener;
   selector: 'tl-context-menu',
   templateUrl: './context-menu.html',
   styleUrls: [ './context-menu.scss' ],
-  providers: [ MenuService ]
+  providers: [ SubMenuService ]
 } )
-export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
+export class TlContextMenu implements OnInit, AfterContentInit, OnDestroy {
 
   @Input() items = [];
 
@@ -46,11 +46,23 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() target = '';
 
+  @Input() width = '250px';
+
+  @Input() itemHeight = '30px';
+
   @Output() show: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
 
   @ViewChild( 'wrapperContextMenu' ) wrapperContextMenu;
+
+  public listElement;
+
+  public iconElement;
+
+  public labelElement;
+
+  public arrowElement;
 
   public position = { left: 0, top: 0 };
 
@@ -58,7 +70,10 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
   public open = false;
 
-  constructor( private renderer: Renderer2, private menuService: MenuService ) {
+  public callBack = Function();
+
+  constructor( private renderer: Renderer2, private subMenuService: SubMenuService,
+               private viewRoot: ViewContainerRef ) {
     windowListener = undefined;
   }
 
@@ -68,13 +83,31 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
     allContextMenu.push( this );
   }
 
-  ngAfterViewInit() {
-    this.menuService.setMenuConfig( {
-      label: this.label,
-      subItem: this.subItem,
-      icon: this.icon,
-      items: this.items
-    }, this.menuList, this.renderer );
+  ngAfterContentInit() {
+    this.subMenuService.setRenderer( this.renderer );
+    this.subMenuService.setRootMenu( this.menuList );
+    this.subMenuService.setViewRootMenu( this.viewRoot );
+    this.subMenuService.setViewSubMenu( this.menuList );
+    this.createBaseList();
+  }
+
+  createBaseList() {
+    for ( let item = 0; item < this.items.length; item++ ) {
+      this.createElementList( this.items[ item ] );
+      this.createElementLabel( this.items[ item ] );
+      this.createElementIcon( this.items[ item ] );
+      this.createElementArrowSubItem( this.items[ item ] );
+      this.relocateElements();
+      this.handleSubItems( this.items[ item ] );
+    }
+  }
+
+  handleSubItems( item ) {
+    if ( item[ this.subItem ] ) {
+      this.subMenuService.setAnchorRootElement( this.listElement.nativeElement );
+      this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+      this.subMenuService.createSimpleSubMenu();
+    }
   }
 
   listenContextMenu() {
@@ -84,13 +117,13 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
         for ( const item of allContextMenu ) {
           if ( $event.target === item.target ) {
             item.resetProperties();
-            item.menuService.createList();
+            item.open = true;
             item.setContextMenuPosition( $event );
             return;
           }
         }
         this.resetProperties();
-        this.menuService.createList();
+        this.open = true;
         this.setContextMenuPosition( $event );
       } );
     }
@@ -98,7 +131,63 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
 
   resetProperties() {
     allContextMenu.forEach( ( item ) => item.open = false );
-    this.menuService.resetMenu();
+    this.subMenuService.closeMenu();
+  }
+
+  createElementList( item ) {
+    this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
+    this.renderer.addClass( this.listElement.nativeElement, 'ui-context-item' );
+    this.listenClickElementList( item );
+    this.setStyleListElement();
+  }
+
+
+  createElementIcon( item ) {
+    this.iconElement = new ElementRef( this.renderer.createElement( 'i' ) );
+    this.renderer.addClass( this.iconElement.nativeElement, 'ui-icon' );
+    if ( item[ this.icon ] ) {
+      this.renderer.addClass( this.iconElement.nativeElement, item[ this.icon ] );
+    }
+  }
+
+  createElementLabel( item ) {
+    this.labelElement = new ElementRef( this.renderer.createElement( 'span' ) );
+    this.renderer.addClass( this.labelElement.nativeElement, 'ui-label' );
+    this.labelElement.nativeElement.innerHTML = item[ this.label ];
+  }
+
+  createElementArrowSubItem( item ) {
+    if ( item[ this.subItem ] ) {
+      this.arrowElement = new ElementRef( this.renderer.createElement( 'i' ) );
+      this.renderer.addClass( this.arrowElement.nativeElement, 'ui-icon' );
+      this.renderer.addClass( this.arrowElement.nativeElement, 'ion-ios-arrow-right' );
+    }
+  }
+
+  relocateElements() {
+    this.renderer.appendChild( this.listElement.nativeElement, this.iconElement.nativeElement );
+    this.renderer.appendChild( this.listElement.nativeElement, this.labelElement.nativeElement );
+    this.renderer.appendChild( this.menuList.element.nativeElement, this.listElement.nativeElement );
+    if (this.arrowElement) {
+      this.renderer.appendChild( this.listElement.nativeElement, this.arrowElement.nativeElement );
+    }
+  }
+
+  listenClickElementList( item ) {
+    this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
+      if ( item[ 'callback' ] ) {
+        this.callBack = item[ 'callback' ];
+        this.callBack( MouseEvent );
+      }
+    } );
+  }
+
+  setStyleListElement() {
+    this.renderer.setStyle( this.listElement.nativeElement, 'max-width', this.width );
+    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight );
+    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.itemHeight );
+    this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
+      '25px 1fr 25px' );
   }
 
   setContextMenuPosition( $event ) {
@@ -109,7 +198,7 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setContextMenuBeforeMouse( $event ) {
-    const minWidthWrapperContextMenu  = 250;
+    const minWidthWrapperContextMenu = 250;
     this.position.left = $event.x - minWidthWrapperContextMenu;
   }
 
@@ -124,7 +213,7 @@ export class TlContextMenu implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fitsOnScreen( $event ) {
-    const minWidthWrapperContextMenu  = 250;
+    const minWidthWrapperContextMenu = 250;
     return ($event.clientX + minWidthWrapperContextMenu) >= window.innerWidth;
   }
 

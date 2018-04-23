@@ -20,22 +20,19 @@
  SOFTWARE.
  */
 import {
-  ViewChild, Input, AfterViewInit, Component, OnDestroy, ViewContainerRef, Renderer2,
-  OnInit
+  Input, Component, OnDestroy,
+  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef, ChangeDetectorRef,
 } from '@angular/core';
-import { MenuService } from '../core/services/menu.service';
-import { TlButton } from '../button/button';
-import { FixedPositionDirective } from '../misc/fixed-position.directive';
-
-let documentClick;
+import { Router } from '@angular/router';
+import { SubMenuService } from './services/submenu.service';
 
 @Component( {
   selector: 'tl-menu',
   templateUrl: './menu.html',
   styleUrls: [ './menu.scss' ],
-  providers: [MenuService]
+  providers: [ SubMenuService ],
 } )
-export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
+export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() items = [];
 
@@ -45,82 +42,283 @@ export class TlMenu implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() subItem = '';
 
-  @Input() trigger;
+  @Input() dockWidth = '40px';
 
-  @Input() target;
+  @Input() width = '200px';
 
-  @Input() positionY = 'bellow';
+  @Input() docked = false;
 
-  @Input() overlapTrigger = false;
+  @Input() charsToSearch = 2;
 
-  @Input() positionX = 'before';
+  @Input() group = '';
 
-  @Input() hover = false;
+  @Input() filterEmptyMessage = 'Nothing to Show';
 
-  @ViewChild( 'wrapperMenuItem', { read: ViewContainerRef } ) wrapperMenuItem: ViewContainerRef;
+  @Input() maxHeight = '800px';
 
-  @ViewChild( FixedPositionDirective ) fixedPos: FixedPositionDirective;
+  @Input() itemHeight = '30px';
 
-  constructor(private menuService: MenuService, private renderer: Renderer2) {}
+  @Input() topDislocation = 0;
 
-  ngOnInit() {
+  @Input() widthRootMenu = '250px';
+
+  @Input() outsideBorder = false;
+
+  @Input() inputPlaceholder = 'Search...';
+
+  @Input() titleMenu = 'Main Menu';
+
+  @Input() operationMode: 'click' | 'hover' = 'hover';
+
+  @Input() mode: 'simple' | 'advanced' = 'simple';
+
+  @Input() link = '';
+
+  @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
+
+  private listElement;
+
+  private iconElement;
+
+  private labelElement;
+
+  private iconSubElement;
+
+  private indexSubMenu = 0;
+
+  private callBack = Function();
+
+  constructor( private renderer: Renderer2,
+               private router: Router,
+               private subMenuService: SubMenuService,
+               private viewRoot: ViewContainerRef ) {
+  }
+
+  ngAfterContentInit() {
+    this.initializeMenu();
+    this.listenWindowResize();
     this.listenDocumentClick();
   }
 
-  ngAfterViewInit() {
-    this.validateTarget();
-    this.listenTrigger();
-    this.listenTriggerMouseLeave();
-    this.menuService.setMenuConfig({ label: this.label, icon: this.icon, items: this.items, subItem: this.subItem},
-      this.wrapperMenuItem, this.renderer);
+  createList() {
+    const list = this.items;
+    for ( let item = 0; item < list.length; item++ ) {
+      this.createElementList( list[ item ] );
+      this.addRootClass();
+      this.handleDockedClass();
+      this.handleAlwaysActive( list[ item ][ 'alwaysActive' ] );
+      this.insertListElementToList();
+      this.createElementIcon( list[ item ][ this.icon ] );
+      this.createElementLabel( list[ item ][ this.label ] );
+      this.orderElements();
+      this.createElementIconSubMenu( list[ item ][ this.subItem ] );
+      this.handleListenerSubMenu( list[ item ][ this.subItem ] );
+      this.handleSubItems( list[ item ] );
+    }
   }
 
-  validateTarget() {
-    if (this.target instanceof TlButton) {
-      this.target = this.target['button'].nativeElement;
+  addRootClass() {
+    this.renderer.addClass( this.listElement.nativeElement, 'root-list' );
+  }
+
+  handleDockedClass() {
+    if ( this.docked ) {
+      this.renderer.addClass( this.listElement.nativeElement, 'docked' );
+      this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns', this.dockWidth );
     }
-    if (this.trigger instanceof TlButton) {
-      this.trigger = this.trigger['button'].nativeElement;
+  }
+
+  initializeMenu() {
+    this.subMenuService.setRenderer( this.renderer );
+    this.subMenuService.setRootMenu( this.menuList );
+    this.subMenuService.setViewRootMenu( this.viewRoot );
+    this.subMenuService.setViewSubMenu( this.menuList );
+    this.createList();
+  }
+
+  handleAlwaysActive( value ) {
+    if ( value ) {
+      this.renderer.addClass( this.listElement.nativeElement, 'always-active' );
     }
-    if (!this.target) {
-      throw new Error('The [target] property is required');
+  }
+
+  handleSubItems( item ) {
+    if ( item[ this.subItem ] ) {
+      if ( this.mode === 'simple' ) {
+        this.subMenuService.setAnchorRootElement( this.listElement.nativeElement );
+        this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+        this.subMenuService.createSimpleSubMenu();
+        this.subMenuService.handleDockedMenu();
+      } else {
+        this.subMenuService.setAnchorRootElement( this.menuList.element.nativeElement.children[ 0 ] );
+        this.subMenuService.setSubMenuData( item[ this.subItem ], this );
+        this.subMenuService.createAdvancedMenu();
+        this.subMenuService.handleDockedMenu();
+      }
     }
+  }
+
+  handleListenerSubMenu( item ) {
+    if ( item ) {
+      this.listenClickListElement();
+    }
+  }
+
+  createElementList( item ) {
+    this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
+    this.renderer.addClass( this.listElement.nativeElement, 'ui-menulist-item' );
+    this.listenClickElementList( item );
+    this.setStyleListElement();
   }
 
   listenDocumentClick() {
-    documentClick = this.renderer.listen( document, 'click', ( $event ) => {
-      if (($event.path.indexOf(this.target) < 0) && ($event.path.indexOf(this.trigger) < 0)) {
-        this.menuService.resetMenu();
+    this.renderer.listen( document, 'click', ( $event ) => {
+      this.subMenuService.closeMenu();
+    } );
+  }
+
+  listenClickElementList( item ) {
+    this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
+      if ( item[ this.link ] ) {
+        this.router.navigate( [ item[ this.link ] ] );
+        this.subMenuService.closeMenu();
+        return;
+      }
+      if ( item[ 'callback' ] ) {
+        this.callBack = item[ 'callback' ];
+        this.callBack( MouseEvent );
+        this.subMenuService.closeMenu();
       }
     } );
   }
 
-  listenTrigger() {
-    const element = this.trigger ? this.trigger : this.target;
-    const eventType = this.hover ? 'mouseenter' : 'click';
-    this.renderer.listen(element, eventType, () => {
-      if (this.menuService.created) {
-        this.menuService.resetMenu();
-        return;
-      }
-      this.menuService.createList();
-      this.fixedPos.setPositioning();
-    });
+  setStyleListElement() {
+    this.renderer.setStyle( this.listElement.nativeElement, 'max-width', this.width );
+    this.renderer.setStyle( this.listElement.nativeElement, 'height', this.itemHeight );
+    this.renderer.setStyle( this.listElement.nativeElement, 'line-height', this.itemHeight );
+    this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns',
+      this.dockWidth + ' 1fr ' + '25px' );
   }
 
-  listenTriggerMouseLeave() {
-    if (this.hover) {
-      const element = this.trigger ? this.trigger : this.target;
-      this.renderer.listen(element, 'mouseleave', ($event) => {
-        if (!$event.relatedTarget.getAttribute('menuitem')) {
-          this.menuService.resetMenu();
+  createElementIcon( icon ) {
+    this.iconElement = new ElementRef( this.renderer.createElement( 'i' ) );
+    this.renderer.addClass( this.iconElement.nativeElement, icon );
+    this.renderer.addClass( this.iconElement.nativeElement, 'icon' );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.itemHeight );
+    this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.itemHeight );
+  }
+
+  createElementIconSubMenu( subItem ) {
+    if ( !this.isDocked() ) {
+      this.iconSubElement = new ElementRef( this.renderer.createElement( 'i' ) );
+      this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
+      this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
+      if ( subItem ) {
+        this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-right' );
+      }
+    }
+  }
+
+  listenWindowResize() {
+    this.renderer.listen( window, 'resize', () => {
+      this.subMenuService.setRootHeightChange( this.maxHeight );
+    } );
+  }
+
+  listenClickListElement() {
+    if ( this.mode === 'advanced' ) {
+      this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
+        if ( this.isTargetOnListElement( $event ) ) {
+          this.subMenuService.getListComponents()[ 0 ].instance.toggleVisibility();
+          this.handleVisibilitySubMenu();
         }
-      });
+      } );
+    }
+  }
+
+  handleVisibilitySubMenu() {
+    this.subMenuService.getListComponents().forEach( ( value, index ) => {
+      if ( (index > 0) && (value.instance.visibilitySubMenu) ) {
+        value.instance.toggleVisibility();
+      }
+    } );
+  }
+
+  isTargetOnListElement( $event ) {
+    for ( const item of $event.currentTarget.children ) {
+      if ( item === $event.target ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  createElementLabel( label ) {
+    if ( !this.isDocked() ) {
+      this.labelElement = new ElementRef( this.renderer.createElement( 'span' ) );
+      this.renderer.addClass( this.labelElement.nativeElement, 'label' );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'height', this.itemHeight );
+      this.renderer.setStyle( this.labelElement.nativeElement, 'line-height', this.itemHeight );
+      this.labelElement.nativeElement.innerHTML = label;
+      return;
+    }
+    this.labelElement = null;
+  }
+
+  isDocked() {
+    return this.listElement.nativeElement.getAttribute( 'class' ).includes( 'docked' );
+  }
+
+  orderElements() {
+    this.renderer.appendChild( this.listElement.nativeElement, this.iconElement.nativeElement );
+    if ( this.labelElement ) {
+      this.renderer.appendChild( this.listElement.nativeElement, this.labelElement.nativeElement );
+    }
+  }
+
+  insertListElementToList() {
+    this.renderer.appendChild( this.menuList.element.nativeElement, this.listElement.nativeElement );
+  }
+
+  resetList() {
+    this.subMenuService.clearView();
+    this.menuList.element.nativeElement.innerHTML = '';
+    this.indexSubMenu = 0;
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    this.handleChangeDocked( changes );
+    this.handleChangeItems( changes );
+    this.handleChangeMode( changes );
+  }
+
+  handleChangeDocked( changes ) {
+    if ( changes[ 'docked' ] ) {
+      if ( !changes[ 'docked' ].firstChange ) {
+        this.resetList();
+        this.initializeMenu();
+      }
+    }
+  }
+
+  handleChangeItems( changes ) {
+    if ( changes[ 'items' ] ) {
+      if ( !changes[ 'items' ].firstChange ) {
+        this.initializeMenu();
+      }
+    }
+  }
+
+  handleChangeMode( changes ) {
+    if ( changes[ 'mode' ] ) {
+      if ( !changes[ 'mode' ].firstChange ) {
+        this.resetList();
+        this.initializeMenu();
+      }
     }
   }
 
   ngOnDestroy() {
-    documentClick();
   }
 
 }

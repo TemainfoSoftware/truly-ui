@@ -45,6 +45,10 @@ export class DatatableRowModelsDemoComponent implements OnInit {
     this.getDataForInifinit(event.skip, event.take);
   }
 
+  onRowSelect($event) {
+    console.log($event);
+  }
+
   private getDataForInifinit(skip, take) {
     clearTimeout(this.timeout );
     this.timeout = setTimeout(() => {

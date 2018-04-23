@@ -21,10 +21,11 @@
  */
 import {
   AfterContentInit,
-  Component, ContentChild, ContentChildren, forwardRef, OnInit, QueryList, ViewChild,
+  Component, ContentChild, ContentChildren, forwardRef, QueryList, Renderer2,
 } from '@angular/core';
 import { TlSidebar } from './parts/sidebar/sidebar';
 import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
+import { SidebarService } from '../modal/sidebar.service';
 
 @Component( {
   selector: 'tl-sidebar-container',
@@ -32,21 +33,34 @@ import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
   styleUrls: [ './sidebar-container.scss' ],
 } )
 
-export class TlSidebarContainer implements OnInit, AfterContentInit {
+export class TlSidebarContainer implements AfterContentInit {
 
-  @ContentChildren(forwardRef(() => TlSidebar )  ) sidebar: QueryList<TlSidebar>;
+  @ContentChildren( forwardRef( () => TlSidebar ) ) sidebar: QueryList<TlSidebar>;
 
   @ContentChild( TlSidebarContent ) sidebarContent;
 
-  constructor() {}
-
-  ngOnInit() {}
+  constructor( private sidebarService: SidebarService, private renderer: Renderer2 ) {
+  }
 
   ngAfterContentInit() {
-    this.sidebar.forEach((item) => {
-      item.toggleChange.subscribe((value) => {
+    this.setSidebarMovement();
+    this.listenResize();
+  }
+
+  setSidebarMovement() {
+    this.sidebar.forEach( ( item ) => {
+      item.toggleChange.subscribe( ( value ) => {
         this.sidebarContent.setMovement( value );
-      });
-    });
+        this.sidebarService.setChange( value );
+      } );
+    } );
+  }
+
+  listenResize() {
+    this.renderer.listen( window, 'resize', () => {
+      this.sidebar.forEach( ( item ) => {
+        this.sidebarContent.setMovement( { sidebar: item } );
+      } );
+    } );
   }
 }

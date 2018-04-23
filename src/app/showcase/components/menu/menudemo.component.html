@@ -1,6 +1,7 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Menu <span class="module-name"><code><u>Module Name</u>: <strong>MenuModule</strong></code></span></h1>
+    <h1 class="title">Menu <span class="module-name"><code><u>Module Name</u>: <strong>MenuModule</strong></code></span>
+    </h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>MenuModule</strong></code></p>
     <p class="text-content">Menu's can be pretty fancy and TrulyUI have a few options to set up.</p>
   </div>
@@ -9,140 +10,146 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <div class="col-md-6">
-              <h5>Basic</h5>
-                <tl-button #target1 [text]="'Target Element'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [target]="target1">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button #target1 [text]="'Target Element'"></tl-button>
-<tl-menu [target]="target1" [items]="menuItems" [label]="'label'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
+            <div class="col-md-12 header-menu-title">
+              <span>[mode] = 'simple'</span>
+              <h3> SimpleMenu </h3>
             </div>
             <div class="col-md-6">
-              <h5>With Trigger</h5>
-              <a #trigger class="trigger-element"> Trigger </a>
-              <tl-button #target2 [text]="'Target Element'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [trigger]="trigger"
-                [target]="target2">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<a #trigger class="trigger-element"> Trigger </a>
-<tl-button #target2 [text]="'Target Element'"></tl-button>
-<tl-menu  [target]="target2" [trigger]="trigger" [items]="menuItems" [label]="'label'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
-            </div>
-          </app-card>
-          <app-card>
-            <div class="col-md-6">
-              <h5>Position Bellow</h5>
-                <tl-button #bellow [text]="'Target Element Bellow'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [positionY]="'bellow'"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [target]="bellow">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button #bellow [text]="'Target Element Bellow'"></tl-button>
-<tl-menu [target]="bellow" [items]="menuItems" [positionY]="'bellow'" [label]="'label'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
+              <div class="col-md-5" style="padding-left: 0">
+                <tl-menu
+                  [items]="menuItems"
+                  [link]="'link'"
+                  [width]="'250px'"
+                  [label]="'label'"
+                  [group]="'category'"
+                  [subItem]="'subItem'"
+                  [icon]="'icon'">
+                </tl-menu>
+              </div>
+              <div class="col-md-7">
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menu
+  [items]="menuItems"
+  [link]="'link'"
+  [width]="'250px'"
+  [label]="'label'"
+  [group]="'category'"
+  [subItem]="'subItem'"
+  [icon]="'icon'">
+</tl-menu>
+              </textarea>
+              </div>
             </div>
             <div class="col-md-6">
-              <h5>Position Above</h5>
-              <tl-button #above [text]="'Target Element Above'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [positionY]="'above'"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [target]="above">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button #above [text]="'Target Element Above'"></tl-button>
-<tl-menu [target]="above" [items]="menuItems" [positionY]="'above'" [label]="'label'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
+              <div class="col-md-2">
+                <tl-menu
+                  [items]="menuItems"
+                  [link]="'link'"
+                  [label]="'label'"
+                  [docked]="true"
+                  [group]="'category'"
+                  [subItem]="'subItem'"
+                  [icon]="'icon'">
+                </tl-menu>
+              </div>
+              <div class="col-md-10">
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menu
+  [items]="menuItems"
+  [link]="'link'"
+  [label]="'label'"
+  [docked]="true"
+  [group]="'category'"
+  [subItem]="'subItem'"
+  [icon]="'icon'">
+</tl-menu>
+            </textarea>
+              </div>
             </div>
           </app-card>
           <app-card>
-            <div class="col-md-6">
-              <h5>Position Before</h5>
-                <tl-button #before [text]="'Target Element Before'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [positionX]="'before'"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [target]="before">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button #before [text]="'Target Element Before'"></tl-button>
-<tl-menu [target]="before" [items]="menuItems" [positionX]="'before'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
+            <div class="col-md-12 header-menu-title">
+              <span>[mode] = 'advanced'</span>
+              <h3> AdvancedMenu </h3>
             </div>
             <div class="col-md-6">
-              <h5>Position After</h5>
-              <tl-button #after [text]="'Target Element After'"></tl-button>
-              <br><br>
-              <tl-menu
-                [items]="menuItems"
-                [positionX]="'after'"
-                [label]="'label'"
-                [subItem]="'subMenu'"
-                [icon]="'icon'"
-                [target]="after">
-              </tl-menu>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button #after [text]="'Target Element After'"></tl-button>
-<tl-menu [target]="after" [items]="menuItems" [positionX]="'after'" [label]="'label'" [subItem]="'subMenu'" [icon]="'icon'"></tl-menu>
-</textarea>
+              <div class="col-md-5" style="padding-left: 0 ">
+                <tl-menu
+                  [items]="menuItems"
+                  [link]="'link'"
+                  [width]="'250px'"
+                  [filterEmptyMessage]="'Not Found'"
+                  [inputPlaceholder]="'Type something...'"
+                  [titleMenu]="'Main Menu'"
+                  [label]="'label'"
+                  [group]="'category'"
+                  [subItem]="'subItem'"
+                  [mode]="'advanced'"
+                  [icon]="'icon'">
+                </tl-menu>
+              </div>
+              <div class="col-md-7">
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menu
+  [items]="menuItems"
+  [link]="'link'"
+  [width]="'250px'"
+  [filterEmptyMessage]="'Not Found'"
+  [inputPlaceholder]="'Type something...'"
+  [titleMenu]="'Main Menu'"
+  [label]="'label'"
+  [group]="'category'"
+  [subItem]="'subItem'"
+  [mode]="'advanced'"
+  [icon]="'icon'">
+</tl-menu>
+              </textarea>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="col-md-2">
+                <tl-menu
+                  [items]="menuItems"
+                  [link]="'link'"
+                  [width]="'200px'"
+                  [filterEmptyMessage]="'Not Found'"
+                  [inputPlaceholder]="'Type something...'"
+                  [titleMenu]="'Main Menu'"
+                  [label]="'label'"
+                  [docked]="true"
+                  [dockWidth]="'35px'"
+                  [group]="'category'"
+                  [subItem]="'subItem'"
+                  [mode]="'advanced'"
+                  [icon]="'icon'">
+                </tl-menu>
+              </div>
+              <div class="col-md-10">
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-menu
+  [items]="menuItems"
+  [link]="'link'"
+  [width]="'200px'"
+  [filterEmptyMessage]="'Not Found'"
+  [inputPlaceholder]="'Type something...'"
+  [titleMenu]="'Main Menu'"
+  [label]="'label'"
+  [docked]="true"
+  [dockWidth]="'35px'"
+  [group]="'category'"
+  [subItem]="'subItem'"
+  [mode]="'advanced'"
+  [icon]="'icon'">
+</tl-menu>
+            </textarea>
+              </div>
             </div>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Menu Configuration'" [icon]="'ion-monitor'">
-          <app-card>
-            <div class="col-md-12">
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-this.items = [
-  { label: 'The Target 2 Context Menu Item 1', icon: '', callBack: this.functionContext2 },
-  { label: 'The Target 2 Context Menu Item 2', icon: '',
-  subMenu: [
-      { label: 'The Target 2 Context Menu Item 3', icon: '' },
-      { label: 'The Target 2 Context Menu Item 4', icon: '' },
-      { label: 'The Target 2 Context Menu Item 5', icon: '' }
-    ]
-  },
-];
-</textarea>
-            </div>
-          </app-card>
-        </app-showcase-card>
-    </div>
+      </div>
     </div>
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>

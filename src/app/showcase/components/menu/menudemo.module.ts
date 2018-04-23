@@ -5,11 +5,11 @@ import {NgModule} from '@angular/core';
 import {HighlightJsModule} from 'ngx-highlight-js';
 
 import { MenuDemoRoutingModule } from './menudemo-routing.module';
-import { MenuDemoComponent } from './menudemo.component';
-import { ButtonModule } from '../../../components/button';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { MenuDemoComponent } from './menudemo.component';
+import { SwitchModule } from '../../../components/switch/index';
 import { MenuModule } from '../../../components/menu/index';
 
 @NgModule({
@@ -18,10 +18,10 @@ import { MenuModule } from '../../../components/menu/index';
   ],
   imports: [
     MenuDemoRoutingModule,
-    ButtonModule,
+    MenuModule,
+    SwitchModule,
     CommonModule,
     FormsModule,
-    MenuModule,
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,

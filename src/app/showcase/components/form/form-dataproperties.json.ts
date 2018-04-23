@@ -42,7 +42,14 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'modalOptions.icon',
+    name: 'mode',
+    type: 'string',
+    default: 'modal',
+    description: 'The form mode that will work',
+    options: 'modal | inline'
+  },
+  {
+    name: '@Modal.icon',
     type: 'string',
     default: 'null',
     description: 'Icon of Window',
@@ -56,56 +63,56 @@ export const dataProperties = [
     options: 'Directive'
   },
   {
-    name: 'modalOptions.title',
+    name: '@Modal.title',
     type: 'string',
     default: 'My Modal',
     description: 'Title of window dialog.',
     options: 'any text'
   },
   {
-    name: 'modalOptions.color',
+    name: '@Modal.color',
     type: 'string',
     default: '#53C68C',
     description: 'Color of window dialog header.',
     options: 'Hex | RGBA'
   },
   {
-    name: 'modalOptions.width',
+    name: '@Modal.width',
     type: 'string',
     default: '500px',
     description: 'Width of window dialog.',
     options: 'px | % | em'
   },
   {
-    name: 'modalOptions.height',
+    name: '@Modal.height',
     type: 'string',
     default: '500px',
     description: 'Height of window dialog.',
     options: 'px | % | em'
   },
   {
-    name: 'modalOptions.draggable',
+    name: '@Modal.draggable',
     type: 'boolean',
     default: 'true',
     description: 'Control if window dialog is draggrable or not.',
     options: 'true | false'
   },
   {
-    name: 'modalOptions.maximizable',
+    name: '@Modal.maximizable',
     type: 'boolean',
     default: 'true',
     description: 'Control if window dialog is maximizable or not.',
     options: 'true | false'
   },
   {
-    name: 'modalOptions.minimizable',
+    name: '@Modal.minimizable',
     type: 'boolean',
     default: 'true',
     description: 'Control if window dialog is minimizable or not.',
     options: 'true | false'
   },
   {
-    name: 'modalOptions.closable',
+    name: '@Modal.closable',
     type: 'boolean',
     default: 'true',
     description: 'Control if window dialog is closable or not.',

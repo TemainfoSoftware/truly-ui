@@ -1,0 +1,67 @@
+<ul #list class="ui-advanced-sub-menu-list" [@rootElementList]="true"
+    [style.visibility]="visibilityMenu ? 'visible' : 'hidden'"
+    [style.opacity]="visibilityMenu ? '1' : '0'"
+    (click)="$event.stopPropagation()"
+    [ngClass]="{'docked': docked}"
+    [style.left]="getWidth()"
+    [style.maxHeight]="maxHeight"
+    [style.width]="widthRootMenu"
+    [style.top]="topPosition" #subMenuList>
+
+  <div class="header-advanced-menu">
+    <div class="ui-header-title">
+      <i class="ion-navicon icon-header"></i>
+      <span class="title-header">{{titleMenu}}</span>
+    </div>
+    <div class="wrapper-search-input">
+      <span><i class="ion-ios-search-strong"></i></span>
+      <input #input type="text"
+             (keydown.arrowdown)="onArrowDown($event)"
+             (keydown.escape)="close()"
+             (keydown.arrowup)="onArrowUp($event)"
+             [ngModel]="model" (keyup)="changeInputValue($event.target.value)" [placeholder]="inputPlaceholder">
+    </div>
+  </div>
+
+  <div class="ui-wrapper-not-found"
+       *ngIf="nothingFound"
+       [tlBlockui]="nothingFound"
+       [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+  </div>
+
+  <div class="ui-wrapper-items"
+       [style.width]="widthRootMenu"
+       (scroll)="onScrollWrapper()"
+       [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'" #wrapperItemsList>
+    <div class="ui-subitem-group" *ngFor="let itemGroup of groups">
+      <div class="ui-label-group" (click)="$event.stopPropagation()"
+           *ngIf="itemGroup.group">{{itemGroup.group}}
+      </div>
+      <div class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="!itemGroup.group">Outros</div>
+      <li #elementList
+          [@rootElementList]="true"
+          (keydown.arrowdown)="onArrowDown($event)"
+          (keydown.arrowup)="onArrowUp($event)"
+          (keydown.arrowleft)="onArrowLeft($event)"
+          (keydown.arrowright)="onArrowRight($event, elementList)"
+          tabindex="-1"
+          [ngClass]="{'ui-advanced-submenu-selected': isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu && item[subItem] }"
+          class="ui-advanced-list-item"
+          (keydown.enter)="callbackListElement($event, item)"
+          (mouseover)="onHoverSubMenu(elementList)"
+          (mouseleave)="onLeaveSubMenu(elementList)"
+          (click)="toggleSubMenu(elementList, item[subItem], $event); callbackListElement($event, item)"
+          [style.height]="itemHeight" [style.line-height]="itemHeight" *ngFor="let item of itemGroup.items">
+        <i [style.height]="itemHeight" [style.line-height]="itemHeight" [class]="'icon ' + item[icon]"></i>
+        <span [style.height]="itemHeight" [style.line-height]="itemHeight" class="label">{{item[label]}}</span>
+
+        <div class="icon-sub-menu" *ngIf="item[subItem]"
+             [ngClass]="{'ui-advanced-submenu-opened' : isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu }">
+          <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]"
+             [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
+             class="ion-ios-arrow-right icon"></i>
+        </div>
+      </li>
+    </div>
+  </div>
+</ul>

@@ -6,7 +6,7 @@
         <table #table class="ui-datatable-table" [colgroup]="dt.columns">
             <thead class="ui-datatable-table-head">
 
-                <tr class="ui-row">
+                <tr class="ui-row ui-row-title">
                     <th *ngFor="let column of dt.columns;"
                         (click)="onClick(column)"
                         [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">

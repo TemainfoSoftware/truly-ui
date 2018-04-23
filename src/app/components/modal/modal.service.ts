@@ -148,8 +148,6 @@ export class ModalService implements OnDestroy {
     this.backdrop = this.view.createComponent( backdropFactory );
 
     (<TlBackdrop>this.backdrop.instance).setBackdropOptions( {
-      'width': this.view.element.nativeElement.offsetWidth + 'px',
-      'height': this.view.element.nativeElement.offsetHeight + 'px',
       'zIndex': 1
     } );
 

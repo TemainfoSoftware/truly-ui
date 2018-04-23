@@ -3,23 +3,25 @@
   user-select: none;
   > .arrow-right {
     position: absolute;
-    line-height: 28px;
     border-left: 0;
     top: 0;
     right: 0;
-    padding: 5px;
+    padding: 0 5px;
+    height: 100%;
+    box-sizing: border-box;
   }
   >.arrow-right:hover {
     cursor: pointer;
   }
   > .arrow-left {
     position: absolute;
-    line-height: 28px;
     border-right: 0;
     top: 0;
     left: 0;
-    padding: 5px;
+    padding: 0 5px;
+    height: 100%;
     z-index: 100;
+    box-sizing: border-box;
   }
   >.arrow-left:hover {
     cursor: pointer;
@@ -31,27 +33,22 @@
   position: relative;
   overflow: auto;
   overflow-y: hidden;
-  min-height: 40px;
   box-sizing: border-box;
   > .wrapper-container-modals {
     display: inline-flex;
     > .container-modal-box {
       cursor: pointer;
-      margin: 5px;
-      height: 28px;
-      line-height: 28px;
+      margin: 2px 2px;
       margin-right: 0;
+      box-sizing: border-box;
       > .ui-container-item {
         padding: 10px;
-        font-family: "Segoe UI";
+        font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
         font-size: 13px;
       }
       > .ui-container-item:first-child {
         padding: 0 0 0 10px;
       }
-    }
-    >.container-modal-box:last-child {
-      margin-right: 5px;
     }
   }
 }

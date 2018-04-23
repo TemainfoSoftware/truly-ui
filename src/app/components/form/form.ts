@@ -48,7 +48,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() submitShortcut = '';
 
-  @Input() mode: 'inline' | 'modal' = 'inline';
+  @Input() mode: 'inline' | 'modal' = 'modal';
 
   @Input() textConfirm = 'Ok';
 
@@ -363,7 +363,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         break;
       }
     }
-    element.focus();
+    if ( element ) {
+      element.focus();
+    }
   }
 
   isActiveElementButtonOk() {

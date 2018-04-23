@@ -20,6 +20,7 @@ __export(require("./components/form/index"));
 __export(require("./components/input/index"));
 __export(require("./components/listbox/index"));
 __export(require("./components/menu/index"));
+__export(require("./components/popupmenu/index"));
 __export(require("./components/misc/index"));
 __export(require("./components/modal/addons/container-modal/index"));
 __export(require("./components/modal/addons/modal-toolbar/index"));

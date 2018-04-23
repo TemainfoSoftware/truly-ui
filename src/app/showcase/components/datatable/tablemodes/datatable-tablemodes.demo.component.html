@@ -41,7 +41,7 @@ export class DatatableColumnFeaturesDemoComponent {
               With scrollable you can navigate the data in a fluid and objective way by scrolling and scrolling to view new or old data.
               But you can use navigation, filtering, sorting all in memory.
             </p>
-            <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>
+            <tl-datatable [data]="dataNormal" [mode]="'scrollable'" (rowSelect)="onSelectRow($event)" (rowClick)="onClickRow($event)"></tl-datatable>
             <hr>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
              <tl-datatable [data]="dataNormal" [mode]="'scrollable'"></tl-datatable>

@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import { ComponentFactoryResolver, Injectable, Renderer2, ViewContainerRef } from '@angular/core';
-import { TlMenuItem } from '../../menu/parts/menu-item';
 import { RelativeWindowPosition } from '../../misc/relative-window-position.directive';
+import { TlPopupMenuItem } from '../../popupmenu/parts/popupmenu-item';
 
 export interface MenuConfig {
   label: string;
@@ -72,7 +72,7 @@ export class MenuService {
     if ( !this.mainList ) {
       this.created = true;
       for ( let item = 0; item < this.items.length; item++ ) {
-        const factory = this.componentResolver.resolveComponentFactory( TlMenuItem );
+        const factory = this.componentResolver.resolveComponentFactory( TlPopupMenuItem );
         this.mainList = this.menuList.createComponent( factory );
         this.setProperties( item, this.mainList, null );
         this.handleSubItems( item, this.mainList );
@@ -114,7 +114,7 @@ export class MenuService {
 
   private createSubItemList( list, parentElement ) {
     for ( let index = 0; index < list.length; index++ ) {
-      const factory = this.componentResolver.resolveComponentFactory( TlMenuItem );
+      const factory = this.componentResolver.resolveComponentFactory( TlPopupMenuItem );
       const subItem = this.menuList.createComponent( factory );
       parentElement.children.push( subItem );
       this.renderer.appendChild( parentElement.anchor.location.nativeElement, subItem.location.nativeElement );
@@ -126,16 +126,16 @@ export class MenuService {
   private setProperties( index, subItem, parentElement, list? ) {
     const items = list ? list : this.items;
     this.setPositionChildElement( subItem, index, items.length - 1, parentElement );
-    (<TlMenuItem>subItem.instance).label = items[ index ][ this.label ];
-    (<TlMenuItem>subItem.instance).icon = items[ index ][ this.icon ];
-    (<TlMenuItem>subItem.instance).subItem = items[ index ][ this.subItem ];
-    (<TlMenuItem>subItem.instance).callBack = items[ index ].callBack;
+    (<TlPopupMenuItem>subItem.instance).label = items[ index ][ this.label ];
+    (<TlPopupMenuItem>subItem.instance).icon = items[ index ][ this.icon ];
+    (<TlPopupMenuItem>subItem.instance).subItem = items[ index ][ this.subItem ];
+    (<TlPopupMenuItem>subItem.instance).callBack = items[ index ].callBack;
   }
 
   private setPositionChildElement( subItem, index, lastIndex, anchor ) {
     if ( anchor ) {
-      (<TlMenuItem>subItem.instance).fitWidth();
-      (<TlMenuItem>subItem.instance).setBorders( index, lastIndex );
+      (<TlPopupMenuItem>subItem.instance).fitWidth();
+      (<TlPopupMenuItem>subItem.instance).setBorders( index, lastIndex );
       this.setAnchorLeftPosition(subItem, anchor);
       this.setAnchorTopPosition(subItem, anchor, index);
     }
@@ -144,12 +144,12 @@ export class MenuService {
   private setAnchorLeftPosition(subItem, anchor) {
     this.relativeWindowPosition.setRenderer(this.renderer);
     this.relativeWindowPosition.anchorElement = anchor.location.nativeElement.firstElementChild;
-    this.relativeWindowPosition.relativeElement = (<TlMenuItem>subItem.instance).wrapperItem.nativeElement;
+    this.relativeWindowPosition.relativeElement = (<TlPopupMenuItem>subItem.instance).wrapperItem.nativeElement;
     this.relativeWindowPosition.setPosition();
   }
 
   private setAnchorTopPosition(subItem, anchor, index) {
-    this.renderer.setStyle((<TlMenuItem>subItem.instance).wrapperItem.nativeElement, 'top',
+    this.renderer.setStyle((<TlPopupMenuItem>subItem.instance).wrapperItem.nativeElement, 'top',
       anchor.location.nativeElement.firstElementChild.getBoundingClientRect().top
       + anchor.location.nativeElement.firstElementChild.offsetHeight * index + 'px');
   }

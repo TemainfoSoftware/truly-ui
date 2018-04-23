@@ -3,12 +3,12 @@
 $theme: (
 
   basic: (
-    default:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
-    active:   ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
-    checked:  ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
-    disabled: ( foreground: #616161, background: #E6E6E6, border: #C8C8C8 ),
-    focus:    ( foreground: #616161, background: #F6F6F6, border: #C8C8C8 ),
-    hover:    ( foreground: #616161, background: #EDEDED, border: #C8C8C8 ),
+    default:  ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
+    active:   ( foreground: #616161, background: #EDEDED, border: #DCDCDC ),
+    checked:  ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
+    disabled: ( foreground: #616161, background: #E6E6E6, border: #DCDCDC ),
+    focus:    ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
+    hover:    ( foreground: #616161, background: #EDEDED, border: #DCDCDC ),
   ),
 
   primary: (
@@ -75,12 +75,12 @@ $theme: (
   ),
 
   dark: (
-    default:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    active:   ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    checked:  ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    disabled: ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    focus:    ( foreground: #616161, background: #E8E8E8, border: #BFBFBF ),
-    hover:    ( foreground: #616161, background: #dadada, border: #BFBFBF ),
+    default:  ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
+    active:   ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
+    checked:  ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
+    disabled: ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
+    focus:    ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
+    hover:    ( foreground: #616161, background: #DADADA, border: #BFBFBF ),
   )
 );
 

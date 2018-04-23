@@ -32,6 +32,8 @@ export class RelativeWindowPosition {
 
   private renderer: Renderer2;
 
+  private topDislocation = 0;
+
   constructor() {
   }
 
@@ -47,19 +49,21 @@ export class RelativeWindowPosition {
     this.relativeElement = relativeElement;
   }
 
-  setPosition() {
+  setPosition(topDislocation?: number) {
+    this.topDislocation = topDislocation ? topDislocation : 0;
     this.fitInWindowX() ? this.setRelativeElementToRightAnchor() : this.setRelativeElementToLeftAnchor();
     this.fitInWindowY() ? this.setRelativeElementToTopAnchor() : this.setRelativeToBottomAnchor();
   }
 
   private setRelativeElementToTopAnchor() {
     this.renderer.setStyle( this.relativeElement, 'top',
-     + this.anchorElement.offsetTop + 1 + 'px' );
+     + this.anchorElement.offsetTop + 1 - this.topDislocation + 'px' );
   }
 
   private setRelativeToBottomAnchor() {
     this.renderer.setStyle( this.relativeElement, 'top',
-      this.anchorElement.offsetTop - (this.relativeElement.offsetHeight) + this.anchorElement.offsetHeight + 'px' );
+      this.anchorElement.offsetTop - (this.relativeElement.offsetHeight) +
+      this.anchorElement.offsetHeight - this.topDislocation + 'px' );
   }
 
   private setRelativeElementToRightAnchor() {

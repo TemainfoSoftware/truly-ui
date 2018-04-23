@@ -21,7 +21,7 @@
  */
 import {
   Input, Component, OnDestroy,
-  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef,
+  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef, ChangeDetectorRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubMenuService } from './services/submenu.service';
@@ -95,11 +95,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.subMenuService.setRenderer( this.renderer );
-    this.subMenuService.setRootMenu( this.menuList );
-    this.subMenuService.setViewRootMenu(this.viewRoot);
-    this.subMenuService.setViewSubMenu( this.menuList );
-    this.createList();
+    this.initializeMenu();
     this.listenWindowResize();
     this.listenDocumentClick();
   }
@@ -130,6 +126,14 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
       this.renderer.addClass( this.listElement.nativeElement, 'docked' );
       this.renderer.setStyle( this.listElement.nativeElement, 'grid-template-columns', this.dockWidth );
     }
+  }
+
+  initializeMenu() {
+    this.subMenuService.setRenderer( this.renderer );
+    this.subMenuService.setRootMenu( this.menuList );
+    this.subMenuService.setViewRootMenu( this.viewRoot );
+    this.subMenuService.setViewSubMenu( this.menuList );
+    this.createList();
   }
 
   handleAlwaysActive( value ) {
@@ -168,21 +172,21 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   listenDocumentClick() {
-    this.renderer.listen(document, 'click', ($event) => {
+    this.renderer.listen( document, 'click', ( $event ) => {
       this.subMenuService.closeMenu();
-    });
+    } );
   }
 
   listenClickElementList( item ) {
-    this.renderer.listen( this.listElement.nativeElement, 'click', (MouseEvent) => {
+    this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
       if ( item[ this.link ] ) {
         this.router.navigate( [ item[ this.link ] ] );
         this.subMenuService.closeMenu();
         return;
       }
-      if (item['callback']) {
-        this.callBack = item['callback'];
-        this.callBack(MouseEvent);
+      if ( item[ 'callback' ] ) {
+        this.callBack = item[ 'callback' ];
+        this.callBack( MouseEvent );
         this.subMenuService.closeMenu();
       }
     } );
@@ -216,13 +220,13 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   listenWindowResize() {
-    this.renderer.listen(window, 'resize', () => {
-      this.subMenuService.setRootHeightChange(this.maxHeight);
-    });
+    this.renderer.listen( window, 'resize', () => {
+      this.subMenuService.setRootHeightChange( this.maxHeight );
+    } );
   }
 
   listenClickListElement() {
-    if (this.mode === 'advanced') {
+    if ( this.mode === 'advanced' ) {
       this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
         if ( this.isTargetOnListElement( $event ) ) {
           this.subMenuService.getListComponents()[ 0 ].instance.toggleVisibility();
@@ -283,10 +287,33 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges( changes: SimpleChanges ) {
+    this.handleChangeDocked( changes );
+    this.handleChangeItems( changes );
+    this.handleChangeMode( changes );
+  }
+
+  handleChangeDocked( changes ) {
     if ( changes[ 'docked' ] ) {
       if ( !changes[ 'docked' ].firstChange ) {
         this.resetList();
-        this.createList();
+        this.initializeMenu();
+      }
+    }
+  }
+
+  handleChangeItems( changes ) {
+    if ( changes[ 'items' ] ) {
+      if ( !changes[ 'items' ].firstChange ) {
+        this.initializeMenu();
+      }
+    }
+  }
+
+  handleChangeMode( changes ) {
+    if ( changes[ 'mode' ] ) {
+      if ( !changes[ 'mode' ].firstChange ) {
+        this.resetList();
+        this.initializeMenu();
       }
     }
   }

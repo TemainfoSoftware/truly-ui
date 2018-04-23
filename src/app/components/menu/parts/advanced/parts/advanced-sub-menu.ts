@@ -26,6 +26,7 @@ import { Router } from '@angular/router';
 import { TlAdvancedRootMenu } from '../advanced-root-menu';
 import { RelativeWindowPosition } from '../../../../misc/relative-window-position.directive';
 import { Subject } from 'rxjs/Subject';
+import { SubMenuService } from '../../../services/submenu.service';
 
 @Component( {
   selector: 'tl-advanced-sub-menu',
@@ -70,6 +71,8 @@ export class TlAdvancedSubMenu implements AfterViewInit {
 
   public fixed = false;
 
+  public menuService;
+
   public onSubMenuLoad: Subject<boolean> = new Subject<boolean>();
 
   private index = 0;
@@ -86,6 +89,10 @@ export class TlAdvancedSubMenu implements AfterViewInit {
   ngAfterViewInit() {
     this.onSubMenuLoad.next(true);
     this.change.detectChanges();
+  }
+
+  setMenuService(menuService: SubMenuService) {
+    this.menuService = menuService;
   }
 
   setDataSubMenu( items ) {
@@ -156,6 +163,7 @@ export class TlAdvancedSubMenu implements AfterViewInit {
   callbackListElement( $event, item ) {
     $event.stopPropagation();
     if ( item[ this.link ] ) {
+      this.menuService.closeMenu();
       return this.router.navigate( [ item[ this.link ] ] );
     }
     this.handleCallbackItem( item, $event );
@@ -165,6 +173,7 @@ export class TlAdvancedSubMenu implements AfterViewInit {
     if ( item[ 'callback' ] ) {
       this.callBack = item[ 'callback' ];
       this.callBack( $event );
+      this.menuService.closeMenu();
     }
   }
 
@@ -189,7 +198,6 @@ export class TlAdvancedSubMenu implements AfterViewInit {
 
   setFocusFirstElement() {
     setTimeout( () => {
-      console.log('TimeoutFirst');
       this.listMenuElements[ 0 ].focus();
     }, 100 );
   }

@@ -8,6 +8,7 @@
   color: #5c5c5c;
   height: 100px;
   padding: 5px;
+  box-sizing: border-box;
   .ui-header-title {
     display: grid;
     grid-template-columns: 40px 1fr 40px;
@@ -70,10 +71,10 @@
   padding: 0;
   position: relative;
   outline: 1px solid #C8C8C8;
-  z-index: 100;
   background: #FFFFFF;
-  box-sizing: content-box;
+  z-index: 100;
   user-select: none;
+  box-sizing: content-box;
   transition: all 150ms ease-in-out;
 
   > .ui-wrapper-items {

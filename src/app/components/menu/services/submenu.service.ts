@@ -74,6 +74,12 @@ export class SubMenuService {
     this.viewRootMenu = view;
   }
 
+  setRootHeightChange(height) {
+    if (this.menu) {
+      (<TlAdvancedRootMenu>this.menu.instance).maxHeight = height;
+    }
+  }
+
   setSubMenuData( data, properties ) {
     this.subMenuData = data;
     this.properties = properties;
@@ -128,6 +134,7 @@ export class SubMenuService {
     this.handlePreviousSubMenu( subMenu, nestedMenu );
     (<TlAdvancedSubMenu>subMenu.instance).setProperties( this.properties );
     (<TlAdvancedSubMenu>subMenu.instance).setDataSubMenu( this.subMenuData );
+    (<TlAdvancedSubMenu>subMenu.instance).setMenuService( this );
     this.subMenuItem = subMenu;
     this.listComponents.push( subMenu );
     this.appendSubMenuAnchor( subMenu );

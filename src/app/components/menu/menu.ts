@@ -100,6 +100,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.subMenuService.setViewRootMenu(this.viewRoot);
     this.subMenuService.setViewSubMenu( this.menuList );
     this.createList();
+    this.listenWindowResize();
     this.listenDocumentClick();
   }
 
@@ -176,11 +177,13 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.renderer.listen( this.listElement.nativeElement, 'click', (MouseEvent) => {
       if ( item[ this.link ] ) {
         this.router.navigate( [ item[ this.link ] ] );
+        this.subMenuService.closeMenu();
         return;
       }
       if (item['callback']) {
         this.callBack = item['callback'];
         this.callBack(MouseEvent);
+        this.subMenuService.closeMenu();
       }
     } );
   }
@@ -210,6 +213,12 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
         this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-right' );
       }
     }
+  }
+
+  listenWindowResize() {
+    this.renderer.listen(window, 'resize', () => {
+      this.subMenuService.setRootHeightChange(this.maxHeight);
+    });
   }
 
   listenClickListElement() {

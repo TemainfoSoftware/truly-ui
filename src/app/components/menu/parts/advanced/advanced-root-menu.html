@@ -31,11 +31,11 @@
 
   <div class="ui-wrapper-items"
        [style.width]="widthRootMenu"
-       [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'"
-       (scroll)="onScrollWrapper()" #wrapperItemsList>
+       [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'" #wrapperItemsList>
     <div class="ui-subitem-group" *ngFor="let itemGroup of groups">
       <div class="ui-label-group" (click)="$event.stopPropagation()"
-             *ngIf="itemGroup.group">{{itemGroup.group}}</div>
+           *ngIf="itemGroup.group">{{itemGroup.group}}
+      </div>
       <div class="ui-label-group" (click)="$event.stopPropagation()" *ngIf="!itemGroup.group">Outros</div>
       <li #elementList
           [@rootElementList]="true"
@@ -63,5 +63,4 @@
       </li>
     </div>
   </div>
-
 </ul>

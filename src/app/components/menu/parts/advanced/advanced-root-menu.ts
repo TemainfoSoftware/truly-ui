@@ -90,6 +90,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   public itemHeight = '';
 
+  public rootItemHeight = '';
+
   public groups = [];
 
   public model: string;
@@ -123,6 +125,8 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   @ViewChild( 'wrapperItemsList' ) wrapperItemsList: ElementRef;
 
   @ViewChild( 'input' ) inputElement: ElementRef;
+
+  @ViewChild( 'wrapperItems' ) wrapperItems: ElementRef;
 
   constructor( private change: ChangeDetectorRef, private router: Router ) {
     this.modelChanged
@@ -310,6 +314,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   callbackListElement( $event, item ) {
     $event.stopPropagation();
     if ( item[ this.link ] ) {
+      this.visibilityMenu = false;
       return this.router.navigate( [ item[ this.link ] ] );
     }
     this.handleCallbackItem( item, $event );
@@ -319,6 +324,7 @@ export class TlAdvancedRootMenu implements AfterContentInit {
     if ( item[ 'callBack' ] ) {
       this.callBack = item[ 'callBack' ];
       this.callBack( $event );
+      this.visibilityMenu = false;
     }
   }
 

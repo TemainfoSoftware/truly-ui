@@ -46,7 +46,7 @@ let documentListener;
 @Component( {
   selector: 'tl-dropdown-list',
   templateUrl: './dropdownlist.html',
-  styleUrls: [ './dropdownlist.scss', './styles/dx-icons.scss' ],
+  styleUrls: [ './dropdownlist.scss' ],
   animations: [
     trigger(
       'enterAnimation', [

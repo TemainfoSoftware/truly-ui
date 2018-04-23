@@ -25,6 +25,7 @@
         "../node_modules/ionicons-npm/css/ionicons.min.css",
         "./assets/css/atom-one-dark.min.css",
         "./assets/css/demo.css",
+        "./app/components/core/styles/icons/dx-icons/dx-icons.scss",
         "styles.scss"
       ],
       "scripts": [

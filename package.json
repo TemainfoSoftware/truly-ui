@@ -12,7 +12,13 @@
     "desktop",
     "ng",
     "electron",
-    "angular2"
+    "angular2",
+    "grid",
+    "datagrid",
+    "input",
+    "mask",
+    "SPA",
+    "button"
   ],
   "license": "MIT",
   "bugs": {
@@ -40,6 +46,7 @@
     "clean": "rimraf tmp coverage",
     "copy:aotimports": "node ./tools/scripts/copy-aot-imports.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
+    "copy:assets": "node ./tools/scripts/copy-assets.js",
     "create:packagejson": "node ./tools/scripts/create-package-json.js",
     "semantic-release": "semantic-release"
   },

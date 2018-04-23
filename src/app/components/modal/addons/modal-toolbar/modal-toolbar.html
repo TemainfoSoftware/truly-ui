@@ -1,10 +1,8 @@
 <div [class]="'container-wrapper '+ color">
      <span [style.background]="arrowsColor"
            [@onCreateElement]="true"
-           [style.height]="'calc(' + height + ' - 6px)'"
-           [style.lineHeight]="'calc(' + height  +' - 6px)'"
-           (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left"><i
-             class="ion-chevron-left"></i></span>
+           [style.lineHeight]="height"
+           (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left"><i class="ion-chevron-left"></i></span>
     <div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
       <div #wrapper class="wrapper-container-modals" [style.line-height]="height" [ngStyle]="
       {position: 'absolute'}">
@@ -20,8 +18,7 @@
       </div>
     </div>
     <span [style.background]="arrowsColor"
-          [style.height]="'calc(' + height + ' - 6px)'"
-          [style.lineHeight]="'calc(' + height + ' - 6px)'"
+          [style.lineHeight]="height"
           [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
       <i class="ion-chevron-right"></i>
     </span>

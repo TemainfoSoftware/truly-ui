@@ -6,7 +6,9 @@
     border-left: 0;
     top: 0;
     right: 0;
-    padding: 5px;
+    padding: 0 5px;
+    height: 100%;
+    box-sizing: border-box;
   }
   >.arrow-right:hover {
     cursor: pointer;
@@ -16,8 +18,10 @@
     border-right: 0;
     top: 0;
     left: 0;
-    padding: 5px;
+    padding: 0 5px;
+    height: 100%;
     z-index: 100;
+    box-sizing: border-box;
   }
   >.arrow-left:hover {
     cursor: pointer;

@@ -31,6 +31,7 @@
 
   <div class="ui-wrapper-items"
        [style.width]="widthRootMenu"
+       (scroll)="onScrollWrapper()"
        [style.maxHeight]="'calc(' + maxHeight + ' - 100px)'" #wrapperItemsList>
     <div class="ui-subitem-group" *ngFor="let itemGroup of groups">
       <div class="ui-label-group" (click)="$event.stopPropagation()"

@@ -47,9 +47,11 @@ export class ShortcutDirective implements OnInit {
     }
 
     addElement() {
+      if (this.component.shortcut.length > 0) {
         elements.push(this.component);
         this.shortcutService.elementsListener = elements;
         this.shortcutService.filterButtons();
+      }
     }
 
 }

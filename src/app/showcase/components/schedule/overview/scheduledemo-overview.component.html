@@ -1,0 +1,38 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">schedule <span class="module-name"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></p>
+    <p class="text-content">The schedule is a form component that represents a graphical Gregorian schedule..</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+            <app-card>
+              <div class="col-md-6">
+                <h5>Basic</h5>
+                <tl-schedule></tl-schedule>
+                <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-schedule></tl-schedule>
+</textarea>
+              </div>
+              <div class="col-md-6">
+
+              </div>
+            </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NavigatorDemoModule } from './components/navigator/navigatordemo.module';
+import { ScheduledemoOverviewModule } from './components/schedule/overview/scheduledemo-overview.module';
 import { HomeComponent } from './home/home.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 
@@ -46,6 +47,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'checkbox',
         loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'
+      },
+      {
+        path: 'contextmenu',
+        loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
       },
       {
         path: 'datatable',
@@ -112,6 +117,14 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/menu/menudemo.module#MenuDemoModule'
       },
       {
+        path: 'multiview',
+        loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
+      },
+      {
+        path: 'overlaypanel',
+        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
+      },
+      {
         path: 'navigator',
         loadChildren: './components/navigator/navigatordemo.module#NavigatorDemoModule'
       },
@@ -124,6 +137,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
       },
       {
+        path: 'popupmenu',
+        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
+      },
+      {
         path: 'radiobutton',
         loadChildren: './components/radiobutton/radiobuttondemo.module#RadioButtonDemoModule'
       },
@@ -132,45 +149,33 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/shortcut/shortcutdemo.module#ShortcutDemoModule'
       },
       {
-        path: 'splitbutton',
-        loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
+        path: 'schedule',
+        loadChildren: './components/schedule/overview/scheduledemo-overview.module#ScheduledemoOverviewModule'
       },
       {
         path: 'sidebar',
         loadChildren: './components/sidebar/sidebardemo.module#SidebarDemoModule'
       },
       {
+        path: 'splitbutton',
+        loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
+      },
+      {
+        path: 'switch',
+        loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
+      },
+      {
         path: 'tabcontrol',
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
-      },
-      {
-        path: 'tooltip',
-        loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
-      },
-      {
-        path: 'overlaypanel',
-        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
-      },
-      {
-        path: 'contextmenu',
-        loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
-      },
-      {
-        path: 'popupmenu',
-        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
-      },
-      {
-        path: 'multiview',
-        loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
       },
       {
         path: 'toolbar',
         loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
       },
       {
-        path: 'switch',
-        loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
-      }
+        path: 'tooltip',
+        loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
+      },
     ])
   ],
   exports: [RouterModule]

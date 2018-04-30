@@ -23,15 +23,15 @@ import { ToasterService } from './services/toaster.service';
 } )
 export class TlToaster implements AfterContentInit, OnDestroy {
 
-  public message;
+  public message = 'Message Description';
 
-  public title;
+  public title = 'Title !';
 
   public icon;
 
   public position = '';
 
-  public time = 0;
+  public time = 3000;
 
   public progressBar = 0;
 
@@ -46,6 +46,8 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   public closeButton = false;
 
   public progress = false;
+
+  public showIcon = true;
 
   public topPosition = undefined;
 

@@ -28,5 +28,6 @@
    position?: string;
    time?: number;
    closeButton?: boolean;
+   showIcon?: boolean;
    progress?: boolean;
  }

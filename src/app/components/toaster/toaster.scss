@@ -4,11 +4,12 @@
   z-index: 100000 !important;
   height: auto;
   width: 300px;
-  box-sizing: border-box;
   transition: all 200ms ease-in-out;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
   user-select: none;
+  box-sizing: border-box;
+
 
   &:hover {
     cursor: pointer;
@@ -31,8 +32,8 @@
     align-items: center;
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     font-size: 1.1em;
-    grid-template-columns: 50px 1fr 50px;
     height: 100%;
+    box-sizing: border-box;
 
     > .ui-toaster-icon {
       text-align: center;
@@ -40,6 +41,7 @@
     }
 
     > .ui-toaster-description {
+      word-break: break-all;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     }
 

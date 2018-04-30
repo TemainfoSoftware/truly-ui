@@ -38,7 +38,7 @@ export class ToasterService {
     this.view = view;
   }
 
-  createToasterComponent(toasterConfig: ToasterConfig) {
+  private createToasterComponent(toasterConfig: ToasterConfig) {
     const componentFactory = this.compiler.resolveComponentFactory( TlToaster );
     this.toaster = this.view.createComponent(componentFactory);
     (<TlToaster>this.toaster.instance).setProperties(toasterConfig);
@@ -53,7 +53,7 @@ export class ToasterService {
     this.listToasters.push(this.toaster);
   }
 
-  info(toasterConfig: ToasterConfig) {
+  information(toasterConfig: ToasterConfig) {
     this.createToasterComponent(toasterConfig);
     (<TlToaster>this.toaster.instance).icon = 'ion-ios-information-outline';
     (<TlToaster>this.toaster.instance).color = 'information';

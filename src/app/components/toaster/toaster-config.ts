@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,32 +19,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-
-import { Component, AfterViewInit, Input } from '@angular/core';
-
-@Component( {
-    selector: 'tl-panelgroup',
-    templateUrl: './panelgroup.html',
-    styleUrls: [ './panelgroup.scss' ],
-} )
-export class TlPanelGroup implements AfterViewInit {
-
-    @Input() labelGroup = 'Panel Group';
-
-    @Input() backgroundColor = '';
-
-    @Input() width = '100%';
-
-    @Input() height = '100%';
-
-    @Input() fontColorCaption = '';
-
-    @Input() fontSizeCaption = '';
-
-    constructor() {}
-
-
-    ngAfterViewInit() {}
-
-}
-
+ export interface ToasterConfig {
+   title: string;
+   message?: string;
+   width?: string;
+   height?: string;
+   color?: string;
+   position?: string;
+   time?: number;
+   closeButton?: boolean;
+   showIcon?: boolean;
+   progress?: boolean;
+ }

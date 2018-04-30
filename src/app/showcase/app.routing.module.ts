@@ -169,12 +169,24 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
       },
       {
+        path: 'toaster',
+        loadChildren: './components/toaster/toasterdemo.module#ToasterDemoModule'
+      },
+      {
         path: 'toolbar',
         loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
       },
       {
         path: 'tooltip',
         loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
+      },
+      {
+        path: 'overlaypanel',
+        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
+      },
+      {
+        path: 'popupmenu',
+        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
       },
     ])
   ],

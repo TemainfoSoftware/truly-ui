@@ -31,6 +31,7 @@ export * from './components/radiobutton/index';
 export * from './components/schedule/index';
 export * from './components/splitbutton/index';
 export * from './components/tabcontrol/index';
+export * from './components/toaster/index';
 export * from './components/toolbar/index';
 export * from './components/tooltip/index';
 export * from './components/validators/index';

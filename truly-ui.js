@@ -37,6 +37,7 @@ __export(require("./components/radiobutton/index"));
 __export(require("./components/schedule/index"));
 __export(require("./components/splitbutton/index"));
 __export(require("./components/tabcontrol/index"));
+__export(require("./components/toaster/index"));
 __export(require("./components/toolbar/index"));
 __export(require("./components/tooltip/index"));
 __export(require("./components/validators/index"));

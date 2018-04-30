@@ -1,0 +1,32 @@
+<div class="ui-toaster-wrapper"
+     (click)="autoDestroy()"
+     [class]="color"
+     [ngClass]="position"
+     [ngStyle]="{
+     'border-bottom-left-radius': !progress ? '3px' : '0',
+     'border-bottom-right-radius': !progress ? '3px' : '0',
+     'width': width,
+     'height': height,
+     'top': topPosition,
+     'bottom': bottomPosition,
+     'left': 'calc(50% - ' + getLeftWidth() + ')'  }">
+  <span *ngIf="closeButton" class="ui-close-button" (click)="autoDestroy()"><i class="ion-close"></i></span>
+  <div class="ui-toaster-content"
+      [ngStyle]="{'grid-template-columns': showIcon ? '50px 1fr 50px' : '1fr', 'padding': !showIcon ? '10px 20px' : '0'}">
+    <div *ngIf="showIcon" class="ui-toaster-icon"><i [class]="icon"></i></div>
+    <div class="ui-toaster-description">
+      <p><b>{{title}}</b></p>
+      <p>{{message}}</p>
+    </div>
+  </div>
+  <tl-progressbar
+    *ngIf="progress"
+    [mode]="'determinate'"
+    [color]="color"
+    [height]="'5px'"
+    [progressInfo]="'none'"
+    [max]="time"
+    [min]="0"
+    [position]="progressBar">
+  </tl-progressbar>
+</div>

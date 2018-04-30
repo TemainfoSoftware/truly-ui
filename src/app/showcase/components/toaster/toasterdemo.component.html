@@ -1,0 +1,94 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Toaster <span class="module-name"><code><u>Module Name</u>: <strong>ToasterModule</strong></code></span>
+    </h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ToasterModule</strong></code></p>
+    <p class="text-content">There's a lot of ways to create a Toaster using Truly UI. Below, are some of those.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-6">
+              <tl-panelgroup [backgroundColor]="'#fafafa'" [height]="'290px'" [labelGroup]="'Toaster Configuration'">
+                <tl-dropdown-list [data]="data"
+                                  [text]="'textItem'"
+                                  [label]="'Position'"
+                                  [valueItem]="'value'"
+                                  [(ngModel)]="position">
+                </tl-dropdown-list>
+                <div class="spacer"></div>
+                <tl-input [label]="'Title'" [(ngModel)]="title"></tl-input>
+                <div class="spacer"></div>
+                <tl-input [label]="'Message'" [(ngModel)]="message"></tl-input>
+                <div class="spacer"></div>
+                <tl-input [label]="'Width'" [textAfter]="'px'" [(ngModel)]="width"></tl-input>
+                <div class="spacer"></div>
+                <tl-input [label]="'Height'" [textAfter]="'px'" [(ngModel)]="height"></tl-input>
+                <div class="spacer"></div>
+                <tl-input [label]="'Time'" [textAfter]="'ms'" [(ngModel)]="time"></tl-input>
+                <div class="spacer"></div>
+                <div class="col-md-6" style="padding-left: 97px">
+                  <tl-checkbox [label]="'Progress Bar'" [(ngModel)]="progress"></tl-checkbox>
+                  <tl-checkbox [label]="'Close Button'" [(ngModel)]="closeButton"></tl-checkbox>
+                  <tl-checkbox [label]="'Show Icon'" [(ngModel)]="showIcon"></tl-checkbox>
+                </div>
+              </tl-panelgroup>
+            </div>
+            <div class="col-md-12">
+              <div class="spacer"></div>
+              <tl-button [color]="'success'" (click)="success()" [text]="'Toaster Success'"></tl-button>
+              <tl-button [color]="'danger'" (click)="danger()" [text]="'Toaster Danger'"></tl-button>
+              <tl-button [color]="'warning'" (click)="warning()" [text]="'Toaster Warning'"></tl-button>
+              <tl-button [color]="'information'" (click)="information()" [text]="'Toaster Information'"></tl-button>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
+          <app-card>
+            <h4>Step One</h4>
+            <h5>First of all, you must declare the <code>ToasterService</code> and set the <code>ViewContainerRef</code>in
+              the constructor</h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor( private toasterService: ToasterService, private view: ViewContainerRef ) {
+  this.toasterService.setView( this.view );
+}
+                  </textarea>
+            <hr>
+            <h4>Step Two</h4>
+            <h5>Create a method that call the Toaster that will wish. For example: Calling the success Toaster.</h5>
+            <h5><b>Allowed Toaster Methods</b></h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+this.toasterService.success(object?)
+this.toasterService.danger(object?)
+this.toasterService.information(object?)
+this.toasterService.warning(object?)
+                </textarea>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+clickMethod() {
+  this.toasterService.success(
+        title: 'My title'
+        message: 'My test message',
+        position: 'top-right'
+        width: '400px',
+        height: '70px',
+        closeButton: true,
+        progress: true,
+        showIcon: true,
+        time: 3000,
+  );
+}
+                  </textarea>
+            <h5>As parameter, you may have to pass the toaster config object.</h5>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

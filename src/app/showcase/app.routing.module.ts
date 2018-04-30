@@ -144,6 +144,14 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
       },
       {
+        path: 'toaster',
+        loadChildren: './components/toaster/toasterdemo.module#ToasterDemoModule'
+      },
+      {
+        path: 'toolbar',
+        loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
+      },
+      {
         path: 'tooltip',
         loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
       },
@@ -152,20 +160,12 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
       },
       {
-        path: 'contextmenu',
-        loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
-      },
-      {
         path: 'popupmenu',
         loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
       },
       {
         path: 'multiview',
         loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
-      },
-      {
-        path: 'toolbar',
-        loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
       },
       {
         path: 'switch',

@@ -123,9 +123,9 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   public required = false;
 
-  private clearButtonPosition;
+  public clearButtonPosition;
 
-  private fieldMask: InputMask;
+  public fieldMask: InputMask;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,

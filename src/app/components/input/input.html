@@ -18,7 +18,9 @@
              'invalid': (invalid | async),
              'withValidators': validators?.length > 0, withoutValidators: validators === null,
              '-disabled': disabled,
-             '-readonly': readonly
+             '-readonly': readonly,
+             '-borderleft': iconBefore || textBefore,
+             '-borderright': iconAfter || textAfter
              }"
            [attr.readonly]="readonly ? true : null"
            [attr.autocomplete]="autocomplete"

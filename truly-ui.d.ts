@@ -28,6 +28,7 @@ export * from './components/sidebar/index';
 export * from './components/panelgroup/index';
 export * from './components/progressbar/index';
 export * from './components/radiobutton/index';
+export * from './components/schedule/index';
 export * from './components/splitbutton/index';
 export * from './components/tabcontrol/index';
 export * from './components/toolbar/index';

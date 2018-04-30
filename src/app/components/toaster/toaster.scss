@@ -1,0 +1,82 @@
+.ui-toaster-wrapper {
+  margin: 10px;
+  position: fixed;
+  z-index: 100000 !important;
+  height: auto;
+  width: 300px;
+  box-sizing: border-box;
+  transition: all 200ms ease-in-out;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  user-select: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  .ui-close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    font-size: 0.8em;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .ui-toaster-content {
+    display: grid;
+    color: #fff;
+    align-items: center;
+    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+    font-size: 1.1em;
+    grid-template-columns: 50px 1fr 50px;
+    height: 100%;
+
+    > .ui-toaster-icon {
+      text-align: center;
+      font-size: 1.5em;
+    }
+
+    > .ui-toaster-description {
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+    }
+
+  }
+
+  p {
+    margin: 0;
+  }
+
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.bottom-center {
+  bottom: 0;
+  left: calc(50% - 150px);
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.top-left {
+  top: 0;
+  left: 0;
+}
+
+.top-center {
+  top: 0;
+  left: calc(50% - 150px);
+}
+
+.top-right {
+  top: 0;
+  right: 0;
+}

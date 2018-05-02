@@ -6,20 +6,23 @@ import { TlDropDownList } from './dropdownlist';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
+import { InputModule } from '../input/index';
 
 export * from './dropdownlist';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule
-    ],
-    declarations: [
-        TlDropDownList
-    ],
-    exports: [
-        TlDropDownList
-    ],
-    providers: [IdGeneratorService, NameGeneratorService, TabIndexService]
-})
-export class DropDownListModule {}
+@NgModule( {
+  imports: [
+    CommonModule,
+    InputModule,
+    FormsModule
+  ],
+  declarations: [
+    TlDropDownList
+  ],
+  exports: [
+    TlDropDownList
+  ],
+  providers: [ IdGeneratorService, NameGeneratorService, TabIndexService ]
+} )
+export class DropDownListModule {
+}

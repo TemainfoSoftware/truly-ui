@@ -55,6 +55,10 @@ export class ScheduleDemoOverviewComponent {
     this.dataEvents = jsonEvts.dataEvents;
   }
 
+  onRowClick( event ) {
+    console.log('RowClick', event);
+  }
+
 
 }
 

@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 
 @Component( {
@@ -27,7 +27,7 @@ import { ScheduleDataSource } from './types/datasource.type';
   templateUrl: './schedule.html',
   styleUrls: [ './schedule.scss' ]
 } )
-export class TlSchedule implements OnChanges {
+export class TlSchedule implements OnInit, OnChanges {
 
   @Input() currentDate: number;
 
@@ -37,16 +37,44 @@ export class TlSchedule implements OnChanges {
 
   @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
 
-  @Input() height = 'auto';
+  @Input() height = '300px';
 
-  @Input() interval = 30;
+  @Input() duration = 30;
 
   @Input() startDayHour = '08:00';
 
   @Input() endDayHour = '18:00';
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
+  @Output() rowClick = new EventEmitter();
+
+  public timesCollection: Array<Date> = [];
+
+  ngOnInit() {
+   this.generateTimes();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {}
+
+  private generateTimes() {
+
+    const MIN_TO_MILLESECOND = 60000;
+
+    const startHourSplited = this.startDayHour.split(':');
+    const startHour_ms = new Date(2018, 4, 2, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+
+    const endHourSplited = this.endDayHour.split(':');
+    const endHour_ms = new Date(2018, 4, 2, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
+
+    let currentHour_ms = startHour_ms;
+    let nextHourBreak_ms = new Date(2018, 4, 2, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+
+    while (currentHour_ms < endHour_ms) {
+       if ( currentHour_ms === nextHourBreak_ms  ) {
+         this.timesCollection.push( new Date(nextHourBreak_ms) );
+         nextHourBreak_ms =  nextHourBreak_ms + (this.duration * MIN_TO_MILLESECOND);
+       }
+      currentHour_ms++;
+    }
   }
 }
 

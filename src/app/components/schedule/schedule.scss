@@ -16,7 +16,7 @@
 }
 
 .ui-schedule-time-row {
-  height: 60px;
+  height: 70px;
   border-bottom: 1px solid #D6D6D6;
   text-align: center;
   width: 100%;
@@ -29,24 +29,27 @@
   }
 }
 
+.ui-schedule-slat{
+  >.ui-schedule-row{
+    &:first-child{
+      border-bottom: 1px #D6D6D6 dotted;
+    }
+    &:last-child{
+      border-bottom: 1px #D6D6D6 solid;
+    }
+  }
+}
 
 .ui-schedule-slats {
   width: 100%;
   & .ui-schedule-row{
     padding-left: 10px;
-    border-bottom: 1px #D6D6D6 solid;
-    height: 30px;
+    height: 35px;
+    content: ' ';
     &:hover{
       background-color: #EDEDED;
     }
-    &:last-child{
-      border-bottom: none;
-    }
   }
-  & .ui-first{
-    border-bottom: 1px #D6D6D6 dotted !important;
-  }
-
 }
 
 

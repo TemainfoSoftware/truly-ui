@@ -28,7 +28,7 @@ body {
   height: 100%;
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 .wrapper:before,
 .wrapper:after {

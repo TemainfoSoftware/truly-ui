@@ -37,13 +37,13 @@ export class TlSchedule implements OnChanges {
 
   @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
 
-  @Input() height: '300px';
+  @Input() height = 'auto';
 
-  @Input() interval: 30;
+  @Input() interval = 30;
 
-  @Input() startDayHour: '08:00';
+  @Input() startDayHour = '08:00';
 
-  @Input() endDayHour: '18:00';
+  @Input() endDayHour = '18:00';
 
   ngOnChanges(changes: SimpleChanges) {
     console.log(changes);

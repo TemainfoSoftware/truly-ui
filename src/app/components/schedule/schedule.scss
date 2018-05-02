@@ -3,13 +3,10 @@
   border: 1px solid #D6D6D6;
 }
 
-.schedule-body{
+.ui-schedule-body {
   display: grid;
+  overflow-x: auto;
   grid-template-columns: 60px auto;
-}
-
-.ui-table-body{
-  width: 100%;
 }
 
 .ui-schedule-times{
@@ -18,7 +15,7 @@
   border-right: 1px solid #D6D6D6;
 }
 
-.ui-schedule-time-row{
+.ui-schedule-time-row {
   height: 60px;
   border-bottom: 1px solid #D6D6D6;
   text-align: center;
@@ -26,12 +23,12 @@
   &:last-child{
     border-bottom: none;
   }
+  & .ui-hour-detail{
+    font-weight: bold;
+    font-size: 20px;
+  }
 }
 
-.ui-hour-detail{
-  font-weight: bold;
-  font-size: 20px;
-}
 
 .ui-schedule-slats {
   width: 100%;
@@ -39,6 +36,9 @@
     padding-left: 10px;
     border-bottom: 1px #D6D6D6 solid;
     height: 30px;
+    &:hover{
+      background-color: #EDEDED;
+    }
     &:last-child{
       border-bottom: none;
     }

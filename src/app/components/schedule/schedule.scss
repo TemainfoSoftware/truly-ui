@@ -1,5 +1,52 @@
-.wrapper-schedule {
-  width: 260px;
-  outline: none;
-  box-sizing: content-box;
+.ui-wrapper-schedule {
+  width: 100%;
+  border: 1px solid #D6D6D6;
 }
+
+.schedule-body{
+  display: grid;
+  grid-template-columns: 60px auto;
+}
+
+.ui-table-body{
+  width: 100%;
+}
+
+.ui-schedule-times{
+  color: #949799;
+  font-weight: 300;
+  border-right: 1px solid #D6D6D6;
+}
+
+.ui-schedule-time-row{
+  height: 60px;
+  border-bottom: 1px solid #D6D6D6;
+  text-align: center;
+  width: 100%;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+
+.ui-hour-detail{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.ui-schedule-slats {
+  width: 100%;
+  & .ui-schedule-row{
+    padding-left: 10px;
+    border-bottom: 1px #D6D6D6 solid;
+    height: 30px;
+    &:last-child{
+      border-bottom: none;
+    }
+  }
+  & .ui-first{
+    border-bottom: 1px #D6D6D6 dotted !important;
+  }
+
+}
+
+

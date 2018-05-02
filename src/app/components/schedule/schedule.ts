@@ -19,16 +19,34 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
-import { ComponentDefaultBase } from '../core/base/component-default.base';
-
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ScheduleDataSource } from './types/datasource.type';
 
 @Component( {
   selector: 'tl-schedule',
   templateUrl: './schedule.html',
   styleUrls: [ './schedule.scss' ]
 } )
-export class TlSchedule  {
+export class TlSchedule implements OnChanges {
 
+  @Input() currentDate: number;
+
+  @Input() currentView: 'day' | 'week' | 'month';
+
+  @Input() dataSource: ScheduleDataSource[];
+
+  @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
+
+  @Input() height: '300px';
+
+  @Input() interval: 30;
+
+  @Input() startDayHour: '08:00';
+
+  @Input() endDayHour: '18:00';
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+  }
 }
 

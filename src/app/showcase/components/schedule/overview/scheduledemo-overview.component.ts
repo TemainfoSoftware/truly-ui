@@ -35,6 +35,21 @@ export class ScheduleDemoOverviewComponent {
 
   public dataEvents;
 
+  public dataSource = [{
+    value: '1',
+    title: 'William Aguera',
+    detail: 'Consulta | Particular',
+    allday: false,
+    date: { start: 51510515, end: 51510515 }
+  },
+  {
+    value: '2',
+    title: 'Maicon Aguera',
+    detail: 'Consulta | Unimed',
+    allday: false,
+    date: { start: 51510515, end: 12312312312 }
+  }];
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;

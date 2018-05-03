@@ -1,9 +1,7 @@
-
-
 @mixin defaultInput() {
   border: 0 !important;
   outline: none;
-  height: 21px;
+  height: 15px;
   padding: 5px 5px;
   font-size: 0.9em;
   padding-right: 0;
@@ -14,7 +12,7 @@
   width: 100%;
   display: table;
 
-  >.-labelTag {
+  > .-labelTag {
     text-align: right;
     line-height: 1;
     width: 100px;
@@ -26,7 +24,7 @@
     font-size: 0.9em;
   }
 
-  >.multiselect-wrapper{
+  > .multiselect-wrapper {
     display: table-cell;
     width: 100%;
 
@@ -35,8 +33,9 @@
     }
 
     & .input-wrapper-multiselect {
-      padding-left: 5px;
-      min-height: 25px;
+      min-height: 23px;
+      border-radius: 3px;
+      box-sizing: border-box;
     }
 
     & .input-wrapper-multiselect input::placeholder {
@@ -50,7 +49,7 @@
 
     & .input-empty {
       @include defaultInput;
-      padding-left: 0;
+      padding-left: 5px;
       width: 100%;
     }
 
@@ -74,39 +73,41 @@
       width: 0.3em;
     }
 
-    & .tags span {
+    & .group-tags {
       position: relative;
-      display: inline-block;
-      cursor: pointer;
-      height: 15px;
-      border-radius: 2px;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px;
-      font-size: 10px;
-      margin-left: 3px;
-      padding-left: 5px;
-      font-family: Verdana;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    & .tags span:first-child {
-      margin-left: 0;
+      height: 23px;
+      margin: 0;
+      .tag {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        height: 15px;
+        border-radius: 1px;
+        -webkit-border-radius: 1px;
+        -moz-border-radius: 1px;
+        font-size: 0.8em;
+        margin-left: 3px;
+        padding-left: 5px;
+        font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        color: #FFFFFF;
+        & span {
+          padding: 0 5px;
+        }
+        &:first-child {
+          margin-left: 3px;
+        }
+      }
     }
 
     & .tags-detail {
       padding: 5px;
       font-size: 10px;
       opacity: 1 !important;
-    }
-
-    & .tags span b {
-      padding: 5px;
-      margin-left: 7px;
     }
 
     & .select-options .itens {
@@ -132,8 +133,6 @@
       position: absolute;
     }
   }
-
-
 
 }
 

@@ -43,11 +43,11 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
 
-  @Input() height = '300px';
+  @Input() height = '550px';
 
-  @Input() duration = 30;
+  @Input() duration = 60;
 
-  @Input() startDayHour = '08:00';
+  @Input() startDayHour = '11:00';
 
   @Input() endDayHour = '22:30';
 
@@ -84,7 +84,7 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     setInterval(() => {
       this.nowIndicatorPositionTop = this.getPositionIndicator();
       this.changeDetectionRef.detectChanges();
-    }, 10000);
+    }, 1000);
   }
 
   private getPositionIndicator() {

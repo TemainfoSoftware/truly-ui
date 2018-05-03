@@ -4,9 +4,13 @@
 }
 
 .ui-schedule-body {
+  overflow-x: auto;
+  position: relative;
+}
+
+.ui-schedule-slats{
   display: grid;
   position: relative;
-  overflow-x: auto;
   grid-template-columns: 60px auto;
 }
 
@@ -17,7 +21,7 @@
 }
 
 .ui-schedule-time-row {
-  height: 70px;
+  height: 86px;
   border-bottom: 1px solid #D6D6D6;
   text-align: center;
   width: 100%;
@@ -30,8 +34,9 @@
   }
 }
 
-.ui-schedule-slat{
+.ui-schedule-widget-rows{
   >.ui-schedule-row{
+    background-color: #f5f5f5;
     &:first-child{
       border-bottom: 1px #D6D6D6 dotted;
     }
@@ -41,11 +46,11 @@
   }
 }
 
-.ui-schedule-slats {
+.ui-schedule-widget-content {
   width: 100%;
   & .ui-schedule-row{
     padding-left: 10px;
-    height: 35px;
+    height: 43px;
     content: ' ';
     &:hover{
       background-color: #EDEDED;
@@ -54,9 +59,9 @@
 }
 
 .ui-schedule-skeleton{
-  position: absolute;
+  //position: absolute;
   >.ui-schedule-now-indicator{
-    margin-top: -5px;
+    margin-top: -7px;
     position: absolute;
   }
 
@@ -67,6 +72,66 @@
     border-top-color: transparent;
     border-bottom-color: transparent;
   }
+}
+
+
+//GRID EVENTS
+.ui-schedule-grid-events{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60px;
+  right: 0;
+}
+
+.ui-schedule-list-events{
+//  padding: 2px;
+  position: relative;
+}
+
+.ui-schedule-event-box{
+  background-color: #FFFFFF;
+  border-radius: 4px 4px 2px 2px;
+  font-size: 13px;
+  border-top: #90ED5D 5px solid;
+  border-left: 1px #D6D6D6 solid;
+  border-right: 1px #D6D6D6 solid;
+  border-bottom: 1px #D6D6D6 solid;
+  user-select: none;
+  margin: 2px 2px 2px 0px;
+  cursor: pointer;
+
+
+  display: flex;
+  box-sizing: border-box;
+  position: absolute;
+
+  > .ui-event-hour{
+    justify-content: flex-end;
+    margin-right: 10px;
+    font-size: 10px;
+    color: #949799;
+    align-items: center;
+    display: flex;
+    width: 30%;
+  }
+  > .ui-schedule-description{
+    padding-left: 5px;
+    width: 70%;
+    > .ui-event-title{
+      font-weight: bold;
+      color: #949799;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    > .ui-event-detail{
+      color: #949799;
+      font-size: 11px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
 }
 
 

@@ -1,3 +1,4 @@
+import { Element } from '@angular/compiler';
 /*
  MIT License
 
@@ -19,17 +20,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter, ViewChild, ElementRef, AfterContentInit,
+  AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
+} from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 
 @Component( {
   selector: 'tl-schedule',
   templateUrl: './schedule.html',
-  styleUrls: [ './schedule.scss' ]
-} )
-export class TlSchedule implements OnInit, OnChanges {
+  styleUrls: [ './schedule.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
-  @Input() currentDate: number;
+
+  @Input() currentDate = new Date().getTime();
 
   @Input() currentView: 'day' | 'week' | 'month';
 
@@ -43,38 +49,74 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() startDayHour = '08:00';
 
-  @Input() endDayHour = '18:00';
+  @Input() endDayHour = '22:30';
 
   @Output() rowClick = new EventEmitter();
 
+  @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
+
   public timesCollection: Array<Date> = [];
 
+  public nowIndicatorPositionTop: number;
+
+  private startDayMilliseconds: number;
+
+  private endDayMilliseconds: number;
+
+  constructor( private changeDetectionRef: ChangeDetectorRef ) {}
+
   ngOnInit() {
-   this.generateTimes();
+    this.setStartDayMilliseconds();
+    this.setEndDayMilliseconds();
+    this.generateTimes();
   }
 
   ngOnChanges(changes: SimpleChanges) {}
 
-  private generateTimes() {
+  ngAfterViewInit() {
+    this.inicializeNowIndicator();
+  }
 
+  private inicializeNowIndicator() {
+    this.nowIndicatorPositionTop = this.getPositionIndicator();
+    this.changeDetectionRef.detectChanges();
+
+    setInterval(() => {
+      this.nowIndicatorPositionTop = this.getPositionIndicator();
+      this.changeDetectionRef.detectChanges();
+    }, 10000);
+  }
+
+  private getPositionIndicator() {
+    const heightBody = this.scheduleSlats.nativeElement.offsetHeight;
+    const currentDate = new Date().getTime() - this.startDayMilliseconds;
+
+    return ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
+  }
+
+  private generateTimes() {
     const MIN_TO_MILLESECOND = 60000;
 
-    const startHourSplited = this.startDayHour.split(':');
-    const startHour_ms = new Date(2018, 4, 2, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+    let currentHour_ms = this.startDayMilliseconds;
+    let nextHourBreak_ms = this.startDayMilliseconds;
 
-    const endHourSplited = this.endDayHour.split(':');
-    const endHour_ms = new Date(2018, 4, 2, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
-
-    let currentHour_ms = startHour_ms;
-    let nextHourBreak_ms = new Date(2018, 4, 2, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
-
-    while (currentHour_ms < endHour_ms) {
+    while ( currentHour_ms < this.endDayMilliseconds ) {
        if ( currentHour_ms === nextHourBreak_ms  ) {
          this.timesCollection.push( new Date(nextHourBreak_ms) );
          nextHourBreak_ms =  nextHourBreak_ms + (this.duration * MIN_TO_MILLESECOND);
        }
       currentHour_ms++;
     }
+  }
+
+  private setStartDayMilliseconds() {
+    const startHourSplited = this.startDayHour.split(':');
+    this.startDayMilliseconds = new Date(2018, 4, 3, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+  }
+
+  private setEndDayMilliseconds() {
+    const endHourSplited = this.endDayHour.split(':');
+    this.endDayMilliseconds = new Date(2018, 4, 3, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
   }
 }
 

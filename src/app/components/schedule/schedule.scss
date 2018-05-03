@@ -5,6 +5,7 @@
 
 .ui-schedule-body {
   display: grid;
+  position: relative;
   overflow-x: auto;
   grid-template-columns: 60px auto;
 }
@@ -49,6 +50,22 @@
     &:hover{
       background-color: #EDEDED;
     }
+  }
+}
+
+.ui-schedule-skeleton{
+  position: absolute;
+  >.ui-schedule-now-indicator{
+    margin-top: -5px;
+    position: absolute;
+  }
+
+  > .ui-schedule-now-arrow{
+    left: 0;
+    border: 1px solid red;
+    border-width: 5px 0 5px 6px;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
   }
 }
 

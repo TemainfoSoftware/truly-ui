@@ -1,16 +1,19 @@
 <div class="ui-wrapper-schedule">
   <div class="ui-schedule-header"></div>
-  <div class="ui-schedule-body" [ngStyle]="{height: height}">
+  <div  class="ui-schedule-body" [ngStyle]="{height: height}">
     <div class="ui-schedule-times">
       <div class="ui-schedule-time-row" *ngFor="let time of timesCollection">
         <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
       </div>
     </div>
-    <div class="ui-schedule-slats">
+    <div #scheduleSlats class="ui-schedule-slats">
       <div *ngFor="let time of timesCollection" class="ui-schedule-slat">
         <div class="ui-schedule-row" (dblclick)="rowClick.emit( time )"></div>
         <div class="ui-schedule-row" (dblclick)="rowClick.emit( time )"></div>
       </div>
+    </div>
+    <div class="ui-schedule-skeleton" >
+      <div class="ui-schedule-now-indicator ui-schedule-now-arrow" [ngStyle]="{top: nowIndicatorPositionTop + 'px'}"> </div>
     </div>
   </div>
   <div class="schedule-footer"></div>

@@ -40,14 +40,14 @@ export class ScheduleDemoOverviewComponent {
     title: 'William Aguera',
     detail: 'Consulta | Particular',
     allday: false,
-    date: { start: 51510515, end: 51510515 }
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   },
   {
     value: '2',
     title: 'Maicon Aguera',
     detail: 'Consulta | Unimed',
     allday: false,
-    date: { start: 51510515, end: 12312312312 }
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   }];
 
   constructor() {

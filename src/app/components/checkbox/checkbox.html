@@ -1,21 +1,21 @@
 <div [class]="'check-container '+ color ">
-    <div (click)="check(value)"
-         *ngIf="value"
-         [ngStyle]="{'border-width':'1px','border-style':'solid'}"
-         class="checkmark-wrapper">
-        <div class="checkmark">
-            <div class="checkmark_stem" [ngClass]="{'disabled' : disabled}"></div>
-            <div class="checkmark_kick" [ngClass]="{'disabled' : disabled}"></div>
-        </div>
+  <div (click)="check(value)"
+       *ngIf="value"
+       [ngStyle]="{'border-width':'1px','border-style':'solid'}"
+       class="checkmark-wrapper">
+    <div class="checkmark">
+      <div class="checkmark_stem" [ngClass]="{'disabled' : disabled}"></div>
+      <div class="checkmark_kick" [ngClass]="{'disabled' : disabled}"></div>
     </div>
-    <input #checkbox
-           type="checkbox"
-           #model="ngModel"
-           (focus)="focusCheckBox()"
-           (change)="emitEvent()"
-           [checked]="value"
-           [attr.disabled]="disabled"
-           [tabindex]="tabindex"
-           [(ngModel)]="value">
-    <label class="-label" (click)="check(value)">{{label}}</label>
+  </div>
+  <input #checkbox
+         type="checkbox"
+         #model="ngModel"
+         (focus)="focusCheckBox()"
+         (change)="emitEvent()"
+         [checked]="value"
+         [attr.disabled]="disabled"
+         [tabindex]="tabindex"
+         [(ngModel)]="value">
+  <label class="-label" (click)="check(value)">{{label}}</label>
 </div>

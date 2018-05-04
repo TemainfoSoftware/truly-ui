@@ -4,6 +4,7 @@ function __export(m) {
   for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
+__export(require("./components/accordion/index"));
 __export(require("./components/autocomplete/index"));
 __export(require("./components/button/index"));
 __export(require("./components/buttongroup/index"));

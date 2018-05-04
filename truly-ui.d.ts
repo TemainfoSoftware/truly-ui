@@ -1,3 +1,4 @@
+export * from './components/accordion/index';
 export * from './components/autocomplete/index';
 export * from './components/button/index';
 export * from './components/buttongroup/index';

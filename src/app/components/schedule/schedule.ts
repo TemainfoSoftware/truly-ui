@@ -75,7 +75,9 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   private endDayMilliseconds: number;
 
-  private eventsPositionsCollection = [];
+  private eventsPositionsByStart = [];
+
+  private eventsPositionsByEnd = [];
 
 
   constructor( private changeDetectionRef: ChangeDetectorRef ) {}
@@ -105,30 +107,132 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     const BOTTOM_POSITION = this.convertMillisecondsToPixel(event.date.end) * -1;
     const TOP_POSITION    = this.convertMillisecondsToPixel(event.date.start);
 
-    const RIGHT_POSITION = this.calcRightPosition(event);
-    const LEFT_POSITION = this.calcLeftPosition(event);
+    const RIGHT_POSITION = this.calcRightPosition(index, event);
+    const LEFT_POSITION = this.calcLeftPosition(index, event);
 
     return {top: TOP_POSITION + 'px', left: LEFT_POSITION + '%', right: RIGHT_POSITION + '%', bottom: BOTTOM_POSITION  + 'px'};
   }
 
-  calcLeftPosition( event: ScheduleDataSource ) {
+  calcLeftPosition( index: number, event: ScheduleDataSource ) {
 
-    const lenghtFromTimestamp = this.eventsPositionsCollection[event.date.start].length;
+    // Algoritim 001
+    if (  (this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0) && ( this.eventsPositionsByEnd[event.date.end].length === 1) ) {
+      const lenghtFromTimestamp = this.eventsPositionsByStart[event.date.start].length;
 
-    const indexOf = this.eventsPositionsCollection[event.date.start].indexOf(event);
-    const divisor = 100 / lenghtFromTimestamp ;
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
 
-    return indexOf * divisor;
+      return (indexOf) * divisor;
+    }
+
+    // Algoritim 002
+    if (
+      (( this.eventsPositionsByEnd[event.date.end].length > 1))
+      && (this.eventsPositionsByStart[event.date.start].length === this.eventsPositionsByEnd[event.date.end].length)
+    ) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return (indexOf) * divisor;
+    }
+
+    // Algoritim 003
+    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1)) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return (indexOf + 1) * divisor;
+    }
+
+    // Algoritim 004
+    if (
+        (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
+        && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
+       ) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return (indexOf) * divisor;
+    }
+
+    // Algoritim 005
+    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1)) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return (indexOf) * divisor;
+    }
+
+
+
   }
 
-  calcRightPosition( event: ScheduleDataSource ) {
+  calcRightPosition( index: number, event: ScheduleDataSource ) {
 
-    const lenghtFromTimestamp = this.eventsPositionsCollection[event.date.start].length;
+    // Algoritim 001
+    if (  (this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0) && ( this.eventsPositionsByEnd[event.date.end].length === 1) ) {
+      const lenghtFromTimestamp = this.eventsPositionsByStart[event.date.start].length;
 
-    const indexOf = this.eventsPositionsCollection[event.date.start].indexOf(event);
-    const divisor = 100 / lenghtFromTimestamp ;
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
 
-    return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    }
+
+    // Algoritim 002
+    if ( ( this.eventsPositionsByEnd[event.date.end].length > 1)
+      && (this.eventsPositionsByStart[event.date.start].length === this.eventsPositionsByEnd[event.date.end].length)
+    ) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    }
+
+
+    // Algoritim 003
+    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))  {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return ((lenghtFromTimestamp - 2 - indexOf) * divisor);
+    }
+
+    // Algoritim 004
+    if (
+      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
+      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
+    ) {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    }
+
+    // Algoritim 005
+    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))  {
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    }
+
   }
 
   private inicializeNowIndicator() {
@@ -138,7 +242,7 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     setInterval(() => {
       this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
       this.currentDate = new Date().getTime();
-      this.changeDetectionRef.detectChanges();
+   //   this.changeDetectionRef.detectChanges();
     }, 1000);
   }
 
@@ -165,18 +269,24 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
   }
 
   private generateEventsPositions() {
-   this.dataSource.forEach((value, index, array) => {
-     if (this.eventsPositionsCollection.indexOf(value.date.start) < 0 ) {
-       this.eventsPositionsCollection[value.date.start] = [];
-     }
-   });
-    this.dataSource.forEach((value, index, array) => {
-      if (this.eventsPositionsCollection.indexOf(value.date.start) < 0 ) {
-        this.eventsPositionsCollection[value.date.start].push(value);
+    this.dataSource.forEach((value ) => {
+      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
+       this.eventsPositionsByStart[value.date.start] = [];
+      }
+      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
+        this.eventsPositionsByEnd[value.date.end] = [];
+      }
+    });
+    this.dataSource.forEach((value ) => {
+      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
+        this.eventsPositionsByStart[value.date.start].push(value);
+      }
+      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
+        this.eventsPositionsByEnd[value.date.end].push(value);
       }
     });
 
-   console.log(this.eventsPositionsCollection);
+   console.log(this.eventsPositionsByStart, this.eventsPositionsByEnd);
   }
 }
 

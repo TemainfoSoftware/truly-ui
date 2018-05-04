@@ -1,0 +1,19 @@
+<div class="ui-wrapper-accordion-item"
+     [style.max-height]="opened ? '1000px' : heightHeader">
+  <div class="ui-accordion-item-header"
+       [ngClass]="{'opened': opened}"
+       [style.height]="heightHeader"
+       [style.line-height]="heightHeader"
+       [style.border-bottom]="opened ? '1px solid #DCDCDC' : 0"
+       (click)="toggle()">
+    <div class="ui-accordion-arrow">
+      <i [class]="!opened ? 'ion-chevron-right' : 'ion-chevron-down'"></i>
+    </div>
+    <span>{{title}}</span>
+  </div>
+
+  <div [@enterAnimation]="true" *ngIf="opened" class="ui-accordion-item-content">
+      <ng-content></ng-content>
+  </div>
+
+</div>

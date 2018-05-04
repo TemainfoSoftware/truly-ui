@@ -1,7 +1,7 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">schedule <span class="module-name"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></p>
+    <h1 class="title">Schedule <span class="module-name"><code><u>Module Name</u>: <strong>ScheduleModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ScheduleModule</strong></code></p>
     <p class="text-content">The schedule is a form component that represents a graphical Gregorian schedule..</p>
   </div>
   <div class="showcase">
@@ -11,7 +11,7 @@
             <app-card>
               <div class="col-md-12">
                 <h5>Basic</h5>
-                <tl-schedule [dataSource]="dataSource" (rowClick)="onRowClick($event)"></tl-schedule>
+                <tl-schedule [dataSource]="dataSource" [startDayHour]="'11:00'" [endDayHour]="'22:00'" (rowClick)="onRowClick($event)"></tl-schedule>
                 <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-schedule></tl-schedule>

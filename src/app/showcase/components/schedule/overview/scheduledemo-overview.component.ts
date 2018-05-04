@@ -35,7 +35,15 @@ export class ScheduleDemoOverviewComponent {
 
   public dataEvents;
 
-  public dataSource = [{
+  public dataSource = [
+    {
+      value: '1',
+      title: 'William Aguera',
+      detail: 'Consulta | Particular',
+      allday: false,
+      date: { start: new Date().getTime() - 3600000 , end: new Date().getTime() - 1800000 }
+    },
+   {
     value: '1',
     title: 'William Aguera',
     detail: 'Consulta | Particular',
@@ -43,9 +51,44 @@ export class ScheduleDemoOverviewComponent {
     date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   },
   {
+    value: '10',
+    title: 'Jerson Algo',
+    detail: 'Consulta | Unimed',
+    allday: false,
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() + 1800000 }
+  },
+  {
     value: '2',
     title: 'Maicon Aguera',
     detail: 'Consulta | Unimed',
+    allday: false,
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+  },
+  {
+    value: '3',
+    title: 'Adilson Nascimento',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  },
+  {
+    value: '3',
+    title: 'Edevaldo Nascimento',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  },
+  {
+    value: '4',
+    title: 'Adilson Nascimento',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
+  },
+  {
+    value: '5',
+    title: 'Jaisson Buccio',
+    detail: 'Consulta | Copel',
     allday: false,
     date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   }];

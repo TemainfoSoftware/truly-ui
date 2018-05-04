@@ -1,4 +1,3 @@
-import { Element } from '@angular/compiler';
 /*
  MIT License
 
@@ -34,22 +33,33 @@ import { ScheduleDataSource } from './types/datasource.type';
 })
 export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
+  // @Input() currentView: 'day' | 'week' | 'month';
+
+  // @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
 
   @Input() currentDate = new Date().getTime();
 
-  @Input() currentView: 'day' | 'week' | 'month';
-
-  @Input() dataSource: ScheduleDataSource[];
-
-  @Input() views: Array<string>; // ["day", "week", "workWeek", "month"],
-
   @Input() height = '550px';
 
-  @Input() duration = 60;
+  @Input() duration = 30;
 
-  @Input() startDayHour = '11:00';
+  @Input('endDayHour') set setEndDayHour(hour: string) {
+    const endHourSplited = hour.split(':');
+    this.endDayMilliseconds = new Date(2018, 4, 4, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
+  }
 
-  @Input() endDayHour = '22:30';
+  @Input('startDayHour') set startDayHour( hour: string ) {
+    const startHourSplited = hour.split(':');
+    this.startDayMilliseconds = new Date(2018, 4, 4, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+  }
+
+  @Input('dataSource') set dataSource( dataSource: ScheduleDataSource[] ) {
+    this._dataSource = dataSource.sort(( a, b ) =>  a.date.start - b.date.start );
+    this.generateEventsPositions();
+  }
+  get dataSource () {
+    return this._dataSource;
+  }
 
   @Output() rowClick = new EventEmitter();
 
@@ -59,15 +69,18 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   public nowIndicatorPositionTop: number;
 
+  private _dataSource: ScheduleDataSource[];
+
   private startDayMilliseconds: number;
 
   private endDayMilliseconds: number;
 
+  private eventsPositionsCollection = [];
+
+
   constructor( private changeDetectionRef: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    this.setStartDayMilliseconds();
-    this.setEndDayMilliseconds();
     this.generateTimes();
   }
 
@@ -75,21 +88,63 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.inicializeNowIndicator();
+
+    // console.log('STARTDAY', this.startDayMilliseconds, new Date(this.startDayMilliseconds));
+    // console.log('ENDDAY', this.endDayMilliseconds, new Date(this.endDayMilliseconds));
+    // console.log('CURRENTDAY', new Date().getTime());
+    //
+    // console.log('CALC CURRENT',  new Date().getTime() - this.startDayMilliseconds );
+    // console.log('CAL FACTOR', this.endDayMilliseconds - this.startDayMilliseconds );
+    //
+    // console.log('HEIGHT:', this.scheduleSlats.nativeElement.offsetHeight);
+    // console.log('FINAL TOP: ',this.nowIndicatorPositionTop );
+  }
+
+  public calcPositionEvent(index, event: ScheduleDataSource) {
+
+    const BOTTOM_POSITION = this.convertMillisecondsToPixel(event.date.end) * -1;
+    const TOP_POSITION    = this.convertMillisecondsToPixel(event.date.start);
+
+    const RIGHT_POSITION = this.calcRightPosition(event);
+    const LEFT_POSITION = this.calcLeftPosition(event);
+
+    return {top: TOP_POSITION + 'px', left: LEFT_POSITION + '%', right: RIGHT_POSITION + '%', bottom: BOTTOM_POSITION  + 'px'};
+  }
+
+  calcLeftPosition( event: ScheduleDataSource ) {
+
+    const lenghtFromTimestamp = this.eventsPositionsCollection[event.date.start].length;
+
+    const indexOf = this.eventsPositionsCollection[event.date.start].indexOf(event);
+    const divisor = 100 / lenghtFromTimestamp ;
+
+    return indexOf * divisor;
+  }
+
+  calcRightPosition( event: ScheduleDataSource ) {
+
+    const lenghtFromTimestamp = this.eventsPositionsCollection[event.date.start].length;
+
+    const indexOf = this.eventsPositionsCollection[event.date.start].indexOf(event);
+    const divisor = 100 / lenghtFromTimestamp ;
+
+    return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
   }
 
   private inicializeNowIndicator() {
-    this.nowIndicatorPositionTop = this.getPositionIndicator();
+    this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
     this.changeDetectionRef.detectChanges();
 
     setInterval(() => {
-      this.nowIndicatorPositionTop = this.getPositionIndicator();
+      this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
+      this.currentDate = new Date().getTime();
       this.changeDetectionRef.detectChanges();
     }, 1000);
   }
 
-  private getPositionIndicator() {
+  private convertMillisecondsToPixel(date = new Date().getTime()) {
     const heightBody = this.scheduleSlats.nativeElement.offsetHeight;
-    const currentDate = new Date().getTime() - this.startDayMilliseconds;
+    const currentDate = date - this.startDayMilliseconds;
 
     return ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
   }
@@ -109,14 +164,50 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  private setStartDayMilliseconds() {
-    const startHourSplited = this.startDayHour.split(':');
-    this.startDayMilliseconds = new Date(2018, 4, 3, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
-  }
+  private generateEventsPositions() {
+   this.dataSource.forEach((value, index, array) => {
+     if (this.eventsPositionsCollection.indexOf(value.date.start) < 0 ) {
+       this.eventsPositionsCollection[value.date.start] = [];
+     }
+   });
+    this.dataSource.forEach((value, index, array) => {
+      if (this.eventsPositionsCollection.indexOf(value.date.start) < 0 ) {
+        this.eventsPositionsCollection[value.date.start].push(value);
+      }
+    });
 
-  private setEndDayMilliseconds() {
-    const endHourSplited = this.endDayHour.split(':');
-    this.endDayMilliseconds = new Date(2018, 4, 3, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
+   console.log(this.eventsPositionsCollection);
   }
 }
 
+// startIn: [{
+//     1231231231312: [
+//       {
+//         value: '1',
+//         title: 'William Aguera',
+//         detail: 'Consulta | Particular',
+//         allday: false,
+//         date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+//       },
+//       {
+//         value: '2',
+//         title: 'William Aguera',
+//         detail: 'Consulta | Particular',
+//         allday: false
+//       }
+//     ],
+//     616161616161: [
+//       {
+//         value: '1',
+//         title: 'William Aguera',
+//         detail: 'Consulta | Particular',
+//         allday: false
+//       },
+//       {
+//         value: '2',
+//         title: 'William Aguera',
+//         detail: 'Consulta | Particular',
+//         allday: false
+//       }
+//     ]
+// }]

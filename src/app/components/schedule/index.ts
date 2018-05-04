@@ -6,6 +6,7 @@ import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
+import { TooltipModule } from '../tooltip';
 import { TlSchedule } from './schedule';
 
 export * from './schedule';
@@ -14,7 +15,8 @@ export * from './schedule';
     imports: [
       CommonModule,
       MiscModule,
-      NavigatorModule
+      NavigatorModule,
+      TooltipModule
     ],
     declarations: [
       TlSchedule,

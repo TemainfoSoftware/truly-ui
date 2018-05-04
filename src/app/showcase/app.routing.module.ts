@@ -21,6 +21,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       // Components
       {
+        path: 'accordion',
+        loadChildren: './components/accordion/accordiondemo.module#AccordionDemoModule'
+      },
+      {
         path: 'autocomplete',
         loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
       },

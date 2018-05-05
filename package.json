@@ -96,7 +96,7 @@
     "jest-preset-angular": "^4.0.0",
     "node-sass": "^4.6.0",
     "pre-commit": "^1.2.2",
-    "protractor": "~5.1.2",
+    "protractor": "~5.3.1",
     "rimraf": "^2.6.2",
     "semantic-release": "^12.4.1",
     "ts-node": "~3.2.0",

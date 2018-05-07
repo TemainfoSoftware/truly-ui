@@ -115,165 +115,88 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   calcLeftPosition( index: number, event: ScheduleDataSource ) {
 
-    // Algoritim 001
-    if (  (this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0) && ( this.eventsPositionsByEnd[event.date.end].length === 1) ) {
-      const lenghtFromTimestamp = this.eventsPositionsByStart[event.date.start].length;
+    const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
+    const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;
+    const indexOfinStart = this.eventsPositionsByStart[event.date.start].indexOf(event);
+    const indexOfInEnd = this.eventsPositionsByEnd[event.date.end].indexOf(event);
 
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
+    let length = 0;
+    let position = 0;
 
-      return (indexOf) * divisor;
+    // Calcula Lenght
+    if ( countSameStartHour === countSameStartEnd ) {
+      length = countSameStartHour ;
     }
 
-    // Algoritim 002
-    if (
-      (( this.eventsPositionsByEnd[event.date.end].length > 1))
-      && (this.eventsPositionsByStart[event.date.start].length === this.eventsPositionsByEnd[event.date.end].length)
-    ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (indexOf) * divisor;
+    if ( countSameStartHour < countSameStartEnd ) {
+      length = countSameStartEnd;
     }
 
-    // Algoritim 003
-    if ( ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 )
-      && ( this.eventsPositionsByEnd[event.date.end].length > 1)
-      && ( this.eventsPositionsByEnd[event.date.end].length > this.eventsPositionsByStart[event.date.start].length)
-    )  {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (indexOf + 1) * divisor;
+    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
+      length = countSameStartHour + countSameStartEnd;
+      position = indexOfinStart + indexOfInEnd;
     }
 
-    // Algoritim 004
-    if (
-        (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
-        && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
-       ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[this.dataSource[ index - 1 ].date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (indexOf) * divisor;
+    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart < indexOfInEnd ) ) {
+      length = countSameStartHour;
+      position = indexOfinStart;
     }
 
-    // Algoritim 005
-    if (
-      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
-      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
-    ) {
-      const nextRow = this.dataSource[ this.eventsPositionsByEnd[event.date.end].length + index ];
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[nextRow.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (indexOf + 1) * divisor;
+    // Calcula Position
+    if ( indexOfinStart === indexOfInEnd ) {
+      position = indexOfinStart ;
     }
 
-    // Algoritim 006
-    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1)) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (indexOf) * divisor;
+    if ( indexOfinStart < indexOfInEnd ) {
+      position = indexOfInEnd;
     }
 
+    const divisor = 100 / length ;
 
-
+    return (position) * divisor;
   }
 
   calcRightPosition( index: number, event: ScheduleDataSource ) {
 
-    // Algoritim 001
-    if (  (this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0) && ( this.eventsPositionsByEnd[event.date.end].length === 1) ) {
-      const lenghtFromTimestamp = this.eventsPositionsByStart[event.date.start].length;
+    const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
+    const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;
+    const indexOfinStart = this.eventsPositionsByStart[event.date.start].indexOf(event);
+    const indexOfInEnd = this.eventsPositionsByEnd[event.date.end].indexOf(event);
 
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
+    let length = 0;
+    let position = 0;
 
-      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    // Calcula Lenght
+    if ( countSameStartHour === countSameStartEnd ) {
+      length = countSameStartHour ;
     }
 
-    // Algoritim 002
-    if ( ( this.eventsPositionsByEnd[event.date.end].length > 1)
-      && (this.eventsPositionsByStart[event.date.start].length === this.eventsPositionsByEnd[event.date.end].length)
-    ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    if ( countSameStartHour < countSameStartEnd ) {
+      length = countSameStartEnd;
     }
 
-
-    // Algoritim 003
-    if ( ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 )
-        && ( this.eventsPositionsByEnd[event.date.end].length > 1)
-        && ( this.eventsPositionsByEnd[event.date.end].length > this.eventsPositionsByStart[event.date.start].length)
-      )  {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
-      const lenght = this.eventsPositionsByStart[event.date.start].length;
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return (( lenght - indexOf ) * divisor);
+    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
+      length = countSameStartHour + countSameStartEnd;
+      position = indexOfinStart + indexOfInEnd + 1;
     }
 
-    // Algoritim 004
-    if (
-      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
-      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
-    ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[this.dataSource[ index - 1 ].date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      console.log(lenghtFromTimestamp, indexOf, divisor, );
-
-      return ((indexOf + 1) * divisor);
+    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart < indexOfInEnd ) ) {
+      length = countSameStartHour;
+      position = indexOfinStart;
     }
 
-    // Algoritim 005
-    if (
-      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
-      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
-    ) {
-
-      const nextRow = this.dataSource[ this.eventsPositionsByEnd[event.date.end].length + index ];
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[nextRow.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const lenght = this.eventsPositionsByStart[event.date.start].length;
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      console.log(lenghtFromTimestamp, indexOf, divisor, );
-
-      return ((lenght - (indexOf + 1)) * divisor);
+    // Calcula Position
+    if ( indexOfinStart === indexOfInEnd ) {
+      position = indexOfinStart ;
     }
 
-    // Algoritim 006
-    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))  {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
-
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
-      const divisor = 100 / lenghtFromTimestamp ;
-
-      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+    if ( indexOfinStart < indexOfInEnd ) {
+      position = indexOfInEnd;
     }
 
+    const divisor = 100 / length ;
+
+    return ( ( length - position - 1  ) * divisor);
   }
 
   private inicializeNowIndicator() {

@@ -57,6 +57,13 @@ export class ScheduleDemoOverviewComponent {
     allday: false,
     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() + 1800000 }
   },
+    // {
+    //   value: '13',
+    //   title: 'Jerson Algo - 13',
+    //   detail: 'Consulta | Unimed',
+    //   allday: false,
+    //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() + 1800000 }
+    // },
   {
     value: '4',
     title: 'Maicon Aguera - 4',

@@ -45,12 +45,12 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   @Input('endDayHour') set setEndDayHour(hour: string) {
     const endHourSplited = hour.split(':');
-    this.endDayMilliseconds = new Date(2018, 4, 4, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
+    this.endDayMilliseconds = new Date(2018, 4, 7, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
   }
 
   @Input('startDayHour') set startDayHour( hour: string ) {
     const startHourSplited = hour.split(':');
-    this.startDayMilliseconds = new Date(2018, 4, 4, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+    this.startDayMilliseconds = new Date(2018, 4, 7, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
   }
 
   @Input('dataSource') set dataSource( dataSource: ScheduleDataSource[] ) {
@@ -107,8 +107,8 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     const BOTTOM_POSITION = this.convertMillisecondsToPixel(event.date.end) * -1;
     const TOP_POSITION    = this.convertMillisecondsToPixel(event.date.start);
 
-    const RIGHT_POSITION = this.calcRightPosition(index, event);
     const LEFT_POSITION = this.calcLeftPosition(index, event);
+    const RIGHT_POSITION = this.calcRightPosition(index, event);
 
     return {top: TOP_POSITION + 'px', left: LEFT_POSITION + '%', right: RIGHT_POSITION + '%', bottom: BOTTOM_POSITION  + 'px'};
   }
@@ -139,7 +139,10 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     }
 
     // Algoritim 003
-    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1)) {
+    if ( ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 )
+      && ( this.eventsPositionsByEnd[event.date.end].length > 1)
+      && ( this.eventsPositionsByEnd[event.date.end].length > this.eventsPositionsByStart[event.date.start].length)
+    )  {
       const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
 
       const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
@@ -153,15 +156,29 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
         (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
         && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
        ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[this.dataSource[ index - 1 ].date.end].length;
 
-      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
       const divisor = 100 / lenghtFromTimestamp ;
 
       return (indexOf) * divisor;
     }
 
     // Algoritim 005
+    if (
+      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
+      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
+    ) {
+      const nextRow = this.dataSource[ this.eventsPositionsByEnd[event.date.end].length + index ];
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[nextRow.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      return (indexOf + 1) * divisor;
+    }
+
+    // Algoritim 006
     if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1)) {
       const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
 
@@ -201,13 +218,17 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
 
     // Algoritim 003
-    if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))  {
+    if ( ( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 )
+        && ( this.eventsPositionsByEnd[event.date.end].length > 1)
+        && ( this.eventsPositionsByEnd[event.date.end].length > this.eventsPositionsByStart[event.date.start].length)
+      )  {
       const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
 
-      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
+      const lenght = this.eventsPositionsByStart[event.date.start].length;
       const divisor = 100 / lenghtFromTimestamp ;
 
-      return ((lenghtFromTimestamp - 2 - indexOf) * divisor);
+      return (( lenght - indexOf ) * divisor);
     }
 
     // Algoritim 004
@@ -215,15 +236,35 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
       (( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
       && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
     ) {
-      const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[this.dataSource[ index - 1 ].date.end].length;
 
-      const indexOf = this.eventsPositionsByEnd[event.date.end].indexOf(event);
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
       const divisor = 100 / lenghtFromTimestamp ;
 
-      return ((lenghtFromTimestamp - 1 - indexOf) * divisor);
+      console.log(lenghtFromTimestamp, indexOf, divisor, );
+
+      return ((indexOf + 1) * divisor);
     }
 
     // Algoritim 005
+    if (
+      (( this.eventsPositionsByEnd[event.date.end].indexOf(event) > 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))
+      && (this.eventsPositionsByStart[event.date.start].length > this.eventsPositionsByEnd[event.date.end].length)
+    ) {
+
+      const nextRow = this.dataSource[ this.eventsPositionsByEnd[event.date.end].length + index ];
+      const lenghtFromTimestamp = this.eventsPositionsByEnd[nextRow.date.end].length;
+
+      const indexOf = this.eventsPositionsByStart[event.date.start].indexOf(event);
+      const lenght = this.eventsPositionsByStart[event.date.start].length;
+      const divisor = 100 / lenghtFromTimestamp ;
+
+      console.log(lenghtFromTimestamp, indexOf, divisor, );
+
+      return ((lenght - (indexOf + 1)) * divisor);
+    }
+
+    // Algoritim 006
     if (  ( this.eventsPositionsByEnd[event.date.end].indexOf(event) === 0 ) && ( this.eventsPositionsByEnd[event.date.end].length > 1))  {
       const lenghtFromTimestamp = this.eventsPositionsByEnd[event.date.end].length;
 

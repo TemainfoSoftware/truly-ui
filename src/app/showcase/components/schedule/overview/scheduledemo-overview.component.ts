@@ -50,13 +50,13 @@ export class ScheduleDemoOverviewComponent {
     allday: false,
     date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   },
-    // {
-    //   value: '3',
-    //   title: 'William Aguera - 3',
-    //   detail: 'Consulta | Particular',
-    //   allday: false,
-    //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
-    // },
+    {
+      value: '3',
+      title: 'William Aguera - 3',
+      detail: 'Consulta | Particular',
+      allday: false,
+      date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+    },
   {
     value: '4',
     title: 'Jerson Algo - 4',
@@ -127,34 +127,34 @@ export class ScheduleDemoOverviewComponent {
     allday: false,
     date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
   },
-  // {
-  //   value: '13',
-  //   title: 'Jaisson Buccio - 13',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '14',
-  //   title: 'Jaisson Buccio - 14',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '15',
-  //   title: 'Jaisson Buccio - 15',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '16',
-  //   title: 'Jaisson Buccio - 16',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
+  {
+    value: '13',
+    title: 'Jaisson Buccio - 13',
+    detail: 'Consulta | Copel',
+    allday: false,
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '14',
+    title: 'Jaisson Buccio - 14',
+    detail: 'Consulta | Copel',
+    allday: false,
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '15',
+    title: 'Jaisson Buccio - 15',
+    detail: 'Consulta | Copel',
+    allday: false,
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '16',
+    title: 'Jaisson Buccio - 16',
+    detail: 'Consulta | Copel',
+    allday: false,
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
   {
     value: '14',
     title: 'Jaisson Buccio - 14',

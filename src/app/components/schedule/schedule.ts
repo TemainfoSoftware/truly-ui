@@ -187,7 +187,7 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
       length = countSameStartEnd;
     }
 
-    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
+    if ( ( countSameStartHour !== countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
       const indice = index - ( ( indexOfinStart - ( indexOfinStart - indexOfInEnd ) + 1 ) );
       const eventDroped = this.dataSource[ indice ].date.end;
       const firstEventDroped = this.eventsPositionsByEnd[ eventDroped ].length;

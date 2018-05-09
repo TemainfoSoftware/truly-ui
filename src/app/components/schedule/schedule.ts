@@ -45,16 +45,16 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
   @Input('endDayHour') set setEndDayHour(hour: string) {
     const endHourSplited = hour.split(':');
-    this.endDayMilliseconds = new Date(2018, 4, 7, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
+    this.endDayMilliseconds = new Date(2018, 4, 9, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
   }
 
   @Input('startDayHour') set startDayHour( hour: string ) {
     const startHourSplited = hour.split(':');
-    this.startDayMilliseconds = new Date(2018, 4, 7, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
+    this.startDayMilliseconds = new Date(2018, 4, 9, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
   }
 
   @Input('dataSource') set dataSource( dataSource: ScheduleDataSource[] ) {
-    this._dataSource = dataSource.sort(( a, b ) =>  a.date.start - b.date.start );
+    this._dataSource = dataSource.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
     this.generateEventsPositions();
   }
   get dataSource () {
@@ -122,7 +122,8 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
     let length = 0;
     let position = 0;
-
+    let fator = 0;
+    let quantidadeLinhaAbaixo = 0;
     // Calcula Lenght
     if ( countSameStartHour === countSameStartEnd ) {
       length = countSameStartHour ;
@@ -132,9 +133,14 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
       length = countSameStartEnd;
     }
 
-    if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
-      length = countSameStartHour + countSameStartEnd;
-      position = indexOfinStart + indexOfInEnd;
+    if ( ( countSameStartHour !== countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
+      const indice = index - ( ( indexOfinStart - ( indexOfinStart - indexOfInEnd ) + 1 ) );
+      const eventDroped = this.dataSource[ indice ].date.end;
+      const firstEventDroped = this.eventsPositionsByEnd[ eventDroped ].length;
+      quantidadeLinhaAbaixo = firstEventDroped - (indexOfinStart - indexOfInEnd);
+
+      length = firstEventDroped;
+      position = indexOfinStart - indexOfInEnd;
     }
 
     if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart < indexOfInEnd ) ) {
@@ -153,7 +159,11 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
     const divisor = 100 / length ;
 
-    return (position) * divisor;
+    if (quantidadeLinhaAbaixo) {
+      fator =  ( ( divisor * quantidadeLinhaAbaixo ) / countSameStartEnd ) * indexOfInEnd ;
+    }
+
+    return  ( position * divisor ) + fator;
   }
 
   calcRightPosition( index: number, event: ScheduleDataSource ) {
@@ -165,6 +175,8 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
     let length = 0;
     let position = 0;
+    let fator = 0;
+    let quantidadeLinhaAbaixo = 0;
 
     // Calcula Lenght
     if ( countSameStartHour === countSameStartEnd ) {
@@ -176,8 +188,13 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
     }
 
     if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
-      length = countSameStartHour + countSameStartEnd;
-      position = indexOfinStart + indexOfInEnd + 1;
+      const indice = index - ( ( indexOfinStart - ( indexOfinStart - indexOfInEnd ) + 1 ) );
+      const eventDroped = this.dataSource[ indice ].date.end;
+      const firstEventDroped = this.eventsPositionsByEnd[ eventDroped ].length;
+      quantidadeLinhaAbaixo = firstEventDroped - (indexOfinStart - indexOfInEnd);
+
+      length = firstEventDroped;
+      position =  ( indexOfinStart - indexOfInEnd ) - 1;
     }
 
     if ( ( countSameStartHour > countSameStartEnd ) && ( indexOfinStart < indexOfInEnd ) ) {
@@ -196,7 +213,12 @@ export class TlSchedule implements OnInit, AfterViewInit, OnChanges {
 
     const divisor = 100 / length ;
 
-    return ( ( length - position - 1  ) * divisor);
+    if (quantidadeLinhaAbaixo) {
+      fator =  ( ( divisor * quantidadeLinhaAbaixo ) / countSameStartEnd ) * ( indexOfInEnd + 1 ) ;
+    }
+
+
+    return ( ( length - position - 1  ) * divisor) - fator;
   }
 
   private inicializeNowIndicator() {

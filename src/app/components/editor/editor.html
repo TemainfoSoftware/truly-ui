@@ -9,27 +9,28 @@
                           [(ngModel)]="font">
         </tl-dropdown-list>
       </li>
-      <li><tl-dropdown-list [data]="dataFontSize" [(ngModel)]="fontSize"></tl-dropdown-list></li>
+      <li><tl-dropdown-list [data]="dataFontSize" (ngModelChange)="onChangeFontSize($event)" [(ngModel)]="fontSize"></tl-dropdown-list></li>
       <li><span class="ui-separator"></span></li>
-      <li><button class="ui-command fa fa-bold" (click)="setBold()"></button></li>
-      <li><button class="ui-command fa fa-italic" (click)="setItalic()"></button></li>
-      <li><button class="ui-command fa fa-underline" (click)="setUnderline()"></button></li>
+      <li><button class="ui-command fa fa-bold" [ngClass]="{'ui-active-tool': activeTools.bold}" (click)="setBold()"></button></li>
+      <li><button class="ui-command fa fa-italic" [ngClass]="{'ui-active-tool': activeTools.italic}" (click)="setItalic()"></button></li>
+      <li><button class="ui-command fa fa-underline" [ngClass]="{'ui-active-tool': activeTools.underline}" (click)="setUnderline()"></button></li>
       <li>
-        <i class="ion-paintbucket"></i>
+        <button class="ui-command fa fa-font"></button>
         <input class="ui-command ui-color-component" [(ngModel)]="colorSelected" (ngModelChange)="onChangeColor($event)" type="color">
       </li>
-      <li><button class="ui-command fa fa-pencil" (click)="setHighlight()"></button></li>
+      <li><button class="ui-command fa fa-pencil" [ngClass]="{'ui-active-tool': cursorHighlight}" (click)="setHighlight()"></button></li>
       <li><span class="ui-separator"></span></li>
-      <li><button class="ui-command fa fa-align-left" (click)="alignContent('justifyLeft')"></button></li>
-      <li><button class="ui-command fa fa-align-center" (click)="alignContent('justifyCenter')"></button></li>
-      <li><button class="ui-command fa fa-align-right" (click)="alignContent('justifyRight')"></button></li>
-      <li><button class="ui-command fa fa-align-justify" (click)="alignContent('justifyFull')"></button></li>
+      <li><button class="ui-command fa fa-align-left" [ngClass]="{'ui-active-tool': activeTools.alignLeft}" (click)="alignContent('justifyLeft')"></button></li>
+      <li><button class="ui-command fa fa-align-center" [ngClass]="{'ui-active-tool': activeTools.alignCenter}" (click)="alignContent('justifyCenter')"></button></li>
+      <li><button class="ui-command fa fa-align-right" [ngClass]="{'ui-active-tool': activeTools.alignRight}" (click)="alignContent('justifyRight')"></button></li>
+      <li><button class="ui-command fa fa-align-justify" [ngClass]="{'ui-active-tool': activeTools.alignJustify}" (click)="alignContent('justifyFull')"></button></li>
       <li><span class="ui-separator"></span></li>
-      <li><button class="ui-command fa fa-list-ul" (click)="setUnorderedList()"></button></li>
-      <li><button class="ui-command fa fa-list-ol" (click)="setOrderedList()"></button></li>
+      <li><button class="ui-command fa fa-list-ul" [ngClass]="{'ui-active-tool': activeTools.listUnordered}" (click)="setUnorderedList()"></button></li>
+      <li><button class="ui-command fa fa-list-ol" [ngClass]="{'ui-active-tool': activeTools.listOrdered}" (click)="setOrderedList()"></button></li>
       <li><span class="ui-separator"></span></li>
       <li><button class="ui-command fa fa-link" (click)="toggleLinkBox(); setDescriptionLink();"></button></li>
       <li><button class="ui-command fa ion-image" (click)="toggleImageBox()"></button></li>
+      <li><button class="ui-command fa ion-quote" [ngClass]="{'ui-active-tool': activeTools.blockQuote}" (click)="setQuote()"></button></li>
     </ul>
   </div>
   <div #contentEditor
@@ -37,14 +38,7 @@
        class="ui-editor-content"
        (mouseup)="onMouseUp()"
        (click)="setCursorSelection()"
-       [ngStyle]="{
-         'text-align': alignment,
-         'font-size': fontSize + 'px'
-       }"
-       [attr.contenteditable]="contentEditable">
-    Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI,
-    quando um impressor desconhecido pegou uma bandeja de tipos e os embaralhou para fazer um livro de modelos de tipos. Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de
-    Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.
+       [attr.contenteditable]="contentEditable" [innerHTML]="content">
   </div>
   <tl-editor-link-box [descriptionLink]="descriptionLink"
                       *ngIf="toggleLink && !toggleImage"

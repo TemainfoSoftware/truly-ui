@@ -21,7 +21,7 @@
  */
 import {
   AfterContentInit,
-  Component, ElementRef, OnChanges, Renderer2, SimpleChanges, ViewChild,
+  Component, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, ViewChild,
 } from '@angular/core';
 
 @Component( {
@@ -31,6 +31,8 @@ import {
 } )
 
 export class TlEditor implements AfterContentInit, OnChanges {
+
+  @Input() content;
 
   @ViewChild( 'contentEditor' ) contentEditor;
 
@@ -42,11 +44,9 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public dataFontSize = [];
 
-  public font = 'Segoe UI';
+  public font = 'Arial';
 
-  public fontSize = '16';
-
-  public alignment = '';
+  public fontSize = '3pt';
 
   public toggleLink = false;
 
@@ -60,7 +60,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public anchorNodeCursor;
 
-  public cursor = false;
+  public cursorHighlight = false;
 
   public selectedContent = false;
 
@@ -68,7 +68,20 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public contentEditable = true;
 
-  public image = { imageUrl: '', width: 0, height: 0};
+  public activeTools = {
+    bold: false,
+    italic: false,
+    underline: false,
+    listUnordered: false,
+    listOrdered: false,
+    alignLeft: false,
+    alignCenter: false,
+    alignRight: false,
+    alignJustify: false,
+    blockQuote: false
+  };
+
+  public image = { imageUrl: '' };
 
   public selection = { start: 0, end: 0, baseNode: null };
 
@@ -81,7 +94,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
       { textItem: 'Comic Sans MS', value: 'Comic Sans MS' },
       { textItem: 'Segoe UI', value: 'Segoe UI' },
     ];
-    this.dataFontSize = [ '3', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20' ];
+    this.dataFontSize = [ '1pt', '2pt', '3pt', '4pt', '5pt', '6pt', '7pt' ];
   }
 
   ngAfterContentInit() {
@@ -91,6 +104,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
   alignContent( align ) {
     this.setContentFocus();
     document.execCommand( align, false, null );
+    this.setCursorSelection();
   }
 
   setAnchorNode() {
@@ -112,37 +126,154 @@ export class TlEditor implements AfterContentInit, OnChanges {
   setBold() {
     this.setContentFocus();
     document.execCommand( 'bold', false, null );
+    this.setCursorSelection();
+  }
+
+  setQuote() {
+    this.setContentFocus();
+    this.activeTools.blockQuote = !this.activeTools.blockQuote;
+    document.execCommand( 'formatBlock', false, this.activeTools.blockQuote ? 'blockquote' : 'div' );
+    this.setCursorSelection();
   }
 
   setItalic() {
     this.setContentFocus();
     document.execCommand( 'italic', false, null );
+    this.setCursorSelection();
   }
 
   setUnorderedList() {
     this.setContentFocus();
     document.execCommand( 'insertUnorderedList', false, null );
+    this.setCursorSelection();
   }
 
   setOrderedList() {
     this.setContentFocus();
     document.execCommand( 'insertOrderedList', false, null );
+    this.setCursorSelection();
   }
 
   setCursorSelection() {
     this.cursorSelection = window.getSelection();
+    this.handleActiveTools();
   }
 
-  onChangeColor( $event ) {
-    console.log( 'change value', $event );
+  handleActiveTools() {
+    this.handleClosestBold();
+    this.handleClosestItalic();
+    this.handleClosestUnderline();
+    this.handleColorParent();
+    this.handleListUnordered();
+    this.handleListOrdered();
+    this.handleAlignLeft();
+    this.handleAlignCenter();
+    this.handleAlignRight();
+    this.handleAlignJustify();
+    this.handleFontSize();
+    this.handleFontName();
+    this.handleBlockQuote();
+  }
+
+  handleFontName() {
+    this.isClosestParentElement( 'font' ) && this.hasFontFace()
+      ? this.setFontNodeSelected() : this.setDefaultFont();
+  }
+
+  hasFontFace() {
+    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
+  }
+
+  hasFontSize() {
+    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' );
+  }
+
+  setFontNodeSelected() {
+    this.font = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
+  }
+
+  setDefaultFont() {
+    this.font = 'Arial';
+  }
+
+  setFontSizeNodeSelected() {
+    this.fontSize = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' ) + 'pt';
+  }
+
+  setDefaultFontSize() {
+    this.fontSize = '3pt';
+  }
+
+  handleFontSize() {
+   this.isClosestParentElement( 'font' ) && this.hasFontSize()
+     ? this.setFontSizeNodeSelected() : this.setDefaultFontSize();
+  }
+
+  handleAlignLeft() {
+    this.activeTools.alignLeft = this.hasStyleParentElement( 'left' );
+  }
+
+  handleAlignCenter() {
+    this.activeTools.alignCenter = this.hasStyleParentElement( 'center' );
+  }
+
+  handleAlignRight() {
+    this.activeTools.alignRight = this.hasStyleParentElement( 'right' );
+  }
+
+  handleAlignJustify() {
+    this.activeTools.alignJustify = this.hasStyleParentElement( 'justify' );
+  }
+
+  handleListOrdered() {
+    this.activeTools.listOrdered = this.isClosestParentElement( 'ol' );
+  }
+
+  handleListUnordered() {
+    this.activeTools.listUnordered = this.isClosestParentElement( 'ul' );
+  }
+
+  onChangeColor($event) {
+    document.execCommand('foreColor', false, $event);
+  }
+
+  handleColorParent() {
+    const getElementFont = this.cursorSelection.baseNode.parentNode.closest( 'font' );
+    getElementFont ? this.colorSelected = getElementFont.getAttribute( 'color' ) : this.colorSelected = '#00000';
+  }
+
+  handleClosestBold() {
+    this.activeTools.bold = this.isClosestParentElement( 'b' );
+  }
+
+  handleClosestUnderline() {
+    this.activeTools.underline = this.isClosestParentElement( 'u' );
+  }
+
+  handleClosestItalic() {
+    this.activeTools.italic = this.isClosestParentElement( 'i' );
+  }
+
+  handleBlockQuote() {
+    this.activeTools.blockQuote = this.isClosestParentElement( 'blockquote' );
+  }
+
+  hasStyleParentElement( alignment: string ) {
+    const childElement = this.cursorSelection.baseNode.parentNode;
+    if ( childElement.attributes.length > 0 ) {
+      return childElement.attributes[ 0 ].value.includes( alignment );
+    }
+    return false;
+  }
+
+  isClosestParentElement( element ) {
+    return !!this.cursorSelection.baseNode.parentNode.closest( element );
   }
 
   setImage( $event ) {
     this.setContentFocus();
     this.image.imageUrl = $event.imageUrl;
-    this.image.width = $event.width;
-    this.image.height = $event.height;
-    this.cursorSelection.getRangeAt( 0 ).insertNode(this.createImageElement());
+    this.cursorSelection.getRangeAt( 0 ).insertNode( this.createImageElement() );
     this.toggleImageBox();
   }
 
@@ -173,14 +304,8 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   createImageElement() {
     const imageHTML = new ElementRef( this.renderer.createElement( 'img' ) );
-    this.renderer.addClass(imageHTML.nativeElement, 'ui-image-editor');
+    this.renderer.addClass( imageHTML.nativeElement, 'ui-image-editor' );
     imageHTML.nativeElement.src = this.image.imageUrl;
-    if (this.image.width > 0) {
-      imageHTML.nativeElement.width = this.image.width;
-    }
-    if (this.image.height > 0) {
-      imageHTML.nativeElement.height = this.image.height;
-    }
     return imageHTML.nativeElement;
   }
 
@@ -193,13 +318,9 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.handleAddElementRange( link );
   }
 
-
   handleAddElementRange( link ) {
-    if ( this.selectedContent ) {
-      window.getSelection().getRangeAt( 0 ).surroundContents( link.nativeElement );
-    } else {
+    this.selectedContent ? window.getSelection().getRangeAt( 0 ).surroundContents( link.nativeElement ) :
       window.getSelection().getRangeAt( 0 ).insertNode( link.nativeElement );
-    }
   }
 
   recoverSelection() {
@@ -211,9 +332,16 @@ export class TlEditor implements AfterContentInit, OnChanges {
     selection.addRange( range );
   }
 
+  onChangeFontSize( $event ) {
+    this.recoverSelection();
+    this.setContentFocus();
+    this.fontSize = $event;
+    document.execCommand( 'fontSize', null, parseInt( this.fontSize, 10 ) );
+  }
+
   setHighlight() {
     this.wrapper.nativeElement.style.cursor = 'grabbing';
-    this.cursor = true;
+    this.cursorHighlight = true;
   }
 
   resetCursor() {
@@ -223,6 +351,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
   setUnderline() {
     this.setContentFocus();
     document.execCommand( 'underline', false, null );
+    this.setCursorSelection();
   }
 
   setContentFocus() {
@@ -230,23 +359,22 @@ export class TlEditor implements AfterContentInit, OnChanges {
   }
 
   onChangeFont( $event ) {
-    this.font = $event;
-    this.setContentFocus();
     this.recoverSelection();
+    this.setContentFocus();
+    this.font = $event;
     document.execCommand( 'fontName', false, this.font );
   }
 
   onMouseUp() {
     this.toggleLink = false;
     this.setAnchorNode();
-    if ( this.cursor ) {
+    if ( this.cursorHighlight ) {
       document.execCommand( 'hiliteColor', false, '#f0ef99' );
-      this.cursor = false;
+      this.cursorHighlight = false;
       this.resetCursor();
     }
   }
 
-  ngOnChanges( data: SimpleChanges ) {
-  }
+  ngOnChanges( data: SimpleChanges ) {}
 
 }

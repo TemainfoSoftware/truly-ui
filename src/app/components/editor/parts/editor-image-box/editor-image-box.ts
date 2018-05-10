@@ -33,10 +33,6 @@ export class TlEditorImageBox implements OnChanges {
 
   @Input() imageUrl = '';
 
-  @Input() width = '0';
-
-  @Input() height = '0';
-
   @Output() onSetImage = new EventEmitter();
 
   @Output() onToggleImage = new EventEmitter();
@@ -44,7 +40,7 @@ export class TlEditorImageBox implements OnChanges {
   public linkItself = '';
 
   setImageUrl() {
-    this.onSetImage.emit({'imageUrl': this.imageUrl, 'width': this.width, 'height': this.height });
+    this.onSetImage.emit({'imageUrl': this.imageUrl });
   }
 
   toggleImageBox() {

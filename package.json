@@ -86,7 +86,7 @@
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
     "@types/jest": "^21.1.0",
-    "@types/node": "~6.0.60",
+    "@types/node": "~10.0.7",
     "codelyzer": "~3.2.0",
     "gulp": "^3.9.1",
     "gulp-inline-ng2-template": "^4.0.0",

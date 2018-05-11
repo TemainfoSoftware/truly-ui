@@ -1,0 +1,15 @@
+<div class="ui-schedule-heading-wrapper">
+  <div class="ui-schedule-heading-views">
+    <div class="ui-schedule-views-choices">
+      <ng-template ngFor let-view [ngForOf]="views">
+        <tl-button [height]="'30px'" [width]="'100px'" (click)="changeView.emit(view)" [text]="view | uppercase"></tl-button>
+      </ng-template>
+    </div>
+  </div>
+  <div class="ui-schedule-heading-navigator">
+    <tl-navigator [type]="'day'" (clickNext)="changeNavigator.emit($event)" (clickPrevious)="changeNavigator.emit($event)"></tl-navigator>
+  </div>
+  <div class="ui-schedule-heading-tools">
+    <tl-button [text]="'New'" [width]="'80px'" color="primary"></tl-button>
+  </div>
+</div>

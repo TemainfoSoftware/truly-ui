@@ -1,22 +1,30 @@
 <div class="ui-wrapper-schedule">
-  <div class="ui-schedule-header"></div>
+
+  <!-- SCHEDULE HEADER -->
+  <div class="ui-schedule-header">
+    <tl-schedule-heading
+      [views]="views"
+      (changeView)="onChangeView($event)"
+      (changeNavigator)="onChangeNavigator($event)"
+    ></tl-schedule-heading>
+  </div>
+
+  <!-- SCHEDULE BODY -->
   <div  class="ui-schedule-body" [ngStyle]="{height: height}" [ngSwitch]="currentView">
     <tl-view-day
       *ngSwitchCase="'day'"
-
       [duration]="duration"
       [currentDate]="currentDate"
-      [dataSource]="dataSource"
-
+      [dataSource]="dataSourceOfDay"
       [startDayMilliseconds]="startDayMilliseconds"
       [endDayMilliseconds]="endDayMilliseconds"
-      [eventsPositionsByStart]="eventsPositionsByStart"
-      [eventsPositionsByEnd]="eventsPositionsByEnd"
     ></tl-view-day>
 
     <tl-day-list
       *ngSwitchCase="'dayList'"
     ></tl-day-list>
   </div>
+
+  <!-- SCHEDULE FOOTER -->
   <div class="schedule-footer"></div>
 </div>

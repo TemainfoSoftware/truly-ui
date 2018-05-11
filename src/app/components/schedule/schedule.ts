@@ -31,34 +31,39 @@ import { ScheduleDataSource } from './types/datasource.type';
   styleUrls: [ './schedule.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TlSchedule implements OnInit {
+export class TlSchedule implements OnInit, OnChanges {
 
-   @Input() currentView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
+  @Input() currentView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
-  // @Input() views: Array<string>; // ["day", "week", "workWeek", "month", "dayList", "weekList"],
+  @Input() views: ['day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'] = ['day', 'dayList'];
 
-  @Input() currentDate = new Date().getTime();
+  @Input() currentDate = new Date();
 
   @Input() height = '550px';
 
   @Input() duration = 30;
 
-  @Input('endDayHour') set setEndDayHour(hour: string) {
-    const endHourSplited = hour.split(':');
-    this.endDayMilliseconds = new Date(2018, 4, 11, Number(endHourSplited[0]), Number( endHourSplited[1])).getTime();
-  }
-
-  @Input('startDayHour') set startDayHour( hour: string ) {
-    const startHourSplited = hour.split(':');
-    this.startDayMilliseconds = new Date(2018, 4, 11, Number(startHourSplited[0]), Number( startHourSplited[1])).getTime();
-  }
-
   @Input('dataSource') set dataSource( dataSource: ScheduleDataSource[] ) {
     this._dataSource = dataSource.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
-    this.generateEventsPositions();
   }
   get dataSource () {
     return this._dataSource;
+  }
+
+  @Input('startDayHour') set startDayHour( hours: string ) {
+    this._startDayHour = hours;
+    this.startDayMilliseconds = this.transformHourToMileseconds( hours );
+  }
+  get startDayHour () {
+    return this._startDayHour;
+  }
+
+  @Input('endDayHour') set setEndDayHour( hours: string ) {
+    this._endDayHour = hours;
+    this.endDayMilliseconds = this.transformHourToMileseconds( hours );
+  }
+  get endDayHour () {
+    return this._endDayHour;
   }
 
   @Output() rowClick = new EventEmitter();
@@ -67,34 +72,59 @@ export class TlSchedule implements OnInit {
 
   public endDayMilliseconds: number;
 
-  public eventsPositionsByStart = [];
-
-  public eventsPositionsByEnd = [];
+  public dataSourceOfDay: ScheduleDataSource[];
 
   private _dataSource: ScheduleDataSource[];
 
+  private _startDayHour: string;
+
+  private _endDayHour: string;
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getDataSourceOfDay();
+  }
 
-  private generateEventsPositions() {
-    this.dataSource.forEach((value ) => {
-      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
-       this.eventsPositionsByStart[value.date.start] = [];
-      }
-      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
-        this.eventsPositionsByEnd[value.date.end] = [];
-      }
-    });
-    this.dataSource.forEach((value ) => {
-      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
-        this.eventsPositionsByStart[value.date.start].push(value);
-      }
-      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
-        this.eventsPositionsByEnd[value.date.end].push(value);
-      }
-    });
+  ngOnChanges(  changes: SimpleChanges  ) {
+    if ( !changes['currentDate'] ) { return; }
+    if ( ! changes['currentDate'].firstChange) {
+      this.refreshStartAndEndDay();
+      this.getDataSourceOfDay();
+    }
+  }
 
-   console.log(this.eventsPositionsByStart, this.eventsPositionsByEnd);
+  onChangeView( view ) {
+    this.currentView = view;
+  }
+
+  onChangeNavigator($event) {
+    this.currentDate = new Date( $event.year, $event.month, $event.day);
+    this.refreshStartAndEndDay();
+    this.getDataSourceOfDay();
+  }
+
+  private transformHourToMileseconds( fullHour: string ) {
+    const hourSplited = fullHour.split(':');
+
+    const hours = Number(hourSplited[0]);
+    const minutes = Number(hourSplited[1]);
+    const year =  this.currentDate.getFullYear();
+    const month =  this.currentDate.getMonth();
+    const date =  this.currentDate.getDate();
+
+    return new Date(year, month, date, hours, minutes).getTime();
+  }
+
+  private refreshStartAndEndDay() {
+    this.endDayMilliseconds = this.transformHourToMileseconds( this.endDayHour );
+    this.startDayMilliseconds = this.transformHourToMileseconds( this.startDayHour );
+  }
+
+
+  private getDataSourceOfDay() {
+    this.dataSourceOfDay = this._dataSource.filter( ( event ) => {
+      return ( event.date.start >= this.startDayMilliseconds ) && ( event.date.end <= this.endDayMilliseconds );
+    });
   }
 }

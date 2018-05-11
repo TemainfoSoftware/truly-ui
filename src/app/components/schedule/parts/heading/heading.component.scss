@@ -1,0 +1,22 @@
+.ui-schedule-heading-wrapper{
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.ui-schedule-heading-views{
+  flex-basis: 50%;
+  text-align: left;
+}
+
+.ui-schedule-heading-navigator{
+  flex-basis: 185px;
+}
+
+.ui-schedule-heading-tools{
+  flex-basis: 50%;
+  text-align: right;
+}

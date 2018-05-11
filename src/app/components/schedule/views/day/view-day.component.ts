@@ -1,18 +1,20 @@
 import {
-  Component, OnInit, OnChanges, AfterViewInit, ChangeDetectorRef, Input, ViewChild, ElementRef
+  Component, OnInit, OnChanges, AfterViewInit, ChangeDetectorRef, Input, ViewChild, ElementRef, SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
 
 @Component({
   selector: 'tl-view-day',
   templateUrl: './view-day.component.html',
-  styleUrls: ['./view-day.component.scss']
+  styleUrls: ['./view-day.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewDayComponent implements OnInit, AfterViewInit {
+export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() duration = 30;
 
-  @Input() currentDate = new Date().getTime();
+  @Input() currentDate = new Date();
 
   @Input() dataSource: ScheduleDataSource[];
 
@@ -20,19 +22,21 @@ export class ViewDayComponent implements OnInit, AfterViewInit {
 
   @Input() endDayMilliseconds: number;
 
-  @Input() eventsPositionsByStart = [];
-
-  @Input() eventsPositionsByEnd = [];
-
   @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
 
   public nowIndicatorPositionTop: number;
 
   public timesCollection: Array<Date> = [];
 
+  public eventsPositionsByStart = [];
+
+  public eventsPositionsByEnd = [];
+
+
   constructor( private changeDetectionRef: ChangeDetectorRef  ) { }
 
   ngOnInit() {
+    this.generateEventsPositions();
     this.generateTimes();
   }
 
@@ -40,6 +44,12 @@ export class ViewDayComponent implements OnInit, AfterViewInit {
     this.inicializeNowIndicator();
   }
 
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( !changes['dataSource'] ) { return; }
+    if (! changes['dataSource'].firstChange) {
+      this.changeDetectionRef.detectChanges();
+    }
+  }
 
   calcPositionEvent(index, event: ScheduleDataSource) {
 
@@ -166,6 +176,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit {
 
     let currentHour_ms = this.startDayMilliseconds;
     let nextHourBreak_ms = this.startDayMilliseconds;
+    this.timesCollection = [];
 
     while ( currentHour_ms < this.endDayMilliseconds ) {
       if ( currentHour_ms === nextHourBreak_ms  ) {
@@ -179,12 +190,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit {
   private inicializeNowIndicator() {
     this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
     this.changeDetectionRef.detectChanges();
-
-    setInterval(() => {
-      this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
-      this.currentDate = new Date().getTime();
-      //   this.changeDetectionRef.detectChanges();
-    }, 1000);
   }
 
 
@@ -194,6 +199,27 @@ export class ViewDayComponent implements OnInit, AfterViewInit {
 
     return ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
   }
+
+
+  private generateEventsPositions() {
+    this.dataSource.forEach((value ) => {
+      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
+        this.eventsPositionsByStart[value.date.start] = [];
+      }
+      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
+        this.eventsPositionsByEnd[value.date.end] = [];
+      }
+    });
+    this.dataSource.forEach((value ) => {
+      if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
+        this.eventsPositionsByStart[value.date.start].push(value);
+      }
+      if (this.eventsPositionsByEnd.indexOf(value.date.end) < 0 ) {
+        this.eventsPositionsByEnd[value.date.end].push(value);
+      }
+    });
+  }
+
 
 
 }

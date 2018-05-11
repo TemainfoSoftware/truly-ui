@@ -21,6 +21,7 @@
 */
 
 import { Injectable } from '@angular/core';
+import { DaysDescription } from '../consts/days-descriptions';
 import { MonthsDescription } from '../consts/months-description';
 
 @Injectable()
@@ -29,6 +30,8 @@ export class NavigatorManagerService {
   private currentMonth: number;
 
   private currentYear: number;
+
+  private currentDay: number;
 
   private startYear: number;
 
@@ -60,6 +63,7 @@ export class NavigatorManagerService {
     this.date = date;
     this.currentMonth = this.date.getMonth();
     this.currentYear = this.date.getFullYear();
+    this.currentDay = this.date.getDate();
 
     this.startYear = this.date.getFullYear();
     this.endYear = this.date.getFullYear() + this.range;
@@ -68,6 +72,7 @@ export class NavigatorManagerService {
 
   getDataObject() {
     return {
+      day: this.currentDay,
       month: this.currentMonth,
       year: this.currentYear,
       rangeYear: {start: this.startYear, end: this.endYear}
@@ -79,6 +84,7 @@ export class NavigatorManagerService {
       case 'monthyear': { return this.getMonthDescription() + ' ' + this.getYearDescription(); }
       case 'year': { return this.getYearDescription().toString(); }
       case 'rangeyear': { return this.getRangeYear().toString(); }
+      case 'day': { return this.getDayDescription().toString(); }
     }
   }
 
@@ -88,6 +94,7 @@ export class NavigatorManagerService {
       case 'monthyear': { this.monthYearTypePrevious(); break; }
       case 'year': { this.yearTypePrevious(); break; }
       case 'rangeyear': { this.rangeYearTypePrevious(); break; }
+      case 'day': { this.dayTypePrevious(); break; }
     }
   }
 
@@ -96,6 +103,7 @@ export class NavigatorManagerService {
       case 'monthyear': { this.monthYearTypeNext(); break; }
       case 'year': { this.yearTypeNext(); break; }
       case 'rangeyear': { this.rangeYearTypeNext(); break; }
+      case 'day': { this.dayTypeNext(); break; }
     }
   }
 
@@ -106,6 +114,12 @@ export class NavigatorManagerService {
 
   private getRangeYear() {
     return this.startYear + ' - ' + this.endYear;
+  }
+
+  private getDayDescription() {
+    const dayOfMonth = new Date(this.currentYear, this.currentMonth, this.currentDay).getDate();
+    const weekDay = DaysDescription[ new Date(this.currentYear, this.currentMonth, this.currentDay).getDay() ];
+    return dayOfMonth + ' ' + weekDay;
   }
 
   private getMonthDescription() {
@@ -147,5 +161,13 @@ export class NavigatorManagerService {
   private rangeYearTypeNext() {
     this.startYear += this.range;
     this.endYear += this.range;
+  }
+
+  private dayTypePrevious() {
+    this.currentDay --;
+  }
+
+  private dayTypeNext() {
+    this.currentDay ++;
   }
 }

@@ -38,7 +38,7 @@ export class TlNavigator implements OnInit, OnChanges {
 
   @Input('height') height = '32px';
 
-  @Input('type') type = 'monthyear';
+  @Input('type') type: 'monthyear' | 'year' | 'rangeyear' | 'day' = 'monthyear';
 
   @Input('date') date = new Date();
 

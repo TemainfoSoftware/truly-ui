@@ -8,6 +8,8 @@ import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
 import { TooltipModule } from '../tooltip';
 import { TlSchedule } from './schedule';
+import { DayListComponent } from './views/day-list/day-list.component';
+import { ViewDayComponent } from './views/day/view-day.component';
 
 export * from './schedule';
 
@@ -20,6 +22,8 @@ export * from './schedule';
     ],
     declarations: [
       TlSchedule,
+      ViewDayComponent,
+      DayListComponent
     ],
     exports: [
       TlSchedule,

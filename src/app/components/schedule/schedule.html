@@ -1,44 +1,22 @@
 <div class="ui-wrapper-schedule">
   <div class="ui-schedule-header"></div>
-  <div  class="ui-schedule-body" [ngStyle]="{height: height}">
-    <div class="ui-schedule-slats">
+  <div  class="ui-schedule-body" [ngStyle]="{height: height}" [ngSwitch]="currentView">
+    <tl-view-day
+      *ngSwitchCase="'day'"
 
-      <!-- CREATE TIMES BOXES-->
-      <div class="ui-schedule-times">
-        <div class="ui-schedule-time-row" *ngFor="let time of timesCollection">
-          <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
-        </div>
-      </div>
+      [duration]="duration"
+      [currentDate]="currentDate"
+      [dataSource]="dataSource"
 
-      <!-- CREATE WIDGET CONTENT-->
-      <div #scheduleSlats class="ui-schedule-widget-content">
-        <div *ngFor="let time of timesCollection; let last = last" class="ui-schedule-widget-rows">
-          <div class="ui-schedule-row" [ngClass]="{last: last}" (dblclick)="rowClick.emit( time )"></div>
-          <div class="ui-schedule-row" [ngClass]="{last: last}" (dblclick)="rowClick.emit( time )"></div>
-        </div>
-      </div>
+      [startDayMilliseconds]="startDayMilliseconds"
+      [endDayMilliseconds]="endDayMilliseconds"
+      [eventsPositionsByStart]="eventsPositionsByStart"
+      [eventsPositionsByEnd]="eventsPositionsByEnd"
+    ></tl-view-day>
 
-    </div>
-    <div class="ui-schedule-skeleton" >
-      <div class="ui-schedule-grid-events">
-        <div class="ui-schedule-list-events">
-
-          <!-- CREATE EVENTS BOXES-->
-          <div class="ui-schedule-event-box" *ngFor="let event of dataSource; let index = index" [ngStyle]="calcPositionEvent( index, event)">
-            <div class="ui-schedule-description">
-              <div class="ui-event-title">{{event.title}}</div>
-              <div class="ui-event-detail">{{event.detail}}</div>
-            </div>
-            <div class="ui-event-hour">{{event.date.start | date: 'HH:mm'}} - {{event.date.end | date: 'HH:mm'}}</div>
-          </div>
-
-        </div>
-      </div>
-      <div class="ui-schedule-now-indicator ui-schedule-now-arrow"
-           [tooltip]="{text: currentDate | date: 'HH:mm', placement: 'right'}"
-           [ngStyle]="{top: nowIndicatorPositionTop + 'px'}">
-      </div>
-    </div>
+    <tl-day-list
+      *ngSwitchCase="'dayList'"
+    ></tl-day-list>
   </div>
   <div class="schedule-footer"></div>
 </div>

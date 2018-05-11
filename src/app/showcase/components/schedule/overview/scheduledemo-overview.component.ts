@@ -160,7 +160,7 @@ export class ScheduleDemoOverviewComponent {
     title: 'Jaisson Buccio - 14',
     detail: 'Consulta | Copel',
     allday: false,
-    date: { start: new Date().getTime() + 5400000 , end: new Date().getTime() + 7200000 }
+    date: { start: new Date().getTime() + 5400000 , end: new Date().getTime() + 10800000 }
   },
   {
     value: '15',

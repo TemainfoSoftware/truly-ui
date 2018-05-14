@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, QueryList, ViewChild, ElementRef,
-  AfterContentInit, Input, Output, EventEmitter, AfterViewInit
+  Component, ContentChildren, QueryList, ViewChild, ElementRef, AfterContentInit, Input, Output, EventEmitter,
+  AfterViewInit, ChangeDetectorRef, Renderer2
 } from '@angular/core';
 
 import { TlButtonGroupItem } from './buttongroup-item';
@@ -51,16 +51,18 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
 
     private item;
 
-    constructor( private buttonGroupService: ButtonGroupService ) {
+    constructor( private buttonGroupService: ButtonGroupService, private cd: ChangeDetectorRef, private renderer: Renderer2 ) {
     }
 
     ngAfterContentInit() {
-        this.createItemList();
+      this.createItemList();
+      this.cd.detectChanges();
     }
 
     ngAfterViewInit() {
       this.setPositions();
       this.removeBorders();
+      this.cd.detectChanges();
     }
 
     createItemList() {
@@ -150,10 +152,11 @@ export class TlButtonGroup implements AfterContentInit, AfterViewInit {
     }
 
     setItems() {
-        this.buttonGroupItem.toArray().forEach( ( item, index ) => {
+        this.buttonGroupItem.toArray().forEach( ( item, index, array ) => {
             item.index = index;
             item.height = parseInt(this.height, 10) + 'px';
-            this.list.nativeElement.appendChild( item._element.nativeElement );
+            this.renderer.appendChild(this.list.nativeElement, item._element.nativeElement );
+            this.cd.markForCheck();
         } );
     }
 

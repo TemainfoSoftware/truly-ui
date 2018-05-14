@@ -10,7 +10,7 @@
   </div>
 
   <!-- SCHEDULE BODY -->
-  <div  class="ui-schedule-body" [ngStyle]="{height: height}" [ngSwitch]="currentView">
+  <div  class="ui-schedule-body" [ngStyle]="{height: height}" [ngSwitch]="defaultView">
     <tl-view-day
       *ngSwitchCase="'day'"
       [duration]="duration"
@@ -18,6 +18,13 @@
       [dataSource]="dataSourceOfDay"
       [startDayMilliseconds]="startDayMilliseconds"
       [endDayMilliseconds]="endDayMilliseconds"
+
+      (onRowDbClick)="rowDbClick.emit($event)"
+      (onEventClick)="eventClick.emit($event)"
+      (onEventDbClick)="eventDbClick.emit($event)"
+      (onEventMouseover)="eventMouseover.emit($event)"
+      (onEventMouseout)="eventMouseout.emit($event)"
+
     ></tl-view-day>
 
     <tl-day-list

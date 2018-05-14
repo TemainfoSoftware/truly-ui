@@ -1,6 +1,6 @@
 import {
   Component, OnInit, OnChanges, AfterViewInit, ChangeDetectorRef, Input, ViewChild, ElementRef, SimpleChanges,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy, Output, EventEmitter
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
 
@@ -23,6 +23,16 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() endDayMilliseconds: number;
 
   @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
+
+  @Output() onRowDbClick = new EventEmitter();
+
+  @Output() onEventDbClick = new EventEmitter();
+
+  @Output() onEventClick = new EventEmitter();
+
+  @Output() onEventMouseover = new EventEmitter();
+
+  @Output() onEventMouseout = new EventEmitter();
 
   public nowIndicatorPositionTop: number;
 

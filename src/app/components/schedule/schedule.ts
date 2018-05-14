@@ -33,7 +33,7 @@ import { ScheduleDataSource } from './types/datasource.type';
 })
 export class TlSchedule implements OnInit, OnChanges {
 
-  @Input() currentView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
+  @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
   @Input() views: ['day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'] = ['day', 'dayList'];
 
@@ -66,7 +66,15 @@ export class TlSchedule implements OnInit, OnChanges {
     return this._endDayHour;
   }
 
-  @Output() rowClick = new EventEmitter();
+  @Output() rowDbClick = new EventEmitter();
+
+  @Output() eventDbClick = new EventEmitter();
+
+  @Output() eventClick = new EventEmitter();
+
+  @Output() eventMouseover = new EventEmitter();
+
+  @Output() eventMouseout = new EventEmitter();
 
   public startDayMilliseconds: number;
 
@@ -95,7 +103,7 @@ export class TlSchedule implements OnInit, OnChanges {
   }
 
   onChangeView( view ) {
-    this.currentView = view;
+    this.defaultView = view;
   }
 
   onChangeNavigator($event) {

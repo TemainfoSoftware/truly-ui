@@ -43,11 +43,11 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() duration = 30;
 
-  @Input('dataSource') set dataSource( dataSource: ScheduleDataSource[] ) {
-    this._dataSource = dataSource.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
+  @Input('events') set events( events: ScheduleDataSource[] ) {
+    this._events = events.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
   }
-  get dataSource () {
-    return this._dataSource;
+  get events () {
+    return this._events;
   }
 
   @Input('startDayHour') set startDayHour( hours: string ) {
@@ -84,9 +84,9 @@ export class TlSchedule implements OnInit, OnChanges {
 
   public endDayMilliseconds: number;
 
-  public dataSourceOfDay: ScheduleDataSource[];
+  public eventsOfDay: ScheduleDataSource[];
 
-  private _dataSource: ScheduleDataSource[];
+  private _events: ScheduleDataSource[];
 
   private _startDayHour: string;
 
@@ -95,14 +95,14 @@ export class TlSchedule implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
-    this.getDataSourceOfDay();
+    this.getEventsOfDay();
   }
 
   ngOnChanges(  changes: SimpleChanges  ) {
     if ( !changes['currentDate'] ) { return; }
     if ( ! changes['currentDate'].firstChange) {
       this.refreshStartAndEndDay();
-      this.getDataSourceOfDay();
+      this.getEventsOfDay();
     }
   }
 
@@ -114,7 +114,7 @@ export class TlSchedule implements OnInit, OnChanges {
   onChangeDate($event) {
     this.currentDate = new Date( $event.year, $event.month, $event.day);
     this.refreshStartAndEndDay();
-    this.getDataSourceOfDay();
+    this.getEventsOfDay();
     this.changeDate.emit( $event );
   }
 
@@ -136,8 +136,8 @@ export class TlSchedule implements OnInit, OnChanges {
   }
 
 
-  private getDataSourceOfDay() {
-    this.dataSourceOfDay = this._dataSource.filter( ( event ) => {
+  private getEventsOfDay() {
+    this.eventsOfDay = this.events.filter( ( event ) => {
       return ( event.date.start >= this.startDayMilliseconds ) && ( event.date.end <= this.endDayMilliseconds );
     });
   }

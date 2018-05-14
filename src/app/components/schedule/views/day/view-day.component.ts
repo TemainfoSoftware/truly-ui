@@ -16,7 +16,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() currentDate = new Date();
 
-  @Input() dataSource: ScheduleDataSource[];
+  @Input() events: ScheduleDataSource[];
 
   @Input() startDayMilliseconds: number;
 
@@ -55,8 +55,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges( changes: SimpleChanges ) {
-    if ( !changes['dataSource'] ) { return; }
-    if (! changes['dataSource'].firstChange) {
+    if ( !changes['events'] ) { return; }
+    if (! changes['events'].firstChange) {
       this.changeDetectionRef.detectChanges();
     }
   }
@@ -94,7 +94,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
     if ( ( countSameStartHour !== countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
       const indice = index - ( ( indexOfinStart - ( indexOfinStart - indexOfInEnd ) + 1 ) );
-      const eventDroped = this.dataSource[ indice ].date.end;
+      const eventDroped = this.events[ indice ].date.end;
       const firstEventDroped = this.eventsPositionsByEnd[ eventDroped ].length;
       quantidadeLinhaAbaixo = firstEventDroped - (indexOfinStart - indexOfInEnd);
 
@@ -148,7 +148,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
     if ( ( countSameStartHour !== countSameStartEnd ) && ( indexOfinStart > indexOfInEnd ) ) {
       const indice = index - ( ( indexOfinStart - ( indexOfinStart - indexOfInEnd ) + 1 ) );
-      const eventDroped = this.dataSource[ indice ].date.end;
+      const eventDroped = this.events[ indice ].date.end;
       const firstEventDroped = this.eventsPositionsByEnd[ eventDroped ].length;
       quantidadeLinhaAbaixo = firstEventDroped - (indexOfinStart - indexOfInEnd);
 
@@ -212,7 +212,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   private generateEventsPositions() {
-    this.dataSource.forEach((value ) => {
+    this.events.forEach((value ) => {
       if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
         this.eventsPositionsByStart[value.date.start] = [];
       }
@@ -220,7 +220,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
         this.eventsPositionsByEnd[value.date.end] = [];
       }
     });
-    this.dataSource.forEach((value ) => {
+    this.events.forEach((value ) => {
       if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
         this.eventsPositionsByStart[value.date.start].push(value);
       }

@@ -22,7 +22,7 @@
 
       <!-- CREATE EVENTS BOXES-->
       <div class="ui-schedule-event-box"
-           *ngFor="let event of dataSource; let index = index"
+           *ngFor="let event of events; let index = index"
            [ngStyle]="calcPositionEvent( index, event)"
 
            (click)="onEventClick.emit(event)"

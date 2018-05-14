@@ -22,6 +22,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() endDayMilliseconds: number;
 
+  @Input() showNowIndicator = false;
+
   @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
 
   @Output() onRowDbClick = new EventEmitter();
@@ -201,8 +203,10 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private inicializeNowIndicator() {
-    this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
-    this.changeDetectionRef.detectChanges();
+    if ( this.showNowIndicator ) {
+      this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
+      this.changeDetectionRef.detectChanges();
+    }
   }
 
 

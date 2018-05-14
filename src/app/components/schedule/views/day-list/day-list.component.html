@@ -1,3 +1,17 @@
-<p>
-  day-list works!
-</p>
+<div class="ui-schedule-daylist-wrapper">
+  <div class="ui-schedule-daylist-events">
+    <div class="ui-schedule-event-box"
+         *ngFor="let event of events; let index = index"
+         (click)="onEventClick.emit(event)"
+         (dblclick)="onEventDbClick.emit(event)"
+         (mouseover)="onEventMouseout.emit(event)"
+         (mouseout)="onEventMouseout.emit(event)"
+    >
+      <div class="ui-event-hour">{{event.date.start | date: 'HH:mm'}} - {{event.date.end | date: 'HH:mm'}}</div>
+      <div class="ui-schedule-description">
+        <div class="ui-event-title">{{event.title}}</div>
+        <div class="ui-event-detail">{{event.detail}}</div>
+      </div>
+    </div>
+  </div>
+</div>

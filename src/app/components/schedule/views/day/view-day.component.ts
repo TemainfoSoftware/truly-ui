@@ -43,7 +43,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   public eventsPositionsByEnd = [];
 
 
-  constructor( private changeDetectionRef: ChangeDetectorRef  ) { }
+  constructor( private changeDetectionRef: ChangeDetectorRef ) { }
 
   ngOnInit() {
     this.generateEventsPositions();

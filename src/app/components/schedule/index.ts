@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BlockUIModule } from '../blockui';
 import { ButtonModule } from '../button';
 import { ButtonGroupModule } from '../buttongroup';
 
@@ -24,6 +25,7 @@ export * from './schedule';
       TooltipModule,
       ButtonGroupModule,
       NavigatorModule,
+      BlockUIModule,
       ButtonModule
     ],
     declarations: [

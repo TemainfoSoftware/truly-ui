@@ -41,6 +41,8 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
 
   @Input() tlBlockui: boolean;
 
+  @Input() dimensionsFrom: 'parent' | 'client' = 'client';
+
   @Input() blockuiConfig: BlockUIConfig = new BlockUIConfig();
 
   private overlayElement: ElementRef;
@@ -82,12 +84,26 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
   }
 
   private show() {
-    if ( this.happenedResize() ) {
-      this.buildLoadingElement();
-    }
-    this.renderer.setStyle( this.elementRef.nativeElement, 'filter', 'blur(1px)' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'table' );
+    setTimeout(() => {
+      if ( this.happenedResize() ) {
+        this.buildLoadingElement();
+      }
+      this.renderer.setStyle( this.elementRef.nativeElement, 'filter', 'blur(1px)' );
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px' );
+
+      if (this.dimensionsFrom === 'client') {
+        this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px' );
+        this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px' );
+      } else {
+        this.renderer.setStyle( this.overlayElement.nativeElement, 'height',
+          this.elementRef.nativeElement.offsetParent.clientHeight + 'px' );
+        this.renderer.setStyle( this.overlayElement.nativeElement, 'width',
+          this.elementRef.nativeElement.offsetParent.clientWidth + 'px' );
+      }
+
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'table' );
+
+    }, 50);
   }
 
   private getElementRefFromInstance() {
@@ -109,8 +125,15 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
   }
 
   private buildLoadingElement() {
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px' );
+
+    if (this.dimensionsFrom === 'client') {
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px' );
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px' );
+    } else {
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.offsetParent.clientHeight + 'px' );
+      this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.offsetParent.clientWidth + 'px' );
+    }
+
     this.renderer.setStyle( this.overlayElement.nativeElement, 'position', 'absolute' );
     this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'none' );
     this.renderer.setStyle( this.overlayElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)' );

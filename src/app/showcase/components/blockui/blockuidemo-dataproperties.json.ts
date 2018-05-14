@@ -28,6 +28,13 @@ export const dataProperties = [
     options: 'Object'
   },
   {
+    name: 'dimensionsFrom',
+    type: 'string',
+    default: 'client',
+    description: 'Choose which element to take the dimensions of Hight and Width',
+    options: 'parent | client'
+  },
+  {
     name: 'blockuiConfig.spin',
     type: 'boolean',
     default: 'false',

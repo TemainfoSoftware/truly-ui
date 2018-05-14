@@ -66,6 +66,10 @@ export class TlSchedule implements OnInit, OnChanges {
     return this._endDayHour;
   }
 
+  @Output() changeView = new EventEmitter();
+
+  @Output() changeDate = new EventEmitter();
+
   @Output() rowDbClick = new EventEmitter();
 
   @Output() eventDbClick = new EventEmitter();
@@ -104,12 +108,14 @@ export class TlSchedule implements OnInit, OnChanges {
 
   onChangeView( view ) {
     this.defaultView = view;
+    this.changeView.emit( view );
   }
 
-  onChangeNavigator($event) {
+  onChangeDate($event) {
     this.currentDate = new Date( $event.year, $event.month, $event.day);
     this.refreshStartAndEndDay();
     this.getDataSourceOfDay();
+    this.changeDate.emit( $event );
   }
 
   private transformHourToMileseconds( fullHour: string ) {

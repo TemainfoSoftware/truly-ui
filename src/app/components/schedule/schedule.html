@@ -4,8 +4,9 @@
   <div class="ui-schedule-header">
     <tl-schedule-heading
       [views]="views"
+      [defaultView]="defaultView"
       (changeView)="onChangeView($event)"
-      (changeNavigator)="onChangeNavigator($event)"
+      (changeDate)="onChangeDate($event)"
     ></tl-schedule-heading>
   </div>
 

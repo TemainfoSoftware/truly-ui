@@ -42,6 +42,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   public eventsPositionsByEnd = [];
 
+  public currentTime = new Date();
 
   constructor( private changeDetectionRef: ChangeDetectorRef ) { }
 
@@ -57,6 +58,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges( changes: SimpleChanges ) {
     if ( !changes['events'] ) { return; }
     if (! changes['events'].firstChange) {
+      this.generateEventsPositions();
+      this.inicializeNowIndicator();
       this.changeDetectionRef.detectChanges();
     }
   }
@@ -206,8 +209,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   private convertMillisecondsToPixel(date = new Date().getTime()) {
     const heightBody = this.scheduleSlats.nativeElement.offsetHeight;
     const currentDate = date - this.startDayMilliseconds;
+    const converted = ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
 
-    return ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
+    return converted > heightBody ? -1000 : converted;
   }
 
 

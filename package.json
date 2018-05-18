@@ -69,7 +69,7 @@
     "ionicons-npm": "^2.0.1",
     "jquery": "^3.2.1",
     "ngx-highlight-js": "^1.0.2",
-    "ngx-highlightjs": "^1.4.1",
+    "ngx-highlightjs": "^2.0.0",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.1.0",

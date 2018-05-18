@@ -6,9 +6,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/of';
+import { of } from 'rxjs';
+
 
 export interface ValidationResult {[validator: string]: string | boolean; }
 
@@ -51,10 +50,10 @@ export const validate =
       }
 
       if (validators) {
-        return Observable.of(synchronousValid());
+        return of(synchronousValid());
       }
 
-      return Observable.of(null);
+      return of(null);
     };
   };
 

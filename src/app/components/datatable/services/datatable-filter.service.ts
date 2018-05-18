@@ -22,8 +22,7 @@
 
 import { Injectable } from '@angular/core';
 import { TlDatatable } from '../datatable';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subject } from 'rxjs';
  import { TlDatatableFilterConstraints } from './datatable-filter-constraints.service';
  import { FilterEventMetadata } from '../metadatas/filter.metadata';
 

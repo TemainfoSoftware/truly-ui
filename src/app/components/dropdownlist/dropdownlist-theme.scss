@@ -38,7 +38,6 @@
         color: map-deep-get($basic, "default", "foreground");
       }
       > .dropdown-list-wrapper-select {
-        border: 1px solid map-deep-get($basic, "default", "border");
         > .dropdown-list-select {
           border: 1px solid map-deep-get($basic, "default", "border");
           background-color: map-deep-get($basic, "default", "background");
@@ -80,13 +79,8 @@
   }
 
   .search-input {
-    >.search-input-icon {
-      color:  map-deep-get($basic, "default", "foreground");
-    }
-    >.search-input-field {
-      color:  map-deep-get($basic, "default", "foreground");
-      border: 1px solid  map-deep-get($basic, "default", "border");
-    }
+    background-color: map-deep-get($basic, "default", "background");
+    border: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .selected {

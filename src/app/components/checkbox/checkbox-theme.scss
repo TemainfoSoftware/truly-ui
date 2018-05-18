@@ -1,6 +1,8 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-checkbox-theme-schema( $theme, $action ){
+@mixin _tl-checkbox-theme-schema( $theme, $action ) {
+
+  $basic:   map-deep-get($theme, 'basic');
 
   @mixin checkbox-color() {
     background-color: map-deep-get($theme, $action, "checked", "background");
@@ -12,8 +14,8 @@
   }
 
   input[type='checkbox']:after {
-    background-color: map-deep-get($theme, $action, "default", "background");
-    border: 1px solid map-deep-get($theme, $action, "default", "border");
+    background-color: map-deep-get($basic, "default", "background");
+    border: 1px solid map-deep-get($basic, "default", "border");
   }
 
   input[type='checkbox']:disabled:after {

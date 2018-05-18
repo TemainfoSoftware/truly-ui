@@ -33,10 +33,10 @@
     vertical-align: middle;
   }
   .addon.-borderleft {
-    border-radius: 2px 0 0 2px;
+    border-radius: 3px 0 0 3px;
   }
   .addon.-borderright {
-    border-radius: 0 2px 2px 0;
+    border-radius: 0 3px 3px 0;
   }
   .addon.-clearbutton {
     font-size: 11px;
@@ -82,11 +82,21 @@
       height: 23px;
       padding: 4px 6px;
       padding-right: 20px;
-      font-size: 10pt;
+      font-size: 12px;
       width: 100%;
       float: right;
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      transition: all 230ms ease-in-out;
+      border-radius: 3px;
+      &.-borderleft{
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      &.-borderright {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
     }
     > .field::placeholder {
       @include textInput;

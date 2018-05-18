@@ -37,10 +37,9 @@
              }">
 
             <div class="search-input" *ngIf="searchOnList">
-                <i class="search-input-icon ion-ios-search-strong"></i>
-                <input #searchInput class="search-input-field"
-                       (keyup)="onKeyDownSearchInput($event); onListOpened($event)"
-                       [ngStyle]="{'width': showOnlyIcon ? width : (wrapper.offsetWidth) + 'px'}">
+              <tl-input (keyup)="onKeyDownSearchInput($event); onListOpened($event)"
+                        #searchInput [iconBefore]="'ion-ios-search-strong'">
+              </tl-input>
             </div>
 
             <div class="-placeholder"

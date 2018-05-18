@@ -25,7 +25,7 @@ import {
 import { Router } from '@angular/router';
 import { TlAdvancedRootMenu } from '../advanced-root-menu';
 import { RelativeWindowPosition } from '../../../../misc/relative-window-position.directive';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { SubMenuService } from '../../../services/submenu.service';
 
 @Component( {

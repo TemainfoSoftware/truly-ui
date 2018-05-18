@@ -33,23 +33,6 @@
         color:map-deep-get($basic, "default", "foreground");
       }
 
-      //& .input:focus {
-      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
-      //  outline: none;
-      //  border: 1px solid map-deep-get($warning, "default", "border");
-      //}
-      //
-      //& .input-empty:focus {
-      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
-      //  outline: none;
-      //  border: 1px solid map-deep-get($warning, "default", "border");
-      //}
-      //
-      //& .focused{
-      //  background-color: rgba(map-deep-get($warning, "default", "background"), 0.1);
-      //  outline: none;
-      //  border: 1px solid map-deep-get($warning, "default", "border");
-      //}
       & .input {
         background: map-deep-get($light, "default", "background");
         color: map-deep-get($light, "default", "foreground");
@@ -75,11 +58,11 @@
         outline: 1px solid map-deep-get($primary, "default", "background");
       }
 
-      & .tags span {
+      & .group-tags span {
         color: map-deep-get($primary, "default", "foreground");
       }
 
-      & .tags span b {
+      & .group-tags span b {
         border-left: 1px solid map-deep-get($primary, "default", "foreground");
       }
 

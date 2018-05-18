@@ -73,7 +73,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
 
     private lastScrollTop = 0;
 
-    private lastScrollLeft= 0;
+    private lastScrollLeft = 0;
 
     private scrollDirection = 'DOWN';
 
@@ -433,7 +433,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         if (this.activeElement.previousElementSibling) {
             if ( this.cursorViewPortPosition > 1  ) {
                 this.cursorViewPortPosition --;
-            }else {
+            } else {
                 this.listComponent.nativeElement.scrollTop -= this.dt.rowHeight;
             }
             this.setFocus( this.activeElement.previousElementSibling );
@@ -444,7 +444,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         if (this.activeElement.nextElementSibling) {
             if ( this.cursorViewPortPosition < this.quantityVisibleRows ) {
                  this.cursorViewPortPosition ++;
-            }else {
+            } else {
               this.listComponent.nativeElement.scrollTop += this.dt.rowHeight;
             }
             this.setFocus( this.activeElement.nextElementSibling );
@@ -472,7 +472,7 @@ export class TlDatatableScrollableMode implements AfterContentInit {
         if ( this.isScrollDown() ) {
              const elementToFind = 'tr[row="' + ( this.lastRowViewport - 1 ) + '"]';
              return this.listBody.nativeElement.querySelector(elementToFind);
-        }else {
+        } else {
             const elementToFind = 'tr[row="' + ( ( this.lastRowViewport - this.quantityVisibleRows ) ) + '"]';
             return this.listBody.nativeElement.querySelector(elementToFind);
         }

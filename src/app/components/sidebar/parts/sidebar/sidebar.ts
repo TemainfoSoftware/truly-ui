@@ -24,7 +24,7 @@ import {
   SimpleChanges, OnChanges, AfterContentInit, ViewContainerRef, ComponentFactoryResolver, Renderer2,
   ElementRef
 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { TlBackdrop } from '../../../core/components/backdrop/backdrop';
 
 @Component( {

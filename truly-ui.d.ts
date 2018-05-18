@@ -1,3 +1,4 @@
+export * from './components/accordion/index';
 export * from './components/autocomplete/index';
 export * from './components/button/index';
 export * from './components/buttongroup/index';
@@ -28,8 +29,10 @@ export * from './components/sidebar/index';
 export * from './components/panelgroup/index';
 export * from './components/progressbar/index';
 export * from './components/radiobutton/index';
+export * from './components/schedule/index';
 export * from './components/splitbutton/index';
 export * from './components/tabcontrol/index';
+export * from './components/toaster/index';
 export * from './components/toolbar/index';
 export * from './components/tooltip/index';
 export * from './components/validators/index';

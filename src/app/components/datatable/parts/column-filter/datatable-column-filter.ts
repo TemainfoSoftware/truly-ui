@@ -23,9 +23,10 @@
 import {
     Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
+import { debounceTime } from 'rxjs/internal/operators';
+import { Subject } from 'rxjs';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
+
 
 @Component({
     selector: '[tlColumnFilter]',
@@ -45,7 +46,7 @@ export class TlDatatabaleColumnFilter implements OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.subject.debounceTime(600).subscribe((event) => {
+        this.subject.pipe( debounceTime(600) ).subscribe((event) => {
             if (event !== undefined) {
                 const filterEventObject = this.makeFilterEvent();
                 this.filterEvent.emit( filterEventObject ) ;

@@ -1,0 +1,41 @@
+* {
+  user-select: none;
+}
+
+.ui-wrapper-accordion-item {
+  height: auto;
+  max-height: 1000px;
+  transition: max-height 500ms linear;
+}
+
+.ui-accordion-item-header {
+  display: grid;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-size: 1.2em;
+  color: #aaaaaa;;
+  border-top: 1px solid #DCDCDC;
+  border-bottom: 1px solid #DCDCDC;
+  box-sizing: border-box;
+  grid-template-columns: 40px 1fr;
+
+  > .ui-accordion-arrow {
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaaaaa;
+  }
+
+  &:hover {
+    background: #F6F6F6;
+    cursor: pointer;
+  }
+}
+
+.opened {
+  background: #F6F6F6;
+}
+
+.ui-accordion-item-content {
+  padding: 10px;
+}
+
+

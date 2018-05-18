@@ -27,7 +27,7 @@ import { ContainerModalService } from './addons/container-modal/container-modal.
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 
 let lastZIndex = 1;
 

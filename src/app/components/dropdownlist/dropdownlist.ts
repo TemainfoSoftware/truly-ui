@@ -32,12 +32,13 @@ import {
 } from '@angular/core';
 
 import { style, transition, trigger, animate, state } from '@angular/animations';
+import { debounceTime } from 'rxjs/internal/operators';
 
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
+import { Subject } from 'rxjs';
+
 import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 
@@ -141,7 +142,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   ngOnInit() {
     this.getTopPosition();
-    this.subject.debounceTime( 200 ).subscribe( searchTextValue => {
+    this.subject.pipe( debounceTime( 200 ) ).subscribe( searchTextValue => {
       this.handleSearch( searchTextValue );
     } );
   }
@@ -189,7 +190,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   isSearchInput( event ) {
     if ( this.searchInput ) {
-      return event.target === this.searchInput.nativeElement;
+      return event.target === this.searchInput.input.nativeElement;
     }
   }
 
@@ -229,7 +230,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   handleFocusSearchInput() {
     if ( this.searchInput ) {
-      return this.searchInput.nativeElement.focus();
+      return this.searchInput.input.nativeElement.focus();
     }
     this.setWrapperFocus();
   }
@@ -243,10 +244,9 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   }
 
   selectValueModelLoaded() {
-    this.datasource.forEach( ( item ) => {
-      if ( this.model.model === item[ this.value ] ) {
-        this.setValueInputAsLabel( item );
-        this.itemSelected = item;
+    this.datasource.forEach( ( item, index ) => {
+      if ( this.model.model === item[ this.valueItem ] ) {
+        this.selectOption(item, index);
       }
     } );
   }

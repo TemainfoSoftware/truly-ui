@@ -1,0 +1,88 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Accordion <span
+      class="module-name"><code><u>Module Name</u>: <strong>AccordionModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>AccordionModule</strong></code></p>
+    <p class="text-content">Displays collapsible content panels for presenting information in a limited amount of
+      space.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <tl-accordion [singleOpened]="true">
+                <tl-accordion-item [title]="'Title of the first content'">
+                  <h4>Content 1</h4>
+                  <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley
+                    of type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+                    also the leap
+                    into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                    the release of
+                    Letraset sheets containing Lorem Ipsum passages, a
+                    nd more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                    Ipsum.</p>
+                </tl-accordion-item>
+                <tl-accordion-item [title]="'Title of the second content'">
+                  <h4>Content 2</h4>
+                  <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley
+                    of type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+                    also the leap
+                    into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                    the release of
+                    Letraset sheets containing Lorem Ipsum passages, a
+                    nd more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                    Ipsum.</p>
+                </tl-accordion-item>
+                <tl-accordion-item [title]="'Title of the third content'">
+                  <h4>Content 3</h4>
+                  <p> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley
+                    of type and scrambled it to make a type specimen book. It has survived not only five centuries, but
+                    also the leap
+                    into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+                    the release of
+                    Letraset sheets containing Lorem Ipsum passages, a
+                    nd more recently with desktop publishing software like Aldus PageMaker including versions of Lorem
+                    Ipsum.</p>
+                </tl-accordion-item>
+              </tl-accordion>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-accordion [singleOpened]="true">
+  <tl-accordion-item [title]="'Title of the first content'">
+    <!--Content 1-->
+  </tl-accordion-item>
+  <tl-accordion-item [title]="'Title of the second content'">
+    <!--Content 2-->
+  </tl-accordion-item>
+  <tl-accordion-item [title]="'Title of the third content'">
+    <!--Content 3-->
+  </tl-accordion-item>
+</tl-accordion>
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <div class="setup">
+      <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+        <app-card>
+          <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        </app-card>
+      </app-showcase-card>
+      <!--<app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+        <app-card>
+          <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+        </app-card>
+      </app-showcase-card>-->
+    </div>
+  </div>
+</div>

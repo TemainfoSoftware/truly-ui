@@ -30,8 +30,7 @@ import { TlDatatableFilterService } from './services/datatable-filter.service';
 import { TlDatatableDataSource } from './services/datatable-datasource.service';
 import { TlDatatableColumnService } from './services/datatable-column.service';
 import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
+import { Subject ,  Observable } from 'rxjs';
 import { TlDatatableSortService } from './services/datatable-sort.service';
 
 @Component({
@@ -111,11 +110,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     private loadingSubject = new Subject<any>();
 
     private _loading = false;
-    set loading(value){
+    set loading(value) {
         this._loading = value;
         this.loadingSubject.next(value);
     }
-    get loading(){
+    get loading() {
         return this._loading;
     }
 

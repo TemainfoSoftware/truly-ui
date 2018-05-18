@@ -21,7 +21,7 @@
 */
 
 import { Injectable, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
 import { DatasourceService } from '../interfaces/datasource.service';

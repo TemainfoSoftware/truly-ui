@@ -24,11 +24,12 @@ import {
 } from '@angular/core';
 
 import { trigger, transition, style, animate } from '@angular/animations';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/filter';
+import { Subject } from 'rxjs';
+
+
+
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/internal/operators';
 import { TlAdvancedSubMenu } from './parts/advanced-sub-menu';
 
 @Component( {
@@ -129,18 +130,18 @@ export class TlAdvancedRootMenu implements AfterContentInit {
   @ViewChild( 'wrapperItems' ) wrapperItems: ElementRef;
 
   constructor( private change: ChangeDetectorRef, private router: Router ) {
-    this.modelChanged
-      .debounceTime( 200 )
-      .distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue )
-      .filter( ( searchTerm ) => {
+    this.modelChanged.pipe(
+      debounceTime( 200 ),
+      distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue ),
+      filter( ( searchTerm ) => {
         if ( this.isTermGreaterThanChars( searchTerm ) ) { return true;
         } else if ( this.isTermLengthEqualsZero( searchTerm ) ) {
           this.rebuildMenu();
           return false;
         }
         return false;
-      } )
-      .subscribe( model => this.filterMenuItem( model ) );
+      }),
+    ).subscribe( model => this.filterMenuItem( model ) );
   }
 
   ngAfterContentInit() {

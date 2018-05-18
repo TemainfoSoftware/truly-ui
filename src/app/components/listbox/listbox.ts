@@ -29,13 +29,9 @@ import {
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { Subject } from 'rxjs/Subject';
-
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/catch';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, filter } from 'rxjs/internal/operators';
+import { debounceTime } from 'rxjs/operators';
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
@@ -202,25 +198,25 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnInit() {
-    this.subject
-      .debounceTime( 200 )
-      .distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue )
-      .filter( ( searchTerm ) => {
+    this.subject.pipe(
+      debounceTime( 200 ),
+      distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue ),
+      filter( ( searchTerm ) => {
         if ( String( searchTerm ).length >= this.charsToSearch ) {
           return true;
         }
         this.handleSearchAsDefaultData();
         return false;
-      } )
-      .subscribe( searchTextValue => {
-        this.handleSearch( searchTextValue );
-        this.filterData.emit( this.filteredData );
-        setTimeout( () => {
-          this.removeSelected();
-          this.resetCursors();
-          this.addClassSelected( 0 );
-        }, 1 );
-      } );
+      })
+    ).subscribe( searchTextValue => {
+      this.handleSearch( searchTextValue );
+      this.filterData.emit( this.filteredData );
+      setTimeout( () => {
+        this.removeSelected();
+        this.resetCursors();
+        this.addClassSelected( 0 );
+      }, 1 );
+    });
   }
 
   ngAfterViewInit() {
@@ -750,19 +746,19 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   filterDataObject( searchTerm ) {
-    const filter = [];
+    const filterBy = [];
     this.filtering = true;
     const data = this.lazyMode ? this.data.data : this.data;
     data.forEach( ( item ) => {
       this.searchQuery.forEach( ( query ) => {
         if ( String( item[ query ] ).toLowerCase().trim().includes( searchTerm.toLowerCase().trim() ) ) {
-          if ( filter.indexOf( item ) === -1 ) {
-            filter.push( item );
+          if ( filterBy.indexOf( item ) === -1 ) {
+            filterBy.push( item );
           }
         }
       } );
     } );
-    return filter;
+    return filterBy;
   }
 
   renderPageData() {
@@ -791,11 +787,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       const keyName = this.searchQuery[ item ];
       fields[ keyName ] = { matchMode: 'contains', value: term };
     } );
-    const filter = {
+    const filterBy = {
       fields: fields,
       operator: 'or'
     };
-    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filter } );
+    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filterBy } );
   }
 
   renderList() {

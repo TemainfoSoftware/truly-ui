@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class HeadingComponent implements OnInit {
 
-  @Input() views: ['day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'] = ['day', 'dayList'];
+  @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
 
   @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 

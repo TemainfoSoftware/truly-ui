@@ -35,7 +35,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
-  @Input() views: ['day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'] = ['day', 'dayList'];
+  @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
 
   @Input() currentDate = new Date();
 

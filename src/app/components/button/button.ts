@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit,
+  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit, ChangeDetectorRef,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';
@@ -39,6 +39,10 @@ import { KeyEvent } from '../core/enums/key-events';
 export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewInit {
 
     @Input() text = '';
+
+    @Input() first = false;
+
+    @Input() last = false;
 
     @Input() iconAddonBefore = '';
 
@@ -88,7 +92,8 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
     }
 
     constructor( public button: ElementRef, public modalService: ModalService,
-                 tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+                 tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
+                 private cd: ChangeDetectorRef ) {
         super( tabIndexService, idService, nameService );
     }
 
@@ -105,6 +110,7 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
         if ( !ModalResult.propertyIsEnumerable( String( this.mdResult ) ) && this.mdResult !== undefined ) {
             throw new EvalError( this.mdResult + ' is not valid ModalResult value' );
         }
+        this.cd.detectChanges();
     }
 
     handleHeadElementButton() {
@@ -137,7 +143,7 @@ export class TlButton extends ComponentDefaultBase implements OnInit, AfterViewI
     executeToggle() {
         if ( this.toggle ) {
             if ( this._buttonSelected ) {
-                this.toggleClassName = '-toggle';
+                this.toggleClassName = '-active';
                 this.selected.emit( { selected : this._buttonSelected } );
                 this._buttonSelected = false;
             } else {

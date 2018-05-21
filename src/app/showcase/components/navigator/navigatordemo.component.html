@@ -38,7 +38,15 @@
 
           </app-card>
           <app-card>
-            <div class="col-md-12">
+            <div class="col-md-4">
+              <h5>With Day Type</h5>
+              <tl-navigator [type]="'day'"></tl-navigator>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-navigator [type]="'day'"></tl-navigator>
+</textarea>
+            </div>
+            <div class="col-md-8">
               <h5>Without Border</h5>
               <tl-navigator [withBorder]="false"></tl-navigator>
               <div class="spacer"></div>

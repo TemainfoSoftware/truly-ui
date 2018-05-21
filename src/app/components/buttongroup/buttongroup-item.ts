@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input, AfterContentInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, AfterContentInit, ChangeDetectorRef } from '@angular/core';
 
 import { ButtonGroupService } from './buttongroup.service';
 
@@ -46,7 +46,7 @@ export class TlButtonGroupItem implements AfterContentInit {
 
     @Input() checkedItem = null;
 
-    public height: string;
+    public height = '30px';
 
     public index = -1;
 
@@ -58,12 +58,11 @@ export class TlButtonGroupItem implements AfterContentInit {
         return this._buttonSelected;
     }
 
-    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService ) {
-        this.height = null;
-    }
+    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService, private cd: ChangeDetectorRef ) {}
 
     ngAfterContentInit() {
         this.isPreselectedItem();
+        this.cd.detectChanges();
     }
 
     @HostListener( 'click', [ '$event' ] )

@@ -30,7 +30,12 @@
 
   &:active{
     background-color: map-deep-get($theme, $action, "active", "background");
+    color: map-deep-get($theme, $action, "active", "foreground");
+  }
 
+  &.-active {
+    outline: none;
+    background-color: map-deep-get($theme, $action, "active", "background");
     color: map-deep-get($theme, $action, "active", "foreground");
   }
 
@@ -87,11 +92,6 @@
       outline: -webkit-focus-ring-color auto 5px;
       outline-color: -webkit-focus-ring-color;
       outline-style: auto;
-    }
-
-    &:active, .-toggle {
-      //  outline: none;
-      // background-color: $active !important;
     }
 
   //  &.disabled{

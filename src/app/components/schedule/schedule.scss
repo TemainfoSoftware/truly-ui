@@ -1,5 +1,17 @@
-.wrapper-schedule {
-  width: 260px;
-  outline: none;
-  box-sizing: content-box;
+.ui-wrapper-schedule {
+  width: 100%;
+}
+
+.ui-schedule-header{
+  border-top: 1px solid #D6D6D6;
+  border-left: 1px solid #D6D6D6;
+  border-right: 1px solid #D6D6D6;
+  height: 50px;
+  width: 100%;
+}
+
+.ui-schedule-body {
+  border: 1px solid #D6D6D6;
+  overflow-x: auto;
+  position: relative;
 }

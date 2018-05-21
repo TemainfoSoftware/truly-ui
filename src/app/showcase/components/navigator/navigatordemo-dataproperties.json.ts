@@ -18,7 +18,7 @@ export const dataProperties = [
     type: 'string',
     default: 'monthyear',
     description: 'Navigator type of operation.',
-    options: 'monthyear | year | rangeyear'
+    options: 'monthyear | year | rangeyear | day'
   },
   {
     name: 'date',

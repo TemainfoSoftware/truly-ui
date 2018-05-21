@@ -2,11 +2,6 @@
 
 @mixin _tl-switch-theme-schema( $theme, $action ){
 
-  @mixin switch-color() {
-    background-color: map-deep-get($theme, $action, "checked", "background");
-    border: 1px solid map-deep-get($theme, $action, "checked", "border");
-  }
-
   input:checked + .slider {
     background-color: map-deep-get($theme, $action, "checked", "background");
     border: 1px solid map-deep-get($theme, $action, "default", "border");

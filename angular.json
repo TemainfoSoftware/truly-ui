@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "truly-ui": {
+    "truly-ui-project": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -26,7 +26,7 @@
               "node_modules/ionicons-npm/css/ionicons.min.css",
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
-              "src/app/components/core/styles/icons/dx-icons/dx-icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
               "src/styles.scss"
             ],
             "scripts": [
@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "truly-ui:build"
+            "browserTarget": "truly-ui-project:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "truly-ui:build:production"
+              "browserTarget": "truly-ui-project:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "truly-ui:build"
+            "browserTarget": "truly-ui-project:build"
           }
         },
         "test": {
@@ -92,7 +92,7 @@
               "node_modules/ionicons-npm/css/ionicons.min.css",
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
-              "src/app/components/core/styles/icons/dx-icons/dx-icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
               "src/styles.scss"
             ],
             "assets": [
@@ -124,7 +124,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "truly-ui:serve"
+            "devServerTarget": "truly-ui-project:serve"
           }
         },
         "lint": {
@@ -139,9 +139,49 @@
           }
         }
       }
+    },
+    "truly-ui": {
+      "root": "projects/truly-ui",
+      "sourceRoot": "projects/truly-ui/src",
+      "projectType": "library",
+      "prefix": "tl",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/truly-ui/tsconfig.lib.json",
+            "project": "projects/truly-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/truly-ui/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/truly-ui/src/test.ts",
+            "tsConfig": "projects/truly-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/truly-ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/truly-ui/tsconfig.lib.json",
+              "projects/truly-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "truly-ui",
+  "defaultProject": "truly-ui-project",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

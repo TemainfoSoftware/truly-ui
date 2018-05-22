@@ -30,7 +30,9 @@
     "node_modules/@types/jest/index.d.ts"
   ],
   "angularCompilerOptions": {
+    "strictMetadataEmit": true,
     "genDir": "./dist/components",
+    "debug": true,
     "skipTemplateCodegen": true
   }
 }

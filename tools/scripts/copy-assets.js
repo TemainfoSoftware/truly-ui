@@ -16,4 +16,4 @@ const copyRecursiveSync = function(src, dest) {
   }
 };
 
-copyRecursiveSync('src/app/components/core/styles/','./dist/css');
+copyRecursiveSync('projects/truly-ui/src/components/core/styles/','./dist/css');

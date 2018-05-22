@@ -35,8 +35,9 @@
     "e2e": "ng e2e",
     "build:library": "ng build truly-ui --prod",
     "build:showcase": "ng build --prod",
-    "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase && npm run copy:assets",
+    "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase && npm run copy:marckdowns && npm run copy:assets",
     "copy:assets": "node ./tools/scripts/copy-assets.js",
+    "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
     "semantic-release": "semantic-release"
   },
   "private": false,

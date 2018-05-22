@@ -103,6 +103,12 @@
     "lint"
   ],
   "release": {
+    "pkgRoot": "dist",
+    "assets": [
+      "dist/*.zip",
+      "dist/*.tar.gz",
+      "dist/*.tgz"
+    ],
     "publish": [
       {
         "path": "@semantic-release/npm",

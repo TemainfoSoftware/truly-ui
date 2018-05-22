@@ -1,5 +1,5 @@
 {
-  "name": "truly-ui-project",
+  "name": "truly-ui",
   "title": "Truly-UI",
   "description": "Web Components for Desktop Applications.",
   "version": "0.0.0-development",
@@ -91,7 +91,7 @@
     "pre-commit": "^1.2.2",
     "protractor": "~5.3.2",
     "rimraf": "^2.6.2",
-    "semantic-release": "^12.4.1",
+    "semantic-release": "^15.4.2",
     "ts-node": "^6.0.3",
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",

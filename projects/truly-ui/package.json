@@ -1,0 +1,35 @@
+{
+  "name": "truly-ui",  "description": "Web Components for Desktop Applications.",
+  "version": "0.0.0-development",
+  "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
+  "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
+  "homepage": "http://truly-ui.tk",
+  "private": false,
+  "keywords": [
+    "angular",
+    "ui",
+    "desktop",
+    "ng",
+    "electron",
+    "angular2",
+    "grid",
+    "datagrid",
+    "input",
+    "mask",
+    "SPA",
+    "button"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "font-awesome": "^4.7.0",
+    "ionicons-npm": "^2.0.1"
+  }
+}

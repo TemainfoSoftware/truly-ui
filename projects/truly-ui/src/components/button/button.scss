@@ -1,0 +1,37 @@
+//Default
+$button-icon-padding: 15px;
+$button-addon-padding: 0 7px;
+$button-display: inline-block;
+$button-font-size: 0.9em;
+$button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+$button-text-align: center;
+
+.tl-button{
+  font-family: $button-font-family;
+  font-size: $button-font-size;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  > .iconAddonBefore{
+    box-sizing: border-box;
+    float: left;
+    font-weight: 400;
+    padding: 0 15px;
+  }
+  > .iconAddonAfter{
+    box-sizing: border-box;
+    float: right;
+    font-weight: 400;
+    padding: 0 15px;
+  }
+  > .textButton{
+    padding: 0 15px;
+    margin: 0;
+    width: 500px !important;
+  }
+}
+

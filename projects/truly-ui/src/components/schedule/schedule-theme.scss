@@ -1,0 +1,10 @@
+@mixin tl-calendar-theme($theme) {
+
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $danger:  map-deep-get($theme, 'danger');
+
+  .wrapper-schedule {
+
+  }
+}

@@ -68,7 +68,7 @@ We assume that you have already installed the following packages at least and ar
    
    import { AppComponent } from './app.component';
    
-   import { CoreModule } from 'truly-ui/components/core'; //CoreModule
+   import { CoreModule } from 'truly-ui'; //CoreModule
     
    @NgModule({
      declarations: [
@@ -94,8 +94,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library, for example the InputComponent :
-import { InputModule } from 'truly-ui/truly-ui';         //Import of all Modules
-import { ButtonModule } from 'truly-ui/components/button';//Only the specific Module imports
+import { InputModule, ButtonModule } from 'truly-ui';//Import Modules
 
 @NgModule({
   declarations: [

@@ -91,7 +91,7 @@
     "pre-commit": "^1.2.2",
     "protractor": "~5.3.2",
     "rimraf": "^2.6.2",
-    "semantic-release": "^15.4.2",
+    "semantic-release": "^12.4.1",
     "ts-node": "^6.0.3",
     "tsickle": ">=0.25.5",
     "tslib": "^1.7.1",

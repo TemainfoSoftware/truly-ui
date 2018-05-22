@@ -1,10 +1,10 @@
 {
-  "name": "truly-ui",  "description": "Web Components for Desktop Applications.",
+  "name": "truly-ui",
+  "description": "Web Components for Desktop Applications.",
   "version": "0.0.0-development",
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
   "homepage": "http://truly-ui.tk",
-  "private": false,
   "keywords": [
     "angular",
     "ui",

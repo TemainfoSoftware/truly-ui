@@ -5,7 +5,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  box-sizing: border-box;
 }
 .ui-schedule-heading-views{
   height: 100%;
@@ -14,10 +14,12 @@
 }
 
 .ui-schedule-heading-navigator{
+  height: 34px;
   flex-basis: 185px;
 }
 
 .ui-schedule-heading-tools{
+  height: 34px;
   flex-basis: 50%;
   text-align: right;
 }

@@ -12,6 +12,7 @@
 
 .ui-schedule-time-row {
   height: 86px;
+  box-sizing: border-box;
   border-bottom: 1px solid #D6D6D6;
   text-align: center;
   width: 100%;
@@ -42,6 +43,7 @@
     padding-left: 10px;
     height: 43px;
     content: ' ';
+    box-sizing: border-box;
     &:hover{
       background-color: #EDEDED;
     }

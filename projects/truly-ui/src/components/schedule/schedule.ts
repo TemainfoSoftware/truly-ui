@@ -94,7 +94,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   private _endDayHour: string;
 
-  constructor() {}
+  constructor( private changeDetection: ChangeDetectorRef ) {}
 
   ngOnInit() {
     this.getEventsOfDay();
@@ -106,6 +106,7 @@ export class TlSchedule implements OnInit, OnChanges {
       this.refreshStartAndEndDay();
       this.getEventsOfDay();
     }
+    this.changeDetection.detectChanges();
   }
 
   onChangeView( view ) {

@@ -55,6 +55,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.inicializeNowIndicator();
+    this.changeDetectionRef.detectChanges();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
@@ -64,6 +65,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
       this.inicializeNowIndicator();
       this.changeDetectionRef.detectChanges();
     }
+    this.changeDetectionRef.detectChanges();
   }
 
   calcPositionEvent(index, event: ScheduleDataSource) {
@@ -203,10 +205,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private inicializeNowIndicator() {
-    if ( this.showNowIndicator ) {
-      this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
-      this.changeDetectionRef.detectChanges();
-    }
+    this.nowIndicatorPositionTop = this.showNowIndicator ? this.convertMillisecondsToPixel() : -1000;
+    this.changeDetectionRef.detectChanges();
   }
 
 

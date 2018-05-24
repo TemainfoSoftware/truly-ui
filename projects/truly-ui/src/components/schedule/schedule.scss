@@ -13,6 +13,7 @@
 
 .ui-schedule-body {
   border: 1px solid #D6D6D6;
+  box-sizing: content-box;
   overflow-x: auto;
   position: relative;
 }

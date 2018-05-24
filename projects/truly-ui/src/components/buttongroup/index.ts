@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ButtonModule } from '../button/index';
+import { ButtonModule } from '../button';
 import { TlButtonGroup } from './buttongroup';
 import { TlButtonGroupItem } from './buttongroup-item';
 

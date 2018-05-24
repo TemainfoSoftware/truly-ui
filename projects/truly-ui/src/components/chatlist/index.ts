@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlChatList } from './chatlist';
-import { ListBoxModule } from '../listbox/index';
-import { MiscModule } from '../misc/index';
+import { ListBoxModule } from '../listbox';
+import { MiscModule } from '../misc';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';

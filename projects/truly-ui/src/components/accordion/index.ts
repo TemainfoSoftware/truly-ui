@@ -5,6 +5,8 @@ import { TlAccordion } from './accordion';
 import { TlAccordionItem } from './parts/accordion-item/accordion-item';
 import { AccordionService } from './services/accordion.service';
 
+export * from './accordion';
+
 @NgModule({
   imports: [
     CommonModule,

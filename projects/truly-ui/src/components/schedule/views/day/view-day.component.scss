@@ -7,11 +7,11 @@
 .ui-schedule-times{
   color: #949799;
   font-weight: 300;
+  background-color: #FFFFFF;
   border-right: 1px solid #D6D6D6;
 }
 
 .ui-schedule-time-row {
-  height: 86px;
   box-sizing: border-box;
   border-bottom: 1px solid #D6D6D6;
   text-align: center;
@@ -28,6 +28,7 @@
 .ui-schedule-widget-rows{
   >.ui-schedule-row{
     background-color: #f5f5f5;
+    border-bottom: 1px #D6D6D6 dotted;
     &:first-child{
       border-bottom: 1px #D6D6D6 dotted;
     }
@@ -41,7 +42,6 @@
   width: 100%;
   & .ui-schedule-row{
     padding-left: 10px;
-    height: 43px;
     content: ' ';
     box-sizing: border-box;
     &:hover{

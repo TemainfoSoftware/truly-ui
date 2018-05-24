@@ -24,6 +24,12 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() showNowIndicator = false;
 
+  @Input() slatHightRows = 43;
+
+  @Input() slatNumberRows = 2;
+
+  @Input() slatNumberRowsAsArray: Array<Number>;
+
   @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
 
   @Output() onRowDbClick = new EventEmitter();
@@ -81,6 +87,10 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   calcLeftPosition( index: number, event: ScheduleDataSource ) {
 
+
+    if ((this.eventsPositionsByStart[event.date.start] === undefined)
+      || (this.eventsPositionsByEnd[event.date.end] === undefined)) { return; }
+
     const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
     const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;
     const indexOfinStart = this.eventsPositionsByStart[event.date.start].indexOf(event);
@@ -133,6 +143,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   calcRightPosition( index: number, event: ScheduleDataSource ) {
+
+    if ((this.eventsPositionsByStart[event.date.start] === undefined)
+      || (this.eventsPositionsByEnd[event.date.end] === undefined)) { return; }
 
     const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
     const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;

@@ -55,21 +55,22 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   constructor( private changeDetectionRef: ChangeDetectorRef ) { }
 
   ngOnInit() {
-    this.generateEventsPositions();
     this.generateTimes();
   }
 
   ngAfterViewInit() {
+    this.generateEventsPositions();
     this.inicializeNowIndicator();
     this.changeDetectionRef.detectChanges();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
-    if ( !changes['events'] ) { return; }
-    if (! changes['events'].firstChange) {
-      this.generateEventsPositions();
-      this.inicializeNowIndicator();
-      this.changeDetectionRef.detectChanges();
+    if ( changes['events'] !== undefined ) {
+      if ( !changes[ 'events' ].firstChange ) {
+        this.generateEventsPositions();
+        this.inicializeNowIndicator();
+        this.changeDetectionRef.detectChanges();
+      }
     }
     this.changeDetectionRef.detectChanges();
   }
@@ -215,6 +216,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
       }
       currentHour_ms++;
     }
+    this.changeDetectionRef.detectChanges();
   }
 
   private inicializeNowIndicator() {
@@ -233,6 +235,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   private generateEventsPositions() {
+
+    if ( this.events === undefined ) { return; }
+
     this.events.forEach((value ) => {
       if (this.eventsPositionsByStart.indexOf(value.date.start) < 0 ) {
         this.eventsPositionsByStart[value.date.start] = [];

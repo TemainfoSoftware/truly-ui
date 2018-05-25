@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 import * as json from './scheduledemo-overview-dataproperties.json';
 import * as jsonEvts from './scheduledemo-overview.dataevents.json';
@@ -35,7 +35,9 @@ export class ScheduleDemoOverviewComponent {
 
   public dataEvents;
 
-  public dataSource = [
+  public dataSource = [];
+
+  public data = [
     {
       value: '1',
       title: 'William Aguera - 1',
@@ -171,9 +173,23 @@ export class ScheduleDemoOverviewComponent {
   }
   ];
 
-  constructor() {
+  constructor(private change: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+
+    setTimeout(() => {
+      this.getDataSource()
+        .then((data: Array<any>) => {
+          this.dataSource = data;
+          this.change.detectChanges();
+        });
+    }, 3000);
+  }
+
+  getDataSource() {
+    return new Promise((resolve) => {
+      resolve(this.data);
+    });
   }
 
   onRowClick( event ) {

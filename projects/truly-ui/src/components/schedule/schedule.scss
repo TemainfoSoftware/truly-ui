@@ -6,12 +6,14 @@
   border-top: 1px solid #D6D6D6;
   border-left: 1px solid #D6D6D6;
   border-right: 1px solid #D6D6D6;
+  box-sizing: border-box;
   height: 50px;
   width: 100%;
 }
 
 .ui-schedule-body {
   border: 1px solid #D6D6D6;
+  box-sizing: content-box;
   overflow-x: auto;
   position: relative;
 }

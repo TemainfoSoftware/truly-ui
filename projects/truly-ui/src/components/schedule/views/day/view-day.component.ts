@@ -24,6 +24,12 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() showNowIndicator = false;
 
+  @Input() slatHightRows = 43;
+
+  @Input() slatNumberRows = 2;
+
+  @Input() slatNumberRowsAsArray: Array<Number>;
+
   @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
 
   @Output() onRowDbClick = new EventEmitter();
@@ -55,6 +61,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.inicializeNowIndicator();
+    this.changeDetectionRef.detectChanges();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
@@ -64,6 +71,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
       this.inicializeNowIndicator();
       this.changeDetectionRef.detectChanges();
     }
+    this.changeDetectionRef.detectChanges();
   }
 
   calcPositionEvent(index, event: ScheduleDataSource) {
@@ -78,6 +86,10 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   calcLeftPosition( index: number, event: ScheduleDataSource ) {
+
+
+    if ((this.eventsPositionsByStart[event.date.start] === undefined)
+      || (this.eventsPositionsByEnd[event.date.end] === undefined)) { return; }
 
     const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
     const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;
@@ -131,6 +143,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   calcRightPosition( index: number, event: ScheduleDataSource ) {
+
+    if ((this.eventsPositionsByStart[event.date.start] === undefined)
+      || (this.eventsPositionsByEnd[event.date.end] === undefined)) { return; }
 
     const countSameStartHour = this.eventsPositionsByStart[event.date.start].length;
     const countSameStartEnd = this.eventsPositionsByEnd[event.date.end].length;
@@ -203,10 +218,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private inicializeNowIndicator() {
-    if ( this.showNowIndicator ) {
-      this.nowIndicatorPositionTop = this.convertMillisecondsToPixel();
-      this.changeDetectionRef.detectChanges();
-    }
+    this.nowIndicatorPositionTop = this.showNowIndicator ? this.convertMillisecondsToPixel() : -1000;
+    this.changeDetectionRef.detectChanges();
   }
 
 

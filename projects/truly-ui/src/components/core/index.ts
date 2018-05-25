@@ -28,6 +28,9 @@ import { ApplicationConfig } from './configs/application.config';
 import { CoreService } from './services/core.service';
 import { TlCore } from './core';
 
+export * from './enums/modal-result';
+export * from './enums/key-events';
+
 // @dynamic
 export function CoreServiceFactory( factory: ComponentFactoryResolver,
                                     injector: Injector,

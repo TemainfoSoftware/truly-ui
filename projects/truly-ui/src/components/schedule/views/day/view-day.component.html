@@ -2,16 +2,18 @@
 
   <!-- CREATE TIMES BOXES-->
   <div class="ui-schedule-times">
-    <div class="ui-schedule-time-row" *ngFor="let time of timesCollection">
+    <div class="ui-schedule-time-row" [ngStyle]="{height: (slatNumberRows * slatHightRows) + 'px'}" *ngFor="let time of timesCollection">
       <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
     </div>
   </div>
 
   <!-- CREATE WIDGET CONTENT-->
   <div #scheduleSlats class="ui-schedule-widget-content">
-    <div *ngFor="let time of timesCollection; let last = last" class="ui-schedule-widget-rows">
-      <div class="ui-schedule-row" [ngClass]="{last: last}" (dblclick)="onRowDbClick.emit( time )"></div>
-      <div class="ui-schedule-row" [ngClass]="{last: last}" (dblclick)="onRowDbClick.emit( time )"></div>
+    <div *ngFor="let time of timesCollection; let last = last; let first = first" class="ui-schedule-widget-rows">
+      <div class="ui-schedule-row" *ngFor="let row of slatNumberRowsAsArray"
+           [ngStyle]="{height: slatHightRows + 'px'}"
+           [ngClass]="{last: last, first: first}"
+           (dblclick)="onRowDbClick.emit( time )"></div>
     </div>
   </div>
 

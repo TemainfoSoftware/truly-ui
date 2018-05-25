@@ -45,6 +45,10 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() showNowIndicator = false;
 
+  @Input() slatHightRows = 43;
+
+  @Input() slatNumberRows = 2;
+
   @Input('events') set events( events: ScheduleDataSource[] ) {
     this._events = events.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
   }
@@ -86,6 +90,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   public endDayMilliseconds: number;
 
+  public slatNumberRowsAsArray: Array<Number>;
+
   public eventsOfDay: ScheduleDataSource[];
 
   private _events: ScheduleDataSource[];
@@ -94,10 +100,11 @@ export class TlSchedule implements OnInit, OnChanges {
 
   private _endDayHour: string;
 
-  constructor() {}
+  constructor( private changeDetection: ChangeDetectorRef ) {}
 
   ngOnInit() {
     this.getEventsOfDay();
+    this.slatNumberRowsAsArray = Array( this.slatNumberRows );
   }
 
   ngOnChanges(  changes: SimpleChanges  ) {
@@ -106,6 +113,7 @@ export class TlSchedule implements OnInit, OnChanges {
       this.refreshStartAndEndDay();
       this.getEventsOfDay();
     }
+    this.changeDetection.detectChanges();
   }
 
   onChangeView( view ) {

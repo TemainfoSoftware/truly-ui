@@ -11,7 +11,7 @@
   </div>
 
   <!-- SCHEDULE BODY -->
-  <div  class="ui-schedule-body" [ngStyle]="{height: height}" [ngSwitch]="defaultView">
+  <div  class="ui-schedule-body" [ngStyle]="{height: 'calc(' + height +' - 52px)'}" [ngSwitch]="defaultView">
     <tl-view-day
       *ngSwitchCase="'day'"
       [duration]="duration"
@@ -20,6 +20,10 @@
       [startDayMilliseconds]="startDayMilliseconds"
       [endDayMilliseconds]="endDayMilliseconds"
       [showNowIndicator]="showNowIndicator"
+
+      [slatHightRows]="slatHightRows"
+      [slatNumberRows]="slatNumberRows"
+      [slatNumberRowsAsArray]="slatNumberRowsAsArray"
 
       (onRowDbClick)="rowDbClick.emit($event)"
       (onEventClick)="eventClick.emit($event)"

@@ -11,7 +11,7 @@
     font-weight: 400;
     height: 45px;
     line-height: 45px;
-
+    box-sizing: border-box;
     >.date {
       width: 170px;
       & span {
@@ -45,7 +45,7 @@
       font-size: 1.2em;
       cursor: pointer;
       text-align: center;
-      width: 90px;
+      width: 85px;
       font-weight: 600;
       user-select: none;
     }

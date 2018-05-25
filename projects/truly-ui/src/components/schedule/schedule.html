@@ -20,6 +20,7 @@
       [startDayMilliseconds]="startDayMilliseconds"
       [endDayMilliseconds]="endDayMilliseconds"
       [showNowIndicator]="showNowIndicator"
+      [statusConfig]="statusConfig"
 
       [slatHightRows]="slatHightRows"
       [slatNumberRows]="slatNumberRows"
@@ -37,6 +38,7 @@
       *ngSwitchCase="'dayList'"
       [events]="eventsOfDay"
       [currentDate]="currentDate"
+      [statusConfig]="statusConfig"
       (onEventClick)="eventClick.emit($event)"
       (onEventDbClick)="eventDbClick.emit($event)"
       (onEventMouseover)="eventMouseover.emit($event)"

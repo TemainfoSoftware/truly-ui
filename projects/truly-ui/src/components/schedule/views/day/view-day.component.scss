@@ -85,14 +85,17 @@
 .ui-schedule-event-box{
   background-color: #FFFFFF;
   border-radius: 4px 4px 2px 2px;
-  font-size: 13px;
-  border-top: #90ED5D 5px solid;
+  font-size: 12px;
+  border-top-width: 5px;
+  border-top-color: transparent;
+  border-top-style: solid;
   border-left: 1px #D6D6D6 solid;
   border-right: 1px #D6D6D6 solid;
   border-bottom: 1px #D6D6D6 solid;
   user-select: none;
   margin: 2px 2px 2px 0px;
   cursor: pointer;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 
 
   display: flex;
@@ -102,7 +105,7 @@
   > .ui-event-hour{
     justify-content: flex-end;
     margin-right: 10px;
-    font-size: 11px;
+    font-size: 10px;
     color: #454e58;
     align-items: center;
     display: flex;
@@ -112,14 +115,14 @@
     padding-left: 5px;
     width: 70%;
     > .ui-event-title{
-      font-weight: bold;
+      font-weight: 600;
       color: #454e58;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
     > .ui-event-detail{
       color: #949799;
-      font-size: 11px;
+      font-size: 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

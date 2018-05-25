@@ -24,6 +24,7 @@ import {
   AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
+import { StatusType } from './types/status.type';
 
 @Component( {
   selector: 'tl-schedule',
@@ -36,6 +37,8 @@ export class TlSchedule implements OnInit, OnChanges {
   @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
   @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
+
+  @Input() statusConfig: {StatusType};
 
   @Input() currentDate = new Date();
 
@@ -103,15 +106,25 @@ export class TlSchedule implements OnInit, OnChanges {
   constructor( private changeDetection: ChangeDetectorRef ) {}
 
   ngOnInit() {
+    this.convertSlarNumberToArray();
     this.getEventsOfDay();
-    this.slatNumberRowsAsArray = Array( this.slatNumberRows );
+    this.changeDetection.detectChanges();
   }
 
   ngOnChanges(  changes: SimpleChanges  ) {
-    if ( !changes['currentDate'] ) { return; }
-    if ( ! changes['currentDate'].firstChange) {
-      this.refreshStartAndEndDay();
-      this.getEventsOfDay();
+
+    if ( changes['events'] !== undefined ) {
+      if ( !changes[ 'events' ].firstChange ) {
+        this.refreshStartAndEndDay();
+        this.getEventsOfDay();
+      }
+    }
+
+    if ( changes['currentDate'] !== undefined ) {
+      if ( ! changes['currentDate'].firstChange) {
+        this.refreshStartAndEndDay();
+        this.getEventsOfDay();
+      }
     }
     this.changeDetection.detectChanges();
   }
@@ -126,6 +139,7 @@ export class TlSchedule implements OnInit, OnChanges {
     this.refreshStartAndEndDay();
     this.getEventsOfDay();
     this.changeDate.emit( $event );
+    this.changeDetection.detectChanges();
   }
 
   private transformHourToMileseconds( fullHour: string ) {
@@ -147,8 +161,16 @@ export class TlSchedule implements OnInit, OnChanges {
 
 
   private getEventsOfDay() {
+
+    if ( this.events === undefined ) { return []; }
+
     this.eventsOfDay = this.events.filter( ( event ) => {
       return ( event.date.start >= this.startDayMilliseconds ) && ( event.date.end <= this.endDayMilliseconds );
     });
+  }
+
+  private convertSlarNumberToArray() {
+    this.slatNumberRowsAsArray = Array( this.slatNumberRows );
+    this.changeDetection.detectChanges();
   }
 }

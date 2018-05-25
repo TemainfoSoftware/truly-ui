@@ -6,8 +6,9 @@
 
 .ui-schedule-event-box{
   background-color: #FFFFFF;
-  font-size: 13px;
-  border-top: #90ED5D 5px solid;
+  font-size: 12px;
+  border-top-width: 5px;
+  border-top-style: solid;
   border-bottom: 1px #D6D6D6 solid;
   user-select: none;
   cursor: pointer;
@@ -15,10 +16,11 @@
   display: flex;
   margin-bottom: 5px;
   box-sizing: border-box;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 
   > .ui-event-hour{
     justify-content: center;
-    font-size: 13px;
+    font-size: 12px;
     color: #454e58;
     align-items: center;
     display: flex;
@@ -30,14 +32,14 @@
     flex-direction: column;
     justify-content: center;
     > .ui-event-title{
-      font-weight: bold;
+      font-weight: 600;
       color: #454e58;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
     > .ui-event-detail{
       color: #949799;
-      font-size: 11px;
+      font-size: 10px;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

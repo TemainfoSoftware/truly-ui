@@ -26,7 +26,8 @@
       <div class="ui-schedule-event-box"
            *ngFor="let event of events; let index = index"
            [ngStyle]="calcPositionEvent( index, event)"
-
+           [style.borderTopColor]="statusConfig ? statusConfig[event.status].color : '#FFFFFF'"
+           [tooltip]="{text: statusConfig ? statusConfig[event.status].description : '' , placement: 'left'}"
            (click)="onEventClick.emit(event)"
            (dblclick)="onEventDbClick.emit(event)"
            (mouseover)="onEventMouseout.emit(event)"

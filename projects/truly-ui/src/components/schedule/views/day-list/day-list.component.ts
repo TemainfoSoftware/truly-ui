@@ -2,6 +2,7 @@ import {
   Component, OnInit, Input, SimpleChanges, OnChanges, ChangeDetectorRef, Output, EventEmitter
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
+import { StatusType } from '../../types/status.type';
 
 @Component({
   selector: 'tl-day-list',
@@ -11,6 +12,8 @@ import { ScheduleDataSource } from '../../types/datasource.type';
 export class DayListComponent implements OnInit, OnChanges {
 
   @Input() events: ScheduleDataSource[];
+
+  @Input() statusConfig: Array<StatusType>;
 
   @Input() currentDate = new Date();
 

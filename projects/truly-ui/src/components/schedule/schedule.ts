@@ -24,6 +24,7 @@ import {
   AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
+import { StatusType } from './types/status.type';
 
 @Component( {
   selector: 'tl-schedule',
@@ -36,6 +37,8 @@ export class TlSchedule implements OnInit, OnChanges {
   @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
   @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
+
+  @Input() statusConfig: {StatusType};
 
   @Input() currentDate = new Date();
 

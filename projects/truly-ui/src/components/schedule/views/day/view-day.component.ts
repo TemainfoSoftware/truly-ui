@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy, Output, EventEmitter
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
+import { StatusType } from '../../types/status.type';
 
 @Component({
   selector: 'tl-view-day',
@@ -17,6 +18,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() currentDate = new Date();
 
   @Input() events: ScheduleDataSource[];
+
+  @Input() statusConfig: {StatusType};
 
   @Input() startDayMilliseconds: number;
 
@@ -56,6 +59,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.generateTimes();
+    console.log(this.statusConfig);
   }
 
   ngAfterViewInit() {

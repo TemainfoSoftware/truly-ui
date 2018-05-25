@@ -20,11 +20,8 @@
     SOFTWARE.
 */
 
-export class ScheduleDataSource {
-  value: string;
-  title: string;
-  detail: string;
-  allday: boolean;
+export class StatusType {
   status: string;
-  date: { start: number, end: number };
+  color: string;
+  description: string;
 }

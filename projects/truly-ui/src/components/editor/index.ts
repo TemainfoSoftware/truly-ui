@@ -19,38 +19,37 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { TlEditor } from './editor';
+import { TlEditorLinkBox } from './parts/editor-link-box/editor-link-box';
+import { TlEditorImageBox } from './parts/editor-image-box/editor-image-box';
+import { DropDownListModule } from '../dropdownlist/index';
+import { ButtonModule } from '../button/index';
+import { FormModule } from '../form/index';
+import { InputModule } from '../input/index';
 
-import { HighlightJsModule } from 'ngx-highlight-js';
+export * from './editor';
 
-import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
-import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
-import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
-import { EditorDemoRoutingModule } from './editordemo-routing.module';
-import { EditorModule } from '../../../components/editor/index';
-import { EditorDemoComponent } from './editordemo.component';
-
-
-@NgModule({
-  declarations: [
-    EditorDemoComponent
-  ],
+@NgModule( {
   imports: [
     CommonModule,
+    DropDownListModule,
     FormsModule,
-    HighlightJsModule,
-    EditorModule,
-    EditorDemoRoutingModule,
-    ShowcaseTablePropertiesModule,
-    ShowcaseCardModule,
-    ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ButtonModule,
+    FormModule,
+    InputModule
+  ],
+  declarations: [
+    TlEditor,
+    TlEditorLinkBox,
+    TlEditorImageBox
   ],
   exports: [
-    EditorDemoComponent,
+    TlEditor,
+    TlEditorLinkBox,
+    TlEditorImageBox
   ],
-})
-export class EditorDemoModule { }
+} )
+export class EditorModule {}

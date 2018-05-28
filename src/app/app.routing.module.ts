@@ -85,12 +85,12 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },
       {
-        path: 'editor',
-        loadChildren: './components/editor/editordemo.module#EditorDemoModule'
-      },
-      {
         path: 'datepicker',
         loadChildren: './components/datepicker/datepickerdemo.module#DatePickerDemoModule'
+      },
+      {
+        path: 'editor',
+        loadChildren: './components/editor/editordemo.module#EditorDemoModule'
       },
       {
         path: 'form',

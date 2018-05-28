@@ -19,37 +19,38 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TlEditor } from './editor';
-import { DropDownListModule } from '../dropdownlist/index';
-import { InputModule } from '../input/index';
-import { ButtonModule } from '../button/index';
-import { FormModule } from '../form/index';
-import { TlEditorLinkBox } from './parts/editor-link-box/editor-link-box';
-import { TlEditorImageBox } from './parts/editor-image-box/editor-image-box';
+import { NgModule } from '@angular/core';
 
-export * from './editor';
+import { HighlightJsModule } from 'ngx-highlight-js';
 
-@NgModule( {
+import { EditorDemoRoutingModule } from './editordemo-routing.module';
+import { EditorDemoComponent } from './editordemo.component';
+import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { EditorModule } from '../../../../projects/truly-ui/src/components/editor/index';
+import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+
+
+@NgModule({
+  declarations: [
+    EditorDemoComponent
+  ],
   imports: [
     CommonModule,
-    DropDownListModule,
     FormsModule,
-    ButtonModule,
-    FormModule,
-    InputModule
-  ],
-  declarations: [
-    TlEditor,
-    TlEditorLinkBox,
-    TlEditorImageBox
+    HighlightJsModule,
+    EditorModule,
+    EditorDemoRoutingModule,
+    ShowcaseTablePropertiesModule,
+    ShowcaseCardModule,
+    ShowcaseTableEventsModule,
+    ShowcaseReturnedValueModule
   ],
   exports: [
-    TlEditor,
-    TlEditorLinkBox,
-    TlEditorImageBox
+    EditorDemoComponent,
   ],
-} )
-export class EditorModule {}
+})
+export class EditorDemoModule { }

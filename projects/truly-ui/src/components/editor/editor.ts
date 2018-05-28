@@ -305,16 +305,16 @@ export class TlEditor implements AfterContentInit, OnChanges {
   createImageElement() {
     const imageHTML = new ElementRef( this.renderer.createElement( 'img' ) );
     this.renderer.addClass( imageHTML.nativeElement, 'ui-image-editor' );
-    imageHTML.nativeElement.src = this.image.imageUrl;
+    imageHTML.nativeElement.setAttribute('src', this.image.imageUrl);
     return imageHTML.nativeElement;
   }
 
   createElementLink() {
     const link = new ElementRef( this.renderer.createElement( 'a' ) );
     this.renderer.addClass( link.nativeElement, 'ui-link' );
-    link.nativeElement.href = this.linkItself;
-    link.nativeElement.text = this.descriptionLink;
-    link.nativeElement.target = '_blank';
+    link.nativeElement.setAttribute('src', this.linkItself);
+    link.nativeElement.setAttribute('text', this.descriptionLink);
+    link.nativeElement.setAttribute('target', '_blank');
     this.handleAddElementRange( link );
   }
 

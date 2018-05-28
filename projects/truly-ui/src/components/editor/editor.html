@@ -46,7 +46,7 @@
                       (onToggleLink)="toggleLinkBox()">
   </tl-editor-link-box>
   <tl-editor-image-box *ngIf="toggleImage && !toggleLink"
-                       [imageUrl]="imageUrl"
+                       [imageUrl]="image.imageUrl"
                        (onSetImage)="setImage($event)"
                        (onToggleImage)="toggleImageBox()">
   </tl-editor-image-box>

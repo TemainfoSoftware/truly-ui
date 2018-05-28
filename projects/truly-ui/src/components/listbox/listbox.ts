@@ -93,7 +93,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() rowsPage = 50;
 
-  @Input() height = 300;
+  @Input() height = '300px';
 
   @Input() showArrows = true;
 
@@ -660,7 +660,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   handleSearchQuery() {
     this.handleSearchQueryAsArrayString();
     const data = this.lazyMode ? this.data.data[ 0 ] : this.data[ 0 ];
-    if ( this.searchQuery.length === 0 ) {
+    if (( this.searchQuery.length === 0 ) && (data.length > 0)) {
       Object.keys( data ).forEach( ( value ) => {
         this.searchQuery.push( value );
       } );
@@ -821,7 +821,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       return this.addNew ? (this.filteredData.length * this.rowHeight) + (this.rowHeight) :
         (this.filteredData.length * this.rowHeight);
     }
-    return this.addNew ? (this.rowsClient * this.rowHeight) : this.rowsClient * this.rowHeight;
+    return this.addNew ? (this.rowsClient * this.rowHeight) + this.rowHeight : this.rowsClient * this.rowHeight;
   }
 
   getElementOfList() {
@@ -1083,7 +1083,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( change: SimpleChanges ) {
     this.validateDataType();
-    if ( this.data ) {
+    if ( this.data.length > 0 ) {
       this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
         this.handleRenderList();
       } );

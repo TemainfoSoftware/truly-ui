@@ -14,7 +14,12 @@
     </div>
   </div>
   <div class="ui-schedule-heading-navigator">
-    <tl-navigator [type]="'day'" (clickNext)="changeDate.emit($event)" (clickPrevious)="changeDate.emit($event)"></tl-navigator>
+    <tl-navigator
+      [type]="'day'"
+      [date]="currentDate"
+      (clickNext)="changeDate.emit($event)"
+      (clickPrevious)="changeDate.emit($event)">
+    </tl-navigator>
   </div>
   <div class="ui-schedule-heading-tools">
     <tl-button [text]="'New'" [width]="'80px'" color="primary"></tl-button>

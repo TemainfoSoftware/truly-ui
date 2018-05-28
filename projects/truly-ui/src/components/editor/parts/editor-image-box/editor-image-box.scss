@@ -1,0 +1,15 @@
+.ui-image-box {
+  position: absolute;
+  width: 400px;
+  border: 1px solid #e4d8d8;
+  top: calc(50% - 40px);
+  left: calc(50% - 200px);
+  height: 80px;
+  background: #fff;
+  transition: all 100ms ease-in-out;
+  box-shadow: 0px 0px 5px #ddd;
+  .ui-form-control {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}

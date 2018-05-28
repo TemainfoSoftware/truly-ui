@@ -89,6 +89,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/datepicker/datepickerdemo.module#DatePickerDemoModule'
       },
       {
+        path: 'editor',
+        loadChildren: './components/editor/editordemo.module#EditorDemoModule'
+      },
+      {
         path: 'form',
         loadChildren: './components/form/formdemo.module#FormDemoModule'
       },

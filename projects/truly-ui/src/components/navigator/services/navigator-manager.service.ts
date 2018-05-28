@@ -75,6 +75,7 @@ export class NavigatorManagerService {
       day: this.currentDay,
       month: this.currentMonth,
       year: this.currentYear,
+      fullDate: new Date( this.currentYear, this.currentMonth, this.currentDay ),
       rangeYear: {start: this.startYear, end: this.endYear}
     };
   }

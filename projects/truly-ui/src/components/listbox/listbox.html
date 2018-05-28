@@ -14,7 +14,7 @@
          tabindex="-1"
          [tlBlockui]="loadingMoreData"
          [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
-         [style.height]="fixedHeight ? (height) + 'px' : getListBoxHeight() + 'px'">
+         [style.height]="fixedHeight ? 'calc(' + height + ')' : getListBoxHeight() + 'px'">
       <ul containerDirective #list class="list" [style.position]="'relative'"
           [style.height]="filtering ? (filteredData?.length * rowHeight) + 'px' : ((lazyMode ? data?.total : data?.length) * rowHeight) + 'px'">
         <div #customTemplate>

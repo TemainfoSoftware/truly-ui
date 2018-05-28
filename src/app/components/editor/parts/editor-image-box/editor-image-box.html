@@ -1,0 +1,13 @@
+<div class="ui-image-box">
+  <tl-form [mode]="'inline'">
+    <div class="ui-form-control">
+      <tl-input [iconBefore]="'ion-link'" [name]="'imageUrl'" [(ngModel)]="imageUrl" [label]="'Image URL'"></tl-input>
+    </div>
+    <div class="ui-form-control" style="float: right">
+      <tl-button (click)="toggleImageBox()" [height]="'25px'" [width]="'35px'" [text]="'Cancel'"
+                 [color]="'basic'"></tl-button>
+      <tl-button (click)="setImageUrl()" [height]="'25px'" [width]="'35px'" [text]="'Save'"
+                 [color]="'primary'"></tl-button>
+    </div>
+  </tl-form>
+</div>

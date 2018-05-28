@@ -1,0 +1,14 @@
+<div class="ui-link-box">
+  <tl-form [mode]="'inline'">
+    <div class="ui-form-control">
+      <tl-input [name]="'descriptionLink'" [(ngModel)]="descriptionLink" [label]="'Description'"></tl-input>
+    </div>
+    <div class="ui-form-control">
+      <tl-input [name]="'linkItself'" [(ngModel)]="linkItself" [label]="'Link'"></tl-input>
+    </div>
+    <div class="ui-form-control" style="float: right">
+      <tl-button (click)="toggleLinkBoxEditorLinkBox()" [height]="'25px'" [width]="'35px'" [text]="'Cancel'" [color]="'basic'"></tl-button>
+      <tl-button (click)="setLinkEditorLinkBox()" [height]="'25px'" [width]="'35px'" [text]="'Save'" [color]="'primary'"></tl-button>
+    </div>
+  </tl-form>
+</div>

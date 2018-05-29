@@ -42,6 +42,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'height',
+    type: 'string',
+    default: '23px',
+    description: 'The height of input box',
+    options: 'any text'
+  },
+  {
     name: 'labelSize',
     type: 'string',
     default: '100px',

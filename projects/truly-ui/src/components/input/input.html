@@ -35,7 +35,7 @@
     [ngClass]="iconAfter"></i></span>
   <span *ngIf="textAfter" #afterText class="addon -borderright"
         [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
-  <i *ngIf="clearButton && value" (click)="clearInput($event)" class="addon -clearbutton ion-close-round"
+  <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)" class="-clearbutton ion-close-round"
      [style.right]="clearButtonPosition + 'px'"></i>
 
 </div>

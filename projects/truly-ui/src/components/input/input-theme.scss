@@ -33,6 +33,11 @@
         color: map-deep-get($basic, "default", "foreground");
       }
     }
+
+    .-clearbutton {
+      color: map-deep-get($light, "default", "foreground");
+    }
+
     .label {
       color: map-deep-get($basic, "default", "foreground");
       &.-validation {

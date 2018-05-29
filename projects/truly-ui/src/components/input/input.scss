@@ -76,6 +76,18 @@
     font-size: 0.7em;
   }
 
+  > .-clearbutton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    line-height: 40px;
+    font-size: 0.8em;
+    padding-right: 5px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   > .ui-wrapper-input {
     > .field {
       display: table-cell;

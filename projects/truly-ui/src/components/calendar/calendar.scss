@@ -63,6 +63,7 @@
       font-size: 0.8em;
       & .ui-table-th {
         text-align: center;
+        line-height: 15px;
       }
     }
 
@@ -70,7 +71,7 @@
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       font-size: 1em;
       text-align: center;
-      padding: 5px;
+      line-height: 30px;
       overflow: hidden;
       user-select: none;
       animation-name: creating;

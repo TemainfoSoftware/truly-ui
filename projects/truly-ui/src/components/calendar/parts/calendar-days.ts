@@ -126,12 +126,10 @@ export class TlCalendarDays {
   }
 
   markToday(day, cell) {
-    if ( (day === this.calendar.day) && (this.calendar.month === new Date().getMonth() )
+    if ( (day === new Date().getDate()) && (this.calendar.month === new Date().getMonth() )
       && (this.calendar.year === new Date().getFullYear()) ) {
       this.calendar.renderer.addClass(cell.nativeElement, 'today');
-      this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.todayIndex = cell;
-      this.calendar.selectedDay = cell.nativeElement;
     }
   }
 

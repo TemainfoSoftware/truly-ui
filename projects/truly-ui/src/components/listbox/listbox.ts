@@ -700,6 +700,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleScrollUp() {
     this.handleScrollFinish();
+    if ( !this.isDataSourceGreaterThanRowsPage() ) {
+      return;
+    }
     if ( this.firstChildElement() ) {
       if ( ( this.firstChildElement().offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
         if ( this.firstChildElement().getBoundingClientRect().top > this.parentElement().top - (5 * this.rowHeight) ) {

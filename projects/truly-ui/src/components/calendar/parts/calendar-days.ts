@@ -119,7 +119,7 @@ export class TlCalendarDays {
   }
 
   selectDay(day, cell) {
-    if ((this.calendar.typingDay) && (day === this.calendar.day)) {
+    if (day === this.calendar.day) {
       this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.selectedDay = cell.nativeElement;
     }

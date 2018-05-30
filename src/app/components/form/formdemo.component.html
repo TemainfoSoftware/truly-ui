@@ -34,6 +34,7 @@
           <app-card>
             <h5>Inline Form</h5>
             <tl-form #form (submitForm)="onSubmitForm($event)" [showConfirmOnChange]="true" [textConfirm]="'Login'"
+                     [mode]="'inline'"
                      [messageDialogConfirmation]="'Are you sure ?'">
               <tl-tabcontrol>
                 <tl-tab [title]="'Login'">

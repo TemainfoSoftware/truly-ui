@@ -178,7 +178,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   handleCustom() {
     if ( this.customTemplate ) {
-      this.listBox.customInput = true;
       this.listBox.template = this.customTemplate;
     }
   }

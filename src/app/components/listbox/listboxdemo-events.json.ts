@@ -4,6 +4,10 @@ export const events = [
     description: 'Dispatched when an element of the list is clicked.',
   },
   {
+    name: 'selectItem',
+    description: 'Dispatched when an element of the list is selected, navigating through it.',
+  },
+  {
     name: 'clickAddNew',
     description: 'Dispatched when element Add New is clicked.',
   },

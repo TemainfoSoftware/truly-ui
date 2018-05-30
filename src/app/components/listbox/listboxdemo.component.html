@@ -80,9 +80,8 @@
                 [data]="dataCustom"
                 [rowsClient]="5"
                 [searchElement]="inputCustomNormal"
-                [id]="'id'"
-                [label]="'firstName'"
-                [labelDetail]="'city'"
+                [height]="'100vh - 400px'"
+                [fixedHeight]="true"
                 [rowHeight]="50">
                 <ng-template let-item="item" let-index="index">
                   <li class="list-template-demo">
@@ -97,7 +96,7 @@
 <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-listbox
   [data]="data"
-  (onClickItem)="onClickNoItem($event)"
+  (clickItem)="onClickItem($event)"
   [rowsClient]="10"
   [searchElement]="input"
   [id]="'id'"

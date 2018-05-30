@@ -94,14 +94,50 @@ export const dataProperties = [
     name: 'rowsClient',
     type: 'number',
     default: '10',
-    description: 'Number of lines that going to be shown on list',
+    description: 'Number of lines that going to be visible on list.',
     options: 'any number'
+  },
+  {
+    name: 'rowsPage',
+    type: 'number',
+    default: '50',
+    description: 'Number of lines that going to be shown on list, created on DOM',
+    options: 'any number'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '300px',
+    description: 'Height of list wrapper, used when fixedHeight property is true.',
+    options: 'any css measure'
+  },
+  {
+    name: 'fixedHeight',
+    type: 'boolean',
+    default: 'false',
+    description: 'When it\'s true, the Wrapper Height of the list is controlled by height property,' +
+    ' otherwise is through the height of row (rowHeight) and number of rows client (rowsClient)',
+    options: 'any css measure'
   },
   {
     name: 'addNew',
     type: 'boolean',
     default: 'false',
     description: 'Controls if the listBox will have the Add New element at the end of the list.',
+    options: 'true | false'
+  },
+  {
+    name: 'lazyMode',
+    type: 'boolean',
+    default: 'false',
+    description: 'Define if list will work lazy load or not.',
+    options: 'true | false'
+  },
+  {
+    name: 'dynamicShowHide',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls the state of list (showed or hide) when searchElement focus is triggered',
     options: 'true | false'
   },
   {
@@ -116,13 +152,6 @@ export const dataProperties = [
     type: 'boolean',
     default: 'true',
     description: 'Controls if going to have Arrows Up and Down to navigate through the list',
-    options: 'true | false'
-  },
-  {
-    name: 'showArrows',
-    type: 'boolean',
-    default: 'true',
-    description: 'Controls if the list going to be fixed or relative',
     options: 'true | false'
   },
   {

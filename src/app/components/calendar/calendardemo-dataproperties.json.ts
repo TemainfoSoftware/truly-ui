@@ -35,6 +35,13 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'inputControlFocus',
+    type: 'TlInput',
+    default: 'null',
+    description: 'Define a TlInput to control focus of calendar ( used on Datepicker Component ).',
+    options: 'TlInput Instance'
+  },
+  {
     name: 'day',
     type: 'number',
     default: 'Current Day',

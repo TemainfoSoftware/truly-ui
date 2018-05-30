@@ -21,4 +21,8 @@ export class NavigatorDemoComponent {
     this.dataEvents = jsonEvts.dataEvents;
   }
 
+  onClickNext( event ) { console.log('CLICKNEXT:', event); }
+
+  onClickPrevious( event ) { console.log('CLICKPREVIOUS:', event); }
+
 }

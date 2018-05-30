@@ -59,7 +59,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.generateTimes();
-    console.log(this.statusConfig);
   }
 
   ngAfterViewInit() {
@@ -77,6 +76,17 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
       }
     }
     this.changeDetectionRef.detectChanges();
+  }
+
+  rowDbClick( time, index) {
+
+    const minutesToStart = index > 0 ? ( this.duration / this.slatNumberRows ) * ( index ) : 0;
+    const minutesToEnd = ( this.duration / this.slatNumberRows ) * ( index + 1 );
+
+    this.onRowDbClick.emit({
+      start: new Date(time).setMinutes( minutesToStart ),
+      end: new Date(time).setMinutes( minutesToEnd )
+    });
   }
 
   calcPositionEvent(index, event: ScheduleDataSource) {

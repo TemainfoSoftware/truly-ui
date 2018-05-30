@@ -217,8 +217,14 @@ export class ScheduleDemoOverviewComponent {
     });
   }
 
+  onEventDbClick( event ) {
+    console.log('EVENT CLICK: ', event);
+  }
+
   onRowClick( event ) {
-    console.log('RowClick', event);
+    console.log('ROW DBCLICK: ', event );
+    console.log('ROW DBCLICK START TIME: ', new Date(event.start));
+    console.log('ROW DBCLICK END TIME: ', new Date(event.end));
   }
 
 

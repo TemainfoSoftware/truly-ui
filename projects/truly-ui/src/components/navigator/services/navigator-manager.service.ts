@@ -75,6 +75,7 @@ export class NavigatorManagerService {
       day: this.currentDay,
       month: this.currentMonth,
       year: this.currentYear,
+      fullDate: new Date( this.currentYear, this.currentMonth, this.currentDay ),
       rangeYear: {start: this.startYear, end: this.endYear}
     };
   }
@@ -128,30 +129,40 @@ export class NavigatorManagerService {
 
   // =============================== \\
   private monthYearTypeNext() {
-    if (this.currentMonth === 11) {
-      this.currentMonth = -1;
-      this.currentYear ++;
-    }
-    this.currentMonth ++;
+    const date = this.getAtualDateFromParameters();
+    date.setMonth( this.date.getMonth() + 1 );
+    this.setDate( date );
   }
 
   private monthYearTypePrevious() {
-    if (this.currentMonth === 0) {
-      this.currentMonth = 12;
-      this.currentYear --;
-    }
-    this.currentMonth --;
+    const date = this.getAtualDateFromParameters();
+    date.setMonth( this.date.getMonth() - 1 );
+    this.setDate( date );
   }
 
-
   private yearTypePrevious() {
-    this.currentYear --;
+    const date = this.getAtualDateFromParameters();
+    date.setFullYear( this.date.getFullYear() - 1 );
+    this.setDate( date );
   }
 
   private yearTypeNext() {
-    this.currentYear ++;
+    const date = this.getAtualDateFromParameters();
+    date.setFullYear( this.date.getFullYear() + 1 );
+    this.setDate( date );
   }
 
+  private dayTypePrevious() {
+    const date = this.getAtualDateFromParameters();
+    date.setDate( this.date.getDate() - 1 );
+    this.setDate( date );
+  }
+
+  private dayTypeNext() {
+    const date = this.getAtualDateFromParameters();
+    date.setDate( this.date.getDate() + 1 );
+    this.setDate( date );
+  }
 
   private rangeYearTypePrevious() {
     this.startYear -= this.range;
@@ -163,11 +174,7 @@ export class NavigatorManagerService {
     this.endYear += this.range;
   }
 
-  private dayTypePrevious() {
-    this.currentDay --;
-  }
-
-  private dayTypeNext() {
-    this.currentDay ++;
+  private getAtualDateFromParameters() {
+    return new Date(this.currentYear, this.currentMonth, this.currentDay);
   }
 }

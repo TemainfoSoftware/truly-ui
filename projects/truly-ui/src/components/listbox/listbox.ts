@@ -93,7 +93,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() rowsPage = 50;
 
-  @Input() height = 300;
+  @Input() height = '300px';
 
   @Input() showArrows = true;
 
@@ -106,8 +106,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() listStripped = false;
 
   @Input() dynamicShowHide = false;
-
-  @Input() customInput = false;
 
   @Input() focusOnScroll = true;
 
@@ -220,7 +218,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.quantityVisibleRows = this.itemContainer.nativeElement.offsetHeight / this.rowHeight;
+    this.quantityVisibleRows = Math.floor(this.itemContainer.nativeElement.offsetHeight / this.rowHeight);
     this.quantityInVisibleRows = Math.round( ( this.rowsPage - this.quantityVisibleRows ) / 2 );
 
     this.lastRow = this.quantityVisibleRows - 1;
@@ -351,7 +349,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   getScrollPositionByContainer() {
-    return Math.floor( this.scrollTop / this.rowHeight );
+    return Math.round( this.scrollTop / this.rowHeight );
   }
 
   getCursorViewPortPosition( index ) {
@@ -571,7 +569,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   isCursorViewLessOrEqualZero() {
-    return this.cursorViewPortPosition <= 0;
+    return this.cursorViewPortPosition < 1;
   }
 
   setScrollTopAndFocusPrevious() {
@@ -660,7 +658,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   handleSearchQuery() {
     this.handleSearchQueryAsArrayString();
     const data = this.lazyMode ? this.data.data[ 0 ] : this.data[ 0 ];
-    if ( this.searchQuery.length === 0 ) {
+    if (( this.searchQuery.length === 0 ) && (data.length > 0)) {
       Object.keys( data ).forEach( ( value ) => {
         this.searchQuery.push( value );
       } );
@@ -700,6 +698,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleScrollUp() {
     this.handleScrollFinish();
+    if ( !this.isDataSourceGreaterThanRowsPage() ) {
+      return;
+    }
     if ( this.firstChildElement() ) {
       if ( ( this.firstChildElement().offsetTop <= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
         if ( this.firstChildElement().getBoundingClientRect().top > this.parentElement().top - (5 * this.rowHeight) ) {
@@ -821,7 +822,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       return this.addNew ? (this.filteredData.length * this.rowHeight) + (this.rowHeight) :
         (this.filteredData.length * this.rowHeight);
     }
-    return this.addNew ? (this.rowsClient * this.rowHeight) : this.rowsClient * this.rowHeight;
+    return this.addNew ? (this.rowsClient * this.rowHeight) + this.rowHeight : this.rowsClient * this.rowHeight;
   }
 
   getElementOfList() {
@@ -1023,9 +1024,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   existCustomTemplate() {
-    if ( this.customInput ) {
-      return true;
-    }
     for ( const node of this.customTemplate.nativeElement.childNodes ) {
       if ( node.nodeName === '#comment' ) {
         return true;
@@ -1083,13 +1081,15 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( change: SimpleChanges ) {
     this.validateDataType();
-    if ( this.data ) {
-      this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
-        this.handleRenderList();
-      } );
-      this.handleSearchQuery();
-      this.loadingMoreData = false;
-      this.change.detectChanges();
+    if (this.data) {
+      if ( this.data.length > 0 ) {
+        this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
+          this.handleRenderList();
+        } );
+        this.handleSearchQuery();
+        this.loadingMoreData = false;
+        this.change.detectChanges();
+      }
     }
   }
 

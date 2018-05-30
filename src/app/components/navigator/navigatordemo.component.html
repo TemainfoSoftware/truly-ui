@@ -12,7 +12,7 @@
           <app-card>
             <div class="col-md-4">
               <h5>Basic Usage</h5>
-              <tl-navigator [type]="'monthyear'"></tl-navigator>
+              <tl-navigator [type]="'monthyear'" (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
  <tl-navigator [type]="'monthyear'"></tl-navigator>
@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4">
               <h5>With RangeYear Type</h5>
-              <tl-navigator [type]="'rangeyear'" [range]="10"></tl-navigator>
+              <tl-navigator [type]="'rangeyear'" [range]="10"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
  <tl-navigator [type]="'rangeyear'" [range]="10"></tl-navigator>
@@ -29,7 +29,7 @@
 
             <div class="col-md-4">
               <h5>With Year Type</h5>
-              <tl-navigator [type]="'year'"></tl-navigator>
+              <tl-navigator [type]="'year'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
  <tl-navigator [type]="'year'"></tl-navigator>
@@ -40,7 +40,7 @@
           <app-card>
             <div class="col-md-4">
               <h5>With Day Type</h5>
-              <tl-navigator [type]="'day'"></tl-navigator>
+              <tl-navigator [type]="'day'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
  <tl-navigator [type]="'day'"></tl-navigator>
@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-8">
               <h5>Without Border</h5>
-              <tl-navigator [withBorder]="false"></tl-navigator>
+              <tl-navigator [withBorder]="false"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
  <tl-navigator [withBorder]="false"></tl-navigator>

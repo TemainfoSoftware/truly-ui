@@ -119,19 +119,17 @@ export class TlCalendarDays {
   }
 
   selectDay(day, cell) {
-    if ((this.calendar.typingDay) && (day === this.calendar.day)) {
+    if (day === this.calendar.day) {
       this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.selectedDay = cell.nativeElement;
     }
   }
 
   markToday(day, cell) {
-    if ( (day === this.calendar.day) && (this.calendar.month === new Date().getMonth() )
+    if ( (day === new Date().getDate()) && (this.calendar.month === new Date().getMonth() )
       && (this.calendar.year === new Date().getFullYear()) ) {
       this.calendar.renderer.addClass(cell.nativeElement, 'today');
-      this.calendar.renderer.addClass(cell.nativeElement, 'selected');
       this.calendar.todayIndex = cell;
-      this.calendar.selectedDay = cell.nativeElement;
     }
   }
 

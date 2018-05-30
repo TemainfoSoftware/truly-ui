@@ -45,11 +45,13 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   @Input() inputControlFocus;
 
-  @Input() year = new Date().getFullYear();
+  @Input() date = new Date();
 
-  @Input() month = new Date().getMonth();
+  @Input() year = this.date.getFullYear();
 
-  @Input() day = new Date().getDate();
+  @Input() month = this.date.getMonth();
+
+  @Input() day = this.date.getDate();
 
   @Input() typingDay = false;
 
@@ -166,9 +168,20 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.month = new Date().getMonth();
     this.day = new Date().getDate();
     this.direction = 'none';
+    this.emitToday();
     this.setDateNavigator();
     this.generateDays();
     this.loadNavigator();
+  }
+
+  emitToday() {
+    this.selectDay.emit(
+      {
+        'year': this.year,
+        'month': this.month,
+        'day': this.day,
+        'fullDate': new Date( this.year, this.month, this.day ),
+      }, );
   }
 
   generateDays() {
@@ -637,7 +650,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.selectDay.emit(
       {
         'year': this.year,
-        'month': this.month + 1,
+        'month': this.month,
         'day': parseInt( cell.innerHTML, 10 ),
         'fullDate': new Date( this.year, this.month, parseInt( cell.innerHTML, 10 ) ),
         'event': $event
@@ -692,7 +705,20 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     }
   }
 
+  setDateChange() {
+    this.day = this.date.getDate();
+    this.month = this.date.getMonth();
+    this.year = this.date.getFullYear();
+  }
+
   ngOnChanges( changes: SimpleChanges ) {
+    if (changes.date) {
+      if ( !changes.date.firstChange ) {
+        this.setDateChange();
+        this.setDateNavigator();
+        this.generateDays();
+      }
+    }
     if ( changes.day ) {
       if ( !changes.day.firstChange ) {
         this.setDateNavigator();

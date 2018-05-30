@@ -21,45 +21,31 @@
  */
 export const dataProperties = [
   {
-    name: 'todayButton',
+    name: 'accordion.singleOpened',
     type: 'boolean',
-    default: 'true',
-    description: 'Displays a footer with a today button.',
+    default: 'false',
+    description: 'Defines if the accordion will open one item at the time.',
     options: 'true | false'
   },
   {
-    name: 'typingDay',
+    name: 'accordion-item.title',
+    type: 'string',
+    default: 'Title 1',
+    description: 'Define the title of the accordion item.',
+    options: 'any text'
+  },
+  {
+    name: 'accordion-item.heightHeader',
+    type: 'string',
+    default: '45px',
+    description: 'Define the height of the accordion\'s item height.',
+    options: 'any text'
+  },
+  {
+    name: 'accordion-item.opened',
     type: 'boolean',
-    default: 'true',
-    description: 'Used on datepicker, this property is used to control change of Date Object while typing.',
-    options: 'true | false'
-  },
-  {
-    name: 'inputControlFocus',
-    type: 'TlInput',
-    default: 'null',
-    description: 'Define a TlInput to control focus of calendar ( used on Datepicker Component ).',
-    options: 'TlInput Instance'
-  },
-  {
-    name: 'day',
-    type: 'number',
-    default: 'Current Day',
-    description: 'Property to set Day of calendar will initiate.',
-    options: 'true | false'
-  },
-  {
-    name: 'month',
-    type: 'number',
-    default: 'Current Month',
-    description: 'Property to set Month of calendar will initiate.',
-    options: 'true | false'
-  },
-  {
-    name: 'year',
-    type: 'number',
-    default: 'Current Year',
-    description: 'Property to set Year of calendar will initiate.',
+    default: 'false',
+    description: 'Defines the opened state of accordion item.',
     options: 'true | false'
   },
 ];

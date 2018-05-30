@@ -63,6 +63,13 @@ export class TlNavigator implements OnInit, OnChanges {
     this.setDescription();
   }
 
+  ngOnChanges(change: SimpleChanges) {
+    this.navigatorManager.setType(this.type);
+    this.navigatorManager.setRange(this.range);
+    this.navigatorManager.setDate(this.date);
+    this.setDescription();
+  }
+
   onClickPrevious() {
     this.navigatorManager.previous();
     this.setDescription();
@@ -82,13 +89,6 @@ export class TlNavigator implements OnInit, OnChanges {
   private setDescription() {
     this.description = this.navigatorManager.getDescription();
     this.change.detectChanges();
-  }
-
-  ngOnChanges(change: SimpleChanges) {
-    this.navigatorManager.setType(this.type);
-    this.navigatorManager.setRange(this.range);
-    this.navigatorManager.setDate(this.date);
-    this.setDescription();
   }
 }
 

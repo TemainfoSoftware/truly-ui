@@ -95,9 +95,9 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @Input() tabindex = 0;
 
-  @Input() textAlign;
+  @Input() textAlign: 'left' | 'right' | 'center' | 'justify' = 'left';
 
-  @Input() mask;
+  @Input() mask = '';
 
   @Input() placeholder = ' ';
 

@@ -10,10 +10,10 @@
   <!-- CREATE WIDGET CONTENT-->
   <div #scheduleSlats class="ui-schedule-widget-content">
     <div *ngFor="let time of timesCollection; let last = last; let first = first" class="ui-schedule-widget-rows">
-      <div class="ui-schedule-row" *ngFor="let row of slatNumberRowsAsArray"
+      <div class="ui-schedule-row" *ngFor="let row of slatNumberRowsAsArray; let index = index"
            [ngStyle]="{height: slatHightRows + 'px'}"
            [ngClass]="{last: last, first: first}"
-           (dblclick)="onRowDbClick.emit( time )"></div>
+           (dblclick)="rowDbClick( time, index )"></div>
     </div>
   </div>
 

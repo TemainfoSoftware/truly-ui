@@ -27,10 +27,12 @@ export class TooltipDirective {
     }
 
     show() {
+      if (this.tooltip.text !== '') {
         const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );
         const componentRef = this.view.createComponent( componentFactory );
         (<TlToolTip>componentRef.instance).setOptions( this.tooltip );
         (<TlToolTip>componentRef.instance).setPosition( this.view.element );
+      }
     }
 
     hide() {

@@ -5,6 +5,7 @@
     <tl-schedule-heading
       [views]="views"
       [defaultView]="defaultView"
+      [currentDate]="currentDate"
       (changeView)="onChangeView($event)"
       (changeDate)="onChangeDate($event)"
     ></tl-schedule-heading>
@@ -31,7 +32,6 @@
       (onEventDbClick)="eventDbClick.emit($event)"
       (onEventMouseover)="eventMouseover.emit($event)"
       (onEventMouseout)="eventMouseout.emit($event)"
-
     ></tl-view-day>
 
     <tl-day-list

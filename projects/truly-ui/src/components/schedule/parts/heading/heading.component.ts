@@ -11,6 +11,8 @@ export class HeadingComponent implements OnInit {
 
   @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
 
+  @Input() currentDate = new Date();
+
   @Output() changeView = new EventEmitter();
 
   @Output() changeDate = new EventEmitter();

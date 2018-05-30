@@ -35,10 +35,45 @@ export const dataProperties = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
+    name: 'type',
+    type: 'string',
+    default: 'text',
+    description: 'Type of input',
+    options: 'any type of Native Input'
+  },
+  {
     name: 'label',
     type: 'string',
     default: 'null',
     description: 'Create a label together with Input Element',
+    options: 'any text'
+  },
+  {
+    name: 'name',
+    type: 'string',
+    default: 'null',
+    description: 'Define the name attribute of input, used on form as form control name.',
+    options: 'any text'
+  },
+  {
+    name: 'maxlength',
+    type: 'number',
+    default: '-1',
+    description: 'Define the max number of characters of input.',
+    options: 'any number'
+  },
+  {
+    name: 'tabindex',
+    type: 'number',
+    default: '0',
+    description: 'Define the tab index order of input.',
+    options: 'any number'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '23px',
+    description: 'The height of input box',
     options: 'any text'
   },
   {
@@ -96,6 +131,13 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Display a text After the Input',
+    options: 'any text'
+  },
+  {
+    name: 'mask',
+    type: 'string',
+    default: 'null',
+    description: 'Property used to define mask.',
     options: 'any text'
   }
   ,

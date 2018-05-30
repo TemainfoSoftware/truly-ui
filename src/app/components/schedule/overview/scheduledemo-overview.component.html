@@ -17,12 +17,13 @@
                   [events]="dataSource"
                   [startDayHour]="'08:00'"
                   [endDayHour]="'22:00'"
+                  [duration]="30"
                   [showNowIndicator]="true"
                   [slatNumberRows]="2"
                   [slatHightRows]="40"
                   [statusConfig]="statusConfig"
                   (rowDbClick)="onRowClick($event)"
-                  (eventDbClick)="onRowClick($event)"
+                  (eventDbClick)="onEventDbClick($event)"
                 >
                 </tl-schedule>
 

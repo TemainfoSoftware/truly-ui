@@ -127,7 +127,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   public loading = true;
 
-  private documentListener = [];
+  private documentScroll;
+
+  private documentClick;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
     asyncValidators: Array<any>, private renderer: Renderer2 ) {
@@ -153,7 +155,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
       if ( this.model.model ) {
         for ( let item = 0; item < this.data.length; item++ ) {
           if ( String( this.data[ item ][ this.modelValue ] ) === String( this.model.viewModel ) ) {
-            this.clickItem.emit({index: item, row: this.data[item]});
+            this.clickItem.emit( { index: item, row: this.data[ item ] } );
             return this.tlinput.value = this.data[ item ][ this.labelName ];
           }
         }
@@ -189,23 +191,21 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenScrollDocument() {
-    this.documentListener.push( this.renderer.listen( document, 'scroll', ( $event ) => {
+    this.documentScroll = this.renderer.listen( document, 'scroll', ( $event ) => {
       this.listBox.showList = false;
       this.listBox.detectChanges();
-    } ) );
+    } );
   }
 
   listenClickDocument() {
-    if ( !this.documentListener ) {
-      this.documentListener.push( this.renderer.listen( document, 'click', ( $event ) => {
-        if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-          this.listBox.showList = false;
-          this.listBox.detectChanges();
-          return;
-        }
-        this.handleOpenOnFocus();
-      } ) );
-    }
+    this.documentClick = this.renderer.listen( document, 'click', ( $event ) => {
+      if ( this.isNotRelatedWithAutocomplete( $event ) ) {
+        this.listBox.showList = false;
+        this.listBox.detectChanges();
+        return;
+      }
+      this.handleOpenOnFocus();
+    } );
   }
 
   onFocusInput( $event ) {
@@ -260,7 +260,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   onInputFocusOut( $event ) {
-    if ( !this.isRelatedTargetLi( $event ) ) {
+    if ( this.isNotRelatedWithAutocomplete( $event ) ) {
       this.listBox.showList = false;
       this.listBox.detectChanges();
     }
@@ -298,10 +298,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     if ( this.isTargetEqualsClearButton( $event ) ) {
       return false;
     }
-    if ( !this.existAutocompleteInputInPath( $event ) ) {
-      return true;
+    if ( this.existAutocompleteInputInPath( $event ) ) {
+      return false;
     }
-    if ( this.isTargetEqualsLi ) {
+    if ( this.isTargetEqualsLi( $event ) ) {
       return false;
     }
     return !this.isTargetEqualsListBox( $event ) &&
@@ -348,21 +348,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     return false;
   }
 
-  /*    highlight( text: string, search ): string {
-   if ( typeof search !== 'object' ) {
-   if ( search && text ) {
-   let pattern = search.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
-   pattern = pattern.split( ' ' ).filter( ( t ) => {
-   return t.length > 0;
-   } ).join( '|' );
-   const regex = new RegExp( pattern, 'gi' );
-
-   return text.replace( regex, ( match ) => `<strong>${match}</strong>` );
-   }
-   return text;
-   }
-   }*/
-
   validateModelValueProperty() {
     if ( !this.modelValue ) {
       throw new Error( 'The [modelValue] property must be specified.' );
@@ -370,9 +355,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   ngOnDestroy() {
-    this.documentListener.forEach( ( listener ) => {
-      listener();
-    } );
+    this.documentScroll();
+    this.documentClick();
   }
 
   ngOnChanges( changes ) {

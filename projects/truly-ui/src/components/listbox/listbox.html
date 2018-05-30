@@ -23,7 +23,8 @@
       </ul>
     </div>
 
-    <div [@enterAnimation]="true" *ngIf="showMore && !scrollFinish && showArrows" (mouseleave)="onShowMoreMouseOut()"
+    <div [@enterAnimation]="true" *ngIf="showMore && !scrollFinish && showArrows"
+         (mouseleave)="onShowMoreMouseOut()"
          (mouseup)="onShowMoreMouseOut()"
          (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
       <i class="ion-chevron-down"></i>

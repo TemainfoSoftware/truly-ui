@@ -1081,13 +1081,15 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( change: SimpleChanges ) {
     this.validateDataType();
-    if ( this.data.length > 0 ) {
-      this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
-        this.handleRenderList();
-      } );
-      this.handleSearchQuery();
-      this.loadingMoreData = false;
-      this.change.detectChanges();
+    if (this.data) {
+      if ( this.data.length > 0 ) {
+        this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
+          this.handleRenderList();
+        } );
+        this.handleSearchQuery();
+        this.loadingMoreData = false;
+        this.change.detectChanges();
+      }
     }
   }
 

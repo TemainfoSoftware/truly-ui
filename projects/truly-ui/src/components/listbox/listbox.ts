@@ -107,8 +107,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() dynamicShowHide = false;
 
-  @Input() customInput = false;
-
   @Input() focusOnScroll = true;
 
   @Input() dynamicFocus = true;
@@ -220,7 +218,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngAfterViewInit() {
-    this.quantityVisibleRows = this.itemContainer.nativeElement.offsetHeight / this.rowHeight;
+    this.quantityVisibleRows = Math.floor(this.itemContainer.nativeElement.offsetHeight / this.rowHeight);
     this.quantityInVisibleRows = Math.round( ( this.rowsPage - this.quantityVisibleRows ) / 2 );
 
     this.lastRow = this.quantityVisibleRows - 1;
@@ -351,7 +349,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   getScrollPositionByContainer() {
-    return Math.floor( this.scrollTop / this.rowHeight );
+    return Math.round( this.scrollTop / this.rowHeight );
   }
 
   getCursorViewPortPosition( index ) {
@@ -571,7 +569,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   isCursorViewLessOrEqualZero() {
-    return this.cursorViewPortPosition <= 0;
+    return this.cursorViewPortPosition < 1;
   }
 
   setScrollTopAndFocusPrevious() {
@@ -1026,9 +1024,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   existCustomTemplate() {
-    if ( this.customInput ) {
-      return true;
-    }
     for ( const node of this.customTemplate.nativeElement.childNodes ) {
       if ( node.nodeName === '#comment' ) {
         return true;

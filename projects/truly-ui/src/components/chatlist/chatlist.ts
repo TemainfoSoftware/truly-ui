@@ -47,7 +47,7 @@ export class TlChatList implements AfterViewInit, OnInit {
 
   @Input() searchQuery;
 
-  @Input() height = 300;
+  @Input() height = 300 / 2 + 'px';
 
   @Input() label = 'firstName';
 

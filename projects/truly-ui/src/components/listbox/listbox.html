@@ -4,7 +4,8 @@
      [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
   <div class="listbox-wrapper">
 
-    <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows" (mouseleave)="onShowMoreMouseOut()"
+    <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows"
+         (mouseleave)="onShowMoreMouseOut()"
          (mouseup)="onShowMoreMouseOut()"
          (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
       <i class="ion-chevron-up"></i>

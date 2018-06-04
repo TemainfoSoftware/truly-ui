@@ -205,7 +205,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         }
         this.handleSearchAsDefaultData();
         return false;
-      })
+      } )
     ).subscribe( searchTextValue => {
       this.handleSearch( searchTextValue );
       this.filterData.emit( this.filteredData );
@@ -214,11 +214,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.resetCursors();
         this.addClassSelected( 0 );
       }, 1 );
-    });
+    } );
   }
 
   ngAfterViewInit() {
-    this.quantityVisibleRows = Math.floor(this.itemContainer.nativeElement.offsetHeight / this.rowHeight);
+    this.quantityVisibleRows = Math.floor( this.itemContainer.nativeElement.offsetHeight / this.rowHeight );
     this.quantityInVisibleRows = Math.round( ( this.rowsPage - this.quantityVisibleRows ) / 2 );
 
     this.lastRow = this.quantityVisibleRows - 1;
@@ -658,7 +658,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   handleSearchQuery() {
     this.handleSearchQueryAsArrayString();
     const data = this.lazyMode ? this.data.data[ 0 ] : this.data[ 0 ];
-    if (( this.searchQuery.length === 0 ) && (data.length > 0)) {
+    if ( ( this.searchQuery.length === 0 ) && (data.length > 0) ) {
       Object.keys( data ).forEach( ( value ) => {
         this.searchQuery.push( value );
       } );
@@ -1081,9 +1081,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( change: SimpleChanges ) {
     this.validateDataType();
-    if (this.data) {
-      if ( this.data.length > 0 ) {
-        this.dataService.updateDataSource( this.lazyMode ? this.data.data : this.data ).then( value => {
+    const data = this.lazyMode ? this.data.data : this.data;
+    if ( data ) {
+      if ( data.length > 0 ) {
+        this.dataService.updateDataSource( data ).then( value => {
           this.handleRenderList();
         } );
         this.handleSearchQuery();

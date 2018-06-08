@@ -716,8 +716,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleScrollFinish() {
-    this.scrollFinish = (this.itemContainer.nativeElement.scrollTop +
-    (this.quantityVisibleRows * this.rowHeight) >= this.listBox.nativeElement.offsetHeight);
+    const lineAddNew = this.addNew ? this.rowHeight : 0;
+    this.scrollFinish = this.itemContainer.nativeElement.scrollTop - lineAddNew >=
+      (this.listBox.nativeElement.offsetHeight - this.itemContainer.nativeElement.offsetHeight);
 
     if ( this.scrollFinish ) {
       this.onShowMoreMouseOut();

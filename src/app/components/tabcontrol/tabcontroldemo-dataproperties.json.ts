@@ -28,6 +28,13 @@ export const dataProperties = [
       options: 'px | % | em'
     },
     {
+      name: 'tabcontrol.tabsheight',
+      type: 'string',
+      default: 'null',
+      description: 'Height of Tabs',
+      options: 'px | % | em'
+    },
+    {
       name: 'tab.title',
       type: 'string',
       default: 'New Tab',

@@ -5,9 +5,9 @@
 .wrapper-tabcontrol {
   height: 100%;
   width: 100%;
-  box-sizing: border-box;
   overflow: hidden;
   user-select: none;
+  box-sizing: border-box;
 
   >.line-separator {
     box-sizing: border-box;
@@ -42,7 +42,8 @@
     text-align: center;
     padding: 0 10px;
     line-height: 25px;
-    height: 26px;
+    height: 25px;
+    box-sizing: border-box;
   }
   >.tab-panel-buttons li:hover {
     cursor: pointer;

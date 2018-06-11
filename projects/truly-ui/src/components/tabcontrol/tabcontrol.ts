@@ -40,6 +40,8 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     @Input( 'height' ) height = 'auto';
 
+    @Input( 'tabsHeight' ) tabsHeight = '25px';
+
     @ViewChild('tabsHeader') tabsHeader;
 
     @ViewChild('wrapperTab') wrapper;
@@ -179,8 +181,10 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       this.widthTabs = 0;
       for (let i = 0; i < this.elementListTabs.length; i++) {
         this.widthTabs = this.widthTabs + Number(this.elementListTabs[i].offsetWidth);
-        this.topPosition = this.wrapper.nativeElement.offsetTop + (this.line.nativeElement.offsetHeight / 2) - 1;
       }
+      this.topPosition =
+        Math.floor((this.wrapper.nativeElement.offsetTop) -
+          (this.line.nativeElement.offsetHeight / 2) + (parseInt(this.tabsHeight, 10)));
       this.widthSeparator = 'calc(100% - ' + ((this.widthTabs) + this.wrapper.nativeElement.offsetLeft +
         this.line.nativeElement.offsetLeft) + 'px' + ' )';
     }

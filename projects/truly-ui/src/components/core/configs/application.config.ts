@@ -20,6 +20,18 @@
     SOFTWARE.
 */
 
-export class  ApplicationConfig {
-  theme = 'default';
+export class LazyApplicationLoaderConfig {
+  theme?: string;
+  button?: ButtonGlobalConfig;
+
+  constructor() {
+    this.theme = 'default';
+    this.button = {
+      iconAddonBefore: ''
+    };
+  }
+}
+
+export interface ButtonGlobalConfig {
+  iconAddonBefore: string;
 }

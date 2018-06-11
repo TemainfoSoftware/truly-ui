@@ -20,27 +20,19 @@
     SOFTWARE.
 */
 
-import {
-  APP_INITIALIZER, InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf, ComponentFactoryResolver, Injector
-} from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { ModalModule } from '../modal';
-import { ApplicationConfig } from './configs/application.config';
-import { CoreService } from './services/core.service';
+import { LazyApplicationLoaderConfig } from './configs/application.config';
+import { CoreService, APPLICATION_CONFIGURATION } from './services/core.service';
 import { TlCore } from './core';
 
 export * from './enums/modal-result';
 export * from './enums/key-events';
 
 // @dynamic
-export function CoreServiceFactory( factory: ComponentFactoryResolver,
-                                    injector: Injector,
-                                    config: ApplicationConfig): Function {
-    return () => new CoreService(factory, injector, config);
+export function CoreServiceFactory( coreService: CoreService) {
+    return () => coreService.initializeApp();
 }
-
-export const COMPONENT_FACTORY_RESOLVER = new InjectionToken<ComponentFactoryResolver>('COMPONENT_FACTORY_RESOLVER');
-export const APPLICATION_CONFIGURATION = new InjectionToken<ApplicationConfig>('APPLICATION_CONFIGURATION');
-export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
 
 // @dynamic
 @NgModule( {
@@ -59,7 +51,7 @@ export const INJECTOR = new InjectionToken<Injector>('INJECTOR');
 } )
 export class CoreModule {
 
-    static forRoot( config: ApplicationConfig ): ModuleWithProviders {
+    static forRoot( config = new LazyApplicationLoaderConfig()): ModuleWithProviders {
       return {
         ngModule: CoreModule,
         providers: [
@@ -67,12 +59,10 @@ export class CoreModule {
           {
             provide: APP_INITIALIZER,
             useFactory: CoreServiceFactory,
-            deps: [COMPONENT_FACTORY_RESOLVER, INJECTOR, APPLICATION_CONFIGURATION],
+            deps: [CoreService],
             multi: true
           },
-          {provide: COMPONENT_FACTORY_RESOLVER, useExisting: ComponentFactoryResolver},
-          {provide: INJECTOR, useExisting: Injector},
-          {provide: APPLICATION_CONFIGURATION, useValue: config},
+          {provide: APPLICATION_CONFIGURATION, useValue: {...config, ... new LazyApplicationLoaderConfig()}},
         ]
       };
     }

@@ -20,31 +20,31 @@
     SOFTWARE.
 */
 
-import { Injectable, Optional, ComponentFactoryResolver, ApplicationRef, Injector } from '@angular/core';
-import { ApplicationConfig } from '../configs/application.config';
+import {
+  Injectable, ComponentFactoryResolver, Injector, InjectionToken, Inject
+} from '@angular/core';
+import { LazyApplicationLoaderConfig } from '../configs/application.config';
 import { TlCore } from '../core';
+
+export const APPLICATION_CONFIGURATION = new InjectionToken<LazyApplicationLoaderConfig>('APPLICATION_CONFIGURATION');
 
 @Injectable()
 export class CoreService {
 
-    private applicationRef: ApplicationRef;
-
     private coreInstance: TlCore;
 
-    constructor( private compiler: ComponentFactoryResolver,
-                 private injector: Injector,
-     @Optional() private config: ApplicationConfig) {
-       this.applicationRef = this.injector.get(ApplicationRef);
-       this.createCoreComponent();
+    constructor( @Inject(APPLICATION_CONFIGURATION) private config,
+                 private compiler: ComponentFactoryResolver,
+                 private injector: Injector) {
     }
 
-    createCoreComponent() {
-      const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-      const ref = componentFactory.create(this.injector);
-      this.coreInstance = ref.instance;
-      this.coreInstance.setTheme( this.config.theme );
-      this.applicationRef.attachView(ref.hostView);
-      this.applicationRef.tick();
+    initializeApp(): Promise<any> {
+      return new Promise(( resolve ) => {
+        const componentFactory = this.compiler.resolveComponentFactory( TlCore );
+        const ref = componentFactory.create(this.injector);
+        this.coreInstance = ref.instance;
+        this.coreInstance.setTheme( this.config.theme );
+        resolve();
+      });
     }
-
 }

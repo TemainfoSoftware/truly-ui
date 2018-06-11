@@ -20,8 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter, ViewChild, ElementRef, AfterContentInit,
-  AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy
+  Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
@@ -38,7 +37,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
 
-  @Input() statusConfig: {StatusType};
+  @Input() statusConfig: StatusType;
 
   @Input() currentDate = new Date();
 

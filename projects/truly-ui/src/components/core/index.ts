@@ -51,7 +51,7 @@ export function CoreServiceFactory( coreService: CoreService) {
 } )
 export class CoreModule {
 
-    static forRoot( config = new LazyApplicationLoaderConfig()): ModuleWithProviders {
+    static forRoot( config: LazyApplicationLoaderConfig ): ModuleWithProviders {
       return {
         ngModule: CoreModule,
         providers: [
@@ -62,7 +62,7 @@ export class CoreModule {
             deps: [CoreService],
             multi: true
           },
-          {provide: APPLICATION_CONFIGURATION, useValue: {...config, ... new LazyApplicationLoaderConfig()}},
+          {provide: APPLICATION_CONFIGURATION, useValue: Object.assign( new LazyApplicationLoaderConfig(), config  )},
         ]
       };
     }

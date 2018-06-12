@@ -35,8 +35,7 @@ export class CoreService {
 
     constructor( @Inject(APPLICATION_CONFIGURATION) private config,
                  private compiler: ComponentFactoryResolver,
-                 private injector: Injector) {
-    }
+                 private injector: Injector) {}
 
     initializeApp(): Promise<any> {
       return new Promise(( resolve ) => {

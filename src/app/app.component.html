@@ -116,7 +116,7 @@
           <ul class="treeview-menu">
             <li><a href="#" routerLink="calendar" routerLinkActive="active"><i class="fa fa-circle-o"></i> Calendar</a></li>
             <li><a href="#" routerLink="checkbox" routerLinkActive="active"><i class="fa fa-circle-o"></i> CheckBox</a></li>
-            <li><a href="#" routerLink="editor" routerLinkActive="active"><i class="fa fa-circle-o"></i> Editor</a></li>
+            <li  *ngIf="!inProduction"><a href="#" routerLink="editor" routerLinkActive="active"><i class="fa fa-circle-o"></i> Editor</a></li>
             <li><a href="#" routerLink="inputmask" routerLinkActive="active"><i class="fa fa-circle-o"></i> Input Mask</a></li>
             <li><a href="#" routerLink="input" routerLinkActive="active"><i class="fa fa-circle-o"></i> Input Text</a></li>
             <li><a href="#" routerLink="inputvalidators" routerLinkActive="active"><i class="fa fa-circle-o"></i> Input Validators</a></li>
@@ -195,6 +195,18 @@
             <li><a href="#" routerLink="datepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> DatePicker</a></li>
           </ul>
         </li>
+        <li *ngIf="!inProduction" class="treeview">
+          <a href="#">
+            <i class="fa ion-ios-bookmarks"></i>
+            <span>Schedule</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#" routerLink="schedule" routerLinkActive="active"><i class="fa fa-circle-o"></i> Overview</a></li>
+          </ul>
+        </li>
         <li class="treeview">
           <a href="#">
             <i class="fa ion-ios-gear-outline"></i>
@@ -207,18 +219,6 @@
             <li><a href="#" routerLink="toaster" routerLinkActive="active"><i class="fa fa-circle-o"></i> Toaster</a></li>
           </ul>
         </li>
-        <!--<li class="treeview">-->
-          <!--<a href="#">-->
-            <!--<i class="fa ion-ios-bookmarks"></i>-->
-            <!--<span>Schedule</span>-->
-            <!--<span class="pull-right-container">-->
-              <!--<i class="fa fa-angle-left pull-right"></i>-->
-            <!--</span>-->
-          <!--</a>-->
-          <!--<ul class="treeview-menu">-->
-            <!--<li><a href="#" routerLink="schedule" routerLinkActive="active"><i class="fa fa-circle-o"></i> Overview</a></li>-->
-          <!--</ul>-->
-        <!--</li>-->
       </ul>
     </section>
     <!-- /.sidebar -->

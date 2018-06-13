@@ -2,6 +2,7 @@
   <ng-template #tabsHeader let-tabs="tabs">
     <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
       <li *ngFor="let tab of tabs"
+          [ngStyle]="{'height': tabsHeight, 'line-height': tabsHeight}"
           [ngClass]="{'tab-selected': tab.selected}" (click)="selectTab(tab)">
         {{tab.title}}
       </li>
@@ -11,7 +12,7 @@
   <div class="line-separator"
         #line
         [style.width]="widthSeparator"
-        [style.top]="topPosition + 'px'"
+        [style.top]="topPosition - 1 + 'px'"
         [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) - 1 +'px'">
   </div>
 

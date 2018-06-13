@@ -156,18 +156,15 @@ export class TlToolTip implements TooltipOptions {
     }
 
     private getTopMeasureForTopTooltip() {
-        this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top =
-            this.getElementTop() - this.elementHeight - this.tooltipPadding + 'px' :
-            this.tooltip.nativeElement.style.top = this.getElementTop() -
+        this.tooltip.nativeElement.style.top = this.getElementTop() -
                 this.tooltip.nativeElement.offsetHeight - this.tooltipPadding + 'px';
     }
 
     private getTopMeasureForLeftAndRight() {
-        this.isLessOrEqualThanNormalWidth() ? this.tooltip.nativeElement.style.top = this.getElementTop() - 2.5 + 'px'
-            : this.tooltip.nativeElement.style.top =
-            this.getElementTop() - this.tooltip.nativeElement.offsetHeight / 2 + this.tooltipPadding + 'px';
+      this.tooltip.nativeElement.style.top =
+        this.getElementTop() + (this.element.nativeElement.offsetHeight / 2) -
+         (this.tooltip.nativeElement.offsetHeight / 2) + 'px';
     }
-
 
     private getElementHeight() {
         this.existsMeasureOnNativeElement() ? this.elementHeight = this.element.nativeElement.offsetHeight :
@@ -175,25 +172,26 @@ export class TlToolTip implements TooltipOptions {
     }
 
     private setTopMeasureForBottom() {
-        this.tooltip.nativeElement.style.top = this.getElementTop() + this.elementHeight + this.tooltipPadding + 'px';
+        this.tooltip.nativeElement.style.top =
+          this.getElementTop() + this.elementHeight + this.tooltipPadding + 'px';
     }
 
     private setAlignCenter() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft +
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.getBoundingClientRect().left +
             (this.elementWidth / 2) - this.tooltip.nativeElement.offsetWidth / 2 + 'px';
     }
 
     private setAlignRight() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft +
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.getBoundingClientRect().left +
             this.elementWidth + this.tooltipPadding + 'px';
     }
 
     private setAlignLeft() {
-        this.tooltip.nativeElement.style.left = this.element.nativeElement.offsetLeft -
-            this.tooltip.nativeElement.offsetWidth - this.tooltipPadding + 'px';
+        this.tooltip.nativeElement.style.left = this.element.nativeElement.getBoundingClientRect().left
+          - this.tooltip.nativeElement.offsetWidth + 'px';
     }
 
     private getElementTop() {
-        return this.element.nativeElement.offsetTop;
+        return this.element.nativeElement.getBoundingClientRect().top;
     }
 }

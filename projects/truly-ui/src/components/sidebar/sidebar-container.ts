@@ -21,11 +21,12 @@
  */
 import {
   AfterContentInit,
-  Component, ContentChild, ContentChildren, forwardRef, QueryList, Renderer2,
+  Component, ContentChild, ContentChildren, forwardRef, OnDestroy, QueryList, Renderer2,
 } from '@angular/core';
 import { TlSidebar } from './parts/sidebar/sidebar';
 import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
 import { SidebarService } from '../modal/sidebar.service';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-sidebar-container',
@@ -33,14 +34,15 @@ import { SidebarService } from '../modal/sidebar.service';
   styleUrls: [ './sidebar-container.scss' ],
 } )
 
-export class TlSidebarContainer implements AfterContentInit {
+export class TlSidebarContainer implements AfterContentInit, OnDestroy {
 
   @ContentChildren( forwardRef( () => TlSidebar ) ) sidebar: QueryList<TlSidebar>;
 
   @ContentChild( TlSidebarContent ) sidebarContent;
 
-  constructor( private sidebarService: SidebarService, private renderer: Renderer2 ) {
-  }
+  private subscription: Subscription = new Subscription();
+
+  constructor( private sidebarService: SidebarService, private renderer: Renderer2 ) {}
 
   ngAfterContentInit() {
     this.setSidebarMovement();
@@ -49,10 +51,10 @@ export class TlSidebarContainer implements AfterContentInit {
 
   setSidebarMovement() {
     this.sidebar.forEach( ( item ) => {
-      item.toggleChange.subscribe( ( value ) => {
+      this.subscription.add( item.toggleChange.subscribe( ( value ) => {
         this.sidebarContent.setMovement( value );
         this.sidebarService.setChange( value );
-      } );
+      } ) );
     } );
   }
 
@@ -63,4 +65,10 @@ export class TlSidebarContainer implements AfterContentInit {
       } );
     } );
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+
 }

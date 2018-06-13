@@ -20,6 +20,10 @@
     SOFTWARE.
 */
 
-export class  ApplicationConfig {
-  theme = 'default';
+export class LazyApplicationLoaderConfig {
+  theme?: string;
+
+  constructor() {
+    this.theme = 'default';
+  }
 }

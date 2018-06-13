@@ -24,7 +24,7 @@
       </ul>
     </div>
 
-    <div [@enterAnimation]="true" *ngIf="showMore && !scrollFinish && showArrows"
+    <div [@enterAnimation]="true" *ngIf="!scrollFinish && showArrows"
          (mouseleave)="onShowMoreMouseOut()"
          (mouseup)="onShowMoreMouseOut()"
          (mousedown)="onShowMoreMouseIn('down')" class="showmore down">

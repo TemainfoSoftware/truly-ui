@@ -31,14 +31,15 @@ import { Component, ViewEncapsulation, ApplicationRef, Renderer2 } from '@angula
 export class TlCore {
   private theme = 'default';
 
-  constructor(private app: ApplicationRef, private renderer: Renderer2) {}
+  constructor(
+    private app: ApplicationRef, private renderer: Renderer2) {}
 
-  setTheme(theme) {
-    setTimeout(() => {
-      this.theme = `tl-${theme}-theme`;
-      if (this.app.components.length ) {
-        this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
-      }
-    }, 200);
-  }
+    setTheme(theme: string) {
+      setTimeout(() => {
+        this.theme = `tl-${theme}-theme`;
+        if (this.app.components.length ) {
+          this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
+        }
+      }, 200);
+    }
 }

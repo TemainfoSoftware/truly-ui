@@ -1,41 +1,51 @@
 import {
-    ComponentFactoryResolver,
-    Directive, HostListener, Input,
-    ViewContainerRef
+  ComponentFactoryResolver,
+  Directive, HostListener, Input, OnDestroy,
+  ViewContainerRef
 } from '@angular/core';
 import { TlToolTip } from '../tooltip';
 import { TooltipOptions } from '../tooltipOptions';
 
 @Directive( {
-    selector: '[tooltip]'
+  selector: '[tooltip]'
 } )
-export class TooltipDirective {
+export class TooltipDirective implements OnDestroy {
 
-    @Input() tooltip: TooltipOptions;
+  @Input() tooltip: TooltipOptions;
 
-    constructor( private view: ViewContainerRef, private compiler: ComponentFactoryResolver ) {
+  private listenerWheel;
+
+  constructor( private view: ViewContainerRef, private compiler: ComponentFactoryResolver ) {
+    this.listenerWheel = document.addEventListener('mousewheel', () => {
+      this.hide();
+    });
+  }
+
+  @HostListener( 'mouseenter' )
+  onMouseEnter() {
+    this.show();
+  }
+
+  @HostListener( 'mouseleave' )
+  onMouseLeave() {
+    this.hide();
+  }
+
+  show() {
+    if ( this.tooltip.text !== '' ) {
+      const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );
+      const componentRef = this.view.createComponent( componentFactory );
+      (<TlToolTip>componentRef.instance).setOptions( this.tooltip );
+      (<TlToolTip>componentRef.instance).setPosition( this.view.element );
     }
+  }
 
-    @HostListener( 'mouseenter' )
-    onMouseEnter() {
-        this.show();
-    }
+  hide() {
+    this.view.clear();
+  }
 
-    @HostListener( 'mouseleave' )
-    onMouseLeave() {
-        this.hide();
-    }
+  ngOnDestroy() {
+    document.removeEventListener('mousewheel', this.listenerWheel, false);
+  }
 
-    show() {
-      if (this.tooltip.text !== '') {
-        const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );
-        const componentRef = this.view.createComponent( componentFactory );
-        (<TlToolTip>componentRef.instance).setOptions( this.tooltip );
-        (<TlToolTip>componentRef.instance).setPosition( this.view.element );
-      }
-    }
-
-    hide() {
-        this.view.clear();
-    }
 }

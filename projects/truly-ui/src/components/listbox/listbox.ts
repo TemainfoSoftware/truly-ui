@@ -59,7 +59,7 @@ import { ListBoxTemplateRenderService } from './parts/listbox-template-render';
     ListBoxListRenderService,
     AddNewRenderService,
     ListBoxTemplateRenderService,
-  ]
+  ],
 } )
 export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
@@ -1025,12 +1025,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   existCustomTemplate() {
-    for ( const node of this.customTemplate.nativeElement.childNodes ) {
-      if ( node.nodeName === '#comment' ) {
-        return true;
-      }
-    }
-    return false;
+    return this.template !== undefined;
   }
 
   resetSkipAndTake() {
@@ -1082,8 +1077,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( change: SimpleChanges ) {
     this.validateDataType();
-    const data = this.lazyMode ? this.data.data : this.data;
-    if ( data ) {
+    if ( this.data ) {
+      const data = this.lazyMode ? this.data.data : this.data;
       if ( data.length > 0 ) {
         this.dataService.updateDataSource( data ).then( value => {
           this.handleRenderList();

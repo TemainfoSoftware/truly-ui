@@ -198,7 +198,7 @@ export class ScheduleDemoOverviewComponent {
   }
   ];
 
-  constructor(private change: ChangeDetectorRef ) {
+  constructor( private change: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
 

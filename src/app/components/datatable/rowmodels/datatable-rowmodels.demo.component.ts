@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 
 import * as json from './datatable-rowmodels.demo.dataproperties.json';
@@ -12,7 +13,7 @@ import * as jsonEvents from './datatable-rowmodels.demo.dataevents.json';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DumpDataService]
 } )
-export class DatatableRowModelsDemoComponent implements OnInit {
+export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
 
   public dataInMemory;
 
@@ -28,6 +29,8 @@ export class DatatableRowModelsDemoComponent implements OnInit {
 
   public timeout;
 
+  private subscriptions = new Subscription();
+
   constructor(private httpCliente: HttpClient, private dumpDataService: DumpDataService, private cd: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
@@ -35,10 +38,12 @@ export class DatatableRowModelsDemoComponent implements OnInit {
 
   ngOnInit() {
     this.getDataForInifinit(0, this.take);
-    this.httpCliente.get('http://trulyui.getsandbox.com/pacientes').subscribe((data: any) => {
-      this.dataInMemory = data.data;
-      this.cd.detectChanges();
-    });
+    this.subscriptions.add(
+      this.httpCliente.get('http://trulyui.getsandbox.com/pacientes').subscribe((data: any) => {
+        this.dataInMemory = data.data;
+        this.cd.detectChanges();
+      })
+    );
   }
 
   onLoadData(event) {
@@ -62,5 +67,9 @@ export class DatatableRowModelsDemoComponent implements OnInit {
 
   private getDataFromService(skip, take) {
     return this.data.slice(skip, take);
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

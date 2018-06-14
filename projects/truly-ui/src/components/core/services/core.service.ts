@@ -21,29 +21,26 @@
 */
 
 import {
-  Injectable, ComponentFactoryResolver, Injector, InjectionToken, Inject
+  Injectable, ComponentFactoryResolver, Injector, Inject
 } from '@angular/core';
 import { LazyApplicationLoaderConfig } from '../configs/application.config';
 import { TlCore } from '../core';
-
-export const APPLICATION_CONFIGURATION = new InjectionToken<LazyApplicationLoaderConfig>('APPLICATION_CONFIGURATION');
+import { APPLICATION_CONFIGURATION } from '../index';
 
 @Injectable()
 export class CoreService {
 
-    private coreInstance: TlCore;
-
-    constructor( @Inject(APPLICATION_CONFIGURATION) private config,
-                 private compiler: ComponentFactoryResolver,
-                 private injector: Injector) {}
+    constructor( private compiler: ComponentFactoryResolver,
+                 private injector: Injector,
+                 @Inject(APPLICATION_CONFIGURATION) private config: LazyApplicationLoaderConfig
+    ) {}
 
     initializeApp(): Promise<any> {
       return new Promise(( resolve ) => {
-        const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-        const ref = componentFactory.create(this.injector);
-        this.coreInstance = ref.instance;
-        this.coreInstance.setTheme( this.config.theme );
-        resolve();
+          const componentFactory = this.compiler.resolveComponentFactory( TlCore );
+          const componentRef = componentFactory.create(this.injector);
+          componentRef.instance.setTheme( this.config.theme, componentRef );
+          resolve();
       });
     }
 }

@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { CoreModule } from '../../projects/truly-ui/src/components/core/';
+import { CoreModule } from '../../projects/truly-ui/src/components/core/index';
 import { ContainerModalModule } from '../../projects/truly-ui/src/components/modal/addons/container-modal';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';

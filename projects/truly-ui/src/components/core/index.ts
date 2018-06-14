@@ -20,17 +20,19 @@
     SOFTWARE.
 */
 
-import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf, InjectionToken } from '@angular/core';
 import { ModalModule } from '../modal';
 import { LazyApplicationLoaderConfig } from './configs/application.config';
-import { CoreService, APPLICATION_CONFIGURATION } from './services/core.service';
+import { CoreService } from './services/core.service';
 import { TlCore } from './core';
+
 
 export * from './enums/modal-result';
 export * from './enums/key-events';
 
-// @dynamic
-export function CoreServiceFactory( coreService: CoreService) {
+export const APPLICATION_CONFIGURATION = new InjectionToken<LazyApplicationLoaderConfig>('APPLICATION_CONFIGURATION');
+
+export function CoreServiceFactory( coreService: CoreService ) {
     return () => coreService.initializeApp();
 }
 
@@ -47,29 +49,35 @@ export function CoreServiceFactory( coreService: CoreService) {
     ],
     entryComponents: [
       TlCore
-    ]
+    ],
+    providers: [
+      CoreService,
+      {
+        provide: APP_INITIALIZER,
+        useFactory: CoreServiceFactory,
+        deps: [ CoreService ],
+        multi: true
+      }
+  ]
 } )
 export class CoreModule {
-
-    static forRoot( config: LazyApplicationLoaderConfig ): ModuleWithProviders {
-      return {
-        ngModule: CoreModule,
-        providers: [
-          CoreService,
-          {
-            provide: APP_INITIALIZER,
-            useFactory: CoreServiceFactory,
-            deps: [CoreService],
-            multi: true
-          },
-          {provide: APPLICATION_CONFIGURATION, useValue: Object.assign( new LazyApplicationLoaderConfig(), config  )},
-        ]
-      };
-    }
 
     constructor (@Optional() @SkipSelf() parentModule: CoreModule) {
         if (parentModule) {
             throw new Error( 'CoreModule is already loaded. Import it in the AppModule only !!!!!!!!');
         }
+    }
+
+    static forRoot( lazyApplicationLoaderConfig: LazyApplicationLoaderConfig ): ModuleWithProviders {
+      return {
+        ngModule: CoreModule,
+        providers: [
+          {
+            provide: APPLICATION_CONFIGURATION,
+            // TODO: Create  useValue: Object.assign( new LazyApplicationLoaderConfig(), lazyApplicationLoaderConfig )
+            useValue: lazyApplicationLoaderConfig
+          }
+        ]
+      };
     }
 }

@@ -20,7 +20,9 @@
     SOFTWARE.
 */
 
-import { Component, ViewEncapsulation, ApplicationRef, Renderer2 } from '@angular/core';
+import {
+  Component, ViewEncapsulation, ApplicationRef, Renderer2
+} from '@angular/core';
 
 @Component({
     selector: 'tl-core',
@@ -32,14 +34,19 @@ export class TlCore {
   private theme = 'default';
 
   constructor(
-    private app: ApplicationRef, private renderer: Renderer2) {}
+    private applicationRef: ApplicationRef,
+    private renderer: Renderer2
 
-    setTheme(theme: string) {
-      setTimeout(() => {
-        this.theme = `tl-${theme}-theme`;
-        if (this.app.components.length ) {
-          this.renderer.addClass(this.app.components[0].location.nativeElement, this.theme);
-        }
-      }, 200);
+  ) {}
+
+    setTheme(theme: string, componentRef) {
+        setTimeout(() => {
+          if (this.applicationRef.components.length > 0 ) {
+            this.theme = `tl-${theme}-theme`;
+            this.renderer.addClass(this.applicationRef.components[0].location.nativeElement, this.theme);
+            this.applicationRef.detachView(componentRef.hostView);
+            this.applicationRef.tick();
+          }
+        }, 100);
     }
 }

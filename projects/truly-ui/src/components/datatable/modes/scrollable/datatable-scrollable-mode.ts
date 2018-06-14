@@ -22,16 +22,10 @@
  */
 
 import {
-    AfterContentInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    forwardRef,
-    Inject,
-    Renderer2,
-    ViewChild
+  AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, Renderer2,
+  ViewChild, OnDestroy
 } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
@@ -43,7 +37,7 @@ import { DatatableHelpersService } from '../../services/datatable-helpers.servic
     styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
     providers: [DatatableHelpersService]
 } )
-export class TlDatatableScrollableMode implements AfterContentInit {
+export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
 
     @ViewChild( 'listComponent' ) listComponent: ElementRef;
 
@@ -92,6 +86,8 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     private elementTR: ElementRef;
 
     private elementTD: ElementRef;
+
+    private subscriptions = new Subscription();
 
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  private renderer: Renderer2,
@@ -147,14 +143,16 @@ export class TlDatatableScrollableMode implements AfterContentInit {
     }
 
     private addListenerToDataSource() {
-        this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource: any) => {
-            this.foundRecords = dataSource.length > 0;
-            this.renderList(this.skip, dataSource);
-            this.dt.loading = false;
-            this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
-            this.cd.detectChanges();
-            this.setFocusWhenChangeData();
-        });
+        this.subscriptions.add(
+          this.dt.dataSourceService.onChangeDataSourceEmitter.subscribe((dataSource: any) => {
+              this.foundRecords = dataSource.length > 0;
+              this.renderList(this.skip, dataSource);
+              this.dt.loading = false;
+              this.bodyHeight = this.dt.rowHeight * this.dt.totalRows;
+              this.cd.detectChanges();
+              this.setFocusWhenChangeData();
+          })
+        );
     }
 
     private addListenerToScroll() {
@@ -172,7 +170,6 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
             this.setLastScrollTop();
         });
-
     }
 
     private handleScrolHorizontal() {
@@ -488,5 +485,9 @@ export class TlDatatableScrollableMode implements AfterContentInit {
             this.setActiveElement();
             this.getCursorViewPortPosition();
         }
+    }
+
+    ngOnDestroy() {
+      this.subscriptions.unsubscribe();
     }
 }

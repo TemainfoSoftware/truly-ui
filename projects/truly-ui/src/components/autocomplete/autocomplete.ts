@@ -31,6 +31,7 @@ import { TlListBox } from '../listbox/listbox';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -127,9 +128,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   public loading = true;
 
-  private documentScroll;
-
-  private documentClick;
+  private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
     asyncValidators: Array<any>, private renderer: Renderer2 ) {
@@ -145,9 +144,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listenerKeyDown();
     this.listenClickDocument();
     this.listenScrollDocument();
+    this.listenerAutocompleteClick();
     this.validationProperty();
-    this.listBox.showList = false;
-    this.listBox.detectChanges();
+    this.setShowList( false );
   }
 
   handleModelInit() {
@@ -169,12 +168,14 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     } );
   }
 
-  onClearInput() {
-    this.value = '';
+  listenerAutocompleteClick() {
+    this.listeners.add(this.renderer.listen( this.autoComplete.nativeElement, 'click', ( $event ) => {
+      $event.stopPropagation();
+      this.handleOpenOnFocus();
+    } ));
   }
 
-  clear() {
-    this.tlinput.clearInput();
+  onClearInput() {
     this.value = '';
   }
 
@@ -191,21 +192,20 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenScrollDocument() {
-    this.documentScroll = this.renderer.listen( document, 'scroll', ( $event ) => {
-      this.listBox.showList = false;
-      this.listBox.detectChanges();
-    } );
+    this.listeners.add(this.renderer.listen( document, 'scroll', ( $event ) => {
+      this.setShowList( false );
+    } ));
+  }
+
+  setShowList( boolean: boolean ) {
+    this.listBox.showList = boolean;
+    this.listBox.detectChanges();
   }
 
   listenClickDocument() {
-    this.documentClick = this.renderer.listen( document, 'click', ( $event ) => {
-      if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-        this.listBox.showList = false;
-        this.listBox.detectChanges();
-        return;
-      }
-      this.handleOpenOnFocus();
-    } );
+    this.listeners.add(this.renderer.listen( document, 'click', () => {
+      this.setShowList( false );
+    } ));
   }
 
   onFocusInput( $event ) {
@@ -215,8 +215,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   handleOpenOnFocus() {
     if ( (this.openFocus) && (!this.listBox.showList) && (this.isAvailableInput()) ) {
-      this.listBox.showList = true;
-      this.listBox.detectChanges();
+      this.setShowList( true );
     }
   }
 
@@ -250,9 +249,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     if ( this.listBox.showList ) {
       $event.stopPropagation();
     }
-    this.listBox.showList = false;
+    this.setShowList( false );
     this.listBox.resetCursors();
-    this.listBox.detectChanges();
   }
 
   onAddNew() {
@@ -261,8 +259,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   onInputFocusOut( $event ) {
     if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-      this.listBox.showList = false;
-      this.listBox.detectChanges();
+      this.setShowList( false );
     }
   }
 
@@ -325,12 +322,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     return $event.target.className.includes( '-clearbutton' );
   }
 
-  isRelatedTargetLi( $event ) {
-    if ( $event.relatedTarget ) {
-      return $event.relatedTarget.nodeName === 'LI';
-    }
-  }
-
   isTargetEqualsInputSearch( $event ) {
     return $event.target === this.tlinput.input.nativeElement;
   }
@@ -355,8 +346,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   ngOnDestroy() {
-    this.documentScroll();
-    this.documentClick();
+    this.listeners.unsubscribe();
   }
 
   ngOnChanges( changes ) {

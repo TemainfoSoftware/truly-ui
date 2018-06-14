@@ -21,31 +21,10 @@
  */
 export const dataProperties = [
   {
-    name: 'accordion.singleOpened',
-    type: 'boolean',
-    default: 'false',
-    description: 'Defines if the accordion will open one item at the time.',
-    options: 'true | false'
-  },
-  {
-    name: 'accordion-item.title',
-    type: 'string',
-    default: 'Title 1',
-    description: 'Define the title of the accordion item.',
-    options: 'any text'
-  },
-  {
-    name: 'accordion-item.heightHeader',
-    type: 'string',
-    default: '45px',
-    description: 'Define the height of the accordion\'s item height.',
-    options: 'any text'
-  },
-  {
-    name: 'accordion-item.opened',
-    type: 'boolean',
-    default: 'false',
-    description: 'Defines the opened state of accordion item.',
+    name: 'content',
+    type: 'HTML String',
+    default: 'null',
+    description: 'Defines the content of editor.',
     options: 'true | false'
   },
 ];

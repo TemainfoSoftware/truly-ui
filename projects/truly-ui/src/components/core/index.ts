@@ -20,17 +20,15 @@
     SOFTWARE.
 */
 
-import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf, InjectionToken } from '@angular/core';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { ModalModule } from '../modal';
 import { LazyApplicationLoaderConfig } from './configs/application.config';
 import { CoreService } from './services/core.service';
 import { TlCore } from './core';
-
+import { APPLICATION_CONFIGURATION } from './tokens/configuration.token';
 
 export * from './enums/modal-result';
 export * from './enums/key-events';
-
-export const APPLICATION_CONFIGURATION = new InjectionToken<LazyApplicationLoaderConfig>('APPLICATION_CONFIGURATION');
 
 export function CoreServiceFactory( coreService: CoreService ) {
     return () => coreService.initializeApp();

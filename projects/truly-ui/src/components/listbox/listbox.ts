@@ -185,8 +185,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   private isScrolling;
 
-  constructor( public renderer: Renderer2, public change: ChangeDetectorRef, public zone: NgZone,
+  constructor( public renderer: Renderer2, public change: ChangeDetectorRef,
                public dataService: ListBoxDataSourceService,
+               private zone: NgZone,
                private addNewRenderService: AddNewRenderService,
                private listRenderService: ListBoxListRenderService,
                private listCustomRenderService: ListBoxTemplateRenderService ) {

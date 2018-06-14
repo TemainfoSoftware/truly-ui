@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018 Temainfo Software
+    Copyright (c) 2017 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,27 +20,7 @@
     SOFTWARE.
 */
 
-import {
-  Injectable, ComponentFactoryResolver, Injector, Inject
-} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { LazyApplicationLoaderConfig } from '../configs/application.config';
-import { TlCore } from '../core';
-import { APPLICATION_CONFIGURATION } from '../tokens/configuration.token';
 
-@Injectable()
-export class CoreService {
-
-    constructor( private compiler: ComponentFactoryResolver,
-                 private injector: Injector,
-                 @Inject(APPLICATION_CONFIGURATION) private config: LazyApplicationLoaderConfig
-    ) {}
-
-    initializeApp(): Promise<any> {
-      return new Promise(( resolve ) => {
-          const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-          const componentRef = componentFactory.create(this.injector);
-          componentRef.instance.setTheme( this.config.theme, componentRef );
-          resolve();
-      });
-    }
-}
+export const APPLICATION_CONFIGURATION = new InjectionToken<LazyApplicationLoaderConfig>('APPLICATION_CONFIGURATION');

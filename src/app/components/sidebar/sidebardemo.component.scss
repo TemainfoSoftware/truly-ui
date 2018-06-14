@@ -99,6 +99,7 @@ tl-sidebar {
   border-bottom: 1px solid #dfdfdf;
   & i {
     grid-area: icon;
+    grid-column-start: 0;
     grid-column-end: 1;
     text-align: center;
     width: 60px;

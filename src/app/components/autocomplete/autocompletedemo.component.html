@@ -2,7 +2,9 @@
   <div class="header-title-demo">
     <h1 class="title">AutoComplete <span class="module-name"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></p>
-    <p class="text-content">There's a lot of ways to create a autocomplete using Truly UI. Below, are some of those.</p>
+    <p class="text-content">The AutoComplete widgets provides suggestions while you type into the field. It can be filtered by a custom Key and supports many
+      features and events output.
+    </p>
   </div>
   <div class="showcase">
     <div class="row">
@@ -70,7 +72,7 @@
                   </li>
                 </ng-template>
               </tl-autocomplete>
-              <span class="returned-value">Returned Value: {{result2}}</span>
+              <span class="returned-value">Returned Value: {{result2 | json}}</span>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{}" [lang]="'html'">
 <tl-autocomplete

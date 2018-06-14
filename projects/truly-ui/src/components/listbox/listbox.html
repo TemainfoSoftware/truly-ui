@@ -18,9 +18,7 @@
          [style.height]="fixedHeight ? 'calc(' + height + ')' : getListBoxHeight() + 'px'">
       <ul containerDirective #list class="list" [style.position]="'relative'"
           [style.height]="filtering ? (filteredData?.length * rowHeight) + 'px' : ((lazyMode ? data?.total : data?.length) * rowHeight) + 'px'">
-        <div #customTemplate>
-          <ng-content></ng-content>
-        </div>
+        <ng-content></ng-content>
       </ul>
     </div>
 

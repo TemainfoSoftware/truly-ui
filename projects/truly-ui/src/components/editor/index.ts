@@ -29,6 +29,7 @@ import { DropDownListModule } from '../dropdownlist/index';
 import { ButtonModule } from '../button/index';
 import { FormModule } from '../form/index';
 import { InputModule } from '../input/index';
+import { TooltipModule } from '../tooltip/index';
 
 export * from './editor';
 
@@ -38,6 +39,7 @@ export * from './editor';
     DropDownListModule,
     FormsModule,
     ButtonModule,
+    TooltipModule,
     FormModule,
     InputModule
   ],

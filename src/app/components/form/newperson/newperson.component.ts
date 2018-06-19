@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Modal } from '../../../../../projects/truly-ui/src/components/modal';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Modal } from '../../../../../projects/truly-ui/src/components/modal/modal-options';
 import { DataFormService } from './dataform.service';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 

@@ -1,10 +1,11 @@
 import { Component, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { ModalOptions, ModalService } from '../../../../projects/truly-ui/src/components/modal';
 import { NewModalComponent } from './newmodal/newModal.component';
 
 import * as json from './modal-dataproperties.json';
 import * as jsonEvt from './modal-dataevents.json';
 import { slideToLeft } from '../../shared/animations/router.animations';
+import { ModalOptions } from '../../../../projects/truly-ui/src/components/modal/modal-options';
+import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
 
 @Component( {
   selector: 'app-modal',
@@ -22,7 +23,7 @@ export class ModalDemoComponent {
   public modalResult;
 
 
-  constructor(public view: ViewContainerRef, private modalService: ModalService, private compiler: ComponentFactoryResolver) {
+  constructor(private modalService: ModalService, private compiler: ComponentFactoryResolver) {
     this.modalevts = jsonEvt.dataEvents;
     this.modalprop = json.dataProperties;
   }

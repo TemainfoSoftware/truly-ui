@@ -1,5 +1,4 @@
 import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { FormService } from '../../../../projects/truly-ui/src/components/form';
 
 import * as json from './form-dataproperties.json';
 import * as jsonEvents from './form-dataevent.json';
@@ -8,6 +7,7 @@ import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { slideToLeft } from '../../shared/animations/router.animations';
+import { FormService } from '../../../../projects/truly-ui/src/components/form/form.service';
 
 @Component( {
   selector: 'app-modal',

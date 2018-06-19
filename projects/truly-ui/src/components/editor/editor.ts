@@ -21,24 +21,46 @@
  */
 import {
   AfterContentInit,
-  Component, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, ViewChild,
+  Component, ElementRef, EventEmitter, Input, OnChanges, Output, Renderer2, SimpleChanges, ViewChild,
 } from '@angular/core';
+
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ToolbarConfigModel } from './model/toolbar-config.model';
+import { ToolbarConfig } from './interfaces/toolbar-config';
 
 @Component( {
   selector: 'tl-editor',
   templateUrl: './editor.html',
   styleUrls: [ './editor.scss' ],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition( ':enter', [
+          style( { transform: 'translateX(100%)', opacity: 0 } ),
+          animate( '250ms', style( { transform: 'translateX(0)', opacity: 1 } ) )
+        ] ),
+        transition( ':leave', [
+          style( { transform: 'translateX(0)', opacity: 1 } ),
+          animate( '250ms', style( { transform: 'translateX(100%)', opacity: 0 } ) )
+        ] )
+      ]
+    )
+  ],
 } )
 
 export class TlEditor implements AfterContentInit, OnChanges {
 
   @Input() content;
 
+  @Input() toolbarConfig: ToolbarConfig = new ToolbarConfigModel();
+
   @ViewChild( 'contentEditor' ) contentEditor;
 
   @ViewChild( 'linkBox' ) linkBox;
 
   @ViewChild( 'wrapper' ) wrapper;
+
+  @Output() saveContent = new EventEmitter();
 
   public dataFont = [];
 
@@ -52,11 +74,13 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public toggleImage = false;
 
+  public saved = false;
+
   public descriptionLink = '';
 
   public linkItself = '';
 
-  public colorSelected = '#00000';
+  public colorSelected = '#000000';
 
   public anchorNodeCursor;
 
@@ -85,6 +109,8 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public selection = { start: 0, end: 0, baseNode: null };
 
+  private interval;
+
   constructor( private renderer: Renderer2 ) {
     this.dataFont = [
       { textItem: 'Arial', value: 'Arial' },
@@ -105,22 +131,6 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.setContentFocus();
     document.execCommand( align, false, null );
     this.setCursorSelection();
-  }
-
-  setAnchorNode() {
-    this.anchorNodeCursor = document.getSelection();
-    this.selection[ 'start' ] = this.anchorNodeCursor.baseOffset;
-    this.selection[ 'end' ] = this.anchorNodeCursor.extentOffset;
-    this.selection[ 'baseNode' ] = this.anchorNodeCursor.baseNode;
-    this.handleNoSelection();
-  }
-
-  handleNoSelection() {
-    this.selectedContent = this.hasSelection();
-  }
-
-  hasSelection() {
-    return (this.selection.end > 0) && (this.selection.end > this.selection.start);
   }
 
   setBold() {
@@ -154,135 +164,11 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.setCursorSelection();
   }
 
-  setCursorSelection() {
-    this.cursorSelection = window.getSelection();
-    this.handleActiveTools();
-  }
-
-  handleActiveTools() {
-    this.handleClosestBold();
-    this.handleClosestItalic();
-    this.handleClosestUnderline();
-    this.handleColorParent();
-    this.handleListUnordered();
-    this.handleListOrdered();
-    this.handleAlignLeft();
-    this.handleAlignCenter();
-    this.handleAlignRight();
-    this.handleAlignJustify();
-    this.handleFontSize();
-    this.handleFontName();
-    this.handleBlockQuote();
-  }
-
-  handleFontName() {
-    this.isClosestParentElement( 'font' ) && this.hasFontFace()
-      ? this.setFontNodeSelected() : this.setDefaultFont();
-  }
-
-  hasFontFace() {
-    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
-  }
-
-  hasFontSize() {
-    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' );
-  }
-
-  setFontNodeSelected() {
-    this.font = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
-  }
-
-  setDefaultFont() {
-    this.font = 'Arial';
-  }
-
-  setFontSizeNodeSelected() {
-    this.fontSize = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' ) + 'pt';
-  }
-
-  setDefaultFontSize() {
-    this.fontSize = '3pt';
-  }
-
-  handleFontSize() {
-   this.isClosestParentElement( 'font' ) && this.hasFontSize()
-     ? this.setFontSizeNodeSelected() : this.setDefaultFontSize();
-  }
-
-  handleAlignLeft() {
-    this.activeTools.alignLeft = this.hasStyleParentElement( 'left' );
-  }
-
-  handleAlignCenter() {
-    this.activeTools.alignCenter = this.hasStyleParentElement( 'center' );
-  }
-
-  handleAlignRight() {
-    this.activeTools.alignRight = this.hasStyleParentElement( 'right' );
-  }
-
-  handleAlignJustify() {
-    this.activeTools.alignJustify = this.hasStyleParentElement( 'justify' );
-  }
-
-  handleListOrdered() {
-    this.activeTools.listOrdered = this.isClosestParentElement( 'ol' );
-  }
-
-  handleListUnordered() {
-    this.activeTools.listUnordered = this.isClosestParentElement( 'ul' );
-  }
-
-  onChangeColor($event) {
-    document.execCommand('foreColor', false, $event);
-  }
-
-  handleColorParent() {
-    const getElementFont = this.cursorSelection.baseNode.parentNode.closest( 'font' );
-    getElementFont ? this.colorSelected = getElementFont.getAttribute( 'color' ) : this.colorSelected = '#00000';
-  }
-
-  handleClosestBold() {
-    this.activeTools.bold = this.isClosestParentElement( 'b' );
-  }
-
-  handleClosestUnderline() {
-    this.activeTools.underline = this.isClosestParentElement( 'u' );
-  }
-
-  handleClosestItalic() {
-    this.activeTools.italic = this.isClosestParentElement( 'i' );
-  }
-
-  handleBlockQuote() {
-    this.activeTools.blockQuote = this.isClosestParentElement( 'blockquote' );
-  }
-
-  hasStyleParentElement( alignment: string ) {
-    const childElement = this.cursorSelection.baseNode.parentNode;
-    if ( childElement.attributes.length > 0 ) {
-      return childElement.attributes[ 0 ].value.includes( alignment );
-    }
-    return false;
-  }
-
-  isClosestParentElement( element ) {
-    return !!this.cursorSelection.baseNode.parentNode.closest( element );
-  }
-
   setImage( $event ) {
     this.setContentFocus();
     this.image.imageUrl = $event.imageUrl;
     this.cursorSelection.getRangeAt( 0 ).insertNode( this.createImageElement() );
     this.toggleImageBox();
-  }
-
-  toggleLinkBox() {
-    this.toggleLink = !this.toggleLink;
-  }
-
-  toggleImageBox() {
-    this.toggleImage = !this.toggleImage;
   }
 
   setDescriptionLink() {
@@ -302,41 +188,10 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.toggleLinkBox();
   }
 
-  createImageElement() {
-    const imageHTML = new ElementRef( this.renderer.createElement( 'img' ) );
-    this.renderer.addClass( imageHTML.nativeElement, 'ui-image-editor' );
-    imageHTML.nativeElement.setAttribute('src', this.image.imageUrl);
-    return imageHTML.nativeElement;
-  }
-
-  createElementLink() {
-    const link = new ElementRef( this.renderer.createElement( 'a' ) );
-    this.renderer.addClass( link.nativeElement, 'ui-link' );
-    link.nativeElement.setAttribute('src', this.linkItself);
-    link.nativeElement.setAttribute('text', this.descriptionLink);
-    link.nativeElement.setAttribute('target', '_blank');
-    this.handleAddElementRange( link );
-  }
-
-  handleAddElementRange( link ) {
-    this.selectedContent ? window.getSelection().getRangeAt( 0 ).surroundContents( link.nativeElement ) :
-      window.getSelection().getRangeAt( 0 ).insertNode( link.nativeElement );
-  }
-
-  recoverSelection() {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.setStart( this.selection.baseNode, this.selection.start );
-    range.setEnd( this.selection.baseNode, this.selection.end );
-    selection.removeAllRanges();
-    selection.addRange( range );
-  }
-
-  onChangeFontSize( $event ) {
-    this.recoverSelection();
+  setUnderline() {
     this.setContentFocus();
-    this.fontSize = $event;
-    document.execCommand( 'fontSize', null, parseInt( this.fontSize, 10 ) );
+    document.execCommand( 'underline', false, null );
+    this.setCursorSelection();
   }
 
   setHighlight() {
@@ -344,18 +199,15 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.cursorHighlight = true;
   }
 
-  resetCursor() {
-    this.wrapper.nativeElement.style.cursor = 'auto';
+  onChangeColor( $event ) {
+    document.execCommand( 'foreColor', false, $event );
   }
 
-  setUnderline() {
+  onChangeFontSize( $event ) {
+    this.recoverSelection();
     this.setContentFocus();
-    document.execCommand( 'underline', false, null );
-    this.setCursorSelection();
-  }
-
-  setContentFocus() {
-    this.contentEditor.nativeElement.focus();
+    this.fontSize = $event;
+    document.execCommand( 'fontSize', null, parseInt( this.fontSize, 10 ) );
   }
 
   onChangeFont( $event ) {
@@ -375,6 +227,205 @@ export class TlEditor implements AfterContentInit, OnChanges {
     }
   }
 
-  ngOnChanges( data: SimpleChanges ) {}
+  onKeyDownSave( event ) {
+    if ( (event.ctrlKey || event.metaKey) && event.which === 83 ) {
+      event.preventDefault();
+      this.save();
+      return false;
+    }
+  }
+
+  toggleLinkBox() {
+    this.toggleLink = !this.toggleLink;
+  }
+
+  toggleImageBox() {
+    this.toggleImage = !this.toggleImage;
+  }
+
+  save() {
+    this.saveContent.emit( this.contentEditor.nativeElement.innerHTML );
+    this.showSavedMessage();
+  }
+
+  setCursorSelection() {
+    this.cursorSelection = window.getSelection();
+    this.handleActiveTools();
+  }
+
+  private showSavedMessage() {
+    this.saved = true;
+    clearInterval( this.interval );
+    this.interval = setInterval( () => {
+      this.saved = false;
+    }, 1000 );
+  }
+
+  private handleActiveTools() {
+    this.handleClosestBold();
+    this.handleClosestItalic();
+    this.handleClosestUnderline();
+    this.handleColorParent();
+    this.handleListUnordered();
+    this.handleListOrdered();
+    this.handleAlignLeft();
+    this.handleAlignCenter();
+    this.handleAlignRight();
+    this.handleAlignJustify();
+    this.handleFontSize();
+    this.handleFontName();
+    this.handleBlockQuote();
+  }
+
+  private handleFontName() {
+    this.isClosestParentElement( 'font' ) && this.hasFontFace()
+      ? this.setFontNodeSelected() : this.setDefaultFont();
+  }
+
+  private hasFontFace() {
+    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
+  }
+
+  private hasFontSize() {
+    return this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' );
+  }
+
+  private setFontNodeSelected() {
+    this.font = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'face' );
+  }
+
+  private setDefaultFont() {
+    this.font = 'Arial';
+  }
+
+  private setFontSizeNodeSelected() {
+    this.fontSize = this.cursorSelection.baseNode.parentNode.closest( 'font' ).getAttribute( 'size' ) + 'pt';
+  }
+
+  private setDefaultFontSize() {
+    this.fontSize = '3pt';
+  }
+
+  private setAnchorNode() {
+    this.anchorNodeCursor = document.getSelection();
+    this.selection[ 'start' ] = this.anchorNodeCursor.baseOffset;
+    this.selection[ 'end' ] = this.anchorNodeCursor.extentOffset;
+    this.selection[ 'baseNode' ] = this.anchorNodeCursor.baseNode;
+    this.handleNoSelection();
+  }
+
+  private handleNoSelection() {
+    this.selectedContent = this.hasSelection();
+  }
+
+  private hasSelection() {
+    return (this.selection.end > 0) && (this.selection.end > this.selection.start);
+  }
+
+  private handleFontSize() {
+    this.isClosestParentElement( 'font' ) && this.hasFontSize()
+      ? this.setFontSizeNodeSelected() : this.setDefaultFontSize();
+  }
+
+  private handleAlignLeft() {
+    this.activeTools.alignLeft = this.hasStyleParentElement( 'left' );
+  }
+
+  private handleAlignCenter() {
+    this.activeTools.alignCenter = this.hasStyleParentElement( 'center' );
+  }
+
+  private handleAlignRight() {
+    this.activeTools.alignRight = this.hasStyleParentElement( 'right' );
+  }
+
+  private handleAlignJustify() {
+    this.activeTools.alignJustify = this.hasStyleParentElement( 'justify' );
+  }
+
+  private handleListOrdered() {
+    this.activeTools.listOrdered = this.isClosestParentElement( 'ol' );
+  }
+
+  private handleListUnordered() {
+    this.activeTools.listUnordered = this.isClosestParentElement( 'ul' );
+  }
+
+  private handleColorParent() {
+    const getElementFont = this.cursorSelection.baseNode.parentNode.closest( 'font' );
+    getElementFont ? this.colorSelected = getElementFont.getAttribute( 'color' ) : this.colorSelected = '#00000';
+  }
+
+  private handleClosestBold() {
+    this.activeTools.bold = this.isClosestParentElement( 'b' );
+  }
+
+  private handleClosestUnderline() {
+    this.activeTools.underline = this.isClosestParentElement( 'u' );
+  }
+
+  private handleClosestItalic() {
+    this.activeTools.italic = this.isClosestParentElement( 'i' );
+  }
+
+  private handleBlockQuote() {
+    this.activeTools.blockQuote = this.isClosestParentElement( 'blockquote' );
+  }
+
+  private hasStyleParentElement( alignment: string ) {
+    const childElement = this.cursorSelection.baseNode.parentNode;
+    if ( childElement.attributes.length > 0 ) {
+      return childElement.attributes[ 0 ].value.includes( alignment );
+    }
+    return false;
+  }
+
+  private isClosestParentElement( element ) {
+    return !!this.cursorSelection.baseNode.parentNode.closest( element );
+  }
+
+  private createImageElement() {
+    const imageHTML = new ElementRef( this.renderer.createElement( 'img' ) );
+    this.renderer.addClass( imageHTML.nativeElement, 'ui-image-editor' );
+    imageHTML.nativeElement.setAttribute( 'src', this.image.imageUrl );
+    return imageHTML.nativeElement;
+  }
+
+  private createElementLink() {
+    const link = new ElementRef( this.renderer.createElement( 'a' ) );
+    this.renderer.addClass( link.nativeElement, 'ui-link' );
+    link.nativeElement.setAttribute( 'src', this.linkItself );
+    link.nativeElement.setAttribute( 'text', this.descriptionLink );
+    link.nativeElement.setAttribute( 'target', '_blank' );
+    this.handleAddElementRange( link );
+  }
+
+  private handleAddElementRange( link ) {
+    this.selectedContent ? window.getSelection().getRangeAt( 0 ).surroundContents( link.nativeElement ) :
+      window.getSelection().getRangeAt( 0 ).insertNode( link.nativeElement );
+  }
+
+  private recoverSelection() {
+    const selection = window.getSelection();
+    const range = document.createRange();
+    if ( this.selection.baseNode ) {
+      range.setStart( this.selection.baseNode, this.selection.start );
+      range.setEnd( this.selection.baseNode, this.selection.end );
+      selection.removeAllRanges();
+      selection.addRange( range );
+    }
+  }
+
+  private resetCursor() {
+    this.wrapper.nativeElement.style.cursor = 'auto';
+  }
+
+  private setContentFocus() {
+    this.contentEditor.nativeElement.focus();
+  }
+
+
+  ngOnChanges( data: SimpleChanges ) {
+  }
 
 }

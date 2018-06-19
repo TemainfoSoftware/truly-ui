@@ -24,14 +24,11 @@ import {
   ViewChildren, Output, EventEmitter, forwardRef,
   Renderer2, ChangeDetectorRef, ChangeDetectionStrategy,
 } from '@angular/core';
-import { TlListBox } from '../listbox';
-
+import { TlListBox } from '../listbox/listbox';
 
 import { ChatListStatus } from './chatlist-status';
 import { ChatListService } from './chatlist.service';
 import { Subject } from 'rxjs';
-
-
 
 @Component( {
   selector: 'tl-chatlist',

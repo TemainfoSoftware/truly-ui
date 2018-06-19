@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlToaster } from './toaster';
 import { ToasterService } from './services/toaster.service';
-import { ProgressBarModule } from '../progressbar/index';
 
-export * from './toaster';
+import { ProgressBarModule } from '../progressbar/index';
 
 @NgModule( {
   imports: [

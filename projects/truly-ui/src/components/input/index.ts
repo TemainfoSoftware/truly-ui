@@ -3,13 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { TlInput } from './input';
-
 import { MessageValidationDirective } from './directives/messagevalidation.directive';
 import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 import { CharcaseDirective } from './directives/charcase.directive';
-import { ValidatorsModule } from '../validators';
 
-export * from './input';
+import { ValidatorsModule } from '../validators/index';
 
 @NgModule( {
   imports: [

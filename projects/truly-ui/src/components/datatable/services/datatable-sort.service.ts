@@ -21,7 +21,7 @@
 */
 
 import { Injectable, ChangeDetectorRef } from '@angular/core';
-import { TlDatatable } from '../';
+import { TlDatatable } from '../datatable';
 import { Observable ,  Subject } from 'rxjs';
 
 @Injectable()

@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { TlTabControl } from './tabcontrol';
 import { TlTab } from './tab/tab';
 
-export * from './tabcontrol';
-
 @NgModule({
     imports: [
         CommonModule,

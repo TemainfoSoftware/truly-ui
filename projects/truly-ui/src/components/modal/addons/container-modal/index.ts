@@ -25,8 +25,6 @@ import { NgModule } from '@angular/core';
 import { TlContainerModalDirective } from './container-modal.directive';
 import { ContainerModalService } from './container-modal.service';
 
-export * from './container-modal.directive';
-
 @NgModule( {
   imports: [
     CommonModule,

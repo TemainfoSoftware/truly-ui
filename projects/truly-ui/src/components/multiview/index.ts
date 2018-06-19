@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { TlMultiView } from './multiview';
 import { TlView } from './view/view';
 
-export * from './multiview';
-
 @NgModule( {
   imports: [
     CommonModule,

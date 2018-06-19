@@ -6,9 +6,8 @@ import { TlDropDownList } from './dropdownlist';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { TabIndexService } from '../form/tabIndex.service';
-import { InputModule } from '../input';
 
-export * from './dropdownlist';
+import { InputModule } from '../input/index';
 
 @NgModule( {
   imports: [

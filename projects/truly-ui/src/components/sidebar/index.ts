@@ -29,8 +29,6 @@ import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { BackdropModule } from '../core/components/backdrop/index';
 
-export * from './sidebar-container';
-
 @NgModule( {
   imports: [
     BackdropModule,

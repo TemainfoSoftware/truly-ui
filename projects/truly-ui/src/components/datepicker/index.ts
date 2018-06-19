@@ -22,13 +22,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TlDatePicker } from './datepicker';
-import { InputModule } from '../input/index';
 import { FormsModule } from '@angular/forms';
-import { CalendarModule } from '../calendar/index';
 import { TlCalendar } from '../calendar/calendar';
-import { MiscModule } from '../misc/index';
 
-export * from './datepicker';
+import { MiscModule } from '../misc/index';
+import { CalendarModule } from '../calendar/index';
+import { InputModule } from '../input/index';
 
 @NgModule( {
   imports: [

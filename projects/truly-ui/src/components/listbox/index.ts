@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlListBox } from './listbox';
-import { BlockUIModule } from '../blockui';
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 
-export * from './listbox';
+import { BlockUIModule } from '../blockui/index';
 
 @NgModule({
     imports: [

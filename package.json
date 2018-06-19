@@ -78,7 +78,7 @@
     "@angular/compiler-cli": "^6.0.2",
     "@angular/language-service": "^6.0.2",
     "@types/jest": "^22.2.3",
-    "@types/node": "~10.1.2",
+    "@types/node": "~10.3.4",
     "@types/reflect-metadata": "^0.1.0",
     "codelyzer": "~4.3.0",
     "gulp": "^3.9.1",

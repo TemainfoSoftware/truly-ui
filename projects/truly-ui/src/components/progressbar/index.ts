@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { TlProgressBar } from './progressbar';
 
-export * from './progressbar';
-
 @NgModule( {
   imports: [
     CommonModule,

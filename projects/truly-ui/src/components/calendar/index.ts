@@ -5,18 +5,17 @@ import { TlCalendar } from './calendar';
 import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { MiscModule } from '../misc';
-import { NavigatorModule } from '../navigator';
 import { TlCalendarDays } from './parts/calendar-days';
 import { TlCalendarMonths } from './parts/calendar-months';
 import { TlCalendarYears } from './parts/calendar-years';
 
-export * from './calendar';
+import { MiscModule } from '../misc/index';
+import { NavigatorModule } from '../navigator/index';
 
 @NgModule({
     imports: [
         CommonModule,
-      MiscModule,
+        MiscModule,
         NavigatorModule
     ],
     declarations: [

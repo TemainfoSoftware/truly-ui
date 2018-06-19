@@ -22,6 +22,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { CPFDirective } from './cpf/cpf.directive';
 import { CNPJDirective } from './cnpj/cnpj.directive';
 import { NumberDirective } from './number/number.directive';
@@ -29,14 +30,6 @@ import { EmailDirective } from './email/email.directive';
 import { CreditCardDirective } from './creditcard/creditcard.directive';
 import { PasswordDirective } from './password/password.directive';
 import { DateDirective } from './date/date.directive';
-
-export * from './creditcard/creditcard.directive';
-export * from './cpf/cpf.directive';
-export * from './cnpj/cnpj.directive';
-export * from './date/date.directive';
-export * from './email/email.directive';
-export * from './number/number.directive';
-export * from './password/password.directive';
 
 @NgModule( {
   imports: [

@@ -6,8 +6,6 @@ import { TabIndexService } from '../form/tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
-export * from './checkbox';
-
 @NgModule({
     imports: [
         CommonModule,

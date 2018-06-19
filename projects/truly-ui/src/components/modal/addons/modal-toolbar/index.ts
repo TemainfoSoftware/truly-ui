@@ -24,8 +24,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TlModalToolbar } from './modal-toolbar';
 
-export * from './modal-toolbar';
-
 @NgModule( {
   imports: [
     CommonModule,

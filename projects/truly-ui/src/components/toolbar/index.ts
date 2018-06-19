@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { TlToolbar } from './toolbar';
 
-export * from './toolbar';
-
 @NgModule( {
   imports: [
     CommonModule,

@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { TlNavigator } from './navigator';
 import { NavigatorService } from './services/navigator.service';
 
-export * from './navigator';
-
 @NgModule({
   imports: [
     CommonModule,

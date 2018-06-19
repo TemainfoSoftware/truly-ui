@@ -292,49 +292,20 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   isNotRelatedWithAutocomplete( $event ) {
-    if ( this.isTargetEqualsClearButton( $event ) ) {
-      return false;
-    }
-    if ( this.existAutocompleteInputInPath( $event ) ) {
-      return false;
-    }
-    if ( this.isTargetEqualsLi( $event ) ) {
-      return false;
-    }
-    return !this.isTargetEqualsListBox( $event ) &&
-      !this.isTargetParentEqualsLi( $event ) &&
-      !this.isTargetEqualsInputSearch( $event );
-  }
-
-  isTargetEqualsListBox( $event ) {
-    return $event.target.className === 'list-box-container';
-  }
-
-  isTargetEqualsLi( $event ) {
-    return $event.target.nodeName === 'LI';
-  }
-
-  isTargetParentEqualsLi( $event ) {
-    return $event.target.parentElement.nodeName === 'LI' || $event.target.parentElement.nodeName === 'UL';
-  }
-
-  isTargetEqualsClearButton( $event ) {
-    return $event.target.className.includes( '-clearbutton' );
-  }
-
-  isTargetEqualsInputSearch( $event ) {
-    return $event.target === this.tlinput.input.nativeElement;
+    return !this.isRelativeTarget($event) && this.isRelativeTargetTypeOfInput($event);
   }
 
   onLazyLoadAutocomplete( $event ) {
     this.lazyLoad.emit( $event );
   }
 
-  existAutocompleteInputInPath( $event ) {
-    for ( let input = 0; input < $event.path.length; input++ ) {
-      if ( this.tlinput.input.nativeElement === $event.path[ input ] ) {
-        return true;
-      }
+  isRelativeTarget( $event ) {
+    return $event.relatedTarget === this.tlinput.input.nativeElement;
+  }
+
+  isRelativeTargetTypeOfInput( $event ) {
+    if ($event.relatedTarget) {
+      return $event.relatedTarget.nodeName === 'INPUT';
     }
     return false;
   }

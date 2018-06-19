@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { ButtonModule } from '../button/index';
 import { DialogService } from './dialog.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
@@ -12,7 +11,7 @@ import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation'
 import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogInfo } from './dialog-info/dialog-info';
 
-export * from './dialog.service';
+import { ButtonModule } from '../button/index';
 
 @NgModule( {
     imports: [

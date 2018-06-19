@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit, ChangeDetectorRef,
+  Component, ElementRef, Input, ViewChild, Output, EventEmitter, AfterViewInit, OnInit, ChangeDetectorRef, Optional,
+  SkipSelf,
 } from '@angular/core';
 
 import { ModalService } from '../modal/modal.service';

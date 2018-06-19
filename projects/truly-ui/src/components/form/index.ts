@@ -22,21 +22,21 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { TlForm } from './form';
 import { FormService } from './form.service';
-import { ButtonModule } from '../button/index';
 import { DialogService } from '../dialog/dialog.service';
 import { TabIndexService } from './tabIndex.service';
 import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { DropDownListModule } from '../dropdownlist/index';
-import { MiscModule } from '../misc/index';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputModule } from '../input/index';
 import { FormSubmitDirective } from './form-submit.directive';
 
-export * from './form.service';
-export * from './form';
+import { InputModule } from '../input/index';
+import { DropDownListModule } from '../dropdownlist/index';
+import { MiscModule } from '../misc/index';
+import { ButtonModule } from '../button/index';
+
 
 @NgModule( {
     imports: [

@@ -25,12 +25,12 @@ import { FormsModule } from '@angular/forms';
 import { TlEditor } from './editor';
 import { TlEditorLinkBox } from './parts/editor-link-box/editor-link-box';
 import { TlEditorImageBox } from './parts/editor-image-box/editor-image-box';
+
 import { DropDownListModule } from '../dropdownlist/index';
 import { ButtonModule } from '../button/index';
 import { FormModule } from '../form/index';
 import { InputModule } from '../input/index';
-
-export * from './editor';
+import { TooltipModule } from '../tooltip/index';
 
 @NgModule( {
   imports: [
@@ -38,6 +38,7 @@ export * from './editor';
     DropDownListModule,
     FormsModule,
     ButtonModule,
+    TooltipModule,
     FormModule,
     InputModule
   ],

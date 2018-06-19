@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,33 +19,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+export class ToolbarConfigModel {
 
-import { TlSidebarContainer } from './sidebar-container';
-import { TlSidebar } from './parts/sidebar/sidebar';
-import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { BackdropModule } from '../core/components/backdrop/index';
+    public font = {
+      family: { show: true, tooltipText: '' },
+      size: { show: true, tooltipText: '' },
+      bold: { show: true, tooltipText: '' },
+      italic: { show: true, tooltipText: '' },
+      underline: { show: true, tooltipText: '' },
+      color: { show: true, tooltipText: '' },
+      highlight: { show: true, tooltipText: '' },
+    };
+    public alignment = {
+      left: { show: true, tooltipText: '' },
+      center: { show: true, tooltipText: '' },
+      right: { show: true, tooltipText: '' },
+      justify: { show: true, tooltipText: '' }
+    };
+    public lists = {
+      ordered: { show: true, tooltipText: '' },
+      unordered: { show: true, tooltipText: '' }
+    };
+    public others = {
+      link: { show: true, tooltipText: '' },
+      imageLink: { show: true, tooltipText: '' },
+      quote: { show: true, tooltipText: '' }
+    };
 
-@NgModule( {
-  imports: [
-    BackdropModule,
-    CommonModule,
-    FormsModule
-  ],
-  declarations: [
-    TlSidebar,
-    TlSidebarContainer,
-    TlSidebarContent
-  ],
-  exports: [
-    TlSidebar,
-    TlSidebarContainer,
-    TlSidebarContent
-  ],
-  entryComponents: [ TlBackdrop ]
-} )
-export class SidebarModule {
 }

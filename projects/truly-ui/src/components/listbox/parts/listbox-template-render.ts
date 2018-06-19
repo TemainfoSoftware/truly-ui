@@ -42,10 +42,10 @@ export class ListBoxTemplateRenderService {
     if ( this.dataService.datasource ) {
       this.zone.runOutsideAngular( () => {
         this.listBox.handleRemoveListChildren();
+        this.clearView();
         for ( let row = 0; row < this.dataService.datasource.length; row++ ) {
           const nodes = this.createViewTemplate( this.dataService.datasource[ row ], row );
-          this.listBox.listTemplateContainer.viewList.insert( nodes );
-
+          this.insertNodesView(nodes);
           for ( const element of nodes.rootNodes ) {
             if ( element.nodeName === 'LI' ) {
               this.listBox.renderer.appendChild( this.listBox.listBox.nativeElement, element );
@@ -63,6 +63,14 @@ export class ListBoxTemplateRenderService {
       } );
       this.listBox.getElementOfList();
     }
+  }
+
+  clearView() {
+    this.listBox.listTemplateContainer.viewList.clear();
+  }
+
+  insertNodesView(nodes) {
+    this.listBox.listTemplateContainer.viewList.insert( nodes );
   }
 
   createViewTemplate( item, index ): EmbeddedViewRef<any> {

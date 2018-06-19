@@ -21,20 +21,17 @@
  */
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { MiscModule } from '../misc/index';
 import { ShortcutService } from '../core/helper/shortcut.service';
-import { BackdropModule } from '../core/components/backdrop/index';
 import { SidebarService } from './sidebar.service';
 
-export * from './modal';
-export * from './modal.service';
-export * from './sidebar.service';
-export * from './modal-options';
+import { BackdropModule } from '../core/components/backdrop/index';
+import { MiscModule } from '../misc/index';
 
 @NgModule( {
     imports: [

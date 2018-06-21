@@ -2,8 +2,8 @@ import { Component, ViewContainerRef } from '@angular/core';
 
 import * as json from './dialog-dataproperties.json';
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { DialogService } from '../../../../projects/truly-ui/src/components/dialog';
 import { ModalResult } from '../../../../projects/truly-ui/src/components/core/enums/modal-result';
+import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 
 @Component( {
   selector: 'app-modal',

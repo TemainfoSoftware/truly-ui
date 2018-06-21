@@ -136,9 +136,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   }
 
   onSelectDay( $event ) {
-    if ( this.open ) {
-      $event.event.stopPropagation();
-    }
     this.selectDay.emit( $event );
     this.setValue( $event );
     this.tlinput.input.nativeElement.focus();

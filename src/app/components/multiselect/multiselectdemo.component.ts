@@ -3,7 +3,7 @@ import { Component, OnChanges, SimpleChanges, ViewContainerRef } from '@angular/
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { DialogService } from '../../../../projects/truly-ui/src/components/dialog';
+import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 
 @Component( {
   selector: 'app-multiselect-demo',

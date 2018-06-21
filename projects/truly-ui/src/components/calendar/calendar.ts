@@ -178,7 +178,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.selectDay.emit(
       {
         'year': this.year,
-        'month': this.month,
+        'month': this.month + 1,
         'day': this.day,
         'fullDate': new Date( this.year, this.month, this.day ),
       }, );
@@ -650,7 +650,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.selectDay.emit(
       {
         'year': this.year,
-        'month': this.month,
+        'month': this.month + 1,
         'day': parseInt( cell.innerHTML, 10 ),
         'fullDate': new Date( this.year, this.month, parseInt( cell.innerHTML, 10 ) ),
         'event': $event

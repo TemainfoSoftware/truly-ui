@@ -53,6 +53,8 @@
     > .ui-row{
       background:  map-deep-get($dark, "default", "background");
       color: rgba( map-deep-get($dark, "default", "foreground"),0.8);
+      cursor: default;
+      user-select: none;
     }
 
     > .ui-row:nth-child(odd){
@@ -80,6 +82,10 @@
     > .ui-row:focus{
       background: map-deep-get($primary, "default", "background") !important;
       color: map-deep-get($primary, "default", "foreground") !important;
+    }
+
+    > .ui-row:hover:not(.ui-selected-row){
+      background: map-deep-get($light, "hover", "background");
     }
   }
 

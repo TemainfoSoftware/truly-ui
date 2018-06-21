@@ -31,7 +31,7 @@ import { NewClientComponent } from './newclient/newclient.component';
 import { DataClientService } from './newclient/dataclient.service';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { AutoCompleteModule } from '../../../../projects/truly-ui/src/components/autocomplete';
-import { DialogModule, DialogService } from '../../../../projects/truly-ui/src/components/dialog';
+import { DialogModule } from '../../../../projects/truly-ui/src/components/dialog';
 import { InputModule } from '../../../../projects/truly-ui/src/components/input';
 import { FormModule } from '../../../../projects/truly-ui/src/components/form';
 import { DropDownListModule } from '../../../../projects/truly-ui/src/components/dropdownlist';
@@ -40,6 +40,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 
 
 @NgModule({

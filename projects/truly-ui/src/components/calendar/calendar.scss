@@ -42,6 +42,7 @@
       }
     }
     >.todayButton {
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       font-size: 1.2em;
       cursor: pointer;
       text-align: center;
@@ -60,6 +61,7 @@
 
     & .ui-table-thead {
       width: 100%;
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       font-size: 0.8em;
       & .ui-table-th {
         text-align: center;
@@ -69,7 +71,7 @@
 
     & .ui-table-line .ui-table-cell {
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      font-size: 1em;
+      font-size: 0.9em;
       text-align: center;
       line-height: 30px;
       overflow: hidden;

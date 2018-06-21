@@ -89,9 +89,10 @@
     }
 
     &:focus {
-      outline: -webkit-focus-ring-color auto 5px;
-      outline-color: -webkit-focus-ring-color;
-      outline-style: auto;
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24,144,255,.2);
+      border-right-width: 1px!important;
     }
 
   //  &.disabled{
@@ -99,4 +100,34 @@
   //  }
   }
 
+}
+/*Create ripple effec*/
+
+.ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.ripple:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .5s, opacity 1s;
+}
+
+.ripple:active:after {
+  transform: scale(0, 0);
+  opacity: .3;
+  transition: 0s;
 }

@@ -14,7 +14,6 @@
 
 .ui-datatable-header-wrap{
   overflow: hidden;
-  //position: relative;
 }
 
 .ui-datatable-column-separator {
@@ -39,13 +38,8 @@
     margin: 0;
   }
 
-  > .ui-row-title{
-    box-shadow: inset 0px -5px 17px -10px rgba(0,0,0,0.40);
-  }
-
   > .ui-row-filter{
     height: 32px;
-    box-shadow: inset 0px 0px 40px -18px rgba(0,0,0,0.45);
   }
 
   > .ui-row .ui-sort-indicator {
@@ -68,12 +62,9 @@
     box-sizing: border-box;
     padding-left: 5px;
     padding-right: 5px;
-   // line-height: 24px;
-   // height: 25px;
     align-items: center;
     overflow: hidden;
     cursor: pointer;
-  //  white-space: nowrap;
   }
   >.ui-row .ui-cel.-textleft{
     text-align: left;

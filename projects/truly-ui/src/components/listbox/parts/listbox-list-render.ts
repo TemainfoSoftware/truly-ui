@@ -85,7 +85,7 @@ export class ListBoxListRenderService {
       this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'height', (this.listBox.rowHeight - padding) + 'px' );
       this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'float', 'right' );
       this.listBox.renderer.setStyle( this.spanElementId.nativeElement, 'line-height', (this.listBox.rowHeight - padding) + 'px' );
-      this.spanElementId.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.id ] );
+      this.spanElementId.nativeElement.append( this.getValueNested(this.listBox.id, this.listBox.dataService.datasource[ row ]) );
     }
   }
 
@@ -96,11 +96,14 @@ export class ListBoxListRenderService {
 
     const spanLabel = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
     spanLabel.nativeElement.append( this.isTypeArrayObject() ?
-      this.listBox.dataService.datasource[ row ][ this.listBox.label ] : this.listBox.dataService.datasource[ row ] );
+      this.getValueNested(this.listBox.label, this.listBox.dataService.datasource[ row ]) : this.listBox.dataService.datasource[ row ] );
     this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabel.nativeElement );
-
     this.createElementSpanLabelDetail( row );
     this.handleAlignmentLine();
+  }
+
+  getValueNested(nestedKeys: string, data: Array<any>) {
+    return nestedKeys.split('.').reduce((a, b) => a[b], data);
   }
 
   handleAlignmentLine() {
@@ -114,7 +117,7 @@ export class ListBoxListRenderService {
     if ( (this.listBox.labelDetail) && (this.isTypeArrayObject()) ) {
       const spanLabelDetail = new ElementRef( this.listBox.renderer.createElement( 'span' ) );
       this.listBox.renderer.setStyle( spanLabelDetail.nativeElement, 'font-size', '0.8em' );
-      spanLabelDetail.nativeElement.append( this.dataService.datasource[ row ][ this.listBox.labelDetail ] );
+      spanLabelDetail.nativeElement.append(  this.getValueNested(this.listBox.labelDetail, this.listBox.dataService.datasource[ row ]) );
       this.listBox.renderer.appendChild( this.spanElementLabel.nativeElement, spanLabelDetail.nativeElement );
     }
   }

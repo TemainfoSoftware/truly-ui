@@ -18,10 +18,9 @@
                                [labelSize]="'10px'"
                                [openFocus]="true"
                                [name]="'clients'"
+                               [id]="'id'"
                                [label]="'Clients'"
                                [clearButton]="true"
-                               (clickItem)="onClickItem($event)"
-                               (selectItem)="onSelectItem($event)"
                                [searchQuery]="['firstName']"
                                [rowHeight]="35"
                                [placeholder]="'Search...'"
@@ -54,21 +53,21 @@
                                [openFocus]="true"
                                [lazyMode]="true"
                                [clearButton]="true"
-                               [modelValue]="'firstName'"
+                               [modelValue]="'name'"
                                [labelSize]="'10px'"
                                [name]="'clients'"
                                [label]="'Clients'"
+                               [searchQuery]="['name']"
+                               [labelName]="'name'"
                                (lazyLoad)="onLazyLoad($event)"
-                               (clickItem)="onClickItem($event)"
                                [placeholder]="'Search...'"
-                               [labelName]="'firstName'"
                                [rowHeight]="35"
                                [(ngModel)]="result2">
                 <ng-template let-item="item" let-index="index">
                   <li class="list-template-demo">
-                    <img class="img-circle" src="../assets/img/avatar.png"
-                         width="20">{{item.firstName}} - <span>{{item.lastName}}</span>
-                    <span class="list-bagde badge">{{item.id}}</span>
+                    <img class="img-circle" src="{{item.country_flag_url}}"
+                         height="20"
+                         width="20"><span>{{item.name}}</span>
                   </li>
                 </ng-template>
               </tl-autocomplete>

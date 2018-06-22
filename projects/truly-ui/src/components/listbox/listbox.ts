@@ -206,7 +206,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if ( String( searchTerm ).length >= this.charsToSearch ) {
           return true;
         }
-        if (searchTerm.length === 0) {
+        if (searchTerm.length < this.charsToSearch) {
           this.handleSearchAsDefaultData();
           return false;
         }
@@ -607,6 +607,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleSearchAsDefaultData() {
     this.filterData.emit( this.data );
+    this.filteredData = this.data;
     this.dataService.updateDataSource( this.data );
     this.validateFilteredAsEmpty();
     this.resetSkipAndTake();
@@ -764,7 +765,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   renderPageData() {
     const data = this.lazyMode ? this.data['data'] : this.data;
-    if ( this.filtering && data.length) {
+    if ( this.filtering && !this.lazyMode) {
       this.dataService.updateDataSource( this.filteredData.slice( this.skip, this.take ) );
       this.handleRenderList();
       return;
@@ -818,12 +819,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   getListBoxHeight() {
     const filtered = this.lazyMode ? this.data['data'] : this.filteredData;
-
     if ( (filtered.length < this.rowsClient) && this.filtering && filtered.length > 0 ) {
       return this.addNew ? (filtered.length * this.rowHeight) + (this.rowHeight) :
         (filtered.length * this.rowHeight);
     }
-
     return this.addNew ? (this.rowsClient * this.rowHeight) + this.rowHeight : this.rowsClient * this.rowHeight;
   }
 

@@ -10,9 +10,12 @@
     background: map-deep-get($light, "default", "background");
 
     border: 1px solid  map-deep-get($basic, "default", "border");
+    border-radius: 3px;
+
     &::-webkit-scrollbar{
       background:  map-deep-get($light, "default", "background");
     }
+
     &::-webkit-scrollbar-corner{
       background: map-deep-get($primary, "default", "foreground");
     }
@@ -24,6 +27,7 @@
 
     &::-webkit-scrollbar-thumb{
       background: map-deep-get($primary, "default", "background");
+      border-radius: 10px;
     }
   }
 

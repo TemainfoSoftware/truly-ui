@@ -174,8 +174,16 @@ Once your library is imported, you can use its components, directives and pipes 
 
 | Feature          | Status                              | Docs         | Issue          |
 |------------------|-------------------------------------|--------------|----------------|
+| colorpicker      |                         non-planned |              |                |
+| datetimepicker   |                         non-planned |              |                |
+| hourpicker       |                         non-planned |              |                |
+| icon             |        In-progress, planned S2 2018 |              |                |
+| monthyearpicker  |                         non-planned |              |                |
+| paginator        |        In-progress, planned S2 2018 |              |                |
 | schedule         |        In-progress, planned S2 2018 |           -  |                |
 | theming          |        In-progress, planned S2 2018 |              |                |
+| timeline         |                         non-planned |              |                |
+| widget           |                         non-planned |              |                |
 
  [1]: http://truly-ui.tk/accordion
  [2]: http://truly-ui.tk/autocomplete

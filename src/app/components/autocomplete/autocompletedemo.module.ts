@@ -41,6 +41,8 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
+import { PersonService } from './http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -59,6 +61,7 @@ import { DialogService } from '../../../../projects/truly-ui/src/components/dial
     DropDownListModule,
     AutoCompleteModule,
     ModalModule,
+    HttpClientModule,
     HighlightJsModule,
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
@@ -71,7 +74,8 @@ import { DialogService } from '../../../../projects/truly-ui/src/components/dial
   providers: [
     DialogService,
     DataClientService,
-    DumpDataService
+    DumpDataService,
+    PersonService
   ],
   entryComponents: [ NewClientComponent ]
 })

@@ -19,12 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
 import * as jsonEvt from './autocompletedemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { TlAutoComplete } from '../../../../projects/truly-ui/src/components/autocomplete/autocomplete';
+import { HttpClient } from '@angular/common/http';
+import { PersonService } from './http.service';
 
 @Component( {
   selector: 'app-autocomplete',
@@ -32,7 +34,7 @@ import { TlAutoComplete } from '../../../../projects/truly-ui/src/components/aut
   styleUrls: [ './autocompletedemo.component.scss' ],
   providers: [ DumpDataService ]
 } )
-export class AutoCompleteDemoComponent {
+export class AutoCompleteDemoComponent implements OnInit {
 
   public dataTableProperties;
 
@@ -56,17 +58,10 @@ export class AutoCompleteDemoComponent {
 
   @ViewChild( TlAutoComplete ) autocomplete;
 
-  constructor( public dataDumpService: DumpDataService, ) {
+  constructor( public dataDumpService: DumpDataService, private personService: PersonService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
     this.dataBasic = this.dataDumpService.createRandomData( 1000 );
-
-    setTimeout( () => {
-      this.dataLazy = {
-        'data': this.getDataFromService( 0, this.take ),
-        'total': this.dataBasic.length
-      };
-    }, 2000 );
 
     this.formOptions1 = {
       title: 'New Client',
@@ -81,27 +76,22 @@ export class AutoCompleteDemoComponent {
 
   }
 
-  onClickItem($event) {
-    console.log('click', $event);
-  }
-
-  onSelectItem($event) {
-    console.log('select', $event);
+  ngOnInit() {
+    const data = [];
+    this.dataLazy = {
+      'data': data,
+      'total': 100
+    };
   }
 
   onLazyLoad( event ) {
-    clearTimeout( this.timeout );
-    this.timeout = setTimeout( () => {
+    const inputValue = event['filters']['fields']['name']['value'];
+    this.personService.getCategories(inputValue).subscribe((data) => {
       this.dataLazy = {
-        'data': this.getDataFromService( event.skip, event.take ),
-        'total': this.dataBasic.length
+        'data': data['location_suggestions'],
+        'total': data['location_suggestions'].length
       };
-    }, 200 );
-  }
-
-
-  getDataFromService( skip, take ) {
-    return this.dataBasic.slice( skip, take );
+    });
   }
 
 }

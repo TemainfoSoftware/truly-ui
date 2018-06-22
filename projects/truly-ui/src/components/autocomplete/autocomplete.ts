@@ -153,13 +153,17 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     setTimeout( () => {
       if ( this.model.model ) {
         for ( let item = 0; item < this.data.length; item++ ) {
-          if ( String( this.data[ item ][ this.modelValue ] ) === String( this.model.viewModel ) ) {
+          if ( String( this.getValueNested( this.modelValue, this.data[ item ] ) ) === String( this.model.viewModel ) ) {
             this.clickItem.emit( { index: item, row: this.data[ item ] } );
-            return this.tlinput.value = this.data[ item ][ this.labelName ];
+            return this.tlinput.value = this.getValueNested( this.labelName, this.data[ item ] );
           }
         }
       }
     }, 1 );
+  }
+
+  getValueNested( nestedKeys: string, data: Array<any> ) {
+    return nestedKeys.split( '.' ).reduce( ( a, b ) => a[ b ], data );
   }
 
   listenerKeyDown() {
@@ -169,10 +173,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenerAutocompleteClick() {
-    this.listeners.add(this.renderer.listen( this.autoComplete.nativeElement, 'click', ( $event ) => {
+    this.listeners.add( this.renderer.listen( this.autoComplete.nativeElement, 'click', ( $event ) => {
       $event.stopPropagation();
       this.handleOpenOnFocus();
-    } ));
+    } ) );
   }
 
   onClearInput() {
@@ -192,9 +196,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenScrollDocument() {
-    this.listeners.add(this.renderer.listen( document, 'scroll', ( $event ) => {
+    this.listeners.add( this.renderer.listen( document, 'scroll', ( $event ) => {
       this.setShowList( false );
-    } ));
+    } ) );
   }
 
   setShowList( boolean: boolean ) {
@@ -203,9 +207,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenClickDocument() {
-    this.listeners.add(this.renderer.listen( document, 'click', () => {
+    this.listeners.add( this.renderer.listen( document, 'click', () => {
       this.setShowList( false );
-    } ));
+    } ) );
   }
 
   onFocusInput( $event ) {
@@ -280,10 +284,11 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   setInputValue( $event ) {
-    this.tlinput.value = $event.row[ this.labelName ];
-    this.value = !this.listBox.isDataArrayString() ? $event.row[ this.modelValue ] : $event.row;
+    this.tlinput.value = this.getValueNested( this.labelName, $event.row );
+    this.value = !this.listBox.isDataArrayString() ? this.getValueNested( this.modelValue, $event.row ) : $event.row;
     this.listBox.detectChanges();
   }
+
 
   setListPosition( $event ) {
     this.listLeftPosition = $event.target.getBoundingClientRect().left;
@@ -292,7 +297,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   isNotRelatedWithAutocomplete( $event ) {
-    return !this.isRelativeTarget($event) && this.isRelativeTargetTypeOfInput($event);
+    return !this.isRelativeTarget( $event ) && this.isRelativeTargetTypeOfInput( $event );
   }
 
   onLazyLoadAutocomplete( $event ) {
@@ -304,7 +309,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   isRelativeTargetTypeOfInput( $event ) {
-    if ($event.relatedTarget) {
+    if ( $event.relatedTarget ) {
       return $event.relatedTarget.nodeName === 'INPUT';
     }
     return false;

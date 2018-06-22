@@ -9,6 +9,8 @@ import { GettingStartedModule } from './getting-started/getting-started.module';
 import { GithubAPIService } from './shared/services/githubapi';
 import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HttpClientModule } from '@angular/common/http';
     ContainerModalModule,
     GettingStartedModule,
     HomeModule,
-    HttpClientModule
+    HttpClientModule,
+    ServiceWorkerModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [GithubAPIService],
   bootstrap: [AppComponent]

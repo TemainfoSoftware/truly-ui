@@ -2,7 +2,7 @@
         attr.tabindex="-1"
         [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
-        [class]="' tl-button '+ color +' ' +toggleClassName"
+        [class]="'ripple tl-button '+ color +' ' +toggleClassName"
         [disabled]="disabled ? true : null"
         (click)="clickToggle()"
         (keydown)="keydown($event)">

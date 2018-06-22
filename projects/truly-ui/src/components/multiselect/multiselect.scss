@@ -82,9 +82,7 @@
         display: inline-block;
         cursor: pointer;
         height: 15px;
-        border-radius: 1px;
-        -webkit-border-radius: 1px;
-        -moz-border-radius: 1px;
+        border-radius: 3px;
         font-size: 0.8em;
         margin-left: 3px;
         padding-left: 5px;
@@ -95,8 +93,10 @@
         -ms-user-select: none;
         user-select: none;
         color: #FFFFFF;
+
         & span {
           padding: 0 5px;
+          font-size: 9px;
         }
         &:first-child {
           margin-left: 3px;
@@ -110,21 +110,23 @@
       opacity: 1 !important;
     }
 
-    & .select-options .itens {
-      display: list-item;
-      list-style: none;
-      font-size: 12px;
-      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -khtml-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-    }
-
-    & .select-options small {
-      float: right;
+    & .select-options {
+      border-radius: 3px;
+      & .itens {
+        display: list-item;
+        list-style: none;
+        font-size: 12px;
+        font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      & small {
+        float: right;
+      }
     }
 
     & .dropdown-arrow {

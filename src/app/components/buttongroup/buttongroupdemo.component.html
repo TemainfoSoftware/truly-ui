@@ -12,15 +12,17 @@
           <app-card>
             <div class="col-md-6">
               <span>Basic</span>
-              <tl-button-group (itemSelect)="showItemSelected($event)">
+              <tl-button-group (itemSelected)="showItemSelected($event)">
                 <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
-              <p class="returned-value">Returned Value: {{ itemSelected }}</p>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button-group (itemSelect)="showItemSelected($event)">
+<tl-button-group>
   <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
@@ -29,15 +31,17 @@
             </div>
             <div class="col-md-6">
               <span>Multiselect</span>
-              <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected2($event)">
+              <tl-button-group [multiSelect]="true">
                 <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
-              <p class="returned-value">Returned Value: {{ itemSelected2 }}</p>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected2($event)">
+<tl-button-group>
   <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
@@ -48,54 +52,39 @@
           <app-card>
             <div class="col-md-6">
               <span>Basic With Preselection</span>
-              <tl-button-group (itemSelect)="showItemSelected3($event)">
+              <tl-button-group>
                 <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
-                <tl-button-group-item [text]="'Button 2'" [checkedItem]="true"></tl-button-group-item>
+                <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
-              <p class="returned-value">Returned Value: {{ itemSelected3 }}</p>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button-group (itemSelect)="showItemSelected3($event)">
+<tl-button-group>
   <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
-  <tl-button-group-item [text]="'Button 2'" [checkedItem]="true"></tl-button-group-item>
+  <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
 </textarea>
             </div>
             <div class="col-md-6">
               <span>Multiselect With Preselection</span>
-              <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-                <tl-button-group-item [text]="'Button 1'" [checkedItem]="true"></tl-button-group-item>
-                <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
-                <tl-button-group-item [text]="'Button 3'" [checkedItem]="true"></tl-button-group-item>
-              </tl-button-group>
-              <p class="returned-value">Returned Value: {{ itemSelected4 }}</p>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-  <tl-button-group-item [text]="'Button 1'" [checkedItem]="true"></tl-button-group-item>
-  <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
-  <tl-button-group-item [text]="'Button 3'" [checkedItem]="true"></tl-button-group-item>
-</tl-button-group>
-</textarea>
-            </div>
-          </app-card>
-          <app-card>
-            <div class="col-md-12">
-              <span>Custom Multiselect With Many Properties</span>
-              <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected5($event)" [height]="'25px'">
+              <tl-button-group [multiSelect]="true">
                 <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
-                <tl-button-group-item [text]="'Button 2'" [checkedItem]="true"></tl-button-group-item>
-                <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
+                <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
+                <tl-button-group-item [selected]="true" [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
-              <p class="returned-value">Returned Value: {{ itemSelected5 }}</p>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-button-group [multiSelect]="true" (itemSelect)="showItemSelected4($event)">
-  <tl-button-group-item [text]="'Button 1'" [checkedItem]="true"></tl-button-group-item>
-  <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
-  <tl-button-group-item [text]="'Button 3'" [checkedItem]="true"></tl-button-group-item>
+ <tl-button-group [multiSelect]="true">
+  <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
+  <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
+  <tl-button-group-item [selected]="true" [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
 </textarea>
             </div>

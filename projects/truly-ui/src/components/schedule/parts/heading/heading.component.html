@@ -5,7 +5,7 @@
         <tl-button-group-item *ngFor="let view of views"
                               [width]="'100px'"
                               [text]="view | uppercase"
-                              [checkedItem]="view === defaultView"
+                              [selected]="view === defaultView"
                               (click)="changeView.emit(view)"
         >
         </tl-button-group-item>

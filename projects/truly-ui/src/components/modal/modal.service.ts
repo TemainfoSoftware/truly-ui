@@ -21,7 +21,7 @@
  */
 import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
-  ComponentRef
+  ComponentRef, Injector
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
@@ -91,6 +91,10 @@ export class ModalService implements OnDestroy {
     this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
   }
 
+  getParentModalInjectedView() {
+    return this.component.instance.body.parentInjector.view.component.componentRef;
+  }
+
   private setGlobalSettings( factoryResolver, parent?: ElementRef, ) {
     this.modalOptions = Reflect.getOwnMetadata( 'annotations',
       Object.getPrototypeOf( this.componentInjected.instance ).constructor );
@@ -152,7 +156,6 @@ export class ModalService implements OnDestroy {
     } );
 
     this.reallocateBackdrop();
-
   }
 
   reallocateBackdrop() {

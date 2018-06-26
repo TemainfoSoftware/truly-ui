@@ -32,6 +32,7 @@ import { SidebarService } from './sidebar.service';
 
 import { BackdropModule } from '../core/components/backdrop/index';
 import { MiscModule } from '../misc/index';
+import { ModalResultDirective } from './directives/modal-result.directive';
 
 @NgModule( {
     imports: [
@@ -41,10 +42,13 @@ import { MiscModule } from '../misc/index';
     ],
     declarations: [
       TlModal,
-      LimitStringPipe
+      ModalResultDirective,
+      LimitStringPipe,
     ],
     exports: [
       TlModal,
+      ModalResultDirective,
+      LimitStringPipe
     ],
     entryComponents: [
       TlModal,

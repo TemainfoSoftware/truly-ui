@@ -48,6 +48,7 @@ export class FormDemoComponent implements OnInit {
 
   form1() {
     this.formService.createForm( NewPersonComponent, this.compiler, null, ( form ) => {
+      console.log('form', form);
       if ( form.formResult ) {
         this.dataFormService.saveDataForm( form.formResult.value );
         this.formModal = this.dataFormService.getDataForm();

@@ -27,41 +27,37 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TlForm } from './form';
 import { FormService } from './form.service';
 import { DialogService } from '../dialog/dialog.service';
-import { TabIndexService } from './tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { FormSubmitDirective } from './form-submit.directive';
 
 import { InputModule } from '../input/index';
 import { DropDownListModule } from '../dropdownlist/index';
 import { MiscModule } from '../misc/index';
 import { ButtonModule } from '../button/index';
-
+import { ModalModule } from '../modal/index';
 
 @NgModule( {
-    imports: [
-        CommonModule,
-        ButtonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        InputModule,
-        DropDownListModule,
-        MiscModule
-    ],
-    declarations: [
-        TlForm,
-        FormSubmitDirective,
-    ],
-    providers: [
-        DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService,
-        FormService,
-    ],
-    exports: [
-        TlForm,
-        FormSubmitDirective
-    ]
+  imports: [
+    CommonModule,
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputModule,
+    DropDownListModule,
+    MiscModule,
+    ModalModule
+  ],
+  declarations: [
+    TlForm,
+    FormSubmitDirective,
+  ],
+  exports: [
+    TlForm,
+    FormSubmitDirective
+  ],
+  providers: [
+    DialogService,
+    FormService,
+  ],
 } )
-export class FormModule {}
+export class FormModule {
+}

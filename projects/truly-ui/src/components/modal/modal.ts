@@ -21,8 +21,8 @@
  */
 import {
   AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter,
-  HostBinding,
-  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
+  HostBinding, forwardRef, ContentChildren,
+  Input, NgZone, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { ModalService } from './modal.service';
@@ -30,6 +30,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { SidebarService } from './sidebar.service';
+import { TlButton } from '../button/button';
 
 let subscribeMouseMove;
 
@@ -89,7 +90,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @ViewChild( 'modal' ) modal: ElementRef;
 
-  @ViewChild( 'body', { read: ViewContainerRef } ) body;
+  @ViewChild( 'body', { read: ViewContainerRef } ) body: ViewContainerRef;
 
   @HostBinding( '@enterAnimation' ) public animation;
 
@@ -230,7 +231,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   mouseupListener() {
-    subscribeMouseMove();
+    if (subscribeMouseMove) {
+      subscribeMouseMove();
+    }
     this.addTransitionModal();
     this.moving = false;
   }
@@ -491,9 +494,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     this.parent = this.containerService.getView().element.nativeElement;
     this.offsetLeftContent = this.parent.getBoundingClientRect().left;
     this.offsetTopContent = this.parent.getBoundingClientRect().top;
-
-    console.log( 'parent left ', this.offsetLeftContent );
-    console.log( 'parent top ', this.offsetTopContent );
   }
 
   ngOnDestroy() {

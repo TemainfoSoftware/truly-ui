@@ -66,7 +66,7 @@ export class TlOverlayPanel implements OnInit, OnDestroy {
 
   handleTarget( target ) {
     if ( target instanceof TlButton ) {
-      this.target = target.element.nativeElement;
+      this.target = target.button.nativeElement;
     }
   }
 

@@ -38,7 +38,7 @@ export class TlButtonGroup implements AfterContentInit {
 
   @Input() height = '30px';
 
-  @Output() itemSelect: EventEmitter = new EventEmitter();
+  @Output() itemSelect: EventEmitter<Object> = new EventEmitter();
 
   @ContentChildren( TlButtonGroupItem ) groupItems: QueryList<TlButtonGroupItem>;
 

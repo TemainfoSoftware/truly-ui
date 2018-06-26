@@ -1,7 +1,16 @@
-<div class="group">
-  <div class="tl-button-group-box">
-
-      <div #list (click)="onClickItemList($event)"></div>
-
+<div class="ui-wrapper-group">
+  <div class="ui-group-box">
+    <ng-template #group let-tabs="tabs">
+      <button #tlbutton
+              *ngFor="let item of groupItems"
+              [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height}"
+              [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
+              [class]="'ripple tl-button '+ item.color"
+              (click)="selectButtonItem(item)"
+              [disabled]="item.disabled ? true : null">
+        <span class="textButton" [ngStyle]="{'line-height': item.height}">{{item.text}}</span>
+      </button>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="group; context: groupContext"></ng-container>
   </div>
 </div>

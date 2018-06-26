@@ -180,7 +180,7 @@ Once your library is imported, you can use its components, directives and pipes 
 | icon             |        In-progress, planned S2 2018 |              |                |
 | monthyearpicker  |                         non-planned |              |                |
 | paginator        |        In-progress, planned S2 2018 |              |                |
-| schedule         |        In-progress, planned S2 2018 |           -  |                |
+| schedule         |        In-progress, planned S2 2018 |              |                |
 | theming          |        In-progress, planned S2 2018 |              |                |
 | timeline         |                         non-planned |              |                |
 | widget           |                         non-planned |              |                |

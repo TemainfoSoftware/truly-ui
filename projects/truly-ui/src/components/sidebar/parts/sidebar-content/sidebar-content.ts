@@ -90,7 +90,7 @@ export class TlSidebarContent implements OnInit {
     switch ( this.start.mode ) {
       case 'over':
        if ( this.start.dock ) {
-       this.setMovementInitialDock();
+         this.setMovementInitialDock();
        }
        break;
       case 'push':

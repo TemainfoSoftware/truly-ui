@@ -19,63 +19,27 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input, AfterContentInit, ChangeDetectorRef } from '@angular/core';
-
-import { ButtonGroupService } from './buttongroup.service';
+import {
+  Component, Input, OnInit,
+} from '@angular/core';
 
 @Component( {
     selector: 'tl-button-group-item',
     templateUrl: './buttongroup-item.html',
     styleUrls: [ './buttongroup-item.scss' ]
 } )
-export class TlButtonGroupItem implements AfterContentInit {
+export class TlButtonGroupItem implements OnInit {
 
-    @Input() text;
+  @Input() text = '';
 
-    @Input() iconAddonBefore;
+  @Input() width = '120px';
 
-    @Input() iconAddonAfter;
+  @Input() disabled = null;
 
-    @Input() iconBeforeText;
+  @Input() color = 'basic';
 
-    @Input() iconAfterText;
+  @Input() selected = false;
 
-    @Input() width = '125px';
-
-    @Input() disabled;
-
-    @Input() checkedItem = null;
-
-    public height = '30px';
-
-    public index = -1;
-
-    @Input() public _buttonSelected = false;
-    set buttonSelected( value: boolean ) {
-        this._buttonSelected = value;
-    }
-    get buttonSelected () {
-        return this._buttonSelected;
-    }
-
-    constructor( public _element: ElementRef, private buttonGroupService: ButtonGroupService, private cd: ChangeDetectorRef ) {}
-
-    ngAfterContentInit() {
-        this.isPreselectedItem();
-        this.cd.detectChanges();
-    }
-
-    @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) {
-        this.buttonGroupService.setIndexItemSelected(this.index);
-    }
-
-    onIsSelected($event) {
-        this._buttonSelected = $event.selected;
-    }
-
-    isPreselectedItem() {
-        this.buttonSelected = this.checkedItem === true;
-    }
+  ngOnInit() {}
 
 }

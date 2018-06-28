@@ -1,7 +1,25 @@
 
 //Default
 
-.tl-button-group-box {
+.ui-group-box {
   position: absolute;
-  display:inline-block
+  display:inline-block;
+  button {
+    transition: background ease-in-out 300ms;
+    &:first-child {
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+      border-right: 0;
+    }
+    &:last-child {
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border-left: 0;
+    }
+  }
+
+}
+
+.button-selected {
+  background: #d8d8d8 !important;
 }

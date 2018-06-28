@@ -24,7 +24,7 @@ export const dataEvents = [
     name: 'itemSelect',
     parameters: [
       {
-        event: 'object', description: 'ButtonGroup item Selected'
+        event: 'Array<Object>: ButtonGroupItem', description: 'List of ButtonGroupItems Selected'
       }
     ],
     description: 'Callback to invoke when a button is clicked',

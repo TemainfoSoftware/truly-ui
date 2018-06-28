@@ -12,10 +12,12 @@ import { TlDialogError } from './dialog-error/dialog-error';
 import { TlDialogInfo } from './dialog-info/dialog-info';
 
 import { ButtonModule } from '../button/index';
+import { ModalModule } from '../modal/index';
 
 @NgModule( {
     imports: [
         CommonModule,
+        ModalModule,
         ButtonModule
     ],
     declarations: [

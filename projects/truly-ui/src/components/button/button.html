@@ -2,10 +2,8 @@
         attr.tabindex="-1"
         [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
-        [class]="'ripple tl-button '+ color +' ' +toggleClassName"
-        [disabled]="disabled ? true : null"
-        (click)="clickToggle()"
-        (keydown)="keydown($event)">
+        [class]="'ripple tl-button '+ color"
+        [disabled]="disabled ? true : null">
     <span *ngIf="iconAddonBefore"
           [ngClass]="iconAddonBefore"
           [class]="color + ' iconAddonBefore'"

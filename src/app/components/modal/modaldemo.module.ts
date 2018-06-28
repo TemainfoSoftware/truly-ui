@@ -13,6 +13,7 @@ import { InputModule } from '../../../../projects/truly-ui/src/components/input'
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import { ModalModule } from '../../../../projects/truly-ui/src/components/modal/index';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     ButtonModule,
     CommonModule,
     FormsModule,
+    ModalModule,
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,

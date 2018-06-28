@@ -1,89 +1,14 @@
-@import "../../core/main";
+@import "../builders/basic/index";
 
-$theme: (
 
-  basic: (
-    default:  ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
-    active:   ( foreground: #616161, background: #EDEDED, border: #DCDCDC ),
-    checked:  ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
-    disabled: ( foreground: #616161, background: #E6E6E6, border: #DCDCDC ),
-    focus:    ( foreground: #616161, background: #F6F6F6, border: #DCDCDC ),
-    hover:    ( foreground: #616161, background: #EDEDED, border: #DCDCDC ),
-  ),
+$default-app-theme: (
+  basic:  tl-palette( $tl-gray, 50, 100,100  ),
+  primary: tl-palette($tl-teal, 700, 600, 800),
 
-  primary: (
-    default:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    active:   ( foreground: #FFFFFF, background: #5ebc8a, border: #58AF7F ),
-    checked:  ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    disabled: ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    focus:    ( foreground: #FFFFFF, background: #66CC99, border: #58AF7F ),
-    hover:    ( foreground: #FFFFFF, background: #5DBA8C, border: #58AF7F ),
-  ),
-
-  //secondary: (
-  //  default:  ( foreground: #FFFFFF, background: #4E9C71, border: #58AF7F ),
-  //  active:   ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-  //  checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-  //  disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-  //  focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-  //  hover:    ( foreground: #FFFFFF, background: #84D6AD, border: #58AF7F ),
-  //),
-
-  success: (
-    default:  ( foreground: #FFFFFF, background: #62C390, border: #9BD8B8 ),
-    active:   ( foreground: #FFFFFF, background: #69a588, border: #9BD8B8 ),
-    checked:  ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
-    disabled: ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
-    focus:    ( foreground: #FFFFFF, background: #84D6AD, border: #9BD8B8 ),
-    hover:    ( foreground: #FFFFFF, background: #5AB283, border: #9BD8B8 ),
-  ),
-
-  danger: (
-    default:  ( foreground: #FFFFFF, background: #F77171, border: #F98D8D ),
-    active:   ( foreground: #FFFFFF, background: #e17a7a, border: #F98D8D ),
-    checked:  ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
-    disabled: ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
-    focus:    ( foreground: #FFFFFF, background: #F98D8D, border: #F98D8D ),
-    hover:    ( foreground: #FFFFFF, background: #eb6767, border: #F98D8D ),
-  ),
-
-  warning: (
-    default:  ( foreground: #FFFFFF, background: #F5D240, border: #F8E285 ),
-    active:   ( foreground: #FFFFFF, background: #d7b43d, border: #F8E285 ),
-    checked:  ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
-    disabled: ( foreground: #FFFFFF, background: #FFD8A9, border: #F8E285 ),
-    focus:    ( foreground: #FFFFFF, background: #FFFBE9, border: #F8E285 ),
-    hover:    ( foreground: #FFFFFF, background: #e6c63c, border: #F8E285 ),
-  ),
-
-  information: (
-    default:  ( foreground: #FFFFFF, background: #0090D9, border: #5CB8E6 ),
-    active:   ( foreground: #FFFFFF, background: #3191cc, border: #5CB8E6 ),
-    checked:  ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
-    disabled: ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
-    focus:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
-    hover:    ( foreground: #FFFFFF, background: #31A5E0, border: #5CB8E6 ),
-  ),
-
-  light: (
-    default:  ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    active:   ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    checked:  ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    disabled: ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    focus:    ( foreground: #616161, background: #FEFEFE, border: #C8C8C8 ),
-    hover:    ( foreground: #616161, background: #f1f1f1, border: #C8C8C8 ),
-  ),
-
-  dark: (
-    default:  ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
-    active:   ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
-    checked:  ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
-    disabled: ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
-    focus:    ( foreground: #616161, background: #F7F7F7, border: #BFBFBF ),
-    hover:    ( foreground: #616161, background: #DADADA, border: #BFBFBF ),
-  )
+  success: tl-palette($tl-green, 600),
+  danger: tl-palette($tl-red),
+  warning: tl-palette($tl-yellow),
+  information: tl-palette($tl-blue),
 );
 
-.tl-default-theme{
-  @include theme-builder($theme)
-}
+@include truly-basic-builder-theme($default-app-theme, 'default');

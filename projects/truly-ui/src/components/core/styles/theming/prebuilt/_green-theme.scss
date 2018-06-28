@@ -1,0 +1,14 @@
+@import "../builder";
+
+$green-theme: (
+  primary: #4acc0f,
+  light: #0df6b3,
+  dark: #1f4e16,
+
+  success: #62C390,
+  danger: #F77171,
+  warning: #F5D240,
+  information: #0090D9,
+);
+
+//@include truly-builder-theme($green-theme,'green');

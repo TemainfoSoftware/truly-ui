@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { Component } from '@angular/core';
+import { CoreService } from '../../../../projects/truly-ui/src/components/core/services/core.service';
 
 import * as json from './buttondemo-dataproperties.json';
 import * as jsonEvts from './buttondemo.dataevents.json';
@@ -35,9 +36,13 @@ export class ButtonDemoComponent {
 
   public dataEvents;
 
-  constructor() {
+  constructor( private coreService: CoreService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+  }
+
+  changeTheme(theme) {
+    this.coreService.setTheme(theme);
   }
 
 }

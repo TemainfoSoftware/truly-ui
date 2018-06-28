@@ -49,7 +49,7 @@ export class ToasterService {
   success(toasterConfig: ToasterConfig) {
     this.createToasterComponent(toasterConfig);
     (<TlToaster>this.toaster.instance).icon = 'ion-checkmark';
-    (<TlToaster>this.toaster.instance).color = 'primary';
+    (<TlToaster>this.toaster.instance).color = 'success';
     this.listToasters.push(this.toaster);
   }
 

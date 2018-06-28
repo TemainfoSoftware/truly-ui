@@ -4,8 +4,6 @@
 
   $basic:   map-deep-get($theme, 'basic');
   $primary: map-deep-get($theme, 'primary');
-  $light:   map-deep-get($theme, 'light');
-  $dark:    map-deep-get($theme, 'dark');
 
   //ALL
   .tl-datatable-box{
@@ -24,9 +22,9 @@
   }
 
   .ui-datatable-table-head{
-    color: map-deep-get($dark, "default", "foreground");
+    color: map-deep-get($basic, "darker", "foreground");
     > .ui-row{
-      background: map-deep-get($dark, "default", "background");
+      background: map-deep-get($basic, "darker", "background");
     }
     > .ui-row .ui-sort-indicator {
       color: map-deep-get($basic, "default", "foreground");
@@ -51,15 +49,15 @@
 
   .ui-datatable-content-body{
     > .ui-row{
-      background:  map-deep-get($dark, "default", "background");
-      color: rgba( map-deep-get($dark, "default", "foreground"),0.8);
+      background:  map-deep-get($basic, "darker", "background");
+      color: rgba( map-deep-get($basic, "darker", "foreground"),0.8);
       cursor: default;
       user-select: none;
     }
 
     > .ui-row:nth-child(odd){
-      background: map-deep-get($light, "default", "background");
-      color: rgba(map-deep-get($light, "default", "foreground"),0.8);
+      background: map-deep-get($basic, "lighter", "background");
+      color: rgba(map-deep-get($basic, "lighter", "foreground"),0.8);
     }
 
     > .ui-row:last-child{
@@ -85,7 +83,7 @@
     }
 
     > .ui-row:hover:not(.ui-selected-row){
-      background: map-deep-get($light, "hover", "background");
+      background: map-deep-get($basic, "lighter", "background");
     }
   }
 

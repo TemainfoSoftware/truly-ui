@@ -44,7 +44,7 @@ export class TlProgressBar implements OnInit, OnChanges {
 
   @Input() mode: 'determinate' | 'indeterminate' = 'determinate';
 
-  @Input() color: 'basic' | 'primary' | 'success' | 'danger' | 'warning' | 'information' | 'light' | 'dark' = 'primary';
+  @Input() color: 'basic' | 'primary' | 'success' | 'danger' | 'warning' | 'information' = 'primary';
 
   constructor() {}
 

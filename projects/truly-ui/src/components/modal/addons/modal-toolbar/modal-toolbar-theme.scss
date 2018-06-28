@@ -15,9 +15,7 @@
 @mixin tl-modal-toolbar-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
-  $dark:    map-deep-get($theme, 'dark');
   $success: map-deep-get($theme, 'success');
-
 
   .container-wrapper {
 
@@ -33,8 +31,8 @@
     }
 
     .container-modals {
-      background-color: map-deep-get($dark, 'default', "background");
-      border: 1px solid map-deep-get($dark, 'default', "border");
+      background-color: map-deep-get($basic, 'darker', "background");
+      border: 1px solid map-deep-get($basic, 'darker', "border");
       //
       //&::-webkit-scrollbar {
       //  background: $scrollbar-background;
@@ -77,14 +75,6 @@
 
     &.information {
       @include _tl-modal-toolbar-theme-scheme($theme, 'information')
-    }
-
-    &.light {
-      @include _tl-modal-toolbar-theme-scheme($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-modal-toolbar-theme-scheme($theme, 'dark')
     }
   }
 }

@@ -3,7 +3,6 @@
 @mixin tl-tabcontrol-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
-  $light:   map-deep-get($theme, 'light');
   $primary:   map-deep-get($theme, 'primary');
 
   .wrapper-tabcontrol {
@@ -33,12 +32,12 @@
 
   .tab-selected {
     border-bottom: 0 !important;
-    background: map-deep-get($light, "default", "background") !important;
+    background: map-deep-get($basic, "lighter", "background") !important;
     border-top: 1px solid map-deep-get($primary, "default", "background") !important;
   }
 
   .tab-wrapper-selected{
-    background: map-deep-get($light, "default", "background");
+    background: map-deep-get($basic, "lighter", "background")
   }
 
 }

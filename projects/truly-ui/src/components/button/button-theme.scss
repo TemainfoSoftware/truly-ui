@@ -80,14 +80,6 @@
       @include _tl-button-theme-schema($theme, 'information')
     }
 
-    &.light {
-      @include _tl-button-theme-schema($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-button-theme-schema($theme, 'dark')
-    }
-
     &:focus {
       border-color: #40a9ff;
       outline: 0;

@@ -2,8 +2,6 @@
 
   $basic:   map-deep-get($theme, 'basic');
   $primary: map-deep-get($theme, 'primary');
-  $light:   map-deep-get($theme, 'light');
-  $dark:    map-deep-get($theme, 'dark');
   $danger:  map-deep-get($theme, 'danger');
   $success: map-deep-get($theme, 'success');
   $warning: map-deep-get($theme, 'warning');
@@ -32,7 +30,7 @@
       background: map-deep-get($success, "default", "background");
     }
     .ui-status-offline {
-      background: map-deep-get($dark, "default", "background");
+      background: map-deep-get($basic, "darker", "background");
     }
     .ui-status-busy {
       background: map-deep-get($danger, "default", "background");

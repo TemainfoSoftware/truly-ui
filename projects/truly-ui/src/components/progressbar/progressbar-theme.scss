@@ -2,7 +2,6 @@
 
 @mixin _tl-progressbar-theme-schema( $theme, $action ){
   $basic: map-deep-get($theme, 'basic');
-  $dark: map_deep-get($theme, 'dark');
 
   border: 1px solid map-deep-get($basic, "default", "border");
 
@@ -19,7 +18,7 @@
   }
 
   .ui-progress-description {
-    color: map-deep-get($dark, "default", "foreground");
+    color: map-deep-get($basic, "darker", "foreground");
   }
 
 }
@@ -51,15 +50,6 @@
     &.information {
       @include _tl-progressbar-theme-schema($theme, 'information')
     }
-
-    &.light {
-      @include _tl-progressbar-theme-schema($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-progressbar-theme-schema($theme, 'dark')
-    }
-
   }
 
 }

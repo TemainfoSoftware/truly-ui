@@ -9,7 +9,7 @@ import { DumpDataService } from '../../../shared/services/dumpdata';
   icon: 'ion-stats-bars',
   draggable: true,
   width: '500px',
-  color: 'success',
+  color: 'primary',
   height: 'auto',
   maximizable: true,
   minimizable: true,

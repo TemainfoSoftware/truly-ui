@@ -1,1 +1,55 @@
-@import "./style/reset";
+@import "../core/styles/theming/theming";
+
+@mixin _tl-core-theme-schema( $theme, $action ) {
+  &.-paint-icon {
+    color: map-deep-get($theme, $action, "default", "background") !important;
+  }
+
+  &.-paint-bg {
+    background-color: map-deep-get($theme, $action, "default", "background") !important;
+  }
+
+  &.-paint-font {
+    color: map-deep-get($theme, $action, "default", "foreground") !important;
+  }
+
+  &.-paint-link {
+    &:hover {
+      color: map-deep-get($theme, $action, "default", "background") !important;
+    }
+    a {
+      &:hover{
+        color: map-deep-get($theme, $action, "default", "background") !important;
+      }
+      &:focus{
+        color: map-deep-get($theme, $action, "default", "background") !important;
+      }
+    }
+  }
+}
+
+@mixin tl-core-theme( $theme ) {
+  .tl-scheme-basic {
+    @include _tl-core-theme-schema($theme, 'basic');
+  }
+
+  .tl-scheme-primary {
+    @include _tl-core-theme-schema($theme, 'primary');
+  }
+
+  .tl-scheme-success {
+    @include _tl-core-theme-schema($theme, 'success');
+  }
+
+  .tl-scheme-danger {
+    @include _tl-core-theme-schema($theme, 'danger');
+  }
+
+  .tl-scheme-warning {
+    @include _tl-core-theme-schema($theme, 'warning');
+  }
+
+  .tl-scheme-information {
+    @include _tl-core-theme-schema($theme, 'information');
+  }
+}

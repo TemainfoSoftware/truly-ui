@@ -12,6 +12,7 @@
     @include tl-calendar-theme($theme);
     @include tl-chatlist-theme($theme);
     @include tl-checkbox-theme($theme);
+    @include tl-core-theme($theme);
     @include tl-popupmenu-theme($theme);
     @include tl-modal-toolbar-theme($theme);
     @include tl-datatable-theme($theme);

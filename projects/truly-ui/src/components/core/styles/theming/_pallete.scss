@@ -6,6 +6,9 @@
 // While the contrast colors in the spec are not prescriptive, we use them for convenience.
 
 
+//Generate Colors: http://mcg.mbitson.com/#!?greencyan=%2366cc99
+
+
 // @deprecated renamed to $dark-primary-text.
 // @deletion-target 7.0.0
 $black-87-opacity: rgba(black, 0.87);
@@ -293,6 +296,40 @@ $tl-cyan: (
     700: $light-primary-text,
     800: $light-primary-text,
     900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  )
+);
+
+
+$tl-cyan-green: (
+  50: #EDF9F3,
+  100: #D1F0E0,
+  200: #B3E6CC,
+  300: #94DBB8,
+  400: #7DD4A8,
+  500: #66CC99,
+  600: #5EC791,
+  700: #53C086,
+  800: #49B97C,
+  900: #38AD6B,
+  A100: #F9FFFC,
+  A200: #C6FFDE,
+  A400: #93FFC0,
+  A700: #7AFFB1,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $dark-primary-text,
+    700: $dark-primary-text,
+    800: $dark-primary-text,
+    900: $dark-primary-text,
     A100: $dark-primary-text,
     A200: $dark-primary-text,
     A400: $dark-primary-text,

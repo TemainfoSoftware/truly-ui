@@ -20,3 +20,16 @@
     darker-contrast: tl-contrast($base-palette, $darker)
   );
 }
+
+@function tl-color($palette, $hue: default, $opacity: null) {
+  // If hueKey is a number between zero and one, then it actually contains an
+  // opacity value, so recall this function with the default hue and that given opacity.
+  @if type-of($hue) == number and $hue >= 0 and $hue <= 1 {
+    @return tl-color($palette, default, $hue);
+  }
+
+  $color: map-get($palette, $hue);
+  $opacity: if($opacity == null, opacity($color), $opacity);
+
+  @return rgba($color, $opacity);
+}

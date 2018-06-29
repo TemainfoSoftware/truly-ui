@@ -1,9 +1,9 @@
 @import "../builders/basic/index";
 
 
-$default-app-theme: (
+$red-app-theme: (
   basic:  tl-palette( $tl-gray, 100, 50, 200),
-  primary: tl-palette($tl-cyan-green, 500, 400, 700),
+  primary: tl-palette($tl-orange, 500, 400, 700),
 
   success: tl-palette($tl-green, 600, 500, 700),
   danger: tl-palette($tl-red, 600, 500, 700),
@@ -11,4 +11,4 @@ $default-app-theme: (
   information: tl-palette($tl-blue, 600, 500, 700),
 );
 
-@include truly-basic-builder-theme($default-app-theme, 'default');
+@include truly-basic-builder-theme($red-app-theme, 'orange');

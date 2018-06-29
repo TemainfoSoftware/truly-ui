@@ -60,7 +60,7 @@
         }
 
         &:focus:not(.ng-dirty) {
-          background-color: rgba(map-deep-get($warning, "default", "background"), 0.2);
+          background-color: rgba(map-deep-get($warning, "default", "background"), 0.12);
           outline: none;
           border: 1px solid map-deep-get($warning, "default", "border");
         }

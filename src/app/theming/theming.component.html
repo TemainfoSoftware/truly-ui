@@ -82,7 +82,7 @@ export class AppModule { }
       </span>
       <ul style="list-style: decimal; font-weight: normal; ">
         <li>It does import builder that will perform the mixin of the color palettes <code>@import "~truly-ui/css/theming/builders/basic/index";</code></li><br>
-        <li>Defines a theme data structure as the composition of multiple palettes. The Palette receives the name and its context variables (default, lighter, darker) in number(View the available palettes in).</li><br>
+        <li>Defines a theme data structure as the composition of multiple palettes. The Palette receives the name and its context variables (default, lighter, darker) in number(View the available palettes).</li><br>
         <li>The object sass is passed to the truly-basic-builder-theme mixin, along with the name that will be the representation of the theme in CoreModule, which will output all of the corresponding styles for the theme.</li>
       </ul>
       <hr>
@@ -131,7 +131,7 @@ export class AppModule { }
 
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Changing Theme at runtime'" [icon]="'ion-document-text'">
+  <app-showcase-card [title]="'Changing Theme at Runtime'" [icon]="'ion-document-text'">
     <app-card>
       <span class="description">TrulyUI allows you to switch between preconfigured and user-created themes, just by switching to the <code>CoreService</code> service which theme you want to use.</span>
       <div class="code-area">
@@ -205,4 +205,12 @@ export class AppComponent {
       <!--</ul>-->
     <!--</app-card>-->
   <!--</app-showcase-card>-->
+  <app-showcase-card [title]="'Colors Palettes'" [icon]="'ion-document-text'">
+    <app-card>
+      <span class="description">
+       These color palettes, originally created by Material Design in 2014, comprises of colors designed to work together harmoniously, and can be used to develop your brand palette.
+      </span>
+      <app-palette></app-palette>
+    </app-card>
+  </app-showcase-card>
 </div>

@@ -24,7 +24,7 @@
 -------
 
 <p align="center">
-  <img src="src/assets/img/logo-readme.png" width="500">
+  <img src="src/assets/img/logo-readme.svg" width="500">
 </p>
 
 

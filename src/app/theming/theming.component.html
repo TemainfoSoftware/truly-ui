@@ -1,0 +1,124 @@
+<div class="container-fluid" style="padding: 20px">
+  <div class="header-title-demo">
+    <h1 class="title">Theming</h1>
+    <p class="text-content">Truly-UI allows you to customize some basic design aspects in order to meet the needs of UI diversity from business and brand, including primary color, contrast colors, border color, etc..</p>
+  </div>
+  <app-showcase-card [title]="'What is a theme?'" [icon]="'ion-document-text'">
+    <app-card>
+      <span class="description">
+        A theme is the set of colors that will be applied to the TrulyUI components.
+        In TrulyUI, a theme is created by composing multiple palettes. In particular, a theme consists of:
+      </span>
+      <ul style="font-weight: normal; ">
+        <li>A <b>basic</b> palette: colors used for element backgrounds.</li>
+        <li>A <b>primary</b> palette: colors most widely used across all screens and components.</li>
+      </ul>
+
+      <ul style="font-weight: normal; ">
+        <li>A <b>success</b> palette: colors used to convey success state.</li>
+        <li>A <b>danger</b> palette: colors used to convey danger state.</li>
+        <li>A <b>warning</b> palette: colors used to convey warning state.</li>
+        <li>A <b>information</b> palette: colors used to convey information state.</li>
+      </ul>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Using a pre-built theme'" [icon]="'ion-document-text'">
+    <app-card>
+      <span class="description">
+        Truly-UI already counts a prepackaged package of several themes to suit any application. To use them simply specify in the creation of the TrulyUI Core Module <code> CoreModule.forRoot({{ '{' }} theme: 'default' {{ '}' }}) </code> which theme you want to use.
+      </span>
+      <div class="code-area">
+         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { CoreModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    CoreModule.forRoot({
+      theme: 'default'
+    })
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+  </textarea>
+      </div>
+      <hr>
+      <h5>Available pre-built themes</h5>
+      <ul>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Amber </a>(<code>amber</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue </a>(<code>blue</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue Gray </a>(<code>bluegray</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Brown </a>(<code>brown</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan </a>(<code>cyan</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan Green </a>(<code>cyangreen</code>) default</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Orange </a>(<code>deeporange</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Purple </a>(<code>deeppurple</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Gray </a>(<code>gray</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Green </a>(<code>green</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Indigo </a>(<code>indigo</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Blue </a>(<code>lightblue</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Green </a>(<code>lightgreen</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Lime </a>(<code>lime</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Orange </a>(<code>orange</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Purple </a>(<code>purple</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Red </a>(<code>red</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Teal </a>(<code>teal</code>)</li>
+        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Yellow </a>(<code>yellow</code>)</li>
+      </ul>
+    </app-card>
+  </app-showcase-card>
+  <!--<app-showcase-card [title]="'Defining a custom theme'" [icon]="'ion-document-text'">-->
+    <!--<app-card>-->
+      <!--<h3>Prerequisites</h3>-->
+      <!--<hr>-->
+      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
+      <!--<ul>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
+      <!--</ul>-->
+    <!--</app-card>-->
+  <!--</app-showcase-card>-->
+  <!--<app-showcase-card [title]="'Changing Theme at runtime'" [icon]="'ion-document-text'">-->
+    <!--<app-card>-->
+      <!--<h3>Prerequisites</h3>-->
+      <!--<hr>-->
+      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
+      <!--<ul>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
+      <!--</ul>-->
+    <!--</app-card>-->
+  <!--</app-showcase-card>-->
+  <!--<app-showcase-card [title]="'Theming your custom components'" [icon]="'ion-document-text'">-->
+    <!--<app-card>-->
+      <!--<h3>Prerequisites</h3>-->
+      <!--<hr>-->
+      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
+      <!--<ul>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
+      <!--</ul>-->
+    <!--</app-card>-->
+  <!--</app-showcase-card>-->
+  <!--<app-showcase-card [title]="'Theming others elements'" [icon]="'ion-document-text'">-->
+    <!--<app-card>-->
+      <!--<h3>Prerequisites</h3>-->
+      <!--<hr>-->
+      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
+      <!--<ul>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
+        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
+      <!--</ul>-->
+    <!--</app-card>-->
+  <!--</app-showcase-card>-->
+</div>

@@ -24,7 +24,13 @@
 -------
 
 <p align="center">
-  <img style="font-family: 'Open Sans'" src="src/assets/img/logo-readme.svg" width="500">
+  <img style="
+  @font-face {
+      font-family: Open Sans;
+      src: url(scr/assets/fonts/opensans.TTF);
+  }
+  font-family: 'Open Sans'
+  " src="src/assets/img/logo-readme.svg" width="500">
 </p>
 
 

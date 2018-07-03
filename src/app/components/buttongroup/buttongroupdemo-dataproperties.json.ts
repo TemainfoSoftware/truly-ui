@@ -58,38 +58,10 @@ export const dataProperties2 = [
     options: 'true | false'
   },
   {
-    name: 'iconAddonBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon before the button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAddonAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon after the button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconBeforeText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'checkedItem',
+    name: 'selected',
     type: 'boolean',
     default: 'false',
-    description: 'Mark button as preselected if set to true.',
+    description: 'The state of button.',
     options: 'true | false'
   }
 ];

@@ -24,7 +24,13 @@
 -------
 
 <p align="center">
-  <img src="src/assets/images/logo.png" width="500">
+  <img style="
+  @font-face {
+      font-family: Open Sans;
+      src: url(scr/assets/fonts/opensans.TTF);
+  }
+  font-family: 'Open Sans'
+  " src="src/assets/img/logo-readme.svg" width="500">
 </p>
 
 
@@ -164,10 +170,11 @@ Once your library is imported, you can use its components, directives and pipes 
 | splitbutton      |                                                        |   [Docs][30] |
 | switch           |                                                        |   [Docs][31] |
 | tabcontrol       |                                                        |   [Docs][32] |
-| toaster          |                                                        |   [Docs][33] |
-| toolbar          |                                                        |   [Docs][34] |
-| tooltip          |                                                        |   [Docs][35] |
-| validators       |                                                        |   [Docs][36] |
+| theming          |                                                        |   [Docs][33] |
+| toaster          |                                                        |   [Docs][34] |
+| toolbar          |                                                        |   [Docs][35] |
+| tooltip          |                                                        |   [Docs][36] |
+| validators       |                                                        |   [Docs][37] |
 
 
 #### In progress, planned, and non-planned features
@@ -176,12 +183,11 @@ Once your library is imported, you can use its components, directives and pipes 
 |------------------|-------------------------------------|--------------|----------------|
 | colorpicker      |                         non-planned |              |                |
 | datetimepicker   |                         non-planned |              |                |
-| hourpicker       |                         non-planned |              |                |
+| hourpicker       |        In-progress, planned S2 2018 |              |                |
 | icon             |        In-progress, planned S2 2018 |              |                |
 | monthyearpicker  |                         non-planned |              |                |
 | paginator        |        In-progress, planned S2 2018 |              |                |
-| schedule         |        In-progress, planned S2 2018 |           -  |                |
-| theming          |        In-progress, planned S2 2018 |              |                |
+| schedule         |        In-progress, planned S2 2018 |              |                |
 | timeline         |                         non-planned |              |                |
 | widget           |                         non-planned |              |                |
 
@@ -217,10 +223,11 @@ Once your library is imported, you can use its components, directives and pipes 
 [30]: http://truly-ui.tk/splitbutton
 [31]: http://truly-ui.tk/switch
 [32]: http://truly-ui.tk/tabcontrol
-[33]: http://truly-ui.tk/toaster
-[34]: http://truly-ui.tk/toolbar
-[35]: http://truly-ui.tk/tooltip
-[36]: http://truly-ui.tk/validators
+[33]: http://truly-ui.tk/theming
+[34]: http://truly-ui.tk/toaster
+[35]: http://truly-ui.tk/toolbar
+[36]: http://truly-ui.tk/tooltip
+[37]: http://truly-ui.tk/validators
 
 ## Feedback
 Feedback is always welcome.

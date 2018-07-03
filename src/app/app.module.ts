@@ -1,8 +1,12 @@
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ButtonModule } from '../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../projects/truly-ui/src/components/core/index';
+import { DropDownListModule } from '../../projects/truly-ui/src/components/dropdownlist';
 import { ContainerModalModule } from '../../projects/truly-ui/src/components/modal/addons/container-modal';
+import { ToolbarModule } from '../../projects/truly-ui/src/components/toolbar';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { GettingStartedModule } from './getting-started/getting-started.module';
@@ -19,12 +23,16 @@ import { environment } from '../environments/environment';
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     BrowserModule,
     CoreModule.forRoot({
       theme: 'default'
     }),
+    DropDownListModule,
     ContainerModalModule,
     GettingStartedModule,
+    ToolbarModule,
+    ButtonModule,
     HomeModule,
     HttpClientModule,
     ServiceWorkerModule,

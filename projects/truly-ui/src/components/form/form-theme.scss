@@ -1,10 +1,10 @@
 @import "../core/styles/theming/theming";
 
 @mixin tl-form-theme($theme) {
-  $light: map-deep-get($theme, 'light');
+  $basic: map-deep-get($theme, 'basic');
   .forFooter {
-    background-color: map-deep-get($light, "default", "background");
-    border-top: 1px solid map-deep-get($light, "default", "border");
+    background-color: map-deep-get($basic, "lighter", "background");
+    border-top: 1px solid map-deep-get($basic, "lighter", "border");
   }
 
 }

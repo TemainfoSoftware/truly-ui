@@ -1,16 +1,12 @@
 @import "../core/styles/theming/theming";
 
-
 @mixin _tl-toolbar-theme-schema($theme, $action) {
-
-    background: map-deep-get($theme, $action, "default", "background");
-    color: map-deep-get($theme, $action, "default", "foreground");
-
+  background: map-deep-get($theme, $action, "default", "background");
+  color: map-deep-get($theme, $action, "default", "foreground");
 }
 
 
 @mixin tl-toolbar-theme($theme) {
-
 
   .ui-toolbar-wrapper {
 
@@ -41,15 +37,6 @@
     &.information {
       @include _tl-toolbar-theme-schema($theme, 'information')
     }
-
-    &.light {
-      @include _tl-toolbar-theme-schema($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-toolbar-theme-schema($theme, 'dark')
-    }
-
   }
 
 

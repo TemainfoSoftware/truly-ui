@@ -23,12 +23,15 @@
 import {
   Injectable, ComponentFactoryResolver, Injector, Inject
 } from '@angular/core';
+import { ComponentRef } from '@angular/core/src/linker/component_factory';
 import { LazyApplicationLoaderConfig } from '../configs/application.config';
 import { TlCore } from '../core';
 import { APPLICATION_CONFIGURATION } from '../tokens/configuration.token';
 
 @Injectable()
 export class CoreService {
+
+    private componentRef: ComponentRef<TlCore>;
 
     constructor( private compiler: ComponentFactoryResolver,
                  private injector: Injector,
@@ -38,9 +41,13 @@ export class CoreService {
     initializeApp(): Promise<any> {
       return new Promise(( resolve ) => {
           const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-          const componentRef = componentFactory.create(this.injector);
-          componentRef.instance.setTheme( this.config.theme, componentRef );
+          this.componentRef = componentFactory.create(this.injector);
+          this.setTheme(this.config.theme);
           resolve();
       });
+    }
+
+    setTheme( theme: string ) {
+      this.componentRef.instance.setTheme( theme, this.componentRef );
     }
 }

@@ -262,6 +262,7 @@ body {
 }
 .main-header .logo .logo-lg {
   display: block;
+  padding: 8px;
 }
 .main-header .logo .logo-mini {
   display: none;

@@ -31,27 +31,36 @@
       </div>
       <div class="banner-footer visible-md visible-lg">
         <div class="col-md-6">
-          <div class="col-md-5">
-            <a href="/gettingstarted" class="btn btn-lg btn-get-started">Get Started</a>
+          <div class="col-md-5" style="padding-top: 15px;">
+            <tl-button style="margin-left: 85px;" href="/gettingstarted" (click)="onClickGetStarted()" [height]="'40px'"
+                       [width]="'180px'" [color]="'primary'">GET STARTED
+            </tl-button>
           </div>
+
           <div class="col-md-7 visible-lg">
             <div class="info-version">
-              <p><a href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a> /
+              <p><a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a>
+                /
                 {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
-                <a href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
+                <a class="tl-scheme-primary -paint-link"
+                   href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
                   Licensed</a> /
-                <a href="{{lastRelease?.html_url}}" target="_blank">Release Notes</a></p>
+                <a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">Release
+                  Notes</a></p>
             </div>
           </div>
         </div>
       </div>
       <div class="banner-image"></div>
       <div class="info-version-md">
-        <p><a href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a> /
+        <p><a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a>
+          /
           {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
-          <a href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
+          <a class="tl-scheme-primary -paint-link"
+             href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
             Licensed</a> /
-          <a href="{{lastRelease?.html_url}}" target="_blank">Release Notes</a></p>
+          <a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">Release Notes</a>
+        </p>
       </div>
     </div>
   </div>
@@ -60,7 +69,54 @@
       <div class="col-xs-12">
         <div class="row">
           <div class="col-xs-12 col-md-3 col-md-push-7 logo" style="display: flex;align-items: center;">
-            <img src="../../assets/img/truly-logo.png" style="width: 250px;">
+            <div style="width: 250px">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                   preserveAspectRatio="xMidYMid meet" viewBox="0 0 640 640" width="300" height="300">
+                <defs>
+                  <path class="tl-scheme-primary -paint-svg" d="M307.88 515.47L149.84 427.23L121.08 180.17L307.88 113.51L307.88 515.47Z"
+                        id="n1IOXn6Mo"></path>
+                  <path class="tl-scheme-primary -paint-svg" d="M307.58 515.47L465.62 427.23L494.38 180.17L307.58 113.51L307.58 515.47Z"
+                        id="c2NaDiQeJu"></path>
+                  <path d="M307.88 515.47L465.92 427.23L494.68 180.17L307.88 113.51L307.88 515.47Z"
+                        id="g43uRwagp7"></path>
+                  <path
+                    d="M325.53 416.38L325.53 297.63L342.35 297.63L377.93 261.58L234.66 261.58L268.8 297.63L289.47 297.63L289.47 416.38L163.99 227.11L448.6 227.11L325.53 416.38Z"
+                    id="a4aZ6TbNkM"></path>
+                </defs>
+                <g>
+                  <g>
+                    <g>
+                      <use xlink:href="#n1IOXn6Mo" opacity="1" fill="#66cc99" fill-opacity="1"></use>
+                      <g>
+                        <use xlink:href="#n1IOXn6Mo" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1"
+                             stroke-opacity="0"></use>
+                      </g>
+                    </g>
+                    <g>
+                      <use xlink:href="#c2NaDiQeJu" opacity="1" fill="#66cc99" fill-opacity="1"></use>
+                      <g>
+                        <use xlink:href="#c2NaDiQeJu" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1"
+                             stroke-opacity="0"></use>
+                      </g>
+                    </g>
+                    <g>
+                      <use xlink:href="#g43uRwagp7" opacity="0.06" fill="#000000" fill-opacity="1"></use>
+                      <g>
+                        <use xlink:href="#g43uRwagp7" opacity="0.06" fill-opacity="0" stroke="#000000" stroke-width="1"
+                             stroke-opacity="0"></use>
+                      </g>
+                    </g>
+                    <g>
+                      <use xlink:href="#a4aZ6TbNkM" opacity="1" fill="#ffffff" fill-opacity="1"></use>
+                      <g>
+                        <use xlink:href="#a4aZ6TbNkM" opacity="1" fill-opacity="0" stroke="#000000" stroke-width="1"
+                             stroke-opacity="0"></use>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </div>
           </div>
           <div class="col-xs-12 col-md-5 col-md-offset-2 col-md-pull-3 why-tl">
             <h1>Why TrulyUI ?</h1>
@@ -72,21 +128,21 @@
       <div class="col-xs-12">
         <div class="col-xs-12 col-md-4 feature-box">
           <div class="col-xs-12 col-md-10 col-md-offset-2">
-            <h3><i class="ion-checkmark"></i>Free & Open Source</h3>
+            <h3><i class="ion-checkmark tl-scheme-primary -paint-icon"></i>Free & Open Source</h3>
             <p>TrulyUI Framework is a 100% free and open source project, licensed under MIT.
               It will always remain free to use, powered by a massive world-wide community.</p>
           </div>
         </div>
         <div class="col-xs-12 col-md-4 feature-box">
           <div class="col-xs-12 col-md-10 col-md-offset-1">
-            <h3><i class="ion-checkmark"></i>Based on Angular</h3>
+            <h3><i class="ion-checkmark tl-scheme-primary -paint-icon"></i>Based on Angular</h3>
             <p>TrulyUI is based on Angular, maintained by world-wide community. By the way,
               we believe that Angular is the most promising Web Framework.</p>
           </div>
         </div>
         <div class="col-xs-12 col-md-4 feature-box">
           <div class="col-xs-12 col-md-10">
-            <h3><i class="ion-checkmark"></i>Desktop Applications</h3>
+            <h3><i class="ion-checkmark tl-scheme-primary -paint-icon"></i>Desktop Applications</h3>
             <p>We developed TrulyUI thinking to fill a gap on open-source Web Technologies that's poor
               when it's about applications on Desktop.<br><em>Ex: Electron, App.js and NW.js</em></p>
           </div>
@@ -95,7 +151,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="container-fluid web-components">
+    <div class="container-fluid web-components tl-scheme-primary -paint-bg">
       <div class="col-xs-12 web-components-header">
         <h1 class="text-center">The Most Complete Open Source UI Library for Desktop Applications</h1>
         <h3 class="text-center">Everything you need to create a complete based on desktop application.</h3>
@@ -103,21 +159,21 @@
       <div class="col-xs-12 web-components-row">
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10 col-md-offset-2">
-            <i class="fa fa-terminal"></i>
+            <i class="fa fa-terminal tl-scheme-primary -paint-font"></i>
             <p><strong>TL-INPUT</strong> Are fields which allow for an input of data, based on a specific and
               predefined format. With many properties that can be used to different's kind of data or treatment.</p>
           </div>
         </div>
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10 col-md-offset-1">
-            <i class="fa fa-window-maximize"></i>
+            <i class="fa fa-window-maximize tl-scheme-primary -paint-font"></i>
             <p><strong>TL-FORM</strong> It's a rich modal component with many features such as intelligence tabbing,
               validation of the internal components, window controls and more.</p>
           </div>
         </div>
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10">
-            <i class="ion-chatbox"></i>
+            <i class="ion-chatbox tl-scheme-primary -paint-font"></i>
             <p><strong>TL-DIALOG</strong> It's a service that has your own set up according with it function such as
               Dialog Info, Alert,
               Confirm and Error. The dialog's have all control window functions as well.</p>
@@ -127,14 +183,14 @@
       <div class="col-xs-12 web-components-row">
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10 col-md-offset-2">
-            <i class="fa fa-table"></i>
+            <i class="fa fa-table tl-scheme-primary -paint-font"></i>
             <p><strong>TL-DATATABLE</strong> As the name describes, represents massive grid data,
               with nice features such as a Intelligence LazyLoad Order, Filter and Keyboard Navigation.</p>
           </div>
         </div>
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10 col-md-offset-1">
-            <i class="fa ion-ios-bookmarks"></i>
+            <i class="fa ion-ios-bookmarks tl-scheme-primary -paint-font"></i>
             <p><strong>TL-SCHEDULE</strong> Displays appointments across the timetable and allows a user to quickly
               change between different timetable views using the View Selector and navigate using the Date Navigator.
             </p>
@@ -142,7 +198,7 @@
         </div>
         <div class="col-xs-12 col-md-4 web-components-list ui-box-features">
           <div class="col-xs-12 col-md-10">
-            <i class="fa fa-minus-square"></i>
+            <i class="fa fa-minus-square tl-scheme-primary -paint-font"></i>
             <p><strong>TL-BUTTON</strong> The buttons have many properties to be used, and custom behavior can be
               attached.
               It's intelligence when used with Dialog and Form, creating own actions to return for them.</p>
@@ -159,7 +215,7 @@
             <i class="fa ion-play"></i>
           </div>
           <div class="col-xs-9 col-sm-10 col-xs-offset-1 col-sm-offset-0 getting-started">
-            <a href="/gettingstarted" target="_blank"><h2>Getting Started</h2></a>
+            <a href="/gettingstarted" target="_blank"><h2 class="tl-scheme-primary -paint-link">Getting Started</h2></a>
             <p>Learn more about how to install TrulyUI Framework. We'll cover the basics and get
               you started from the ground up.</p>
           </div>
@@ -172,7 +228,8 @@
             <i class="fa fa-github"></i>
           </div>
           <div class="col-xs-9 col-sm-10 col-xs-offset-1 col-sm-offset-0">
-            <a href="https://github.com/TemainfoSistemas/truly-ui" target="_blank"><h2 class="title-boxes-bottom">Fork
+            <a href="https://github.com/TemainfoSistemas/truly-ui" target="_blank"><h2
+              class="tl-scheme-primary -paint-link">Fork
               us on Github</h2></a>
             <p>Fork us on Github and Contribute with the project.</p>
           </div>

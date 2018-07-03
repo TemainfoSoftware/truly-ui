@@ -1,4 +1,4 @@
-<div class="tl-dropdown-list-box">
+<div class="tl-dropdown-list-box"  [ngStyle]="{'line-height' : height}">
     <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}
     </label>
     <div class="wrapper" #wrapper (click)="changeShowStatus($event)">
@@ -21,7 +21,7 @@
         <div *ngIf="!showOnlyIcon" class="dropdown-list-icon"
              [style.line-height]="height"
              [ngClass]="{' disabled ': disabled}">
-            <i class="ion-chevron-down"></i>
+            <i class="ion-chevron-down" style="padding: 0;"></i>
         </div>
     </div>
     <div class="wrapper">

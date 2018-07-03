@@ -3,11 +3,8 @@
 @mixin tl-multiselect-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
-  $light:   map-deep-get($theme, 'light');
   $primary:   map-deep-get($theme, 'primary');
   $warning:   map-deep-get($theme, 'warning');
-
-
 
   .tl-multiselect-container {
 
@@ -22,8 +19,8 @@
       }
 
       & .input-wrapper-multiselect {
-        border: 1px solid  map-deep-get($basic, "default", "border");
-        background:  map-deep-get($light, "default", "background");
+        border: 1px solid  map-deep-get($basic, "lighter", "border");
+        background:  map-deep-get($basic, "lighter", "background");
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
@@ -34,13 +31,13 @@
       }
 
       & .input {
-        background: map-deep-get($light, "default", "background");
-        color: map-deep-get($light, "default", "foreground");
+        background: map-deep-get($basic, "lighter", "background");
+        color: map-deep-get($basic, "lighter", "foreground");
       }
 
       & .input-empty {
-        background: map-deep-get($light, "default", "background");
-        color: map-deep-get($light, "default", "foreground");
+        background: map-deep-get($basic, "lighter", "background");
+        color: map-deep-get($basic, "lighter", "foreground");
       }
 
       & .inputFormOpenFilter {
@@ -67,15 +64,15 @@
       }
 
       & .select-options .itens {
-        color: map-deep-get($light, "default", "foreground");
-        background: map-deep-get($light, "default", "background");
+        background: map-deep-get($basic, "lighter", "background");
+        color: map-deep-get($basic, "lighter", "foreground");
         border-top:1px solid rgba( map-deep-get($basic, "default", "border"),0.3);
         border-left: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
         border-right: 1px solid  rgba(map-deep-get($basic, "default", "border"),0.3);
       }
 
       & .select-options small {
-        color: map-deep-get($light, "default", "foreground");
+        color: map-deep-get($basic, "lighter", "foreground");
       }
 
       & .select-options .itens:last-child {

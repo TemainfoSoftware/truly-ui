@@ -3,17 +3,15 @@
 @mixin tl-listbox-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
-  $light:   map-deep-get($theme, 'light');
   $primary: map-deep-get($theme, 'primary');
 
   .list-box-container {
-    background: map-deep-get($light, "default", "background");
-
+    background: map-deep-get($basic, "lighter", "background");
     border: 1px solid  map-deep-get($basic, "default", "border");
     border-radius: 3px;
 
     &::-webkit-scrollbar{
-      background:  map-deep-get($light, "default", "background");
+      background:  map-deep-get($basic, "lighter", "background");
     }
 
     &::-webkit-scrollbar-corner{
@@ -56,7 +54,7 @@
   }
 
   .item.stripped:nth-of-type(even){
-    background: map-deep-get($light, "default", "background");
+    background: map-deep-get($basic, "lighter", "background");
   }
 
   .nothingToShow {

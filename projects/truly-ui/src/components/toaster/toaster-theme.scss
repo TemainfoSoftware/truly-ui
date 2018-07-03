@@ -6,7 +6,7 @@
   color:  map-deep-get($theme, $action, "default", "foreground");
 
   .ui-toaster-content {
-    color: #FFF;
+    color: map-deep-get($theme, $action, "default", "foreground");
   }
 
 }
@@ -37,14 +37,6 @@
 
     &.information {
       @include _tl-toaster-theme-schema($theme, 'information')
-    }
-
-    &.light {
-      @include _tl-toaster-theme-schema($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-toaster-theme-schema($theme, 'dark')
     }
   }
 }

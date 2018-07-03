@@ -57,13 +57,5 @@
     &.information {
       @include _tl-modal-theme-scheme($theme, 'information')
     }
-
-    &.light {
-      @include _tl-modal-theme-scheme($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-modal-theme-scheme($theme, 'dark')
-    }
   }
 }

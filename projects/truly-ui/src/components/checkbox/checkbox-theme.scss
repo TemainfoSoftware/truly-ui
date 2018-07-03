@@ -9,7 +9,6 @@
 
   $basic:   map-deep-get($theme, 'basic');
 
-
   input[type='checkbox']:checked:before {
     @include checkbox-color( $theme, $action );
   }
@@ -86,14 +85,6 @@
 
     &.information {
       @include _tl-checkbox-theme-schema($theme, 'information')
-    }
-
-    &.light {
-      @include _tl-checkbox-theme-schema($theme, 'light')
-    }
-
-    &.dark {
-      @include _tl-checkbox-theme-schema($theme, 'dark')
     }
   }
 }

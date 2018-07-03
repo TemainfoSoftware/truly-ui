@@ -73,10 +73,16 @@ export class AppModule { }
       </ul>
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Defining a Single Custom theme'" [icon]="'ion-document-text'">
+  <app-showcase-card [title]="'Defining a Custom theme'" [icon]="'ion-document-text'">
     <app-card>
       <span class="description">
         When you want more customization than a pre-built theme offers, you can create your own theme file.<br>
+        TrulyUI also allows you to perform the Runtime swapping of the themes you created. Just specify them in the
+        <code>setTheme ()</code> function of the <code>CoreService</code> service.
+        <br>
+        <br>
+        We recommend that you use Theme switching in Runtime when you create multiple themes. So your user can switch between them.
+        <br>
         <br>
         A custom theme file does three things:
       </span>
@@ -86,7 +92,7 @@ export class AppModule { }
         <li>The object sass is passed to the truly-basic-builder-theme mixin, along with the name that will be the representation of the theme in CoreModule, which will output all of the corresponding styles for the theme.</li>
       </ul>
       <hr>
-      <h3>Example</h3>
+      <h3>Example Single Theme</h3>
       <span class="description">1 - Creates the Theme in style.scss</span>
       <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'scss'">
@@ -105,7 +111,6 @@ $snack-app-theme: (
 @include truly-basic-builder-theme($snack-app-theme, 'snack');
   </textarea>
       </div>
-
       <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
       <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
@@ -121,6 +126,61 @@ import { CoreModule } from 'truly-ui';
     BrowserModule,
     CoreModule.forRoot({
       theme: 'snack'
+    })
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+  </textarea>
+      </div>
+      <hr>
+      <h3>Example Multiple Theme</h3>
+      <span class="description">1 - Creates the Theme in style.scss</span>
+      <div class="code-area">
+         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'scss'">
+@import "~truly-ui/css/theming/builders/basic/index";
+
+$snack-app-light-theme: (
+  basic:  tl-palette( $tl-gray, 100, 50, 200),
+  primary: tl-palette($tl-cyan-green, 500, 400, 700),
+
+  success: tl-palette($tl-green, 600, 500, 700),
+  danger: tl-palette($tl-red, 600, 500, 700),
+  warning: tl-palette($tl-yellow, 600, 500, 700),
+  information: tl-palette($tl-blue, 600, 500, 700),
+);
+
+$snack-app-dark-theme: (
+  basic:  tl-palette( $tl-gray, 800, 700, 900),
+  primary: tl-palette($tl-cyan-green, 500, 400, 700),
+
+  success: tl-palette($tl-green, 600, 500, 700),
+  danger: tl-palette($tl-red, 600, 500, 700),
+  warning: tl-palette($tl-yellow, 600, 500, 700),
+  information: tl-palette($tl-blue, 600, 500, 700),
+);
+
+
+@include truly-basic-builder-theme($snack-app-dark-theme, 'snack-light');
+@include truly-basic-builder-theme($snack-app-dark-theme, 'snack-dark');
+
+  </textarea>
+      </div>
+      <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
+      <div class="code-area">
+         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { CoreModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    CoreModule.forRoot({
+      theme: 'snack-dark'
     })
   ],
   bootstrap: [AppComponent]
@@ -181,30 +241,7 @@ export class AppComponent {
       </div>
     </app-card>
   </app-showcase-card>
-  <!--<app-showcase-card [title]="'Theming your custom components'" [icon]="'ion-document-text'">-->
-    <!--<app-card>-->
-      <!--<h3>Prerequisites</h3>-->
-      <!--<hr>-->
-      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
-      <!--<ul>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
-      <!--</ul>-->
-    <!--</app-card>-->
-  <!--</app-showcase-card>-->
-  <!--<app-showcase-card [title]="'Theming others elements'" [icon]="'ion-document-text'">-->
-    <!--<app-card>-->
-      <!--<h3>Prerequisites</h3>-->
-      <!--<hr>-->
-      <!--<span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>-->
-      <!--<ul>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>-->
-        <!--<li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>-->
-      <!--</ul>-->
-    <!--</app-card>-->
-  <!--</app-showcase-card>-->
+
   <app-showcase-card [title]="'Colors Palettes'" [icon]="'ion-document-text'">
     <app-card>
       <span class="description">

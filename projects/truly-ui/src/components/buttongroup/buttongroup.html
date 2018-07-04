@@ -6,7 +6,7 @@
               [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height}"
               [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
               [class]="'ripple tl-button '+ item.color"
-              (click)="selectButtonItem(item)"
+              (click)="selectButtonItem(item, $event)"
               [disabled]="item.disabled ? true : null">
         <span class="textButton" [ngStyle]="{'line-height': item.height}">{{item.text}}</span>
       </button>

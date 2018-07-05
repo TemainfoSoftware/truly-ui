@@ -18,10 +18,6 @@
       @include _tl-toolbar-theme-schema($theme, 'primary')
     }
 
-    //&.secondary {
-    //  @include _tl-toolbar-theme-schema($theme,'secondary')
-    //}
-
     &.success {
       @include _tl-toolbar-theme-schema($theme, 'success')
     }
@@ -38,8 +34,6 @@
       @include _tl-toolbar-theme-schema($theme, 'information')
     }
   }
-
-
 }
 
 

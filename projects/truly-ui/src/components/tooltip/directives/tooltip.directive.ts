@@ -1,10 +1,9 @@
 import {
-  ComponentFactoryResolver,
-  Directive, HostListener, Input, OnDestroy,
-  ViewContainerRef
+  ComponentFactoryResolver, Directive, HostListener, Input, OnDestroy, ViewContainerRef, Renderer2
 } from '@angular/core';
 import { TlToolTip } from '../tooltip';
 import { TooltipOptions } from '../tooltipOptions';
+
 
 @Directive( {
   selector: '[tooltip]'
@@ -15,10 +14,19 @@ export class TooltipDirective implements OnDestroy {
 
   private listenerWheel;
 
-  constructor( private view: ViewContainerRef, private compiler: ComponentFactoryResolver ) {
-    this.listenerWheel = document.addEventListener('mousewheel', () => {
-      this.hide();
-    });
+  constructor(
+    private view: ViewContainerRef,
+    private compiler: ComponentFactoryResolver,
+    private renderer: Renderer2
+  ) {
+
+   if (!this.listenerWheel) {
+     this.listenerWheel = this.renderer.listen(this.view.element.nativeElement, 'mousewheel', (event) => {
+       console.log(event);
+       this.hide();
+     });
+   }
+
   }
 
   @HostListener( 'mouseenter' )
@@ -45,7 +53,7 @@ export class TooltipDirective implements OnDestroy {
   }
 
   ngOnDestroy() {
-    document.removeEventListener('mousewheel', this.listenerWheel, false);
+   this.listenerWheel();
   }
 
 }

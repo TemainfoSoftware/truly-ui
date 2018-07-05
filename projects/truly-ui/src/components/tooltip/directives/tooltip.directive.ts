@@ -22,7 +22,6 @@ export class TooltipDirective implements OnDestroy {
 
    if (!this.listenerWheel) {
      this.listenerWheel = this.renderer.listen(this.view.element.nativeElement, 'mousewheel', (event) => {
-       console.log(event);
        this.hide();
      });
    }

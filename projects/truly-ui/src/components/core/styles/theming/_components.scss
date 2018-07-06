@@ -7,6 +7,7 @@
 @import "../../../contextmenu/contextmenu-theme";
 @import "../../../core/core";
 @import "../../../datatable/datatable-theme";
+@import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../form/form-theme";
 @import "../../../input/input-theme";
@@ -39,6 +40,7 @@
   @include tl-contextmenu-theme($theme);
   @include tl-core-theme($theme);
   @include tl-datatable-theme($theme);
+  @include tl-dialog-error-theme($theme);
   @include tl-dropdonwlist-theme($theme);
   @include tl-form-theme($theme);
   @include tl-input-theme($theme);

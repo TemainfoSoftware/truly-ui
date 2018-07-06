@@ -16,7 +16,7 @@
     </div>
     <div [@enterAnimation]="errorlog" *ngIf="errorlog" class="error-log">
         <pre>Exception Name/Code: {{exceptionName}}</pre>
-        <code>
+        <code *ngIf="exceptionMessage">
            {{exceptionMessage}}
         </code>
     </div>

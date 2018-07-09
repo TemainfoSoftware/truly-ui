@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018 Temainfo Software
+    Copyright (c) 2017 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,7 @@
     SOFTWARE.
 */
 
-import { I18nInterface } from '../../i18n/i18n.interface';
-import en_US from '../../i18n/languages/en_US';
-
-export class LazyApplicationLoaderConfig {
-  theme?: string;
-  language?: I18nInterface;
-
-  constructor() {
-    this.theme = 'default';
-    this.language = en_US;
-  }
-}
+export { I18nService } from './i18n.service';
+export { I18nInterface } from './i18n.interface';
+export { default as en_US } from './languages/en_US';
+export { default as pt_BR } from './languages/pt_BR';

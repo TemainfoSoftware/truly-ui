@@ -23,6 +23,7 @@
 import {
   Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, SimpleChanges, OnChanges
 } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 
 @Component( {
@@ -54,7 +55,10 @@ export class TlNavigator implements OnInit, OnChanges {
 
   public description = '';
 
-  constructor(public navigatorManager: NavigatorManagerService, public change: ChangeDetectorRef) {}
+  constructor(
+    public navigatorManager: NavigatorManagerService,
+    public change: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.navigatorManager.setType(this.type);

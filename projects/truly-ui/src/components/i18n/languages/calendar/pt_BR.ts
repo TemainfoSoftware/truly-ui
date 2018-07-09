@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018 Temainfo Software
+    Copyright (c) 2017 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,21 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-
-import { I18nInterface } from '../../i18n/i18n.interface';
-import en_US from '../../i18n/languages/en_US';
-
-export class LazyApplicationLoaderConfig {
-  theme?: string;
-  language?: I18nInterface;
-
-  constructor() {
-    this.theme = 'default';
-    this.language = en_US;
-  }
-}
+export default {
+  today: 'Hoje',
+  months: [
+    { name: 'Janeiro', initials: 'jan' },
+    { name: 'Fevereiro', initials: 'fev' },
+    { name: 'Março', initials: 'mar' },
+    { name: 'Abril', initials: 'abr' },
+    { name: 'Maio', initials: 'mai' },
+    { name: 'Junho', initials: 'jun' },
+    { name: 'Julho', initials: 'jul' },
+    { name: 'Agosto', initials: 'ago' },
+    { name: 'Setembro', initials: 'set' },
+    { name: 'Outrubo', initials: 'out' },
+    { name: 'Novembro', initials: 'nov' },
+    { name: 'Dezembro', initials: 'dez' }
+  ],
+  dayOfWeek: [ 'Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa' ]
+};

@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018 Temainfo Software
+    Copyright (c) 2017 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,22 @@
     SOFTWARE.
 */
 
-import { I18nInterface } from '../../i18n/i18n.interface';
-import en_US from '../../i18n/languages/en_US';
+import { Injectable } from '@angular/core';
+import { I18nInterface } from './i18n.interface';
 
-export class LazyApplicationLoaderConfig {
-  theme?: string;
-  language?: I18nInterface;
+@Injectable()
+export class I18nService {
 
-  constructor() {
-    this.theme = 'default';
-    this.language = en_US;
+  private locale: I18nInterface;
+
+  setLocale(locale: I18nInterface): void {
+    if (this.locale && this.locale.locale === locale.locale) {
+      return;
+    }
+    this.locale = locale;
+  }
+
+  getLocale() {
+    return this.locale;
   }
 }

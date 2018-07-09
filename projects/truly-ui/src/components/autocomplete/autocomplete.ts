@@ -100,6 +100,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() charsToSearch = 2;
 
+  @Input() rowsClient = 5;
+
   @ViewChild( NgModel ) model: NgModel;
 
   @ViewChild( 'inputWriter' ) tlinput;

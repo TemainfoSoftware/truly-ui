@@ -35,5 +35,5 @@ export default {
     { name: 'November', initials: 'nov' },
     { name: 'December', initials: 'dec' }
   ],
-  dayOfWeek: [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ]
+  dayOfWeek: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ]
 };

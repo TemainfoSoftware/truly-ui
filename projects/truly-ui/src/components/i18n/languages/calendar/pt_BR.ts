@@ -35,5 +35,5 @@ export default {
     { name: 'Novembro', initials: 'nov' },
     { name: 'Dezembro', initials: 'dez' }
   ],
-  dayOfWeek: [ 'Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa' ]
+  dayOfWeek: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ]
 };

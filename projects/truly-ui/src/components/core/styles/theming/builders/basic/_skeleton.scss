@@ -17,7 +17,7 @@
 
       active:   ( foreground: map-deep-get($basic, darker-contrast), background: map-deep-get($basic, darker), border: rgba(black, 0.12) ),
       checked:  ( foreground: map-deep-get($basic, default-contrast), background: map-deep-get($basic, default), border: rgba(black, 0.12) ),
-      disabled: ( foreground: map-deep-get($basic, default-contrast), background: map-deep-get($basic, default), border: rgba(black, 0.12) ),
+      disabled: ( foreground: map-deep-get($basic, default-contrast), background: rgba(map-deep-get($basic, default), 0.45), border: rgba(black, 0.12) ),
       focus:    ( foreground: map-deep-get($basic, default-contrast), background: map-deep-get($basic, default), border: rgba(black, 0.12) ),
       hover:    ( foreground: map-deep-get($basic, lighter-contrast), background: map-deep-get($basic, lighter), border: rgba(black, 0.12) )
     ),
@@ -29,7 +29,7 @@
 
       active:   ( foreground: map-deep-get($primary, darker-contrast), background: map-deep-get($primary, darker), border: rgba(black, 0.12)  ),
       checked:  ( foreground: map-deep-get($primary, default-contrast), background: map-deep-get($primary, default), border: rgba(black, 0.12)  ),
-      disabled: ( foreground: map-deep-get($primary, default-contrast), background: map-deep-get($primary, default), border: rgba(black, 0.12)  ),
+      disabled: ( foreground: map-deep-get($primary, default-contrast), background: rgba(map-deep-get($primary, default), 0.45), border: rgba(black, 0.12)  ),
       focus:    ( foreground: map-deep-get($primary, default-contrast), background: map-deep-get($primary, default), border: rgba(black, 0.12)  ),
       hover:    ( foreground: map-deep-get($primary, lighter-contrast), background: map-deep-get($primary, lighter), border: rgba(black, 0.12) )
     ),
@@ -41,31 +41,31 @@
 
       active:   ( foreground: map-deep-get($success, darker-contrast), background: map-deep-get($success, darker), border: rgba(black, 0.12)  ),
       checked:  ( foreground: map-deep-get($success, default-contrast), background: map-deep-get($success, default), border: rgba(black, 0.12) ),
-      disabled: ( foreground: map-deep-get($success, default-contrast), background: map-deep-get($success, default), border: rgba(black, 0.12) ),
+      disabled: ( foreground: map-deep-get($success, default-contrast), background: rgba(map-deep-get($success, default), 0.45), border: rgba(black, 0.12) ),
       focus:    ( foreground: map-deep-get($success, default-contrast), background: map-deep-get($success, default), border: rgba(black, 0.12)  ),
       hover:    ( foreground: map-deep-get($success, default-contrast), background: map-deep-get($success, lighter), border: rgba(black, 0.12)  )
     ),
 
     danger: (
-      default:  ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, darker), border: rgba(black, 0.12)  ),
+      default:  ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, default), border: rgba(black, 0.12)  ),
       lighter:  ( foreground: map-deep-get($danger, lighter-contrast), background: map-deep-get($danger, lighter), border: rgba(black, 0.12) ),
       darker:   ( foreground: map-deep-get($danger, darker-contrast), background: map-deep-get($danger, darker), border: rgba(black, 0.12) ),
 
-      active:   ( foreground: map-deep-get($danger, darker-contrast), background: map-deep-get($danger, default), border: rgba(black, 0.12)  ),
+      active:   ( foreground: map-deep-get($danger, darker-contrast), background: map-deep-get($danger, darker), border: rgba(black, 0.12)  ),
       checked:  ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, default), border: rgba(black, 0.12)  ),
-      disabled: ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, default), border: rgba(black, 0.12)  ),
+      disabled: ( foreground: map-deep-get($danger, default-contrast), background: rgba(map-deep-get($danger, default), 0.45), border: rgba(black, 0.12)  ),
       focus:    ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, default), border: rgba(black, 0.12)  ),
       hover:    ( foreground: map-deep-get($danger, default-contrast), background: map-deep-get($danger, lighter), border: rgba(black, 0.12)  )
     ),
 
     warning: (
-      default:  ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, darker), border: rgba(black, 0.12)  ),
+      default:  ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, default), border: rgba(black, 0.12)  ),
       lighter:  ( foreground: map-deep-get($warn, lighter-contrast), background: map-deep-get($warn, lighter), border: rgba(black, 0.12) ),
       darker:   ( foreground: map-deep-get($warn, darker-contrast), background: map-deep-get($warn, darker), border: rgba(black, 0.12) ),
 
-      active:   ( foreground: map-deep-get($warn, darker-contrast), background: map-deep-get($warn, default), border: rgba(black, 0.12)  ),
+      active:   ( foreground: map-deep-get($warn, darker-contrast), background: map-deep-get($warn, darker), border: rgba(black, 0.12)  ),
       checked:  ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, default), border: rgba(black, 0.12)  ),
-      disabled: ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, default), border: rgba(black, 0.12)  ),
+      disabled: ( foreground: map-deep-get($warn, default-contrast), background: rgba(map-deep-get($warn, default), 0.45), border: rgba(black, 0.12)  ),
       focus:    ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, default), border: rgba(black, 0.12)  ),
       hover:    ( foreground: map-deep-get($warn, default-contrast), background: map-deep-get($warn, lighter), border: rgba(black, 0.12)  )
     ),
@@ -77,7 +77,7 @@
 
       active:   ( foreground: map-deep-get($info, darker-contrast), background: map-deep-get($info, darker), border: rgba(black, 0.12)  ),
       checked:  ( foreground: map-deep-get($info, default-contrast), background: map-deep-get($info, default), border: rgba(black, 0.12)  ),
-      disabled: ( foreground: map-deep-get($info, default-contrast), background: map-deep-get($info, default), border: rgba(black, 0.12)  ),
+      disabled: ( foreground: map-deep-get($info, default-contrast), background: rgba(map-deep-get($info, default), 0.45), border: rgba(black, 0.12)  ),
       focus:    ( foreground: map-deep-get($info, default-contrast), background: map-deep-get($info, default), border: rgba(black, 0.12)  ),
       hover:    ( foreground: map-deep-get($info, default-contrast), background: map-deep-get($info, lighter), border: rgba(black, 0.12)  )
     )

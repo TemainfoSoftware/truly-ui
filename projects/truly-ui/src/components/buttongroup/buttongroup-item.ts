@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, Input, OnInit,
+  Component, Input, OnInit, Output, EventEmitter,
 } from '@angular/core';
 
 @Component( {
@@ -40,6 +40,12 @@ export class TlButtonGroupItem implements OnInit {
 
   @Input() selected = false;
 
+  @Output() click = new EventEmitter();
+
   ngOnInit() {}
+
+  emitClick(event) {
+    this.click.emit(event);
+  }
 
 }

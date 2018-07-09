@@ -1,0 +1,10 @@
+@import "../core/styles/theming/theming";
+
+@mixin tl-button-group-theme( $theme ) {
+
+  .button-selected {
+    background: map-deep-get($theme, 'primary', "default", "background") !important;
+    color: map-deep-get($theme, 'primary', "default", "foreground") !important;
+  }
+
+}

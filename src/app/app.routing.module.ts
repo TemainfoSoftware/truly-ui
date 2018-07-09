@@ -1,9 +1,8 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { NavigatorDemoModule } from './components/navigator/navigatordemo.module';
-import { ScheduledemoOverviewModule } from './components/schedule/overview/scheduledemo-overview.module';
 import { HomeComponent } from './home/home.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
+import { ThemingModule } from './theming/theming.module';
 
 @NgModule({
   imports: [
@@ -18,6 +17,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       {
         path: 'home', component: HomeComponent
+      },
+      {
+        path: 'theming',
+        loadChildren: './theming/theming.module#ThemingModule'
       },
       // Components
       {

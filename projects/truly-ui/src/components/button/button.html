@@ -2,7 +2,7 @@
         attr.tabindex="-1"
         [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
-        [class]="'ripple tl-button '+ color"
+        [class]="'tl-button ripple '+ color"
         [disabled]="disabled ? true : null">
     <span *ngIf="iconAddonBefore"
           [ngClass]="iconAddonBefore"

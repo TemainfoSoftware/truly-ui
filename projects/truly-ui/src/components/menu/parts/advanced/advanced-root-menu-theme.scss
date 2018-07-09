@@ -1,0 +1,89 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin tl-advanced-root-menu-theme( $theme ) {
+  $basic:   map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+
+
+  .header-advanced-menu {
+    color: map-deep-get($basic, "default", "foreground");
+    .wrapper-search-input {
+      span {
+        background: map-deep-get($primary, "default", "background");
+        color: map-deep-get($primary, "default", "foreground");
+      }
+
+      input {
+        color: #000;
+        border: 1px solid map-deep-get($primary, "default", "background");
+        &::placeholder {
+          color: #ccc;
+        }
+      }
+    }
+
+  }
+
+  .ui-advanced-sub-menu-list {
+    outline: 1px solid map-deep-get($basic, "default", "border");
+    background: map-deep-get($basic, "default", "background");
+
+    > .ui-wrapper-items {
+      &::-webkit-scrollbar-thumb {
+        background: map-deep-get($primary, "default", "background");
+      }
+    }
+
+    > .ui-label-nothing-found {
+      color: map-deep-get($basic, "darker", "foreground");
+    }
+
+    .ui-label-group {
+      color: map-deep-get($primary, "default", "background");
+      border-bottom: 1px solid map-deep-get($primary, "default", "background");
+    }
+
+  }
+
+  .ui-advanced-list-item {
+    background: map-deep-get($basic, "default", "background");
+    border-top: 1px solid map-deep-get($basic, "default", "border");
+
+    > .icon {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    > .icon-sub-menu {
+      color: map-deep-get($basic, "default", "foreground");
+
+      &.ui-advanced-submenu-opened {
+        background: map-deep-get($primary, "default", "background");
+        color: map-deep-get($primary, "default", "foreground");
+      }
+    }
+
+    > .label {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    > .category {
+      color: map-deep-get($primary, "default", "background");
+    }
+
+    &.ui-advanced-submenu-selected {
+      background: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &:focus {
+      background: map-deep-get($basic, "default", "background");
+      outline: none;
+    }
+  }
+
+  .ui-list-category {
+    color: map-deep-get($primary, "default", "background");
+    border-bottom: 1px solid map-deep-get($primary, "default", "background");
+  }
+
+}

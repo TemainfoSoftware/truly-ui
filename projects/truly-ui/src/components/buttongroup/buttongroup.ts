@@ -51,7 +51,7 @@ export class TlButtonGroup implements AfterContentInit {
     }
   }
 
-  selectButtonItem( groupItem: TlButtonGroupItem ) {
+  selectButtonItem( groupItem: TlButtonGroupItem, event ) {
     groupItem.selected = !groupItem.selected;
     if ( !this.multiSelect ) {
       this.groupItems.forEach( item => {
@@ -61,6 +61,7 @@ export class TlButtonGroup implements AfterContentInit {
       } );
     }
     this.itemSelect.emit(this.groupItems.filter( item => item.selected));
+    groupItem.emitClick(event);
   }
 
   get groupContext() {

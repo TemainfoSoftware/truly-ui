@@ -173,6 +173,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
       },
       {
+        path: 'timepicker',
+        loadChildren: './components/timepicker/timepickerdemo.module#TimePickerDemoModule'
+      },
+      {
         path: 'tabcontrol',
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
       },

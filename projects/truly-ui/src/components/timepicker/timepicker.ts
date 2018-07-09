@@ -75,8 +75,6 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   @ViewChild( 'wrapperDial' ) wrapperDial;
 
-  @ViewChild( 'input' ) inputView;
-
   public iconAfter = '';
 
   public moving = false;
@@ -192,7 +190,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   setInputValue( value ) {
-    this.inputView.input.nativeElement.value = value.hour + ':' + value.minute;
+    this.tlinput.input.nativeElement.value = value.hour + ':' + value.minute;
   }
 
   close() {
@@ -283,9 +281,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   setLeftPosition() {
-    this.timePickerContent.nativeElement.style.left =
-      this.tlinput.input.nativeElement.getBoundingClientRect().left -
-      this.tlinput.labelSize + 'px';
+    this.timePickerContent.nativeElement.style.left = this.tlinput.input.nativeElement.getBoundingClientRect().left + 'px';
   }
 
 

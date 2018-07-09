@@ -43,6 +43,7 @@ export { TabControlModule } from './components/tabcontrol/index';
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
+export { TimePickerModule } from './components/timepicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
 // Services..

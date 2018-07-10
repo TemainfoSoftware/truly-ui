@@ -19,13 +19,12 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/pt_BR';
-import Dialog from './dialog/pt_BR';
-import Navigator from './navigator/pt_BR';
 
-export default {
-  locale: 'pt-BR',
-  Calendar,
-  Dialog,
-  Navigator
-};
+export interface DialogI18nInterface {
+  exceptionBoxDescription: string;
+  textClose: string;
+  textOk: string;
+  textCancel: string;
+  textYes: string;
+  textNo: string;
+}

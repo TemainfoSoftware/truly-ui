@@ -20,10 +20,12 @@
     SOFTWARE.
 */
 import Calendar from './calendar/en_US';
+import Dialog from './dialog/en_US';
 import Navigator from './navigator/en_US';
 
 export default {
   locale: 'en-US',
   Calendar,
+  Dialog,
   Navigator,
 };

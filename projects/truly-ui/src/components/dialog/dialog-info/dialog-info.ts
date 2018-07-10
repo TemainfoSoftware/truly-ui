@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { I18nService } from '../../i18n';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 
@@ -40,13 +41,18 @@ import { Modal } from '../../modal/modal-options';
     styleUrls: ['../dialog.scss']
 })
 export class TlDialogInfo extends DialogDefaultBehavior implements AfterViewInit {
+
     title = '';
+
     message = '';
-    textOk = 'OK';
+
+    get textOk() {
+      return this.i18n.getLocale().Dialog.textOk;
+    }
 
     @ViewChild('button') button;
 
-    constructor() {
+    constructor( private i18n: I18nService ) {
         super();
     }
 

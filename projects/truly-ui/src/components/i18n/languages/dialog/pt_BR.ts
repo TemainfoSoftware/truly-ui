@@ -19,13 +19,12 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/pt_BR';
-import Dialog from './dialog/pt_BR';
-import Navigator from './navigator/pt_BR';
 
 export default {
-  locale: 'pt-BR',
-  Calendar,
-  Dialog,
-  Navigator
+  exceptionBoxDescription: 'Nome/Código da Exceção',
+  textClose: 'Fechar',
+  textOk: 'OK',
+  textCancel: 'Cancelar',
+  textYes: 'Sim',
+  textNo: 'Não',
 };

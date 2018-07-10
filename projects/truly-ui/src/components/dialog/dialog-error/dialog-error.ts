@@ -21,6 +21,7 @@
  */
 import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { I18nService } from '../../i18n';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 @Modal({
@@ -57,11 +58,17 @@ export class TlDialogError extends DialogDefaultBehavior implements AfterViewIni
 
     message = '';
 
-    textOk = 'Ok';
-
     exceptionName = '';
 
     exceptionMessage = '';
+
+    get textOk() {
+      return this.i18n.getLocale().Dialog.textOk;
+    }
+
+    get exceptionBoxDescription() {
+      return this.i18n.getLocale().Dialog.exceptionBoxDescription;
+    }
 
     @ViewChild('button') button;
 
@@ -69,7 +76,7 @@ export class TlDialogError extends DialogDefaultBehavior implements AfterViewIni
 
     public errorlog: boolean;
 
-    constructor() {
+    constructor( private i18n: I18nService ) {
         super();
     }
 

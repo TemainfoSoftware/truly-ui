@@ -53,7 +53,9 @@ export class TimePickerService implements OnDestroy {
 
   public change = new Subject();
 
-  constructor( private wrapperDial: ElementRef, private clockRadiusElement: ElementRef, private renderer: Renderer2 ) {
+  private clockRadius = { height: 200, width: 200 };
+
+  constructor( private wrapperDial: ElementRef, private renderer: Renderer2 ) {
   }
 
   createHourDial() {
@@ -144,7 +146,7 @@ export class TimePickerService implements OnDestroy {
   }
 
   setRadiusNumber() {
-    this.radius = Math.round( (this.clockRadiusElement.nativeElement.offsetWidth / 2) - 15 );
+    this.radius = Math.round( (this.clockRadius.width / 2) - 15 );
   }
 
   setStylesNumber() {
@@ -211,11 +213,11 @@ export class TimePickerService implements OnDestroy {
   }
 
   getAngleX() {
-    return Math.round( this.radius * Math.cos( this.relativeAngle ) + (this.clockRadiusElement.nativeElement.offsetWidth / 2 ) );
+    return Math.round( this.radius * Math.cos( this.relativeAngle ) + (this.clockRadius.width / 2 ) );
   }
 
   getAngleY() {
-    return Math.round( this.radius * Math.sin( this.relativeAngle ) + (this.clockRadiusElement.nativeElement.offsetHeight / 2 ) );
+    return Math.round( this.radius * Math.sin( this.relativeAngle ) + (this.clockRadius.height / 2 ) );
   }
 
   ngOnDestroy() {

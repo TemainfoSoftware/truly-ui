@@ -1,23 +1,21 @@
-<div class="tl-timepicker">
-  <div class="ui-input-box" #inputBox>
-    <tl-input #input
-              [label]="label"
-              [labelSize]="labelSize"
-              [name]="name"
-              (clear)="onClearInput($event)"
-              (keyup)="onKeyUp($event)"
-              (focus)="open()"
-              [iconAfter]="iconAfter"
-              [textAlign]="textAlign"
-              [mask]="'00:00'"
-              [labelPlacement]="labelPlacement"
-              [readonly]="readonly ? true : null"
-              [disabled]="disabled ? true : null"
-              [(ngModel)]="value"
-              [placeholder]="placeholder"
-              [clearButton]="clearButton">
-    </tl-input>
-  </div>
+<div [class]="'tl-timepicker ' + color">
+  <tl-input #input
+            [label]="label"
+            [labelSize]="labelSize"
+            [name]="name"
+            (clear)="onClearInput($event)"
+            (keyup)="onKeyUp($event)"
+            (focus)="open()"
+            [iconAfter]="iconAfter"
+            [textAlign]="textAlign"
+            [mask]="'00:00'"
+            [labelPlacement]="labelPlacement"
+            [readonly]="readonly ? true : null"
+            [disabled]="disabled ? true : null"
+            [(ngModel)]="value"
+            [placeholder]="placeholder"
+            [clearButton]="clearButton">
+  </tl-input>
   <div class="ui-wrapper-timepicker-content" #timePickerContent
        [style.display]="opened() ? 'block' : 'none'">
     <div class="ui-arrow-up" #arrow [style.display]="opened() && !isTimePickerAbove ? 'block' : 'none'"></div>

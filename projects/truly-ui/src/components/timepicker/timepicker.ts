@@ -63,6 +63,8 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   @Input() buttonDoneMessage = 'Done';
 
+  @Input() color = 'primary';
+
   @Output() changeTime: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild( NgModel ) model: NgModel;
@@ -99,7 +101,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   ngAfterContentInit() {
-    this.timepickerService = new TimePickerService( this.wrapperDial, this.uiClockRadius, this.renderer );
+    this.timepickerService = new TimePickerService( this.wrapperDial, this.renderer );
     this.timepickerService.createHourDial();
     this.handleModelChange();
     this.handleIconTimePicker();
@@ -251,7 +253,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   handleTimePickerPosition() {
-    const timePickerHeight = 300;
+    const timePickerHeight = this.showButtonDone ? 325 : 300;
     const totalHeight = (this.tlinput.input.nativeElement.getBoundingClientRect().top ) + timePickerHeight;
     if ( (window.innerHeight - totalHeight) < 0 ) {
       this.setTopPositionTop();
@@ -263,7 +265,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   setTopPositionTop() {
     this.isTimePickerAbove = true;
-    const timePickerHeight = 300;
+    const timePickerHeight = this.showButtonDone ? 325 : 300;
     this.timePickerContent.nativeElement.style.top =
       ( this.tlinput.input.nativeElement.getBoundingClientRect().top - this.tlinput.input.nativeElement.offsetHeight )
       - timePickerHeight + 'px';

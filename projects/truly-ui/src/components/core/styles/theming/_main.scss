@@ -24,6 +24,7 @@
   @include tl-tabcontrol-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
+  @include tl-timepicker-theme($theme);
 }
 
 

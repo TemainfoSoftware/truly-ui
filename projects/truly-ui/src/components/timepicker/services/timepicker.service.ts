@@ -167,10 +167,12 @@ export class TimePickerService implements OnDestroy {
   }
 
   setTimeClock( value: string ) {
+    value.length > 2 ? this.createMinuteDial() : this.createHourDial();
     if ( value.length === 2 ) {
       this.timeClock.hour = String( value.substring( 0, 2 ) );
       this.angle = this.getClockAngle( this.timeClock.hour );
     } else if ( value.length === 4 ) {
+      this.timeClock.hour = String( value.substring( 0, 2 ) );
       this.timeClock.minute = String( value.substring( 2, 4 ) );
       this.angle = this.getClockAngle( this.timeClock.minute );
     }

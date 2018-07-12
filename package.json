@@ -52,7 +52,7 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.3",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.1.2",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "intl": "^1.2.5",

@@ -55,10 +55,23 @@ export class TimePickerService implements OnDestroy {
 
   private clockRadius = { height: 200, width: 200 };
 
-  constructor( private wrapperDial: ElementRef, private renderer: Renderer2 ) {
+  constructor( private wrapperDial: ElementRef, private wrapperDialMin: ElementRef, private renderer: Renderer2 ) {
+  }
+
+  createMinHourDial() {
+    this.numbers = 12;
+    this.minNumber = 0;
+    this.divisor = 30;
+    this.maxNumber = 12;
+    this.type = 'minHour';
+    this.setRelativeAngle();
+    this.setClockStep();
+    this.createNumbers();
+    this.angle = this.getClockAngle( this.timeClock.hour );
   }
 
   createHourDial() {
+    this.createMinHourDial();
     this.clearWrapper();
     this.numbers = 12;
     this.minNumber = 12;
@@ -73,6 +86,7 @@ export class TimePickerService implements OnDestroy {
 
   createMinuteDial() {
     this.clearWrapper();
+    this.clearWrapperMin();
     this.numbers = 60;
     this.minNumber = 0;
     this.maxNumber = 60;
@@ -86,6 +100,10 @@ export class TimePickerService implements OnDestroy {
 
   clearWrapper() {
     this.wrapperDial.nativeElement.innerHTML = '';
+  }
+
+  clearWrapperMin() {
+    this.wrapperDialMin.nativeElement.innerHTML = '';
   }
 
   getDivisorAngle() {
@@ -123,18 +141,26 @@ export class TimePickerService implements OnDestroy {
   }
 
   appendElementNumber() {
-    this.renderer.appendChild( this.wrapperDial.nativeElement, this.elementNumber.nativeElement );
+    if ( this.type === 'minHour' ) {
+      this.renderer.appendChild( this.wrapperDialMin.nativeElement, this.elementNumber.nativeElement );
+    } else {
+      this.renderer.appendChild( this.wrapperDial.nativeElement, this.elementNumber.nativeElement );
+    }
   }
 
   listenClickNumber( index: number ) {
     this.subscribe.add( this.renderer.listen( this.elementNumber.nativeElement, 'click', ( $event ) => {
       this.setAngleLineHour( index * this.divisor );
-      this.change.next(this.timeClock);
+      this.change.next( this.timeClock );
     } ) );
   }
 
   setElementNumberValue( hour: number ) {
     const time = ((hour === 24) || (hour === 60)) ? 0 : hour;
+    if ( this.type === 'minHour' ) {
+      this.renderer.addClass( this.elementNumber.nativeElement, 'clock-number' );
+      this.elementNumber.nativeElement.innerHTML = ('0' + time).slice( -2 );
+    }
     if ( this.type === 'minute' && (hour % 5) === 0 ) {
       this.renderer.addClass( this.elementNumber.nativeElement, 'clock-number' );
       this.elementNumber.nativeElement.innerHTML = ('0' + time).slice( -2 );
@@ -146,7 +172,7 @@ export class TimePickerService implements OnDestroy {
   }
 
   setRadiusNumber() {
-    this.radius = Math.round( (this.clockRadius.width / 2) - 15 );
+    this.radius = Math.round( (this.clockRadius.width / 2) - (this.type !== 'minHour' ? 15 : 40) );
   }
 
   setStylesNumber() {

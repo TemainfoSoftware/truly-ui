@@ -75,6 +75,8 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   @ViewChild( 'uiClockRadius' ) uiClockRadius;
 
+  @ViewChild( 'wrapperDialMin' ) wrapperDialMin;
+
   @ViewChild( 'wrapperDial' ) wrapperDial;
 
   public iconAfter = '';
@@ -91,7 +93,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   private clockMeasure = { offsetX: 0, offsetY: 0, width: 0, height: 0 };
 
-  private wrapperMeasure = { offsetX: 0, offsetY: 0 };
+  private wrapperMeasure = { offsetX: 0, offsetY: 0, width: 0, height: 0 };
 
   private boxCenter = [];
 
@@ -101,7 +103,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   ngAfterContentInit() {
-    this.timepickerService = new TimePickerService( this.wrapperDial, this.renderer );
+    this.timepickerService = new TimePickerService( this.wrapperDial, this.wrapperDialMin, this.renderer );
     this.timepickerService.createHourDial();
     this.handleModelChange();
     this.handleIconTimePicker();
@@ -141,6 +143,8 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   setWrapperOffset() {
     this.wrapperMeasure.offsetX = this.timePickerContent.nativeElement.offsetLeft;
     this.wrapperMeasure.offsetY = this.timePickerContent.nativeElement.offsetTop;
+    this.wrapperMeasure.width = this.timePickerContent.nativeElement.offsetWidth;
+    this.wrapperMeasure.height = this.timePickerContent.nativeElement.offsetHeight;
   }
 
   setBoxCenter() {
@@ -166,8 +170,10 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   windowMouseMove() {
     this.listeners.push( this.renderer.listen( document, 'mousemove', ( $event ) => {
+
       const positionX = $event.pageX - this.boxCenter[ 0 ];
       const positionY = -($event.pageY - ( this.boxCenter[ 1 ] + this.clockMeasure.height));
+
       if ( this.moving ) {
         let angle = Math.floor( Math.atan2( positionX, positionY ) * (180 / Math.PI) );
         if ( angle < 0 ) {

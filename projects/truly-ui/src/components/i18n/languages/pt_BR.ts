@@ -19,6 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+import Listbox from './listbox/pt_BR';
 import Calendar from './calendar/pt_BR';
 import Datatable from './datatable/pt_BR';
 import Dialog from './dialog/pt_BR';
@@ -29,5 +30,6 @@ export default {
   Calendar,
   Datatable,
   Dialog,
+  Listbox,
   Navigator
 };

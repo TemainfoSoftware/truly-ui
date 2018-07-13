@@ -32,6 +32,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, filter } from 'rxjs/internal/operators';
 import { debounceTime } from 'rxjs/operators';
+import { I18nService } from '../i18n';
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';
@@ -88,8 +89,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input() searchQuery: any = [];
 
   @Input() hiddenScroll = false;
-
-  @Input() filterEmptyMessage = 'Nothing Found';
 
   @Input() rowsPage = 50;
 
@@ -157,6 +156,10 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   public scrollFinish = false;
 
+  get filterEmptyMessage () {
+    return this.i18n.getLocale().Listbox.notFoundText;
+  }
+
   private subject = new Subject();
 
   private lastRowViewport = 0;
@@ -192,7 +195,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                private zone: NgZone,
                private addNewRenderService: AddNewRenderService,
                private listRenderService: ListBoxListRenderService,
-               private listCustomRenderService: ListBoxTemplateRenderService ) {
+               private listCustomRenderService: ListBoxTemplateRenderService,
+               private i18n: I18nService
+  ) {
 
     this.listRenderService.setInstanceListBox( this );
     this.listCustomRenderService.setInstanceListBox( this );

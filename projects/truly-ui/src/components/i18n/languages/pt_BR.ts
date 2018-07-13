@@ -20,12 +20,14 @@
     SOFTWARE.
 */
 import Calendar from './calendar/pt_BR';
+import Datatable from './datatable/pt_BR';
 import Dialog from './dialog/pt_BR';
 import Navigator from './navigator/pt_BR';
 
 export default {
   locale: 'pt-BR',
   Calendar,
+  Datatable,
   Dialog,
   Navigator
 };

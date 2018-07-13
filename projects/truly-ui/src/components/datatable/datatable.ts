@@ -26,6 +26,7 @@ import {
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
+import { FilterOptionsService } from './services/datatable-filter-options.service';
 import { TlDatatableFilterService } from './services/datatable-filter.service';
 import { TlDatatableDataSource } from './services/datatable-datasource.service';
 import { TlDatatableColumnService } from './services/datatable-column.service';
@@ -42,7 +43,8 @@ import { TlDatatableSortService } from './services/datatable-sort.service';
       TlDatatableColumnService,
       TlDatatableFilterConstraints,
       TlDatatableFilterService,
-      TlDatatableSortService
+      TlDatatableSortService,
+      FilterOptionsService
     ]
 })
 export class TlDatatable implements AfterContentInit, OnChanges {

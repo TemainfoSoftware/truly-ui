@@ -19,13 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Injector } from '@angular/core';
 import { FilterOptionsService } from '../../services/datatable-filter-options.service';
 
 @Component( {
     selector: 'tl-datatable-column',
     template: '',
-    providers: [FilterOptionsService]
 } )
 export class TlDatatableColumn implements OnInit {
 
@@ -47,9 +46,10 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('filterOptions') filterOptions = [];
 
-    private filterOptionsService = new FilterOptionsService();
+    private filterOptionsService: FilterOptionsService;
 
-    constructor() {
+    constructor( private injector: Injector ) {
+      this.filterOptionsService = injector.get(FilterOptionsService);
         this.setFilterOptions();
     }
 

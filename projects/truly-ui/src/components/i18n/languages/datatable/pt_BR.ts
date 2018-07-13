@@ -19,15 +19,19 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/en_US';
-import Datatable from './datatable/en_US';
-import Dialog from './dialog/en_US';
-import Navigator from './navigator/en_US';
 
 export default {
-  locale: 'en-US',
-  Calendar,
-  Datatable,
-  Dialog,
-  Navigator,
+  notFoundText: 'Registros não encontrados',
+  filterPlaceholder: 'Filtrar...',
+  dropdownResetPlaceholder: 'Padrão',
+  filterOptionStartsWith: 'Inicia com',
+  filterOptionContains: 'Contém',
+  filterOptionNotContains: 'Não contém',
+  filterOptionEndsWith: 'Termina com',
+  filterOptionEquals: 'É igual a',
+  filterOptionNotEquals: 'Não é igual a',
+  filterOptionLessThan: 'Menor que',
+  filterOptionGreaterThan: 'Maior que',
+  filterOptionLessThanOrEqual: 'Menor que ou igual a',
+  filterOptionGreaterThanOrEqual: 'Maior que ou igual a',
 };

@@ -19,19 +19,8 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/en_US';
-import Datatable from './datatable/en_US';
-import Dialog from './dialog/en_US';
-import Form from './form/en_US';
-import Listbox from './listbox/en_US';
-import Navigator from './navigator/en_US';
 
 export default {
-  locale: 'en-US',
-  Calendar,
-  Datatable,
-  Dialog,
-  Form,
-  Listbox,
-  Navigator,
+  textOk: 'OK',
+  textCancel: 'Cancelar',
 };

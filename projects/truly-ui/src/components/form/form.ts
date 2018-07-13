@@ -26,6 +26,7 @@ import {
   forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
+import { I18nService } from '../i18n';
 import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
@@ -50,9 +51,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() mode: 'inline' | 'modal' = 'modal';
 
-  @Input() textConfirm = 'Ok';
+  @Input() textConfirm = this.i18n.getLocale().Form.textOk;
 
-  @Input() textCancel = 'Cancel';
+  @Input() textCancel = this.i18n.getLocale().Form.textCancel;
 
   @Input() padding = '10px';
 
@@ -86,8 +87,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  constructor( private renderer: Renderer2 ) {
-  }
+  constructor( private renderer: Renderer2, private i18n: I18nService ) {}
 
   ngOnInit() {
     componentFormIndex = -1;

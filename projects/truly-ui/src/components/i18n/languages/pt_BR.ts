@@ -19,10 +19,11 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Listbox from './listbox/pt_BR';
 import Calendar from './calendar/pt_BR';
 import Datatable from './datatable/pt_BR';
 import Dialog from './dialog/pt_BR';
+import Form from './form/pt_BR';
+import Listbox from './listbox/pt_BR';
 import Navigator from './navigator/pt_BR';
 
 export default {
@@ -30,6 +31,7 @@ export default {
   Calendar,
   Datatable,
   Dialog,
+  Form,
   Listbox,
   Navigator
 };

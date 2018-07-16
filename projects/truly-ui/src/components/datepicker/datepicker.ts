@@ -31,7 +31,7 @@ import { TlInput } from '../input/input';
 import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
-import { KeyEvent } from '../core/enums/key-events';
+import { CdkConnectedOverlay, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -40,7 +40,7 @@ import { KeyEvent } from '../core/enums/key-events';
   providers: [ MakeProvider( TlDatePicker ) ]
 } )
 
-export class TlDatePicker extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy {
+export class TlDatePicker extends ElementBase<string> implements OnInit, AfterViewInit {
 
   @Input() label = '';
 
@@ -72,19 +72,19 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @ViewChild( TlInput ) tlinput;
 
+  @ViewChild( CdkConnectedOverlay ) overlay: CdkConnectedOverlay;
+
   @ViewChild( 'calendarContent' ) calendarContent;
 
   @ViewChild( 'arrow' ) arrow;
 
-  public open = false;
+  public isOpen = false;
+
+  public positionOverlay = '';
 
   public iconAfter = '';
 
   public formatDate = '';
-
-  public listeners = [];
-
-  public isCalendarAbove = false;
 
   public year = new Date().getFullYear();
 
@@ -99,9 +99,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   }
 
   ngOnInit() {
-    this.listenDocumentScroll();
-    this.listenDocumentMouseDown();
-    this.listenWindowResize();
     this.handleDateChange();
     if ( this.iconCalendar ) {
       this.iconAfter = 'ion-calendar';
@@ -125,9 +122,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   }
 
   onDateInputFocus() {
-    this.handleOpen();
-    this.handleCalendarPosition();
-    if ( this.value && !this.open ) {
+    if ( this.value && !this.isOpen ) {
       const inputDate = ReverseFormatDate( this.stringUnmasked( this.value ), this.formatDate );
       this.day = inputDate[ 'day' ];
       this.month = inputDate[ 'month' ] - 1;
@@ -142,86 +137,18 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
     this.handleAutoClose();
   }
 
-  onClickInput() {
-    this.handleOpen();
-    this.handleCalendarPosition();
-  }
-
-  handleOpen() {
-    if ( !this.open && !this.tlinput.disabled ) {
-      this.open = true;
+  handleAutoClose() {
+    if ( this.autoClose ) {
+      this.isOpen = false;
     }
   }
 
-  onClickCalendar() {
-    this.setInputFocus();
+  onPositionChange( $event: ConnectedOverlayPositionChange ) {
+    this.positionOverlay = $event.connectionPair.originY;
   }
 
-  handleCalendarPosition() {
-    const calendarHeight = 270;
-    const totalHeight = (this.tlinput.input.nativeElement.getBoundingClientRect().top ) + calendarHeight;
-    if ( (window.innerHeight - totalHeight) < 0 ) {
-      this.setTopPositionTop();
-      this.setLeftPosition();
-      return;
-    }
-    this.setWrapperCalendarPositionBottom();
-  }
-
-
-  setTopPositionTop() {
-    this.isCalendarAbove = true;
-    const calendarHeight = 270;
-    this.calendarContent.nativeElement.style.top =
-      ( this.tlinput.input.nativeElement.getBoundingClientRect().top - this.tlinput.input.nativeElement.offsetHeight )
-      - calendarHeight + 'px';
-  }
-
-  setWrapperCalendarPositionBottom() {
-    this.setTopPositionBottom();
-    this.setLeftPosition();
-  }
-
-  setInputFocus() {
-    setTimeout( () => {
-      this.tlinput.input.nativeElement.focus();
-    }, 0 );
-  }
-
-  setTopPositionBottom() {
-    this.isCalendarAbove = false;
-    this.calendarContent.nativeElement.style.top =
-      ( this.tlinput.input.nativeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight ) + 'px';
-  }
-
-  setLeftPosition() {
-    this.calendarContent.nativeElement.style.left =
-      this.tlinput.input.nativeElement.getBoundingClientRect().left -
-      this.tlinput.labelSize + 'px';
-  }
-
-  listenWindowResize() {
-    this.listeners.push( this.renderer.listen( window, 'resize', ( $event ) => {
-      this.open = false;
-    } ) );
-  }
-
-  listenDocumentScroll() {
-    this.listeners.push( this.renderer.listen( document, 'scroll', ( $event ) => {
-      this.open = false;
-    } ) );
-  }
-
-  listenDocumentMouseDown() {
-    this.listeners.push( this.renderer.listen( document, 'mousedown', ( $event ) => {
-      this.isElementInPath( $event );
-    } ) );
-  }
-
-  isElementInPath( $event ) {
-    if ( $event.path.indexOf( this.calendarContent.nativeElement ) < 0 ) {
-      this.open = false;
-    }
+  backDropClick() {
+    this.isOpen = false;
   }
 
   getFormattedDate( $event ) {
@@ -243,54 +170,11 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
     $event.stopPropagation();
   }
 
-  handleAutoClose() {
-    if ( this.autoClose ) {
-      this.open = false;
-    }
-  }
-
   formatDayAndMonth( value ) {
     if ( String( value ).length === 1 ) {
       return '0' + value;
     }
     return value;
-  }
-
-  onInputKeyUp( $event ) {
-    switch ( $event.keyCode ) {
-      case KeyEvent.ARROWRIGHT:
-        this.handleEvent( $event );
-        return;
-      case KeyEvent.ARROWDOWN:
-        this.handleEvent( $event );
-        return;
-      case KeyEvent.ARROWUP:
-        this.handleEvent( $event );
-        return;
-      case KeyEvent.ARROWLEFT:
-        this.handleEvent( $event );
-        return;
-      case KeyEvent.ENTER:
-        this.handleEvent( $event );
-        return;
-      case KeyEvent.TAB:
-        this.open = false;
-        return;
-      case KeyEvent.ESCAPE:
-        if ( this.open ) {
-          $event.preventDefault();
-          $event.stopPropagation();
-        }
-        return this.open = false;
-    }
-    this.handleOpenWhileTyping();
-  }
-
-  handleEvent( $event ) {
-    if ( this.open ) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
   }
 
   handleDateChange() {
@@ -309,18 +193,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
     }
   }
 
-  handleOpenWhileTyping() {
-    this.handleOpen();
-  }
-
   stringUnmasked( value ) {
     return String( value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
-  }
-
-  ngOnDestroy() {
-    this.listeners.forEach( ( item ) => {
-      item();
-    } );
   }
 
 }

@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,37 +21,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TlDatePicker } from './datepicker';
-import { FormsModule } from '@angular/forms';
-import { TlCalendar } from '../calendar/calendar';
+ import { trigger, state, transition, style, animate } from '@angular/animations';
 
-import { MiscModule } from '../misc/index';
-import { CalendarModule } from '../calendar/index';
-import { InputModule } from '../input/index';
-import { TlDatePickerContent } from './datepicker-content/datepicker-content';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PortalModule } from '@angular/cdk/portal';
-
-@NgModule( {
-  imports: [
-    CommonModule,
-    MiscModule,
-    CalendarModule,
-    FormsModule,
-    OverlayModule,
-    PortalModule,
-    InputModule
-  ],
-  declarations: [
-    TlDatePicker,
-    TlDatePickerContent
-  ],
-  exports: [
-    TlDatePicker,
-    TlDatePickerContent
-  ],
-  entryComponents: [ TlCalendar ]
-} )
-export class DatePickerModule {}
+export const OverlayAnimation =
+   [
+     trigger('picker', [
+       state('void', style({
+         transform: 'scale(0)',
+         opacity: 0
+       })),
+       transition('void <=> *', [
+         style({
+           opacity: 1
+         }),
+         animate('150ms cubic-bezier(0.25, 0.8, 0.25, 1)')
+       ])
+     ])
+   ];

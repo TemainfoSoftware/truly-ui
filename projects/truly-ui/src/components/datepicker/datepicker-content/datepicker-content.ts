@@ -19,37 +19,39 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TlDatePicker } from './datepicker';
-import { FormsModule } from '@angular/forms';
-import { TlCalendar } from '../calendar/calendar';
+import {
+  Component, EventEmitter, Input, Output, TemplateRef, ViewChild
+} from '@angular/core';
+import { TlInput } from '../../input/input';
+import { OverlayAnimation } from '../../core/directives/overlay-animation';
 
-import { MiscModule } from '../misc/index';
-import { CalendarModule } from '../calendar/index';
-import { InputModule } from '../input/index';
-import { TlDatePickerContent } from './datepicker-content/datepicker-content';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { PortalModule } from '@angular/cdk/portal';
-
-@NgModule( {
-  imports: [
-    CommonModule,
-    MiscModule,
-    CalendarModule,
-    FormsModule,
-    OverlayModule,
-    PortalModule,
-    InputModule
-  ],
-  declarations: [
-    TlDatePicker,
-    TlDatePickerContent
-  ],
-  exports: [
-    TlDatePicker,
-    TlDatePickerContent
-  ],
-  entryComponents: [ TlCalendar ]
+@Component( {
+  selector: 'tl-datepicker-content',
+  templateUrl: './datepicker-content.html',
+  styleUrls: [ './datepicker-content.scss' ],
+  animations: OverlayAnimation
 } )
-export class DatePickerModule {}
+
+export class TlDatePickerContent  {
+
+  @Input('day') day = new Date().getDate();
+
+  @Input('month') month = new Date().getMonth();
+
+  @Input('year') year = new Date().getFullYear();
+
+  @Input('input') input: TlInput;
+
+  @Input('overlayPosition') overlayPosition: string;
+
+  @Output() selectDayContent: EventEmitter<any> = new EventEmitter<any>();
+
+  @ViewChild(TemplateRef) template: TemplateRef<any>;
+
+  constructor() {}
+
+  selectDay($event) {
+    this.selectDayContent.emit($event);
+  }
+
+}

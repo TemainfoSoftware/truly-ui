@@ -1,0 +1,8 @@
+<div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'"></div>
+<div class="ui-wrapper-calendar-content" @picker>
+  <div class="ui-calendar-content">
+    <tl-calendar [day]="day" [typingDay]="true" [month]="month" [year]="year"
+                 [inputControlFocus]="input" (selectDay)="selectDay($event)"></tl-calendar>
+  </div>
+  <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'"></div>
+</div>

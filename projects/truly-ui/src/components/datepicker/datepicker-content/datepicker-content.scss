@@ -1,0 +1,56 @@
+.ui-calendar-content {
+  padding: 10px;
+  background: #fff;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  border: 1px solid #C8C8C8;
+}
+
+.ui-arrow-up {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 100;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #a6a6a6 transparent;
+}
+
+.ui-arrow-up:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -9px;
+  top: 1px;
+  border-style: solid;
+  border-width: 0 9px 9px 9px;
+  border-color: transparent transparent #fff transparent;
+}
+
+.ui-arrow-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 100;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #a6a6a6 transparent;
+  transform: rotate(180deg);
+  top: 276px;
+}
+
+.ui-arrow-down:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -9px;
+  top: 1px;
+  border-style: solid;
+  border-width: 0 9px 9px 9px;
+  border-color: transparent transparent #fff transparent;
+}
+

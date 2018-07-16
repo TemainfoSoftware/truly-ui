@@ -1,4 +1,5 @@
 @import "../core/styles/theming/theming";
+@import "~@angular/cdk/overlay-prebuilt.css";
 
 @mixin _tl-core-theme-schema( $theme, $action ) {
   &.-paint-icon {

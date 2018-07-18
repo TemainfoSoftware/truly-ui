@@ -31,7 +31,7 @@ import { TlInput } from '../input/input';
 import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
-import { CdkConnectedOverlay, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -72,8 +72,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @ViewChild( TlInput ) tlinput;
 
-  @ViewChild( CdkConnectedOverlay ) overlay: CdkConnectedOverlay;
-
   @ViewChild( 'calendarContent' ) calendarContent;
 
   @ViewChild( 'arrow' ) arrow;
@@ -85,6 +83,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   public iconAfter = '';
 
   public formatDate = '';
+
+  public trigger;
 
   public year = new Date().getFullYear();
 

@@ -1,9 +1,8 @@
 <tl-input #tlinput
-          cdkOverlayOrigin
-          #trigger="cdkOverlayOrigin"
           [label]="label"
           [labelSize]="labelSize"
           [name]="name"
+          (overlayOrigin)="trigger = $event"
           (focus)="onDateInputFocus()"
           (click)="isOpen = !isOpen"
           (keypress)="handleDateChange()"

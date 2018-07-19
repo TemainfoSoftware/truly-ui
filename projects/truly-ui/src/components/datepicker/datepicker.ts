@@ -22,7 +22,7 @@
 import {
   Component,
   Optional, Inject, ViewChild, Output,
-  Input, Renderer2, OnInit, EventEmitter, OnDestroy, ElementRef, AfterViewInit
+  Input, OnInit, EventEmitter, ElementRef, AfterViewInit
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
@@ -31,7 +31,7 @@ import { TlInput } from '../input/input';
 import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
-import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -64,6 +64,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @Input() iconCalendar = false;
 
+  @Input() openOnFocus = true;
+
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild( NgModel ) model: NgModel;
@@ -94,7 +96,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
-               private datePicker: ElementRef, private renderer: Renderer2 ) {
+               private datePicker: ElementRef ) {
     super( validators, asyncValidators );
   }
 
@@ -128,13 +130,27 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
       this.month = inputDate[ 'month' ] - 1;
       this.year = inputDate[ 'year' ];
     }
+    this.handleOpenOnFocus();
+  }
+
+  handleOpenOnFocus() {
+    if (this.openOnFocus) {
+      this.isOpen = true;
+    }
   }
 
   onSelectDay( $event ) {
     this.selectDay.emit( $event );
     this.setValue( $event );
-    this.tlinput.input.nativeElement.focus();
+    this.setDateValues($event);
     this.handleAutoClose();
+    this.tlinput.input.nativeElement.focus();
+  }
+
+  setDateValues($event) {
+    this.day = $event.day;
+    this.month = $event.month - 1;
+    this.year = $event.year;
   }
 
   handleAutoClose() {

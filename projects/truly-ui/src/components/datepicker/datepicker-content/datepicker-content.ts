@@ -34,11 +34,11 @@ import { OverlayAnimation } from '../../core/directives/overlay-animation';
 
 export class TlDatePickerContent  {
 
-  @Input('day') day = new Date().getDate();
+  @Input('day') day;
 
-  @Input('month') month = new Date().getMonth();
+  @Input('month') month;
 
-  @Input('year') year = new Date().getFullYear();
+  @Input('year') year;
 
   @Input('input') input: TlInput;
 

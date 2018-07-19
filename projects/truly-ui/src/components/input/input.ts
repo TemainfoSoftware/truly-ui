@@ -126,6 +126,8 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @Output() focus: EventEmitter<any> = new EventEmitter();
 
+  @Output() blur: EventEmitter<any> = new EventEmitter();
+
   public required = false;
 
   public clearButtonPosition;
@@ -140,10 +142,10 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   ngOnInit() {
     this.setRequired();
+    this.overlayOrigin.emit( this.cdkOverlayOrigin );
   }
 
   ngAfterViewInit() {
-    this.overlayOrigin.emit(this.cdkOverlayOrigin);
     this.validateClearButtonPosition();
     this.hasMask();
   }
@@ -183,6 +185,10 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   onInputFocus( $event ) {
     this.focus.emit( $event );
+  }
+
+  onInputBlur( $event ) {
+    this.blur.emit( $event );
   }
 
   clearInput( $event? ) {

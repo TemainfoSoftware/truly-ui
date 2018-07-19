@@ -28,6 +28,7 @@
            [attr.maxlength]="maxlength"
            [attr.name]="name"
            [placeholder]="placeholder"
+           (blur)="onInputBlur($event)"
            (focus)="onInputFocus($event)"
            [(ngModel)]="value">
   </div>

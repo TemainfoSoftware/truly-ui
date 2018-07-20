@@ -1,8 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { I18nService } from '../../../i18n';
 import { TlInput } from '../../input';
-
-const format = require('string-format');
+import * as format from 'string-format';
 
 @Component({
   selector: 'tl-messagevalidation',

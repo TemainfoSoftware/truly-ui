@@ -20,9 +20,16 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 
 export class CPF implements CustomType {
+
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( i18n: ValidatorsI18nInterface ) {
+    this.i18n = i18n;
+  }
 
   validate(): ValidatorFn {
     return ( control: AbstractControl ) => {
@@ -34,11 +41,11 @@ export class CPF implements CustomType {
       sum = 0;
 
       if ( (this.cpfUnmasked( control ) === null) || (this.cpfUnmasked( control ).length < 9) ) {
-        return { cpf: 'Invalid CPF' };
+        return { cpf: this.i18n.invalidCPF };
       }
 
       if ( this.isAllCharacteresEquals( control ) ) {
-        return { cpf: 'Invalid CPF' };
+        return { cpf: this.i18n.invalidCPF };
       }
 
       for ( let i = 1; i <= 9; i++ ) {
@@ -50,7 +57,7 @@ export class CPF implements CustomType {
         leftover = 0;
       }
       if ( leftover !== Number( this.cpfUnmasked( control ).substring( 9, 10 ) ) ) {
-        return { cpf: 'Invalid CPF' };
+        return { cpf: this.i18n.invalidCPF };
       }
       sum = 0;
       for ( let i = 1; i <= 10; i++ ) {
@@ -61,7 +68,7 @@ export class CPF implements CustomType {
         leftover = 0;
       }
       if ( leftover !== Number( this.cpfUnmasked( control ).substring( 10, 11 ) ) ) {
-        return { cpf: 'Invalid CPF' };
+        return { cpf: this.i18n.invalidCPF };
       }
 
       return null;

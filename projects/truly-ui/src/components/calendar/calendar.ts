@@ -32,6 +32,7 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlNavigator } from '../navigator/navigator';
 import { NavigatorService } from '../navigator/services/navigator.service';
 import { CalendarService } from './services/calendar.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-calendar',
@@ -67,21 +68,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   @ViewChildren( TlNavigator ) tlnavigator: QueryList<TlNavigator>;
 
-  public months =
-    [
-      { name: 'January', initials: 'jan' },
-      { name: 'February', initials: 'feb' },
-      { name: 'March', initials: 'mar' },
-      { name: 'April', initials: 'apr' },
-      { name: 'May', initials: 'may' },
-      { name: 'June', initials: 'jun' },
-      { name: 'July', initials: 'jul' },
-      { name: 'August', initials: 'aug' },
-      { name: 'September', initials: 'sept' },
-      { name: 'October', initials: 'oct' },
-      { name: 'November', initials: 'nov' },
-      { name: 'December', initials: 'dec' }
-    ];
+  get todayText(): string {
+    return this.i18n.getLocale().Calendar.today;
+  }
 
   public displayMonths = false;
 
@@ -105,15 +94,26 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   private rangeYear = {};
 
-  public dayOfWeek =
-    [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ];
+  get months() {
+    return this.i18n.getLocale().Calendar.months;
+  }
 
-  constructor( public calendar: ElementRef, public renderer: Renderer2, private navigatorService: NavigatorService,
-               private calendarService: CalendarService, private view: ViewContainerRef,
-               tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService ) {
+  get dayOfWeek() {
+    return this.i18n.getLocale().Calendar.dayOfWeek;
+  }
+
+  constructor(
+    public calendar: ElementRef,
+    public renderer: Renderer2,
+    private i18n: I18nService,
+    private navigatorService: NavigatorService,
+    private calendarService: CalendarService,
+    private view: ViewContainerRef,
+    tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
     super( tabIndexService, idService, nameService );
     this.dateNavigator = new Date();
   }
+
 
   ngAfterViewInit() {
     this.calendarService.setView( this.view );
@@ -130,6 +130,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
       }
     }, 1 );
   }
+
 
   decreaseDate( $event? ) {
     this.direction = 'left';

@@ -28,6 +28,20 @@ export const dataProperties = [
     options: 'ElementRef'
   },
   {
+    name: 'textConfirm',
+    type: 'string',
+    default: 'Ok',
+    description: 'Confirmation button text',
+    options: 'any string'
+  },
+  {
+    name: 'textCancel',
+    type: 'string',
+    default: 'Cancel',
+    description: 'Cancel button text',
+    options: 'any string'
+  },
+  {
     name: 'showConfirmOnChange',
     type: 'boolean',
     default: 'false',

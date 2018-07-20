@@ -26,7 +26,6 @@ import { OverlayModule } from '@angular/cdk/overlay';
   exports: [
     TlInput,
     CharcaseDirective,
-    TlMessageValidationComponent,
     MessageValidationDirective,
   ],
   entryComponents: [TlMessageValidationComponent]

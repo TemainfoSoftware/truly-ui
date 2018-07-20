@@ -25,6 +25,7 @@ import {
   ContentChild, Directive, forwardRef
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { I18nService } from '../../i18n/i18n.service';
 import { CPFFactory } from './cpf.factory';
 import { TlInput } from '../../input/input';
 
@@ -42,11 +43,11 @@ export class CPFDirective implements Validator, AfterViewInit {
 
     @ContentChild(TlInput) tlinput;
 
-    constructor() {}
+    constructor( private i18n: I18nService ) {}
 
     ngAfterViewInit() {}
 
     validate( c: FormControl ) {
-      return CPFFactory.getInstance(  this.tlinput ).validate()( c );
+      return CPFFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
     }
 }

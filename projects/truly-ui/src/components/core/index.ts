@@ -21,6 +21,7 @@
 */
 
 import { APP_INITIALIZER, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 import { LazyApplicationLoaderConfig } from './configs/application.config';
 import { CoreService } from './services/core.service';
 import { TlCore } from './core';
@@ -48,6 +49,7 @@ export function CoreServiceFactory( coreService: CoreService ) {
     ],
     providers: [
       CoreService,
+      I18nService,
       {
         provide: APP_INITIALIZER,
         useFactory: CoreServiceFactory,
@@ -68,6 +70,7 @@ export class CoreModule {
       return {
         ngModule: CoreModule,
         providers: [
+          I18nService,
           {
             provide: APPLICATION_CONFIGURATION,
             // TODO: Create  useValue: Object.assign( new LazyApplicationLoaderConfig(), lazyApplicationLoaderConfig )

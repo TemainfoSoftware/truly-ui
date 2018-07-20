@@ -41,10 +41,8 @@
   }
 
   .ui-box-notfound-records{
-    >.ui-container{
       background: map-deep-get($basic, "default", "background");
       color: map-deep-get($basic, "default", "foreground");
-    }
   }
 
   .ui-datatable-content-body{

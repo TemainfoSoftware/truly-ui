@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 
@@ -45,9 +46,11 @@ export class TlDialogAlert extends DialogDefaultBehavior implements AfterViewIni
 
     message = '';
 
-    textClose = 'Close';
+    get textClose() {
+      return this.i18n.getLocale().Dialog.textClose;
+    }
 
-    constructor() {
+    constructor( private i18n: I18nService ) {
         super();
     }
 

@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 
 /*https://www.freeformatter.com/credit-card-number-generator-validator.html#howToValidate
@@ -31,20 +32,23 @@ export class CreditCard implements CustomType {
 
   private creditCard;
 
-  constructor( card ) {
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( card, i18n: ValidatorsI18nInterface ) {
     this.creditCard = card;
+    this.i18n = i18n;
   }
 
   validate(): ValidatorFn {
     return ( control: AbstractControl ) => {
       if ( !this.creditCard ) {
-        return { creditcard: 'Invalid Credit Card' };
+        return { creditcard: this.i18n.invalidCreditCard };
       }
       const regex = new RegExp( this.creditCard.regex );
       if ( (this.creditNumberUnmasked( control.value ) !== '') &&
         (!regex.test( this.creditNumberUnmasked( control.value ) )) ) {
-        return { creditcard: 'Invalid Credit Card' };
-      }
+        return { creditcard: this.i18n.invalidCreditCard };
+  }
       return null;
     };
   }

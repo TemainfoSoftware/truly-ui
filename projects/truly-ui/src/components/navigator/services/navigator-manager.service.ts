@@ -21,8 +21,7 @@
 */
 
 import { Injectable } from '@angular/core';
-import { DaysDescription } from '../consts/days-descriptions';
-import { MonthsDescription } from '../consts/months-description';
+import { I18nService } from '../../i18n/i18n.service';
 
 @Injectable()
 export class NavigatorManagerService {
@@ -42,6 +41,15 @@ export class NavigatorManagerService {
   private type: string;
 
   private range: number;
+
+  get monthsDescription() {
+    return this.i18n.getLocale().Navigator.monthsDescription;
+  }
+  get daysDescription() {
+    return this.i18n.getLocale().Navigator.daysDescription;
+  }
+
+  constructor( private i18n: I18nService ) {}
 
   previous() {
     this.managerPreviousAction();
@@ -119,12 +127,12 @@ export class NavigatorManagerService {
 
   private getDayDescription() {
     const dayOfMonth = new Date(this.currentYear, this.currentMonth, this.currentDay).getDate();
-    const weekDay = DaysDescription[ new Date(this.currentYear, this.currentMonth, this.currentDay).getDay() ];
+    const weekDay = this.daysDescription[ new Date(this.currentYear, this.currentMonth, this.currentDay).getDay() ];
     return dayOfMonth + ' ' + weekDay;
   }
 
   private getMonthDescription() {
-    return MonthsDescription[this.currentMonth];
+    return this.monthsDescription[this.currentMonth];
   }
 
   // =============================== \\

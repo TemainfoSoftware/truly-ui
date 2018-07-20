@@ -11,20 +11,20 @@
           <app-card>
             <div class="col-md-6">
               <span>CPF</span>
-              <tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
+              <tl-input name="cpf" messageValidation cpf [(ngModel)]="cpf"></tl-input>
               <app-showcase-returned-value [value]="cpf"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="cpf" cpf [(ngModel)]="cpf"></tl-input>
+<tl-input name="cpf" messageValidation cpf [(ngModel)]="cpf"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
               <span>CNPJ</span>
-              <tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+              <tl-input cnpj messageValidation name="cnpj" [(ngModel)]="cnpj"></tl-input>
               <app-showcase-returned-value [value]="cnpj"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input cnpj name="cnpj" [(ngModel)]="cnpj"></tl-input>
+<tl-input cnpj name="cnpj" messageValidation [(ngModel)]="cnpj"></tl-input>
 </textarea>
             </div>
           </app-card>
@@ -40,22 +40,22 @@
             </div>
             <div class="col-md-6">
               <span>NUMBER</span>
-              <tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+              <tl-input name="number" number required messageValidation [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
               <app-showcase-returned-value [value]="number"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="number" number required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+<tl-input name="number" number messageValidation required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>EMAIL</span>
-              <tl-input name="email" email [(ngModel)]="email"></tl-input>
+              <tl-input name="email" messageValidation email [(ngModel)]="email"></tl-input>
               <app-showcase-returned-value [value]="email"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="email" email [(ngModel)]="email"></tl-input>
+<tl-input name="email" email messageValidation [(ngModel)]="email"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
@@ -71,11 +71,11 @@
           <app-card>
             <div class="col-md-6">
               <span>PASSWORD</span>
-              <tl-input name="password" minlength="5" required messageValidation password [(ngModel)]="password"></tl-input>
+              <tl-input name="password" minlength="5" required messageValidation [passwordRule]="{digits: true, uppercase : true, special : true}" password [(ngModel)]="password"></tl-input>
               <app-showcase-returned-value [value]="password"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="password" minlength="5" required messageValidation password [(ngModel)]="password"></tl-input>
+<tl-input name="password" minlength="5"  [passwordRule]="{digits: true, uppercase : true, special : true}" required messageValidation password [(ngModel)]="password"></tl-input>
 </textarea>
             </div>
           </app-card>

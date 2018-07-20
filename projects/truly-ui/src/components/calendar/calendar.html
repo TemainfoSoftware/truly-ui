@@ -30,7 +30,7 @@
                     [width]="todayButton ? '100px' : '187px'">
       </tl-navigator>
     </div>
-    <div *ngIf="todayButton" class="todayButton" (click)="getToday()">TODAY</div>
+    <div *ngIf="todayButton" class="todayButton" (click)="getToday()">{{todayText | uppercase}}</div>
   </div>
   <table #table border="0" cellspacing="0" cellpadding="0" class="ui-table-calendar">
     <thead class="ui-table-thead" *ngIf="!displayMonths && !displayYears">

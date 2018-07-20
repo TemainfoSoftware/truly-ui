@@ -20,14 +20,15 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { CPF } from './cpf.validator';
 
 export class CPFFactory {
 
-  static getInstance( tlinput ): CustomType {
+  static getInstance( tlinput, i18n: ValidatorsI18nInterface ): CustomType {
     this.setCpfMask( tlinput );
-    return new CPF();
+    return new CPF(i18n);
   }
 
   static setCpfMask( tlinput ) {

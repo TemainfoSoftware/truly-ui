@@ -23,7 +23,6 @@
 import {
   Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, SimpleChanges, OnChanges
 } from '@angular/core';
-import { I18nService } from '../i18n/i18n.service';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 
 @Component( {

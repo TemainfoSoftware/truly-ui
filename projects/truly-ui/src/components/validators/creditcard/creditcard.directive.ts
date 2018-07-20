@@ -24,7 +24,7 @@ import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { I18nService } from '../../i18n';
+import { I18nService } from '../../i18n/i18n.service';
 import { CreditCardFactory } from './creditcard.factory';
 import { TlInput } from '../../input/input';
 

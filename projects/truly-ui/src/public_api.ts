@@ -52,7 +52,7 @@ export { FormService } from './components/form/form.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 
 // Languages...
-export { I18nService } from './components/i18n/index';
-export { I18nInterface } from './components/i18n/index';
-export { en_US } from './components/i18n/index';
-export { pt_BR } from './components/i18n/index';
+export { I18nService } from './components/i18n/i18n.service';
+export { I18nInterface } from './components/i18n/i18n.interface';
+export { en_US } from './components/i18n/languages/en_US';
+export { pt_BR } from './components/i18n/languages/pt_BR';

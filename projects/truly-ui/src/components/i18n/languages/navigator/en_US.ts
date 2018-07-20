@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-export default {
+export const Navigator = {
   monthsDescription: [
     'January',
     'February',

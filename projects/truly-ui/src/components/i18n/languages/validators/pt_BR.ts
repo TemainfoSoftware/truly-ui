@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-export default {
+export const Validators =  {
   invalidDatePattern: 'Data Inválida, o valor deve corresponder ao padrão',
   fieldRequired: 'Campo requerido, por favor informe um valor',
   invalidMinLength: 'O campo deve ter no minimo {0} caracteres',

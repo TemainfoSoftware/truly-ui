@@ -21,16 +21,17 @@
 */
 
 import { Injectable } from '@angular/core';
-import { I18nService } from '../../i18n';
+import { I18nService } from '../../i18n/i18n.service';
+import { DatatableI18nInterface } from '../../i18n/languages/datatable';
 
 @Injectable()
 export class FilterOptionsService {
 
-  get optionDescription() {
+  constructor( private i18n: I18nService ) {}
+
+  optionDescription(): DatatableI18nInterface {
     return this.i18n.getLocale().Datatable;
   }
-
-  constructor( private i18n: I18nService ) {}
 
   getOptionsByType( type ): Array<any> {
     switch ( type ) {
@@ -45,43 +46,43 @@ export class FilterOptionsService {
 
   getOptionsDefault() {
     return [ {
-      description : this.optionDescription.filterOptionStartsWith,
+      description : this.optionDescription().filterOptionStartsWith,
       valueItem : 'startsWith',
       icon : 'dx-icon-filter-operation-starts-with'
     }, {
-      description : this.optionDescription.filterOptionContains,
+      description : this.optionDescription().filterOptionContains,
       valueItem : 'contains',
       icon : 'dx-icon-filter-operation-contains'
     }, {
-      description : this.optionDescription.filterOptionNotContains,
+      description : this.optionDescription().filterOptionNotContains,
       valueItem : 'notContains',
       icon : 'dx-icon-filter-operation-not-contains'
     }, {
-      description : this.optionDescription.filterOptionEndsWith,
+      description : this.optionDescription().filterOptionEndsWith,
       valueItem : 'endsWith',
       icon : 'dx-icon-filter-operation-ends-with'
     }, {
-      description : this.optionDescription.filterOptionEquals,
+      description : this.optionDescription().filterOptionEquals,
       valueItem : 'equals',
       icon : 'dx-icon-filter-operation-equals'
     }, {
-      description : this.optionDescription.filterOptionNotEquals,
+      description : this.optionDescription().filterOptionNotEquals,
       valueItem : 'notEquals',
       icon : 'dx-icon-filter-operation-not-equals'
     }, {
-      description : this.optionDescription.filterOptionLessThan,
+      description : this.optionDescription().filterOptionLessThan,
       valueItem : 'lessThan',
       icon : 'dx-icon-filter-operation-less'
     }, {
-      description : this.optionDescription.filterOptionGreaterThan,
+      description : this.optionDescription().filterOptionGreaterThan,
       valueItem : 'greaterThan',
       icon : 'dx-icon-filter-operation-greater'
     }, {
-      description : this.optionDescription.filterOptionLessThanOrEqual,
+      description : this.optionDescription().filterOptionLessThanOrEqual,
       valueItem : 'lessThanOrEqual',
       icon : 'dx-icon-filter-operation-less-equal'
     }, {
-      description : this.optionDescription.filterOptionGreaterThanOrEqual,
+      description : this.optionDescription().filterOptionGreaterThanOrEqual,
       valueItem : 'greaterThanOrEqual',
       icon : 'dx-icon-filter-operation-greater-equal'
     } ];
@@ -90,27 +91,27 @@ export class FilterOptionsService {
 
   getOptionsText() {
     return [ {
-      description : this.optionDescription.filterOptionStartsWith,
+      description : this.optionDescription().filterOptionStartsWith,
       valueItem : 'startsWith',
       icon : 'dx-icon-filter-operation-starts-with'
     }, {
-      description : this.optionDescription.filterOptionContains,
+      description : this.optionDescription().filterOptionContains,
       valueItem : 'contains',
       icon : 'dx-icon-filter-operation-contains'
     }, {
-      description : this.optionDescription.filterOptionNotContains,
+      description : this.optionDescription().filterOptionNotContains,
       valueItem : 'notContains',
       icon : 'dx-icon-filter-operation-not-contains'
     }, {
-      description : this.optionDescription.filterOptionEndsWith,
+      description : this.optionDescription().filterOptionEndsWith,
       valueItem : 'endsWith',
       icon : 'dx-icon-filter-operation-ends-with'
     }, {
-      description : this.optionDescription.filterOptionEquals,
+      description : this.optionDescription().filterOptionEquals,
       valueItem : 'equals',
       icon : 'dx-icon-filter-operation-equals'
     }, {
-      description : this.optionDescription.filterOptionNotEquals,
+      description : this.optionDescription().filterOptionNotEquals,
       valueItem : 'notEquals',
       icon : 'dx-icon-filter-operation-not-equals'
     } ];
@@ -118,27 +119,27 @@ export class FilterOptionsService {
 
   getOptionsNumber() {
     return [ {
-      description : this.optionDescription.filterOptionEquals,
+      description : this.optionDescription().filterOptionEquals,
       valueItem : 'equals',
       icon : 'dx-icon-filter-operation-equals'
     }, {
-      description : this.optionDescription.filterOptionNotEquals,
+      description : this.optionDescription().filterOptionNotEquals,
       valueItem : 'notEquals',
       icon : 'dx-icon-filter-operation-not-equals'
     }, {
-      description : this.optionDescription.filterOptionLessThan,
+      description : this.optionDescription().filterOptionLessThan,
       valueItem : 'lessThan',
       icon : 'dx-icon-filter-operation-less'
     }, {
-      description : this.optionDescription.filterOptionGreaterThan,
+      description : this.optionDescription().filterOptionGreaterThan,
       valueItem : 'greaterThan',
       icon : 'dx-icon-filter-operation-greater'
     }, {
-      description : this.optionDescription.filterOptionLessThanOrEqual,
+      description : this.optionDescription().filterOptionLessThanOrEqual,
       valueItem : 'lessThanOrEqual',
       icon : 'dx-icon-filter-operation-less-equal'
     }, {
-      description : this.optionDescription.filterOptionGreaterThanOrEqual,
+      description : this.optionDescription().filterOptionGreaterThanOrEqual,
       valueItem : 'greaterThanOrEqual',
       icon : 'dx-icon-filter-operation-greater-equal'
     } ];

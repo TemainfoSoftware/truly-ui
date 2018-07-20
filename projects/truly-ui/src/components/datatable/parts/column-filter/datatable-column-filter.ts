@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { debounceTime } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs';
-import { I18nService } from '../../../i18n';
+import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
 
 

@@ -26,7 +26,7 @@ import {
   forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
-import { I18nService } from '../i18n';
+import { I18nService } from '../i18n/i18n.service';
 import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';

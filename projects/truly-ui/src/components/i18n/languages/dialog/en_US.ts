@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-export default {
+export const Dialog = {
   exceptionBoxDescription: 'Exception Name/Code',
   textClose: 'Close',
   textOk: 'OK',

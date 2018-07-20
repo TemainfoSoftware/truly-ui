@@ -21,7 +21,7 @@
 */
 
 import { I18nInterface } from '../../i18n/i18n.interface';
-import en_US from '../../i18n/languages/en_US';
+import { en_US } from '../../i18n/languages/en_US';
 
 export class LazyApplicationLoaderConfig {
   theme?: string;

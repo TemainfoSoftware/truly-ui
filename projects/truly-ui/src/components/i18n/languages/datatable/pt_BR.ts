@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-export default {
+export const Datatable = {
   notFoundText: 'Registros não encontrados',
   filterPlaceholder: 'Filtrar...',
   dropdownResetPlaceholder: 'Padrão',

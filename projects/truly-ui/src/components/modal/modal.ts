@@ -21,8 +21,8 @@
  */
 import {
   AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter,
-  HostBinding, forwardRef, ContentChildren,
-  Input, NgZone, OnDestroy, OnInit, Output, QueryList, Renderer2, ViewChild, ViewContainerRef
+  HostBinding,
+  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { ModalService } from './modal.service';
@@ -30,7 +30,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { SidebarService } from './sidebar.service';
-import { TlButton } from '../button/button';
 
 let subscribeMouseMove;
 

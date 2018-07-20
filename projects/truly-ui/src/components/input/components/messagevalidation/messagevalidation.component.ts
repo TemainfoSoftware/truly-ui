@@ -1,7 +1,8 @@
 import { Component, ElementRef } from '@angular/core';
-import { I18nService } from '../../../i18n';
+import { I18nService } from '../../../i18n/i18n.service';
 import { TlInput } from '../../input';
-import * as format from 'string-format';
+import * as stringFormat from 'string-format';
+const format = stringFormat;
 
 @Component({
   selector: 'tl-messagevalidation',
@@ -44,7 +45,7 @@ export class TlMessageValidationComponent {
         }
         if (key === 'pattern') {
           console.log(messages);
-          this.messages.push(format(this.i18n.getLocale().Validators.patternNotMatch));
+          this.messages.push(this.i18n.getLocale().Validators.patternNotMatch);
           return;
         }
         this.messages.push(messages[key]);

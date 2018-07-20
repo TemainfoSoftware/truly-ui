@@ -20,6 +20,6 @@
     SOFTWARE.
 */
 
-export default {
+export const Listbox = {
   notFoundText: 'Nada encontrado'
 };

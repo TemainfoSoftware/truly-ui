@@ -24,7 +24,6 @@ import { ValidatorsModule } from '../validators/index';
   exports: [
     TlInput,
     CharcaseDirective,
-    TlMessageValidationComponent,
     MessageValidationDirective,
   ],
   entryComponents: [TlMessageValidationComponent]

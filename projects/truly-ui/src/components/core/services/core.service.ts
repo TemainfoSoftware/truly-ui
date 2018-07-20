@@ -31,7 +31,7 @@ import { APPLICATION_CONFIGURATION } from '../tokens/configuration.token';
 
 import { I18nInterface } from '../../i18n/i18n.interface';
 import { I18nService } from '../../i18n/i18n.service';
-import en_US from '../../i18n/languages/en_US';
+import { en_US } from '../../i18n/languages/en_US';
 
 @Injectable()
 export class CoreService {

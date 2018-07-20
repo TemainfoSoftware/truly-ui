@@ -21,7 +21,7 @@
  */
 import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
-import { I18nService } from '../../i18n';
+import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 @Modal({

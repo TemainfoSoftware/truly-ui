@@ -2,8 +2,8 @@
 
 
 $default-app-theme: (
-  basic:  tl-palette( $tl-blue-gray, 800, 600, 900),
-  primary: tl-palette($tl-cyan-green, 600, 500, 700),
+  basic:  tl-palette( $tl-gray, 100, 50, 200),
+  primary: tl-palette( $tl-cyan-green, 600, 500, 700),
 
   success: tl-palette($tl-green, 600, 500, 700),
   danger: tl-palette($tl-red, 600, 500, 700),

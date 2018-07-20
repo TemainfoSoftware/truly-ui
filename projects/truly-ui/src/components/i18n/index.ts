@@ -22,5 +22,5 @@
 
 export { I18nService } from './i18n.service';
 export { I18nInterface } from './i18n.interface';
-export { default as en_US } from './languages/en_US';
-export { default as pt_BR } from './languages/pt_BR';
+export { en_US } from './languages/en_US';
+export { pt_BR } from './languages/pt_BR';

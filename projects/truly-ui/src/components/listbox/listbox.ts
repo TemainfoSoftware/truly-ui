@@ -32,7 +32,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, filter } from 'rxjs/internal/operators';
 import { debounceTime } from 'rxjs/operators';
-import { I18nService } from '../i18n';
+import { I18nService } from '../i18n/i18n.service';
 
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 import { KeyEvent } from '../core/enums/key-events';

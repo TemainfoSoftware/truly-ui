@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-export default {
+export const Form = {
   textOk: 'OK',
   textCancel: 'Cancelar',
 };

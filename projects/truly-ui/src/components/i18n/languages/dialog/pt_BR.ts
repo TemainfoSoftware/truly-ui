@@ -1,7 +1,7 @@
 /*
     MIT License
 
-    Copyright (c) 2018 Temainfo Software
+    Copyright (c) 2017 Temainfo Sistemas
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,11 @@
     SOFTWARE.
 */
 
-export const MonthsDescription = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
+export const Dialog = {
+  exceptionBoxDescription: 'Nome/Código da Exceção',
+  textClose: 'Fechar',
+  textOk: 'OK',
+  textCancel: 'Cancelar',
+  textYes: 'Sim',
+  textNo: 'Não',
+};

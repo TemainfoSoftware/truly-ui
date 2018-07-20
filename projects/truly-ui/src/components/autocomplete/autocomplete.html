@@ -5,7 +5,7 @@
     <tl-input #inputWriter
               [label]="label"
               (focusout)="onInputFocusOut($event)"
-              (focus)="onFocusInput($event)"
+              (focus)="onFocusInput()"
               (clear)="onClearInput()"
               [labelSize]="labelSize"
               [iconBefore]="iconBefore"
@@ -30,7 +30,7 @@
         [label]="labelName"
         [labelDetail]="labelDetail"
         [lazyMode]="lazyMode"
-        [rowsClient]="5"
+        [rowsClient]="rowsClient"
         [searchQuery]="searchQuery"
         [dynamicShowHide]="true"
         [charsToSearch]="charsToSearch"

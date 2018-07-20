@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { CreditCard } from './creditcard.validator';
 import * as cards from './creditcards';
@@ -29,9 +30,9 @@ const creditCard = 0;
 // @dynamic
 export class CreditCardFactory {
 
-  static getInstance( tlinput ): CustomType {
+  static getInstance( tlinput, i18n: ValidatorsI18nInterface ): CustomType {
     this.setCreditCardMask( tlinput );
-    const credicardInstance = new CreditCard(creditCard);
+    const credicardInstance = new CreditCard(creditCard, i18n);
     return credicardInstance;
   }
 

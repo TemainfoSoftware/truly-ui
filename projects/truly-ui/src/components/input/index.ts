@@ -8,12 +8,14 @@ import { TlMessageValidationComponent } from './components/messagevalidation/mes
 import { CharcaseDirective } from './directives/charcase.directive';
 
 import { ValidatorsModule } from '../validators/index';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule( {
   imports: [
     CommonModule,
     FormsModule,
-    ValidatorsModule
+    ValidatorsModule,
+    OverlayModule
   ],
   declarations: [
     TlInput,
@@ -24,7 +26,6 @@ import { ValidatorsModule } from '../validators/index';
   exports: [
     TlInput,
     CharcaseDirective,
-    TlMessageValidationComponent,
     MessageValidationDirective,
   ],
   entryComponents: [TlMessageValidationComponent]

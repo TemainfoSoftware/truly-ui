@@ -20,12 +20,14 @@
     SOFTWARE.
 */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { TlDatatableColumn } from '../parts/column/datatable-column';
 
 @Injectable()
 export class TlDatatableColumnService {
+
+    constructor( private injector: Injector ) {}
 
     private dt: TlDatatable;
 
@@ -54,7 +56,7 @@ export class TlDatatableColumnService {
     }
 
     private buildNewDataTableColumn(field) {
-        const column = new TlDatatableColumn();
+        const column = new TlDatatableColumn(this.injector);
         column.title = field.toUpperCase();
         column.field = field;
         column.width = this.getWidthColumn() + '%';

@@ -1,0 +1,53 @@
+@import "../../../../core/styles/theming/theming";
+
+@mixin tl-advanced-sub-menu-theme( $theme ) {
+  $basic:   map-deep-get($theme, 'basic');
+  $primary:   map-deep-get($theme, 'primary');
+
+  .header-advanced-submenu {
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+    > .icon-header {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+  }
+
+  .ui-advanced-sub-menu-list {
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+    outline: 1px solid map-deep-get($basic, "default", "border");
+  }
+
+  .ui-advanced-submenu-list-item{
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+    border-bottom: 1px solid map-deep-get($basic, "default", "border");
+    > .icon {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    > .icon-sub-menu {
+      color: map-deep-get($basic, "default", "foreground");
+
+      &.ui-advanced-submenu-opened {
+        background: map-deep-get($primary, "default", "background");
+        color: map-deep-get($primary, "default", "foreground");
+      }
+    }
+
+    > .label {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &.ui-advanced-submenu-selected {
+      background: map-deep-get($primary, "default", "background");
+      color:  map-deep-get($primary, "default", "foreground");
+    }
+
+    &:focus {
+      background: map-deep-get($basic, "default", "background");
+      outline: none;
+    }
+  }
+
+}

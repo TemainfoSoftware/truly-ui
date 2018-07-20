@@ -1,15 +1,22 @@
+@import "../../../accordion/accordion-theme";
 @import "../../../button/button-theme";
+@import "../../../buttongroup/buttongroup-theme";
 @import "../../../calendar/calendar-theme";
 @import "../../../chatlist/chatlist-theme";
-@import "../../../core/core";
 @import "../../../checkbox/checkbox-theme";
+@import "../../../contextmenu/contextmenu-theme";
+@import "../../../core/core";
 @import "../../../datatable/datatable-theme";
+@import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../form/form-theme";
 @import "../../../input/input-theme";
 @import "../../../listbox/listbox-theme";
 @import "../../../popupmenu/popupmenu-theme";
 @import "../../../menu/menu-theme";
+@import "../../../menu/parts/simple/simple-sub-menu-theme";
+@import "../../../menu/parts/advanced/parts/advanced-sub-menu-theme";
+@import "../../../menu/parts/advanced/advanced-root-menu-theme";
 @import "../../../modal/modal-theme";
 @import "../../../modal/addons/modal-toolbar/modal-toolbar-theme";
 @import "../../../multiselect/multiselect-theme";
@@ -22,3 +29,40 @@
 @import "../../../tabcontrol/tabcontrol-theme";
 @import "../../../toaster/toaster-theme";
 @import "../../../toolbar/toolbar-theme";
+@import "../../../timepicker/timepicker-theme";
+
+@mixin truly-all-components($theme) {
+  @include tl-accordion-theme($theme);
+  @include tl-button-group-theme($theme);
+  @include tl-button-theme($theme);
+  @include tl-calendar-theme($theme);
+  @include tl-chatlist-theme($theme);
+  @include tl-checkbox-theme($theme);
+  @include tl-contextmenu-theme($theme);
+  @include tl-core-theme($theme);
+  @include tl-datatable-theme($theme);
+  @include tl-dialog-error-theme($theme);
+  @include tl-dropdonwlist-theme($theme);
+  @include tl-form-theme($theme);
+  @include tl-input-theme($theme);
+  @include tl-listbox-theme($theme);
+  @include tl-popupmenu-theme($theme);
+  @include tl-menu-theme($theme);
+  @include tl-advanced-root-menu-theme($theme);
+  @include tl-advanced-sub-menu-theme($theme);
+  @include tl-simple-sub-menu-theme($theme);
+  @include tl-modal-theme($theme);
+  @include tl-modal-toolbar-theme($theme);
+  @include tl-multiselect-theme($theme);
+  @include tl-navigator-theme($theme);
+  @include tl-panelgroup-theme($theme);
+  @include tl-progressbar-theme($theme);
+  @include tl-radiobutton-theme($theme);
+  @include tl-splitbutton-theme($theme);
+  @include tl-switch-theme($theme);
+  @include tl-tabcontrol-theme($theme);
+  @include tl-toaster-theme($theme);
+  @include tl-toolbar-theme($theme);
+  @include tl-timepicker-theme($theme);
+}
+

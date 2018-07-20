@@ -54,7 +54,10 @@ export class TlNavigator implements OnInit, OnChanges {
 
   public description = '';
 
-  constructor(public navigatorManager: NavigatorManagerService, public change: ChangeDetectorRef) {}
+  constructor(
+    public navigatorManager: NavigatorManagerService,
+    public change: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.navigatorManager.setType(this.type);

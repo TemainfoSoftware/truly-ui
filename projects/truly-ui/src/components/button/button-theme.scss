@@ -7,6 +7,38 @@
   color:  map-deep-get($theme, $action, "default", "foreground");
   transition: background ease-in-out 100ms;
 
+
+  /*Create ripple effec*/
+
+  &.ripple {
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #FFFFFF 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform .5s, opacity 1s;
+    }
+    &:active:after {
+      transform: scale(0, 0);
+      opacity: .3;
+      transition: 0s;
+    }
+
+  }
+
+
   & .iconAddonAfter {
     border-left: 1px solid map-deep-get($theme, $action, "default", "border");
   }
@@ -41,10 +73,9 @@
   }
 
   &.disabled{
-    background-color: map-deep-get($theme, $action, "hover", "background");
-    border: 1px solid map-deep-get($theme, $action, "hover", "border");
-    color: map-deep-get($theme, $action, "hover", "foreground");
-    opacity: 0.45;
+    background-color: map-deep-get($theme, $action, "disabled", "background");
+    border: 1px solid map-deep-get($theme, $action, "disabled", "border");
+    color: map-deep-get($theme, $action, "disabled", "foreground");
     cursor: default;
   }
 }
@@ -60,10 +91,6 @@
     &.primary {
       @include _tl-button-theme-schema($theme, 'primary')
     }
-
-    //&.secondary {
-    //  @include _tl-button-theme-schema($theme,'secondary')
-    //}
 
     &.success {
       @include _tl-button-theme-schema($theme, 'success')
@@ -87,40 +114,5 @@
       box-shadow: 0 0 0 2px rgba(24,144,255,.2);
       border-right-width: 1px!important;
     }
-
-  //  &.disabled{
-  ////   color: $disable;
-  //  }
   }
-
-}
-/*Create ripple effec*/
-
-.ripple {
-  position: relative;
-  overflow: hidden;
-  transform: translate3d(0, 0, 0);
-}
-
-.ripple:after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
-  background-repeat: no-repeat;
-  background-position: 50%;
-  transform: scale(10, 10);
-  opacity: 0;
-  transition: transform .5s, opacity 1s;
-}
-
-.ripple:active:after {
-  transform: scale(0, 0);
-  opacity: .3;
-  transition: 0s;
 }

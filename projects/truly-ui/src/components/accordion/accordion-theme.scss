@@ -1,0 +1,34 @@
+@import "../core/styles/theming/theming";
+
+@mixin tl-accordion-theme($theme) {
+
+  $basic: map-deep-get($theme, 'basic');
+
+  .ui-wrapper-accordion {
+    border: 1px solid map-deep-get($basic, "default", "border");
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+  }
+
+  .ui-accordion-item-header {
+    color: map-deep-get($basic, "default", "foreground");
+    background: map-deep-get($basic, "default", "background");
+    border-top: 1px solid map-deep-get($basic, "default", "border");
+    border-bottom: 1px solid map-deep-get($basic, "default", "border");
+
+    > .ui-accordion-arrow {
+      color: map-deep-get($basic, "lighter", "foreground");
+    }
+
+    &:hover {
+      background: map-deep-get($basic, "lighter", "background");
+      color: map-deep-get($basic, "lighter", "foreground");
+    }
+  }
+
+  .opened {
+    background: map-deep-get($basic, "darker", "background");
+  }
+
+
+}

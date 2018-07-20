@@ -20,10 +20,15 @@
     SOFTWARE.
 */
 
+import { I18nInterface } from '../../i18n/i18n.interface';
+import { en_US } from '../../i18n/languages/en_US';
+
 export class LazyApplicationLoaderConfig {
   theme?: string;
+  language?: I18nInterface;
 
   constructor() {
     this.theme = 'default';
+    this.language = en_US;
   }
 }

@@ -152,5 +152,12 @@ export const dataProperties = [
     default: 'left',
     description: 'Define the alignment of the text inside of the input. (css text-align)',
     options: 'left|right|center|justify|initial|inherit'
-  }
+  },
+  {
+    name: 'addNewMessage',
+    type: 'string',
+    default: '\'Add New\'',
+    description: 'Text shown in Add New element',
+    options: 'any text'
+  },
 ];

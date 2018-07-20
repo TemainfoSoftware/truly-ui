@@ -1,0 +1,23 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin tl-simple-sub-menu-theme( $theme ) {
+  $basic:   map-deep-get($theme, 'basic');
+
+  .ui-simple-list-item {
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
+    > .icon {
+      color: map-deep-get($basic, "default", "foreground");
+
+    }
+    > .label {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &:hover {
+      background: map-deep-get($basic, "hover", "background");
+      color: map-deep-get($basic, "hover", "foreground");
+    }
+  }
+
+}

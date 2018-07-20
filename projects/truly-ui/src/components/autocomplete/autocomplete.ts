@@ -22,7 +22,7 @@
 import {
   Component, ContentChild, EventEmitter,
   Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit, OnChanges
+  Optional, Inject, OnInit, AfterViewInit, OnChanges, ElementRef
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -100,6 +100,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() charsToSearch = 2;
 
+  @Input() rowsClient = 5;
+
+  @Input() addNewMessage = 'Add New';
+
   @ViewChild( NgModel ) model: NgModel;
 
   @ViewChild( 'inputWriter' ) tlinput;
@@ -131,11 +135,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private renderer: Renderer2 ) {
+    asyncValidators: Array<any>, private renderer: Renderer2, private element: ElementRef ) {
     super( validators, asyncValidators );
   }
 
   ngOnInit() {
+    this.getPosition();
     this.handleCustom();
   }
 
@@ -212,8 +217,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     } ) );
   }
 
-  onFocusInput( $event ) {
-    this.setListPosition( $event );
+  onFocusInput() {
+    this.getPosition();
     this.handleOpenOnFocus();
   }
 
@@ -289,10 +294,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listBox.detectChanges();
   }
 
-
-  setListPosition( $event ) {
-    this.listLeftPosition = $event.target.getBoundingClientRect().left;
-    this.listTopPosition = $event.target.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight;
+  getPosition() {
+    this.listLeftPosition = this.tlinput.input.nativeElement.getBoundingClientRect().left;
+    this.listTopPosition = (this.element.nativeElement.getBoundingClientRect().top) + (this.tlinput.input.nativeElement.offsetHeight);
     this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
   }
 

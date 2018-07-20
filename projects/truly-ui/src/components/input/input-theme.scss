@@ -30,6 +30,7 @@
       }
       &.-predefined {
         color: map-deep-get($basic, "default", "foreground");
+        background-color: map-deep-get($basic, "default", "background");
       }
     }
 
@@ -45,11 +46,11 @@
     }
 
     > .ui-wrapper-input {
-      background-color: #FFFFFF;
+      background-color: map-deep-get($basic, "default", "background");
       > .field {
         border: 1px solid map-deep-get($basic, "default", "border");
         background-color: map-deep-get($basic, "lighter", "background");
-        color: map-deep-get($basic, "lighter", "color");
+        color: map-deep-get($basic, "lighter", "foreground");
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
@@ -60,7 +61,7 @@
         }
 
         &:focus:not(.ng-dirty) {
-          background-color: rgba(map-deep-get($warning, "default", "background"), 0.12);
+          background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
           outline: none;
           border: 1px solid map-deep-get($warning, "default", "border");
         }
@@ -75,6 +76,7 @@
 
         &.-readonly {
           background-color: map-deep-get($basic, "default", "background");
+          color: map-deep-get($basic, "default", "foreground");
         }
 
         &.ng-touched.invalid {

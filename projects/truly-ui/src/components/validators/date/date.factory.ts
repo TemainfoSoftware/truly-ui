@@ -20,14 +20,15 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { DateTl } from './date.validator';
 
 export class DateFactory {
 
-  static getInstance( tlinput, format ): CustomType {
+  static getInstance( tlinput, format, i18n: ValidatorsI18nInterface ): CustomType {
     this.setDateMask( tlinput, format );
-    return new DateTl(tlinput, format);
+    return new DateTl(tlinput, format, i18n);
   }
 
   static setDateMask( tlinput, format ) {

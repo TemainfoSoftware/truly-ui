@@ -28,6 +28,9 @@ import { TlCalendar } from '../calendar/calendar';
 import { MiscModule } from '../misc/index';
 import { CalendarModule } from '../calendar/index';
 import { InputModule } from '../input/index';
+import { TlDatePickerContent } from './datepicker-content/datepicker-content';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
 
 @NgModule( {
   imports: [
@@ -35,13 +38,17 @@ import { InputModule } from '../input/index';
     MiscModule,
     CalendarModule,
     FormsModule,
+    OverlayModule,
+    PortalModule,
     InputModule
   ],
   declarations: [
-    TlDatePicker
+    TlDatePicker,
+    TlDatePickerContent
   ],
   exports: [
-    TlDatePicker
+    TlDatePicker,
+    TlDatePickerContent
   ],
   entryComponents: [ TlCalendar ]
 } )

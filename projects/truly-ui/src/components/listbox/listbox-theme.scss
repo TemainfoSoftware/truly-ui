@@ -25,7 +25,7 @@
 
     &::-webkit-scrollbar-thumb{
       background: map-deep-get($primary, "default", "background");
-      border-radius: 10px;
+      border-radius: 3px;
     }
   }
 
@@ -40,7 +40,7 @@
   }
 
   .item {
-    border-bottom: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
+    border-bottom: 1px solid map-deep-get($basic, "default", "border");
     color: map-deep-get($basic, "default", "foreground");
   }
 

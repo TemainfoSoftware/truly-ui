@@ -31,6 +31,7 @@ import {
 import { InputMask } from './core/input-mask';
 import { ElementBase } from './core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 
 /**
  * Input Component personalized with few features.
@@ -115,11 +116,17 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @ViewChild( 'inputBox' ) inputBox;
 
+  @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+
   @Output() clear: EventEmitter<any> = new EventEmitter();
+
+  @Output() overlayOrigin: EventEmitter<any> = new EventEmitter();
 
   @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
   @Output() focus: EventEmitter<any> = new EventEmitter();
+
+  @Output() blur: EventEmitter<any> = new EventEmitter();
 
   public required = false;
 
@@ -135,6 +142,7 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   ngOnInit() {
     this.setRequired();
+    this.overlayOrigin.emit( this.cdkOverlayOrigin );
   }
 
   ngAfterViewInit() {
@@ -177,6 +185,10 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   onInputFocus( $event ) {
     this.focus.emit( $event );
+  }
+
+  onInputBlur( $event ) {
+    this.blur.emit( $event );
   }
 
   clearInput( $event? ) {

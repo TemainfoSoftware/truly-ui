@@ -20,13 +20,14 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { Email } from './email.validator';
 
 export class EmailFactory {
 
-  static getInstance(): CustomType {
-    return new Email();
+  static getInstance( i18n: ValidatorsI18nInterface ): CustomType {
+    return new Email(i18n);
   }
 }
 

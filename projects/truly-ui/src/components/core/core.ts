@@ -43,8 +43,8 @@ export class TlCore {
         setTimeout(() => {
           if (this.applicationRef.components.length > 0 ) {
             this.theme = `tl-${theme}-theme`;
-            this.renderer.removeAttribute(this.applicationRef.components[0].location.nativeElement, 'class');
-            this.renderer.setAttribute(this.applicationRef.components[0].location.nativeElement, 'class', this.theme);
+            this.renderer.removeClass(document.body, this.theme);
+            this.renderer.addClass(document.body, this.theme);
             this.applicationRef.detachView(componentRef.hostView);
             this.applicationRef.tick();
           }

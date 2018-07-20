@@ -1,8 +1,6 @@
 .ui-wrapper-context-menu {
   position: fixed;
-  background: #fff;
   z-index: 1000;
-  border: 1px solid #c3c3c3;
   min-width: 250px;
 }
 
@@ -28,8 +26,6 @@
 
   &:hover {
     cursor: pointer;
-    background-color: #66CC99;
-    color: #fff;
   }
 
   &:hover > ::ng-deep tl-simple-sub-menu {

@@ -8,29 +8,6 @@
   $theme: generate-theme( $theme-config );
 
   .tl-#{$theme-name}-theme{
-    @include tl-button-theme($theme);
-    @include tl-calendar-theme($theme);
-    @include tl-chatlist-theme($theme);
-    @include tl-checkbox-theme($theme);
-    @include tl-core-theme($theme);
-    @include tl-popupmenu-theme($theme);
-    @include tl-modal-toolbar-theme($theme);
-    @include tl-datatable-theme($theme);
-    @include tl-dropdonwlist-theme($theme);
-    @include tl-form-theme($theme);
-    @include tl-input-theme($theme);
-    @include tl-listbox-theme($theme);
-    @include tl-modal-theme($theme);
-    @include tl-multiselect-theme($theme);
-    @include tl-menu-theme($theme);
-    @include tl-navigator-theme($theme);
-    @include tl-panelgroup-theme($theme);
-    @include tl-progressbar-theme($theme);
-    @include tl-radiobutton-theme($theme);
-    @include tl-splitbutton-theme($theme);
-    @include tl-switch-theme($theme);
-    @include tl-tabcontrol-theme($theme);
-    @include tl-toaster-theme($theme);
-    @include tl-toolbar-theme($theme);
+    @include truly-all-components($theme);
   }
 }

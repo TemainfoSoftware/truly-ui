@@ -51,7 +51,7 @@ export class DialogDemoComponent {
   error() {
     this.dialogService.error( 'This is an Error Dialog', ( modalResult ) => {
       console.log( 'Return', modalResult );
-    }, );
+    }, {exceptionName: '404', exceptionMessage: 'I was created using a function call!'});
   }
 
 }

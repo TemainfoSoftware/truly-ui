@@ -5,8 +5,8 @@
               *ngFor="let item of groupItems"
               [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height}"
               [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
-              [class]="'ripple tl-button '+ item.color"
-              (click)="selectButtonItem(item)"
+              [class]="'tl-button ripple '+ item.color"
+              (click)="selectButtonItem(item, $event)"
               [disabled]="item.disabled ? true : null">
         <span class="textButton" [ngStyle]="{'line-height': item.height}">{{item.text}}</span>
       </button>

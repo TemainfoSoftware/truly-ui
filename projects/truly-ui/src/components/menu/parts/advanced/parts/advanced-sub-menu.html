@@ -7,7 +7,7 @@
   <li #elementList
       [ngClass]="
       {'ui-advanced-submenu-selected': isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu && item[subItem] }"
-      class="ui-advanced-list-item"
+      class="ui-advanced-submenu-list-item"
       tabindex="-1"
       (keydown.arrowdown)="onArrowDown( $event )"
       (keydown.arrowup)="onArrowUp( $event )"

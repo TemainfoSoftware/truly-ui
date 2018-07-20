@@ -29,7 +29,9 @@
   "peerDependencies": {
     "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
     "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/cdk": "^6.3.3",
     "font-awesome": "^4.7.0",
-    "ionicons-npm": "^2.0.1"
+    "ionicons-npm": "^2.0.1",
+    "string-format": "^2.0.0"
   }
 }

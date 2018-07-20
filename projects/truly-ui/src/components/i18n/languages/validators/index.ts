@@ -19,21 +19,17 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/pt_BR';
-import Datatable from './datatable/pt_BR';
-import Dialog from './dialog/pt_BR';
-import Form from './form/pt_BR';
-import Listbox from './listbox/pt_BR';
-import Navigator from './navigator/pt_BR';
-import Validators from './validators/pt_BR';
 
-export default {
-  locale: 'pt-BR',
-  Calendar,
-  Datatable,
-  Dialog,
-  Form,
-  Listbox,
-  Navigator,
-  Validators,
-};
+export interface ValidatorsI18nInterface {
+  invalidDatePattern: string;
+  fieldRequired: string;
+  invalidMinLength: string;
+  patternNotMatch: string;
+  invalidCPF: string;
+  invalidCNPJ: string;
+  invalidEmail: string;
+  invalidCreditCard: string;
+  invalidPasswordRuleDigits: string;
+  invalidPasswordRuleUppercase: string;
+  invalidPasswordRuleSpecial: string;
+}

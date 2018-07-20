@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { ButtonModule } from '../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../projects/truly-ui/src/components/core/index';
 import { DropDownListModule } from '../../projects/truly-ui/src/components/dropdownlist';
+import en_US from '../../projects/truly-ui/src/components/i18n/languages/en_US';
+import pt_BR from '../../projects/truly-ui/src/components/i18n/languages/pt_BR';
 import { ContainerModalModule } from '../../projects/truly-ui/src/components/modal/addons/container-modal';
 import { ToolbarModule } from '../../projects/truly-ui/src/components/toolbar';
 import { AppComponent } from './app.component';
@@ -26,7 +28,8 @@ import { environment } from '../environments/environment';
     FormsModule,
     BrowserModule,
     CoreModule.forRoot({
-      theme: 'default'
+      theme: 'default',
+      language: pt_BR
     }),
     DropDownListModule,
     ContainerModalModule,

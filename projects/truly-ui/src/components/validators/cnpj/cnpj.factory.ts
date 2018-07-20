@@ -20,14 +20,15 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { CNPJ } from './cnpj.validator';
 
 export class CNPJFactory {
 
-  static getInstance( tlinput ): CustomType {
+  static getInstance( tlinput, i18n: ValidatorsI18nInterface ): CustomType {
     this.setCNPJMask( tlinput );
-    return new CNPJ();
+    return new CNPJ(i18n);
   }
 
   static setCNPJMask( tlinput ) {

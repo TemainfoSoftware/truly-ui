@@ -25,6 +25,7 @@ import {
   ContentChild, Directive, forwardRef
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { I18nService } from '../../i18n';
 import { TlInput } from '../../input/input';
 import { CNPJFactory } from './cnpj.factory';
 
@@ -42,11 +43,11 @@ export class CNPJDirective implements Validator, AfterViewInit {
 
     @ContentChild(TlInput) tlinput;
 
-    constructor() {}
+    constructor( private i18n: I18nService ) {}
 
     ngAfterViewInit() {}
 
     validate( c: FormControl ) {
-      return CNPJFactory.getInstance(  this.tlinput ).validate()( c );
+      return CNPJFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
     }
 }

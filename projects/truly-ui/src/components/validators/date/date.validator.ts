@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
 
@@ -31,8 +32,11 @@ export class DateTl implements CustomType {
 
   private tlinput;
 
-  constructor( tlinput, format ) {
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( tlinput, format, i18n: ValidatorsI18nInterface ) {
     this.tlinput = tlinput;
+    this.i18n = i18n;
     formatDate = format;
   }
 
@@ -40,18 +44,18 @@ export class DateTl implements CustomType {
     return ( c: AbstractControl ) => {
 
       if ( !this.stringUnmasked( c ) && c.touched ) {
-        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
+        return { date: this.i18n.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       if ( (this.stringUnmasked( c ).length) !== formatDate.length ) {
-        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
+        return { date: this.i18n.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       const formattedDate = ReverseFormatDate(this.stringUnmasked(c), formatDate);
       this.date = new Date( formattedDate['year'] + '-' + formattedDate['month'] + '-' + formattedDate['day'] );
 
       if ( this.date.toDateString() === 'Invalid Date' ) {
-        return { date: 'Invalid Date, value must match with pattern [ ' + formatDate.toUpperCase() + ' ]' };
+        return { date: this.i18n.invalidDatePattern +  ' [ ' + formatDate.toUpperCase() + ' ]' };
       }
 
       return null;

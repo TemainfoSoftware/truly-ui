@@ -52,6 +52,7 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.3",
+    "@angular/service-worker": "^6.0.3",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
@@ -63,9 +64,9 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
+    "string-format": "^2.0.0",
     "web-animations-js": "^2.3.1",
-    "zone.js": "^0.8.26",
-    "@angular/service-worker": "^6.0.3"
+    "zone.js": "^0.8.26"
   },
   "peerDependencies": {
     "@angular/common": "^6.0.3",

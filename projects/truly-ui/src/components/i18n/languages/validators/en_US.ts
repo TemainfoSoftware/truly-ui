@@ -19,21 +19,17 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import Calendar from './calendar/pt_BR';
-import Datatable from './datatable/pt_BR';
-import Dialog from './dialog/pt_BR';
-import Form from './form/pt_BR';
-import Listbox from './listbox/pt_BR';
-import Navigator from './navigator/pt_BR';
-import Validators from './validators/pt_BR';
 
 export default {
-  locale: 'pt-BR',
-  Calendar,
-  Datatable,
-  Dialog,
-  Form,
-  Listbox,
-  Navigator,
-  Validators,
+  invalidDatePattern: 'Invalid Date, value must match with pattern',
+  fieldRequired: 'Field Required, please enter a value',
+  invalidMinLength: 'Value must have {0} characters',
+  patternNotMatch: 'Value does not match required pattern',
+  invalidCPF: 'Invalid CPF',
+  invalidCNPJ: 'Invalid CNPJ',
+  invalidEmail: 'Invalid Email',
+  invalidCreditCard: 'Invalid Credit Card',
+  invalidPasswordRuleDigits: 'Invalid Password, must have at least one digit. ex: abc123',
+  invalidPasswordRuleUppercase: 'Invalid Password, must have at least one Uppercase Letter. ex: abcY123',
+  invalidPasswordRuleSpecial: 'Invalid Password, must have at least one Special Character. ex: abcY123@#!',
 };

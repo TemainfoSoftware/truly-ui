@@ -25,6 +25,7 @@ import Dialog from './dialog/en_US';
 import Form from './form/en_US';
 import Listbox from './listbox/en_US';
 import Navigator from './navigator/en_US';
+import Validators from './validators/en_US';
 
 export default {
   locale: 'en-US',
@@ -34,4 +35,5 @@ export default {
   Form,
   Listbox,
   Navigator,
+  Validators,
 };

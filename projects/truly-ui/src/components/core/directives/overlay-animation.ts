@@ -25,7 +25,7 @@
 
 export const OverlayAnimation =
    [
-     trigger('picker', [
+     trigger('overlay', [
        state('void', style({
          transform: 'scale(0)',
          opacity: 0

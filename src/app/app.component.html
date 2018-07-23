@@ -324,9 +324,9 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu"> 
+          <ul class="treeview-menu">
             <li><a href="#" routerLink="datepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> DatePicker</a></li>
-            <li><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
+            <li *ngIf="!inProduction"><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
           </ul>
         </li>
         <li *ngIf="!inProduction" class="treeview">

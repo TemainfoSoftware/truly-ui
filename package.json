@@ -111,8 +111,7 @@
     "pkgRoot": "dist",
     "assets": [
       "dist/*.zip",
-      "dist/*.tar.gz",
-      "dist/*.tgz"
+      "dist/*.tar.gz"
     ],
     "publish": [
       {

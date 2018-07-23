@@ -60,9 +60,10 @@ We assume that you have already installed the following packages at least and ar
 
     ```
     "styles": [
-           "../node_modules/font-awesome/css/font-awesome.min.css",
-           "../node_modules/ionicons-npm/css/ionicons.min.css",
-           "../node_modules/truly-ui/css/icons/dx-icons/dx-icons.scss",
+           "node_modules/@angular/cdk/overlay-prebuilt.css",
+           "node_modules/font-awesome/css/font-awesome.min.css",
+           "node_modules/ionicons-npm/css/ionicons.min.css",
+           "node_modules/truly-ui/css/icons/dx-icons/dx-icons.scss"
     ]
     ```
     

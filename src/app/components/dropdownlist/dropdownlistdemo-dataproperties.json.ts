@@ -7,14 +7,14 @@ export const dataProperties = [
     options: 'any object | any array'
   },
   {
-    name: 'text',
+    name: 'keyText',
     type: 'string',
     default: 'text',
     description: 'Sets the data item field that represents the item text.',
     options: 'any text'
   },
   {
-    name: 'valueItem',
+    name: 'keyValue',
     type: 'string',
     default: 'value',
     description: 'Sets the data item field that represents the item value.',

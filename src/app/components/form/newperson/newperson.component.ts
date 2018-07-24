@@ -37,11 +37,22 @@ export class NewPersonComponent implements OnInit, OnChanges {
 
   public birthday;
 
+  public dropdown;
+
+  public dependente;
+
   constructor(public formDataService: DataFormService,  public dataDumpService: DumpDataService) {
     this.dataAuto = this.dataDumpService.createRandomData( 200 );
   }
 
   ngOnInit() {
+    this.dropdown = [
+      { textItem : 'Wallace', value : '1' },
+      { textItem : 'Wilson', value : '2' },
+      { textItem : 'Wanda', value : '3' },
+      { textItem : 'Wanderson', value : '4' },
+      { textItem : 'Wanderlei', value : '5' }
+    ];
     this.data = [
       { textItem : 'Male', valueItem : 'M' },
       { textItem : 'Female', valueItem : 'F' },

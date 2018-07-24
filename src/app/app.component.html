@@ -103,8 +103,8 @@
         <tl-dropdown-list
           class="list-themes"
           [data]="data"
-          [text]="'textItem'"
-          [valueItem]="'value'"
+          [keyText]="'textItem'"
+          [keyValue]="'value'"
           [width]="'150px'"
           [ngModel]="colorSelected"
           [height]="'35px'"
@@ -318,7 +318,7 @@
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu"> 
+          <ul class="treeview-menu">
             <li><a href="#" routerLink="datepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> DatePicker</a></li>
             <li><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
           </ul>

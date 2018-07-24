@@ -172,7 +172,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   taggedNotForm( element: HTMLElement ) {
     for ( let item = 0; item < element.attributes.length; item++ ) {
-      if ( element.attributes[ item ].nodeValue === 'notform' ) {
+      if ( element.attributes[ item ].nodeValue === 'notform' || element.attributes[ item ].nodeName === 'notform' ) {
         return true;
       }
     }

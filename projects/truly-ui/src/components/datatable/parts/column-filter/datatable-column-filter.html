@@ -6,11 +6,11 @@
                  [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
                 <tl-dropdown-list
                     [data]="column?.filterOptions"
-                    [text]="'description'"
+                    [keyText]="'description'"
                     [icon]="'icon'"
                     [width]="'175px'"
                     [height]="'23px'"
-                    [valueItem]="'valueItem'"
+                    [keyValue]="'valueItem'"
                     [showOnlyIcon]="true"
                     [placeholder]="'Reset'"
                     [placeholderIcon]="'ion-search'"

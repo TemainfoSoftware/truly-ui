@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 import { debounceTime } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs';
+import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
 
 
@@ -41,9 +42,17 @@ export class TlDatatabaleColumnFilter implements OnInit {
 
     public filters: FilterMetadata = { matchMode: {}, value: {} };
 
+    get filterPlaceholder() {
+      return this.i18n.getLocale().Datatable.filterPlaceholder;
+    }
+
+    get dropdownResetPlaceholder() {
+      return this.i18n.getLocale().Datatable.dropdownResetPlaceholder;
+    }
+
     private subject =  new Subject();
 
-    constructor() {}
+    constructor( private i18n: I18nService ) {}
 
     ngOnInit() {
         this.subject.pipe( debounceTime(600) ).subscribe((event) => {

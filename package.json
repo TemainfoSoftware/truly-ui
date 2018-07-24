@@ -65,10 +65,12 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.1.0",
     "rxjs-compat": "^6.1.0",
+    "string-format": "^2.0.0",
     "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.26"
   },
   "peerDependencies": {
+    "@angular/cdk": "^6.3.3",
     "@angular/common": "^6.0.3",
     "@angular/core": "^6.0.3",
     "font-awesome": "^4.7.0",
@@ -109,8 +111,7 @@
     "pkgRoot": "dist",
     "assets": [
       "dist/*.zip",
-      "dist/*.tar.gz",
-      "dist/*.tgz"
+      "dist/*.tar.gz"
     ],
     "publish": [
       {

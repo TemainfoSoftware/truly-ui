@@ -11,7 +11,7 @@
         <div [ngClass]="{'ui-box-notfound-records':true, 'ui-show': !foundRecords,'ui-hide': foundRecords}" >
             <div class="ui-container" >
                 <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
-                <div class="ui-notfound-text">Not to show</div>
+                <div class="ui-notfound-text">{{notFountText}}</div>
             </div>
         </div>
         <div [ngStyle]="{height: bodyHeight+'px'}">

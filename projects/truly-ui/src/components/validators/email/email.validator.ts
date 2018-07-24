@@ -20,14 +20,22 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 
 export class Email implements CustomType {
+
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( i18n: ValidatorsI18nInterface ) {
+    this.i18n = i18n;
+  }
+
   validate(): ValidatorFn {
     return ( control: AbstractControl ) => {
       const regex = new RegExp( /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/ );
       if ( (control.value !== '') && (!regex.test( control.value )) ) {
-        return { email: 'Invalid Email' };
+        return { email: this.i18n.invalidEmail };
       }
       return null;
     };

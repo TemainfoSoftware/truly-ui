@@ -26,6 +26,7 @@ import {
   ViewChild, OnDestroy
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { I18nService } from '../../../i18n/i18n.service';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
@@ -50,6 +51,10 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     public bodyHeight = 0;
 
     public translateY = 0;
+
+    get notFountText() {
+      return this.i18n.getLocale().Datatable.notFoundText;
+    }
 
     private quantityVisibleRows = 0;
 
@@ -92,7 +97,8 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
-                 private helperService: DatatableHelpersService
+                 private helperService: DatatableHelpersService,
+                 private i18n: I18nService
     ) {}
 
     ngAfterContentInit() {

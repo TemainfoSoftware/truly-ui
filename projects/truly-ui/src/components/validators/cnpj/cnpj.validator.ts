@@ -20,20 +20,27 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export class CNPJ implements CustomType {
 
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( i18n: ValidatorsI18nInterface ) {
+    this.i18n = i18n;
+  }
+
   validate(): ValidatorFn {
     return ( c: AbstractControl ) => {
 
       if ( (this.cnpjUnmasked( c ) === null) || (this.cnpjUnmasked( c ).length < 14) ) {
-        return { cnpj: 'Invalid CNPJ' };
+        return { cnpj: this.i18n.invalidCNPJ };
       }
 
       if ( this.isAllCharacteresEquals( c ) ) {
-        return { cnpj: 'Invalid CNPJ' };
+        return { cnpj: this.i18n.invalidCNPJ };
       }
 
       let size: any = this.cnpjUnmasked( c ).length - 2;
@@ -52,7 +59,7 @@ export class CNPJ implements CustomType {
       }
       result = sum % 11 < 2 ? 0 : 11 - sum % 11;
       if ( result !== parseInt( digits.charAt( 0 ), 10 ) ) {
-        return { cnpj: 'Invalid CNPJ' };
+        return { cnpj: this.i18n.invalidCNPJ };
       }
 
       size = size + 1;
@@ -68,7 +75,7 @@ export class CNPJ implements CustomType {
       result = sum % 11 < 2 ? 0 : 11 - sum % 11;
 
       if ( result !== parseInt( digits.charAt( 1 ), 10 ) ) {
-        return { cnpj: 'Invalid CNPJ' };
+        return { cnpj: this.i18n.invalidCNPJ };
       }
 
       return null;

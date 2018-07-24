@@ -21,6 +21,7 @@
  */
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
+import { I18nService } from '../../i18n/i18n.service';
 import { Modal } from '../../modal/modal-options';
 
 @Modal({
@@ -43,15 +44,21 @@ export class TlDialogConfirmation implements AfterViewInit {
 
     message = '';
 
-    textOk = 'Yes';
+    get textNo() {
+      return this.i18n.getLocale().Dialog.textNo;
+    }
 
-    textCancel = 'No';
+    get textYes() {
+      return this.i18n.getLocale().Dialog.textYes;
+    }
 
     @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
 
     @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
 
     private defaultOK;
+
+    constructor(  private i18n: I18nService ) {}
 
     ngAfterViewInit() {
         setTimeout( () => {

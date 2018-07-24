@@ -12,7 +12,7 @@
                     [height]="'23px'"
                     [keyValue]="'valueItem'"
                     [showOnlyIcon]="true"
-                    [placeholder]="'Reset'"
+                    [placeholder]="dropdownResetPlaceholder"
                     [placeholderIcon]="'ion-search'"
                     [ngModel]="filters.matchMode[column.field]"
                     (ngModelChange)="onChangeFilter(filters.matchMode[column.field] = $event)"
@@ -24,7 +24,7 @@
                           [clearButton]="true"
                           [ngModel]="filters.value[column.field]"
                           (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
-                          [placeholder]="'Filter..'"
+                          [placeholder]="filterPlaceholder"
                           [type]="column?.type" >
                 </tl-input>
             </div>

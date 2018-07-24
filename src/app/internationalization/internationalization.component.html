@@ -1,0 +1,91 @@
+<div class="container-fluid" style="padding: 20px">
+  <div class="header-title-demo">
+    <h1 class="title">Internationalization</h1>
+    <p class="text-content">The default language of Truly-UI is English(<code>en_US</code>) as of yet. If you want to use other languages, you can follow the instructions below.</p>
+  </div>
+  <app-showcase-card [title]="'Configuration'" [icon]="'ion-document-text'">
+    <app-card>
+      <span class="description">
+        Truly-UI provides a way to set the language of the components in the main module, so all Truly components will
+        be translated into the configured language. To configure, simply pass the <code>language</code> key to the <code>CoreModule.forRoot()</code>
+      </span>
+      <div class="code-area">
+        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+      import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+
+import { CoreModule, pt_BR } from 'truly-ui'; //CoreModule
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    CoreModule.forRoot({
+      theme: 'default',
+      language: pt_BR  // SET LANGUAGE
+    })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+      </textarea>
+        </div>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Changing Language at Runtime'" [icon]="'ion-document-text'">
+    <app-card>
+      <span class="description">
+        The Truly-UI Internationalization API also provides a Runtime Language Changing service. Just use the <code>I18nService</code> service as an injection dependency on other services / components of your application and use the <code>setLocale()</code> method, passing as parameter the language.
+      </span>
+      <div class="code-area">
+        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+import { Injectable } from '@angular/core';
+
+import { I18nService, I18nInterface, en_US } from 'truly-ui';
+
+@Injectable()
+export class MyService {
+
+    constructor( private i18nService: I18nService ) {}
+
+    setLocale(locale: I18nInterface = en_US): void {
+      this.i18nService.setLocale(locale);
+    }
+}
+      </textarea>
+      </div>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Supported languages'" [icon]="'ion-document-text'">
+    <app-card>
+      <div class="table-box">
+        <table class="table table-truly">
+          <thead class="table-truly-head">
+          <tr>
+            <th>Language</th>
+            <th>Packagename</th>
+          </tr>
+          </thead>
+          <tbody class="table-truly-body">
+          <tr>
+            <td><span>English</span></td>
+            <td><span class="badge">en_US</span></td>
+          </tr>
+          </tbody>
+          <tbody class="table-truly-body">
+          <tr>
+            <td><span>Portuguese (Brazil)</span></td>
+            <td><span class="badge">pt_BR</span></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </app-showcase-card>
+</div>

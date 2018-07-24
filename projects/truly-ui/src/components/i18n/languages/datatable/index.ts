@@ -20,12 +20,18 @@
     SOFTWARE.
 */
 
-export const DaysDescription = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
+export interface DatatableI18nInterface {
+  notFoundText: string;
+  filterPlaceholder: string;
+  dropdownResetPlaceholder: string;
+  filterOptionStartsWith: string;
+  filterOptionContains: string;
+  filterOptionNotContains: string;
+  filterOptionEndsWith: string;
+  filterOptionEquals: string;
+  filterOptionNotEquals: string;
+  filterOptionLessThan: string;
+  filterOptionGreaterThan: string;
+  filterOptionLessThanOrEqual: string;
+  filterOptionGreaterThanOrEqual: string;
+}

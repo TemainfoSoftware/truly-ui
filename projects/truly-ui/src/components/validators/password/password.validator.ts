@@ -20,6 +20,7 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 
 export class Password implements CustomType {
@@ -28,8 +29,11 @@ export class Password implements CustomType {
 
   private regex: RegExp;
 
-  constructor( passwordRule ) {
+  private i18n: ValidatorsI18nInterface;
+
+  constructor( passwordRule, i18n: ValidatorsI18nInterface ) {
     this.passwordRule = passwordRule;
+    this.i18n = i18n;
   }
 
   validate(): ValidatorFn {
@@ -42,21 +46,21 @@ export class Password implements CustomType {
       if ( this.passwordRule['digits'] ) {
         this.regex = new RegExp( digits );
         if (!this.regex.test(control.value)) {
-          return {password: 'Invalid Password, must have at least one digit. ex: abc123.'};
+          return { password: this.i18n.invalidPasswordRuleDigits };
         }
       }
 
       if (this.passwordRule['uppercase']) {
         this.regex = new RegExp( uppercase );
         if (!this.regex.test(control.value)) {
-          return {password: 'Invalid Password, must have at least one Uppercase Letter. ex: abcY123.'};
+          return { password: this.i18n.invalidPasswordRuleUppercase };
         }
       }
 
       if (this.passwordRule['special']) {
         this.regex = new RegExp( special );
         if (!this.regex.test(control.value)) {
-          return {password: 'Invalid Password, must have at least one Special Character. ex: abcY123@#!.'};
+          return { password: this.i18n.invalidPasswordRuleSpecial };
         }
       }
 

@@ -122,12 +122,18 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu tl-scheme-primary -paint-link" data-widget="tree">
         <li class="header" style="color: #fff">WELCOME</li>
-        <li><a href="#" routerLink="home" routerLinkActive="active"><i class="fa ion-home"></i> <span>Home</span></a>
+        <li>
+          <a href="#" routerLink="home" routerLinkActive="active"><i class="fa ion-home"></i> <span>Home</span></a>
         </li>
-        <li><a href="#" routerLink="gettingstarted" routerLinkActive="active"><i class="fa ion-play"></i> <span>Getting Started</span></a>
+        <li>
+          <a href="#" routerLink="gettingstarted" routerLinkActive="active"><i class="fa ion-play"></i> <span>Getting Started</span></a>
         </li>
-        <li><a href="#" routerLink="theming" routerLinkActive="active"><i class="fa fa-paint-brush"></i>
-          <span>Theming</span></a></li>
+        <li>
+          <a href="#" routerLink="theming" routerLinkActive="active"><i class="fa fa-paint-brush"></i><span>Theming</span></a>
+        </li>
+        <li>
+          <a href="#" routerLink="i18n" routerLinkActive="active"><i class="fa fa-audio-description"></i><span>Internationalization</span></a>
+        </li>
         <li class="header" style="color: #fff">DOCUMENTATION</li>
         <li class="treeview">
           <a href="#">
@@ -320,7 +326,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="#" routerLink="datepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> DatePicker</a></li>
-            <li><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
+            <li *ngIf="!inProduction"><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
           </ul>
         </li>
         <li *ngIf="!inProduction" class="treeview">

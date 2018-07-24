@@ -2,7 +2,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
-import { ThemingModule } from './theming/theming.module';
 
 @NgModule({
   imports: [
@@ -17,6 +16,10 @@ import { ThemingModule } from './theming/theming.module';
       },
       {
         path: 'home', component: HomeComponent
+      },
+      {
+        path: 'i18n',
+        loadChildren: './internationalization/internationalization.module#InternationalizationModule'
       },
       {
         path: 'theming',

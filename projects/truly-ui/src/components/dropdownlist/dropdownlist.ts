@@ -43,7 +43,7 @@ import { KeyEvent } from '../core/enums/key-events';
   selector: 'tl-dropdown-list',
   templateUrl: './dropdownlist.html',
   styleUrls: [ './dropdownlist.scss' ],
-  animations: OverlayAnimation,
+  animations: [ OverlayAnimation ],
   providers: [
     [ MakeProvider( TlDropDownList ) ]
   ]

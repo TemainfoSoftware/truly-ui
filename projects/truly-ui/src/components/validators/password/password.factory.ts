@@ -20,13 +20,14 @@
  SOFTWARE.
  */
 
+import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
 import { CustomType } from '../../input/core/custom-type';
 import { Password } from './password.validator';
 
 export class PasswordFactory {
 
-  static getInstance(passwordRule): CustomType {
-    return new Password(passwordRule);
+  static getInstance( passwordRule, i18n: ValidatorsI18nInterface): CustomType {
+    return new Password(passwordRule, i18n);
   }
 }
 

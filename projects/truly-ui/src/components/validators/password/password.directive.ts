@@ -25,6 +25,7 @@ import {
   Input,
   ContentChild, Directive, forwardRef} from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { I18nService } from '../../i18n/i18n.service';
 import { TlInput } from '../../input/input';
 import { PasswordFactory } from './password.factory';
 import { PasswordRule } from './passwordrule.interface';
@@ -45,13 +46,13 @@ export class PasswordDirective implements Validator, AfterViewInit {
 
     @ContentChild(TlInput) tlinput;
 
-    constructor() {}
+    constructor( private i18n: I18nService ) {}
 
     ngAfterViewInit() {
       this.tlinput.input.nativeElement.setAttribute('type', 'password');
     }
 
     validate( c: FormControl ) {
-        return PasswordFactory.getInstance( this.passwordRule ).validate()( c );
+        return PasswordFactory.getInstance( this.passwordRule, this.i18n.getLocale().Validators ).validate()( c );
     }
 }

@@ -24,9 +24,14 @@ import {
   Injectable, ComponentFactoryResolver, Injector, Inject
 } from '@angular/core';
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
+
 import { LazyApplicationLoaderConfig } from '../configs/application.config';
 import { TlCore } from '../core';
 import { APPLICATION_CONFIGURATION } from '../tokens/configuration.token';
+
+import { I18nInterface } from '../../i18n/i18n.interface';
+import { I18nService } from '../../i18n/i18n.service';
+import { en_US } from '../../i18n/languages/en_US';
 
 @Injectable()
 export class CoreService {
@@ -35,6 +40,7 @@ export class CoreService {
 
     constructor( private compiler: ComponentFactoryResolver,
                  private injector: Injector,
+                 private i18nService: I18nService,
                  @Inject(APPLICATION_CONFIGURATION) private config: LazyApplicationLoaderConfig
     ) {}
 
@@ -43,11 +49,16 @@ export class CoreService {
           const componentFactory = this.compiler.resolveComponentFactory( TlCore );
           this.componentRef = componentFactory.create(this.injector);
           this.setTheme(this.config.theme);
+          this.setLocale(this.config.language);
           resolve();
       });
     }
 
-    setTheme( theme: string ) {
+    setTheme( theme: string = 'default' ) {
       this.componentRef.instance.setTheme( theme, this.componentRef );
+    }
+
+    setLocale(locale: I18nInterface = en_US): void {
+      this.i18nService.setLocale(locale);
     }
 }

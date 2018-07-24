@@ -87,7 +87,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   public timepickerService: TimePickerService;
 
-  private isTimePickerAbove;
+  public isTimePickerAbove: boolean;
 
   private listeners = [];
 

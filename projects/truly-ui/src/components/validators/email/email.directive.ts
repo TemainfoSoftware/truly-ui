@@ -24,6 +24,7 @@ import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { I18nService } from '../../i18n/i18n.service';
 import { EmailFactory } from './email.factory';
 import { TlInput } from '../../input/input';
 
@@ -38,12 +39,13 @@ import { TlInput } from '../../input/input';
     ]
 } )
 export class EmailDirective implements Validator {
+  @ContentChild(TlInput) tlinput;
 
-    @ContentChild(TlInput) tlinput;
+  constructor( private i18n: I18nService ) {}
 
-    validate( c: FormControl ) {
-      if (this.tlinput.input.nativeElement.value.length > 0) {
-        return EmailFactory.getInstance().validate()( c );
-      }
+  validate( c: FormControl ) {
+    if (this.tlinput.input.nativeElement.value.length > 0) {
+      return EmailFactory.getInstance( this.i18n.getLocale().Validators ).validate()( c );
     }
+  }
 }

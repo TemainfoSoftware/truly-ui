@@ -24,6 +24,7 @@ import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
+import { I18nService } from '../../i18n/i18n.service';
 import { CreditCardFactory } from './creditcard.factory';
 import { TlInput } from '../../input/input';
 
@@ -41,7 +42,9 @@ export class CreditCardDirective implements Validator {
 
   @ContentChild( TlInput ) tlinput;
 
+  constructor( private i18n: I18nService ) {}
+
   validate( c: FormControl ) {
-    return CreditCardFactory.getInstance( this.tlinput ).validate()( c );
+    return CreditCardFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
   }
 }

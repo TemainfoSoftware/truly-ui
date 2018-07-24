@@ -15,7 +15,7 @@
         <i [ngClass]="{'ion-chevron-down': !errorlog, 'ion-chevron-up': errorlog}" class="ion-chevron-down"></i>
     </div>
     <div [@enterAnimation]="errorlog" *ngIf="errorlog" class="error-log">
-        <pre>Exception Name/Code: {{exceptionName}}</pre>
+        <pre>{{exceptionBoxDescription}}: {{exceptionName}}</pre>
         <code *ngIf="exceptionMessage">
            {{exceptionMessage}}
         </code>

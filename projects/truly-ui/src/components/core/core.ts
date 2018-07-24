@@ -42,8 +42,8 @@ export class TlCore {
     setTheme(theme: string, componentRef) {
         setTimeout(() => {
           if (this.applicationRef.components.length > 0 ) {
-            this.theme = `tl-${theme}-theme`;
             this.renderer.removeClass(document.body, this.theme);
+            this.theme = `tl-${theme}-theme`;
             this.renderer.addClass(document.body, this.theme);
             this.applicationRef.detachView(componentRef.hostView);
             this.applicationRef.tick();

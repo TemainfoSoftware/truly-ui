@@ -29,7 +29,7 @@ import { OverlayAnimation } from '../../core/directives/overlay-animation';
   selector: 'tl-datepicker-content',
   templateUrl: './datepicker-content.html',
   styleUrls: [ './datepicker-content.scss' ],
-  animations: OverlayAnimation
+  animations: [ OverlayAnimation ]
 } )
 
 export class TlDatePickerContent  {

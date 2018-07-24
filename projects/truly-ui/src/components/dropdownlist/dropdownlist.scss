@@ -6,7 +6,11 @@ $default-cursorHover: pointer;
 $default-cursor: default;
 $default-outline: none;
 
-.tl-dropdown-list-box {
+* {
+  box-sizing: border-box;
+}
+
+.ui-dropdown-box {
   display: table;
   border-collapse: separate;
   user-select: none;
@@ -27,13 +31,13 @@ $default-outline: none;
     padding: 0 0 5px 0;
   }
   > .labeltext.-labelleft {
-    display: table-cell;
-    text-align: right;
-    padding: 5px 5px 5px 0;
-  }
-  > .wrapper {
-    position: relative;
     display: table;
+    text-align: right;
+    padding: 4px 4px 4px 0;
+  }
+  > .ui-dropdown-wrapper-list {
+    position: relative;
+    display: table-cell;
     margin: 0;
     padding: 0;
     > .select {
@@ -52,12 +56,6 @@ $default-outline: none;
       padding-left: 10px;
       padding-right: 30px;
     }
-    > .select:focus {
-      outline: -webkit-focus-ring-color auto 5px;
-      outline-color: -webkit-focus-ring-color;
-      outline-style: auto;
-    }
-
     > .dropdown-list-icon {
       position: absolute;
       display: table-cell;
@@ -67,62 +65,20 @@ $default-outline: none;
       text-align: center;
       width: 30px;
       height: 100%;
+      transition: all 250ms ease-in-out;
     }
     > .dropdown-list-icon i {
       font-size: 0.7em;
       vertical-align: middle;
     }
-    > .dropdown-list-wrapper-select {
-      z-index: 10;
-      position: fixed;
-      outline: $default-outline;
-      cursor: $default-cursorHover;
-      padding: 0;
-      left: 0;
-      margin: 0;
-      width: 100%;
-      text-align: left;
-      > .dropdown-list-select {
-        border-top: 0;
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        -webkit-border-bottom-right-radius: 3px;
-        -webkit-border-bottom-left-radius: 3px;
-        -moz-border-radius-bottomright: 3px;
-        -moz-border-radius-bottomleft: 3px;
-        border-bottom-right-radius: 3px;
-        border-bottom-left-radius: 3px;
-        > li {
-          font-family: $default-fontFamily;
-          font-size: $default-fontSize;
-          outline: $default-outline;
-          padding: 0 10px;
-        }
-        > li span {
-          font-weight: normal;
-        }
-      }
-      > .dropdown-list-select::-webkit-scrollbar {
-        width: 0.5em;
-      }
-      > .-placeholder {
-        font-family: $default-fontFamily;
-        font-size: $default-fontSize;
-        font-weight: normal;
-        cursor: $default-cursor;
-        outline: $default-outline;
-        border-bottom: 0;
-        border-top: 0;
-        padding: 0 10px;
-      }
-    }
   }
 }
 
-.search-input {
-  box-sizing: border-box;
-  padding: 5px;
+.ui-hidden-input {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  width: 0;
 }
 
 .ui-icon{

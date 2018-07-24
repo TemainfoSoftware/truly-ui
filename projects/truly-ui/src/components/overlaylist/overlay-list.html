@@ -1,0 +1,35 @@
+<div class="ui-dropdown-wrapper-list">
+  <div class="dropdown-list-wrapper-select"
+       [ngStyle]="{'width': width}">
+
+    <div class="search-input"
+         *ngIf="searchOnList">
+      <tl-input
+        (keyup)="handleKeyUp($event)"
+        (keydown)="handleKeyEvents($event)"
+        (keydown.enter)="emitSelectOption()"
+        [iconBefore]="'ion-ios-search-strong'">
+      </tl-input>
+    </div>
+
+    <ul class="dropdown-list-select"
+        tabindex="0"
+        role="listbox"
+        cdkTrapFocus
+        cdkTrapFocusAutoCapture
+        (keydown)="handleKeyEvents($event)"
+        (keydown.space)="$event.preventDefault()"
+        (keydown.enter)="emitSelectOption()"
+        [style.height]="calculatedHeight">
+      <li *ngFor="let item of datasource; let i = index"
+          (click)="handleClickOption(i)"
+          role="option"
+          [optionItem]="item"
+          [ngStyle]="{'line-height' : height}">
+        <i *ngIf="item[icon]" [class]="'ui-icon ' + item[icon]"> </i>
+            <span *ngIf="typeOfData === 'complex'"> {{ item[keyText] }}</span>
+            <span *ngIf="typeOfData === 'simple'"> {{ item }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

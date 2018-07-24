@@ -1,68 +1,54 @@
-<div class="tl-dropdown-list-box"  [ngStyle]="{'line-height' : height}">
-    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}
+<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : height}">
+    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
     </label>
-    <div class="wrapper" #wrapper (click)="changeShowStatus($event)">
-        <div *ngIf="showOnlyIcon"
-             class="ui-overlap"
-             (keydown)="onListOpened($event)"
-             tabindex="-1"
-             [ngStyle]="{'height' : height, 'line-height' : height, 'width': '35px'}">
-            <i #dropdownShow class="{{placeholderIcon}}"></i>
-        </div>
-        <input #dropdown
-               class="select"
-               attr.tabindex="-1"
-               readonly
-               placeholder="{{ placeholder?.valueOf() }}"
-               [(ngModel)]="value"
-               [ngStyle]="{'height' : height, 'line-height' : height, 'width': !showOnlyIcon ? width : '35px'}"
-               [disabled]="disabled ? true : null">
+    <div class="ui-dropdown-wrapper-list"
+         (click)="!disabled ? isOpen = !isOpen : null"
+         cdkOverlayOrigin #trigger="cdkOverlayOrigin">
 
-        <div *ngIf="!showOnlyIcon" class="dropdown-list-icon"
+      <input class="select"
+             readonly
+             [attr.disabled]="disabled ? true : null"
+             [placeholder]="placeholder"
+             [value]="selectedDescription"
+             (keydown)="onKeyDown($event)"
+             [ngStyle]="{'height' : height, 'line-height' : height, 'width': width}">
+
+      <input readonly
+             notform
+             class="ui-hidden-input"
+             [(ngModel)]="value"
+             [ngStyle]="{'height' : height, 'line-height' : height}">
+
+        <div class="dropdown-list-icon"
              [style.line-height]="height"
+             [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down" style="padding: 0;"></i>
         </div>
+
     </div>
-    <div class="wrapper">
-        <div class="dropdown-list-wrapper-select"
-             *ngIf="!disabled"
-             [style.zIndex]="1000"
-             [@enterAnimation]="showHide"
-             [ngStyle]="{
-               'width': showOnlyIcon ? width: wrapper?.offsetWidth + 'px',
-               'left': listLeftPosition + 'px',
-               'top': listTopPosition + 'px'
-             }">
 
-            <div class="search-input" *ngIf="searchOnList">
-              <tl-input (keyup)="onKeyDownSearchInput($event); onListOpened($event)"
-                        #searchInput [iconBefore]="'ion-ios-search-strong'">
-              </tl-input>
-            </div>
+  <ng-template cdkConnectedOverlay
+               (backdropClick)="backDropClick($event)"
+               [cdkConnectedOverlayHasBackdrop]="true"
+               [cdkConnectedOverlayOrigin]="trigger"
+               [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+               [cdkConnectedOverlayOpen]="isOpen">
+    <tl-overlay-list
+      @overlay
+      (selectOption)="onSelectOption($event)"
+      (search)="handleSearch($event)"
+      [typeOfData]="typeOfData"
+      [optionSelected]="optionSelected"
+      [inputModelIndex]="indexOptionSelectedModel"
+      [datasource]="datasource"
+      [scroll]="scroll"
+      [height]="height"
+      [width]="width"
+      [icon]="icon"
+      [keyText]="keyText"
+      [searchOnList]="searchOnList">
+    </tl-overlay-list>
+  </ng-template>
 
-            <div class="-placeholder"
-                 [style.display]="placeholder && showHide ? 'block' : 'none'"
-                #defaultPlaceholder
-                [style.zIndex]="1000"
-                [ngStyle]="{'line-height' : height}"
-                (keydown)="placeholderEnter($event)"
-                (click)="selectPlaceholder()" tabindex="-1">
-               <i *ngIf="placeholderIcon && icon" [class]="'ui-icon '+placeholderIcon"> </i><span> {{ placeholder }}</span>
-           </div>
-
-           <ul class="dropdown-list-select"
-               (keydown)="onListOpened($event)"
-               #list
-               [ngStyle]="calcHeightItem()"
-               [style.display]="showHide ? 'block' : 'none'">
-               <li *ngFor="let item of datasource; let i = index"
-                   (click)="selectOption(item, i)"
-                   tabindex="{{ i }}"
-                   [ngStyle]="{'line-height' : height}">
-                   <i *ngIf="item[icon]" [class]="'ui-icon '+item[icon]"> </i> <span> {{ item[text] }}</span>
-               </li>
-           </ul>
-       </div>
-   </div>
 </div>

@@ -1,28 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TlDropDownList } from './dropdownlist';
 
 import { InputModule } from '../input/index';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
-import { OverlayListModule } from '../overlaylist/index';
+import { ListOptionDirective } from './directives/listoption.directive';
+import { TlOverlayList } from './overlay-list';
 
 @NgModule( {
   imports: [
     CommonModule,
     InputModule,
-    OverlayListModule,
     OverlayModule,
     A11yModule,
     FormsModule
   ],
   declarations: [
-    TlDropDownList,
+    TlOverlayList,
+    ListOptionDirective,
   ],
   exports: [
-    TlDropDownList,
+    TlOverlayList,
+    ListOptionDirective,
   ],
 } )
-export class DropDownListModule {
+export class OverlayListModule {
 }

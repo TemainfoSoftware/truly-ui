@@ -38,7 +38,9 @@
       @overlay
       (selectOption)="onSelectOption($event)"
       (search)="handleSearch($event)"
+      (defaultOption)="onDefaultOption()"
       [typeOfData]="typeOfData"
+      [defaultOptionText]="placeholder"
       [optionSelected]="optionSelected"
       [inputModelIndex]="indexOptionSelectedModel"
       [datasource]="datasource"

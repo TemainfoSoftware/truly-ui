@@ -49,10 +49,10 @@ $default-outline: none;
     margin: 0;
     text-align: left;
     > .dropdown-list-select {
-      overflow-y: auto;
       padding: 0;
       margin: 0;
       list-style: none;
+      overflow-y: auto;
       -webkit-border-bottom-right-radius: 3px;
       -webkit-border-bottom-left-radius: 3px;
       -moz-border-radius-bottomright: 3px;
@@ -60,12 +60,17 @@ $default-outline: none;
       border-bottom-right-radius: 3px;
       border-bottom-left-radius: 3px;
       > li {
+        display: grid;
+        grid-template-columns: 35px 1fr;
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         outline: $default-outline;
-        padding: 0 10px;
+      }
+      > li i {
+        text-align: center;
       }
       > li span {
+        text-align: left;
         font-weight: normal;
       }
     }
@@ -96,7 +101,6 @@ $default-outline: none;
     padding: 5px;
   }
 }
-
 
 .selected {
   background: #66cc99;

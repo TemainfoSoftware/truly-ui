@@ -75,7 +75,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'width' ) width = '120px';
 
-  @Input( 'placeholder' ) placeholder = '';
+  @Input( 'placeholder' ) placeholder = 'Select Item';
 
   @Input( 'searchOnList' ) searchOnList = false;
 
@@ -99,12 +99,10 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   public calculatedHeight;
 
-  private arraylisteners = [];
-
   private subject = new Subject();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private renderer: Renderer2, private element: ElementRef ) {
+    asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
   }
 
@@ -160,6 +158,13 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     this.isOpen = false;
   }
 
+  onDefaultOption() {
+    this.value = '';
+    this.selectedDescription = this.placeholder;
+    this.optionSelected = null;
+    this.isOpen = false;
+  }
+
   isSimpleData() {
     return this.typeOfData === 'simple';
   }
@@ -181,7 +186,6 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   }
 
   ngOnDestroy() {
-    this.arraylisteners.forEach( ( listener ) => listener() );
   }
 
 }

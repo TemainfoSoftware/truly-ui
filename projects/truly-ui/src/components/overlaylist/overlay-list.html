@@ -7,7 +7,7 @@
       <tl-input
         (keyup)="handleKeyUp($event)"
         (keydown)="handleKeyEvents($event)"
-        (keydown.enter)="emitSelectOption()"
+        (keydown.enter)="emitSelectOption(); $event.preventDefault()"
         [iconBefore]="'ion-ios-search-strong'">
       </tl-input>
     </div>
@@ -19,16 +19,21 @@
         cdkTrapFocusAutoCapture
         (keydown)="handleKeyEvents($event)"
         (keydown.space)="$event.preventDefault()"
-        (keydown.enter)="emitSelectOption()"
+        (keydown.enter)="emitSelectOption(); $event.preventDefault()"
         [style.height]="calculatedHeight">
+      <li (click)="clickDefaultOption()" class="ui-default-option"
+          [ngStyle]="{'line-height' : height, 'padding-left': defaultIcon ? '0' : '10px', 'grid-template-columns': defaultIcon ? '35px 1fr' : '1fr'}">
+        <i *ngIf="defaultIcon" [ngStyle]="{'line-height' : height }" [class]="'ui-icon ' + defaultIcon"></i>
+        <span> {{ defaultOptionText }} </span>
+      </li>
       <li *ngFor="let item of datasource; let i = index"
-          (click)="handleClickOption(i)"
           role="option"
           [optionItem]="item"
-          [ngStyle]="{'line-height' : height}">
-        <i *ngIf="item[icon]" [class]="'ui-icon ' + item[icon]"> </i>
-            <span *ngIf="typeOfData === 'complex'"> {{ item[keyText] }}</span>
-            <span *ngIf="typeOfData === 'simple'"> {{ item }}</span>
+          (click)="handleClickOption(i)"
+          [ngStyle]="{'line-height' : height, 'grid-template-columns': item[icon] ? '35px 1fr' : '1fr'}">
+        <i *ngIf="item[icon]" [ngStyle]="{'line-height' : height}" [class]="'ui-icon ' + item[icon]"> </i>
+            <span *ngIf="typeOfData === 'complex'" [style.padding-left]="item[icon] ? '0' : '10px'"> {{ item[keyText] }}</span>
+            <span *ngIf="typeOfData === 'simple'" [style.padding-left]="item[icon] ? '0' : '10px'"> {{ item }}</span>
       </li>
     </ul>
   </div>

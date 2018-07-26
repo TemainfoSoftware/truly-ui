@@ -50,6 +50,10 @@ export class TlOverlayList implements OnInit, AfterViewInit {
 
   @Input( 'icon' ) icon = null;
 
+  @Input( 'defaultIcon' ) defaultIcon = null;
+
+  @Input( 'defaultOptionText' ) defaultOptionText = 'Reset';
+
   @Input( 'width' ) width = '120px';
 
   @Input( 'scroll' ) scroll;
@@ -57,6 +61,8 @@ export class TlOverlayList implements OnInit, AfterViewInit {
   @Input( 'calculatedHeight' ) calculatedHeight;
 
   @Output() selectOption: EventEmitter<any> = new EventEmitter();
+
+  @Output() defaultOption: EventEmitter<any> = new EventEmitter();
 
   @Output() search: EventEmitter<any> = new EventEmitter();
 
@@ -76,6 +82,7 @@ export class TlOverlayList implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager( this.options );
+    this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
   }
@@ -87,6 +94,7 @@ export class TlOverlayList implements OnInit, AfterViewInit {
 
   handleKeyEvents( $event: KeyboardEvent ) {
     this.keyManager.onKeydown( $event );
+    $event.stopPropagation();
   }
 
   handleKeyUp( $event ) {
@@ -110,6 +118,10 @@ export class TlOverlayList implements OnInit, AfterViewInit {
   handleClickOption( index: number ) {
     this.keyManager.setActiveItem( index );
     this.emitSelectOption();
+  }
+
+  clickDefaultOption() {
+    this.defaultOption.emit();
   }
 
   emitSelectOption() {

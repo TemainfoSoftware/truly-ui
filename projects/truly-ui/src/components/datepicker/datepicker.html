@@ -5,6 +5,7 @@
           (overlayOrigin)="trigger = $event"
           (focus)="onDateInputFocus()"
           (click)="isOpen = !isOpen"
+          (keydown)="handleArrowKeys($event)"
           (keypress)="handleDateChange()"
           (clear)="onClearInput($event)"
           [iconAfter]="iconAfter"

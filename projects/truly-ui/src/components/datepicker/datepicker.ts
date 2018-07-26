@@ -32,6 +32,7 @@ import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -206,6 +207,36 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
           }
         }
       }
+    }
+  }
+
+  handleArrowKeys($event) {
+    switch ($event.keyCode) {
+      case KeyEvent.ARROWUP:
+        if (this.isOpen) {
+          $event.preventDefault();
+          $event.stopPropagation();
+        }
+        break;
+      case KeyEvent.ESCAPE:
+        if (this.isOpen) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          this.isOpen = false;
+        }
+        break;
+      case KeyEvent.ARROWDOWN:
+        if (this.isOpen) {
+          $event.preventDefault();
+          $event.stopPropagation();
+        }
+        break;
+      case KeyEvent.ARROWRIGHT:
+        $event.preventDefault();
+        break;
+      case KeyEvent.ARROWLEFT:
+        $event.preventDefault();
+        break;
     }
   }
 

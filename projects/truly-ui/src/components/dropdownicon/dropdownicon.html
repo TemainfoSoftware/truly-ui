@@ -1,0 +1,33 @@
+<div class="ui-wrapper-dropdownicon">
+  <button tabindex="0"
+          (click)="isOpen = !isOpen"
+          cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+          [ngClass]="{'disabled': disabled}"
+          [ngStyle]="{ 'height': heightIcon, 'width': widthIcon }"
+          [class]="'ui-button-icon ripple '+ color"
+          [disabled]="disabled ? true : null">
+    <div [style.line-height]="heightIcon" [class]="'ui-icon ' + getIcon()"></div>
+  </button>
+  <input class="ui-hidden-input" [(ngModel)]="value">
+  <ng-template cdkConnectedOverlay
+               (backdropClick)="isOpen = false"
+               [cdkConnectedOverlayHasBackdrop]="true"
+               [cdkConnectedOverlayOrigin]="trigger"
+               [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+               [cdkConnectedOverlayOpen]="isOpen">
+    <tl-overlay-list
+      @overlay
+      (selectOption)="onSelectOption($event)"
+      (defaultOption)="onDefaultOption()"
+      [typeOfData]="typeOfData"
+      [defaultOptionText]="defaultOptionText"
+      [defaultIcon]="defaultIcon"
+      [optionSelected]="optionSelected"
+      [datasource]="data"
+      [height]="heightItems"
+      [width]="widthItems"
+      [icon]="keyIcon"
+      [keyText]="keyText">
+    </tl-overlay-list>
+  </ng-template>
+</div>

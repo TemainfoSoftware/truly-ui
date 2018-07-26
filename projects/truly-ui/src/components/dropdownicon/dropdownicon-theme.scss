@@ -1,0 +1,94 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-dropdown-icon-theme-schema( $theme, $action ){
+
+  background-color: map-deep-get($theme, $action, "default", "background");
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+  color:  map-deep-get($theme, $action, "default", "foreground");
+  transition: background ease-in-out 100ms;
+
+  /*Create ripple effec*/
+
+  &.ripple {
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #FFFFFF 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform .5s, opacity 1s;
+    }
+    &:active:after {
+      transform: scale(0, 0);
+      opacity: .3;
+      transition: 0s;
+    }
+
+  }
+
+  &:active{
+    background-color: map-deep-get($theme, $action, "active", "background");
+    color: map-deep-get($theme, $action, "active", "foreground");
+  }
+
+  &.-active {
+    outline: none;
+    background-color: map-deep-get($theme, $action, "active", "background");
+    color: map-deep-get($theme, $action, "active", "foreground");
+  }
+
+  &.disabled{
+    background-color: map-deep-get($theme, $action, "disabled", "background");
+    border: 1px solid map-deep-get($theme, $action, "disabled", "border");
+    color: map-deep-get($theme, $action, "disabled", "foreground");
+    cursor: default;
+  }
+}
+
+@mixin tl-dropdown-icon-theme( $theme ) {
+
+  .ui-button-icon {
+
+    &.basic {
+      @include _tl-dropdown-icon-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-dropdown-icon-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-dropdown-icon-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-dropdown-icon-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-dropdown-icon-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-dropdown-icon-theme-schema($theme, 'information')
+    }
+
+    &:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24,144,255,.2);
+      border-right-width: 1px!important;
+    }
+  }
+}

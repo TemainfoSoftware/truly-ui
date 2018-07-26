@@ -1,0 +1,29 @@
+//Default
+$button-font-size: 0.9em;
+$button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+
+.ui-button-icon {
+  font-family: $button-font-family;
+  font-size: $button-font-size;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+  > .ui-icon {
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+  }
+
+}
+
+.ui-hidden-input {
+  visibility: hidden;
+  position: absolute;
+  width: 1px;
+}
+

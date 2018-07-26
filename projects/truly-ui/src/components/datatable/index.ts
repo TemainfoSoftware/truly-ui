@@ -15,29 +15,32 @@ import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column
 import { InputModule } from '../input/index';
 import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
+import { DropDownIconModule } from '../dropdownicon/index';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        BlockUIModule,
-        InputModule,
-        DropDownListModule
-    ],
-    declarations: [
-        TlColgroupDirective,
-        TlDatatable,
-        TlDatatableColumn,
-        TlDatatabaleColumnFilter,
-        TlDatatableHeader,
-        TlDatatableNormalMode,
-        TlDatatablePaginatorMode,
-        TlDatatableScrollableMode,
-        TlResizerDirective,
-    ],
-    exports: [
-        TlDatatable,
-        TlDatatableColumn
-    ]
-})
-export class DatatableModule {}
+@NgModule( {
+  imports: [
+    CommonModule,
+    FormsModule,
+    BlockUIModule,
+    InputModule,
+    DropDownIconModule,
+    DropDownListModule
+  ],
+  declarations: [
+    TlColgroupDirective,
+    TlDatatable,
+    TlDatatableColumn,
+    TlDatatabaleColumnFilter,
+    TlDatatableHeader,
+    TlDatatableNormalMode,
+    TlDatatablePaginatorMode,
+    TlDatatableScrollableMode,
+    TlResizerDirective,
+  ],
+  exports: [
+    TlDatatable,
+    TlDatatableColumn
+  ]
+} )
+export class DatatableModule {
+}

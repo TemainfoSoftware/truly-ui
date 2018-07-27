@@ -1,0 +1,107 @@
+$default-fontSize: 14px;
+$default-fontFamily: "Segoe UI", Lato, 'sans-serif', "Arial";
+$default-height: 39px;
+$default-cursorHover: pointer;
+$default-cursor: default;
+$default-outline: none;
+
+.ui-dropdown-wrapper-list {
+  position: relative;
+  display: table;
+  margin: 0;
+  padding: 0;
+  > .select {
+    overflow: hidden;
+    font-family: $default-fontFamily;
+    font-size: $default-fontSize;
+    cursor: $default-cursorHover;
+    margin: 0;
+    padding-left: 5px;
+    vertical-align: middle;
+    user-select: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  > .select.without-icon {
+    padding-left: 10px;
+    padding-right: 30px;
+  }
+  > .dropdown-list-icon {
+    position: absolute;
+    display: table-cell;
+    cursor: $default-cursorHover;
+    top: 0;
+    right: 0;
+    text-align: center;
+    width: 30px;
+    height: 100%;
+  }
+  > .dropdown-list-icon i {
+    font-size: 0.7em;
+    vertical-align: middle;
+  }
+  > .dropdown-list-wrapper-select {
+    z-index: 10;
+    outline: $default-outline;
+    cursor: $default-cursorHover;
+    padding: 0;
+    left: 0;
+    margin: 0;
+    text-align: left;
+    > .dropdown-list-select {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      overflow-y: auto;
+      -webkit-border-bottom-right-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -moz-border-radius-bottomright: 3px;
+      -moz-border-radius-bottomleft: 3px;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      > li {
+        display: grid;
+        grid-template-columns: 35px 1fr;
+        font-family: $default-fontFamily;
+        font-size: $default-fontSize;
+        outline: $default-outline;
+      }
+      > li i {
+        text-align: center;
+      }
+      > li span {
+        text-align: left;
+        font-weight: normal;
+      }
+    }
+    > .dropdown-list-select::-webkit-scrollbar {
+      width: 0.5em;
+    }
+    > .dropdown-list-select:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      border-right-width: 1px !important;
+    }
+    > .-placeholder {
+      font-family: $default-fontFamily;
+      font-size: $default-fontSize;
+      font-weight: normal;
+      cursor: $default-cursor;
+      outline: $default-outline;
+      border-bottom: 0;
+      border-top: 0;
+      padding: 0 10px;
+      z-index: 1000;
+      user-select: none;
+    }
+  }
+  .search-input {
+    box-sizing: border-box;
+    padding: 5px;
+  }
+}
+
+.selected {
+  background: #66cc99;
+}

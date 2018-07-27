@@ -21,53 +21,53 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'icon',
+    name: 'keyIcon',
     type: 'string',
     default: 'null',
     description: 'Sets the data item field that represents the item icon.',
     options: 'any text'
   },
   {
-    name: 'label',
+    name: 'heightItems',
     type: 'string',
-    default: 'null',
-    description: 'Create a label together with Dropdown List.',
-    options: 'any text'
-  },
-  {
-    name: 'labelPlacement',
-    type: 'string',
-    default: 'left',
-    description: 'Sets the label position.',
-    options: 'left | top'
-  },
-  {
-    name: 'labelSize',
-    type: 'string',
-    default: '100',
-    description: 'Sets the label width.',
-    options: 'px | % | em'
-  },
-  {
-    name: 'height',
-    type: 'string',
-    default: '37px',
+    default: '30px',
     description: 'Sets the height of Dropdown List.',
     options: 'px | % | em'
   },
   {
-    name: 'width',
+    name: 'defaultOptionText',
     type: 'string',
-    default: '87px',
+    default: 'Select...',
+    description: 'The text of null or default option.',
+    options: 'any text'
+  },
+  {
+    name: 'defaultIcon',
+    type: 'string',
+    default: 'ion-search',
+    description: 'The class Icon of null or default option.',
+    options: 'class icon'
+  },
+  {
+    name: 'widthItems',
+    type: 'string',
+    default: '120px',
     description: 'Sets the width of Dropdown List.',
     options: 'px | % | em'
   },
   {
-    name: 'searchOnList',
-    type: 'boolean',
-    default: 'false',
-    description: 'Handle if will have input search or not',
-    options: 'true | false'
+    name: 'heightIcon',
+    type: 'string',
+    default: '23px',
+    description: 'Sets the height of Icon Button.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'widthIcon',
+    type: 'string',
+    default: '35px',
+    description: 'Sets the width of Icon Button.',
+    options: 'px | % | em'
   },
   {
     name: 'placeholder',
@@ -83,11 +83,4 @@ export const dataProperties = [
     description: 'Disables the dropdown list if set to true.',
     options: 'true | false'
   },
-  {
-    name: 'scroll',
-    type: 'number',
-    default: 'null | 10 to auto scroll',
-    description: 'Displays minimum amount of items to create the scroll.',
-    options: 'any number'
-  }
   ];

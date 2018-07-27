@@ -1,4 +1,6 @@
-/*
+
+
+ /*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -19,18 +21,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AnimationTriggerMetadata, trigger, state, transition, style, animate } from '@angular/animations';
+ import { Directive, Input, HostBinding } from '@angular/core';
+ import { Highlightable } from '@angular/cdk/a11y';
 
-export const OverlayAnimation: AnimationTriggerMetadata =
-  trigger( 'overlay', [
-    state( 'void', style( {
-      transform: 'scale(0)',
-      opacity: 0
-    } ) ),
-    transition( 'void <=> *', [
-      style( {
-        opacity: 1
-      } ),
-      animate( '150ms cubic-bezier(0.25, 0.8, 0.25, 1)' )
-    ] )
-  ] );
+ @Directive( {
+   selector: '[role="option"]'
+ } )
+ export class ListOptionDirective implements Highlightable {
+   @Input( 'optionItem' ) optionItem;
+
+   @HostBinding( 'class.selected' ) isActive;
+
+   setActiveStyles(): void {
+     this.isActive = true;
+   }
+
+   setInactiveStyles(): void {
+     this.isActive = false;
+   }
+ }

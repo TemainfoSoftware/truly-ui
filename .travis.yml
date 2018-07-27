@@ -6,7 +6,10 @@ cache:
     - node_modules
 notifications:
   email: false
-  hipchat: F6Rp7PgVWhO5B7cniWWk9tl9iAdLZJR03GNf0O1y@3935008
+  slack:
+    rooms:
+      - temainfo:QGzy1iQZdygEHxsEuylBqC1e#truly-ui
+      - temainfo:QGzy1iQZdygEHxsEuylBqC1e#builds
 node_js:
   - '8'
 before_script:

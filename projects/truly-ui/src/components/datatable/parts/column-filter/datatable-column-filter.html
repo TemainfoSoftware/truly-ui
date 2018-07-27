@@ -5,7 +5,7 @@
                  *ngIf="column?.showFilterOptions && column?.filterOptions.length"
                  [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
 
-              <tl-dropdownicon
+              <tl-dropdown-icon
                 [data]="column?.filterOptions"
                 [widthItems]="'175px'"
                 [heightItems]="'25px'"
@@ -14,7 +14,7 @@
                 [defaultOptionText]="dropdownResetPlaceholder"
                 [ngModel]="filters.matchMode[column.field]"
                 (ngModelChange)="onChangeFilter(filters.matchMode[column.field] = $event)">
-              </tl-dropdownicon>
+              </tl-dropdown-icon>
 
             </div>
             <div  class="ui-input">

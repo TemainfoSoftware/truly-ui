@@ -4,8 +4,8 @@
       <li [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font?.family?.show">
         <tl-dropdown-list [data]="dataFont"
                           (ngModelChange)="onChangeFont($event)"
-                          [text]="'textItem'"
-                          [valueItem]="'value'"
+                          [keyText]="'textItem'"
+                          [keyValue]="'value'"
                           [(ngModel)]="font">
         </tl-dropdown-list>
       </li>

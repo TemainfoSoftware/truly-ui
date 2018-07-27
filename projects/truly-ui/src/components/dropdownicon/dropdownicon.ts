@@ -79,7 +79,8 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
   ngOnInit() {}
 
   ngAfterViewInit() {
-    if (typeof (Object.values(this.data)[0]) === 'string' ) {
+    const key = Object.keys(this.data)[0];
+    if (typeof this.data[key] === 'string' ) {
       this.typeOfData = 'simple';
     }
     if (!this.keyIcon) {

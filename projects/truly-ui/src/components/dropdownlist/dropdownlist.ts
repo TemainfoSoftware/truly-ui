@@ -122,7 +122,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     if ( ( this.data[ 0 ] === undefined ) ) {
       throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
     }
-    if (typeof (Object.values(this.data)[0]) === 'string' ) {
+    const key = Object.keys(this.data)[0];
+    if (typeof this.data[key] === 'string' ) {
       this.typeOfData = 'simple';
     }
   }
@@ -179,10 +180,6 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
         }
         break;
     }
-  }
-
-  backDropClick() {
-    this.isOpen = false;
   }
 
   ngOnDestroy() {

@@ -29,7 +29,7 @@
     </div>
 
   <ng-template cdkConnectedOverlay
-               (backdropClick)="backDropClick($event)"
+               (backdropClick)="isOpen = false"
                [cdkConnectedOverlayHasBackdrop]="true"
                [cdkConnectedOverlayOrigin]="trigger"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"

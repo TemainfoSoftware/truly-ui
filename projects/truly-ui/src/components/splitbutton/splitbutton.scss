@@ -4,38 +4,51 @@ $button-height: 37px;
 $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 $button-font-size: 1em;
 
-.tl-split-button-box{
+.tl-button {
+  border-radius: 3px 0 0 3px;
+}
+
+.tl-split-button-box {
   font-family: $button-font-family;
   font-size: $button-font-size;
   display: inline-block;
   position: relative;
   height: $button-height;
-  > .split-button-actions{
+  > .split-button-actions {
     margin: 0;
     padding: 0;
     line-height: $button-height;
     cursor: pointer;
     float: right;
     user-select: none;
-
-    >.actions-menu{
-      position: absolute;
-      overflow: hidden;
-      left:0;
-      margin: 0;
-      height:auto;
-      display:inline;
-      padding: 0;
-      list-style: none;
-      min-width: 125px;
-      border-top: 0 !important;
-      z-index: 1;
-      cursor: auto;
-    }
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
   }
-  > .split-button-actions i{
+  > .split-button-actions i {
     padding: 0 15px;
   }
 }
 
+.icon-arrow {
+  transition: all 250ms ease-in-out;
+}
 
+.actions-menu {
+  left:0;
+  margin: 0;
+  padding: 0;
+  border-top: 0;
+  height:auto;
+  display:inline;
+  overflow: hidden;
+  list-style: none;
+  min-width: 125px;
+  z-index: 1;
+  cursor: auto;
+  border-radius: 0 0 3px 3px;
+}
+
+.border-top {
+  border-radius: 3px 3px 0 0;
+  border-bottom: 0;
+}

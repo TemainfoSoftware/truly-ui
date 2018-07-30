@@ -1,43 +1,78 @@
 @import "../core/styles/theming/theming";
 
-@mixin tl-splitbutton-theme($theme) {
+@mixin _tl-splitbutton-theme-schema($theme, $action) {
 
-  $basic: map-deep-get($theme, 'basic');
-
-  .tl-split-button-box{
-    > .split-button-actions{
-      background-color: map-deep-get($basic, "default", "background");
-      border-top: 1px solid  map-deep-get($basic, "default", "border");
-      border-right: 1px solid  map-deep-get($basic, "default", "border");
-      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
-      color: map-deep-get($basic, "default", "foreground");
-      >.actions-menu{
-        background-color: map-deep-get($basic, "default", "background");
-        border: 1px solid  map-deep-get($basic, "default", "border");
-      }
-    }
-    > .split-button-actions:hover, .split-button-actions.active{
-      background-color: map-deep-get($basic, "hover", "background");
-    }
-    > .split-button-actions:active{
-      background-color: map-deep-get($basic, "active", "background");;
-    }
-    > .split-button-actions i{
-      color: map-deep-get($basic, "default", "foreground");
-    }
+  .split-button-actions {
+    background-color: map-deep-get($theme, $action, "default", "background");
+    border-top: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    color: map-deep-get($theme, $action, "default", "foreground");
   }
 
-  tl-split-button-action li{
-    color: map-deep-get($basic, "default", "foreground");
+  .split-button-actions:hover, .split-button-actions.active {
+    background-color: map-deep-get($theme, $action, "hover", "background");
+  }
 
-    &:hover{
-      background-color: map-deep-get($basic, "hover", "background");
+  .split-button-actions:active {
+    background-color: map-deep-get($theme, $action, "active", "background");
+  }
+
+  .split-button-actions i {
+    color: map-deep-get($theme, $action, "default", "foreground");
+  }
+
+  .border-top {
+    border-top: 1px solid map-deep-get($theme, $action, "default", "border") !important;
+  }
+
+  .ui-button {
+    background-color: map-deep-get($theme, $action, "default", "background");
+    border: 1px solid map-deep-get($theme, $action, "default", "border");
+    color:  map-deep-get($theme, $action, "default", "foreground");
+    transition: background ease-in-out 100ms;
+  }
+
+}
+
+@mixin tl-splitbutton-theme( $theme ) {
+
+  .actions-menu {
+    background-color: map-deep-get($theme, 'basic', "default", "background");
+    border: 1px solid map-deep-get($theme, 'basic', "default", "border");
+  }
+
+  .tl-split-button-box {
+
+    &.basic {
+      @include _tl-splitbutton-theme-schema($theme, 'basic')
     }
-    &.separator{
-      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
+
+    &.primary {
+      @include _tl-splitbutton-theme-schema($theme, 'primary')
     }
-    &.icon-action{
-      color: map-deep-get($basic, "default", "foreground");
+
+    &.success {
+      @include _tl-splitbutton-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-splitbutton-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-splitbutton-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-splitbutton-theme-schema($theme, 'information')
+    }
+
+    &:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
+      border-right-width: 1px !important;
     }
   }
 }

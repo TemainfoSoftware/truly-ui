@@ -1,10 +1,27 @@
 
 //Default
+$button-font-size: 0.9em;
+$button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+
+.tl-button {
+  font-family: $button-font-family;
+  font-size: $button-font-size;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 3px;
+}
+
 :host li{
   padding: 0 10px;
   text-decoration: none;
   display: block;
   cursor: pointer;
+  height: 35px;
+  line-height: 35px;
 }
 :host li .icon-action{
   padding: 0 5px 0 0;

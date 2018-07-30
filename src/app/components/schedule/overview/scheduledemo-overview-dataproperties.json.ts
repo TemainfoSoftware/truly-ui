@@ -19,40 +19,90 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
 export const dataProperties = [
   {
-    name: 'todayButton',
-    type: 'boolean',
-    default: 'true',
-    description: 'Displays a footer with a today button.',
-    options: 'true | false'
+    name: 'defaultView',
+    type: 'string',
+    default: 'day',
+    description: 'Defines the default View of the Schedule.',
+    options: 'day | week | month | workWeek | dayList | weekList'
   },
   {
-    name: 'typingDay',
-    type: 'boolean',
-    default: 'true',
-    description: 'Used on datepicker, this property is used to control change of Date Object while typing.',
-    options: 'true | false'
+    name: 'views',
+    type: 'Array<string>',
+    default: '[\'day\', \'dayList\']',
+    description: 'Defines which views will be used in Schedule.',
+    options: 'day | week | month | workWeek | dayList | weekList'
   },
   {
-    name: 'day',
-    type: 'number',
+    name: 'statusConfig',
+    type: 'Array<StatusType>',
     default: 'Current Day',
-    description: 'Property to set Day of schedule will initiate.',
+    description: 'Configures the status types that will be part of Schedule.',
+    options: '{\n' + '  status: string;\n' + '  color: string;\n' + '  description: string;\n' + '}'
+  },
+  {
+    name: 'currentDate',
+    type: 'date',
+    default: 'new Date()',
+    description: 'Sets a default date at the time Schedule is created.',
+    options: 'new Date()'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '550px',
+    description: 'Schedule Height.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'duration',
+    type: 'number',
+    default: '30',
+    description: 'Default interval between one schedule and the other. In Mininutes',
+    options: 'any number'
+  },
+  {
+    name: 'showNowIndicator',
+    type: 'boolean',
+    default: 'false',
+    description: 'Hide / Show Current Time Indicator in Schedule',
     options: 'true | false'
   },
   {
-    name: 'month',
+    name: 'slatHightRows',
     type: 'number',
-    default: 'Current Month',
-    description: 'Property to set Month of schedule will initiate.',
-    options: 'true | false'
+    default: '43',
+    description: 'Sets the Slat height between the times. In Pixel',
+    options: 'any number'
   },
   {
-    name: 'year',
+    name: 'slatNumberRows',
     type: 'number',
-    default: 'Current Year',
-    description: 'Property to set Year of schedule will initiate.',
-    options: 'true | false'
+    default: '2',
+    description: 'Number of Slats between hours',
+    options: 'any number'
+  },
+  {
+    name: 'events',
+    type: 'Array<ScheduleDataSource>',
+    default: '[]',
+    description: 'Schedule Events',
+    options: ''
+  },
+  {
+    name: 'startDayHour',
+    type: 'string',
+    default: '',
+    description: 'Start time of Agenda in Daily schedules',
+    options: 'any string with hour format ex(00:00)'
+  },
+  {
+    name: 'endDayHour',
+    type: 'string',
+    default: '',
+    description: 'End time of Agenda in Daily schedules',
+    options: 'any string with hour format ex(00:00)'
   },
 ];

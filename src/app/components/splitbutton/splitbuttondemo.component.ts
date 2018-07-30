@@ -18,6 +18,6 @@ export class SplitButtonDemoComponent {
   }
 
   callBackDemo($event) {
-    console.log($event.srcElement.innerText);
+    console.log($event);
   }
 }

@@ -42,41 +42,20 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
     name: 'disabled',
     type: 'boolean',
     default: 'false',
     description: 'Disables the button if set to true.',
     options: 'true | false'
   },
-  {
-    name: 'iconAddonBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAddonAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconBeforeText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  }
-  ];
+];
 export const dataProperties2 = [
   {
     name: 'label',

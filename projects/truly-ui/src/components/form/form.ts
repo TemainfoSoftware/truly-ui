@@ -57,6 +57,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() padding = '10px';
 
+  @Input() closeOnClickOk = false;
+
   @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() submitForm: EventEmitter<NgForm> = new EventEmitter();

@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Input, OnInit, Directive, HostListener, ContentChild, ComponentRef
+  Input, OnInit, Directive, HostListener, ContentChild, ComponentRef, ElementRef
 } from '@angular/core';
 import { ModalResult } from '../../core/enums/modal-result';
 import { ModalService } from '../modal.service';
@@ -42,12 +42,16 @@ export class ModalResultDirective implements OnInit {
 
   @HostListener( 'click' )
   onClick() {
-    this.dispatchCallback();
+    if (!this.button.disabled) {
+      this.dispatchCallback();
+    }
   }
 
   @HostListener( 'keydown.enter' )
   onKeyDown() {
-    this.dispatchCallback();
+    if (!this.button.disabled) {
+      this.dispatchCallback();
+    }
   }
 
   constructor( private modalService: ModalService ) {

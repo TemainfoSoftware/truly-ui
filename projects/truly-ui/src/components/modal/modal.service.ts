@@ -21,7 +21,7 @@
  */
 import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
-  ComponentRef, Injector
+  ComponentRef, Injector, ViewRef
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
@@ -36,7 +36,7 @@ export class ModalService implements OnDestroy {
 
   public component: ComponentRef<any>;
 
-  public componentList: Array<ComponentRef<any>> = [];
+  public componentList = [];
 
   public componentInjected: ComponentRef<any>;
 
@@ -48,13 +48,16 @@ export class ModalService implements OnDestroy {
 
   public head = new Subject();
 
+  private selectedModal;
+
   public modalOptions;
 
   public backdrop;
 
   private callBack = Function();
 
-  constructor( private containerModal: ContainerModalService ) {}
+  constructor( private containerModal: ContainerModalService ) {
+  }
 
   createModalDialog( component: Type<any>, factoryResolver, callback ) {
     this.view = this.containerModal.getView();
@@ -66,9 +69,9 @@ export class ModalService implements OnDestroy {
     return this;
   }
 
-  createModal( component: Type<any>, factoryResolver, parentElement: ElementRef, callback ) {
+  createModal( component: Type<any>, factoryResolver, parentElement: ElementRef, callback, identifier?: string ) {
     this.view = this.containerModal.getView();
-    this.setComponentModal( factoryResolver );
+    this.setComponentModal( factoryResolver, identifier );
     this.injectComponentToModal( component, factoryResolver );
     this.setGlobalSettings( factoryResolver, parentElement );
     this.setInitialZIndex();
@@ -76,10 +79,10 @@ export class ModalService implements OnDestroy {
     return this;
   }
 
-  private setComponentModal( compiler ) {
+  private setComponentModal( compiler, id? ) {
     const componentFactory = compiler.resolveComponentFactory( TlModal );
     this.component = this.view.createComponent( componentFactory );
-    this.componentList.push( this.component );
+    this.componentList.push( { componentRef: this.component, identifier: id } );
     this.subject.next( this.component );
     (<TlModal>this.component.instance).setServiceControl( this );
     (<TlModal>this.component.instance).setComponentRef( this.component );
@@ -114,6 +117,15 @@ export class ModalService implements OnDestroy {
     if ( this.modalOptions[ 0 ].backdrop ) {
       this.createBackdrop( TlBackdrop, factoryResolver );
     }
+  }
+
+  getModal( identifier: string ) {
+    this.selectedModal = null;
+    const listFilteredComponent = this.componentList.filter( ( item ) => item.identifier === identifier );
+    if ( listFilteredComponent.length > 0 ) {
+      this.selectedModal = listFilteredComponent[ 0 ].componentRef;
+    }
+    return this;
   }
 
   private setInitialZIndex() {
@@ -159,7 +171,7 @@ export class ModalService implements OnDestroy {
   }
 
   reallocateBackdrop() {
-    this.view.element.nativeElement.insertAdjacentElement('afterbegin', (<TlBackdrop>this.backdrop.instance).backdrop.nativeElement );
+    this.view.element.nativeElement.insertAdjacentElement( 'afterbegin', (<TlBackdrop>this.backdrop.instance).backdrop.nativeElement );
   }
 
   showModal( item: ComponentRef<any> ) {
@@ -174,40 +186,30 @@ export class ModalService implements OnDestroy {
     this.handleActiveWindow();
   }
 
-  close( component: ComponentRef<any> ) {
-    if ( this.view === undefined || component === undefined ) {
+  close( component?: ComponentRef<any> ) {
+    if ( (this.view === undefined) || (this.selectedModal === null) && !component ) {
       return;
     }
-    this.view.remove( this.view.indexOf( this.handleComponentList( component ) ) );
+    this.view.remove( this.view.indexOf( component || this.selectedModal ) );
     this.subject.next( this.componentList );
-    this.removeOfTheList();
+    this.removeOfTheList( component || this.selectedModal );
     this.removeBackdrop();
-  }
-
-  private handleComponentList( component ) {
-    let comp = component;
-    this.componentList.forEach( ( value ) => {
-      if ( value.location.nativeElement === component ) {
-        comp = value;
-      }
-    } );
-    return comp;
   }
 
   private handleActiveWindow() {
     const visibleHighestZIndex = [];
-    this.getVisibleModals().forEach( ( value, index2, array ) => {
+    this.getVisibleModals().forEach( ( value ) => {
       visibleHighestZIndex.push( value.firstElementChild.style.zIndex );
     } );
 
     const highest = this.getHighestZIndexModals( visibleHighestZIndex );
 
-    this.componentList.forEach( ( value, index2, array ) => {
+    this.componentList.forEach( ( value ) => {
       if ( this.getVisibleModals().length === 0 ) {
         return this.setActiveModal( null );
       }
-      if ( Number( value.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
-        return this.setActiveModal( value );
+      if ( Number( value.componentRef.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
+        return this.setActiveModal( value.componentRef );
       }
     } );
   }
@@ -225,8 +227,9 @@ export class ModalService implements OnDestroy {
     return visibleModals;
   }
 
-  private removeOfTheList() {
-    this.componentList.splice( this.componentList.length - 1, 1 );
+  private removeOfTheList( component ) {
+    const index = this.componentList.findIndex( ( item ) => item.componentRef === component );
+    this.componentList.splice( index, 1 );
     this.sortComponentsByZIndex();
   }
 
@@ -238,7 +241,8 @@ export class ModalService implements OnDestroy {
 
   sortComponentsByZIndex() {
     this.componentList.sort( ( a, b ) => {
-      return a.location.nativeElement.children[ 0 ].style.zIndex - b.location.nativeElement.children[ 0 ].style.zIndex;
+      return a.componentRef.location.nativeElement.children[ 0 ].style.zIndex
+        - b.componentRef.location.nativeElement.children[ 0 ].style.zIndex;
     } );
   }
 
@@ -248,7 +252,10 @@ export class ModalService implements OnDestroy {
       if ( this.isResultUndefined() ) {
         return;
       }
-      if ( !(this.isMdResultEqualsNone( result.mdResult )) ) {
+      if ( !this.isMdResultEqualsNone( result.mdResult ) ) {
+        if ( (result.mdResult === ModalResult.MROK) && !(this.modalOptions[ 0 ].closeOnOK) ) {
+          return;
+        }
         this.close( component );
       }
       setTimeout( () => {

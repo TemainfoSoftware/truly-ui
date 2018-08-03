@@ -18,8 +18,30 @@
                        mdResult="MRCUSTOM"
                        [iconAddonBefore]="'ion-ios-list-outline'"
                        [shortcut]="'CTRL + X'"
-                       (click)="form1()">
+                       (click)="form1('FORM1')">
             </tl-button>
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="form1('FORM2')">
+            </tl-button>
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="form1('FORM3')">
+            </tl-button>
+
+            <tl-input [(ngModel)]="identifier"></tl-input>
+
+            <tl-button [text]="'User Register'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'"
+                       (click)="closeModalID()">
+            </tl-button>
+
             <!--<div class="parentElementContainer" *ngIf="formModal">
               <pre class="result">
                 {{formModal | json}}

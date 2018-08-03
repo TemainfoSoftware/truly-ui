@@ -51,6 +51,7 @@ export { ModalService } from './components/modal/modal.service';
 export { DialogService } from './components/dialog/dialog.service';
 export { FormService } from './components/form/form.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
+export { ToasterService } from './components/toaster/services/toaster.service';
 
 // Languages...
 export { I18nService } from './components/i18n/i18n.service';

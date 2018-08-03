@@ -16,6 +16,7 @@ export interface ModalOptions {
     fullscreen?: boolean;
     restoreMaximize?: boolean;
     backdrop?: boolean;
+    closeOnOK?: boolean;
 }
 
 export function Modal(metadata: ModalOptions) {

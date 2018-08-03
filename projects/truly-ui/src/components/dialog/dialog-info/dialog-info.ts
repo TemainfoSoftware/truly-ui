@@ -34,6 +34,7 @@ import { Modal } from '../../modal/modal-options';
   maximizable: false,
   minimizable: false,
   backdrop: false,
+  closeOnOK: true
 })
 @Component({
     selector: 'tl-dialog-info',

@@ -110,6 +110,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Input() height = '23px';
 
+  @Input() showValidations = false;
+
   @ViewChild( 'afterText' ) public textClearButton;
 
   @ViewChild( 'afterIcon' ) public iconClearButton;
@@ -135,6 +137,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   @Output() blur: EventEmitter<any> = new EventEmitter();
 
   public required = false;
+
+  public isShowingMessages = false;
 
   public clearButtonPosition;
 
@@ -189,10 +193,12 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   }
 
   onInputFocus( $event ) {
+    this.isShowingMessages = true;
     this.focus.emit( $event );
   }
 
   onInputBlur( $event ) {
+    this.isShowingMessages = false;
     this.blur.emit( $event );
   }
 

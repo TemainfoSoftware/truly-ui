@@ -37,6 +37,13 @@
         [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
   <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)" class="-clearbutton ion-close-round"
      [style.right]="clearButtonPosition + 'px'"></i>
-
 </div>
 
+<ng-template cdkConnectedOverlay
+             [cdkConnectedOverlayHasBackdrop]="true"
+             (backdropClick)="isShowingMessages = false"
+             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
+             [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+             [cdkConnectedOverlayOpen]="isShowingMessages">
+<tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors" [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
+</ng-template>

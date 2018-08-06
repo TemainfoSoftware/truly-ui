@@ -13,11 +13,8 @@
               <span>CPF</span>
               <form [formGroup]="form">
                 <tl-input name="cpf" [mask]="'999.999.999-99'" [showValidations]="true" cpf [formControlName]="'cpf'"></tl-input>
-
               </form>
-
-
-              <app-showcase-returned-value [value]="cpf"></app-showcase-returned-value>
+              <app-showcase-returned-value [value]="form.value | json"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="cpf" [showValidations]="true" cpf [(ngModel)]="cpf"></tl-input>
@@ -102,10 +99,10 @@
             </div>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Message Validation Directive'" [icon]="'ion-settings'">
+        <app-showcase-card [title]="'Message Validation Property'" [icon]="'ion-settings'">
           <app-card>
             <div class="pattern" style="line-height: 20px">
-              <p style="font-size: 1.2em; line-height: 1.5em">The <code>messageValidation</code> is used on <code>tl-input</code> to show error messages. The box of errors messages only will appears
+              <p style="font-size: 1.2em; line-height: 1.5em">The <code>showValidations</code> property is used on <code>tl-input</code> to show error messages. The box of errors messages only will appears
                 if the input is <code>dirty</code> and that has validation error.</p>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input name="password" minlength="5" required [showValidations]="true" password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>

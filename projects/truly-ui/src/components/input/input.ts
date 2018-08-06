@@ -26,12 +26,16 @@ import {
   AfterViewInit,
   Output,
   Inject,
-  EventEmitter, Renderer2, Optional, Injector, ElementRef, HostListener, OnInit,
+  EventEmitter, Renderer2, Optional, Injector, ElementRef, HostListener, OnInit, ContentChild,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import { ElementBase } from './core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import {
+  FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR,
+  NgModel
+} from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { ValueAccessorBase } from './core/value-accessor';
 
 /**
  * Input Component personalized with few features.
@@ -66,7 +70,7 @@ import { CdkOverlayOrigin } from '@angular/cdk/overlay';
     multi: true,
   } ],
 } )
-export class TlInput extends ElementBase<string> implements OnInit, AfterViewInit {
+export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterViewInit {
 
   @Input() textBefore = '';
 
@@ -110,13 +114,15 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   @ViewChild( 'afterIcon' ) public iconClearButton;
 
-  @ViewChild( NgModel ) model: NgModel;
-
   @ViewChild( 'input' ) input;
 
   @ViewChild( 'inputBox' ) inputBox;
 
+  @ViewChild( NgModel ) model: NgModel;
+
   @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
@@ -134,10 +140,10 @@ export class TlInput extends ElementBase<string> implements OnInit, AfterViewIni
 
   public fieldMask: InputMask;
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+
+  constructor( @Optional() @Inject( NG_VALIDATORS ) public validators: Array<any>,
                private tlInput: ElementRef, private renderer: Renderer2 ) {
-    super( validators, asyncValidators );
+    super();
   }
 
   ngOnInit() {

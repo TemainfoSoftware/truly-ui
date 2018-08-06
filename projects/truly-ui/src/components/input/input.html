@@ -13,13 +13,11 @@
            cdkOverlayOrigin
            [tabindex]="tabindex"
            [style.text-align]="textAlign"
-           [disabled]="disabled"
+           [disabled]="disabled || isDisabled"
            class="field"
            [ngClass]="{
-             'invalid': (invalid | async),
+             'invalid': controlName?.control.errors,
              'withValidators': validators?.length > 0, withoutValidators: validators === null,
-             '-disabled': disabled,
-             '-readonly': readonly,
              '-borderleft': iconBefore || textBefore,
              '-borderright': iconAfter || textAfter
              }"
@@ -28,9 +26,9 @@
            [attr.maxlength]="maxlength"
            [attr.name]="name"
            [placeholder]="placeholder"
+           [(ngModel)]="value"
            (blur)="onInputBlur($event)"
-           (focus)="onInputFocus($event)"
-           [(ngModel)]="value">
+           (focus)="onInputFocus($event)">
   </div>
 
   <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i

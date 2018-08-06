@@ -11,51 +11,53 @@
           <app-card>
             <div class="col-md-6">
               <span>CPF</span>
-              <tl-input name="cpf" messageValidation cpf [(ngModel)]="cpf"></tl-input>
-              <app-showcase-returned-value [value]="cpf"></app-showcase-returned-value>
+              <form [formGroup]="form">
+                <tl-input name="cpf" [mask]="'999.999.999-99'" [showValidations]="true" cpf [formControlName]="'cpf'"></tl-input>
+              </form>
+              <app-showcase-returned-value [value]="form.value | json"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="cpf" messageValidation cpf [(ngModel)]="cpf"></tl-input>
+<tl-input name="cpf" [showValidations]="true" cpf [(ngModel)]="cpf"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
               <span>CNPJ</span>
-              <tl-input cnpj messageValidation name="cnpj" [(ngModel)]="cnpj"></tl-input>
+              <tl-input cnpj [showValidations]="true" name="cnpj" [(ngModel)]="cnpj"></tl-input>
               <app-showcase-returned-value [value]="cnpj"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input cnpj name="cnpj" messageValidation [(ngModel)]="cnpj"></tl-input>
+<tl-input cnpj name="cnpj" [showValidations]="true" [(ngModel)]="cnpj"></tl-input>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>DATE</span>
-              <tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
+              <tl-input name="date" date formatDate="DD/MM/YYYY" required [showValidations]="true" [(ngModel)]="date"></tl-input>
               <app-showcase-returned-value [value]="date"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="date" date formatDate="DD/MM/YYYY" required messageValidation [(ngModel)]="date"></tl-input>
+<tl-input name="date" date formatDate="DD/MM/YYYY" required [showValidations]="true" [(ngModel)]="date"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
               <span>NUMBER</span>
-              <tl-input name="number" number required messageValidation [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+              <tl-input name="number" number required [showValidations]="true" [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
               <app-showcase-returned-value [value]="number"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="number" number messageValidation required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
+<tl-input name="number" number [showValidations]="true" required [clearButton]="true" maxlength="5" [(ngModel)]="number"></tl-input>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>EMAIL</span>
-              <tl-input name="email" messageValidation email [(ngModel)]="email"></tl-input>
+              <tl-input name="email" [showValidations]="true" email [(ngModel)]="email"></tl-input>
               <app-showcase-returned-value [value]="email"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="email" email messageValidation [(ngModel)]="email"></tl-input>
+<tl-input name="email" email [showValidations]="true" [(ngModel)]="email"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
@@ -64,18 +66,18 @@
               <app-showcase-returned-value [value]="pattern"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input messageValidation name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
+<tl-input [showValidations]="true" name="pattern" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" [(ngModel)]="pattern"></tl-input>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>PASSWORD</span>
-              <tl-input name="password" minlength="5" required messageValidation [passwordRule]="{digits: true, uppercase : true, special : true}" password [(ngModel)]="password"></tl-input>
+              <tl-input name="password" minlength="5" required [showValidations]="true" [passwordRule]="{digits: true, uppercase : true, special : true}" password [(ngModel)]="password"></tl-input>
               <app-showcase-returned-value [value]="password"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="password" minlength="5"  [passwordRule]="{digits: true, uppercase : true, special : true}" required messageValidation password [(ngModel)]="password"></tl-input>
+<tl-input name="password" minlength="5"  [passwordRule]="{digits: true, uppercase : true, special : true}" required [showValidations]="true" password [(ngModel)]="password"></tl-input>
 </textarea>
             </div>
           </app-card>
@@ -97,13 +99,13 @@
             </div>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Message Validation Directive'" [icon]="'ion-settings'">
+        <app-showcase-card [title]="'Message Validation Property'" [icon]="'ion-settings'">
           <app-card>
             <div class="pattern" style="line-height: 20px">
-              <p style="font-size: 1.2em; line-height: 1.5em">The <code>messageValidation</code> is used on <code>tl-input</code> to show error messages. The box of errors messages only will appears
+              <p style="font-size: 1.2em; line-height: 1.5em">The <code>showValidations</code> property is used on <code>tl-input</code> to show error messages. The box of errors messages only will appears
                 if the input is <code>dirty</code> and that has validation error.</p>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input name="password" minlength="5" required messageValidation password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>
+<tl-input name="password" minlength="5" required [showValidations]="true" password [passwordRule]="{digits: true,special: true }" [(ngModel)]="password"></tl-input>
 </textarea>
               <img src="assets/images/messagevalidation.png">
             </div>

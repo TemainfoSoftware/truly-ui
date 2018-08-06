@@ -19,29 +19,32 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component( {
-    selector: 'tl-split-button-action',
-    template: `
-        <li [class]="separator ? 'separator' : null">
-            <i *ngIf="icon" class="icon-action {{ icon }}"></i>
-            {{ label }}
-        </li>
-    `,
-    styleUrls: [ './splitbutton-action.scss' ]
+  selector: 'tl-split-button-action',
+  template: `
+    <li (click)="onClickListener()" [class]="separator ? 'separator' : null">
+      <i *ngIf="icon" class="icon-action {{ icon }}"></i>
+      {{ label }}
+    </li>
+  `,
+  styleUrls: [ './splitbutton-action.scss' ]
 } )
 export class TlSplitButtonAction {
 
-    @Input() label = '';
+  @Input() label = '';
 
-    @Input() icon = '';
+  @Input() icon = '';
 
-    @Input() separator = false;
+  @Input() separator = false;
 
-    constructor( public element: ElementRef ) { }
+  @Output() click: EventEmitter<any> = new EventEmitter();
 
-    @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) { }
+  onClickListener() {
+    this.click.emit( this );
+  }
+
+  constructor() {}
 
 }

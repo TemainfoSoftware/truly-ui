@@ -50,7 +50,7 @@
     & .input-empty {
       @include defaultInput;
       padding-left: 5px;
-      width: 100%;
+      width: 98%;
     }
 
     & .inputFormOpenFilter {
@@ -70,7 +70,8 @@
     }
 
     & .select-options::-webkit-scrollbar {
-      width: 0.3em;
+      width: 0.5em;
+      border-radius: 3px;
     }
 
     & .group-tags {

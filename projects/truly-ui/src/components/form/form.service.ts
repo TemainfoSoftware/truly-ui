@@ -27,7 +27,7 @@ export class FormService {
 
     constructor(public modalService: ModalService) {}
 
-    createForm(component: Type<any>, compiler, parent: ElementRef, callback: Function) {
-        this.modalService.createModal( component, compiler, parent, callback );
+    createForm(component: Type<any>, compiler, parent: ElementRef, callback: Function, indentifier?: string) {
+        this.modalService.createModal( component, compiler, parent, callback, indentifier );
     }
 }

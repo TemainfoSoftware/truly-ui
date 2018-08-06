@@ -63,12 +63,14 @@
         border-left: 1px solid map-deep-get($primary, "default", "foreground");
       }
 
+      & .select-options {
+        background: map-deep-get($basic, "lighter", "background");
+      }
+
       & .select-options .itens {
         background: map-deep-get($basic, "lighter", "background");
         color: map-deep-get($basic, "lighter", "foreground");
         border-top:1px solid rgba( map-deep-get($basic, "default", "border"),0.3);
-        border-left: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
-        border-right: 1px solid  rgba(map-deep-get($basic, "default", "border"),0.3);
       }
 
       & .select-options small {

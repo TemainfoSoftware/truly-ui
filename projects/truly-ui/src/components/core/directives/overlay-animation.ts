@@ -1,6 +1,4 @@
-
-
- /*
+/*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -21,18 +19,18 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- import { AnimationTriggerMetadata, trigger, state, transition, style, animate } from '@angular/animations';
+import { AnimationTriggerMetadata, trigger, state, transition, style, animate } from '@angular/animations';
 
 export const OverlayAnimation: AnimationTriggerMetadata =
-   trigger('picker', [
-     state('void', style({
-       transform: 'scale(0)',
-       opacity: 0
-     })),
-     transition('void <=> *', [
-       style({
-         opacity: 1
-       }),
-       animate('150ms cubic-bezier(0.25, 0.8, 0.25, 1)')
-     ])
-   ]);
+  trigger( 'overlay', [
+    state( 'void', style( {
+      transform: 'scale(0)',
+      opacity: 0
+    } ) ),
+    transition( 'void <=> *', [
+      style( {
+        opacity: 1
+      } ),
+      animate( '150ms cubic-bezier(0.25, 0.8, 0.25, 1)' )
+    ] )
+  ] );

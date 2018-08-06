@@ -20,16 +20,12 @@
  SOFTWARE.
  */
 
-import {
-  AfterViewInit,
-  Input,
-  ContentChild, Directive, forwardRef
-} from '@angular/core';
+import { Input, ContentChild, Directive, forwardRef } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { I18nService } from '../../i18n/i18n.service';
-import { DateFactory } from './date.factory';
+import { ValidationErrors } from '@angular/forms/src/directives/validators';
 import { TlInput } from '../../input/input';
 import { TlDatePicker } from '../../datepicker/datepicker';
+import { DateValidator } from './date.validator';
 
 @Directive( {
     selector: '[date][ngModel],[date][formControl],[date][formControlName]',
@@ -41,7 +37,7 @@ import { TlDatePicker } from '../../datepicker/datepicker';
       }
     ]
 } )
-export class DateDirective implements Validator, AfterViewInit {
+export class DateDirective implements Validator {
 
     @Input() formatDate = 'dd.mm.yyyy';
 
@@ -49,23 +45,34 @@ export class DateDirective implements Validator, AfterViewInit {
 
     @ContentChild(TlDatePicker) tldatepicker;
 
-    constructor( private i18n: I18nService ) {}
-
-    ngAfterViewInit() {}
-
-    validate( c: FormControl ) {
+    validate( c: FormControl ): ValidationErrors {
       this.getInput();
-      return DateFactory.getInstance(
-        this.tlinput,
-        this.formatDate,
-        this.i18n.getLocale().Validators
-      ).validate()( c );
+      this.setDateMask();
+
+      return DateValidator( this.formatDate )( c );
     }
 
     getInput() {
       if (!this.tlinput) {
         this.tldatepicker.formatDate = this.formatDate;
         this.tlinput = this.tldatepicker.tlinput;
+      }
+    }
+
+    setDateMask( ) {
+      if ( this.tlinput ) {
+        const formatTmp = this.formatDate.replace( /[a-z]/gi, '' );
+        const formatArray = this.formatDate.split( '' );
+
+        for ( let i = 0; i < formatArray.length; i++ ) {
+          if ( formatArray[ i ] !== formatTmp[ 0 ] ) {
+            formatArray[ i ] = '9';
+          }
+        }
+
+        const strFormat = formatArray.toString().replace( /,/gi, '' );
+        this.tlinput.mask = strFormat;
+        this.tlinput.input.nativeElement.setAttribute('placeholder', this.formatDate.toUpperCase());
       }
     }
 

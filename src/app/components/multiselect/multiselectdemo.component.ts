@@ -98,7 +98,6 @@ export class MultiSelectDemoComponent implements OnChanges {
         console.log('Return', modalResult);
       }, {
         title: 'Model Value',
-        textOk: 'Ok',
         draggable: true,
       }
     );

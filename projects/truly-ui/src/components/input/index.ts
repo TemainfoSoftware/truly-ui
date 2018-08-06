@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { TlInput } from './input';
-import { MessageValidationDirective } from './directives/messagevalidation.directive';
 import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 import { CharcaseDirective } from './directives/charcase.directive';
 
@@ -20,15 +19,13 @@ import { OverlayModule } from '@angular/cdk/overlay';
   declarations: [
     TlInput,
     CharcaseDirective,
-    MessageValidationDirective,
     TlMessageValidationComponent,
   ],
   exports: [
     TlInput,
     CharcaseDirective,
-    MessageValidationDirective,
+    TlMessageValidationComponent
   ],
-  entryComponents: [TlMessageValidationComponent]
 } )
 export class InputModule {
 }

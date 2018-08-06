@@ -33,6 +33,8 @@ export class FormDemoComponent implements OnInit {
 
   public data;
 
+  public identifier;
+
   constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: FormService,
                public dataFormService: DataFormService, public dataDumpService: DumpDataService,
                private compiler: ComponentFactoryResolver ) {
@@ -46,14 +48,17 @@ export class FormDemoComponent implements OnInit {
     this.person = this.formDataService.getDataForm();
   }
 
-  form1() {
+  form1(id) {
     this.formService.createForm( NewPersonComponent, this.compiler, null, ( form ) => {
-      console.log('form', form);
       if ( form.formResult ) {
         this.dataFormService.saveDataForm( form.formResult.value );
         this.formModal = this.dataFormService.getDataForm();
       }
-    } );
+    }, id );
+  }
+
+  closeModalID() {
+    this.formService.modalService.getModal(this.identifier).close();
   }
 
   onSubmitForm( $event ) {

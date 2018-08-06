@@ -24,9 +24,11 @@ import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { I18nService } from '../../i18n/i18n.service';
-import { CreditCardFactory } from './creditcard.factory';
+import { ValidationErrors } from '@angular/forms/src/directives/validators';
 import { TlInput } from '../../input/input';
+import { CreditCardValidator } from './creditcard.validator';
+
+const creditCard = 0;
 
 @Directive( {
   selector: '[creditCard][ngModel],[creditCard][formControl],[creditCard][formControlName]',
@@ -40,11 +42,14 @@ import { TlInput } from '../../input/input';
 } )
 export class CreditCardDirective implements Validator {
 
-  @ContentChild( TlInput ) tlinput;
+  @ContentChild( TlInput ) input;
 
-  constructor( private i18n: I18nService ) {}
+  constructor() {}
 
-  validate( c: FormControl ) {
-    return CreditCardFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
+  validate( c: FormControl ): ValidationErrors {
+    if ( this.input ) {
+      this.input.mask = '9999.9999.9999.9999';
+    }
+    return CreditCardValidator( creditCard )( c );
   }
 }

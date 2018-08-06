@@ -1,6 +1,7 @@
 @import "../../../accordion/accordion-theme";
 @import "../../../button/button-theme";
 @import "../../../buttongroup/buttongroup-theme";
+@import "../../../dropdownicon/dropdownicon-theme";
 @import "../../../calendar/calendar-theme";
 @import "../../../chatlist/chatlist-theme";
 @import "../../../checkbox/checkbox-theme";
@@ -35,6 +36,7 @@
   @include tl-accordion-theme($theme);
   @include tl-button-group-theme($theme);
   @include tl-button-theme($theme);
+  @include tl-dropdown-icon-theme($theme);
   @include tl-calendar-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);

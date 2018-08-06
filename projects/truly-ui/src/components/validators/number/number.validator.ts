@@ -20,23 +20,16 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { CustomType } from '../../input/core/custom-type';
 
-export class NumberTl implements CustomType {
-
-  constructor() {}
-
-  validate(): ValidatorFn {
-    return ( control: AbstractControl ) => {
-      const regex = new RegExp( '^(-|[0-9])[0-9]+|[0-9]' );
-      if (control.touched) {
-        if ( regex.test(control.value )) {
-          return null;
-        }
-        return {number: false};
+export function NumberValidator(): ValidatorFn {
+  return ( control: AbstractControl ) => {
+    const regex = new RegExp( '^(-|[0-9])[0-9]+|[0-9]' );
+    if (control.touched) {
+      if ( regex.test(control.value )) {
+        return null;
       }
-      return null;
-    };
-  }
-
+      return {number: false};
+    }
+    return null;
+  };
 }

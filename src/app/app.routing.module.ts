@@ -91,6 +91,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },
       {
+        path: 'dropdownicon',
+        loadChildren: './components/dropdownicon/dropdownicondemo.module#DropDownIconDemoModule'
+      },
+      {
         path: 'datepicker',
         loadChildren: './components/datepicker/datepickerdemo.module#DatePickerDemoModule'
       },

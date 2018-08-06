@@ -7,74 +7,81 @@
   $primary: map-deep-get($theme, 'primary');
 
 
-  .tl-dropdown-list-box {
+  .ui-dropdown-box {
     > .labeltext {
       color: map-deep-get($basic, "default", "foreground");
       > b.required {
         color: map-deep-get($danger, "default", "foreground");
       }
     }
-    > .wrapper {
-      > .select {
-        background: map-deep-get($basic, "default", "background");
-        color: map-deep-get($basic, "default", "foreground");
+  }
+
+  .ui-dropdown-wrapper-list {
+    > .select {
+      background: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+    > .select:hover {
+      background-color: map-deep-get($basic, "default", "background");
+    }
+    > .select:focus {
+      border-color: #40a9ff;
+      outline: 0;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      border-right-width: 1px !important;
+    }
+    > .select:active {
+      background-color: map-deep-get($basic, "default", "background");
+    }
+    > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
+      border: 1px solid map-deep-get($danger, "default", "border");
+      background-color: #FFF1F1;
+    }
+    > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
+      border: 1px solid  map-deep-get($primary, "default", "border");
+      background-color: map-deep-get($primary, "default", "background");
+    }
+    > .dropdown-list-icon i {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+    > .dropdown-list-wrapper-select {
+      > .dropdown-list-select {
         border: 1px solid map-deep-get($basic, "default", "border");
-      }
-      > .select:hover {
         background-color: map-deep-get($basic, "default", "background");
-      }
-      > .select:active {
-        background-color: map-deep-get($basic, "default", "background");
-      }
-      > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-        border: 1px solid map-deep-get($danger, "default", "border");
-        background-color: #FFF1F1;
-      }
-      > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-        border: 1px solid  map-deep-get($primary, "default", "border");
-        background-color: map-deep-get($primary, "default", "background");
-      }
-      > .dropdown-list-icon i {
         color: map-deep-get($basic, "default", "foreground");
-      }
-      > .dropdown-list-wrapper-select {
-        > .dropdown-list-select {
-          border: 1px solid map-deep-get($basic, "default", "border");
-          background-color: map-deep-get($basic, "default", "background");
+        > li {
           color: map-deep-get($basic, "default", "foreground");
-          > li {
-            color: map-deep-get($basic, "default", "foreground");
-          }
-          > li:hover {
-            background-color: map-deep-get($primary, "default", "background");
-            color: map-deep-get($primary, "default", "foreground");
-          }
-          > li:focus {
-            background-color: map-deep-get($primary, "default", "background");
-            color: map-deep-get($primary, "default", "foreground");
-          }
-          > li:active {
-            background-color: map-deep-get($basic, "default", "background");
-            color: map-deep-get($basic, "default", "foreground");
-          }
         }
-        > .dropdown-list-select::-webkit-scrollbar-thumb {
-          background-color: map-deep-get($primary, "default", "background");
-        }
-        > .-placeholder {
-          color: map-deep-get($basic, "default", "foreground");
-          background-color: map-deep-get($basic, "default", "background");
-          border: 1px solid map-deep-get($basic, "default", "border");
-        }
-        .-placeholder:focus {
+        > li:hover {
           background-color: map-deep-get($primary, "default", "background");
           color: map-deep-get($primary, "default", "foreground");
         }
+        > li:focus {
+          background-color: map-deep-get($primary, "default", "background");
+          color: map-deep-get($primary, "default", "foreground");
+        }
+        > li:active {
+          background-color: map-deep-get($basic, "default", "background");
+          color: map-deep-get($basic, "default", "foreground");
+        }
       }
-      > .disabled::placeholder, .disabled {
-        opacity: 0.45;
-        color: #000000;
+      > .dropdown-list-select::-webkit-scrollbar-thumb {
+        background-color: map-deep-get($primary, "default", "background");
       }
+      > .-placeholder {
+        color: map-deep-get($basic, "default", "foreground");
+        background-color: map-deep-get($basic, "default", "background");
+        border: 1px solid map-deep-get($basic, "default", "border");
+      }
+      .-placeholder:focus {
+        background-color: map-deep-get($primary, "default", "background");
+        color: map-deep-get($primary, "default", "foreground");
+      }
+    }
+    > .disabled::placeholder, .disabled {
+      opacity: 0.45;
+      color: #000000;
     }
   }
 

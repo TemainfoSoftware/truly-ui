@@ -20,76 +20,64 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
-import { CustomType } from '../../input/core/custom-type';
+import { LOCALE_I18N } from '../../i18n/i18n.service';
 
-export class CPF implements CustomType {
+export function CPFValidator( ): ValidatorFn {
+  return ( control: AbstractControl ) => {
 
-  private i18n: ValidatorsI18nInterface;
+    let sum = 0;
+    let leftover;
 
-  constructor( i18n: ValidatorsI18nInterface ) {
-    this.i18n = i18n;
-  }
-
-  validate(): ValidatorFn {
-    return ( control: AbstractControl ) => {
-
-      let sum;
-
-      let leftover;
-
-      sum = 0;
-
-      if ( (this.cpfUnmasked( control ) === null) || (this.cpfUnmasked( control ).length < 9) ) {
-        return { cpf: this.i18n.invalidCPF };
-      }
-
-      if ( this.isAllCharacteresEquals( control ) ) {
-        return { cpf: this.i18n.invalidCPF };
-      }
-
-      for ( let i = 1; i <= 9; i++ ) {
-        sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (11 - i);
-      }
-
-      leftover = (sum * 10) % 11;
-      if ( (leftover === 10) || (leftover === 11) ) {
-        leftover = 0;
-      }
-      if ( leftover !== Number( this.cpfUnmasked( control ).substring( 9, 10 ) ) ) {
-        return { cpf: this.i18n.invalidCPF };
-      }
-      sum = 0;
-      for ( let i = 1; i <= 10; i++ ) {
-        sum = sum + Number( this.cpfUnmasked( control ).substring( i - 1, i ) ) * (12 - i);
-      }
-      leftover = (sum * 10) % 11;
-      if ( (leftover === 10) || (leftover === 11) ) {
-        leftover = 0;
-      }
-      if ( leftover !== Number( this.cpfUnmasked( control ).substring( 10, 11 ) ) ) {
-        return { cpf: this.i18n.invalidCPF };
-      }
-
-      return null;
-    };
-  }
-
-  cpfUnmasked( c ) {
-    return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-  }
-
-
-  isAllCharacteresEquals( c ) {
-    let result = true;
-    for ( let i = 1; i <= 9; i++ ) {
-      if ( this.cpfUnmasked( c ).substring( i - 1, i ) !== this.cpfUnmasked( c )[ 0 ] ) {
-        result = false;
-        break;
-      }
+    if ( (cpfUnmasked( control ) === null) || (cpfUnmasked( control ).length < 9) ) {
+      return { cpf: LOCALE_I18N.Validators.invalidCPF };
     }
-    return result;
-  }
 
+    if ( isAllCharacteresEquals( control ) ) {
+      return { cpf: LOCALE_I18N.Validators.invalidCPF };
+    }
+
+    for ( let i = 1; i <= 9; i++ ) {
+      sum = sum + Number( cpfUnmasked( control ).substring( i - 1, i ) ) * (11 - i);
+    }
+
+    leftover = (sum * 10) % 11;
+    if ( (leftover === 10) || (leftover === 11) ) {
+      leftover = 0;
+    }
+
+    if ( leftover !== Number( cpfUnmasked( control ).substring( 9, 10 ) ) ) {
+      return { cpf: LOCALE_I18N.Validators.invalidCPF };
+    }
+    sum = 0;
+    for ( let i = 1; i <= 10; i++ ) {
+      sum = sum + Number( cpfUnmasked( control ).substring( i - 1, i ) ) * (12 - i);
+    }
+
+    leftover = (sum * 10) % 11;
+    if ( (leftover === 10) || (leftover === 11) ) {
+      leftover = 0;
+    }
+
+    if ( leftover !== Number( cpfUnmasked( control ).substring( 10, 11 ) ) ) {
+      return { cpf: LOCALE_I18N.Validators.invalidCPF };
+    }
+
+    return null;
+  };
+}
+
+export function cpfUnmasked( c ) {
+  return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+}
+
+export function isAllCharacteresEquals( c ) {
+  let result = true;
+  for ( let i = 1; i <= 9; i++ ) {
+    if ( cpfUnmasked( c ).substring( i - 1, i ) !== cpfUnmasked( c )[ 0 ] ) {
+      result = false;
+      break;
+    }
+  }
+  return result;
 }
 

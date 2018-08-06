@@ -77,6 +77,13 @@ export const dataProperties = [
     options: 'Directive'
   },
   {
+    name: 'formGroup',
+    type: 'FormGroup',
+    default: 'null',
+    description: 'Bind Angular FormGroup to Truly-UI Form.',
+    options: 'FormGroup'
+  },
+  {
     name: '@Modal.title',
     type: 'string',
     default: 'My Modal',

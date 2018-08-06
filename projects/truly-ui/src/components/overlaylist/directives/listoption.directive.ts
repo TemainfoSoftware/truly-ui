@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,30 +21,22 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+ import { Directive, Input, HostBinding } from '@angular/core';
+ import { Highlightable } from '@angular/cdk/a11y';
 
-import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
-import { CustomType } from '../../input/core/custom-type';
-import { CreditCard } from './creditcard.validator';
-import * as cards from './creditcards';
+ @Directive( {
+   selector: '[role="option"]'
+ } )
+ export class ListOptionDirective implements Highlightable {
+   @Input( 'optionItem' ) optionItem;
 
-const creditCard = 0;
+   @HostBinding( 'class.selected' ) isActive;
 
-// @dynamic
-export class CreditCardFactory {
+   setActiveStyles(): void {
+     this.isActive = true;
+   }
 
-  static getInstance( tlinput, i18n: ValidatorsI18nInterface ): CustomType {
-    this.setCreditCardMask( tlinput );
-    const credicardInstance = new CreditCard(creditCard, i18n);
-    return credicardInstance;
-  }
-
-  static setCreditCardMask( tlinput ) {
-    tlinput.mask = '9999.9999.9999.9999';
-  }
-
-  static creditNumberUnmasked( value ) {
-    return String( value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-  }
-
-}
-
+   setInactiveStyles(): void {
+     this.isActive = false;
+   }
+ }

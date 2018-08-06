@@ -33,7 +33,8 @@ import { Modal } from '../../modal/modal-options';
   draggable: true,
   maximizable: false,
   minimizable: false,
-  backdrop: false
+  backdrop: false,
+  closeOnOK: true
 })
 @Component({
     selector: 'tl-dialog-alert',

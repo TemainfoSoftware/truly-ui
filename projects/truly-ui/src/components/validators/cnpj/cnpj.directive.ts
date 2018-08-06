@@ -20,14 +20,11 @@
  SOFTWARE.
  */
 
-import {
-  AfterViewInit,
-  ContentChild, Directive, forwardRef
-} from '@angular/core';
+import { ContentChild, Directive, forwardRef } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { I18nService } from '../../i18n/i18n.service';
+import { ValidationErrors } from '@angular/forms/src/directives/validators';
 import { TlInput } from '../../input/input';
-import { CNPJFactory } from './cnpj.factory';
+import { CNPJValidator } from './cnpj.validator';
 
 @Directive( {
     selector: '[cnpj][ngModel],[cnpj][formControl],[cnpj][formControlName]',
@@ -39,15 +36,14 @@ import { CNPJFactory } from './cnpj.factory';
       }
     ]
 } )
-export class CNPJDirective implements Validator, AfterViewInit {
+export class CNPJDirective implements Validator {
 
-    @ContentChild(TlInput) tlinput;
+    @ContentChild(TlInput) input;
 
-    constructor( private i18n: I18nService ) {}
-
-    ngAfterViewInit() {}
-
-    validate( c: FormControl ) {
-      return CNPJFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
+    validate( c: FormControl ): ValidationErrors {
+      if ( this.input ) {
+        this.input.mask = '99.999.999/9999-99';
+      }
+      return CNPJValidator()( c );
     }
 }

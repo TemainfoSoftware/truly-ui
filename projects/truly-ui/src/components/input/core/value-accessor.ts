@@ -3,8 +3,10 @@ import {ControlValueAccessor} from '@angular/forms';
 export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;
 
-  private changed = new Array<(value: T) => void>();
-  private touched = new Array<() => void>();
+  public isDisabled: boolean;
+
+  public propagateChange: any = () => {};
+  public propagateTouched: any = () => {};
 
   get value(): T {
     return this.innerValue;
@@ -13,7 +15,7 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   set value(value: T) {
     if (this.innerValue !== value) {
       this.innerValue = value;
-      this.changed.forEach(f => f(value));
+      this.propagateChange(value);
     }
   }
 
@@ -22,14 +24,15 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   }
 
   registerOnChange(fn: (value: T) => void) {
-    this.changed.push(fn);
+    this.propagateChange = fn;
   }
 
   registerOnTouched(fn: () => void) {
-    this.touched.push(fn);
+    this.propagateTouched = fn;
   }
 
-  touch() {
-    this.touched.forEach(f => f());
+  setDisabledState( isDisabled: boolean ): void {
+      this.isDisabled = isDisabled;
   }
+
 }

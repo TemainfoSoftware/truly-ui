@@ -20,14 +20,11 @@
  SOFTWARE.
  */
 
-import {
-  AfterViewInit,
-  Input,
-  ContentChild, Directive, forwardRef, HostListener
-} from '@angular/core';
+import { ContentChild, Directive, forwardRef, HostListener } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { NumberFactory } from './number.factory';
+import { ValidationErrors } from '@angular/forms/src/directives/validators';
 import { TlInput } from '../../input/input';
+import { NumberValidator } from './number.validator';
 
 @Directive( {
     selector: '[number][ngModel],[number][formControl],[number][formControlName]',
@@ -58,9 +55,9 @@ export class NumberDirective implements Validator {
       return ($event.keyCode === 45) && ($event.target.selectionStart === 0);
     }
 
-    validate( c: FormControl ) {
+    validate( c: FormControl ): ValidationErrors {
       if (this.tlinput.input.nativeElement.value.length > 0) {
-        return NumberFactory.getInstance().validate()( c );
+        return NumberValidator()( c );
       }
     }
 }

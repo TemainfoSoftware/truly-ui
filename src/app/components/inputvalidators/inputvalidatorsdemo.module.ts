@@ -1,5 +1,5 @@
 import { CommonModule  } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { InputValidatorsDemoComponent } from './inputvalidatorsdemo.component';
@@ -21,6 +21,7 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
     CommonModule,
     FormsModule,
     HighlightJsModule,
+    ReactiveFormsModule,
     InputValidatorsDemoRoutingModule,
     InputModule,
     ValidatorsModule,

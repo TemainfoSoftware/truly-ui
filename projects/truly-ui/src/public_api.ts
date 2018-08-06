@@ -1,7 +1,4 @@
-import { KeyEvent } from './components/core/enums/key-events';
-import { ModalResult } from './components/core/enums/modal-result';
-import { ModalOptions } from './components/modal/modal-options';
-
+// Modules
 export { AccordionModule } from './components/accordion/index';
 export { AutoCompleteModule } from './components/autocomplete/index';
 export { ButtonModule } from './components/button/index';
@@ -11,8 +8,6 @@ export { CheckBoxModule } from './components/checkbox/index';
 export { ChatListModule } from './components/chatlist/index';
 export { CalendarModule } from './components/calendar/index';
 export { CoreModule } from './components/core/index';
-export { KeyEvent } from './components/core/enums/key-events';
-export { ModalResult } from './components/core/enums/modal-result';
 export { ContextMenuModule } from './components/contextmenu/index';
 export { DatatableModule } from './components/datatable/index';
 export { DatePickerModule } from './components/datepicker/index';
@@ -27,7 +22,6 @@ export { PopupMenuModule } from './components/popupmenu/index';
 export { MiscModule } from './components/misc/index';
 export { ContainerModalModule } from './components/modal/addons/container-modal/index';
 export { ModalToolbarModule } from './components/modal/addons/modal-toolbar/index';
-export { ModalOptions, Modal } from './components/modal/modal-options';
 export { ModalModule } from './components/modal/index';
 export { MultiSelectModule } from './components/multiselect/index';
 export { MultiViewModule } from './components/multiview/index';
@@ -46,14 +40,31 @@ export { TooltipModule } from './components/tooltip/index';
 export { TimePickerModule } from './components/timepicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
-// Services..
-export { ModalService } from './components/modal/modal.service';
+// Interfaces
+export { ModalOptions, Modal } from './components/modal/modal-options';
+
+// Enumerators
+export { KeyEvent } from './components/core/enums/key-events';
+export { ModalResult } from './components/core/enums/modal-result';
+
+// Services
 export { DialogService } from './components/dialog/dialog.service';
 export { FormService } from './components/form/form.service';
+export { ModalService } from './components/modal/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
+export { ToasterService } from './components/toaster/services/toaster.service';
 
-// Languages...
+// Languages
 export { I18nService } from './components/i18n/i18n.service';
 export { I18nInterface } from './components/i18n/i18n.interface';
 export { en_US } from './components/i18n/languages/en_US';
 export { pt_BR } from './components/i18n/languages/pt_BR';
+
+// Validators
+export { CNPJValidator } from './components/validators/cnpj/cnpj.validator';
+export { CPFValidator } from './components/validators/cpf/cpf.validator';
+export { CreditCardValidator } from './components/validators/creditcard/creditcard.validator';
+export { DateValidator } from './components/validators/date/date.validator';
+export { EmailValidator } from './components/validators/email/email.validator';
+export { NumberValidator } from './components/validators/number/number.validator';
+export { PasswordValidator } from './components/validators/password/password.validator';

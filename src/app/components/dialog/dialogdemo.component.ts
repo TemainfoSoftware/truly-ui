@@ -29,7 +29,6 @@ export class DialogDemoComponent {
       console.log('Return', modalResult);
     }, {
       title: 'My custom dialog',
-      textOk: 'Ok',
       draggable: true,
     } );
   }

@@ -69,6 +69,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() height = '500px';
 
+  @Input() closeOnOK = false;
+
   @Input() width = '500px';
 
   @Input() fullscreen = false;

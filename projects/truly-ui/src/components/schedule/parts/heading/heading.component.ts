@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ViewType } from '../../types/view.type';
 
 @Component({
   selector: 'tl-schedule-heading',
@@ -13,9 +14,11 @@ export class HeadingComponent implements OnInit {
 
   @Input() currentDate = new Date();
 
-  @Output() changeView = new EventEmitter();
+  @Output() changeView = new EventEmitter<ViewType>();
 
   @Output() changeDate = new EventEmitter();
+
+  @Output() newEventClick = new EventEmitter();
 
   constructor() { }
 

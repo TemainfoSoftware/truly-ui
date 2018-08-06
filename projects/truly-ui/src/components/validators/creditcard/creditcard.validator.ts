@@ -20,40 +20,28 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
-import { CustomType } from '../../input/core/custom-type';
+import { LOCALE_I18N } from '../../i18n/i18n.service';
 
 /*https://www.freeformatter.com/credit-card-number-generator-validator.html#howToValidate
   https://www.4devs.com.br/validador_numero_cartao_credito
     https://www.tools4noobs.com/online_tools/credit_card_validate/
       https://pt.stackoverflow.com/questions/97234/validar-n%C3%BAmero-cart%C3%A3o-de-cr%C3%A9dito*/
 
-export class CreditCard implements CustomType {
-
-  private creditCard;
-
-  private i18n: ValidatorsI18nInterface;
-
-  constructor( card, i18n: ValidatorsI18nInterface ) {
-    this.creditCard = card;
-    this.i18n = i18n;
-  }
-
-  validate(): ValidatorFn {
-    return ( control: AbstractControl ) => {
-      if ( !this.creditCard ) {
-        return { creditcard: this.i18n.invalidCreditCard };
+export function  CreditCardValidator( creditCard ): ValidatorFn {
+  return ( control: AbstractControl ) => {
+    if ( !creditCard ) {
+      return { creditcard: LOCALE_I18N.Validators.invalidCreditCard };
+    }
+    const regex = new RegExp( creditCard.regex );
+    if ( ( creditNumberUnmasked( control.value ) !== '') &&
+      (!regex.test( creditNumberUnmasked( control.value ) )) ) {
+        return { creditcard: LOCALE_I18N.Validators.invalidCreditCard };
       }
-      const regex = new RegExp( this.creditCard.regex );
-      if ( (this.creditNumberUnmasked( control.value ) !== '') &&
-        (!regex.test( this.creditNumberUnmasked( control.value ) )) ) {
-        return { creditcard: this.i18n.invalidCreditCard };
-  }
-      return null;
-    };
-  }
-
-  creditNumberUnmasked( value ) {
-    return String( value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-  }
+    return null;
+  };
 }
+
+function creditNumberUnmasked( value ) {
+  return String( value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+}
+

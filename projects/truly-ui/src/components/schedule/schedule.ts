@@ -24,6 +24,7 @@ import {
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
+import { ViewType } from './types/view.type';
 
 @Component( {
   selector: 'tl-schedule',
@@ -33,9 +34,9 @@ import { StatusType } from './types/status.type';
 })
 export class TlSchedule implements OnInit, OnChanges {
 
-  @Input() defaultView: 'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'  = 'day';
+  @Input() defaultView: ViewType = 'day';
 
-  @Input() views: Array<'day' | 'week' | 'month' | 'workWeek' | 'dayList' | 'weekList'> = ['day', 'dayList'];
+  @Input() views: Array<ViewType> = [ 'day', 'dayList' ];
 
   @Input() statusConfig: StatusType;
 
@@ -74,7 +75,7 @@ export class TlSchedule implements OnInit, OnChanges {
     return this._endDayHour;
   }
 
-  @Output() changeView = new EventEmitter();
+  @Output() changeView = new EventEmitter<ViewType>();
 
   @Output() changeDate = new EventEmitter();
 
@@ -87,6 +88,8 @@ export class TlSchedule implements OnInit, OnChanges {
   @Output() eventMouseover = new EventEmitter();
 
   @Output() eventMouseout = new EventEmitter();
+
+  @Output() newEventClick = new EventEmitter();
 
   public startDayMilliseconds: number;
 
@@ -110,7 +113,7 @@ export class TlSchedule implements OnInit, OnChanges {
     this.changeDetection.detectChanges();
   }
 
-  ngOnChanges(  changes: SimpleChanges  ) {
+  ngOnChanges( changes: SimpleChanges ) {
 
     if ( changes['events'] !== undefined ) {
       if ( !changes[ 'events' ].firstChange ) {
@@ -128,7 +131,7 @@ export class TlSchedule implements OnInit, OnChanges {
     this.changeDetection.detectChanges();
   }
 
-  onChangeView( view ) {
+  onChangeView( view: ViewType ) {
     this.defaultView = view;
     this.changeView.emit( view );
   }

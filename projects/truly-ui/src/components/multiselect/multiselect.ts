@@ -69,6 +69,8 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   @Input() detailOnTag = null;
 
+  @Input() keyValue = null;
+
   @Input() itemHeight = '7px';
 
   @Input() itemAmount = 5;
@@ -89,7 +91,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   @ViewChild( 'ul' ) ul;
 
-  @ViewChild(NgModel) model: NgModel;
+  @ViewChild( NgModel ) model: NgModel;
 
   @ViewChild( 'element' ) wrapperTags;
 
@@ -121,12 +123,10 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   private scrollDocument;
 
-  constructor(
-    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-    private change: ChangeDetectorRef, private renderer: Renderer2
-  ) {
-    super(validators, asyncValidators);
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private change: ChangeDetectorRef, private renderer: Renderer2 ) {
+    super( validators, asyncValidators );
   }
 
   ngOnInit() {
@@ -179,12 +179,13 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
     this.setModelValueWithSourceKey();
     let modeltemp;
     modeltemp = this.value;
-    modeltemp.forEach( ( value, index, array ) => {
-      this.dataSource.forEach( ( value2, index2, array2 ) => {
-        if ( JSON.stringify( value ) === JSON.stringify( this.getValue( value2 ) ) ) {
-          this.tags.push( value2 );
-        }
-      } );
+    modeltemp.forEach( ( value ) => {
+      let indexMock;
+      indexMock = this.keyValue ? this.dataSource.findIndex( (item => item[ this.keyValue ] === value) ) :
+        this.dataSource.findIndex( (item => JSON.stringify(item) === JSON.stringify(value)) );
+      if ( indexMock > -1 ) {
+        this.tags.push( this.dataSource[ indexMock ] );
+      }
     } );
   }
 
@@ -347,12 +348,12 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   }
 
   activeInputText() {
-  //  this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
+    //  this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
   }
 
   deActiveInputText() {
     if ( this.isOpen ) {
-  // /    this.input.nativeElement.style.webkitTextFillColor = 'transparent';
+      // /    this.input.nativeElement.style.webkitTextFillColor = 'transparent';
     }
   }
 
@@ -529,7 +530,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   setModelValue() {
     const modeltemp = [];
     this.tags.forEach( ( value ) => {
-      modeltemp.push( this.getValue( value ) );
+      modeltemp.push( this.getValue( value )[ this.keyValue ] );
     } );
     this.value = modeltemp;
   }

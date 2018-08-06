@@ -4,20 +4,18 @@
             <div class="ui-dropdown"
                  *ngIf="column?.showFilterOptions && column?.filterOptions.length"
                  [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
-                <tl-dropdown-list
-                    [data]="column?.filterOptions"
-                    [text]="'description'"
-                    [icon]="'icon'"
-                    [width]="'175px'"
-                    [height]="'23px'"
-                    [valueItem]="'valueItem'"
-                    [showOnlyIcon]="true"
-                    [placeholder]="dropdownResetPlaceholder"
-                    [placeholderIcon]="'ion-search'"
-                    [ngModel]="filters.matchMode[column.field]"
-                    (ngModelChange)="onChangeFilter(filters.matchMode[column.field] = $event)"
-                >
-                </tl-dropdown-list>
+
+              <tl-dropdown-icon
+                [data]="column?.filterOptions"
+                [widthItems]="'175px'"
+                [heightItems]="'25px'"
+                [keyText]="'description'"
+                [keyValue]="'valueItem'"
+                [defaultOptionText]="dropdownResetPlaceholder"
+                [ngModel]="filters.matchMode[column.field]"
+                (ngModelChange)="onChangeFilter(filters.matchMode[column.field] = $event)">
+              </tl-dropdown-icon>
+
             </div>
             <div  class="ui-input">
                 <tl-input *ngIf="column?.showFilter"

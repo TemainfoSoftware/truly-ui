@@ -2,7 +2,7 @@
   <div class="header-title-demo">
     <h1 class="title">Dropdown List <span class="module-name"><code><u>Module Name</u>: <strong>DropDownListModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>DropDownListModule</strong></code></p>
-    <p class="text-content">The DropdownList is a component that can be selected and filtered.</p>
+    <p class="keyText-content">The DropdownList is a component that can be selected and filtered.</p>
   </div>
   <div class="showcase">
     <div class="row">
@@ -12,8 +12,8 @@
             <div class="col-md-6">
               <h5>Basic</h5>
               <tl-dropdown-list [data]="data"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected | json"></app-showcase-returned-value>
@@ -21,7 +21,7 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [text]="'textItem'"
+  [keyText]="'textItem'"
   [(ngModel)]="itemSelected">
 </tl-dropdown-list>
 </textarea>
@@ -29,8 +29,8 @@
             <div class="col-md-6">
               <h5>Auto Scroll</h5>
               <tl-dropdown-list [data]="bigData"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected4">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected4 | json"></app-showcase-returned-value>
@@ -38,8 +38,8 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="bigData"
-  [text]="'textItem'"
-  [valueItem]="'value'"
+  [keyText]="'textItem'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected4">
 </tl-dropdown-list>
 </textarea>
@@ -49,9 +49,9 @@
             <div class="col-md-6">
               <h5>Scroll</h5>
               <tl-dropdown-list [data]="data"
-                                [text]="'textItem'"
+                                [keyText]="'textItem'"
                                 [(ngModel)]="itemSelected3"
-                                [valueItem]="'value'"
+                                [keyValue]="'value'"
                                 [scroll]="3">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected3 | json"></app-showcase-returned-value>
@@ -59,9 +59,9 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [text]="'textItem'"
+  [keyText]="'textItem'"
   [(ngModel)]="itemSelected3"
-  [valueItem]="'value'"
+  [keyValue]="'value'"
   [scroll]="3">
 </tl-dropdown-list>
   </textarea>
@@ -69,9 +69,9 @@
             <div class="col-md-6">
               <h5>Placeholder</h5>
               <tl-dropdown-list [data]="data"
-                                [text]="'textItem'"
+                                [keyText]="'textItem'"
                                 [placeholder]="'Select item'"
-                                [valueItem]="'value'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected2">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected2 | json"></app-showcase-returned-value>
@@ -79,9 +79,9 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [text]="'textItem'"
+  [keyText]="'textItem'"
   [placeholder]="'Select item'"
-  [valueItem]="'value'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected2">
 </tl-dropdown-list>
   </textarea>
@@ -91,10 +91,10 @@
             <div class="col-md-6">
               <h5>Label</h5>
               <tl-dropdown-list [data]="data"
-                                [label]="'Label Text'"
+                                [label]="'Label keyText'"
                                 [labelSize]="'80px'"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected5">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected5 | json"></app-showcase-returned-value>
@@ -102,10 +102,10 @@
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [label]="'Label Text'"
+  [label]="'Label keyText'"
   [labelSize]="'80px'"
-  [text]="'textItem'"
-  [valueItem]="'value'"
+  [keyText]="'textItem'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected5">
 </tl-dropdown-list>
 </textarea>
@@ -115,8 +115,8 @@
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [height]="'30px'"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected6">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected6 | json"></app-showcase-returned-value>
@@ -126,8 +126,8 @@
   [data]="data"
   [placeholder]="'Select item'"
   [height]="'21px'"
-  [text]="'textItem'"
-  [valueItem]="'value'"
+  [keyText]="'textItem'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected6">
 </tl-dropdown-list>
 </textarea>
@@ -140,8 +140,8 @@
                                 [placeholder]="'Select item'"
                                 [width]="'180px'"
                                 [searchOnList]="true"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [(ngModel)]="itemSelected7">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected7 | json"></app-showcase-returned-value>
@@ -152,8 +152,8 @@
   [placeholder]="'Select item'"
   [width]="'120px'"
   [searchOnList]="true"
-  [text]="'textItem'"
-  [valueItem]="'value'"
+  [keyText]="'textItem'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected7">
 </tl-dropdown-list>
 </textarea>
@@ -164,8 +164,8 @@
                                 [placeholder]="'Select Item'"
                                 [labelSize]="'80px'"
                                 [labelPlacement]="'top'"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 required
                                 [(ngModel)]="itemSelected9">
               </tl-dropdown-list>
@@ -174,11 +174,11 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [label]="'Label Text'"
+  [label]="'Label keyText'"
   [labelSize]="'80px'"
   [labelPlacement]="top"
-  [text]="'textItem'"
-  [valueItem]="'value'"
+  [keyText]="'textItem'"
+  [keyValue]="'value'"
   [(ngModel)]="itemSelected9">
 </tl-dropdown-list>
   </textarea>
@@ -189,13 +189,13 @@
               <h5>Disabled</h5>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
-                                [text]="'textItem'"
-                                [valueItem]="'value'"
+                                [keyText]="'textItem'"
+                                [keyValue]="'value'"
                                 [disabled]="true">
               </tl-dropdown-list>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-dropdown-list [data]="data" [placeholder]="'Select item'" [text]="'textItem'" [disabled]="true"></tl-dropdown-list>
+<tl-dropdown-list [data]="data" [placeholder]="'Select item'" [keyText]="'textItem'" [disabled]="true"></tl-dropdown-list>
 </textarea>
             </div>
             <div class="col-md-6">
@@ -207,37 +207,6 @@
 <tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
 </textarea>
             </div>
-          </app-card>
-          <app-card>
-            <div class="col-md-12">
-              <h5>With Icon</h5>
-              <tl-dropdown-list [data]="dataWidthIcon"
-                                [text]="'textItem'"
-                                [icon]="'icon'"
-                                [width]="'160px'"
-                                [placeholder]="'Filter'"
-                                [valueItem]="'value'"
-                                [placeholderIcon]="'fa fa-filter'"
-                                [showOnlyIcon]="true"
-                                [(ngModel)]="itemSelected9">
-              </tl-dropdown-list>
-              <app-showcase-returned-value [value]="itemSelected9 | json"></app-showcase-returned-value>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-dropdown-list
-  [data]="dataWidthIcon"
-  [text]="'textItem'"
-  [icon]="'icon'"
-  [valueItem]="'value'"
-  [width]="'160px'"
-  [placeholder]="'Filter'"
-  [placeholderIcon]="'fa fa-filter'"
-  [showOnlyIcon]="true"
-  [(ngModel)]="itemSelected9">
-</tl-dropdown-list>
-</textarea>
-            </div>
-
           </app-card>
         </app-showcase-card>
         <app-showcase-card [title]="'Important'" [icon]="'ion-information-circled'">

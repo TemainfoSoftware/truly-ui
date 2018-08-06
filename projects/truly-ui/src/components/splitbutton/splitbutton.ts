@@ -20,98 +20,46 @@
  SOFTWARE.
  */
 import {
-    Component, ContentChildren, Input, QueryList, AfterContentInit,
-    Renderer2, ViewChild, ElementRef, HostListener
-    } from '@angular/core';
+  Component, Input, AfterContentInit, ContentChildren, QueryList, ChangeDetectorRef,
+} from '@angular/core';
 
-import { animate, style, transition, trigger } from '@angular/animations';
-
+import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { TlSplitButtonAction } from './splitbutton-action';
-
-let globalZindex = 1;
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component( {
-    selector: 'tl-split-button',
-    templateUrl: './splitbutton.html',
-    styleUrls: [ './splitbutton.scss' ],
-    animations: [
-        trigger(
-            'enterAnimation', [
-                transition( ':enter', [
-                    style( { opacity: 0, transform: 'translate(0%,-5%)', flex: '0' } ),
-                    animate( '200ms', style( { opacity: 1, transform: 'translate(0%,0%)' } ) )
-                ] ),
-                transition( ':leave', [
-                    style( { opacity: 1, transform: 'translate(0%,0%)' } ),
-                    animate( '200ms', style( { opacity: 0, transform: 'translate(0%,-5%)' } ) )
-                ] )
-            ]
-        )
-    ]
+  selector: 'tl-split-button',
+  templateUrl: './splitbutton.html',
+  styleUrls: [ './splitbutton.scss' ],
+  animations: [ OverlayAnimation ]
 } )
 export class TlSplitButton implements AfterContentInit {
 
-    @Input() text = '';
+  @Input() text = '';
 
-    @Input() iconAddonBefore = '';
+  @Input() width = '125px';
 
-    @Input() iconAddonAfter = '';
+  @Input() height = '35px';
 
-    @Input() iconBeforeText;
+  @Input() disabled: boolean = null;
 
-    @Input() iconAfterText;
+  @Input() color = 'basic';
 
-    @Input() width = '125px';
+  @ContentChildren( TlSplitButtonAction ) actions: QueryList<TlSplitButtonAction>;
 
-    @Input() height = '35px';
+  public isOpen: boolean;
 
-    @Input() disabled: boolean = null;
+  public positionOverlay = 'bottom';
 
-    @ViewChild( 'lista' ) lista: ElementRef;
+  constructor(private change: ChangeDetectorRef) {}
 
-    @ContentChildren( TlSplitButtonAction ) splitButtonActions: QueryList<TlSplitButtonAction>;
+  ngAfterContentInit() {
+    this.actions.forEach( ( item ) => item.click.subscribe( () => this.isOpen = false ) );
+  }
 
-    public zIndex = 0;
-
-    public showHide: boolean;
-
-    constructor( public button: ElementRef, private _renderer: Renderer2 ) {
-        this.showHide = false;
-    }
-
-    @HostListener( 'click', [ '$event' ] )
-    onClickListener( $event ) {
-        $event.stopPropagation();
-        this.showHide = false;
-    }
-
-    ngAfterContentInit() {
-        this._renderer.listen( document, 'click', ( event ) => {
-            if ( !(event.target.className === 'split-button-actions active') && !(event.target.localName === 'i') ) {
-                this.showHide = false;
-            }
-        } );
-    }
-
-    changeShowStatus(event) {
-        this.showHide = !this.showHide;
-        if ( this.showHide ) {
-            setTimeout( () => {
-                this.getAndSetZIndex();
-                this.createActionItem();
-            }, 0 );
-        }
-    }
-
-    createActionItem() {
-        this.splitButtonActions.toArray().forEach( (item) => {
-            this.lista.nativeElement.appendChild( item.element.nativeElement );
-        });
-    }
-
-    getAndSetZIndex() {
-        this.zIndex = globalZindex++;
-        return this.zIndex;
-    }
+  onPositionChange( $event: ConnectedOverlayPositionChange ) {
+    this.positionOverlay = $event.connectionPair.originY;
+    this.change.detectChanges();
+  }
 
 }

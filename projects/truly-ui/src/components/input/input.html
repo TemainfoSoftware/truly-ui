@@ -16,7 +16,7 @@
            [disabled]="disabled || isDisabled"
            class="field"
            [ngClass]="{
-             'invalid': controlName?.control.errors,
+             'invalid': controlName?.control.errors || model?.control.errors,
              'withValidators': validators?.length > 0, withoutValidators: validators === null,
              '-borderleft': iconBefore || textBefore,
              '-borderright': iconAfter || textAfter

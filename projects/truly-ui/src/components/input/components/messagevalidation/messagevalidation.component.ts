@@ -43,8 +43,11 @@ export class TlMessageValidationComponent {
           this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
           return;
         }
+        if (key === 'email') {
+          this.messages.push(format(this.i18n.getLocale().Validators.invalidEmail));
+          return;
+        }
         if (key === 'pattern') {
-          console.log(messages);
           this.messages.push(this.i18n.getLocale().Validators.patternNotMatch);
           return;
         }

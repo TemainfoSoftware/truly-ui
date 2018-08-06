@@ -118,9 +118,9 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @ViewChild( 'inputBox' ) inputBox;
 
-  @ViewChild( NgModel ) model: NgModel;
-
   @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+
+  @ContentChild( NgModel ) model: NgModel;
 
   @ContentChild( FormControlName ) controlName: FormControlName;
 
@@ -139,7 +139,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   public clearButtonPosition;
 
   public fieldMask: InputMask;
-
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) public validators: Array<any>,
                private tlInput: ElementRef, private renderer: Renderer2 ) {

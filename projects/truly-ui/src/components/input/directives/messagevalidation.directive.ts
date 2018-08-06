@@ -21,19 +21,22 @@
  */
 
 import {
+  AfterViewInit,
   ComponentFactoryResolver, ContentChild, Directive, OnDestroy, OnInit, Renderer2,
   ViewContainerRef
 } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { FormControlName, NgModel } from '@angular/forms';
 import { TlMessageValidationComponent } from '../components/messagevalidation/messagevalidation.component';
 import { TlInput } from '../input';
 
 @Directive( {
   selector: '[messageValidation]'
 } )
-export class MessageValidationDirective implements OnInit, OnDestroy {
+export class MessageValidationDirective implements AfterViewInit, OnDestroy {
 
-  @ContentChild( NgModel ) model;
+  @ContentChild( FormControlName ) control;
+
+  @ContentChild( NgModel ) controlModel;
 
   @ContentChild( TlInput ) tlinput;
 
@@ -41,9 +44,13 @@ export class MessageValidationDirective implements OnInit, OnDestroy {
 
   private listeners = [];
 
-  constructor( private compiler: ComponentFactoryResolver, private view: ViewContainerRef, private renderer: Renderer2 ) {}
+  private currentControl;
 
-  ngOnInit() {
+  constructor( private compiler: ComponentFactoryResolver, private view: ViewContainerRef, private renderer: Renderer2 ) {
+  }
+
+  ngAfterViewInit() {
+    this.currentControl = this.control ? this.control : this.controlModel;
     this.listenFocus();
     this.listenFocusOut();
     this.listenChanges();
@@ -51,38 +58,40 @@ export class MessageValidationDirective implements OnInit, OnDestroy {
   }
 
   listenScrollDocument() {
-    this.listeners.push(this.renderer.listen(document, 'scroll', () => {
-      this.setDisplayMessages(true);
-    }));
+    this.listeners.push( this.renderer.listen( document, 'scroll', () => {
+      this.setDisplayMessages( true );
+    } ) );
   }
 
   listenFocus() {
-    this.listeners.push(this.renderer.listen(this.tlinput.input.nativeElement, 'focus', () => {
-      this.setDisplayMessages(false);
-    }));
+    this.listeners.push( this.renderer.listen( this.tlinput.input.nativeElement, 'focus', () => {
+      this.setDisplayMessages( false );
+    } ) );
   }
 
   listenFocusOut() {
-    this.listeners.push(this.renderer.listen(this.tlinput.input.nativeElement, 'focusout', () => {
-      this.setDisplayMessages(true);
-    }));
+    this.listeners.push( this.renderer.listen( this.tlinput.input.nativeElement, 'focusout', () => {
+      this.setDisplayMessages( true );
+    } ) );
   }
 
   listenChanges() {
-    this.model.statusChanges.subscribe( () => {
-      this.model.control.errors ? this.createMessageValidation() : this.removeMessageValidation();
-      this.setMessageValidation();
-    } );
-  }
-
-  setMessageValidation() {
-    if ( this.component && this.model.dirty ) {
-     (<TlMessageValidationComponent>this.component.instance).setMessages( this.model.control.errors );
+    if ( this.currentControl ) {
+      this.currentControl.statusChanges.subscribe( () => {
+        this.currentControl.control.errors ? this.createMessageValidation() : this.removeMessageValidation();
+        this.setMessageValidation();
+      } );
     }
   }
 
-  setDisplayMessages(value) {
-    if (this.component) {
+  setMessageValidation() {
+    if ( this.component && this.currentControl.dirty ) {
+      (<TlMessageValidationComponent>this.component.instance).setMessages( this.currentControl.errors );
+    }
+  }
+
+  setDisplayMessages( value ) {
+    if ( this.component ) {
       (<TlMessageValidationComponent>this.component.instance).hideMessages( value );
       (<TlMessageValidationComponent>this.component.instance).setInput( this.tlinput );
       this.replacePositionTree();
@@ -102,16 +111,16 @@ export class MessageValidationDirective implements OnInit, OnDestroy {
   }
 
   removeMessageValidation() {
-    if ( this.component && !this.model.control.errors ) {
+    if ( this.component && this.currentControl.errors ) {
       this.view.remove( this.view.indexOf( this.component ) );
       this.component = null;
     }
   }
 
   ngOnDestroy() {
-    this.listeners.forEach((item) => {
+    this.listeners.forEach( ( item ) => {
       item();
-    });
+    } );
   }
 
 }

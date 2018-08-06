@@ -56,6 +56,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'showValidations',
+    type: 'boolean',
+    default: 'false',
+    description: 'Define if will be shown the validations box right below of field.',
+    options: 'any text'
+  },
+  {
     name: 'maxlength',
     type: 'number',
     default: '-1',

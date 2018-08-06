@@ -25,9 +25,9 @@ import {
   ContentChild, Directive, forwardRef
 } from '@angular/core';
 import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { I18nService } from '../../i18n/i18n.service';
-import { CPFFactory } from './cpf.factory';
+import { ValidationErrors } from '@angular/forms/src/directives/validators';
 import { TlInput } from '../../input/input';
+import { CPFValidator } from './cpf.validator';
 
 @Directive( {
     selector: '[cpf][ngModel],[cpf][formControl],[cpf][formControlName]',
@@ -35,19 +35,20 @@ import { TlInput } from '../../input/input';
       {
         multi: true,
         provide: NG_VALIDATORS,
-        useExisting: forwardRef( () => CPFDirective),
+        useExisting: forwardRef( () => CPFDirective)
       }
     ]
 } )
-export class CPFDirective implements Validator, AfterViewInit {
+export class CPFDirective implements Validator {
 
-    @ContentChild(TlInput) tlinput;
+    @ContentChild(TlInput) input;
 
-    constructor( private i18n: I18nService ) {}
+    constructor( ) {}
 
-    ngAfterViewInit() {}
-
-    validate( c: FormControl ) {
-      return CPFFactory.getInstance( this.tlinput, this.i18n.getLocale().Validators ).validate()( c );
+    validate( c: FormControl ): ValidationErrors {
+      if ( this.input ) {
+        this.input.mask = '999.999.999-99';
+      }
+      return CPFValidator( )( c );
     }
 }

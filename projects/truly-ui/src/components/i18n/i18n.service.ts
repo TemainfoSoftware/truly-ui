@@ -23,6 +23,8 @@
 import { Injectable } from '@angular/core';
 import { I18nInterface } from './i18n.interface';
 
+export let LOCALE_I18N: I18nInterface;
+
 @Injectable()
 export class I18nService {
 
@@ -33,6 +35,7 @@ export class I18nService {
       return;
     }
     this.locale = locale;
+    LOCALE_I18N = locale;
   }
 
   getLocale() {

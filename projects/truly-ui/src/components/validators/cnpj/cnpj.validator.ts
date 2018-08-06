@@ -20,32 +20,23 @@
  SOFTWARE.
  */
 
-import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
-import { CustomType } from '../../input/core/custom-type';
+import { LOCALE_I18N } from '../../i18n/i18n.service';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export class CNPJ implements CustomType {
-
-  private i18n: ValidatorsI18nInterface;
-
-  constructor( i18n: ValidatorsI18nInterface ) {
-    this.i18n = i18n;
-  }
-
-  validate(): ValidatorFn {
+export function CNPJValidator( ): ValidatorFn {
     return ( c: AbstractControl ) => {
 
-      if ( (this.cnpjUnmasked( c ) === null) || (this.cnpjUnmasked( c ).length < 14) ) {
-        return { cnpj: this.i18n.invalidCNPJ };
+      if ( ( cnpjUnmasked( c ) === null) || ( cnpjUnmasked( c ).length < 14) ) {
+        return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
       if ( this.isAllCharacteresEquals( c ) ) {
-        return { cnpj: this.i18n.invalidCNPJ };
+        return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
-      let size: any = this.cnpjUnmasked( c ).length - 2;
-      let numbers: any = this.cnpjUnmasked( c ).substring( 0, size );
-      const digits: any = this.cnpjUnmasked( c ).substring( size );
+      let size: any = cnpjUnmasked( c ).length - 2;
+      let numbers: any = cnpjUnmasked( c ).substring( 0, size );
+      const digits: any = cnpjUnmasked( c ).substring( size );
 
       let sum = 0;
       let pos = size - 7;
@@ -59,11 +50,11 @@ export class CNPJ implements CustomType {
       }
       result = sum % 11 < 2 ? 0 : 11 - sum % 11;
       if ( result !== parseInt( digits.charAt( 0 ), 10 ) ) {
-        return { cnpj: this.i18n.invalidCNPJ };
+        return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
       size = size + 1;
-      numbers = this.cnpjUnmasked( c ).substring( 0, size );
+      numbers = cnpjUnmasked( c ).substring( 0, size );
       sum = 0;
       pos = size - 7;
       for ( let i = size; i >= 1; i-- ) {
@@ -75,27 +66,25 @@ export class CNPJ implements CustomType {
       result = sum % 11 < 2 ? 0 : 11 - sum % 11;
 
       if ( result !== parseInt( digits.charAt( 1 ), 10 ) ) {
-        return { cnpj: this.i18n.invalidCNPJ };
+        return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
       return null;
     };
   }
 
-  cnpjUnmasked( c ) {
-    return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
-  }
+function  cnpjUnmasked( c ) {
+  return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
+}
 
 
-  isAllCharacteresEquals( c ) {
-    let result = true;
-    for ( let i = 1; i <= 9; i++ ) {
-      if ( this.cnpjUnmasked( c ).substring( i - 1, i ) !== this.cnpjUnmasked( c )[ 0 ] ) {
-        result = false;
-        break;
-      }
+function isAllCharacteresEquals( c ) {
+  let result = true;
+  for ( let i = 1; i <= 9; i++ ) {
+    if ( cnpjUnmasked( c ).substring( i - 1, i ) !== cnpjUnmasked( c )[ 0 ] ) {
+      result = false;
+      break;
     }
-    return result;
   }
-
+  return result;
 }

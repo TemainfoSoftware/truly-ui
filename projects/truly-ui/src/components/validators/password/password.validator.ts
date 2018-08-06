@@ -20,53 +20,39 @@
  SOFTWARE.
  */
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import { ValidatorsI18nInterface } from '../../i18n/languages/validators';
-import { CustomType } from '../../input/core/custom-type';
+import { LOCALE_I18N } from '../../i18n/i18n.service';
+import { PasswordRule } from './passwordrule.interface';
 
-export class Password implements CustomType {
+export function PasswordValidator( passwordRule: PasswordRule ): ValidatorFn {
+  return ( control: AbstractControl ) => {
 
-  private passwordRule;
+    const digits = '^(?=.*[0-9]).*$';
+    const uppercase = '^(?=.*[A-Z]).*$';
+    const special = '^(?=.*[!@#$%^&*]).*$';
+    let regex: RegExp;
 
-  private regex: RegExp;
-
-  private i18n: ValidatorsI18nInterface;
-
-  constructor( passwordRule, i18n: ValidatorsI18nInterface ) {
-    this.passwordRule = passwordRule;
-    this.i18n = i18n;
-  }
-
-  validate(): ValidatorFn {
-    return ( control: AbstractControl ) => {
-
-      const digits = '^(?=.*[0-9]).*$';
-      const uppercase = '^(?=.*[A-Z]).*$';
-      const special = '^(?=.*[!@#$%^&*]).*$';
-
-      if ( this.passwordRule['digits'] ) {
-        this.regex = new RegExp( digits );
-        if (!this.regex.test(control.value)) {
-          return { password: this.i18n.invalidPasswordRuleDigits };
-        }
+    if ( passwordRule['digits'] ) {
+      regex = new RegExp( digits );
+      if (!regex.test(control.value)) {
+        return { password: LOCALE_I18N.Validators.invalidPasswordRuleDigits };
       }
+    }
 
-      if (this.passwordRule['uppercase']) {
-        this.regex = new RegExp( uppercase );
-        if (!this.regex.test(control.value)) {
-          return { password: this.i18n.invalidPasswordRuleUppercase };
-        }
+    if ( passwordRule['uppercase'] ) {
+      regex = new RegExp( uppercase );
+      if (!regex.test(control.value)) {
+        return { password: LOCALE_I18N.Validators.invalidPasswordRuleUppercase };
       }
+    }
 
-      if (this.passwordRule['special']) {
-        this.regex = new RegExp( special );
-        if (!this.regex.test(control.value)) {
-          return { password: this.i18n.invalidPasswordRuleSpecial };
-        }
+    if ( passwordRule['special'] ) {
+      regex = new RegExp( special );
+      if (!regex.test(control.value)) {
+        return { password: LOCALE_I18N.Validators.invalidPasswordRuleSpecial };
       }
+    }
 
-      return null;
+    return null;
 
-    };
-  }
-
+  };
 }

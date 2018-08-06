@@ -57,11 +57,11 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() padding = '10px';
 
-  @Input() closeOnClickOk = false;
-
   @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() submitForm: EventEmitter<NgForm> = new EventEmitter();
+
+  @Input( 'formGroup' ) formGroup: FormGroup;
 
   @ContentChildren( forwardRef( () => TlInput ), { descendants: true } ) inputList: QueryList<TlInput>;
 
@@ -89,7 +89,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  constructor( private renderer: Renderer2, private i18n: I18nService ) {}
+  constructor( private renderer: Renderer2, private i18n: I18nService ) {
+  }
 
   ngOnInit() {
     componentFormIndex = -1;
@@ -103,13 +104,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.setInitialFocus();
     this.getElementsOfForm();
     this.clickListener();
-    this.formLoaded.emit( this.form.form );
+    this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
   }
 
   addControls() {
-    this.models.toArray().forEach( ( control, index, array ) => {
-      this.form.addControl( control );
-    } );
+    if ( !this.formGroup ) {
+      this.models.toArray().forEach( ( control, index, array ) => {
+        this.form.addControl( control );
+      } );
+    }
   }
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
@@ -156,8 +159,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
-    this.formResult = this.form;
-    this.submitForm.emit( this.form.value );
+    this.formResult = this.formGroup ? this.formGroup : this.form;
+    this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
   }
 
   getElementsOfForm() {
@@ -304,7 +307,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
     if ( !this.validateFirstElement() ) {
       const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
-      for ( let element = previousElement; element < this.focusElements.length; element-- ) {
+
+      for ( let element = previousElement; element < this.focusElements.length && (element > 0); element-- ) {
         if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
           return this.focusElements[ element ].focus();
         }
@@ -337,12 +341,17 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   isElementDisabled( element ) {
+    if ( element === undefined ) {
+      return false;
+    }
     return element.disabled;
   }
 
   setInitialFocus() {
-    this.initialFocus ? this.initialFocus.input.nativeElement.focus()
-      : this.setFocusOnFirstInput();
+    setTimeout( () => {
+      this.initialFocus ? this.initialFocus.input.nativeElement.focus()
+        : this.setFocusOnFirstInput();
+    } );
   }
 
   setFocusOK() {
@@ -360,7 +369,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   setFocusOnFirstInput() {
     let element;
     for ( const item in this.inputList.toArray() ) {
-      if ( !(this.inputList.toArray()[ item ].disabled) ) {
+      if ( !(this.inputList.toArray()[ item ].input.nativeElement.disabled) ) {
         element = this.inputList.toArray()[ item ].input.nativeElement;
         break;
       }

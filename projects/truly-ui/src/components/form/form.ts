@@ -67,8 +67,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChildren( forwardRef( () => TlButton ), { descendants: true } ) buttonList: QueryList<TlButton>;
 
-  @ContentChildren( NgModel, { descendants: true } ) models: QueryList<NgModel>;
-
   @ContentChild( FormSubmitDirective ) submitDirective;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
@@ -92,6 +90,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   constructor( private renderer: Renderer2, private i18n: I18nService ) {
   }
 
+  get valid() {
+    return this.form.valid;
+  }
+
   ngOnInit() {
     componentFormIndex = -1;
   }
@@ -109,8 +111,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   addControls() {
     if ( !this.formGroup ) {
-      this.models.toArray().forEach( ( control, index, array ) => {
-        this.form.addControl( control );
+      this.inputList.toArray().forEach( ( input, index, array ) => {
+        this.form.addControl( input.model );
       } );
     }
   }
@@ -308,7 +310,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     if ( !this.validateFirstElement() ) {
       const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
 
-      for ( let element = previousElement; element < this.focusElements.length && (element > 0); element-- ) {
+      for ( let element = previousElement; element < this.focusElements.length && (element >= 0); element-- ) {
         if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
           return this.focusElements[ element ].focus();
         }

@@ -21,15 +21,30 @@
  */
 import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
-  ComponentRef, Injector, ViewRef
+  ComponentRef, Injector, ViewRef, EventEmitter
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { Subject } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 let lastZIndex = 1;
+
+export interface ModalConfiguration {
+  parentElement: ElementRef;
+  factory: ComponentFactoryResolver;
+  execute: string;
+  identifier: string;
+  actions: {
+    insertCall: Function;
+    updateCall: Function;
+    excludeCall: Function;
+    viewCall: Function;
+  };
+}
+
 
 @Injectable()
 export class ModalService implements OnDestroy {
@@ -56,6 +71,8 @@ export class ModalService implements OnDestroy {
 
   private callBack = Function();
 
+  private eventCallback = new EventEmitter();
+
   constructor( private containerModal: ContainerModalService ) {
   }
 
@@ -69,15 +86,21 @@ export class ModalService implements OnDestroy {
     return this;
   }
 
-  createModal( component: Type<any>, factoryResolver, parentElement: ElementRef, callback, identifier?: string ) {
-    this.view = this.containerModal.getView();
-    this.setComponentModal( factoryResolver, identifier );
-    this.injectComponentToModal( component, factoryResolver );
-    this.setGlobalSettings( factoryResolver, parentElement );
-    this.setInitialZIndex();
-    this.callBack = callback;
-    return this;
+  createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver | ModalConfiguration,
+               identifier: string = '', parentElement: ElementRef = null) {
+    return new Promise( ( resolve, reject ) => {
+      this.view = this.containerModal.getView();
+      this.setComponentModal( factoryOrConfig, identifier );
+      this.injectComponentToModal( component, factoryOrConfig );
+      this.setGlobalSettings( factoryOrConfig, parentElement );
+      this.setInitialZIndex();
+
+      this.eventCallback.subscribe( ( result: { mdResult: number, formResult: NgForm }  ) => {
+        resolve(result);
+      });
+    });
   }
+
 
   private setComponentModal( compiler, id? ) {
     const componentFactory = compiler.resolveComponentFactory( TlModal );
@@ -259,7 +282,7 @@ export class ModalService implements OnDestroy {
         this.close( component );
       }
       setTimeout( () => {
-        this.resultCallback();
+       this.resultCallback();
         this.handleActiveWindow();
         resolve();
       }, 500 );
@@ -281,8 +304,10 @@ export class ModalService implements OnDestroy {
   resultCallback() {
     if ( this.componentInjected.instance.modalResult ) {
       this.callBack( this.componentInjected.instance.modalResult );
+      this.eventCallback.emit(this.componentInjected.instance.modalResult);
     }
   }
+
 
   on( event, callback ) {
     this.component.instance[ event ].subscribe( callback );

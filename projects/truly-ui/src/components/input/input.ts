@@ -25,13 +25,11 @@ import {
   ViewChild,
   AfterViewInit,
   Output,
-  Inject,
-  EventEmitter, Renderer2, Optional, Injector, ElementRef, HostListener, OnInit, ContentChild,
+  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, AfterContentInit, ChangeDetectorRef,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
-import { ElementBase } from './core/element-base';
 import {
-  FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR,
+  FormControlName, NG_VALUE_ACCESSOR,
   NgModel
 } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
@@ -60,13 +58,14 @@ import { ValueAccessorBase } from './core/value-accessor';
  *  '
  * })
  */
+
 @Component( {
   selector: 'tl-input',
   templateUrl: './input.html',
   styleUrls: [ './input.scss' ],
   providers: [ {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: TlInput,
+    useExisting: forwardRef(() => TlInput),
     multi: true,
   } ],
 } )
@@ -144,28 +143,38 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   public fieldMask: InputMask;
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) public validators: Array<any>,
-               private tlInput: ElementRef, private renderer: Renderer2 ) {
+  public hasValidator;
+
+  constructor( private tlInput: ElementRef, private renderer: Renderer2, private change: ChangeDetectorRef ) {
     super();
   }
 
   ngOnInit() {
-    this.setRequired();
     this.overlayOrigin.emit( this.cdkOverlayOrigin );
   }
 
   ngAfterViewInit() {
+    this.setRequired();
+    this.handleValidator();
     this.validateClearButtonPosition();
     this.hasMask();
   }
 
   setRequired() {
-    const attributes = Array( this.tlInput.nativeElement.attributes )[ 0 ];
-    for ( let item = 0; item < attributes.length; item++ ) {
-      if ( attributes[ item ].nodeName === 'required' ) {
+    const currentControl = this.controlName ? this.controlName : this.model;
+    if ( currentControl && currentControl.control.errors) {
+      if ( currentControl.control.errors[ 'required' ] ) {
         this.required = true;
-        break;
+        this.change.detectChanges();
       }
+    }
+  }
+
+  handleValidator() {
+    const currentControl = this.controlName ? this.controlName : this.model;
+    if (currentControl) {
+      this.hasValidator = currentControl.control.validator;
+      this.change.detectChanges();
     }
   }
 

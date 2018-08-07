@@ -17,7 +17,8 @@
            class="field"
            [ngClass]="{
              'invalid': controlName?.control.errors || model?.control.errors,
-             'withValidators': validators?.length > 0, withoutValidators: validators === null,
+             'withValidators': hasValidator,
+             'withoutValidators': !hasValidator,
              '-borderleft': iconBefore || textBefore,
              '-borderright': iconAfter || textAfter
              }"
@@ -39,11 +40,11 @@
      [style.right]="clearButtonPosition + 'px'"></i>
 </div>
 
+
 <ng-template cdkConnectedOverlay
-             [cdkConnectedOverlayHasBackdrop]="true"
-             (backdropClick)="isShowingMessages = false"
+             *ngIf="showValidations"
+             [cdkConnectedOverlayHasBackdrop]="false"
              [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
-             [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
              [cdkConnectedOverlayOpen]="isShowingMessages">
 <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors" [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
 </ng-template>

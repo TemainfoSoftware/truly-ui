@@ -29,10 +29,13 @@ export class ModalDemoComponent {
   }
 
   modal1() {
-    this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResult) => {
-        this.modalResult = modalResult;
-    }).on('show', () => {
-      console.log('Show Modal');
+    this.modalService.createModal( NewModalComponent, this.compiler, 'FORM1' )
+      .then( ( modalResult ) => {
+        console.log( modalResult );
+      });
+
+    this.modalService.on('show', ( event ) => {
+      console.log('Show Modal', event);
     });
   }
 }

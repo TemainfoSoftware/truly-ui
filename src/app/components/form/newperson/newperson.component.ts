@@ -14,7 +14,7 @@ import { DumpDataService } from '../../../shared/services/dumpdata';
   maximizable: true,
   minimizable: true,
   fullscreen: false,
-  closeOnOK: false
+  closeOnOK: true
 })
 
 @Component( {

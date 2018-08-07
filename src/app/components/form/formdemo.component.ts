@@ -7,7 +7,8 @@ import { NewPersonComponent } from './newperson/newperson.component';
 import { DataFormService } from './newperson/dataform.service';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { FormService } from '../../../../projects/truly-ui/src/components/form/form.service';
+import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
+import { NgForm } from '@angular/forms';
 
 @Component( {
   selector: 'app-modal',
@@ -33,9 +34,7 @@ export class FormDemoComponent implements OnInit {
 
   public data;
 
-  public identifier;
-
-  constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: FormService,
+  constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: ModalService,
                public dataFormService: DataFormService, public dataDumpService: DumpDataService,
                private compiler: ComponentFactoryResolver ) {
 
@@ -49,16 +48,14 @@ export class FormDemoComponent implements OnInit {
   }
 
   form1(id) {
-    this.formService.createForm( NewPersonComponent, this.compiler, null, ( form ) => {
-      if ( form.formResult ) {
-        this.dataFormService.saveDataForm( form.formResult.value );
-        this.formModal = this.dataFormService.getDataForm();
-      }
-    }, id );
-  }
-
-  closeModalID() {
-    this.formService.modalService.getModal(this.identifier).close();
+    this.formService.createModal( NewPersonComponent, this.compiler, id )
+      .then( (form: { mdResult: number, formResult: NgForm } ) => {
+          if ( form ) {
+            this.dataFormService.saveDataForm( form.formResult.value );
+            console.log( form );
+            this.formModal = this.dataFormService.getDataForm();
+          }
+      });
   }
 
   onSubmitForm( $event ) {

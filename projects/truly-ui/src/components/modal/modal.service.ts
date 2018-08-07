@@ -33,15 +33,15 @@ import { NgForm } from '@angular/forms';
 let lastZIndex = 1;
 
 export interface ModalConfiguration {
-  parentElement: ElementRef;
   factory: ComponentFactoryResolver;
-  execute: string;
+  executeAction: string;
   identifier: string;
-  actions: {
-    insertCall: Function;
-    updateCall: Function;
-    excludeCall: Function;
-    viewCall: Function;
+  parentElement?: ElementRef;
+  actions?: {
+    insertCall?: Function;
+    updateCall?: Function;
+    excludeCall?: Function;
+    viewCall?: Function;
   };
 }
 
@@ -90,11 +90,17 @@ export class ModalService implements OnDestroy {
                identifier: string = '', parentElement: ElementRef = null) {
     return new Promise( ( resolve, reject ) => {
       this.view = this.containerModal.getView();
-      this.setComponentModal( factoryOrConfig, identifier );
-      this.injectComponentToModal( component, factoryOrConfig );
-      this.setGlobalSettings( factoryOrConfig, parentElement );
-      this.setInitialZIndex();
+      if (!factoryOrConfig['factory']) {
+        this.setComponentModal( factoryOrConfig, identifier );
+        this.injectComponentToModal( component, factoryOrConfig );
+        this.setGlobalSettings( factoryOrConfig, parentElement );
 
+      } else {
+        this.setComponentModal( factoryOrConfig['factory'], factoryOrConfig['identifier'] );
+        this.injectComponentToModal( component, factoryOrConfig['factory'] );
+        this.setGlobalSettings( factoryOrConfig['factory'], factoryOrConfig['parentElement'] );
+      }
+      this.setInitialZIndex();
       this.eventCallback.subscribe( ( result: { mdResult: number, formResult: NgForm }  ) => {
         resolve(result);
       });

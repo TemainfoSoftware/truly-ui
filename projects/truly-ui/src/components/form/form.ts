@@ -23,7 +23,7 @@ import {
   Component, ContentChildren, Input,
   QueryList, Renderer2, Output,
   ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild,
+  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild, Injector,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
@@ -31,6 +31,7 @@ import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
+import { ModalService } from '../modal/modal.service';
 
 let componentFormIndex;
 
@@ -87,7 +88,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  constructor( private renderer: Renderer2, private i18n: I18nService ) {
+  private modalFormInstance;
+
+  constructor( private renderer: Renderer2, private i18n: I18nService, private injector: Injector ) {
+    this.modalFormInstance = this.injector.get(ModalService);
   }
 
   get valid() {
@@ -99,6 +103,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   ngAfterContentInit() {
+    this.handleFormGroupValues();
     this.addControls();
   }
 
@@ -107,6 +112,12 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.getElementsOfForm();
     this.clickListener();
     this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
+  }
+
+  handleFormGroupValues() {
+    if (this.formGroup) {
+      this.formGroup.patchValue( this.modalFormInstance.modalConfiguration.dataForm );
+    }
   }
 
   addControls() {

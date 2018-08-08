@@ -44,12 +44,12 @@ export { ValidatorsModule } from './components/validators/index';
 export { ModalOptions, Modal } from './components/modal/modal-options';
 
 // Enumerators
+export { ActionsModal } from './components/core/enums/actions-modal';
 export { KeyEvent } from './components/core/enums/key-events';
 export { ModalResult } from './components/core/enums/modal-result';
 
 // Services
 export { DialogService } from './components/dialog/dialog.service';
-export { FormService } from './components/form/form.service';
 export { ModalService } from './components/modal/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { ToasterService } from './components/toaster/services/toaster.service';

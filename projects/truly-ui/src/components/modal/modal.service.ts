@@ -27,20 +27,24 @@ import { ContainerModalService } from './addons/container-modal/container-modal.
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { ActionsModal } from '../core/enums/actions-modal';
+import { TlDialogConfirmation } from '../dialog/dialog-confirmation/dialog-confirmation';
 
 let lastZIndex = 1;
 
 export interface ModalConfiguration {
   factory: ComponentFactoryResolver;
-  executeAction: string;
+  executeAction: ActionsModal;
   identifier: string;
+  dataForm?: Object;
+  deleteMessage?: string;
   parentElement?: ElementRef;
   actions?: {
     insertCall?: Function;
     updateCall?: Function;
-    excludeCall?: Function;
+    deleteCall?: Function;
     viewCall?: Function;
   };
 }
@@ -63,6 +67,8 @@ export class ModalService implements OnDestroy {
 
   public head = new Subject();
 
+  public modalConfiguration: ComponentFactoryResolver | ModalConfiguration;
+
   private selectedModal;
 
   public modalOptions;
@@ -71,9 +77,12 @@ export class ModalService implements OnDestroy {
 
   private callBack = Function();
 
-  private eventCallback = new EventEmitter();
+  private eventCallback: EventEmitter<any>;
+
+  private subscription = new Subscription();
 
   constructor( private containerModal: ContainerModalService ) {
+    console.log( 'ModalService=Instance' );
   }
 
   createModalDialog( component: Type<any>, factoryResolver, callback ) {
@@ -87,26 +96,71 @@ export class ModalService implements OnDestroy {
   }
 
   createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver | ModalConfiguration,
-               identifier: string = '', parentElement: ElementRef = null) {
+               identifier: string = '', parentElement: ElementRef = null ) {
+    this.modalConfiguration = factoryOrConfig;
+    this.eventCallback = new EventEmitter();
+
     return new Promise( ( resolve, reject ) => {
       this.view = this.containerModal.getView();
-      if (!factoryOrConfig['factory']) {
+
+      if ( factoryOrConfig[ 'executeAction' ] === ActionsModal.DELETE ) {
+        this.createModalDialog( TlDialogConfirmation, factoryOrConfig[ 'factory' ], ( dialog ) => {
+          if ( dialog.mdResult === ModalResult.MRYES ) {
+            factoryOrConfig[ 'actions' ].deleteCall();
+          }
+        } );
+        this.componentInjected.instance.message = factoryOrConfig[ 'deleteMessage' ];
+        return;
+      }
+
+      if ( !factoryOrConfig[ 'factory' ] ) {
         this.setComponentModal( factoryOrConfig, identifier );
         this.injectComponentToModal( component, factoryOrConfig );
         this.setGlobalSettings( factoryOrConfig, parentElement );
-
       } else {
-        this.setComponentModal( factoryOrConfig['factory'], factoryOrConfig['identifier'] );
-        this.injectComponentToModal( component, factoryOrConfig['factory'] );
-        this.setGlobalSettings( factoryOrConfig['factory'], factoryOrConfig['parentElement'] );
+        this.setComponentModal( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'identifier' ] );
+        this.injectComponentToModal( component, factoryOrConfig[ 'factory' ] );
+        this.setGlobalSettings( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'parentElement' ] );
       }
+
       this.setInitialZIndex();
-      this.eventCallback.subscribe( ( result: { mdResult: number, formResult: NgForm }  ) => {
-        resolve(result);
-      });
-    });
+      this.eventCallback.subscribe( ( result: { mdResult: number, formResult: NgForm } ) => {
+        resolve( result );
+        if ( result.mdResult === ModalResult.MRCANCEL || !factoryOrConfig[ 'actions' ] ) {
+          return;
+        }
+        switch ( factoryOrConfig[ 'executeAction' ] ) {
+          case ActionsModal.INSERT:
+            if ( !factoryOrConfig[ 'actions' ].insertCall ) {
+              this.throwError( 'INSERT' );
+            }
+            factoryOrConfig[ 'actions' ].insertCall( result.formResult.value );
+            break;
+          case ActionsModal.DELETE:
+            if ( !factoryOrConfig[ 'actions' ].deleteCall ) {
+              this.throwError( 'DELETE' );
+            }
+            break;
+          case ActionsModal.UPDATE:
+            if ( !factoryOrConfig[ 'actions' ].updateCall ) {
+              this.throwError( 'UPDATE' );
+            }
+            factoryOrConfig[ 'actions' ].updateCall( result.formResult.value );
+            break;
+          case ActionsModal.VIEW:
+            if ( !factoryOrConfig[ 'actions' ].viewCall ) {
+              this.throwError( 'VIEW' );
+            }
+            factoryOrConfig[ 'actions' ].viewCall( result.formResult.value );
+            break;
+        }
+      } );
+    } );
   }
 
+  throwError( type: string ) {
+    throw new Error( 'Callback ' + type + ' not implemented' );
+  }
 
   private setComponentModal( compiler, id? ) {
     const componentFactory = compiler.resolveComponentFactory( TlModal );
@@ -121,6 +175,7 @@ export class ModalService implements OnDestroy {
   private injectComponentToModal( component: Type<any>, compiler ) {
     const factoryInject = compiler.resolveComponentFactory( component );
     this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
+    console.log( 'Factory', this.componentInjected );
   }
 
   getParentModalInjectedView() {
@@ -288,7 +343,7 @@ export class ModalService implements OnDestroy {
         this.close( component );
       }
       setTimeout( () => {
-       this.resultCallback();
+        this.resultCallback();
         this.handleActiveWindow();
         resolve();
       }, 500 );
@@ -310,7 +365,7 @@ export class ModalService implements OnDestroy {
   resultCallback() {
     if ( this.componentInjected.instance.modalResult ) {
       this.callBack( this.componentInjected.instance.modalResult );
-      this.eventCallback.emit(this.componentInjected.instance.modalResult);
+      this.eventCallback.emit( this.componentInjected.instance.modalResult );
     }
   }
 

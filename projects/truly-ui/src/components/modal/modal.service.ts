@@ -79,10 +79,7 @@ export class ModalService implements OnDestroy {
 
   private eventCallback: EventEmitter<any>;
 
-  private subscription = new Subscription();
-
   constructor( private containerModal: ContainerModalService ) {
-    console.log( 'ModalService=Instance' );
   }
 
   createModalDialog( component: Type<any>, factoryResolver, callback ) {

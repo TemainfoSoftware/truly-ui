@@ -116,7 +116,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   handleFormGroupValues() {
     if (this.formGroup) {
-      this.formGroup.patchValue( this.modalFormInstance.modalConfiguration.dataForm );
+      if (this.modalFormInstance.modalConfiguration && this.modalFormInstance.modalConfiguration.dataForm) {
+        this.formGroup.patchValue( this.modalFormInstance.modalConfiguration.dataForm );
+      }
     }
   }
 

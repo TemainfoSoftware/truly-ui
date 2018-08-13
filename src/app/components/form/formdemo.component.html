@@ -14,11 +14,17 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <h5>Modal Form</h5>
-            <tl-button [text]="'User Register'"
+            <tl-button [text]="'Form 1'"
+                       mdResult="MRCUSTOM"
+                       [iconAddonBefore]="'ion-ios-list-outline'"
+                       [shortcut]="'CTRL + X'">
+            </tl-button>
+
+            <tl-button [text]="'Form 2'"
                        mdResult="MRCUSTOM"
                        [iconAddonBefore]="'ion-ios-list-outline'"
                        [shortcut]="'CTRL + X'"
-                       (click)="form1('FORM1')">
+                       (click)="form2('FORM2')">
             </tl-button>
             <!--<div class="parentElementContainer" *ngIf="formModal">
               <pre class="result">
@@ -41,7 +47,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <tl-input [name]="'name'" minlength="3" messageValidation required [labelSize]="100"
+                        <tl-input [name]="'name'" minlength="3" [showValidations]="true" required [labelSize]="100"
                                   [ngModel]="person?.name" [label]="'User'"></tl-input>
                       </div>
                     </div>
@@ -49,7 +55,7 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        <tl-input name="password" password messageValidation required [labelSize]="100"
+                        <tl-input name="password" password [showValidations]="true" required [labelSize]="100"
                                   [ngModel]="person?.password" [label]="'Password'"></tl-input>
                       </div>
                     </div>

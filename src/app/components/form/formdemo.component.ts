@@ -1,14 +1,13 @@
-import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
 
 import * as json from './form-dataproperties.json';
 import * as jsonEvents from './form-dataevent.json';
 
-import { NewPersonComponent } from './newperson/newperson.component';
-import { DataFormService } from './newperson/dataform.service';
+import { ActionsModal } from '../../../../projects/truly-ui/src/components/core/enums/actions-modal';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { slideToLeft } from '../../shared/animations/router.animations';
 import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators, FormGroup, FormControl} from '@angular/forms';
 
 @Component( {
   selector: 'app-modal',
@@ -16,9 +15,7 @@ import { NgForm } from '@angular/forms';
   animations: [ slideToLeft() ],
   styleUrls: [ './formdemo.component.scss' ]
 } )
-export class FormDemoComponent implements OnInit {
-
-  @ViewChild( 'containerModal' ) containerModal;
+export class FormDemoComponent {
 
   public index: number;
 
@@ -34,8 +31,7 @@ export class FormDemoComponent implements OnInit {
 
   public data;
 
-  constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: ModalService,
-               public dataFormService: DataFormService, public dataDumpService: DumpDataService,
+  constructor( public view: ViewContainerRef, public formService: ModalService, public dataDumpService: DumpDataService,
                private compiler: ComponentFactoryResolver ) {
 
     this.data = this.dataDumpService.createRandomData( 100 );
@@ -43,23 +39,17 @@ export class FormDemoComponent implements OnInit {
     this.dataEvents = jsonEvents.dataEvents;
   }
 
-  ngOnInit() {
-    this.person = this.formDataService.getDataForm();
+  form2( id ) {
+
   }
 
-  form1(id) {
-    this.formService.createModal( NewPersonComponent, this.compiler, id )
-      .then( (form: { mdResult: number, formResult: NgForm } ) => {
-          if ( form ) {
-            this.dataFormService.saveDataForm( form.formResult.value );
-            console.log( form );
-            this.formModal = this.dataFormService.getDataForm();
-          }
-      });
+  alertFunction(result) {
+    console.log('INSERT', result);
   }
 
   onSubmitForm( $event ) {
     this.formInline = $event;
   }
+
 
 }

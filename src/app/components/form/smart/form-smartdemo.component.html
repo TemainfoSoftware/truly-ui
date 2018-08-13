@@ -1,0 +1,106 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Smart Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
+    <p class="text-content">The smart form is the same approach of the modal form, but with a little difference on creation.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <tl-button [text]="'Open Modal Form'" (click)="openModal()"></tl-button>
+            <blockquote>The expression "Smart Form" is basically the same modal approach, what changes and ends up
+              becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
+              and manages to create a form with these actions defined and tasked to execute upon completion.
+            </blockquote>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Making it work'" [icon]="'ion-hammer'">
+          <app-card>
+            <h4>The First Step</h4>
+            <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<!--app.component.html-->
+<!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" tlContainerModal>
+    <!-- Main content -->
+    <section class="content">
+      <router-outlet></router-outlet>
+    </section>
+    <!-- /.content -->
+  </div>
+<!-- /.content-wrapper -->
+            </textarea>
+            <h5>App Module</h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+import { CoreModule, ContainerModalModule } from 'truly-ui';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserAnimationsModule,
+    FormsModule,
+    BrowserModule,
+    CoreModule.forRoot({
+      theme: 'default',
+      language: en_US
+    }),
+    ContainerModalModule,
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+            </textarea>
+          </app-card>
+          <app-card>
+            <h4>Creating the CRUD Form</h4>
+            <p>To create a CRUD form in truly-ui we should pass some the parameter <code>ModalConfiguration</code> like described bellow.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+    this.modalService.createModal( NewPersonComponent, {
+      factory: this.factory,
+      executeAction: ActionsModal.INSERT,
+      deleteMessage: 'Deve realmente excluir ?',
+      identifier: id,
+      dataForm: {
+        nickname: 'willz',
+        id: 'b42f0653-b0a3-4482-b2e3-3d971ddaeb3f',
+        email: 'williamaguera.m@hotmail.com',
+        name: 'William',
+        lastName: 'Aguera',
+        user: 'william',
+      },
+      actions: {
+        insertCall: function () {
+          console.log('INSERT Function executed');
+        },
+        updateCall: function () {
+          console.log('UPDATE Function executed');
+        },
+        deleteCall: function () {
+          console.log('VIEW Function executed');
+        },
+        viewCall: function () {
+          console.log('VIEW Function executed');
+        }
+      }
+    } );
+            </textarea>
+            <h4>Modal Configuration</h4>
+            <app-showcase-table-properties [data]="modalConfig"></app-showcase-table-properties>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

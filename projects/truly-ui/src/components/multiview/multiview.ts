@@ -39,6 +39,10 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, 
 
   @Input() transitionTime = '300ms';
 
+  @Input() height = '100%';
+
+  @Input() backdroungColor = 'transparent';
+
   @ContentChildren( forwardRef( () => TlView ) ) views: QueryList<TlView>;
 
   @ViewChild( 'multiViewContainer' ) multiViewContainer;

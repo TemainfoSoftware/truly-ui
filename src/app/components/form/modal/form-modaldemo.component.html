@@ -31,7 +31,9 @@
                 <tl-view [value]="'HTML'">
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-form [mode]="'modal'" [formGroup]="form">
+
   <tl-panelgroup [labelGroup]="'General'">
+
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
       <div fxLayout="row" fxLayoutAlign="space-between stretch">
         <tl-input fxFlex="30" formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
@@ -40,15 +42,19 @@
       <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
       <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
     </div>
+
   </tl-panelgroup>
-  <div class="spacer"></div>
+
   <tl-panelgroup [labelGroup]="'Access Informations'" fxLayout="column">
+
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
       <tl-input formControlName="user" [showValidations]="true" [labelSize]="100" [label]="'User'"></tl-input>
       <tl-input password formControlName="password" [showValidations]="true" [labelSize]="100"
                 [label]="'Password'"></tl-input>
     </div>
+
   </tl-panelgroup>
+
 </tl-form>
 
                   </textarea>
@@ -109,8 +115,8 @@ export class NewPersonComponent {
             <h4>The First Step</h4>
             <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-  <!--app.component.html-->
-              <!-- Content Wrapper. Contains page content -->
+<!--app.component.html-->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" tlContainerModal>
     <!-- Main content -->
     <section class="content">
@@ -118,7 +124,7 @@ export class NewPersonComponent {
     </section>
     <!-- /.content -->
   </div>
-              <!-- /.content-wrapper -->
+<!-- /.content-wrapper -->
             </textarea>
             <h5>App Module</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">

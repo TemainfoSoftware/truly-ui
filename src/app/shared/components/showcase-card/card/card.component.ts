@@ -7,8 +7,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
-  @ViewChild('infoBox') infoBox;
-
   constructor() { }
 
   ngOnInit() {

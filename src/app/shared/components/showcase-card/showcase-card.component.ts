@@ -15,12 +15,9 @@ export class ShowcaseCardComponent implements AfterViewInit {
 
   @Input('title') title = 'New Card Header';
 
-  @ContentChildren( forwardRef( () => CardComponent ) ) cardComponent: QueryList<CardComponent>;
-
-  constructor(private renderer: Renderer2) { }
+  constructor() { }
 
   ngAfterViewInit() {
-    this.renderer.setStyle(this.cardComponent.last.infoBox.nativeElement, 'margin-bottom', '20px');
   }
 
 }

@@ -54,7 +54,7 @@ export const ModalConfig = [
     name: 'dataForm',
     type: 'object',
     default: 'null',
-    description: 'It is the form value object used to populate the fields when action is UPDATE',
+    description: 'It is the form value object used to populate the fields on creation.',
     options: 'object'
   },
   {

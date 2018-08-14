@@ -22,7 +22,7 @@
  SOFTWARE.
  */
  export interface PasswordRule {
-   digits: boolean;
-   uppercase: boolean;
-   specials: boolean;
+   digits?: boolean;
+   uppercase?: boolean;
+   specials?: boolean;
  }

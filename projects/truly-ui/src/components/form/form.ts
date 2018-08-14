@@ -68,6 +68,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChildren( forwardRef( () => TlButton ), { descendants: true } ) buttonList: QueryList<TlButton>;
 
+  @ContentChildren( forwardRef( () => NgModel ), { descendants: true } ) models: QueryList<NgModel>;
+
   @ContentChild( FormSubmitDirective ) submitDirective;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
@@ -124,8 +126,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   addControls() {
     if ( !this.formGroup ) {
-      this.inputList.toArray().forEach( ( input, index, array ) => {
-        this.form.addControl( input.model );
+      this.models.toArray().forEach( ( item, index, array ) => {
+        this.form.addControl( item );
       } );
     }
   }

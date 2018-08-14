@@ -27,8 +27,7 @@
                   </li>
                 </ul>
               </div>
-              <tl-multiview [modelValue]="reactive" (selectedChange)="reactive = $event" [backdroungColor]="'#282C34'"
-                            [height]="'380px'">
+              <tl-multiview [modelValue]="reactive" (selectedChange)="reactive = $event" [backdroungColor]="'#282C34'">
                 <tl-view [value]="'HTML'">
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-form [mode]="'modal'" [formGroup]="form">
@@ -221,7 +220,7 @@ export class NewPersonComponent {
             </textarea>
           </app-card>
           <app-card>
-            <h4>Modal Annotation</h4>
+            <h4>Modal Annotation (@Modal) </h4>
             <app-showcase-table-properties [data]="dataModalOptions"></app-showcase-table-properties>
           </app-card>
           <app-card>

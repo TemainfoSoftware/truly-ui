@@ -63,16 +63,9 @@ export const dataProperties = [
     options: 'modal | inline'
   },
   {
-    name: '@Modal.icon',
-    type: 'string',
-    default: 'null',
-    description: 'Icon of Window',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
     name: 'formSubmit',
     type: 'Directive',
-    default: 'Directive',
+    default: 'null',
     description: 'Directive to set what button will be the submit one.',
     options: 'Directive'
   },
@@ -83,61 +76,4 @@ export const dataProperties = [
     description: 'Bind Angular FormGroup to Truly-UI Form.',
     options: 'FormGroup'
   },
-  {
-    name: '@Modal.title',
-    type: 'string',
-    default: 'My Modal',
-    description: 'Title of window dialog.',
-    options: 'any text'
-  },
-  {
-    name: '@Modal.color',
-    type: 'string',
-    default: '#53C68C',
-    description: 'Color of window dialog header.',
-    options: 'Hex | RGBA'
-  },
-  {
-    name: '@Modal.width',
-    type: 'string',
-    default: '500px',
-    description: 'Width of window dialog.',
-    options: 'px | % | em'
-  },
-  {
-    name: '@Modal.height',
-    type: 'string',
-    default: '500px',
-    description: 'Height of window dialog.',
-    options: 'px | % | em'
-  },
-  {
-    name: '@Modal.draggable',
-    type: 'boolean',
-    default: 'true',
-    description: 'Control if window dialog is draggrable or not.',
-    options: 'true | false'
-  },
-  {
-    name: '@Modal.maximizable',
-    type: 'boolean',
-    default: 'true',
-    description: 'Control if window dialog is maximizable or not.',
-    options: 'true | false'
-  },
-  {
-    name: '@Modal.minimizable',
-    type: 'boolean',
-    default: 'true',
-    description: 'Control if window dialog is minimizable or not.',
-    options: 'true | false'
-  },
-  {
-    name: '@Modal.closable',
-    type: 'boolean',
-    default: 'true',
-    description: 'Control if window dialog is closable or not.',
-    options: 'true | false'
-  },
-
-  ];
+];

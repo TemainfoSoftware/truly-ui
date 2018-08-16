@@ -1,13 +1,14 @@
-import { Component, ViewChild, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
+import { Component, ViewContainerRef, ComponentFactoryResolver, OnInit } from '@angular/core';
 
 import * as json from './form-dataproperties.json';
 import * as jsonEvents from './form-dataevent.json';
 
-import { NewPersonComponent } from './newperson/newperson.component';
-import { DataFormService } from './newperson/dataform.service';
+import { ActionsModal } from '../../../../projects/truly-ui/src/components/core/enums/actions-modal';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { FormService } from '../../../../projects/truly-ui/src/components/form/form.service';
+import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
+import { NgForm, Validators, FormGroup, FormControl} from '@angular/forms';
+import { PasswordValidator } from '../../../../projects/truly-ui/src/components/validators/password/password.validator';
 
 @Component( {
   selector: 'app-modal',
@@ -15,11 +16,13 @@ import { FormService } from '../../../../projects/truly-ui/src/components/form/f
   animations: [ slideToLeft() ],
   styleUrls: [ './formdemo.component.scss' ]
 } )
-export class FormDemoComponent implements OnInit {
+export class FormDemoComponent {
 
-  @ViewChild( 'containerModal' ) containerModal;
-
-  public index: number;
+  public form = new FormGroup({
+    user: new FormControl(''),
+    password: new FormControl('', PasswordValidator({ digits: true, specials: false, uppercase: false})),
+    remember: new FormControl(false)
+  });
 
   public formprop;
 
@@ -27,42 +30,18 @@ export class FormDemoComponent implements OnInit {
 
   public person;
 
-  public formModal;
-
   public formInline;
 
   public data;
 
-  public identifier;
-
-  constructor( public view: ViewContainerRef, public formDataService: DataFormService, public formService: FormService,
-               public dataFormService: DataFormService, public dataDumpService: DumpDataService,
-               private compiler: ComponentFactoryResolver ) {
-
-    this.data = this.dataDumpService.createRandomData( 100 );
+  constructor() {
     this.formprop = json.dataProperties;
     this.dataEvents = jsonEvents.dataEvents;
-  }
-
-  ngOnInit() {
-    this.person = this.formDataService.getDataForm();
-  }
-
-  form1(id) {
-    this.formService.createForm( NewPersonComponent, this.compiler, null, ( form ) => {
-      if ( form.formResult ) {
-        this.dataFormService.saveDataForm( form.formResult.value );
-        this.formModal = this.dataFormService.getDataForm();
-      }
-    }, id );
-  }
-
-  closeModalID() {
-    this.formService.modalService.getModal(this.identifier).close();
   }
 
   onSubmitForm( $event ) {
     this.formInline = $event;
   }
+
 
 }

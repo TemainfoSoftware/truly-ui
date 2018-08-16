@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,15 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ElementRef, Injectable, Type } from '@angular/core';
-import { ModalService } from '../modal/modal.service';
-
-@Injectable()
-export class FormService {
-
-    constructor(public modalService: ModalService) {}
-
-    createForm(component: Type<any>, compiler, parent: ElementRef, callback: Function, indentifier?: string) {
-        this.modalService.createModal( component, compiler, parent, callback, indentifier );
-    }
-}
+ export enum ActionsModal {
+   INSERT = 'I',
+   UPDATE = 'U',
+   DELETE = 'D',
+   VIEW = 'V'
+ }

@@ -107,6 +107,18 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/form/formdemo.module#FormDemoModule'
       },
       {
+        path: 'inlineform',
+        loadChildren: './components/form/inline/form-inlinedemo.module#FormInlineDemoModule'
+      },
+      {
+        path: 'modalform',
+        loadChildren: './components/form/modal/form-modaldemo.module#FormModalDemoModule'
+      },
+      {
+        path: 'smartform',
+        loadChildren: './components/form/smart/form-smartdemo.module#FormSmartDemoModule'
+      },
+      {
         path: 'input',
         loadChildren: './components/input/inputdemo.module#InputDemoModule'
       },

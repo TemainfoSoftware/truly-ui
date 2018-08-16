@@ -8,6 +8,47 @@
   src: url("/assets/fonts/segoeui.ttf");
 }
 
+.box-component-viewer {
+  margin: 10px 0;
+  border: 1px solid #c5c5c5;
+  > .header {
+    height: 40px;
+    > ul {
+      margin: 0;
+      display: inline-flex;
+      list-style: none;
+      padding: 0;
+      > li {
+        background: #f1f1f1;
+        height: 40px;
+        text-align: center;
+        cursor: pointer;
+        color: #868686;
+        line-height: 40px;
+        padding: 0 20px;
+        border-right: 1px solid #c5c5c5;
+        .selected {
+          border-top: 1px solid #66cc99;
+        }
+      }
+    }
+  }
+}
+
+
+blockquote {
+  padding: 10px 20px;
+  margin: 20px;
+  color: #8a8a8a;
+  border-left: 5px solid #59c7a4;
+}
+
+.hljs {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: 0;
+}
+
 .title {
   color: #626464;
   padding-bottom: 10px;

@@ -55,8 +55,7 @@ export class ToasterDemoComponent {
 
   public data = [];
 
-  constructor( private toasterService: ToasterService, private view: ViewContainerRef ) {
-    this.toasterService.setView( this.view );
+  constructor( private toasterService: ToasterService ) {
     this.dataTableProperties = json.dataProperties;
 
     this.data = [

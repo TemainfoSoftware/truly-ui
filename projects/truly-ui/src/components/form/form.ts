@@ -23,7 +23,7 @@ import {
   Component, ContentChildren, Input,
   QueryList, Renderer2, Output,
   ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild,
+  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild, Injector,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
@@ -31,6 +31,7 @@ import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
+import { ModalService } from '../modal/modal.service';
 
 let componentFormIndex;
 
@@ -67,7 +68,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChildren( forwardRef( () => TlButton ), { descendants: true } ) buttonList: QueryList<TlButton>;
 
-  @ContentChildren( NgModel, { descendants: true } ) models: QueryList<NgModel>;
+  @ContentChildren( forwardRef( () => NgModel ), { descendants: true } ) models: QueryList<NgModel>;
 
   @ContentChild( FormSubmitDirective ) submitDirective;
 
@@ -89,7 +90,14 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  constructor( private renderer: Renderer2, private i18n: I18nService ) {
+  private modalFormInstance;
+
+  constructor( private renderer: Renderer2, private i18n: I18nService, private injector: Injector ) {
+    this.modalFormInstance = this.injector.get(ModalService);
+  }
+
+  get valid() {
+    return this.form.valid;
   }
 
   ngOnInit() {
@@ -97,6 +105,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   ngAfterContentInit() {
+    this.handleFormGroupValues();
     this.addControls();
   }
 
@@ -107,10 +116,18 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
   }
 
+  handleFormGroupValues() {
+    if (this.formGroup) {
+      if (this.modalFormInstance.modalConfiguration && this.modalFormInstance.modalConfiguration.dataForm) {
+        this.formGroup.patchValue( this.modalFormInstance.modalConfiguration.dataForm );
+      }
+    }
+  }
+
   addControls() {
     if ( !this.formGroup ) {
-      this.models.toArray().forEach( ( control, index, array ) => {
-        this.form.addControl( control );
+      this.models.toArray().forEach( ( item, index, array ) => {
+        this.form.addControl( item );
       } );
     }
   }
@@ -308,7 +325,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     if ( !this.validateFirstElement() ) {
       const previousElement = (document.activeElement as HTMLElement).tabIndex - 1;
 
-      for ( let element = previousElement; element < this.focusElements.length && (element > 0); element-- ) {
+      for ( let element = previousElement; element < this.focusElements.length && (element >= 0); element-- ) {
         if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
           return this.focusElements[ element ].focus();
         }

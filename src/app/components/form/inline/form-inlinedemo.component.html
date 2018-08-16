@@ -1,0 +1,335 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Inline Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span>
+    </h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
+    <p class="text-content">The form component can be used as inline form, using the property <code>[mode]</code> as <code>inline</code>. The same approach of native html form,
+      but taking advantage of the tl-form features like Keyboard Management, TabIndex and Angular Forms treatments.</p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Reactive Inline Form '" [icon]="'ion-monitor'">
+          <app-card>
+            <tl-tabcontrol [height]="'250px'">
+              <tl-tab [title]="'General'">
+                <tl-form [formGroup]="form" [mode]="'inline'" (submitForm)="onSubmit($event)">
+                  <div class="form-group">
+                    <tl-input [label]="'Name'" formControlName="name"></tl-input>
+                  </div>
+                  <div class="form-group">
+                    <tl-input [label]="'LastName'" formControlName="lastName"></tl-input>
+                  </div>
+                  <div class="form-group">
+                    <tl-input [mask]="'99.99.9999'" [label]="'Birthday'" formControlName="birthday"></tl-input>
+                  </div>
+                  <div class="form-group col-md-offset-1" style="float: left;">
+                    <tl-checkbox [color]="'primary'" [label]="'Active'" formControlName="active"></tl-checkbox>
+                  </div>
+                  <div class="form-group" style="float: right;">
+                    <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!form.valid"
+                               formSubmit></tl-button>
+                  </div>
+                </tl-form>
+              </tl-tab>
+            </tl-tabcontrol>
+            <div class="spacer"></div>
+            <div class="box-component-viewer">
+              <div class="header">
+                <ul>
+                  <li [ngClass]="{ selected: reactive === 'HTML' }" (click)="reactive = 'HTML'">form-inlinedemo.component.html</li>
+                  <li [ngClass]="{ selected: reactive === 'TYPESCRIPT' }" (click)="reactive = 'TYPESCRIPT'">form-inlinedemo.component.ts
+                  </li>
+                </ul>
+              </div>
+              <tl-multiview [modelValue]="reactive" (selectedChange)="reactive = $event">
+                <tl-view [value]="'HTML'">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tabcontrol [height]="'250px'">
+
+  <tl-tab [title]="'General'">
+    <tl-form [formGroup]="form" [mode]="'inline'" (submitForm)="onSubmit($event)">
+      <div class="form-group">
+        <tl-input [label]="'Name'" formControlName="name"></tl-input>
+      </div>
+      <div class="form-group">
+        <tl-input [label]="'LastName'" formControlName="lastName"></tl-input>
+      </div>
+      <div class="form-group">
+        <tl-input [mask]="'99.99.9999'" [label]="'Birthday'" formControlName="birthday"></tl-input>
+      </div>
+      <div class="form-group col-md-offset-1">
+        <tl-checkbox [color]="'primary'" [label]="'Active'" formControlName="active"></tl-checkbox>
+      </div>
+      <div class="form-group">
+        <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!form.valid" formSubmit></tl-button>
+      </div>
+    </tl-form>
+  </tl-tab>
+
+</tl-tabcontrol>
+                  </textarea>
+                </tl-view>
+                <tl-view [value]="'TYPESCRIPT'">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+                    import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateValidator } from 'truly-ui';
+
+@Component({
+  selector: 'app-form-inlinedemo',
+  templateUrl: './form-inlinedemo.component.html',
+  styleUrls: ['./form-inlinedemo.component.scss']
+})
+export class FormInlinedemoComponent {
+
+  public form = new FormGroup({
+    name: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    birthday: new FormControl('', [ DateValidator('dd.mm.yyyy'), Validators.required ]),
+    active: new FormControl(false)
+  });
+  constructor() { }
+
+  onSubmit($event) {
+    console.log($event);
+  }
+}
+                  </textarea>
+                </tl-view>
+              </tl-multiview>
+            </div>
+          </app-card>
+          <app-card>
+            <h4>Imports</h4>
+            <p>Import <code>ReactiveFormsModule</code> and the Truly-ui <code>FormsModule</code></p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormModule } from 'truly-ui';
+
+@NgModule({
+  declarations:[
+    FormDemoComponent
+  ]
+  imports: [
+    ReactiveFormsModule
+    FormsModule
+    FormModule,
+  ]
+  exports: [
+    FormDemoComponent
+  ]
+})
+export class FormDemoModule {}
+            </textarea>
+          </app-card>
+          <app-card>
+            <h4>Create a FormGroup</h4>
+            <p>Create a Reactive Form with validations.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+public form = new FormGroup({
+  name: new FormControl('', Validators.required),
+  lastName: new FormControl('', Validators.required),
+  birthday: new FormControl('', [ DateValidator('dd.mm.yyyy'), Validators.required ]),
+  active: new FormControl(false)
+});
+            </textarea>
+          </app-card>
+          <app-card>
+            <h4>Configure Form in HTML</h4>
+            <p>Create a tl-form with formGroup directive with it controls.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-form [formGroup]="form" [mode]="'inline'" (submitForm)="onSubmit($event)">
+    <tl-input [label]="'Name'" formControlName="name"></tl-input>
+    <tl-input [label]="'LastName'" formControlName="lastName"></tl-input>
+    <tl-input [mask]="'99.99.9999'" [label]="'Birthday'" formControlName="birthday"></tl-input>
+    <tl-checkbox [color]="'primary'" [label]="'Active'" formControlName="active"></tl-checkbox>
+</tl-form>
+            </textarea>
+            <p></p>
+          </app-card>
+          <app-card>
+            <h4>Configure Button Submit</h4>
+            <p>Configure the Button Submit using the <code>formSubmit</code> directive, it will act as button submit for
+              the form.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!form.valid" formSubmit></tl-button>
+</textarea>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Template Driven Inline Form'" [icon]="'ion-monitor'">
+          <app-card>
+            <tl-tabcontrol [height]="'250px'">
+              <tl-tab [title]="'General'">
+                <tl-form #formDriven [mode]="'inline'" (submitForm)="onSubmit($event)">
+                  <div class="form-group">
+                    <tl-input [name]="'name'" [label]="'Name'" required [(ngModel)]="user.name"></tl-input>
+                  </div>
+                  <div class="form-group">
+                    <tl-input [name]="'lastName'" [label]="'LastName'" [(ngModel)]="user.lastName"></tl-input>
+                  </div>
+                  <div class="form-group">
+                    <tl-input [name]="'birthday'" [mask]="'99.99.9999'" [label]="'Birthday'" [(ngModel)]="user.birthday"></tl-input>
+                  </div>
+                  <div class="form-group col-md-offset-1" style="float: left;">
+                    <tl-checkbox [name]="'active'" [color]="'primary'" [label]="'Active'" [(ngModel)]="user.active"></tl-checkbox>
+                  </div>
+                  <div class="form-group" style="float: right;">
+                    <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!formDriven.valid"
+                               formSubmit></tl-button>
+                  </div>
+                </tl-form>
+              </tl-tab>
+            </tl-tabcontrol>
+            <div class="spacer"></div>
+            <blockquote>Using Template Driven, must be specified the <code>[name]</code> attribute</blockquote>
+            <div class="box-component-viewer">
+              <div class="header">
+                <ul>
+                  <li [ngClass]="{ selected: driven === 'HTML' }" (click)="driven = 'HTML'">form-inlinedemo.component.html</li>
+                  <li [ngClass]="{ selected: driven === 'TYPESCRIPT' }" (click)="driven = 'TYPESCRIPT'">form-inlinedemo.component.ts</li>
+                </ul>
+              </div>
+              <tl-multiview [modelValue]="driven" (selectedChange)="driven = $event" [height]="'280px'"
+                            [backdroungColor]="'#282C34'">
+                <tl-view [value]="'HTML'">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tabcontrol [height]="'250px'">
+
+  <tl-tab [title]="'General'">
+    <tl-form #formDriven [mode]="'inline'" (submitForm)="onSubmit($event)">
+        <tl-input [name]="'name'" [label]="'Name'" required [(ngModel)]="user.name"></tl-input>
+        <tl-input [name]="'lastName'" [label]="'LastName'" [(ngModel)]="user.lastName"></tl-input>
+        <tl-input [name]="'birthday'" [mask]="'99.99.9999'" [label]="'Birthday'" [(ngModel)]="user.birthday"></tl-input>
+        <tl-checkbox [name]="'active'" [color]="'primary'" [label]="'Active'" [(ngModel)]="user.active"></tl-checkbox>
+        <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!formDriven.valid" formSubmit></tl-button>
+    </tl-form>
+  </tl-tab>
+
+</tl-tabcontrol>
+                  </textarea>
+                </tl-view>
+                <tl-view [value]="'TYPESCRIPT'">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class User {
+  name: string;
+  lastName: string;
+  birthday: string;
+  active: boolean;
+}
+@Component({
+  selector: 'app-form-inlinedemo',
+  templateUrl: './form-inlinedemo.component.html',
+  styleUrls: ['./form-inlinedemo.component.scss']
+})
+export class FormInlinedemoComponent {
+  public user = new User();
+
+  constructor() {}
+}
+</textarea>
+
+                </tl-view>
+                <tl-view [value]="'TYPESCRIPT'">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+                    import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateValidator } from 'truly-ui';
+
+@Component({
+  selector: 'app-form-inlinedemo',
+  templateUrl: './form-inlinedemo.component.html',
+  styleUrls: ['./form-inlinedemo.component.scss']
+})
+export class FormInlinedemoComponent {
+
+  public form = new FormGroup({
+    name: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    birthday: new FormControl('', [ DateValidator('dd.mm.yyyy'), Validators.required ]),
+    active: new FormControl(false)
+  });
+  constructor() { }
+
+  onSubmit($event) {
+    console.log($event);
+  }
+}
+                  </textarea>
+                </tl-view>
+              </tl-multiview>
+            </div>
+          </app-card>
+          <app-card>
+            <h4>Configure Form in HTML</h4>
+            <p>Create a tl-form with tl-input with <code>[(ngModel)]</code> directive.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-form #formDriven [mode]="'inline'" (submitForm)="onSubmit($event)">
+    <tl-input [label]="'Name'" [(ngModel)]="user.name"></tl-input>
+    <tl-input [label]="'LastName'" [(ngModel)]="user.lastName"></tl-input>
+    <tl-input [mask]="'99.99.9999'" [label]="'Birthday'" [(ngModel)]="user.birthday"></tl-input>
+    <tl-checkbox [color]="'primary'" [label]="'Active'" [(ngModel)]="user.active"></tl-checkbox>
+    <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!formDriven.valid" formSubmit></tl-button>
+</tl-form>
+            </textarea>
+            <blockquote>Once are using TL-FORM with Template Driven, the TL-FORM component will create a form internally
+              and will add the controls that's inside of it.
+            </blockquote>
+          </app-card>
+          <app-card>
+            <h4>Configure Form in the Component</h4>
+            <p>Create a Class that represents de Model</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class User {
+  name: string;
+  lastName: string;
+  birthday: string;
+  active: boolean;
+}
+@Component({
+  selector: 'app-form-inlinedemo',
+  templateUrl: './form-inlinedemo.component.html',
+  styleUrls: ['./form-inlinedemo.component.scss']
+})
+export class FormInlinedemoComponent {
+  public user = new User();
+
+  constructor() {}
+
+  onSubmit($event) {
+    console.log($event);
+  }
+}
+            </textarea>
+          </app-card>
+          <app-card>
+            <h4>Get the Form Value</h4>
+            <p>Get the form value using the <code>submitForm</code> event registering in tl-form tag.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-form [mode]="'inline'" (submitForm)="onSubmit($event)">
+  <!--Fields...-->
+</tl-form>
+</textarea>
+          </app-card>
+          <app-card>
+            <div>
+              <p>The result of <code>submitForm</code> event</p>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'json'">
+{
+    name: 'David',
+    lastName: 'Spencer',
+    birthday: '22.05.189',
+    active: true
+}
+</textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+  </div>
+</div>

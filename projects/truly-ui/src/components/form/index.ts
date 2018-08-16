@@ -25,7 +25,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TlForm } from './form';
-import { FormService } from './form.service';
 import { DialogService } from '../dialog/dialog.service';
 import { FormSubmitDirective } from './form-submit.directive';
 
@@ -56,7 +55,6 @@ import { ModalModule } from '../modal/index';
   ],
   providers: [
     DialogService,
-    FormService,
   ],
 } )
 export class FormModule {

@@ -1,5 +1,5 @@
 import { CommonModule  } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
@@ -21,8 +21,6 @@ import { TabControlModule } from '../../../../projects/truly-ui/src/components/t
 import { TooltipModule } from '../../../../projects/truly-ui/src/components/tooltip';
 import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/validators';
 
-import { NewPersonComponent } from './newperson/newperson.component';
-import { DataFormService } from './newperson/dataform.service';
 import { FormDemoComponent } from './formdemo.component';
 import { FormDemoRoutingModule } from './formdemo-routing.module';
 
@@ -32,10 +30,10 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { HighlightModule } from 'ngx-highlightjs';
+import { MultiViewModule } from '../../../../projects/truly-ui/src/components/multiview/index';
 
 @NgModule({
   declarations: [
-    NewPersonComponent,
     FormDemoComponent,
   ],
   imports: [
@@ -54,12 +52,13 @@ import { HighlightModule } from 'ngx-highlightjs';
     DialogModule,
     AutoCompleteModule,
     FormsModule,
+    ReactiveFormsModule,
     DatePickerModule,
     PanelGroupModule,
     ModalToolbarModule,
     HighlightJsModule,
     TooltipModule,
-    MultiSelectModule,
+    MultiViewModule,
     MiscModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
@@ -67,14 +66,9 @@ import { HighlightModule } from 'ngx-highlightjs';
   ],
   exports: [
     FormDemoComponent,
-    NewPersonComponent,
   ],
   providers: [
     DumpDataService,
-    DataFormService,
   ],
-  entryComponents: [
-    NewPersonComponent
-  ]
 })
 export class FormDemoModule {}

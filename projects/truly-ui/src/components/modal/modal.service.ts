@@ -28,7 +28,6 @@ import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { Subject, Subscription } from 'rxjs';
-import { NgForm } from '@angular/forms';
 import { ActionsModal } from '../core/enums/actions-modal';
 import { TlDialogConfirmation } from '../dialog/dialog-confirmation/dialog-confirmation';
 
@@ -121,17 +120,20 @@ export class ModalService implements OnDestroy {
       }
 
       this.setInitialZIndex();
-      this.eventCallback.subscribe( ( result: { mdResult: number, formResult: NgForm } ) => {
+      this.eventCallback.subscribe( ( result: any ) => {
         resolve( result );
-        if ( result.mdResult === ModalResult.MRCANCEL || !factoryOrConfig[ 'actions' ] ) {
+        if ( result.mdResult === ModalResult.MRCANCEL
+          || result === ModalResult.MRCLOSE
+          || !factoryOrConfig[ 'actions' ] ) {
           return;
         }
+        const instantResult = result.formResult ? result.formResult.value : result;
         switch ( factoryOrConfig[ 'executeAction' ] ) {
           case ActionsModal.INSERT:
             if ( !factoryOrConfig[ 'actions' ].insertCall ) {
               this.throwError( 'INSERT' );
             }
-            factoryOrConfig[ 'actions' ].insertCall( result.formResult.value );
+            factoryOrConfig[ 'actions' ].insertCall( instantResult );
             break;
           case ActionsModal.DELETE:
             if ( !factoryOrConfig[ 'actions' ].deleteCall ) {
@@ -142,13 +144,13 @@ export class ModalService implements OnDestroy {
             if ( !factoryOrConfig[ 'actions' ].updateCall ) {
               this.throwError( 'UPDATE' );
             }
-            factoryOrConfig[ 'actions' ].updateCall( result.formResult.value );
+            factoryOrConfig[ 'actions' ].updateCall( instantResult );
             break;
           case ActionsModal.VIEW:
             if ( !factoryOrConfig[ 'actions' ].viewCall ) {
               this.throwError( 'VIEW' );
             }
-            factoryOrConfig[ 'actions' ].viewCall( result.formResult.value );
+            factoryOrConfig[ 'actions' ].viewCall( instantResult );
             break;
         }
       } );
@@ -172,7 +174,6 @@ export class ModalService implements OnDestroy {
   private injectComponentToModal( component: Type<any>, compiler ) {
     const factoryInject = compiler.resolveComponentFactory( component );
     this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
-    console.log( 'Factory', this.componentInjected );
   }
 
   getParentModalInjectedView() {
@@ -333,10 +334,10 @@ export class ModalService implements OnDestroy {
       if ( this.isResultUndefined() ) {
         return;
       }
-      if ( !this.isMdResultEqualsNone( result.mdResult ) ) {
-        if ( (result.mdResult === ModalResult.MROK) && !(this.modalOptions[ 0 ].closeOnOK) ) {
-          return;
-        }
+      if ( !(this.isMdResultEqualsOK( result.mdResult ))) {
+        this.close( component );
+      }
+      if (this.modalOptions[0].closeOnOK) {
         this.close( component );
       }
       setTimeout( () => {
@@ -347,8 +348,8 @@ export class ModalService implements OnDestroy {
     } );
   }
 
-  private isMdResultEqualsNone( mdResult: ModalResult ) {
-    return Number( mdResult ) === Number( ModalResult.MRCUSTOM );
+  private isMdResultEqualsOK( mdResult: ModalResult ) {
+    return Number( mdResult ) === Number( ModalResult.MROK );
   }
 
   private isResultUndefined() {

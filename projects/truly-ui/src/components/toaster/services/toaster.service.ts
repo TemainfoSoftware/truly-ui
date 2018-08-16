@@ -19,31 +19,31 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ComponentFactoryResolver, ComponentRef, ViewContainerRef, Injectable } from '@angular/core';
+import {
+  ComponentFactoryResolver, ComponentRef, Injectable, ApplicationRef,
+  Injector, EmbeddedViewRef
+} from '@angular/core';
 import { TlToaster } from '../toaster';
 import { ToasterConfig } from '../toaster-config';
 
 @Injectable()
 export class ToasterService {
 
-  private view: ViewContainerRef;
-
   private toaster: ComponentRef<any>;
 
   private listToasters = [];
 
-  constructor(private compiler: ComponentFactoryResolver) {}
-
-  setView(view: ViewContainerRef) {
-    this.view = view;
-  }
+  constructor(private compiler: ComponentFactoryResolver, private appRef: ApplicationRef, private injector: Injector) {}
 
   private createToasterComponent(toasterConfig: ToasterConfig) {
-    const componentFactory = this.compiler.resolveComponentFactory( TlToaster );
-    this.toaster = this.view.createComponent(componentFactory);
+    this.toaster = this.compiler.resolveComponentFactory( TlToaster ).create(this.injector);
+    this.appRef.attachView(this.toaster.hostView);
     (<TlToaster>this.toaster.instance).setProperties(toasterConfig);
     (<TlToaster>this.toaster.instance).setServiceInstance(this);
     (<TlToaster>this.toaster.instance).setComponentRef(this.toaster);
+    const domElem = (this.toaster.hostView as EmbeddedViewRef < any > )
+      .rootNodes[0] as HTMLElement;
+    document.body.appendChild(domElem);
   }
 
   success(toasterConfig: ToasterConfig) {

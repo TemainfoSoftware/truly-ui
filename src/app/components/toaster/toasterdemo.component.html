@@ -48,12 +48,10 @@
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
           <app-card>
             <h4>Step One</h4>
-            <h5>First of all, you must declare the <code>ToasterService</code> and set the <code>ViewContainerRef</code>in
+            <h5>First of all, you must inject the <code>ToasterService</code>in
               the constructor</h5>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-constructor( private toasterService: ToasterService, private view: ViewContainerRef ) {
-  this.toasterService.setView( this.view );
-}
+constructor( private toasterService: ToasterService ) {}
                   </textarea>
             <hr>
             <h4>Step Two</h4>

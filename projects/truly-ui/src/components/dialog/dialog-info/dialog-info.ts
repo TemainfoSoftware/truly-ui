@@ -33,7 +33,7 @@ import { Modal } from '../../modal/modal-options';
   draggable: false,
   maximizable: false,
   minimizable: false,
-  backdrop: false,
+  backdrop: true,
   closeOnOK: true
 })
 @Component({

@@ -29,14 +29,6 @@ deploy:
     skip_cleanup: true
     access_key_id: $ACCESS_KEY_ID
     secret_access_key: $SECRET_ACCESS_KEY
-    bucket: "www.truly-ui.io"
-    region: sa-east-1
-    acl: public_read
-  - provider: s3
-    local_dir: showcase
-    skip_cleanup: true
-    access_key_id: $ACCESS_KEY_ID
-    secret_access_key: $SECRET_ACCESS_KEY
     bucket: "truly-ui.com"
     region: us-east-1
     acl: public_read

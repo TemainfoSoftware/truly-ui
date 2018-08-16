@@ -28,7 +28,6 @@ import { FormModule } from '../../../../../projects/truly-ui/src/components/form
 import { TabControlModule } from '../../../../../projects/truly-ui/src/components/tabcontrol/index';
 import { DialogModule } from '../../../../../projects/truly-ui/src/components/dialog/index';
 import { AutoCompleteModule } from '../../../../../projects/truly-ui/src/components/autocomplete/index';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
 import { FormModalComponent } from './form-modal/form-modal.component';
 
@@ -48,7 +47,6 @@ import { FormModalComponent } from './form-modal/form-modal.component';
     ValidatorsModule,
     CheckBoxModule,
     FormModalDemoRoutingModule,
-    FlexLayoutModule,
     FormModule,
     TabControlModule,
     DialogModule,

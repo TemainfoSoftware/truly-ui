@@ -32,6 +32,7 @@ import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
 import { ModalService } from '../modal/modal.service';
+import { ActionsModal } from '../core/enums/actions-modal';
 
 let componentFormIndex;
 
@@ -45,6 +46,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   @Input() initialFocus: TlInput;
 
   @Input() showConfirmOnChange = false;
+
+  @Input() primaryKey = '';
 
   @Input() messageDialogConfirmation = 'Are you sure ?';
 
@@ -61,6 +64,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() submitForm: EventEmitter<NgForm> = new EventEmitter();
+
+  @Output() actionForm: EventEmitter<ActionsModal> = new EventEmitter();
 
   @Input( 'formGroup' ) formGroup: FormGroup;
 
@@ -90,10 +95,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private listeners = [];
 
-  private modalFormInstance;
+  private modalInstance;
 
   constructor( private renderer: Renderer2, private i18n: I18nService, private injector: Injector ) {
-    this.modalFormInstance = this.injector.get(ModalService);
+    this.modalInstance = this.injector.get(ModalService);
   }
 
   get valid() {
@@ -106,6 +111,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   ngAfterContentInit() {
     this.handleFormGroupValues();
+    this.setPrimaryKeyDisabled();
+    this.actionForm.emit( this.modalInstance.modalConfiguration.executeAction );
     this.addControls();
   }
 
@@ -118,9 +125,17 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   handleFormGroupValues() {
     if (this.formGroup) {
-      if (this.modalFormInstance.modalConfiguration && this.modalFormInstance.modalConfiguration.dataForm) {
-        this.formGroup.patchValue( this.modalFormInstance.modalConfiguration.dataForm );
+      if (this.modalInstance.modalConfiguration &&
+        this.modalInstance.modalConfiguration.executeAction !== ActionsModal.INSERT &&
+        this.modalInstance.modalConfiguration.dataForm) {
+        this.formGroup.patchValue( this.modalInstance.modalConfiguration.dataForm );
       }
+    }
+  }
+
+  setPrimaryKeyDisabled() {
+    if (this.primaryKey && this.formGroup) {
+      this.formGroup.get(this.primaryKey).disable();
     }
   }
 
@@ -176,8 +191,12 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
+    if (this.primaryKey) {
+      this.formGroup.get(this.primaryKey).enable();
+    }
     this.formResult = this.formGroup ? this.formGroup : this.form;
     this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
+    console.log('FORM', this.formGroup);
   }
 
   getElementsOfForm() {

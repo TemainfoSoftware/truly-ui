@@ -1,90 +1,136 @@
 @import "../core/styles/theming/theming";
 
-@mixin tl-multiselect-theme($theme) {
+@mixin _tl-multiselect-theme-schema($theme, $action) {
 
-  $basic:   map-deep-get($theme, 'basic');
-  $primary:   map-deep-get($theme, 'primary');
-  $warning:   map-deep-get($theme, 'warning');
+    $danger: map-deep-get($theme, 'danger');
+    $primary: map_get($theme, 'primary');
+    $success: map-deep-get($theme, 'success');
 
-  .tl-multiselect-container {
-
-    > .-labelTag {
-      color: map-deep-get($basic, "default", "foreground");
+  .-labelTag {
+      color: map-deep-get($theme, $action, "default", "foreground");
     }
 
-    >.multiselect-wrapper{
+    .multiselect-wrapper{
+
       & .selectedItem {
         background-color: map-deep-get($primary, "default", "background") !important;
-        color: map-deep-get($primary, "default", "foreground")  !important;
+        color: map-deep-get($primary, "default", "foreground") !important;
       }
 
       & .input-wrapper-multiselect {
-        border: 1px solid  map-deep-get($basic, "lighter", "border");
-        background:  map-deep-get($basic, "lighter", "background");
+        border: 1px solid map-deep-get($theme, $action, "default", "border");
+        background:  map-deep-get($theme, $action, "default", "background");
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
       }
 
+      & .input-wrapper-multiselect.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border") !important;
+        background-color: rgba(map-deep-get($danger, "default", "background"), 0.2) !important;
+        outline: none;
+      }
+
+      & .input-wrapper-multiselect.withValidators:not(.invalid) {
+        border: 1px solid map-deep-get($success, "default", "border");
+        background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
+        outline: none;
+      }
+
       & .input-wrapper-multiselect input::placeholder {
-        color:map-deep-get($basic, "default", "foreground");
+        color: map-deep-get($theme, $action, "lighter", "foreground");
       }
 
       & .input {
-        background: map-deep-get($basic, "lighter", "background");
-        color: map-deep-get($basic, "lighter", "foreground");
+        background: transparent;
+        color: map-deep-get($theme, $action, "lighter", "foreground");
       }
 
       & .input-empty {
-        background: map-deep-get($basic, "lighter", "background");
-        color: map-deep-get($basic, "lighter", "foreground");
+        background: map-deep-get($theme, $action, "lighter", "foreground");
+        color: map-deep-get($theme, $action, "lighter", "foreground");
+      }
+
+      & .input-empty.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border") !important;
+        background-color: transparent;
+        outline: none;
       }
 
       & .inputFormOpenFilter {
-        border-top: 1px solid  map-deep-get($basic, "default", "border");
-        border-left: 1px solid  map-deep-get($basic, "default", "border");
-        border-right: 1px solid  map-deep-get($basic, "default", "border");
-        border-bottom: 0 !important;
+        border-top: 1px solid  map-deep-get($theme, $action, "default", "border");
+        border-left: 1px solid  map-deep-get($theme, $action, "default", "border");
+        border-right: 1px solid  map-deep-get($theme, $action, "default", "border");
       }
 
       & .select-options {
-        //border: 1px solid  map-deep-get($basic, "default", "border")
-      }
-      & .select-options::-webkit-scrollbar-thumb {
-        background-color: map-deep-get($primary, "default", "background");
-        outline: 1px solid map-deep-get($primary, "default", "background");
-      }
-
-      & .group-tags span {
-        color: map-deep-get($primary, "default", "foreground");
-      }
-
-      & .group-tags span b {
-        border-left: 1px solid map-deep-get($primary, "default", "foreground");
-      }
-
-      & .select-options {
-        background: map-deep-get($basic, "lighter", "background");
+        background-color: map-deep-get($theme, $action, "default", "background");
+        border: 1px solid rgba( map-deep-get($theme, $action, "default", "border"),0.3);
       }
 
       & .select-options .itens {
-        background: map-deep-get($basic, "lighter", "background");
-        color: map-deep-get($basic, "lighter", "foreground");
-        border-top:1px solid rgba( map-deep-get($basic, "default", "border"),0.3);
+        background: map-deep-get($theme, $action, "default", "background");
+        color: map-deep-get($theme, $action, "default", "foreground");
+        border-top: 1px solid rgba( map-deep-get($theme, $action, "default", "border"), 0.3);
+        &:first-child {
+          border-top: none;
+        }
       }
 
       & .select-options small {
-        color: map-deep-get($basic, "lighter", "foreground");
-      }
-
-      & .select-options .itens:last-child {
-        border-bottom: 1px solid rgba(map-deep-get($basic, "default", "border"),0.3);
+        color:  map-deep-get($theme, $action, "default", "foreground");
       }
 
       & .select-options .itens:hover {
-        background: map-deep-get($basic, "hover", "background");
+        background: map-deep-get($theme, $action, "hover", "background");
         outline: none;
       }
+
+      & .select-options::-webkit-scrollbar-thumb {
+        background-color:  map-deep-get($theme, $action, "default", "background");
+        outline: 1px solid map-deep-get($theme, $action, "default", "border");
+      }
+
+      & .group-tags {
+        .tag {
+          background-color: map-deep-get($primary, "default", "background");
+        }
+        span b {
+          color: map-deep-get($theme, $action, "default", "foreground");
+          border-left: 1px solid map-deep-get($theme, $action, "default", "foreground");
+
+        }
+      }
     }
+  }
+
+@mixin tl-multiselect-theme( $theme ) {
+
+  .tl-multiselect-container {
+
+    &.basic {
+      @include _tl-multiselect-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-multiselect-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-multiselect-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-multiselect-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-multiselect-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-multiselect-theme-schema($theme, 'information')
+    }
+
   }
 }

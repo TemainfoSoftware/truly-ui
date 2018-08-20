@@ -56,6 +56,13 @@ export const dataProperties = [
     options: 'Object Key'
   },
   {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of multiselect tags.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
     name: 'icon',
     type: 'string',
     default: 'null',
@@ -70,7 +77,7 @@ export const dataProperties = [
     options: 'Object Key'
   },
   {
-    name: 'color',
+    name: 'keyColor',
     type: 'string',
     default: 'null',
     description: 'Key that going to be used to change the color tag.',

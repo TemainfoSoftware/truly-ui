@@ -1,3 +1,4 @@
+import { ButtonI18nInterface } from './languages/button/index';
 import { CalendarI18nInterface } from './languages/calendar/index';
 import { DatatableI18nInterface } from './languages/datatable/index';
 import { DialogI18nInterface } from './languages/dialog/index';
@@ -8,6 +9,7 @@ import { ValidatorsI18nInterface } from './languages/validators/index';
 
 export interface I18nInterface {
   locale: string;
+  Button: ButtonI18nInterface;
   Calendar: CalendarI18nInterface;
   Datatable: DatatableI18nInterface;
   Dialog: DialogI18nInterface;

@@ -3,7 +3,8 @@
         [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
         [class]="'tl-button ripple '+ color"
-        [disabled]="disabled ? true : null">
+        [disabled]="( disabled || isLoading ) ? true : null"
+        >
     <span *ngIf="iconAddonBefore"
           [ngClass]="iconAddonBefore"
           [class]="color + ' iconAddonBefore'"
@@ -16,9 +17,16 @@
           [class]="color + ' iconAddonAfter'"
           [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">
     </span>
-    <span class="textButton" [ngStyle]="{'line-height': height}">
-          <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText"></i>
-            {{text}}<ng-content></ng-content>
-          <i *ngIf="iconAfterText" [ngClass]="iconAfterText"></i>
+
+    <!-- WHEN IS LOADING-->
+    <span *ngIf="isLoading"  class="textButton -isLoading" [ngStyle]="{'line-height': height}">
+      <i *ngIf="isLoading" ngClass="fa fa-circle-o-notch fa-spin fa-fw"></i>
+      {{ textLoading }}
+    </span>
+    <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">
+      <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText"></i>
+        {{text}}<ng-content></ng-content>
+      <i *ngIf="iconAfterText" [ngClass]="iconAfterText"></i>
     </span>
 </button>
+

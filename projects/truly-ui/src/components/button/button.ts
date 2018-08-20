@@ -20,13 +20,21 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, Input, ViewChild, Output, EventEmitter, OnInit
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
     selector: 'tl-button',
     templateUrl: './button.html',
-    styleUrls: [ './button.scss' ],
+    styleUrls: [ './button.scss' ]
+
 } )
 export class TlButton implements OnInit {
 
@@ -62,13 +70,25 @@ export class TlButton implements OnInit {
 
     @Input() color = 'basic';
 
+    @Input() isLoading = false;
+
+    @Input() set textLoading( text ) {
+      this._textLoading = text;
+    }
+
+    get textLoading() {
+      return this._textLoading || this.i18nService.getLocale().Button.loadingText;
+    }
+
     @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
     public shortcutManager = {};
 
-    constructor( public button: ElementRef ) {}
+    private _textLoading: string;
+
+    constructor( public button: ElementRef, private i18nService: I18nService ) {}
 
     ngOnInit() {}
 }

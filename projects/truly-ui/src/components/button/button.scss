@@ -22,17 +22,22 @@ $button-text-align: center;
     float: left;
     font-weight: 400;
     padding: 0 15px;
+    pointer-events: none;
   }
   > .iconAddonAfter{
     box-sizing: border-box;
     float: right;
     font-weight: 400;
     padding: 0 15px;
+    pointer-events: none;
   }
   > .textButton{
     padding: 0 15px;
     margin: 0;
     width: 500px !important;
+    &.-isLoading{
+      pointer-events: none;
+    }
   }
 }
 

@@ -1,30 +1,45 @@
-<div class="tl-multiselect-container">
+<div [class]="'tl-multiselect-container '+ color">
   <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
   <div class="multiselect-wrapper">
     <div
-      [ngClass]="{'focused':focused, 'noFocused':!focused,'inputFormOpenFilter': isOpen && filteredItens.length !== 0}"
-      class="input-wrapper-multiselect" #element (click)="setInputFocus()">
-      <span class="group-tags" *ngIf="hasKeySource">
+      class="input-wrapper-multiselect"  #element (click)="setInputFocus()"
+      [ngClass]="
+      {
+      'focused':focused, 'noFocused':!focused,
+      'invalid': controlName?.control.errors || model?.control.errors,
+      'withValidators': hasValidator,
+      'inputFormOpenFilter': isOpen && filteredItens.length !== 0
+      }">
+      <div class="group-tags" *ngIf="hasKeySource">
         <div class="tag" *ngFor="let tag of tags; let i = index"
              (click)="selectTagClick($event,i, tag)"
-             [ngStyle]="changeColorTag(tag)">{{tag?.source[labelTag]}}
+             [ngStyle]="changeColorTag(tag)">
+          <span>{{tag?.source[labelTag]}}</span>
           <small *ngIf="detailOnTag && detail !== undefined" class="tags-detail">
             <{{tag?.source[detail]}}>
           </small>
           <span (click)="removeTag(i, tag)">X</span>
         </div>
-      </span>
-      <span class="group-tags" *ngIf="!hasKeySource">
+      </div>
+      <div class="group-tags" *ngIf="!hasKeySource">
         <div class="tag" *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, i, tag)"
-             [ngStyle]="changeColorTag(tag)">{{tag[labelTag]}}
+             [ngStyle]="changeColorTag(tag)">
+          <span>{{tag[labelTag]}}</span>
           <small *ngIf="detailOnTag && detail !== undefined"
                  class="tags-detail"><{{tag[detail]}}>
           </small>
           <span (click)="removeTag(i, tag)">X</span>
         </div>
-      </span>
-      <input [attr.autocomplete]="'off'" [ngClass]="{'input-empty': isTagsEqualsZero(), 'input': !isTagsEqualsZero()}"
-             #model="ngModel"
+      </div>
+      <input [attr.autocomplete]="'off'"
+             [ngClass]="
+             {
+              'input-empty': isTagsEqualsZero(),
+              'input': !isTagsEqualsZero(),
+              'invalid': controlName?.control.errors || model?.control.errors,
+              'withValidators': hasValidator,
+              'withoutValidators': !hasValidator
+              }"
              #input width="300"
              [(ngModel)]="value"
              (blur)="closeList( $event )"
@@ -37,6 +52,7 @@
     <div *ngIf="hasKeySource" [style.display]="isOpen ? 'block' : 'none'">
       <ul #ul class="select-options"
           [style.position]="'fixed'"
+          [style.display]="filteredItens.length > 0 ? 'block' : 'none'"
           [style.left]="listPosition + 'px'"
           [style.top]="listTopPosition + 25 + 'px'"
           [ngStyle]="calcHeightWidthItem()">
@@ -63,6 +79,7 @@
     </div>
     <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
       <ul #ul class="select-options"
+          [style.display]="filteredItens.length > 0 ? 'block' : 'none'"
           [style.position]="'fixed'"
           [style.left]="listPosition + 'px'"
           [style.top]="listTopPosition + 25 + 'px'"

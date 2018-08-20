@@ -4,6 +4,7 @@ import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
 import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component( {
   selector: 'app-multiselect-demo',
@@ -27,8 +28,17 @@ export class MultiSelectDemoComponent implements OnChanges {
 
   public dataCustomDetail = [];
 
+  public form = new FormGroup({
+    id: new FormControl('', Validators.required)
+  });
+
+
+
   constructor(public view: ViewContainerRef, public dialogService: DialogService) {
 
+    this.dataNoSourceBasicModel = [ 4, 5 ];
+
+    this.form.get('id').patchValue(this.dataNoSourceBasicModel);
 
     this.dataTableProperties = jsonProp.dataProperties;
 

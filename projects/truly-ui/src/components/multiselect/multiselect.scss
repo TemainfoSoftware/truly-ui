@@ -1,11 +1,10 @@
 @mixin defaultInput() {
   border: 0 !important;
   outline: none;
-  height: 15px;
-  padding: 5px 5px;
+  height: 23px;
   font-size: 0.9em;
-  padding-right: 0;
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  margin-left: 5px;
 }
 
 .tl-multiselect-container {
@@ -13,10 +12,10 @@
   display: table;
 
   > .-labelTag {
+    display: table-cell;
     text-align: right;
     line-height: 1;
     width: 100px;
-    padding-right: 5px;
     white-space: nowrap;
     vertical-align: middle;
     font-weight: normal;
@@ -26,13 +25,16 @@
 
   > .multiselect-wrapper {
     display: table-cell;
-    width: 100%;
+    padding-left: 5px;
 
     & small {
       opacity: 0.7;
     }
 
     & .input-wrapper-multiselect {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       min-height: 23px;
       border-radius: 3px;
       box-sizing: border-box;
@@ -53,10 +55,6 @@
       width: 98%;
     }
 
-    & .inputFormOpenFilter {
-      border-bottom: 0 !important;
-    }
-
     & .select-options {
       display: block;
       position: absolute;
@@ -65,7 +63,6 @@
       z-index: 1000;
       margin: 0 auto;
       padding: 0 !important;
-      border-top: 0;
       cursor: pointer;
     }
 
@@ -75,18 +72,19 @@
     }
 
     & .group-tags {
-      position: relative;
       height: 23px;
-      margin: 0;
+      display: flex;
+      align-items: center;
       .tag {
         position: relative;
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        grid-template-columns: 1fr 20px;
         cursor: pointer;
         height: 15px;
         border-radius: 3px;
         font-size: 0.8em;
         margin-left: 3px;
-        padding-left: 5px;
         font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -97,9 +95,11 @@
 
         & span {
           padding: 0 5px;
-          font-size: 9px;
+          text-align: center;
         }
+
         &:first-child {
+          border-top: 0;
           margin-left: 3px;
         }
       }

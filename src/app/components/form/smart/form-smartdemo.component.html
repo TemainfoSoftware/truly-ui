@@ -102,6 +102,17 @@ export class AppModule { }
             <app-showcase-table-properties [data]="modalConfig"></app-showcase-table-properties>
           </app-card>
           <app-card>
+            <h4>Using Primary Key Property</h4>
+            <p>The smart form has a property ( <code> [primaryKey] </code> ) to approach the primary key field on the the form, that allows the form to disable it but still return the value when the action is <code>Update</code></p>
+            <p>See bellow an example of the use.</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+<tl-form [mode]="'modal'" [formGroup]="form" [primaryKey]="'id'">
+  <tl-input formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
+  <tl-input formControlName="name" [labelSize]="100" [label]="'Name'"></tl-input>
+</tl-form>
+            </textarea>
+          </app-card>
+          <app-card>
             <h4>Closing Form</h4>
             <p>When using <code>CloseOnOK</code> property as <code>false</code> the modal form does not going to close, but the modal service provides a method to close the modals
             using the id passed in the moment of the creation</p>

@@ -56,6 +56,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'primaryKey',
+    type: 'string',
+    default: 'null',
+    description: 'Property that set\'s the primary key field in the form, disabling the field.',
+    options: 'any text'
+  },
+  {
     name: 'mode',
     type: 'string',
     default: 'modal',

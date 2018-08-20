@@ -10,20 +10,24 @@
       <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'" >
         <app-card>
           <div class="col-md-6">
-            <tl-multiselect
-              [data]="dataNoSourceBasic"
-              (tagClick)="onClickTag($event)"
-              (tagRemove)="onRemoveTag($event)"
-              [labelTag]="'firstName'"
-              [label]="'Basic Usage'"
-              [labelSize]="'auto'"
-              [(ngModel)]="dataNoSourceBasicModel"
-              [detail]="'email'"
-              [sortAlphabetically]="true"
-              [query]="'firstName'">
-            </tl-multiselect>
+            <tl-form [formGroup]="form" [mode]="'inline'">
+              <tl-multiselect
+                [data]="dataNoSourceBasic"
+                (tagClick)="onClickTag($event)"
+                (tagRemove)="onRemoveTag($event)"
+                [labelTag]="'firstName'"
+                [label]="'Basic Usage'"
+                [keyValue]="'id'"
+                [labelSize]="100"
+                formControlName="id"
+                [detail]="'email'"
+
+                [sortAlphabetically]="true"
+                [query]="'firstName'">
+              </tl-multiselect>
+            </tl-form>
             <span style="margin-left: 120px" class="returned-value" (click)="show()">Show Model Value</span>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
   [data]="dataNoSourceBasic"
   (getSelecteds)="getSelecteds($event)"
@@ -37,9 +41,9 @@
   [sortAlphabetically]="true"
   [query]="'firstName'">
 </tl-multiselect>
-</textarea>
+</textarea>-->
           </div>
-          <div class="col-md-6">
+          <!--<div class="col-md-6">
             <tl-multiselect
               [data]="dataCustomColors"
               [color]="'color'"
@@ -65,9 +69,9 @@
   [query]="'firstName'">
 </tl-multiselect>
 </textarea>
-        </div>
+        </div>-->
         </app-card>
-        <app-card>
+        <!--<app-card>
           <div class="col-md-6">
             <tl-multiselect
               [data]="dataCustomDetail"
@@ -115,12 +119,12 @@
 </tl-multiselect>
     </textarea>
           </div>
-        </app-card>
+        </app-card>-->
       </app-showcase-card>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <!--<div class="col-md-12">
         <app-showcase-card [title]="'Important'" [icon]="'ion-information-circled'">
           <app-card>
             <h4>Use Multiselect As Simple Array</h4>
@@ -153,7 +157,7 @@ this.dataNoSourceBasic =
     </textarea>
           </app-card>
         </app-showcase-card>
-      </div>
+      </div>-->
     </div>
   </div>
 

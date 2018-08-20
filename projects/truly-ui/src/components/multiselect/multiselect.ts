@@ -27,12 +27,12 @@ import {
   Output,
   Optional,
   ViewChild,
-  ChangeDetectionStrategy, Renderer2, OnDestroy, Inject, AfterViewInit, Injector, ChangeDetectorRef,
+  ChangeDetectionStrategy, ContentChild, Renderer2, OnDestroy, Inject, AfterViewInit, ChangeDetectorRef,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component( {
   selector: 'tl-multiselect',
@@ -43,9 +43,11 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
     [ MakeProvider( TlMultiSelect ) ]
   ]
 } )
-export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, AfterViewInit, OnDestroy {
+export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() color: string;
+  @Input() keyColor: string;
+
+  @Input() color = 'basic';
 
   @Input() data = [];
 
@@ -53,7 +55,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   @Input() label: string;
 
-  @Input() labelSize = '120px';
+  @Input() labelSize = '100px';
 
   @Input() labelTag: string;
 
@@ -61,7 +63,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   @Input() icon: string;
 
-  @Input() defaultColorTag = '#66CC99';
+  @Input() defaultColorTag = '';
 
   @Input() defaultIconTag = null;
 
@@ -91,7 +93,9 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   @ViewChild( 'ul' ) ul;
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @ViewChild( 'element' ) wrapperTags;
 
@@ -123,10 +127,10 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   private scrollDocument;
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
-               private change: ChangeDetectorRef, private renderer: Renderer2 ) {
-    super( validators, asyncValidators );
+  public hasValidator;
+
+  constructor( private change: ChangeDetectorRef, private renderer: Renderer2 ) {
+    super();
   }
 
   ngOnInit() {
@@ -141,6 +145,7 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
 
   ngAfterViewInit() {
     this.validateHasModel();
+    this.handleValidator();
   }
 
   validateKeySource() {
@@ -187,6 +192,14 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
         this.tags.push( this.dataSource[ indexMock ] );
       }
     } );
+  }
+
+  handleValidator() {
+    const currentControl = this.controlName ? this.controlName : this.model;
+    if (currentControl) {
+      this.hasValidator = currentControl.control.validator;
+      this.change.detectChanges();
+    }
   }
 
   setModelValueWithSourceKey() {
@@ -274,7 +287,6 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   }
 
   handleKeyDown( $event ) {
-    this.activeInputText();
     switch ( $event.keyCode ) {
       case KeyEvent.ENTER:
         this.handleKeyEnter( $event );
@@ -347,16 +359,6 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
     this.cursor = 0;
   }
 
-  activeInputText() {
-    //  this.input.nativeElement.style.webkitTextFillColor = 'rgb(202, 202, 202)';
-  }
-
-  deActiveInputText() {
-    if ( this.isOpen ) {
-      // /    this.input.nativeElement.style.webkitTextFillColor = 'transparent';
-    }
-  }
-
   handleArrowRight() {
     this.cleanTagSelected();
     if ( this.selectTag !== this.tags.length - 1 ) {
@@ -398,7 +400,6 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   handleInputFocus() {
     this.validateOpenOnFocus();
     this.setOutlineMultiSelect();
-    this.deActiveInputText();
     this.sortFilteredItens();
     this.listPosition = this.wrapperTags.nativeElement.getBoundingClientRect() - 5;
     this.getTopPosition();
@@ -623,16 +624,11 @@ export class TlMultiSelect extends ElementBase<Array<any>> implements OnInit, Af
   }
 
   changeColorTag( tag ) {
-    if ( (this.color) && (tag.effect) ) {
+    if ( (this.keyColor) && (tag.effect) ) {
       if ( !tag.selected ) {
-        return { 'background': tag.effect[ this.color ] };
+        return { 'background': tag.effect[ this.keyColor ] };
       }
-      return { 'background': tag.effect[ this.color ], 'opacity': 0.8 };
-    } else {
-      if ( tag.selected ) {
-        return { 'background': this.defaultColorTag, 'opacity': 0.8 };
-      }
-      return { 'background': this.defaultColorTag };
+      return { 'background': tag.effect[ this.keyColor ], 'opacity': 0.8 };
     }
   }
 

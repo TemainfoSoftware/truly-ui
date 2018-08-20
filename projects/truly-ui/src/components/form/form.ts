@@ -111,9 +111,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   ngAfterContentInit() {
     this.handleFormGroupValues();
+    this.handleSmartFormAction();
     this.setPrimaryKeyDisabled();
-    this.actionForm.emit( this.modalInstance.modalConfiguration.executeAction );
     this.addControls();
+  }
+
+  handleSmartFormAction() {
+    if (this.modalInstance.modalConfiguration) {
+      this.actionForm.emit( this.modalInstance.modalConfiguration.executeAction );
+    }
   }
 
   ngAfterViewInit() {
@@ -196,7 +202,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
     this.formResult = this.formGroup ? this.formGroup : this.form;
     this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
-    console.log('FORM', this.formGroup);
   }
 
   getElementsOfForm() {

@@ -154,7 +154,23 @@
             </div>
           </app-card>
           <app-card>
-            <div class="col-md-12">
+
+            <div class="col-md-6">
+              <h5>Loading Button</h5>
+              <tl-button
+                [isLoading]="isLoading"
+                [width]="'200px'"
+                [color]="'primary'"
+                [textLoading]="'Saving'"
+                [text]="'Click Me'"
+                (click)="onClickButtonLoading()"></tl-button>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-button [isLoading]="isLoading" [iconAfterText]="'fa fa-home'"></tl-button>
+</textarea>
+            </div>
+
+            <div class="col-md-6">
               <h5>Many Properties</h5>
               <tl-button [text]="'Button'"
                          [iconAddonBefore]="'ion-printer'"

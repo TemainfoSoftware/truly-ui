@@ -19,6 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
+import { Button } from './button/pt_BR';
 import { Calendar } from './calendar/pt_BR';
 import { Datatable } from './datatable/pt_BR';
 import { Dialog } from './dialog/pt_BR';
@@ -29,6 +30,7 @@ import { Validators } from './validators/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
+  Button,
   Calendar,
   Datatable,
   Dialog,

@@ -19,8 +19,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
-import { CoreService } from '../../../../projects/truly-ui/src/components/core/services/core.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {CoreService} from '../../../../projects/truly-ui/src/components/core/services/core.service';
 
 import * as json from './buttondemo-dataproperties.json';
 import * as jsonEvts from './buttondemo.dataevents.json';
@@ -28,7 +28,7 @@ import * as jsonEvts from './buttondemo.dataevents.json';
 @Component( {
   selector : 'app-button',
   templateUrl : './buttondemo.component.html',
-  styleUrls : [ './buttondemo.component.scss' ]
+  styleUrls : [ './buttondemo.component.scss' ],
 } )
 export class ButtonDemoComponent {
 
@@ -36,14 +36,18 @@ export class ButtonDemoComponent {
 
   public dataEvents;
 
-  constructor( private coreService: CoreService ) {
+  public isLoading = false;
+
+  constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
 
-  changeTheme(theme) {
-    this.coreService.setTheme(theme);
+  onClickButtonLoading() {
+    this.isLoading = !this.isLoading;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 5000);
   }
-
 }
 

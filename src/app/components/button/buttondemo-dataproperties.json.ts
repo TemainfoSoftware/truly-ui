@@ -96,5 +96,19 @@ export const dataProperties = [
     default: 'null',
     description: 'Return value class when set inside a Modal Component.',
     options: 'MRFREE | MRCUSTOM | MROK | MRCANCEL | MRABORT | MRRETRY | MRIGNORE | MRYES | MRNO | MRCLOSE'
+  },
+  {
+    name: 'isLoading',
+    type: 'boolean',
+    default: 'false',
+    description: 'When passed as TRUE the button is disable and activates an icon and load text.',
+    options: 'false | true'
+  },
+  {
+    name: 'textLoading',
+    type: 'string',
+    default: 'null',
+    description: 'Change default text loading.',
+    options: 'Any Text'
   }
-  ];
+];

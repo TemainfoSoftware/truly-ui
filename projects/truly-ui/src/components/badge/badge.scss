@@ -1,4 +1,49 @@
-.tl-badge{
+.tl-badge {
+  font-size: 14px;
+  color: rgba(0,0,0,.65);
+  box-sizing: border-box;
+  margin: 0 20px 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  vertical-align: middle;
 
+  > .badge-count {
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(50%);
+    right: 0;
+    top: -10px;
+    height: 20px;
+    border-radius: 10px;
+    min-width: 20px;
+    background: #f5222d;
+    color: #fff;
+    line-height: 20px;
+    text-align: center;
+    padding: 0 6px;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    -webkit-transform-origin: -10% center;
+    transform-origin: -10% center;
+    box-shadow: 0 0 0 1px #fff;
+  }
+  > .badge-dot {
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(50%);
+    right: 0;
+    -webkit-transform-origin: 0 center;
+    transform-origin: 0 center;
+    top: -3px;
+    height: 6px;
+    width: 6px;
+    border-radius: 100%;
+    background: #f5222d;
+    z-index: 10;
+    box-shadow: 0 0 0 1px #fff;
+  }
 }
-

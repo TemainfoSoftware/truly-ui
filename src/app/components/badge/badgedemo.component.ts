@@ -35,6 +35,21 @@ export class BadgeDemoComponent {
 
   public dataEvents;
 
+  public onlyDot = false;
+
+  public count = 10;
+
+  addCount(): void {
+    this.count++;
+  }
+
+  minCount(): void {
+    this.count--;
+    if (this.count < 0) {
+      this.count = 0;
+    }
+  }
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;

@@ -10,6 +10,9 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { BadgeModule } from '../../../../projects/truly-ui/src/components/badge';
+import { SwitchModule } from '../../../../projects/truly-ui/src/components/switch';
+import { ButtonModule } from '../../../../projects/truly-ui/src/components/button';
+import { ButtonGroupModule } from '../../../../projects/truly-ui/src/components/buttongroup';
 
 @NgModule({
   declarations: [
@@ -18,8 +21,11 @@ import { BadgeModule } from '../../../../projects/truly-ui/src/components/badge'
   imports: [
     BadgeDemoRoutingModule,
     BadgeModule,
+    ButtonModule,
+    ButtonGroupModule,
     CommonModule,
     FormsModule,
+    SwitchModule,
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,

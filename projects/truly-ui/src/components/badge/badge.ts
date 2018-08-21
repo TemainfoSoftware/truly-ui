@@ -20,13 +20,38 @@
  SOFTWARE.
  */
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
-@Component( {
+@Component({
   selector: 'tl-badge',
   templateUrl: './badge.html',
-  styleUrls: [ './badge.scss' ],
-} )
+  styleUrls: ['./badge.scss'],
+})
 export class TlBadge {
+
+  @Input() count: number;
+
+  @Input() overflowCount: number;
+
+  @Input() onlyDot: boolean;
+
+  public value: number | string;
+
+  overFlowCount(value: number, limit?: number): number | string {
+    if (limit !== undefined) {
+      if (value > limit) {
+        this.value = limit + '+';
+      } else {
+        this.value = value;
+      }
+    } else {
+      if (value > 99) {
+        this.value = 99 + '+';
+      } else {
+        this.value = value;
+      }
+    }
+    return this.value;
+  }
 
 }

@@ -30,11 +30,11 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       {
         path: 'badge',
-        loadChildren: './components/badge/badgedemo.module#BadgedemoModule'
+        loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
       },
       {
         path: 'button',
-        loadChildren: './components/button/buttondemo.module#ButtondemoModule'
+        loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
       },
       {
         path: 'buttongroup',

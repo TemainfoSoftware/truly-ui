@@ -29,7 +29,7 @@ import * as jsonEvts from './badgedemo.dataevents.json';
   templateUrl : './badgedemo.component.html',
   styleUrls : [ './badgedemo.component.scss' ]
 } )
-export class BadgedemoComponent {
+export class BadgeDemoComponent {
 
   public dataTableProperties;
 

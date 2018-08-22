@@ -1,36 +1,35 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Button <span class="module-name"><code><u>Module Name</u>: <strong>ButtonModule</strong></code></span></h1>
+    <h1 class="title">Button <span
+      class="module-name"><code><u>Module Name</u>: <strong>ButtonModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>ButtonModule</strong></code></p>
     <p class="text-content">
-
-     The Truly-UI buttons are styles for actions in forms, dialogs, and more with support for multiple sizes, states and many properties for customization
-
+      The Truly-UI buttons are styles for actions in forms, dialogs, and more with support for multiple sizes, states
+      and many properties for customization
     </p>
   </div>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
-
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
-              <tl-button  [text]="'Button'"></tl-button><br>
+              <tl-button [text]="'Button'"></tl-button>
+              <br>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'"></tl-button>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h5>Addon - Icon Before</h5>
-              <tl-button [text]="'Ok'"
-                         [iconAddonBefore]="'ion-printer'">
+              <tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'">
               </tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
@@ -44,56 +43,69 @@
               <tl-button [text]="'Information'" [color]="'information'"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-              <tl-button [text]="'Basic'" [color]="'basic'"></tl-button>
-              <tl-button [text]="'Primary'" [color]="'primary'"></tl-button>
-              <tl-button [text]="'Success'" [color]="'success'"></tl-button>
-              <tl-button [text]="'Danger'" [color]="'danger'"></tl-button>
-              <tl-button [text]="'Warning'" [color]="'warning'"></tl-button>
-              <tl-button [text]="'Information'" [color]="'information'"></tl-button>
-</textarea>
+<tl-button [text]="'Basic'" [color]="'basic'"></tl-button>
+<tl-button [text]="'Primary'" [color]="'primary'"></tl-button>
+<tl-button [text]="'Success'" [color]="'success'"></tl-button>
+<tl-button [text]="'Danger'" [color]="'danger'"></tl-button>
+<tl-button [text]="'Warning'" [color]="'warning'"></tl-button>
+<tl-button [text]="'Information'" [color]="'information'"></tl-button>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Button Icon</h5>
+              <tl-button width="'40px'" [color]="'basic'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'primary'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'success'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'danger'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'warning'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'information'"><i class="ion-home"></i></tl-button>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-button width="'40px'" [color]="'basic'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'primary'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'success'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'danger'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'warning'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'information'"><i class="ion-home"></i></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <h5>Addon - Icon After</h5>
-              <tl-button [text]="'Button'"
-                         [iconAddonAfter]="'fa fa-home'">
-              </tl-button>
+              <tl-button [text]="'Button'" [iconAddonAfter]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconAddonAfter]="'fa fa-home'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconAddonAfter]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h5>Addon - Icon Before and After</h5>
-              <tl-button [text]="'Button'"
-                         [iconAddonBefore]="'ion-printer'"
-                         [iconAddonAfter]="'fa fa-home'">
-              </tl-button>
+              <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [iconAddonAfter]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [iconAddonAfter]="'fa fa-home'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [iconAddonAfter]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <h5>Toggle</h5>
-              <tl-button [text]="'Button'"
-                         [toggle]="true">
-              </tl-button>
+              <tl-button [text]="'Button'" [toggle]="true"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [toggle]="true"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                  <tl-button [text]="'Button'" [toggle]="true"></tl-button>
+                </textarea>
             </div>
             <div class="col-md-6">
               <h5>Icon Before Text Button</h5>
               <tl-button [text]="'Button'" [iconBeforeText]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconBeforeText]="'fa fa-home'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconBeforeText]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
@@ -101,17 +113,17 @@
               <h5>Icon After Text Button</h5>
               <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconAfterText]="'ion-printer'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'"></tl-button>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h5>Icon After and Before Text Button</h5>
               <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'" [iconBeforeText]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconAfterText]="'ion-printer'" [iconBeforeText]="'fa fa-home'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'" [iconBeforeText]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
@@ -119,72 +131,59 @@
               <h5>Width</h5>
               <tl-button [text]="'Button'" [width]="'150px'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [width]="'150px'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [width]="'150px'"></tl-button>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h5>Height</h5>
               <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'ion-printer'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'ion-printer'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'ion-printer'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <h5>Disabled</h5>
-              <tl-button [text]="'Button'"
-                         [disabled]="true">
+              <tl-button [text]="'Button'" [disabled]="true">
               </tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [disabled]="true"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [disabled]="true"></tl-button>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h5>Custom Style</h5>
               <tl-button [text]="'Button'">
               </tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'"></tl-button>
+              </textarea>
             </div>
           </app-card>
           <app-card>
-
             <div class="col-md-6">
               <h5>Loading Button</h5>
-              <tl-button
-                [isLoading]="isLoading"
-                [width]="'200px'"
-                [color]="'primary'"
-                [textLoading]="'Saving'"
-                [text]="'Click Me'"
-                (click)="onClickButtonLoading()"></tl-button>
+              <tl-button [isLoading]="isLoading" [width]="'200px'" [color]="'primary'" [textLoading]="'Saving'" [text]="'Click Me'" (click)="onClickButtonLoading()"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-button [isLoading]="isLoading" [iconAfterText]="'fa fa-home'"></tl-button>
-</textarea>
+                <tl-button [isLoading]="isLoading" [iconAfterText]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
-
             <div class="col-md-6">
               <h5>Many Properties</h5>
-              <tl-button [text]="'Button'"
-                         [iconAddonBefore]="'ion-printer'"
-                         [toggle]="true"
-                         [iconAfterText]="'fa fa-home'">
-              </tl-button>
+              <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [toggle]="true" [iconAfterText]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [toggle]="true" [iconAfterText]="'fa fa-home'"></tl-button>
-</textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [toggle]="true" [iconAfterText]="'fa fa-home'"></tl-button>
+              </textarea>
             </div>
           </app-card>
         </app-showcase-card>
-    </div>
+      </div>
     </div>
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>

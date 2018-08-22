@@ -21,18 +21,17 @@
  */
 import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
-  AfterViewInit } from '@angular/core';
+  AfterViewInit, SimpleChanges, OnChanges, Renderer2 } from '@angular/core';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from './directives/listoption.directive';
-
-
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
   selector: 'tl-overlay-list',
   templateUrl: './overlay-list.html',
   styleUrls: [ './overlay-list.scss' ],
 } )
-export class TlOverlayList implements OnInit, AfterViewInit {
+export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'datasource' ) datasource = [];
 
@@ -58,6 +57,10 @@ export class TlOverlayList implements OnInit, AfterViewInit {
 
   @Input( 'scroll' ) scroll;
 
+  @Input( 'customInput' ) customInput;
+
+  @Input( 'hasDefaultOption' ) hasDefaultOption = false;
+
   @Input( 'calculatedHeight' ) calculatedHeight;
 
   @Output() selectOption: EventEmitter<any> = new EventEmitter();
@@ -73,23 +76,46 @@ export class TlOverlayList implements OnInit, AfterViewInit {
   @ViewChildren( ListOptionDirective ) options: QueryList<ListOptionDirective>;
   keyManager: ActiveDescendantKeyManager<ListOptionDirective>;
 
-  constructor() {
-  }
+  constructor( private renderer: Renderer2 ) {}
 
   ngOnInit() {
     this.handleScroll();
   }
 
   ngAfterViewInit() {
+    this.handleCustomInputEvents();
     this.keyManager = new ActiveDescendantKeyManager( this.options );
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
   }
 
+  handleCustomInputEvents() {
+    if (this.customInput) {
+      this.renderer.listen( this.customInput, 'keydown', ($event) => {
+        console.log('event custom');
+        if (this.isKeyCodeEnter($event) && this.hasDataOnDataSource()) {
+          this.handleActiveItem();
+          this.emitSelectOption();
+        }
+        this.handleKeyEvents($event);
+      });
+    }
+  }
+
+  hasDataOnDataSource() {
+    return this.datasource.length > 0;
+  }
+
+  isKeyCodeEnter($event) {
+    return $event.keyCode === KeyEvent.ENTER;
+  }
+
   handleActiveItem() {
-    this.optionSelected ?
-      this.keyManager.setActiveItem( this.optionSelected.optionIndex ) : this.keyManager.setFirstItemActive();
+    setTimeout(() => {
+      this.optionSelected ?
+        this.keyManager.setActiveItem( this.optionSelected.optionIndex ) : this.keyManager.setFirstItemActive();
+    }, 1);
   }
 
   handleKeyEvents( $event: KeyboardEvent ) {
@@ -132,6 +158,8 @@ export class TlOverlayList implements OnInit, AfterViewInit {
     this.search.emit( $event.target.value );
   }
 
-
+  ngOnChanges(changes: SimpleChanges ) {
+    this.keyManager = new ActiveDescendantKeyManager( this.options );
+  }
 }
 

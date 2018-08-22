@@ -31,9 +31,11 @@ export class TlBadge {
 
   @Input() count: number;
 
-  @Input() overflowCount: number;
+  @Input() maxCount: number;
 
   @Input() onlyDot: boolean;
+
+  @Input() color = 'basic';
 
   public value: number | string;
 

@@ -1,0 +1,73 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-badge-theme-schema( $theme, $action ){
+  &.badge-count {
+    background: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");;
+    box-shadow: 0 0 0 1px #fff;
+  }
+
+  &.badge-dot {
+    background: map-deep-get($theme, $action, "default", "background");
+    box-shadow: 0 0 0 1px #fff;
+  }
+}
+
+@mixin tl-badge-theme( $theme ) {
+
+  .badge-count{
+
+    &.basic {
+      @include _tl-badge-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-badge-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-badge-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-badge-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-badge-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-badge-theme-schema($theme, 'information')
+    }
+
+  }
+
+  .badge-dot{
+
+    &.basic {
+      @include _tl-badge-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-badge-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-badge-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-badge-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-badge-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-badge-theme-schema($theme, 'information')
+    }
+
+  }
+}

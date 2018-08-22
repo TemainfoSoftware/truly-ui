@@ -26,7 +26,7 @@
     <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">
       <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText"></i>
         {{text}}<ng-content></ng-content>
-      <i *ngIf="iconAfterText" [ngClass]="iconAfterText"></i>
+      <i *ngIf="iconAfterText" [ngClass]="iconAfterText" class="iconAfterText"></i>
     </span>
 </button>
 

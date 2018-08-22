@@ -223,8 +223,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     if ( !this.icon ) {
       this.showIcon = false;
     }
-    if ( this.data === undefined || this.query === undefined ) {
-      throw new Error( 'The property [data] and property [query] are Required ' + '' +
+    if ( this.data === undefined || this.query === undefined && !this.isSimpleData() ) {
+      throw new Error( 'The property [data] and property [query] are Required when using a complex array object ' + '' +
         'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
     }
     if ( !this.labelTag ) {
@@ -323,7 +323,6 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   addTag( item ) {
     if ( item ) {
-      console.log( '$event selected tag', item );
       this.tags.push( item[ 'option' ][ 'optionItem' ] );
       this.placeholder = '';
       this.selectTag = this.tags.length;

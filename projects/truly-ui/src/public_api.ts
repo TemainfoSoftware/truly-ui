@@ -1,6 +1,7 @@
 // Modules
 export { AccordionModule } from './components/accordion/index';
 export { AutoCompleteModule } from './components/autocomplete/index';
+export { BadgeModule } from './components/badge/index';
 export { ButtonModule } from './components/button/index';
 export { ButtonGroupModule } from './components/buttongroup/index';
 export { BlockUIModule } from './components/blockui/index';

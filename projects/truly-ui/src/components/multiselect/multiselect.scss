@@ -1,10 +1,18 @@
 @mixin defaultInput() {
-  border: 0 !important;
+  font: inherit;
+  background: 0 0;
+  border: none;
+  outline: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  margin-left: 5px;
+  vertical-align: bottom;
+  text-align: inherit;
   outline: none;
   height: 23px;
   font-size: 0.9em;
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  margin-left: 5px;
 }
 
 .tl-multiselect-container {
@@ -38,21 +46,16 @@
       min-height: 23px;
       border-radius: 3px;
       box-sizing: border-box;
+      flex-direction: row;
+      flex-wrap: wrap;
     }
 
     & .input-wrapper-multiselect input::placeholder {
       font-size: 0.9em;
     }
 
-    & .input {
+    & .input-field {
       @include defaultInput;
-      width: 20%;
-    }
-
-    & .input-empty {
-      @include defaultInput;
-      padding-left: 5px;
-      width: 98%;
     }
 
     & .select-options {
@@ -72,8 +75,9 @@
     }
 
     & .group-tags {
-      height: 23px;
       display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
       .tag {
         position: relative;
@@ -84,7 +88,7 @@
         height: 15px;
         border-radius: 3px;
         font-size: 0.8em;
-        margin-left: 3px;
+        margin: 3px;
         font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
         -webkit-touch-callout: none;
         -webkit-user-select: none;

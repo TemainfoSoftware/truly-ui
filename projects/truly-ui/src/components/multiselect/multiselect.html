@@ -1,111 +1,64 @@
 <div [class]="'tl-multiselect-container '+ color">
-  <div class="-labelTag" [style.width]="labelSize">{{label}}</div>
+  <div class="-labelTag" [style.width]="labelSize">{{label}}<b
+    *ngIf="required" style="color: #FF6666">*</b></div>
   <div class="multiselect-wrapper">
     <div
-      class="input-wrapper-multiselect"  #element (click)="setInputFocus()"
+      class="input-wrapper-multiselect"
+      cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+      #element (click)="setInputFocus();"
       [ngClass]="
       {
-      'focused':focused, 'noFocused':!focused,
+      'ng-touched': touched,
       'invalid': controlName?.control.errors || model?.control.errors,
       'withValidators': hasValidator,
       'inputFormOpenFilter': isOpen && filteredItens.length !== 0
       }">
-      <div class="group-tags" *ngIf="hasKeySource">
-        <div class="tag" *ngFor="let tag of tags; let i = index"
-             (click)="selectTagClick($event,i, tag)"
-             [ngStyle]="changeColorTag(tag)">
-          <span>{{tag?.source[labelTag]}}</span>
-          <small *ngIf="detailOnTag && detail !== undefined" class="tags-detail">
-            <{{tag?.source[detail]}}>
-          </small>
-          <span (click)="removeTag(i, tag)">X</span>
-        </div>
-      </div>
-      <div class="group-tags" *ngIf="!hasKeySource">
+      <div class="group-tags">
         <div class="tag" *ngFor="let tag of tags; let i = index" (click)="selectTagClick($event, i, tag)"
              [ngStyle]="changeColorTag(tag)">
-          <span>{{tag[labelTag]}}</span>
-          <small *ngIf="detailOnTag && detail !== undefined"
+          <span>{{ isSimpleData() ? tag : tag[labelTag] }}</span>
+          <small *ngIf="detailOnTag && detail !== undefined && !isSimpleData()"
                  class="tags-detail"><{{tag[detail]}}>
           </small>
           <span (click)="removeTag(i, tag)">X</span>
         </div>
-      </div>
-      <input [attr.autocomplete]="'off'"
-             [ngClass]="
+        <input autocomplete="off"
+               class="input-field"
+               [ngClass]="
              {
-              'input-empty': isTagsEqualsZero(),
-              'input': !isTagsEqualsZero(),
               'invalid': controlName?.control.errors || model?.control.errors,
               'withValidators': hasValidator,
               'withoutValidators': !hasValidator
               }"
-             #input width="300"
-             [(ngModel)]="value"
-             (blur)="closeList( $event )"
-             (focus)="handleInputFocus()"
-             [attr.placeholder]="placeholder"
-             (keyup)="searchItem($event.target.value, $event)"
-             (keydown)="handleKeyDown($event)"
-             type="text">
+               #input
+               [(ngModel)]="value"
+               (focus)="handleInputFocus(); isOpen = !isOpen"
+               [attr.placeholder]="placeholder"
+               (keydown.backspace)="isOpen = true"
+               (keydown.arrowDown)="handleArrowDown($event)"
+               (keyup)="searchItem($event.target.value)"
+               (keydown)="handleKeyDown($event)">
+      </div>
     </div>
-    <div *ngIf="hasKeySource" [style.display]="isOpen ? 'block' : 'none'">
-      <ul #ul class="select-options"
-          [style.position]="'fixed'"
-          [style.display]="filteredItens.length > 0 ? 'block' : 'none'"
-          [style.left]="listPosition + 'px'"
-          [style.top]="listTopPosition + 25 + 'px'"
-          [ngStyle]="calcHeightWidthItem()">
-        <li
-          [ngStyle]=" {'padding': itemHeight }"
-          [ngClass]="{selectedItem:item?.selected}"
-          (blur)="closeList($event)"
-          tabindex="-1"
-          *ngFor="let item of filteredItens; let i = index"
-          class="itens" (click)="addTag(item)">
 
-          <i *ngIf="defaultIconTag" style="padding: 0 10px"
-             [ngClass]="{selectedItem:item?.selected}"
-             class="{{defaultIconTag}}"></i>
-          <i *ngIf="showIcon && !defaultIconTag"
-             style="padding: 0 10px"
-             [ngClass]="{selectedItem:item?.selected}"
-             class="{{item?.effect[icon]}}"></i>
-
-          {{item?.source[query]}}
-          <small [ngClass]="{selectedItem:item?.selected}">{{item?.source[detail]}}</small>
-        </li>
-      </ul>
-    </div>
-    <div *ngIf="!hasKeySource" [style.display]=" isOpen ? 'block' : 'none' ">
-      <ul #ul class="select-options"
-          [style.display]="filteredItens.length > 0 ? 'block' : 'none'"
-          [style.position]="'fixed'"
-          [style.left]="listPosition + 'px'"
-          [style.top]="listTopPosition + 25 + 'px'"
-          [ngStyle]="calcHeightWidthItem()">
-        <li [ngStyle]="{'padding': itemHeight}"
-            [ngClass]="{selectedItem:item?.selected}"
-            (blur)="closeList($event)" tabindex="-1"
-            (keydown)="handleKeyDown( $event )"
-            *ngFor="let item of filteredItens; let i = index"
-            class="itens" (click)="addTag(item)">
-
-          <i *ngIf="defaultIconTag"
-             style="padding: 0 10px"
-             [ngClass]="{selectedItem:item?.selected}"
-             class="{{defaultIconTag}}">
-          </i>
-          <i *ngIf="showIcon && !defaultIconTag"
-             style="padding: 0 10px"
-             [ngClass]="{selectedItem:item?.selected}"
-             class="{{item?.effect[icon]}}">
-          </i>
-
-          {{item[query]}}
-          <small [ngClass]="{selectedItem:item?.selected}">{{item[detail]}}</small>
-        </li>
-      </ul>
-    </div>
+    <ng-template cdkConnectedOverlay
+                 (backdropClick)="isOpen = false"
+                 [cdkConnectedOverlayHasBackdrop]="true"
+                 [cdkConnectedOverlayOrigin]="trigger"
+                 [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+                 [cdkConnectedOverlayOpen]="isOpen">
+      <tl-overlay-list
+        @overlay
+        (selectOption)="addTag($event)"
+        (search)="handleKeyDown($event)"
+        [customInput]="input"
+        [typeOfData]="typeOfData"
+        [datasource]="filteredItens"
+        [height]="itemHeight"
+        [width]="element.offsetWidth + 'px'"
+        [icon]="icon"
+        [keyText]="query">
+      </tl-overlay-list>
+    </ng-template>
   </div>
 </div>

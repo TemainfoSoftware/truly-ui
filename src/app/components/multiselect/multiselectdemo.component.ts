@@ -28,35 +28,39 @@ export class MultiSelectDemoComponent implements OnChanges {
 
   public dataCustomDetail = [];
 
+  public dataSourceStringArray = [];
+
+  public model;
+
   public form = new FormGroup({
-    id: new FormControl('', Validators.required)
+    complex: new FormControl('', Validators.required),
+    arrayString: new FormControl('', Validators.required)
   });
-
-
 
   constructor(public view: ViewContainerRef, public dialogService: DialogService) {
 
-    this.dataNoSourceBasicModel = [ 4, 5 ];
+    this.dataNoSourceBasicModel = [ 4, 2 ];
 
-    this.form.get('id').patchValue(this.dataNoSourceBasicModel);
+    this.form.get('complex').patchValue(this.dataNoSourceBasicModel);
 
     this.dataTableProperties = jsonProp.dataProperties;
 
     this.events = jsonEvt.events;
 
+    this.dataSourceStringArray = [ 'Wilhão', 'Maicão', 'Genessão', 'Marcião', 'Dilsão', 'Gersão', 'Jaissera' ];
+
     this.dataNoSourceBasic =
       [
-        { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
+        { id: 1, firstName: 'William Aguera das Merces', lastName: 'King', email: 'contact@domain.com' },
         { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
-        { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
-        { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-        { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
+        { id: 3, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+        { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
         ,
       ];
 
     this.dataNoSourceBasicModel = [
-      { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-      { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
+      { id: 3, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+      { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
     ];
 
     this.dataCustomColors =
@@ -115,20 +119,20 @@ export class MultiSelectDemoComponent implements OnChanges {
 
   exception(error) {
     this.dialogService.error( error.message, ( modalResult ) => {
-      console.log( 'Return', modalResult );
+      // console.log( 'Return', modalResult );
     }, {exceptionName: error.name, exceptionMessage: error.message});
   }
 
   onClickTag($event) {
-    console.log('Clicked Tag', $event);
+    // console.log('Clicked Tag', $event);
   }
 
   onRemoveTag($event) {
-    console.log('Removed Tag', $event);
+    // console.log('Removed Tag', $event);
   }
 
   ngOnChanges( change: SimpleChanges ) {
-    console.log( 'changes', change );
+    // console.log( 'changes', change );
   }
 
 }

@@ -15,13 +15,13 @@
     <ul class="dropdown-list-select"
         tabindex="0"
         role="listbox"
-        cdkTrapFocus
-        cdkTrapFocusAutoCapture
+        *ngIf="hasDataOnDataSource()"
         (keydown)="handleKeyEvents($event)"
         (keydown.space)="$event.preventDefault()"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()"
         [style.height]="calculatedHeight">
       <li (click)="clickDefaultOption()" class="ui-default-option"
+          *ngIf="hasDefaultOption"
           [ngStyle]="{'line-height' : height, 'padding-left': defaultIcon ? '0' : '10px', 'grid-template-columns': defaultIcon ? '35px 1fr' : '1fr'}">
         <i *ngIf="defaultIcon" [ngStyle]="{'line-height' : height }" [class]="'ui-icon ' + defaultIcon"></i>
         <span> {{ defaultOptionText }} </span>

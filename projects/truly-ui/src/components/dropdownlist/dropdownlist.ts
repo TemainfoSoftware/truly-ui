@@ -27,8 +27,7 @@ import {
   OnInit,
   Inject,
   Optional,
-  Renderer2,
-  ViewChild, ElementRef,
+  ViewChild,
 } from '@angular/core';
 
 import { debounceTime } from 'rxjs/internal/operators';
@@ -48,7 +47,6 @@ import { KeyEvent } from '../core/enums/key-events';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-
 export class TlDropDownList extends ElementBase<string> implements AfterViewInit, OnInit, OnDestroy {
 
   @Input( 'data' ) data: any[] = [];

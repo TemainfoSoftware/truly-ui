@@ -2,6 +2,7 @@
     <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
     </label>
     <div class="ui-dropdown-wrapper-list"
+         #wrapper
          (click)="!disabled ? isOpen = !isOpen : null"
          cdkOverlayOrigin #trigger="cdkOverlayOrigin">
 
@@ -39,6 +40,7 @@
       (selectOption)="onSelectOption($event)"
       (search)="handleSearch($event)"
       (defaultOption)="onDefaultOption()"
+      [customInput]="wrapper"
       [typeOfData]="typeOfData"
       [defaultOptionText]="placeholder"
       [optionSelected]="optionSelected"

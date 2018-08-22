@@ -1,176 +1,123 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title"> MultiSelect <span class="module-name"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></span></h1>
+    <h1 class="title"> MultiSelect <span
+      class="module-name"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>MultiSelectModule</strong></code></p>
     <p class="text-content">MultiSelect is a component where exists a list of itens to search and select like tags.</p>
   </div>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-      <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'" >
-        <app-card>
-          <div class="col-md-6">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
             <tl-form [formGroup]="form" [mode]="'inline'">
-              <tl-multiselect
-                [data]="dataNoSourceBasic"
-                (tagClick)="onClickTag($event)"
-                (tagRemove)="onRemoveTag($event)"
-                [labelTag]="'firstName'"
-                [label]="'Basic Usage'"
-                [keyValue]="'id'"
-                [labelSize]="100"
-                formControlName="id"
-                [detail]="'email'"
-
-                [sortAlphabetically]="true"
-                [query]="'firstName'">
-              </tl-multiselect>
-            </tl-form>
-            <span style="margin-left: 120px" class="returned-value" (click)="show()">Show Model Value</span>
-<!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <tl-multiselect
+                    [data]="dataNoSourceBasic"
+                    (tagClick)="onClickTag($event)"
+                    (tagRemove)="onRemoveTag($event)"
+                    [labelTag]="'firstName'"
+                    [label]="'Complex Array'"
+                    [keyValue]="'id'"
+                    [labelSize]="100"
+                    formControlName="complex"
+                    [sortAlphabetically]="true"
+                    [query]="'firstName'">
+                  </tl-multiselect>
+                </div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
   [data]="dataNoSourceBasic"
-  (getSelecteds)="getSelecteds($event)"
   (tagClick)="onClickTag($event)"
   (tagRemove)="onRemoveTag($event)"
   [labelTag]="'firstName'"
-  [label]="'Basic Usage'"
-  [labelSize]="'auto'"
-  [(ngModel)]="dataNoSourceBasicModel"
-  [detail]="'email'"
+  [label]="'Complex Array'"
+  [keyValue]="'id'"
+  [labelSize]="100"
+  formControlName="complex"
   [sortAlphabetically]="true"
   [query]="'firstName'">
 </tl-multiselect>
-</textarea>-->
-          </div>
-          <!--<div class="col-md-6">
-            <tl-multiselect
-              [data]="dataCustomColors"
-              [color]="'color'"
-              [label]="'With Custom Colors'"
-              [defaultColorTag]="'#0090d9'"
-              [detailOnTag]="true"
-              [labelTag]="'firstName'"
-              [labelSize]="'auto'"
-              [detail]="'email'"
-              [query]="'firstName'">
-            </tl-multiselect>
-            <br>
-<textarea highlight-js [options]="{}" [lang]="'html'">
+</textarea>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <tl-multiselect
+                    [data]="dataSourceStringArray"
+                    (tagClick)="onClickTag($event)"
+                    (tagRemove)="onRemoveTag($event)"
+                    [label]="'Array String'"
+                    [labelSize]="100"
+                    formControlName="arrayString"
+                    [sortAlphabetically]="true">
+                  </tl-multiselect>
+                </div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
-  [data]="dataCustomColors"
-  [color]="'color'"
-  [label]="'With Custom Colors'"
-  [defaultColorTag]="'#0090d9'"
-  [detailOnTag]="true"
-  [labelTag]="'firstName'"
-  [labelSize]="'auto'"
-  [detail]="'email'"
-  [query]="'firstName'">
+  [data]="dataSourceStringArray"
+  (tagClick)="onClickTag($event)"
+  (tagRemove)="onRemoveTag($event)"
+  [label]="'Array String'"
+  [labelSize]="100"
+  formControlName="arrayString"
+  [sortAlphabetically]="true">
 </tl-multiselect>
 </textarea>
-        </div>-->
-        </app-card>
-        <!--<app-card>
-          <div class="col-md-6">
-            <tl-multiselect
-              [data]="dataCustomDetail"
-              [detailOnTag]="true"
-              [label]="'With Detail on Tag'"
-              [labelTag]="'firstName'"
-              [detail]="'email'"
-              [query]="'firstName'">
-            </tl-multiselect>
-            <br>
-            <textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-multiselect
-  [data]="dataCustomDetail"
-  [detailOnTag]="true"
-  [label]="'With Detail on Tag'"
-  [labelTag]="'firstName'"
-  [labelSize]="'auto'"
-  [detail]="'email'"
-  [query]="'firstName'">
-</tl-multiselect>
-    </textarea>
-          </div>
-          <div class="col-md-6">
-            <tl-multiselect
-              [data]="dataCustomIcon"
-              [icon]="'icon'"
-              [label]="'With Icons'"
-              [labelTag]="'firstName'"
-              [labelSize]="'auto'"
-              [detail]="'email'"
-              [defaultColorTag]="'#ff9102'"
-              [query]="'firstName'">
-            </tl-multiselect>
-            <br>
-            <textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-multiselect
-  [data]="dataCustomIcon"
-  [icon]="'icon'"
-  [label]="'With Icon'"
-  [labelTag]="'firstName'"
-  [labelSize]="'auto'"
-  [detail]="'email'"
-  [defaultColorTag]="'#ff9102'"
-  [query]="'firstName'">
-</tl-multiselect>
-    </textarea>
-          </div>
-        </app-card>-->
+              </div>
+            </tl-form>
+      </app-card>
       </app-showcase-card>
-      </div>
     </div>
-    <div class="row">
-      <!--<div class="col-md-12">
-        <app-showcase-card [title]="'Important'" [icon]="'ion-information-circled'">
-          <app-card>
-            <h4>Use Multiselect As Simple Array</h4>
-            <h5>There's <code>TWO</code> ways to use MultiSelect, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
-              you want to. For Example:</h5>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
+  </div>
+  <div class="row">
+    <!--<div class="col-md-12">
+      <app-showcase-card [title]="'Important'" [icon]="'ion-information-circled'">
+        <app-card>
+          <h4>Use Multiselect As Simple Array</h4>
+          <h5>There's <code>TWO</code> ways to use MultiSelect, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
+            you want to. For Example:</h5>
+          <textarea highlight-js [options]="{}" [lang]="'typescript'">
 this.dataNoSourceBasic =
-      [
-        { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
-        { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
-        { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
-        { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-        { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
-      ];
-    </textarea>
-            <hr>
-            <h4>Use Multiselect As Complex Array</h4>
-            <h5>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> must pass a pattern to the component.
-              The Keys <code>[source]</code> and <code>[effect]</code>. In this case you can personalize each tag. For Example:</h5>
-            <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
-    this.dataCustomColors =
-      [
-        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#DC136C' } },
-        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#84B082' } },
-        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#353A47' } },
-        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: {color: '#885A5A' } },
-        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', effect: {color: '#F7C1BB' } } }
-      ];
-    </textarea>
-          </app-card>
-        </app-showcase-card>
-      </div>-->
-    </div>
+    [
+      { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
+      { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
+      { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
+      { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+      { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
+    ];
+  </textarea>
+          <hr>
+          <h4>Use Multiselect As Complex Array</h4>
+          <h5>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> must pass a pattern to the component.
+            The Keys <code>[source]</code> and <code>[effect]</code>. In this case you can personalize each tag. For Example:</h5>
+          <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
+          <textarea highlight-js [options]="{}" [lang]="'typescript'">
+  this.dataCustomColors =
+    [
+      { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#DC136C' } },
+      { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#84B082' } },
+      { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#353A47' } },
+      { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: {color: '#885A5A' } },
+      { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', effect: {color: '#F7C1BB' } } }
+    ];
+  </textarea>
+        </app-card>
+      </app-showcase-card>
+    </div>-->
   </div>
+</div>
 
-  <div class="setup">
-    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
-      <app-card>
-        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      </app-card>
-    </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
-      <app-card>
-        <app-showcase-table-events [data]="events"></app-showcase-table-events>
-      </app-card>
-    </app-showcase-card>
-  </div>
+<div class="setup">
+  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-card>
+      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+    </app-card>
+  </app-showcase-card>
+  <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-card>
+      <app-showcase-table-events [data]="events"></app-showcase-table-events>
+    </app-card>
+  </app-showcase-card>
+</div>
 </div>

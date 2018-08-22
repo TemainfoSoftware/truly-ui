@@ -39,6 +39,8 @@ export class TlBadge {
 
   public value: number | string;
 
+  public limit: number | string;
+
   overFlowCount(value: number, limit?: number): number | string {
     if (limit !== undefined) {
       if (value > limit) {

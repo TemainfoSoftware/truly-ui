@@ -21,80 +21,31 @@
  */
 export const dataProperties = [
   {
-    name: 'text',
-    type: 'string',
+    name: 'count',
+    type: 'number',
     default: 'null',
-    description: 'Displays a text button.',
-    options: 'any text'
+    description: 'Number to show in badge.',
+    options: 'any number'
   },
   {
     name: 'color',
     type: 'string',
     default: 'basic',
-    description: 'Changes the default color of the button.',
-    options: 'basic | primary | success | information | warning | danger | light | dark'
+    description: 'Changes the default color of the badge.',
+    options: 'basic | primary | success | danger | warning | information'
   },
   {
-    name: 'width',
-    type: 'string',
-    default: '125px',
-    description: 'Button width.',
-    options: 'px | % | em'
+    name: 'maxCount',
+    type: 'number',
+    default: '99',
+    description: 'Max count to show.',
+    options: 'any mumber'
   },
   {
-    name: 'height',
-    type: 'string',
-    default: '39',
-    description: 'Button height.',
-    options: 'px | % | em'
-  },
-  {
-    name: 'disabled',
+    name: 'onlyDot',
     type: 'boolean',
     default: 'false',
-    description: 'Disables the button if set to true.',
+    description: 'Whether to display a dot instead of count.',
     options: 'true | false'
-  },
-  {
-    name: 'iconAddonBefore',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAddonAfter',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon in the addon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconBeforeText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'iconAfterText',
-    type: 'string',
-    default: 'null',
-    description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
-  },
-  {
-    name: 'toggle',
-    type: 'boolean',
-    default: 'false',
-    description: 'Change the button to toggle button if set to true.',
-    options: 'true | false'
-  },
-  {
-    name: 'mdResult',
-    type: 'string',
-    default: 'null',
-    description: 'Return value class when set inside a Modal Component.',
-    options: 'MRFREE | MRCUSTOM | MROK | MRCANCEL | MRABORT | MRRETRY | MRIGNORE | MRYES | MRNO | MRCLOSE'
   }
   ];

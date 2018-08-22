@@ -35,7 +35,7 @@ export class BadgeDemoComponent {
 
   public dataEvents;
 
-  public onlyDot = false;
+  public onlyDot = true;
 
   public count = 10;
 

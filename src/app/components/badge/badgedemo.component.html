@@ -15,43 +15,157 @@
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
-              <tl-badge [count]="5" [onlyDot]="onlyDot"><span class="head-example"></span></tl-badge>
-              <tl-switch [label]="'Dot'" (toggle)="onlyDot = $event"></tl-switch>
+              <div class="badge-wrapper">
+                <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </div>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-badge></tl-badge>
+                <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
               </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Overflow Count</h5>
-              <tl-badge [count]="99"><tl-button></tl-button></tl-badge>
-              <tl-badge [count]="200"><span class="head-example"></span></tl-badge>
-              <tl-badge [count]="200" [overflowCount]="10"><span class="head-example"></span></tl-badge>
-              <tl-badge [count]="10000" [overflowCount]="999"><span class="head-example"></span></tl-badge>
+              <h5>Standalone</h5>
+              <div class="badge-wrapper-stand">
+                <tl-badge [count]="25" [color]="'danger'"></tl-badge>
+              </div>
+              <div class="badge-wrapper-stand">
+                <tl-badge [count]="4" [color]="'basic'"></tl-badge>
+              </div>
+              <div class="badge-wrapper-stand">
+                <tl-badge [count]="200" [color]="'success'"></tl-badge>
+              </div>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-badge></tl-badge>
+<tl-badge [count]="25" [color]="'danger'"></tl-badge>
+<tl-badge [count]="4" [color]="'basic'"></tl-badge>
+<tl-badge [count]="200" [color]="'success'"></tl-badge>
               </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Dynamic</h5>
-              <tl-badge [count]="count"><span class="head-example"></span></tl-badge>
-
-              <tl-button [width]="'40px'" (click)="minCount()"><i class="ion-minus"></i></tl-button>
-              <tl-button [width]="'40px'" (click)="addCount()"><i class="ion-plus"></i></tl-button>
-
+              <h5>Overflow Count</h5>
+              <div class="badge-wrapper">
+                <tl-badge [count]="99" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [count]="200" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [count]="200" [maxCount]="10" [color]="'danger'"><span class="head-example"></span>
+                </tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [count]="10000" [maxCount]="999" [color]="'danger'"><span class="head-example"></span>
+                </tl-badge>
+              </div>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-badge></tl-badge>
+<tl-badge [count]="99" [color]="'danger'"><span class="head-example"></span></tl-badge>
+<tl-badge [count]="200" [color]="'danger'"><span class="head-example"></span></tl-badge>
+<tl-badge [count]="200" [maxCount]="10" [color]="'danger'"><span class="head-example"></span></tl-badge>
+<tl-badge [count]="10000" [maxCount]="999" [color]="'danger'"><span class="head-example"></span></tl-badge>
               </textarea>
             </div>
             <div class="col-md-6">
-
+              <h5>Dynamic</h5>
+              <div class="badge-wrapper">
+                <tl-badge [count]="count" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </div>
+              <tl-button [width]="'40px'" (click)="minCount()"><i class="ion-minus"></i></tl-button>
+              <tl-button [width]="'40px'" (click)="addCount()"><i class="ion-plus"></i></tl-button>
+              <br>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="onlyDot" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </div>
+              <tl-switch [label]="'Dot'" [color]="'information'" [checked]="true" (toggle)="onlyDot = $event"></tl-switch>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-badge [count]="count" [color]="'danger'"><span class="head-example"></span></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h5>Status Color</h5>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'basic'"></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'primary'"></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'success'"></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'danger'"></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'warning'"></tl-badge>
+              </div>
+              <div class="badge-wrapper">
+                <tl-badge [onlyDot]="true" [color]="'information'"></tl-badge>
+              </div>
+              <ul>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'basic'"></tl-badge>
+                  </div>
+                  Default
+                </li>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'primary'"></tl-badge>
+                  </div>
+                  Primary
+                </li>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'success'"></tl-badge>
+                  </div>
+                  Success
+                </li>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'danger'"></tl-badge>
+                  </div>
+                  Error
+                </li>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'warning'"></tl-badge>
+                  </div>
+                  Warning
+                </li>
+                <li>
+                  <div class="badge-wrapper">
+                    <tl-badge [onlyDot]="true" [color]="'information'"></tl-badge>
+                  </div>
+                  Information
+                </li>
+              </ul>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-badge [onlyDot]="true" [color]="'basic'"></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'primary'"></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'success'"></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'danger'"></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'warning'"></tl-badge>
+<tl-badge [onlyDot]="true" [color]="'information'"></tl-badge>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h5>Clickable</h5>
+              <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
+              </textarea>
             </div>
           </app-card>
         </app-showcase-card>
@@ -60,11 +174,6 @@
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      </app-card>
-    </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
-      <app-card>
-        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
       </app-card>
     </app-showcase-card>
   </div>

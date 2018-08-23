@@ -1,6 +1,7 @@
 @import "components";
 
 @mixin theme-builder($theme){
+  @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);
   @include tl-calendar-theme($theme);

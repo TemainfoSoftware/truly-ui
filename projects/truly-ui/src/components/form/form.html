@@ -21,7 +21,7 @@
                        mdResult="MROK"
                        [color]="'success'"
                        [shortcut]="submitShortcut"
-                       [disabled]="formGroup ? !formGroup.valid : !form.valid"
+                       [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
                        (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-checkmark'">

@@ -8,6 +8,7 @@ export { BlockUIModule } from './components/blockui/index';
 export { CheckBoxModule } from './components/checkbox/index';
 export { ChatListModule } from './components/chatlist/index';
 export { CalendarModule } from './components/calendar/index';
+export { ColorPickerModule } from './components/colorpicker/index';
 export { CoreModule } from './components/core/index';
 export { ContextMenuModule } from './components/contextmenu/index';
 export { DatatableModule } from './components/datatable/index';

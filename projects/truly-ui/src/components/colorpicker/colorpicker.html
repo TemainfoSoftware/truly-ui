@@ -1,3 +1,24 @@
-<div class="tl-colorpicker">
-
-</div>
+<tl-input #tlinput
+          [label]="label"
+          [labelSize]="labelSize"
+          [name]="name"
+          (overlayOrigin)="trigger = $event"
+          (click)="isOpen = !isOpen"
+          [textAlign]="textAlign"
+          [labelPlacement]="labelPlacement"
+          [readonly]="readonly ? true : null"
+          [disabled]="disabled ? true : null"
+          [placeholder]="placeholder">
+</tl-input>
+<ng-template cdkConnectedOverlay
+             (backdropClick)="isOpen = false"
+             (positionChange)="onPositionChange($event)"
+             [cdkConnectedOverlayHasBackdrop]="true"
+             [cdkConnectedOverlayOrigin]="trigger"
+             [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+             [cdkConnectedOverlayOpen]="isOpen">
+  <tl-colorpicker-content
+    [overlayPosition]="positionOverlay"
+    [input]="tlinput">
+  </tl-colorpicker-content>
+</ng-template>

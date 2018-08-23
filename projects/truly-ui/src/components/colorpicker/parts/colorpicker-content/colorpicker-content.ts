@@ -20,48 +20,26 @@
     SOFTWARE.
 */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { TlInput } from '../input/input';
-import { ConnectedOverlayPositionChange } from '../../../../../node_modules/@angular/cdk/overlay';
+import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { TlInput } from '../../../input/input';
+import { OverlayAnimation } from '../../../core/directives/overlay-animation';
 
-@Component({
-  selector: 'tl-colorpicker',
-  templateUrl: './colorpicker.html',
-  styleUrls: ['./colorpicker.scss'],
+@Component( {
+  selector: 'tl-colorpicker-content',
+  templateUrl: './colorpicker-content.html',
+  styleUrls: [ './colorpicker-content.scss' ],
+  animations: [ OverlayAnimation ]
 })
-export class TlColorPicker implements OnInit {
 
-  @Input() label = '';
+export class TlColorPickerContent implements OnInit {
 
-  @Input() labelSize = '';
+  @Input('input') input: TlInput;
 
-  @Input() name = '';
+  @Input('overlayPosition') overlayPosition: string;
 
-  @Input() textAlign = 'left';
-
-  @Input() labelPlacement = 'left';
-
-  @Input() readonly = false;
-
-  @Input() disabled = false;
-
-  @Input() placeholder = 'Colorpicker Field';
-
-  @ViewChild( TlInput ) tlinput;
-
-  public isOpen = false;
-
-  public positionOverlay = '';
+  @ViewChild(TemplateRef) template: TemplateRef<any>;
 
   constructor() {}
-
-  onPositionChange( $event: ConnectedOverlayPositionChange ) {
-    this.positionOverlay = $event.connectionPair.originY;
-  }
-
-  backDropClick() {
-    this.isOpen = false;
-  }
 
   ngOnInit() {}
 

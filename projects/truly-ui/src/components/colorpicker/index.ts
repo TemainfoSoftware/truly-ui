@@ -3,17 +3,24 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlColorPicker } from './colorpicker';
+import { InputModule } from '../input';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-content';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    OverlayModule,
+    InputModule
   ],
   declarations: [
-    TlColorPicker
+    TlColorPicker,
+    TlColorPickerContent
   ],
   exports: [
-    TlColorPicker
+    TlColorPicker,
+    TlColorPickerContent
   ]
 })
 export class ColorPickerModule {}

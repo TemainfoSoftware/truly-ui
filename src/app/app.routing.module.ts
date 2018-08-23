@@ -222,10 +222,6 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         path: 'overlaypanel',
         loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
       },
-      {
-        path: 'popupmenu',
-        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
-      },
     ])
   ],
   exports: [RouterModule]

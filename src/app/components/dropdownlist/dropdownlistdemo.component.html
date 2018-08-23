@@ -31,6 +31,7 @@
               <tl-dropdown-list [data]="bigData"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
+                                [scroll]="5"
                                 [(ngModel)]="itemSelected4">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected4 | json"></app-showcase-returned-value>

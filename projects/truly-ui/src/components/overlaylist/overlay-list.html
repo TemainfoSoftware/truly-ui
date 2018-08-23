@@ -13,12 +13,15 @@
     </div>
 
     <ul class="dropdown-list-select"
-        tabindex="0"
-        role="listbox"
+        scrollManager
+        [elementController]="customInput"
+        [listItemHeight]="height"
         *ngIf="hasDataOnDataSource()"
         (keydown)="handleKeyEvents($event)"
         (keydown.space)="$event.preventDefault()"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()"
+        role="listbox"
+        tabindex="0"
         [style.height]="calculatedHeight">
       <li (click)="clickDefaultOption()" class="ui-default-option"
           *ngIf="hasDefaultOption"

@@ -7,9 +7,11 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ListOptionDirective } from './directives/listoption.directive';
 import { TlOverlayList } from './overlay-list';
+import { MiscModule } from '../misc/index';
 
 @NgModule( {
   imports: [
+    MiscModule,
     CommonModule,
     InputModule,
     OverlayModule,

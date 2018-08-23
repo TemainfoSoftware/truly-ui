@@ -47,6 +47,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() showConfirmOnChange = false;
 
+  @Input() isLoading = false;
+
   @Input() primaryKey = '';
 
   @Input() messageDialogConfirmation = 'Are you sure ?';

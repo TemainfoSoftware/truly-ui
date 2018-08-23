@@ -37,7 +37,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'searchOnList' ) searchOnList = false;
 
-  @Input( 'height' ) height = '';
+  @Input( 'itemHeight' ) itemHeight = '';
 
   @Input( 'inputModelIndex' ) inputModelIndex;
 
@@ -55,13 +55,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'width' ) width = '120px';
 
-  @Input( 'scroll' ) scroll;
+  @Input( 'maxHeight' ) maxHeight = '200px';
 
   @Input( 'customInput' ) customInput;
 
   @Input( 'hasDefaultOption' ) hasDefaultOption = false;
-
-  @Input( 'calculatedHeight' ) calculatedHeight;
 
   @Output() selectOption: EventEmitter<any> = new EventEmitter();
 
@@ -78,9 +76,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   constructor( private renderer: Renderer2 ) {}
 
-  ngOnInit() {
-    this.handleScroll();
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.handleCustomInputEvents();
@@ -125,12 +121,6 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   handleKeyUp( $event ) {
     if ( this.searchOnList ) {
       this.keydownSearch( $event );
-    }
-  }
-
-  handleScroll() {
-    if ( this.scroll ) {
-      this.calculatedHeight = parseInt( this.height, 10 ) * this.scroll + 'px';
     }
   }
 

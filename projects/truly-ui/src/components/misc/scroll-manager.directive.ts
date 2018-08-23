@@ -47,7 +47,7 @@ export class ScrollManager implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout( () => {
       this.numberItemsContainer =
-        this.scrollContainer.nativeElement.offsetHeight / parseInt( this.listItemHeight, 10 );
+        Math.floor(this.scrollContainer.nativeElement.offsetHeight / parseInt( this.listItemHeight, 10 ));
     } );
   }
 

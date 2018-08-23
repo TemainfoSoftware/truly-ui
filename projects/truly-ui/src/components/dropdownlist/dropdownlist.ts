@@ -27,7 +27,7 @@ import {
   OnInit,
   Inject,
   Optional,
-  ViewChild,
+  ViewChild, ElementRef,
 } from '@angular/core';
 
 import { debounceTime } from 'rxjs/internal/operators';
@@ -65,9 +65,11 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'labelSize' ) labelSize = '100px';
 
-  @Input( 'height' ) height = '23px';
+  @Input( 'itemHeight' ) itemHeight = '23px';
 
   @Input( 'keyValue' ) keyValue = 'value';
+
+  @Input( 'maxHeight' ) maxHeight = '150px';
 
   @Input( 'preSelected' ) preSelected = '';
 
@@ -79,9 +81,9 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'placeholderIcon' ) placeholderIcon = 'ion-navicon-round';
 
-  @Input( 'scroll' ) scroll = null;
-
   @ViewChild( NgModel ) model: NgModel;
+
+  @ViewChild( 'input' ) input: ElementRef;
 
   public typeOfData = 'complex';
 
@@ -94,8 +96,6 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   public isOpen = false;
 
   public datasource = [];
-
-  public calculatedHeight;
 
   private subject = new Subject();
 
@@ -162,6 +162,10 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     this.selectedDescription = this.placeholder;
     this.optionSelected = null;
     this.isOpen = false;
+  }
+
+  setInputFocus() {
+    this.input.nativeElement.focus();
   }
 
   isSimpleData() {

@@ -74,7 +74,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   @ViewChild( 'defaultPlaceholder' ) defaultPlaceholder: ElementRef;
 
   @ViewChildren( ListOptionDirective ) options: QueryList<ListOptionDirective>;
-  keyManager: ActiveDescendantKeyManager<ListOptionDirective>;
+  public keyManager: ActiveDescendantKeyManager<ListOptionDirective>;
 
   constructor( private renderer: Renderer2 ) {}
 
@@ -93,7 +93,6 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   handleCustomInputEvents() {
     if (this.customInput) {
       this.renderer.listen( this.customInput, 'keydown', ($event) => {
-        console.log('event custom');
         if (this.isKeyCodeEnter($event) && this.hasDataOnDataSource()) {
           this.handleActiveItem();
           this.emitSelectOption();

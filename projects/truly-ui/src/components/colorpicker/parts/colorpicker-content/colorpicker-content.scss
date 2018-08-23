@@ -4,6 +4,8 @@
   margin-top: 9px;
   margin-bottom: 9px;
   border: 1px solid #C8C8C8;
+  width: 240px;
+  height: 200px;
 }
 
 .ui-arrow-up {
@@ -11,7 +13,7 @@
   width: 0;
   height: 0;
   border-style: solid;
-  z-index: 100;
+  z-index: 1000;
   border-width: 0 10px 10px 10px;
   border-color: transparent transparent #a6a6a6 transparent;
 }
@@ -38,7 +40,7 @@
   border-width: 0 10px 10px 10px;
   border-color: transparent transparent #a6a6a6 transparent;
   transform: rotate(180deg);
-  top: 276px;
+  top: 208px;
 }
 
 .ui-arrow-down:after {

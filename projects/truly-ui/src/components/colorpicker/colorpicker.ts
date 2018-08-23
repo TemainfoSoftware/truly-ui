@@ -20,9 +20,9 @@
     SOFTWARE.
 */
 
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ChangeDetectorRef} from '@angular/core';
 import { TlInput } from '../input/input';
-import { ConnectedOverlayPositionChange } from '../../../../../node_modules/@angular/cdk/overlay';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'tl-colorpicker',
@@ -51,16 +51,15 @@ export class TlColorPicker implements OnInit {
 
   public isOpen = false;
 
+  public trigger;
+
   public positionOverlay = '';
 
-  constructor() {}
+  constructor(private change: ChangeDetectorRef) {}
 
   onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
-  }
-
-  backDropClick() {
-    this.isOpen = false;
+    this.change.detectChanges();
   }
 
   ngOnInit() {}

@@ -20,15 +20,13 @@
     SOFTWARE.
 */
 
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TlInput } from '../../../input/input';
-import { OverlayAnimation } from '../../../core/directives/overlay-animation';
 
 @Component( {
   selector: 'tl-colorpicker-content',
   templateUrl: './colorpicker-content.html',
-  styleUrls: [ './colorpicker-content.scss' ],
-  animations: [ OverlayAnimation ]
+  styleUrls: [ './colorpicker-content.scss' ]
 })
 
 export class TlColorPickerContent implements OnInit {
@@ -38,6 +36,8 @@ export class TlColorPickerContent implements OnInit {
   @Input('overlayPosition') overlayPosition: string;
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;
+
+  @ViewChild(TlInput) content: ElementRef;
 
   constructor() {}
 

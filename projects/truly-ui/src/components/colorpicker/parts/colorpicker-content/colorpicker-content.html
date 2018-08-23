@@ -1,5 +1,5 @@
-<div class="ui-arrow-up" @overlay *ngIf="overlayPosition === 'bottom'"></div>
-<div class="ui-wrapper-calendar-content" @overlay>
-  <div class="ui-colorpicker-content"></div>
-  <div class="ui-arrow-down" @overlay *ngIf="overlayPosition === 'top'"></div>
+<div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'"></div>
+<div class="ui-wrapper-colorpicker-content">
+  <div #content class="ui-colorpicker-content"></div>
+  <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'"></div>
 </div>

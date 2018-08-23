@@ -161,12 +161,13 @@
                 [isLoading]="isLoading"
                 [width]="'200px'"
                 [color]="'primary'"
-                [textLoading]="'Saving'"
                 [text]="'Click Me'"
-                (click)="onClickButtonLoading()"></tl-button>
+                [textLoading]="'Saving'"
+                (click)="onClickButtonLoading()">
+              </tl-button>
               <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-button [isLoading]="isLoading" [iconAfterText]="'fa fa-home'"></tl-button>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-button [isLoading]="isLoading" [width]="'200px'" [color]="'primary'" [text]="'Click Me'" [textLoading]="'Saving'" (click)="onClickButtonLoading()"></tl-button>
 </textarea>
             </div>
 

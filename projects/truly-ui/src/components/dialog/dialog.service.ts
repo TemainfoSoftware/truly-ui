@@ -36,20 +36,15 @@ import { TlBackdrop } from '../core/components/backdrop/backdrop';
 @Injectable()
 export class DialogService {
 
-    private modalResult;
-
     constructor( private modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {}
 
-
     info( message: string, callback?: Function, options?: InfoOptions ) {
-        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogInfo, this.factoryResolver,  callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
     confirmation( message: string, callback: Function, options?: ConfirmationOptions) {
-        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, callback );
         if (options) {
             this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
@@ -59,14 +54,12 @@ export class DialogService {
     }
 
     alert( message: string, callback: Function, options?: AlertOptions ) {
-        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogAlert, this.factoryResolver, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );
     }
 
     error( message: string, callback?: Function, options?: ErrorOptions ) {
-        this.modalService.createBackdrop( TlBackdrop, this.factoryResolver );
         this.modalService.createModalDialog( TlDialogError, this.factoryResolver, callback );
         this.modalService.componentInjected.instance.message = message;
         this.setDialogOptions( options );

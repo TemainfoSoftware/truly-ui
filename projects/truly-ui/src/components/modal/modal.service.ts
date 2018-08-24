@@ -98,7 +98,6 @@ export class ModalService implements OnDestroy {
 
     return new Promise( ( resolve, reject ) => {
       this.view = this.containerModal.getView();
-
       if ( factoryOrConfig[ 'executeAction' ] === ActionsModal.DELETE ) {
         this.createModalDialog( TlDialogConfirmation, factoryOrConfig[ 'factory' ], ( dialog ) => {
           if ( dialog.mdResult === ModalResult.MRYES ) {
@@ -317,7 +316,7 @@ export class ModalService implements OnDestroy {
 
   private removeBackdrop() {
     if ( this.backdrop ) {
-      this.view.remove( this.view.indexOf( this.backdrop ) );
+      this.backdrop.destroy();
     }
   }
 
@@ -363,7 +362,9 @@ export class ModalService implements OnDestroy {
   resultCallback() {
     if ( this.componentInjected.instance.modalResult ) {
       this.callBack( this.componentInjected.instance.modalResult );
-      this.eventCallback.emit( this.componentInjected.instance.modalResult );
+      if (this.eventCallback) {
+        this.eventCallback.emit( this.componentInjected.instance.modalResult );
+      }
     }
   }
 

@@ -72,10 +72,10 @@
     color: map-deep-get($theme, $action, "active", "foreground");
   }
 
-  &:disabled{
+  &:disabled {
     background-color: map-deep-get($theme, $action, "disabled", "background");
     border: 1px solid map-deep-get($theme, $action, "disabled", "border");
-    color: map-deep-get($theme, $action, "disabled", "foreground");
+    color: rgba( map-deep-get($theme, $action, "disabled", "foreground"), 0.5);
     cursor: default;
   }
 }

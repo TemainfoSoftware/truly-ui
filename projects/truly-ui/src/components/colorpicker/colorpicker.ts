@@ -49,7 +49,7 @@ export class TlColorPicker implements OnInit {
 
   @ViewChild( TlInput ) tlinput;
 
-  public isOpen = false;
+  public isOpen = true;
 
   public trigger;
 

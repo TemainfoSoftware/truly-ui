@@ -20,13 +20,13 @@
     SOFTWARE.
 */
 
-import { Component, ElementRef, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { TlInput } from '../../../input/input';
+import {Component, ElementRef, HostListener, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {TlInput} from '../../../input/input';
 
-@Component( {
+@Component({
   selector: 'tl-colorpicker-content',
   templateUrl: './colorpicker-content.html',
-  styleUrls: [ './colorpicker-content.scss' ]
+  styleUrls: ['./colorpicker-content.scss']
 })
 
 export class TlColorPickerContent implements OnInit {
@@ -35,12 +35,61 @@ export class TlColorPickerContent implements OnInit {
 
   @Input('overlayPosition') overlayPosition: string;
 
+  public hueSliderColor = '#006699';
+
+  public positionHue = 0;
+
+  private offsetWidthHueSlide = 0;
+
+  public positionAlpha = 0;
+
+  private offsetWidthAlphaSlide = 0;
+
+  private isMoving = false;
+
+  private mousePressX = 0;
+
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
-  @ViewChild(TlInput) content: ElementRef;
+  @ViewChild('content') content: ElementRef;
 
-  constructor() {}
+  @ViewChild('hueSlider') hueSlider: ElementRef;
 
-  ngOnInit() {}
+  @ViewChild('alphaSlider') alphaSlider: ElementRef;
+
+  constructor() {
+  }
+
+  ngOnInit() {
+  }
+
+  public onMouseDown($event, elementName) {
+    this.isMoving = true;
+    this.mousePressX = $event.clientX;
+    if (elementName === 'hue') {
+      this.offsetWidthHueSlide = this.hueSlider.nativeElement.offsetWidth;
+      this.positionHue = this.mousePressX - this.content.nativeElement.offsetWidth - this.offsetWidthHueSlide + 8;
+    } else {
+      this.offsetWidthAlphaSlide = this.alphaSlider.nativeElement.offsetWidth;
+      this.positionAlpha = this.mousePressX - this.content.nativeElement.offsetWidth - this.offsetWidthAlphaSlide + 8;
+    }
+  }
+
+  public onMouseUp() {
+    this.isMoving = false;
+  }
+
+  public onMouseMove($event, elementName) {
+    if (this.isMoving) {
+      const moviment = $event.clientX - this.mousePressX;
+      if (elementName === 'hue') {
+        this.offsetWidthHueSlide = this.hueSlider.nativeElement.offsetWidth;
+        this.positionHue = this.mousePressX - this.content.nativeElement.offsetWidth - this.offsetWidthHueSlide + 8 + moviment;
+      } else {
+        this.offsetWidthAlphaSlide = this.alphaSlider.nativeElement.offsetWidth;
+        this.positionAlpha = this.mousePressX - this.content.nativeElement.offsetWidth - this.offsetWidthAlphaSlide + 8 + moviment;
+      }
+    }
+  }
 
 }

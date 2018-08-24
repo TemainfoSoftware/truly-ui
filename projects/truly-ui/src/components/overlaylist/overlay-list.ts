@@ -21,7 +21,8 @@
  */
 import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
-  AfterViewInit, SimpleChanges, OnChanges, Renderer2 } from '@angular/core';
+  AfterViewInit, SimpleChanges, OnChanges, Renderer2, ChangeDetectorRef, ChangeDetectionStrategy
+} from '@angular/core';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from './directives/listoption.directive';
 import { KeyEvent } from '../core/enums/key-events';
@@ -149,6 +150,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges ) {
     this.keyManager = new ActiveDescendantKeyManager( this.options );
+    this.handleActiveItem();
   }
 }
 

@@ -23,6 +23,7 @@
 @import "../../../modal/addons/modal-toolbar/modal-toolbar-theme";
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
+@import "../../../overlaylist/overlaylist-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
 @import "../../../radiobutton/radiobutton-theme";
@@ -59,6 +60,7 @@
   @include tl-modal-toolbar-theme($theme);
   @include tl-multiselect-theme($theme);
   @include tl-navigator-theme($theme);
+  @include tl-overlaylist-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);

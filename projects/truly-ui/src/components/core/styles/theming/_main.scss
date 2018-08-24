@@ -18,6 +18,7 @@
   @include tl-multiselect-theme($theme);
   @include tl-menu-theme($theme);
   @include tl-navigator-theme($theme);
+  @include tl-overlaylist-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);

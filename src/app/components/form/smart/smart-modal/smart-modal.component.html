@@ -2,19 +2,31 @@
   <tl-panelgroup [labelGroup]="'General'">
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
       <div fxLayout="row" fxLayoutAlign="space-between stretch">
-        <tl-input fxFlex="30" formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
-        <tl-input formControlName="name" [showValidations]="true" [labelSize]="100" [label]="'Name'"></tl-input>
+        <div class="form-group">
+          <tl-input fxFlex="30" formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
+        </div>
+        <div class="form-group">
+          <tl-input formControlName="name" [showValidations]="true" [labelSize]="100" [label]="'Name'"></tl-input>
+        </div>
       </div>
-      <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
-      <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
+      <div class="form-group">
+        <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
+      </div>
+      <div class="form-group">
+        <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
+      </div>
     </div>
   </tl-panelgroup>
   <div class="spacer"></div>
   <tl-panelgroup [labelGroup]="'Access Informations'" fxLayout="column">
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
-      <tl-input formControlName="user" [showValidations]="true" [labelSize]="100" [label]="'User'"></tl-input>
+      <div class="form-group">
+        <tl-input formControlName="user" [showValidations]="true" [labelSize]="100" [label]="'User'"></tl-input>
+      </div>
+      <div class="form-group">
       <tl-input password formControlName="password" [showValidations]="true" [labelSize]="100"
                 [label]="'Password'"></tl-input>
+      </div>
     </div>
   </tl-panelgroup>
 </tl-form>

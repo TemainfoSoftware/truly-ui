@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter,
+  AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
   HostBinding,
   Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
@@ -147,7 +147,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   constructor( private element: ElementRef, private renderer: Renderer2,
                private containerService: ContainerModalService,
-               private sidebarService: SidebarService, private zone: NgZone ) {
+               private sidebarService: SidebarService,
+               private zone: NgZone,
+               private change: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -166,9 +168,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   listenSidebarChange() {
-    this.sidebarService.sidebarChange.subscribe(() => {
+    this.sidebarService.sidebarChange.subscribe( () => {
       this.handleChangeSidebarWhenMaximized();
-    });
+    } );
   }
 
   handleChangeSidebarWhenMaximized() {
@@ -190,11 +192,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   handleFullscreen() {
-    setTimeout( () => {
-      if ( this.fullscreen ) {
-        this.maximizeModal();
-      }
-    }, 1 );
+    if ( this.fullscreen ) {
+      this.maximizeModal();
+    }
   }
 
   resizeListener() {
@@ -206,7 +206,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   addTransitionModal() {
-    this.renderer.setStyle(this.modal.nativeElement, 'transition', 'all 150ms ease-in-out');
+    this.renderer.setStyle( this.modal.nativeElement, 'transition', 'all 150ms ease-in-out' );
   }
 
   mousemoveListener() {
@@ -232,7 +232,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   mouseupListener() {
-    if (subscribeMouseMove) {
+    if ( subscribeMouseMove ) {
       subscribeMouseMove();
     }
     this.addTransitionModal();
@@ -240,7 +240,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   removeTransitionModal() {
-    this.renderer.removeStyle(this.modal.nativeElement, 'transition');
+    this.renderer.removeStyle( this.modal.nativeElement, 'transition' );
   }
 
   mouseDown( $event ) {
@@ -447,6 +447,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
       this.maximized = true;
       this.moving = false;
       this.maximize.emit();
+      this.change.detectChanges();
       return;
     }
     this.restoreMaximizeModal();

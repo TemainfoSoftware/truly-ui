@@ -90,6 +90,9 @@
         .tag {
           background-color: map-deep-get($primary, "default", "background");
         }
+        .tag.selected {
+          background-color: map-deep-get($primary, "darker", "background");
+        }
         span b {
           color: map-deep-get($theme, $action, "default", "foreground");
           border-left: 1px solid map-deep-get($theme, $action, "default", "foreground");

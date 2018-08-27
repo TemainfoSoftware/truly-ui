@@ -59,11 +59,11 @@ export class TlSidebarContainer implements AfterContentInit, OnDestroy {
   }
 
   listenResize() {
-    this.renderer.listen( window, 'resize', () => {
+    this.subscription.add(this.renderer.listen( window, 'resize', () => {
       this.sidebar.forEach( ( item ) => {
         this.sidebarContent.setMovement( { sidebar: item } );
       } );
-    } );
+    } ));
   }
 
   ngOnDestroy() {

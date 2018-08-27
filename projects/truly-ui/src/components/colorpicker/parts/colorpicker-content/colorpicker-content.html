@@ -1,20 +1,23 @@
 <div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'"></div>
 <div class="ui-wrapper-colorpicker-content">
   <div #content class="ui-colorpicker-content">
-    <div class="ui-colorpicker-scheme" [style.background-color]="hueSliderColor">
-
+    <div class="ui-colorpicker-scheme">
+      <canvas #scheme width="230" height="130" (mousedown)="mouseMove($event)" (mouseup)="mouseMove($event)"></canvas>
     </div>
     <div class="ui-colorpicker-alpha">
       <div class="left">
-        <div class="selected-color-background"></div>
+        <div class="selected-color-background" [style.backgroundColor]="rgbaColor"></div>
       </div>
       <div class="right">
-        <div #hueSlider class="hue" (mousedown)="onMouseDown($event, 'hue')" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event, 'hue')">
+        <div #hue class="hue" (mousedown)="onMouseDownHue($event)" (mouseup)="onMouseUpHue()">
+          <canvas #hueSlider (mousemove)="onMouseMoveHue($event)" width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionHue"></div>
         </div>
-        <div #alphaSlider class="alpha" (mousedown)="onMouseDown($event, 'alpha')" (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event, 'alpha')">
+        <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)" (mouseup)="onMouseUpAlpha()">
+          <canvas #hueAlpha (mousemove)="onMouseMoveAlpha($event)" width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionAlpha"></div>
         </div>
+        {{ data }}
       </div>
     </div>
     <div #footer class="ui-colorpicker-footer">

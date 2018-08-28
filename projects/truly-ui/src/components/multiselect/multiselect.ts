@@ -159,12 +159,20 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.setModelValueWithSourceKey();
     this.value.forEach( ( value ) => {
       let indexMock;
-      indexMock = this.keyValue ? this.dataSource.findIndex( (item => item[ this.keyValue ] === value) ) :
+      indexMock = this.keyValue ? this.dataSource.findIndex( (item => this.getCompare(item, value)) ) :
         this.dataSource.findIndex( (item => JSON.stringify( item ) === JSON.stringify( value )) );
       if ( indexMock > -1 ) {
         this.tags.push( this.dataSource[ indexMock ] );
       }
     } );
+  }
+
+  getCompare(item, value) {
+    if (value[this.keyValue]) {
+      return item[this.keyValue] === value[this.keyValue];
+    } else {
+      return item[this.keyValue] === value;
+    }
   }
 
   handleValidator() {

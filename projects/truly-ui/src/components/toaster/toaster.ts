@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ComponentRef, OnDestroy, HostBinding } from '@angular/core';
+import { AfterContentInit, Component, ComponentRef, OnDestroy, HostBinding, ViewChild } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { ToasterService } from './services/toaster.service';
 
@@ -23,6 +23,8 @@ import { ToasterService } from './services/toaster.service';
 } )
 export class TlToaster implements AfterContentInit, OnDestroy {
 
+  @ViewChild('toasterWrapper') toasterWrapper;
+
   public message = 'Message Description';
 
   public title = 'Title !';
@@ -39,7 +41,7 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   public width = '400px';
 
-  public height = '70px';
+  public height = 'auto';
 
   public componentRef;
 
@@ -98,7 +100,9 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   }
 
   setPosition() {
-    this.position.includes('top') ? this.setTopPosition() : this.setBottomPosition();
+    setTimeout(() => {
+      this.position.includes('top') ? this.setTopPosition() : this.setBottomPosition();
+    });
   }
 
   getLeftWidth() {
@@ -107,26 +111,25 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   }
 
   setBottomPosition() {
-    const margin = 10;
-    const height = parseInt( this.height, 10 );
+    const height = this.toasterWrapper.nativeElement.offsetHeight;
     const numberToasters = this.getListToastersByBottomPosition().length - 1;
+    console.log('toasterWrapper', this.toasterWrapper);
 
     if ( numberToasters === 0 ) {
       this.bottomPosition = '0';
     } else {
-      this.bottomPosition = ((numberToasters) * (height + margin)) + 'px';
+      this.bottomPosition = ((numberToasters) * (height)) + 'px';
     }
   }
 
   setTopPosition() {
-    const margin = 10;
-    const height = parseInt( this.height, 10 );
+    const height = this.toasterWrapper.nativeElement.offsetHeight;
     const numberToasters = this.getListToastersByTopPosition().length - 1;
 
     if ( numberToasters === 0 ) {
       this.topPosition = '0';
     } else {
-      this.topPosition = ((numberToasters) * (height + margin)) + 'px';
+      this.topPosition = ((numberToasters) * (height)) + 'px';
     }
   }
 
@@ -149,9 +152,8 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   setTopPositionChange() {
     this.getListToastersByTopPosition().forEach( ( value, index ) => {
-      const padding = 10;
-      const height = parseInt( this.height, 10 );
-      value.instance.topPosition = index * ((height + padding)) + 'px';
+      const height = this.toasterWrapper.nativeElement.offsetHeight;
+      value.instance.topPosition = index * ((height)) + 'px';
     } );
   }
 
@@ -161,9 +163,8 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   setBottomPositionChange() {
     this.getListToastersByBottomPosition().forEach( ( value, index ) => {
-      const padding = 10;
-      const height = parseInt( this.height, 10 );
-      value.instance.bottomPosition = index * ((height + padding)) + 'px';
+      const height = this.toasterWrapper.nativeElement.offsetHeight;
+      value.instance.bottomPosition = index * ((height)) + 'px';
     } );
   }
 

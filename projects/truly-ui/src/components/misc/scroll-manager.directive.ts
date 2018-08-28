@@ -47,19 +47,20 @@ export class ScrollManager implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout( () => {
       this.numberItemsContainer =
-        Math.floor(this.scrollContainer.nativeElement.offsetHeight / parseInt( this.listItemHeight, 10 ));
+        Math.floor( this.scrollContainer.nativeElement.offsetHeight / parseInt( this.listItemHeight, 10 ) );
     } );
   }
 
   listenController() {
-    this.renderer.listen( this.elementController, 'keydown', ( $event ) => {
-      if ( this.isArrowUp( $event ) ) {
-        this.onArrowUp();
-      } else
-        if ( this.isArrowDown( $event ) ) {
+    if ( this.elementController ) {
+      this.renderer.listen( this.elementController, 'keydown', ( $event ) => {
+        if ( this.isArrowUp( $event ) ) {
+          this.onArrowUp();
+        } else if ( this.isArrowDown( $event ) ) {
           this.onArrowDown();
         }
-    } );
+      } );
+    }
   }
 
   isArrowUp( $event ) {

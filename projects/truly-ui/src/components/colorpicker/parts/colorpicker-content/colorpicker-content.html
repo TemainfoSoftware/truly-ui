@@ -2,19 +2,20 @@
 <div class="ui-wrapper-colorpicker-content">
   <div #content class="ui-colorpicker-content">
     <div class="ui-colorpicker-scheme">
-      <canvas #scheme width="230" height="130" (mousedown)="mouseMove($event)" (mouseup)="mouseMove($event)"></canvas>
+      <canvas #scheme width="230" height="130" (mousedown)="changeColorScheme($event)" (mouseup)="changeColorScheme($event)"></canvas>
     </div>
     <div class="ui-colorpicker-alpha">
       <div class="left">
-        <div class="selected-color-background" [style.backgroundColor]="rgbaColor"></div>
+        <div class="selected-color-background"></div>
+        <div class="selected-color" [style.backgroundColor]="rgbaColorPreview"></div>
       </div>
       <div class="right">
-        <div #hue class="hue" (mousedown)="onMouseDownHue($event)" (mouseup)="onMouseUpHue()">
-          <canvas #hueSlider (mousemove)="onMouseMoveHue($event)" width="144" height="14"></canvas>
+        <div #hue class="hue" (mousedown)="onMouseDownHue($event)" (mouseup)="setMoving(false)" (mouseleave)="setMoving(false)" (mousemove)="onMouseMoveHue($event)">
+          <canvas #hueSlider width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionHue"></div>
         </div>
-        <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)" (mouseup)="onMouseUpAlpha()">
-          <canvas #hueAlpha (mousemove)="onMouseMoveAlpha($event)" width="144" height="14"></canvas>
+        <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)" (mouseup)="setMoving(false)" (mouseleave)="setMoving(false)" (mousemove)="onMouseMoveAlpha($event)">
+          <canvas #alphaSlider width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionAlpha"></div>
         </div>
         {{ data }}

@@ -20,8 +20,10 @@
     SOFTWARE.
 */
 
-import {AfterContentInit, Component, ElementRef, HostListener, Input, NgZone, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {TlInput} from '../../../input/input';
+
+import {Rgba} from './formats';
 
 @Component({
   selector: 'tl-colorpicker-content',
@@ -30,26 +32,6 @@ import {TlInput} from '../../../input/input';
 })
 
 export class TlColorPickerContent implements OnInit, AfterContentInit {
-
-  @Input('input') input: TlInput;
-
-  @Input('overlayPosition') overlayPosition: string;
-
-  public positionHue = 0;
-
-  public positionAlpha = 0;
-
-  private isMoving = false;
-
-  private mousePressX = 0;
-
-  public contextScheme;
-
-  public contextHueSlider;
-
-  public contextAlphaSlider;
-
-  public data;
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
@@ -63,7 +45,31 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
   @ViewChild('alpha') alpha: ElementRef;
   @ViewChild('alphaSlider') alphaSlider: ElementRef;
 
-  public rgbaColor = 'rgba(255,0,0,1)';
+  @Input('input') input: TlInput;
+
+  @Input('overlayPosition') overlayPosition: string;
+
+  public positionHue = 70;
+
+  public positionAlpha = 144;
+
+  private isMoving = false;
+
+  private mousePressX = 0;
+
+  public contextScheme;
+
+  public contextHueSlider;
+
+  public contextAlphaSlider;
+
+  public data;
+
+  public opacity: number | string = 1;
+
+  public rgbaColor = 'rgba(255,0,0,' + this.opacity + ')';
+
+  public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
 
   constructor() {
   }
@@ -88,25 +94,26 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     hue.addColorStop(1, 'rgba(255, 0, 0, 1)');
     this.contextHueSlider.fillStyle = hue;
     this.contextHueSlider.fill();
+
+    this.contextAlphaSlider = this.alphaSlider.nativeElement.getContext('2d');
+    this.contextAlphaSlider.rect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
+    this.opacityGradient();
   }
 
   public onMouseDownHue($event) {
-    this.isMoving = true;
+    this.setMoving(true);
     this.positionHue = $event.clientX - this.content.nativeElement.offsetWidth - this.hue.nativeElement.offsetWidth + 16;
     this.changeColor($event);
   }
 
   public onMouseDownAlpha($event) {
-    this.isMoving = true;
+    this.setMoving(true);
     this.positionAlpha = $event.clientX - this.content.nativeElement.offsetWidth - this.alpha.nativeElement.offsetWidth + 16;
+    this.changeOpacity($event);
   }
 
-  public onMouseUpHue() {
-    this.isMoving = false;
-  }
-
-  public onMouseUpAlpha() {
-    this.isMoving = false;
+  public setMoving(value) {
+    this.isMoving = value;
   }
 
   public onMouseMoveHue($event) {
@@ -124,6 +131,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     }
     this.positionAlpha = this.mousePressX - this.content.nativeElement.offsetWidth -
       this.alpha.nativeElement.offsetWidth + 16 + this.getMoviment($event);
+    this.changeOpacity($event);
   }
 
   getMoviment($event) {
@@ -147,21 +155,50 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     this.contextScheme.fillRect(0, 0, this.contextScheme.canvas.width, this.contextScheme.canvas.height);
   }
 
-  mouseMove($event) {
-    // this.data = this.contextScheme.getImageData($event.offsetX, $event.offsetY, 1, 1).data;
+  opacityGradient() {
+    const context = this.alphaSlider.nativeElement.getContext('2d');
+    context.clearRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
+
+    const gridTransparent = this.contextAlphaSlider.createLinearGradient(0, 0, this.contextAlphaSlider.canvas.width, 0);
+    gridTransparent.addColorStop(0, 'transparent');
+    gridTransparent.addColorStop(1, this.rgbaColor);
+    this.contextAlphaSlider.fillStyle = gridTransparent;
+    this.contextAlphaSlider.fillRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
+  }
+
+  changeColorScheme($event) {
     const x = $event.offsetX;
     const y = $event.offsetY;
     const imageData = this.contextScheme.getImageData(x, y, 1, 1).data;
-    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
+    this.setColor(imageData);
+    this.opacityGradient();
   }
 
   changeColor($event) {
     const x = $event.offsetX;
     const y = $event.offsetY;
     const imageData = this.contextHueSlider.getImageData(x, y, 1, 1).data;
-    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-    this.data = this.rgbaColor;
+    this.setColor(imageData);
     this.fillGradient();
+    this.opacityGradient();
+  }
+
+  setColor(imageData) {
+    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
+    this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+  }
+
+  changeOpacity($event) {
+    this.opacity = Math.round((100 * $event.offsetX) / $event.target.clientWidth);
+    const x = $event.offsetX;
+    const y = $event.offsetY;
+    const imageData = this.contextAlphaSlider.getImageData(x, y, 1, 1).data;
+    if (this.opacity >= 99) {
+      this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
+    } else {
+      this.opacity = (this.opacity <= 9) ? '0.0' + this.opacity : '0.' + this.opacity;
+      this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+    }
   }
 
 }

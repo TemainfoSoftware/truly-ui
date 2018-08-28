@@ -113,7 +113,6 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   setBottomPosition() {
     const height = this.toasterWrapper.nativeElement.offsetHeight;
     const numberToasters = this.getListToastersByBottomPosition().length - 1;
-    console.log('toasterWrapper', this.toasterWrapper);
 
     if ( numberToasters === 0 ) {
       this.bottomPosition = '0';

@@ -217,8 +217,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   removeElementsForFilter() {
     this.tags.forEach( ( value ) => {
       this.dataSource.forEach( ( value2, index, array ) => {
-        const compareValue = this.isSimpleData() ? value : value[ this.query ];
-        const compareValue2 = this.isSimpleData() ? value2 : value2[ this.query ];
+        const compareValue = this.isSimpleData() ? value : value[ this.keyValue ];
+        const compareValue2 = this.isSimpleData() ? value2 : value2[ this.keyValue ];
         if ( JSON.stringify( compareValue ) === JSON.stringify( compareValue2 ) ) {
           this.dataSource.splice( index, 1 );
         }
@@ -235,6 +235,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     if ( this.data === undefined || this.query === undefined && !this.isSimpleData() ) {
       throw new Error( 'The property [data] and property [query] are Required when using a complex array object ' + '' +
         'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
+    }
+    if (!this.isSimpleData() && !this.keyValue) {
+      throw new Error( 'You must pass the [keyValue] property when not using an ArrayString as datasource' );
     }
     if ( !this.labelTag ) {
       this.labelTag = this.query;

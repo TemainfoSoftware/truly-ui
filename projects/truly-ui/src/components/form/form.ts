@@ -199,7 +199,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
-    if (this.primaryKey) {
+    if (this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE) {
       this.formGroup.get(this.primaryKey).enable();
     }
     this.formResult = this.formGroup ? this.formGroup : this.form;

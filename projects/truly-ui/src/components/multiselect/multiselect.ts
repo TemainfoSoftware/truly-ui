@@ -123,7 +123,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   ngOnInit() {
     this.placeholderMessage = this.placeholder;
-    this.dataSource = this.data;
+    this.dataSource = [...this.data];
     this.validateTypeDataSource();
     this.setFilteredItems();
     this.validationProperty();
@@ -220,7 +220,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         const compareValue = this.isSimpleData() ? value : value[ this.keyValue ];
         const compareValue2 = this.isSimpleData() ? value2 : value2[ this.keyValue ];
         if ( JSON.stringify( compareValue ) === JSON.stringify( compareValue2 ) ) {
-          this.dataSource.splice( index, 1 );
+          this.dataSource = this.dataSource.filter((filter, indexFilter) => (indexFilter !== index));
         }
       } );
     } );

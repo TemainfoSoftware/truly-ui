@@ -25,6 +25,13 @@
           </small>
           <span (click)="removeTag(i, tag)">X</span>
         </div>
+
+        <input autocomplete="off"
+               [name]="'notform'"
+               class="input-field"
+               [style.display]="'none'"
+               [(ngModel)]="value">
+
         <input autocomplete="off"
                class="input-field"
                [ngClass]="
@@ -34,13 +41,12 @@
               'withoutValidators': !hasValidator
               }"
                #input
-               [(ngModel)]="value"
                (focus)="handleInputFocus(); isOpen = !isOpen"
                [attr.placeholder]="placeholder"
-               (keydown.backspace)="isOpen = true"
                (keydown.arrowDown)="handleArrowDown($event)"
                (keyup)="searchItem($event.target.value)"
                (keydown)="handleKeyDown($event)">
+
       </div>
     </div>
 

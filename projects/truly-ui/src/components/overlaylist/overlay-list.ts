@@ -116,7 +116,6 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   handleKeyEvents( $event: KeyboardEvent ) {
     this.keyManager.onKeydown( $event );
-    $event.stopPropagation();
   }
 
   handleKeyUp( $event ) {

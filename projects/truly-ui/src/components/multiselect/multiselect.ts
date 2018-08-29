@@ -263,7 +263,30 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         this.handleKeyDelete( $event );
         break;
       case KeyEvent.BACKSPACE:
+        this.isOpen = true;
         this.handleKeyBackspace();
+        break;
+      case KeyEvent.ESCAPE:
+        if (this.isOpen) {
+          this.stopEventKeyDown($event);
+        }
+        this.isOpen = false;
+        break;
+      case KeyEvent.ENTER:
+        if (this.isOpen) {
+          this.stopEventKeyDown($event);
+        }
+        break;
+      case KeyEvent.TAB:
+        if (this.isOpen) {
+          this.isOpen = false;
+        }
+        break;
+      case KeyEvent.ARROWDOWN:
+          this.handleIsOpen($event);
+          break;
+      case KeyEvent.ARROWUP:
+        this.handleIsOpen($event);
         break;
       case KeyEvent.ARROWLEFT:
         this.stopEventKeyDown( $event );
@@ -277,6 +300,12 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
           this.handleArrowRight();
         }
         break;
+    }
+  }
+
+  handleIsOpen($event) {
+    if (this.isOpen) {
+      this.stopEventKeyDown($event);
     }
   }
 

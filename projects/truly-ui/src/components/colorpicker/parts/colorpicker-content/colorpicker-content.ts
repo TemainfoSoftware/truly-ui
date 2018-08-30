@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import {AfterContentInit, Component, ElementRef, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {TlInput} from '../../../input/input';
 
 import {Rgba} from './formats';
@@ -33,6 +33,12 @@ import {Rgba} from './formats';
 
 export class TlColorPickerContent implements OnInit, AfterContentInit {
 
+  @Input('input') input: TlInput;
+
+  @Input('overlayPosition') overlayPosition: string;
+
+  @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
   @ViewChild('content') content: ElementRef;
@@ -40,22 +46,20 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
   @ViewChild('scheme') scheme: ElementRef;
 
   @ViewChild('hue') hue: ElementRef;
+
   @ViewChild('hueSlider') hueSlider: ElementRef;
 
   @ViewChild('alpha') alpha: ElementRef;
+
   @ViewChild('alphaSlider') alphaSlider: ElementRef;
 
-  @Input('input') input: TlInput;
+  public positionSchemeX = 0;
 
-  @Input('overlayPosition') overlayPosition: string;
+  public positionSchemeY = 0;
 
   public positionHue = 70;
 
   public positionAlpha = 144;
-
-  private isMoving = false;
-
-  private mousePressX = 0;
 
   public contextScheme;
 
@@ -63,13 +67,13 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
 
   public contextAlphaSlider;
 
-  public data;
-
-  public opacity: number | string = 1;
+  public opacity = 1;
 
   public rgbaColor = 'rgba(255,0,0,' + this.opacity + ')';
 
   public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
+
+  private isMoving = false;
 
   constructor() {
   }
@@ -100,28 +104,41 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     this.opacityGradient();
   }
 
+  public setMoving(value) {
+    this.isMoving = value;
+  }
+
+  public onMouseDownScheme($event) {
+    this.setMoving(true);
+    this.setPositionScheme($event);
+    this.changeColorScheme($event);
+  }
+
   public onMouseDownHue($event) {
     this.setMoving(true);
-    this.positionHue = $event.clientX - this.content.nativeElement.offsetWidth - this.hue.nativeElement.offsetWidth + 16;
+    this.setPositionHue($event);
     this.changeColor($event);
   }
 
   public onMouseDownAlpha($event) {
     this.setMoving(true);
-    this.positionAlpha = $event.clientX - this.content.nativeElement.offsetWidth - this.alpha.nativeElement.offsetWidth + 16;
+    this.setPositionAlpha($event);
     this.changeOpacity($event);
   }
 
-  public setMoving(value) {
-    this.isMoving = value;
+  public onMouseMoveScheme($event) {
+    if (!this.isMoving) {
+      return;
+    }
+    this.setPositionScheme($event);
+    this.changeColorScheme($event);
   }
 
   public onMouseMoveHue($event) {
     if (!this.isMoving) {
       return;
     }
-    this.positionHue = this.mousePressX - this.content.nativeElement.offsetWidth -
-      this.hue.nativeElement.offsetWidth + 16 + this.getMoviment($event);
+    this.setPositionHue($event);
     this.changeColor($event);
   }
 
@@ -129,13 +146,23 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     if (!this.isMoving) {
       return;
     }
-    this.positionAlpha = this.mousePressX - this.content.nativeElement.offsetWidth -
-      this.alpha.nativeElement.offsetWidth + 16 + this.getMoviment($event);
+    this.setPositionAlpha($event);
     this.changeOpacity($event);
   }
 
-  getMoviment($event) {
-    return $event.clientX - this.mousePressX;
+  setPositionScheme($event) {
+    this.positionSchemeX = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft - 8;
+    this.positionSchemeY = $event.clientY - this.content.nativeElement.offsetParent.offsetTop - 16;
+  }
+
+  setPositionHue($event) {
+    this.positionHue = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft -
+      (this.hue.nativeElement.offsetWidth / 2) - 8;
+  }
+
+  setPositionAlpha($event) {
+    this.positionAlpha = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft -
+      (this.hue.nativeElement.offsetWidth / 2) - 8;
   }
 
   fillGradient() {
@@ -183,22 +210,40 @@ export class TlColorPickerContent implements OnInit, AfterContentInit {
     this.opacityGradient();
   }
 
+  rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
+    let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
+    if (allowHex8) {
+      hex += ((1 << 8) | Math.round(rgba.a * 255)).toString(16).substr(1);
+    }
+    return hex;
+  }
+
+  hexToRgb(hex): string {
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    const a = Math.round((parseInt(hex.substring(6, 8), 16) * 100) / 255) / 100;
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+  }
+
   setColor(imageData) {
     this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
     this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
+    this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
+    this.selectColor.emit(this.rgbaColorPreview);
   }
 
   changeOpacity($event) {
-    this.opacity = Math.round((100 * $event.offsetX) / $event.target.clientWidth);
+    this.opacity = Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100;
     const x = $event.offsetX;
     const y = $event.offsetY;
     const imageData = this.contextAlphaSlider.getImageData(x, y, 1, 1).data;
-    if (this.opacity >= 99) {
-      this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-    } else {
-      this.opacity = (this.opacity <= 9) ? '0.0' + this.opacity : '0.' + this.opacity;
-      this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
-    }
+    this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
+    console.log('rgba: ' + rgba);
+    this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
+    this.selectColor.emit(this.hexToRgb(this.rgbaColorPreview));
   }
 
 }

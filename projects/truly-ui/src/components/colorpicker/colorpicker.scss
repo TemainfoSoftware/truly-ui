@@ -1,3 +1,15 @@
 .tl-colorpicker {
+  width: 100%;
+  display: table;
+}
 
+.ui-color-box {
+  width: 35px;
+  height: 23px;
+  border: 1px solid #ccc;
+  display: table-cell;
+}
+
+.ui-input-wrapper {
+  display: table-cell;
 }

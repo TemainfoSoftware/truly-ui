@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import {Component, OnInit, Input, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Input, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
 import { TlInput } from '../input/input';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
@@ -47,6 +47,8 @@ export class TlColorPicker implements OnInit {
 
   @Input() placeholder = 'Colorpicker Field';
 
+  @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild( TlInput ) tlinput;
 
   public isOpen = true;
@@ -55,11 +57,18 @@ export class TlColorPicker implements OnInit {
 
   public positionOverlay = '';
 
+  public selectedColor;
+
   constructor(private change: ChangeDetectorRef) {}
 
   onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
     this.change.detectChanges();
+  }
+
+  emitSelectColor($event) {
+    this.selectedColor = $event;
+    this.selectColor.emit($event);
   }
 
   ngOnInit() {}

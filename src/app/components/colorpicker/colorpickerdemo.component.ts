@@ -39,5 +39,10 @@ export class ColorPickerDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  onSelectColor($event) {
+    console.log('$event', $event);
+  }
+
 }
 

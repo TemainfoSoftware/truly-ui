@@ -1,6 +1,3 @@
-export interface Rgba {
-  r: number;
-  g: number;
-  b: number;
-  a: number;
+export class Rgba {
+  constructor(public r: number, public g: number, public b: number, public a: number) {}
 }

@@ -75,7 +75,7 @@
   &:disabled {
     background-color: map-deep-get($theme, $action, "disabled", "background");
     border: 1px solid map-deep-get($theme, $action, "disabled", "border");
-    color: rgba( map-deep-get($theme, $action, "disabled", "foreground"), 0.5);
+    color: rgba( map-deep-get($theme, $action, "disabled", "foreground"), 0.8);
     cursor: default;
   }
 }

@@ -27,7 +27,7 @@ import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 @Component({
   selector: 'tl-colorpicker',
   templateUrl: './colorpicker.html',
-  styleUrls: ['./colorpicker.scss'],
+  styleUrls: ['./colorpicker.scss']
 })
 export class TlColorPicker implements OnInit {
 

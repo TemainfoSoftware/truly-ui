@@ -24,11 +24,11 @@ import { Component } from '@angular/core';
 import * as json from './colorpickerdemo-dataproperties.json';
 import * as jsonEvts from './colorpickerdemo.dataevents.json';
 
-@Component( {
-selector : 'app-colorpicker',
-templateUrl : './colorpickerdemo.component.html',
-styleUrls : [ './colorpickerdemo.component.scss' ],
-} )
+@Component({
+  selector : 'app-colorpicker',
+  templateUrl : './colorpickerdemo.component.html',
+  styleUrls : [ './colorpickerdemo.component.scss' ],
+})
 export class ColorPickerDemoComponent {
 
   public dataTableProperties;

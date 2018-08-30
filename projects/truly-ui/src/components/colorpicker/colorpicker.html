@@ -21,6 +21,7 @@
                  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                  [cdkConnectedOverlayOpen]="isOpen">
       <tl-colorpicker-content
+        [selectedColor]="selectedColor"
         (selectColor)="emitSelectColor($event)"
         [overlayPosition]="positionOverlay"
         [input]="tlinput">

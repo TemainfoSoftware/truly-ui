@@ -19,7 +19,7 @@
 
       & .input-wrapper-multiselect {
         border: 1px solid map-deep-get($theme, $action, "default", "border");
-        background:  map-deep-get($theme, $action, "default", "background");
+        background:  map-deep-get($theme, $action, "lighter", "background");
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);

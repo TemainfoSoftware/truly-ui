@@ -83,6 +83,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   @Input() sortAlphabetically = false;
 
+  @Input() onlyKeyValue = false;
+
   @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
   @Output() tagClick: EventEmitter<any> = new EventEmitter();
@@ -123,7 +125,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   ngOnInit() {
     this.placeholderMessage = this.placeholder;
-    this.dataSource = [...this.data];
+    this.dataSource = [ ...this.data ];
     this.validateTypeDataSource();
     this.setFilteredItems();
     this.validationProperty();
@@ -147,19 +149,19 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   validateHasModel() {
     setTimeout( () => {
       if ( this.value ) {
-        this.handleModelValueAsTags();
         this.cleanInput();
+        this.handleModelValueAsTags();
         this.removeElementsForFilter();
+        this.setModelValue();
       }
       this.selectTag = this.tags.length;
     }, 1 );
   }
 
   handleModelValueAsTags() {
-    this.setModelValueWithSourceKey();
     this.value.forEach( ( value ) => {
       let indexMock;
-      indexMock = this.keyValue ? this.dataSource.findIndex( (item => this.getCompare(item, value)) ) :
+      indexMock = this.keyValue ? this.dataSource.findIndex( (item => this.getCompare( item, value )) ) :
         this.dataSource.findIndex( (item => JSON.stringify( item ) === JSON.stringify( value )) );
       if ( indexMock > -1 ) {
         this.tags.push( this.dataSource[ indexMock ] );
@@ -167,11 +169,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     } );
   }
 
-  getCompare(item, value) {
-    if (value[this.keyValue]) {
-      return item[this.keyValue] === value[this.keyValue];
+  getCompare( item, value ) {
+    if ( value[ this.keyValue ] ) {
+      return item[ this.keyValue ] === value[ this.keyValue ];
     } else {
-      return item[this.keyValue] === value;
+      return item[ this.keyValue ] === value;
     }
   }
 
@@ -180,14 +182,6 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     if ( currentControl ) {
       this.hasValidator = currentControl.control.validator;
       this.change.detectChanges();
-    }
-  }
-
-  setModelValueWithSourceKey() {
-    for ( let item = 0; item < this.value.length; item++ ) {
-      if ( this.value[ item ].source ) {
-        return this.tags = this.value;
-      }
     }
   }
 
@@ -220,7 +214,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         const compareValue = this.isSimpleData() ? value : value[ this.keyValue ];
         const compareValue2 = this.isSimpleData() ? value2 : value2[ this.keyValue ];
         if ( JSON.stringify( compareValue ) === JSON.stringify( compareValue2 ) ) {
-          this.dataSource = this.dataSource.filter((filter, indexFilter) => (indexFilter !== index));
+          this.dataSource = this.dataSource.filter( ( filter, indexFilter ) => (indexFilter !== index) );
         }
       } );
     } );
@@ -236,7 +230,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
       throw new Error( 'The property [data] and property [query] are Required when using a complex array object ' + '' +
         'Example : ' + '<tl-multiselect [data]="source" [query]="name"' );
     }
-    if (!this.isSimpleData() && !this.keyValue) {
+    if ( !this.isSimpleData() && !this.keyValue ) {
       throw new Error( 'You must pass the [keyValue] property when not using an ArrayString as datasource' );
     }
     if ( !this.labelTag ) {
@@ -267,26 +261,26 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         this.handleKeyBackspace();
         break;
       case KeyEvent.ESCAPE:
-        if (this.isOpen) {
-          this.stopEventKeyDown($event);
+        if ( this.isOpen ) {
+          this.stopEventKeyDown( $event );
         }
         this.isOpen = false;
         break;
       case KeyEvent.ENTER:
-        if (this.isOpen) {
-          this.stopEventKeyDown($event);
+        if ( this.isOpen ) {
+          this.stopEventKeyDown( $event );
         }
         break;
       case KeyEvent.TAB:
-        if (this.isOpen) {
+        if ( this.isOpen ) {
           this.isOpen = false;
         }
         break;
       case KeyEvent.ARROWDOWN:
-          this.handleIsOpen($event);
-          break;
+        this.handleIsOpen( $event );
+        break;
       case KeyEvent.ARROWUP:
-        this.handleIsOpen($event);
+        this.handleIsOpen( $event );
         break;
       case KeyEvent.ARROWLEFT:
         this.stopEventKeyDown( $event );
@@ -303,9 +297,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     }
   }
 
-  handleIsOpen($event) {
-    if (this.isOpen) {
-      this.stopEventKeyDown($event);
+  handleIsOpen( $event ) {
+    if ( this.isOpen ) {
+      this.stopEventKeyDown( $event );
     }
   }
 
@@ -335,7 +329,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   cleanSelected() {
-    this.tags.forEach((item) => item.selected = false);
+    this.tags.forEach( ( item ) => item.selected = false );
   }
 
   handleInputFocus() {
@@ -395,7 +389,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   setModelValue() {
     const modeltemp = [];
     this.tags.forEach( ( value ) => {
-      modeltemp.push( value[ this.keyValue ] );
+      modeltemp.push( this.onlyKeyValue ? value[ this.keyValue ] : value );
     } );
     this.value = modeltemp;
   }
@@ -407,11 +401,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   getTagSelected() {
-    return this.tags.filter( ( item ) => item.selected )[0];
+    return this.tags.filter( ( item ) => item.selected )[ 0 ];
   }
 
   removeTagSelectedOfTags() {
-    this.tags = this.tags.filter((item) => !item.selected );
+    this.tags = this.tags.filter( ( item ) => !item.selected );
   }
 
   addTagSelectedToFiltered() {

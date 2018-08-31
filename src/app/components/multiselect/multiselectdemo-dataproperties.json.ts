@@ -35,6 +35,20 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'keyValue',
+    type: 'string',
+    default: 'null',
+    description: 'Key that going to be used as value of component.',
+    options: 'any text'
+  },
+  {
+    name: 'onlyKeyValue',
+    type: 'boolean',
+    default: 'false',
+    description: 'Controls if the component will work only with key value',
+    options: 'true | false'
+  },
+  {
     name: 'label',
     type: 'string',
     default: 'null',

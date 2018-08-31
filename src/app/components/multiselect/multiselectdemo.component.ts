@@ -41,19 +41,21 @@ export class MultiSelectDemoComponent implements OnInit, OnChanges {
         { id: 1, firstName: 'William Aguera das Merces', lastName: 'King', email: 'contact@domain.com' },
         { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
         { id: 3, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-        { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
-        ,
+        { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' },
       ];
 
   }
 
   ngOnInit() {
-    this.dataNoSourceBasicModel = [ 4, 2 ];
+    this.dataNoSourceBasicModel = [
+      { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
+      { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }, ];
     this.form.get('complex').patchValue(this.dataNoSourceBasicModel);
   }
 
   onClickTag($event) {
     // console.log('Clicked Tag', $event);
+    console.log('FORM', this.form.get('complex').value);
   }
 
   onRemoveTag($event) {

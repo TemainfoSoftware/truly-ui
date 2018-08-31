@@ -34,14 +34,7 @@
       </div>
     </div>
     <div #footer class="ui-colorpicker-footer">
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
-      <div class="preset-color"></div>
+      <div class="preset-color" *ngFor="let color of presetColors" [style.backgroundColor]="color"></div>
     </div>
   </div>
   <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'"></div>

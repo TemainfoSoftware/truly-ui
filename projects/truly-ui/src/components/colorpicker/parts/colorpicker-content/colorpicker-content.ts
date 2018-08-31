@@ -71,7 +71,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public positionSchemeY = 0;
 
-  public positionHue = 70;
+  public positionHue = 0;
 
   public positionAlpha = 144;
 
@@ -87,13 +87,15 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
 
-  private hueMapColor: Rgba[] = [];
+  public presetColors: string[] = ['#333333', '#006699'];
 
   private isMoving = false;
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngAfterContentInit() {
     this.contextScheme = this.scheme.nativeElement.getContext('2d');
@@ -112,7 +114,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     hue.addColorStop(1, 'rgba(255, 0, 0, 1)');
     this.contextHueSlider.fillStyle = hue;
     this.contextHueSlider.fill();
-    this.mapColor(this.contextHueSlider);
 
     this.contextAlphaSlider = this.alphaSlider.nativeElement.getContext('2d');
     this.contextAlphaSlider.rect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
@@ -120,22 +121,10 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   ngOnChanges(value: SimpleChanges) {
-    if (value['selectedColor']) {
+    if (value['selectedColor'] && this.selectedColor !== undefined) {
       this.rgbaColorPreview = this.selectedColor;
-    }
-  }
-
-  mapColor(contextHueSlider) {
-    const w = contextHueSlider.canvas.width;
-    const h = contextHueSlider.canvas.height;
-    const l = w * h;
-    for (let i = 0; i < l; i++) {
-      const y = i / w;
-      const x = i - y * w;
-
-      const imageData = contextHueSlider.getImageData(x, y, 1, 1).data;
-      const data = new Rgba(imageData[0], imageData[1], imageData[2], imageData[2], x, y);
-      this.hueMapColor.push(data);
+      this.rgbaColor = this.hexToRgbString(this.selectedColor);
+      // this.mapCursor(this.selectedColor);
     }
   }
 
@@ -183,6 +172,31 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     }
     this.setPositionAlpha($event);
     this.changeOpacity($event);
+  }
+
+  mapCursor(color) {
+    const rgb = this.hexToRgb(color);
+    const pixelsPoint = 144 / 7;
+    let pixelPoint = 0;
+    if (rgb[0] === 255 && rgb[1] > 0) {
+      pixelPoint = (rgb[1] * pixelsPoint) / 255;
+    }
+    if (rgb[1] === 255 && rgb[0] > 0) {
+      pixelPoint = pixelsPoint + (pixelsPoint * 2) - (pixelsPoint + (rgb[0] * pixelsPoint) / 255);
+    }
+    if (rgb[1] === 255 && rgb[2] > 0) {
+      pixelPoint = (pixelsPoint * 2) + (rgb[2] * pixelsPoint) / 255;
+    }
+    if (rgb[2] === 255 && rgb[1] > 0) {
+      pixelPoint = pixelsPoint + (pixelsPoint * 4) - (pixelsPoint + (rgb[1] * pixelsPoint) / 255);
+    }
+    if (rgb[2] === 255 && rgb[0] > 0) {
+      pixelPoint = ((rgb[0] * pixelsPoint) / 255) + (pixelsPoint * 4);
+    }
+    if (rgb[0] === 255 && rgb[2] > 0) {
+      pixelPoint = pixelsPoint + (pixelsPoint * 6) - (pixelsPoint + (rgb[2] * pixelsPoint) / 255);
+    }
+    this.positionHue = pixelPoint;
   }
 
   setPositionScheme($event) {
@@ -258,7 +272,15 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     const g = parseInt(hex.substring(3, 5), 16);
     const b = parseInt(hex.substring(5, 7), 16);
     const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
-    return (hex.length > 7) ? [r, g, b, a] : [r, g, b, 1];
+    return (hex.length > 7) ? [r, g, b] : [r, g, b];
+  }
+
+  hexToRgbString(hex): string {
+    const r = parseInt(hex.substring(1, 3), 16);
+    const g = parseInt(hex.substring(3, 5), 16);
+    const b = parseInt(hex.substring(5, 7), 16);
+    const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
+    return (hex.length > 7) ? 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')' : 'rgba(' + r + ',' + g + ',' + b + ',1)';
   }
 
   setColor(imageData) {
@@ -267,6 +289,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
     this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
     this.selectColor.emit(this.rgbaColorPreview);
+    this.presetColors = this.presetColors.concat(this.selectedColor);
   }
 
   changeOpacity($event) {

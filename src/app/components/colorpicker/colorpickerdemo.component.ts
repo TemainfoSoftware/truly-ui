@@ -41,7 +41,7 @@ export class ColorPickerDemoComponent {
   }
 
   onSelectColor($event) {
-    console.log('$event', $event);
+    // console.log('$event', $event);
   }
 
 }

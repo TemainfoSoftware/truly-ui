@@ -33,9 +33,13 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-import {TlInput} from '../../../input/input';
 
-import {Rgba} from './formats';
+import { TlInput } from '../../../input/input';
+
+import { Rgba } from './colorpicker-formats';
+
+import { ColorPickerService } from './colorpicker-service';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'tl-colorpicker-content',
@@ -87,14 +91,15 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
 
-  public presetColors: string[] = ['#333333', '#006699'];
-
   private isMoving = false;
 
-  constructor() {
+  public presetColors: string[];
+
+  constructor(private colorPickerService: ColorPickerService) {
   }
 
   ngOnInit() {
+    this.getPresetColor();
   }
 
   ngAfterContentInit() {
@@ -259,6 +264,32 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.opacityGradient();
   }
 
+  changeOpacity($event) {
+    this.opacity = Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100;
+    const x = $event.offsetX;
+    const y = $event.offsetY;
+    const imageData = this.contextAlphaSlider.getImageData(x, y, 1, 1).data;
+    this.setColor(imageData);
+  }
+
+  setColor(imageData) {
+    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
+    this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
+    this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
+    this.selectColor.emit(this.rgbaColorPreview);
+  }
+
+  getPresetColor(): void {
+    this.presetColors = this.colorPickerService.getPresetColor();
+  }
+
+  setPresetColor(color): Observable<string[]> {
+    this.colorPickerService.addPresetColor(color);
+    this.getPresetColor();
+    return of(this.colorPickerService.presetColors);
+  }
+
   rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
     let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
     if (allowHex8) {
@@ -281,23 +312,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     const b = parseInt(hex.substring(5, 7), 16);
     const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
     return (hex.length > 7) ? 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')' : 'rgba(' + r + ',' + g + ',' + b + ',1)';
-  }
-
-  setColor(imageData) {
-    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-    this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
-    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
-    this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
-    this.selectColor.emit(this.rgbaColorPreview);
-    this.presetColors = this.presetColors.concat(this.selectedColor);
-  }
-
-  changeOpacity($event) {
-    this.opacity = Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100;
-    const x = $event.offsetX;
-    const y = $event.offsetY;
-    const imageData = this.contextAlphaSlider.getImageData(x, y, 1, 1).data;
-    this.setColor(imageData);
   }
 
 }

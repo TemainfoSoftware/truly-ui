@@ -12,7 +12,9 @@
     <div class="ui-colorpicker-alpha">
       <div class="left">
         <div class="selected-color-background"></div>
-        <div class="selected-color" [style.backgroundColor]="rgbaColorPreview"></div>
+        <a (click)="setPresetColor(rgbaColorPreview)">
+          <div class="selected-color" [style.backgroundColor]="rgbaColorPreview"></div>
+        </a>
       </div>
       <div class="right">
         <div #hue class="hue"

@@ -20,14 +20,16 @@
     SOFTWARE.
 */
 
-import {Component, OnInit, Input, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
 import { TlInput } from '../input/input';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import {ColorPickerService} from './parts/colorpicker-content/colorpicker-service';
 
 @Component({
   selector: 'tl-colorpicker',
   templateUrl: './colorpicker.html',
-  styleUrls: ['./colorpicker.scss']
+  styleUrls: ['./colorpicker.scss'],
+  providers: [ColorPickerService]
 })
 export class TlColorPicker implements OnInit {
 

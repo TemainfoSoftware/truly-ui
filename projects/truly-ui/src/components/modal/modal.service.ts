@@ -21,33 +21,19 @@
  */
 import {
   ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
-  ComponentRef, Injector, ViewRef, EventEmitter
+  ComponentRef, EventEmitter
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
 import { TlModal } from './modal';
 import { ModalResult } from '../core/enums/modal-result';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ActionsModal } from '../core/enums/actions-modal';
 import { TlDialogConfirmation } from '../dialog/dialog-confirmation/dialog-confirmation';
+import { TlDialogInfo } from '../dialog/dialog-info/dialog-info';
+import { ModalConfig, ModalConfiguration } from './modal-config';
 
 let lastZIndex = 1;
-
-export interface ModalConfiguration {
-  factory: ComponentFactoryResolver;
-  executeAction: ActionsModal;
-  identifier: string;
-  dataForm?: Object;
-  deleteMessage?: string;
-  parentElement?: ElementRef;
-  actions?: {
-    insertCall?: Function;
-    updateCall?: Function;
-    deleteCall?: Function;
-    viewCall?: Function;
-  };
-}
-
 
 @Injectable()
 export class ModalService implements OnDestroy {
@@ -66,7 +52,7 @@ export class ModalService implements OnDestroy {
 
   public head = new Subject();
 
-  public modalConfiguration: ComponentFactoryResolver | ModalConfiguration;
+  public modalConfiguration: ComponentFactoryResolver | ModalConfiguration = new ModalConfiguration();
 
   private selectedModal;
 
@@ -78,8 +64,7 @@ export class ModalService implements OnDestroy {
 
   private eventCallback: EventEmitter<any>;
 
-  constructor( private containerModal: ContainerModalService ) {
-  }
+  constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, callback ) {
     this.view = this.containerModal.getView();
@@ -91,20 +76,33 @@ export class ModalService implements OnDestroy {
     return this;
   }
 
-  createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver | ModalConfiguration,
+  createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver | ModalConfig,
                identifier: string = '', parentElement: ElementRef = null ) {
+
     this.modalConfiguration = factoryOrConfig;
     this.eventCallback = new EventEmitter();
 
     return new Promise( ( resolve, reject ) => {
       this.view = this.containerModal.getView();
-      if ( factoryOrConfig[ 'executeAction' ] === ActionsModal.DELETE ) {
-        this.createModalDialog( TlDialogConfirmation, factoryOrConfig[ 'factory' ], ( dialog ) => {
+
+      if ( factoryOrConfig[ 'factory' ] ) {
+        this.modalConfiguration = Object.assign(new ModalConfiguration(), factoryOrConfig);
+      }
+
+      if ((this.modalConfiguration['executeAction'] === ActionsModal.UPDATE ||
+        this.modalConfiguration['executeAction'] === ActionsModal.DELETE) && !this.modalConfiguration['dataForm'] ) {
+        this.createModalDialog( TlDialogInfo, this.modalConfiguration[ 'factory' ], ( dialog ) => {} );
+        this.componentInjected.instance.message = this.modalConfiguration[ 'recordNotFoundMessage' ];
+        return;
+      }
+
+      if ( this.modalConfiguration[ 'executeAction' ] === ActionsModal.DELETE ) {
+        this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ( dialog ) => {
           if ( dialog.mdResult === ModalResult.MRYES ) {
-            factoryOrConfig[ 'actions' ].deleteCall();
+            this.modalConfiguration[ 'actions' ].deleteCall(this.modalConfiguration[ 'dataForm' ]);
           }
         } );
-        this.componentInjected.instance.message = factoryOrConfig[ 'deleteMessage' ];
+        this.componentInjected.instance.message = this.modalConfiguration[ 'deleteConfirmationMessage' ];
         return;
       }
 

@@ -32,4 +32,5 @@ export interface ValidatorsI18nInterface {
   invalidPasswordRuleDigits: string;
   invalidPasswordRuleUppercase: string;
   invalidPasswordRuleSpecial: string;
+  invalidPasswordRuleLowerCase: string;
 }

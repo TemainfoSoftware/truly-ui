@@ -25,4 +25,5 @@
    digits?: boolean;
    uppercase?: boolean;
    specials?: boolean;
+   lowercase?: boolean;
  }

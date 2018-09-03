@@ -30,6 +30,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './modal-options';
 import { SidebarService } from './sidebar.service';
+import { Subscription } from 'rxjs';
 
 let subscribeMouseMove;
 
@@ -105,6 +106,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   public componentRef: ComponentRef<TlModal>;
 
+  public subscription = new Subscription();
+
   public modalResult;
 
   public status = '';
@@ -168,9 +171,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   listenSidebarChange() {
-    this.sidebarService.sidebarChange.subscribe( () => {
+    this.subscription.add(this.sidebarService.sidebarChange.subscribe( () => {
       this.handleChangeSidebarWhenMaximized();
-    } );
+    } ));
   }
 
   handleChangeSidebarWhenMaximized() {
@@ -500,6 +503,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   ngOnDestroy() {
     this.subscribeResize();
+    this.change.detach();
+    this.subscription.unsubscribe();
   }
 
 }

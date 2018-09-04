@@ -34,7 +34,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import {TlInput} from '../../../input/input';
+import { TlInput } from '../../../input/input';
 
 import { Rgba } from './colorpicker-formats';
 
@@ -90,8 +90,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public opacity = 1;
 
-  public rgbaColor = 'rgba(255,0,0,' + this.opacity + ')';
-
   public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
 
   private isMoving = false;
@@ -110,45 +108,9 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   ngAfterContentInit() {
-    this.contextScheme = this.scheme.nativeElement.getContext('2d');
-    this.contextScheme.rect(0, 0, this.contextScheme.canvas.width, this.contextScheme.canvas.height);
-    this.fillGradient();
-
-    this.contextHueSlider = this.hueSlider.nativeElement.getContext('2d');
-    this.contextHueSlider.rect(0, 0, this.contextHueSlider.canvas.width, this.contextHueSlider.canvas.height);
-    const hue = this.contextHueSlider.createLinearGradient(0, 0, this.contextHueSlider.canvas.width, 0);
-    hue.addColorStop(0, 'rgba(255, 0, 0, 1)');
-    hue.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
-    hue.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
-    hue.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
-    hue.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
-    hue.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
-    hue.addColorStop(1, 'rgba(255, 0, 0, 1)');
-    this.contextHueSlider.fillStyle = hue;
-    this.contextHueSlider.fill();
-
-    this.contextAlphaSlider = this.alphaSlider.nativeElement.getContext('2d');
-    this.contextAlphaSlider.rect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
-    this.opacityGradient();
-  }
-
-  ngOnChanges(value: SimpleChanges) {
-    if (value['selectedColor'] && this.selectedColor !== undefined) {
-      this.rgbaColorPreview = this.selectedColor;
-      this.rgbaColor = this.colorPickerHelpers.hexToRgbString(this.selectedColor);
-      const rgb = this.colorPickerHelpers.hexToRgb(this.selectedColor);
-      this.mapCursor(this.colorPickerHelpers.rgbToHsl(rgb[0], rgb[1], rgb[2]));
-    }
-  }
-
-  mapCursor(color) {
-    this.colorPickerService.positionHue = color.h;
-    this.getPositionHue();
-    console.log('', color);
-  }
-
-  public setMoving(value) {
-    this.isMoving = value;
+    this.createCanvasScheme();
+    this.createCanvasHue();
+    this.createCanvasAlpha();
   }
 
   getPositionSchemeX(): void {
@@ -187,6 +149,10 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
       this.content.nativeElement.offsetParent.offsetLeft, this.hue.nativeElement.offsetWidth);
     this.getPositionAlpha();
     return of(this.colorPickerService.positionAlpha);
+  }
+
+  public setMoving(value) {
+    this.isMoving = value;
   }
 
   public onMouseDownScheme($event) {
@@ -231,8 +197,34 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.changeOpacity($event);
   }
 
+  getRgbaColor(): string {
+    return this.colorPickerService.rgbaColor;
+  }
+
+  setRgbaColor(color): Observable<string> {
+    this.colorPickerService.setRgbaColor(color);
+    this.getRgbaColor();
+    return of(this.colorPickerService.rgbaColor);
+  }
+
+  getRgbaColorPreview(): string {
+    return this.colorPickerService.rgbaColorPreview;
+  }
+
+  setRgbaColorPreview(color): Observable<string> {
+    this.colorPickerService.setRgbaColorPreview(color);
+    this.getRgbaColorPreview();
+    return of(this.colorPickerService.rgbaColorPreview);
+  }
+
+  createCanvasScheme() {
+    this.contextScheme = this.scheme.nativeElement.getContext('2d');
+    this.contextScheme.rect(0, 0, this.contextScheme.canvas.width, this.contextScheme.canvas.height);
+    this.fillGradient();
+  }
+
   fillGradient() {
-    this.contextScheme.fillStyle = this.rgbaColor;
+    this.contextScheme.fillStyle = this.getRgbaColor();
     this.contextScheme.fillRect(0, 0, this.contextScheme.canvas.width, this.contextScheme.canvas.height);
 
     const gridWhite = this.contextScheme.createLinearGradient(0, 0, this.contextScheme.canvas.width, 0);
@@ -248,13 +240,34 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.contextScheme.fillRect(0, 0, this.contextScheme.canvas.width, this.contextScheme.canvas.height);
   }
 
+  createCanvasHue() {
+    this.contextHueSlider = this.hueSlider.nativeElement.getContext('2d');
+    this.contextHueSlider.rect(0, 0, this.contextHueSlider.canvas.width, this.contextHueSlider.canvas.height);
+    const hue = this.contextHueSlider.createLinearGradient(0, 0, this.contextHueSlider.canvas.width, 0);
+    hue.addColorStop(0, 'rgba(255, 0, 0, 1)');
+    hue.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
+    hue.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
+    hue.addColorStop(0.51, 'rgba(0, 255, 255, 1)');
+    hue.addColorStop(0.68, 'rgba(0, 0, 255, 1)');
+    hue.addColorStop(0.85, 'rgba(255, 0, 255, 1)');
+    hue.addColorStop(1, 'rgba(255, 0, 0, 1)');
+    this.contextHueSlider.fillStyle = hue;
+    this.contextHueSlider.fill();
+  }
+
+  createCanvasAlpha() {
+    this.contextAlphaSlider = this.alphaSlider.nativeElement.getContext('2d');
+    this.contextAlphaSlider.rect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
+    this.opacityGradient();
+  }
+
   opacityGradient() {
     const context = this.alphaSlider.nativeElement.getContext('2d');
     context.clearRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
 
     const gridTransparent = this.contextAlphaSlider.createLinearGradient(0, 0, this.contextAlphaSlider.canvas.width, 0);
     gridTransparent.addColorStop(0, 'transparent');
-    gridTransparent.addColorStop(1, this.rgbaColor);
+    gridTransparent.addColorStop(1, this.getRgbaColor());
     this.contextAlphaSlider.fillStyle = gridTransparent;
     this.contextAlphaSlider.fillRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
   }
@@ -285,11 +298,11 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setColor(imageData) {
-    this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
-    this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
+    this.setRgbaColor('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)');
+    this.setRgbaColorPreview('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')');
     const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
     this.rgbaColorPreview = (this.opacity === 1) ? this.colorPickerHelpers.rgbaToHex(rgba) : this.colorPickerHelpers.rgbaToHex(rgba, true);
-    this.selectColor.emit(this.rgbaColorPreview);
+    this.selectColor.emit(this.getRgbaColorPreview());
   }
 
   getPresetColor(): void {
@@ -300,6 +313,19 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.colorPickerService.setPresetColor(color);
     this.getPresetColor();
     return of(this.colorPickerService.presetColors);
+  }
+
+  ngOnChanges(value: SimpleChanges) {
+    if (value['selectedColor'] && this.selectedColor !== undefined) {
+      const hsva = this.colorPickerHelpers.stringToHsva(this.selectedColor);
+      this.colorPickerService.positionHue = hsva.h * 144;
+      this.getPositionHue();
+      this.colorPickerService.positionSchemeX = (hsva.s * 230) - 8;
+      this.getPositionSchemeX();
+      this.colorPickerService.positionSchemeY = ((1 - hsva.v) * 130) - 8;
+      this.getPositionSchemeY();
+      // this.setRgbaColor('#fff');
+    }
   }
 
 }

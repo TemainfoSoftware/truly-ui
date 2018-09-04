@@ -12,8 +12,8 @@
     <div class="ui-colorpicker-alpha">
       <div class="left">
         <div class="selected-color-background"></div>
-        <a (click)="setPresetColor(rgbaColorPreview)">
-          <div class="selected-color" [style.backgroundColor]="rgbaColorPreview"></div>
+        <a (click)="setPresetColor(getRgbaColorPreview())">
+          <div class="selected-color" [style.backgroundColor]="getRgbaColorPreview()"></div>
         </a>
       </div>
       <div class="right">

@@ -1,4 +1,4 @@
-import { Hsla, Rgba } from './colorpicker-formats';
+import {Hsla, Hsva, Rgba} from './colorpicker-formats';
 
 export class ColorPickerHelpers {
   rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
@@ -25,22 +25,95 @@ export class ColorPickerHelpers {
     return (hex.length > 7) ? 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')' : 'rgba(' + r + ',' + g + ',' + b + ',1)';
   }
 
-  rgbToHsl(r: number, g: number, b: number) {
-    r = this.bound(r, 255);
-    g = this.bound(g, 255);
-    b = this.bound(b, 255);
+  public stringToHsva(colorString: string = '', allowHex8: boolean = false): Hsva | null {
+    let hsva: Hsva | null = null;
+    colorString = (colorString || '').toLowerCase();
 
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h = 0;
-    let s = 0;
-    const l = (max + min) / 2;
+    const stringParsers = [
+      {
+        re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+        parse: function(execResult: any) {
+          return new Rgba(parseInt(execResult[2], 10) / 255,
+            parseInt(execResult[3], 10) / 255,
+            parseInt(execResult[4], 10) / 255,
+            isNaN(parseFloat(execResult[5])) ? 1 : parseFloat(execResult[5]));
+        }
+      }, {
+        re: /(hsl)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+        parse: function(execResult: any) {
+          return new Hsla(parseInt(execResult[2], 10) / 360,
+            parseInt(execResult[3], 10) / 100,
+            parseInt(execResult[4], 10) / 100,
+            isNaN(parseFloat(execResult[5])) ? 1 : parseFloat(execResult[5]));
+        }
+      }
+    ];
+
+    if (allowHex8) {
+      stringParsers.push({
+        re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$/,
+        parse: function(execResult: any) {
+          return new Rgba(parseInt(execResult[1], 16) / 255,
+            parseInt(execResult[2], 16) / 255,
+            parseInt(execResult[3], 16) / 255,
+            parseInt(execResult[4] || 'FF', 16) / 255);
+        }
+      });
+    } else {
+      stringParsers.push({
+        re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
+        parse: function(execResult: any) {
+          return new Rgba(parseInt(execResult[1], 16) / 255,
+            parseInt(execResult[2], 16) / 255,
+            parseInt(execResult[3], 16) / 255,
+            1);
+        }
+      });
+    }
+
+    stringParsers.push({
+      re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])$/,
+      parse: function(execResult: any) {
+        return new Rgba(parseInt(execResult[1] + execResult[1], 16) / 255,
+          parseInt(execResult[2] + execResult[2], 16) / 255,
+          parseInt(execResult[3] + execResult[3], 16) / 255,
+          1);
+      }
+    });
+
+    for (const key in stringParsers) {
+      if (stringParsers.hasOwnProperty(key)) {
+        const parser = stringParsers[key];
+        const match = parser.re.exec(colorString), color: any = match && parser.parse(match);
+        if (color) {
+          if (color instanceof Rgba) {
+            hsva = this.rgbaToHsva(color);
+          } else if (color instanceof Hsla) {
+            hsva = this.hsla2hsva(color);
+          }
+          return hsva;
+        }
+      }
+    }
+
+    return hsva;
+  }
+
+  public rgbaToHsva(rgba: Rgba): Hsva {
+    let h: number, s: number;
+
+    const r = Math.min(rgba.r, 1), g = Math.min(rgba.g, 1);
+    const b = Math.min(rgba.b, 1), a = Math.min(rgba.a, 1);
+
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+
+    const v: number = max, d = max - min;
+
+    s = (max === 0) ? 0 : d / max;
 
     if (max === min) {
-      h = s = 0;
+      h = 0;
     } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
       switch (max) {
         case r:
           h = (g - b) / d + (g < b ? 6 : 0);
@@ -51,37 +124,27 @@ export class ColorPickerHelpers {
         case b:
           h = (r - g) / d + 4;
           break;
+        default:
+          h = 0;
       }
+
       h /= 6;
     }
-    return new Hsla(Math.round((h) * 144), Math.round(s * 100), Math.round(l * 100));
+
+    return new Hsva(h, s, v, a);
   }
 
-  bound(n: any, max: number) {
-    if (this.isOnePointZero(n)) {
-      n = '100%';
-    }
-    const processPercent = this.isPercentage(n);
-    n = max === 360 ? n : Math.min(max, Math.max(0, parseFloat(n)));
-    if (processPercent) {
-      n = parseInt(String(n * max), 10) / 100;
-    }
-    if (Math.abs(n - max) < 0.000001) {
-      return 1;
-    }
-    if (max === 360) {
-      n = (n < 0 ? n % max + max : n % max) / parseFloat(String(max));
+  public hsla2hsva(hsla: Hsla): Hsva {
+    const h = Math.min(hsla.h, 1), s = Math.min(hsla.s, 1);
+    const l = Math.min(hsla.l, 1), a = Math.min(hsla.a, 1);
+
+    if (l === 0) {
+      return new Hsva(h, 0, 0, a);
     } else {
-      n = (n % max) / parseFloat(String(max));
+      const v = l + s * (1 - Math.abs(2 * l - 1)) / 2;
+
+      return new Hsva(h, 2 * (v - l) / v, v, a);
     }
-    return n;
   }
 
-  isOnePointZero(n: string | number) {
-    return typeof n === 'string' && n.indexOf('.') !== -1 && parseFloat(n) === 1;
-  }
-
-  isPercentage(n: string | number) {
-    return typeof n === 'string' && n.indexOf('%') !== -1;
-  }
 }

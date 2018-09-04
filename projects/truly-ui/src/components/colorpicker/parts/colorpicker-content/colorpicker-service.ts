@@ -13,6 +13,12 @@ export class ColorPickerService {
 
   public positionAlpha = 144;
 
+  public opacity = 1;
+
+  public rgbaColor = 'rgba(255,0,0,' + this.opacity + ')';
+
+  public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
+
   public presetColors: string[] = [];
 
   constructor() {}
@@ -44,6 +50,14 @@ export class ColorPickerService {
   setPositionScheme($event, offsetLeft, offsetTop) {
     this.positionSchemeX = $event.clientX - offsetLeft - 8;
     this.positionSchemeY = $event.clientY - offsetTop - 16;
+  }
+
+  setRgbaColor(color) {
+    this.rgbaColor = color;
+  }
+
+  setRgbaColorPreview(color) {
+    this.rgbaColorPreview = color;
   }
 
   getPresetColor(): string[] {

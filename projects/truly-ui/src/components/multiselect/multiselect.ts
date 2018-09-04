@@ -267,6 +267,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         this.isOpen = false;
         break;
       case KeyEvent.ENTER:
+        this.handleOverlayList();
         if ( this.isOpen ) {
           this.stopEventKeyDown( $event );
         }
@@ -294,6 +295,12 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
           this.handleArrowRight();
         }
         break;
+    }
+  }
+
+  handleOverlayList() {
+    if (this.filteredItens.length === 0) {
+      this.isOpen = false;
     }
   }
 

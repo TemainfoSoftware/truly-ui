@@ -157,7 +157,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   onKeyDownButtonOk( $event: KeyboardEvent ) {
     $event.stopPropagation();
-    this.getFormValues();
   }
 
   clickListener() {

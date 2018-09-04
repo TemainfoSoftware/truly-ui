@@ -22,7 +22,6 @@
                        [color]="'success'"
                        [shortcut]="submitShortcut"
                        [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
-                       (keyup)="onKeyDownButtonOk($event)"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-checkmark'">
             </tl-button>

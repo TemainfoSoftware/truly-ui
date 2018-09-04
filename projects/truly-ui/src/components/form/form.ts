@@ -155,17 +155,21 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
   }
 
-  onKeyDownButtonOk( $event: KeyboardEvent ) {
-    $event.stopPropagation();
-  }
-
   clickListener() {
     if ( this.mode === 'modal' ) {
       this.listenMouseDownButtonForm();
+      this.listenKeyDownButtonForm();
     } else {
       this.listenKeyDownSubmitButton();
       this.listenMouseDownSubmitButton();
     }
+  }
+
+  listenKeyDownButtonForm() {
+    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keydown.enter', $event => {
+      $event.stopPropagation();
+      this.onClickButtonOk();
+    } );
   }
 
   listenMouseDownButtonForm() {

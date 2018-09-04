@@ -121,33 +121,33 @@ export class ModalService implements OnDestroy {
         resolve( result );
         if ( result.mdResult === ModalResult.MRCANCEL
           || result === ModalResult.MRCLOSE
-          || !factoryOrConfig[ 'actions' ] ) {
+          || !this.modalConfiguration[ 'actions' ] ) {
           return;
         }
         const instantResult = result.formResult ? result.formResult.value : result;
-        switch ( factoryOrConfig[ 'executeAction' ] ) {
+        switch ( this.modalConfiguration[ 'executeAction' ] ) {
           case ActionsModal.INSERT:
-            if ( !factoryOrConfig[ 'actions' ].insertCall ) {
+            if ( !this.modalConfiguration[ 'actions' ].insertCall ) {
               this.throwError( 'INSERT' );
             }
-            factoryOrConfig[ 'actions' ].insertCall( instantResult );
+            this.modalConfiguration[ 'actions' ].insertCall( instantResult );
             break;
           case ActionsModal.DELETE:
-            if ( !factoryOrConfig[ 'actions' ].deleteCall ) {
+            if ( !this.modalConfiguration[ 'actions' ].deleteCall ) {
               this.throwError( 'DELETE' );
             }
             break;
           case ActionsModal.UPDATE:
-            if ( !factoryOrConfig[ 'actions' ].updateCall ) {
+            if ( !this.modalConfiguration[ 'actions' ].updateCall ) {
               this.throwError( 'UPDATE' );
             }
-            factoryOrConfig[ 'actions' ].updateCall( instantResult );
+            this.modalConfiguration[ 'actions' ].updateCall( instantResult );
             break;
           case ActionsModal.VIEW:
-            if ( !factoryOrConfig[ 'actions' ].viewCall ) {
+            if ( !this.modalConfiguration[ 'actions' ].viewCall ) {
               this.throwError( 'VIEW' );
             }
-            factoryOrConfig[ 'actions' ].viewCall( instantResult );
+            this.modalConfiguration[ 'actions' ].viewCall( instantResult );
             break;
         }
       } );

@@ -53,7 +53,7 @@ export class TlSchedule implements OnInit, OnChanges {
   @Input() slatNumberRows = 2;
 
   @Input('events') set events( events: ScheduleDataSource[] ) {
-    this._events = events.sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
+    this._events = [...events].sort(( a, b ) => a.date.start - b.date.start || b.date.end - a.date.end );
   }
   get events () {
     return this._events;

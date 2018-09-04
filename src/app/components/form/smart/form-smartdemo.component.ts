@@ -25,7 +25,6 @@ export class FormSmartdemoComponent implements OnInit {
     this.modalService.createModal( SmartFormModalComponent, {
       factory: this.factory,
       executeAction: ActionsModal.INSERT,
-      deleteMessage: 'Are you sure ?',
       identifier: 'FORM_SMART_1',
       dataForm: {
         nickname: 'willz',

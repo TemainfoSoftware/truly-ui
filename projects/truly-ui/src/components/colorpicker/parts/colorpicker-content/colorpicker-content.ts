@@ -34,11 +34,14 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { TlInput } from '../../../input/input';
+import {TlInput} from '../../../input/input';
 
 import { Rgba } from './colorpicker-formats';
 
 import { ColorPickerService } from './colorpicker-service';
+
+import { ColorPickerHelpers } from './colorpicker-helpers';
+
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -71,13 +74,13 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   @ViewChild('alphaSlider') alphaSlider: ElementRef;
 
-  public positionSchemeX = 0;
+  public positionSchemeX: number;
 
-  public positionSchemeY = 0;
+  public positionSchemeY: number;
 
-  public positionHue = 0;
+  public positionHue: number;
 
-  public positionAlpha = 144;
+  public positionAlpha: number;
 
   public contextScheme;
 
@@ -95,10 +98,14 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public presetColors: string[];
 
-  constructor(private colorPickerService: ColorPickerService) {
+  constructor(private colorPickerService: ColorPickerService, private colorPickerHelpers: ColorPickerHelpers) {
   }
 
   ngOnInit() {
+    this.getPositionSchemeX();
+    this.getPositionSchemeY();
+    this.getPositionHue();
+    this.getPositionAlpha();
     this.getPresetColor();
   }
 
@@ -128,31 +135,64 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   ngOnChanges(value: SimpleChanges) {
     if (value['selectedColor'] && this.selectedColor !== undefined) {
       this.rgbaColorPreview = this.selectedColor;
-      this.rgbaColor = this.hexToRgbString(this.selectedColor);
-      // this.mapCursor(this.selectedColor);
+      this.rgbaColor = this.colorPickerHelpers.hexToRgbString(this.selectedColor);
+      const rgb = this.colorPickerHelpers.hexToRgb(this.selectedColor);
+      this.mapCursor(this.colorPickerHelpers.rgbToHsl(rgb[0], rgb[1], rgb[2]));
     }
+  }
+
+  mapCursor(color) {
+    this.colorPickerService.positionHue = color.h;
+    this.getPositionHue();
+    console.log('', color);
   }
 
   public setMoving(value) {
     this.isMoving = value;
   }
 
+  getPositionSchemeX(): void {
+    this.positionSchemeX = this.colorPickerService.getPositionSchemeX();
+  }
+
+  getPositionSchemeY(): void {
+    this.positionSchemeY = this.colorPickerService.getPositionSchemeY();
+  }
+
+  setPositionScheme($event): Observable<number> {
+    this.colorPickerService.setPositionScheme($event,
+      this.content.nativeElement.offsetParent.offsetLeft, this.content.nativeElement.offsetParent.offsetTop);
+    this.getPositionSchemeX();
+    this.getPositionSchemeY();
+    return of(this.colorPickerService.positionSchemeX, this.colorPickerService.positionSchemeY);
+  }
+
+  getPositionHue(): void {
+    this.positionHue = this.colorPickerService.getPositionHue();
+  }
+
+  setPositionHue($event): Observable<number> {
+    this.colorPickerService.setPositionHue($event,
+      this.content.nativeElement.offsetParent.offsetLeft, this.hue.nativeElement.offsetWidth);
+    this.getPositionHue();
+    return of(this.colorPickerService.positionHue);
+  }
+
+  getPositionAlpha(): void {
+    this.positionAlpha = this.colorPickerService.getPositionAlpha();
+  }
+
+  setPositionAlpha($event): Observable<number> {
+    this.colorPickerService.setPositionAlpha($event,
+      this.content.nativeElement.offsetParent.offsetLeft, this.hue.nativeElement.offsetWidth);
+    this.getPositionAlpha();
+    return of(this.colorPickerService.positionAlpha);
+  }
+
   public onMouseDownScheme($event) {
     this.setMoving(true);
     this.setPositionScheme($event);
     this.changeColorScheme($event);
-  }
-
-  public onMouseDownHue($event) {
-    this.setMoving(true);
-    this.setPositionHue($event);
-    this.changeColor($event);
-  }
-
-  public onMouseDownAlpha($event) {
-    this.setMoving(true);
-    this.setPositionAlpha($event);
-    this.changeOpacity($event);
   }
 
   public onMouseMoveScheme($event) {
@@ -163,6 +203,12 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.changeColorScheme($event);
   }
 
+  public onMouseDownHue($event) {
+    this.setMoving(true);
+    this.setPositionHue($event);
+    this.changeColor($event);
+  }
+
   public onMouseMoveHue($event) {
     if (!this.isMoving) {
       return;
@@ -171,52 +217,18 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.changeColor($event);
   }
 
+  public onMouseDownAlpha($event) {
+    this.setMoving(true);
+    this.setPositionAlpha($event);
+    this.changeOpacity($event);
+  }
+
   public onMouseMoveAlpha($event) {
     if (!this.isMoving) {
       return;
     }
     this.setPositionAlpha($event);
     this.changeOpacity($event);
-  }
-
-  mapCursor(color) {
-    const rgb = this.hexToRgb(color);
-    const pixelsPoint = 144 / 7;
-    let pixelPoint = 0;
-    if (rgb[0] === 255 && rgb[1] > 0) {
-      pixelPoint = (rgb[1] * pixelsPoint) / 255;
-    }
-    if (rgb[1] === 255 && rgb[0] > 0) {
-      pixelPoint = pixelsPoint + (pixelsPoint * 2) - (pixelsPoint + (rgb[0] * pixelsPoint) / 255);
-    }
-    if (rgb[1] === 255 && rgb[2] > 0) {
-      pixelPoint = (pixelsPoint * 2) + (rgb[2] * pixelsPoint) / 255;
-    }
-    if (rgb[2] === 255 && rgb[1] > 0) {
-      pixelPoint = pixelsPoint + (pixelsPoint * 4) - (pixelsPoint + (rgb[1] * pixelsPoint) / 255);
-    }
-    if (rgb[2] === 255 && rgb[0] > 0) {
-      pixelPoint = ((rgb[0] * pixelsPoint) / 255) + (pixelsPoint * 4);
-    }
-    if (rgb[0] === 255 && rgb[2] > 0) {
-      pixelPoint = pixelsPoint + (pixelsPoint * 6) - (pixelsPoint + (rgb[2] * pixelsPoint) / 255);
-    }
-    this.positionHue = pixelPoint;
-  }
-
-  setPositionScheme($event) {
-    this.positionSchemeX = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft - 8;
-    this.positionSchemeY = $event.clientY - this.content.nativeElement.offsetParent.offsetTop - 16;
-  }
-
-  setPositionHue($event) {
-    this.positionHue = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft -
-      (this.hue.nativeElement.offsetWidth / 2) - 4;
-  }
-
-  setPositionAlpha($event) {
-    this.positionAlpha = $event.clientX - this.content.nativeElement.offsetParent.offsetLeft -
-      (this.hue.nativeElement.offsetWidth / 2) - 4;
   }
 
   fillGradient() {
@@ -276,7 +288,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.rgbaColor = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)';
     this.rgbaColorPreview = 'rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')';
     const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
-    this.rgbaColorPreview = (this.opacity === 1) ? this.rgbaToHex(rgba) : this.rgbaToHex(rgba, true);
+    this.rgbaColorPreview = (this.opacity === 1) ? this.colorPickerHelpers.rgbaToHex(rgba) : this.colorPickerHelpers.rgbaToHex(rgba, true);
     this.selectColor.emit(this.rgbaColorPreview);
   }
 
@@ -285,33 +297,9 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setPresetColor(color): Observable<string[]> {
-    this.colorPickerService.addPresetColor(color);
+    this.colorPickerService.setPresetColor(color);
     this.getPresetColor();
     return of(this.colorPickerService.presetColors);
-  }
-
-  rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
-    let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);
-    if (allowHex8) {
-      hex += ((1 << 8) | Math.round(rgba.a * 255)).toString(16).substr(1);
-    }
-    return hex;
-  }
-
-  hexToRgb(hex): Array<number> {
-    const r = parseInt(hex.substring(1, 3), 16);
-    const g = parseInt(hex.substring(3, 5), 16);
-    const b = parseInt(hex.substring(5, 7), 16);
-    const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
-    return (hex.length > 7) ? [r, g, b] : [r, g, b];
-  }
-
-  hexToRgbString(hex): string {
-    const r = parseInt(hex.substring(1, 3), 16);
-    const g = parseInt(hex.substring(3, 5), 16);
-    const b = parseInt(hex.substring(5, 7), 16);
-    const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
-    return (hex.length > 7) ? 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')' : 'rgba(' + r + ',' + g + ',' + b + ',1)';
   }
 
 }

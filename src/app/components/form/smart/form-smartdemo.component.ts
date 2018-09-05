@@ -21,7 +21,7 @@ export class FormSmartdemoComponent implements OnInit {
     this.modalConfig = json.ModalConfig;
   }
 
-  openModal( action: ActionsModal ) {
+  openModal( action ) {
     this.modalService.createModal( SmartFormModalComponent, {
       factory: this.factory,
       executeAction: action,

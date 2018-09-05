@@ -88,10 +88,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public contextAlphaSlider;
 
-  public opacity = 1;
-
-  public rgbaColorPreview = 'rgba(255,0,0,' + this.opacity + ')';
-
   private isMoving = false;
 
   public presetColors: string[];
@@ -110,7 +106,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   ngAfterContentInit() {
     this.createCanvasScheme();
     this.createCanvasHue();
-    this.createCanvasAlpha();
+    this.createCanvasAlpha(this.getRgbaColorPreview());
   }
 
   getPositionSchemeX(): void {
@@ -197,6 +193,16 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.changeOpacity($event);
   }
 
+  getOpacityColor(): number {
+    return this.colorPickerService.opacity;
+  }
+
+  setOpacityColor(opacity): Observable<number> {
+    this.colorPickerService.setOpacityColor(opacity);
+    this.getOpacityColor();
+    return of(this.colorPickerService.opacity);
+  }
+
   getRgbaColor(): string {
     return this.colorPickerService.rgbaColor;
   }
@@ -255,19 +261,19 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.contextHueSlider.fill();
   }
 
-  createCanvasAlpha() {
+  createCanvasAlpha(color) {
     this.contextAlphaSlider = this.alphaSlider.nativeElement.getContext('2d');
     this.contextAlphaSlider.rect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
-    this.opacityGradient();
+    this.opacityGradient(color);
   }
 
-  opacityGradient() {
+  opacityGradient(color) {
     const context = this.alphaSlider.nativeElement.getContext('2d');
     context.clearRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
 
     const gridTransparent = this.contextAlphaSlider.createLinearGradient(0, 0, this.contextAlphaSlider.canvas.width, 0);
     gridTransparent.addColorStop(0, 'transparent');
-    gridTransparent.addColorStop(1, this.getRgbaColor());
+    gridTransparent.addColorStop(1, color);
     this.contextAlphaSlider.fillStyle = gridTransparent;
     this.contextAlphaSlider.fillRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
   }
@@ -277,7 +283,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     const y = $event.offsetY;
     const imageData = this.contextScheme.getImageData(x, y, 1, 1).data;
     this.setColor(imageData);
-    this.opacityGradient();
+    this.opacityGradient(this.getRgbaColor());
   }
 
   changeColor($event) {
@@ -285,23 +291,28 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     const y = $event.offsetY;
     const imageData = this.contextHueSlider.getImageData(x, y, 1, 1).data;
     this.setColor(imageData);
+    this.colorPickerService.positionSchemeX = 230 - 16;
+    this.colorPickerService.positionSchemeY = 0;
+    this.getPositionSchemeX();
+    this.getPositionSchemeY();
     this.fillGradient();
-    this.opacityGradient();
+    this.opacityGradient(this.getRgbaColor());
   }
 
   changeOpacity($event) {
-    this.opacity = Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100;
-    const x = $event.offsetX;
-    const y = $event.offsetY;
-    const imageData = this.contextAlphaSlider.getImageData(x, y, 1, 1).data;
-    this.setColor(imageData);
+    this.setOpacityColor(Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100);
+    const rgb = this.colorPickerHelpers.hexToRgb(this.getRgbaColorPreview());
+    const rgba = new Rgba(rgb[0], rgb[1], rgb[2], this.getOpacityColor());
+    this.setRgbaColorPreview(this.colorPickerHelpers.rgbaToHex(rgba, true));
+    this.selectColor.emit(this.getRgbaColorPreview());
   }
 
   setColor(imageData) {
     this.setRgbaColor('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)');
-    this.setRgbaColorPreview('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.opacity + ')');
-    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.opacity);
-    this.rgbaColorPreview = (this.opacity === 1) ? this.colorPickerHelpers.rgbaToHex(rgba) : this.colorPickerHelpers.rgbaToHex(rgba, true);
+    this.setRgbaColorPreview('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',' + this.getOpacityColor() + ')');
+    const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.getOpacityColor());
+    this.setRgbaColorPreview((this.getOpacityColor() === 1) ?
+      this.colorPickerHelpers.rgbaToHex(rgba) : this.colorPickerHelpers.rgbaToHex(rgba, true));
     this.selectColor.emit(this.getRgbaColorPreview());
   }
 
@@ -317,14 +328,25 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   ngOnChanges(value: SimpleChanges) {
     if (value['selectedColor'] && this.selectedColor !== undefined) {
+      this.selectedColor = this.colorPickerHelpers.hexToRgbString(this.selectedColor);
       const hsva = this.colorPickerHelpers.stringToHsva(this.selectedColor);
-      this.colorPickerService.positionHue = hsva.h * 144;
-      this.getPositionHue();
-      this.colorPickerService.positionSchemeX = (hsva.s * 230) - 8;
-      this.getPositionSchemeX();
-      this.colorPickerService.positionSchemeY = ((1 - hsva.v) * 130) - 8;
-      this.getPositionSchemeY();
-      // this.setRgbaColor('#fff');
+      if (!this.isMoving && hsva !== null) {
+        this.colorPickerService.positionHue = hsva.h * 144;
+        this.colorPickerService.positionSchemeX = Math.floor((hsva.s * 230) - 8 );
+        this.colorPickerService.positionSchemeY = Math.floor(( (1 - hsva.v) * 130 ) - 8);
+        this.colorPickerService.positionAlpha = (hsva.a * 144);
+        this.getPositionHue();
+        this.getPositionSchemeX();
+        this.getPositionSchemeY();
+        this.getPositionAlpha();
+
+        this.createCanvasHue();
+        const imageData = this.contextHueSlider.getImageData(hsva.h * 144, 1, 1, 1).data;
+        this.setRgbaColor('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)');
+        this.setRgbaColorPreview(this.selectedColor);
+        this.createCanvasScheme();
+        this.createCanvasAlpha(this.getRgbaColorPreview());
+      }
     }
   }
 

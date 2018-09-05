@@ -52,6 +52,10 @@ export class ColorPickerService {
     this.positionSchemeY = $event.clientY - offsetTop - 16;
   }
 
+  setOpacityColor(opacity) {
+    this.opacity = opacity;
+  }
+
   setRgbaColor(color) {
     this.rgbaColor = color;
   }

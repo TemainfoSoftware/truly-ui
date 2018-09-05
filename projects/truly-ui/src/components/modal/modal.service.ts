@@ -81,77 +81,95 @@ export class ModalService implements OnDestroy {
 
     this.modalConfiguration = factoryOrConfig;
     this.eventCallback = new EventEmitter();
+    this.view = this.containerModal.getView();
 
     return new Promise( ( resolve, reject ) => {
-      this.view = this.containerModal.getView();
 
-      if ( factoryOrConfig[ 'factory' ] ) {
-        this.modalConfiguration = Object.assign(new ModalConfiguration(), factoryOrConfig);
+      if ( !this.isModalConfigurationType() ) {
+        this.setComponentModal(factoryOrConfig, identifier);
+        this.injectComponentToModal(component, factoryOrConfig);
+        this.setGlobalSettings(factoryOrConfig, parentElement);
+        this.setInitialZIndex();
+        this.handleEventCallbacks( resolve );
+        return;
       }
+      this.modalConfiguration = Object.assign(new ModalConfiguration(), factoryOrConfig);
 
-      if ((this.modalConfiguration['executeAction'] === ActionsModal.UPDATE ||
-        this.modalConfiguration['executeAction'] === ActionsModal.DELETE) && !this.modalConfiguration['dataForm'] ) {
-        this.createModalDialog( TlDialogInfo, this.modalConfiguration[ 'factory' ], ( dialog ) => {} );
-        this.componentInjected.instance.message = this.modalConfiguration[ 'recordNotFoundMessage' ];
+      if ( this.recordNotFound() ) {
         return;
       }
 
-      if ( this.modalConfiguration[ 'executeAction' ] === ActionsModal.DELETE ) {
-        this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ( dialog ) => {
-          if ( dialog.mdResult === ModalResult.MRYES ) {
-            this.modalConfiguration[ 'actions' ].deleteCall(this.modalConfiguration[ 'dataForm' ]);
-          }
-        } );
-        this.componentInjected.instance.message = this.modalConfiguration[ 'deleteConfirmationMessage' ];
+      if ( this.confirmDelete() ) {
         return;
       }
 
-      if ( !factoryOrConfig[ 'factory' ] ) {
-        this.setComponentModal( factoryOrConfig, identifier );
-        this.injectComponentToModal( component, factoryOrConfig );
-        this.setGlobalSettings( factoryOrConfig, parentElement );
-      } else {
-        this.setComponentModal( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'identifier' ] );
-        this.injectComponentToModal( component, factoryOrConfig[ 'factory' ] );
-        this.setGlobalSettings( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'parentElement' ] );
-      }
-
+      this.setComponentModal( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'identifier' ] );
+      this.injectComponentToModal( component, factoryOrConfig[ 'factory' ] );
+      this.setGlobalSettings( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'parentElement' ] );
       this.setInitialZIndex();
-      this.eventCallback.subscribe( ( result: any ) => {
-        resolve( result );
-        if ( result.mdResult === ModalResult.MRCANCEL
-          || result === ModalResult.MRCLOSE
-          || !this.modalConfiguration[ 'actions' ] ) {
-          return;
-        }
-        const instantResult = result.formResult ? result.formResult.value : result;
-        switch ( this.modalConfiguration[ 'executeAction' ] ) {
-          case ActionsModal.INSERT:
-            if ( !this.modalConfiguration[ 'actions' ].insertCall ) {
-              this.throwError( 'INSERT' );
-            }
-            this.modalConfiguration[ 'actions' ].insertCall( instantResult );
-            break;
-          case ActionsModal.DELETE:
-            if ( !this.modalConfiguration[ 'actions' ].deleteCall ) {
-              this.throwError( 'DELETE' );
-            }
-            break;
-          case ActionsModal.UPDATE:
-            if ( !this.modalConfiguration[ 'actions' ].updateCall ) {
-              this.throwError( 'UPDATE' );
-            }
-            this.modalConfiguration[ 'actions' ].updateCall( instantResult );
-            break;
-          case ActionsModal.VIEW:
-            if ( !this.modalConfiguration[ 'actions' ].viewCall ) {
-              this.throwError( 'VIEW' );
-            }
-            this.modalConfiguration[ 'actions' ].viewCall( instantResult );
-            break;
+      this.handleEventCallbacks( resolve );
+    });
+  }
+
+  confirmDelete() {
+    if ( this.modalConfiguration[ 'executeAction' ] === ActionsModal.DELETE ) {
+      this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ( dialog ) => {
+        if ( dialog.mdResult === ModalResult.MRYES ) {
+          this.modalConfiguration[ 'actions' ].deleteCall(this.modalConfiguration[ 'dataForm' ]);
         }
       } );
-    } );
+      this.componentInjected.instance.message = this.modalConfiguration[ 'deleteConfirmationMessage' ];
+      return true;
+    }
+    return false;
+  }
+
+
+  recordNotFound() {
+    if ((this.modalConfiguration['executeAction'] === ActionsModal.UPDATE ||
+      this.modalConfiguration['executeAction'] === ActionsModal.DELETE) && !this.modalConfiguration['dataForm'] ) {
+      this.createModalDialog( TlDialogInfo, this.modalConfiguration[ 'factory' ], ( dialog ) => {} );
+      this.componentInjected.instance.message = this.modalConfiguration[ 'recordNotFoundMessage' ];
+      return true;
+    }
+    return false;
+  }
+
+  handleEventCallbacks( resolve ) {
+    this.eventCallback.subscribe( ( result: any ) => {
+      resolve( result );
+      if ( result.mdResult === ModalResult.MRCANCEL
+        || result === ModalResult.MRCLOSE
+        || !this.modalConfiguration[ 'actions' ] ) {
+        return;
+      }
+      const instantResult = result.formResult ? result.formResult.value : result;
+      switch ( this.modalConfiguration[ 'executeAction' ] ) {
+        case ActionsModal.INSERT:
+          if ( !this.modalConfiguration[ 'actions' ].insertCall ) {
+            this.throwError( 'INSERT' );
+          }
+          this.modalConfiguration[ 'actions' ].insertCall( instantResult );
+          break;
+        case ActionsModal.DELETE:
+          if ( !this.modalConfiguration[ 'actions' ].deleteCall ) {
+            this.throwError( 'DELETE' );
+          }
+          break;
+        case ActionsModal.UPDATE:
+          if ( !this.modalConfiguration[ 'actions' ].updateCall ) {
+            this.throwError( 'UPDATE' );
+          }
+          this.modalConfiguration[ 'actions' ].updateCall( instantResult );
+          break;
+        case ActionsModal.VIEW:
+          if ( !this.modalConfiguration[ 'actions' ].viewCall ) {
+            this.throwError( 'VIEW' );
+          }
+          this.modalConfiguration[ 'actions' ].viewCall( instantResult );
+          break;
+      }
+    });
   }
 
   throwError( type: string ) {
@@ -370,6 +388,10 @@ export class ModalService implements OnDestroy {
   on( event, callback ) {
     this.component.instance[ event ].subscribe( callback );
     return this;
+  }
+
+  isModalConfigurationType() {
+    return this.modalConfiguration[ 'factory' ] ;
   }
 
   ngOnDestroy() {

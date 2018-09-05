@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { ContentChild, Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2 } from '@angular/core';
 import { ShortcutService } from '../core/helper/shortcut.service';
 import { TlButton } from '../button/button';
 
@@ -29,7 +29,7 @@ const elements = [];
 @Directive( {
     selector: '[shortcut]'
 } )
-export class ShortcutDirective implements OnInit {
+export class ShortcutDirective implements AfterContentInit {
 
     @Input() shortcut = '';
 
@@ -41,7 +41,7 @@ export class ShortcutDirective implements OnInit {
         this.shortcutService.setRenderer( this.renderer );
     }
 
-    ngOnInit() {
+    ngAfterContentInit() {
         this.component = { shortcut: this.shortcut, element: this.tlbutton ? this.tlbutton : this.element };
         this.addElement();
     }

@@ -20,16 +20,17 @@
  SOFTWARE.
  */
 
-import { Injectable, Renderer2 } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { TlButton } from '../../button/button';
 import { ModalService } from '../../modal/modal.service';
+import { Subscription } from 'rxjs';
 
 let listener;
 
 const buttonElements = [];
 
 @Injectable()
-export class ShortcutService {
+export class ShortcutService implements OnDestroy {
 
   public elementsListener = [];
 
@@ -39,11 +40,11 @@ export class ShortcutService {
 
   private highestZindexElement;
 
+  private subscription: Subscription = new Subscription();
+
   private headElement = {};
 
-  constructor( private modalService: ModalService ) {
-
-  }
+  constructor( private modalService: ModalService ) {}
 
   setRenderer( renderer ) {
     this.renderer = renderer;
@@ -51,11 +52,14 @@ export class ShortcutService {
   }
 
   createListener() {
-    this.modalService.head.subscribe( ( component ) => {
+    this.subscription.add(this.modalService.head.subscribe( ( component ) => {
       this.headElement = component;
-    } );
+    } ));
     if ( !listener ) {
-      listener = this.renderer.listen( document, 'keydown', ( $event: KeyboardEvent ) => {
+      this.subscription.add(this.renderer.listen( document, 'keydown', ( $event: KeyboardEvent ) => {
+        if (!$event.key) {
+          return;
+        }
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
           return;
         }
@@ -64,7 +68,8 @@ export class ShortcutService {
         }
         this.handleClickComponentWithoutEqualsKeys();
         this.handleElementsOfView();
-      } );
+      } ));
+      listener = this.subscription;
     }
   }
 
@@ -248,6 +253,10 @@ export class ShortcutService {
     return this.elementsListener.filter( ( value, index, array ) => {
       return !this.isElementInstanceOfButton( value );
     } );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

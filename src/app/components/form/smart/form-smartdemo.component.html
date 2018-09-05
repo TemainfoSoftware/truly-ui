@@ -84,17 +84,17 @@ export class AppModule { }
         user: 'william',
       },
       actions: {
-        insertCall: function () {
-          console.log('Executing the INSERT Function...');
+        insertCall: function ( values ) {
+          console.log('Executing the INSERT Function...', values);
         },
-        updateCall: function () {
-          console.log('Executing the UPDATE Function...');
+        updateCall: function ( values ) {
+          console.log('Executing the UPDATE Function...', values);
         },
-        deleteCall: function () {
-          console.log('Executing the DELETE Function...');
+        deleteCall: function ( values ) {
+          console.log('Executing the DELETE Function...', values);
         },
-        viewCall: function () {
-          console.log('Executing the VIEW Function...');
+        viewCall: function ( values ) {
+          console.log('Executing the VIEW Function...', values);
         }
       }
     } ).then((result) => {

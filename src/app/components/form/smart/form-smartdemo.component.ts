@@ -21,31 +21,32 @@ export class FormSmartdemoComponent implements OnInit {
     this.modalConfig = json.ModalConfig;
   }
 
-  openModal() {
+  openModal( action: ActionsModal ) {
     this.modalService.createModal( SmartFormModalComponent, {
       factory: this.factory,
-      executeAction: ActionsModal.INSERT,
+      executeAction: action,
       identifier: 'FORM_SMART_1',
       dataForm: {
         nickname: 'willz',
         id: 'b42f0653-b0a3-4482-b2e3-3d971ddaeb3f',
-        email: 'williamaguera.m@hotmail.com',
-        name: 'William',
-        lastName: 'Aguera',
-        user: 'william',
+        email: 'robert.william@truly.com',
+        name: 'robert',
+        lastName: 'william',
+        user: 'robertw',
+        password: '1234567#A',
       },
       actions: {
-        insertCall: function () {
-          console.log('INSERT Function executed');
+        insertCall: function ( values ) {
+          console.log('INSERT Function executed', values);
         },
-        updateCall: function () {
-          console.log('UPDATE Function executed');
+        updateCall: function ( values ) {
+          console.log('UPDATE Function executed', values );
         },
-        deleteCall: function () {
-          console.log('VIEW Function executed');
+        deleteCall: function ( values ) {
+          console.log('DELETE Function executed', values );
         },
-        viewCall: function () {
-          console.log('VIEW Function executed');
+        viewCall: function ( values ) {
+          console.log('VIEW Function executed', values );
         }
       }
     } );

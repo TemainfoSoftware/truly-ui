@@ -49,7 +49,7 @@ export class ColorPickerService {
 
   setPositionScheme($event, offsetLeft, offsetTop) {
     this.positionSchemeX = $event.clientX - offsetLeft - 8;
-    this.positionSchemeY = $event.clientY - offsetTop - 16;
+    this.positionSchemeY = $event.clientY - offsetTop - 8;
   }
 
   setOpacityColor(opacity) {

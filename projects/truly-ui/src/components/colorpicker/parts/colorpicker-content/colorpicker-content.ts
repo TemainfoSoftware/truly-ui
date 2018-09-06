@@ -118,8 +118,8 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setPositionScheme($event): Observable<number> {
-    this.colorPickerService.setPositionScheme($event,
-      this.content.nativeElement.offsetParent.offsetLeft, this.content.nativeElement.offsetParent.offsetTop);
+    this.colorPickerService.setPositionScheme($event, this.content.nativeElement.offsetParent.offsetLeft + 1,
+      this.content.nativeElement.offsetParent.offsetTop + 10);
     this.getPositionSchemeX();
     this.getPositionSchemeY();
     return of(this.colorPickerService.positionSchemeX, this.colorPickerService.positionSchemeY);
@@ -326,15 +326,21 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     return of(this.colorPickerService.presetColors);
   }
 
+  changeColorByPreset(color) {
+    this.setRgbaColor(color);
+    this.setRgbaColorPreview(color);
+    this.selectColor.emit(this.getRgbaColorPreview());
+  }
+
   ngOnChanges(value: SimpleChanges) {
     if (value['selectedColor'] && this.selectedColor !== undefined) {
       this.selectedColor = this.colorPickerHelpers.hexToRgbString(this.selectedColor);
       const hsva = this.colorPickerHelpers.stringToHsva(this.selectedColor);
       if (!this.isMoving && hsva !== null) {
         this.colorPickerService.positionHue = hsva.h * 144;
-        this.colorPickerService.positionSchemeX = Math.floor((hsva.s * 230) - 8 );
-        this.colorPickerService.positionSchemeY = Math.floor(( (1 - hsva.v) * 130 ) - 8);
-        this.colorPickerService.positionAlpha = (hsva.a * 144);
+        this.colorPickerService.positionSchemeX = Math.floor((hsva.s * 230) - 8);
+        this.colorPickerService.positionSchemeY = Math.floor(((1 - hsva.v) * 130) - 8);
+        this.colorPickerService.positionAlpha = hsva.a * 144;
         this.getPositionHue();
         this.getPositionSchemeX();
         this.getPositionSchemeY();

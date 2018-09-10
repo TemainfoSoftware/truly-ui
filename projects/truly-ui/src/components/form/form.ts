@@ -55,6 +55,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() submitShortcut = '';
 
+  @Input() cancelShortcut = 'escape';
+
   @Input() mode: 'inline' | 'modal' = 'modal';
 
   @Input() textConfirm = this.i18n.getLocale().Form.textOk;
@@ -316,6 +318,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   handleKeysForm( $event: KeyboardEvent ) {
+    if ( $event.keyCode !== KeyEvent.ESCAPE ) {
+      $event.stopPropagation();
+    }
     if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
       $event.preventDefault();
       this.backwardTabbing();

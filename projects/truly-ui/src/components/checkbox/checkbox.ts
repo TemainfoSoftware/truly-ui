@@ -20,13 +20,12 @@
  SOFTWARE.
  */
 import {
-  Component, Input, ViewChild, Output, EventEmitter,
-  Optional, Inject, Injector, OnInit, ChangeDetectorRef
+  Component, Input, ViewChild, Output, EventEmitter, ContentChild, OnInit
 } from '@angular/core';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component( {
   selector: 'tl-checkbox',
@@ -36,7 +35,7 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
     [ MakeProvider( TlCheckBox ) ]
   ]
 } )
-export class TlCheckBox extends ElementBase<boolean> implements OnInit {
+export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit {
 
   @Input() label = '';
 
@@ -50,17 +49,16 @@ export class TlCheckBox extends ElementBase<boolean> implements OnInit {
 
   @ViewChild( 'checkbox' ) checkbox;
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @Output() checkBox: EventEmitter<any> = new EventEmitter();
 
   @Output() focusBox: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-  ) {
-    super(validators, asyncValidators);
+  constructor() {
+    super();
   }
 
   ngOnInit() {

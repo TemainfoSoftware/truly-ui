@@ -20,38 +20,56 @@
  SOFTWARE.
  */
 
-import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2 } from '@angular/core';
+import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2, OnDestroy } from '@angular/core';
 import { ShortcutService } from '../core/helper/shortcut.service';
 import { TlButton } from '../button/button';
 
-const elements = [];
+let elements = [];
+
+let identifier = 0;
 
 @Directive( {
-    selector: '[shortcut]'
+  selector: '[shortcut]'
 } )
-export class ShortcutDirective implements AfterContentInit {
+export class ShortcutDirective implements AfterContentInit, OnDestroy {
 
-    @Input() shortcut = '';
+  @Input() shortcut = '';
 
-    @ContentChild( TlButton ) tlbutton;
+  @ContentChild( TlButton ) tlbutton;
 
-    private component;
+  private component;
 
-    constructor( private element: ElementRef, private shortcutService: ShortcutService, private renderer: Renderer2 ) {
-        this.shortcutService.setRenderer( this.renderer );
+  private shortcutID = 'shortcut-' + identifier++;
+
+  constructor( private element: ElementRef, private shortcutService: ShortcutService, private renderer: Renderer2 ) {
+    this.shortcutService.setRenderer( this.renderer );
+  }
+
+  ngAfterContentInit() {
+    this.component = {
+      id: this.shortcutID,
+      shortcut: this.shortcut,
+      element: this.tlbutton ? this.tlbutton : this.element
+    };
+    this.addElement();
+  }
+
+  addElement() {
+    if ( this.component.shortcut.length > 0 ) {
+      elements.push( this.component );
+      this.shortcutService.elementsListener = elements;
+      this.shortcutService.filterButtons();
     }
+  }
 
-    ngAfterContentInit() {
-        this.component = { shortcut: this.shortcut, element: this.tlbutton ? this.tlbutton : this.element };
-        this.addElement();
-    }
+  removeShortcut( id: string ) {
+    elements = elements.filter( ( value ) => {
+      return value.id !== id;
+    } );
+  }
 
-    addElement() {
-      if (this.component.shortcut.length > 0) {
-        elements.push(this.component);
-        this.shortcutService.elementsListener = elements;
-        this.shortcutService.filterButtons();
-      }
-    }
+  ngOnDestroy() {
+    this.removeShortcut( this.shortcutID );
+  }
 
 }

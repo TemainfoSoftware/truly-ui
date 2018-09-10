@@ -72,6 +72,8 @@ export class TlButton implements OnInit {
 
     @Input() isLoading = false;
 
+    @Input() indexShortcut = 0;
+
     @Input() set textLoading( text ) {
       this._textLoading = text;
     }
@@ -83,8 +85,6 @@ export class TlButton implements OnInit {
     @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
-
-    public shortcutManager = {};
 
     private _textLoading: string;
 

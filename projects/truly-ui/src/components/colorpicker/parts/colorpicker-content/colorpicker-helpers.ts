@@ -14,7 +14,7 @@ export class ColorPickerHelpers {
     const g = parseInt(hex.substring(3, 5), 16);
     const b = parseInt(hex.substring(5, 7), 16);
     const a = Math.round((parseInt(hex.substring(7, 9), 16) / 255) * 100) / 100;
-    return (hex.length > 7) ? [r, g, b, a] : [r, g, b];
+    return (hex.length > 7) ? [r, g, b, a] : [r, g, b, 1];
   }
 
   hexToRgbString(hex): string {

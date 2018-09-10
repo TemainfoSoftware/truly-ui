@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class ColorPickerService {
 
-  public positionSchemeX = 0;
+  public positionSchemeX = 222;
 
-  public positionSchemeY = 0;
+  public positionSchemeY = -8;
 
   public positionHue = 0;
 

@@ -55,9 +55,15 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   public bottomPosition = undefined;
 
+  private timeout;
+
   private interval;
 
-  private timeout;
+  private heightElement = 0;
+
+  private margin = 20;
+
+  private numberToasters: number;
 
   private toasterService: ToasterService;
 
@@ -101,8 +107,13 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   setPosition() {
     setTimeout(() => {
+      this.setHeight();
       this.position.includes('top') ? this.setTopPosition() : this.setBottomPosition();
     });
+  }
+
+  setHeight() {
+    this.heightElement = this.toasterWrapper.nativeElement.offsetHeight;
   }
 
   getLeftWidth() {
@@ -111,24 +122,20 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   }
 
   setBottomPosition() {
-    const height = this.toasterWrapper.nativeElement.offsetHeight;
-    const numberToasters = this.getListToastersByBottomPosition().length - 1;
-
-    if ( numberToasters === 0 ) {
+    this.getNumberToastersBottom();
+    if ( this.numberToasters <= 0 ) {
       this.bottomPosition = '0';
     } else {
-      this.bottomPosition = ((numberToasters) * (height)) + 'px';
+      this.bottomPosition = (this.numberToasters * this.heightElement) + (this.margin * this.numberToasters) + 'px';
     }
   }
 
   setTopPosition() {
-    const height = this.toasterWrapper.nativeElement.offsetHeight;
-    const numberToasters = this.getListToastersByTopPosition().length - 1;
-
-    if ( numberToasters === 0 ) {
+    this.getNumberToastersTop();
+    if ( this.numberToasters <= 0 ) {
       this.topPosition = '0';
     } else {
-      this.topPosition = ((numberToasters) * (height)) + 'px';
+      this.topPosition = (this.numberToasters * this.heightElement) + (this.margin * this.numberToasters) + 'px';
     }
   }
 
@@ -149,10 +156,18 @@ export class TlToaster implements AfterContentInit, OnDestroy {
     this.componentRef.destroy();
   }
 
+  getNumberToastersBottom() {
+    this.numberToasters = this.getListToastersByBottomPosition().length - 1;
+  }
+
+  getNumberToastersTop() {
+    this.numberToasters = this.getListToastersByTopPosition().length - 1;
+  }
+
   setTopPositionChange() {
     this.getListToastersByTopPosition().forEach( ( value, index ) => {
       const height = this.toasterWrapper.nativeElement.offsetHeight;
-      value.instance.topPosition = index * ((height)) + 'px';
+      value.instance.topPosition = (index * height) + ( this.margin * index) + 'px';
     } );
   }
 
@@ -163,7 +178,7 @@ export class TlToaster implements AfterContentInit, OnDestroy {
   setBottomPositionChange() {
     this.getListToastersByBottomPosition().forEach( ( value, index ) => {
       const height = this.toasterWrapper.nativeElement.offsetHeight;
-      value.instance.bottomPosition = index * ((height)) + 'px';
+      value.instance.bottomPosition = (index * height) + ( this.margin * index) + 'px';
     } );
   }
 

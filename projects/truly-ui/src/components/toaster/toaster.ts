@@ -123,20 +123,17 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   setBottomPosition() {
     this.getNumberToastersBottom();
-    if ( this.numberToasters <= 0 ) {
-      this.bottomPosition = '0';
-    } else {
-      this.bottomPosition = (this.numberToasters * this.heightElement) + (this.margin * this.numberToasters) + 'px';
-    }
+    this.bottomPosition = this.getPositionToast();
   }
 
   setTopPosition() {
     this.getNumberToastersTop();
-    if ( this.numberToasters <= 0 ) {
-      this.topPosition = '0';
-    } else {
-      this.topPosition = (this.numberToasters * this.heightElement) + (this.margin * this.numberToasters) + 'px';
-    }
+    this.topPosition = this.getPositionToast();
+  }
+
+  getPositionToast() {
+    return this.numberToasters <= 0 ? 0 :
+      (this.numberToasters * this.heightElement) + (this.margin * this.numberToasters) + 'px';
   }
 
   getListToastersByTopPosition() {

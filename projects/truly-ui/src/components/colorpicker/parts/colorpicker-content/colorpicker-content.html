@@ -1,5 +1,5 @@
-<div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'"></div>
-<div class="ui-wrapper-colorpicker-content">
+<div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'" @overlay></div>
+<div class="ui-wrapper-colorpicker-content" @overlay>
   <div #content class="ui-colorpicker-content">
     <div class="ui-colorpicker-scheme"
          (mousedown)="onMouseDownScheme($event)"
@@ -12,8 +12,8 @@
     <div class="ui-colorpicker-alpha">
       <div class="left">
         <div class="selected-color-background"></div>
-        <a (click)="setPresetColor(getRgbaColorPreview())">
-          <div class="selected-color" [style.backgroundColor]="getRgbaColorPreview()"></div>
+        <a (click)="setPresetColor(selectedColor)">
+          <div class="selected-color" [style.backgroundColor]="selectedColor"></div>
         </a>
       </div>
       <div class="right">
@@ -35,9 +35,13 @@
         </div>
       </div>
     </div>
-    <div #footer class="ui-colorpicker-footer" *ngIf="presetColors.length !== 0">
+    <div class="ui-colorpicker-return" *ngIf="returnFormatColor === true">
+      <input readonly type="text" [ngModel]="getColorFormat()" spellcheck="false">
+      <span>{{ (!formatColor) ? 'HEX' : 'RGBA' }}  <i class="ion-code" (click)="formatColor = !formatColor"></i></span>
+    </div>
+    <div class="ui-colorpicker-preset" *ngIf="presetColors.length !== 0 && recentColors === true">
       <div class="preset-color" *ngFor="let color of presetColors.slice().reverse()" (click)="changeColorByPreset(color)" [style.backgroundColor]="color"></div>
     </div>
   </div>
-  <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'"></div>
+  <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'" @overlay></div>
 </div>

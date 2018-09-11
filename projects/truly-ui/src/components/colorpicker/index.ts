@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TlColorPicker } from './colorpicker';
 import { InputModule } from '../input';
+import { ButtonModule } from '../button';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-content';
 
@@ -12,7 +13,8 @@ import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-co
     CommonModule,
     FormsModule,
     OverlayModule,
-    InputModule
+    InputModule,
+    ButtonModule
   ],
   declarations: [
     TlColorPicker,

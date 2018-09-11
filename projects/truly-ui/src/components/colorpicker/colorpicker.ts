@@ -22,6 +22,7 @@
 
 import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
 import { TlInput } from '../input/input';
+import { TlButton } from '../button/button';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
 import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-helpers';
@@ -50,9 +51,17 @@ export class TlColorPicker implements OnInit {
 
   @Input() placeholder = 'Colorpicker Field';
 
+  @Input() onlyColor = false;
+
+  @Input() recentColors = false;
+
+  @Input() returnFormatColor = false;
+
   @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild( TlInput ) tlinput;
+
+  @ViewChild( TlButton ) tlbutton;
 
   public isOpen = true;
 
@@ -60,9 +69,11 @@ export class TlColorPicker implements OnInit {
 
   public positionOverlay = '';
 
-  public selectedColor;
+  public selectedColor = '#FF0000';
 
-  constructor(private change: ChangeDetectorRef) {}
+  constructor(private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {}
+
+  ngOnInit() {}
 
   onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
@@ -74,6 +85,15 @@ export class TlColorPicker implements OnInit {
     this.selectColor.emit($event);
   }
 
-  ngOnInit() {}
+  copyInputColor(inputElement) {
+    inputElement.input.nativeElement.select();
+    document.execCommand('copy');
+    inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);
+  }
+
+  closeColorPicker(selectedColor) {
+    this.isOpen = false;
+    this.colorPickerService.setPresetColor(selectedColor);
+  }
 
 }

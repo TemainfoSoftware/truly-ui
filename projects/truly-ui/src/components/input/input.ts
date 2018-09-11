@@ -131,6 +131,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
+  @Output() click: EventEmitter<MouseEvent> = new EventEmitter();
+
   @Output() focus: EventEmitter<any> = new EventEmitter();
 
   @Output() blur: EventEmitter<any> = new EventEmitter();
@@ -197,8 +199,20 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
     }
   }
 
-  onClickAddon( MouseEvent, side ) {
-    this.clickAddon.emit( { MouseEvent, side } );
+  onClickAddon( $event, side ) {
+    this.stopEvent($event);
+    this.clickAddon.emit( { $event, side } );
+  }
+
+  onInputClick( $event: MouseEvent ) {
+    this.stopEvent($event);
+    this.isShowingMessages = true;
+    this.click.emit( $event );
+  }
+
+  stopEvent($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   onInputFocus( $event ) {

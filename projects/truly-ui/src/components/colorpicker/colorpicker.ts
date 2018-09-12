@@ -20,12 +20,23 @@
     SOFTWARE.
 */
 
-import { Component, OnInit, Input, ViewChild, ChangeDetectorRef, Output, EventEmitter} from '@angular/core';
-import { TlInput } from '../input/input';
-import { TlButton } from '../button/button';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
-import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-helpers';
+import {
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component, ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output, Renderer2,
+  ViewChild
+} from '@angular/core';
+import {TlInput} from '../input/input';
+import {TlButton} from '../button/button';
+import {CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
+import {ColorPickerService} from './parts/colorpicker-content/colorpicker-service';
+import {ColorPickerHelpers} from './parts/colorpicker-content/colorpicker-helpers';
 
 @Component({
   selector: 'tl-colorpicker',
@@ -33,7 +44,7 @@ import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-help
   styleUrls: ['./colorpicker.scss'],
   providers: [ColorPickerService, ColorPickerHelpers]
 })
-export class TlColorPicker implements OnInit {
+export class TlColorPicker implements OnInit, AfterContentInit {
 
   @Input() label = '';
 
@@ -51,11 +62,15 @@ export class TlColorPicker implements OnInit {
 
   @Input() placeholder = 'Colorpicker Field';
 
-  @Input() onlyColor = false;
+  @Input() mode: 'inline' | 'onlyColor' | 'fromOrigin' | 'input' = 'input';
 
   @Input() recentColors = false;
 
   @Input() returnFormatColor = false;
+
+  @Input() copyButton = false;
+
+  @Input() elementOrigin;
 
   @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
 
@@ -63,17 +78,35 @@ export class TlColorPicker implements OnInit {
 
   @ViewChild( TlButton ) tlbutton;
 
-  public isOpen = true;
+  @ViewChild( 'trigger' ) trigger;
 
-  public trigger;
+  @ViewChild( CdkConnectedOverlay ) connectedOverlay: CdkConnectedOverlay;
+
+  public isOpen = true;
 
   public positionOverlay = '';
 
   public selectedColor = '#FF0000';
 
-  constructor(private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {}
+  constructor(private renderer: Renderer2, private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.listClickElementOrgin();
+    this.validFromOrigin();
+  }
+
+  ngAfterContentInit() {
+    const element = new CdkOverlayOrigin( !this.elementOrigin ? this.trigger.elementRef.nativeElement : this.elementOrigin);
+    this.connectedOverlay.origin = element;
+  }
+
+  listClickElementOrgin() {
+    if (this.elementOrigin) {
+      this.renderer.listen(this.elementOrigin, 'click', () => {
+        this.isOpen = !this.isOpen;
+      });
+    }
+  }
 
   onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
@@ -81,7 +114,7 @@ export class TlColorPicker implements OnInit {
   }
 
   emitSelectColor($event) {
-    this.selectedColor = $event;
+    this.selectedColor = $event.hex;
     this.selectColor.emit($event);
   }
 
@@ -94,6 +127,12 @@ export class TlColorPicker implements OnInit {
   closeColorPicker(selectedColor) {
     this.isOpen = false;
     this.colorPickerService.setPresetColor(selectedColor);
+  }
+
+  validFromOrigin() {
+    if (this.mode === 'fromOrigin' && !this.elementOrigin) {
+      throw Error('Property [elementOrigin] is undefined on \'fromOrigin\' mode');
+    }
   }
 
 }

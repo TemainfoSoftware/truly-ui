@@ -111,8 +111,26 @@
   text-align: center;
 }
 
-.ui-colorpicker-return i {
-  font-size: 14px;
+.ui-colorpicker-return .display {
+  display: table;
+  width: 100%;
+}
+
+.ui-colorpicker-return .display .left {
+  display: table-cell;
+  width: 90%;
+}
+
+.ui-colorpicker-return .display .right {
+  display: table-cell;
+  width: 10%;
+  border: 1px solid #C8C8C8;
+  border-left: none;
+}
+
+.ui-colorpicker-return .rotate-90 {
+  display: inline-block;
+  transform: rotate(90deg);
 }
 
 

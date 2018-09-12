@@ -28,7 +28,7 @@ import {
   Input,
   OnChanges,
   OnInit,
-  Output,
+  Output, Renderer2,
   SimpleChanges,
   TemplateRef,
   ViewChild
@@ -61,7 +61,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   @Input() returnFormatColor = false;
 
-  @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
+  @Output('selectColor') selectColor: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
@@ -97,8 +97,9 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public presetColors: string[];
 
-  constructor(private colorPickerService: ColorPickerService, private colorPickerHelpers: ColorPickerHelpers) {
-  }
+  constructor(private renderer: Renderer2,
+              private colorPickerService: ColorPickerService,
+              private colorPickerHelpers: ColorPickerHelpers) { }
 
   ngOnInit() {
     this.getPositionSchemeX();
@@ -112,6 +113,11 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.createCanvasScheme();
     this.createCanvasHue();
     this.createCanvasAlpha(this.getRgbaColorPreview());
+  }
+
+  windowMouseEvent() {
+    this.renderer.listen(window, 'mousemove', (event) => {
+    });
   }
 
   getPositionSchemeX(): void {
@@ -336,9 +342,10 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   setColor(imageData) {
     this.setRgbaColor('rgba(' + imageData[0] + ',' + imageData[1] + ',' + imageData[2] + ',1)');
     const rgba = new Rgba(imageData[0], imageData[1], imageData[2], this.getOpacityColor());
-    this.setRgbaColorPreview((this.getOpacityColor() === 1) ?
-      this.colorPickerHelpers.rgbaToHex(rgba) : this.colorPickerHelpers.rgbaToHex(rgba, true));
-    this.selectColor.emit(this.getRgbaColorPreview());
+    const hex = (this.getOpacityColor() === 1) ? this.colorPickerHelpers.rgbaToHex(rgba) :
+      this.colorPickerHelpers.rgbaToHex(rgba, true);
+    this.setRgbaColorPreview(hex);
+    this.selectColor.emit({'hex': hex, 'rgba': this.colorPickerHelpers.hexToRgbString(hex)});
   }
 
   getPresetColor(): void {
@@ -354,7 +361,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   changeColorByPreset(color) {
     this.setRgbaColor(color);
     this.setRgbaColorPreview(color);
-    this.selectColor.emit(this.getRgbaColorPreview());
+    this.selectColor.emit({'hex': this.getRgbaColorPreview(), 'rgba': this.colorPickerHelpers.hexToRgbString(this.getRgbaColorPreview())});
   }
 
   updateColor(value) {

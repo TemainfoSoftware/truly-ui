@@ -1,7 +1,7 @@
 <div class="tl-colorpicker" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-  <div #colorBox class="ui-color-box" (click)="isOpen = !isOpen" [style.background]="selectedColor"></div>
+  <div *ngIf="mode !== 'inline' && mode !== 'fromOrigin'" #colorBox class="ui-color-box" (click)="isOpen = !isOpen" [style.background]="selectedColor"></div>
   <div class="ui-input-wrapper">
-    <div *ngIf="!onlyColor">
+    <div *ngIf="mode === 'input'">
       <tl-input #tlinput
                 [label]="label"
                 [labelSize]="labelSize"
@@ -13,7 +13,7 @@
                 [readonly]="readonly ? true : null"
                 [disabled]="disabled ? true : null"
                 [placeholder]="placeholder"
-                [iconAfter]="'fa fa-clipboard'"
+                [iconAfter]="(copyButton) ? 'fa fa-clipboard' : null"
                 (clickAddon)="copyInputColor(tlinput)">
       </tl-input>
     </div>
@@ -21,7 +21,6 @@
                  (backdropClick)="closeColorPicker(selectedColor)"
                  (positionChange)="onPositionChange($event)"
                  [cdkConnectedOverlayHasBackdrop]="true"
-                 [cdkConnectedOverlayOrigin]="trigger"
                  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                  [cdkConnectedOverlayOpen]="isOpen">
       <tl-colorpicker-content
@@ -33,4 +32,13 @@
       </tl-colorpicker-content>
     </ng-template>
   </div>
+</div>
+
+<div class="inline" *ngIf="mode === 'inline'">
+  <tl-colorpicker-content
+    [selectedColor]="selectedColor"
+    (selectColor)="emitSelectColor($event)"
+    [recentColors]="recentColors"
+    [returnFormatColor]="returnFormatColor">
+  </tl-colorpicker-content>
 </div>

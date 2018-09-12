@@ -36,8 +36,15 @@
       </div>
     </div>
     <div class="ui-colorpicker-return" *ngIf="returnFormatColor === true">
-      <input readonly type="text" [ngModel]="getColorFormat()" spellcheck="false">
-      <span>{{ (!formatColor) ? 'HEX' : 'RGBA' }}  <i class="ion-code" (click)="formatColor = !formatColor"></i></span>
+      <div class="display">
+        <div class="left">
+          <input readonly type="text" [ngModel]="getColorFormat()" spellcheck="false">
+        </div>
+        <div class="right">
+          <i class="ion-code rotate-90" (click)="formatColor = !formatColor"></i>
+        </div>
+      </div>
+      <span>{{ (!formatColor) ? 'HEX' : 'RGBA' }}</span>
     </div>
     <div class="ui-colorpicker-preset" *ngIf="presetColors.length !== 0 && recentColors === true">
       <div class="preset-color" *ngFor="let color of presetColors.slice().reverse()" (click)="changeColorByPreset(color)" [style.backgroundColor]="color"></div>

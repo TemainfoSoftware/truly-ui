@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import * as json from './colorpickerdemo-dataproperties.json';
 import * as jsonEvts from './colorpickerdemo.dataevents.json';
@@ -41,7 +41,7 @@ export class ColorPickerDemoComponent {
   }
 
   onSelectColor($event) {
-    // console.log('$event', $event);
+    console.log('$event', $event);
   }
 
 }

@@ -22,12 +22,10 @@
 
 import {
   AfterContentInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ElementRef,
+  Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output, Renderer2,
   ViewChild

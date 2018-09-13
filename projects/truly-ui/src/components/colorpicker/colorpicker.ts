@@ -80,7 +80,7 @@ export class TlColorPicker implements OnInit, AfterContentInit {
 
   @ViewChild( CdkConnectedOverlay ) connectedOverlay: CdkConnectedOverlay;
 
-  public isOpen = true;
+  public isOpen = false;
 
   public positionOverlay = '';
 

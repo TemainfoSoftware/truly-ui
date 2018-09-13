@@ -1,15 +1,11 @@
 <div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'" @overlay></div>
 <div class="ui-wrapper-colorpicker-content" @overlay>
   <div #content class="ui-colorpicker-content">
-    <div class="ui-colorpicker-scheme"
-         (mousedown)="onMouseDownScheme($event)"
-         (mouseup)="setMoving(false)"
-         (mouseleave)="setMoving(false)"
-         (mousemove)="onMouseMoveScheme($event)">
+    <div class="ui-colorpicker-scheme" (mousedown)="onMouseDownScheme($event)">
       <canvas #scheme width="230" height="130"></canvas>
-      <div class="cursor" [style.left.px]="positionSchemeX" [style.top.px]="positionSchemeY"></div>
+      <div #cursorScheme class="cursor" [style.left.px]="positionSchemeX" [style.top.px]="positionSchemeY"></div>
     </div>
-    <div class="ui-colorpicker-alpha">
+    <div class="ui-colorpicker-select">
       <div class="left">
         <div class="selected-color-background"></div>
         <a (click)="setPresetColor(selectedColor)">
@@ -17,19 +13,11 @@
         </a>
       </div>
       <div class="right">
-        <div #hue class="hue"
-             (mousedown)="onMouseDownHue($event)"
-             (mouseup)="setMoving(false)"
-             (mouseleave)="setMoving(false)"
-             (mousemove)="onMouseMoveHue($event)">
+        <div #hue class="hue" (mousedown)="onMouseDownHue($event)">
           <canvas #hueSlider width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionHue"></div>
         </div>
-        <div #alpha class="alpha"
-             (mousedown)="onMouseDownAlpha($event)"
-             (mouseup)="setMoving(false)"
-             (mouseleave)="setMoving(false)"
-             (mousemove)="onMouseMoveAlpha($event)">
+        <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)">
           <canvas #alphaSlider width="144" height="14"></canvas>
           <div class="cursor" [style.left.px]="positionAlpha"></div>
         </div>

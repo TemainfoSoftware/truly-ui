@@ -44,6 +44,12 @@ import { Observable, of } from 'rxjs';
 
 import { OverlayAnimation } from '../../../core/directives/overlay-animation';
 
+export interface ColorPickerMovable {
+  scheme?: boolean;
+  hue?: boolean;
+  alpha?: boolean;
+}
+
 @Component({
   selector: 'tl-colorpicker-content',
   templateUrl: './colorpicker-content.html',
@@ -69,6 +75,8 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   @ViewChild('scheme') scheme: ElementRef;
 
+  @ViewChild('cursorScheme') cursorScheme: ElementRef;
+
   @ViewChild('hue') hue: ElementRef;
 
   @ViewChild('hueSlider') hueSlider: ElementRef;
@@ -91,7 +99,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   public contextAlphaSlider;
 
-  private isMoving = false;
+  private isMoving: ColorPickerMovable = { scheme: false, hue: false, alpha: false };
 
   public formatColor = false;
 
@@ -107,6 +115,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.getPositionHue();
     this.getPositionAlpha();
     this.getPresetColor();
+    this.windowMouseEvent();
   }
 
   ngAfterContentInit() {
@@ -116,7 +125,20 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   windowMouseEvent() {
-    this.renderer.listen(window, 'mousemove', (event) => {
+    this.renderer.listen(window, 'mousemove', ($event) => {
+      if (this.isMoving.scheme) {
+        this.onMouseMoveScheme($event);
+      }
+      if (this.isMoving.hue) {
+        this.onMouseMoveHue($event);
+      }
+      if (this.isMoving.alpha) {
+        this.onMouseMoveAlpha($event);
+      }
+    });
+
+    this.renderer.listen(window, 'mouseup', () => {
+      this.isMoving = { scheme: false, hue: false, alpha: false };
     });
   }
 
@@ -129,10 +151,17 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setPositionScheme($event): Observable<number> {
-    this.colorPickerService.setPositionScheme($event, this.content.nativeElement.offsetParent.offsetLeft + 1,
-      this.content.nativeElement.offsetParent.offsetTop + 10);
+    const offset = this.content.nativeElement.getBoundingClientRect();
+    const left = offset.left;
+    const top = offset.top;
+    const width = this.scheme.nativeElement.offsetWidth;
+    const height = this.scheme.nativeElement.offsetHeight;
+    const midCursorWidth = this.cursorScheme.nativeElement.offsetWidth / 2;
+    this.colorPickerService.setPositionScheme($event, left, top, width, height, midCursorWidth);
     this.getPositionSchemeX();
     this.getPositionSchemeY();
+    this.changeColorScheme(this.colorPickerService.getPositionSchemeX() + midCursorWidth,
+      this.colorPickerService.getPositionSchemeY() + midCursorWidth);
     return of(this.colorPickerService.positionSchemeX, this.colorPickerService.positionSchemeY);
   }
 
@@ -141,9 +170,12 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setPositionHue($event): Observable<number> {
-    this.colorPickerService.setPositionHue($event,
-      this.content.nativeElement.offsetParent.offsetLeft, this.hue.nativeElement.offsetWidth);
+    const offset = this.hue.nativeElement.getBoundingClientRect();
+    const left = offset.left;
+    const width = this.hue.nativeElement.offsetWidth;
+    this.colorPickerService.setPositionHue($event, left, width);
     this.getPositionHue();
+    this.changeColor(this.colorPickerService.getPositionHue());
     return of(this.colorPickerService.positionHue);
   }
 
@@ -152,56 +184,49 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   setPositionAlpha($event): Observable<number> {
-    this.colorPickerService.setPositionAlpha($event,
-      this.content.nativeElement.offsetParent.offsetLeft, this.hue.nativeElement.offsetWidth);
+    const offset = this.alpha.nativeElement.getBoundingClientRect();
+    const left = offset.left;
+    const width = this.alpha.nativeElement.offsetWidth;
+    this.colorPickerService.setPositionAlpha($event, left, width);
     this.getPositionAlpha();
+    this.changeOpacity(this.colorPickerService.getPositionAlpha());
     return of(this.colorPickerService.positionAlpha);
   }
 
-  public setMoving(value) {
-    this.isMoving = value;
-  }
-
   public onMouseDownScheme($event) {
-    this.setMoving(true);
+    this.isMoving.scheme = true;
     this.setPositionScheme($event);
-    this.changeColorScheme($event);
   }
 
   public onMouseMoveScheme($event) {
-    if (!this.isMoving) {
+    if (!this.isMoving.scheme) {
       return;
     }
     this.setPositionScheme($event);
-    this.changeColorScheme($event);
   }
 
   public onMouseDownHue($event) {
-    this.setMoving(true);
+    this.isMoving.hue = true;
     this.setPositionHue($event);
-    this.changeColor($event);
   }
 
   public onMouseMoveHue($event) {
-    if (!this.isMoving) {
+    if (!this.isMoving.hue) {
       return;
     }
     this.setPositionHue($event);
-    this.changeColor($event);
   }
 
   public onMouseDownAlpha($event) {
-    this.setMoving(true);
+    this.isMoving.alpha = true;
     this.setPositionAlpha($event);
-    this.changeOpacity($event);
   }
 
   public onMouseMoveAlpha($event) {
-    if (!this.isMoving) {
+    if (!this.isMoving.alpha) {
       return;
     }
     this.setPositionAlpha($event);
-    this.changeOpacity($event);
   }
 
   getOpacityColor(): number {
@@ -311,18 +336,15 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.contextAlphaSlider.fillRect(0, 0, this.contextAlphaSlider.canvas.width, this.contextAlphaSlider.canvas.height);
   }
 
-  changeColorScheme($event) {
-    const x = $event.offsetX;
-    const y = $event.offsetY;
+  changeColorScheme(x, y) {
+    x = (x >= this.scheme.nativeElement.offsetWidth) ? (x - 1) : x;
     const imageData = this.contextScheme.getImageData(x, y, 1, 1).data;
     this.setColor(imageData);
     this.opacityGradient(this.getRgbaColor());
   }
 
-  changeColor($event) {
-    const x = $event.offsetX;
-    const y = $event.offsetY;
-    const imageData = this.contextHueSlider.getImageData(x, y, 1, 1).data;
+  changeColor(x) {
+    const imageData = this.contextHueSlider.getImageData((x - 1), 1, 1, 1).data;
     this.setColor(imageData);
     this.fillGradient();
     this.opacityGradient(this.getRgbaColor());
@@ -333,8 +355,8 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.getPositionSchemeY();
   }
 
-  changeOpacity($event) {
-    this.setOpacityColor(Math.round((100 * ($event.offsetX + 1) / $event.target.clientWidth)) / 100);
+  changeOpacity(x) {
+    this.setOpacityColor(Math.round(((100 * x) / this.alphaSlider.nativeElement.offsetWidth)) / 100);
     const imageDataAlpha = this.contextAlphaSlider.getImageData(this.contextAlphaSlider.canvas.width - 1, 1, 1, 1).data;
     this.setColor(imageDataAlpha);
   }
@@ -369,7 +391,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
       const selected: Array<number> = this.colorPickerHelpers.hexToRgb(this.selectedColor);
       const hsva = (this.selectedColor.length > 7) ? this.colorPickerHelpers.stringToHsva(this.selectedColor, true)
         : this.colorPickerHelpers.stringToHsva(this.selectedColor);
-      if (!this.isMoving && hsva !== null) {
+      if (!this.isMoving.scheme && !this.isMoving.hue && !this.isMoving.alpha && hsva !== null) {
         this.colorPickerService.positionHue = hsva.h * 144;
         this.colorPickerService.positionSchemeX = Math.floor((hsva.s * 230) - 8);
         this.colorPickerService.positionSchemeY = Math.floor(((1 - hsva.v) * 130) - 8);

@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ColorPickerService  {
+export class ColorPickerService {
 
   public positionSchemeX = 222;
 
@@ -21,22 +21,43 @@ export class ColorPickerService  {
 
   public presetColors: string[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   getPositionHue(): number {
     return this.positionHue;
   }
 
-  setPositionHue($event, offsetParent, offsetWidth) {
-    this.positionHue = $event.clientX - offsetParent - (offsetWidth / 2) - 4;
+  setPositionHue($event, left, width) {
+    if ($event.clientX > left && $event.clientX < (left + width)) {
+      this.positionHue = $event.clientX - left;
+    }
+
+    if ($event.clientX < left) {
+      this.positionHue = 1;
+    }
+
+    if ($event.clientX > (left + width)) {
+      this.positionHue = width;
+    }
   }
 
   getPositionAlpha(): number {
     return this.positionAlpha;
   }
 
-  setPositionAlpha($event, offsetParent, offsetWidth) {
-    this.positionAlpha = $event.clientX - offsetParent - (offsetWidth / 2) - 4;
+  setPositionAlpha($event, left, width) {
+    if ($event.clientX > left && $event.clientX < (left + width)) {
+      this.positionAlpha = $event.clientX - left;
+    }
+
+    if ($event.clientX < left) {
+      this.positionAlpha = 1;
+    }
+
+    if ($event.clientX > (left + width)) {
+      this.positionAlpha = width;
+    }
   }
 
   getPositionSchemeX(): number {
@@ -47,9 +68,51 @@ export class ColorPickerService  {
     return this.positionSchemeY;
   }
 
-  setPositionScheme($event, offsetLeft, offsetTop) {
-    this.positionSchemeX = $event.clientX - offsetLeft - 8;
-    this.positionSchemeY = $event.clientY - offsetTop - 8;
+  setPositionScheme($event, left, top, width, height, midCursorWidth) {
+    if ($event.clientX > left && $event.clientX < (left + width) && $event.clientY > top && $event.clientY < (top + height)) {
+      this.positionSchemeX = $event.clientX - left - midCursorWidth;
+      this.positionSchemeY = $event.clientY - top - midCursorWidth;
+    }
+
+    if ($event.clientX < left && $event.clientY > top && $event.clientY < (top + height)) {
+      this.positionSchemeX = -midCursorWidth;
+      this.positionSchemeY = $event.clientY - top - midCursorWidth;
+    }
+
+    if ($event.clientY < top && $event.clientX > left && $event.clientX < (left + width)) {
+      this.positionSchemeX = $event.clientX - left - midCursorWidth;
+      this.positionSchemeY = -midCursorWidth;
+    }
+
+    if ($event.clientX > (left + width) && $event.clientY > top && $event.clientY < (top + height)) {
+      this.positionSchemeX = width - midCursorWidth;
+      this.positionSchemeY = $event.clientY - top - midCursorWidth;
+    }
+
+    if ($event.clientY > (top + height) && $event.clientX > left && $event.clientX < (left + width)) {
+      this.positionSchemeX = $event.clientX - left - midCursorWidth;
+      this.positionSchemeY = height - midCursorWidth;
+    }
+
+    if ($event.clientX < left && $event.clientY < top) {
+      this.positionSchemeX = -midCursorWidth;
+      this.positionSchemeY = -midCursorWidth;
+    }
+
+    if ($event.clientY > (top + height) && $event.clientX < left) {
+      this.positionSchemeX = -midCursorWidth;
+      this.positionSchemeY = height - midCursorWidth;
+    }
+
+    if ($event.clientX > (left + width) && $event.clientY < top) {
+      this.positionSchemeX = width - midCursorWidth;
+      this.positionSchemeY = - midCursorWidth;
+    }
+
+    if ($event.clientY > (top + height) && $event.clientX > (left + width)) {
+      this.positionSchemeX = width - midCursorWidth;
+      this.positionSchemeY = height - midCursorWidth;
+    }
   }
 
   setOpacityColor(opacity) {

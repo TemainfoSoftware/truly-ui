@@ -32,22 +32,22 @@
   position: absolute;
 }
 
-.ui-colorpicker-alpha {
+.ui-colorpicker-select {
   margin-bottom: 3px;
   display: flex;
   padding: 4px 8px;
 }
 
-.ui-colorpicker-alpha .left {
+.ui-colorpicker-select .left {
   position: relative;
   padding: 0px 10px 0 5px;
 }
 
-.ui-colorpicker-alpha .left a {
+.ui-colorpicker-select .left a {
   cursor: pointer;
 }
 
-.ui-colorpicker-alpha .selected-color {
+.ui-colorpicker-select .selected-color {
   position: absolute;
   top: 0;
   left: 5px;
@@ -56,21 +56,21 @@
   border-radius: 50%;
 }
 
-.ui-colorpicker-alpha .selected-color-background {
+.ui-colorpicker-select .selected-color-background {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAh0lEQVRYR+2W0QlAMQgD60zdfwOdqa8TmI/wQMr5K0I5bZLIzLOa2nt37VVVbd+dDx5obgCC3KBLwJ2ff4PnVidkf+ucIhw80HQaCLo3DMH3CRK3iFsmAWVl6hPNDwt8EvNE5q+YuEXcMgkonVM6SdyCoEvAnZ8v1Hjx817MilmxSUB5rdLJDycZgUAZUch/AAAAAElFTkSuQmCC');
 }
 
-.ui-colorpicker-alpha .right {
+.ui-colorpicker-select .right {
   -webkit-flex: 1 1 auto;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 0 5px 0 10px;
 }
 
-.ui-colorpicker-alpha .hue {
+.ui-colorpicker-select .hue {
   direction: ltr;
   width: 100%;
   height: 14px;
@@ -79,7 +79,7 @@
   cursor: pointer;
 }
 
-.ui-colorpicker-alpha .alpha {
+.ui-colorpicker-select .alpha {
   direction: ltr;
   width: 100%;
   height: 14px;
@@ -89,11 +89,11 @@
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIWDwYQlZMa3gAAAWVJREFUaN7tmEGO6jAQRCsOArHgBpyAJYGjcGocxAm4A2IHpmoWE0eBH+ezmFlNvU06shJ3W6VEelWMUQAIIF9f6qZpimsA1LYtS2uF51/u27YVAFZVRUkEoGHdPV/sIcbIEIIkUdI/9Xa7neyv61+SWFUVAVCSct00TWn2fv6u3+Ecfd3tXzy/0+nEUu+SPjo/kqzrmiQpScN6v98XewfA8/lMkiLJ2WxGSUopcT6fM6U0NX9/frfbjev1WtfrlZfLhYfDQQHG/AIOlnGwjINlHCxjHCzjYJm/TJWdCwquJXseFFzGwDNNeiKMOJTO8xQdDQaeB29+K9efeLaBo9J7vdvtJj1RjFFjfiv7qv95tjx/7leSQgh93e1ffMeIp6O+YQjho/N791t1XVOSSI7N//K+4/GoxWLBx+PB5/Op5XLJ+/3OlJJWqxU3m83ovv5iGf8KjYNlHCxjHCzjYBkHy5gf5gusvQU7U37jTAAAAABJRU5ErkJggg==');
 }
 
-.ui-colorpicker-alpha canvas {
+.ui-colorpicker-select canvas {
   position: absolute;
 }
 
-.ui-colorpicker-alpha .cursor {
+.ui-colorpicker-select .cursor {
   position: relative;
   width: 16px;
   height: 16px;

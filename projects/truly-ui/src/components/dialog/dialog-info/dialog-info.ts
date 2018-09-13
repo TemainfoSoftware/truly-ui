@@ -19,10 +19,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
+import { TlButton } from '../../button/button';
 
 @Modal({
   icon: 'ion-information-circled',
@@ -41,7 +42,7 @@ import { Modal } from '../../modal/modal-options';
     templateUrl: './dialog-info.html',
     styleUrls: ['../dialog.scss']
 })
-export class TlDialogInfo extends DialogDefaultBehavior implements AfterViewInit {
+export class TlDialogInfo extends DialogDefaultBehavior implements OnInit {
 
     title = '';
 
@@ -51,14 +52,15 @@ export class TlDialogInfo extends DialogDefaultBehavior implements AfterViewInit
       return this.i18n.getLocale().Dialog.textOk;
     }
 
-    @ViewChild('button') button;
+    @ViewChild( TlButton ) button: TlButton;
 
     constructor( private i18n: I18nService ) {
         super();
     }
 
-    ngAfterViewInit() {
-        this.buttonAction = this.button;
+    ngOnInit() {
+      this.button.setFocus();
     }
+
 }
 

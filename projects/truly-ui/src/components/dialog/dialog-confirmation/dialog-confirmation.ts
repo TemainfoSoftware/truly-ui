@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
 import { I18nService } from '../../i18n/i18n.service';
 import { Modal } from '../../modal/modal-options';
@@ -41,7 +41,7 @@ import { Modal } from '../../modal/modal-options';
     templateUrl: './dialog-confirmation.html',
     styleUrls: ['../dialog.scss']
 })
-export class TlDialogConfirmation implements AfterViewInit {
+export class TlDialogConfirmation implements OnInit {
 
     message = '';
 
@@ -61,11 +61,9 @@ export class TlDialogConfirmation implements AfterViewInit {
 
     constructor(  private i18n: I18nService ) {}
 
-    ngAfterViewInit() {
-        setTimeout( () => {
-            this.defaultOK === true || this.defaultOK === undefined ? this.buttonDialogOk.buttonElement.nativeElement.focus() :
-                this.buttonDialogCancel.buttonElement.nativeElement.focus();
-        }, 1 );
+    ngOnInit() {
+      this.defaultOK === true || this.defaultOK === undefined ? this.buttonDialogOk.buttonElement.nativeElement.focus() :
+        this.buttonDialogCancel.buttonElement.nativeElement.focus();
     }
 
     onkeyup( $event: KeyboardEvent ) {

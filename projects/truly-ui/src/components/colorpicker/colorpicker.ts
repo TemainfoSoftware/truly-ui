@@ -35,12 +35,27 @@ import {TlButton} from '../button/button';
 import {CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
 import {ColorPickerService} from './parts/colorpicker-content/colorpicker-service';
 import {ColorPickerHelpers} from './parts/colorpicker-content/colorpicker-helpers';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'tl-colorpicker',
   templateUrl: './colorpicker.html',
   styleUrls: ['./colorpicker.scss'],
-  providers: [ColorPickerService, ColorPickerHelpers]
+  providers: [ColorPickerService, ColorPickerHelpers],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition( ':enter', [
+          style( { transform: 'translateX(100%)', opacity: 0 } ),
+          animate( '250ms', style( { transform: 'translateX(0)', opacity: 1 } ) )
+        ] ),
+        transition( ':leave', [
+          style( { transform: 'translateX(0)', opacity: 1 } ),
+          animate( '250ms', style( { transform: 'translateX(100%)', opacity: 0 } ) )
+        ] )
+      ]
+    )
+  ]
 })
 export class TlColorPicker implements OnInit, AfterContentInit {
 
@@ -82,9 +97,13 @@ export class TlColorPicker implements OnInit, AfterContentInit {
 
   public isOpen = false;
 
+  public saved = false;
+
   public positionOverlay = '';
 
   public selectedColor = '#FF0000';
+
+  private interval;
 
   constructor(private renderer: Renderer2, private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {}
 
@@ -120,6 +139,15 @@ export class TlColorPicker implements OnInit, AfterContentInit {
     inputElement.input.nativeElement.select();
     document.execCommand('copy');
     inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);
+    this.showCopyMessage();
+  }
+
+  private showCopyMessage() {
+    this.saved = true;
+    clearInterval( this.interval );
+    this.interval = setInterval( () => {
+      this.saved = false;
+    }, 1000 );
   }
 
   closeColorPicker(selectedColor) {

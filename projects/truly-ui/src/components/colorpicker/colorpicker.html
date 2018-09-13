@@ -16,6 +16,10 @@
                 [iconAfter]="(copyButton) ? 'fa fa-clipboard' : null"
                 (clickAddon)="copyInputColor(tlinput)">
       </tl-input>
+      <div class="ui-saved-content-message" [@enterAnimation]="saved" *ngIf="saved">
+        <i class="ion-ios-checkmark-outline"></i>
+        <span>Copied!</span>
+      </div>
     </div>
     <ng-template cdkConnectedOverlay
                  (backdropClick)="closeColorPicker(selectedColor)"

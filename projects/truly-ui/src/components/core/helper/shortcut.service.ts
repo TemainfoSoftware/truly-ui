@@ -59,6 +59,8 @@ export class ShortcutService implements OnDestroy {
     } ));
     if ( !listener ) {
       this.subscription.add(document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+        $event.preventDefault();
+        $event.stopPropagation();
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
           return;
         }

@@ -20,15 +20,15 @@
  SOFTWARE.
  */
 import {
-  Component, Optional, Inject, ContentChildren, QueryList, Input, ViewChild, AfterViewInit, Output,
+  Component, ContentChild, ContentChildren, QueryList, Input, ViewChild, AfterViewInit, Output,
   EventEmitter, OnChanges,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { KeyEvent } from '../core/enums/key-events';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import { ElementBase } from '../input/core/element-base';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 const Orientation = {
   VERTICAL: 'vertical',
@@ -43,7 +43,7 @@ const Orientation = {
     [ MakeProvider( TlRadioGroup ) ]
   ]
 } )
-export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
+export class TlRadioGroup extends ValueAccessorBase<string> implements AfterViewInit {
 
   public itemSelected;
 
@@ -59,7 +59,9 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   @ViewChild( 'radiobutton' ) radiobutton;
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @ContentChildren( TlRadioButton ) listRadioButton: QueryList<TlRadioButton>;
 
@@ -67,10 +69,8 @@ export class TlRadioGroup extends ElementBase<string> implements AfterViewInit {
 
   @Output() private onFocusRadio: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-    @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>) {
-    super(validators, asyncValidators);
+  constructor() {
+    super();
   }
 
   ngAfterViewInit() {

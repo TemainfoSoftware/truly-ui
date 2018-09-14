@@ -27,15 +27,16 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output, Renderer2,
+  Output,
+  Renderer2,
   ViewChild
 } from '@angular/core';
-import {TlInput} from '../input/input';
-import {TlButton} from '../button/button';
-import {CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
-import {ColorPickerService} from './parts/colorpicker-content/colorpicker-service';
-import {ColorPickerHelpers} from './parts/colorpicker-content/colorpicker-helpers';
-import {animate, style, transition, trigger} from '@angular/animations';
+import { TlInput } from '../input/input';
+import { TlButton } from '../button/button';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
+import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-helpers';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'tl-colorpicker',
@@ -82,6 +83,8 @@ export class TlColorPicker implements OnInit, AfterContentInit {
   @Input() returnFormatColor = false;
 
   @Input() copyButton = false;
+
+  @Input() openFocus = false;
 
   @Input() elementOrigin;
 
@@ -142,7 +145,7 @@ export class TlColorPicker implements OnInit, AfterContentInit {
     this.showCopyMessage();
   }
 
-  private showCopyMessage() {
+  showCopyMessage() {
     this.saved = true;
     clearInterval( this.interval );
     this.interval = setInterval( () => {

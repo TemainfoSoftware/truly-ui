@@ -101,8 +101,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   private isMoving: ColorPickerMovable = { scheme: false, hue: false, alpha: false };
 
-  public formatColor = false;
-
   public presetColors: string[];
 
   constructor(private renderer: Renderer2,
@@ -142,53 +140,44 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     });
   }
 
-  getPositionSchemeX(): void {
-    this.positionSchemeX = this.colorPickerService.getPositionSchemeX();
+  getPositionSchemeX(): number {
+    return this.colorPickerService.getPositionSchemeX();
   }
 
-  getPositionSchemeY(): void {
-    this.positionSchemeY = this.colorPickerService.getPositionSchemeY();
+  getPositionSchemeY(): number {
+    return this.colorPickerService.getPositionSchemeY();
   }
 
   setPositionScheme($event): Observable<number> {
     const offset = this.content.nativeElement.getBoundingClientRect();
-    const left = offset.left;
-    const top = offset.top;
     const width = this.scheme.nativeElement.offsetWidth;
     const height = this.scheme.nativeElement.offsetHeight;
     const midCursorWidth = this.cursorScheme.nativeElement.offsetWidth / 2;
-    this.colorPickerService.setPositionScheme($event, left, top, width, height, midCursorWidth);
-    this.getPositionSchemeX();
-    this.getPositionSchemeY();
-    this.changeColorScheme(this.colorPickerService.getPositionSchemeX() + midCursorWidth,
-      this.colorPickerService.getPositionSchemeY() + midCursorWidth);
+    this.colorPickerService.setPositionScheme($event, offset.left, offset.top, width, height, midCursorWidth);
+    this.changeColorScheme(this.getPositionSchemeX() + midCursorWidth, this.getPositionSchemeY() + midCursorWidth);
     return of(this.colorPickerService.positionSchemeX, this.colorPickerService.positionSchemeY);
   }
 
-  getPositionHue(): void {
-    this.positionHue = this.colorPickerService.getPositionHue();
+  getPositionHue(): number {
+    return this.colorPickerService.getPositionHue();
   }
 
   setPositionHue($event): Observable<number> {
     const offset = this.hue.nativeElement.getBoundingClientRect();
-    const left = offset.left;
     const width = this.hue.nativeElement.offsetWidth;
-    this.colorPickerService.setPositionHue($event, left, width);
-    this.getPositionHue();
+    this.colorPickerService.setPositionHue($event, offset.left, width);
     this.changeColor(this.colorPickerService.getPositionHue());
     return of(this.colorPickerService.positionHue);
   }
 
-  getPositionAlpha(): void {
-    this.positionAlpha = this.colorPickerService.getPositionAlpha();
+  getPositionAlpha(): number {
+    return this.colorPickerService.getPositionAlpha();
   }
 
   setPositionAlpha($event): Observable<number> {
     const offset = this.alpha.nativeElement.getBoundingClientRect();
-    const left = offset.left;
     const width = this.alpha.nativeElement.offsetWidth;
-    this.colorPickerService.setPositionAlpha($event, left, width);
-    this.getPositionAlpha();
+    this.colorPickerService.setPositionAlpha($event, offset.left, width);
     this.changeOpacity(this.colorPickerService.getPositionAlpha());
     return of(this.colorPickerService.positionAlpha);
   }
@@ -257,13 +246,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.colorPickerService.setRgbaColorPreview(color);
     this.getRgbaColorPreview();
     return of(this.colorPickerService.rgbaColorPreview);
-  }
-
-  getColorFormat() {
-    if (this.formatColor) {
-      return this.colorPickerHelpers.hexToRgbString(this.selectedColor);
-    }
-    return this.selectedColor;
   }
 
   createCanvasScheme() {
@@ -392,24 +374,16 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
       const hsva = (this.selectedColor.length > 7) ? this.colorPickerHelpers.stringToHsva(this.selectedColor, true)
         : this.colorPickerHelpers.stringToHsva(this.selectedColor);
       if (!this.isMoving.scheme && !this.isMoving.hue && !this.isMoving.alpha && hsva !== null) {
-        this.colorPickerService.positionHue = hsva.h * 144;
-        this.colorPickerService.positionSchemeX = Math.floor((hsva.s * 230) - 8);
-        this.colorPickerService.positionSchemeY = Math.floor(((1 - hsva.v) * 130) - 8);
-        this.colorPickerService.positionAlpha = hsva.a * 144;
-        this.getPositionHue();
-        this.getPositionSchemeX();
-        this.getPositionSchemeY();
-        this.getPositionAlpha();
-
+        this.colorPickerService.setPositionHueManual(hsva.h * 144);
+        this.colorPickerService.setPositionSchemeManual(Math.floor((hsva.s * 230) - 8), Math.floor(((1 - hsva.v) * 130) - 8));
+        this.colorPickerService.setPositionAlphaManual(hsva.a * 144);
         this.deleteCanvasHue();
         this.createCanvasHue();
         const imageDataHue = this.contextHueSlider.getImageData(hsva.h * 144, 1, 1, 1).data;
         this.setRgbaColor('rgba(' + imageDataHue[0] + ',' + imageDataHue[1] + ',' + imageDataHue[2] + ',1)');
         this.setRgbaColorPreview('rgba(' + selected[0] + ',' + selected[1] + ',' + selected[2] + ',1)');
-
         this.deleteCanvasAlpha();
         this.createCanvasAlpha(this.getRgbaColorPreview());
-
         this.deleteCanvasScheme();
         this.createCanvasScheme();
       }

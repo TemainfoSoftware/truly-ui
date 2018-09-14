@@ -1,12 +1,14 @@
 <div class="tl-colorpicker" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-  <div *ngIf="mode !== 'inline' && mode !== 'fromOrigin'" #colorBox class="ui-color-box" (click)="isOpen = !isOpen" [style.background]="selectedColor"></div>
+  <div *ngIf="mode !== 'inline' && mode !== 'fromOrigin'" #colorBox class="ui-color-box" (click)="(!disabled) ? isOpen = !isOpen : null" [style.background]="selectedColor"></div>
   <div class="ui-input-wrapper">
     <div *ngIf="mode === 'input'">
       <tl-input #tlinput
                 [label]="label"
                 [labelSize]="labelSize"
                 [name]="name"
-                (click)="isOpen = !isOpen"
+                (focus)="(openFocus) ? isOpen = !isOpen : null"
+                (focusout)="(openFocus) ? isOpen = !isOpen : null"
+                (click)="(!disabled) ? isOpen = !isOpen : null"
                 [textAlign]="textAlign"
                 [labelPlacement]="labelPlacement"
                 [(ngModel)]="selectedColor"
@@ -16,9 +18,11 @@
                 [iconAfter]="(copyButton) ? 'fa fa-clipboard' : null"
                 (clickAddon)="copyInputColor(tlinput)">
       </tl-input>
-      <div class="ui-saved-content-message" [@enterAnimation]="saved" *ngIf="saved">
-        <i class="ion-ios-checkmark-outline"></i>
-        <span>Copied!</span>
+      <div class="message">
+        <div class="copy-message" [@enterAnimation]="saved" *ngIf="saved">
+          <i class="ion-ios-checkmark-outline"></i>
+          <span>Copied!</span>
+        </div>
       </div>
     </div>
     <ng-template cdkConnectedOverlay

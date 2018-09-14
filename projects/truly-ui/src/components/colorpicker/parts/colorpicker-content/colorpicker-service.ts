@@ -42,6 +42,10 @@ export class ColorPickerService {
     }
   }
 
+  setPositionHueManual(pos) {
+    this.positionHue = pos;
+  }
+
   getPositionAlpha(): number {
     return this.positionAlpha;
   }
@@ -58,6 +62,10 @@ export class ColorPickerService {
     if ($event.clientX > (left + width)) {
       this.positionAlpha = width;
     }
+  }
+
+  setPositionAlphaManual(pos) {
+    this.positionAlpha = pos;
   }
 
   getPositionSchemeX(): number {
@@ -113,6 +121,11 @@ export class ColorPickerService {
       this.positionSchemeX = width - midCursorWidth;
       this.positionSchemeY = height - midCursorWidth;
     }
+  }
+
+  setPositionSchemeManual(posX, posY) {
+    this.positionSchemeX = posX;
+    this.positionSchemeY = posY;
   }
 
   setOpacityColor(opacity) {

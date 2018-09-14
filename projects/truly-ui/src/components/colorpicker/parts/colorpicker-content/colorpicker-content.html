@@ -3,7 +3,7 @@
   <div #content class="ui-colorpicker-content">
     <div class="ui-colorpicker-scheme" (mousedown)="onMouseDownScheme($event)">
       <canvas #scheme width="230" height="130"></canvas>
-      <div #cursorScheme class="cursor" [style.left.px]="positionSchemeX" [style.top.px]="positionSchemeY"></div>
+      <div #cursorScheme class="cursor" [style.left.px]="getPositionSchemeX()" [style.top.px]="getPositionSchemeY()"></div>
     </div>
     <div class="ui-colorpicker-select">
       <div class="left">
@@ -15,25 +15,15 @@
       <div class="right">
         <div #hue class="hue" (mousedown)="onMouseDownHue($event)">
           <canvas #hueSlider width="144" height="14"></canvas>
-          <div class="cursor" [style.left.px]="positionHue"></div>
+          <div class="cursor" [style.left.px]="getPositionHue()"></div>
         </div>
         <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)">
           <canvas #alphaSlider width="144" height="14"></canvas>
-          <div class="cursor" [style.left.px]="positionAlpha"></div>
+          <div class="cursor" [style.left.px]="getPositionAlpha()"></div>
         </div>
       </div>
     </div>
-    <div class="ui-colorpicker-return" *ngIf="returnFormatColor === true">
-      <div class="display">
-        <div class="left">
-          <input readonly type="text" [ngModel]="getColorFormat()" spellcheck="false">
-        </div>
-        <div class="right">
-          <i class="ion-code rotate-90" (click)="formatColor = !formatColor"></i>
-        </div>
-      </div>
-      <span>{{ (!formatColor) ? 'HEX' : 'RGBA' }}</span>
-    </div>
+    <tl-colorpicker-input *ngIf="returnFormatColor === true" [selectedColor]="selectedColor"></tl-colorpicker-input>
     <div class="ui-colorpicker-preset" *ngIf="presetColors.length !== 0 && recentColors === true">
       <div class="preset-color" *ngFor="let color of presetColors.slice().reverse()" (click)="changeColorByPreset(color)" [style.backgroundColor]="color"></div>
     </div>

@@ -20,10 +20,14 @@
   display: table-cell;
 }
 
-.ui-saved-content-message {
+.ui-input-wrapper .message {
   position: absolute;
+  overflow: hidden;
   top: 0;
   right: 55px;
+}
+
+.ui-input-wrapper .copy-message {
   background: #333;
   color: #fff;
   padding: 1px 5px 2px 1px;

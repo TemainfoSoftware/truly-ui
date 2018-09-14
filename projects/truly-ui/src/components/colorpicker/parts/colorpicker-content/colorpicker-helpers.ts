@@ -95,22 +95,17 @@ export class ColorPickerHelpers {
         }
       }
     }
-
     return hsva;
   }
 
   public rgbaToHsva(rgba: Rgba): Hsva {
     let h: number, s: number;
-
     const r = Math.min(rgba.r, 1), g = Math.min(rgba.g, 1);
     const b = Math.min(rgba.b, 1), a = Math.min(rgba.a, 1);
-
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
-
     const v: number = max, d = max - min;
 
     s = (max === 0) ? 0 : d / max;
-
     if (max === min) {
       h = 0;
     } else {
@@ -127,10 +122,8 @@ export class ColorPickerHelpers {
         default:
           h = 0;
       }
-
       h /= 6;
     }
-
     return new Hsva(h, s, v, a);
   }
 
@@ -142,7 +135,6 @@ export class ColorPickerHelpers {
       return new Hsva(h, 0, 0, a);
     } else {
       const v = l + s * (1 - Math.abs(2 * l - 1)) / 2;
-
       return new Hsva(h, 2 * (v - l) / v, v, a);
     }
   }

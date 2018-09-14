@@ -7,6 +7,7 @@ import { InputModule } from '../input';
 import { ButtonModule } from '../button';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-content';
+import { TlColorPickerInput } from './parts/colorpicker-content/colorpicker-input/colorpicker-input';
 
 @NgModule({
   imports: [
@@ -18,11 +19,13 @@ import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-co
   ],
   declarations: [
     TlColorPicker,
-    TlColorPickerContent
+    TlColorPickerContent,
+    TlColorPickerInput
   ],
   exports: [
     TlColorPicker,
-    TlColorPickerContent
+    TlColorPickerContent,
+    TlColorPickerInput
   ]
 })
 export class ColorPickerModule {}

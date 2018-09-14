@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 
 import * as json from './colorpickerdemo-dataproperties.json';
 import * as jsonEvts from './colorpickerdemo.dataevents.json';

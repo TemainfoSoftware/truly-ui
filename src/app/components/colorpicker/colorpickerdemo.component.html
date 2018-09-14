@@ -30,6 +30,8 @@
                 </div>
                 <div class="col-md-6">
                   <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [copyButton]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <br>
+                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [copyButton]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                 </div>
               </div>
               <button #botao>click</button>

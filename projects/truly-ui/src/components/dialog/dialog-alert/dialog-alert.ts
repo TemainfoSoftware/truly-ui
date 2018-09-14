@@ -19,12 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
+import { TlButton } from '../../button/button';
 
-@Modal({
+@Modal( {
   icon: 'ion-alert-circled',
   title: 'Alert',
   color: 'warning',
@@ -35,27 +36,27 @@ import { Modal } from '../../modal/modal-options';
   minimizable: false,
   backdrop: true,
   closeOnOK: true
-})
-@Component({
-    selector: 'tl-dialog-alert',
-    templateUrl: './dialog-alert.html',
-    styleUrls: ['../dialog.scss']
-})
-export class TlDialogAlert extends DialogDefaultBehavior implements AfterViewInit {
+} )
+@Component( {
+  selector: 'tl-dialog-alert',
+  templateUrl: './dialog-alert.html',
+  styleUrls: [ '../dialog.scss' ]
+} )
+export class TlDialogAlert extends DialogDefaultBehavior implements OnInit {
 
-    @ViewChild('button') button;
+  @ViewChild( TlButton ) button: TlButton;
 
-    message = '';
+  message = '';
 
-    get textClose() {
-      return this.i18n.getLocale().Dialog.textClose;
-    }
+  get textClose() {
+    return this.i18n.getLocale().Dialog.textClose;
+  }
 
-    constructor( private i18n: I18nService ) {
-        super();
-    }
+  constructor( private i18n: I18nService ) {
+    super();
+  }
 
-    ngAfterViewInit() {
-        this.buttonAction = this.button;
-    }
+  ngOnInit() {
+    this.button.setFocus();
+  }
 }

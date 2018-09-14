@@ -24,8 +24,6 @@ import { KeyEvent } from '../core/enums/key-events';
 
 export class DialogDefaultBehavior {
 
-    public buttonAction;
-
     constructor() {}
 
     onKeyDown( $event: KeyboardEvent ) {

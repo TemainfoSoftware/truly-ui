@@ -1,30 +1,59 @@
-.tl-colorpicker {
+.ui-form-control {
   width: 100%;
   display: table;
+}
+
+.ui-form-control .right {
+  display: table-cell;
+}
+
+.ui-overlay {
+  width: 100%;
+  display: flex;
 }
 
 .ui-color-box {
   width: 35px;
   height: 23px;
   border: 1px solid #ccc;
-  display: table-cell;
-}
-
-.ui-copy-box {
-  width: 60px;
-  height: 23px;
-  display: table-cell;
 }
 
 .ui-input-wrapper {
-  display: table-cell;
+  width: 100%;
+  position: relative;
 }
 
 .ui-input-wrapper .message {
   position: absolute;
   overflow: hidden;
   top: 0;
-  right: 55px;
+  right: 40px;
+}
+
+.label {
+  line-height: 1;
+  width: 100px;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-weight: normal;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-size: 0.9em;
+}
+
+.label.-labeltop {
+  text-align: left;
+  padding: 0 0 5px 0;
+  display: table-caption;
+}
+
+.label.-labelleft {
+  text-align: right;
+  padding: 4px 4px 4px 0;
+  display: table-cell;
+}
+
+.label.-validation {
+  font-size: 0.7em;
 }
 
 .ui-input-wrapper .copy-message {

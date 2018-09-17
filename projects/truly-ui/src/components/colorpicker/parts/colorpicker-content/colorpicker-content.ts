@@ -187,6 +187,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
     this.setPositionScheme($event);
   }
 
+
   public onMouseMoveScheme($event) {
     if (!this.isMoving.scheme) {
       return;

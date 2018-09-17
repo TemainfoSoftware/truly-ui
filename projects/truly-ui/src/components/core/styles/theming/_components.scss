@@ -7,6 +7,7 @@
 @import "../../../chatlist/chatlist-theme";
 @import "../../../checkbox/checkbox-theme";
 @import "../../../contextmenu/contextmenu-theme";
+@import "../../../colorpicker/colorpicker-theme";
 @import "../../../core/core";
 @import "../../../datatable/datatable-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
@@ -43,6 +44,7 @@
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-contextmenu-theme($theme);
+  @include tl-colorpicker-theme($theme);
   @include tl-core-theme($theme);
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);

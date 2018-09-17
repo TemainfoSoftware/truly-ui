@@ -24,6 +24,7 @@ import {
   AfterContentInit,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   EventEmitter,
   Input,
   OnInit,
@@ -33,16 +34,32 @@ import {
 } from '@angular/core';
 import { TlInput } from '../input/input';
 import { TlButton } from '../button/button';
-import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
+import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  ConnectedOverlayPositionChange
+} from '@angular/cdk/overlay';
+import {
+  animate,
+  style,
+  transition,
+  trigger
+} from '@angular/animations';
 import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-helpers';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
+import { KeyEvent} from '../core/enums/key-events';
+import { ValueAccessorBase} from '../input/core/value-accessor';
+import {
+  FormControlName,
+  NgModel
+} from '@angular/forms';
+import { MakeProvider } from '../core/base/value-accessor-provider';
 
 @Component({
   selector: 'tl-colorpicker',
   templateUrl: './colorpicker.html',
   styleUrls: ['./colorpicker.scss'],
-  providers: [ColorPickerService, ColorPickerHelpers],
+  providers: [ ColorPickerService, ColorPickerHelpers, MakeProvider(TlColorPicker)],
   animations: [
     trigger(
       'enterAnimation', [
@@ -58,11 +75,11 @@ import { animate, style, transition, trigger } from '@angular/animations';
     )
   ]
 })
-export class TlColorPicker implements OnInit, AfterContentInit {
+export class TlColorPicker extends ValueAccessorBase<string> implements OnInit, AfterContentInit {
 
   @Input() label = '';
 
-  @Input() labelSize = '';
+  @Input() labelSize = '100px';
 
   @Input() name = '';
 
@@ -88,6 +105,10 @@ export class TlColorPicker implements OnInit, AfterContentInit {
 
   @Input() elementOrigin;
 
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
+
   @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
 
   @ViewChild( TlInput ) tlinput;
@@ -104,11 +125,13 @@ export class TlColorPicker implements OnInit, AfterContentInit {
 
   public positionOverlay = '';
 
-  public selectedColor = '#FF0000';
+  public required = false;
 
   private interval;
 
-  constructor(private renderer: Renderer2, private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {}
+  constructor(private renderer: Renderer2, private change: ChangeDetectorRef, private colorPickerService: ColorPickerService) {
+    super();
+  }
 
   ngOnInit() {
     this.listClickElementOrgin();
@@ -134,7 +157,7 @@ export class TlColorPicker implements OnInit, AfterContentInit {
   }
 
   emitSelectColor($event) {
-    this.selectedColor = $event.hex;
+    this.value = $event.hex;
     this.selectColor.emit($event);
   }
 
@@ -153,9 +176,26 @@ export class TlColorPicker implements OnInit, AfterContentInit {
     }, 1000 );
   }
 
-  closeColorPicker(selectedColor) {
+  keyDown($event) {
+    switch ($event.keyCode) {
+      case KeyEvent.TAB:
+        this.isOpen = !this.isOpen;
+        break;
+      case KeyEvent.ESCAPE:
+        this.isOpen = !this.isOpen;
+        break;
+      case KeyEvent.ARROWUP:
+        this.isOpen = !this.isOpen;
+        break;
+      case KeyEvent.ARROWDOWN:
+        this.isOpen = !this.isOpen;
+        break;
+    }
+  }
+
+  closeColorPicker() {
     this.isOpen = false;
-    this.colorPickerService.setPresetColor(selectedColor);
+    this.colorPickerService.setPresetColor(this.value);
   }
 
   validFromOrigin() {

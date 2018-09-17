@@ -16,29 +16,39 @@
               <div class="row">
                 <div class="col-md-6">
                   <h5>Inline</h5>
-                  <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" [recentColors]="true" [ngModel]="'#5EC791'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" [ngModel]="'#5EC791'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
                 </div>
                 <div class="col-md-6">
                   <h5>Input</h5>
-                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" [ngModel]="'#f44336'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <div class="spacer"></div>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'input'" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'input'" [returnFormatColor]="true" [openFocus]="true" [ngModel]="'#f44336'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
-                  <div class="spacer"></div>
-                  <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                </div>
+              </div>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5>Copy Button</h5>
+                  <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [ngModel]="'#9c27b0'" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <div class="spacer"></div>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [ngModel]="'#9c27b0'" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
-                  <div class="spacer"></div>
-                  <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                </div>
+                <div class="col-md-6">
+                  <h5>Label</h5>
+                  <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [ngModel]="'#3f51b5'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <div class="spacer"></div>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [ngModel]="'#3f51b5'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
                 </div>
               </div>
@@ -51,17 +61,17 @@
                   <h5>From Origin</h5>
                   <button #button><i class="fa fa-paint-brush"></i> Color Picker</button>
                   <div class="spacer"></div>
-                  <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [ngModel]="'#2196f3'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [ngModel]="'#2196f3'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
                 </div>
                 <div class="col-md-6">
                   <h5>Only Color</h5>
-                  <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" [ngModel]="'#4caf50'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   <div class="spacer"></div>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                    <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                    <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" [ngModel]="'#4caf50'" (selectColor)="onSelectColor($event)"></tl-colorpicker>
                   </textarea>
                 </div>
               </div>

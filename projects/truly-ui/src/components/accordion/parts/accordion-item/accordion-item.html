@@ -1,5 +1,4 @@
-<div class="ui-wrapper-accordion-item"
-     [style.max-height]="opened ? '1000px' : heightHeader">
+<div class="ui-wrapper-accordion-item">
   <div class="ui-accordion-item-header"
        [ngClass]="{'opened': opened}"
        [style.height]="heightHeader"
@@ -12,7 +11,10 @@
     <span>{{title}}</span>
   </div>
 
-  <div [@enterAnimation]="true" *ngIf="opened" class="ui-accordion-item-content">
+  <div #panel
+       [style.max-height]="opened ? '200px' : 0"
+       [style.display]="'block' ? opened : 'none'"
+       class="ui-accordion-item-content">
       <ng-content></ng-content>
   </div>
 

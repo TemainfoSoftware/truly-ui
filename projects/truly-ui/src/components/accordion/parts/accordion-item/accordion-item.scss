@@ -2,12 +2,6 @@
   user-select: none;
 }
 
-.ui-wrapper-accordion-item {
-  height: auto;
-  max-height: 1000px;
-  transition: max-height 500ms linear;
-}
-
 .ui-accordion-item-header {
   display: grid;
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
@@ -26,7 +20,10 @@
 }
 
 .ui-accordion-item-content {
-  padding: 10px;
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 500ms linear;
 }
 
 

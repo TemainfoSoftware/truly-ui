@@ -21,13 +21,13 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'selectColor',
     parameters: [
       {
         event: 'selected',
-        description: 'Action Selected'
+        description: 'Color Selected'
       }
     ],
-    description: 'Callback to invoke when toogle event.',
+    description: 'Dispatched when a color is selected.',
   },
 ];

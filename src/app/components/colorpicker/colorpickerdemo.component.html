@@ -4,8 +4,7 @@
       class="module-name"><code><u>Module Name</u>: <strong>ColorPickerModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>ColorPickerModule</strong></code></p>
     <p class="text-content">
-      The Truly-UI ColorPicker are styles for actions in forms, dialogs, and more with support for multiple sizes, states
-      and many properties for customization
+      ColorPicker is a field with color palets  that overlay it and return the selected color.
     </p>
   </div>
   <div class="showcase">
@@ -14,32 +13,58 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic</h5>
               <div class="row">
                 <div class="col-md-6">
-                  <tl-colorpicker [mode]="'inline'" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <h5>Inline</h5>
+                  <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'inline'" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
                 </div>
                 <div class="col-md-6">
-                  <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" [copyButton]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <h5>Input</h5>
+                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <div class="spacer"></div>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'input'" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
+                  <div class="spacer"></div>
+                  <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <div class="spacer"></div>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'input'" [copyButton]="true" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
+                  <div class="spacer"></div>
+                  <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <div class="spacer"></div>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'input'" [label]="'Color Picker'" [labelSize]="'100px'" [recentColors]="true" [returnFormatColor]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
                 </div>
               </div>
-              <div class="spacer"></div>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
               <div class="row">
                 <div class="col-md-6">
-                  <tl-colorpicker (selectColor)="onSelectColor($event)" [mode]="'fromOrigin'" [elementOrigin]="botao" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <h5>From Origin</h5>
+                  <button #button><i class="fa fa-paint-brush"></i> Color Picker</button>
+                  <div class="spacer"></div>
+                  <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
                 </div>
                 <div class="col-md-6">
-                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [copyButton]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
-                  <br>
-                  <tl-colorpicker [mode]="'input'" [recentColors]="true" [returnFormatColor]="true" [copyButton]="true" [openFocus]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <h5>Only Color</h5>
+                  <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  <div class="spacer"></div>
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                    <tl-colorpicker [mode]="'onlyColor'" [recentColors]="true" [returnFormatColor]="true" (selectColor)="onSelectColor($event)"></tl-colorpicker>
+                  </textarea>
                 </div>
               </div>
-              <button #botao>click</button>
-              <br>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-colorpicker></tl-colorpicker>
-              </textarea>
             </div>
           </app-card>
         </app-showcase-card>

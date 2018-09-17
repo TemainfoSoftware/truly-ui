@@ -2,22 +2,24 @@
 
 @mixin _tl-colorpicker-theme-schema( $theme, $action ){
   //SKELETON COMPONENT HERE
-}
-
-@mixin tl-colorpicker-theme( $theme ) {
 
   $basic: map-deep-get($theme, 'basic');
   $danger: map-deep-get($theme, 'danger');
   $success: map-deep-get($theme, 'success');
   $warning: map-deep-get($theme, 'warning');
 
-  .tl-colorpicker{
-    .label {
-      color: map-deep-get($basic, "default", "foreground");
-      &.-validation {
-        color: map-deep-get($danger, "default", "background");
-      }
+  .label {
+    color: map-deep-get($basic, "default", "foreground");
+    &.-validation {
+      color: map-deep-get($danger, "default", "background");
     }
+  }
+
+}
+
+@mixin tl-colorpicker-theme( $theme ) {
+
+  .tl-colorpicker {
 
     &.basic {
       @include _tl-colorpicker-theme-schema($theme, 'basic')

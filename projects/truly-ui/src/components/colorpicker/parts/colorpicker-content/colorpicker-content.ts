@@ -67,6 +67,8 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   @Input() returnFormatColor = false;
 
+  @Input() color = 'basic';
+
   @Output('selectColor') selectColor: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;

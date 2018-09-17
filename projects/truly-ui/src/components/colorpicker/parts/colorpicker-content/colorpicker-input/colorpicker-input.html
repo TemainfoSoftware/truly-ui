@@ -1,4 +1,4 @@
-<div class="ui-colorpicker-input">
+<div [class]="'ui-colorpicker-input ' + color">
   <div class="display">
     <div class="left">
       <input #inputColor readonly type="text" (click)="copyInputColor()" [ngModel]="getColorFormat()" spellcheck="false">

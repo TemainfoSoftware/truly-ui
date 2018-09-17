@@ -1,4 +1,4 @@
-<div class="tl-colorpicker">
+<div [class]="'tl-colorpicker ' + color">
   <div class="ui-form-control">
     <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}
       <b *ngIf="required" style="color: #FF6666">*</b></label>

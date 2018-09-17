@@ -1,5 +1,5 @@
 <div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'" @overlay></div>
-<div class="ui-wrapper-colorpicker-content" @overlay>
+<div [class]="'ui-wrapper-colorpicker-content ' + color" @overlay>
   <div #content class="ui-colorpicker-content">
     <div class="ui-colorpicker-scheme" (mousedown)="onMouseDownScheme($event)">
       <canvas #scheme width="230" height="130"></canvas>
@@ -25,7 +25,7 @@
     </div>
     <tl-colorpicker-input *ngIf="returnFormatColor === true" [selectedColor]="selectedColor"></tl-colorpicker-input>
     <div class="ui-colorpicker-preset" *ngIf="presetColors.length !== 0 && recentColors === true">
-      <div class="preset-color" *ngFor="let color of presetColors.slice().reverse()" (click)="changeColorByPreset(color)" [style.backgroundColor]="color"></div>
+      <div class="preset-color" *ngFor="let preset of presetColors.slice().reverse()" (click)="changeColorByPreset(preset)" [style.backgroundColor]="preset"></div>
     </div>
   </div>
   <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'" @overlay></div>

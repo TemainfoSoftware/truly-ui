@@ -7,7 +7,6 @@
   color:  map-deep-get($theme, $action, "default", "foreground");
   transition: background ease-in-out 100ms;
 
-
   /*Create ripple effec*/
 
   &.ripple {

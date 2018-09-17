@@ -105,6 +105,8 @@ export class TlColorPicker extends ValueAccessorBase<string> implements OnInit, 
 
   @Input() elementOrigin;
 
+  @Input() color = 'basic';
+
   @ContentChild( NgModel ) model: NgModel;
 
   @ContentChild( FormControlName ) controlName: FormControlName;

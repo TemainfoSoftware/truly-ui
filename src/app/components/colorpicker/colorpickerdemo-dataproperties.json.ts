@@ -21,10 +21,52 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
+    name: 'mode',
+    type: 'string',
+    default: 'input',
+    description: 'Define a view.',
+    options: 'inline | onlyColor | fromOrigin | input'
+  },
+  {
+    name: 'elementOrigin',
+    type: 'element',
+    default: 'null',
+    description: 'Define a element of origin.',
+    options: 'variable local'
+  },
+  {
+    name: 'recentColors',
+    type: 'bollean',
+    default: 'false',
+    description: 'Display recent colors.',
+    options: 'true | false'
+  },
+  {
+    name: 'returnFormatColor',
+    type: 'bollean',
+    default: 'false',
+    description: 'Display color code.',
+    options: 'true | false'
+  },
+  {
+    name: 'copyButton',
+    type: 'bollean',
+    default: 'false',
+    description: 'Display copy button.',
+    options: 'true | false'
+  },
+  {
+    name: 'label',
     type: 'string',
     default: 'null',
-    description: 'Displays a text.',
+    description: 'Create a label together with Input Element',
     options: 'any text'
   },
+  {
+    name: 'labelSize',
+    type: 'string',
+    default: '100px',
+    description: 'Width of label text',
+    options: 'px | % | em'
+  }
 ];

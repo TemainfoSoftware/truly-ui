@@ -1,0 +1,14 @@
+<div [class]="'ui-colorpicker-input ' + color">
+  <div class="display">
+    <div class="left">
+      <input #inputColor readonly type="text" (click)="copyInputColor()" [ngModel]="getColorFormat()" spellcheck="false">
+      <div class="copy-message" [@enterAnimation]="saved" *ngIf="saved">
+        <i class="ion-ios-checkmark-outline"></i>
+      </div>
+    </div>
+    <div class="right">
+      <i class="ion-code rotate-90" (click)="formatColor = !formatColor"></i>
+    </div>
+  </div>
+  <span>{{ (!formatColor) ? 'HEX' : 'RGBA' }}</span>
+</div>

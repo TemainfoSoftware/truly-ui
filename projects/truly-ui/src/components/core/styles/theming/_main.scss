@@ -5,6 +5,9 @@
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);
   @include tl-calendar-theme($theme);
+  @include tl-colorpicker-theme($theme);
+  @include tl-colorpicker-content-theme($theme);
+  @include tl-colorpicker-input-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-popupmenu-theme($theme);

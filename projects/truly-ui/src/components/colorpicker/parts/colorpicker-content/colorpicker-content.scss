@@ -1,0 +1,170 @@
+.ui-colorpicker-content {
+  width: 232px;
+  height: auto;
+  cursor: default;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin-top: 9px;
+  margin-bottom: 9px;
+}
+
+.ui-colorpicker-scheme {
+  width: 230px;
+  height: 130px;
+}
+
+.ui-colorpicker-scheme .cursor {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #FFFFFF;
+  box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;
+  border-radius: 50%;
+  cursor: default;
+  pointer-events: none;
+}
+
+.ui-colorpicker-scheme canvas {
+  position: absolute;
+}
+
+.ui-colorpicker-select {
+  margin-bottom: 3px;
+  display: flex;
+  padding: 4px 8px;
+}
+
+.ui-colorpicker-select .left {
+  position: relative;
+  padding: 0px 10px 0 5px;
+}
+
+.ui-colorpicker-select .left a {
+  cursor: pointer;
+}
+
+.ui-colorpicker-select .selected-color {
+  position: absolute;
+  top: 0;
+  left: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.ui-colorpicker-select .selected-color-background {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAAh0lEQVRYR+2W0QlAMQgD60zdfwOdqa8TmI/wQMr5K0I5bZLIzLOa2nt37VVVbd+dDx5obgCC3KBLwJ2ff4PnVidkf+ucIhw80HQaCLo3DMH3CRK3iFsmAWVl6hPNDwt8EvNE5q+YuEXcMgkonVM6SdyCoEvAnZ8v1Hjx817MilmxSUB5rdLJDycZgUAZUch/AAAAAElFTkSuQmCC');
+}
+
+.ui-colorpicker-select .right {
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 0 5px 0 10px;
+}
+
+.ui-colorpicker-select .hue {
+  direction: ltr;
+  width: 100%;
+  height: 14px;
+  margin: 0 0 10px 0;
+  border: none;
+  cursor: pointer;
+}
+
+.ui-colorpicker-select .alpha {
+  direction: ltr;
+  width: 100%;
+  height: 14px;
+  border: none;
+  cursor: pointer;
+  background-size: 100% 100%;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAQCAYAAAD06IYnAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AIWDwYQlZMa3gAAAWVJREFUaN7tmEGO6jAQRCsOArHgBpyAJYGjcGocxAm4A2IHpmoWE0eBH+ezmFlNvU06shJ3W6VEelWMUQAIIF9f6qZpimsA1LYtS2uF51/u27YVAFZVRUkEoGHdPV/sIcbIEIIkUdI/9Xa7neyv61+SWFUVAVCSct00TWn2fv6u3+Ecfd3tXzy/0+nEUu+SPjo/kqzrmiQpScN6v98XewfA8/lMkiLJ2WxGSUopcT6fM6U0NX9/frfbjev1WtfrlZfLhYfDQQHG/AIOlnGwjINlHCxjHCzjYJm/TJWdCwquJXseFFzGwDNNeiKMOJTO8xQdDQaeB29+K9efeLaBo9J7vdvtJj1RjFFjfiv7qv95tjx/7leSQgh93e1ffMeIp6O+YQjho/N791t1XVOSSI7N//K+4/GoxWLBx+PB5/Op5XLJ+/3OlJJWqxU3m83ovv5iGf8KjYNlHCxjHCzjYBkHy5gf5gusvQU7U37jTAAAAABJRU5ErkJggg==');
+}
+
+.ui-colorpicker-select canvas {
+  position: absolute;
+}
+
+.ui-colorpicker-select .cursor {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transform: translate(-6px, -1px);
+  box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 4px 0px;
+  cursor: default;
+  pointer-events: none;
+}
+
+.ui-colorpicker-preset {
+  padding: 4px 8px 2px 8px;
+}
+
+.ui-colorpicker-preset .preset-color {
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin: 4px 4px 4px 4px;
+  border-radius: 25%;
+  cursor: pointer;
+}
+
+.ui-colorpicker-preset ul li:last-child {
+  margin-right: 0;
+}
+
+.ui-arrow-up {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 1000;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #a6a6a6 transparent;
+}
+
+.ui-arrow-up:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -9px;
+  top: 1px;
+  border-style: solid;
+  border-width: 0 9px 9px 9px;
+  border-color: transparent transparent #fff transparent;
+}
+
+.ui-arrow-down {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 100;
+  border-width: 0 10px 10px 10px;
+  border-color: transparent transparent #a6a6a6 transparent;
+  transform: rotate(180deg);
+  top: auto;
+  margin-top: -10px;
+}
+
+.ui-arrow-down:after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: -9px;
+  top: 1px;
+  border-style: solid;
+  border-width: 0 9px 9px 9px;
+  border-color: transparent transparent #fff transparent;
+}

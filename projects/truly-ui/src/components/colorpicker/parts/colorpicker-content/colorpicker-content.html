@@ -1,0 +1,32 @@
+<div class="ui-arrow-up" *ngIf="overlayPosition === 'bottom'" @overlay></div>
+<div [class]="'ui-wrapper-colorpicker-content ' + color" @overlay>
+  <div #content class="ui-colorpicker-content">
+    <div class="ui-colorpicker-scheme" (mousedown)="onMouseDownScheme($event)">
+      <canvas #scheme width="230" height="130"></canvas>
+      <div #cursorScheme class="cursor" [style.left.px]="getPositionSchemeX()" [style.top.px]="getPositionSchemeY()"></div>
+    </div>
+    <div class="ui-colorpicker-select">
+      <div class="left">
+        <div class="selected-color-background"></div>
+        <a (click)="setPresetColor(selectedColor)">
+          <div class="selected-color" [style.backgroundColor]="selectedColor"></div>
+        </a>
+      </div>
+      <div class="right">
+        <div #hue class="hue" (mousedown)="onMouseDownHue($event)">
+          <canvas #hueSlider width="144" height="14"></canvas>
+          <div class="cursor" [style.left.px]="getPositionHue()"></div>
+        </div>
+        <div #alpha class="alpha" (mousedown)="onMouseDownAlpha($event)">
+          <canvas #alphaSlider width="144" height="14"></canvas>
+          <div class="cursor" [style.left.px]="getPositionAlpha()"></div>
+        </div>
+      </div>
+    </div>
+    <tl-colorpicker-input *ngIf="returnFormatColor === true" [selectedColor]="selectedColor"></tl-colorpicker-input>
+    <div class="ui-colorpicker-preset" *ngIf="presetColors.length !== 0 && recentColors === true">
+      <div class="preset-color" *ngFor="let preset of presetColors.slice().reverse()" (click)="changeColorByPreset(preset)" [style.backgroundColor]="preset"></div>
+    </div>
+  </div>
+  <div class="ui-arrow-down" *ngIf="overlayPosition === 'top'" @overlay></div>
+</div>

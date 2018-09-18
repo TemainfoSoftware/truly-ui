@@ -19,16 +19,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import * as json from './colorpickerdemo-dataproperties.json';
 import * as jsonEvts from './colorpickerdemo.dataevents.json';
 
-@Component( {
-selector : 'app-colorpicker',
-templateUrl : './colorpickerdemo.component.html',
-styleUrls : [ './colorpickerdemo.component.scss' ],
-} )
+@Component({
+  selector : 'app-colorpicker',
+  templateUrl : './colorpickerdemo.component.html',
+  styleUrls : [ './colorpickerdemo.component.scss' ],
+})
 export class ColorPickerDemoComponent {
 
   public dataTableProperties;
@@ -39,5 +39,10 @@ export class ColorPickerDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  onSelectColor($event) {
+    // console.log('$event', $event);
+  }
+
 }
 

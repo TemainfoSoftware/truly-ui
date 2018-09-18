@@ -1,0 +1,34 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-timeline-theme-schema( $theme, $action ){
+  //SKELETON COMPONENT HERE
+}
+
+@mixin tl-button-theme( $theme ) {
+
+  .tl-timeline{
+    &.basic {
+      @include _tl-timeline-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-timeline-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-timeline-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-timeline-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-timeline-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-timeline-theme-schema($theme, 'information')
+    }
+  }
+}

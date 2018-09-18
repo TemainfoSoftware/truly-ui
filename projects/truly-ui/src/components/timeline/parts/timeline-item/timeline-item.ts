@@ -20,28 +20,21 @@
     SOFTWARE.
 */
 
-import { Component, OnInit } from '@angular/core';
-
-import { TimeLineData } from './interfaces/timeline-inteface';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'tl-timeline',
-  templateUrl: './timeline.html',
-  styleUrls: ['./timeline.scss'],
+  selector: 'timeline-item',
+  templateUrl: './timeline-item.html',
+  styleUrls: ['./timeline-item.scss'],
 })
-export class TlTimeline implements OnInit {
+export class TlTimelineItem implements OnInit {
 
-  public itens: TimeLineData[] = [
-      {title: 'teste', text: 'Create a services site 2015-09-01', color: 'green'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'}
-    ];
+  @Input() color = 'blue';
 
-  constructor() {
-  }
+  @Input() last = '';
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
 }

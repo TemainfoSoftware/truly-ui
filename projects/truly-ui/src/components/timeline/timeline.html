@@ -1,3 +1,6 @@
 <div class="tl-timeline">
-  I' Am timeline
+  <timeline-item
+    *ngFor="let item of itens; let last = last;"
+    [last]="last"
+    [color]="(item.color) ? item.color : 'blue'">{{ item.text }}</timeline-item>
 </div>

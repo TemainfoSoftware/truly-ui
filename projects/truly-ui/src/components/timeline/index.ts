@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TlTimeline } from './timeline';
+import { TlTimelineItem } from './parts/timeline-item/timeline-item';
+import { TimelineService } from './services/timeline-service';
 
 @NgModule({
   imports: [
@@ -10,7 +12,11 @@ import { TlTimeline } from './timeline';
     FormsModule
   ],
   declarations: [
-    TlTimeline
+    TlTimeline,
+    TlTimelineItem
+  ],
+  providers: [
+    TimelineService
   ],
   exports: [
     TlTimeline

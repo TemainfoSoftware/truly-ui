@@ -34,21 +34,18 @@ import {
   ViewChild
 } from '@angular/core';
 
+
+import { Observable, of } from 'rxjs';
+
+import { OverlayAnimation } from '../../../core/directives/overlay-animation';
+
 import { Rgba } from './colorpicker-formats';
 
 import { ColorPickerService } from './colorpicker-service';
 
 import { ColorPickerHelpers } from './colorpicker-helpers';
 
-import { Observable, of } from 'rxjs';
-
-import { OverlayAnimation } from '../../../core/directives/overlay-animation';
-
-export interface ColorPickerMovable {
-  scheme?: boolean;
-  hue?: boolean;
-  alpha?: boolean;
-}
+import { ColorPickerMovable } from './colorpicker-content-interface';
 
 @Component({
   selector: 'tl-colorpicker-content',

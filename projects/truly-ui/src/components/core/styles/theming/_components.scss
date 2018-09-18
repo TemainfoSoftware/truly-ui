@@ -1,4 +1,5 @@
 @import "../../../accordion/accordion-theme";
+@import "../../../accordion/parts/accordion-item/accordion-item-theme";
 @import "../../../badge/badge-theme";
 @import "../../../button/button-theme";
 @import "../../../buttongroup/buttongroup-theme";
@@ -40,6 +41,7 @@
 
 @mixin truly-all-components($theme) {
   @include tl-accordion-theme($theme);
+  @include tl-accordion-item-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-group-theme($theme);
   @include tl-button-theme($theme);

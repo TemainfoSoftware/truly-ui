@@ -1,0 +1,62 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin _tl-accordion-item-theme-schema( $theme, $action ) {
+
+  background-color: map-deep-get($theme, $action, "default", "background");
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+  color:  map-deep-get($theme, $action, "default", "foreground");
+  transition: background ease-in-out 100ms;
+
+  .ui-accordion-item-header {
+
+    &:hover:not(.disabled) {
+      background: map-deep-get($theme, $action, "hover", "background");
+      color: map-deep-get($theme, $action, "hover", "foreground");
+    }
+  }
+
+  .ui-accordion-item-content {
+    background: map-deep-get($theme, 'basic', "default", "background");
+    color: map-deep-get($theme, 'basic', "default", "foreground");
+  }
+
+  .opened {
+    background: map-deep-get($theme, $action, "darker", "background");
+  }
+
+  .disabled {
+    color: rgba(map-deep-get($theme, $action, "disabled", "foreground"), 0.3);
+  }
+
+}
+
+@mixin tl-accordion-item-theme( $theme ) {
+
+  .ui-wrapper-accordion-item {
+
+    &.basic {
+      @include _tl-accordion-item-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-accordion-item-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-accordion-item-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-accordion-item-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-accordion-item-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-accordion-item-theme-schema($theme, 'information')
+    }
+
+  }
+}

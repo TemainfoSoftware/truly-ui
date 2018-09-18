@@ -1,6 +1,8 @@
 @import "components";
 
 @mixin theme-builder($theme){
+  @include tl-accordion-theme($theme);
+  @include tl-accordion-item-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);

@@ -32,7 +32,7 @@ export class ColorPickerHelpers {
     const stringParsers = [
       {
         re: /(rgb)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*%?,\s*(\d{1,3})\s*%?(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-        parse: function(execResult: any) {
+        parse: (execResult: any) => {
           return new Rgba(parseInt(execResult[2], 10) / 255,
             parseInt(execResult[3], 10) / 255,
             parseInt(execResult[4], 10) / 255,
@@ -40,7 +40,7 @@ export class ColorPickerHelpers {
         }
       }, {
         re: /(hsl)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})%\s*,\s*(\d{1,3})%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
-        parse: function(execResult: any) {
+        parse: ( execResult: any) => {
           return new Hsla(parseInt(execResult[2], 10) / 360,
             parseInt(execResult[3], 10) / 100,
             parseInt(execResult[4], 10) / 100,
@@ -52,7 +52,7 @@ export class ColorPickerHelpers {
     if (allowHex8) {
       stringParsers.push({
         re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})?$/,
-        parse: function(execResult: any) {
+        parse: (execResult: any) => {
           return new Rgba(parseInt(execResult[1], 16) / 255,
             parseInt(execResult[2], 16) / 255,
             parseInt(execResult[3], 16) / 255,
@@ -62,7 +62,7 @@ export class ColorPickerHelpers {
     } else {
       stringParsers.push({
         re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})$/,
-        parse: function(execResult: any) {
+        parse: (execResult: any) => {
           return new Rgba(parseInt(execResult[1], 16) / 255,
             parseInt(execResult[2], 16) / 255,
             parseInt(execResult[3], 16) / 255,
@@ -73,7 +73,7 @@ export class ColorPickerHelpers {
 
     stringParsers.push({
       re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])$/,
-      parse: function(execResult: any) {
+      parse: (execResult: any) => {
         return new Rgba(parseInt(execResult[1] + execResult[1], 16) / 255,
           parseInt(execResult[2] + execResult[2], 16) / 255,
           parseInt(execResult[3] + execResult[3], 16) / 255,

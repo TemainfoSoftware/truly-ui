@@ -45,8 +45,8 @@ import {
   transition,
   trigger
 } from '@angular/animations';
-import { ColorPickerHelpers } from './parts/colorpicker-content/colorpicker-helpers';
-import { ColorPickerService } from './parts/colorpicker-content/colorpicker-service';
+import { ColorPickerHelpers } from './helpers/colorpicker-helpers';
+import { ColorPickerService } from './services/colorpicker-service';
 import { KeyEvent} from '../core/enums/key-events';
 import { ValueAccessorBase} from '../input/core/value-accessor';
 import {

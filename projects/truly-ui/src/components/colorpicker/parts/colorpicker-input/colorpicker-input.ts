@@ -26,9 +26,9 @@ import {
   OnInit, ViewChild,
 } from '@angular/core';
 
-import { ColorPickerService } from '../colorpicker-service';
+import { ColorPickerService } from '../../services/colorpicker-service';
 
-import { ColorPickerHelpers } from '../colorpicker-helpers';
+import { ColorPickerHelpers } from '../../helpers/colorpicker-helpers';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({

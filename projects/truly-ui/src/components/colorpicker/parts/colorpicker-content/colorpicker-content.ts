@@ -33,19 +33,13 @@ import {
   TemplateRef,
   ViewChild
 } from '@angular/core';
-
-
 import { Observable, of } from 'rxjs';
 
 import { OverlayAnimation } from '../../../core/directives/overlay-animation';
-
-import { Rgba } from './colorpicker-formats';
-
-import { ColorPickerService } from './colorpicker-service';
-
-import { ColorPickerHelpers } from './colorpicker-helpers';
-
-import { ColorPickerMovable } from './colorpicker-content-interface';
+import { Rgba } from '../../helpers/colorpicker-formats';
+import { ColorPickerService } from '../../services/colorpicker-service';
+import { ColorPickerHelpers } from '../../helpers/colorpicker-helpers';
+import { ColorPickerMovable } from '../../interfaces/colorpicker-content-interface';
 
 @Component({
   selector: 'tl-colorpicker-content',
@@ -87,10 +81,6 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   public positionSchemeX: number;
 
   public positionSchemeY: number;
-
-  public positionHue: number;
-
-  public positionAlpha: number;
 
   public contextScheme;
 
@@ -369,7 +359,7 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
   }
 
   updateColor(value) {
-    if (value['selectedColor'] && this.selectedColor !== undefined) {
+    if (value['selectedColor'] && this.selectedColor !== undefined && this.selectedColor) {
       const selected: Array<number> = this.colorPickerHelpers.hexToRgb(this.selectedColor);
       const hsva = (this.selectedColor.length > 7) ? this.colorPickerHelpers.stringToHsva(this.selectedColor, true)
         : this.colorPickerHelpers.stringToHsva(this.selectedColor);

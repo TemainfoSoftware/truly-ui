@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { TlColorPicker } from './colorpicker';
 import { InputModule } from '../input';
-import { ButtonModule } from '../button';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-content';
-import { TlColorPickerInput } from './parts/colorpicker-content/colorpicker-input/colorpicker-input';
+import { TlColorPickerInput } from './parts/colorpicker-input/colorpicker-input';
+import { ColorPickerService } from './services/colorpicker-service';
 
 @NgModule({
   imports: [
@@ -15,7 +15,10 @@ import { TlColorPickerInput } from './parts/colorpicker-content/colorpicker-inpu
     FormsModule,
     OverlayModule,
     InputModule,
-    ButtonModule
+
+  ],
+  providers: [
+    ColorPickerService
   ],
   declarations: [
     TlColorPicker,
@@ -24,8 +27,6 @@ import { TlColorPickerInput } from './parts/colorpicker-content/colorpicker-inpu
   ],
   exports: [
     TlColorPicker,
-    TlColorPickerContent,
-    TlColorPickerInput
   ]
 })
 export class ColorPickerModule {}

@@ -21,6 +21,8 @@
 */
 
 export const Form = {
+  deleteConfirmationMessage: 'Deseja realmente excluir o registro ?',
+  recordNotFoundMessage: 'Não há registro selecionado para executar esta ação',
   textOk: 'OK',
   textCancel: 'Cancelar',
 };

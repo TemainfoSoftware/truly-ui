@@ -1,0 +1,72 @@
+.ui-form-control {
+  width: 100%;
+  display: table;
+}
+
+.ui-form-control .right {
+  display: table-cell;
+}
+
+.ui-overlay {
+  width: 100%;
+  display: flex;
+}
+
+.ui-color-box {
+  width: 35px;
+  height: 23px;
+  border: 1px solid #C8C8C8;
+  border-radius: 3px;
+  margin-right: 3px;
+}
+
+.ui-input-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.ui-input-wrapper .message {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 40px;
+}
+
+.label {
+  line-height: 1;
+  width: 100px;
+  white-space: nowrap;
+  vertical-align: middle;
+  font-weight: normal;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-size: 0.9em;
+}
+
+.label.-labeltop {
+  text-align: left;
+  padding: 0 0 5px 0;
+  display: table-caption;
+}
+
+.label.-labelleft {
+  text-align: right;
+  padding: 4px 4px 4px 0;
+  display: table-cell;
+}
+
+.label.-validation {
+  font-size: 0.7em;
+}
+
+.ui-input-wrapper .copy-message {
+  background: #333;
+  color: #fff;
+  padding: 1px 5px 2px 1px;
+  box-sizing: border-box;
+  user-select: none;
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  text-align: center;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 10px;
+}

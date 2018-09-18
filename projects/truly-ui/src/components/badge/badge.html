@@ -1,0 +1,6 @@
+<div class="tl-badge">
+  <span  *ngIf="count > 0 || onlyDot" [class]="(!onlyDot) ? 'badge-count ' + color : 'badge-dot ' + color">
+    {{ (!onlyDot) ? overFlowCount(count, maxCount) : '' }}
+  </span>
+  <ng-content></ng-content>
+</div>

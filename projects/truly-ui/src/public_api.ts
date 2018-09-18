@@ -1,12 +1,14 @@
 // Modules
 export { AccordionModule } from './components/accordion/index';
 export { AutoCompleteModule } from './components/autocomplete/index';
+export { BadgeModule } from './components/badge/index';
 export { ButtonModule } from './components/button/index';
 export { ButtonGroupModule } from './components/buttongroup/index';
 export { BlockUIModule } from './components/blockui/index';
 export { CheckBoxModule } from './components/checkbox/index';
 export { ChatListModule } from './components/chatlist/index';
 export { CalendarModule } from './components/calendar/index';
+export { ColorPickerModule } from './components/colorpicker/index';
 export { CoreModule } from './components/core/index';
 export { ContextMenuModule } from './components/contextmenu/index';
 export { DatatableModule } from './components/datatable/index';

@@ -65,6 +65,7 @@ $default-outline: none;
         font-family: $default-fontFamily;
         font-size: $default-fontSize;
         outline: $default-outline;
+        user-select: none;
       }
       > li i {
         text-align: center;
@@ -100,8 +101,4 @@ $default-outline: none;
     box-sizing: border-box;
     padding: 5px;
   }
-}
-
-.selected {
-  background: #66cc99;
 }

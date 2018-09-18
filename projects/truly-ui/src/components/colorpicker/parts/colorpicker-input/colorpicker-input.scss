@@ -1,0 +1,48 @@
+.ui-colorpicker-input {
+  padding: 0px 13px 4px 13px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.ui-colorpicker-input .display {
+  display: table;
+  width: 100%;
+}
+
+.ui-colorpicker-input .display .left {
+  position: relative;
+  display: table-cell;
+  width: 90%;
+  overflow: hidden;
+}
+
+.ui-colorpicker-input .display .right {
+  display: table-cell;
+  width: 10%;
+  border-left: none;
+}
+
+.ui-colorpicker-input .rotate-90 {
+  display: inline-block;
+  transform: rotate(90deg);
+}
+
+.ui-colorpicker-input input {
+  width: 100%;
+  padding: 4px 0px 4px 0;
+  font-size: 12px;
+  text-align: center;
+}
+
+.ui-colorpicker-input .select {
+  width: 20%;
+  display: table-cell;
+  text-align: center;
+}
+
+.ui-colorpicker-input .copy-message {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 14px;
+}

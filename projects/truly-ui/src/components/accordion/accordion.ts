@@ -5,7 +5,8 @@ import { AccordionService } from './services/accordion.service';
 @Component({
   selector: 'tl-accordion',
   templateUrl: './accordion.html',
-  styleUrls: ['./accordion.scss']
+  styleUrls: ['./accordion.scss'],
+  providers: [AccordionService]
 })
 export class TlAccordion implements AfterContentInit {
 

@@ -1,9 +1,8 @@
-import { Component, OnChanges, SimpleChanges, ViewContainerRef } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
 
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component( {
@@ -12,123 +11,59 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: [ './multiselectdemo.component.scss' ],
   providers: [ DumpDataService ]
 } )
-export class MultiSelectDemoComponent implements OnChanges {
+export class MultiSelectDemoComponent implements OnInit, OnChanges {
 
   public dataTableProperties;
-
-  public events;
 
   public dataNoSourceBasic = [];
 
   public dataNoSourceBasicModel = [];
 
-  public dataCustomColors = [];
+  public dataSourceStringArray = [];
 
-  public dataCustomIcon = [];
+  public model;
 
-  public dataCustomDetail = [];
+  public events;
 
   public form = new FormGroup({
-    id: new FormControl('', Validators.required)
+    complex: new FormControl('', Validators.required),
+    arrayString: new FormControl('', Validators.required)
   });
 
-
-
-  constructor(public view: ViewContainerRef, public dialogService: DialogService) {
-
-    this.dataNoSourceBasicModel = [ 4, 5 ];
-
-    this.form.get('id').patchValue(this.dataNoSourceBasicModel);
+  constructor(public view: ViewContainerRef ) {
 
     this.dataTableProperties = jsonProp.dataProperties;
-
     this.events = jsonEvt.events;
+    this.dataSourceStringArray = [ 'Wilhão', 'Maicão', 'Genessão', 'Marcião', 'Dilsão', 'Gersão', 'Jaissera' ];
 
     this.dataNoSourceBasic =
       [
-        { id: 1, firstName: 'William', lastName: 'King', email: 'contact@domain.com' },
+        { id: 1, firstName: 'William Aguera das Merces', lastName: 'King', email: 'contact@domain.com' },
         { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
-        { id: 3, firstName: 'Andrea', lastName: 'King', email: 'contact@domain.com' },
-        { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-        { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
-        ,
+        { id: 3, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
+        { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' },
       ];
 
+  }
+
+  ngOnInit() {
     this.dataNoSourceBasicModel = [
-      { id: 4, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
-      { id: 5, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }
-    ];
-
-    this.dataCustomColors =
-      [
-        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#DC136C' } },
-        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#84B082' } },
-        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: {color: '#353A47' } },
-        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: {color: '#885A5A' } },
-        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com', effect: {color: '#F7C1BB' } } }
-        ,
-      ];
-
-    this.dataCustomDetail =
-      [
-        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }},
-        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' }},
-        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }},
-        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}},
-        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com'}}
-        ,
-      ];
-
-    this.dataCustomIcon =
-      [
-        { source: { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-heart' }},
-        { source: { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com'}, effect: { icon: 'ion-upload' }},
-        { source: { id: 3, firstName: 'Murilo', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-ribbon-b' } },
-        { source: { id: 4, firstName: 'Sara', lastName: 'King', email: 'contact@domain.com'}, effect: { icon: 'ion-ios-paper-outline' } },
-        { source: { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com' }, effect: { icon: 'ion-ios-alarm' } }
-        ,
-      ];
-  }
-
-  show() {
-    try {
-      if ( this.dataNoSourceBasicModel.length >= 1 ) {
-        this.showInfo();
-      } else {
-        throw { name: 'DATA LENGTH ERROR', message: 'Invalid Data, needs more than ONE tag selected' };
-      }
-    } catch (err) {
-      this.exception(err);
-    }
-  }
-
-
-  showInfo() {
-    this.dialogService.info( JSON.stringify(this.dataNoSourceBasicModel), ( modalResult ) => {
-        console.log('Return', modalResult);
-      }, {
-        title: 'Model Value',
-        draggable: true,
-      }
-    );
-  }
-
-  exception(error) {
-    this.dialogService.error( error.message, ( modalResult ) => {
-      console.log( 'Return', modalResult );
-    }, {exceptionName: error.name, exceptionMessage: error.message});
+      { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
+      { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }, ];
+    this.form.get('complex').patchValue(this.dataNoSourceBasicModel);
   }
 
   onClickTag($event) {
-    console.log('Clicked Tag', $event);
+    // console.log('Clicked Tag', $event);
+    console.log('FORM', this.form.get('complex').value);
   }
 
   onRemoveTag($event) {
-    console.log('Removed Tag', $event);
+    // console.log('Removed Tag', $event);
   }
 
   ngOnChanges( change: SimpleChanges ) {
-    console.log( 'changes', change );
+    // console.log( 'changes', change );
   }
 
 }

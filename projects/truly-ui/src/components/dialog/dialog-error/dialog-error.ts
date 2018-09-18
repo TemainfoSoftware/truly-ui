@@ -19,11 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, HostBinding, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
+import { TlButton } from '../../button/button';
 @Modal({
   icon: 'ion-close-circled',
   title: 'Error',
@@ -55,7 +56,7 @@ import { Modal } from '../../modal/modal-options';
         )
     ]
 })
-export class TlDialogError extends DialogDefaultBehavior implements AfterViewInit {
+export class TlDialogError extends DialogDefaultBehavior implements OnInit {
 
     message = '';
 
@@ -71,7 +72,7 @@ export class TlDialogError extends DialogDefaultBehavior implements AfterViewIni
       return this.i18n.getLocale().Dialog.exceptionBoxDescription;
     }
 
-    @ViewChild('button') button;
+    @ViewChild( TlButton ) button: TlButton;
 
     @HostBinding( '@enterAnimation' ) public animation;
 
@@ -81,8 +82,8 @@ export class TlDialogError extends DialogDefaultBehavior implements AfterViewIni
         super();
     }
 
-    ngAfterViewInit() {
-        this.buttonAction = this.button;
+    ngOnInit() {
+      this.button.setFocus();
     }
 
     open(value) {

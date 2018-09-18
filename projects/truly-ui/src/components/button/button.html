@@ -1,5 +1,6 @@
 <button #tlbutton
         attr.tabindex="-1"
+        cdkTrapFocus
         [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
         [ngClass]="{' disabled ': disabled}"
         [class]="'tl-button ripple '+ color"
@@ -26,7 +27,7 @@
     <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">
       <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText"></i>
         {{text}}<ng-content></ng-content>
-      <i *ngIf="iconAfterText" [ngClass]="iconAfterText"></i>
+      <i *ngIf="iconAfterText" [ngClass]="iconAfterText" class="iconAfterText"></i>
     </span>
 </button>
 

@@ -1,27 +1,30 @@
-<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : height}">
+<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight}">
     <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
     </label>
     <div class="ui-dropdown-wrapper-list"
          (click)="!disabled ? isOpen = !isOpen : null"
          cdkOverlayOrigin #trigger="cdkOverlayOrigin">
 
+
       <input class="select"
              readonly
              [attr.disabled]="disabled ? true : null"
+             #input
              [placeholder]="placeholder"
              [value]="selectedDescription"
              (keydown)="onKeyDown($event)"
-             [ngStyle]="{'height' : height, 'line-height' : height, 'width': width}">
+             [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight, 'width': width}">
 
       <input readonly
              notform
              class="ui-hidden-input"
              [(ngModel)]="value"
-             [ngStyle]="{'height' : height, 'line-height' : height}">
+             [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}">
 
         <div class="dropdown-list-icon"
-             [style.line-height]="height"
+             [style.line-height]="itemHeight"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
+             (click)="setInputFocus()"
              [ngClass]="{' disabled ': disabled}">
             <i class="ion-chevron-down" style="padding: 0;"></i>
         </div>
@@ -39,13 +42,14 @@
       (selectOption)="onSelectOption($event)"
       (search)="handleSearch($event)"
       (defaultOption)="onDefaultOption()"
+      [customInput]="input"
       [typeOfData]="typeOfData"
       [defaultOptionText]="placeholder"
       [optionSelected]="optionSelected"
       [inputModelIndex]="indexOptionSelectedModel"
       [datasource]="datasource"
-      [scroll]="scroll"
-      [height]="height"
+      [maxHeight]="maxHeight"
+      [itemHeight]="itemHeight"
       [width]="width"
       [icon]="icon"
       [keyText]="keyText"

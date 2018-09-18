@@ -9,7 +9,10 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
-            <tl-button [text]="'Open Modal Form'" (click)="openModal()"></tl-button>
+            <tl-button class="btn-actions" [text]="'SmartForm [INSERT]'" [color]="'success'" (click)="openModal('I')"></tl-button>
+            <tl-button class="btn-actions" [text]="'SmartForm [UPDATE]'" [color]="'warning'" (click)="openModal('U')"></tl-button>
+            <tl-button class="btn-actions" [text]="'SmartForm [DELETE]'" [color]="'danger'" (click)="openModal('D')"></tl-button>
+            <code>Open Console (F12) to view the returns :)</code>
             <blockquote>The expression "Smart Form" is basically the same modal approach, what changes and ends up
               becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
               and manages to create a form with these actions defined and tasked to execute upon completion.
@@ -71,27 +74,28 @@ export class AppModule { }
       factory: this.factory,
       executeAction: ActionsModal.INSERT,
       deleteMessage: 'Are you sure ?',
-      identifier: id,
+      identifier: 'FORM_SMART_1',
       dataForm: {
         nickname: 'willz',
         id: 'b42f0653-b0a3-4482-b2e3-3d971ddaeb3f',
-        email: 'williamaguera.m@hotmail.com',
-        name: 'William',
-        lastName: 'Aguera',
-        user: 'william',
+        email: 'robert.william@truly.com',
+        name: 'robert',
+        lastName: 'william',
+        user: 'robertw',
+        password: '1234567#A',
       },
       actions: {
-        insertCall: function () {
-          console.log('Executing the INSERT Function...');
+        insertCall: function ( values ) {
+          console.log('Executing the INSERT Function...', values);
         },
-        updateCall: function () {
-          console.log('Executing the UPDATE Function...');
+        updateCall: function ( values ) {
+          console.log('Executing the UPDATE Function...', values);
         },
-        deleteCall: function () {
-          console.log('Executing the DELETE Function...');
+        deleteCall: function ( values ) {
+          console.log('Executing the DELETE Function...', values);
         },
-        viewCall: function () {
-          console.log('Executing the VIEW Function...');
+        viewCall: function ( values ) {
+          console.log('Executing the VIEW Function...', values);
         }
       }
     } ).then((result) => {

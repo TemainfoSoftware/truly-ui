@@ -1,0 +1,58 @@
+<div [class]="'tl-colorpicker ' + color">
+  <div class="ui-form-control">
+    <label *ngIf="label" class="label -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize}">{{label}}
+      <b *ngIf="required" style="color: #FF6666">*</b></label>
+    <div class="right">
+      <div class="ui-overlay" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+        <div *ngIf="mode !== 'inline' && mode !== 'fromOrigin'" #colorBox class="ui-color-box"
+             (click)="(!disabled) ? isOpen = !isOpen : null" [style.background]="value"></div>
+        <div class="ui-input-wrapper">
+          <div *ngIf="mode === 'input'">
+            <tl-input #tlinput
+                      [name]="name"
+                      (focus)="(openFocus) ? isOpen = !isOpen : null"
+                      (keydown)="keyDown($event)"
+                      (click)="(!disabled) ? isOpen = !isOpen : null"
+                      [textAlign]="textAlign"
+                      [(ngModel)]="value"
+                      [readonly]="readonly ? true : null"
+                      [disabled]="disabled ? true : null"
+                      [placeholder]="placeholder"
+                      [iconAfter]="(copyButton) ? 'fa fa-clipboard' : null"
+                      (clickAddon)="copyInputColor(tlinput)">
+            </tl-input>
+            <div class="message">
+              <div class="copy-message" [@enterAnimation]="saved" *ngIf="saved">
+                <i class="ion-ios-checkmark-outline"></i>
+                <span>Copied!</span>
+              </div>
+            </div>
+          </div>
+          <ng-template cdkConnectedOverlay
+                       (backdropClick)="closeColorPicker()"
+                       (positionChange)="onPositionChange($event)"
+                       [cdkConnectedOverlayHasBackdrop]="true"
+                       [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+                       [cdkConnectedOverlayOpen]="isOpen">
+            <tl-colorpicker-content
+              [selectedColor]="value"
+              (selectColor)="emitSelectColor($event)"
+              [overlayPosition]="positionOverlay"
+              [recentColors]="recentColors"
+              [returnFormatColor]="returnFormatColor">
+            </tl-colorpicker-content>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="inline" *ngIf="mode === 'inline'">
+  <tl-colorpicker-content
+    [selectedColor]="value"
+    (selectColor)="emitSelectColor($event)"
+    [recentColors]="recentColors"
+    [returnFormatColor]="returnFormatColor">
+  </tl-colorpicker-content>
+</div>

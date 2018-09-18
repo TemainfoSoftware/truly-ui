@@ -40,10 +40,6 @@ export class TlButton implements OnInit {
 
     @Input() text = '';
 
-    @Input() first = false;
-
-    @Input() last = false;
-
     @Input() iconAddonBefore = '';
 
     @Input() iconAddonAfter = '';
@@ -56,11 +52,7 @@ export class TlButton implements OnInit {
 
     @Input() width = '120px';
 
-    @Input() defaultFocus = false;
-
     @Input() disabled = null;
-
-    @Input() toggle = false;
 
     @Input() colorIconBefore = '';
 
@@ -71,6 +63,8 @@ export class TlButton implements OnInit {
     @Input() color = 'basic';
 
     @Input() isLoading = false;
+
+    @Input() indexShortcut = 0;
 
     @Input() set textLoading( text ) {
       this._textLoading = text;
@@ -84,12 +78,14 @@ export class TlButton implements OnInit {
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
-    public shortcutManager = {};
-
     private _textLoading: string;
 
     constructor( public button: ElementRef, private i18nService: I18nService ) {}
 
     ngOnInit() {}
+
+    setFocus() {
+      this.buttonElement.nativeElement.focus();
+    }
 }
 

@@ -11,7 +11,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
   height: 'auto',
   maximizable: true,
   minimizable: true,
-  fullscreen: false,
+  fullscreen: true,
   closeOnOK: true
 })
 @Component( {

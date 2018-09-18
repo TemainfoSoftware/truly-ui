@@ -20,16 +20,17 @@
  SOFTWARE.
  */
 
-import { Injectable, Renderer2 } from '@angular/core';
+import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { TlButton } from '../../button/button';
 import { ModalService } from '../../modal/modal.service';
+import { Subscription } from 'rxjs';
 
 let listener;
 
-const buttonElements = [];
+let buttonElements = [];
 
 @Injectable()
-export class ShortcutService {
+export class ShortcutService implements OnDestroy {
 
   public elementsListener = [];
 
@@ -37,13 +38,15 @@ export class ShortcutService {
 
   private elementIndex;
 
+  private currentShortcut;
+
   private highestZindexElement;
+
+  private subscription: Subscription = new Subscription();
 
   private headElement = {};
 
-  constructor( private modalService: ModalService ) {
-
-  }
+  constructor( private modalService: ModalService ) {}
 
   setRenderer( renderer ) {
     this.renderer = renderer;
@@ -51,20 +54,24 @@ export class ShortcutService {
   }
 
   createListener() {
-    this.modalService.head.subscribe( ( component ) => {
+    this.subscription.add(this.modalService.head.subscribe( ( component ) => {
       this.headElement = component;
-    } );
+    } ));
     if ( !listener ) {
-      listener = this.renderer.listen( document, 'keydown', ( $event: KeyboardEvent ) => {
+      this.subscription.add(document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+        $event.preventDefault();
+        $event.stopPropagation();
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
           return;
         }
         if ( this.getEqualKeys( this.elementsListener[ this.elementIndex ].shortcut ).length > 1 ) {
+          this.currentShortcut = this.elementsListener[ this.elementIndex ].shortcut;
           return this.handleClickComponentWithEqualsKeys();
         }
         this.handleClickComponentWithoutEqualsKeys();
         this.handleElementsOfView();
-      } );
+      } ));
+      listener = this.subscription;
     }
   }
 
@@ -94,16 +101,21 @@ export class ShortcutService {
   }
 
   activeHighestButtonElement() {
-    let buttonToClick = null;
-    buttonElements.forEach( ( value ) => {
-      if ( value.element.shortcutManager.activeModal === this.modalService.activeModal ) {
-        buttonToClick = value.element.buttonElement.nativeElement;
-      }
+    const buttonToClick = buttonElements.filter( ( value ) => {
+      return (this.currentShortcut === value.shortcut);
     } );
-    buttonToClick.click();
+    this.sortButtons(buttonToClick)[0].element.button.nativeElement.click();
     setTimeout( () => {
       this.handleElementsOfView();
     }, 520 );
+  }
+
+  sortButtons(buttonToClick) {
+    buttonToClick.sort( ( a, b ) => {
+        return parseInt( a.element.indexShortcut, 10 ) -
+          parseInt( b.element.indexShortcut, 10 );
+    } );
+    return buttonToClick;
   }
 
   activeElementButton( element ) {
@@ -114,6 +126,7 @@ export class ShortcutService {
   }
 
   filterButtons() {
+    buttonElements = [];
     this.elementsListener.forEach( ( value ) => {
       if ( this.isElementInstanceOfButton( value ) ) {
         if ( buttonElements.indexOf( value ) < 0 ) {
@@ -248,6 +261,10 @@ export class ShortcutService {
     return this.elementsListener.filter( ( value, index, array ) => {
       return !this.isElementInstanceOfButton( value );
     } );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

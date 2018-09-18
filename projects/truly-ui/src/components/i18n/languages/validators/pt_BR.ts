@@ -32,4 +32,5 @@ export const Validators =  {
   invalidPasswordRuleDigits: 'Senha inválida, ela deve ter pelo menos um dígito. ex: abc123',
   invalidPasswordRuleUppercase: 'Senha inválida, ela deve ter pelo menos uma letra maiúscula. ex: abcY123',
   invalidPasswordRuleSpecial: 'Senha inválida, ela deve ter pelo menos um caractere especial. ex: abcY123@#!',
+  invalidPasswordRuleLowerCase: 'Senha inválida, ela deve ter pelo menos uma letra minúscula. ex: abc',
 };

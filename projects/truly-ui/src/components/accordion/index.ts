@@ -19,8 +19,5 @@ import { AccordionService } from './services/accordion.service';
     TlAccordion,
     TlAccordionItem
   ],
-  providers: [
-    AccordionService
-  ]
 })
 export class AccordionModule {}

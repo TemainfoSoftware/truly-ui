@@ -1,9 +1,13 @@
 @import "components";
 
 @mixin theme-builder($theme){
+  @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);
   @include tl-calendar-theme($theme);
+  @include tl-colorpicker-theme($theme);
+  @include tl-colorpicker-content-theme($theme);
+  @include tl-colorpicker-input-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-popupmenu-theme($theme);
@@ -17,6 +21,7 @@
   @include tl-multiselect-theme($theme);
   @include tl-menu-theme($theme);
   @include tl-navigator-theme($theme);
+  @include tl-overlaylist-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);

@@ -49,10 +49,17 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
-    name: 'height',
+    name: 'itemHeight',
     type: 'string',
-    default: '37px',
-    description: 'Sets the height of Dropdown List.',
+    default: '23px',
+    description: 'Sets the height box and itemHeight of items list.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'maxHeight',
+    type: 'string',
+    default: '150px',
+    description: 'Sets the max height of the list.',
     options: 'px | % | em'
   },
   {
@@ -83,11 +90,4 @@ export const dataProperties = [
     description: 'Disables the dropdown list if set to true.',
     options: 'true | false'
   },
-  {
-    name: 'scroll',
-    type: 'number',
-    default: 'null | 10 to auto scroll',
-    description: 'Displays minimum amount of items to create the scroll.',
-    options: 'any number'
-  }
   ];

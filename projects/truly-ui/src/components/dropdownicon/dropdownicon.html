@@ -1,5 +1,7 @@
 <div class="ui-wrapper-dropdownicon">
   <button tabindex="0"
+          #button
+          (keydown.enter)="$event.preventDefault()"
           (click)="isOpen = !isOpen"
           cdkOverlayOrigin #trigger="cdkOverlayOrigin"
           [ngClass]="{'disabled': disabled}"
@@ -19,12 +21,13 @@
       @overlay
       (selectOption)="onSelectOption($event)"
       (defaultOption)="onDefaultOption()"
+      [customInput]="button"
       [typeOfData]="typeOfData"
       [defaultOptionText]="defaultOptionText"
       [defaultIcon]="defaultIcon"
       [optionSelected]="optionSelected"
       [datasource]="data"
-      [height]="heightItems"
+      [itemHeight]="heightItems"
       [width]="widthItems"
       [icon]="keyIcon"
       [keyText]="keyText">

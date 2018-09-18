@@ -13,6 +13,7 @@
             <div class="col-md-6">
               <tl-panelgroup [backgroundColor]="'#fafafa'" [height]="'290px'" [labelGroup]="'Toaster Configuration'">
                 <tl-dropdown-list [data]="data"
+                                  [labelSize]="100"
                                   [keyText]="'textItem'"
                                   [label]="'Position'"
                                   [keyValue]="'value'"
@@ -38,10 +39,12 @@
             </div>
             <div class="col-md-12">
               <div class="spacer"></div>
-              <tl-button [color]="'success'" (click)="success()" [text]="'Toaster Success'"></tl-button>
-              <tl-button [color]="'danger'" (click)="danger()" [text]="'Toaster Danger'"></tl-button>
-              <tl-button [color]="'warning'" (click)="warning()" [text]="'Toaster Warning'"></tl-button>
-              <tl-button [color]="'information'" (click)="information()" [text]="'Toaster Information'"></tl-button>
+              <div class="type-buttons">
+                <tl-button [color]="'success'" (click)="success()" [text]="'Toaster Success'"></tl-button>
+                <tl-button [color]="'danger'" (click)="danger()" [text]="'Toaster Danger'"></tl-button>
+                <tl-button [color]="'warning'" (click)="warning()" [text]="'Toaster Warning'"></tl-button>
+                <tl-button [color]="'information'" (click)="information()" [text]="'Toaster Information'"></tl-button>
+              </div>
             </div>
           </app-card>
         </app-showcase-card>

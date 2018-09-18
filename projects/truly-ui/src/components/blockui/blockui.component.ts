@@ -28,7 +28,7 @@ import { BlockUIConfig } from './blockui-config';
     template: `
       <div id="blockui">
         <div class="blockui-content">
-          <i [class]="config.spin ? 'fa ' + config.icon + ' fa-spin fastSpin fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
+          <i [class]="config.spin ? 'fa spin ' + config.icon + ' fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
           <span *ngIf="config.message">{{config.message}}</span>
         </div>
       </div>`,

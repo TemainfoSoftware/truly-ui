@@ -106,8 +106,9 @@
           [keyText]="'textItem'"
           [keyValue]="'value'"
           [width]="'150px'"
+          [maxHeight]="'400px'"
           [ngModel]="colorSelected"
-          [height]="'35px'"
+          [itemHeight]="'35px'"
           (ngModelChange)="modelChange($event)">
         </tl-dropdown-list>
       </tl-toolbar>
@@ -144,6 +145,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="#" routerLink="badge" routerLinkActive="active"><i class="fa fa-circle-o"></i> Badge</a></li>
             <li><a href="#" routerLink="button" routerLinkActive="active"><i class="fa fa-circle-o"></i> Button</a></li>
             <li><a href="#" routerLink="buttongroup" routerLinkActive="active"><i class="fa fa-circle-o"></i> Button
               Group</a></li>
@@ -341,6 +343,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="#" routerLink="colorpicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> ColorPicker</a></li>
             <li><a href="#" routerLink="datepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> DatePicker</a></li>
             <li *ngIf="!inProduction"><a href="#" routerLink="timepicker" routerLinkActive="active"><i class="fa fa-circle-o"></i> TimePicker</a></li>
           </ul>

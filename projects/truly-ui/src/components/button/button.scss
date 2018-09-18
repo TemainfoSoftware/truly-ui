@@ -35,9 +35,16 @@ $button-text-align: center;
     padding: 0 15px;
     margin: 0;
     width: 500px !important;
-    &.-isLoading{
+    &.-isLoading {
       pointer-events: none;
+      i {
+        -webkit-transform-origin: 50% calc(50% - .5px) !important;
+        transform-origin: 50% calc(50% - .5px) !important;
+      }
     }
   }
 }
 
+.iconAfterText{
+  padding: 0 0 0 5px !important;
+}

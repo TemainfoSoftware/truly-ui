@@ -35,6 +35,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
       },
       {
+        path: 'badge',
+        loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
+      },
+      {
         path: 'button',
         loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
       },
@@ -49,6 +53,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'calendar',
         loadChildren: './components/calendar/calendardemo.module#CalendarDemoModule'
+      },
+      {
+        path: 'colorpicker',
+        loadChildren: './components/colorpicker/colorpickerdemo.module#ColorPickerDemoModule'
       },
       {
         path: 'chatlist',
@@ -217,10 +225,6 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'overlaypanel',
         loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
-      },
-      {
-        path: 'popupmenu',
-        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
       },
     ])
   ],

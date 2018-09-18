@@ -47,11 +47,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() showConfirmOnChange = false;
 
+  @Input() isLoading = false;
+
   @Input() primaryKey = '';
 
   @Input() messageDialogConfirmation = 'Are you sure ?';
 
   @Input() submitShortcut = '';
+
+  @Input() cancelShortcut = 'escape';
 
   @Input() mode: 'inline' | 'modal' = 'modal';
 
@@ -153,18 +157,21 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
   }
 
-  onKeyDownButtonOk( $event: KeyboardEvent ) {
-    $event.stopPropagation();
-    this.getFormValues();
-  }
-
   clickListener() {
     if ( this.mode === 'modal' ) {
       this.listenMouseDownButtonForm();
+      this.listenKeyDownButtonForm();
     } else {
       this.listenKeyDownSubmitButton();
       this.listenMouseDownSubmitButton();
     }
+  }
+
+  listenKeyDownButtonForm() {
+    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keydown.enter', $event => {
+      $event.stopPropagation();
+      this.onClickButtonOk();
+    } );
   }
 
   listenMouseDownButtonForm() {
@@ -197,7 +204,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
-    if (this.primaryKey) {
+    if (this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE) {
       this.formGroup.get(this.primaryKey).enable();
     }
     this.formResult = this.formGroup ? this.formGroup : this.form;
@@ -311,6 +318,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   handleKeysForm( $event: KeyboardEvent ) {
+    if ( $event.keyCode !== KeyEvent.ESCAPE ) {
+      $event.stopPropagation();
+    }
     if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
       $event.preventDefault();
       this.backwardTabbing();

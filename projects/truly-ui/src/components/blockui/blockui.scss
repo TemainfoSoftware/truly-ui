@@ -30,7 +30,16 @@
   justify-content: center;
 }
 
-.fastSpin {
-  -webkit-animation: fa-spin 1s infinite linear;
-  animation: fa-spin 1s infinite linear;
+.spin {
+  -webkit-animation: rotation 800ms infinite linear;
+  transform-origin: 50% 50% !important;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }

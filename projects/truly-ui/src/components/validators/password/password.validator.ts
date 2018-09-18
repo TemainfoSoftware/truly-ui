@@ -29,6 +29,8 @@ export function PasswordValidator( passwordRule: PasswordRule ): ValidatorFn {
     const digits = '^(?=.*[0-9]).*$';
     const uppercase = '^(?=.*[A-Z]).*$';
     const special = '^(?=.*[!@#$%^&*]).*$';
+    const lowercase = '^(?=.*[a-z]).*$';
+
     let regex: RegExp;
 
     if ( passwordRule['digits'] ) {
@@ -49,6 +51,13 @@ export function PasswordValidator( passwordRule: PasswordRule ): ValidatorFn {
       regex = new RegExp( special );
       if (!regex.test(control.value)) {
         return { password: LOCALE_I18N.Validators.invalidPasswordRuleSpecial };
+      }
+    }
+
+    if ( passwordRule['lowercase'] ) {
+      regex = new RegExp( lowercase );
+      if (!regex.test(control.value)) {
+        return { password: LOCALE_I18N.Validators.invalidPasswordRuleLowerCase };
       }
     }
 

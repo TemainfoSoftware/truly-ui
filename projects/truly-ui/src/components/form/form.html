@@ -12,16 +12,17 @@
                        mdResult="MRCANCEL"
                        [color]="'basic'"
                        [style.padding-right]="'5px'"
+                       [shortcut]="cancelShortcut"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-close-circled'">
             </tl-button>
             <tl-button #buttonFormOk
                        [text]="textConfirm"
+                       [isLoading]="isLoading"
                        mdResult="MROK"
                        [color]="'success'"
                        [shortcut]="submitShortcut"
-                       [disabled]="formGroup ? !formGroup.valid : !form.valid"
-                       (keyup)="onKeyDownButtonOk($event)"
+                       [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
                        [formResult]="formResult"
                        [iconAddonBefore]="'ion-checkmark'">
             </tl-button>

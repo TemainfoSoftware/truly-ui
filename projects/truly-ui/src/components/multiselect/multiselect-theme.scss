@@ -19,19 +19,19 @@
 
       & .input-wrapper-multiselect {
         border: 1px solid map-deep-get($theme, $action, "default", "border");
-        background:  map-deep-get($theme, $action, "default", "background");
+        background:  map-deep-get($theme, $action, "lighter", "background");
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
       }
 
-      & .input-wrapper-multiselect.invalid {
+      & .input-wrapper-multiselect.ng-touched.invalid {
         border: 1px solid map-deep-get($danger, "default", "border") !important;
         background-color: rgba(map-deep-get($danger, "default", "background"), 0.2) !important;
         outline: none;
       }
 
-      & .input-wrapper-multiselect.withValidators:not(.invalid) {
+      & .input-wrapper-multiselect.withValidators.ng-touched:not(.invalid) {
         border: 1px solid map-deep-get($success, "default", "border");
         background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
         outline: none;
@@ -41,13 +41,8 @@
         color: map-deep-get($theme, $action, "lighter", "foreground");
       }
 
-      & .input {
+      & .input-field {
         background: transparent;
-        color: map-deep-get($theme, $action, "lighter", "foreground");
-      }
-
-      & .input-empty {
-        background: map-deep-get($theme, $action, "lighter", "foreground");
         color: map-deep-get($theme, $action, "lighter", "foreground");
       }
 
@@ -94,6 +89,9 @@
       & .group-tags {
         .tag {
           background-color: map-deep-get($primary, "default", "background");
+        }
+        .tag.selected {
+          background-color: map-deep-get($primary, "darker", "background");
         }
         span b {
           color: map-deep-get($theme, $action, "default", "foreground");

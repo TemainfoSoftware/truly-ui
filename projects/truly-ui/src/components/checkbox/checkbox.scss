@@ -11,6 +11,12 @@ input[type='checkbox'] {
   position: absolute;
   margin: 0 !important;
   top: 5px;
+  &:focus {
+    border-color: #40a9ff;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(24,144,255,.2);
+    border-right-width: 1px!important;
+  }
 }
 
 input[type='checkbox']:checked:before {

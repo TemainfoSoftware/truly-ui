@@ -9,7 +9,7 @@
     <input [style.padding-right]="clearButton ? '20px' : '12px'"
            [style.height]="height"
            #input
-           type="text"
+           [attr.type]="type"
            cdkOverlayOrigin
            [tabindex]="tabindex"
            [style.text-align]="textAlign"
@@ -28,11 +28,13 @@
            [attr.name]="name"
            [placeholder]="placeholder"
            [(ngModel)]="value"
+           (click)="onInputClick($event)"
            (blur)="onInputBlur($event)"
            (focus)="onInputFocus($event)">
   </div>
 
-  <span #afterIcon *ngIf="iconAfter" (click)="onClickAddon($event, 'after')" class="addon -borderright"><i
+  <span #afterIcon *ngIf="iconAfter"
+        (click)="onClickAddon($event, 'after')" class="addon -borderright"><i
     [ngClass]="iconAfter"></i></span>
   <span *ngIf="textAfter" #afterText class="addon -borderright"
         [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>

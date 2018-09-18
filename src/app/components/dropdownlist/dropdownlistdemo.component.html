@@ -51,8 +51,7 @@
               <tl-dropdown-list [data]="data"
                                 [keyText]="'textItem'"
                                 [(ngModel)]="itemSelected3"
-                                [keyValue]="'value'"
-                                [scroll]="3">
+                                [keyValue]="'value'">
               </tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected3 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
@@ -61,8 +60,7 @@
   [data]="data"
   [keyText]="'textItem'"
   [(ngModel)]="itemSelected3"
-  [keyValue]="'value'"
-  [scroll]="3">
+  [keyValue]="'value'">
 </tl-dropdown-list>
   </textarea>
             </div>
@@ -114,7 +112,7 @@
               <h5>Height</h5>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
-                                [height]="'30px'"
+                                [itemHeight]="'30px'"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
                                 [(ngModel)]="itemSelected6">
@@ -125,7 +123,7 @@
 <tl-dropdown-list
   [data]="data"
   [placeholder]="'Select item'"
-  [height]="'21px'"
+  [itemHeight]="'30px'"
   [keyText]="'textItem'"
   [keyValue]="'value'"
   [(ngModel)]="itemSelected6">

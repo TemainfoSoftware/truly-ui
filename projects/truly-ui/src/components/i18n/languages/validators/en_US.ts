@@ -32,4 +32,5 @@ export const Validators = {
   invalidPasswordRuleDigits: 'Invalid Password, must have at least one digit. ex: abc123',
   invalidPasswordRuleUppercase: 'Invalid Password, must have at least one Uppercase Letter. ex: abcY123',
   invalidPasswordRuleSpecial: 'Invalid Password, must have at least one Special Character. ex: abcY123@#!',
+  invalidPasswordRuleLowerCase: 'Invalid Password, must have at least one lowercase letter. ex: abc',
 };

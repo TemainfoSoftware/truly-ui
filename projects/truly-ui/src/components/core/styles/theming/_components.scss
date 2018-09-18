@@ -1,4 +1,5 @@
 @import "../../../accordion/accordion-theme";
+@import "../../../badge/badge-theme";
 @import "../../../button/button-theme";
 @import "../../../buttongroup/buttongroup-theme";
 @import "../../../dropdownicon/dropdownicon-theme";
@@ -6,6 +7,9 @@
 @import "../../../chatlist/chatlist-theme";
 @import "../../../checkbox/checkbox-theme";
 @import "../../../contextmenu/contextmenu-theme";
+@import "../../../colorpicker/colorpicker-theme";
+@import "../../../colorpicker/parts/colorpicker-content/colorpicker-content-theme";
+@import "../../../colorpicker/parts/colorpicker-input/colorpicker-input-theme";
 @import "../../../core/core";
 @import "../../../datatable/datatable-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
@@ -22,6 +26,7 @@
 @import "../../../modal/addons/modal-toolbar/modal-toolbar-theme";
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
+@import "../../../overlaylist/overlaylist-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
 @import "../../../radiobutton/radiobutton-theme";
@@ -34,6 +39,7 @@
 
 @mixin truly-all-components($theme) {
   @include tl-accordion-theme($theme);
+  @include tl-badge-theme($theme);
   @include tl-button-group-theme($theme);
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);
@@ -41,6 +47,9 @@
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-contextmenu-theme($theme);
+  @include tl-colorpicker-theme($theme);
+  @include tl-colorpicker-content-theme($theme);
+  @include tl-colorpicker-input-theme($theme);
   @include tl-core-theme($theme);
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);
@@ -57,6 +66,7 @@
   @include tl-modal-toolbar-theme($theme);
   @include tl-multiselect-theme($theme);
   @include tl-navigator-theme($theme);
+  @include tl-overlaylist-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);

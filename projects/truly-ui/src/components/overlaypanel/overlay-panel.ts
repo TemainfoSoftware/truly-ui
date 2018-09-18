@@ -20,73 +20,77 @@
  SOFTWARE.
  */
 import {
-  Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2,
+  Component, Input, EventEmitter, Output, AfterContentInit, ViewChild, Renderer2, OnInit,
 } from '@angular/core';
+import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { TlButton } from '../button/button';
+import { OverlayAnimation } from '../core/directives/overlay-animation';
 
 @Component( {
   selector: 'tl-overlay-panel',
   templateUrl: './overlay-panel.html',
   styleUrls: [ './overlay-panel.scss' ],
+  animations: [ OverlayAnimation ]
 } )
-export class TlOverlayPanel implements OnInit, OnDestroy {
+export class TlOverlayPanel implements OnInit, AfterContentInit {
 
-  @Input() position = { left: '', top: '' };
+  @Input() elementOrigin;
+
+  @Input() color = 'basic';
+
+  @Input() width = '100%';
 
   @Output() show: EventEmitter<any> = new EventEmitter();
 
-  public target;
+  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
 
-  public open = false;
-
-  public globalListeners = [];
+  public isOpen = false;
 
   constructor( private renderer: Renderer2 ) {}
 
   ngOnInit() {
-    this.listenDocument();
-    this.listenScroll();
+    this.validateNullOrigin();
   }
 
-  listenScroll() {
-    this.globalListeners.push( this.renderer.listen( window, 'scroll', () => {
-      if ( this.target ) {
-        this.setPositionElement();
-      }
-    } ) );
+  ngAfterContentInit() {
+    this.cdkOverlay.origin = new CdkOverlayOrigin( this.getTargetElement() );
+    this.listenElementOrigin();
   }
 
-  listenDocument() {
-    this.globalListeners.push( this.renderer.listen( document, 'click', ( $event ) => {
-      if ( !($event.path.indexOf( this.target ) >= 0) ) {
-        this.open = false;
-      }
-    } ) );
-  }
-
-  handleTarget( target ) {
-    if ( target instanceof TlButton ) {
-      this.target = target.button.nativeElement;
+  private listenElementOrigin() {
+    if ( this.elementOrigin ) {
+      this.renderer.listen( this.getTargetElement(), 'click', () => {
+        this.isOpen = !this.isOpen;
+      } );
     }
   }
 
-  toggle( $event, target? ) {
-    this.target = target ? target : $event.target;
-    this.handleTarget( target );
-    this.setPositionElement();
-    this.open = !this.open;
+  private validateNullOrigin() {
+    if ( !this.elementOrigin ) {
+      throw new Error( 'The [elementOrigin] property is required' );
+    }
   }
 
-  setPositionElement() {
-    this.position.left = this.target.getBoundingClientRect().left;
-    this.position.top = this.target.getBoundingClientRect().top + this.target.offsetHeight;
+  private getTargetElement() {
+    return this.isElementTlButton() ? this.elementOrigin.buttonElement.nativeElement : this.elementOrigin;
   }
 
-  ngOnDestroy() {
-    this.globalListeners.forEach( ( item ) => {
-      item();
-    } );
+  private isElementTlButton() {
+    return this.elementOrigin instanceof TlButton;
   }
+
+  open() {
+    this.isOpen = true;
+  }
+
+  close() {
+    this.isOpen = false;
+  }
+
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
+
 
 }
 

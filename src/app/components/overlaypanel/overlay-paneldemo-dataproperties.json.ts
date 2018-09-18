@@ -21,10 +21,24 @@
  */
 export const dataProperties = [
   {
-    name: 'labelGroup',
+    name: 'elementOrigin',
+    type: 'HTMLElement',
+    default: 'null',
+    description: 'It\'s the element that overlay will attached be to',
+    options: 'HTMLElement'
+  },
+  {
+    name: 'color',
     type: 'string',
-    default: 'Panel Group',
-    description: 'Label of PanelGroup',
-    options: 'any text'
-  }
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
+    name: 'width',
+    type: 'string',
+    default: '125px',
+    description: 'Button width.',
+    options: 'px | % | em'
+  },
   ];

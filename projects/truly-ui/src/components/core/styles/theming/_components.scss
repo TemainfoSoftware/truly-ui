@@ -1,4 +1,5 @@
 @import "../../../accordion/accordion-theme";
+@import "../../../accordion/parts/accordion-item/accordion-item-theme";
 @import "../../../badge/badge-theme";
 @import "../../../button/button-theme";
 @import "../../../buttongroup/buttongroup-theme";
@@ -27,6 +28,7 @@
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
 @import "../../../overlaylist/overlaylist-theme";
+@import "../../../overlaypanel/overlay-panel-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
 @import "../../../radiobutton/radiobutton-theme";
@@ -39,6 +41,7 @@
 
 @mixin truly-all-components($theme) {
   @include tl-accordion-theme($theme);
+  @include tl-accordion-item-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-group-theme($theme);
   @include tl-button-theme($theme);
@@ -67,6 +70,7 @@
   @include tl-multiselect-theme($theme);
   @include tl-navigator-theme($theme);
   @include tl-overlaylist-theme($theme);
+  @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);

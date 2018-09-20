@@ -12,12 +12,14 @@ export class TlAccordion implements AfterContentInit {
 
   @Input() singleOpened = false;
 
+  @Input() color = 'primary';
+
   @ContentChildren( TlAccordionItem ) listAccordion: QueryList<TlAccordionItem>;
 
   constructor(private accordionService: AccordionService) { }
 
   ngAfterContentInit() {
-    this.accordionService.setAccordionList(this.listAccordion.toArray(), this.singleOpened);
+    this.accordionService.setAccordionList(this.listAccordion.toArray(), this.singleOpened, this.color);
   }
 
 }

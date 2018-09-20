@@ -50,7 +50,7 @@ export class ScheduleDemoOverviewComponent {
       detail: 'Consulta | Particular',
       status: 'missed',
       allday: false,
-      date: { start: new Date().getTime() - 3600000 , end: new Date().getTime() - 1800000 }
+      date: { start: new Date().getTime() - 3600000 , end:   new Date().getTime() - 1800000}
     },
    {
     value: '2',
@@ -101,39 +101,39 @@ export class ScheduleDemoOverviewComponent {
       date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
     },
   {
-    value: '7',
-    title: 'Adilson Nascimento - 7',
+    value: '8',
+    title: 'Adilson Nascimento - 8',
     detail: 'Consulta | UNIPREV',
     allday: false,
     status: 'attended',
     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
   },
   {
-    value: '8',
-    title: 'Adilson Nascimento - 8',
+    value: '9',
+    title: 'Adilson Nascimento - 9',
     detail: 'Consulta | UNIPREV',
     allday: false,
     status: 'notmet',
     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
   },
   {
-    value: '9',
-    title: 'Edevaldo Nascimento - 9',
+    value: '10',
+    title: 'Edevaldo Nascimento - 10',
     detail: 'Consulta | UNIPREV',
     allday: false,
     status: 'attended',
     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
   },
   {
-    value: '10',
-    title: 'Adilson Nascimento - 10',
+    value: '11',
+    title: 'Adilson Nascimento - 11',
     detail: 'Consulta | UNIPREV',
     allday: false,
     status: 'attended',
     date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
   },
   {
-    value: '11',
+    value: '12',
     title: 'Jaisson Buccio - 12',
     detail: 'Consulta | Copel',
     allday: false,
@@ -141,20 +141,12 @@ export class ScheduleDemoOverviewComponent {
     date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
   },
   {
-    value: '12',
-    title: 'Jaisson Buccio - 12',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
-  },
-  {
     value: '13',
     title: 'Jaisson Buccio - 13',
     detail: 'Consulta | Copel',
     allday: false,
     status: 'notmet',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
   },
   {
     value: '14',
@@ -169,7 +161,7 @@ export class ScheduleDemoOverviewComponent {
     title: 'Jaisson Buccio - 15',
     detail: 'Consulta | Copel',
     allday: false,
-    status: 'attended',
+    status: 'notmet',
     date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
   },
   {
@@ -181,16 +173,24 @@ export class ScheduleDemoOverviewComponent {
     date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
   },
   {
-    value: '14',
-    title: 'Jaisson Buccio - 14',
+    value: '17',
+    title: 'Jaisson Buccio - 17',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '18',
+    title: 'Jaisson Buccio - 18',
     detail: 'Consulta | Copel',
     allday: false,
     status: 'attended',
     date: { start: new Date().getTime() + 5400000 , end: new Date().getTime() + 10800000 }
   },
   {
-    value: '15',
-    title: 'Jaisson Buccio - 15',
+    value: '19',
+    title: 'Jaisson Buccio - 19',
     detail: 'Consulta | Copel',
     allday: false,
     status: 'notmet',

@@ -1,9 +1,7 @@
-<div class="ui-dropdown-wrapper-list">
-  <div class="dropdown-list-wrapper-select"
-       [ngStyle]="{'width': width}">
+<div class="ui-wrapper-list">
+  <div class="dropdown-list-wrapper-select" [ngStyle]="{'width': width}">
 
-    <div class="search-input"
-         *ngIf="searchOnList">
+    <div class="search-input" *ngIf="searchOnList">
       <tl-input
         (keyup)="handleKeyUp($event)"
         (keydown)="handleKeyEvents($event)"
@@ -12,33 +10,20 @@
       </tl-input>
     </div>
 
-    <ul class="dropdown-list-select"
-        scrollManager
-        [elementController]="customInput"
-        [listItemHeight]="itemHeight"
-        *ngIf="hasDataOnDataSource()"
+    <section class="dropdown-list-select"
         (keydown)="handleKeyEvents($event)"
         (keydown.space)="$event.preventDefault()"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()"
-        role="listbox"
-        tabindex="0"
         [style.maxHeight]="maxHeight"
-        >
-      <li (click)="clickDefaultOption()" class="ui-default-option"
-          *ngIf="hasDefaultOption"
-          [ngStyle]="{'line-height' : itemHeight, 'padding-left': defaultIcon ? '0' : '10px', 'grid-template-columns': defaultIcon ? '35px 1fr' : '1fr'}">
-        <i *ngIf="defaultIcon" [ngStyle]="{'line-height' : itemHeight }" [class]="'ui-icon ' + defaultIcon"></i>
-        <span> {{ defaultOptionText }} </span>
-      </li>
-      <li *ngFor="let item of datasource; let i = index"
-          role="option"
-          [optionItem]="item"
-          (click)="handleClickOption(i)"
-          [ngStyle]="{'line-height' : itemHeight, 'grid-template-columns': item[icon] ? '35px 1fr' : '1fr'}">
-        <i *ngIf="item[icon]" [ngStyle]="{'line-height' : itemHeight}" [class]="'ui-icon ' + item[icon]"> </i>
-            <span *ngIf="typeOfData === 'complex'" [style.padding-left]="item[icon] ? '0' : '10px'"> {{ item[keyText] }}</span>
-            <span *ngIf="typeOfData === 'simple'" [style.padding-left]="item[icon] ? '0' : '10px'"> {{ item }}</span>
-      </li>
-    </ul>
+        tabindex="0">
+        <tl-list-item *ngFor="let item of datasource; let i = index"
+                      (searchEmit)="searching()"
+                      [searchOnList]="searchOnList"
+                      [height]="itemHeight"
+                      (click)="handleClickOption(i)"
+                      [item]="item">
+          {{ item[keyText] }}
+        </tl-list-item>
+    </section>
   </div>
 </div>

@@ -28,6 +28,7 @@
 @import "../../../multiselect/multiselect-theme";
 @import "../../../navigator/navigator-theme";
 @import "../../../overlaylist/overlaylist-theme";
+@import "../../../overlaylist/list-item/list-item-theme";
 @import "../../../overlaypanel/overlay-panel-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
@@ -60,6 +61,7 @@
   @include tl-form-theme($theme);
   @include tl-input-theme($theme);
   @include tl-listbox-theme($theme);
+  @include tl-list-item-theme($theme);
   @include tl-popupmenu-theme($theme);
   @include tl-menu-theme($theme);
   @include tl-advanced-root-menu-theme($theme);

@@ -37,6 +37,7 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
+import { ListItemMeta } from '../overlaylist/overlay-list';
 
 @Component( {
   selector: 'tl-dropdown-list',
@@ -58,6 +59,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   @Input( 'label' ) label: string;
 
   @Input( 'showOnlyIcon' ) showOnlyIcon = false;
+
+  @Input( 'debounceTime' ) debounceTime = 200;
 
   @Input( 'disabled' ) disabled = null;
 
@@ -83,7 +86,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @ViewChild( NgModel ) model: NgModel;
 
-  @ViewChild( 'input' ) input: ElementRef;
+  @ViewChild( 'wrapper' ) wrapper: ElementRef;
 
   public typeOfData = 'complex';
 
@@ -106,7 +109,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   ngOnInit() {
     this.datasource = this.data;
-    this.subject.pipe( debounceTime( 200 ) ).subscribe( searchTextValue => {
+    this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
       this.handleSearch( searchTextValue );
     } );
   }
@@ -150,11 +153,12 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     this.datasource = filter;
   }
 
-  onSelectOption( $event ) {
+  onSelectOption( $event: ListItemMeta ) {
     this.optionSelected = $event;
-    this.selectedDescription = this.isSimpleData() ?  $event.option.optionItem : $event.option.optionItem[ this.keyText ];
-    this.value = this.isSimpleData() ?  $event.option.optionItem : $event.option.optionItem[ this.keyValue ];
+    this.selectedDescription = this.isSimpleData() ?  $event.option.item : $event.option.item[ this.keyText ];
+    this.value = this.isSimpleData() ?  $event.option.item : $event.option.item[ this.keyValue ];
     this.isOpen = false;
+    this.setInputFocus();
   }
 
   onDefaultOption() {
@@ -165,7 +169,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
   }
 
   setInputFocus() {
-    this.input.nativeElement.focus();
+    this.wrapper.nativeElement.focus();
   }
 
   isSimpleData() {

@@ -21,11 +21,18 @@
  */
 import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
-  AfterViewInit, SimpleChanges, OnChanges, Renderer2, ChangeDetectorRef, ChangeDetectionStrategy
+  AfterViewInit, SimpleChanges, OnChanges, Renderer2,
 } from '@angular/core';
-import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from './directives/listoption.directive';
 import { KeyEvent } from '../core/enums/key-events';
+import { TlListItem } from './list-item/list-item';
+import { TlInput } from '../input/input';
+
+export interface ListItemMeta {
+  option?: TlListItem;
+  index?: number;
+}
 
 @Component( {
   selector: 'tl-overlay-list',
@@ -62,7 +69,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'hasDefaultOption' ) hasDefaultOption = false;
 
-  @Output() selectOption: EventEmitter<any> = new EventEmitter();
+  @Output() selectOption: EventEmitter<ListItemMeta> = new EventEmitter();
 
   @Output() defaultOption: EventEmitter<any> = new EventEmitter();
 
@@ -70,10 +77,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild( 'list' ) list: ElementRef;
 
+  @ViewChild( TlInput ) inputSearch: TlInput;
+
   @ViewChild( 'defaultPlaceholder' ) defaultPlaceholder: ElementRef;
 
-  @ViewChildren( ListOptionDirective ) options: QueryList<ListOptionDirective>;
-  public keyManager: ActiveDescendantKeyManager<ListOptionDirective>;
+  @ViewChildren(TlListItem) items: QueryList<TlListItem>;
+  public keyManager: FocusKeyManager<TlListItem>;
 
   constructor( private renderer: Renderer2 ) {}
 
@@ -81,7 +90,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.handleCustomInputEvents();
-    this.keyManager = new ActiveDescendantKeyManager( this.options );
+    this.keyManager = new FocusKeyManager( this.items );
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
@@ -110,7 +119,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   handleActiveItem() {
     setTimeout(() => {
       this.optionSelected ?
-        this.keyManager.setActiveItem( this.optionSelected.optionIndex ) : this.keyManager.setFirstItemActive();
+        this.keyManager.setActiveItem( this.optionSelected.index ) : this.keyManager.setFirstItemActive();
     }, 1);
   }
 
@@ -135,12 +144,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.emitSelectOption();
   }
 
-  clickDefaultOption() {
-    this.defaultOption.emit();
+  searching() {
+    this.inputSearch.setFocus();
   }
 
   emitSelectOption() {
-    this.selectOption.emit( { option: this.keyManager.activeItem, optionIndex: this.keyManager.activeItemIndex } );
+    this.selectOption.emit( <ListItemMeta>{ option: this.keyManager.activeItem, index: this.keyManager.activeItemIndex } );
   }
 
   keydownSearch( $event ) {
@@ -148,7 +157,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges ) {
-    this.keyManager = new ActiveDescendantKeyManager( this.options );
+    this.keyManager = new FocusKeyManager( this.items );
     this.handleActiveItem();
   }
 }

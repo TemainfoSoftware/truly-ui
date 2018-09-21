@@ -1,0 +1,43 @@
+@import "../../core/styles/theming/theming";
+
+@mixin _tl-list-item-theme-schema( $theme, $action ) {
+
+  .ui-list-item {
+    &:focus {
+      background-color: map-deep-get($theme, $action, "default", "background");
+      color:  map-deep-get($theme, $action, "default", "foreground");
+    }
+  }
+
+}
+
+@mixin tl-list-item-theme( $theme ) {
+
+  .ui-wrapper-list-item {
+
+    &.basic {
+      @include _tl-list-item-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-list-item-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-list-item-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-list-item-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-list-item-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-list-item-theme-schema($theme, 'information')
+    }
+  }
+
+}

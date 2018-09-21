@@ -10,10 +10,12 @@ import { TimelineModule } from '../../../../projects/truly-ui/src/components/tim
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
+import {TestComponent} from './test-component';
 
 @NgModule({
   declarations: [
-    TimelineDemoComponent
+    TimelineDemoComponent,
+    TestComponent
   ],
   imports: [
     TimelineDemoRoutingModule,
@@ -26,7 +28,8 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
     ShowcaseTableEventsModule
   ],
   exports: [
-    TimelineDemoComponent
+    TimelineDemoComponent,
+    TestComponent
   ]
 })
 export class TimelineDemoModule {}

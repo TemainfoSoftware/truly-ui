@@ -14,13 +14,43 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic</h5>
-              <tl-timeline></tl-timeline>
-              <br>
+
+              <tl-timeline [data]="data" [align]="'right'"></tl-timeline>
+
               <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-timeline></tl-timeline>
-              </textarea>
+              <div class="spacer"></div>
+
+              <tl-timeline [data]="data">
+                <ng-template let-item="item" let-index="index">
+                  <tl-timeline-item [align]="'center'" [side]="controlSide()" [date]="item.date">
+                    <div class="content-head">
+                      <span class="content-title">{{ item.title }}</span>
+                      <span class="content-time"><i class="ion ion-clock"></i> {{ item.duration }} Minutos de Atendimento</span>
+                    </div>
+                    <div class="content-body">
+                      <test-comp [data]="item.category"></test-comp>
+                    </div>
+                  </tl-timeline-item>
+                </ng-template>
+              </tl-timeline>
+
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+
+              <tl-timeline [data]="data">
+                <ng-template let-item="item" let-index="index">
+                  <tl-timeline-item [align]="'right'" [date]="item.date">
+                    <div class="content-head">
+                      <span class="content-title">{{ item.title }}</span>
+                      <span class="content-time"><i class="ion ion-clock"></i> {{ item.duration }} Minutos de Atendimento</span>
+                    </div>
+                    <div class="content-body">
+                      <test-comp [data]="item.category"></test-comp>
+                    </div>
+                  </tl-timeline-item>
+                </ng-template>
+              </tl-timeline>
+
             </div>
           </app-card>
         </app-showcase-card>

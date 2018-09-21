@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
 import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { HeadingComponent } from './parts/heading/heading.component';
 import { TlSchedule } from './schedule';
@@ -15,6 +13,7 @@ import { TooltipModule } from '../tooltip/index';
 import { BlockUIModule } from '../blockui/index';
 import { ButtonModule } from '../button/index';
 import { ButtonGroupModule } from '../buttongroup/index';
+import { GenerateEventsService } from './services/generate-events.service';
 
 
 @NgModule({
@@ -37,9 +36,7 @@ import { ButtonGroupModule } from '../buttongroup/index';
       TlSchedule,
     ],
     providers: [
-      TabIndexService,
-      IdGeneratorService,
-      NameGeneratorService,
+      GenerateEventsService
     ]
 })
 export class ScheduleModule {}

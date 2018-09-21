@@ -24,20 +24,25 @@
 
       <!-- CREATE EVENTS BOXES-->
       <div class="ui-schedule-event-box"
-           *ngFor="let event of events; let index = index"
-           [ngStyle]="calcPositionEvent( index, event)"
-           [style.borderLeftColor]="statusConfig ? statusConfig[event.status].color : '#FFFFFF'"
-           [tooltip]="{text: statusConfig ? statusConfig[event.status].description : '' , placement: 'top'}"
-           (click)="onEventClick.emit(event)"
-           (dblclick)="onEventDbClick.emit(event)"
-           (mouseover)="onEventMouseout.emit(event)"
-           (mouseout)="onEventMouseout.emit(event)"
+           *ngFor="let event of eventsWithPositions; let index = index"
+           [ngStyle]="{
+              top: event.positions.top + 'px',
+              left: event.positions.left + 'px',
+              height: event.positions.height + 'px',
+              width: event.positions.width + 'px'
+           }"
+           [style.borderLeftColor]="statusConfig ? statusConfig[event.data.status].color : '#FFFFFF'"
+           [tooltip]="{text: statusConfig ? statusConfig[event.data.status].description : '' , placement: 'top'}"
+           (click)="onEventClick.emit(event.data)"
+           (dblclick)="onEventDbClick.emit(event.data)"
+           (mouseover)="onEventMouseout.emit(event.data)"
+           (mouseout)="onEventMouseout.emit(event.data)"
       >
         <div class="ui-schedule-description">
-          <div class="ui-event-title">{{event.title}}</div>
-          <div class="ui-event-detail">{{event.detail}}</div>
+          <div class="ui-event-title">{{event.data.title}}</div>
+          <div class="ui-event-detail">{{event.data.detail}}</div>
         </div>
-        <div class="ui-event-hour">{{event.date.start | date: 'HH:mm'}} - {{event.date.end | date: 'HH:mm'}}</div>
+        <div class="ui-event-hour">{{event.data.date.start | date: 'HH:mm'}} - {{event.data.date.end | date: 'HH:mm'}}</div>
       </div>
 
     </div>

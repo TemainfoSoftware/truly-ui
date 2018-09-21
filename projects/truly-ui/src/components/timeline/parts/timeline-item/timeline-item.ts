@@ -20,18 +20,23 @@
     SOFTWARE.
 */
 
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TimeLineData } from '../../interfaces/timeline-inteface';
 
 @Component({
-  selector: 'timeline-item',
+  selector: 'tl-timeline-item',
   templateUrl: './timeline-item.html',
   styleUrls: ['./timeline-item.scss'],
 })
 export class TlTimelineItem implements OnInit {
 
-  @Input() color = 'blue';
+  @Input() align: 'left';
 
-  @Input() last = '';
+  @Input() side: string;
+
+  @Input() date: number;
+
+  @Input() data: TimeLineData[];
 
   constructor() {}
 

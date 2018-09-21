@@ -1,6 +1,16 @@
 <div class="tl-timeline">
-  <timeline-item
-    *ngFor="let item of itens; let last = last;"
-    [last]="last"
-    [color]="(item.color) ? item.color : 'blue'">{{ item.text }}</timeline-item>
+  <div #view></div>
 </div>
+
+<ng-template let-item="item" let-index="index" #defaultTemplate>
+  <tl-timeline-item [align]="align" [side]="controlSide()">
+    <div class="content-head">
+      <span class="content-title">{{ item.title }}</span>
+    </div>
+    <div class="content-body">
+      <div class="content-text">
+        {{ item.text }}
+      </div>
+    </div>
+  </tl-timeline-item>
+</ng-template>

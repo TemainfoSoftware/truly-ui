@@ -20,9 +20,7 @@
     SOFTWARE.
 */
 
-import { Component, OnInit } from '@angular/core';
-
-import { TimeLineData } from './interfaces/timeline-inteface';
+import {Component, ContentChild, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 
 @Component({
   selector: 'tl-timeline',
@@ -31,17 +29,53 @@ import { TimeLineData } from './interfaces/timeline-inteface';
 })
 export class TlTimeline implements OnInit {
 
-  public itens: TimeLineData[] = [
-      {title: 'teste', text: 'Create a services site 2015-09-01', color: 'green'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'},
-      {title: 'teste', text: 'Create a services site 2015-09-01'}
-    ];
+  @Input() data: Array<any>;
 
-  constructor() {
-  }
+  @Input() align = 'left';
+
+  @Input() title: string;
+
+  @Input() text: string;
+
+  @ContentChild(TemplateRef) customTemplate: TemplateRef<any>;
+
+  @ViewChild(TemplateRef) defaultTemplate: TemplateRef<any>;
+
+  @ViewChild('view', {read: ViewContainerRef}) view: ViewContainerRef;
+
+  public side = 'left';
+
+  constructor() {}
 
   ngOnInit() {
+    this.createViewTemplate();
+  }
+
+  createViewTemplate() {
+    this.data.forEach((item, index) => {
+      let node;
+      if (this.customTemplate) {
+        node = this.customTemplate.createEmbeddedView({
+          item: item,
+          index: index
+        });
+      } else {
+        node = this.defaultTemplate.createEmbeddedView({
+          item: item,
+          index: index
+        });
+      }
+      this.insertOnView(node);
+    });
+  }
+
+  insertOnView(node) {
+    this.view.insert(node);
+  }
+
+  public controlSide() {
+    this.side = (this.side === 'left') ? 'right' : 'left';
+    return this.side;
   }
 
 }

@@ -19,7 +19,8 @@ import { TimelineService } from './services/timeline-service';
     TimelineService
   ],
   exports: [
-    TlTimeline
+    TlTimeline,
+    TlTimelineItem
   ]
 })
 export class TimelineModule {}

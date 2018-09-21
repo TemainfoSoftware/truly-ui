@@ -1,8 +1,18 @@
-<li [class]="(last) ? 'tl-timeline-item tl-timeline-item-last' : 'tl-timeline-item'">
-  <div class="tl-timeline-item-tail"></div>
-  <div [class]="'tl-timeline-item-head tl-timeline-item-head-' + color">
-    <span>APR</span>
+<li class="tl-timeline-item" #customTemplateRef>
+  <div [class]="'tl-timeline-item-tail tail-' + align"></div>
+  <div [class]="'tl-timeline-item-head head-' + align">
+    <div class="head-date" *ngIf="date">
+      <span class="date-day">{{ date | date : 'dd' }}</span>
+      <span class="date-month">{{ date | date : 'MMM' | uppercase }}</span>
+      <span class="date-year">{{ date | date : 'yyyy' }}</span>
+      <span class="date-separator"></span>
+      <span class="date-hour">{{ date | date : 'H:MM' }}</span>
+    </div>
+    <div class="head-dot"></div>
   </div>
-  <div [class]="'tl-timeline-item-dot tl-timeline-item-dot-' + color"></div>
-  <div class="tl-timeline-item-content">Create a services site 2015-09-0 {{ last }}</div>
+  <div class="tl-timeline-item-content"
+       [ngClass]="align === 'center' ? (date) ? 'float-' + side + ' arrow-' + side : 'float-df-' + side + ' arrow-' + side : (date) ? 'content-' + align : 'content-df-' + align">
+    <ng-content></ng-content>
+  </div>
+  <div class="clearfix"></div>
 </li>

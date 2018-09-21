@@ -23,8 +23,7 @@ import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
   AfterViewInit, SimpleChanges, OnChanges, Renderer2,
 } from '@angular/core';
-import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
-import { ListOptionDirective } from './directives/listoption.directive';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
@@ -67,6 +66,8 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'customInput' ) customInput;
 
+  @Input( 'customFocus' ) customFocus;
+
   @Input( 'hasDefaultOption' ) hasDefaultOption = false;
 
   @Output() selectOption: EventEmitter<ListItemMeta> = new EventEmitter();
@@ -83,6 +84,8 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChildren(TlListItem) items: QueryList<TlListItem>;
   public keyManager: FocusKeyManager<TlListItem>;
+
+  public notFound = false;
 
   constructor( private renderer: Renderer2 ) {}
 
@@ -145,7 +148,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   searching() {
-    this.inputSearch.setFocus();
+    this.customFocus ? this.customFocus.focus() : this.inputSearch.setFocus();
   }
 
   emitSelectOption() {
@@ -156,9 +159,16 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.search.emit( $event.target.value );
   }
 
+  setNotFound() {
+    this.notFound = this.datasource.length === 0;
+  }
+
   ngOnChanges(changes: SimpleChanges ) {
     this.keyManager = new FocusKeyManager( this.items );
     this.handleActiveItem();
+    if (changes['datasource']) {
+      this.setNotFound();
+    }
   }
 }
 

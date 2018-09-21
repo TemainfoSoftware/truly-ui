@@ -59,6 +59,12 @@ $default-outline: none;
       -moz-border-radius-bottomleft: 3px;
       border-bottom-right-radius: 3px;
       border-bottom-left-radius: 3px;
+      > .ui-label-notfound {
+        font-weight: normal;
+        padding: 5px;
+        margin: 0;
+        background: white;
+      }
       > li {
         display: grid;
         grid-template-columns: 35px 1fr;

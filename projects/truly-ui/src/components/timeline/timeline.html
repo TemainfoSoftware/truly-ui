@@ -1,16 +1,27 @@
-<div class="tl-timeline">
-  <div #view></div>
+<div class="tl-timeline" *ngIf="data">
+  <ng-container *ngFor="let item of data; let i = index">
+    <tl-timeline-item #line
+                      [date]="item.date"
+                      [template]="(customTemplate) ? customTemplate : basicTemplate"
+                      (initialize)="onInit(line, item, i)"
+                      [data]="data"
+                      [align]="align"
+                      [side]="controlSide()">
+    </tl-timeline-item>
+  </ng-container>
 </div>
 
-<ng-template let-item="item" let-index="index" #defaultTemplate>
-  <tl-timeline-item [align]="align" [side]="controlSide()">
-    <div class="content-head">
-      <span class="content-title">{{ item.title }}</span>
+<div class="tl-timeline" *ngIf="!customTemplate && !data">
+  <tl-timeline-item #line [date]="date" [template]="basicTemplate" (initialize)="onInit(line)" [align]="align" [side]="side"></tl-timeline-item>
+</div>
+
+<ng-template let-item="item" let-index="index" #basicTemplate>
+  <div class="content-head">
+    <span class="content-title">{{ (data) ? item.title : title }}</span>
+  </div>
+  <div class="content-body">
+    <div class="content-text">
+      {{ (data) ? item.text : text }}
     </div>
-    <div class="content-body">
-      <div class="content-text">
-        {{ item.text }}
-      </div>
-    </div>
-  </tl-timeline-item>
+  </div>
 </ng-template>

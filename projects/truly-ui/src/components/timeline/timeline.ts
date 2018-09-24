@@ -20,7 +20,8 @@
     SOFTWARE.
 */
 
-import {Component, ContentChild, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
+import { TlTimelineItem } from './parts/timeline-item/timeline-item';
 
 @Component({
   selector: 'tl-timeline',
@@ -37,40 +38,18 @@ export class TlTimeline implements OnInit {
 
   @Input() text: string;
 
+  @Input() date: number;
+
+  @Input() side = 'left';
+
   @ContentChild(TemplateRef) customTemplate: TemplateRef<any>;
-
-  @ViewChild(TemplateRef) defaultTemplate: TemplateRef<any>;
-
-  @ViewChild('view', {read: ViewContainerRef}) view: ViewContainerRef;
-
-  public side = 'left';
 
   constructor() {}
 
-  ngOnInit() {
-    this.createViewTemplate();
-  }
+  ngOnInit() {}
 
-  createViewTemplate() {
-    this.data.forEach((item, index) => {
-      let node;
-      if (this.customTemplate) {
-        node = this.customTemplate.createEmbeddedView({
-          item: item,
-          index: index
-        });
-      } else {
-        node = this.defaultTemplate.createEmbeddedView({
-          item: item,
-          index: index
-        });
-      }
-      this.insertOnView(node);
-    });
-  }
-
-  insertOnView(node) {
-    this.view.insert(node);
+  onInit(lineItem: TlTimelineItem, item?, index?) {
+    lineItem.setTemplateView(item, index);
   }
 
   public controlSide() {

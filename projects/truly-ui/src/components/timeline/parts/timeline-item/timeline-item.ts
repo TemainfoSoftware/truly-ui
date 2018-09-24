@@ -20,7 +20,17 @@
     SOFTWARE.
 */
 
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { TimeLineData } from '../../interfaces/timeline-inteface';
 
 @Component({
@@ -28,9 +38,9 @@ import { TimeLineData } from '../../interfaces/timeline-inteface';
   templateUrl: './timeline-item.html',
   styleUrls: ['./timeline-item.scss'],
 })
-export class TlTimelineItem implements OnInit {
+export class TlTimelineItem implements OnInit, AfterViewInit {
 
-  @Input() align: 'left';
+  @Input() align = 'left';
 
   @Input() side: string;
 
@@ -38,8 +48,30 @@ export class TlTimelineItem implements OnInit {
 
   @Input() data: TimeLineData[];
 
+  @Input() template: TemplateRef<any>;
+
+  @Output() initialize: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('view', {read: ViewContainerRef}) view: ViewContainerRef;
+
   constructor() {}
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.initialize.emit();
+  }
+
+  setTemplateView(item, index) {
+    const node = this.template.createEmbeddedView({
+      item: item,
+      index: index
+    });
+    this.insertOnView(node);
+  }
+
+  insertOnView(node) {
+    this.view.insert(node);
+  }
 
 }

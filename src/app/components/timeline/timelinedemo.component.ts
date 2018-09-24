@@ -35,8 +35,6 @@ export class TimelineDemoComponent {
 
   public dataEvents;
 
-  public side = 'left';
-
   public data = [
     {
       title: 'Dr. Fábio dos Santos',
@@ -53,25 +51,23 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
-    },
-    {
+    }, {
       title: 'Dr. Fábio dos Santos',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 20,
+      duration: 15,
       category: [
         {
           title: 'Anamnese',
+          text: 'Mauris vulputate dolor vel finibus sagittis.'
+        },
+        {
+          title: 'Evolução',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }
   ];
-
-  public controlSide() {
-    this.side = (this.side === 'left') ? 'right' : 'left';
-    return this.side;
-  }
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

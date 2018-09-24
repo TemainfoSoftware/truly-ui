@@ -1,21 +1,19 @@
-<div [class]="'check-container '+ color ">
-  <div (click)="check(value)"
-       *ngIf="value"
-       [ngStyle]="{'border-width':'1px','border-style':'solid'}"
-       class="checkmark-wrapper">
-    <div class="checkmark">
-      <div class="checkmark_stem" [ngClass]="{'disabled' : disabled}"></div>
-      <div class="checkmark_kick" [ngClass]="{'disabled' : disabled}"></div>
-    </div>
-  </div>
+<div [class]="'check-container '+ color">
   <input #checkbox
+         class="ui-check-input"
          type="checkbox"
          #model="ngModel"
-         (focus)="focusCheckBox()"
          (change)="emitEvent()"
          [checked]="value"
          [attr.disabled]="disabled"
          [tabindex]="tabindex"
          [(ngModel)]="value">
-  <label class="-label" (click)="check(value)">{{label}}</label>
+  <label class="cbx" (click)="check(value)">
+    <span tabindex="-1" (focus)="focusCheckBox()" (keydown.space)="$event.preventDefault(); check(value)">
+          <svg width="12px" height="10px" viewBox="0 0 12 10">
+            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+          </svg>
+    </span>
+    <span class="-label">{{label}}</span>
+  </label>
 </div>

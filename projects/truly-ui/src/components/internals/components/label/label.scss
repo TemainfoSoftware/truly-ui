@@ -9,11 +9,11 @@ $default-fontSize: 0.9em;
 }
 
 :host(.label-left) {
-  display: grid;
+  display: table-cell;
   text-align: right;
   align-items: center;
   padding: 0 5px;
-  height: 20px;
+  vertical-align: middle;
 }
 
 span {

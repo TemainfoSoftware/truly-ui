@@ -109,20 +109,21 @@
     color: #454e58;
     align-items: center;
     display: flex;
-    width: 30%;
+    width: 35%;
   }
   > .ui-schedule-description{
     padding-left: 5px;
-    width: 70%;
+    width: 65%;
     > .ui-event-title{
       font-weight: 600;
       color: #454e58;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-size: 10px;
     }
     > .ui-event-detail{
       color: #949799;
-      font-size: 10px;
+      font-size: 9px;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

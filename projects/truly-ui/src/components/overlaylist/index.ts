@@ -8,6 +8,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { ListOptionDirective } from './directives/listoption.directive';
 import { TlOverlayList } from './overlay-list';
 import { MiscModule } from '../misc/index';
+import { TlListItem } from './list-item/list-item';
 
 @NgModule( {
   imports: [
@@ -20,10 +21,12 @@ import { MiscModule } from '../misc/index';
   ],
   declarations: [
     TlOverlayList,
+    TlListItem,
     ListOptionDirective,
   ],
   exports: [
     TlOverlayList,
+    TlListItem,
     ListOptionDirective,
   ],
 } )

@@ -5,13 +5,14 @@
     <div
       class="input-wrapper-multiselect"
       cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-      #element (click)="setInputFocus();"
+      #element
+      (click)="isOpen = !isOpen;"
       [ngClass]="
       {
       'ng-touched': touched,
       'invalid': controlName?.control.errors || model?.control.errors,
       'withValidators': hasValidator,
-      'inputFormOpenFilter': isOpen && filteredItens.length !== 0
+      'inputFormOpenFilter': isOpen && filteredItems.length !== 0
       }">
       <div class="group-tags">
         <div class="tag"
@@ -41,12 +42,11 @@
               'withoutValidators': !hasValidator
               }"
                #input
-               (focus)="handleInputFocus(); isOpen = !isOpen"
                [attr.placeholder]="placeholder"
+               (focus)="handleInputFocus();"
                (keydown.arrowDown)="handleArrowDown($event)"
-               (keyup)="searchItem($event.target.value)"
+               (keyup)="subject.next($event.target.value)"
                (keydown)="handleKeyDown($event)">
-
       </div>
     </div>
 
@@ -60,9 +60,11 @@
         @overlay
         (selectOption)="addTag($event)"
         (search)="handleKeyDown($event)"
+        [searchOnList]="true"
         [customInput]="input"
+        [customFocus]="input"
         [typeOfData]="typeOfData"
-        [datasource]="filteredItens"
+        [datasource]="filteredItems"
         [itemHeight]="itemHeight"
         [width]="element.offsetWidth + 'px'"
         [icon]="icon"

@@ -1,36 +1,28 @@
 <div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight}">
-    <label *ngIf="label" class="labeltext -label{{labelPlacement}}" [ngStyle]="{'width' : labelSize + 'px'}">{{label}}
-    </label>
-    <div class="ui-dropdown-wrapper-list"
+
+  <tl-label *ngIf="label"
+            [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"
+            [labelPlacement]="labelPlacement"
+            [labelSize]="labelSize"
+            [labelTitle]="label">
+  </tl-label>
+    <div #wrapper
+         tabindex="-1"
+         cdkOverlayOrigin
          (click)="!disabled ? isOpen = !isOpen : null"
-         cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-
-
-      <input class="select"
-             readonly
-             [attr.disabled]="disabled ? true : null"
-             #input
-             [placeholder]="placeholder"
-             [value]="selectedDescription"
-             (keydown)="onKeyDown($event)"
-             [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight, 'width': width}">
-
-      <input readonly
-             notform
-             class="ui-hidden-input"
-             [(ngModel)]="value"
-             [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}">
-
+         (keydown)="onKeyDown($event)"
+         class="ui-dropdown-wrapper-list"
+         [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight, 'width': width}"
+         #trigger="cdkOverlayOrigin">
+        <label>{{ selectedDescription ? selectedDescription : placeholder }}</label>
         <div class="dropdown-list-icon"
-             [style.line-height]="itemHeight"
-             [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              (click)="setInputFocus()"
+             [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{' disabled ': disabled}">
-            <i class="ion-chevron-down" style="padding: 0;"></i>
+            <i class="ion-chevron-down"></i>
         </div>
-
     </div>
-
+  <input readonly notform class="ui-hidden-input" [(ngModel)]="value">
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
                [cdkConnectedOverlayHasBackdrop]="true"
@@ -42,7 +34,7 @@
       (selectOption)="onSelectOption($event)"
       (search)="handleSearch($event)"
       (defaultOption)="onDefaultOption()"
-      [customInput]="input"
+      [customInput]="wrapper"
       [typeOfData]="typeOfData"
       [defaultOptionText]="placeholder"
       [optionSelected]="optionSelected"
@@ -56,5 +48,4 @@
       [searchOnList]="searchOnList">
     </tl-overlay-list>
   </ng-template>
-
 </div>

@@ -24,6 +24,7 @@
   @include tl-menu-theme($theme);
   @include tl-navigator-theme($theme);
   @include tl-overlaylist-theme($theme);
+  @include tl-list-item-theme($theme);
   @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
   @include tl-progressbar-theme($theme);

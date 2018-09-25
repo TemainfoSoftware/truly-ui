@@ -44,6 +44,9 @@
       & .input-field {
         background: transparent;
         color: map-deep-get($theme, $action, "lighter", "foreground");
+        &::placeholder {
+          opacity: 0.6;
+        }
       }
 
       & .input-empty.invalid {

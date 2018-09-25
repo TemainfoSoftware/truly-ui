@@ -25,28 +25,31 @@ import {
 } from '@angular/core';
 
 @Component( {
-    selector: 'tl-label',
-    templateUrl: './label.html',
-    styleUrls: [ './label.scss' ],
+  selector: 'tl-label',
+  templateUrl: './label.html',
+  styleUrls: [ './label.scss' ],
 } )
 export class TlLabel {
 
-    @Input() labelPlacement = 'left';
+  @Input() labelPlacement = 'left';
 
-    @Input() labelSize = '100px';
+  @Input() labelSize = '100px';
 
-    @Input() labelTitle = '';
+  @Input() labelTitle = '';
 
-    @HostBinding('class.label-left')
-    get left() {
-      return this.labelPlacement === 'left';
-    }
+  @HostBinding( 'style.width' ) public width: string = this.labelSize;
 
-    @HostBinding('class.label-top')
-    get top() {
-      return this.labelPlacement === 'top';
-    }
+  @HostBinding( 'class.label-left' )
+  get left() {
+    return this.labelPlacement === 'left';
+  }
 
-    constructor() {}
+  @HostBinding( 'class.label-top' )
+  get top() {
+    return this.labelPlacement === 'top';
+  }
+
+  constructor() {
+  }
 
 }

@@ -53,29 +53,6 @@
     cursor: pointer;
   }
 
-  .label {
-    line-height: 1;
-    width: 100px;
-    white-space: nowrap;
-    vertical-align: middle;
-    font-weight: normal;
-    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-    font-size: 0.9em;
-  }
-  .label.-labeltop {
-    text-align: left;
-    padding: 0 0 5px 0;
-    display: table-caption;
-  }
-  .label.-labelleft {
-    text-align: right;
-    padding: 4px 4px 4px 0;
-    display: table-cell;
-  }
-  .label.-validation {
-    font-size: 0.7em;
-  }
-
   > .-clearbutton {
     position: absolute;
     top: 0;
@@ -97,7 +74,6 @@
       padding-right: 20px;
       font-size: 12px;
       width: 100%;
-      float: right;
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       transition: all 230ms ease-in-out;

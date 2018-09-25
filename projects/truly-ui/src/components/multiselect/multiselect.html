@@ -1,15 +1,15 @@
 <div [class]="'tl-multiselect-container '+ color">
-  <div class="-labelTag" [style.width]="labelSize">{{label}}<b
-    *ngIf="required" style="color: #FF6666">*</b></div>
+  <tl-label [labelTitle]="label" [labelSize]="labelSize" [labelPlacement]="labelPlacement"></tl-label>
   <div class="multiselect-wrapper">
     <div
       class="input-wrapper-multiselect"
       cdkOverlayOrigin #trigger="cdkOverlayOrigin"
       #element
-      (click)="isOpen = !isOpen;"
+      (click)="!disabled ? isOpen = !isOpen : null;"
       [ngClass]="
       {
       'ng-touched': touched,
+      'ng-disabled': disabled,
       'invalid': controlName?.control.errors || model?.control.errors,
       'withValidators': hasValidator,
       'inputFormOpenFilter': isOpen && filteredItems.length !== 0
@@ -43,13 +43,12 @@
               }"
                #input
                [attr.placeholder]="placeholder"
-               (focus)="handleInputFocus();"
+               [attr.disabled]="disabled"
                (keydown.arrowDown)="handleArrowDown($event)"
                (keyup)="subject.next($event.target.value)"
                (keydown)="handleKeyDown($event)">
       </div>
     </div>
-
     <ng-template cdkConnectedOverlay
                  (backdropClick)="isOpen = false"
                  [cdkConnectedOverlayHasBackdrop]="true"

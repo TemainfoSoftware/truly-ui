@@ -78,6 +78,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   @Input() itemHeight = '30px';
 
+  @Input() labelPlacement: 'left' | 'top' = 'left';
+
   @Input() debounceTime = 200;
 
   @Input() itemAmount = 5;
@@ -89,6 +91,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   @Input() sortAlphabetically = false;
 
   @Input() onlyKeyValue = false;
+
+  @Input() disabled = false;
 
   @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
@@ -141,6 +145,19 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.handleTyping();
   }
 
+  ngAfterViewInit() {
+    this.validateHasModel();
+    this.setRequired();
+    this.setDisabled();
+    this.handleValidator();
+  }
+
+  setDisabled() {
+    if (this.controlName) {
+      this.disabled = this.controlName.disabled;
+    }
+  }
+
   handleTyping() {
     this.subscription.add( this.subject.pipe(
       map( event => event ),
@@ -149,12 +166,6 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     ).subscribe( ( value ) => {
       this.searchItem( value );
     } ) );
-  }
-
-  ngAfterViewInit() {
-    this.validateHasModel();
-    this.setRequired();
-    this.handleValidator();
   }
 
   setRequired() {

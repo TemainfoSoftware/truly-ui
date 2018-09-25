@@ -3,6 +3,7 @@
 @mixin _tl-multiselect-theme-schema($theme, $action) {
 
     $danger: map-deep-get($theme, 'danger');
+    $basic: map-deep-get($theme, 'basic');
     $primary: map_get($theme, 'primary');
     $success: map-deep-get($theme, 'success');
 
@@ -23,6 +24,14 @@
         -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      }
+
+      & .input-wrapper-multiselect.ng-disabled {
+        opacity: 0.35;
+        filter: Alpha(Opacity=70);
+        cursor: default !important;
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
       }
 
       & .input-wrapper-multiselect.ng-touched.invalid {

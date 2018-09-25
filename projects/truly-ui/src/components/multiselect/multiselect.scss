@@ -16,7 +16,7 @@
 
 @mixin textInput {
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .tl-multiselect-container {
@@ -37,7 +37,7 @@
 
   > .multiselect-wrapper {
     display: table-cell;
-    padding-left: 5px;
+    width: 100%;
 
     & small {
       opacity: 0.7;

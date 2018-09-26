@@ -22,16 +22,19 @@
 import { NgModule } from '@angular/core';
 import { TlLabel } from './components/label/label';
 import { CommonModule } from '@angular/common';
+import { TlTag } from './components/tag/tag';
 
 @NgModule( {
   imports: [
     CommonModule
   ],
   exports: [
-    TlLabel
+    TlLabel,
+    TlTag
   ],
   declarations: [
-    TlLabel
+    TlLabel,
+    TlTag
   ],
   providers: [],
 } )

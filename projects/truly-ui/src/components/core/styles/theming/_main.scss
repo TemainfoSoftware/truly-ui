@@ -31,6 +31,7 @@
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
   @include tl-switch-theme($theme);
+  @include tl-tag-theme($theme);
   @include tl-tabcontrol-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);

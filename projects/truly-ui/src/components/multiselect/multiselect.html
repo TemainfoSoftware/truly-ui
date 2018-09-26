@@ -15,17 +15,11 @@
       'inputFormOpenFilter': isOpen && filteredItems.length !== 0
       }">
       <div class="group-tags">
-        <div class="tag"
-             *ngFor="let tag of tags; let i = index"
-             (click)="selectTagClick($event, i, tag)"
-             [class.selected]="tag['selected']"
-             [ngStyle]="changeColorTag(tag)">
-          <span>{{ isSimpleData() ? tag : tag[labelTag] }}</span>
-          <small *ngIf="detailOnTag && detail !== undefined && !isSimpleData()"
-                 class="tags-detail"><{{tag[detail]}}>
-          </small>
-          <span (click)="removeTag(i, tag)">X</span>
-        </div>
+        <tl-tag *ngFor="let tag of tags; let i = index"
+                [title]="isSimpleData() ? tag : tag[labelTag]"
+                (close)="removeTag(i, tag)"
+                (click)="selectTagClick($event, i, tag)">
+        </tl-tag>
 
         <input autocomplete="off"
                [name]="'notform'"

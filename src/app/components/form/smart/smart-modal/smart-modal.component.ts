@@ -27,6 +27,7 @@ export class SmartFormModalComponent {
     nickname: new FormControl('',  Validators.required),
     email: new FormControl('', [Validators.email, Validators.required]),
     user: new FormControl('', Validators.required),
+    select: new FormControl('', Validators.required),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8)

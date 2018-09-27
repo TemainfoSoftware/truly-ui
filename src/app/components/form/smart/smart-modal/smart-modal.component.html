@@ -15,6 +15,9 @@
       <div class="form-group">
         <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
       </div>
+      <div class="form-group">
+        <tl-multiselect formControlName="select" [data]="['James', 'Nicolas', 'Joe', 'Rachel' ]" [label]="'Select'" [labelSize]="'100'"></tl-multiselect>
+      </div>
     </div>
   </tl-panelgroup>
   <div class="spacer"></div>

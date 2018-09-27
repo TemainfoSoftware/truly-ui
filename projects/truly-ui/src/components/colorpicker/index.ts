@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { TlColorPicker } from './colorpicker';
-import { InputModule } from '../input';
+import { InputModule } from '../input/index';
 import { TlColorPickerContent } from './parts/colorpicker-content/colorpicker-content';
 import { TlColorPickerInput } from './parts/colorpicker-input/colorpicker-input';
 import { ColorPickerService } from './services/colorpicker-service';
@@ -15,7 +15,6 @@ import { ColorPickerService } from './services/colorpicker-service';
     FormsModule,
     OverlayModule,
     InputModule,
-
   ],
   providers: [
     ColorPickerService

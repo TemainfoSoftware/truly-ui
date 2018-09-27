@@ -26,7 +26,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ContentChild, AfterViewInit, ChangeDetectorRef, SimpleChanges, OnChanges,
+  ContentChild, AfterViewInit, ChangeDetectorRef,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
@@ -166,6 +166,12 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     ).subscribe( ( value ) => {
       this.searchItem( value );
     } ) );
+  }
+
+  handleOpenOnFocus() {
+    if (this.openFocus) {
+      this.isOpen = true;
+    }
   }
 
   setRequired() {
@@ -373,6 +379,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   handleInputFocus() {
     this.touched = true;
     this.sortFilteredItems();
+    this.handleOpenOnFocus();
   }
 
   setFilteredItems() {

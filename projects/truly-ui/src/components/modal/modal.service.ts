@@ -52,7 +52,7 @@ export class ModalService implements OnDestroy {
 
   public head = new Subject();
 
-  public modalConfiguration: ComponentFactoryResolver | ModalConfiguration = new ModalConfiguration();
+  public modalConfiguration: ComponentFactoryResolver | ModalConfiguration;
 
   private selectedModal;
 

@@ -60,6 +60,10 @@
           opacity: 0.6;
         }
 
+        &:focus {
+          outline: none;
+        }
+
         &:focus:not(.ng-dirty) {
           background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
           outline: none;

@@ -13,92 +13,38 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   box-sizing: border-box;
 }
 
-.ui-button-icon {
-  font-family: $button-font-family;
-  font-size: $button-font-size;
-  padding: 0;
-  margin: 0;
-  outline: none;
-  display: inline-block;
-  cursor: pointer;
-  box-sizing: border-box;
-  border-radius: 3px;
-  width: 35px;
-  height: 30px;
+.ui-dropdown-box {
+  display: table;
+}
 
-  > .ui-icon {
-    height: 100%;
-    width: 100%;
-    line-height: 30px;
-    vertical-align: middle;
+.ui-dropdown-wrapper-list {
+  border-radius:3px;
+  grid-template-columns: 1fr 30px;
+  display: grid;
+  label {
+    margin: 0;
+    font-size: $default-fontSize;
+    font-family: $default-fontFamily;
+    font-weight: normal;
+    padding-left: 10px;
   }
-  > .ui-hidden-input {
-    visibility: hidden;
+  > .dropdown-list-icon {
+    text-align: center;
+    font-size: $default-fontSize;
+    font-family: $default-fontFamily;
+    font-weight: normal;
+    i {
+      padding: 0;
+    }
   }
 }
 
-.ui-dropdown-box {
-  display: table;
-  border-collapse: separate;
-  user-select: none;
-  > .labeltext {
-    font-family: $default-fontFamily;
-    box-sizing: border-box;
-    font-size: $default-fontSize;
-    font-weight: normal;
-    line-height: 1;
-    white-space: nowrap;
-    vertical-align: middle;
-    > b.required {
-    }
-  }
-  > .labeltext.-labeltop {
-    display: table-caption;
-    text-align: left;
-    padding: 0 0 5px 0;
-  }
-  > .labeltext.-labelleft {
-    display: table;
-    text-align: right;
-    padding: 4px 4px 4px 0;
-  }
-  > .ui-dropdown-wrapper-list {
-    position: relative;
-    display: table-cell;
-    margin: 0;
-    padding: 0;
-    > .select {
-      overflow: hidden;
-      font-family: $default-fontFamily;
-      font-size: $default-fontSize;
-      cursor: $default-cursorHover;
-      margin: 0;
-      padding-left: 5px;
-      vertical-align: middle;
-      user-select: none;
-      border-radius: 3px;
-      box-sizing: border-box;
-    }
-    > .select.without-icon {
-      padding-left: 10px;
-      padding-right: 30px;
-    }
-    > .dropdown-list-icon {
-      position: absolute;
-      display: table-cell;
-      cursor: $default-cursorHover;
-      top: 0;
-      right: 0;
-      text-align: center;
-      width: 30px;
-      height: 100%;
-      transition: all 250ms ease-in-out;
-    }
-    > .dropdown-list-icon i {
-      font-size: 0.7em;
-      vertical-align: middle;
-    }
-  }
+.select {
+  height: 20px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  outline: none;
 }
 
 .ui-hidden-input {
@@ -106,6 +52,7 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   left: 0;
   opacity: 0;
   width: 0;
+  bottom: 0;
 }
 
 .ui-icon{
@@ -113,12 +60,4 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   height: 20px;
   text-align: center;
   display: inline-block;
-}
-
-.ui-overlap{
-  position: absolute;
-  cursor: pointer;
-  padding: 0px;
-  text-align: center;
-  box-sizing: border-box;
 }

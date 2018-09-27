@@ -1,30 +1,25 @@
 <div [class]="'tl-multiselect-container '+ color">
-  <div class="-labelTag" [style.width]="labelSize">{{label}}<b
-    *ngIf="required" style="color: #FF6666">*</b></div>
+  <tl-label [labelTitle]="label" [labelSize]="labelSize" [labelPlacement]="labelPlacement"></tl-label>
   <div class="multiselect-wrapper">
     <div
       class="input-wrapper-multiselect"
       cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-      #element (click)="setInputFocus();"
+      #element
+      (click)="!disabled ? isOpen = !isOpen : null;"
       [ngClass]="
       {
       'ng-touched': touched,
+      'ng-disabled': disabled,
       'invalid': controlName?.control.errors || model?.control.errors,
       'withValidators': hasValidator,
-      'inputFormOpenFilter': isOpen && filteredItens.length !== 0
+      'inputFormOpenFilter': isOpen && filteredItems.length !== 0
       }">
       <div class="group-tags">
-        <div class="tag"
-             *ngFor="let tag of tags; let i = index"
-             (click)="selectTagClick($event, i, tag)"
-             [class.selected]="tag['selected']"
-             [ngStyle]="changeColorTag(tag)">
-          <span>{{ isSimpleData() ? tag : tag[labelTag] }}</span>
-          <small *ngIf="detailOnTag && detail !== undefined && !isSimpleData()"
-                 class="tags-detail"><{{tag[detail]}}>
-          </small>
-          <span (click)="removeTag(i, tag)">X</span>
-        </div>
+        <tl-tag *ngFor="let tag of tags; let i = index"
+                [title]="isSimpleData() ? tag : tag[labelTag]"
+                (close)="removeTag(i, tag)"
+                (click)="selectTagClick($event, i, tag)">
+        </tl-tag>
 
         <input autocomplete="off"
                [name]="'notform'"
@@ -41,15 +36,13 @@
               'withoutValidators': !hasValidator
               }"
                #input
-               (focus)="handleInputFocus(); isOpen = !isOpen"
                [attr.placeholder]="placeholder"
+               [attr.disabled]="disabled"
                (keydown.arrowDown)="handleArrowDown($event)"
-               (keyup)="searchItem($event.target.value)"
+               (keyup)="subject.next($event.target.value)"
                (keydown)="handleKeyDown($event)">
-
       </div>
     </div>
-
     <ng-template cdkConnectedOverlay
                  (backdropClick)="isOpen = false"
                  [cdkConnectedOverlayHasBackdrop]="true"
@@ -60,9 +53,11 @@
         @overlay
         (selectOption)="addTag($event)"
         (search)="handleKeyDown($event)"
+        [searchOnList]="true"
         [customInput]="input"
+        [customFocus]="input"
         [typeOfData]="typeOfData"
-        [datasource]="filteredItens"
+        [datasource]="filteredItems"
         [itemHeight]="itemHeight"
         [width]="element.offsetWidth + 'px'"
         [icon]="icon"

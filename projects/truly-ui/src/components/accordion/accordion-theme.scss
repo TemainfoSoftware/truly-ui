@@ -4,41 +4,4 @@
 
   $basic: map-deep-get($theme, 'basic');
 
-  .ui-wrapper-accordion {
-    border: 1px solid map-deep-get($basic, "default", "border");
-    background: map-deep-get($basic, "default", "background");
-    color: map-deep-get($basic, "default", "foreground");
-  }
-
-  .ui-accordion-item-header {
-    color: map-deep-get($basic, "default", "foreground");
-    background: map-deep-get($basic, "default", "background");
-    border: 1px solid map-deep-get($basic, "default", "border");
-
-    > .ui-accordion-arrow {
-      color: map-deep-get($basic, "lighter", "foreground");
-    }
-
-    &:hover {
-      background: map-deep-get($basic, "lighter", "background");
-      color: map-deep-get($basic, "lighter", "foreground");
-    }
-  }
-
-  .opened {
-    background: map-deep-get($basic, "darker", "background");
-  }
-
-  tl-accordion-item {
-    .ui-accordion-item-content {
-      border-left: 1px solid map-deep-get($basic, "default", "border");
-      border-right: 1px solid map-deep-get($basic, "default", "border");
-    }
-    &:last-child {
-      .ui-accordion-item-content, .ui-accordion-item-header {
-        border-bottom: 1px solid map-deep-get($basic, "default", "border");
-      }
-    }
-  }
-
 }

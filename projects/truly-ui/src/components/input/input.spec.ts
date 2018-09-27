@@ -6,9 +6,7 @@ import { InputModule } from './index';
 import { DebugElement } from '@angular/core';
 
 let componentInputInstance: TlInput;
-let elementoHTMLLabel: HTMLElement;
 let fixture: ComponentFixture<TlInput>;
-let debugElment: DebugElement;
 let clearButton: DebugElement;
 let inputElement: HTMLInputElement;
 
@@ -59,7 +57,7 @@ describe( 'TLInput Propriedade [ CLEARBUTTON ]', () => {
     //     expect( componentInputInstance.value ).toEqual( '' );
     // } ) );
 } );
-describe( 'TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
+/*describe( 'TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
 
     beforeEach( () => {
         componentInputInstance.label = textMock;
@@ -96,4 +94,4 @@ describe( 'TlInput Propriedade [ LABEL, LABELSIZE, LABELPLACEMENT ]', () => {
         expect( debugElment ).toBeNull();
     } ) );
 
-} );
+} );*/

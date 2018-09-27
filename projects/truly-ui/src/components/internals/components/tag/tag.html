@@ -1,0 +1,9 @@
+<div [class]="'tl-tag ' + color">
+  <div class="tag"
+       [style.height]="height"
+       [style.width]="width"
+       [style.line-height]="height">
+    <span>{{ title }}</span>
+    <i (click)="onClose()" class="ion-close-circled"></i>
+  </div>
+</div>

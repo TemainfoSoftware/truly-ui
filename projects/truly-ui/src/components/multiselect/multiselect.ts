@@ -26,13 +26,16 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ContentChild, AfterViewInit, ChangeDetectorRef,
+  ContentChild, AfterViewInit, ChangeDetectorRef, SimpleChanges, OnChanges,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
+import { ListItemMeta } from '../overlaylist/overlay-list';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 @Component( {
   selector: 'tl-multiselect',
@@ -75,15 +78,21 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   @Input() itemHeight = '30px';
 
+  @Input() labelPlacement: 'left' | 'top' = 'left';
+
+  @Input() debounceTime = 200;
+
   @Input() itemAmount = 5;
 
   @Input() minLengthSearch = 2;
 
-  @Input() placeholder = '';
+  @Input() placeholder = 'Select item...';
 
   @Input() sortAlphabetically = false;
 
   @Input() onlyKeyValue = false;
+
+  @Input() disabled = false;
 
   @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
 
@@ -101,11 +110,19 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   public isOpen = false;
 
-  public filteredItens = [];
+  public filteredItems = [];
 
   public tags = [];
 
   public showIcon = true;
+
+  public hasValidator;
+
+  public subject: Subject<any> = new Subject();
+
+  public touched = false;
+
+  public required = false;
 
   private selectTag: number;
 
@@ -113,11 +130,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   private dataSource = [];
 
-  public hasValidator;
-
-  public touched = false;
-
-  public required = false;
+  private subscription: Subscription = new Subscription();
 
   constructor( private change: ChangeDetectorRef ) {
     super();
@@ -129,12 +142,30 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.validateTypeDataSource();
     this.setFilteredItems();
     this.validationProperty();
+    this.handleTyping();
   }
 
   ngAfterViewInit() {
     this.validateHasModel();
     this.setRequired();
+    this.setDisabled();
     this.handleValidator();
+  }
+
+  setDisabled() {
+    if (this.controlName) {
+      this.disabled = this.controlName.disabled;
+    }
+  }
+
+  handleTyping() {
+    this.subscription.add( this.subject.pipe(
+      map( event => event ),
+      debounceTime( this.debounceTime ),
+      distinctUntilChanged(),
+    ).subscribe( ( value ) => {
+      this.searchItem( value );
+    } ) );
   }
 
   setRequired() {
@@ -185,9 +216,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     }
   }
 
-  sortFilteredItens() {
+  sortFilteredItems() {
     if ( this.sortAlphabetically ) {
-      this.filteredItens.sort( ( a, b ) => {
+      this.filteredItems.sort( ( a, b ) => {
         const compareX = this.isSimpleData() ? a : a[ this.query ];
         const compareY = this.isSimpleData() ? b : b[ this.query ];
         const x = compareX.toLowerCase();
@@ -218,8 +249,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         }
       } );
     } );
-    this.filteredItens = this.dataSource;
-    this.sortFilteredItens();
+    this.filteredItems = this.dataSource;
+    this.sortFilteredItems();
   }
 
   validationProperty() {
@@ -244,10 +275,10 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   validateEmptySearch() {
     setTimeout( () => {
       if ( this.input.nativeElement.value === '' && this.isTagsEqualsZero() ) {
-        return this.filteredItens = this.data;
+        return this.filteredItems = this.data;
       }
     }, 1 );
-    this.sortFilteredItens();
+    this.sortFilteredItems();
   }
 
   handleKeyDown( $event ) {
@@ -299,7 +330,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   handleOverlayList() {
-    if (this.filteredItens.length === 0) {
+    if ( this.filteredItems.length === 0 ) {
       this.isOpen = false;
     }
   }
@@ -341,25 +372,25 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   handleInputFocus() {
     this.touched = true;
-    this.sortFilteredItens();
+    this.sortFilteredItems();
   }
 
   setFilteredItems() {
     this.validateEmptySearch();
     if ( !this.isTagsLengthMoreThanZero() ) {
       if ( this.isFilteredLengthEqualsDataLength() ) {
-        this.filteredItens = this.data;
-        this.sortFilteredItens();
+        this.filteredItems = this.data;
+        this.sortFilteredItems();
       }
     }
   }
 
   removeTagOfFilter( tag? ) {
-    this.filteredItens = this.filteredItens.filter( ( item ) => {
+    this.filteredItems = this.filteredItems.filter( ( item ) => {
       return JSON.stringify( tag ) !== JSON.stringify( item );
     } );
     this.change.detectChanges();
-    this.sortFilteredItens();
+    this.sortFilteredItems();
   }
 
   setSelectTagAsTrue() {
@@ -370,15 +401,23 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.input.nativeElement.focus();
   }
 
-  addTag( item ) {
-    if ( item[ 'option' ] ) {
-      this.tags.push( item[ 'option' ][ 'optionItem' ] );
+  addTag( item: ListItemMeta ) {
+    if ( item.option ) {
+      this.tags.push( item.option.item );
       this.placeholder = '';
       this.getSelecteds.emit( this.tags );
       this.setModelValue();
-      this.removeTagOfFilter( item[ 'option' ][ 'optionItem' ] );
+      this.removeTagOfFilter( item.option.item );
       this.removeElementsForFilter();
+      this.handleAllSelected();
       this.cleanInput();
+    }
+  }
+
+  handleAllSelected() {
+    if ( this.filteredItems.length === 0 ) {
+      this.isOpen = false;
+      this.setInputFocus();
     }
   }
 
@@ -404,7 +443,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   deleteTagSelected() {
     this.addTagSelectedToFiltered();
     this.removeTagSelectedOfTags();
-    this.sortFilteredItens();
+    this.sortFilteredItems();
   }
 
   getTagSelected() {
@@ -416,20 +455,20 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   addTagSelectedToFiltered() {
-    this.filteredItens = [ ...this.filteredItens, this.getTagSelected() ];
+    this.filteredItems = [ ...this.filteredItems, this.getTagSelected() ];
   }
 
   searchItem( imputed ) {
     if ( this.isValueMoreOrEqualThanMinLengthSearch( imputed ) ) {
       !this.isTagsLengthMoreThanZero() ? this.filterOnData( imputed, this.dataSource ) :
-        this.filterOnData( imputed, this.filteredItens );
+        this.filterOnData( imputed, this.filteredItems );
     } else {
       this.removeElementsForFilter();
     }
   }
 
   filterOnData( imputed: string, dataSource: Array<any> ) {
-    this.filteredItens = dataSource.filter( ( value ) => {
+    this.filteredItems = dataSource.filter( ( value ) => {
       const typeValue = this.isSimpleData() ? value : value[ this.query ];
       return typeValue.toString().toUpperCase().includes( imputed.toUpperCase().trim() );
     } );
@@ -478,9 +517,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   removeTag( index, item? ) {
     if ( item ) {
-      this.filteredItens.push( item );
+      this.filteredItems.push( item );
     } else {
-      this.filteredItens.push( this.tags[ index ] );
+      this.filteredItems.push( this.tags[ index ] );
     }
     this.tagRemove.emit( item ? item : this.tags[ index ] );
     this.getSelecteds.emit( this.tags );
@@ -488,7 +527,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.changePlaceholder();
     this.setInputFocus();
     this.setModelValue();
-    this.sortFilteredItens();
+    this.sortFilteredItems();
     this.cleanInput();
   }
 
@@ -511,7 +550,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   isFilteredLengthEqualsDataLength() {
-    return this.filteredItens.length === this.dataSource.length;
+    return this.filteredItems.length === this.dataSource.length;
   }
 
 }

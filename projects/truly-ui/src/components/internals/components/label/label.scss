@@ -1,0 +1,28 @@
+$default-fontFamily: "Segoe UI", Lato, 'sans-serif', "Arial";
+$default-cursorHover: pointer;
+$default-fontSize: 0.9em;
+
+:host(.label-top) {
+  display: table-caption;
+  text-align: left;
+  padding: 0 0 5px 0;
+}
+
+:host(.label-left) {
+  display: table-cell;
+  text-align: right;
+  align-items: center;
+  padding: 0 5px;
+  vertical-align: middle;
+}
+
+span {
+  font-family: $default-fontFamily;
+  box-sizing: border-box;
+  font-size: $default-fontSize;
+  font-weight: normal;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+

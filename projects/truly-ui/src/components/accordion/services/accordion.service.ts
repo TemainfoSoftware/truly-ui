@@ -28,11 +28,18 @@ export class AccordionService {
 
   private singleOpened;
 
+  private color;
+
   constructor() {}
 
-  setAccordionList( list, singleOpened ) {
+  getColor() {
+    return this.color;
+  }
+
+  setAccordionList( list, singleOpened, color ) {
     this.accordionItems = list;
     this.singleOpened = singleOpened;
+    this.color = color;
   }
 
   closeAll(accordion) {

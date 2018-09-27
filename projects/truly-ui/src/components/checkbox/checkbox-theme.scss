@@ -7,50 +7,24 @@
 
 @mixin _tl-checkbox-theme-schema( $theme, $action ) {
 
-  $basic:   map-deep-get($theme, 'basic');
+  $basic: map-deep-get($theme, 'basic');
 
-  input[type='checkbox']:checked:before {
-    @include checkbox-color( $theme, $action );
+  svg {
+    stroke: map-deep-get($theme, $action, "checked", "foreground");
+    &:before {
+      @include checkbox-color($theme, $action);
+    }
+    &:hover span:first-child {
+      @include checkbox-color($theme, $action);
+    }
   }
 
-  input[type='checkbox']:after {
-    background-color: map-deep-get($basic, "default", "background");
-    border: 1px solid map-deep-get($basic, "default", "border");
-  }
-
-  input[type='checkbox']:disabled:after {
-    background-color: map-deep-get($theme, $action, "disabled", "background");
-    border: 1px solid map-deep-get($theme, $action, "disabled", "border");
-  }
-
-  input[type='checkbox']:checked:after {
-    @include checkbox-color( $theme, $action );
-  }
-
-  input[type='checkbox']:checked:before {
-    @include checkbox-color( $theme, $action );
-  }
-
-  .-label {
-    color: map-deep-get($theme, 'basic', "default", "foreground");
-  }
-
-  .checkmark-wrapper {
-    border-color: map-deep-get($theme, $action, "checked", "border");
-    background-color: map-deep-get($theme, $action, "checked", "background");
-  }
-
-  .checkmark_stem:not(.disabled) {
-    background-color: map-deep-get($theme, $action, "checked", "foreground");
-  }
-
-  .checkmark_kick:not(.disabled) {
-    background-color: map-deep-get($theme, $action, "checked", "foreground");
-  }
-
-  .disabled {
-    background-color: map-deep-get($theme, $action, "checked", "foreground");
-    opacity: 0.5;
+  .ui-check-input:checked + .cbx {
+    span {
+      &:first-child {
+        @include checkbox-color($theme, $action);
+      }
+    }
   }
 
 }
@@ -58,7 +32,7 @@
 
 @mixin tl-checkbox-theme($theme) {
 
-  .check-container{
+  .check-container {
     &.basic {
       @include _tl-checkbox-theme-schema($theme, 'basic')
     }

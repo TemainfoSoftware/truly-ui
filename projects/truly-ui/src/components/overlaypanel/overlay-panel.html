@@ -1,5 +1,14 @@
-<div [ngStyle]="{'left': position.left + 'px', 'top': position.top + 'px'}" class="ui-wrapper-overlay-panel" *ngIf="open">
-  <div class="ui-overlay-panel">
+
+<ng-template cdkConnectedOverlay
+             (backdropClick)="isOpen = false"
+             [cdkConnectedOverlayHasBackdrop]="true"
+             [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+             [cdkConnectedOverlayOpen]="isOpen">
+
+<div @overlay [class]="'ui-wrapper-overlay-panel ' + color">
+  <div class="ui-overlay-panel" [style.width]="width">
     <ng-content></ng-content>
   </div>
 </div>
+
+</ng-template>

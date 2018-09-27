@@ -1,0 +1,48 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin _tl-tag-theme-schema( $theme, $action ){
+  //SKELETON COMPONENT HERE
+  .tag {
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+  }
+  .tag.selected {
+    background-color: map-deep-get($theme, $action, "darker", "background");
+  }
+  span b {
+    color: map-deep-get($theme, $action, "default", "foreground");
+    border-left: 1px solid map-deep-get($theme, $action, "default", "foreground");
+
+  }
+}
+
+@mixin tl-tag-theme( $theme ) {
+
+  .tl-tag {
+
+    &.basic {
+      @include _tl-tag-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-tag-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-tag-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-tag-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-tag-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-tag-theme-schema($theme, 'information')
+    }
+
+  }
+}

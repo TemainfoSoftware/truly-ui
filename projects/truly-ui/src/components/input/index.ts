@@ -8,12 +8,14 @@ import { CharcaseDirective } from './directives/charcase.directive';
 
 import { ValidatorsModule } from '../validators/index';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { InternalsModule } from '../internals/index';
 
 @NgModule( {
   imports: [
     CommonModule,
     FormsModule,
     ValidatorsModule,
+    InternalsModule,
     OverlayModule
   ],
   declarations: [

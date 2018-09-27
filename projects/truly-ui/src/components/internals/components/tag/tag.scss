@@ -1,0 +1,25 @@
+
+.tag {
+  position: relative;
+  margin: 3px;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 20px;
+  border-radius: 3px;
+  user-select: none;
+  cursor: pointer;
+  text-align: center;
+
+  & span {
+    margin: 0 7px;
+    text-align: center;
+    font-size: 0.9em;
+    font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  }
+
+  i {
+    font-size: 0.9em;
+    text-align: center;
+  }
+
+}

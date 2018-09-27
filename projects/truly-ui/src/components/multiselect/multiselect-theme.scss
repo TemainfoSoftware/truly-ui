@@ -3,6 +3,7 @@
 @mixin _tl-multiselect-theme-schema($theme, $action) {
 
     $danger: map-deep-get($theme, 'danger');
+    $basic: map-deep-get($theme, 'basic');
     $primary: map_get($theme, 'primary');
     $success: map-deep-get($theme, 'success');
 
@@ -25,6 +26,14 @@
         box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
       }
 
+      & .input-wrapper-multiselect.ng-disabled {
+        opacity: 0.35;
+        filter: Alpha(Opacity=70);
+        cursor: default !important;
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
       & .input-wrapper-multiselect.ng-touched.invalid {
         border: 1px solid map-deep-get($danger, "default", "border") !important;
         background-color: rgba(map-deep-get($danger, "default", "background"), 0.2) !important;
@@ -44,6 +53,9 @@
       & .input-field {
         background: transparent;
         color: map-deep-get($theme, $action, "lighter", "foreground");
+        &::placeholder {
+          opacity: 0.6;
+        }
       }
 
       & .input-empty.invalid {

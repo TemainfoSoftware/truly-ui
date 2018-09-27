@@ -48,4 +48,11 @@ export const dataProperties = [
     description: 'Defines the opened state of accordion item.',
     options: 'true | false'
   },
+  {
+    name: 'accordion-item.disabled',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines the disabled state of accordion item.',
+    options: 'true | false'
+  },
 ];

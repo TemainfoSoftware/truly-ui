@@ -4,13 +4,15 @@ import { TlMultiSelect } from './multiselect';
 import { FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OverlayListModule } from '../overlaylist/index';
+import { InternalsModule } from '../internals/index';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     OverlayListModule,
-    OverlayModule
+    OverlayModule,
+    InternalsModule
   ],
   declarations: [
     TlMultiSelect,

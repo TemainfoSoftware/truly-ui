@@ -6,7 +6,7 @@ import { ToasterService } from './services/toaster.service';
   selector: 'tl-toaster',
   templateUrl: './toaster.html',
   styleUrls: [ './toaster.scss' ],
-  animations: [
+/*  animations: [
     trigger(
       'enterAnimation', [
         transition( ':enter', [
@@ -19,7 +19,7 @@ import { ToasterService } from './services/toaster.service';
         ] )
       ]
     )
-  ],
+  ],*/
 } )
 export class TlToaster implements AfterContentInit, OnDestroy {
 
@@ -67,7 +67,7 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   private toasterService: ToasterService;
 
-  @HostBinding( '@enterAnimation' ) animation;
+  // @HostBinding( '@enterAnimation' ) animation;
 
   constructor() {}
 

@@ -27,6 +27,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
+import { I18nService } from '../i18n/i18n.service';
 
 export interface ListItemMeta {
   option?: TlListItem;
@@ -87,7 +88,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   public notFound = false;
 
-  constructor( private renderer: Renderer2 ) {}
+  get emptyList() {
+    return this.i18n.getLocale().OverlayList.emptyList;
+  }
+
+  constructor( private renderer: Renderer2, private i18n: I18nService ) {}
 
   ngOnInit() {}
 

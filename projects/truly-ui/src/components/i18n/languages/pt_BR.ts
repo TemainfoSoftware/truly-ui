@@ -27,6 +27,7 @@ import { Form } from './form/pt_BR';
 import { Listbox } from './listbox/pt_BR';
 import { Navigator } from './navigator/pt_BR';
 import { Validators } from './validators/pt_BR';
+import { OverlayList } from './overlaylist/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
@@ -38,4 +39,5 @@ export const pt_BR = {
   Listbox,
   Navigator,
   Validators,
+  OverlayList,
 };

@@ -30,11 +30,13 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 
 import { ListBoxModule } from '../listbox/index';
 import { InputModule } from '../input/index';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule( {
     imports : [
         CommonModule,
         ListBoxModule,
+        OverlayModule,
         InputModule,
         FormsModule
     ],

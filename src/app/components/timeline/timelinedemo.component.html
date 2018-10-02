@@ -15,39 +15,11 @@
           <app-card>
             <div class="col-md-12">
 
-              <tl-timeline [title]="'Teste'" [text]="'Teste do texto'" [align]="'left'" [side]="'left'"></tl-timeline>
-              <tl-timeline [title]="'Teste'" [text]="'Teste do texto'" [align]="'left'" [side]="'right'"></tl-timeline>
-
-              <div class="spacer"></div>
-              <div class="spacer"></div>
-
-              <tl-timeline [title]="'Teste'" [text]="'Teste do texto'" [align]="'center'" [side]="'left'"></tl-timeline>
-              <tl-timeline [title]="'Teste'" [text]="'Teste do texto'" [align]="'center'" [side]="'right'"></tl-timeline>
-
-              <div class="spacer"></div>
-              <div class="spacer"></div>
-
-              <tl-timeline [data]="data" [align]="'right'" [side]="'right'"></tl-timeline>
-
-              <div class="spacer"></div>
-              <div class="spacer"></div>
-
-              <tl-timeline [data]="data" [align]="'center'">
-                <ng-template let-item="item" let-index="index">
-                  <div class="content-head">
-                    <span class="content-title">{{ item.title }}</span>
-                    <span class="content-time"><i class="ion ion-clock"></i> {{ item.duration }} Minutos de Atendimento</span>
-                  </div>
-                  <div class="content-body">
-                    <test-comp [data]="item.category"></test-comp>
-                  </div>
-                </ng-template>
-              </tl-timeline>
-
-              <div class="spacer"></div>
-              <div class="spacer"></div>
-
-              <tl-timeline [data]="data" [align]="'right'">
+               <tl-timeline
+                 [data]="dataLazy.data"
+                 (lazyLoad)="onLazyLoad($event)"
+                 [height]="'500px'"
+                 [align]="'left'">
                 <ng-template let-item="item" let-index="index">
                   <div class="content-head">
                     <span class="content-title">{{ item.title }}</span>

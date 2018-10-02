@@ -21,12 +21,11 @@
  */
 import {
   Component, ContentChild, EventEmitter,
-  Input, OnDestroy, Output, Renderer2, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit, OnChanges, ElementRef
+  Input, OnDestroy, Output, TemplateRef, ViewChild,
+  Optional, Inject, OnInit, AfterViewInit, OnChanges,
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-import { KeyEvent } from '../core/enums/key-events';
 import { TlListBox } from '../listbox/listbox';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
@@ -124,10 +123,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-  public listLeftPosition;
-
-  public listTopPosition;
-
   public widthInput;
 
   public loading = true;
@@ -139,18 +134,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private renderer: Renderer2, private element: ElementRef ) {
+    asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
   }
 
   ngOnInit() {
-    this.getPosition();
+    this.getWidth();
   }
 
   ngAfterViewInit() {
     this.validateModelValueProperty();
-    this.listenerKeyDown();
-    this.listenerAutocompleteClick();
     this.validationProperty();
   }
 
@@ -171,19 +164,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     return nestedKeys.split( '.' ).reduce( ( a, b ) => a[ b ], data );
   }
 
-  listenerKeyDown() {
-    this.renderer.listen( this.tlinput.input.nativeElement, 'keydown', ( $event ) => {
-      this.handleKeyDown( $event );
-    } );
-  }
-
-  listenerAutocompleteClick() {
-    this.listeners.add( this.renderer.listen( this.autoComplete.nativeElement, 'click', ( $event ) => {
-      $event.stopPropagation();
-      this.handleOpenOnFocus();
-    } ) );
-  }
-
   onClearInput() {
     this.value = '';
   }
@@ -195,48 +175,18 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   onFocusInput() {
-    this.getPosition();
+    this.getWidth();
     this.handleOpenOnFocus();
   }
 
   handleOpenOnFocus() {
     if ( (this.openFocus) && (this.isAvailableInput()) ) {
-      this.isOpen = true;
+      this.isOpen = !this.isOpen;
     }
   }
 
   isAvailableInput() {
     return !this.tlinput.disabled && !this.tlinput.readonly;
-  }
-
-  handleKeyDown( $event ) {
-    switch ( $event.keyCode ) {
-      case KeyEvent.ENTER:
-        this.closeList( $event );
-        return;
-      case KeyEvent.ESCAPE:
-        this.handleEscape();
-        return;
-    }
-  }
-
-  handleEscape() {
-    this.handleFilteredListNotSelected();
-  }
-
-  handleFilteredListNotSelected() {
-    if ( this.listBox.showList && this.listBox.filteredData.length > 0 && !this.listBox.itemSelected ) {
-      this.listBox.handleClickItem( this.listBox.dataService.datasource[ 0 ], 0 );
-    }
-  }
-
-  closeList( $event ) {
-    $event.preventDefault();
-    if ( this.listBox.showList ) {
-      $event.stopPropagation();
-    }
-    this.isOpen = true;
-    this.listBox.resetCursors();
   }
 
   onAddNew() {
@@ -265,29 +215,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listBox.detectChanges();
   }
 
-  getPosition() {
-    this.listLeftPosition = this.tlinput.input.nativeElement.getBoundingClientRect().left;
-    this.listTopPosition = (this.element.nativeElement.getBoundingClientRect().top) + (this.tlinput.input.nativeElement.offsetHeight);
+  getWidth() {
     this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
-  }
-
-  isNotRelatedWithAutocomplete( $event ) {
-    return !this.isRelativeTarget( $event ) && this.isRelativeTargetTypeOfInput( $event );
   }
 
   onLazyLoadAutocomplete( $event ) {
     this.lazyLoad.emit( $event );
-  }
-
-  isRelativeTarget( $event ) {
-    return $event.relatedTarget === this.tlinput.input.nativeElement;
-  }
-
-  isRelativeTargetTypeOfInput( $event ) {
-    if ( $event.relatedTarget ) {
-      return $event.relatedTarget.nodeName === 'INPUT';
-    }
-    return false;
   }
 
   validateModelValueProperty() {

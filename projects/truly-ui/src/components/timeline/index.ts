@@ -6,10 +6,13 @@ import { TlTimeline } from './timeline';
 import { TlTimelineItem } from './parts/timeline-item/timeline-item';
 import { TimelineService } from './services/timeline-service';
 
+import { BlockUIModule } from '../blockui/index';
+
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    BlockUIModule
   ],
   declarations: [
     TlTimeline,

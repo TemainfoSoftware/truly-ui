@@ -1,27 +1,29 @@
-<div class="tl-timeline" *ngIf="data">
-  <ng-container *ngFor="let item of data; let i = index">
+<div #listComponent class="tl-timeline"
+     [tlBlockui]="loadingMoreData"
+     (scroll)="listenerToScroll($event)"
+     [style.height]="height"
+     [ngClass]="(align === 'right') ? 'rtl' : null">
+  <ng-container *ngFor="let item of data; let i = index;">
     <tl-timeline-item #line
-                      [date]="item.date"
+                      [attr.data-index]="skip + i"
+                      [date]="item[keyDate]"
                       [template]="(customTemplate) ? customTemplate : basicTemplate"
                       (initialize)="onInit(line, item, i)"
                       [data]="data"
                       [align]="align"
-                      [side]="controlSide()">
+                      [side]="(align === 'center') ? controlSide() : null"
+                      [ngClass]="(align === 'right') ? 'ltr' : null">
     </tl-timeline-item>
   </ng-container>
 </div>
 
-<div class="tl-timeline" *ngIf="!customTemplate && !data">
-  <tl-timeline-item #line [date]="date" [template]="basicTemplate" (initialize)="onInit(line)" [align]="align" [side]="side"></tl-timeline-item>
-</div>
-
 <ng-template let-item="item" let-index="index" #basicTemplate>
   <div class="content-head">
-    <span class="content-title">{{ (data) ? item.title : title }}</span>
+    <span class="content-title">{{ item[keyTitle] }}</span>
   </div>
   <div class="content-body">
     <div class="content-text">
-      {{ (data) ? item.text : text }}
+      {{ item[keyText] }}
     </div>
   </div>
 </ng-template>

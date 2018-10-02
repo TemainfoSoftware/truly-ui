@@ -20,41 +20,150 @@
     SOFTWARE.
 */
 
-import { Component, ContentChild, Input, OnInit, TemplateRef } from '@angular/core';
-import { TlTimelineItem } from './parts/timeline-item/timeline-item';
+import {
+  Component,
+  ContentChild,
+  ElementRef,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  ChangeDetectorRef,
+  OnChanges
+} from '@angular/core';
+import {TlTimelineItem} from './parts/timeline-item/timeline-item';
 
 @Component({
   selector: 'tl-timeline',
   templateUrl: './timeline.html',
   styleUrls: ['./timeline.scss'],
 })
-export class TlTimeline implements OnInit {
+export class TlTimeline implements OnInit, OnChanges {
 
-  @Input() data: Array<any>;
+  @Input() data: Array<any> = [];
 
   @Input() align = 'left';
 
-  @Input() title: string;
+  @Input() height = '400px';
 
-  @Input() text: string;
+  @Input() keyTitle = 'title';
 
-  @Input() date: number;
+  @Input() keyText = 'text';
 
-  @Input() side = 'left';
+  @Input() keyDate = 'date';
+
+  @Input() rowData = 20;
+
+  @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('listComponent') listComponent: ElementRef;
 
   @ContentChild(TemplateRef) customTemplate: TemplateRef<any>;
 
-  constructor() {}
+  public side = false;
+
+  public dataFull: Array<any> = [];
+
+  private scrollTop = 0;
+
+  private lastScrollTop = 0;
+
+  private scrollDirection = 'DOWN';
+
+  public skip = 0;
+
+  public take = 20;
+
+  public PERCENTAGE_LIMIT = 0.1;
+
+  public loadingMoreData = false;
+
+  constructor(public change: ChangeDetectorRef) {
+  }
 
   ngOnInit() {}
 
-  onInit(lineItem: TlTimelineItem, item?, index?) {
+  public controlSide() {
+    this.side = !this.side;
+    return this.side;
+  }
+
+  public listenerToScroll($event) {
+    this.setScrollTop($event);
+    this.setScrollDirection();
+    this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
+    this.setLastScrollTop();
+  }
+
+  private setScrollTop($event) {
+    this.scrollTop = $event.target.scrollTop;
+  }
+
+  private setLastScrollTop() {
+    this.lastScrollTop = this.scrollTop;
+  }
+
+  private setScrollDirection() {
+    this.scrollDirection = (this.scrollTop > this.lastScrollTop) ? 'DOWN' : 'UP';
+  }
+
+  private isScrollDown() {
+    return this.scrollDirection === 'DOWN';
+  }
+
+  private isLimitDown() {
+    const scrollHeight = this.listComponent.nativeElement.scrollHeight;
+    const offsetHeight = this.listComponent.nativeElement.offsetHeight;
+    const limitDown = scrollHeight - (scrollHeight * this.PERCENTAGE_LIMIT) - offsetHeight;
+    return this.scrollTop > limitDown;
+  }
+
+  private isLimitUp() {
+    const scrollHeight = this.listComponent.nativeElement.scrollHeight;
+    const limitUp = scrollHeight * this.PERCENTAGE_LIMIT;
+    return this.scrollTop < limitUp;
+  }
+
+  handleScrollDown() {
+    if (this.isLimitDown()) {
+      if (!this.loadingMoreData) {
+        this.skip = this.skip;
+        this.take += this.rowData;
+        this.getDataLazy();
+      }
+    }
+  }
+
+  handleScrollUp() {
+    if (this.isLimitUp()) {
+      if (!this.loadingMoreData) {
+        if (this.skip > 0) {}
+      }
+    }
+  }
+
+  getDataLazy() {
+    this.loadingMoreData = true;
+    this.lazyLoad.emit({skip: this.skip, take: this.take});
+  }
+
+  onInit(lineItem: TlTimelineItem, item, index) {
     lineItem.setTemplateView(item, index);
   }
 
-  public controlSide() {
-    this.side = (this.side === 'left') ? 'right' : 'left';
-    return this.side;
+  ngOnChanges(change: SimpleChanges) {
+    this.loadingMoreData = false;
+    this.change.detectChanges();
+
+    console.log('skip', this.skip);
+    console.log('take', this.take);
+
+    if (change['data'].currentValue) {
+      this.dataFull.push(...change['data'].currentValue);
+    }
   }
 
 }

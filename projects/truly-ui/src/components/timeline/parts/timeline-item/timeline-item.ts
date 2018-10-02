@@ -21,7 +21,6 @@
 */
 
 import {
-  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -31,22 +30,21 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { TimeLineData } from '../../interfaces/timeline-inteface';
 
 @Component({
   selector: 'tl-timeline-item',
   templateUrl: './timeline-item.html',
   styleUrls: ['./timeline-item.scss'],
 })
-export class TlTimelineItem implements OnInit, AfterViewInit {
+export class TlTimelineItem implements OnInit {
 
   @Input() align = 'left';
 
-  @Input() side: string;
+  @Input() side: boolean;
 
   @Input() date: number;
 
-  @Input() data: TimeLineData[];
+  @Input() data: Array<any> = [];
 
   @Input() template: TemplateRef<any>;
 
@@ -54,12 +52,21 @@ export class TlTimelineItem implements OnInit, AfterViewInit {
 
   @ViewChild('view', {read: ViewContainerRef}) view: ViewContainerRef;
 
+  public sideString: string;
+
   constructor() {}
 
-  ngOnInit() {}
-
-  ngAfterViewInit() {
+  ngOnInit() {
     this.initialize.emit();
+    this.changeSide();
+  }
+
+  changeSide() {
+    if (this.side) {
+      this.sideString = 'left';
+    } else {
+      this.sideString = 'right';
+    }
   }
 
   setTemplateView(item, index) {

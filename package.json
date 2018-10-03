@@ -82,7 +82,7 @@
     "@angular/cli": "~6.0.3",
     "@angular/compiler-cli": "^6.0.2",
     "@angular/language-service": "^6.0.2",
-    "@types/jest": "^22.2.3",
+    "@types/jest": "^23.3.3",
     "@types/node": "~10.1.2",
     "@types/reflect-metadata": "^0.1.0",
     "codelyzer": "~4.3.0",

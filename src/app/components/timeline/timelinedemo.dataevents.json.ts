@@ -21,13 +21,17 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'onLazyLoad',
     parameters: [
       {
-        event: 'selected',
-        description: 'Action Selected'
+        event: 'event.skip',
+        description: 'First data offset'
+      },
+      {
+        event: 'event.take',
+        description: 'Number of datas per scroll'
       }
     ],
-    description: 'Callback to invoke when toogle event.',
+    description: 'Callback to invoke when paging, sorting or filtering happens in infinite mode.',
   },
 ];

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 
 
 @Component({
-  selector: 'test-comp',
+  selector: 'repeat-component',
   template: `
     <div *ngFor="let item of data">
       <div class="content-subtitle">{{ item.title }}</div>
@@ -26,7 +26,7 @@ import {Component, Input} from '@angular/core';
     }
   `]
 })
-export class TestComponent {
+export class RepeatComponent {
 
   @Input( 'data' ) data = [];
 

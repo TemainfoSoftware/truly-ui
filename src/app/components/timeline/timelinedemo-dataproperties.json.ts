@@ -21,10 +21,66 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
-    type: 'string',
+    name: 'data',
+    type: 'Array',
     default: 'null',
-    description: 'Displays a text.',
-    options: 'any text'
+    description: 'An array of objects to display.',
+    options: '[.. , ..]'
   },
+  {
+    name: 'data',
+    type: 'object',
+    default: 'null',
+    description: 'An object with the data and total number of records.',
+    options: '{ data:[ .. , ..], total: 1000 }'
+  },
+  {
+    name: 'align',
+    type: 'string',
+    default: 'left',
+    description: 'Alignment of timeline.',
+    options: 'left | center | right'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '400px',
+    description: 'Height of timeline.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'keyTitle',
+    type: 'string',
+    default: 'title',
+    description: 'Name of your title property on object.',
+    options: 'any string'
+  },
+  {
+    name: 'keyText',
+    type: 'string',
+    default: 'text',
+    description: 'Name of your text property on object.',
+    options: 'any string'
+  },
+  {
+    name: 'keyDate',
+    type: 'string',
+    default: 'date',
+    description: 'Name of your date property on object.',
+    options: 'any string'
+  },
+  {
+    name: 'mode',
+    type: 'string',
+    default: 'basic',
+    description: 'Define mode in infinite or basic.',
+    options: 'basic | infinite'
+  },
+  {
+    name: 'rowData',
+    type: 'number',
+    default: '20',
+    description: 'Number of records at a time.',
+    options: 'any number'
+  }
 ];

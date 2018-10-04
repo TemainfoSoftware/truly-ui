@@ -43,1697 +43,41 @@ export class TimelineDemoComponent {
 
   public dataBasic = [
     {
-      title: 'Dr. Fábio dos Santos 1',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 2',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 3',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 4',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 5',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 6',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 7',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 8',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 9',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 10',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 11',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 12',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 13',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 14',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 15',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 16',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 17',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 18',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 19',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 20',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 21',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 22',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 23',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 24',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 25',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 26',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 27',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 28',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 29',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 30',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 31',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 32',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 32',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 33',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 34',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 35',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 36',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 37',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 38',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos 39',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 1',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 2',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 3',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 4',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 5',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 6',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 7',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 8',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
+      title: 'Dr. Gregory House 9',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 10',
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
+    }
+  ];
+
+  public dataAdvanced = [
+    {
+      title: 'Dr. Gregory House 1',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1743,12 +87,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 2',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1757,88 +101,33 @@ export class TimelineDemoComponent {
           title: 'Anamnese',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 3',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1848,12 +137,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 4',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1863,12 +152,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 5',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1878,12 +167,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 6',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1893,12 +182,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 7',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1908,12 +197,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 8',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1923,12 +212,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 9',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1938,12 +227,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 10',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1953,12 +242,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 11',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -1967,88 +256,33 @@ export class TimelineDemoComponent {
           title: 'Anamnese',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
-        {
-          title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
-        {
-          title: 'Evolução',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        }
-      ]
-    }, {
-      title: 'Dr. Fábio dos Santos',
-      date: 1537477718000,
-      text: 'Mauris vulputate dolor vel finibus sagittis.',
-      duration: 15,
-      category: [
         {
-          title: 'Anamnese',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 12',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2058,12 +292,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 13',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2073,12 +307,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 14',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2088,12 +322,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 15',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2103,12 +337,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 16',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2118,12 +352,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 17',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2133,12 +367,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 18',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2148,12 +382,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 19',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2163,12 +397,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 20',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2178,12 +412,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 21',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2193,12 +427,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 22',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2208,12 +442,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 23',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2223,12 +457,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 24',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2238,12 +472,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 25',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2253,12 +487,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 26',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2268,12 +502,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 27',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2283,12 +517,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 28',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2298,12 +532,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 29',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2313,12 +547,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 30',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2328,12 +562,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 31',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2343,12 +577,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 32',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2358,12 +592,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 32',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2373,12 +607,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 33',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2388,12 +622,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 34',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2403,12 +637,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 35',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2418,12 +652,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 36',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2433,12 +667,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 37',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2448,12 +682,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 38',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2463,12 +697,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 39',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2478,12 +712,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 40',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2493,12 +727,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 41',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2508,12 +742,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 42',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2523,12 +757,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 43',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2538,12 +772,12 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 44',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
@@ -2553,26 +787,22 @@ export class TimelineDemoComponent {
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
     }, {
-      title: 'Dr. Fábio dos Santos',
+      title: 'Dr. Gregory House 45',
       date: 1537477718000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
       category: [
         {
           title: 'Anamnese',
-          text: 'Mauris vulputate dolor vel finibus sagittis.'
-        },
-        {
-          title: 'Evolução',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         },
         {
-          title: 'Evolução',
+          title: 'Evolution',
           text: 'Mauris vulputate dolor vel finibus sagittis.'
         }
       ]
@@ -2585,12 +815,12 @@ export class TimelineDemoComponent {
 
     this.dataLazy = {
       'data' : this.getDataFromService(0, this.take),
-      'total' : this.dataBasic.length
+      'total' : this.dataAdvanced.length
     };
   }
 
   getDataFromService(skip, take) {
-    return this.dataBasic.slice(skip, take);
+    return this.dataAdvanced.slice(skip, take);
   }
 
   onLazyLoad(event) {
@@ -2598,7 +828,7 @@ export class TimelineDemoComponent {
     this.timeout = setTimeout( () => {
       this.dataLazy = {
         'data': this.getDataFromService( event.skip, event.take ),
-        'total': this.dataBasic.length
+        'total': this.dataAdvanced.length
       };
       // console.log('datalazy', this.dataLazy);
     }, 1000 );

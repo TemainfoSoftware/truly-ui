@@ -777,7 +777,6 @@ export class TimelineDemoComponent {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
-    this.dataEvents = jsonEvts.dataEvents;
 
     this.dataLazy = {
       'data' : this.getDataFromService(0, this.take),

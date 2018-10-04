@@ -18,7 +18,7 @@
                 [data]="dataAdvanced"
                 [height]="'400px'">
                 <ng-template let-item="item" let-index="index">
-                  <div class="content-head">
+                  <div class="content-head tl-scheme-primary -paint-bg -paint-font">
                     <span class="content-title">{{ item.title }}</span>
                     <span class="content-time"><i class="ion ion-clock"></i> {{ item.duration }} Minutes of Service</span>
                   </div>
@@ -31,7 +31,7 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-timeline [data]="dataAdvanced" [height]="'400px'">
   <ng-template let-item="item" let-index="index">
-    <div class="content-head">
+    <div class="content-head tl-scheme-primary -paint-bg -paint-font">
       <span class="content-title">{ { item.title }}</span>
       <span class="content-time"><i class="ion ion-clock"></i>{ { item.duration }} Minutes of Service</span>
     </div>
@@ -106,11 +106,6 @@ export class RepeatComponent {
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      </app-card>
-    </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
-      <app-card>
-        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
       </app-card>
     </app-showcase-card>
   </div>

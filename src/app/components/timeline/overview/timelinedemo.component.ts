@@ -811,7 +811,6 @@ export class TimelineDemoComponent {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
-    this.dataEvents = jsonEvts.dataEvents;
   }
 
 }

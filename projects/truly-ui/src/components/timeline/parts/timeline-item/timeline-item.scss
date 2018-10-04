@@ -38,8 +38,6 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date {
-  background: #66CC99;
-  color: #FFFFFF;
   padding: 4px 0;
   border-radius: 6px;
 }
@@ -57,7 +55,6 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-separator {
-  border-top: 1px solid #FFFFFF;
   margin: 4px 0;
 }
 
@@ -71,8 +68,6 @@ $offset-tail: 4px;
   margin-top: 10px;
   width: 10px;
   height: 10px;
-  background-color: #FFFFFF;
-  border: 1px solid #66cc99;
   border-radius: 50%;
 }
 
@@ -80,7 +75,6 @@ $offset-tail: 4px;
   position: absolute;
   top: .75em;
   height: 100%;
-  border-left: 2px solid #e8e8e8;
 }
 
 .tl-timeline-item .tail-left {
@@ -104,7 +98,6 @@ $offset-tail: 4px;
   top: 0;
   font-size: 23px;
   font-family: "FontAwesome";
-  color: #66cc99;
 }
 
 .tl-timeline-item .tl-timeline-item-content .content-head {

@@ -57,6 +57,10 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Input() rowData = 20;
 
+  @Input() mode = 'basic';
+
+  @Input() color = 'primary';
+
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('listComponent') listComponent: ElementRef;
@@ -81,8 +85,7 @@ export class TlTimeline implements OnInit, OnChanges {
 
   public loadingMoreData = false;
 
-  constructor(public change: ChangeDetectorRef) {
-  }
+  constructor(public change: ChangeDetectorRef) {}
 
   ngOnInit() {}
 
@@ -130,8 +133,6 @@ export class TlTimeline implements OnInit, OnChanges {
   handleScrollDown() {
     if (this.isLimitDown()) {
       if (!this.loadingMoreData) {
-        this.skip = this.skip;
-        this.take += this.rowData;
         this.getDataLazy();
       }
     }
@@ -145,9 +146,20 @@ export class TlTimeline implements OnInit, OnChanges {
     }
   }
 
+  haveMoreData() {
+    return this.take < this.data['total'];
+  }
+
   getDataLazy() {
-    this.loadingMoreData = true;
-    this.lazyLoad.emit({skip: this.skip, take: this.take});
+    if (this.haveMoreData()) {
+      this.skip = this.rowData + this.skip;
+      this.take = this.skip + this.rowData;
+      this.loadingMoreData = true;
+
+      console.log('take', this.take);
+      console.log('total', this.data['total']);
+      this.lazyLoad.emit({skip: this.skip, take: this.take});
+    }
   }
 
   onInit(lineItem: TlTimelineItem, item, index) {
@@ -157,12 +169,8 @@ export class TlTimeline implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges) {
     this.loadingMoreData = false;
     this.change.detectChanges();
-
-    console.log('skip', this.skip);
-    console.log('take', this.take);
-
-    if (change['data'].currentValue) {
-      this.dataFull.push(...change['data'].currentValue);
+    if (change['data'].currentValue.data) {
+      this.dataFull.push(...change['data'].currentValue.data);
     }
   }
 

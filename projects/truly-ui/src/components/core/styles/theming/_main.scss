@@ -31,6 +31,8 @@
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
   @include tl-timepicker-theme($theme);
+  @include tl-timeline-theme($theme);
+  @include tl-timeline-item-theme($theme);
 }
 
 

@@ -1,7 +1,7 @@
-.tl-timeline {
+.tl-timeline-scroll {
   overflow-y: scroll;
   overflow-x: auto;
-  padding: 21px;
+  padding: 0 21px;
 }
 
 .ltr {
@@ -12,43 +12,37 @@
   direction: rtl;
 }
 
-.tl-timeline::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+.tl-timeline-scroll::-webkit-scrollbar {
+  width: 8px;
 }
 
-.tl-timeline::-webkit-scrollbar-thumb {
-  background: #66cc99;
-  border-radius: 50px;
+.tl-timeline-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
 }
 
-.tl-timeline::-webkit-scrollbar-track {
-  background: #f2f2f2;
-  border-radius: 50px;
+.tl-timeline-scroll::-webkit-scrollbar-track {
+  border-radius: 4px;
 }
 
-.content-head {
+.content-head-default {
   width: 100%;
   padding: 5px 10px 5px 10px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  background: #66cc99;
-  color: #FFFFFF;
 }
 
-.content-head .content-title {
+.content-head-default .content-title {
   font-size: 14px;
   font-weight: bold;
 }
 
-.content-body {
-  border: 1px solid #DDDDDD;
+.content-body-default {
   border-top: none;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
 
-.content-body .content-text {
+.content-body-default .content-text {
   padding: 5px 10px;
   font-size: 12px;
 }

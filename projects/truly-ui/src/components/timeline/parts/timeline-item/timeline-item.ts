@@ -44,6 +44,8 @@ export class TlTimelineItem implements OnInit {
 
   @Input() date: number;
 
+  @Input() color = 'primary';
+
   @Input() data: Array<any> = [];
 
   @Input() template: TemplateRef<any>;

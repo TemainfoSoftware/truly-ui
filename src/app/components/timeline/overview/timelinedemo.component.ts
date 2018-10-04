@@ -812,26 +812,6 @@ export class TimelineDemoComponent {
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
-
-    this.dataLazy = {
-      'data' : this.getDataFromService(0, this.take),
-      'total' : this.dataAdvanced.length
-    };
-  }
-
-  getDataFromService(skip, take) {
-    return this.dataAdvanced.slice(skip, take);
-  }
-
-  onLazyLoad(event) {
-    clearTimeout( this.timeout );
-    this.timeout = setTimeout( () => {
-      this.dataLazy = {
-        'data': this.getDataFromService( event.skip, event.take ),
-        'total': this.dataAdvanced.length
-      };
-      // console.log('datalazy', this.dataLazy);
-    }, 1000 );
   }
 
 }

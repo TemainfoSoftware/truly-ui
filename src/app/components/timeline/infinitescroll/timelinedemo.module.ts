@@ -6,16 +6,14 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 
 import { TimelineDemoRoutingModule } from './timelinedemo-routing.module';
 import { TimelineDemoComponent } from './timelinedemo.component';
-import { TimelineModule } from '../../../../projects/truly-ui/src/components/timeline';
-import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
-import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
-import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { RepeatComponent } from './repeat-component';
+import { TimelineModule } from '../../../../../projects/truly-ui/src/components/timeline';
+import { ShowcaseCardModule } from '../../../shared/components/showcase-card/showcase-card.module';
+import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
 
 @NgModule({
   declarations: [
-    TimelineDemoComponent,
-    RepeatComponent
+    TimelineDemoComponent
   ],
   imports: [
     TimelineDemoRoutingModule,
@@ -28,8 +26,7 @@ import { RepeatComponent } from './repeat-component';
     ShowcaseTableEventsModule
   ],
   exports: [
-    TimelineDemoComponent,
-    RepeatComponent
+    TimelineDemoComponent
   ]
 })
 export class TimelineDemoModule {}

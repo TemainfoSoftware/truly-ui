@@ -1,0 +1,117 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Template Dynamic<span
+      class="module-name"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></p>
+    <p class="text-content">
+      You can use the Timeline in several ways including Template Dynamic.
+    </p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Template Dynamic</h5>
+              <tl-timeline
+                [data]="dataAdvanced"
+                [height]="'400px'">
+                <ng-template let-item="item" let-index="index">
+                  <div class="content-head">
+                    <span class="content-title">{{ item.title }}</span>
+                    <span class="content-time"><i class="ion ion-clock"></i> {{ item.duration }} Minutes of Service</span>
+                  </div>
+                  <div class="content-body">
+                    <repeat-component [data]="item.category"></repeat-component>
+                  </div>
+                </ng-template>
+              </tl-timeline>
+              <br>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-timeline [data]="dataAdvanced" [height]="'400px'">
+  <ng-template let-item="item" let-index="index">
+    <div class="content-head">
+      <span class="content-title">{ { item.title }}</span>
+      <span class="content-time"><i class="ion ion-clock"></i>{ { item.duration }} Minutes of Service</span>
+    </div>
+    <div class="content-body">
+      <repeat-component [data]="item.category"></repeat-component>
+    </div>
+  </ng-template>
+</tl-timeline>
+              </textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'javascript'">
+export class TimelineDemoComponent {
+
+  public dataAdvanced = [
+    {
+      title: 'Dr. Gregory House 1',
+      date: 1537477718000,
+      text: 'Mauris vulputate dolor vel finibus sagittis.',
+      duration: 15,
+      category: [
+        {
+          title: 'Anamnese',
+          text: 'Mauris vulputate dolor vel finibus sagittis.'
+        },
+        {
+          title: 'Evolution',
+          text: 'Mauris vulputate dolor vel finibus sagittis.'
+        }
+      ]
+    }
+  ];
+
+}
+
+// Create component to repeat items from an array inside the object
+@Component({
+  selector: 'repeat-component',
+  template: `
+    <div *ngFor="let item of data">
+      <div class="content-subtitle">{ { item.title }}</div>
+      <div class="content-text">
+        <p>{ { item.text }}</p>
+      </div>
+    </div>
+  `,
+  styles: [`
+    .content-subtitle {
+      border-top: 1px solid #DDDDDD;
+      border-bottom: 1px solid #DDDDDD;
+      background: #f2f2f2;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+
+    .content-text {
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+  `]
+});
+
+export class RepeatComponent {
+
+  @Input( 'data' ) data = [];
+
+}
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

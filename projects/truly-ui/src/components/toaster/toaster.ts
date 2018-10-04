@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ComponentRef, OnDestroy, HostBinding, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ComponentRef, OnDestroy, HostBinding, ViewChild, OnInit } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { ToasterService } from './services/toaster.service';
 
@@ -21,11 +21,11 @@ import { ToasterService } from './services/toaster.service';
     )
   ],*/
 } )
-export class TlToaster implements AfterContentInit, OnDestroy {
+export class TlToaster implements AfterContentInit, OnInit, OnDestroy {
 
   @ViewChild('toasterWrapper') toasterWrapper;
 
-  public message = 'Message Description';
+  public message: string | Object = 'Message Description';
 
   public title = 'Title !';
 
@@ -33,7 +33,7 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   public position = '';
 
-  public time = 3000;
+  public time: string | number = 3000;
 
   public progressBar = 0;
 
@@ -71,24 +71,37 @@ export class TlToaster implements AfterContentInit, OnDestroy {
 
   constructor() {}
 
-  ngAfterContentInit() {
-    this.setPosition();
+  ngOnInit() {
     this.handleProgressBarTime();
     this.handleAutoDestroy();
+  }
+
+  ngAfterContentInit() {
+    this.setPosition();
   }
 
   handleProgressBarTime() {
     if ( this.progress ) {
       this.interval = setInterval( () => {
-        this.progressBar = this.progressBar + 100;
+        if (this.progressBar < this.time) {
+          this.progressBar = this.progressBar + 100;
+        }
       }, 100 );
     }
+  }
+
+  getMessageKeys() {
+    return Object.keys(this.message);
+  }
+
+  isMessageObject() {
+    return typeof this.message === 'object';
   }
 
   handleAutoDestroy() {
     this.timeout = setTimeout( () => {
       this.autoDestroy();
-    }, this.time );
+    }, Number(this.time) + 200 );
   }
 
   setProperties( properties ) {

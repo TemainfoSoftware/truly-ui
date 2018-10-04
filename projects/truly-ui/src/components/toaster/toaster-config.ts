@@ -21,7 +21,7 @@
  */
  export interface ToasterConfig {
    title: string;
-   message?: string;
+   message?: string | Object;
    width?: string;
    height?: string;
    color?: string;

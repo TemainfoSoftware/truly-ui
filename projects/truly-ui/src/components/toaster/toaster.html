@@ -17,7 +17,14 @@
     <div *ngIf="showIcon" class="ui-toaster-icon"><i [class]="icon"></i></div>
     <div class="ui-toaster-description">
       <p><b>{{title}}</b></p>
-      <p>{{message}}</p>
+
+
+      <ng-container *ngIf="isMessageObject()">
+        <p *ngFor="let item of getMessageKeys()">
+          {{ item }}{{ message[item] }}
+        </p>
+      </ng-container>
+      <p *ngIf="!isMessageObject()">{{message}}</p>
     </div>
   </div>
   <tl-progressbar

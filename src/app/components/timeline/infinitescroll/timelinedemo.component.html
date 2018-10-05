@@ -1,0 +1,78 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Infinite Scroll<span
+      class="module-name"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></p>
+    <p class="text-content">
+      You can use the Timeline in several ways including Infinite Scroll.
+    </p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Infinite Scroll</h5>
+              <tl-timeline [data]="dataLazy" [height]="'400px'" [mode]="'infinite'" (lazyLoad)="onLazyLoad($event)"></tl-timeline>
+              <br>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-timeline [data]="dataLazy" [height]="'400px'" [mode]="'infinite'" (lazyLoad)="onLazyLoad($event)"></tl-timeline>
+              </textarea>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+export class TimelineDemoComponent {
+
+  public dataLazy;
+
+  public take = 20;
+
+  public dataAdvanced = [
+    {
+      title: 'Dr. Gregory House 1',
+      date: 1537477718000,
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
+    },
+    {
+      title: 'Dr. Gregory House 2',
+      date: 1537477718000,
+      text: 'Mauris vulputate dolor vel finibus sagittis.'
+    }
+  ];
+
+  constructor() {
+    this.dataLazy = {
+      'data' : this.getDataFromService(0, this.take),
+      'total' : this.dataAdvanced.length
+    };
+  }
+
+  getDataFromService(skip, take) {
+    return this.dataAdvanced.slice(skip, take);
+  }
+
+  onLazyLoad(event) {
+    this.dataLazy = {
+      'data': this.getDataFromService( event.skip, event.take ),
+      'total': this.dataAdvanced.length
+    };
+  }
+
+}
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

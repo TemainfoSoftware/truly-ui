@@ -1,0 +1,30 @@
+<div [tlBlockui]="loadingMoreData" [class]="'tl-timeline ' + color">
+  <div #listComponent class="tl-timeline-scroll"
+       (scroll)="listenerToScroll($event)"
+       [style.height]="height"
+       [ngClass]="(align === 'right') ? 'rtl' : null">
+    <ng-container *ngFor="let item of (mode === 'infinite') ? dataFull : data; let i = index;">
+      <tl-timeline-item #line
+                        [attr.data-index]="skip + i"
+                        [date]="item[keyDate]"
+                        [template]="(customTemplate) ? customTemplate : basicTemplate"
+                        (initialize)="onInit(line, item, i)"
+                        [data]="data"
+                        [align]="align"
+                        [side]="(align === 'center') ? controlSide() : null"
+                        [ngClass]="(align === 'right') ? 'ltr' : null">
+      </tl-timeline-item>
+    </ng-container>
+  </div>
+
+  <ng-template let-item="item" let-index="index" #basicTemplate>
+    <div class="content-head-default">
+      <span class="content-title">{{ item[keyTitle] }}</span>
+    </div>
+    <div class="content-body-default">
+      <div class="content-text">
+        {{ item[keyText] }}
+      </div>
+    </div>
+  </ng-template>
+</div>

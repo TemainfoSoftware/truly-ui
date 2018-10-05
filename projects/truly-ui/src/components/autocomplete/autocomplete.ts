@@ -132,6 +132,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   public loading = true;
 
+  public isOpen = false;
+
+  public trigger;
+
   private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
@@ -141,17 +145,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   ngOnInit() {
     this.getPosition();
-    this.handleCustom();
   }
 
   ngAfterViewInit() {
     this.validateModelValueProperty();
     this.listenerKeyDown();
-    this.listenClickDocument();
-    this.listenScrollDocument();
     this.listenerAutocompleteClick();
     this.validationProperty();
-    this.setShowList( false );
   }
 
   handleModelInit() {
@@ -188,33 +188,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.value = '';
   }
 
-  handleCustom() {
-    if ( this.customTemplate ) {
-      this.listBox.template = this.customTemplate;
-    }
-  }
-
   validationProperty() {
     if ( (!this.labelName && !this.listBox.isDataArrayString()) ) {
       throw new Error( 'The [labelName] property is required to show the content on input while selecting' );
     }
-  }
-
-  listenScrollDocument() {
-    this.listeners.add( this.renderer.listen( document, 'scroll', ( $event ) => {
-      this.setShowList( false );
-    } ) );
-  }
-
-  setShowList( boolean: boolean ) {
-    this.listBox.showList = boolean;
-    this.listBox.detectChanges();
-  }
-
-  listenClickDocument() {
-    this.listeners.add( this.renderer.listen( document, 'click', () => {
-      this.setShowList( false );
-    } ) );
   }
 
   onFocusInput() {
@@ -223,8 +200,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   handleOpenOnFocus() {
-    if ( (this.openFocus) && (!this.listBox.showList) && (this.isAvailableInput()) ) {
-      this.setShowList( true );
+    if ( (this.openFocus) && (this.isAvailableInput()) ) {
+      this.isOpen = true;
     }
   }
 
@@ -258,18 +235,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     if ( this.listBox.showList ) {
       $event.stopPropagation();
     }
-    this.setShowList( false );
+    this.isOpen = true;
     this.listBox.resetCursors();
   }
 
   onAddNew() {
     this.addNew.emit();
-  }
-
-  onInputFocusOut( $event ) {
-    if ( this.isNotRelatedWithAutocomplete( $event ) ) {
-      this.setShowList( false );
-    }
   }
 
   onClickItemList( $event ) {

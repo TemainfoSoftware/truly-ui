@@ -207,6 +207,18 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/timepicker/timepickerdemo.module#TimePickerDemoModule'
       },
       {
+        path: 'timeline',
+        loadChildren: './components/timeline/overview/timelinedemo.module#TimelineDemoModule'
+      },
+      {
+        path: 'timeline/infinitescroll',
+        loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
+      },
+      {
+        path: 'timeline/templatedynamic',
+        loadChildren: './components/timeline/templatedynamic/timelinedemo.module#TimelineDemoModule'
+      },
+      {
         path: 'tabcontrol',
         loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
       },

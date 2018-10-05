@@ -16,7 +16,7 @@
         (keydown.enter)="emitSelectOption(); $event.preventDefault()"
         [style.maxHeight]="maxHeight"
         tabindex="0">
-        <div class="ui-label-notfound" *ngIf="notFound">{{ 'Not Found' }}</div>
+        <div class="ui-label-notfound" *ngIf="notFound">{{ emptyList }}</div>
         <tl-list-item *ngFor="let item of datasource; let i = index"
                       (searchEmit)="searching()"
                       [searchOnList]="searchOnList"

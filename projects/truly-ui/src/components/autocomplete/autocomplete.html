@@ -1,10 +1,15 @@
 <div class="ui-autocomplete-box" #autoComplete>
   <div class="ui-autocomplete-wrapper" #autocompleteList>
-    <div *ngIf="loading" class="ui-loader"><div></div><div></div><div></div><div></div></div>
+    <div *ngIf="loading" class="ui-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <tl-input class="ui-autocomplete-model" #input [name]="'notform'" [(ngModel)]="value"></tl-input>
     <tl-input #inputWriter
               [label]="label"
-              (focusout)="onInputFocusOut($event)"
+              (overlayOrigin)="trigger = $event"
               (focus)="onFocusInput()"
               (clear)="onClearInput()"
               [labelSize]="labelSize"
@@ -20,14 +25,18 @@
               [placeholder]="placeholder"
               [clearButton]="clearButton">
     </tl-input>
-    <div class="autocomplete-listbox"
-         [style.width]="widthInput + 'px'"
-         [style.top]="listTopPosition + 'px'"
-         [style.left]="listLeftPosition + 'px'">
+    <ng-template cdkConnectedOverlay
+                 (backdropClick)="isOpen = false"
+                 [cdkConnectedOverlayHasBackdrop]="true"
+                 [cdkConnectedOverlayOrigin]="trigger"
+                 [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+                 [cdkConnectedOverlayOpen]="isOpen">
       <tl-listbox
         [data]="data"
         [id]="id"
         [label]="labelName"
+        [templateRef]="customTemplate"
+        [style.width.px]="widthInput"
         [labelDetail]="labelDetail"
         [lazyMode]="lazyMode"
         [rowsClient]="rowsClient"
@@ -45,7 +54,7 @@
         [addNew]="true"
         [rowHeight]="rowHeight">
       </tl-listbox>
-    </div>
+    </ng-template>
   </div>
   <ng-content></ng-content>
 </div>

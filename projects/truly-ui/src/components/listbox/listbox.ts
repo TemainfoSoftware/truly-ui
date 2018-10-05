@@ -112,6 +112,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @Input() dynamicFocus = true;
 
+  @Input() templateRef: TemplateRef<any>;
+
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
   @Output() selectItem: EventEmitter<any> = new EventEmitter();
@@ -1081,6 +1083,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges( change: SimpleChanges ) {
+    if (change['templateRef']) {
+      this.template = change['templateRef'].currentValue;
+    }
     this.validateDataType();
     if ( this.data ) {
       const data = this.lazyMode ? this.data.data : this.data;

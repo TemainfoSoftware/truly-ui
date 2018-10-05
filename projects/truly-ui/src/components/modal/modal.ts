@@ -38,7 +38,7 @@ let subscribeMouseMove;
   selector: 'tl-modal',
   templateUrl: './modal.html',
   styleUrls: [ './modal.scss' ],
-  animations: [
+/*  animations: [
     trigger(
       'enterAnimation', [
         transition( ':enter', [
@@ -50,7 +50,7 @@ let subscribeMouseMove;
         ] )
       ]
     )
-  ]
+  ]*/
 } )
 export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
@@ -94,7 +94,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @ViewChild( 'body', { read: ViewContainerRef } ) body: ViewContainerRef;
 
-  @HostBinding( '@enterAnimation' ) public animation;
+  // @HostBinding( '@enterAnimation' ) public animation;
 
   @Output() show: EventEmitter<any> = new EventEmitter();
 

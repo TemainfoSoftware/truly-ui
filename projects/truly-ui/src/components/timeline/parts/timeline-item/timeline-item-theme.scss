@@ -1,0 +1,62 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin _tl-timeline-item-theme-schema( $theme, $action ){
+  //SKELETON COMPONENT HERE
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  .tl-timeline-item-head {
+    > .head-date {
+      background-color: map-deep-get($theme, $action, "default", "background");
+      color: map-deep-get($theme, $action, "default", "foreground");
+      > .date-separator {
+        border-top: 1px solid map-deep-get($theme, $action, "default", "foreground");
+      }
+    }
+    > .head-dot {
+      background-color: map-deep-get($theme, $action, "default", "foreground");
+      border: 1px solid map-deep-get($theme, $action, "default", "background");
+    }
+  }
+
+  .tl-timeline-item-tail {
+    border-left: 2px solid map-deep-get($theme, $action, "default", "border");
+  }
+
+  .tl-timeline-item-content:before {
+    color: map-deep-get($theme, $action, "default", "background");
+  }
+
+}
+
+@mixin tl-timeline-item-theme( $theme ) {
+
+  .tl-timeline-item {
+    &.basic {
+      @include _tl-timeline-item-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-timeline-item-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-timeline-item-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-timeline-item-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-timeline-item-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-timeline-item-theme-schema($theme, 'information')
+    }
+  }
+}

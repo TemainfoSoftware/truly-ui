@@ -37,7 +37,8 @@
               }"
                #input
                [attr.placeholder]="placeholder"
-               [attr.disabled]="disabled"
+               [attr.disabled]="disabled ? true : null"
+               (focus)="handleInputFocus()"
                (keydown.arrowDown)="handleArrowDown($event)"
                (keyup)="subject.next($event.target.value)"
                (keydown)="handleKeyDown($event)">

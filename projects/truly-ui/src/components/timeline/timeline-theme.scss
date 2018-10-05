@@ -1,0 +1,56 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-timeline-theme-schema( $theme, $action ) {
+  //SKELETON COMPONENT HERE
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  .tl-timeline-scroll::-webkit-scrollbar-thumb {
+    background-color: map-deep-get($theme, $action, "default", "background");
+  }
+
+  .tl-timeline-scroll::-webkit-scrollbar-track {
+    background-color: map-deep-get($theme, $action, "default", "border");
+  }
+
+  .content-head-default {
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+  }
+
+  .content-body-default {
+    border: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
+}
+
+@mixin tl-timeline-theme( $theme ) {
+
+  .tl-timeline {
+    &.basic {
+      @include _tl-timeline-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-timeline-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-timeline-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-timeline-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-timeline-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-timeline-theme-schema($theme, 'information')
+    }
+  }
+}

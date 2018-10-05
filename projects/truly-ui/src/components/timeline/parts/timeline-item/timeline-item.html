@@ -1,0 +1,18 @@
+<li [class]="'tl-timeline-item ' + color" #customTemplateRef>
+  <div [class]="'tl-timeline-item-tail tail-' + align"></div>
+  <div [class]="'tl-timeline-item-head head-' + align">
+    <div class="head-date" *ngIf="date">
+      <span class="date-day">{{ date | date : 'dd' }}</span>
+      <span class="date-month">{{ date | date : 'MMM' | uppercase }}</span>
+      <span class="date-year">{{ date | date : 'yyyy' }}</span>
+      <span class="date-separator"></span>
+      <span class="date-hour">{{ date | date : 'H:MM' }}</span>
+    </div>
+    <div class="head-dot"></div>
+  </div>
+  <div class="tl-timeline-item-content"
+       [ngClass]="align === 'center' ? (date) ? 'float-' + sideString + ' arrow-' + sideString : 'float-df-' + sideString + ' arrow-' + sideString : (date) ? 'content-' + align : 'content-df-' + align">
+    <div #view></div>
+  </div>
+  <div class="clearfix"></div>
+</li>

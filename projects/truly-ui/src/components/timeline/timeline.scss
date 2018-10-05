@@ -1,0 +1,48 @@
+.tl-timeline-scroll {
+  overflow-y: scroll;
+  overflow-x: auto;
+  padding: 0 21px;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.tl-timeline-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tl-timeline-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+.tl-timeline-scroll::-webkit-scrollbar-track {
+  border-radius: 4px;
+}
+
+.content-head-default {
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.content-head-default .content-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.content-body-default {
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.content-body-default .content-text {
+  padding: 5px 10px;
+  font-size: 12px;
+}

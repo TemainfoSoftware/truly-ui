@@ -164,6 +164,7 @@ export class TlColorPicker extends ValueAccessorBase<string> implements OnInit, 
   }
 
   copyInputColor(inputElement) {
+    this.isOpen = !this.isOpen;
     inputElement.input.nativeElement.select();
     document.execCommand('copy');
     inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);

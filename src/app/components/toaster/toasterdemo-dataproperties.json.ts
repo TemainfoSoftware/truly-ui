@@ -49,13 +49,6 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
-    name: 'closeButton',
-    type: 'boolean',
-    default: 'false',
-    description: 'Controls whether the close button will be shown or not',
-    options: 'true | false'
-  },
-  {
     name: 'progress',
     type: 'boolean',
     default: 'false',

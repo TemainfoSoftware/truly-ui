@@ -10,7 +10,6 @@ import { ButtonModule } from '../../../../projects/truly-ui/src/components/butto
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { ToasterModule } from '../../../../projects/truly-ui/src/components/toaster/index';
 import { RadioButtonModule } from '../../../../projects/truly-ui/src/components/radiobutton/index';
 import { InputModule } from '../../../../projects/truly-ui/src/components/input/index';
 import { DropDownListModule } from '../../../../projects/truly-ui/src/components/dropdownlist/index';
@@ -24,7 +23,6 @@ import { PanelGroupModule } from '../../../../projects/truly-ui/src/components/p
   imports: [
     ToasterDemoRoutingModule,
     ButtonModule,
-    ToasterModule,
     CommonModule,
     FormsModule,
     HighlightJsModule,

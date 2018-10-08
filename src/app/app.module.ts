@@ -16,6 +16,7 @@ import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ToasterModule } from '../../projects/truly-ui/src/components/toaster/index';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { environment } from '../environments/environment';
     ToolbarModule,
     ButtonModule,
     HomeModule,
+    ToasterModule.forRoot(),
     HttpClientModule,
     ServiceWorkerModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })

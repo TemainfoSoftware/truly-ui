@@ -1,4 +1,6 @@
-/*
+
+
+ /*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -19,13 +21,20 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export interface ToasterConfig {
-   title: string;
-   message?: string | Object;
-   width?: string;
-   height?: string;
-   position?: string;
-   time?: number;
-   showIcon?: boolean;
-   progress?: boolean;
- }
+import { ToasterConfig } from '../../toaster-config';
+
+ export class Toaster implements ToasterConfig {
+   title = 'Toaster Title';
+   message = 'My Toaster';
+   width = '400px';
+   height = 'auto';
+   position = 'top-right';
+   time = 3000;
+   closeButton = false;
+   showIcon = false;
+   progress = true;
+   id = '';
+   closed = false;
+   color = 'primary';
+   icon = null;
+}

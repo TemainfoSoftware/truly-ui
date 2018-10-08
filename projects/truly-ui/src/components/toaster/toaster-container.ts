@@ -19,13 +19,41 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export interface ToasterConfig {
-   title: string;
-   message?: string | Object;
-   width?: string;
-   height?: string;
-   position?: string;
-   time?: number;
-   showIcon?: boolean;
-   progress?: boolean;
- }
+import { Component, Input } from '@angular/core';
+import { ToasterService } from './services/toaster.service';
+import { trigger, transition, style, animate } from '@angular/animations';
+
+@Component( {
+  selector: 'tl-toaster-container',
+  templateUrl: './toaster-container.html',
+  styleUrls: ['./toaster-container.scss'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition( ':enter', [
+          style( { transform: 'translateY(-20%)', opacity: 0 } ),
+          animate( '200ms', style( { transform: 'translateY(0)', opacity: 1 } ) )
+        ] ),
+        transition( ':leave', [
+          style( { opacity: 1 } ),
+          animate( '200ms', style( { opacity: 0 } ) )
+        ] )
+      ]
+    )
+  ],
+} )
+export class TlToasterContainer {
+
+  @Input() position = 'top-right';
+
+  @Input() width = '400px';
+
+  public toasterService: ToasterService;
+
+  constructor() {}
+
+  getWidth() {
+    return parseInt(this.width, 10) / 2 + 'px';
+  }
+
+}

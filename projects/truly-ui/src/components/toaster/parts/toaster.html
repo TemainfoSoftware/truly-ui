@@ -1,30 +1,22 @@
-<div class="ui-toaster-wrapper"
-     #toasterWrapper
-     (click)="autoDestroy()"
-     [class]="color"
-     [ngClass]="position"
+<div [class]="'ui-toaster-wrapper ' + color"
+     [@enterAnimation]="true"
+     (click)="close()"
      [ngStyle]="{
      'border-bottom-left-radius': !progress ? '3px' : '0',
      'border-bottom-right-radius': !progress ? '3px' : '0',
      'width': width,
-     'height': height,
-     'top': topPosition,
-     'bottom': bottomPosition,
-     'left': 'calc(50% - ' + getLeftWidth() + ')'  }">
-  <span *ngIf="closeButton" class="ui-close-button" (click)="autoDestroy()"><i class="ion-close"></i></span>
+     'height': height}">
   <div class="ui-toaster-content"
-      [ngStyle]="{'grid-template-columns': showIcon ? '50px 1fr 50px' : '1fr', 'padding': !showIcon ? '10px 20px' : '20px'}">
+  [ngStyle]="{'grid-template-columns': showIcon ? '50px 1fr' : '1fr', 'padding': !showIcon || height === 'auto' ? '20px 0' : '0'}">
     <div *ngIf="showIcon" class="ui-toaster-icon"><i [class]="icon"></i></div>
     <div class="ui-toaster-description">
       <p><b>{{title}}</b></p>
-
-
+      <p *ngIf="!isMessageObject()">{{message}}</p>
       <ng-container *ngIf="isMessageObject()">
         <p *ngFor="let item of getMessageKeys()">
-          {{ item }}{{ message[item] }}
+          {{ item }} {{ message[item] }}
         </p>
       </ng-container>
-      <p *ngIf="!isMessageObject()">{{message}}</p>
     </div>
   </div>
   <tl-progressbar

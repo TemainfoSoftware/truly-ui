@@ -1,15 +1,12 @@
 .ui-toaster-wrapper {
   margin: 10px;
-  position: fixed;
-  z-index: 100000 !important;
   height: auto;
   width: 300px;
-  transition: all 200ms ease-in-out;
+  transition: all 0.5s cubic-bezier(0.75, 0, 0.25, 1) 0.1s;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
   user-select: none;
   box-sizing: border-box;
-
 
   &:hover {
     cursor: pointer;

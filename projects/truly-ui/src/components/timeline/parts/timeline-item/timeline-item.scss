@@ -34,7 +34,7 @@ $offset-tail: 4px;
 .tl-timeline-item .tl-timeline-item-head span {
   display: block;
   text-align: center;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date {
@@ -43,15 +43,18 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-day {
-  font-size: 22px;
+  font-size: 1.5em;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-month {
-  font-size: 12px;
+  font-size: 0.7em;
+  margin-top: -3px;
+  letter-spacing: 1px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-year {
-  font-size: 11px;
+  font-size: 0.7em;
+  margin-top: 6px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-separator {
@@ -59,7 +62,7 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-hour {
-  font-size: 11px;
+  font-size: 0.8em;
   font-weight: bold;
 }
 

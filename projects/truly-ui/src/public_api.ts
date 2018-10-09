@@ -45,6 +45,7 @@ export { ValidatorsModule } from './components/validators/index';
 
 // Interfaces
 export { ModalOptions, Modal } from './components/modal/modal-options';
+export { ToasterConfig } from './components/toaster/toaster-config';
 
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';

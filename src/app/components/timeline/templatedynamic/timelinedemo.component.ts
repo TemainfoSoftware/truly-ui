@@ -22,7 +22,6 @@
 import { Component } from '@angular/core';
 
 import * as json from './timelinedemo-dataproperties.json';
-import * as jsonEvts from './timelinedemo.dataevents.json';
 
 @Component({
   selector: 'app-timeline',

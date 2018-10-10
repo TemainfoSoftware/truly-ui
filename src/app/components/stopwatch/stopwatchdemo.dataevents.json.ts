@@ -21,13 +21,13 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'returnTime',
     parameters: [
       {
-        event: 'selected',
-        description: 'Action Selected'
+        event: 'return',
+        description: 'Time'
       }
     ],
-    description: 'Callback to invoke when toogle event.',
+    description: 'Returns when clicked to stop.',
   },
 ];

@@ -21,10 +21,17 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
+    name: 'width',
     type: 'string',
-    default: 'null',
-    description: 'Displays a text.',
-    options: 'any text'
+    default: '240px',
+    description: 'Width of component.',
+    options: 'px | % | em'
   },
+  {
+    name: 'height',
+    type: 'string',
+    default: '60px',
+    description: 'Height of component.',
+    options: 'px | % | em'
+  }
 ];

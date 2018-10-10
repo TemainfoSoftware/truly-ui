@@ -15,11 +15,15 @@
           <app-card>
             <div class="col-md-12">
               <h5>Basic</h5>
-              <tl-stopwatch></tl-stopwatch>
+              <tl-stopwatch [width]="'240px'" [height]="'45px'" (returnTime)="onStop($event)" #timer></tl-stopwatch>
+              <button (click)="timer.start()">Start</button>
+              <button (click)="timer.stop()">Stop</button>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-stopwatch></tl-stopwatch>
+<tl-stopwatch [width]="'240px'" [height]="'45px'" (returnTime)="onStop($event)" #timer></tl-stopwatch>
+<button (click)="timer.start()">Start</button>
+<button (click)="timer.stop()">Stop</button>
               </textarea>
             </div>
           </app-card>

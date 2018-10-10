@@ -39,5 +39,9 @@ export class StopwatchDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  onStop($event) {
+    console.log('Time:', $event.time);
+  }
 }
 

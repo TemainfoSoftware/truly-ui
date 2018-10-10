@@ -199,6 +199,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
       },
       {
+        path: 'stopwatch',
+        loadChildren: './components/stopwatch/stopwatchdemo.module#StopwatchDemoModule'
+      },
+      {
         path: 'switch',
         loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
       },
@@ -215,7 +219,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
       },
       {
-        path: 'timeline/templatedynamic',
+        path: 'timeline/dynamictemplate',
         loadChildren: './components/timeline/templatedynamic/timelinedemo.module#TimelineDemoModule'
       },
       {

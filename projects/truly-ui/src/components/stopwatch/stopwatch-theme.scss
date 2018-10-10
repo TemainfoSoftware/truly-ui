@@ -2,6 +2,15 @@
 
 @mixin _tl-stopwatch-theme-schema( $theme, $action ){
   //SKELETON COMPONENT HERE
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  color: map-deep-get($theme, $action, "default", "foreground");
+  background: map-deep-get($theme, $action, "default", "background");
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
 }
 
 @mixin tl-stopwatch-theme( $theme ) {

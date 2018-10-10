@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'tl-stopwatch',
@@ -29,8 +29,98 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TlStopwatch implements OnInit {
 
+  public hour = 0;
+
+  public minute = 0;
+
+  public second = 0;
+
+  public LIMIT_HOUR = 24;
+
+  public LIMIT_MINUTE = 60;
+
+  public LIMIT_SECOND = 60;
+
+  public isPause = true;
+
+  public interval;
+
+  @Input() color = 'basic';
+
+  @Input() width = '240px';
+
+  @Input() height = '60px';
+
+  @Output() returnTime = new EventEmitter();
+
   constructor() {}
 
   ngOnInit() {}
+
+  isLimitHour() {
+    return this.hour === this.LIMIT_HOUR;
+  }
+
+  isLimitMinute() {
+    return this.minute === this.LIMIT_MINUTE;
+  }
+
+  isLimitSecond() {
+    return this.second === this.LIMIT_SECOND;
+  }
+
+  resetHour() {
+    this.hour = 0;
+  }
+
+  resetMinute() {
+    this.minute = 0;
+  }
+
+  resetSecond() {
+    this.second = 0;
+  }
+
+  incrementHour() {
+    this.resetMinute();
+    this.hour++;
+  }
+
+  incrementMinute() {
+    this.resetSecond();
+    this.minute++;
+  }
+
+  incrementSecond() {
+    this.second++;
+  }
+
+  start() {
+    this.isPause = false;
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      if (this.isPause) { return; }
+      this.incrementSecond();
+      if (this.isLimitSecond()) {
+        this.incrementMinute();
+      }
+      if (this.isLimitMinute()) {
+        this.incrementHour();
+      }
+      if (this.isLimitHour()) {
+        this.resetHour();
+      }
+    }, 1000);
+  }
+
+  stop() {
+    this.isPause = true;
+    const time = this.formatTime(this.hour) + ':' + this.formatTime(this.minute) + ':' + this.formatTime(this.second);
+    this.returnTime.emit({time: time});
+  }
+
+  formatTime(digit) {
+    return digit <= 9 ? '0' + digit : digit;
+  }
 
 }

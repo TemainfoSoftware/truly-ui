@@ -7,7 +7,7 @@
       (keydown.enter)="callbackListElement($event, item)"
       (click)="callbackListElement($event, item)"
       *ngFor="let item of items">
-    <i [style.height]="itemHeight" [style.line-height]="itemHeight" [class]="'icon fa ' + item[icon]"></i>
+    <i [style.height]="itemHeight" [style.line-height]="itemHeight" [class]="'icon ' + item[icon]"></i>
     <span [style.height]="itemHeight" [style.line-height]="itemHeight" class="label">{{item[label]}}</span>
     <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]" [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
        class="ion-ios-arrow-right icon"></i>

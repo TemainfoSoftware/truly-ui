@@ -33,8 +33,15 @@ export const dataProperties = [
     default: 'null',
     description: 'Button group height.',
     options: 'px | % | em'
+  },
+  {
+    name: 'fontSize',
+    type: 'string',
+    default: '0.8em',
+    description: 'Font size.',
+    options: 'px | % | em'
   }
-  ];
+];
 export const dataProperties2 = [
   {
     name: 'text',
@@ -63,12 +70,5 @@ export const dataProperties2 = [
     default: 'false',
     description: 'The state of button.',
     options: 'true | false'
-  },
-  {
-    name: 'fontSize',
-    type: 'string',
-    default: '0.8em',
-    description: 'Font size.',
-    options: 'px | % | em'
   }
 ];

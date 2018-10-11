@@ -49,7 +49,7 @@ export class TlButtonGroup implements AfterContentInit {
   constructor() {}
 
   ngAfterContentInit() {
-    if (this.useSelected) {
+    if ( this.useSelected ) {
       const selectedTab = this.groupItems.find( tab => tab.selected );
       if ( !selectedTab && this.groupItems.first ) {
         this.groupItems.first.selected = true;

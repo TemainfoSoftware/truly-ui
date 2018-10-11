@@ -4,9 +4,9 @@
       <button #tlbutton
               *ngFor="let item of groupItems"
               [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height, 'font-size': fontSize}"
-              [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
+              [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected && useSelected}"
               [class]="'tl-button ripple '+ item.color"
-              (click)="useSelected ? selectButtonItem(item, $event) : null"
+              (click)="selectButtonItem(item, $event)"
               [disabled]="item.disabled ? true : null">
         <span class="textButton" [ngStyle]="{'line-height': item.height}">
           <i *ngIf="item.iconBeforeText" [ngClass]="item.iconBeforeText"></i>

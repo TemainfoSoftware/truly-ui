@@ -63,5 +63,12 @@ export const dataProperties2 = [
     default: 'false',
     description: 'The state of button.',
     options: 'true | false'
+  },
+  {
+    name: 'fontSize',
+    type: 'string',
+    default: '0.8em',
+    description: 'Font size.',
+    options: 'px | % | em'
   }
 ];

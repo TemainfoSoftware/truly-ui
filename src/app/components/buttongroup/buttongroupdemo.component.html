@@ -13,7 +13,7 @@
             <div class="col-md-6">
               <span>Basic</span>
               <tl-button-group (itemSelected)="showItemSelected($event)">
-                <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Button 1'" [iconBeforeText]="'fa fa-home'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
@@ -27,7 +27,7 @@
   <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
-</textarea>
+              </textarea>
             </div>
             <div class="col-md-6">
               <span>Multiselect</span>
@@ -46,14 +46,14 @@
   <tl-button-group-item [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
-</textarea>
+              </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <span>Basic With Preselection</span>
               <tl-button-group>
-                <tl-button-group-item [text]="'Button 1'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Button 1'" [iconAfterText]="'ion-home'"></tl-button-group-item>
                 <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
                 <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
               </tl-button-group>
@@ -67,7 +67,7 @@
   <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
-</textarea>
+              </textarea>
             </div>
             <div class="col-md-6">
               <span>Multiselect With Preselection</span>
@@ -86,7 +86,34 @@
   <tl-button-group-item [selected]="true" [text]="'Button 2'"></tl-button-group-item>
   <tl-button-group-item [selected]="true" [text]="'Button 3'"></tl-button-group-item>
 </tl-button-group>
-</textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <span>Color</span>
+              <tl-button-group [useSelected]="false" (itemSelected)="showItemSelected($event)">
+                <tl-button-group-item [text]="'Basic'" [color]="'basic'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Primary'" [color]="'primary'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Success'" [color]="'success'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Danger'" [color]="'danger'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Warning'" [color]="'warning'"></tl-button-group-item>
+                <tl-button-group-item [text]="'Information'" [color]="'information'"></tl-button-group-item>
+              </tl-button-group>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-button-group [useSelected]="false" (itemSelected)="showItemSelected($event)">
+  <tl-button-group-item [text]="'Basic'" [color]="'basic'"></tl-button-group-item>
+  <tl-button-group-item [text]="'Primary'" [color]="'primary'"></tl-button-group-item>
+  <tl-button-group-item [text]="'Success'" [color]="'success'"></tl-button-group-item>
+  <tl-button-group-item [text]="'Danger'" [color]="'danger'"></tl-button-group-item>
+  <tl-button-group-item [text]="'Warning'" [color]="'warning'"></tl-button-group-item>
+  <tl-button-group-item [text]="'Information'" [color]="'information'"></tl-button-group-item>
+</tl-button-group>
+              </textarea>
             </div>
           </app-card>
         </app-showcase-card>

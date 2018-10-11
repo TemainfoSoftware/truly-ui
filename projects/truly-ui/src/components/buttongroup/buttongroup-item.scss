@@ -16,6 +16,10 @@ $button-text-align: center;
   cursor: pointer;
   box-sizing: border-box;
 
+  > .iconAfterText{
+    padding: 0 0 0 5px !important;
+  }
+
   > .textButton{
     padding: 0 15px;
     margin: 0;

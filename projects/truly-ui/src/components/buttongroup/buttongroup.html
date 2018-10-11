@@ -6,9 +6,13 @@
               [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height, 'font-size': fontSize}"
               [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
               [class]="'tl-button ripple '+ item.color"
-              (click)="selectButtonItem(item, $event)"
+              (click)="useSelected ? selectButtonItem(item, $event) : null"
               [disabled]="item.disabled ? true : null">
-        <span class="textButton" [ngStyle]="{'line-height': item.height}">{{item.text}}</span>
+        <span class="textButton" [ngStyle]="{'line-height': item.height}">
+          <i *ngIf="item.iconBeforeText" [ngClass]="item.iconBeforeText"></i>
+            {{item.text}}
+          <i *ngIf="item.iconAfterText" [ngClass]="item.iconAfterText" class="iconAfterText"></i>
+        </span>
       </button>
     </ng-template>
     <ng-container *ngTemplateOutlet="group; context: groupContext"></ng-container>

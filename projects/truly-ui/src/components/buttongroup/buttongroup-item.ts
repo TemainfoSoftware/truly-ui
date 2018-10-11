@@ -32,6 +32,10 @@ export class TlButtonGroupItem implements OnInit {
 
   @Input() text = '';
 
+  @Input() iconBeforeText = '';
+
+  @Input() iconAfterText = '';
+
   @Input() width = '120px';
 
   @Input() disabled = null;

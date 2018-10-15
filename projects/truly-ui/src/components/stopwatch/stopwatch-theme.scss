@@ -11,6 +11,10 @@
   color: map-deep-get($theme, $action, "default", "foreground");
   background: map-deep-get($theme, $action, "default", "background");
   border: 1px solid map-deep-get($theme, $action, "default", "border");
+
+  .icon {
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
 }
 
 @mixin tl-stopwatch-theme( $theme ) {

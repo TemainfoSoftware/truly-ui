@@ -17,12 +17,14 @@
               <tl-stopwatch [width]="'240px'" [height]="'45px'" (returnTime)="onStop($event)" #timer></tl-stopwatch>
               <button (click)="timer.start()">Start</button>
               <button (click)="timer.stop()">Stop</button>
+              <button (click)="timer.reset()">Reset</button>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-stopwatch [width]="'240px'" [height]="'45px'" (returnTime)="onStop($event)" #timer></tl-stopwatch>
 <button (click)="timer.start()">Start</button>
 <button (click)="timer.stop()">Stop</button>
+<button (click)="timer.reset()">Reset</button>
               </textarea>
             </div>
           </app-card>

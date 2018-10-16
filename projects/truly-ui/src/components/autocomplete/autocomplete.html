@@ -10,6 +10,10 @@
     <tl-input #inputWriter
               [label]="label"
               (overlayOrigin)="trigger = $event"
+              (click)="isOpen = true"
+              (keydown)="isOpen = true"
+              (keydown.enter)="isOpen = false"
+              (keydown.tab)="isOpen = false"
               (focus)="onFocusInput()"
               (clear)="onClearInput()"
               [labelSize]="labelSize"
@@ -26,17 +30,16 @@
               [clearButton]="clearButton">
     </tl-input>
     <ng-template cdkConnectedOverlay
-                 (backdropClick)="isOpen = false"
-                 [cdkConnectedOverlayHasBackdrop]="true"
                  [cdkConnectedOverlayOrigin]="trigger"
                  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-                 [cdkConnectedOverlayOpen]="isOpen">
+                 [cdkConnectedOverlayOpen]="true">
       <tl-listbox
         [data]="data"
         [id]="id"
         [label]="labelName"
         [templateRef]="customTemplate"
         [style.width.px]="widthInput"
+        [style.visibility]="isOpen ? 'visible' : 'hidden'"
         [labelDetail]="labelDetail"
         [lazyMode]="lazyMode"
         [rowsClient]="rowsClient"

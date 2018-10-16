@@ -22,7 +22,7 @@
 import {
   Component, ContentChild, EventEmitter,
   Input, OnDestroy, Output, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit, OnChanges,
+  Optional, Inject, OnInit, AfterViewInit, OnChanges, Renderer2,
 } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
@@ -129,12 +129,14 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   public isOpen = false;
 
+  private  listener;
+
   public trigger;
 
   private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any> ) {
+    asyncValidators: Array<any>, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
   }
 
@@ -145,6 +147,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   ngAfterViewInit() {
     this.validateModelValueProperty();
     this.validationProperty();
+    this.listenContainer();
+  }
+
+  listenContainer() {
+    this.renderer.listen(document, 'click', () => {
+      this.isOpen = false;
+    });
   }
 
   handleModelInit() {
@@ -181,7 +190,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   handleOpenOnFocus() {
     if ( (this.openFocus) && (this.isAvailableInput()) ) {
-      this.isOpen = !this.isOpen;
+      this.isOpen = true;
     }
   }
 
@@ -198,6 +207,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
       this.clickItem.emit( $event );
       this.setInputValue( $event );
       this.tlinput.input.nativeElement.focus();
+      this.isOpen = false;
     }
   }
 

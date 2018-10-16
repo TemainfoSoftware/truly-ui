@@ -134,8 +134,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   @ContentChild( TemplateRef ) template: TemplateRef<Object>;
 
-  public showList = true;
-
   public cursor = -1;
 
   public skip = 0;
@@ -158,7 +156,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   public scrollFinish = false;
 
-  get filterEmptyMessage () {
+  get filterEmptyMessage() {
     return this.i18n.getLocale().Listbox.notFoundText;
   }
 
@@ -198,8 +196,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
                private addNewRenderService: AddNewRenderService,
                private listRenderService: ListBoxListRenderService,
                private listCustomRenderService: ListBoxTemplateRenderService,
-               private i18n: I18nService
-  ) {
+               private i18n: I18nService ) {
 
     this.listRenderService.setInstanceListBox( this );
     this.listCustomRenderService.setInstanceListBox( this );
@@ -213,7 +210,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         if ( String( searchTerm ).length >= this.charsToSearch ) {
           return true;
         }
-        if (searchTerm.length < this.charsToSearch) {
+        if ( searchTerm.length < this.charsToSearch ) {
           this.handleSearchAsDefaultData();
           return false;
         }
@@ -474,7 +471,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleOpenFocusList() {
     if ( this.dynamicShowHide ) {
-      this.showList = false;
       this.detectChanges();
     }
   }
@@ -485,19 +481,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       return;
     }
     this.handleValueSearchElement();
-    if ( this.showList ) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      if ( this.existChildrenElements() ) {
-        this.handleLastScrollTopOnKey();
-        this.scrollByArrows = true;
-        if ( this.isCursorLessThanListLength() ) {
-          this.isCursorViewNewThanVisibleRows() ?
-            this.setScrollTopAndFocusNext() : this.setCursorViewNextAndFocusNext();
-          this.handleCursorWithoutSearchElement();
-          this.setLastSelected();
-          this.setLastScrollTopOnKey();
-        }
+    $event.preventDefault();
+    $event.stopPropagation();
+    if ( this.existChildrenElements() ) {
+      this.handleLastScrollTopOnKey();
+      this.scrollByArrows = true;
+      if ( this.isCursorLessThanListLength() ) {
+        this.isCursorViewNewThanVisibleRows() ?
+          this.setScrollTopAndFocusNext() : this.setCursorViewNextAndFocusNext();
+        this.handleCursorWithoutSearchElement();
+        this.setLastSelected();
+        this.setLastScrollTopOnKey();
       }
     }
   }
@@ -508,19 +502,17 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       return;
     }
     this.handleValueSearchElement();
-    if ( this.showList ) {
-      $event.preventDefault();
-      $event.stopPropagation();
-      if ( this.existChildrenElements() ) {
-        this.handleLastScrollTopOnKey();
-        this.scrollByArrows = true;
-        if ( this.isCursorGreaterThanZero() ) {
-          this.isCursorViewLessOrEqualZero() ? this.setScrollTopAndFocusPrevious() :
-            this.setCursorViewNextAndFocusPrevious();
-          this.handleCursorWithoutSearchElement();
-          this.setLastSelected();
-          this.setLastScrollTopOnKey();
-        }
+    $event.preventDefault();
+    $event.stopPropagation();
+    if ( this.existChildrenElements() ) {
+      this.handleLastScrollTopOnKey();
+      this.scrollByArrows = true;
+      if ( this.isCursorGreaterThanZero() ) {
+        this.isCursorViewLessOrEqualZero() ? this.setScrollTopAndFocusPrevious() :
+          this.setCursorViewNextAndFocusPrevious();
+        this.handleCursorWithoutSearchElement();
+        this.setLastSelected();
+        this.setLastScrollTopOnKey();
       }
     }
   }
@@ -561,7 +553,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleValueSearchElement() {
-    if ( (this.searchElement.model) && (!this.showList) ) {
+    if ( (this.searchElement.model) ) {
       return;
     }
   }
@@ -600,7 +592,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleSearch( searchTerm ) {
     if ( searchTerm ) {
-      this.showList = true;
       this.filtering = true;
       this.detectChanges();
       this.setScrollTopZero();
@@ -632,13 +623,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       return;
     }
     this.itemSelected = null;
-    this.setFilteredData(searchTerm);
+    this.setFilteredData( searchTerm );
     this.handleSkipAndTakeWhileSearching();
     this.validateFilteredAsEmpty();
   }
 
 
-  setFilteredData(searchTerm) {
+  setFilteredData( searchTerm ) {
     this.filteredData = !this.isDataArrayString() ?
       this.filterDataObject( searchTerm ) : this.filterDataString( searchTerm );
   }
@@ -771,8 +762,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   renderPageData() {
-    const data = this.lazyMode ? this.data['data'] : this.data;
-    if ( this.filtering && !this.lazyMode) {
+    const data = this.lazyMode ? this.data[ 'data' ] : this.data;
+    if ( this.filtering && !this.lazyMode ) {
       this.dataService.updateDataSource( this.filteredData.slice( this.skip, this.take ) );
       this.handleRenderList();
       return;
@@ -820,12 +811,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   handleClickAddNew() {
     this.clickAddNew.emit();
-    this.showList = false;
     this.change.detectChanges();
   }
 
   getListBoxHeight() {
-    const filtered = this.lazyMode ? this.data['data'] : this.filteredData;
+    const filtered = this.lazyMode ? this.data[ 'data' ] : this.filteredData;
     if ( (filtered.length < this.rowsClient) && this.filtering && filtered.length > 0 ) {
       return this.addNew ? (filtered.length * this.rowHeight) + (this.rowHeight) :
         (filtered.length * this.rowHeight);
@@ -1083,8 +1073,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges( change: SimpleChanges ) {
-    if (change['templateRef']) {
-      this.template = change['templateRef'].currentValue;
+    if ( change[ 'templateRef' ] ) {
+      this.template = change[ 'templateRef' ].currentValue;
     }
     this.validateDataType();
     if ( this.data ) {
@@ -1101,7 +1091,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       }
       this.nothingToShow = true;
       this.loadingMoreData = false;
-      console.log('NOTHING FOUND');
+      console.log( 'NOTHING FOUND' );
     }
   }
 

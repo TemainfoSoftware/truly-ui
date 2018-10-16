@@ -53,9 +53,11 @@ export class TlStopwatch implements OnInit {
 
   @Output() returnTime = new EventEmitter();
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   isLimitHour() {
     return this.hour === this.LIMIT_HOUR;
@@ -99,7 +101,9 @@ export class TlStopwatch implements OnInit {
     this.isPause = false;
     clearInterval(this.interval);
     this.interval = setInterval(() => {
-      if (this.isPause) { return; }
+      if (this.isPause) {
+        return;
+      }
       this.incrementSecond();
       if (this.isLimitSecond()) {
         this.incrementMinute();
@@ -117,6 +121,12 @@ export class TlStopwatch implements OnInit {
     this.isPause = true;
     const time = this.formatTime(this.hour) + ':' + this.formatTime(this.minute) + ':' + this.formatTime(this.second);
     this.returnTime.emit({time: time});
+  }
+
+  reset() {
+    this.hour = 0;
+    this.minute = 0;
+    this.second = 0;
   }
 
   formatTime(digit) {

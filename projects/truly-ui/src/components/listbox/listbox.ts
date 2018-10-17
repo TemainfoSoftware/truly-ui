@@ -315,8 +315,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           return;
         case KeyEvent.ENTER:
           return;
-        case KeyEvent.ESCAPE:
-          return;
         case KeyEvent.PAGEDOWN:
           return;
         case KeyEvent.PAGEUP:
@@ -399,9 +397,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       case KeyEvent.ARROWUP:
         this.handleKeyArrowUp( $event );
         return;
-      case KeyEvent.ESCAPE:
-        this.handleEscape( $event );
-        return;
       case KeyEvent.ENTER:
         this.handleKeyEnter( $event );
         return;
@@ -454,11 +449,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       this.itemContainer.nativeElement.scrollTop - (this.rowHeight * this.rowsPage);
   }
 
-  handleEscape( $event ) {
-    $event.stopPropagation();
-    this.handleOpenFocusList();
-  }
-
   handleKeyEnter( $event ) {
     if ( this.itemSelected && this.dataService.datasource.indexOf( this.itemSelected ) > -1 ) {
       const index = this.dataService.datasource.indexOf( this.itemSelected );
@@ -467,12 +457,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
     $event.preventDefault();
     this.addNewRenderService.handleAddNewSelected();
-  }
-
-  handleOpenFocusList() {
-    if ( this.dynamicShowHide ) {
-      this.detectChanges();
-    }
   }
 
   handleKeyArrowDown( $event ) {
@@ -593,7 +577,6 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   handleSearch( searchTerm ) {
     if ( searchTerm ) {
       this.filtering = true;
-      this.detectChanges();
       this.setScrollTopZero();
       this.addScrollListListener();
       this.resetCursors();

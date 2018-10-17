@@ -14,6 +14,7 @@
               (keydown)="isOpen = true"
               (keydown.enter)="isOpen = false"
               (keydown.tab)="isOpen = false"
+              (blur)="isOpen = false"
               (focus)="onFocusInput()"
               (clear)="onClearInput()"
               [labelSize]="labelSize"

@@ -3,7 +3,7 @@
     <ng-template #group let-tabs="tabs">
       <button #tlbutton
               *ngFor="let item of groupItems"
-              [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height, 'font-size': fontSize}"
+              [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height, 'font-size': fontSize, 'cursor': 'pointer'}"
               [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected && useSelected}"
               [class]="'tl-button ripple '+ item.color"
               (click)="selectButtonItem(item, $event)"

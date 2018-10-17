@@ -27,7 +27,7 @@ import {
   OnInit,
   Inject,
   Optional,
-  ViewChild, ElementRef,
+  ViewChild, ElementRef, SimpleChanges, OnChanges,
 } from '@angular/core';
 
 import { debounceTime } from 'rxjs/internal/operators';
@@ -48,7 +48,7 @@ import { ListItemMeta } from '../overlaylist/overlay-list';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements AfterViewInit, OnInit, OnDestroy {
+export class TlDropDownList extends ElementBase<string> implements AfterViewInit, OnInit {
 
   @Input( 'data' ) data: any[] = [];
 
@@ -116,30 +116,17 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   ngAfterViewInit() {
     this.validateData();
-    this.handleModelInit();
+    this.listenModelChange();
   }
 
   validateData() {
     if ( ( this.data[ 0 ] === undefined ) ) {
       throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
     }
-    const key = Object.keys(this.data)[0];
-    if (typeof this.data[key] === 'string' ) {
+    const key = Object.keys( this.data )[ 0 ];
+    if ( typeof this.data[ key ] === 'string' ) {
       this.typeOfData = 'simple';
     }
-  }
-
-  handleModelInit() {
-    setTimeout( () => {
-      if ( this.model.model ) {
-        this.datasource.forEach( ( value, index) => {
-          if ( value[ this.keyValue ] === this.model.model ) {
-            this.selectedDescription = value[ this.keyText ];
-            this.indexOptionSelectedModel = index;
-          }
-        } );
-      }
-    }, 0 );
   }
 
   handleSearch( searchTextValue ) {
@@ -155,8 +142,8 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   onSelectOption( $event: ListItemMeta ) {
     this.optionSelected = $event;
-    this.selectedDescription = this.isSimpleData() ?  $event.option.item : $event.option.item[ this.keyText ];
-    this.value = this.isSimpleData() ?  $event.option.item : $event.option.item[ this.keyValue ];
+    this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
+    this.value = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyValue ];
     this.isOpen = false;
     this.setInputFocus();
   }
@@ -176,6 +163,25 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     return this.typeOfData === 'simple';
   }
 
+  listenModelChange() {
+    this.model.valueChanges.subscribe( () => {
+      this.datasource.forEach( ( value, index ) => {
+        if ( this.getCompare( value ) === this.model.model ) {
+          this.selectedDescription = this.getDescription( value );
+          this.indexOptionSelectedModel = index;
+        }
+      } );
+    } );
+  }
+
+  getCompare( value ) {
+    return this.isSimpleData() ? value : value[ this.keyValue ];
+  }
+
+  getDescription( value ) {
+    return this.isSimpleData() ? value : value[ this.keyText ];
+  }
+
   onKeyDown( $event ) {
     switch ( $event.keyCode ) {
       case KeyEvent.SPACE:
@@ -186,9 +192,6 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
         }
         break;
     }
-  }
-
-  ngOnDestroy() {
   }
 
 }

@@ -200,7 +200,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
   }
 
   onChangeColor( $event ) {
-    document.execCommand( 'foreColor', false, $event );
+    document.execCommand( 'foreColor', false, $event.hex );
   }
 
   onChangeFontSize( $event ) {
@@ -353,7 +353,11 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   private handleColorParent() {
     const getElementFont = this.cursorSelection.baseNode.parentNode.closest( 'font' );
-    getElementFont ? this.colorSelected = getElementFont.getAttribute( 'color' ) : this.colorSelected = '#00000';
+    getElementFont ? this.setColorWithColorElement( getElementFont ) : this.colorSelected = '#000000';
+  }
+
+  private setColorWithColorElement( getElementFont ) {
+    this.colorSelected = getElementFont.getAttribute( 'color' );
   }
 
   private handleClosestBold() {
@@ -406,7 +410,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
   }
 
   private recoverSelection() {
-    const selection = window.getSelection();
+    const selection = document.getSelection();
     const range = document.createRange();
     if ( this.selection.baseNode ) {
       range.setStart( this.selection.baseNode, this.selection.start );

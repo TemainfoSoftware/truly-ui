@@ -1,7 +1,7 @@
 <div class="ui-editor-wrapper" #wrapper>
   <div class="ui-editor-header">
     <ul class="ui-tools-list">
-      <li [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font?.family?.show">
+      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font?.family?.show">
         <tl-dropdown-list [data]="dataFont"
                           (ngModelChange)="onChangeFont($event)"
                           [keyText]="'textItem'"
@@ -9,13 +9,15 @@
                           [(ngModel)]="font">
         </tl-dropdown-list>
       </li>
-      <li [tooltip]="{text: toolbarConfig.font?.size?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.size?.show"><tl-dropdown-list [data]="dataFontSize" (ngModelChange)="onChangeFontSize($event)" [(ngModel)]="fontSize"></tl-dropdown-list></li>
+      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.size?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.size?.show">
+        <tl-dropdown-list [data]="dataFontSize" (ngModelChange)="onChangeFontSize($event)" [(ngModel)]="fontSize"></tl-dropdown-list>
+      </li>
       <li [tooltip]="{text: toolbarConfig.font?.bold?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.bold?.show"><button class="ui-command fa fa-bold" [ngClass]="{'ui-active-tool': activeTools.bold}" (click)="setBold()"></button></li>
       <li [tooltip]="{text: toolbarConfig.font.italic?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.italic?.show"><button class="ui-command fa fa-italic" [ngClass]="{'ui-active-tool': activeTools.italic}" (click)="setItalic()"></button></li>
       <li [tooltip]="{text: toolbarConfig.font.underline?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.underline?.show"><button class="ui-command fa fa-underline" [ngClass]="{'ui-active-tool': activeTools.underline}" (click)="setUnderline()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.font.color?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.color?.show">
+      <li [style.border-bottom]="'2px solid ' + colorSelected" #button  [tooltip]="{text: toolbarConfig.font.color?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.color?.show">
         <button class="ui-command fa fa-font"></button>
-        <input class="ui-command ui-color-component" [(ngModel)]="colorSelected" (ngModelChange)="onChangeColor($event)" type="color">
+        <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [(ngModel)]="colorSelected" [returnFormatColor]="true" (selectColor)="onChangeColor($event)"></tl-colorpicker>
       </li>
       <li [tooltip]="{text: toolbarConfig.font.highlight?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font.highlight?.show"><button class="ui-command fa fa-pencil" [ngClass]="{'ui-active-tool': cursorHighlight}" (click)="setHighlight()"></button></li>
       <li [tooltip]="{text: toolbarConfig.alignment?.left?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.alignment?.left?.show"><button class="ui-command fa fa-align-left" [ngClass]="{'ui-active-tool': activeTools.alignLeft}" (click)="alignContent('justifyLeft')"></button></li>
@@ -29,6 +31,11 @@
       <li [tooltip]="{text: toolbarConfig.others?.quote?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.others?.quote?.show"><button class="ui-command fa ion-quote" [ngClass]="{'ui-active-tool': activeTools.blockQuote}" (click)="setQuote()"></button></li>
     </ul>
   </div>
+
+
+
+
+
   <div #contentEditor
        tabindex="-1"
        class="ui-editor-content"

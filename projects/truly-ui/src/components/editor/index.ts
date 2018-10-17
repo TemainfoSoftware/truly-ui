@@ -31,6 +31,7 @@ import { ButtonModule } from '../button/index';
 import { FormModule } from '../form/index';
 import { InputModule } from '../input/index';
 import { TooltipModule } from '../tooltip/index';
+import { ColorPickerModule } from '../colorpicker/index';
 
 @NgModule( {
   imports: [
@@ -40,7 +41,8 @@ import { TooltipModule } from '../tooltip/index';
     ButtonModule,
     TooltipModule,
     FormModule,
-    InputModule
+    InputModule,
+    ColorPickerModule,
   ],
   declarations: [
     TlEditor,

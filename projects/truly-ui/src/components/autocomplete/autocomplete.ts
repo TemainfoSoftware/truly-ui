@@ -29,8 +29,9 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { TlListBox } from '../listbox/listbox';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -107,13 +108,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @ViewChild( 'inputWriter' ) tlinput;
 
-  @ViewChild( 'autoComplete' ) autoComplete;
-
-  @ViewChild( 'autocompleteList' ) list;
-
   @ViewChild( TlListBox ) listBox: TlListBox;
 
+  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
+
   @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @Output() addNew: EventEmitter<any> = new EventEmitter();
 
@@ -128,8 +129,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   public loading = true;
 
   public isOpen = false;
-
-  private  listener;
 
   public trigger;
 
@@ -150,10 +149,15 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
     this.listenContainer();
   }
 
+  setPointerEvents( value: string ) {
+    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
+  }
+
   listenContainer() {
-    this.renderer.listen(document, 'click', () => {
+    this.listeners.add(this.renderer.listen( document, 'click', () => {
       this.isOpen = false;
-    });
+      this.setPointerEvents( 'none' );
+    } ));
   }
 
   handleModelInit() {
@@ -191,6 +195,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   handleOpenOnFocus() {
     if ( (this.openFocus) && (this.isAvailableInput()) ) {
       this.isOpen = true;
+      this.setPointerEvents( 'auto' );
     }
   }
 
@@ -208,6 +213,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
       this.setInputValue( $event );
       this.tlinput.input.nativeElement.focus();
       this.isOpen = false;
+      this.setPointerEvents( 'none' );
     }
   }
 

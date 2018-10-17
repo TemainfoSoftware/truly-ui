@@ -141,7 +141,6 @@ export class ListBoxListRenderService {
         if ($event.currentTarget.localName === 'li') {
           this.listBox.handleClickItem( this.dataService.datasource[ row ], row,
             this.listElement.nativeElement.getAttribute('data-indexnumber'));
-          this.listBox.handleOpenFocusList();
           this.listBox.setHandlerFocus();
         }
       } );

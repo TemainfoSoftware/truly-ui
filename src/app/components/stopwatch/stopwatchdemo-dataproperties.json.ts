@@ -33,5 +33,19 @@ export const dataProperties = [
     default: '60px',
     description: 'Height of component.',
     options: 'px | % | em'
+  },
+  {
+    name: 'initialTime',
+    type: 'string',
+    default: '00:00:00',
+    description: 'Set time initial.',
+    options: '00:00:00'
+  },
+  {
+    name: 'resetOnStop',
+    type: 'boolean',
+    default: 'false',
+    description: 'Reset when stopped.',
+    options: 'true | false'
   }
 ];

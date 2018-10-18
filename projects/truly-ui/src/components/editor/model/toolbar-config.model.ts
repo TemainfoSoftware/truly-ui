@@ -22,12 +22,12 @@
 export class ToolbarConfigModel {
 
     public font = {
-      family: { show: true, tooltipText: '' },
-      size: { show: true, tooltipText: '' },
-      bold: { show: true, tooltipText: '' },
-      italic: { show: true, tooltipText: '' },
+      family:    { show: true, tooltipText: '' },
+      size:      { show: true, tooltipText: '' },
+      bold:      { show: true, tooltipText: '' },
+      italic:    { show: true, tooltipText: '' },
       underline: { show: true, tooltipText: '' },
-      color: { show: true, tooltipText: '' },
+      color:     { show: true, tooltipText: '' },
       highlight: { show: true, tooltipText: '' },
     };
     public alignment = {

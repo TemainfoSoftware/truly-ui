@@ -21,24 +21,12 @@
  */
 export const dataProperties = [
   {
-    name: 'content',
-    type: 'HTML String',
-    default: 'null',
-    description: 'Defines the content of editor.',
-    options: 'true | false'
-  },
-  {
-    name: 'color',
-    type: 'string',
-    default: 'basic',
-    description: 'Changes the default color of header.',
-    options: 'basic | primary | success | information | warning | danger | light | dark'
-  },
-  {
-    name: 'toolbarConfig',
-    type: 'Object - ToolbarConfig',
-    default: 'null',
-    description: 'The toolbar config object',
-    options: 'Object of type toolbar config'
+    name: 'saveContent',
+    parameters: [
+      {
+        event: 'innerHTML', description: 'Inner HTML of content'
+      }
+    ],
+    description: 'Event emitted when pressed CTRL + S ( save ) while typing',
   },
 ];

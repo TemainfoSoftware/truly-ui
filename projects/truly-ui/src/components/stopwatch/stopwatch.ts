@@ -20,7 +20,14 @@
     SOFTWARE.
 */
 
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { StopwatchService } from './services/stopwatch-service';
 
 @Component({
   selector: 'tl-stopwatch',
@@ -29,104 +36,68 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 })
 export class TlStopwatch implements OnInit {
 
-  public hour = 0;
-
-  public minute = 0;
-
-  public second = 0;
-
-  public LIMIT_HOUR = 24;
-
-  public LIMIT_MINUTE = 60;
-
-  public LIMIT_SECOND = 60;
-
-  public isPause = true;
-
-  public interval;
-
   @Input() color = 'basic';
 
   @Input() width = '240px';
 
   @Input() height = '60px';
 
+  @Input() resetOnStop = false;
+
+  @Input('initialTime')
+  set initialTime(value: string) {
+    this.stopWatchService.hour = parseInt(value.substr(0, 2), 10);
+    this.stopWatchService.minute = parseInt(value.substr(3, 2), 10);
+    this.stopWatchService.second = parseInt(value.substr(6, 2), 10);
+  }
+
   @Output() returnTime = new EventEmitter();
 
-  constructor() {
+  constructor(private stopWatchService: StopwatchService) {
   }
 
   ngOnInit() {
   }
 
-  isLimitHour() {
-    return this.hour === this.LIMIT_HOUR;
-  }
-
-  isLimitMinute() {
-    return this.minute === this.LIMIT_MINUTE;
-  }
-
-  isLimitSecond() {
-    return this.second === this.LIMIT_SECOND;
-  }
-
-  resetHour() {
-    this.hour = 0;
-  }
-
-  resetMinute() {
-    this.minute = 0;
-  }
-
-  resetSecond() {
-    this.second = 0;
-  }
-
-  incrementHour() {
-    this.resetMinute();
-    this.hour++;
-  }
-
-  incrementMinute() {
-    this.resetSecond();
-    this.minute++;
-  }
-
-  incrementSecond() {
-    this.second++;
-  }
-
   start() {
-    this.isPause = false;
-    clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      if (this.isPause) {
+    this.stopWatchService.isPause = false;
+    clearInterval(this.stopWatchService.interval);
+    this.stopWatchService.interval = setInterval(() => {
+      if (this.stopWatchService.isPause) {
         return;
       }
-      this.incrementSecond();
-      if (this.isLimitSecond()) {
-        this.incrementMinute();
+      this.stopWatchService.incrementSecond();
+      if (this.stopWatchService.isLimitSecond()) {
+        this.stopWatchService.incrementMinute();
       }
-      if (this.isLimitMinute()) {
-        this.incrementHour();
+      if (this.stopWatchService.isLimitMinute()) {
+        this.stopWatchService.incrementHour();
       }
-      if (this.isLimitHour()) {
-        this.resetHour();
+      if (this.stopWatchService.isLimitHour()) {
+        this.stopWatchService.resetHour();
       }
     }, 1000);
   }
 
+  getHour() {
+    return this.formatTime(this.stopWatchService.hour) + ':' +
+      this.formatTime(this.stopWatchService.minute) + ':' +
+      this.formatTime(this.stopWatchService.second);
+  }
+
   stop() {
-    this.isPause = true;
-    const time = this.formatTime(this.hour) + ':' + this.formatTime(this.minute) + ':' + this.formatTime(this.second);
+    this.stopWatchService.isPause = true;
+    const time = this.formatTime(this.stopWatchService.hour) + ':' +
+      this.formatTime(this.stopWatchService.minute) + ':' +
+      this.formatTime(this.stopWatchService.second);
     this.returnTime.emit({time: time});
+    if (this.resetOnStop) { this.reset(); }
   }
 
   reset() {
-    this.hour = 0;
-    this.minute = 0;
-    this.second = 0;
+    this.stopWatchService.hour = 0;
+    this.stopWatchService.minute = 0;
+    this.stopWatchService.second = 0;
   }
 
   formatTime(digit) {

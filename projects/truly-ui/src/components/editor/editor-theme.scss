@@ -1,0 +1,66 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-editor-theme-schema( $theme, $action ) {
+
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+
+  .ui-editor-header {
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color:  map-deep-get($theme, $action, "default", "foreground");
+    transition: background ease-in-out 100ms;
+  }
+
+  .ui-link {
+    color: map-deep-get($theme, 'information', "default", "background");
+  }
+
+  .ui-editor-content {
+    background: white;
+  }
+
+  .ui-saved-content-message {
+    background: black;
+  }
+
+  .ui-active-tool {
+    background-color: map-deep-get($theme, "primary", "default", "background");
+    color:  map-deep-get($theme, "primary", "foreground");
+  }
+
+  .ui-command {
+    &:hover {
+      background-color: map-deep-get($theme, $action, "hover", "background");
+    }
+  }
+}
+
+@mixin tl-editor-theme( $theme ) {
+
+  .ui-editor-wrapper {
+
+    &.basic {
+      @include _tl-editor-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-editor-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-editor-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-editor-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-editor-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-editor-theme-schema($theme, 'information')
+    }
+
+  }
+}

@@ -28,6 +28,7 @@ import { Listbox } from './listbox/en_US';
 import { Navigator } from './navigator/en_US';
 import { Validators } from './validators/en_US';
 import { OverlayList } from './overlaylist/en_US';
+import { Editor } from './editor/en_US';
 
 export const en_US = {
   locale: 'en-US',
@@ -35,6 +36,7 @@ export const en_US = {
   Calendar,
   Datatable,
   Dialog,
+  Editor,
   Form,
   Listbox,
   Navigator,

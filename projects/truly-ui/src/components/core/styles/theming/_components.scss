@@ -15,6 +15,7 @@
 @import "../../../datatable/datatable-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
+@import "../../../editor/editor-theme";
 @import "../../../form/form-theme";
 @import "../../../input/input-theme";
 @import "../../../listbox/listbox-theme";
@@ -62,6 +63,7 @@
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);
   @include tl-dropdonwlist-theme($theme);
+  @include tl-editor-theme($theme);
   @include tl-form-theme($theme);
   @include tl-input-theme($theme);
   @include tl-listbox-theme($theme);

@@ -1,4 +1,4 @@
-<div class="ui-editor-wrapper" #wrapper>
+<div [class]="'ui-editor-wrapper ' + color" #wrapper>
   <div class="ui-editor-header">
     <ul class="ui-tools-list">
       <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top'}" *ngIf="toolbarConfig.font?.family?.show">

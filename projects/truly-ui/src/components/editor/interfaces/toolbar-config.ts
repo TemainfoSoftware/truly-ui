@@ -24,7 +24,6 @@
 import { ToolbarConfigModel } from '../model/toolbar-config.model';
 
  export interface ToolbarConfig extends ToolbarConfigModel {
-
   font: {
     family:    { show: boolean, tooltipText: string }
     size:      { show: boolean, tooltipText: string }

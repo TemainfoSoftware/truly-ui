@@ -25,7 +25,7 @@ import {
   OnInit,
   Input,
   Output,
-  EventEmitter
+  EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { StopwatchService } from './services/stopwatch-service';
 
@@ -55,11 +55,12 @@ export class TlStopwatch implements OnInit {
 
   public currentHour = '00:00:00';
 
-  constructor( private stopWatchService: StopwatchService ) {}
+  constructor( private stopWatchService: StopwatchService, private change: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    this.stopWatchService.refreshHour.subscribe((hour) => {
+    this.stopWatchService.refreshHour.subscribe((hour: string) => {
       this.currentHour = hour;
+      this.change.detectChanges();
     });
   }
 

@@ -1,4 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class StopwatchService {
@@ -19,7 +20,7 @@ export class StopwatchService {
 
   public interval;
 
-  public refreshHour = new EventEmitter();
+  public refreshHour = new Subject();
 
   constructor() {}
 
@@ -78,16 +79,16 @@ export class StopwatchService {
       if (this.isLimitHour()) {
         this.resetHour();
       }
-      this.refreshHour.emit(this.getHour());
+      this.refreshHour.next(this.getHour());
     }, 1000);
   }
 
   stop() {
     this.isPause = true;
-    this.refreshHour.emit(this.getHour());
+    this.refreshHour.next(this.getHour());
   }
 
-  getHour() {
+  getHour(): string {
     return this.formatTime(this.hour) + ':' +
       this.formatTime(this.minute) + ':' +
       this.formatTime(this.second);
@@ -101,7 +102,7 @@ export class StopwatchService {
     this.hour = 0;
     this.minute = 0;
     this.second = 0;
-    this.refreshHour.emit(this.getHour());
+    this.refreshHour.next(this.getHour());
   }
 
 }

@@ -57,6 +57,7 @@ export { ModalResult } from './components/core/enums/modal-result';
 export { DialogService } from './components/dialog/dialog.service';
 export { ModalService } from './components/modal/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
+export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
 
 // Languages

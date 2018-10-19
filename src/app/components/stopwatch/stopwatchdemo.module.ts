@@ -17,7 +17,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
   ],
   imports: [
     StopwatchDemoRoutingModule,
-    StopwatchModule,
+    StopwatchModule.forRoot(),
     CommonModule,
     FormsModule,
     HighlightJsModule,

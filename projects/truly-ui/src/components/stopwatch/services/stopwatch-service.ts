@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 
 @Injectable()
 export class StopwatchService {
@@ -18,6 +18,8 @@ export class StopwatchService {
   public isPause = true;
 
   public interval;
+
+  public refreshHour = new EventEmitter();
 
   constructor() {}
 
@@ -58,4 +60,48 @@ export class StopwatchService {
   incrementSecond() {
     this.second++;
   }
+
+  start() {
+    this.isPause = false;
+    clearInterval(this.interval);
+    this.interval = setInterval(() => {
+      if (this.isPause) {
+        return;
+      }
+      this.incrementSecond();
+      if (this.isLimitSecond()) {
+        this.incrementMinute();
+      }
+      if (this.isLimitMinute()) {
+        this.incrementHour();
+      }
+      if (this.isLimitHour()) {
+        this.resetHour();
+      }
+      this.refreshHour.emit(this.getHour());
+    }, 1000);
+  }
+
+  stop() {
+    this.isPause = true;
+    this.refreshHour.emit(this.getHour());
+  }
+
+  getHour() {
+    return this.formatTime(this.hour) + ':' +
+      this.formatTime(this.minute) + ':' +
+      this.formatTime(this.second);
+  }
+
+  formatTime(digit) {
+    return digit <= 9 ? '0' + digit : digit;
+  }
+
+  reset() {
+    this.hour = 0;
+    this.minute = 0;
+    this.second = 0;
+    this.refreshHour.emit(this.getHour());
+  }
+
 }

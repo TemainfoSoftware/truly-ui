@@ -53,55 +53,28 @@ export class TlStopwatch implements OnInit {
 
   @Output() returnTime = new EventEmitter();
 
-  constructor(private stopWatchService: StopwatchService) {
-  }
+  public currentHour = '00:00:00';
+
+  constructor( private stopWatchService: StopwatchService ) {}
 
   ngOnInit() {
+    this.stopWatchService.refreshHour.subscribe((hour) => {
+      this.currentHour = hour;
+    });
   }
 
   start() {
-    this.stopWatchService.isPause = false;
-    clearInterval(this.stopWatchService.interval);
-    this.stopWatchService.interval = setInterval(() => {
-      if (this.stopWatchService.isPause) {
-        return;
-      }
-      this.stopWatchService.incrementSecond();
-      if (this.stopWatchService.isLimitSecond()) {
-        this.stopWatchService.incrementMinute();
-      }
-      if (this.stopWatchService.isLimitMinute()) {
-        this.stopWatchService.incrementHour();
-      }
-      if (this.stopWatchService.isLimitHour()) {
-        this.stopWatchService.resetHour();
-      }
-    }, 1000);
-  }
-
-  getHour() {
-    return this.formatTime(this.stopWatchService.hour) + ':' +
-      this.formatTime(this.stopWatchService.minute) + ':' +
-      this.formatTime(this.stopWatchService.second);
+    this.stopWatchService.start();
   }
 
   stop() {
-    this.stopWatchService.isPause = true;
-    const time = this.formatTime(this.stopWatchService.hour) + ':' +
-      this.formatTime(this.stopWatchService.minute) + ':' +
-      this.formatTime(this.stopWatchService.second);
-    this.returnTime.emit({time: time});
+    this.stopWatchService.stop();
+    this.returnTime.emit({time: this.stopWatchService.getHour()});
     if (this.resetOnStop) { this.reset(); }
   }
 
   reset() {
-    this.stopWatchService.hour = 0;
-    this.stopWatchService.minute = 0;
-    this.stopWatchService.second = 0;
-  }
-
-  formatTime(digit) {
-    return digit <= 9 ? '0' + digit : digit;
+    this.stopWatchService.reset();
   }
 
 }

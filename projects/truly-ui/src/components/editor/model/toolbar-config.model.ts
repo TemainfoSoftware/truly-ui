@@ -19,31 +19,36 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { forwardRef, Inject } from '@angular/core';
+import { I18nService } from '../../i18n/i18n.service';
+
 export class ToolbarConfigModel {
 
-    public font = {
-      family: { show: true, tooltipText: '' },
-      size: { show: true, tooltipText: '' },
-      bold: { show: true, tooltipText: '' },
-      italic: { show: true, tooltipText: '' },
-      underline: { show: true, tooltipText: '' },
-      color: { show: true, tooltipText: '' },
-      highlight: { show: true, tooltipText: '' },
-    };
-    public alignment = {
-      left: { show: true, tooltipText: '' },
-      center: { show: true, tooltipText: '' },
-      right: { show: true, tooltipText: '' },
-      justify: { show: true, tooltipText: '' }
-    };
-    public lists = {
-      ordered: { show: true, tooltipText: '' },
-      unordered: { show: true, tooltipText: '' }
-    };
-    public others = {
-      link: { show: true, tooltipText: '' },
-      imageLink: { show: true, tooltipText: '' },
-      quote: { show: true, tooltipText: '' }
-    };
+  constructor( @Inject( forwardRef( () => I18nService)) public i18n: I18nService ) {}
+
+  public font = {
+    family: { show: true, tooltipText: this.i18n.getLocale().Editor.fontFamilyText },
+    size: { show: true, tooltipText: this.i18n.getLocale().Editor.fontSizeText },
+    bold: { show: true, tooltipText: this.i18n.getLocale().Editor.boldText },
+    italic: { show: true, tooltipText: this.i18n.getLocale().Editor.italicText },
+    underline: { show: true, tooltipText: this.i18n.getLocale().Editor.underlineText },
+    color: { show: true, tooltipText: this.i18n.getLocale().Editor.colorText },
+    highlight: { show: true, tooltipText: this.i18n.getLocale().Editor.highlightText },
+  };
+  public alignment = {
+    left: { show: true, tooltipText: this.i18n.getLocale().Editor.alignLeftText },
+    center: { show: true, tooltipText: this.i18n.getLocale().Editor.alignCenterText },
+    right: { show: true, tooltipText: this.i18n.getLocale().Editor.alignRightText },
+    justify: { show: true, tooltipText: this.i18n.getLocale().Editor.justifyText }
+  };
+  public lists = {
+    ordered: { show: true, tooltipText: this.i18n.getLocale().Editor.listOrdered },
+    unordered: { show: true, tooltipText: this.i18n.getLocale().Editor.listUnordered }
+  };
+  public others = {
+    link: { show: true, tooltipText: this.i18n.getLocale().Editor.linkText },
+    imageLink: { show: true, tooltipText: this.i18n.getLocale().Editor.imageText },
+    quote: { show: true, tooltipText: this.i18n.getLocale().Editor.quoteText }
+  };
 
 }

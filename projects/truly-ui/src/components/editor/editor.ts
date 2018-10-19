@@ -27,6 +27,7 @@ import {
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ToolbarConfigModel } from './model/toolbar-config.model';
 import { ToolbarConfig } from './interfaces/toolbar-config';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-editor',
@@ -52,7 +53,9 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   @Input() content;
 
-  @Input() toolbarConfig: ToolbarConfig = new ToolbarConfigModel();
+  @Input() color = 'basic';
+
+  @Input() toolbarConfig: ToolbarConfig;
 
   @ViewChild( 'contentEditor' ) contentEditor;
 
@@ -107,24 +110,26 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   public image = { imageUrl: '' };
 
-  public selection = { start: 0, end: 0, baseNode: null };
+  public selection = { start: 0, end: 0, baseNode: null, extentNode: null };
 
   private interval;
 
-  constructor( private renderer: Renderer2 ) {
+  constructor( private i18n: I18nService, private renderer: Renderer2 ) {
     this.dataFont = [
       { textItem: 'Arial', value: 'Arial' },
-      { textItem: 'Roboto', value: 'Roboto' },
-      { textItem: 'Lato', value: 'Lato' },
+      { textItem: 'Verdana', value: 'Verdana' },
       { textItem: 'Calibri', value: 'Calibri' },
-      { textItem: 'Comic Sans MS', value: 'Comic Sans MS' },
-      { textItem: 'Segoe UI', value: 'Segoe UI' },
+      { textItem: 'Courier New', value: 'Courier New' },
+      { textItem: 'Georgia', value: 'Georgia' },
+      { textItem: 'Trebuchet MS', value: 'Trebuchet MS' },
+      { textItem: 'Bookman', value: 'Bookman' },
     ];
     this.dataFontSize = [ '1pt', '2pt', '3pt', '4pt', '5pt', '6pt', '7pt' ];
   }
 
   ngAfterContentInit() {
     this.setContentFocus();
+    this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
   }
 
   alignContent( align ) {
@@ -311,6 +316,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.selection[ 'start' ] = this.anchorNodeCursor.baseOffset;
     this.selection[ 'end' ] = this.anchorNodeCursor.extentOffset;
     this.selection[ 'baseNode' ] = this.anchorNodeCursor.baseNode;
+    this.selection[ 'extentNode' ] = this.anchorNodeCursor.extentNode;
     this.handleNoSelection();
   }
 
@@ -414,7 +420,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
     const range = document.createRange();
     if ( this.selection.baseNode ) {
       range.setStart( this.selection.baseNode, this.selection.start );
-      range.setEnd( this.selection.baseNode, this.selection.end );
+      range.setEnd( this.selection.extentNode, this.selection.end );
       selection.removeAllRanges();
       selection.addRange( range );
     }

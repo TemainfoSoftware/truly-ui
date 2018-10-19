@@ -19,27 +19,22 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import { Button } from './button/pt_BR';
-import { Calendar } from './calendar/pt_BR';
-import { Datatable } from './datatable/pt_BR';
-import { Dialog } from './dialog/pt_BR';
-import { Form } from './form/pt_BR';
-import { Listbox } from './listbox/pt_BR';
-import { Navigator } from './navigator/pt_BR';
-import { Validators } from './validators/pt_BR';
-import { OverlayList } from './overlaylist/pt_BR';
-import { Editor } from './editor/pt_BR';
 
-export const pt_BR = {
-  locale: 'pt-BR',
-  Button,
-  Calendar,
-  Datatable,
-  Dialog,
-  Editor,
-  Form,
-  Listbox,
-  Navigator,
-  Validators,
-  OverlayList,
+export const Editor = {
+  fontFamilyText: 'Font Family',
+  fontSizeText: 'Font Size',
+  boldText: 'Font Bold',
+  italicText: 'Font Italic',
+  underlineText: 'Underline text',
+  colorText: 'Change color text',
+  highlightText: 'Hightlight text',
+  alignLeftText: 'Align left',
+  alignCenterText: 'Align Center',
+  alignRightText: 'Align Right',
+  justifyText: 'Justify text',
+  listUnordered: 'List unordered',
+  listOrdered: 'List Ordered',
+  linkText: 'Link text',
+  imageText: 'Image text',
+  quoteText: 'Quote text'
 };

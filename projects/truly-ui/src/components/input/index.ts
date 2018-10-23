@@ -9,6 +9,7 @@ import { CharcaseDirective } from './directives/charcase.directive';
 import { ValidatorsModule } from '../validators/index';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { InternalsModule } from '../internals/index';
+import { CurrencyDirective } from './directives/currency/currency.directive';
 
 @NgModule( {
   imports: [
@@ -21,11 +22,13 @@ import { InternalsModule } from '../internals/index';
   declarations: [
     TlInput,
     CharcaseDirective,
+    CurrencyDirective,
     TlMessageValidationComponent,
   ],
   exports: [
     TlInput,
     CharcaseDirective,
+    CurrencyDirective,
     TlMessageValidationComponent
   ],
 } )

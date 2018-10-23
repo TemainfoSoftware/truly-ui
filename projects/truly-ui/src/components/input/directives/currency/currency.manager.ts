@@ -1,4 +1,4 @@
-export class InputManager {
+export class CurrencyManager {
 
   private _storedRawValue: string;
 

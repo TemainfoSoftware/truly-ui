@@ -1,6 +1,6 @@
 import {InjectionToken} from '@angular/core';
 
-export interface CurrencyMaskConfig {
+export interface CurrencyConfig {
   align: string;
   allowNegative: boolean;
   allowZero: boolean;
@@ -12,4 +12,4 @@ export interface CurrencyMaskConfig {
   nullable: boolean;
 }
 
-export let CURRENCY_MASK_CONFIG = new InjectionToken<CurrencyMaskConfig>('currency.mask.config');
+export let CURRENCY_MASK_CONFIG = new InjectionToken<CurrencyConfig>('currency.mask.config');

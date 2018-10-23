@@ -1,11 +1,11 @@
-import {InputManager} from './input.manager';
-import {CurrencyMaskConfig} from './currency-mask.config';
+import {CurrencyManager} from './currency.manager';
+import {CurrencyConfig} from './currency-mask.config';
 
 
-export class InputService {
+export class CurrencyService {
   PER_AR_NUMBER: Map<string, string> = new Map<string, string>();
 
-  public inputManager: InputManager;
+  public inputManager: CurrencyManager;
 
   initialize() {
     this.PER_AR_NUMBER.set('\u06F0', '0');
@@ -31,8 +31,8 @@ export class InputService {
     this.PER_AR_NUMBER.set('\u0669', '9');
   }
 
-  constructor(private htmlInputElement: any, private options: CurrencyMaskConfig) {
-    this.inputManager = new InputManager(htmlInputElement);
+  constructor(private htmlInputElement: any, private options: CurrencyConfig) {
+    this.inputManager = new CurrencyManager(htmlInputElement);
     this.initialize();
   }
 

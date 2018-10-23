@@ -1,13 +1,13 @@
-import {InputService} from './input.service';
+import {CurrencyService} from './currency.service';
 
-export class InputHandler {
+export class CurrencyHandler {
 
-  private inputService: InputService;
+  private inputService: CurrencyService;
   private onModelChange: Function;
   private onModelTouched: Function;
 
   constructor(htmlInputElement: HTMLInputElement, options: any) {
-    this.inputService = new InputService(htmlInputElement, options);
+    this.inputService = new CurrencyService(htmlInputElement, options);
   }
 
   handleCut(event: any): void {

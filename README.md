@@ -171,13 +171,15 @@ Once your library is imported, you can use its components, directives and pipes 
 | radiobutton      |                                                        |   [Docs][30] |
 | sidebar          |                                                        |   [Docs][31] |
 | splitbutton      |                                                        |   [Docs][32] |
-| switch           |                                                        |   [Docs][33] |
-| tabcontrol       |                                                        |   [Docs][34] |
-| theming          |                                                        |   [Docs][35] |
-| toaster          |                                                        |   [Docs][36] |
-| toolbar          |                                                        |   [Docs][37] |
-| tooltip          |                                                        |   [Docs][38] |
-| validators       |                                                        |   [Docs][39] |
+| stopwatch        |                                                        |   [Docs][33] |
+| switch           |                                                        |   [Docs][34] |
+| tabcontrol       |                                                        |   [Docs][35] |
+| theming          |                                                        |   [Docs][36] |
+| timeline         |                                                        |   [Docs][37] |
+| toaster          |                                                        |   [Docs][38] |
+| toolbar          |                                                        |   [Docs][39] |
+| tooltip          |                                                        |   [Docs][40] |
+| validators       |                                                        |   [Docs][41] |
 
 
 #### In progress, planned, and non-planned features
@@ -186,11 +188,10 @@ Once your library is imported, you can use its components, directives and pipes 
 |------------------|-------------------------------------|--------------|----------------|
 | datetimepicker   |                         non-planned |              |                |
 | hourpicker       |        In-progress, planned S2 2018 |              |                |
-| icon             |        In-progress, planned S2 2018 |              |                |
+| icon             |        In-progress, planned S1 2019 |              |                |
 | monthyearpicker  |                         non-planned |              |                |
 | paginator        |        In-progress, planned S1 2019 |              |                |
 | schedule         |        In-progress, planned S1 2019 |              |                |
-| timeline         |                         non-planned |              |                |
 | widget           |                         non-planned |              |                |
 
  [1]: http://truly-ui.com/accordion
@@ -225,13 +226,15 @@ Once your library is imported, you can use its components, directives and pipes 
 [30]: http://truly-ui.com/radiobutton
 [31]: http://truly-ui.com/sidebar
 [32]: http://truly-ui.com/splitbutton
-[33]: http://truly-ui.com/switch
-[34]: http://truly-ui.com/tabcontrol
-[35]: http://truly-ui.com/theming
-[36]: http://truly-ui.com/toaster
-[37]: http://truly-ui.com/toolbar
-[38]: http://truly-ui.com/tooltip
-[39]: http://truly-ui.com/validators
+[33]: http://truly-ui.com/stopwatch
+[34]: http://truly-ui.com/switch
+[35]: http://truly-ui.com/tabcontrol
+[36]: http://truly-ui.com/theming
+[37]: http://truly-ui.com/timeline
+[38]: http://truly-ui.com/toaster
+[39]: http://truly-ui.com/toolbar
+[40]: http://truly-ui.com/tooltip
+[41]: http://truly-ui.com/validators
 
 ## Feedback
 Feedback is always welcome.

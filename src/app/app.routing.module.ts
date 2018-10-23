@@ -139,6 +139,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'
       },
       {
+        path: 'inputcurrency',
+        loadChildren: './components/inputcurrency/inputcurrencydemo.module#InputCurrencyDemoModule'
+      },
+      {
         path: 'listbox',
         loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
       },

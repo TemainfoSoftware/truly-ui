@@ -53,19 +53,8 @@
     cursor: pointer;
   }
 
-  > .-clearbutton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    line-height: 40px;
-    font-size: 0.8em;
-    padding-right: 5px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   > .ui-wrapper-input {
+    position: relative;
     border-radius: 3px;
     > .field {
       display: table-cell;
@@ -95,6 +84,17 @@
     }
     > .field.-disabled {
       cursor: default !important;
+    }
+    > .clearButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      line-height: 40px;
+      font-size: 0.8em;
+      padding-right: 5px;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

@@ -32,6 +32,7 @@
            (click)="onInputClick($event)"
            (blur)="onInputBlur($event)"
            (focus)="onInputFocus($event)">
+    <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)" class="clearButton ion-close-round"></i>
   </div>
 
   <span #afterIcon *ngIf="iconAfter"
@@ -39,9 +40,6 @@
     [ngClass]="iconAfter"></i></span>
   <span *ngIf="textAfter" #afterText class="addon -borderright"
         [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
-  <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)" class="-clearbutton ion-close-round"
-     [style.top]="labelPlacement === 'top' ? '50%' : '0'"
-     [style.right]="clearButtonPosition + 'px'"></i>
 </div>
 
 

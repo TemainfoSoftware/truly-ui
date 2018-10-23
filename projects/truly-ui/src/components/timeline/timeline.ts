@@ -155,9 +155,6 @@ export class TlTimeline implements OnInit, OnChanges {
       this.skip = this.rowData + this.skip;
       this.take = this.skip + this.rowData;
       this.loadingMoreData = true;
-
-      console.log('take', this.take);
-      console.log('total', this.data['total']);
       this.lazyLoad.emit({skip: this.skip, take: this.take});
     }
   }

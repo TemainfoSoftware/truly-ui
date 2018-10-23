@@ -23,6 +23,7 @@ import { Component } from '@angular/core';
 
 import * as json from './stopwatchdemo-dataproperties.json';
 import * as jsonEvts from './stopwatchdemo.dataevents.json';
+import {StopwatchService} from '../../../../projects/truly-ui/src/components/stopwatch/services/stopwatch-service';
 
 @Component( {
 selector : 'app-stopwatch',
@@ -35,7 +36,7 @@ export class StopwatchDemoComponent {
 
   public dataEvents;
 
-  constructor() {
+  constructor( public stopWatchService: StopwatchService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }

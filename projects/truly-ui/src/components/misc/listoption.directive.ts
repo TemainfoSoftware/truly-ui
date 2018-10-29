@@ -29,7 +29,7 @@
  export class ListOptionDirective  {
 
    constructor(private element: ElementRef) {}
-   
+
    focus() {
      this.element.nativeElement.focus();
    }

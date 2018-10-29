@@ -47,6 +47,22 @@
   display: none;
 }
 
+.ui-check-input:indeterminate + .cbx {
+  span {
+    &:first-child {
+      animation: wave .4s ease;
+      svg {
+        stroke-dashoffset: 0
+      }
+      &:before {
+        transform: scale(3.5);
+        opacity: 0;
+        transition: all .6s ease;
+      }
+    }
+  }
+}
+
 .ui-check-input:checked + .cbx {
   span {
     &:first-child {

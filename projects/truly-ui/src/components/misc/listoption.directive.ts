@@ -21,22 +21,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- import { Directive, Input, HostBinding } from '@angular/core';
- import { Highlightable } from '@angular/cdk/a11y';
+ import { Directive, ElementRef } from '@angular/core';
 
  @Directive( {
    selector: '[role="option"]'
  } )
- export class ListOptionDirective implements Highlightable {
-   @Input( 'optionItem' ) optionItem;
+ export class ListOptionDirective  {
 
-   @HostBinding( 'class.selected' ) isActive;
-
-   setActiveStyles(): void {
-     this.isActive = true;
+   constructor(private element: ElementRef) {}
+   
+   focus() {
+     this.element.nativeElement.focus();
    }
 
-   setInactiveStyles(): void {
-     this.isActive = false;
-   }
  }

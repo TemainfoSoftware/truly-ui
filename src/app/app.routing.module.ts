@@ -175,6 +175,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
       },
       {
+        path: 'permissions',
+        loadChildren: './components/permissions/permissionsdemo.module#PermissionsDemoModule'
+      },
+      {
         path: 'progressbar',
         loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
       },

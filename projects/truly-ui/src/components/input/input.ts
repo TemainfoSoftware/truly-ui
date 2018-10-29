@@ -111,6 +111,10 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Input() showValidations = false;
 
+  @Input() withBorder = false;
+
+  @Input() flatBorder = true;
+
   @ViewChild( 'input' ) input;
 
   @ViewChild( 'inputBox' ) inputBox;

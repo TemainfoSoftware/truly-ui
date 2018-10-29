@@ -30,6 +30,7 @@ export { NavigatorModule } from './components/navigator/index';
 export { OverlayPanelModule } from './components/overlaypanel/index';
 export { PanelGroupModule } from './components/panelgroup/index';
 export { PopupMenuModule } from './components/popupmenu/index';
+export { PermissionsModule } from './components/permissions/index';
 export { ProgressBarModule } from './components/progressbar/index';
 export { RadioButtonModule } from './components/radiobutton/index';
 export { SidebarModule } from './components/sidebar/index';

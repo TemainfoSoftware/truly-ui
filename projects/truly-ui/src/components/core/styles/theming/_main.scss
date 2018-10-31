@@ -28,6 +28,7 @@
   @include tl-list-item-theme($theme);
   @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-permissions-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);

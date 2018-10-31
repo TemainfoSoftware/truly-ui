@@ -33,6 +33,7 @@
 @import "../../../overlaypanel/overlay-panel-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
+@import "../../../permissions/permissions-theme";
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
 @import "../../../stopwatch/stopwatch-theme";
@@ -80,6 +81,7 @@
   @include tl-overlaylist-theme($theme);
   @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-permissions-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);

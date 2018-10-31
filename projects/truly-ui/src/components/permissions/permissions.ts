@@ -47,6 +47,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   @Input() height = '300px';
 
+  @Input() color = 'basic';
+
   @Input() keyGroup = 'description';
 
   @Input() keyPermissions = 'permissions';

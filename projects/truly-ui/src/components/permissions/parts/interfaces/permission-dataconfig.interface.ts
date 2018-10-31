@@ -24,7 +24,7 @@
  import { Permission } from '../models/permission.model';
 
  export interface PermissionDataConfig {
-   id: number | string;
+   id?: number | string;
    description: string;
    tags?: Array<string>;
    permissions?: Array<Permission>;

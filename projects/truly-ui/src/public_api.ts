@@ -48,6 +48,7 @@ export { ValidatorsModule } from './components/validators/index';
 // Interfaces
 export { ModalOptions, Modal } from './components/modal/modal-options';
 export { ToasterConfig } from './components/toaster/toaster-config';
+export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';
@@ -60,6 +61,9 @@ export { ModalService } from './components/modal/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
+
+// Classes
+export { Permission } from './components/permissions/parts/models/permission.model';
 
 // Languages
 export { I18nService } from './components/i18n/i18n.service';

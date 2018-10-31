@@ -22,6 +22,6 @@
  SOFTWARE.
  */
  export class Permission {
-   key: number | string;
+   description: number | string;
    permission: string;
  }

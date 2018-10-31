@@ -22,7 +22,7 @@
 
 import {
   AfterContentInit, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, QueryList, Output, ViewChild,
-  ViewChildren
+  ViewChildren, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -38,13 +38,21 @@ import { ListOptionDirective } from '../misc/listoption.directive';
   templateUrl: './permissions.html',
   styleUrls: [ './permissions.scss' ],
 } )
-export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
+export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, OnChanges {
 
   @Input() data: Array<PermissionDataConfig> = [];
 
   @Input() permissions: string[] = [];
 
   @Input() height = '300px';
+
+  @Input() keyGroup = 'description';
+
+  @Input() keyPermissions = 'permissions';
+
+  @Input() keyPermissionValue = 'permission';
+
+  @Input() keyPermissionDescription = 'description';
 
   @ViewChildren( PermissionGroupDirective ) permissionGroup: QueryList<PermissionGroupDirective>;
 
@@ -74,7 +82,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
 
   public dataSourceSelected: any = [];
 
-  constructor() {}
+  constructor( private changes: ChangeDetectorRef ) {
+  }
 
   ngOnInit() {
     this.setUpDataSource();
@@ -83,27 +92,38 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   ngAfterContentInit() {
-    this.dataSource.forEach( ( item: PermissionDataConfig ) => {
-      item.permissions.forEach(( itemPermission ) => {
-        if (this.permissions.indexOf( <string>itemPermission.key) > -1) {
-          itemPermission['allow'] = true;
-        }
-      });
-      const allowed = item.permissions.filter((permission, index, array) => permission['allow']);
-      if (allowed.length === item.permissions.length) {
-        item['checked'] = true;
-      } else if (allowed.length === 0) {
-        item['checked'] = false;
-      } else {
-        item['checked'] = 'indeterminate';
-      }
-    } );
+    this.handleChangePermissions();
     this.setFirstGroupSelected();
   }
 
   ngAfterViewInit() {
     this.keyManagerPermissionGroup = new FocusKeyManager( this.permissionGroup );
     this.keyManagerPermissionList = new FocusKeyManager( this.permissionList );
+  }
+
+  filterPermissionAllowed( dataSourceItem ) {
+    return this.permissions.filter( ( item, index, array ) =>
+    item[ this.keyPermissionValue ] === dataSourceItem[ this.keyPermissionValue ] );
+  }
+
+  handleChangePermissions() {
+    if ( this.dataSource.length > 0 ) {
+      this.dataSource.forEach( ( item: PermissionDataConfig ) => {
+        item[ this.keyPermissions ].forEach( ( itemPermission ) => {
+          if ( this.filterPermissionAllowed( itemPermission ).length > 0 ) {
+            itemPermission[ 'allow' ] = true;
+          }
+        } );
+        const allowed = item[ this.keyPermissions ].filter( ( permission, index, array ) => permission[ 'allow' ] );
+        if ( allowed.length === item[ this.keyPermissions ].length ) {
+          item[ 'checked' ] = true;
+        } else if ( allowed.length === 0 ) {
+          item[ 'checked' ] = false;
+        } else {
+          item[ 'checked' ] = 'indeterminate';
+        }
+      } );
+    }
   }
 
   handleFilterGroup() {
@@ -135,8 +155,18 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
     }
   }
 
-  emitChange(permission) {
-    this.changePermission.emit(permission);
+  emitChange() {
+    const allowed = [];
+    this.dataSource.forEach( ( item ) => {
+      item[ this.keyPermissions ].forEach( ( permission: Permission ) => {
+        if (permission[ 'allow' ]) {
+         const clone = Object.assign({}, permission);
+         delete clone['allow'];
+         allowed.push(clone);
+        }
+      });
+    });
+    this.changePermission.emit(allowed);
   }
 
   setSelectedGroup() {
@@ -159,13 +189,13 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
 
   filterByGroup( term ) {
     this.dataSource = this.data.filter( ( item: PermissionDataConfig ) =>
-      item.group.toLowerCase().includes( term.toLowerCase() ) );
+      item[ this.keyGroup ].toLowerCase().includes( term.toLowerCase() ) );
     this.selected = false;
   }
 
   filterByRule( term ) {
     this.dataSourceSelected = this.selectedGroup.filter( ( item: Permission ) =>
-      item.permission.toLowerCase().includes( term.toLowerCase() ) );
+      item[ this.keyPermissionDescription ].toLowerCase().includes( term.toLowerCase() ) );
   }
 
   setFirstPermissionSelected() {
@@ -182,7 +212,7 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
   }
 
   setUpDataSource() {
-    this.dataSource = this.data;
+    this.dataSource = JSON.parse( JSON.stringify( this.data ) );
   }
 
   setRightListFocus() {
@@ -195,24 +225,26 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
 
   onCheckGroup( checked: boolean | string ) {
     setTimeout( () => {
-      const change = [];
       this.selectedGroup.forEach( ( item: Permission ) => {
-        item['allow'] = <boolean>checked;
-        change.push({key: item.key, allow: item['allow']});
-      });
-      this.emitChange(change);
+        item[ 'allow' ] = <boolean>checked;
+      } );
+      this.emitChange();
     } );
   }
 
-  handleKeyManager($event: KeyboardEvent, manager: FocusKeyManager<any>) {
-    manager.onKeydown($event);
+  handleKeyManager( $event: KeyboardEvent, manager: FocusKeyManager<any> ) {
+    manager.onKeydown( $event );
+  }
+
+  detectChanges() {
+    this.changes.detectChanges();
   }
 
   handleSelectPermission( $event: Event, item: Permission ) {
     this.stopEvent( $event );
-    item['allow'] = !item['allow'];
+    item[ 'allow' ] = !item[ 'allow' ];
     this.handleCheckPermission();
-    this.emitChange([{key: item.key, allow: item['allow']}]);
+    this.emitChange();
   }
 
   handleSpaceSelect( $event: Event, item: PermissionDataConfig ) {
@@ -236,6 +268,12 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit {
 
   inputFilterPermissions( $event ) {
     this.filterPermissions.next( $event );
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes[ 'permissions' ] ) {
+      this.handleChangePermissions();
+    }
   }
 
 

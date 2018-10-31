@@ -25,7 +25,7 @@
 
  export interface PermissionDataConfig {
    id: number | string;
-   group: string;
+   description: string;
    tags?: Array<string>;
    permissions?: Array<Permission>;
    checked?: boolean | string;

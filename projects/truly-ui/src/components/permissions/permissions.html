@@ -32,19 +32,19 @@
   </div>
   <div class="ui-container-permissions">
     <div class="ui-permissions-panel">
-      <div class="nothing-shown" *ngIf="dataSource.length === 0">
+      <div class="nothing-shown" *ngIf="dataSource?.length === 0">
         <span class="not-found-text">Nothing Found</span>
       </div>
-      <ul #listGroup class="ui-permission-list" [style.display]="dataSource.length > 0 ? 'block' : 'none'">
+      <ul #listGroup class="ui-permission-list" [style.display]="dataSource?.length > 0 ? 'block' : 'none'">
         <li tabindex="-1" *ngFor="let item of dataSource; let i = index"
             permissionGroup
-            [permissions]="item.permissions"
+            [permissions]="item[keyPermissions]"
             (selectGroup)="selectGroup($event, i)"
             (click)="keyManagerPermissionGroup.setActiveItem(i)"
             (keydown)="handleKeyManager($event, keyManagerPermissionGroup)"
             (keydown.ArrowRight)="setRightListFocus()"
             (keydown.space)="handleSpaceSelect($event, item)">
-          <span>{{ item?.group }}</span>
+          <span>{{ item[keyGroup] }}</span>
           <span class="ui-checkbox">
             <tl-checkbox [label]="' '"
                          (checkBox)="onCheckGroup($event)"
@@ -57,9 +57,9 @@
       </ul>
     </div>
     <div class="ui-permissions-detail-panel">
-      <div class="nothing-shown" *ngIf="!selected || dataSourceSelected.length === 0">
-        <i *ngIf="dataSourceSelected.length !== 0 && !selected" class="ion-android-time"></i>
-        <span *ngIf="dataSourceSelected.length === 0" class="not-found-text">Nothing Found</span>
+      <div class="nothing-shown" *ngIf="!selected || dataSourceSelected?.length === 0">
+        <i *ngIf="dataSourceSelected?.length !== 0 && !selected" class="ion-android-time"></i>
+        <span *ngIf="dataSourceSelected?.length === 0" class="not-found-text">Nothing Found</span>
       </div>
       <ul #listPermission class="ui-permission-list" [style.display]="selected ? 'block' : 'none'">
         <li tabindex="-1" *ngFor="let item of dataSourceSelected; let i = index"
@@ -69,13 +69,13 @@
             (keydown.space)="handleSelectPermission($event, item)"
             (keydown.ArrowLeft)="setLeftListFocus()"
             class="ui-detail-list">
-          <span>{{ item?.permission }}</span>
+          <span>{{ item[keyPermissionDescription] }}</span>
           <div class="ui-checkbox permission">
             <tl-checkbox [label]="' '"
                          [(ngModel)]="item.allow"
                          (checkBox)="
                          handleCheckPermission();
-                         emitChange([{key: item.key, allow: item['allow']}])"
+                         emitChange()"
                          [color]="'primary'">
             </tl-checkbox>
           </div>

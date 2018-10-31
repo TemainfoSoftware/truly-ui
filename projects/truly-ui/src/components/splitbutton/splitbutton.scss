@@ -13,7 +13,6 @@ $button-font-size: 1em;
   font-size: $button-font-size;
   display: inline-block;
   position: relative;
-  height: $button-height;
   > .split-button-actions {
     margin: 0;
     padding: 0;
@@ -46,6 +45,7 @@ $button-font-size: 1em;
   z-index: 1;
   cursor: auto;
   border-radius: 0 0 3px 3px;
+  box-sizing: border-box;
 }
 
 .border-top {

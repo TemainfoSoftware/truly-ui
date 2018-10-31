@@ -35,60 +35,56 @@ export class PermissionsDemoComponent {
 
   public dataEvents;
 
-  public data = [
+  public data: any = [
     {
-      'id': 1,
-      'group': 'Agenda',
-      'tags': [ 'relatorio', 'financeiro' ],
-      'permissions': [
+      'description': 'Agenda',
+      'variavel': [
         {
-          'key': 'ATENDER_PACIENTE',
-          'permission': 'Atender Paciente',
+          'permission': 'ATENDER_PACIENTE',
+          'description': 'Atender Paciente',
         },
         {
-          'key': 'EFETUAR_PACIENTE',
-          'permission': 'Efetuar pré consulta',
+          'permission': 'EFETUAR_PACIENTE',
+          'description': 'Efetuar pré consulta',
         }
       ],
     },
     {
-      'id': 2,
-      'group': 'Cadastro de Paciente',
-      'tags': [ 'relatorio', 'financeiro' ],
-      'permissions': [
+      'description': 'Cadastro de Paciente',
+      'variavel': [
         {
-          'key': 'EFETUAR_PRECONSULTA',
-          'permission': 'Efetuar pré consulta',
+          'permission': 'EFETUAR_PRECONSULTA',
+          'description': 'Efetuar pré consulta',
         },
         {
-          'key': 'RELATORIO_PACIENTES',
-          'permission': 'Relatorio de Pacientes',
+          'permission': 'RELATORIO_PACIENTES',
+          'description': 'Relatorio de Pacientes',
         },
         {
-          'key': 'RELATORIO_ANIVERSARIANTES',
-          'permission': 'Relatorio de Aniversariantes',
+          'permission': 'RELATORIO_ANIVERSARIANTES',
+          'description': 'Relatorio de Aniversariantes',
         },
         {
-          'key': 'RELATORIO_PRONTUARIO',
-          'permission': 'Relatorio de Prontuario',
+          'permission': 'RELATORIO_PRONTUARIO',
+          'description': 'Relatorio de Prontuario',
         },
         {
-          'key': 'RELATORIO_CONTAS',
-          'permission': 'Relatorio de Contas',
+          'permission': 'RELATORIO_CONTAS',
+          'description': 'Relatorio de Contas',
         }
       ],
     },
   ];
 
   public permissions = [
-    'ATENDER_PACIENTE',
-    'EFETUAR_PACIENTE',
-    'RELATORIO_PACIENTES',
-    'RELATORIO_ANIVERSARIANTES',
-    'RELATORIO_CONTAS'
+    { 'permission': 'ATENDER_PACIENTE', 'description': 'Atender Paciente'},
+    { 'permission': 'EFETUAR_PACIENTE', 'description': 'Efetuar Paciente'},
+    { 'permission': 'RELATORIO_ANIVERSARIANTES', 'description': 'Relatorio de Aniversariantes'},
   ];
 
   constructor() {
+    this.data = Object.freeze(this.data);
+
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }

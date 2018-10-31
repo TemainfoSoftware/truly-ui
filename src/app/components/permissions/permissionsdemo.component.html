@@ -15,7 +15,7 @@
           <app-card>
             <div class="col-md-12">
               <h5>Basic</h5>
-              <tl-permissions (changePermission)="onChangePermissions($event)" [data]="data" [permissions]="permissions"></tl-permissions>
+              <tl-permissions [keyPermissions]="'variavel'" (changePermission)="onChangePermissions($event)" [data]="data" [permissions]="permissions"></tl-permissions>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

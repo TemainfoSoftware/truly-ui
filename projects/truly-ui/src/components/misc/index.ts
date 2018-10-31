@@ -6,6 +6,7 @@ import { ShortcutService } from '../core/helper/shortcut.service';
 import { FixedPositionDirective } from './fixed-position.directive';
 import { RelativeWindowPosition } from './relative-window-position.directive';
 import { ScrollManager } from './scroll-manager.directive';
+import { ListOptionDirective } from './listoption.directive';
 
 @NgModule( {
   imports: [
@@ -16,12 +17,14 @@ import { ScrollManager } from './scroll-manager.directive';
     ShortcutDirective,
     RelativeWindowPosition,
     FixedPositionDirective,
+    ListOptionDirective,
     ScrollManager
   ],
   exports: [
     ShortcutDirective,
     RelativeWindowPosition,
     FixedPositionDirective,
+    ListOptionDirective,
     ScrollManager
   ],
   providers: [

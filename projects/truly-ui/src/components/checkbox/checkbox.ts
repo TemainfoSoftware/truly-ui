@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, Input, ViewChild, Output, EventEmitter, ContentChild, OnInit
+  Component, Input, ViewChild, Output, EventEmitter, ContentChild, OnInit, AfterViewInit, AfterContentInit,
+  SimpleChanges, OnChanges
 } from '@angular/core';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
@@ -35,7 +36,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
     [ MakeProvider( TlCheckBox ) ]
   ]
 } )
-export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit {
+export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit, OnChanges {
 
   @Input() label = '';
 
@@ -46,6 +47,8 @@ export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit {
   @Input() disabled = null;
 
   @Input() color = 'basic';
+
+  @Input() indeterminate = false;
 
   @ViewChild( 'checkbox' ) checkbox;
 
@@ -69,7 +72,13 @@ export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit {
   }
 
   check( boolean ) {
-    if (!this.disabled) {
+    if ( this.checkbox.nativeElement.indeterminate ) {
+      this.checkbox.nativeElement.indeterminate = false;
+      this.value = true;
+      this.emitEvent();
+      return;
+    }
+    if ( !this.disabled ) {
       this.value = !boolean;
       this.emitEvent();
     }
@@ -81,6 +90,12 @@ export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit {
 
   focusCheckBox() {
     this.focusBox.emit( this.value );
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
+    if ( changes[ 'indeterminate' ] ) {
+      this.checkbox.nativeElement.indeterminate = changes[ 'indeterminate' ].currentValue;
+    }
   }
 
 }

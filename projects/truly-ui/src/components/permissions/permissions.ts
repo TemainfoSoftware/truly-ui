@@ -170,15 +170,21 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   }
 
   setSelectedGroup() {
-    this.dataSourceSelected = this.permissionGroup.filter( ( item ) => item.selected )[ 0 ].permissions;
+    if (this.permissionGroup.length > 0) {
+      this.dataSourceSelected = this.permissionGroup.filter( ( item ) => item.selected )[ 0 ].permissions;
+      return;
+    }
+    return [];
   }
 
   selectGroup( selectGroup: PermissionGroupDirective, index: number ) {
-    this.deselectGroups( selectGroup );
-    this.selectedGroupIndex = index;
-    this.selectedGroup = selectGroup.permissions;
-    this.dataSourceSelected = selectGroup.permissions;
-    this.selected = true;
+    if (selectGroup) {
+      this.deselectGroups( selectGroup );
+      this.selectedGroupIndex = index;
+      this.selectedGroup = selectGroup.permissions;
+      this.dataSourceSelected = selectGroup.permissions;
+      this.selected = true;
+    }
   }
 
   deselectGroups( selectGroup ) {

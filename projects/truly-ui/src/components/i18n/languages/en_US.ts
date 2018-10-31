@@ -29,6 +29,7 @@ import { Navigator } from './navigator/en_US';
 import { Validators } from './validators/en_US';
 import { OverlayList } from './overlaylist/en_US';
 import { Editor } from './editor/en_US';
+import { Permissions } from './permissions/en_US';
 
 export const en_US = {
   locale: 'en-US',
@@ -41,5 +42,6 @@ export const en_US = {
   Listbox,
   Navigator,
   Validators,
-  OverlayList
+  OverlayList,
+  Permissions
 };

@@ -7,7 +7,7 @@
                  (clear)="setUpDataSource(); setFirstGroupSelected()"
                  [flatBorder]="true"
                  [withBorder]="false"
-                 [iconBefore]="'ion-search'" [placeholder]="'Procurar...'"
+                 [iconBefore]="'ion-search'" [placeholder]="searchGroup"
                  [clearButton]="true" [height]="'30px'">
       </tl-input>
     </div>
@@ -21,19 +21,19 @@
           [flatBorder]="true"
           [withBorder]="false"
           [iconBefore]="'ion-search'"
-          [placeholder]="'Procurar Funcionalidade...'"
+          [placeholder]="searchFunctionality"
           [clearButton]="true" [height]="'30px'">
         </tl-input>
       </div>
       <div class="ui-check-header">
-        <div><span>Permitir</span></div>
+        <div><span>{{ allowColumn }}</span></div>
       </div>
     </div>
   </div>
   <div class="ui-container-permissions">
     <div class="ui-permissions-panel">
       <div class="nothing-shown" *ngIf="dataSource?.length === 0">
-        <span class="not-found-text">Nothing Found</span>
+        <span class="not-found-text">{{ notFound }}</span>
       </div>
       <ul #listGroup class="ui-permission-list" [style.display]="dataSource?.length > 0 ? 'block' : 'none'">
         <li tabindex="-1" *ngFor="let item of dataSource; let i = index"
@@ -59,7 +59,7 @@
     <div class="ui-permissions-detail-panel">
       <div class="nothing-shown" *ngIf="!selected || dataSourceSelected?.length === 0">
         <i *ngIf="dataSourceSelected?.length !== 0 && !selected" class="ion-android-time"></i>
-        <span *ngIf="dataSourceSelected?.length === 0" class="not-found-text">Nothing Found</span>
+        <span *ngIf="dataSourceSelected?.length === 0" class="not-found-text">{{ notFound }}</span>
       </div>
       <ul #listPermission class="ui-permission-list" [style.display]="selected ? 'block' : 'none'">
         <li tabindex="-1" *ngFor="let item of dataSourceSelected; let i = index"

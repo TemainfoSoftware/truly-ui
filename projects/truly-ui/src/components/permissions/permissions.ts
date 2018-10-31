@@ -22,7 +22,7 @@
 
 import {
   AfterContentInit, AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, QueryList, Output, ViewChild,
-  ViewChildren, OnChanges, SimpleChanges, ChangeDetectionStrategy, ChangeDetectorRef
+  ViewChildren, OnChanges, SimpleChanges, ChangeDetectorRef
 } from '@angular/core';
 
 import { Subject } from 'rxjs';
@@ -32,6 +32,7 @@ import { Permission } from './parts/models/permission.model';
 import { PermissionGroupDirective } from './parts/directives/permission-group.directive';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from '../misc/listoption.directive';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-permissions',
@@ -82,7 +83,15 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   public dataSourceSelected: any = [];
 
-  constructor( private changes: ChangeDetectorRef ) {
+  public notFound = this.i18n.getLocale().Permissions.notFound;
+
+  public searchGroup = this.i18n.getLocale().Permissions.searchGroup;
+
+  public searchFunctionality = this.i18n.getLocale().Permissions.searchFunctionality;
+
+  public allowColumn = this.i18n.getLocale().Permissions.allowColumnText;
+
+  constructor( private changes: ChangeDetectorRef, private i18n: I18nService ) {
   }
 
   ngOnInit() {

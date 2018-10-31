@@ -8,6 +8,7 @@ import { NavigatorI18nInterface } from './languages/navigator/index';
 import { ValidatorsI18nInterface } from './languages/validators/index';
 import { OverlayI18nInterface } from './languages/overlaylist/index';
 import { EditorI18nInterface } from './languages/editor/index';
+import { PermissionsI18nInterface } from './languages/permissions/index';
 
 export interface I18nInterface {
   locale: string;
@@ -21,4 +22,5 @@ export interface I18nInterface {
   Listbox: ListboxI18nInterface;
   Navigator: NavigatorI18nInterface;
   Validators: ValidatorsI18nInterface;
+  Permissions: PermissionsI18nInterface;
 }

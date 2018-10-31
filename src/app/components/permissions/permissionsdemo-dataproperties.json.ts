@@ -21,10 +21,59 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
-    type: 'string',
+    name: 'data',
+    type: 'Array<PermissionDataConfig>',
     default: 'null',
-    description: 'Displays a text.',
+    description: 'Array of data to shown on list.',
+    options: 'Array of PermissionDataConfig'
+  },
+  {
+    name: 'permissions',
+    type: 'Array<Permission>',
+    default: 'null',
+    description: 'Array of permissions used to compare the values.',
+    options: 'Array of permissions'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '100%',
+    description: 'Permissions\'s Painel Height.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the permissions\'s Painel.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
+    name: 'keyGroup',
+    type: 'string',
+    default: 'description',
+    description: 'Key used to describe title of group',
+    options: 'any text'
+  },
+  {
+    name: 'keyPermissions',
+    type: 'string',
+    default: 'permissions',
+    description: 'Key used to describe the array of permissions',
+    options: 'any text'
+  },
+  {
+    name: 'keyPermissionValue',
+    type: 'string',
+    default: 'permission',
+    description: 'Key used to describe the permission value used to compare with the data source provided.',
+    options: 'any text'
+  },
+  {
+    name: 'keyPermissionDescription',
+    type: 'string',
+    default: 'description',
+    description: 'Key used to describe the title of permission.',
     options: 'any text'
   },
 ];

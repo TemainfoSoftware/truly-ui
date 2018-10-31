@@ -38,53 +38,48 @@ export class PermissionsDemoComponent {
   public data: any = [
     {
       'description': 'Agenda',
-      'variavel': [
+      'permissions': [
         {
-          'permission': 'ATENDER_PACIENTE',
-          'description': 'Atender Paciente',
+          'permission': 'ATTEND_THE_PATIENT',
+          'description': 'Attend the Patient',
         },
         {
-          'permission': 'EFETUAR_PACIENTE',
-          'description': 'Efetuar pré consulta',
+          'permission': 'MAKE_INQUIRY',
+          'description': 'Make an Inquiry',
         }
       ],
     },
     {
-      'description': 'Cadastro de Paciente',
-      'variavel': [
+      'description': 'Patient Registration',
+      'permissions': [
         {
-          'permission': 'EFETUAR_PRECONSULTA',
-          'description': 'Efetuar pré consulta',
+          'permission': 'PATIENT_REPORT',
+          'description': 'Patient Report',
         },
         {
-          'permission': 'RELATORIO_PACIENTES',
-          'description': 'Relatorio de Pacientes',
+          'permission': 'ANNIVERSARY_REPORT',
+          'description': 'Anniversary Report',
         },
         {
-          'permission': 'RELATORIO_ANIVERSARIANTES',
-          'description': 'Relatorio de Aniversariantes',
+          'permission': 'REPORT_RECORD',
+          'description': 'Report of Record',
         },
         {
-          'permission': 'RELATORIO_PRONTUARIO',
-          'description': 'Relatorio de Prontuario',
-        },
-        {
-          'permission': 'RELATORIO_CONTAS',
-          'description': 'Relatorio de Contas',
+          'permission': 'FINANCIAL_REPORT',
+          'description': 'Financial Report',
         }
       ],
     },
   ];
 
   public permissions = [
-    { 'permission': 'ATENDER_PACIENTE', 'description': 'Atender Paciente'},
-    { 'permission': 'EFETUAR_PACIENTE', 'description': 'Efetuar Paciente'},
-    { 'permission': 'RELATORIO_ANIVERSARIANTES', 'description': 'Relatorio de Aniversariantes'},
+    { 'permission': 'PATIENT_REPORT', 'description': 'Patient Report'},
+    { 'permission': 'REPORT_RECORD', 'description': 'Report of Record'},
+    { 'permission': 'MAKE_INQUIRY', 'description': 'Make an Inquiry'},
   ];
 
   constructor() {
     this.data = Object.freeze(this.data);
-
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }

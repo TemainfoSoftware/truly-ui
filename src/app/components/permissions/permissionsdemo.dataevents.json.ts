@@ -21,13 +21,7 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
-    parameters: [
-      {
-        event: 'selected',
-        description: 'Action Selected'
-      }
-    ],
-    description: 'Callback to invoke when toogle event.',
+    name: 'changePermission',
+    description: 'Returns the Array of Permissions Allowed',
   },
 ];

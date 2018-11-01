@@ -32,6 +32,7 @@ import { ActionsModal } from '../core/enums/actions-modal';
 import { TlDialogConfirmation } from '../dialog/dialog-confirmation/dialog-confirmation';
 import { TlDialogInfo } from '../dialog/dialog-info/dialog-info';
 import { ModalConfig, ModalConfiguration } from './modal-config';
+import { ConfirmCallback } from '../dialog/dialog.service';
 
 let lastZIndex = 1;
 
@@ -62,6 +63,10 @@ export class ModalService implements OnDestroy {
 
   private callBack = Function();
 
+  private callbackConfirmation: ConfirmCallback = { isYes: Function(), isNo: Function() };
+
+  private isDialogConfirmation = false;
+
   private eventCallback: EventEmitter<any>;
 
   constructor( private containerModal: ContainerModalService ) {}
@@ -72,7 +77,8 @@ export class ModalService implements OnDestroy {
     this.injectComponentToModal( component, factoryResolver );
     this.setGlobalSettings( factoryResolver );
     this.setInitialZIndex();
-    this.callBack = callback;
+    this.isDialogConfirmation ?
+      this.setCallbackConfirmation(callback) : this.callBack = callback;
     return this;
   }
 
@@ -187,6 +193,7 @@ export class ModalService implements OnDestroy {
   }
 
   private injectComponentToModal( component: Type<any>, compiler ) {
+    this.isDialogConfirmation = component === TlDialogConfirmation;
     const factoryInject = compiler.resolveComponentFactory( component );
     this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
   }
@@ -375,15 +382,32 @@ export class ModalService implements OnDestroy {
     this.componentInjected.instance.modalResult = mdResult;
   }
 
+  setCallbackConfirmation(callback: ConfirmCallback) {
+    this.callbackConfirmation.isYes = callback.isYes;
+    this.callbackConfirmation.isNo = callback.isNo;
+  }
+
   resultCallback() {
     if ( this.componentInjected.instance.modalResult ) {
-      this.callBack( this.componentInjected.instance.modalResult );
+      this.isDialogConfirmation ? this.handleCallbackConfirmation() :
+        this.callBack( this.componentInjected.instance.modalResult );
       if (this.eventCallback) {
         this.eventCallback.emit( this.componentInjected.instance.modalResult );
       }
     }
   }
 
+  handleCallbackConfirmation() {
+    if (this.isResultYes()) {
+      this.callbackConfirmation.isYes(ModalResult.MRYES);
+    } else {
+      this.callbackConfirmation.isYes(ModalResult.MRNO);
+    }
+  }
+
+  isResultYes() {
+    return this.componentInjected.instance.modalResult.mdResult === ModalResult.MRYES;
+  }
 
   on( event, callback ) {
     this.component.instance[ event ].subscribe( callback );

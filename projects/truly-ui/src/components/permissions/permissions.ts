@@ -225,6 +225,7 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
     setTimeout( () => {
       this.keyManagerPermissionGroup.setFirstItemActive();
       this.selectGroup( this.permissionGroup.toArray()[ 0 ], 0 );
+      this.handleCheckPermission();
     }, 100 );
   }
 
@@ -289,6 +290,11 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes[ 'permissions' ] ) {
+      this.handleChangePermissions();
+    }
+    if (changes['data']) {
+      this.setUpDataSource();
+      this.setFirstGroupSelected();
       this.handleChangePermissions();
     }
   }

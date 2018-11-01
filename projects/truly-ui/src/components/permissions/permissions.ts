@@ -159,11 +159,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
       this.dataSource[ this.selectedGroupIndex ].checked = false;
       return;
     }
-    if ( selected.length === this.selectedGroup.length ) {
-      this.dataSource[ this.selectedGroupIndex ].checked = true;
-    } else {
+    (selected.length === this.selectedGroup.length) ? this.dataSource[ this.selectedGroupIndex ].checked = true :
       this.dataSource[ this.selectedGroupIndex ].checked = 'indeterminate';
-    }
   }
 
   emitChange() {

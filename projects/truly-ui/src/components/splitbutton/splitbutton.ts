@@ -20,7 +20,12 @@
  SOFTWARE.
  */
 import {
-  Component, Input, AfterContentInit, ContentChildren, QueryList, ChangeDetectorRef,
+  Component,
+  Input,
+  AfterContentInit,
+  ContentChildren,
+  QueryList,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { OverlayAnimation } from '../core/directives/overlay-animation';

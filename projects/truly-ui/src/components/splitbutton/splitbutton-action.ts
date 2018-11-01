@@ -19,12 +19,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 
 @Component( {
   selector: 'tl-split-button-action',
   template: `
-    <li (click)="onClickListener()" [class]="separator ? 'separator' : null">
+    <li (click)="onClickListener($event)" [class]="separator ? 'separator' : null">
       <i *ngIf="icon" class="icon-action {{ icon }}"></i>
       {{ label }}
     </li>
@@ -41,8 +46,10 @@ export class TlSplitButtonAction {
 
   @Output() click: EventEmitter<any> = new EventEmitter();
 
-  onClickListener() {
-    this.click.emit( this );
+  onClickListener($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    this.click.emit($event);
   }
 
   constructor() {}

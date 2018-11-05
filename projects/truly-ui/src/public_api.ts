@@ -47,6 +47,7 @@ export { ValidatorsModule } from './components/validators/index';
 
 // Interfaces
 export { ModalOptions, Modal } from './components/modal/modal-options';
+export { ModalConfig } from './components/modal/modal-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 

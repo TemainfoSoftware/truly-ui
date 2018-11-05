@@ -3,64 +3,83 @@
     <h1 class="title">Dialog <span
       class="module-name"><code><u>Module Name</u>: <strong>DialogModule</strong></code></span></h1>
     <p class="module-name-top"><code><u>Module Name</u>: <strong>DialogModule</strong></code></p>
-    <p class="text-content">Dialog is an overlay component service that can be used as message, confirmation, alert and to show an error exception.</p>
+    <p class="text-content">Dialog is an overlay component service that can be used as message, confirmation, alert and
+      to show an error exception.</p>
   </div>
   <div class="showcase">
     <div class="row">
-        <div class="col-md-12">
-          <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
-            <app-card>
-              <div class="col-md-3">
-                  <h5>Show Dialog Info</h5>
-                  <tl-button [text]="'Show Dialog Info'" [color]="'information'" [iconAddonBefore]="'ion-information-circled'" (click)="info()"></tl-button>
-              </div>
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-3">
+              <h5>Show Dialog Info</h5>
+              <tl-button [text]="'Show Dialog Info'" [color]="'information'"
+                         [iconAddonBefore]="'ion-information-circled'" (click)="info()"></tl-button>
+            </div>
 
-              <div class="col-md-3">
-                  <h5>Show Dialog Confirmation</h5>
-                  <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'"  [iconAddonBefore]="'ion-checkmark'" (click)="confirmation()"></tl-button>
-              </div>
-              <div class="col-md-3">
-                  <h5>Show Dialog Alert</h5>
-                  <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion-alert-circled'"
-                             (click)="alert()"></tl-button>
-              </div>
-              <div class="col-md-3">
-                  <h5>Show Dialog Error</h5>
-                  <tl-button [text]="'Show Dialog Error'" [color]="'danger'"  [iconAddonBefore]="'ion-close-circled'"
-                             (click)="error()"></tl-button>
-              </div>
-            </app-card>
-          </app-showcase-card>
-          <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
-            <app-card>
-              <h4>Step One</h4>
-              <h5>Declare the <code>DialogService</code> and the <code>ViewContainerRef</code> in your <code>constructor</code>.</h5>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public dialogService: DialogService) {}
+            <div class="col-md-3">
+              <h5>Show Dialog Confirmation</h5>
+              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion-checkmark'"
+                         (click)="confirmation()"></tl-button>
+            </div>
+            <div class="col-md-3">
+              <h5>Show Dialog Alert</h5>
+              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion-alert-circled'"
+                         (click)="alert()"></tl-button>
+            </div>
+            <div class="col-md-3">
+              <h5>Show Dialog Error</h5>
+              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion-close-circled'"
+                         (click)="error()"></tl-button>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
+          <app-card>
+            <h4>Step One</h4>
+            <h5>Inject the <code>DialogService</code> in your <code>constructor</code>.</h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  constructor( public dialogService: DialogService ) {}
         </textarea>
-              <hr>
-              <h4>Step Two</h4>
-              <h5>Inside of your <code>constructor</code>, set your view calling the method of the Dialog Service.</h5>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-  constructor(public view: ViewContainerRef, public dialogService: DialogService) {
-       this.dialogService.setView(this.view);
-  }
-        </textarea>
-              <hr>
-              <h4>Final Step</h4>
-              <h5>Create an function to call the dialog type method of the DialogService. For example:</h5>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <hr>
+            <h4>Final Step</h4>
+            <h5>Create an function to call the dialog type method of the DialogService. For example:</h5>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 
   showDialogConfirmation() {
-      this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
-          console.log('Return',modalResult);
-      })
+    this.dialogService.confirmation( 'Are you sure ?', ({
+      isYes: (yes) => console.log('yes', yes),
+      isNo: (no) => console.log('no', no)
+    }));
   }
         </textarea>
-            </app-card>
-          </app-showcase-card>
-        </div>
-  </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Dialog Results'" [icon]="'ion-clipboard'">
+      <app-card>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  export enum ModalResult {
+      MRFREE = -1,
+      MRCUSTOM = 0,
+      MROK = 1,
+      MRCANCEL = 2,
+      MRABORT = 3,
+      MRRETRY = 4,
+      MRIGNORE = 5,
+      MRYES = 6,
+      MRNO = 7,
+      MRCLOSE = 8,
+  }
+</textarea>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Methods'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-events [data]="dialogEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>
         <app-showcase-table-properties [data]="dialogProp"></app-showcase-table-properties>

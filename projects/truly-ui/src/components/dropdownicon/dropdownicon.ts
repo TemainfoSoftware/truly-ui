@@ -55,7 +55,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() widthItems = '120px';
 
-  @Input() keyIcon;
+  @Input() keyIcon = 'icon';
 
   @Input() defaultOptionText = 'Select...';
 

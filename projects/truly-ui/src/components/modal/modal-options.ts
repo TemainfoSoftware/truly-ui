@@ -17,6 +17,7 @@ export interface ModalOptions {
     restoreMaximize?: boolean;
     backdrop?: boolean;
     closeOnOK?: boolean;
+    unique?: boolean;
 }
 
 export function Modal(metadata: ModalOptions) {

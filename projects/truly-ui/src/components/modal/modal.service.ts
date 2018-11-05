@@ -69,6 +69,8 @@ export class ModalService implements OnDestroy {
 
   private eventCallback: EventEmitter<any>;
 
+  private uniqueModal = false;
+
   constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, callback ) {
@@ -109,7 +111,7 @@ export class ModalService implements OnDestroy {
         return;
       }
 
-      this.setComponentModal( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'identifier' ] );
+      this.setComponentModal( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'identifier' ], factoryOrConfig['unique'] );
       this.injectComponentToModal( component, factoryOrConfig[ 'factory' ] );
       this.setGlobalSettings( factoryOrConfig[ 'factory' ], factoryOrConfig[ 'parentElement' ] );
       this.setInitialZIndex();
@@ -119,11 +121,11 @@ export class ModalService implements OnDestroy {
 
   confirmDelete() {
     if ( this.modalConfiguration[ 'executeAction' ] === ActionsModal.DELETE ) {
-      this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ( dialog ) => {
-        if ( dialog.mdResult === ModalResult.MRYES ) {
+      this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ({
+        isYes: () => {
           this.modalConfiguration[ 'actions' ].deleteCall(this.modalConfiguration[ 'dataForm' ]);
         }
-      } );
+      }));
       this.componentInjected.instance.message = this.modalConfiguration[ 'deleteConfirmationMessage' ];
       return true;
     }
@@ -182,7 +184,17 @@ export class ModalService implements OnDestroy {
     throw new Error( 'Callback ' + type + ' not implemented' );
   }
 
-  private setComponentModal( compiler, id? ) {
+  private setComponentModal( compiler, id?: string, unique?: boolean ) {
+    if (unique) {
+      if (this.existModal(id)) {
+        this.setActiveModal(this.selectedModal);
+        this.showModal(this.selectedModal);
+        this.uniqueModal = true;
+        return;
+      } else  {
+        this.uniqueModal = false;
+      }
+    }
     const componentFactory = compiler.resolveComponentFactory( TlModal );
     this.component = this.view.createComponent( componentFactory );
     this.componentList.push( { componentRef: this.component, identifier: id } );
@@ -192,10 +204,17 @@ export class ModalService implements OnDestroy {
     this.setActiveModal( this.component );
   }
 
+  private existModal(identifier: string) {
+    this.getModal(identifier);
+    return this.selectedModal !== null;
+  }
+
   private injectComponentToModal( component: Type<any>, compiler ) {
     this.isDialogConfirmation = component === TlDialogConfirmation;
-    const factoryInject = compiler.resolveComponentFactory( component );
-    this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
+    if (!this.uniqueModal) {
+      const factoryInject = compiler.resolveComponentFactory( component );
+      this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
+    }
   }
 
   getParentModalInjectedView() {

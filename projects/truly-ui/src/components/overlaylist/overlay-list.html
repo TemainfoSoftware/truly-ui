@@ -24,6 +24,7 @@
                       (keydown.enter)="handleClickOption(i)"
                       (click)="handleClickOption(i)"
                       [item]="item">
+          <i *ngIf="item[keyIcon]" style="padding: 0 5px" [class]="item[keyIcon]"></i>
           {{ typeOfData === 'simple' ? item : item[keyText] }}
         </tl-list-item>
     </section>

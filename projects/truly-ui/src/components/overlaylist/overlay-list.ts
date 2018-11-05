@@ -55,6 +55,8 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'keyText' ) keyText = 'text';
 
+  @Input() keyIcon = 'icon';
+
   @Input( 'icon' ) icon = null;
 
   @Input( 'defaultIcon' ) defaultIcon = null;

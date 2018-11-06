@@ -143,6 +143,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/inputcurrency/inputcurrencydemo.module#InputCurrencyDemoModule'
       },
       {
+        path: 'icons',
+        loadChildren: './components/icons/iconsdemo.module#IconsDemoModule'
+      },
+      {
         path: 'listbox',
         loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
       },

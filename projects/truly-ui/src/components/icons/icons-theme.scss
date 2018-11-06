@@ -1,0 +1,34 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-icons-theme-schema( $theme, $action ){
+  //SKELETON COMPONENT HERE
+}
+
+@mixin tl-icons-theme( $theme ) {
+
+  .tl-icons{
+    &.basic {
+      @include _tl-icons-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-icons-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-icons-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-icons-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-icons-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-icons-theme-schema($theme, 'information')
+    }
+  }
+}

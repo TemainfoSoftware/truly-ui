@@ -18,6 +18,7 @@ export { DialogModule } from './components/dialog/index';
 export { DropDownListModule } from './components/dropdownlist/index';
 export { EditorModule } from './components/editor/index';
 export { FormModule } from './components/form/index';
+export { IconsModule } from './components/icons/index';
 export { InputModule } from './components/input/index';
 export { ListBoxModule} from './components/listbox/index';
 export { MenuModule } from './components/menu/index';

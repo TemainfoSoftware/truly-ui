@@ -53,6 +53,8 @@ export class ModalService implements OnDestroy {
 
   public head = new Subject();
 
+  public modalShow = new Subject();
+
   public modalConfiguration: ComponentFactoryResolver | ModalConfiguration;
 
   private selectedModal;
@@ -301,6 +303,7 @@ export class ModalService implements OnDestroy {
     lastZIndex++;
     item.location.nativeElement.firstElementChild.style.zIndex = lastZIndex;
     item.instance.element.nativeElement.style.display = 'block';
+    this.modalShow.next();
   }
 
   minimize( component: ComponentRef<any> ) {
@@ -324,9 +327,7 @@ export class ModalService implements OnDestroy {
     this.getVisibleModals().forEach( ( value ) => {
       visibleHighestZIndex.push( value.firstElementChild.style.zIndex );
     } );
-
     const highest = this.getHighestZIndexModals( visibleHighestZIndex );
-
     this.componentList.forEach( ( value ) => {
       if ( this.getVisibleModals().length === 0 ) {
         return this.setActiveModal( null );

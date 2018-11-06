@@ -11,11 +11,13 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
           <app-card>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Basic</span>
-              </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleBasic()"></tl-switch>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Basic</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleBasic()"></tl-switch>
+                </div>
               </div>
               <div class="blockui" [tlBlockui]="basic">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -32,11 +34,13 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>With Message</span>
-              </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleMessage()"></tl-switch>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>With Message</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleMessage()"></tl-switch>
+                </div>
               </div>
               <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion-load-c', 'message': 'Loading...'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -55,11 +59,13 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Spin OFF</span>
-              </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch  [label]="'Toggle Visibility'" (toggle)="toggleSpinOff()"></tl-switch>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Spin OFF</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch  [label]="'Toggle Visibility'" (toggle)="toggleSpinOff()"></tl-switch>
+                </div>
               </div>
               <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'ion-close-circled'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -76,13 +82,14 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Message & Spin false</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Message & Spin false</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleSpinOffMessage()"></tl-switch>
+                </div>
               </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleSpinOffMessage()"></tl-switch>
-              </div>
-
               <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'ion-alert-circled', 'message': 'Content Blocked'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,

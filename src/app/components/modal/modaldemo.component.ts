@@ -3,8 +3,9 @@ import { NewModalComponent } from './newmodal/newModal.component';
 
 import * as json from './modal-dataproperties.json';
 import * as jsonEvt from './modal-dataevents.json';
+import * as jsonResult from './modal-dataresults.json';
+
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { ModalOptions } from '../../../../projects/truly-ui/src/components/modal/modal-options';
 import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
 
 @Component( {
@@ -16,16 +17,19 @@ import { ModalService } from '../../../../projects/truly-ui/src/components/modal
 export class ModalDemoComponent {
 
   public index: number;
-  public modalOptions: ModalOptions;
 
   public modalprop;
+
   public modalevts;
+
   public modalResult;
 
+  public modalResults;
 
   constructor(private modalService: ModalService, private compiler: ComponentFactoryResolver) {
     this.modalevts = jsonEvt.dataEvents;
     this.modalprop = json.dataProperties;
+    this.modalResults = jsonResult.dataProperties;
   }
 
   modal1() {

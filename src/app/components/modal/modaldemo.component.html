@@ -111,6 +111,26 @@ this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResu
         </app-showcase-card>
       </div>
     </div>
+    <app-showcase-card [title]="'Modal Results'" [icon]="'ion-clipboard'">
+      <app-card>
+        <table class="table table-truly">
+          <thead class="table-truly-head">
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Value</th>
+          </tr>
+          </thead>
+          <tbody class="table-truly-body" *ngFor="let item of modalResults; let i = index">
+          <tr>
+            <td><span>{{ item.name }}</span></td>
+            <td>{{ item.description }}</td>
+            <td><code>{{ item.value }}</code></td>
+          </tr>
+          </tbody>
+        </table>
+      </app-card>
+    </app-showcase-card>
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>
         <app-showcase-table-properties [data]="modalprop"></app-showcase-table-properties>

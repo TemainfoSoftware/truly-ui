@@ -193,10 +193,9 @@ export class ModalService implements OnDestroy {
         this.showModal(this.selectedModal);
         this.uniqueModal = true;
         return;
-      } else  {
-        this.uniqueModal = false;
       }
     }
+    this.uniqueModal = false;
     const componentFactory = compiler.resolveComponentFactory( TlModal );
     this.component = this.view.createComponent( componentFactory );
     this.componentList.push( { componentRef: this.component, identifier: id } );

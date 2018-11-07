@@ -417,11 +417,8 @@ export class ModalService implements OnDestroy {
   }
 
   handleCallbackConfirmation() {
-    if (this.isResultYes()) {
-      this.callbackConfirmation.isYes(ModalResult.MRYES);
-    } else {
-      this.callbackConfirmation.isYes(ModalResult.MRNO);
-    }
+    this.isResultYes() ? this.callbackConfirmation.isYes(ModalResult.MRYES) :
+      this.callbackConfirmation.isNo(ModalResult.MRNO);
   }
 
   isResultYes() {

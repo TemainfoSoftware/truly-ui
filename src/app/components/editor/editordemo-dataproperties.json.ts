@@ -35,6 +35,13 @@ export const dataProperties = [
     options: 'basic | primary | success | information | warning | danger | light | dark'
   },
   {
+    name: 'height',
+    type: 'string',
+    default: '300px',
+    description: 'Editor\'\s height.',
+    options: 'px | % | em'
+  },
+  {
     name: 'toolbarConfig',
     type: 'Object - ToolbarConfig',
     default: 'null',

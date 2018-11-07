@@ -20,17 +20,46 @@
     SOFTWARE.
 */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'tl-icons',
+  selector: 'tl-icon',
   templateUrl: './icons.html',
   styleUrls: ['./icons.scss'],
 })
 export class TlIcons implements OnInit {
 
+  @Input() icon = '';
+
+  @Input() lib = '';
+
+  @Input() size = '14px';
+
+  @Input() animation = '';
+
+  @Input() platform = 'md';
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if ( this.lib === '' ) {
+      this.whatLib();
+    }
+  }
+
+  whatLib() {
+    const takeTwoLetters = this.icon.substr(0, 2);
+    switch (takeTwoLetters) {
+      case 'dx':
+        this.lib = 'dx';
+        break;
+      case 'fa':
+        this.lib = 'fa';
+        break;
+      default:
+        this.lib = 'ion';
+        break;
+    }
+  }
 
 }

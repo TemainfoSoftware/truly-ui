@@ -1,3 +1,5 @@
 <div class="tl-icons">
-  <i class="ion ion-heart"></i>
+  <dx-icon [icon]="icon" [size]="size" [animation]="animation" *ngIf="lib === 'dx'"></dx-icon>
+  <fa-icon [icon]="icon" [size]="size" [animation]="animation" *ngIf="lib === 'fa'"></fa-icon>
+  <ion-icon [icon]="icon" [size]="size" [animation]="animation" [platform]="platform" *ngIf="lib === 'ion'"></ion-icon>
 </div>

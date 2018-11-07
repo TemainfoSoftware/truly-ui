@@ -35,6 +35,7 @@
   <div #contentEditor
        tabindex="-1"
        class="ui-editor-content"
+       [style.height]="height"
        (keydown)="onKeyDownSave($event)"
        (mouseup)="onMouseUp()"
        (click)="setCursorSelection()"

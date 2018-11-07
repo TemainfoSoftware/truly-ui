@@ -57,6 +57,8 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   @Input() toolbarConfig: ToolbarConfig;
 
+  @Input() height = '300px';
+
   @ViewChild( 'contentEditor' ) contentEditor;
 
   @ViewChild( 'linkBox' ) linkBox;

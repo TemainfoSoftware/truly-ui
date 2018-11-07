@@ -29,6 +29,8 @@
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
               "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/all.min.css",
+              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -96,6 +98,8 @@
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
               "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/all.min.css",
+              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "assets": [

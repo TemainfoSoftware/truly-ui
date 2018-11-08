@@ -39,6 +39,8 @@ export class TlIcons implements OnInit {
 
   @Input() platform = 'md';
 
+  @Input() style: 'solid';
+
   constructor() {}
 
   ngOnInit() {

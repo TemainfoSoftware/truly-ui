@@ -239,6 +239,12 @@ Once your library is imported, you can use its components, directives and pipes 
 ## Feedback
 Feedback is always welcome.
 
+## For google
+angular 2 components, angular 4 components, angular electron, angular 5 components ng2 nw ng components
+ng-components ng2-components angular2 components angular4 electron angular 5 components angular 6 components 
+angular 7 components angular electron components desktop applications library ui components desktop electron angular
+components electron angular
+
 
 ## License
 

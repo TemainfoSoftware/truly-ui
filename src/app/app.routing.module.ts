@@ -144,7 +144,19 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       {
         path: 'icons',
-        loadChildren: './components/icons/iconsdemo.module#IconsDemoModule'
+        loadChildren: './components/icons/overview/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/dxicons',
+        loadChildren: './components/icons/dxicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/font-awesome',
+        loadChildren: './components/icons/font-awesome/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/ionicons',
+        loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
       },
       {
         path: 'listbox',

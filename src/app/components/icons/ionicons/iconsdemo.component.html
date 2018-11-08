@@ -1,0 +1,42 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Icons<span
+      class="module-name"><code><u>Module Name</u>: <strong>IconsModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>IconsModule</strong></code></p>
+    <p class="text-content">
+      The Truly-UI Icons are styles for actions in forms, dialogs, and more with support for multiple sizes, states
+      and many properties for customization
+    </p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Basic</h5>
+              <tl-icon [icon]="'dx-icon-airplane'" [animation]="'spin'" [lib]="'dx'" [size]="'24px'"></tl-icon>
+              <tl-icon [icon]="'airplane'" [animation]="'spin'" [platform]="'md'" [size]="'45px'"></tl-icon>
+              <tl-icon [icon]="'fa-address-book'" [animation]="'spin'" [lib]="'fa'"></tl-icon>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-icon></tl-icon>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

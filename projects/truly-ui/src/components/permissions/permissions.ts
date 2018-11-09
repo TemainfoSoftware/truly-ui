@@ -113,8 +113,11 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   }
 
   filterPermissionAllowed( dataSourceItem ) {
-    return this.permissions.filter( ( item, index, array ) =>
-    item[ this.keyPermissionValue ] === dataSourceItem[ this.keyPermissionValue ] );
+    if (this.permissions) {
+      return this.permissions.filter( ( item, index, array ) =>
+      item[ this.keyPermissionValue ] === dataSourceItem[ this.keyPermissionValue ] );
+    }
+    return [];
   }
 
   handleChangePermissions() {

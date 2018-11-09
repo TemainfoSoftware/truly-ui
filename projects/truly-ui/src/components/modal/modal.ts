@@ -76,8 +76,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() fullscreen = false;
 
-  @Input() unique = false;
-
   @Input() restoreMaximize = true;
 
   @Input() backdrop = false;
@@ -434,7 +432,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   closeModal() {
     if ( this.closable ) {
-      this.serviceControl.execCallBack( ModalResult.MRCLOSE, this.componentRef );
+      this.serviceControl.execCallBack( { mdResult: ModalResult.MRCLOSE } , this.componentRef );
       this.close.emit( this.componentRef.instance );
     }
   }

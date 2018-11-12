@@ -155,7 +155,7 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   }
 
   handleCheckPermission() {
-    if (!this.dataSource.length > 0) {
+    if (! ( this.dataSource.length > 0) ) {
       return;
     }
     const selected = this.selectedGroup.filter( ( item ) => item.allow );

@@ -1,1 +1,2 @@
-<i class="{{ PREFIX_LIB }} {{ 'ion-' + platform + '-' + icon }} {{ (animation) ? 'fa-' + animation : null }}" [ngStyle]="{'font-size': size}"></i>
+<i class="{{ PREFIX + '-' + style + '-' + icon }} {{ (animation) ? 'anim-' + animation + ' animated' : null }}"
+   [ngStyle]="{'font-size': size, 'color': color}"></i>

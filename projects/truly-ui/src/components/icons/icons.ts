@@ -20,47 +20,45 @@
     SOFTWARE.
 */
 
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ElementRef,
+  Input,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 
 @Component({
   selector: 'tl-icon',
   templateUrl: './icons.html',
   styleUrls: ['./icons.scss'],
 })
-export class TlIcons implements OnInit {
+export class TlIcons implements AfterContentInit {
 
-  @Input() icon = '';
+  @Input() icon: string;
 
-  @Input() lib = '';
+  @Input() lib: string;
+
+  @Input() style: string;
 
   @Input() size = '14px';
 
-  @Input() animation = '';
+  @Input() animation: string;
 
-  @Input() platform = 'md';
+  @Input() color: string;
 
-  @Input() style: 'solid';
+  @ViewChild('content') content: ElementRef<any>;
+
+  @ViewChild(TemplateRef) template: TemplateRef<any>;
 
   constructor() {}
 
-  ngOnInit() {
-    if ( this.lib === '' ) {
-      this.whatLib();
-    }
-  }
-
-  whatLib() {
-    const takeTwoLetters = this.icon.substr(0, 2);
-    switch (takeTwoLetters) {
-      case 'dx':
-        this.lib = 'dx';
-        break;
-      case 'fa':
-        this.lib = 'fa';
-        break;
-      default:
-        this.lib = 'ion';
-        break;
+  ngAfterContentInit() {
+    if ( this.icon === undefined ) {
+      if ( this.content.nativeElement.innerText ) {
+        this.icon = this.content.nativeElement.innerText;
+      }
     }
   }
 

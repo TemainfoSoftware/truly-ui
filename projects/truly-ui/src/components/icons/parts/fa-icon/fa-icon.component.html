@@ -1,2 +1,2 @@
-<i class="{{ (style === 'solid') ? PREFIX_LIB_SOLID : PREFIX_LIB_REGULAR }} {{ icon }} {{ (animation) ? 'fa-' + animation : null }}"
-   [ngStyle]="{'font-size': size}"></i>
+<i class="{{ style }} {{ PREFIX + icon }} {{ (animation) ? 'anim-' + animation + ' animated' : null }}"
+   [ngStyle]="{'font-size': size, 'color': color}"></i>

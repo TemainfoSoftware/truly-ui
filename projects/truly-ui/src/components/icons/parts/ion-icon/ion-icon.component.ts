@@ -7,19 +7,24 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class IonIconComponent implements OnInit {
 
-  public PREFIX_LIB = 'icon';
+  public PREFIX = 'ion';
 
   @Input() icon: string;
+
+  @Input() style: string;
 
   @Input() size: string;
 
   @Input() animation: string;
 
-  @Input() platform: string;
+  @Input() color: string;
 
   constructor() { }
 
   ngOnInit() {
+    if ( this.style === undefined ) {
+      this.style = 'md';
+    }
   }
 
 }

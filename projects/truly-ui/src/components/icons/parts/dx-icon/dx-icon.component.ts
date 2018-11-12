@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DxIconComponent implements OnInit {
 
-  public PREFIX_LIB = 'dx-icon';
+  public PREFIX = 'dx-icon dx-icon-';
 
   @Input() icon: string;
 
@@ -15,9 +15,10 @@ export class DxIconComponent implements OnInit {
 
   @Input() animation: string;
 
-  constructor() { }
+  @Input() color: string;
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
 }

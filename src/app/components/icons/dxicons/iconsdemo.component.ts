@@ -20,24 +20,63 @@
   SOFTWARE.
 */
 import { Component } from '@angular/core';
-
-import * as json from './iconsdemo-dataproperties.json';
-import * as jsonEvts from './iconsdemo.dataevents.json';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component( {
-selector : 'app-icons',
-templateUrl : './iconsdemo.component.html',
-styleUrls : [ './iconsdemo.component.scss' ],
+  selector : 'app-icons',
+  templateUrl : './iconsdemo.component.html',
+  styleUrls : [ './iconsdemo.component.scss' ],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition( ':enter', [
+          style( { opacity: 0 } ),
+          animate( '250ms', style( { opacity: 1 } ) )
+        ] ),
+        transition( ':leave', [
+          style( { opacity: 1 } ),
+          animate( '250ms', style( { opacity: 0 } ) )
+        ] )
+      ]
+    )
+  ]
 } )
 export class IconsDemoComponent {
 
-  public dataTableProperties;
+  public saved: string;
 
-  public dataEvents;
+  public interval;
 
-  constructor() {
-    this.dataTableProperties = json.dataProperties;
-    this.dataEvents = jsonEvts.dataEvents;
+  public dataIcons = ['add', 'airplane', 'bookmark', 'box', 'car', 'card', 'cart', 'chart', 'check', 'clear', 'clock', 'close', 'coffee',
+    'comment', 'doc', 'download', 'dragvertical', 'edit', 'email', 'event', 'favorites', 'find', 'filter-operation-equals', 'filter',
+    'filter-operation-not-equals', 'filter-operation-less', 'filter-operation-less-equal', 'filter-operation-greater',
+    'filter-operation-greater-equal', 'filter-operation-contains', 'filter-operation-not-contains', 'filter-operation-starts-with',
+    'filter-operation-ends-with', 'folder', 'food', 'gift', 'globe', 'group', 'help', 'home', 'image', 'info', 'key', 'like', 'map',
+    'menu', 'message', 'money', 'music', 'overflow', 'percent', 'photo', 'plus', 'preferences', 'product', 'pulldown', 'refresh', 'remove',
+    'revert', 'runner', 'save', 'search', 'tags', 'tel', 'tips', 'todo', 'toolbox', 'trash', 'user', 'upload', 'floppy', 'arrowleft',
+    'arrowdown', 'arrowright', 'arrowup', 'spinleft', 'spinright', 'spinnext', 'spinprev', 'spindown', 'spinup', 'chevronleft',
+    'chevronright', 'chevronnext', 'chevronprev', 'chevrondown', 'chevronup', 'chevrondoubleleft', 'chevrondoubleright', 'equal',
+    'notequal', 'less', 'greater', 'lessorequal', 'greaterorequal', 'sortup', 'sortdown', 'sortuptext', 'sortdowntext', 'sorted', 'expand',
+    'collapse', 'columnfield', 'rowfield', 'datafield', 'fields', 'fieldchooser', 'columnchooser', 'pin', 'unpin', 'pinleft', 'pinright',
+    'contains', 'startswith', 'endswith', 'doesnotcontain', 'range', 'export', 'exportxlsx', 'exportpdf', 'exportselected', 'warning',
+    'more', 'square', 'clearsquare', 'back', 'repeat', 'selectall', 'unselectall', 'print'];
+
+  constructor() {}
+
+  copyIcon(inputElement) {
+    inputElement.input.nativeElement.select();
+    document.execCommand('copy');
+    inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);
+    this.showCopyMessage(inputElement.input.nativeElement.value);
   }
+
+  showCopyMessage(icon) {
+    this.saved = icon;
+    clearInterval( this.interval );
+    this.interval = setInterval( () => {
+      this.saved = '';
+    }, 1000 );
+  }
+
 }
 

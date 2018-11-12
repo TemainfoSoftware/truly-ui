@@ -1,0 +1,20 @@
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+ul li {
+  padding: 10px 0;
+  text-align: center;
+}
+
+ul li tl-input {
+  margin: 5px 10px;
+  display: block;
+}
+
+.copy-message {
+  position: absolute;
+  top: 48px;
+  right: 14px;
+}

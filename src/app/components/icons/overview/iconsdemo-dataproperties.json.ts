@@ -21,10 +21,46 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
+    name: 'icon',
     type: 'string',
     default: 'null',
-    description: 'Displays a text.',
+    description: 'Icon code.',
     options: 'any text'
   },
+  {
+    name: 'lib',
+    type: 'string',
+    default: 'null',
+    description: 'Icon Library.',
+    options: 'dx: dxicons | fa: font-awesome | ion: ionicons'
+  },
+  {
+    name: 'style',
+    type: 'string',
+    default: 'fas | dm',
+    description: 'Style inside the library.',
+    options: 'fas: font-awesome | far: font-awesome | fab: font-awesome | dm: ionicons | ios: ionicons | logo: ionicons'
+  },
+  {
+    name: 'size',
+    type: 'string',
+    default: '14px',
+    description: 'Size of icon.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'animation',
+    type: 'string',
+    default: 'null',
+    description: 'Animation of icons.',
+    options: 'wrench | ring | horizontal | vertical | flash | bounce | spin | float | pulse | shake | tada | ' +
+      'passing | passing-reverse | burst | falling'
+  },
+  {
+    name: 'color',
+    type: 'string',
+    default: 'null',
+    description: 'Changes the default color of the icon.',
+    options: 'hex | rgb | rgba'
+  }
 ];

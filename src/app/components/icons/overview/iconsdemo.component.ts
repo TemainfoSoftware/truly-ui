@@ -22,7 +22,6 @@
 import { Component } from '@angular/core';
 
 import * as json from './iconsdemo-dataproperties.json';
-import * as jsonEvts from './iconsdemo.dataevents.json';
 
 @Component( {
 selector : 'app-icons',
@@ -33,11 +32,8 @@ export class IconsDemoComponent {
 
   public dataTableProperties;
 
-  public dataEvents;
-
   constructor() {
     this.dataTableProperties = json.dataProperties;
-    this.dataEvents = jsonEvts.dataEvents;
   }
 }
 

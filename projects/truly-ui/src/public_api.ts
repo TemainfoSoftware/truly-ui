@@ -36,6 +36,7 @@ export { RadioButtonModule } from './components/radiobutton/index';
 export { SidebarModule } from './components/sidebar/index';
 export { ScheduleModule } from './components/schedule/index';
 export { StopwatchModule } from './components/stopwatch/index';
+export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
 export { TimelineModule } from './components/timeline/index';

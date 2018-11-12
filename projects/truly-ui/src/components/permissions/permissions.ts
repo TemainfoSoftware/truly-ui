@@ -124,9 +124,7 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
     if ( this.dataSource.length > 0 ) {
       this.dataSource.forEach( ( item: PermissionDataConfig ) => {
         item[ this.keyPermissions ].forEach( ( itemPermission ) => {
-          if ( this.filterPermissionAllowed( itemPermission ).length > 0 ) {
-            itemPermission[ 'allow' ] = true;
-          }
+          itemPermission['allow'] = this.filterPermissionAllowed( itemPermission ).length > 0;
         } );
         const allowed = item[ this.keyPermissions ].filter( ( permission, index, array ) => permission[ 'allow' ] );
         if ( allowed.length === item[ this.keyPermissions ].length ) {
@@ -157,6 +155,9 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   }
 
   handleCheckPermission() {
+    if (!this.dataSource.length > 0) {
+      return;
+    }
     const selected = this.selectedGroup.filter( ( item ) => item.allow );
     if ( selected.length === 0 ) {
       this.dataSource[ this.selectedGroupIndex ].checked = false;

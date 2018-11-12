@@ -30,9 +30,9 @@ import { FormSubmitDirective } from './form-submit.directive';
 
 import { InputModule } from '../input/index';
 import { DropDownListModule } from '../dropdownlist/index';
-import { MiscModule } from '../misc/index';
 import { ButtonModule } from '../button/index';
 import { ModalModule } from '../modal/index';
+import { ShortcutModule } from '../shortcut/index';
 
 @NgModule( {
   imports: [
@@ -42,7 +42,7 @@ import { ModalModule } from '../modal/index';
     ReactiveFormsModule,
     InputModule,
     DropDownListModule,
-    MiscModule,
+    ShortcutModule,
     ModalModule
   ],
   declarations: [

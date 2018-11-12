@@ -21,9 +21,10 @@
  */
 
 import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
-import { TlButton } from '../../button/button';
-import { ModalService } from '../../modal/modal.service';
 import { Subscription } from 'rxjs';
+import { ModalService } from '../modal/modal.service';
+import { TlButton } from '../button/button';
+import { ShortcutConfig } from './shortcut.config';
 
 let listener;
 
@@ -46,7 +47,14 @@ export class ShortcutService implements OnDestroy {
 
   private headElement = {};
 
-  constructor( private modalService: ModalService ) {}
+  private config: ShortcutConfig;
+
+  constructor( private modalService: ModalService ) {
+  }
+
+  setConfig( config: ShortcutConfig ) {
+    this.config = config;
+  }
 
   setRenderer( renderer ) {
     this.renderer = renderer;
@@ -54,12 +62,15 @@ export class ShortcutService implements OnDestroy {
   }
 
   createListener() {
-    this.subscription.add(this.modalService.head.subscribe( ( component ) => {
+    this.subscription.add( this.modalService.head.subscribe( ( component ) => {
       this.headElement = component;
-    } ));
+    } ) );
     if ( !listener ) {
-      this.subscription.add(document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+      this.subscription.add( document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
+          return;
+        }
+        if ( this.isElementDisabledClass() ) {
           return;
         }
         if ( this.getEqualKeys( this.elementsListener[ this.elementIndex ].shortcut ).length > 1 ) {
@@ -68,8 +79,31 @@ export class ShortcutService implements OnDestroy {
         }
         this.handleClickComponentWithoutEqualsKeys();
         this.handleElementsOfView();
-      } ));
+      } ) );
       listener = this.subscription;
+    }
+  }
+
+  isElementDisabledClass() {
+    if ( !this.config ) {
+      return false;
+    }
+    if ( !this.config.disableClass ) {
+      return false;
+    }
+    for ( let index = 0; index < this.getElementDisabled().classList.length; index++ ) {
+      if ( this.getElementDisabled().classList[ index ] === this.config.disableClass ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getElementDisabled() {
+    if ( this.elementsListener[ this.elementIndex ].element instanceof TlButton ) {
+      return this.elementsListener[ this.elementIndex ].element.button.nativeElement;
+    } else {
+      return this.elementsListener[ this.elementIndex ].element.nativeElement;
     }
   }
 
@@ -102,16 +136,16 @@ export class ShortcutService implements OnDestroy {
     const buttonToClick = buttonElements.filter( ( value ) => {
       return (this.currentShortcut === value.shortcut);
     } );
-    this.sortButtons(buttonToClick)[0].element.button.nativeElement.click();
+    this.sortButtons( buttonToClick )[ 0 ].element.button.nativeElement.click();
     setTimeout( () => {
       this.handleElementsOfView();
     }, 520 );
   }
 
-  sortButtons(buttonToClick) {
+  sortButtons( buttonToClick ) {
     buttonToClick.sort( ( a, b ) => {
-        return parseInt( a.element.indexShortcut, 10 ) -
-          parseInt( b.element.indexShortcut, 10 );
+      return parseInt( a.element.indexShortcut, 10 ) -
+        parseInt( b.element.indexShortcut, 10 );
     } );
     return buttonToClick;
   }

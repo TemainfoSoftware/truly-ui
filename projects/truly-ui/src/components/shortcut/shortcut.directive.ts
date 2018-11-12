@@ -20,9 +20,10 @@
  SOFTWARE.
  */
 
-import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2, OnDestroy } from '@angular/core';
-import { ShortcutService } from '../core/helper/shortcut.service';
+import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2, OnDestroy, Optional, Inject } from '@angular/core';
+import { ShortcutService } from './shortcut.service';
 import { TlButton } from '../button/button';
+import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
 
 let elements = [];
 
@@ -41,8 +42,10 @@ export class ShortcutDirective implements AfterContentInit, OnDestroy {
 
   private shortcutID = 'shortcut-' + identifier++;
 
-  constructor( private element: ElementRef, private shortcutService: ShortcutService, private renderer: Renderer2 ) {
+  constructor( @Optional() @Inject( SHORTCUT_CONFIG ) private shortcutConfig: ShortcutConfig,
+               private element: ElementRef, private shortcutService: ShortcutService, private renderer: Renderer2 ) {
     this.shortcutService.setRenderer( this.renderer );
+    this.shortcutService.setConfig(this.shortcutConfig);
   }
 
   ngAfterContentInit() {

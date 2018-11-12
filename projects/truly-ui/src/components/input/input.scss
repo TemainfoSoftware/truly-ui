@@ -46,6 +46,9 @@
     right: 4px;
     cursor: pointer;
   }
+  .addon.-flatborders {
+    border-radius: 0;
+  }
   .addon.-predefined {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   }
@@ -64,6 +67,7 @@
       width: 100%;
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      border-radius: 3px;
       transition: all 230ms ease-in-out;
       &.-borderleft{
         border-top-left-radius: 0;
@@ -72,6 +76,9 @@
       &.-borderright {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+      }
+      &.-flatborders {
+        border-radius: 0;
       }
     }
     > .field::placeholder {

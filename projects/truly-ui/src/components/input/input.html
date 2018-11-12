@@ -3,22 +3,24 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
 
   <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')"
-        [ngClass]="{ 'withoutBorder' : !withBorder }" class="addon -borderleft"><i
-    [ngClass]="iconBefore"></i></span>
+        [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder }" class="addon -borderleft">
+    <i [ngClass]="iconBefore"></i>
+  </span>
+
   <span *ngIf="textBefore" class="addon -borderleft"
         [ngClass]="
         {
         'predefined' : textBefore,
         'withBorder': withBorder,
-        'withoutBorder' : !withBorder
+        'withoutBorder' : !withBorder,
+        '-flatborders': flatBorder
         }">
     {{textBefore}}
   </span>
 
-  <div class="ui-wrapper-input" [style.height]="height" [style.border-radius]="flatBorder ? '0' : '3px'">
+  <div class="ui-wrapper-input" [ngClass]="{'-flatborders': flatBorder}" [style.height]="height">
     <input [style.padding-right]="clearButton ? '20px' : '12px'"
            [style.height]="height"
-           [style.border-radius]="flatBorder ? '0' : '3px'"
            #input
            [type]="type"
            cdkOverlayOrigin
@@ -31,6 +33,7 @@
              'withValidators': hasValidator,
              'withoutValidators': !hasValidator,
              '-borderleft': iconBefore || textBefore,
+             '-flatborders': flatBorder,
              'withBorder': withBorder,
              'withoutBorder' : !withBorder,
              '-borderright': iconAfter || textAfter
@@ -50,10 +53,12 @@
 
   <span #afterIcon *ngIf="iconAfter"
         (click)="onClickAddon($event, 'after')" class="addon -borderright"
-        [ngClass]="{ 'withoutBorder' : !withBorder }"><i [ngClass]="iconAfter"></i></span>
+        [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder, '-borderright': iconAfter || textAfter }">
+    <i [ngClass]="iconAfter"></i>
+  </span>
 
   <span *ngIf="textAfter" #afterText class="addon -borderright"
-        [ngClass]="{ '-predefined' : textAfter,'withoutBorder' : !withBorder}">{{textAfter}}</span>
+        [ngClass]="{ '-predefined' : textAfter, '-flatborders': flatBorder, 'withoutBorder' : !withBorder }">{{textAfter}}</span>
 </div>
 
 

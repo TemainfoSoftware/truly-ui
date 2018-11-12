@@ -10,19 +10,19 @@ import { ButtonModule } from '../../../../projects/truly-ui/src/components/butto
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { MiscModule } from '../../../../projects/truly-ui/src/components/misc/index';
 import { DialogModule } from '../../../../projects/truly-ui/src/components/dialog/index';
+import { ShortcutModule } from '../../../../projects/truly-ui/src/components/shortcut/index';
 
 @NgModule({
   declarations: [
     ShortcutDemoComponent
   ],
   imports: [
+    ShortcutModule.forRoot({ disableClass: 'ngx-disabled' }),
     ShortcutDemoRoutingModule,
     ButtonModule,
     CommonModule,
     FormsModule,
-    MiscModule,
     DialogModule,
     HighlightJsModule,
     ShowcaseCardModule,

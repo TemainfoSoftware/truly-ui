@@ -49,6 +49,32 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
       <app-card>
+        <h3>Shortcut Config</h3>
+        <p>The shortcut config has the <code>disabledClass</code> attribute, is used to set a disabled class to control elements disabled, not allowing to execute
+        it.</p>
+        <textarea highlight-js [options]="{'tabReplace' : ''}" [lang]="'typescript'">
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { ShortcutModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    ShortcutDemoComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ShortcutModule.forRoot({ disableClass: 'ngx-disabled' }),
+  ],
+  exports: [
+    ShortcutDemoComponent
+  ]
+})
+export class ShortcutDemoModule {}
+        </textarea>
+      </app-card>
+      <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
       </app-card>
     </app-showcase-card>

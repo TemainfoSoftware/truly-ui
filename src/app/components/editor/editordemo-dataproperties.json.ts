@@ -25,7 +25,7 @@ export const dataProperties = [
     type: 'HTML String',
     default: 'null',
     description: 'Defines the content of editor.',
-    options: 'true | false'
+    options: 'HTML String'
   },
   {
     name: 'color',

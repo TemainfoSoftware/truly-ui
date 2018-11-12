@@ -1,8 +1,8 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">TimePicker <span class="module-name"><code><u>Module Name</u>: <strong>TimePickerModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>TimePickerModule</strong></code></p>
-    <p class="text-content">Timepicker can parse the most used time representations allowing you and your users to enter time using their preferred way for writing it.</p>
+    <h1 class="title">ClockPicker <span class="module-name"><code><u>Module Name</u>: <strong>ClockPickerModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ClockPickerModule</strong></code></p>
+    <p class="text-content">ClockPicker can parse the most used time representations allowing you and your users to enter time using their preferred way for writing it.</p>
   </div>
   <div class="showcase">
     <div class="row">
@@ -11,24 +11,24 @@
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
-              <tl-timepicker [(ngModel)]="time"></tl-timepicker>
+              <tl-clockpicker [(ngModel)]="time"></tl-clockpicker>
               <div class="spacer"></div>
             </div>
             <div class="col-md-6">
               <h5>Icon Time Picker</h5>
-              <tl-timepicker [(ngModel)]="timeIcon" [iconTimepicker]="true"></tl-timepicker>
+              <tl-clockpicker [(ngModel)]="timeIcon" [iconTimepicker]="true"></tl-clockpicker>
               <div class="spacer"></div>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <h5>Without Button Done</h5>
-              <tl-timepicker [(ngModel)]="timeButton" [showButtonDone]="false"></tl-timepicker>
+              <tl-clockpicker [(ngModel)]="timeButton" [showButtonDone]="false"></tl-clockpicker>
               <div class="spacer"></div>
             </div>
             <div class="col-md-6">
               <h5>AutoClose</h5>
-              <tl-timepicker [(ngModel)]="timeClose" [autoClose]="true"></tl-timepicker>
+              <tl-clockpicker [(ngModel)]="timeClose" [autoClose]="true"></tl-clockpicker>
               <div class="spacer"></div>
             </div>
           </app-card>

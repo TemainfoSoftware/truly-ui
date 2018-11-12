@@ -42,7 +42,7 @@
 @import "../../../internals/components/tag/tag-theme";
 @import "../../../toaster/parts/toaster-theme";
 @import "../../../toolbar/toolbar-theme";
-@import "../../../timepicker/timepicker-theme";
+@import "../../../clockpicker/clockpicker-theme";
 @import "../../../timeline/timeline-theme";
 @import "../../../timeline/parts/timeline-item/timeline-item-theme";
 
@@ -91,7 +91,7 @@
   @include tl-tag-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
-  @include tl-timepicker-theme($theme);
+  @include tl-clockpicker-theme($theme);
   @include tl-timeline-theme($theme);
   @include tl-timeline-item-theme($theme);
 }

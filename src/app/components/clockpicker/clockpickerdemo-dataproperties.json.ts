@@ -59,14 +59,14 @@ export const data = [
       name: 'autoClose',
       type: 'boolean',
       default: 'false',
-      description: 'Controls if TimePicker will be closed as soon as time is selected.',
+      description: 'Controls if ClockPicker will be closed as soon as time is selected.',
       options: 'true | false'
     },
     {
       name: 'iconTimepicker',
       type: 'boolean',
       default: 'false',
-      description: 'Controls if will be shown the TimePicker icon.',
+      description: 'Controls if will be shown the ClockPicker icon.',
       options: 'true | false'
     },
     {
@@ -80,7 +80,7 @@ export const data = [
       name: 'showButtonDone',
       type: 'boolean',
       default: 'true',
-      description: 'Controls if will be shown the TimePicker Button \'Done\'.',
+      description: 'Controls if will be shown the ClockPicker Button \'Done\'.',
       options: 'any text'
     },
     {

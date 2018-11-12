@@ -23,7 +23,7 @@ import { ElementRef, Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription, Subject } from 'rxjs';
 
 @Injectable()
-export class TimePickerService implements OnDestroy {
+export class ClockPickerService implements OnDestroy {
 
   private subscribe = new Subscription();
 
@@ -204,7 +204,7 @@ export class TimePickerService implements OnDestroy {
     }
   }
 
-  closeTimePicker() {
+  closeClockPicker() {
     this.opened = false;
   }
 
@@ -228,11 +228,11 @@ export class TimePickerService implements OnDestroy {
     return (parseInt( value, 10 ) / radius) * 360;
   }
 
-  getTimePickerValue() {
+  getClockPickerValue() {
     return this.timeClock;
   }
 
-  openTimePicker() {
+  openClockPicker() {
     this.opened = true;
   }
 

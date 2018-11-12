@@ -215,8 +215,8 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
       },
       {
-        path: 'timepicker',
-        loadChildren: './components/timepicker/timepickerdemo.module#TimePickerDemoModule'
+        path: 'clockpicker',
+        loadChildren: './components/clockpicker/clockpickerdemo.module#ClockPickerDemoModule'
       },
       {
         path: 'timeline',

@@ -43,7 +43,7 @@ export { TimelineModule } from './components/timeline/index';
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
-export { TimePickerModule } from './components/timepicker/index';
+export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
 // Interfaces

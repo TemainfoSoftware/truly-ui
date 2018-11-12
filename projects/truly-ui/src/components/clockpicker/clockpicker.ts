@@ -27,15 +27,15 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { TlInput } from '../input/input';
 import { ElementBase } from '../input/core/element-base';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { TimePickerService } from './services/timepicker.service';
+import { ClockPickerService } from './services/clockpicker.service';
 
 @Component( {
-  selector: 'tl-timepicker',
-  templateUrl: './timepicker.html',
-  styleUrls: [ './timepicker.scss' ],
-  providers: [ MakeProvider( TlTimePicker ), TimePickerService ]
+  selector: 'tl-clockpicker',
+  templateUrl: './clockpicker.html',
+  styleUrls: [ './clockpicker.scss' ],
+  providers: [ MakeProvider( TlClockPicker ), ClockPickerService ]
 } )
-export class TlTimePicker extends ElementBase<string> implements AfterViewInit, AfterContentInit, OnDestroy {
+export class TlClockPicker extends ElementBase<string> implements AfterViewInit, AfterContentInit, OnDestroy {
 
   @Input() label = '';
 
@@ -51,7 +51,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   @Input() disabled = false;
 
-  @Input() placeholder = 'TimePicker Field';
+  @Input() placeholder = 'ClockPicker Field';
 
   @Input() clearButton = true;
 
@@ -85,9 +85,9 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   public time = { hour: '00', minute: '00' };
 
-  public timepickerService: TimePickerService;
+  public timepickerService: ClockPickerService;
 
-  public isTimePickerAbove: boolean;
+  public isClockPickerAbove: boolean;
 
   private listeners = [];
 
@@ -103,11 +103,11 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   ngAfterContentInit() {
-    this.timepickerService = new TimePickerService( this.wrapperDial, this.wrapperDialMin, this.renderer );
+    this.timepickerService = new ClockPickerService( this.wrapperDial, this.wrapperDialMin, this.renderer );
     this.timepickerService.createHourDial();
     this.handleModelChange();
-    this.handleIconTimePicker();
-    this.onCloseTimePicker();
+    this.handleIconClockPicker();
+    this.onCloseClockPicker();
     this.windowMouseMove();
     this.listenDocumentScroll();
     this.documentMouseDown();
@@ -116,10 +116,10 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
 
   ngAfterViewInit() {
     this.setPickerMeasures();
-    this.handleTimePickerPosition();
+    this.handleClockPickerPosition();
   }
 
-  handleIconTimePicker() {
+  handleIconClockPicker() {
     if ( this.iconTimepicker ) {
       this.iconAfter = 'ion-clock';
     }
@@ -202,7 +202,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   close() {
-    this.timepickerService.closeTimePicker();
+    this.timepickerService.closeClockPicker();
   }
 
   opened() {
@@ -217,7 +217,7 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
     this.timepickerService.createMinuteDial();
   }
 
-  onCloseTimePicker() {
+  onCloseClockPicker() {
     this.timepickerService.change.subscribe( ( value ) => {
       this.setInputValue( value );
       this.changeTime.emit( value );
@@ -238,8 +238,8 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
   }
 
   open() {
-    this.timepickerService.openTimePicker();
-    this.handleTimePickerPosition();
+    this.timepickerService.openClockPicker();
+    this.handleClockPickerPosition();
     this.setPickerMeasures();
   }
 
@@ -253,12 +253,12 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
       setTimeout( () => this.timepickerService.createMinuteDial() );
     } else {
       if ( this.autoClose ) {
-        this.timepickerService.closeTimePicker();
+        this.timepickerService.closeClockPicker();
       }
     }
   }
 
-  handleTimePickerPosition() {
+  handleClockPickerPosition() {
     const timePickerHeight = this.showButtonDone ? 325 : 300;
     const totalHeight = (this.tlinput.input.nativeElement.getBoundingClientRect().top ) + timePickerHeight;
     if ( (window.innerHeight - totalHeight) < 0 ) {
@@ -266,24 +266,24 @@ export class TlTimePicker extends ElementBase<string> implements AfterViewInit, 
       this.setLeftPosition();
       return;
     }
-    this.setWrapperTimePickerPositionBottom();
+    this.setWrapperClockPickerPositionBottom();
   }
 
   setTopPositionTop() {
-    this.isTimePickerAbove = true;
+    this.isClockPickerAbove = true;
     const timePickerHeight = this.showButtonDone ? 325 : 300;
     this.timePickerContent.nativeElement.style.top =
       ( this.tlinput.input.nativeElement.getBoundingClientRect().top - this.tlinput.input.nativeElement.offsetHeight )
       - timePickerHeight + 'px';
   }
 
-  setWrapperTimePickerPositionBottom() {
+  setWrapperClockPickerPositionBottom() {
     this.setTopPositionBottom();
     this.setLeftPosition();
   }
 
   setTopPositionBottom() {
-    this.isTimePickerAbove = false;
+    this.isClockPickerAbove = false;
     this.timePickerContent.nativeElement.style.top =
       ( this.tlinput.input.nativeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight ) + 'px';
   }

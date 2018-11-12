@@ -1,13 +1,13 @@
-.tl-timepicker {
+.tl-clockpicker {
 
-  >.ui-wrapper-timepicker-content {
+  >.ui-wrapper-clockpicker-content {
     position: fixed;
     height: 100%;
     z-index: 1000;
-    >.ui-timepicker-wrapper {
+    >.ui-clockpicker-wrapper {
       position: absolute;
       margin-top: 9px;
-      >.ui-timepicker-header {
+      >.ui-clockpicker-header {
         position: relative;
         height: 50px;
         font-weight: bold;
@@ -21,7 +21,7 @@
         cursor: pointer;
         user-select: none;
       }
-      >.ui-timepicker-content {
+      >.ui-clockpicker-content {
         padding: 10px;
         cursor: move;
         position: relative;
@@ -60,7 +60,7 @@
           }
         }
       }
-      >.ui-timepicker-footer {
+      >.ui-clockpicker-footer {
         height: 50px;
         display: flex;
         align-items: center;

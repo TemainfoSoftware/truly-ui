@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as json from './timepickerdemo-dataproperties.json';
-import * as jsonEvents from './timepickerdemo-dataevents.json';
+import * as json from './clockpickerdemo-dataproperties.json';
+import * as jsonEvents from './clockpickerdemo-dataevents.json';
 
 @Component({
-  selector: 'app-timepickerdemo',
-  templateUrl: './timepickerdemo.component.html',
-  styleUrls: ['./timepickerdemo.component.scss']
+  selector: 'app-clockpickerdemo',
+  templateUrl: './clockpickerdemo.component.html',
+  styleUrls: ['./clockpickerdemo.component.scss']
 })
-export class TimePickerdemoComponent implements OnInit {
+export class ClockPickerdemoComponent implements OnInit {
 
   public dataProperties;
 

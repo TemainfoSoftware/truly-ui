@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlTimePicker } from './timepicker';
+import { TlClockPicker } from './clockpicker';
 import { InputModule } from '../input/index';
 import { FormsModule } from '@angular/forms';
-import { TimePickerService } from './services/timepicker.service';
 import { MiscModule } from '../misc/index';
 
 @NgModule( {
@@ -14,11 +13,11 @@ import { MiscModule } from '../misc/index';
     FormsModule
   ],
   declarations: [
-    TlTimePicker,
+    TlClockPicker,
   ],
   exports: [
-    TlTimePicker,
+    TlClockPicker,
   ],
 } )
-export class TimePickerModule {
+export class ClockPickerModule {
 }

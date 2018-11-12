@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TimePickerdemoComponent } from './timepickerdemo.component';
+import { ClockPickerdemoComponent } from './clockpickerdemo.component';
 
 @NgModule( {
   imports: [
     RouterModule.forChild( [
-      { path: '', component: TimePickerdemoComponent }
+      { path: '', component: ClockPickerdemoComponent }
     ] )
   ],
   exports: [
     RouterModule
   ]
 } )
-export class TimePickerDemoRoutingModule {
+export class ClockPickerDemoRoutingModule {
 }

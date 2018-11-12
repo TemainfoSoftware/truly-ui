@@ -6,28 +6,28 @@ import { HighlightJsModule } from 'ngx-highlight-js';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { TimePickerdemoComponent } from './timepickerdemo.component';
-import { TimePickerDemoRoutingModule } from './timepickerdemo-routing.module';
-import { TimePickerModule } from '../../../../projects/truly-ui/src/components/timepicker/index';
+import { ClockPickerdemoComponent } from './clockpickerdemo.component';
+import { ClockPickerDemoRoutingModule } from './clockpickerdemo-routing.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { ClockPickerModule } from '../../../../projects/truly-ui/src/components/clockpicker/index';
 
 @NgModule({
   declarations: [
-    TimePickerdemoComponent
+    ClockPickerdemoComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    TimePickerModule,
+    ClockPickerModule,
     HighlightJsModule,
     ShowcaseCardModule,
-    TimePickerDemoRoutingModule,
+    ClockPickerDemoRoutingModule,
     ShowcaseTablePropertiesModule,
     ShowcaseReturnedValueModule,
     ShowcaseTableEventsModule
   ],
   exports: [
-    TimePickerdemoComponent
+    ClockPickerdemoComponent
   ]
 })
-export class TimePickerDemoModule {}
+export class ClockPickerDemoModule {}

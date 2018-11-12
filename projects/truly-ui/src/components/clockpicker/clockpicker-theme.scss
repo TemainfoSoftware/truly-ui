@@ -1,9 +1,9 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-timepicker-theme-schema( $theme, $action ) {
+@mixin _tl-clockpicker-theme-schema( $theme, $action ) {
 
 
-  .ui-wrapper-timepicker-content {
+  .ui-wrapper-clockpicker-content {
 
     .ui-arrow-up {
       border-color: transparent transparent map-deep-get($theme, $action, "default", "border") transparent;
@@ -14,17 +14,17 @@
     }
   }
 
-  .ui-timepicker-wrapper {
+  .ui-clockpicker-wrapper {
     border: 1px solid map-deep-get($theme, $action, "default", "border");
     background: map-deep-get($theme, 'basic', "default", "background");
 
 
-    > .ui-timepicker-header {
+    > .ui-clockpicker-header {
       background: map-deep-get($theme, 'basic', "lighter", "background");
       color: rgba(map-deep-get($theme, 'basic', "lighter", "foreground"), 0.2);
     }
 
-    > .ui-timepicker-content {
+    > .ui-clockpicker-content {
       background: map-deep-get($theme, 'basic', "default", "background");
       border-top: 1px solid map-deep-get($theme, $action, "default", "border");
       border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
@@ -35,7 +35,7 @@
       }
     }
 
-    > .ui-timepicker-footer {
+    > .ui-clockpicker-footer {
       background: map-deep-get($theme, 'basic', "lighter", "background");
       color: map-deep-get($theme, 'basic', "lighter", "foreground");
       &:hover {
@@ -77,32 +77,32 @@
   }
 }
 
-@mixin tl-timepicker-theme( $theme ) {
+@mixin tl-clockpicker-theme( $theme ) {
 
-  .tl-timepicker {
+  .tl-clockpicker {
 
     &.basic {
-      @include _tl-timepicker-theme-schema($theme, 'basic')
+      @include _tl-clockpicker-theme-schema($theme, 'basic')
     }
 
     &.primary {
-      @include _tl-timepicker-theme-schema($theme, 'primary')
+      @include _tl-clockpicker-theme-schema($theme, 'primary')
     }
 
     &.success {
-      @include _tl-timepicker-theme-schema($theme, 'success')
+      @include _tl-clockpicker-theme-schema($theme, 'success')
     }
 
     &.danger {
-      @include _tl-timepicker-theme-schema($theme, 'danger')
+      @include _tl-clockpicker-theme-schema($theme, 'danger')
     }
 
     &.warning {
-      @include _tl-timepicker-theme-schema($theme, 'warning')
+      @include _tl-clockpicker-theme-schema($theme, 'warning')
     }
 
     &.information {
-      @include _tl-timepicker-theme-schema($theme, 'information')
+      @include _tl-clockpicker-theme-schema($theme, 'information')
     }
 
     &:focus {

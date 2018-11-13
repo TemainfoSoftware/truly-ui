@@ -26,10 +26,10 @@
               "node_modules/@angular/cdk/overlay-prebuilt.css",
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
-              "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
-              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/all.min.css",
-              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/ionicons.min.css",
-              "projects/truly-ui/src/components/core/styles/icons/animations/styles.css",
+              "projects/truly-ui/src/components/core/styles/icons/dx-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/animations.scss",
               "src/styles.scss"
             ],
             "scripts": [
@@ -94,10 +94,10 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/atom-one-dark.min.css",
               "src/assets/css/demo.css",
-              "projects/truly-ui/src/components/core/styles/icons/dx-icons/dx-icons.scss",
-              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/all.min.css",
-              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/ionicons.min.css",
-              "projects/truly-ui/src/components/core/styles/icons/animations/styles.css",
+              "projects/truly-ui/src/components/core/styles/icons/dx-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/icons.scss",
+              "projects/truly-ui/src/components/core/styles/icons/animations.scss",
               "src/styles.scss"
             ],
             "assets": [

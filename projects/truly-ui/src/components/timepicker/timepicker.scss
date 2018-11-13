@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+
+.ui-wrapper-content {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  margin-top: 10px;
+  user-select: none;
+  background: #f5f5f5;
+  > .ui-timepicker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 50px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    > .ui-selected-time {
+      font-size: 1em;
+      font-family: Lato, "Segoe UI";
+      font-weight: normal;
+    }
+    > .ui-button-now {
+      padding: 5px 10px;
+      border: 1px solid #6c9;
+      border-radius: 3px;
+      color: #6c9;
+      transition: all 200ms linear;
+      &:hover {
+        cursor: pointer;
+        background: #66cc99;
+        color: #FFF;
+      }
+    }
+  }
+  > .ui-timepicker-footer {
+    height: 30px;
+  }
+  > .ui-timepicker-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    height: 180px;
+    > .ui-controller-section {
+      height: 20px;
+      border: 1px solid #DCDCDC;
+      width: 220px;
+      position: absolute;
+      top: calc(50% + 15px);
+    }
+    > .ui-hour-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        background: transparent;
+      }
+    }
+    > .ui-minute-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        background: transparent;
+      }
+    }
+    > .ui-ampm-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      overflow: auto;
+      position: relative;
+      top: calc(50% - 10px);
+    }
+  }
+
+  > .ui-timepicker-footer {
+    display: flex;
+    align-items: center;
+  }
+
+  .list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+}

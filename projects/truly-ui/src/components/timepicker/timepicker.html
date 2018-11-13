@@ -1,0 +1,47 @@
+<div class="ui-timepicker-wrapper">
+
+  <tl-input (overlayOrigin)="trigger = $event" (click)="isOpen = !isOpen" [flatBorder]="true"
+            [iconAfter]="'ion-clock'"></tl-input>
+
+  <div class="ui-wrapper-content">
+    <div class="ui-timepicker-header">
+      <div class="ui-selected-time">{{ selectedTime }}</div>
+      <div (click)="clickNow($event)" class="ui-button-now">{{ nowText }}</div>
+    </div>
+    <div class="ui-timepicker-content">
+      <div class="ui-controller-section"></div>
+      <div class="ui-hour-content">
+        <ul class="list">
+          <li *ngFor="let index of minutes">{{ index }}</li>
+        </ul>
+      </div>
+      <div class="ui-minute-content">
+        <ul class="list">
+          <li *ngFor="let index of hours">{{ index }}</li>
+        </ul>
+      </div>
+      <div class="ui-ampm-content">
+        <ul class="list">
+          <li>AM</li>
+          <li>PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ui-timepicker-footer">
+      <tl-button [width]="'110px'" [text]="'Cancel'"></tl-button>
+      <tl-button [width]="'110px'" [text]="'Confirm'" [color]="'primary'"></tl-button>
+    </div>
+  </div>
+
+  <!--<ng-template cdkConnectedOverlay
+               (backdropClick)="isOpen = false"
+               [cdkConnectedOverlayHasBackdrop]="true"
+               [cdkConnectedOverlayOrigin]="trigger"
+               [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+               [cdkConnectedOverlayOpen]="isOpen">
+
+
+  </ng-template>-->
+
+</div>
+

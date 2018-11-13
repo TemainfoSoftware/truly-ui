@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component( {
@@ -43,9 +43,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
 } )
 export class IconsDemoComponent {
 
+  @ViewChild('inputCopy') inputCopy: ElementRef<any>;
+
+  public copy: string;
+
   public saved: string;
 
   public interval;
+
+  public outputIcon;
 
   public dataIcons = ['add', 'airplane', 'bookmark', 'box', 'car', 'card', 'cart', 'chart', 'check', 'clear', 'clock', 'close', 'coffee',
     'comment', 'doc', 'download', 'dragvertical', 'edit', 'email', 'event', 'favorites', 'find', 'filter-operation-equals', 'filter',
@@ -63,11 +69,14 @@ export class IconsDemoComponent {
 
   constructor() {}
 
-  copyIcon(inputElement) {
-    inputElement.input.nativeElement.select();
-    document.execCommand('copy');
-    inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);
-    this.showCopyMessage(inputElement.input.nativeElement.value);
+  copyIcon(icon) {
+    this.onMouseLeave();
+    this.outputIcon = `<tl-icon [lib]="'dx'">${ icon }</tl-icon>`;
+    setTimeout(() => {
+      this.inputCopy.nativeElement.select();
+      document.execCommand('copy');
+      this.showCopyMessage(icon);
+    });
   }
 
   showCopyMessage(icon) {
@@ -76,6 +85,14 @@ export class IconsDemoComponent {
     this.interval = setInterval( () => {
       this.saved = '';
     }, 1000 );
+  }
+
+  onMouseOver(icon) {
+    this.copy = icon;
+  }
+
+  onMouseLeave() {
+    this.copy = '';
   }
 
 }

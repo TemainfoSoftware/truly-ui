@@ -62,5 +62,12 @@ export const dataProperties = [
     default: 'null',
     description: 'Changes the default color of the icon.',
     options: 'hex | rgb | rgba'
+  },
+  {
+    name: 'align',
+    type: 'string',
+    default: 'left',
+    description: 'Change icon alignment.',
+    options: 'left | right'
   }
 ];

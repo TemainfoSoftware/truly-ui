@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component( {
@@ -43,9 +43,15 @@ import { animate, style, transition, trigger } from '@angular/animations';
 } )
 export class IconsDemoComponent {
 
+  @ViewChild('inputCopy') inputCopy: ElementRef<any>;
+
+  public copy: string;
+
   public saved: string;
 
   public interval;
+
+  public outputIcon;
 
   public materialIcons = ['add-circle-outline', 'add-circle', 'add', 'airplane',
     'alarm', 'albums', 'alert', 'american-football', 'analytics',
@@ -186,11 +192,14 @@ export class IconsDemoComponent {
 
   constructor() {}
 
-  copyIcon(inputElement) {
-    inputElement.input.nativeElement.select();
-    document.execCommand('copy');
-    inputElement.input.nativeElement.setSelectionRange(0, inputElement.input.nativeElement.value.length);
-    this.showCopyMessage(inputElement.input.nativeElement.value);
+  copyIcon(icon, styleIcon) {
+    this.onMouseLeave();
+    this.outputIcon = `<tl-icon [lib]="'ion'" [style]="'${ styleIcon }'">${ icon }</tl-icon>`;
+    setTimeout(() => {
+      this.inputCopy.nativeElement.select();
+      document.execCommand('copy');
+      this.showCopyMessage(icon);
+    });
   }
 
   showCopyMessage(icon) {
@@ -199,6 +208,14 @@ export class IconsDemoComponent {
     this.interval = setInterval( () => {
       this.saved = '';
     }, 1000 );
+  }
+
+  onMouseOver(icon) {
+    this.copy = icon;
+  }
+
+  onMouseLeave() {
+    this.copy = '';
   }
 
 }

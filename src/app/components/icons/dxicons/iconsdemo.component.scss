@@ -8,13 +8,21 @@ ul li {
   text-align: center;
 }
 
-ul li tl-input {
+ul li span {
   margin: 5px 10px;
+  max-height: 19px;
   display: block;
+  cursor: pointer;
+  border: 1px solid #CCC;
+  background: #F4F4F4;
+  font-size: 12px;
+  color: #333;
 }
 
 .copy-message {
+  width: 20px;
+  height: 19px;
   position: absolute;
-  top: 42px;
-  right: 14px;
+  top: 39px;
+  right: 10px;
 }

@@ -17,15 +17,12 @@
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of materialIcons">
                   <tl-icon [icon]="icon" [style]="'md'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <tl-input #tlinput
-                            [readonly]="true"
-                            [name]="icon"
-                            [ngModel]="icon"
-                            [textAlign]="'center'"
-                            (click)="copyIcon(tlinput)">
-                  </tl-input>
+                  <span (click)="copyIcon(icon, 'md')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
                   <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [icon]="'done-all'" [style]="'md'" [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'"></tl-icon>
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                  </div>
+                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
                   </div>
                 </li>
               </ul>
@@ -37,15 +34,12 @@
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of iosIcons">
                   <tl-icon [icon]="icon" [style]="'ios'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <tl-input #tlinput
-                            [readonly]="true"
-                            [name]="icon"
-                            [ngModel]="icon"
-                            [textAlign]="'center'"
-                            (click)="copyIcon(tlinput)">
-                  </tl-input>
+                  <span (click)="copyIcon(icon, 'ios')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
                   <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [icon]="'done-all'" [style]="'md'" [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'"></tl-icon>
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                  </div>
+                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
                   </div>
                 </li>
               </ul>
@@ -57,21 +51,19 @@
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of logoIcons">
                   <tl-icon [icon]="icon" [style]="'logo'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <tl-input #tlinput
-                            [readonly]="true"
-                            [name]="icon"
-                            [ngModel]="icon"
-                            [textAlign]="'center'"
-                            (click)="copyIcon(tlinput)">
-                  </tl-input>
+                  <span (click)="copyIcon(icon, 'logo')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
                   <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [icon]="'done-all'" [style]="'md'" [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'"></tl-icon>
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                  </div>
+                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
                   </div>
                 </li>
               </ul>
             </div>
           </app-card>
         </app-showcase-card>
+        <input #inputCopy type="text" [ngModel]="outputIcon" style="width:1px;height:1px;border:0;">
       </div>
     </div>
   </div>

@@ -48,6 +48,8 @@ export class TlIcons implements AfterContentInit {
 
   @Input() color: string;
 
+  @Input() align: string;
+
   @ViewChild('content') content: ElementRef<any>;
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;

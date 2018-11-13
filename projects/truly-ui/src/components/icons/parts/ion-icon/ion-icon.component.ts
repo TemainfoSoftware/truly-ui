@@ -7,7 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class IonIconComponent implements OnInit {
 
-  public PREFIX = 'ion';
+  public format: string;
+
+  public PREFIX = 'ion ion';
 
   @Input() icon: string;
 
@@ -19,12 +21,19 @@ export class IonIconComponent implements OnInit {
 
   @Input() color: string;
 
+  @Input() align: string;
+
   constructor() { }
 
   ngOnInit() {
     if ( this.style === undefined ) {
       this.style = 'md';
     }
+
+    this.format = this.style + ' ';
+    this.format += this.PREFIX + '-' + this.style + '-' + this.icon;
+    this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
+    this.format += (this.align) ? ' pull-' + this.align : '';
   }
 
 }

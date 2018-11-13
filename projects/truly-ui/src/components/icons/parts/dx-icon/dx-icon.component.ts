@@ -7,6 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DxIconComponent implements OnInit {
 
+  public format: string;
+
   public PREFIX = 'dx-icon dx-icon-';
 
   @Input() icon: string;
@@ -17,8 +19,14 @@ export class DxIconComponent implements OnInit {
 
   @Input() color: string;
 
-  constructor() {}
+  @Input() align: string;
 
-  ngOnInit() {}
+  constructor() { }
+
+  ngOnInit() {
+    this.format = this.PREFIX + this.icon;
+    this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
+    this.format += (this.align) ? ' pull-' + this.align : '';
+  }
 
 }

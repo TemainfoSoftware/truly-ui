@@ -223,6 +223,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/timeline/overview/timelinedemo.module#TimelineDemoModule'
       },
       {
+        path: 'timepicker',
+        loadChildren: './components/timepicker/timepickerdemo.module#TimepickerDemoModule'
+      },
+      {
         path: 'timeline/infinitescroll',
         loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
       },

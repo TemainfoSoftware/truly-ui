@@ -11,7 +11,7 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
               <h5>Basic</h5>
@@ -24,11 +24,11 @@
             </div>
             <div class="col-md-6">
               <h5>Addon - Icon Before</h5>
-              <tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'">
+              <tl-button [text]="'Ok'" [iconAddonBefore]="'fas fa-print'">
               </tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-button [text]="'Ok'" [iconAddonBefore]="'ion-printer'"></tl-button>
+                <tl-button [text]="'Ok'" [iconAddonBefore]="'fas fa-print'"></tl-button>
               </textarea>
             </div>
           </app-card>
@@ -55,20 +55,20 @@
           <app-card>
             <div class="col-md-12">
               <h5>Button Icon</h5>
-              <tl-button width="'40px'" [color]="'basic'"><i class="ion-home"></i></tl-button>
-              <tl-button width="'40px'" [color]="'primary'"><i class="ion-home"></i></tl-button>
-              <tl-button width="'40px'" [color]="'success'"><i class="ion-home"></i></tl-button>
-              <tl-button width="'40px'" [color]="'danger'"><i class="ion-home"></i></tl-button>
-              <tl-button width="'40px'" [color]="'warning'"><i class="ion-home"></i></tl-button>
-              <tl-button width="'40px'" [color]="'information'"><i class="ion-home"></i></tl-button>
+              <tl-button width="'40px'" [color]="'basic'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <tl-button width="'40px'" [color]="'primary'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <tl-button width="'40px'" [color]="'success'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <tl-button width="'40px'" [color]="'danger'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <tl-button width="'40px'" [color]="'warning'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <tl-button width="'40px'" [color]="'information'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button width="'40px'" [color]="'basic'"><i class="ion-home"></i></tl-button>
-<tl-button width="'40px'" [color]="'primary'"><i class="ion-home"></i></tl-button>
-<tl-button width="'40px'" [color]="'success'"><i class="ion-home"></i></tl-button>
-<tl-button width="'40px'" [color]="'danger'"><i class="ion-home"></i></tl-button>
-<tl-button width="'40px'" [color]="'warning'"><i class="ion-home"></i></tl-button>
-<tl-button width="'40px'" [color]="'information'"><i class="ion-home"></i></tl-button>
+<tl-button width="'40px'" [color]="'basic'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<tl-button width="'40px'" [color]="'primary'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<tl-button width="'40px'" [color]="'success'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<tl-button width="'40px'" [color]="'danger'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<tl-button width="'40px'" [color]="'warning'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<tl-button width="'40px'" [color]="'information'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
               </textarea>
             </div>
           </app-card>
@@ -101,10 +101,10 @@
             </div>
             <div class="col-md-6">
               <h5>Icon After Text Button</h5>
-              <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'"></tl-button>
+              <tl-button [text]="'Button'" [iconAfterText]="'fas fa-print'"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-button [text]="'Button'" [iconAfterText]="'ion-printer'"></tl-button>
+                <tl-button [text]="'Button'" [iconAfterText]="'fas fa-print'"></tl-button>
               </textarea>
             </div>
           </app-card>
@@ -119,10 +119,10 @@
             </div>
             <div class="col-md-6">
               <h5>Height</h5>
-              <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'ion-printer'"></tl-button>
+              <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'fas fa-print'"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'ion-printer'"></tl-button>
+                <tl-button [text]="'Button'" [height]="'40px'" [iconAddonAfter]="'fas fa-print'"></tl-button>
               </textarea>
             </div>
           </app-card>
@@ -164,17 +164,17 @@
             </div>
             <div class="col-md-6">
               <h5>Many Properties</h5>
-              <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [iconAfterText]="'fa fa-home'"></tl-button>
+              <tl-button [text]="'Button'" [iconAddonBefore]="'fas fa-print'" [iconAfterText]="'fa fa-home'"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-button [text]="'Button'" [iconAddonBefore]="'ion-printer'" [iconAfterText]="'fa fa-home'"></tl-button>
+                <tl-button [text]="'Button'" [iconAddonBefore]="'fas fa-print'" [iconAfterText]="'fa fa-home'"></tl-button>
               </textarea>
             </div>
           </app-card>
         </app-showcase-card>
       </div>
     </div>
-    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
       <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
       </app-card>

@@ -42,7 +42,7 @@ export class TlIcons implements AfterContentInit {
 
   @Input() style: string;
 
-  @Input() size = '14px';
+  @Input() size = '12px';
 
   @Input() animation: string;
 

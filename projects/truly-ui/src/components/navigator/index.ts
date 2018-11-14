@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { TlNavigator } from './navigator';
 import { NavigatorService } from './services/navigator.service';
+import { IconsModule } from '../icons';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    IconsModule
   ],
   declarations: [
     TlNavigator,

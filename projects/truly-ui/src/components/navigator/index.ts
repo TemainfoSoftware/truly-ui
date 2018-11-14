@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { TlNavigator } from './navigator';
 import { NavigatorService } from './services/navigator.service';
-import { IconsModule } from '../icons';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
   imports: [

@@ -75,7 +75,7 @@ export class ToasterService {
 
   danger( toasterConfig: ToasterConfig ) {
     this.createToaster( toasterConfig );
-    this.toaster.icon = 'ion-close-circled';
+    this.toaster.icon = 'ion ion-ios-close-circle';
     this.toaster.color = 'danger';
     this.toaster.id = 'toaster-danger-' + uniqueId++;
     this.addToaster();

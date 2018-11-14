@@ -3,7 +3,7 @@
     <h1 class="title">Internationalization</h1>
     <p class="text-content">The default language of Truly-UI is English(<code>en_US</code>) as of yet. If you want to use other languages, you can follow the instructions below.</p>
   </div>
-  <app-showcase-card [title]="'Configuration'" [icon]="'ion-document-text'">
+  <app-showcase-card [title]="'Configuration'" [icon]="'fas fa-file-alt'">
     <app-card>
       <span class="description">
         Truly-UI provides a way to set the language of the components in the main module, so all Truly components will
@@ -38,7 +38,7 @@ export class AppModule { }
         </div>
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Changing Language at Runtime'" [icon]="'ion-document-text'">
+  <app-showcase-card [title]="'Changing Language at Runtime'" [icon]="'fas fa-file-alt'">
     <app-card>
       <span class="description">
         The Truly-UI Internationalization API also provides a Runtime Language Changing service. Just use the <code>I18nService</code> service as an injection dependency on other services / components of your application and use the <code>setLocale()</code> method, passing as parameter the language.
@@ -62,7 +62,7 @@ export class MyService {
       </div>
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Supported languages'" [icon]="'ion-document-text'">
+  <app-showcase-card [title]="'Supported languages'" [icon]="'fas fa-file-alt'">
     <app-card>
       <div class="table-box">
         <table class="table table-truly">

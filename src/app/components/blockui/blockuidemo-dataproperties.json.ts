@@ -44,7 +44,7 @@ export const dataProperties = [
   {
     name: 'blockuiConfig.icon',
     type: 'string',
-    default: 'fa fa-refresh',
+    default: 'fas fa-sync-alt',
     description: 'Icon to be shown.',
     options: 'icon class'
   },

@@ -2545,10 +2545,9 @@ table.text-center th {
   display: block;
   font-size: 14px;
 }
-.treeview-menu > li > a > .fa,
-.treeview-menu > li > a > .glyphicon,
-.treeview-menu > li > a > .ion {
-  width: 20px;
+.treeview-menu > li > a > tl-icon {
+  width: 15px;
+  display: inline-block;
 }
 .treeview-menu > li > a > .pull-right-container > .fa-angle-left,
 .treeview-menu > li > a > .pull-right-container > .fa-angle-down,

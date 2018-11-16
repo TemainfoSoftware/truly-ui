@@ -59,7 +59,7 @@ export class ToasterService {
 
   success( toasterConfig: ToasterConfig ) {
     this.createToaster( toasterConfig );
-    this.toaster.icon = 'ion-checkmark';
+    this.toaster.icon = 'ion ion-ios-checkmark-circle-outline';
     this.toaster.color = 'success';
     this.toaster.id = 'toaster-sucess-' + uniqueId++;
     this.addToaster();
@@ -67,7 +67,7 @@ export class ToasterService {
 
   information( toasterConfig: ToasterConfig ) {
     this.createToaster( toasterConfig );
-    this.toaster.icon = 'ion-ios-information-outline';
+    this.toaster.icon = 'ion ion-ios-information-circle-outline';
     this.toaster.color = 'information';
     this.toaster.id = 'toaster-information-' + uniqueId++;
     this.addToaster();
@@ -75,7 +75,7 @@ export class ToasterService {
 
   danger( toasterConfig: ToasterConfig ) {
     this.createToaster( toasterConfig );
-    this.toaster.icon = 'ion ion-ios-close-circle';
+    this.toaster.icon = 'ion ion-ios-close-circle-outline';
     this.toaster.color = 'danger';
     this.toaster.id = 'toaster-danger-' + uniqueId++;
     this.addToaster();
@@ -83,7 +83,7 @@ export class ToasterService {
 
   warning( toasterConfig: ToasterConfig ) {
     this.createToaster( toasterConfig );
-    this.toaster.icon = 'ion-android-warning';
+    this.toaster.icon = 'ion ion-ios-warning';
     this.toaster.color = 'warning';
     this.toaster.id = 'toaster-warning-' + uniqueId++;
     this.addToaster();

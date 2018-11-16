@@ -23,7 +23,7 @@
             </tl-input>
             <div class="message">
               <div class="copy-message" [@enterAnimation]="saved" *ngIf="saved">
-                <i class="ion-ios-checkmark-outline"></i>
+                <tl-icon [lib]="'ion'">checkmark-circle-outline</tl-icon>
                 <span>Copied!</span>
               </div>
             </div>

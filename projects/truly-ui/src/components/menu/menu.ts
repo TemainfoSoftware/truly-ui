@@ -215,7 +215,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
       this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
       this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
       if ( subItem ) {
-        this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-right' );
+        this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-forward' );
       }
     }
   }

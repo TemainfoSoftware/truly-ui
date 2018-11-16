@@ -32,13 +32,15 @@ import { SidebarService } from './sidebar.service';
 
 import { BackdropModule } from '../core/components/backdrop/index';
 import { MiscModule } from '../misc/index';
+import { IconsModule } from '../icons/index';
 import { ModalResultDirective } from './directives/modal-result.directive';
 
 @NgModule( {
     imports: [
       CommonModule,
       BackdropModule,
-      MiscModule
+      MiscModule,
+      IconsModule
     ],
     declarations: [
       TlModal,

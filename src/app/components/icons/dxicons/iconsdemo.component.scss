@@ -13,6 +13,9 @@ ul li .shadow-hover {
   padding: 10px 10px 10px 10px;
   border-radius: 6px;
   cursor: pointer;
+  transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 ul li .shadow-hover:hover {

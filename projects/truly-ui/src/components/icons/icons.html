@@ -1,0 +1,6 @@
+<dx-icon [icon]="icon" [size]="size" [animation]="animation" [color]="color" [align]="align" *ngIf="lib === 'dx'"></dx-icon>
+<fa-icon [icon]="icon" [style]="style" [size]="size" [animation]="animation" [color]="color" [align]="align" *ngIf="lib === 'fa'"></fa-icon>
+<ion-icon [icon]="icon" [style]="style" [size]="size" [animation]="animation" [color]="color" [align]="align" *ngIf="lib === 'ion'"></ion-icon>
+<div hidden #content>
+  <ng-content></ng-content>
+</div>

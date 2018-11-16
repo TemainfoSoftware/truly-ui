@@ -26,7 +26,7 @@ import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 import { TlButton } from '../../button/button';
 @Modal({
-  icon: 'ion-close-circled',
+  icon: 'ion ion-ios-close-circle',
   title: 'Error',
   color: 'danger',
   width: '400px',

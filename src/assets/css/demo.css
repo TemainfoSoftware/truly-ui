@@ -219,10 +219,10 @@ body {
 .main-header .sidebar-toggle {
   float: left;
   padding: 15px 15px;
-  font-family: fontAwesome;
+  font-family: Ionicons;
 }
 .main-header .sidebar-toggle:before {
-  content: "\f0c9";
+  content: "\f1c3";
 }
 .main-header .sidebar-toggle:hover {
   color: #fff;
@@ -307,7 +307,7 @@ body {
   margin-right: 5px;
 }
 .content-header > .breadcrumb > li + li:before {
-  content: '>\00a0';
+  content: '\f3d1';
 }
 @media (max-width: 991px) {
   .content-header > .breadcrumb {
@@ -478,10 +478,9 @@ body {
   padding: 12px 0 12px 20px;
   display: block;
 }
-.sidebar-menu > li > a > .fa,
-.sidebar-menu > li > a > .glyphicon,
-.sidebar-menu > li > a > .ion {
+.sidebar-menu > li > a > tl-icon {
   width: 20px;
+  display: inline-block;
 }
 .sidebar-menu > li .label,
 .sidebar-menu > li .badge {
@@ -2546,10 +2545,9 @@ table.text-center th {
   display: block;
   font-size: 14px;
 }
-.treeview-menu > li > a > .fa,
-.treeview-menu > li > a > .glyphicon,
-.treeview-menu > li > a > .ion {
-  width: 20px;
+.treeview-menu > li > a > tl-icon {
+  width: 15px;
+  display: inline-block;
 }
 .treeview-menu > li > a > .pull-right-container > .fa-angle-left,
 .treeview-menu > li > a > .pull-right-container > .fa-angle-down,

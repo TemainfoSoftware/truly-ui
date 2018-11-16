@@ -15,8 +15,8 @@
                         <div *ngIf="dt.allowSortColumn" class="ui-sort-indicator -push-{{column.alignment}}">
                             <span
                               [ngClass]="{
-                                      'ion-ios-arrow-thin-up': getSortOrder(column) == 1,
-                                      'ion-ios-arrow-thin-down': getSortOrder(column) == -1
+                                      'ion ion-ios-arrow-round-up': getSortOrder(column) == 1,
+                                      'ion ion-ios-arrow-round-down': getSortOrder(column) == -1
                               }"
                             >
                           </span>

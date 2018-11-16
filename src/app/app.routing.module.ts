@@ -143,6 +143,22 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/inputcurrency/inputcurrencydemo.module#InputCurrencyDemoModule'
       },
       {
+        path: 'icons',
+        loadChildren: './components/icons/overview/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/dxicons',
+        loadChildren: './components/icons/dxicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/font-awesome',
+        loadChildren: './components/icons/font-awesome/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/ionicons',
+        loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
         path: 'listbox',
         loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
       },

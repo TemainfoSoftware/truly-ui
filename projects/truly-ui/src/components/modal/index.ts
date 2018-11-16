@@ -30,7 +30,7 @@ import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { SidebarService } from './sidebar.service';
 
 import { BackdropModule } from '../core/components/backdrop/index';
-import { MiscModule } from '../misc/index';
+import { IconsModule } from '../icons/index';
 import { ModalResultDirective } from './directives/modal-result.directive';
 import { ShortcutService } from '../shortcut/shortcut.service';
 import { ShortcutModule } from '../shortcut/index';
@@ -39,7 +39,8 @@ import { ShortcutModule } from '../shortcut/index';
     imports: [
       CommonModule,
       BackdropModule,
-      ShortcutModule
+      ShortcutModule,
+      IconsModule,
     ],
     declarations: [
       TlModal,

@@ -72,7 +72,6 @@ export class ToasterDemoComponent {
 
   information() {
     this.toasterService.information( this.getValues() );
-    this.toasterService.information( this.getValues() );
   }
 
   danger() {

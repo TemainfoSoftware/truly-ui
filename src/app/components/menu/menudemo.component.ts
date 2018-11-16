@@ -46,125 +46,125 @@ export class MenuDemoComponent {
     this.menuItems = [
       {
         label: 'First Menu',
-        icon: 'ion-gear-a',
+        icon: 'fa-cog',
       },
       {
         label: 'Second Menu',
-        icon: 'ion-heart',
+        icon: 'fa-heart',
       },
       {
         label: 'Third Menu',
-        icon: 'ion-document-text',
+        icon: 'fa-file-invoice',
       },
       {
         label: 'Fourth Menu',
-        icon: 'ion-gear-a',
+        icon: 'fa-archive',
       },
       {
         label: 'Fifth Menu',
-        icon: 'ion-heart',
+        icon: 'fa-book',
       },
       {
         label: 'Sixth Menu',
-        icon: 'ion-document-text',
+        icon: 'fa-archive',
       },
       {
         label: 'Main Menu',
-        icon: 'ion-navicon',
+        icon: 'fa-bars',
         alwaysActive: true,
         subItem: [
           {
             label: 'Alabama',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'United States',
           },
           {
             label: 'Alaska',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'United States',
           },
           {
             label: 'Arizona',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'United States',
           },
           {
             label: 'Arkansas',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'United States',
           },
           {
             label: 'California',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'United States',
             subItem: [
               {
                 label: 'Acton',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
               },
               {
                 label: 'Adelanto',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
               },
               {
                 label: 'Agoura Hills',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
                 subItem: [
                   {
                     label: 'Agoura Hills',
-                    icon: 'ion-earth',
+                    icon: 'fas fa-globe-americas',
                     category: 'United States',
                   },
                 ]
               },
               {
                 label: 'Alameda',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
               },
               {
                 label: 'Alamo',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
               },
               {
                 label: 'Albany',
-                icon: 'ion-earth',
+                icon: 'fas fa-globe-americas',
                 category: 'United States',
               }
             ]
           },
           {
             label: 'Alsace',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'France',
           },
           {
             label: 'Aquitaine',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'France',
           },
           {
             label: 'Lorraine',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'France',
           },
           {
             label: 'New South Wales',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'Australia',
           },
           {
             label: 'Queensland',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'Australia',
           },
           {
             label: 'South Australia',
-            icon: 'ion-earth',
+            icon: 'fas fa-globe-americas',
             category: 'Australia',
           },
         ]

@@ -43,7 +43,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() disabled = null;
 
-  @Input() defaultIcon = 'ion-search';
+  @Input() defaultIcon = 'ion ion-ios-search';
 
   @Input() color = 'basic';
 

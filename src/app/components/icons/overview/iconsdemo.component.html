@@ -1,0 +1,153 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Icons<span
+      class="module-name"><code><u>Module Name</u>: <strong>IconsModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>IconsModule</strong></code></p>
+    <p class="text-content">
+      The Truly-UI Icons unites the main packages of icons available on the web: DXIcons, Font-Awesome, Ionicons.
+    </p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Basic</h5>
+                <tl-icon [lib]="'dx'">home</tl-icon>
+                <tl-icon [lib]="'fa'">home</tl-icon>
+                <tl-icon [lib]="'ion'">home</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [lib]="'dx'">home</tl-icon>
+<tl-icon [lib]="'fa'">home</tl-icon>
+<tl-icon [lib]="'ion'">home</tl-icon>
+                </textarea>
+              </div>
+              <div class="col-md-6">
+                <h5>DXIcons</h5>
+                <tl-icon [lib]="'dx'">filter-operation-starts-with</tl-icon>
+                <tl-icon [lib]="'dx'">comment</tl-icon>
+                <tl-icon [lib]="'dx'">airplane</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [lib]="'dx'">filter-operation-starts-with</tl-icon>
+<tl-icon [lib]="'dx'">comment</tl-icon>
+<tl-icon [lib]="'dx'">airplane</tl-icon>
+                </textarea>
+              </div>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Font Awesome</h5>
+                <tl-icon [style]="'fas'" [lib]="'fa'">address-book</tl-icon>
+                <tl-icon [style]="'far'" [lib]="'fa'">address-book</tl-icon>
+                <tl-icon [style]="'fas'" [lib]="'fa'">address-card</tl-icon>
+                <tl-icon [style]="'far'" [lib]="'fa'">address-card</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [style]="'fas'" [lib]="'fa'">address-book</tl-icon>
+<tl-icon [style]="'far'" [lib]="'fa'">address-book</tl-icon>
+<tl-icon [style]="'fas'" [lib]="'fa'">address-card</tl-icon>
+<tl-icon [style]="'far'" [lib]="'fa'">address-card</tl-icon>
+                </textarea>
+              </div>
+              <div class="col-md-6">
+                <h5>Ionicons</h5>
+                <tl-icon [style]="'md'" [lib]="'ion'">alarm</tl-icon>
+                <tl-icon [style]="'ios'" [lib]="'ion'">alarm</tl-icon>
+                <tl-icon [style]="'md'" [lib]="'ion'">basket</tl-icon>
+                <tl-icon [style]="'ios'" [lib]="'ion'">basket</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [style]="'md'" [lib]="'ion'">alarm</tl-icon>
+<tl-icon [style]="'ios'" [lib]="'ion'">alarm</tl-icon>
+<tl-icon [style]="'md'" [lib]="'ion'">basket</tl-icon>
+<tl-icon [style]="'ios'" [lib]="'ion'">basket</tl-icon>
+                </textarea>
+              </div>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Size</h5>
+                <tl-icon [lib]="'dx'" [size]="'20px'">home</tl-icon>
+                <tl-icon [lib]="'fa'" [size]="'20px'">home</tl-icon>
+                <tl-icon [lib]="'ion'" [size]="'20px'">home</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [lib]="'dx'" [size]="'20px'">home</tl-icon>
+<tl-icon [lib]="'fa'" [size]="'20px'">home</tl-icon>
+<tl-icon [lib]="'ion'" [size]="'20px'">home</tl-icon>
+                </textarea>
+                <br>
+                <h5>Color</h5>
+                <tl-icon [lib]="'dx'" [color]="'#006699'">home</tl-icon>
+                <tl-icon [lib]="'fa'" [color]="'rgb(94, 199, 145)'">home</tl-icon>
+                <tl-icon [lib]="'ion'" [color]="'red'">home</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [lib]="'dx'" [color]="'#006699'">home</tl-icon>
+<tl-icon [lib]="'fa'" [color]="'rgba(94, 199, 145, 1)'">home</tl-icon>
+<tl-icon [lib]="'ion'" [color]="'red'">home</tl-icon>
+                </textarea>
+              </div>
+              <div class="col-md-6">
+                <h5>Animations</h5>
+                <tl-icon [lib]="'fa'" [animation]="'wrench'">wrench</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'ring'">bell</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'horizontal'">envelope</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'vertical'">thumbs-up</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'flash'">exclamation-triangle</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'bounce'">thumbs-up</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'float'">plane</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'pulse'">heart</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'shake'">envelope</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'tada'">trophy</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'passing'">space-shuttle</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'passing-reverse'">space-shuttle</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'burst'">circle</tl-icon>
+                <tl-icon [lib]="'fa'" [animation]="'falling'">star</tl-icon>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-icon [lib]="'fa'" [animation]="'wrench'">wrench</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'ring'">bell</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'horizontal'">envelope</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'vertical'">thumbs-up</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'flash'">exclamation-triangle</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'bounce'">thumbs-up</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'float'">plane</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'pulse'">heart</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'shake'">envelope</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'tada'">trophy</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'passing'">space-shuttle</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'passing-reverse'">space-shuttle</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'burst'">circle</tl-icon>
+<tl-icon [lib]="'fa'" [animation]="'falling'">star</tl-icon>
+                </textarea>
+              </div>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

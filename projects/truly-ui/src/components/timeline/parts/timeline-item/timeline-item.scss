@@ -100,7 +100,7 @@ $offset-tail: 4px;
   position: absolute;
   top: 0;
   font-size: 23px;
-  font-family: "FontAwesome";
+  font-family: "Ionicons";
 }
 
 .tl-timeline-item .tl-timeline-item-content .content-head {
@@ -184,13 +184,13 @@ $offset-tail: 4px;
 .tl-timeline-item .content-left:before,
 .tl-timeline-item .content-df-left:before,
 .tl-timeline-item .arrow-right:before {
-  content: "\f0d9";
-  left: -7px;
+  content: "\f282";
+  left: -5px;
 }
 
 .tl-timeline-item .content-right:before,
 .tl-timeline-item .content-df-right:before,
 .tl-timeline-item .arrow-left:before {
-  content: "\f0da";
-  right: -7px;
+  content: "\f284";
+  right: -5px;
 }

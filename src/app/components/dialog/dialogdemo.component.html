@@ -9,32 +9,32 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-3">
               <h5>Show Dialog Info</h5>
               <tl-button [text]="'Show Dialog Info'" [color]="'information'"
-                         [iconAddonBefore]="'ion-information-circled'" (click)="info()"></tl-button>
+                         [iconAddonBefore]="'ion ion-ios-information-circle'" (click)="info()"></tl-button>
             </div>
 
             <div class="col-md-3">
               <h5>Show Dialog Confirmation</h5>
-              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion-checkmark'"
+              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion ion-md-checkmark'"
                          (click)="confirmation()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Alert</h5>
-              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion-alert-circled'"
+              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion ion-md-alert'"
                          (click)="alert()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Error</h5>
-              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion-close-circled'"
+              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion ion-md-close-circle'"
                          (click)="error()"></tl-button>
             </div>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
+        <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
             <h4>Step One</h4>
             <h5>Inject the <code>DialogService</code> in your <code>constructor</code>.</h5>
@@ -57,7 +57,7 @@
         </app-showcase-card>
       </div>
     </div>
-    <app-showcase-card [title]="'Dialog Results'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Dialog Results'" [icon]="'fas fa-clipboard-list'">
       <app-card>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   export enum ModalResult {
@@ -75,17 +75,17 @@
 </textarea>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Methods'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Methods'" [icon]="'fas fa-clipboard-list'">
       <app-card>
         <app-showcase-table-events [data]="dialogEvents"></app-showcase-table-events>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
       <app-card>
         <app-showcase-table-properties [data]="dialogProp"></app-showcase-table-properties>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
         <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
       </app-card>

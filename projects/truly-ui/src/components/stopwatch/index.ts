@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { TlStopwatch } from './stopwatch';
 import { StopwatchService } from './services/stopwatch-service';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    IconsModule
   ],
   declarations: [
     TlStopwatch

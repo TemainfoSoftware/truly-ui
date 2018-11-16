@@ -1,8 +1,8 @@
 import {
-  Component, OnInit, Input, ContentChildren, forwardRef, QueryList, AfterViewInit,
-  Renderer2
+  Component,
+  Input,
+  AfterViewInit
 } from '@angular/core';
-import { CardComponent } from './card/card.component';
 
 @Component({
   selector: 'app-showcase-card',
@@ -17,7 +17,6 @@ export class ShowcaseCardComponent implements AfterViewInit {
 
   constructor() { }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() { }
 
 }

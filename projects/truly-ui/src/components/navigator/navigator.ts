@@ -21,7 +21,15 @@
  */
 
 import {
-  Component, EventEmitter, Input, Output, ChangeDetectionStrategy, OnInit, ChangeDetectorRef, SimpleChanges, OnChanges
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+  OnInit,
+  ChangeDetectorRef,
+  SimpleChanges,
+  OnChanges
 } from '@angular/core';
 import { NavigatorManagerService } from './services/navigator-manager.service';
 

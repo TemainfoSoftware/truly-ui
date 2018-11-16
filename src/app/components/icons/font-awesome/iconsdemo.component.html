@@ -1,0 +1,85 @@
+<div class="router-outlet">
+  <div class="header-title-demo">
+    <h1 class="title">Icons | Font Awesome<span
+      class="module-name"><code><u>Module Name</u>: <strong>IconsModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>IconsModule</strong></code></p>
+    <p class="text-content">
+      The Truly-UI Icons unites the main packages of icons available on the web: DXIcons, Font-Awesome, Ionicons.
+    </p>
+  </div>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Solid Style</h5>
+              <ul class="row">
+                <li class="col-md-2" *ngFor="let icon of solidIcons">
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'fas')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [lib]="'fa'" [style]="'fas'" [size]="'34px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Regular Style</h5>
+              <ul class="row">
+                <li class="col-md-2" *ngFor="let icon of redularIcons">
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'far')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [lib]="'fa'" [style]="'far'" [size]="'34px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Brands</h5>
+              <ul class="row">
+                <li class="col-md-2" *ngFor="let icon of brandsIcons">
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'fab')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [lib]="'fa'" [style]="'fab'" [size]="'34px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </app-card>
+        </app-showcase-card>
+        <input #inputCopy type="text" [ngModel]="outputIcon" style="width:1px;height:1px;border:0;">
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,7 +8,7 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-3">
               <tl-button [text]="'Change to Online'" [color]="'success'" (click)="changeOnline()"></tl-button>
@@ -65,12 +65,12 @@
       </div>
     </div>
   </div>
-  <app-showcase-card [title]="'Methods'" [icon]="'ion-wand'">
+  <app-showcase-card [title]="'Methods'" [icon]="'ion-md-color-wand'">
     <app-card>
       <app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+  <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
       <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
     </app-card>

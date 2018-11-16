@@ -23,11 +23,11 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnDestroy,
   OnInit,
   Inject,
   Optional,
-  ViewChild, ElementRef, SimpleChanges, OnChanges,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 
 import { debounceTime } from 'rxjs/internal/operators';

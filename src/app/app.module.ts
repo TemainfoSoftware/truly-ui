@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ButtonModule } from '../../projects/truly-ui/src/components/button';
+import { IconsModule } from '../../projects/truly-ui/src/components/icons';
 import { CoreModule } from '../../projects/truly-ui/src/components/core/index';
 import { DropDownListModule } from '../../projects/truly-ui/src/components/dropdownlist';
 import { en_US } from '../../projects/truly-ui/src/components/i18n';
@@ -37,6 +38,7 @@ import { ToasterModule } from '../../projects/truly-ui/src/components/toaster/in
     ToolbarModule,
     ButtonModule,
     HomeModule,
+    IconsModule,
     ToasterModule.forRoot(),
     HttpClientModule,
     ServiceWorkerModule,

@@ -13,6 +13,7 @@ import { BadgeModule } from '../../../../projects/truly-ui/src/components/badge'
 import { SwitchModule } from '../../../../projects/truly-ui/src/components/switch';
 import { ButtonModule } from '../../../../projects/truly-ui/src/components/button';
 import { ButtonGroupModule } from '../../../../projects/truly-ui/src/components/buttongroup';
+import { IconsModule } from '../../../../projects/truly-ui/src/components/icons';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ButtonGroupModule } from '../../../../projects/truly-ui/src/components/
     BadgeModule,
     ButtonModule,
     ButtonGroupModule,
+    IconsModule,
     CommonModule,
     FormsModule,
     SwitchModule,

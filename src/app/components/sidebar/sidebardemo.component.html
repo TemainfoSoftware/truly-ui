@@ -21,10 +21,10 @@
                 <tl-sidebar-container>
                   <tl-sidebar [position]="'start'" #sidebarLeft [mode]="'push'">
                     <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarLeft.docked}">
-                      <li><i class="ion-coffee"></i><span *ngIf="!sidebarLeft.docked">Home</span></li>
-                      <li><i class="ion-icecream"></i><span *ngIf="!sidebarLeft.docked">Input</span></li>
-                      <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarLeft.docked">Button</span></li>
-                      <li><i class="ion-images"></i><span *ngIf="!sidebarLeft.docked">Panels</span></li>
+                      <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarLeft.docked">Home</span></li>
+                      <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarLeft.docked">Input</span></li>
+                      <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarLeft.docked">Button</span></li>
+                      <li><i class="ion-md-images"></i><span *ngIf="!sidebarLeft.docked">Panels</span></li>
                     </ul>
                   </tl-sidebar>
                   <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
@@ -79,10 +79,10 @@
               <tl-sidebar-container>
                 <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'" >
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarSlide.docked}">
-                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
-                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
-                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarSlide.docked">Button</span></li>
-                    <li><i class="ion-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
+                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
+                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
+                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarSlide.docked">Button</span></li>
+                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
                 <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
@@ -145,10 +145,10 @@
                   [mode]="'slide'"
                   [dock]="true">
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarDock.docked}">
-                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
-                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>
-                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarDock.docked">Button</span></li>
-                    <li><i class="ion-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
+                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
+                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>
+                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarDock.docked">Button</span></li>
+                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
                 <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
@@ -203,10 +203,10 @@
               <tl-sidebar-container>
                 <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'">
                   <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarOver.docked}">
-                    <li><i class="ion-coffee"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
-                    <li><i class="ion-icecream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
-                    <li><i class="ion-chatboxes"></i><span *ngIf="!sidebarOver.docked">Button</span></li>
-                    <li><i class="ion-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
+                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
+                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
+                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarOver.docked">Button</span></li>
+                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
                   </ul>
                 </tl-sidebar>
                 <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
@@ -269,7 +269,7 @@
           <app-showcase-table-properties [data]="dataTablePropertiesContent"></app-showcase-table-properties>
         </app-card>
       </app-showcase-card>
-      <app-showcase-card [title]="'Events'" [icon]="'fas fa-broadcast-tower'">
+      <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
         <app-card>
           <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
         </app-card>

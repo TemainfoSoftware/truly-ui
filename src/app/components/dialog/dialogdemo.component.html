@@ -19,17 +19,17 @@
 
             <div class="col-md-3">
               <h5>Show Dialog Confirmation</h5>
-              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion-checkmark'"
+              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion ion-md-checkmark'"
                          (click)="confirmation()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Alert</h5>
-              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion-alert-circled'"
+              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion ion-md-alert'"
                          (click)="alert()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Error</h5>
-              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion-close-circled'"
+              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion ion-md-close-circle'"
                          (click)="error()"></tl-button>
             </div>
           </app-card>
@@ -85,7 +85,7 @@
         <app-showcase-table-properties [data]="dialogProp"></app-showcase-table-properties>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'fas fa-broadcast-tower'">
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
         <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
       </app-card>

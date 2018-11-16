@@ -16,13 +16,18 @@
               <h5>Material Style</h5>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of materialIcons">
-                  <tl-icon [icon]="icon" [style]="'md'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <span (click)="copyIcon(icon, 'md')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
-                  <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
-                  </div>
-                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'md')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [style]="'md'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -33,13 +38,18 @@
               <h5>iOS Style</h5>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of iosIcons">
-                  <tl-icon [icon]="icon" [style]="'ios'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <span (click)="copyIcon(icon, 'ios')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
-                  <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
-                  </div>
-                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'ios')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [style]="'ios'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
                   </div>
                 </li>
               </ul>
@@ -50,13 +60,18 @@
               <h5>Logos</h5>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of logoIcons">
-                  <tl-icon [icon]="icon" [style]="'logo'" [lib]="'ion'" [size]="'22px'"></tl-icon>
-                  <span (click)="copyIcon(icon, 'logo')" (mouseover)="onMouseOver(icon)" (mouseleave)="onMouseLeave(icon)">{{ icon }}</span>
-                  <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
-                  </div>
-                  <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                    <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                  <div class="shadow-hover"
+                       (click)="copyIcon(icon, 'logo')"
+                       (mouseover)="onMouseOver(icon)"
+                       (mouseleave)="onMouseLeave(icon)">
+                    <tl-icon [icon]="icon" [style]="'logo'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <span>{{ icon }}</span>
+                    <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                    </div>
+                    <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
+                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                    </div>
                   </div>
                 </li>
               </ul>

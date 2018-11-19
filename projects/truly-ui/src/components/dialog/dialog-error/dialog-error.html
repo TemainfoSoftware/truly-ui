@@ -6,11 +6,11 @@
         <tl-button [text]="textOk"
                    mdResult="MROK"
                    [color]="'basic'"
-                   [iconAddonBefore]="'ion-close'">
+                   [iconAddonBefore]="'ion ion-md-close'">
         </tl-button>
     </div>
     <div title="Show More" class="arrow-log-error" (click)="open(errorlog)" >
-        <i [ngClass]="{'ion ion-ios-arrow-down': !errorlog, 'ion ion-ios-arrow-up': errorlog}" class="ion ion-ios-arrow-down"></i>
+        <tl-icon [lib]="'ion'" [style]="'ios'" [icon]="(errorlog) ? 'ion ion-ios-arrow-up' : 'ion ion-ios-arrow-down'"></tl-icon>
     </div>
     <div [@enterAnimation]="errorlog" *ngIf="errorlog" class="error-log">
         <pre>{{exceptionBoxDescription}}: {{exceptionName}}</pre>

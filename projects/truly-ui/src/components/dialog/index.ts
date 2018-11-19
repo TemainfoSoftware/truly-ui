@@ -13,12 +13,14 @@ import { TlDialogInfo } from './dialog-info/dialog-info';
 
 import { ButtonModule } from '../button/index';
 import { ModalModule } from '../modal/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule( {
     imports: [
         CommonModule,
         ModalModule,
-        ButtonModule
+        ButtonModule,
+        IconsModule
     ],
     declarations: [
         TlDialogInfo,

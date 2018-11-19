@@ -60,8 +60,6 @@ export class TlIcons implements AfterContentInit {
     if ( this.icon === undefined ) {
       this.contentIconCode();
     }
-
-    console.log('icon', this.icon);
   }
 
   contentIconCode() {
@@ -100,6 +98,23 @@ export class TlIcons implements AfterContentInit {
 
   setStyle(start, length) {
     this.style = this.icon.substr(start, length);
+
+    switch ( this.lib ) {
+      case 'dx':
+        this.setIcon( 16 );
+        break;
+      case 'fa':
+        const fistSplit = this.icon.indexOf('-') + 1;
+        this.setIcon( fistSplit );
+        break;
+      case 'ion':
+        this.setIcon( (start + length) + 1 );
+        break;
+    }
+  }
+
+  setIcon(start: number) {
+    this.icon = this.icon.substr( start );
   }
 
 }

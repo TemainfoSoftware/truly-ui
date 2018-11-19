@@ -12,10 +12,6 @@ import {
 })
 export class FaIconComponent implements OnInit, OnChanges {
 
-  public format: string;
-
-  public PREFIX = 'fa-';
-
   @Input() icon: string;
 
   @Input() style: string;
@@ -27,6 +23,10 @@ export class FaIconComponent implements OnInit, OnChanges {
   @Input() color: string;
 
   @Input() align: string;
+
+  public format: string;
+
+  public PREFIX = 'fa-';
 
   constructor() { }
 

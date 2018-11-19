@@ -12,10 +12,6 @@ import {
 })
 export class DxIconComponent implements OnInit, OnChanges {
 
-  public format: string;
-
-  public PREFIX = 'dx-icon dx-icon-';
-
   @Input() icon: string;
 
   @Input() size: string;
@@ -25,6 +21,10 @@ export class DxIconComponent implements OnInit, OnChanges {
   @Input() color: string;
 
   @Input() align: string;
+
+  public format: string;
+
+  public PREFIX = 'dx-icon dx-icon-';
 
   constructor() { }
 

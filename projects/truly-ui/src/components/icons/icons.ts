@@ -68,9 +68,6 @@ export class TlIcons implements AfterContentInit {
       this.lib = ( this.lib === 'io' ) ? 'ion' : this.lib;
 
       this.getStyle();
-
-      console.log('lib: ', this.lib);
-      console.log('style: ', this.style);
     }
   }
 

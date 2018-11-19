@@ -44,7 +44,7 @@ export const dataProperties = [
   {
     name: 'size',
     type: 'string',
-    default: '14px',
+    default: '12px',
     description: 'Size of icon.',
     options: 'px | % | em'
   },

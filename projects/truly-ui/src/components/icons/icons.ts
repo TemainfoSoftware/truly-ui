@@ -62,6 +62,41 @@ export class TlIcons implements AfterContentInit {
         this.icon = this.content.nativeElement.innerText;
       }
     }
+
+    if ( this.isFullCode() ) {
+      this.lib = this.icon.substr(0, 2);
+      this.lib = ( this.lib === 'io' ) ? 'ion' : this.lib;
+
+      this.getStyle();
+
+      console.log('lib: ', this.lib);
+      console.log('style: ', this.style);
+    }
+  }
+
+  isFullCode() {
+    const space = this.icon.indexOf(' ');
+    return space !== -1;
+  }
+
+  getStyle() {
+    let fistSplit, secondSplit;
+
+    if ( this.lib === 'fa' ) {
+      fistSplit = 0;
+      secondSplit = this.icon.indexOf(' ');
+    }
+
+    if ( this.lib === 'ion' ) {
+      fistSplit = this.icon.indexOf('-') + 1;
+      secondSplit = this.icon.indexOf('-', fistSplit) - fistSplit;
+    }
+
+    this.setStyle(fistSplit, secondSplit);
+  }
+
+  setStyle(start, length) {
+    this.style = this.icon.substr(start, length);
   }
 
 }

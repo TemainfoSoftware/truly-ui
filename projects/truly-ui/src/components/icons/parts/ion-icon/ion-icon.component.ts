@@ -30,8 +30,7 @@ export class IonIconComponent implements OnInit {
       this.style = 'md';
     }
 
-    this.format = this.style + ' ';
-    this.format += this.PREFIX + '-' + this.style + '-' + this.icon;
+    this.format = this.PREFIX + '-' + this.style + '-' + this.icon;
     this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
     this.format += (this.align) ? ' pull-' + this.align : '';
   }

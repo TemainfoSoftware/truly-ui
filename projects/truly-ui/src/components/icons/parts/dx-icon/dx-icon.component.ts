@@ -1,11 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'dx-icon',
   templateUrl: './dx-icon.component.html',
   styleUrls: ['./dx-icon.component.scss']
 })
-export class DxIconComponent implements OnInit {
+export class DxIconComponent implements OnInit, OnChanges {
 
   public format: string;
 
@@ -24,9 +29,17 @@ export class DxIconComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.formatClass();
+  }
+
+  formatClass() {
     this.format = this.PREFIX + this.icon;
     this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
     this.format += (this.align) ? ' pull-' + this.align : '';
+  }
+
+  ngOnChanges() {
+    this.formatClass();
   }
 
 }

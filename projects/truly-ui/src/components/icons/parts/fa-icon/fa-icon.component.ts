@@ -1,11 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'fa-icon',
   templateUrl: './fa-icon.component.html',
   styleUrls: ['./fa-icon.component.scss']
 })
-export class FaIconComponent implements OnInit {
+export class FaIconComponent implements OnInit, OnChanges {
 
   public format: string;
 
@@ -26,6 +31,10 @@ export class FaIconComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.formatClass();
+  }
+
+  formatClass() {
     if ( this.style === undefined ) {
       this.style = 'fas';
     }
@@ -34,6 +43,10 @@ export class FaIconComponent implements OnInit {
     this.format += this.PREFIX + this.icon;
     this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
     this.format += (this.align) ? ' pull-' + this.align : '';
+  }
+
+  ngOnChanges() {
+    this.formatClass();
   }
 
 }

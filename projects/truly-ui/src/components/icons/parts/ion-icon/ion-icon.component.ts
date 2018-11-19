@@ -1,11 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit
+} from '@angular/core';
 
 @Component({
   selector: 'ion-icon',
   templateUrl: './ion-icon.component.html',
   styleUrls: ['./ion-icon.component.scss']
 })
-export class IonIconComponent implements OnInit {
+export class IonIconComponent implements OnInit, OnChanges {
 
   public format: string;
 
@@ -26,6 +31,10 @@ export class IonIconComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.formatClass();
+  }
+
+  formatClass() {
     if ( this.style === undefined ) {
       this.style = 'md';
     }
@@ -33,6 +42,10 @@ export class IonIconComponent implements OnInit {
     this.format = this.PREFIX + '-' + this.style + '-' + this.icon;
     this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
     this.format += (this.align) ? ' pull-' + this.align : '';
+  }
+
+  ngOnChanges() {
+    this.formatClass();
   }
 
 }

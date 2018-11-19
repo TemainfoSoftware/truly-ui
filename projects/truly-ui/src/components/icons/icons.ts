@@ -58,16 +58,22 @@ export class TlIcons implements AfterContentInit {
 
   ngAfterContentInit() {
     if ( this.icon === undefined ) {
-      if ( this.content.nativeElement.innerText ) {
-        this.icon = this.content.nativeElement.innerText;
-      }
+      this.contentIconCode();
     }
 
-    if ( this.isFullCode() ) {
-      this.lib = this.icon.substr(0, 2);
-      this.lib = ( this.lib === 'io' ) ? 'ion' : this.lib;
+    console.log('icon', this.icon);
+  }
 
-      this.getStyle();
+  contentIconCode() {
+    if ( this.content.nativeElement.innerText ) {
+      this.icon = this.content.nativeElement.innerText;
+
+      if ( this.isFullCode() ) {
+        this.lib = this.icon.substr(0, 2);
+        this.lib = ( this.lib === 'io' ) ? 'ion' : this.lib;
+
+        this.getStyle();
+      }
     }
   }
 

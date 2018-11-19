@@ -21,13 +21,13 @@
  */
 import {
   AfterContentInit,
-  AfterViewInit, ChangeDetectorRef,
+  ChangeDetectorRef,
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
   Input,
-  OnChanges, OnInit,
+  OnChanges,
   Renderer2,
   ViewContainerRef
 } from '@angular/core';

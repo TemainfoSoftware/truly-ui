@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 import { TlBlockUI } from './blockui';
 import { TlBlockUIComponent } from './blockui.component';
+import { IconsModule } from '../icons/index';
 
-@NgModule( {
+@NgModule({
   imports: [
     CommonModule,
-    FormsModule,
+    IconsModule
   ],
   declarations: [
     TlBlockUI,
@@ -20,6 +20,5 @@ import { TlBlockUIComponent } from './blockui.component';
   entryComponents: [
     TlBlockUIComponent
   ]
-} )
-export class BlockUIModule {
-}
+})
+export class BlockUIModule {}

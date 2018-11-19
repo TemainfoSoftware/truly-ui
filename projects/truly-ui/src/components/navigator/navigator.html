@@ -3,7 +3,7 @@
        (click)="onClickPrevious()"
        [ngClass]="{'ui-button': true, 'ui-with-border': withBorder}"
        [ngStyle]="{height:height, lineHeight: height}">
-    <tl-icon [lib]="'fa'" [style]="'fas'">chevron-left</tl-icon>
+    <tl-icon [lib]="'fa'" [style]="'fas'" [icon]="'chevron-left'"></tl-icon>
   </div>
   <div tabindex="-1"
        [ngClass]="{'ui-navigator': true,'ui-with-border': withBorder}"
@@ -15,6 +15,6 @@
        (click)="onClickNext()"
        [ngClass]="{'ui-button': true, 'ui-with-border': withBorder}"
        [ngStyle]="{height:height, lineHeight: height}">
-    <tl-icon [lib]="'fa'" [style]="'fas'">chevron-right</tl-icon>
+    <tl-icon [lib]="'fa'" [style]="'fas'" [icon]="'chevron-right'"></tl-icon>
   </div>
 </div>

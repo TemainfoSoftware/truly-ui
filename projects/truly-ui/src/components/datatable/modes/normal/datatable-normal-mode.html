@@ -8,8 +8,7 @@
                 <tr #tbody class="ui-row" [tabindex]="i"  [@enterAnimation]="'in'" *ngFor="let row of  dataSourceService.datasource; let i = index" [ngStyle]="{'height': datatable.rowHeight+'px'}"
                     (click)="datatable.onRowClick(dataSourceService.datasource[i],i)"
                     (focus)="datatable.onRowSelect(dataSourceService.datasource[i],i)"
-                    (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)"
-                >
+                    (dblclick)="datatable.onRowDblclick(dataSourceService.datasource[i],i)">
                     <td *ngFor="let column of datatable.columns;" [class]="'ui-cel ' + helperService.getClassAlignment(column.alignment)">{{row[column.field]}}</td>
                 </tr>
             </tbody>

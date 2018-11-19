@@ -21,7 +21,7 @@
 */
 
 import {
-  AfterContentInit,
+  AfterViewInit,
   Component,
   ElementRef,
   Input,
@@ -34,7 +34,7 @@ import {
   templateUrl: './icons.html',
   styleUrls: ['./icons.scss'],
 })
-export class TlIcons implements AfterContentInit {
+export class TlIcons implements AfterViewInit {
 
   @Input() icon: string;
 
@@ -56,7 +56,7 @@ export class TlIcons implements AfterContentInit {
 
   constructor() {}
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     if ( this.icon === undefined ) {
       this.contentIconCode();
     }

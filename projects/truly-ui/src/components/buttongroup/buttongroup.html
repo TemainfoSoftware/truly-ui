@@ -9,9 +9,9 @@
               (click)="selectButtonItem(item, $event)"
               [disabled]="item.disabled ? true : null">
         <span class="textButton" [ngStyle]="{'line-height': item.height}">
-          <i *ngIf="item.iconBeforeText" [ngClass]="item.iconBeforeText"></i>
+          <tl-icon *ngIf="item.iconBeforeText">{{ item.iconBeforeText }}</tl-icon>
             {{item.text}}
-          <i *ngIf="item.iconAfterText" [ngClass]="item.iconAfterText" class="iconAfterText"></i>
+          <tl-icon *ngIf="item.iconAfterText" class="iconAfterText">{{ item.iconAfterText }}</tl-icon>
         </span>
       </button>
     </ng-template>

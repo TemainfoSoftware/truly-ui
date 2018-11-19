@@ -5,11 +5,13 @@ import { TlButtonGroup } from './buttongroup';
 import { TlButtonGroupItem } from './buttongroup-item';
 
 import { ButtonModule } from '../button/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
     imports: [
         CommonModule,
-        ButtonModule
+        ButtonModule,
+        IconsModule
     ],
     declarations: [
         TlButtonGroup,

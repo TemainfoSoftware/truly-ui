@@ -6,18 +6,16 @@
         [class]="'tl-button ripple '+ color"
         [disabled]="( disabled || isLoading ) ? true : null"
         >
-    <span *ngIf="iconAddonBefore"
-          [ngClass]="iconAddonBefore"
+    <tl-icon *ngIf="iconAddonBefore"
           [class]="color + ' iconAddonBefore'"
           [ngStyle]="{'line-height' : 'calc(' + height + ' - 1px)'}"
-          [style.color]="colorIconBefore">
-    </span>
-    <span *ngIf="iconAddonAfter"
-          [ngClass]="iconAddonAfter"
+          [style.color]="colorIconBefore">{{ iconAddonBefore }}
+    </tl-icon>
+    <tl-icon *ngIf="iconAddonAfter"
           [style.color]="colorIconAfter"
           [class]="color + ' iconAddonAfter'"
-          [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">
-    </span>
+          [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">{{ iconAddonAfter }}
+    </tl-icon>
 
     <!-- WHEN IS LOADING-->
     <span *ngIf="isLoading"  class="textButton -isLoading" [ngStyle]="{'line-height': height}">
@@ -25,9 +23,9 @@
       {{ textLoading }}
     </span>
     <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">
-      <i *ngIf="iconBeforeText" [ngClass]="iconBeforeText"></i>
+      <tl-icon *ngIf="iconBeforeText">{{ iconBeforeText }}</tl-icon>
         {{text}}<ng-content></ng-content>
-      <i *ngIf="iconAfterText" [ngClass]="iconAfterText" class="iconAfterText"></i>
+      <tl-icon *ngIf="iconAfterText" class="iconAfterText">{{ iconAfterText }}</tl-icon>
     </span>
 </button>
 

@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { TlButton } from './button';
 import { ModalModule } from '../modal/index';
 import { MiscModule } from '../misc/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
     imports: [
         CommonModule,
         MiscModule,
-        ModalModule
+        ModalModule,
+        IconsModule
     ],
     declarations: [
         TlButton,

@@ -25,14 +25,14 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Create an icon Before the Input.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconAfter',
     type: 'string',
     default: 'null',
     description: 'Create an icon After the Input.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'type',

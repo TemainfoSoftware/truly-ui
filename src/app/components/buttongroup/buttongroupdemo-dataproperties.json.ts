@@ -90,13 +90,13 @@ export const dataProperties2 = [
     type: 'string',
     default: 'null',
     description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconAfterText',
     type: 'string',
     default: 'null',
     description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   }
 ];

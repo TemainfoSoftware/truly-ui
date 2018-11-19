@@ -4,7 +4,7 @@
 
   <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')"
         [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder }" class="addon -borderleft">
-    <i [ngClass]="iconBefore"></i>
+    <tl-icon>{{ iconBefore }}</tl-icon>
   </span>
 
   <span *ngIf="textBefore" class="addon -borderleft"
@@ -47,14 +47,18 @@
            (click)="onInputClick($event)"
            (blur)="onInputBlur($event)"
            (focus)="onInputFocus($event)">
-    <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)"
-       class="clearButton ion-md-close"></i>
+    <tl-icon *ngIf="clearButton && value"
+             [style.lineHeight]="height"
+             (click)="clearInput($event)"
+             [lib]="'ion'"
+             [style]="'ios'"
+             class="clearButton">close</tl-icon>
   </div>
 
   <span #afterIcon *ngIf="iconAfter"
         (click)="onClickAddon($event, 'after')" class="addon -borderright"
         [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder, '-borderright': iconAfter || textAfter }">
-    <i [ngClass]="iconAfter"></i>
+    <tl-icon>{{ iconAfter }}</tl-icon>
   </span>
 
   <span *ngIf="textAfter" #afterText class="addon -borderright"

@@ -23,4 +23,4 @@ import { InternalsModule } from '../internals/index';
     TlTimepicker
   ]
 })
-export class TimepickerModule {}
+export class TimePickerModule {}

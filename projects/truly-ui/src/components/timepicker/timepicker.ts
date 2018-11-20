@@ -36,7 +36,7 @@ import { Subscription } from 'rxjs';
   styleUrls: [ './timepicker.scss' ],
   providers: [ {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TlTimepicker),
+    useExisting: forwardRef( () => TlTimepicker ),
     multi: true,
   } ],
   animations: [ OverlayAnimation ]
@@ -51,6 +51,20 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @Input() label = '';
 
+  @Input() labelPlacement = 'left';
+
+  @Input() labelSize = '100px';
+
+  @Input() height = '23px';
+
+  @Input() readonly: boolean = null;
+
+  @Input() disabled: boolean = null;
+
+  @Input() withBorder = true;
+
+  @Input() color = 'basic';
+
   @Input() name = '';
 
   @ViewChild( 'listHour' ) listHour: ElementRef;
@@ -59,9 +73,13 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
 
-  @Output() clickNow: EventEmitter<any> = new EventEmitter();
+  @Output() now: EventEmitter<any> = new EventEmitter();
 
   @Output() changeTime: EventEmitter<string> = new EventEmitter();
+
+  @Output() confirm: EventEmitter<string> = new EventEmitter();
+
+  @Output() cancel: EventEmitter<string> = new EventEmitter();
 
   public model: NgModel;
 
@@ -98,7 +116,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2) {
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
     super( validators, asyncValidators );
   }
 
@@ -112,28 +130,31 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.formatTime();
   }
 
-  getFormatHourNumber() {
-    return this.format === '12' ? 13 : 24;
+  private getFormatHourNumber() {
+    return this.isFormat12() ? 13 : 24;
   }
 
-  listenContainer() {
-    this.listeners.add(this.renderer.listen( document, 'click', () => {
+  private listenContainer() {
+    this.listeners.add( this.renderer.listen( document, 'click', () => {
       this.isOpen = false;
-    } ));
+    } ) );
   }
 
-  mouseDownContainer($event) {
+  mouseDownContainer( $event ) {
     $event.stopPropagation();
   }
 
-  emitClickNow() {
-    this.clickNow.emit(this.format === '24' ? this.selectedTime : { time: this.selectedTime, timeZone: this.timeZone });
+  private emitClickNow() {
+    this.now.emit( this.isFormat24() ? this.selectedTime : {
+      time: this.selectedTime,
+      timeZone: this.timeZone
+    } );
   }
 
   onClickNow() {
-    const convert = this.format === '12' ? this.convertToAmPm( new Date().getHours() ) : new Date().getHours();
-    this.hour = this.leftPad.transform(convert, 2);
-    this.minute = this.leftPad.transform(new Date().getMinutes(), 2);
+    const convert = this.isFormat12() ? this.convertToAmPm( new Date().getHours() ) : new Date().getHours();
+    this.hour = this.leftPad.transform( convert, 2 );
+    this.minute = this.leftPad.transform( new Date().getMinutes(), 2 );
     this.formatTime();
     this.onChangeValue( this.hour + ':' + this.minute );
     this.emitClickNow();
@@ -154,17 +175,31 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     $event.target.scrollTop >= (this.itemHeight / 2) ? this.timeZone = 'PM' : this.timeZone = 'AM';
   }
 
+  onClickCancel() {
+    this.isOpen = false;
+    this.cancel.emit(this.selectedTime);
+  }
+
+  onClickConfirm() {
+    this.isOpen = false;
+    this.confirm.emit(this.selectedTime);
+  }
+
   onChangeValue( $event ) {
-    if (!$event) {
+    if ( !$event ) {
       return;
     }
     const split = this.cleanValue( $event ).split( ':' );
     if ( split[ 0 ].length >= 2 ) {
-      this.hour = split[ 0 ];
+      if ( this.isFormat12() ) {
+        this.hour = this.leftPad.transform( this.convertToAmPm( split[ 0 ] ), 2 );
+      } else {
+        this.hour = split[ 0 ];
+      }
       const element: any = this.getItemByDataIndexHour();
       if ( element ) {
         this.listHour.nativeElement.scrollTop =
-          element.offsetTop -  ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+          element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
       }
     }
     if ( split[ 1 ].length >= 2 ) {
@@ -172,12 +207,12 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
       const element: any = this.getItemByDataIndexMinute();
       if ( element ) {
         this.listMinutes.nativeElement.scrollTop =
-          element.offsetTop -  ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+          element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
       }
     }
   }
 
-  convertToAmPm( hour ) {
+  private convertToAmPm( hour ) {
     const timeString = hour + ':00:00';
     const hourEnd = timeString.indexOf( ':' );
     const H = +timeString.substr( 0, hourEnd );
@@ -186,18 +221,26 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     return H % 12 || 12;
   }
 
-  getItemByDataIndexMinute() {
+  private getItemByDataIndexMinute() {
     const strDataIndex: string = 'div[dataIndexMinute="' + this.minute + '"]';
     return document.querySelector( strDataIndex );
   }
 
-  getItemByDataIndexHour() {
+  private getItemByDataIndexHour() {
     const strDataIndex: string = 'div[dataIndexHour="' + this.hour + '"]';
     return document.querySelector( strDataIndex );
   }
 
-  cleanValue( value ) {
+  private cleanValue( value ) {
     return value.replace( /_/g, '' );
+  }
+
+  private isFormat24() {
+    return this.format === '24';
+  }
+
+  private isFormat12() {
+    return this.format === '12';
   }
 
   isTimeZonePM() {
@@ -211,20 +254,24 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   clickListItem( scrollElement, $event ) {
     scrollElement.scrollTop =
       $event.target.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
-    setTimeout(() => {
+    setTimeout( () => {
       this.value = this.selectedTime;
-    }, 100);
+    }, 100 );
   }
 
   setAm() {
-    this.listAmPm.nativeElement.scrollTop = 0;
+    if ( this.listAmPm ) {
+      this.listAmPm.nativeElement.scrollTop = 0;
+    }
   }
 
   setPm() {
-    this.listAmPm.nativeElement.scrollTop = this.itemHeight * 2;
+    if ( this.listAmPm ) {
+      this.listAmPm.nativeElement.scrollTop = this.itemHeight * 2;
+    }
   }
 
-  formatTime() {
+  private formatTime() {
     this.selectedTime = this.leftPad.transform( this.hour, 2 ) + ':' + this.leftPad.transform( this.minute, 2 );
   }
 

@@ -7,6 +7,12 @@
             (ngModelChange)="onChangeValue($event)"
             [flatBorder]="flatBorder"
             [label]="label"
+            [labelPlacement]="labelPlacement"
+            [labelSize]="labelSize"
+            [withBorder]="withBorder"
+            [height]="height"
+            [disabled]="disabled"
+            [readonly]="readonly"
             [name]="name"
             [textAfter]="format === '12' ? timeZone : null"
             [iconAfter]="showTimeIcon ? 'ion-clock' : null">
@@ -19,7 +25,7 @@
                [cdkConnectedOverlayOpen]="true"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'">
 
-    <div class="ui-wrapper-content" (click)="mouseDownContainer($event)" [style.visibility]="isOpen ? 'visible' : 'hidden'">
+    <div [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)" [style.visibility]="isOpen ? 'visible' : 'hidden'">
       <div class="ui-timepicker-header">
         <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
         <tl-button [flatBorder]="true"
@@ -88,8 +94,8 @@
         </div>
       </div>
       <div class="ui-timepicker-footer">
-        <tl-button (click)="isOpen = false" [flatBorder]="true" [width]="'110px'" [text]="'Cancel'"></tl-button>
-        <tl-button (click)="isOpen = false" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="'Confirm'" [color]="'primary'"></tl-button>
+        <tl-button (click)="onClickCancel()" [flatBorder]="true" [width]="'110px'" [text]="'Cancel'"></tl-button>
+        <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="'Confirm'" [color]="'primary'"></tl-button>
       </div>
     </div>
 

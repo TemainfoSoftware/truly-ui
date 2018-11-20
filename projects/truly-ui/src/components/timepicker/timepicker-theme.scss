@@ -1,12 +1,64 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-timepicker-theme-schema( $theme, $action ){
-  //SKELETON COMPONENT HERE
+@mixin _tl-timepicker-theme-schema( $theme, $action ) {
+
+  > .ui-timepicker-header {
+    border: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  > .ui-timepicker-content {
+    border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: white;
+    > .ui-transparent-section {
+      background-image: linear-gradient(to top, rgb(255, 255, 255), transparent, rgb(255, 255, 255));
+    }
+    > .ui-controller-section {
+      border: 1px solid map-deep-get($theme, $action, "default", "border");
+      background-image: linear-gradient(to top, #ececec, rgba(255, 0, 0, 0), transparent);
+    }
+    > .ui-hour-content {
+      &:hover {
+        background: map-deep-get($theme, $action, "default", "background");
+      }
+    }
+    > .ui-minute-content {
+      &:hover {
+        background: map-deep-get($theme, $action, "default", "background");
+      }
+    }
+    > .ui-ampm-content {
+      &:hover {
+        background: map-deep-get($theme, $action, "default", "background");
+      }
+    }
+  }
+  > .ui-title-header {
+    border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  > .ui-timepicker-footer {
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  .list {
+    color: map-deep-get($theme, $action, "default", "foreground");
+    > .ui-list-item {
+      &:hover {
+        color: map-deep-get($theme, 'primary', "default", "background");
+      }
+    }
+  }
+  .selectedItem {
+    color: map-deep-get($theme, 'primary', "default", "background");
+  }
+
 }
 
 @mixin tl-timepicker-theme( $theme ) {
 
-  .tl-timepicker{
+  .ui-wrapper-content {
     &.basic {
       @include _tl-timepicker-theme-schema($theme, 'basic')
     }

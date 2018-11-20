@@ -21,13 +21,59 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
+    name: 'changeTime',
     parameters: [
       {
-        event: 'selected',
-        description: 'Action Selected'
+        event: 'time',
+        description: 'Time selected'
+      },
+      {
+        event: 'timeZone',
+        description: 'Time Zone selected (AM|PM)'
       }
     ],
-    description: 'Callback to invoke when toogle event.',
+    description: 'EventEmitter returned when time is changed',
+  },
+  {
+    name: 'now',
+    parameters: [
+      {
+        event: 'time',
+        description: 'Time selected'
+      },
+      {
+        event: 'timeZone',
+        description: 'Time Zone selected (AM|PM)'
+      }
+    ],
+    description: 'EventEmitter returned when button NOW is clicked',
+  },
+  {
+    name: 'cancel',
+    parameters: [
+      {
+        event: 'selectedTime',
+        description: 'Time selected'
+      },
+      {
+        event: 'timeZone',
+        description: 'Time Zone selected (AM|PM)'
+      }
+    ],
+    description: 'EventEmitter returned when button CANCEL is clicked',
+  },
+  {
+    name: 'confirm',
+    parameters: [
+      {
+        event: 'selectedTime',
+        description: 'Time selected'
+      },
+      {
+        event: 'timeZone',
+        description: 'Time Zone selected (AM|PM)'
+      }
+    ],
+    description: 'EventEmitter returned when button CONFIRM is clicked',
   },
 ];

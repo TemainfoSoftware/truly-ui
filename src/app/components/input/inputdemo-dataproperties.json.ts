@@ -49,6 +49,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'withBorder',
+    type: 'boolean',
+    default: 'true',
+    description: 'Define the input field border',
+    options: 'true | false'
+  },
+  {
     name: 'name',
     type: 'string',
     default: 'null',
@@ -89,6 +96,13 @@ export const dataProperties = [
     default: '100px',
     description: 'Width of label text',
     options: 'px | % | em'
+  },
+  {
+    name: 'flatBorder',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines if the input field has flat borders or not',
+    options: 'true | false'
   },
   {
     name: 'labelPlacement',

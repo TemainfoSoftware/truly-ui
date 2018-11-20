@@ -21,10 +21,80 @@
 */
 export const dataProperties = [
   {
-    name: 'text',
+    name: 'format',
+    type: 'string',
+    default: '24',
+    description: 'Describes the format of hour, 12hrs or 24hrs',
+    options: '12 | 24'
+  },
+  {
+    name: 'flatBorder',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines if the input field has flat borders or not',
+    options: 'true | false'
+  },
+  {
+    name: 'showTimeIcon',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines if will show time icon or not',
+    options: 'true | false'
+  },
+  {
+    name: 'labelPlacement',
+    type: 'string',
+    default: 'left',
+    description: 'Label Position',
+    options: 'top | left'
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    description: 'Display an input with not selectable text (disabled)',
+    options: 'true | false'
+  },
+  {
+    name: 'readonly',
+    type: 'boolean',
+    default: 'false',
+    description: 'Display an input with selectable text (only read)',
+    options: 'true | false'
+  },
+  {
+    name: 'name',
     type: 'string',
     default: 'null',
-    description: 'Displays a text.',
+    description: 'Define the name attribute of input, used on form as form control name.',
     options: 'any text'
+  },
+  {
+    name: 'textAlign',
+    type: 'string',
+    default: 'left',
+    description: 'Define the alignment of the text inside of the input. (css text-align)',
+    options: 'left|right|center|justify|initial|inherit'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '23px',
+    description: 'The height of input box',
+    options: 'any text'
+  },
+  {
+    name: 'label',
+    type: 'string',
+    default: 'null',
+    description: 'Create a label together with Input Element',
+    options: 'any text'
+  },
+  {
+    name: 'withBorder',
+    type: 'boolean',
+    default: 'true',
+    description: 'Define the input field border',
+    options: 'true | false'
   },
 ];

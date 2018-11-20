@@ -35,9 +35,19 @@ export class TimepickerDemoComponent {
 
   public dataEvents;
 
+  public dataTwo;
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+
+    this.dataTwo = '1513';
   }
+
+  onClickNow($event) {
+    console.log('Click Now', $event);
+  }
+
+
 }
 

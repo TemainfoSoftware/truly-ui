@@ -1,47 +1,99 @@
 <div class="ui-timepicker-wrapper">
 
-  <tl-input (overlayOrigin)="trigger = $event" (click)="isOpen = !isOpen" [flatBorder]="true"
-            [iconAfter]="'ion-clock'"></tl-input>
+  <tl-input (overlayOrigin)="trigger = $event"
+            (click)="isOpen = !isOpen"
+            [mask]="'Hh:Mm'"
+            [ngModel]="value"
+            (ngModelChange)="onChangeValue($event)"
+            [flatBorder]="flatBorder"
+            [label]="label"
+            [name]="name"
+            [textAfter]="format === '12' ? timeZone : null"
+            [iconAfter]="showTimeIcon ? 'ion-clock' : null">
+  </tl-input>
 
-  <div class="ui-wrapper-content">
-    <div class="ui-timepicker-header">
-      <div class="ui-selected-time">{{ selectedTime }}</div>
-      <div (click)="clickNow($event)" class="ui-button-now">{{ nowText }}</div>
-    </div>
-    <div class="ui-timepicker-content">
-      <div class="ui-controller-section"></div>
-      <div class="ui-hour-content">
-        <ul class="list">
-          <li *ngFor="let index of minutes">{{ index }}</li>
-        </ul>
-      </div>
-      <div class="ui-minute-content">
-        <ul class="list">
-          <li *ngFor="let index of hours">{{ index }}</li>
-        </ul>
-      </div>
-      <div class="ui-ampm-content">
-        <ul class="list">
-          <li>AM</li>
-          <li>PM</li>
-        </ul>
-      </div>
-    </div>
-    <div class="ui-timepicker-footer">
-      <tl-button [width]="'110px'" [text]="'Cancel'"></tl-button>
-      <tl-button [width]="'110px'" [text]="'Confirm'" [color]="'primary'"></tl-button>
-    </div>
-  </div>
-
-  <!--<ng-template cdkConnectedOverlay
+  <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
-               [cdkConnectedOverlayHasBackdrop]="true"
+               [cdkConnectedOverlayHasBackdrop]="false"
                [cdkConnectedOverlayOrigin]="trigger"
-               [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-               [cdkConnectedOverlayOpen]="isOpen">
+               [cdkConnectedOverlayOpen]="true"
+               [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'">
 
+    <div class="ui-wrapper-content" (click)="mouseDownContainer($event)" [style.visibility]="isOpen ? 'visible' : 'hidden'">
+      <div class="ui-timepicker-header">
+        <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
+        <tl-button [flatBorder]="true"
+                   (click)="onClickNow()"
+                   [outline]="true" [width]="'50px'"
+                   [text]="nowText" [color]="'primary'">
+        </tl-button>
+      </div>
+      <div class="ui-title-header">
+        <span class="ui-picker-title">Hour</span>
+        <span class="ui-picker-title">Minute</span>
+        <span *ngIf="format === '12'" class="ui-picker-title">AM/PM</span>
+      </div>
+      <div class="ui-timepicker-content">
+        <div class="ui-transparent-section"></div>
+        <div class="ui-controller-section">
+          <span [style.left]="format === '24' ? '50%' : '33%'" class="double-dot">:</span>
+        </div>
+        <div class="ui-hour-content">
+          <div class="list" #listHour (scroll)="onScrollHour($event)">
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div
+              class="ui-list-item"
+              (click)="clickListItem(listHour, $event)"
+              *ngFor="let index of hours"
+              [attr.dataIndexHour]="index | leftpad:2"
+              [ngClass]="{ 'selectedItem': hour === index }">{{ index | leftpad:2 }}</div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+          </div>
+        </div>
+        <div class="ui-minute-content">
+          <div class="list" #listMinutes (scroll)="onScrollMinutes($event)">
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div
+              class="ui-list-item"
+              (click)="clickListItem(listMinutes, $event)"
+              [attr.dataIndexMinute]="index | leftpad:2"
+              *ngFor="let index of minutes"
+              [ngClass]="{ 'selectedItem': minute === index }">{{ index | leftpad:2 }}</div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+          </div>
+        </div>
+        <div *ngIf="format === '12'" class="ui-ampm-content">
+          <div class="list" #listAmPm (scroll)="onScrollAmPm($event)">
+            <div> </div>
+            <div> </div>
+            <div> </div>
+            <div [ngClass]="{ 'selectedItem': isTimeZoneAM() }" class="ui-list-item" (click)="setAm()">AM</div>
+            <div [ngClass]="{ 'selectedItem': isTimeZonePM() }" class="ui-list-item" (click)="setPm()">PM</div>
+            <div> </div>
+            <div> </div>
+            <div> </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui-timepicker-footer">
+        <tl-button (click)="isOpen = false" [flatBorder]="true" [width]="'110px'" [text]="'Cancel'"></tl-button>
+        <tl-button (click)="isOpen = false" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="'Confirm'" [color]="'primary'"></tl-button>
+      </div>
+    </div>
 
-  </ng-template>-->
+  </ng-template>
 
 </div>
 

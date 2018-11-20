@@ -5,6 +5,7 @@ import { TlTimepicker } from './timepicker';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { InputModule } from '../input/index';
 import { ButtonModule } from '../button/index';
+import { InternalsModule } from '../internals/index';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { ButtonModule } from '../button/index';
     OverlayModule,
     InputModule,
     ButtonModule,
+    InternalsModule,
     FormsModule
   ],
   declarations: [

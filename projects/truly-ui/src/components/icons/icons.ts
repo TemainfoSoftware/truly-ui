@@ -21,7 +21,8 @@
 */
 
 import {
-  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -34,7 +35,7 @@ import {
   templateUrl: './icons.html',
   styleUrls: ['./icons.scss'],
 })
-export class TlIcons implements AfterContentInit {
+export class TlIcons implements AfterViewInit {
 
   @Input() icon: string;
 
@@ -42,7 +43,7 @@ export class TlIcons implements AfterContentInit {
 
   @Input() style: string;
 
-  @Input() size = '12px';
+  @Input() size = '13px';
 
   @Input() animation: string;
 
@@ -54,26 +55,23 @@ export class TlIcons implements AfterContentInit {
 
   @ViewChild(TemplateRef) template: TemplateRef<any>;
 
-  constructor() {}
+  constructor(private change: ChangeDetectorRef) {}
 
-  ngAfterContentInit() {
-    if ( this.icon === undefined ) {
-      setTimeout(() => {
-        this.contentIconCode();
-      }, 0);
-    }
+  ngAfterViewInit() {
+    this.contentIconCode();
   }
 
   contentIconCode() {
-    if ( this.content.nativeElement.innerText ) {
+    if (this.content.nativeElement.innerText) {
       this.icon = this.content.nativeElement.innerText;
 
-      if ( this.isFullCode() ) {
+      if (this.isFullCode()) {
         this.lib = this.icon.substr(0, 2);
-        this.lib = ( this.lib === 'io' ) ? 'ion' : this.lib;
+        this.lib = (this.lib === 'io') ? 'ion' : this.lib;
 
         this.getStyle();
       }
+      this.change.detectChanges();
     }
   }
 
@@ -85,12 +83,12 @@ export class TlIcons implements AfterContentInit {
   getStyle() {
     let fistSplit, secondSplit;
 
-    if ( this.lib === 'fa' ) {
+    if (this.lib === 'fa') {
       fistSplit = 0;
       secondSplit = this.icon.indexOf(' ');
     }
 
-    if ( this.lib === 'ion' ) {
+    if (this.lib === 'ion') {
       fistSplit = this.icon.indexOf('-') + 1;
       secondSplit = this.icon.indexOf('-', fistSplit) - fistSplit;
     }
@@ -101,22 +99,22 @@ export class TlIcons implements AfterContentInit {
   setStyle(start, length) {
     this.style = this.icon.substr(start, length);
 
-    switch ( this.lib ) {
+    switch (this.lib) {
       case 'dx':
-        this.setIcon( 16 );
+        this.setIcon(16);
         break;
       case 'fa':
         const fistSplit = this.icon.indexOf('-') + 1;
-        this.setIcon( fistSplit );
+        this.setIcon(fistSplit);
         break;
       case 'ion':
-        this.setIcon( (start + length) + 1 );
+        this.setIcon((start + length) + 1);
         break;
     }
   }
 
   setIcon(start: number) {
-    this.icon = this.icon.substr( start );
+    this.icon = this.icon.substr(start);
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="ui-timepicker-wrapper">
 
   <tl-input (overlayOrigin)="trigger = $event"
-            (click)="isOpen = !isOpen"
+            (click)="changeOpened()"
             [mask]="'Hh:Mm'"
             [ngModel]="value"
             (ngModelChange)="onChangeValue($event)"

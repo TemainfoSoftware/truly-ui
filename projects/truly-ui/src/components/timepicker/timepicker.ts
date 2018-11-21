@@ -22,7 +22,7 @@
 
 import {
   Input, AfterContentInit, Optional, Inject, Component, forwardRef, ElementRef, OnInit, ViewChild,
-  Renderer2, OnDestroy, Output, EventEmitter,
+  Renderer2, OnDestroy, Output, EventEmitter, AfterViewInit,
 } from '@angular/core';
 import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
 import { ElementBase } from '../input/core/element-base';
@@ -30,6 +30,7 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subscription } from 'rxjs';
 import { I18nService } from '../i18n/i18n.service';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 
 export interface IncrementalSteps {
   hour: number;
@@ -52,7 +53,7 @@ export enum TIME {
   } ],
   animations: [ OverlayAnimation ]
 } )
-export class TlTimepicker extends ElementBase<string> implements OnInit, AfterContentInit, OnDestroy {
+export class TlTimepicker extends ElementBase<string> implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
 
   @Input() format: '12' | '24' = '24';
 
@@ -85,6 +86,8 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   @ViewChild( 'listMinutes' ) listMinutes: ElementRef;
 
   @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
+
+  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
 
   @Output() now: EventEmitter<any> = new EventEmitter();
 
@@ -158,6 +161,23 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.formatTime();
   }
 
+  ngAfterViewInit() {
+    this.handleOpen();
+  }
+
+  handleOpen() {
+    !this.isOpen ? this.setPointerEvents('none') : this.setPointerEvents('auto');
+  }
+
+  changeOpened() {
+    this.isOpen = !this.isOpen;
+    this.handleOpen();
+  }
+
+  private setPointerEvents( value: string ) {
+    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
+  }
+
   private getFormatMinuteNumber() {
     return this.incrementalSteps.minute ? (60 / this.incrementalSteps.minute) : 60;
   }
@@ -172,6 +192,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   private listenContainer() {
     this.listeners.add( this.renderer.listen( document, 'click', () => {
       this.isOpen = false;
+      this.handleOpen();
     } ) );
   }
 
@@ -197,12 +218,14 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   }
 
   onScrollHour( $event ) {
-    this.hour = Math.round( ( $event.target.scrollTop / this.itemHeight ) * this.incrementalSteps.hour );
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    this.hour = this.incrementalSteps.hour > 0 ? (scroll * this.incrementalSteps.hour) : scroll;
     this.formatTime();
   }
 
   onScrollMinutes( $event ) {
-    this.minute = Math.round( ($event.target.scrollTop / this.itemHeight) * this.incrementalSteps.minute );
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    this.minute = this.incrementalSteps.minute > 0 ? (scroll * this.incrementalSteps.minute) : scroll;
     this.formatTime();
   }
 
@@ -245,7 +268,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   }
 
   private getDataIndex( type: TIME ) {
-    type === TIME.HOUR ? this.getItemByDataIndexHour() : this.getItemByDataIndexMinute();
+    return type === TIME.HOUR ? this.getItemByDataIndexHour() : this.getItemByDataIndexMinute();
   }
 
   private convertToAmPm( hour ) {

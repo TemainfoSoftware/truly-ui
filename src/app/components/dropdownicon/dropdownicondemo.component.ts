@@ -20,11 +20,11 @@ export class DropDownIconDemoComponent {
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.data = [
-      { textItem : 'Wallace', value : '1', icon: 'ion-arrow-shrink' },
-      { textItem : 'Wilson', value : '2', icon: 'ion-arrow-expand' },
-      { textItem : 'Wanda', value : '3', icon: 'ion-arrow-move' },
-      { textItem : 'Wanderson', value : '4', icon: 'ion-arrow-resize' },
-      { textItem : 'Wanderlei', value : '5', icon: 'ion-arrow-swap' }
+      { textItem : 'Wallace', value : '1', icon: 'ion ion-ios-trending-down' },
+      { textItem : 'Wilson', value : '2', icon: 'ion ion-ios-expand' },
+      { textItem : 'Wanda', value : '3', icon: 'ion ion-ios-move' },
+      { textItem : 'Wanderson', value : '4', icon: 'ion ion-ios-resize' },
+      { textItem : 'Wanderlei', value : '5', icon: 'ion ion-ios-swap' }
     ];
   }
 

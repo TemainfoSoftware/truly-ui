@@ -41,6 +41,7 @@ export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
 export { TimelineModule } from './components/timeline/index';
+export { TimePickerModule } from './components/timepicker/index';
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
@@ -51,6 +52,7 @@ export { ValidatorsModule } from './components/validators/index';
 export { ModalOptions, Modal } from './components/modal/modal-options';
 export { ModalConfig } from './components/modal/modal-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
+export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 
 // Enumerators

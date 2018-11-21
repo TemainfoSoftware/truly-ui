@@ -1,0 +1,113 @@
+* {
+  box-sizing: border-box;
+}
+
+.ui-wrapper-content {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  user-select: none;
+  cursor: pointer;
+  > .ui-timepicker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 50px;
+    > .ui-selected-time {
+      font-size: 1.5em;
+      font-family: Lato, "Segoe UI";
+      font-weight: normal;
+    }
+  }
+  > .ui-timepicker-footer {
+    height: 30px;
+  }
+  > .ui-timepicker-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 210px;
+    > .ui-transparent-section {
+      width: 218px;
+      position: absolute;
+      height: 210px;
+      pointer-events: none;
+    }
+    > .ui-controller-section {
+      pointer-events: none;
+      height: 30px;
+      width: 220px;
+      position: absolute;
+      top: calc(50% - 5px);
+      > .double-dot {
+        position: absolute;
+        line-height: 25px;
+        font-size: 1.2em;
+      }
+    }
+    > .ui-hour-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transition: background 200ms linear;
+    }
+    > .ui-minute-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transition: background 200ms linear;
+      span {
+        position: absolute;
+      }
+    }
+    > .ui-ampm-content {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      transition: background 200ms linear;
+      > .list {
+        line-height: 27px;
+      }
+    }
+
+  }
+  > .ui-title-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    > .ui-picker-title {
+      font-size: 0.8em;
+      color: #505050;
+      font-weight: bold;
+    }
+  }
+  > .ui-timepicker-footer {
+    display: flex;
+    align-items: center;
+  }
+  .list {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    text-align: center;
+    font-size: 1em;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      background: transparent;
+      width: 1px;
+    }
+    > .ui-list-item {
+      height: 30px;
+      font-size: 1.2em;
+      scroll-snap-align: center;
+      line-height: 30px;
+    }
+  }
+  .selectedItem {
+    font-weight: 600;
+  }
+}

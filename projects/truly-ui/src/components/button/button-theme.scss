@@ -1,6 +1,8 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-button-theme-schema( $theme, $action ){
+@mixin _tl-button-theme-schema( $theme, $action ) {
+
+  $isBasic: $action;
 
   background-color: map-deep-get($theme, $action, "default", "background");
   border: 1px solid map-deep-get($theme, $action, "default", "border");
@@ -8,6 +10,17 @@
   transition: background ease-in-out 100ms;
 
   /*Create ripple effec*/
+
+  &.outline {
+    background: transparent;
+    @if $isBasic == 'basic' {
+      color: map-deep-get($theme, $action, "default", "foreground");
+      border: 1px solid map-deep-get($theme, $action, "default", "border");
+    } @else {
+      color:  map-deep-get($theme, $action, "default", "background");
+      border: 1px solid map-deep-get($theme, $action, "default", "background");
+    }
+  }
 
   &.ripple {
     position: relative;
@@ -46,13 +59,13 @@
   }
 
 
-  &:hover{
+  &:hover {
     background-color: map-deep-get($theme, $action, "hover", "background");
     border: 1px solid map-deep-get($theme, $action, "hover", "border");
     color: map-deep-get($theme, $action, "hover", "foreground");
     box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.04);
 
-    & .iconAddonAfter{
+    & .iconAddonAfter {
       border-left: 1px solid map-deep-get($theme, $action, "hover", "border");
     }
     & .iconAddonBefore {

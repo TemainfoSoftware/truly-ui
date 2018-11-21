@@ -30,6 +30,10 @@ export class InputMask {
   private maskAwaliablePatterns: { [key: string]: RegExp } = {
     '0': /\d/,
     '9': /\d/,
+    'H': /[0-1-2]/,
+    'h': /[0-9]/,
+    'M': /[0-5]/,
+    'm': /[0-9]/,
     'A': /[a-zA-Z]/,
   };
 
@@ -161,6 +165,7 @@ export class InputMask {
 
   private handleNotMath() {
     if ( !this.isTextLengthMatchWithExpressionLength() ) {
+      console.log('not math');
       this.value = '';
       this.updateModel();
       this.tlInput.value = '';
@@ -403,7 +408,8 @@ export class InputMask {
   }
 
   private replaceValidChar( charInputted, cursor, inputArray ) {
-    if ( this.isValidSymbolMask( charInputted, this.maskExpression[ cursor ] ) ) {
+    if ( this.isValidSymbolMask( charInputted, this.maskExpression[ cursor ] ) &&
+    this.validateHourMatch( charInputted, this.maskExpression[ cursor ] )) {
       this.value = this.replaceUnderscoreForChar( inputArray, charInputted, cursor );
       this.setPosition( cursor + 1 );
     }
@@ -416,9 +422,7 @@ export class InputMask {
   }
 
   private isTextLengthMatchWithExpressionLength() {
-    return ( this.clearMask( this.maskExpression ).length === this.clearMask( this.value ).length)
-      && ( ( this.cleanValue( this.maskExpression ).length === this.cleanValue( this.value ).length))
-      && ( ( this.removeUnderscore( this.maskExpression ).length === this.removeUnderscore( this.value ).length));
+    return ( this.removeUnderscore( this.maskExpression ).length === this.removeUnderscore( this.value ).length);
   }
 
   private isValidSymbolMask( inputSymbol: string, maskSymbolChar: string ): boolean {
@@ -427,6 +431,16 @@ export class InputMask {
     }
     return ( inputSymbol === maskSymbolChar || this.maskAwaliablePatterns[ maskSymbolChar ] )
       && (this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol ));
+  }
+
+  private validateHourMatch(inputSymbol, maskSymbolChar) {
+    if (maskSymbolChar !== 'h') {
+      return true;
+    }
+    if (Number( this.value[0] ) < 2) {
+      return true;
+    }
+    return maskSymbolChar === 'h' && Number( inputSymbol ) <= 3;
   }
 
   private updateModel(): void {
@@ -465,6 +479,10 @@ export class InputMask {
     mask = mask.replace( /9/gi, '_' );
     mask = mask.replace( /0/gi, '_' );
     mask = mask.replace( /A/gi, '_' );
+    mask = mask.replace( /H/gi, '_' );
+    mask = mask.replace( /h/gi, '_' );
+    mask = mask.replace( /M/gi, '_' );
+    mask = mask.replace( /m/gi, '_' );
     return this.maskGuideExpression = mask;
   }
 

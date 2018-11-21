@@ -13,23 +13,31 @@
           <app-card>
             <div class="col-md-3">
               <h5>Show Dialog Info</h5>
-              <tl-button [text]="'Show Dialog Info'" [color]="'information'"
-                         [iconAddonBefore]="'ion ion-ios-information-circle'" (click)="info()"></tl-button>
+              <tl-button [text]="'Show Dialog Info'"
+                         [color]="'information'"
+                         [iconAddonBefore]="'fas fa-info-circle'"
+                         (click)="info()"></tl-button>
             </div>
 
             <div class="col-md-3">
               <h5>Show Dialog Confirmation</h5>
-              <tl-button [text]="'Show Dialog Confirmation'" [color]="'success'" [iconAddonBefore]="'ion ion-md-checkmark'"
+              <tl-button [text]="'Show Dialog Confirmation'"
+                         [color]="'success'"
+                         [iconAddonBefore]="'fas fa-check'"
                          (click)="confirmation()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Alert</h5>
-              <tl-button [text]="'Show Dialog Alert'" [color]="'warning'" [iconAddonBefore]="'ion ion-md-alert'"
+              <tl-button [text]="'Show Dialog Alert'"
+                         [color]="'warning'"
+                         [iconAddonBefore]="'fas fa-exclamation-circle'"
                          (click)="alert()"></tl-button>
             </div>
             <div class="col-md-3">
               <h5>Show Dialog Error</h5>
-              <tl-button [text]="'Show Dialog Error'" [color]="'danger'" [iconAddonBefore]="'ion ion-md-close-circle'"
+              <tl-button [text]="'Show Dialog Error'"
+                         [color]="'danger'"
+                         [iconAddonBefore]="'fas fa-times-circle'"
                          (click)="error()"></tl-button>
             </div>
           </app-card>

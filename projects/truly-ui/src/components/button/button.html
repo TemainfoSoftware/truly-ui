@@ -1,8 +1,14 @@
 <button #tlbutton
         attr.tabindex="-1"
         cdkTrapFocus
-        [ngStyle]="{'min-width': width, 'height': height, 'line-height': height}"
-        [ngClass]="{' disabled ': disabled}"
+        [ngStyle]="
+            {
+             'min-width': width,
+             'height': height,
+             'border-radius': flatBorder ? '0' : '3px',
+             'line-height': height
+             }"
+        [ngClass]="{'disabled ': disabled, 'outline': outline}"
         [class]="'tl-button ripple '+ color"
         [disabled]="( disabled || isLoading ) ? true : null"
         >

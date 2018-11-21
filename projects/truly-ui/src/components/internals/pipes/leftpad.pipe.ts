@@ -1,4 +1,6 @@
-/*
+
+
+ /*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -19,27 +21,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { TlLabel } from './components/label/label';
-import { CommonModule } from '@angular/common';
-import { TlTag } from './components/tag/tag';
-import { TlLeftPadPipe } from './pipes/leftpad.pipe';
+ import { Pipe, PipeTransform } from '@angular/core';
 
-@NgModule( {
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    TlLabel,
-    TlTag,
-    TlLeftPadPipe
-  ],
-  declarations: [
-    TlLabel,
-    TlTag,
-    TlLeftPadPipe
-  ],
-  providers: [],
-} )
-export class InternalsModule {
-}
+ @Pipe({name: 'leftpad'})
+ export class TlLeftPadPipe implements PipeTransform {
+   transform(value: string | number, exponent: number) {
+     return (String(0) + value).slice(-exponent);
+   }
+ }

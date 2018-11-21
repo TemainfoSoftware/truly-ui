@@ -27,7 +27,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    padding-top: 10px;
     height: 210px;
     > .ui-transparent-section {
       width: 218px;
@@ -40,7 +39,7 @@
       height: 30px;
       width: 220px;
       position: absolute;
-      top: calc(50%);
+      top: calc(50% - 5px);
       > .double-dot {
         position: absolute;
         line-height: 25px;

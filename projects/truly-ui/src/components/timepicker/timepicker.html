@@ -28,10 +28,13 @@
     <div [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)" [style.visibility]="isOpen ? 'visible' : 'hidden'">
       <div class="ui-timepicker-header">
         <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
-        <tl-button [flatBorder]="true"
+        <tl-button *ngIf="incrementalSteps.hour === 0 || incrementalSteps.minute === 0"
+                   [flatBorder]="true"
                    (click)="onClickNow()"
-                   [outline]="true" [width]="'50px'"
-                   [text]="nowText" [color]="'primary'">
+                   [outline]="true"
+                   [width]="'50px'"
+                   [text]="nowText"
+                   [color]="'primary'">
         </tl-button>
       </div>
       <div class="ui-title-header">

@@ -29,6 +29,7 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subscription } from 'rxjs';
+import { I18nService } from '../i18n/i18n.service';
 
 export interface IncrementalSteps {
   hour: number;
@@ -99,7 +100,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   public trigger;
 
-  public nowText = 'Now';
+  public nowText = this.i18n.getLocale().TimePicker.now;
 
   public selectedTime = '10:30 AM';
 
@@ -130,7 +131,8 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   private lastStep = 0;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private renderer: Renderer2, private i18n: I18nService ) {
     super( validators, asyncValidators );
   }
 

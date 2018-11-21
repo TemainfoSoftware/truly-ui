@@ -2,7 +2,9 @@
      <span [style.background]="arrowsColor"
            [@onCreateElement]="true"
            [style.lineHeight]="height"
-           (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left"><i class="ion-chevron-left"></i></span>
+           (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left">
+       <tl-icon [lib]="'ion'" [style]="'ios'">arrow-back</tl-icon>
+     </span>
     <div #container [style.height]="height" [style.background-color]="containerColor" class="container-modals">
       <div #wrapper class="wrapper-container-modals" [style.line-height]="height" [ngStyle]="
       {position: 'absolute'}">
@@ -12,7 +14,7 @@
                [style.lineHeight]="'calc(' + height + ' - 6px)'"
                [style.opacity]="item.componentRef === modalService.activeModal ? 1 : 0.7"
                *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.componentRef)">
-              <span class="ui-container-item"><i [ngClass]="item.componentRef.instance.icon"></i></span>
+              <span class="ui-container-item"><tl-icon>{{ item.componentRef.instance.icon }}</tl-icon></span>
               <span class="ui-container-item">{{getTextContainerItem(item.componentRef.instance.title)}}</span>
           </div>
       </div>
@@ -20,6 +22,6 @@
     <span [style.background]="arrowsColor"
           [style.lineHeight]="height"
           [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
-      <i class="ion-chevron-right"></i>
+      <tl-icon [lib]="'ion'" [style]="'ios'">arrow-forward</tl-icon>
     </span>
 </div>

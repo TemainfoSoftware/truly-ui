@@ -4,7 +4,7 @@
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
              (mousedown)="mouseDown($event);"
              (dblclick)="maximizeModal()">
-            <span class="ui-icon"><i [ngClass]="icon"></i></span>
+            <span class="ui-icon"><tl-icon>{{ icon }}</tl-icon></span>
             <span class="ui-title">{{title}}</span>
         </div>
         <div class="controls" [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'">

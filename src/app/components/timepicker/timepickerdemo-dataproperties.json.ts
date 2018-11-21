@@ -77,6 +77,13 @@ export const dataProperties = [
     options: 'left|right|center|justify|initial|inherit'
   },
   {
+    name: 'incrementalSteps',
+    type: 'Object<IncrementalSteps>',
+    default: 'null',
+    description: 'Define number of incremental steps of hour and minute',
+    options: 'Object<IncrementalSteps>'
+  },
+  {
     name: 'height',
     type: 'string',
     default: '23px',

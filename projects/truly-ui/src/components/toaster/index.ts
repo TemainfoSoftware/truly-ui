@@ -8,12 +8,15 @@ import { ProgressBarModule } from '../progressbar/index';
 import { TlToasterContainer } from './toaster-container';
 import { OverlayModule } from '@angular/cdk/overlay';
 
+import { IconsModule } from '../icons/index';
+
 @NgModule( {
   imports: [
     CommonModule,
     FormsModule,
     ProgressBarModule,
-    OverlayModule
+    OverlayModule,
+    IconsModule
   ],
   declarations: [
     TlToaster,

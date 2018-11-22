@@ -8,7 +8,7 @@
      'height': height}">
   <div class="ui-toaster-content"
   [ngStyle]="{'grid-template-columns': showIcon ? '50px 1fr' : '1fr', 'padding': !showIcon || height === 'auto' ? '20px 0' : '0'}">
-    <div *ngIf="showIcon" class="ui-toaster-icon"><i [class]="icon"></i></div>
+    <div *ngIf="showIcon" class="ui-toaster-icon"><tl-icon [size]="'1.5em'">{{ icon }}</tl-icon></div>
     <div class="ui-toaster-description">
       <p><b>{{title}}</b></p>
       <p *ngIf="!isMessageObject()">{{message}}</p>

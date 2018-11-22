@@ -75,11 +75,17 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @Input() withBorder = true;
 
-  @Input() incrementalSteps: IncrementalSteps = { hour: 0, minute: 0 };
+  @Input() steps: IncrementalSteps = { hour: 1, minute: 1 };
+
+  @Input() availableTimes = [];
 
   @Input() color = 'basic';
 
   @Input() name = '';
+
+  @Input() min: Date = new Date(1999, 0, 1, 0, 0);
+
+  @Input() max: Date =  new Date(1999, 0, 1, 23, 59);
 
   @ViewChild( 'listHour' ) listHour: ElementRef;
 
@@ -97,7 +103,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @Output() cancel: EventEmitter<string> = new EventEmitter();
 
-  public model: NgModel;
+  @ViewChild(NgModel) model: NgModel;
 
   public isOpen = false;
 
@@ -131,38 +137,48 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   private listeners: Subscription = new Subscription();
 
-  private lastStep = 0;
-
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
                private renderer: Renderer2, private i18n: I18nService ) {
     super( validators, asyncValidators );
   }
 
-  ngOnInit() {
-    this.minutes = Array( this.getFormatMinuteNumber() ).fill( 0 ).map( ( x, i ) => {
-      if ( this.incrementalSteps.minute ) {
-        this.lastStep = (this.incrementalSteps.minute * i);
-        return this.lastStep;
-      }
-      return i;
-    } );
-    this.hours = Array( this.getFormatHourNumber() ).fill( 0 ).map( ( x, i ) => {
-      if ( this.incrementalSteps.hour ) {
-        this.lastStep = (this.incrementalSteps.hour * i);
-        return this.lastStep;
-      }
-      return i;
-    } );
-  }
+  ngOnInit() {}
 
   ngAfterContentInit() {
+    this.handleCreateRing();
     this.listenContainer();
     this.formatTime();
   }
 
   ngAfterViewInit() {
+    this.listenModelChange();
     this.handleOpen();
+  }
+
+  handleCreateRing() {
+    this.createHourRing();
+    this.createMinuteRing();
+  }
+
+  createHourRing() {
+    let lastHour = this.min.getHours() - this.steps.hour;
+    for (let i = 0; i <= this.max.getHours(); i++) {
+      if ( i === ( lastHour + this.steps.hour)) {
+        this.hours.push(i);
+        lastHour = i;
+      }
+    }
+  }
+
+  createMinuteRing() {
+    let lastMinute = this.min.getMinutes() - this.steps.minute;
+    for (let i = 0; i <= this.max.getMinutes(); i++) {
+      if ( i === ( lastMinute + this.steps.minute)) {
+        this.minutes.push(i);
+        lastMinute = i;
+      }
+    }
   }
 
   handleOpen() {
@@ -178,22 +194,25 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
   }
 
-  private getFormatMinuteNumber() {
-    return this.incrementalSteps.minute ? (60 / this.incrementalSteps.minute) : 60;
-  }
-
-  private getFormatHourNumber() {
-    if ( this.isFormat12() ) {
-      return this.incrementalSteps.hour ? (13 / this.incrementalSteps.hour) : 13;
-    }
-    return this.incrementalSteps.hour ? (24 / this.incrementalSteps.hour) : 24;
-  }
-
   private listenContainer() {
     this.listeners.add( this.renderer.listen( document, 'click', () => {
       this.isOpen = false;
       this.handleOpen();
     } ) );
+  }
+
+  private listenModelChange() {
+    if (this.model) {
+      this.model.valueChanges.subscribe((value) => {
+        if (value instanceof Date) {
+          this.hour = value.getHours();
+          this.minute = value.getMinutes();
+          this.formatTime();
+          this.value = this.selectedTime;
+          this.onChangeValue( this.hour + ':' + this.minute );
+        }
+      });
+    }
   }
 
   mouseDownContainer( $event ) {
@@ -219,13 +238,13 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   onScrollHour( $event ) {
     const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
-    this.hour = this.incrementalSteps.hour > 0 ? (scroll * this.incrementalSteps.hour) : scroll;
+    this.hour = this.steps.hour > 0 ? (scroll * this.steps.hour) : scroll;
     this.formatTime();
   }
 
   onScrollMinutes( $event ) {
     const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
-    this.minute = this.incrementalSteps.minute > 0 ? (scroll * this.incrementalSteps.minute) : scroll;
+    this.minute = this.steps.minute > 0 ? (scroll * this.steps.minute) : scroll;
     this.formatTime();
   }
 
@@ -262,8 +281,10 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {
     const element: any = this.getDataIndex( type );
     if ( element ) {
-      elementScroll.scrollTop =
-        element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+      setTimeout(() => {
+        elementScroll.scrollTop =
+          element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+      }, 100);
     }
   }
 
@@ -313,7 +334,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   clickListItem( scrollElement, $event ) {
     scrollElement.scrollTop =
       $event.target.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
-    this.value = this.selectedTime;
+    setTimeout(() => { this.value = this.selectedTime; }, 100);
   }
 
   setAm() {
@@ -335,6 +356,5 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   ngOnDestroy() {
     this.listeners.unsubscribe();
   }
-
 
 }

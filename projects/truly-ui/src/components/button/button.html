@@ -26,6 +26,7 @@
     <!-- WHEN IS LOADING-->
     <span *ngIf="isLoading"  class="textButton -isLoading" [ngStyle]="{'line-height': height}">
       <i *ngIf="isLoading" ngClass="fa fa-circle-o-notch fa-spin fa-fw"></i>
+      <tl-icon [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
       {{ textLoading }}
     </span>
     <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">

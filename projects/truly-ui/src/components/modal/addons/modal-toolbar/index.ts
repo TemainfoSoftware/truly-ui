@@ -23,10 +23,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { TlModalToolbar } from './modal-toolbar';
+import { IconsModule } from '../../../icons/index';
 
 @NgModule( {
   imports: [
     CommonModule,
+    IconsModule
   ],
   declarations: [
     TlModalToolbar

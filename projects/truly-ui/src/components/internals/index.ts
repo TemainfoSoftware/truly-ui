@@ -25,9 +25,12 @@ import { CommonModule } from '@angular/common';
 import { TlTag } from './components/tag/tag';
 import { TlLeftPadPipe } from './pipes/leftpad.pipe';
 
+import {IconsModule} from '../icons/index';
+
 @NgModule( {
   imports: [
-    CommonModule
+    CommonModule,
+    IconsModule
   ],
   exports: [
     TlLabel,

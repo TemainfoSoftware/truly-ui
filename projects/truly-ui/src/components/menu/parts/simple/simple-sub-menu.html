@@ -10,6 +10,6 @@
     <i [style.height]="itemHeight" [style.line-height]="itemHeight" [class]="'icon ' + item[icon]"></i>
     <span [style.height]="itemHeight" [style.line-height]="itemHeight" class="label">{{item[label]}}</span>
     <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]" [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
-       class="ion-ios-arrow-right icon"></i>
+       class="ion ion-ios-arrow-forward icon"></i>
   </li>
 </ul>

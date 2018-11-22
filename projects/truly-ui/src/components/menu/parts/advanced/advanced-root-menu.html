@@ -26,7 +26,7 @@
   <div class="ui-wrapper-not-found"
        *ngIf="nothingFound"
        [tlBlockui]="nothingFound"
-       [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+       [blockuiConfig]="{'spin': false, 'icon': 'ion ion-md-sad', 'message': filterEmptyMessage}">
   </div>
 
   <div class="ui-wrapper-items"
@@ -59,7 +59,7 @@
              [ngClass]="{'ui-advanced-submenu-opened' : isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu }">
           <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]"
              [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
-             class="ion-ios-arrow-right icon"></i>
+             class="ion ion-ios-arrow-forward icon"></i>
         </div>
       </li>
     </div>

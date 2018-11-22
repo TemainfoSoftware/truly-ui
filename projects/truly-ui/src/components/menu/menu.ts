@@ -213,6 +213,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     if ( !this.isDocked() ) {
       this.iconSubElement = new ElementRef( this.renderer.createElement( 'i' ) );
       this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
+      this.renderer.addClass( this.iconElement.nativeElement, 'fa' );
       this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
       if ( subItem ) {
         this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-forward' );

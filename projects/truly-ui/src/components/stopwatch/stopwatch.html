@@ -1,6 +1,6 @@
 <div [class]="'tl-stopwatch ' + color" [ngStyle]="{'width': width, 'height': height}">
   <div class="icon">
-    <i class="ion ion-md-time" aria-hidden="true"></i>
+    <tl-icon [lib]="'fa'" [style]="'far'" [size]="'2.2em'">clock</tl-icon>
   </div>
   <div class="time">
     <p>{{ currentHour }}</p>

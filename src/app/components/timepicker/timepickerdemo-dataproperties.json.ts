@@ -77,11 +77,25 @@ export const dataProperties = [
     options: 'left|right|center|justify|initial|inherit'
   },
   {
-    name: 'incrementalSteps',
+    name: 'steps',
     type: 'Object<IncrementalSteps>',
     default: 'null',
     description: 'Define number of incremental steps of hour and minute',
     options: 'Object<IncrementalSteps>'
+  },
+  {
+    name: 'min',
+    type: 'Date',
+    default: 'null',
+    description: 'Define a object of [min] Date to initiate the picker',
+    options: 'Object<Time>'
+  },
+  {
+    name: 'max',
+    type: 'Date',
+    default: 'null',
+    description: 'Define a object of [max] Date the picker',
+    options: 'Object<Time>'
   },
   {
     name: 'height',

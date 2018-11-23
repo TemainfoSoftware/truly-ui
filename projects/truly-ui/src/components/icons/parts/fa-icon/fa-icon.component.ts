@@ -16,7 +16,7 @@ export class FaIconComponent implements OnInit, OnChanges {
 
   @Input() style: string;
 
-  @Input() size: string;
+  @Input() size = '12px';
 
   @Input() animation: string;
 

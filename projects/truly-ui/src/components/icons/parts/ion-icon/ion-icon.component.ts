@@ -16,7 +16,7 @@ export class IonIconComponent implements OnInit, OnChanges {
 
   @Input() style: string;
 
-  @Input() size: '14px';
+  @Input() size = '12px';
 
   @Input() animation: string;
 

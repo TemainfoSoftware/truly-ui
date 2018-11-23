@@ -14,7 +14,7 @@ export class DxIconComponent implements OnInit, OnChanges {
 
   @Input() icon: string;
 
-  @Input() size: string;
+  @Input() size = '12px';
 
   @Input() animation: string;
 

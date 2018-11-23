@@ -43,7 +43,7 @@ export class TlIcons implements AfterViewInit {
 
   @Input() style: string;
 
-  @Input() size = '12px';
+  @Input() size: string;
 
   @Input() animation: string;
 

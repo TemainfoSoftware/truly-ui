@@ -12,16 +12,31 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <tl-input
+                  [iconAfter]="'fas fa-search'"
+                  [placeholder]="'Search Icon'"
+                  [clearButton]="true"
+                  [(ngModel)]="filter"
+                  [autocomplete]="'off'">
+                </tl-input>
+              </div>
+              <div class="col-md-3">
+                <tl-switch [label]="'Show Cheatsheet'" [color]="'primary'" [checked]="cheatsheet" (toggle)="toggleCheatsheet()"></tl-switch>
+              </div>
+            </div>
             <div class="col-md-12">
               <h5>Material Style</h5>
               <ul class="row">
-                <li class="col-md-2" *ngFor="let icon of materialIcons">
+                <li class="col-md-2" *ngFor="let icon of filterIcon(materialIcons)">
                   <div class="shadow-hover"
                        (click)="copyIcon(icon, 'md')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
                     <tl-icon [icon]="icon" [style]="'md'" [lib]="'ion'" [size]="'36px'"></tl-icon>
-                    <span>{{ icon }}</span>
+                    <span *ngIf="!cheatsheet">{{ icon }}</span>
+                    <span *ngIf="cheatsheet">ion ion-md-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
                       <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
                     </div>
@@ -37,13 +52,14 @@
             <div class="col-md-12">
               <h5>iOS Style</h5>
               <ul class="row">
-                <li class="col-md-2" *ngFor="let icon of iosIcons">
+                <li class="col-md-2" *ngFor="let icon of filterIcon(iosIcons)">
                   <div class="shadow-hover"
                        (click)="copyIcon(icon, 'ios')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
                     <tl-icon [icon]="icon" [style]="'ios'" [lib]="'ion'" [size]="'36px'"></tl-icon>
-                    <span>{{ icon }}</span>
+                    <span *ngIf="!cheatsheet">{{ icon }}</span>
+                    <span *ngIf="cheatsheet">ion ion-ios-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
                       <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
                     </div>
@@ -59,13 +75,14 @@
             <div class="col-md-12">
               <h5>Logos</h5>
               <ul class="row">
-                <li class="col-md-2" *ngFor="let icon of logoIcons">
+                <li class="col-md-2" *ngFor="let icon of filterIcon(logoIcons)">
                   <div class="shadow-hover"
                        (click)="copyIcon(icon, 'logo')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
                     <tl-icon [icon]="icon" [style]="'logo'" [lib]="'ion'" [size]="'36px'"></tl-icon>
-                    <span>{{ icon }}</span>
+                    <span *ngIf="!cheatsheet">{{ icon }}</span>
+                    <span *ngIf="cheatsheet">ion ion-logo-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
                       <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
                     </div>

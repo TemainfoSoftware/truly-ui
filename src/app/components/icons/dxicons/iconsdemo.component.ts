@@ -45,6 +45,10 @@ export class IconsDemoComponent {
 
   @ViewChild('inputCopy') inputCopy: ElementRef<any>;
 
+  public filter: string;
+
+  public cheatsheet = false;
+
   public copy: string;
 
   public saved: string;
@@ -69,9 +73,30 @@ export class IconsDemoComponent {
 
   constructor() {}
 
+  filterIcon(array) {
+    if ( array.length === 0 || this.filter === undefined || this.filter.trim() === '' ) {
+      return array;
+    }
+
+    return array.filter((v) => {
+      if ( v.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0 ) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  toggleCheatsheet() {
+    this.cheatsheet = !this.cheatsheet;
+  }
+
   copyIcon(icon) {
     this.onMouseLeave();
-    this.outputIcon = `<tl-icon [lib]="'dx'">${ icon }</tl-icon>`;
+    if ( this.cheatsheet ) {
+      this.outputIcon = `dx-icon dx-icon-${ icon }`;
+    } else {
+      this.outputIcon = `<tl-icon [lib]="'dx'">${ icon }</tl-icon>`;
+    }
     setTimeout(() => {
       this.inputCopy.nativeElement.select();
       document.execCommand('copy');

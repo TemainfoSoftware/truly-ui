@@ -12,16 +12,30 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
+            <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <tl-input
+                  [placeholder]="'Search Icon'"
+                  [clearButton]="true"
+                  [(ngModel)]="filter"
+                  [autocomplete]="'off'">
+                </tl-input>
+              </div>
+              <div class="col-md-3">
+                <tl-switch [label]="'Show Cheatsheet'" [color]="'primary'" [checked]="cheatsheet" (toggle)="toggleCheatsheet()"></tl-switch>
+              </div>
+            </div>
             <div class="col-md-12">
               <h5>Basic</h5>
               <ul class="row">
-                <li class="col-md-2" *ngFor="let icon of dataIcons">
+                <li class="col-md-2" *ngFor="let icon of filterIcon(dataIcons)">
                   <div class="shadow-hover"
                        (click)="copyIcon(icon)"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
                     <tl-icon [icon]="icon" [lib]="'dx'" [size]="'36px'"></tl-icon>
-                    <span>{{ icon }}</span>
+                    <span *ngIf="!cheatsheet">{{ icon }}</span>
+                    <span *ngIf="cheatsheet">dx-icon dx-icon-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
                       <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
                     </div>

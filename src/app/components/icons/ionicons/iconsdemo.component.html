@@ -34,14 +34,14 @@
                        (click)="copyIcon(icon, 'md')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
-                    <tl-icon [icon]="icon" [style]="'md'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <i class="ion ion-md-{{ icon }}"></i>
                     <span *ngIf="!cheatsheet">{{ icon }}</span>
                     <span *ngIf="cheatsheet">ion ion-md-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                      <i class="ion ion-md-done-all copy"></i>
                     </div>
                     <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                      <i class="ion ion-md-copy copyed"></i>
                     </div>
                   </div>
                 </li>
@@ -57,14 +57,14 @@
                        (click)="copyIcon(icon, 'ios')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
-                    <tl-icon [icon]="icon" [style]="'ios'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <i class="ion ion-ios-{{ icon }}"></i>
                     <span *ngIf="!cheatsheet">{{ icon }}</span>
                     <span *ngIf="cheatsheet">ion ion-ios-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                      <i class="ion ion-md-done-all copy"></i>
                     </div>
                     <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                      <i class="ion ion-md-copy copyed"></i>
                     </div>
                   </div>
                 </li>
@@ -80,14 +80,14 @@
                        (click)="copyIcon(icon, 'logo')"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
-                    <tl-icon [icon]="icon" [style]="'logo'" [lib]="'ion'" [size]="'36px'"></tl-icon>
+                    <i class="ion ion-logo-{{ icon }}"></i>
                     <span *ngIf="!cheatsheet">{{ icon }}</span>
                     <span *ngIf="cheatsheet">ion ion-logo-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#5EC791'">done-all</tl-icon>
+                      <i class="ion ion-md-done-all copy"></i>
                     </div>
                     <div class="copy-message" [@enterAnimation]="copy === icon" *ngIf="copy === icon">
-                      <tl-icon [lib]="'ion'" [size]="'14px'" [color]="'#333333'">copy</tl-icon>
+                      <i class="ion ion-md-copy copyed"></i>
                     </div>
                   </div>
                 </li>

@@ -33,7 +33,7 @@
                        (click)="copyIcon(icon)"
                        (mouseover)="onMouseOver(icon)"
                        (mouseleave)="onMouseLeave(icon)">
-                    <tl-icon [icon]="icon" [lib]="'dx'" [size]="'36px'"></tl-icon>
+                    <i class="dx-icon dx-icon-{{ icon }}"></i>
                     <span *ngIf="!cheatsheet">{{ icon }}</span>
                     <span *ngIf="cheatsheet">dx-icon dx-icon-{{ icon }}</span>
                     <div class="copy-message" [@enterAnimation]="saved === icon" *ngIf="saved === icon">

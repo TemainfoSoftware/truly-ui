@@ -201,12 +201,7 @@ export class IconsDemoComponent {
       return array;
     }
 
-    return array.filter((v) => {
-      if ( v.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0 ) {
-        return true;
-      }
-      return false;
-    });
+    return array.filter( (v) => v.toLowerCase().indexOf(this.filter.toLowerCase()) >= 0 );
   }
 
   toggleCheatsheet() {

@@ -19,7 +19,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import * as json from './timepickerdemo-dataproperties.json';
 import * as jsonEvts from './timepickerdemo.dataevents.json';
@@ -29,19 +29,25 @@ selector : 'app-timepicker',
 templateUrl : './timepickerdemo.component.html',
 styleUrls : [ './timepickerdemo.component.scss' ],
 } )
-export class TimepickerDemoComponent {
+export class TimepickerDemoComponent implements OnInit {
 
   public dataTableProperties;
 
   public dataEvents;
 
-  public dataTwo;
+  public dataTwo = new Date(2018, 11, 21, 17, 15);
+
+  public maxHourMinuteDate = new Date(2018, 11, 21, 20, 59);
+
+  public minHourMinuteDate = new Date(2018, 11, 21, 0, 0);
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+  }
 
-    this.dataTwo = '1513';
+  ngOnInit() {
+
   }
 
   onClickNow($event) {

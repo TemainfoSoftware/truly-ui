@@ -126,6 +126,9 @@ export class ModalService implements OnDestroy {
       this.createModalDialog( TlDialogConfirmation, this.modalConfiguration[ 'factory' ], ({
         isYes: () => {
           this.modalConfiguration[ 'actions' ].deleteCall(this.modalConfiguration[ 'dataForm' ]);
+        },
+        isNo: () => {
+          return null;
         }
       }));
       this.componentInjected.instance.message = this.modalConfiguration[ 'deleteConfirmationMessage' ];

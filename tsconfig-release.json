@@ -23,12 +23,6 @@
   "include": [
     "./tmp/src-inlined/**/*.ts"
   ],
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts",
-    "node_modules/*",
-    "node_modules/@types/jest/index.d.ts"
-  ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
     "genDir": "./dist/components",

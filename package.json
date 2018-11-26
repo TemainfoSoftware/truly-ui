@@ -30,7 +30,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "test": "jest --config=jest.conf.json",
+    "test": "node ./node_modules/jest/bin/jest --config=jest.conf.json",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:library": "ng build truly-ui --prod",

@@ -4,14 +4,14 @@
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
              (mousedown)="mouseDown($event);"
              (dblclick)="maximizeModal()">
-            <span class="ui-icon"><i [ngClass]="icon"></i></span>
+            <span class="ui-icon"><tl-icon>{{ icon }}</tl-icon></span>
             <span class="ui-title">{{title}}</span>
         </div>
         <div class="controls" [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'">
             <div class="control-item"
                  [ngClass]="{'disabled': !minimizable}"
                  (click)="minimizeModal()">
-                <i  class="ion-android-remove" [class.disabled]="!minimizable"></i>
+                <tl-icon [lib]="'ion'" [class.disabled]="!minimizable">remove</tl-icon>
             </div>
 
             <div class="control-item" *ngIf="!maximized"
@@ -19,7 +19,7 @@
                  [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="maximizeShortcut"
                  (click)="maximizeModal()">
-                <i ngClass="ion-android-expand" [class.disabled]="!maximizable"></i>
+              <tl-icon [lib]="'ion'" [class.disabled]="!maximizable">expand</tl-icon>
             </div>
 
             <div class="control-item" *ngIf="maximized"
@@ -27,7 +27,7 @@
                  [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="restoreShortcut"
                  (click)="restoreMaximizeModal()">
-                <i ngClass="ion-android-contract" [class.disabled]="!restoreMaximize"></i>
+              <tl-icon [lib]="'ion'" [class.disabled]="!restoreMaximize">contract</tl-icon>
             </div>
 
             <div class="control-item"
@@ -35,7 +35,7 @@
                  [ngStyle]="{'zIndex': modal.style.zIndex}"
                  [shortcut]="closeShortcut"
                  (click)="closeModal()">
-                <i class="ion-close" [class.disabled]="!closable"></i>
+              <tl-icon [lib]="'ion'" [class.disabled]="!closable">close</tl-icon>
             </div>
         </div>
     </div>

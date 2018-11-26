@@ -1,9 +1,9 @@
 <div class="tl-navigator">
   <div tabindex="-1"
        (click)="onClickPrevious()"
-       [ngClass]="{'ui-button': true,'ui-with-border': withBorder}"
-       [ngStyle]="{height:height,lineHeight: height}">
-    <i class="ion-chevron-left"></i>
+       [ngClass]="{'ui-button': true, 'ui-with-border': withBorder}"
+       [ngStyle]="{height:height, lineHeight: height}">
+    <tl-icon [lib]="'fa'" [style]="'fas'" [icon]="'chevron-left'"></tl-icon>
   </div>
   <div tabindex="-1"
        [ngClass]="{'ui-navigator': true,'ui-with-border': withBorder}"
@@ -13,8 +13,8 @@
   </div>
   <div tabindex="-1"
        (click)="onClickNext()"
-       [ngClass]="{'ui-button': true,'ui-with-border': withBorder}"
+       [ngClass]="{'ui-button': true, 'ui-with-border': withBorder}"
        [ngStyle]="{height:height, lineHeight: height}">
-    <i class="ion-chevron-right"></i>
+    <tl-icon [lib]="'fa'" [style]="'fas'" [icon]="'chevron-right'"></tl-icon>
   </div>
 </div>

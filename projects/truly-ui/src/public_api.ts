@@ -18,6 +18,7 @@ export { DialogModule } from './components/dialog/index';
 export { DropDownListModule } from './components/dropdownlist/index';
 export { EditorModule } from './components/editor/index';
 export { FormModule } from './components/form/index';
+export { IconsModule } from './components/icons/index';
 export { InputModule } from './components/input/index';
 export { ListBoxModule} from './components/listbox/index';
 export { MenuModule } from './components/menu/index';
@@ -30,21 +31,29 @@ export { NavigatorModule } from './components/navigator/index';
 export { OverlayPanelModule } from './components/overlaypanel/index';
 export { PanelGroupModule } from './components/panelgroup/index';
 export { PopupMenuModule } from './components/popupmenu/index';
+export { PermissionsModule } from './components/permissions/index';
 export { ProgressBarModule } from './components/progressbar/index';
 export { RadioButtonModule } from './components/radiobutton/index';
 export { SidebarModule } from './components/sidebar/index';
 export { ScheduleModule } from './components/schedule/index';
+export { StopwatchModule } from './components/stopwatch/index';
+export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
 export { TimelineModule } from './components/timeline/index';
+export { TimePickerModule } from './components/timepicker/index';
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
-export { TimePickerModule } from './components/timepicker/index';
+export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
 // Interfaces
 export { ModalOptions, Modal } from './components/modal/modal-options';
+export { ModalConfig } from './components/modal/modal-config';
+export { ToasterConfig } from './components/toaster/toaster-config';
+export { IncrementalSteps } from './components/timepicker/timepicker';
+export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';
@@ -55,7 +64,11 @@ export { ModalResult } from './components/core/enums/modal-result';
 export { DialogService } from './components/dialog/dialog.service';
 export { ModalService } from './components/modal/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
+export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
+
+// Classes
+export { Permission } from './components/permissions/parts/models/permission.model';
 
 // Languages
 export { I18nService } from './components/i18n/i18n.service';

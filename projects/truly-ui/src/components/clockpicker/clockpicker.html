@@ -1,0 +1,47 @@
+<div [class]="'tl-clockpicker ' + color">
+  <tl-input #input
+            [label]="label"
+            [labelSize]="labelSize"
+            [name]="name"
+            (clear)="onClearInput($event)"
+            (keyup)="onKeyUp($event)"
+            (focus)="open()"
+            [iconAfter]="iconAfter"
+            [textAlign]="textAlign"
+            [mask]="'00:00'"
+            [labelPlacement]="labelPlacement"
+            [readonly]="readonly ? true : null"
+            [disabled]="disabled ? true : null"
+            [(ngModel)]="value"
+            [placeholder]="placeholder"
+            [clearButton]="clearButton">
+  </tl-input>
+  <div class="ui-wrapper-clockpicker-content" #timePickerContent
+       [style.display]="opened() ? 'block' : 'none'">
+    <div class="ui-arrow-up" #arrow [style.display]="opened() && !isClockPickerAbove ? 'block' : 'none'"></div>
+    <div class="ui-clockpicker-wrapper">
+      <div class="ui-clockpicker-header">
+        <span [ngClass]="{ 'selected-time' : timepickerService.type === 'hour' }"
+              (click)="changeHour()">{{ timepickerService.getClockPickerValue().hour }}</span>
+        :
+        <span [ngClass]="{ 'selected-time' : timepickerService.type === 'minute'}"
+              (click)="changeMinute()">{{ timepickerService.getClockPickerValue().minute }}</span>
+      </div>
+      <div class="ui-clockpicker-content" [ngClass]="{ 'noBorderBottom' : !showButtonDone }">
+        <div class="ui-clock" #uiClockRadius>
+          <div class="ui-point-center" #point></div>
+          <div class="ui-clock-line" [style.transform]="'rotate('+ timepickerService.getAngleClock() + 'deg)'">
+            <div class="ui-clock-line-circle"></div>
+          </div>
+        </div>
+        <div class="clockpicker-dial" (mousedown)="onMouseDown()" (mouseup)="onMouseUp()" #wrapperDial></div>
+        <div class="clockpicker-dial dial-min" (mousedown)="onMouseDown()" (mouseup)="onMouseUp()" #wrapperDialMin></div>
+      </div>
+      <div *ngIf="showButtonDone" class="ui-clockpicker-footer" (click)="close()">
+        {{ buttonDoneMessage }}
+      </div>
+      <div class="ui-arrow-down" [style.display]="opened() && isClockPickerAbove ? 'block' : 'none'"></div>
+    </div>
+  </div>
+</div>
+

@@ -28,8 +28,8 @@ import { BlockUIConfig } from './blockui-config';
     template: `
       <div id="blockui">
         <div class="blockui-content">
-          <i [class]="config.spin ? 'fa spin ' + config.icon + ' fa-fw' : 'fa ' + config.icon + ' fa-fw'"></i>
-          <span *ngIf="config.message">{{config.message}}</span>
+          <tl-icon [size]="'3em'" [animation]="config.spin ? 'spin' : null">{{ config.icon }}</tl-icon>
+          <span *ngIf="config.message">{{ config.message }}</span>
         </div>
       </div>`,
     styleUrls: ['./blockui.scss']
@@ -38,5 +38,5 @@ export class TlBlockUIComponent {
 
     public config: BlockUIConfig = new BlockUIConfig();
 
-    constructor( public element: ElementRef) {}
+    constructor( public element: ElementRef ) {}
 }

@@ -19,13 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
 import { I18nService } from '../../i18n/i18n.service';
 import { Modal } from '../../modal/modal-options';
 
 @Modal({
-  icon: 'ion-information-circled',
+  icon: 'fas fa-check',
   title: 'Confirmation',
   color: 'success',
   width: '400px',

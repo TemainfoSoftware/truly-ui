@@ -60,10 +60,11 @@ We assume that you have already installed the following packages at least and ar
 
     ```
     "styles": [
-           "node_modules/@angular/cdk/overlay-prebuilt.css",
-           "node_modules/font-awesome/css/font-awesome.min.css",
-           "node_modules/ionicons-npm/css/ionicons.min.css",
-           "node_modules/truly-ui/css/icons/dx-icons/dx-icons.scss"
+          "node_modules/@angular/cdk/overlay-prebuilt.css",
+          "node_modules/truly-ui/css/icons/dx-icons/css/icons.scss",
+          "node_modules/truly-ui/css/icons/fa-icons/css/icons.scss",
+          "node_modules/truly-ui/css/icons/ion-icons/css/icons.scss",
+          "node_modules/truly-ui/css/icons/animations.scss"
     ]
     ```
     
@@ -156,28 +157,31 @@ Once your library is imported, you can use its components, directives and pipes 
 | dropdownlist     |                                                        |   [Docs][15] |
 | editor           |                                                        |   [Docs][16] |
 | form             |                                                        |   [Docs][17] |
-| input            |                                                        |   [Docs][18] |
-| listbox          |                                                        |   [Docs][19] |
-| menu             |                                                        |   [Docs][20] |
-| shortcut         |                                                        |   [Docs][21] |
-| modal            |                                                        |   [Docs][22] |
-| multiselect      |                                                        |   [Docs][23] |
-| multiview        |                                                        |   [Docs][24] |
-| navigator        |                                                        |   [Docs][25] |
-| overlaypanel     |                                                        |   [Docs][26] |
-| panelgroup       |                                                        |   [Docs][27] |
-| popupmenu        |                                                        |   [Docs][28] |
-| progressbar      |                                                        |   [Docs][29] |
-| radiobutton      |                                                        |   [Docs][30] |
-| sidebar          |                                                        |   [Docs][31] |
-| splitbutton      |                                                        |   [Docs][32] |
-| switch           |                                                        |   [Docs][33] |
-| tabcontrol       |                                                        |   [Docs][34] |
-| theming          |                                                        |   [Docs][35] |
-| toaster          |                                                        |   [Docs][36] |
-| toolbar          |                                                        |   [Docs][37] |
-| tooltip          |                                                        |   [Docs][38] |
-| validators       |                                                        |   [Docs][39] |
+| icon             |                                                        |   [Docs][18] |
+| input            |                                                        |   [Docs][19] |
+| listbox          |                                                        |   [Docs][20] |
+| menu             |                                                        |   [Docs][21] |
+| shortcut         |                                                        |   [Docs][22] |
+| modal            |                                                        |   [Docs][23] |
+| multiselect      |                                                        |   [Docs][24] |
+| multiview        |                                                        |   [Docs][25] |
+| navigator        |                                                        |   [Docs][26] |
+| overlaypanel     |                                                        |   [Docs][27] |
+| panelgroup       |                                                        |   [Docs][28] |
+| popupmenu        |                                                        |   [Docs][29] |
+| progressbar      |                                                        |   [Docs][30] |
+| radiobutton      |                                                        |   [Docs][31] |
+| sidebar          |                                                        |   [Docs][32] |
+| splitbutton      |                                                        |   [Docs][33] |
+| stopwatch        |                                                        |   [Docs][34] |
+| switch           |                                                        |   [Docs][35] |
+| tabcontrol       |                                                        |   [Docs][36] |
+| theming          |                                                        |   [Docs][37] |
+| timeline         |                                                        |   [Docs][38] |
+| toaster          |                                                        |   [Docs][39] |
+| toolbar          |                                                        |   [Docs][40] |
+| tooltip          |                                                        |   [Docs][41] |
+| validators       |                                                        |   [Docs][42] |
 
 
 #### In progress, planned, and non-planned features
@@ -185,12 +189,11 @@ Once your library is imported, you can use its components, directives and pipes 
 | Feature          | Status                              | Docs         | Issue          |
 |------------------|-------------------------------------|--------------|----------------|
 | datetimepicker   |                         non-planned |              |                |
-| hourpicker       |        In-progress, planned S2 2018 |              |                |
-| icon             |        In-progress, planned S2 2018 |              |                |
+| timepicker       |        In-progress, planned S2 2018 |              |                |
+| clockpicker      |        In-progress, planned S2 2018 |              |                |
 | monthyearpicker  |                         non-planned |              |                |
 | paginator        |        In-progress, planned S1 2019 |              |                |
 | schedule         |        In-progress, planned S1 2019 |              |                |
-| timeline         |                         non-planned |              |                |
 | widget           |                         non-planned |              |                |
 
  [1]: http://truly-ui.com/accordion
@@ -210,31 +213,40 @@ Once your library is imported, you can use its components, directives and pipes 
 [15]: http://truly-ui.com/dropdownlist
 [16]: http://truly-ui.com/editor
 [17]: http://truly-ui.com/form
-[18]: http://truly-ui.com/input
-[19]: http://truly-ui.com/listbox
-[20]: http://truly-ui.com/menu
-[21]: http://truly-ui.com/misc
-[22]: http://truly-ui.com/modal
-[23]: http://truly-ui.com/multiselect
-[24]: http://truly-ui.com/multiview
-[25]: http://truly-ui.com/navigator
-[26]: http://truly-ui.com/overlaypanel
-[27]: http://truly-ui.com/panelgroup
-[28]: http://truly-ui.com/popupmenu
-[29]: http://truly-ui.com/progressbar
-[30]: http://truly-ui.com/radiobutton
-[31]: http://truly-ui.com/sidebar
-[32]: http://truly-ui.com/splitbutton
-[33]: http://truly-ui.com/switch
-[34]: http://truly-ui.com/tabcontrol
-[35]: http://truly-ui.com/theming
-[36]: http://truly-ui.com/toaster
-[37]: http://truly-ui.com/toolbar
-[38]: http://truly-ui.com/tooltip
-[39]: http://truly-ui.com/validators
+[18]: http://truly-ui.com/icon
+[19]: http://truly-ui.com/input
+[20]: http://truly-ui.com/listbox
+[21]: http://truly-ui.com/menu
+[22]: http://truly-ui.com/misc
+[23]: http://truly-ui.com/modal
+[24]: http://truly-ui.com/multiselect
+[25]: http://truly-ui.com/multiview
+[26]: http://truly-ui.com/navigator
+[27]: http://truly-ui.com/overlaypanel
+[28]: http://truly-ui.com/panelgroup
+[29]: http://truly-ui.com/popupmenu
+[30]: http://truly-ui.com/progressbar
+[31]: http://truly-ui.com/radiobutton
+[32]: http://truly-ui.com/sidebar
+[33]: http://truly-ui.com/splitbutton
+[34]: http://truly-ui.com/stopwatch
+[35]: http://truly-ui.com/switch
+[36]: http://truly-ui.com/tabcontrol
+[37]: http://truly-ui.com/theming
+[38]: http://truly-ui.com/timeline
+[39]: http://truly-ui.com/toaster
+[40]: http://truly-ui.com/toolbar
+[41]: http://truly-ui.com/tooltip
+[42]: http://truly-ui.com/validators
 
 ## Feedback
 Feedback is always welcome.
+
+## For google
+angular 2 components, angular 4 components, angular electron, angular 5 components ng2 nw ng components
+ng-components ng2-components angular2 components angular4 electron angular 5 components angular 6 components 
+angular 7 components angular electron components desktop applications library ui components desktop electron angular
+components electron angular
 
 
 ## License

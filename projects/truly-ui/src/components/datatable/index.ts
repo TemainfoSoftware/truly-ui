@@ -12,6 +12,7 @@ import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column-filter';
 
+import { IconsModule } from '../icons/index';
 import { InputModule } from '../input/index';
 import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
@@ -22,6 +23,7 @@ import { DropDownIconModule } from '../dropdownicon/index';
     CommonModule,
     FormsModule,
     BlockUIModule,
+    IconsModule,
     InputModule,
     DropDownIconModule,
     DropDownListModule

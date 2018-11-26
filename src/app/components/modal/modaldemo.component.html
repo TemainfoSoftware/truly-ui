@@ -13,16 +13,16 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <tl-button [text]="'Show Modal'" [iconAddonBefore]="'ion-monitor'" (click)="modal1()"></tl-button>
+            <tl-button [text]="'Show Modal'" [iconAddonBefore]="'fas fa-desktop'" (click)="modal1()"></tl-button>
           </app-card>
         </app-showcase-card>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Modal Features'" [icon]="'ion-android-bulb'">
+        <app-showcase-card [title]="'Modal Features'" [icon]="'far fa-lightbulb'">
           <app-card>
             <h4>Modal Container</h4>
             <p>The Modal Container is used to group all modals that are minimized.</p>
@@ -49,7 +49,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Making it Work'" [icon]="'ion-hammer'">
+        <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
             <h4>Step One</h4>
             <h5>Declare the <code>ModalService</code> and set the <code>tlContainerModal</code> Directive on a HTML Element root, where modal going to be on it.
@@ -111,12 +111,33 @@ this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResu
         </app-showcase-card>
       </div>
     </div>
-    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Modal Results'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <table class="table table-truly">
+          <thead class="table-truly-head">
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Value</th>
+          </tr>
+          </thead>
+          <tbody class="table-truly-body" *ngFor="let item of modalResults; let i = index">
+          <tr>
+            <td><span>{{ item.name }}</span></td>
+            <td>{{ item.description }}</td>
+            <td><code>{{ item.value }}</code></td>
+          </tr>
+          </tbody>
+        </table>
+      </app-card>
+    </app-showcase-card>
+
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
       <app-card>
         <app-showcase-table-properties [data]="modalprop"></app-showcase-table-properties>
       </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
         <app-showcase-table-events [data]="modalevts"></app-showcase-table-events>
       </app-card>

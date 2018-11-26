@@ -6,12 +6,14 @@ import { TlListBox } from './listbox';
 import { ListBoxContainerDirective } from './lisbox-container-directive';
 
 import { BlockUIModule } from '../blockui/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        BlockUIModule
+        BlockUIModule,
+        IconsModule
     ],
     declarations: [
         TlListBox,

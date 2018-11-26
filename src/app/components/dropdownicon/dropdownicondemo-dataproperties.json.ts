@@ -23,7 +23,7 @@ export const dataProperties = [
   {
     name: 'keyIcon',
     type: 'string',
-    default: 'null',
+    default: 'icon',
     description: 'Sets the data item field that represents the item icon.',
     options: 'any text'
   },

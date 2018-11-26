@@ -21,7 +21,7 @@
 */
 
 export class BlockUIConfig {
-    public icon = 'fa-refresh';
+    public icon = 'fas fa-sync-alt';
     public spin = true;
     public message = '';
 }

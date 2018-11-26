@@ -218,6 +218,11 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
           $event.stopPropagation();
         }
         break;
+      case KeyEvent.TAB:
+        if (this.isOpen) {
+          this.isOpen = false;
+        }
+        break;
       case KeyEvent.ESCAPE:
         if (this.isOpen) {
           $event.preventDefault();

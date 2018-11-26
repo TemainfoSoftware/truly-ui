@@ -3,7 +3,6 @@
 }
 
 .ui-link {
-  color: #587cdb !important;
   text-decoration: underline;
 }
 
@@ -27,7 +26,6 @@
   top: 0;
   right: 0;
   background: #333;
-  color: #fff;
   padding: 10px;
   box-sizing: border-box;
   user-select: none;
@@ -38,36 +36,8 @@
   border-bottom-left-radius: 20px;
 }
 
-.ui-active-tool {
-  color: #66CC99;
-}
-
-.ui-separator {
-  height: 100%;
-  background: #e8e8e8;
-  width: 1px;
-}
-
-.ui-link-box {
-  position: absolute;
-  width: 400px;
-  border: 1px solid #e4d8d8;
-  top: calc(50% - 52px);
-  left: calc(50% - 200px);
-  height: 105px;
-  background: #fff;
-  transition: all 100ms ease-in-out;
-  box-shadow: 0px 0px 5px #ddd;
-  .ui-form-control {
-    padding-top: 2px;
-    padding-bottom: 2px;
-  }
-}
-
 .ui-editor-header {
   height: 40px;
-  border: 1px solid #e8e8e8;
-  background: #f5f5f5;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom: 0;
@@ -78,9 +48,12 @@
     display: inline-flex;
     height: inherit;
     line-height: inherit;
+    li:not(.dropdown) {
+      padding: 0;
+      width: 40px;
+    }
     li {
       display: flex;
-      color: #8e8e8e;
       transition: all 200ms ease-in;
       align-items: center;
       justify-content: center;
@@ -97,13 +70,10 @@
   padding: 0;
   border: 0;
   height: 40px;
-  width: 20px;
+  width: 40px;
   outline: none;
   cursor: pointer;
   transition: all 200ms ease-in-out;
-  &:hover {
-    background: #f0f0f0;
-  }
 }
 
 .ui-color-component {
@@ -116,9 +86,7 @@
 .ui-editor-content {
   height: 300px;
   overflow: auto;
-  background: #FFFFFF;
   padding: 10px;
-  border: 1px solid #e8e8e8;
   box-sizing: border-box;
   outline: none;
 }

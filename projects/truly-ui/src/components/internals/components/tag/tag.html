@@ -4,6 +4,6 @@
        [style.width]="width"
        [style.line-height]="height">
     <span>{{ title }}</span>
-    <i (click)="onClose()" class="ion-close-circled"></i>
+    <tl-icon [lib]="'fa'" [style]="'fas'" (click)="onClose()">times-circle</tl-icon>
   </div>
 </div>

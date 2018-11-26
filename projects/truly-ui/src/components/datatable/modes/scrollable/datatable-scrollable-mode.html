@@ -9,8 +9,8 @@
          [ngStyle]="{'height': dt.heightViewPort+'px' }">
 
         <div [ngClass]="{'ui-box-notfound-records':true, 'ui-show': !foundRecords,'ui-hide': foundRecords}" >
-            <div class="ui-container" >
-                <i class="fa fa-filter fa-2x" aria-hidden="true"></i>
+            <div class="ui-container">
+                <tl-icon [lib]="'fa'" [style]="'fas'" [size]="'2em'" aria-hidden="true">filter</tl-icon>
                 <div class="ui-notfound-text">{{notFountText}}</div>
             </div>
         </div>

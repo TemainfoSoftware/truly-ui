@@ -1,0 +1,42 @@
+@import "../../core/styles/theming/theming";
+
+@mixin _tl-toaster-theme-schema( $theme, $action ) {
+
+  background-color: rgba(map-deep-get($theme, $action, "default", "background"), 0.9);
+  color:  map-deep-get($theme, $action, "default", "foreground");
+
+  .ui-toaster-content {
+    color: map-deep-get($theme, $action, "default", "foreground");
+  }
+
+}
+
+@mixin tl-toaster-theme( $theme ) {
+
+  .ui-toaster-wrapper {
+
+    &.basic {
+      @include _tl-toaster-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-toaster-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-toaster-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-toaster-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-toaster-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-toaster-theme-schema($theme, 'information')
+    }
+  }
+}

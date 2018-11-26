@@ -33,8 +33,22 @@ export const dataProperties = [
     default: 'null',
     description: 'Button group height.',
     options: 'px | % | em'
+  },
+  {
+    name: 'fontSize',
+    type: 'string',
+    default: '0.8em',
+    description: 'Font size.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'useSelected',
+    type: 'boolean',
+    default: 'true',
+    description: 'Use the control for the button state.',
+    options: 'true | false'
   }
-  ];
+];
 export const dataProperties2 = [
   {
     name: 'text',
@@ -63,5 +77,26 @@ export const dataProperties2 = [
     default: 'false',
     description: 'The state of button.',
     options: 'true | false'
+  },
+  {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
+    name: 'iconBeforeText',
+    type: 'string',
+    default: 'null',
+    description: 'Creates an icon before the text button.',
+    options: 'ion ion-printer | fas fa-home | any'
+  },
+  {
+    name: 'iconAfterText',
+    type: 'string',
+    default: 'null',
+    description: 'Creates an icon after the text button.',
+    options: 'ion ion-printer | fas fa-home | any'
   }
 ];

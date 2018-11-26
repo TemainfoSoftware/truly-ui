@@ -1,24 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TlTimePicker } from './timepicker';
-import { InputModule } from '../input/index';
 import { FormsModule } from '@angular/forms';
-import { TimePickerService } from './services/timepicker.service';
-import { MiscModule } from '../misc/index';
+import { TlTimepicker } from './timepicker';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { InputModule } from '../input/index';
+import { ButtonModule } from '../button/index';
+import { InternalsModule } from '../internals/index';
 
-@NgModule( {
+@NgModule({
   imports: [
     CommonModule,
+    OverlayModule,
     InputModule,
-    MiscModule,
+    ButtonModule,
+    InternalsModule,
     FormsModule
   ],
   declarations: [
-    TlTimePicker,
+    TlTimepicker
   ],
   exports: [
-    TlTimePicker,
-  ],
-} )
-export class TimePickerModule {
-}
+    TlTimepicker
+  ]
+})
+export class TimePickerModule {}

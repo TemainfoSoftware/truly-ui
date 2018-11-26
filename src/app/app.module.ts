@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ButtonModule } from '../../projects/truly-ui/src/components/button';
+import { IconsModule } from '../../projects/truly-ui/src/components/icons';
 import { CoreModule } from '../../projects/truly-ui/src/components/core/index';
 import { DropDownListModule } from '../../projects/truly-ui/src/components/dropdownlist';
 import { en_US } from '../../projects/truly-ui/src/components/i18n';
@@ -16,6 +17,7 @@ import { HomeModule } from './home/home.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ToasterModule } from '../../projects/truly-ui/src/components/toaster/index';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { environment } from '../environments/environment';
     ToolbarModule,
     ButtonModule,
     HomeModule,
+    IconsModule,
+    ToasterModule.forRoot(),
     HttpClientModule,
     ServiceWorkerModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })

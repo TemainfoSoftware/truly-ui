@@ -1,9 +1,11 @@
 import { Component, ViewContainerRef } from '@angular/core';
 
 import * as json from './dialog-dataproperties.json';
+import * as jsonEvts from './dialogdemo.dataevents.json';
+
 import { slideToLeft } from '../../shared/animations/router.animations';
 import { ModalResult } from '../../../../projects/truly-ui/src/components/core/enums/modal-result';
-import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
+import { ConfirmCallback, DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 
 @Component( {
   selector: 'app-modal',
@@ -14,14 +16,14 @@ import { DialogService } from '../../../../projects/truly-ui/src/components/dial
 } )
 export class DialogDemoComponent {
 
-  public index: number;
-  public modals;
-
   public dialogProp;
+
+  public dialogEvents;
 
   constructor( public view: ViewContainerRef, public dialogService: DialogService ) {
 
     this.dialogProp = json.dataProperties;
+    this.dialogEvents = jsonEvts.dataEvents;
   }
 
   info() {
@@ -34,11 +36,10 @@ export class DialogDemoComponent {
   }
 
   confirmation() {
-    this.dialogService.confirmation( 'Are you sure ?', ( modalResult ) => {
-      if (modalResult.modalResult === ModalResult.MRYES) {
-        alert('clicked YES');
-      }
-    }, );
+    this.dialogService.confirmation( 'Are you sure ?', ({
+      isYes: (yes) => console.log('yes', yes),
+      isNo: (no) => console.log('no', no)
+    }));
   }
 
   alert() {

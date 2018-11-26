@@ -3,7 +3,7 @@ import { Modal } from '../../../../../projects/truly-ui/src/components/modal/mod
 
 @Modal({
   title: 'New Modal',
-  icon: 'ion-monitor',
+  icon: 'fas fa-desktop',
   draggable: true,
   width: '500px',
   height: 'auto',

@@ -2,85 +2,63 @@
 
 @mixin _tl-timepicker-theme-schema( $theme, $action ) {
 
-
-  .ui-wrapper-timepicker-content {
-
-    .ui-arrow-up {
-      border-color: transparent transparent map-deep-get($theme, $action, "default", "border") transparent;
-    }
-
-    .ui-arrow-up:after {
-      border-color: transparent transparent map-deep-get($theme, 'basic', "lighter", "background") transparent;
-    }
-  }
-
-  .ui-timepicker-wrapper {
+  > .ui-timepicker-header {
     border: 1px solid map-deep-get($theme, $action, "default", "border");
-    background: map-deep-get($theme, 'basic', "default", "background");
-
-
-    > .ui-timepicker-header {
-      background: map-deep-get($theme, 'basic', "lighter", "background");
-      color: rgba(map-deep-get($theme, 'basic', "lighter", "foreground"), 0.2);
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  > .ui-timepicker-content {
+    border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: white;
+    > .ui-transparent-section {
+      background-image: linear-gradient(to top, rgb(255, 255, 255), transparent, rgb(255, 255, 255));
     }
-
-    > .ui-timepicker-content {
-      background: map-deep-get($theme, 'basic', "default", "background");
-      border-top: 1px solid map-deep-get($theme, $action, "default", "border");
-      border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
-      .ui-clock {
-        background: map-deep-get($theme, 'basic', "lighter", "background");
-        color: rgba(map-deep-get($theme, 'basic', "lighter", "foreground"), 0.2);
-        border: 1px solid map-deep-get($theme, $action, "default", "border");
-      }
+    > .ui-controller-section {
+      border: 1px solid map-deep-get($theme, $action, "default", "border");
+      background-image: linear-gradient(to top, #ececec, rgba(255, 0, 0, 0), transparent);
     }
-
-    > .ui-timepicker-footer {
-      background: map-deep-get($theme, 'basic', "lighter", "background");
-      color: map-deep-get($theme, 'basic', "lighter", "foreground");
-      &:hover {
-        background: map-deep-get($theme, 'basic', "hover", "background");
-        color: map-deep-get($theme, 'basic', "hover", "foreground");
-      }
-    }
-
-    .selected-time {
-      color: map-deep-get($theme, $action, "default", "background");
-    }
-
-
-    .clock-number {
-      color:  map-deep-get($theme, 'basic', "lighter", "foreground");
+    > .ui-hour-content {
       &:hover {
         background: map-deep-get($theme, $action, "default", "background");
-        color: map-deep-get($theme, 'basic', "default", "foreground");
-        cursor: pointer;
       }
     }
-
-    .ui-point-center {
-      background-color:  map-deep-get($theme, $action, "default", "background");
+    > .ui-minute-content {
+      &:hover {
+        background: map-deep-get($theme, $action, "default", "background");
+      }
     }
-
-    .ui-clock-line, .ui-clock-line-circle {
-      background:  map-deep-get($theme, $action, "default", "background");
+    > .ui-ampm-content {
+      &:hover {
+        background: map-deep-get($theme, $action, "default", "background");
+      }
     }
-
-    .ui-arrow-down {
-      border-color: transparent transparent map-deep-get($theme, $action, "default", "border") transparent;
-    }
-
-    .ui-arrow-down:after {
-      border-color: transparent transparent map-deep-get($theme, 'basic', "lighter", "background") transparent;
-    }
-
   }
+  > .ui-title-header {
+    border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  > .ui-timepicker-footer {
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+  .list {
+    color: map-deep-get($theme, $action, "default", "foreground");
+    > .ui-list-item {
+      &:hover {
+        color: map-deep-get($theme, 'primary', "default", "background");
+      }
+    }
+  }
+  .selectedItem {
+    color: map-deep-get($theme, 'primary', "default", "background");
+  }
+
 }
 
 @mixin tl-timepicker-theme( $theme ) {
 
-  .tl-timepicker {
-
+  .ui-wrapper-content {
     &.basic {
       @include _tl-timepicker-theme-schema($theme, 'basic')
     }
@@ -103,13 +81,6 @@
 
     &.information {
       @include _tl-timepicker-theme-schema($theme, 'information')
-    }
-
-    &:focus {
-      border-color: #40a9ff;
-      outline: 0;
-      box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
-      border-right-width: 1px !important;
     }
   }
 }

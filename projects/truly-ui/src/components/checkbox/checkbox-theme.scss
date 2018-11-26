@@ -19,6 +19,14 @@
     }
   }
 
+  .ui-check-input:indeterminate + .cbx {
+    span {
+      &:first-child {
+        @include checkbox-color($theme, $action);
+      }
+    }
+  }
+
   .ui-check-input:checked + .cbx {
     span {
       &:first-child {

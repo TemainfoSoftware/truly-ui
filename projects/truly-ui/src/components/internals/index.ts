@@ -23,18 +23,24 @@ import { NgModule } from '@angular/core';
 import { TlLabel } from './components/label/label';
 import { CommonModule } from '@angular/common';
 import { TlTag } from './components/tag/tag';
+import { TlLeftPadPipe } from './pipes/leftpad.pipe';
+
+import {IconsModule} from '../icons/index';
 
 @NgModule( {
   imports: [
-    CommonModule
+    CommonModule,
+    IconsModule
   ],
   exports: [
     TlLabel,
-    TlTag
+    TlTag,
+    TlLeftPadPipe
   ],
   declarations: [
     TlLabel,
-    TlTag
+    TlTag,
+    TlLeftPadPipe
   ],
   providers: [],
 } )

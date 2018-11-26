@@ -3,12 +3,16 @@
     <ng-template #group let-tabs="tabs">
       <button #tlbutton
               *ngFor="let item of groupItems"
-              [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height}"
-              [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected}"
+              [ngStyle]="{'min-width': item.width, 'height': height, 'line-height': height, 'font-size': fontSize, 'cursor': 'pointer'}"
+              [ngClass]="{' disabled ': item.disabled, 'button-selected': item.selected && useSelected}"
               [class]="'tl-button ripple '+ item.color"
               (click)="selectButtonItem(item, $event)"
               [disabled]="item.disabled ? true : null">
-        <span class="textButton" [ngStyle]="{'line-height': item.height}">{{item.text}}</span>
+        <span class="textButton" [ngStyle]="{'line-height': item.height}">
+          <tl-icon *ngIf="item.iconBeforeText">{{ item.iconBeforeText }}</tl-icon>
+            {{item.text}}
+          <tl-icon *ngIf="item.iconAfterText" class="iconAfterText">{{ item.iconAfterText }}</tl-icon>
+        </span>
       </button>
     </ng-template>
     <ng-container *ngTemplateOutlet="group; context: groupContext"></ng-container>

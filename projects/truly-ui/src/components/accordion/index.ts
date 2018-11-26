@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 
 import { TlAccordion } from './accordion';
 import { TlAccordionItem } from './parts/accordion-item/accordion-item';
-import { AccordionService } from './services/accordion.service';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    IconsModule
   ],
   declarations: [
     TlAccordion,

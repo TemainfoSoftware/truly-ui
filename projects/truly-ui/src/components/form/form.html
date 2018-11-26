@@ -14,7 +14,7 @@
                        [style.padding-right]="'5px'"
                        [shortcut]="cancelShortcut"
                        [formResult]="formResult"
-                       [iconAddonBefore]="'ion-close-circled'">
+                       [iconAddonBefore]="'fas fa-times'">
             </tl-button>
             <tl-button #buttonFormOk
                        [text]="textConfirm"
@@ -24,7 +24,7 @@
                        [shortcut]="submitShortcut"
                        [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
                        [formResult]="formResult"
-                       [iconAddonBefore]="'ion-checkmark'">
+                       [iconAddonBefore]="'fas fa-check'">
             </tl-button>
         </div>
     </div>

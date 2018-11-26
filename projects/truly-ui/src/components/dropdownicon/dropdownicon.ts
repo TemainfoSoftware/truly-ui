@@ -43,7 +43,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() disabled = null;
 
-  @Input() defaultIcon = 'ion-search';
+  @Input() defaultIcon = 'ion ion-ios-search';
 
   @Input() color = 'basic';
 
@@ -55,7 +55,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() widthItems = '120px';
 
-  @Input() keyIcon;
+  @Input() keyIcon = 'icon';
 
   @Input() defaultOptionText = 'Select...';
 
@@ -90,7 +90,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   onSelectOption( $event ) {
     this.optionSelected = $event;
-    this.value = this.optionSelected.option.optionItem[this.keyValue];
+    this.value = this.optionSelected.option.item[this.keyValue];
     this.isOpen = false;
   }
 
@@ -102,7 +102,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   getIcon() {
     if (this.optionSelected) {
-      return this.optionSelected.option.optionItem.icon;
+      return this.optionSelected.option.item.icon;
     }
     return this.defaultIcon;
   }

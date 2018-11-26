@@ -3,7 +3,7 @@
     <h1 class="title">Getting Started</h1>
     <p class="text-content">We'll cover the basics and get you started from the ground up.</p>
   </div>
-    <app-showcase-card [title]="'Prerequisites'" [icon]="'ion-document-text'">
+    <app-showcase-card [title]="'Prerequisites'" [icon]="'fas fa-file-alt'">
       <app-card>
         <h3>Prerequisites</h3>
         <hr>
@@ -27,9 +27,10 @@
           <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 "styles": [
   "node_modules/@angular/cdk/overlay-prebuilt.css",
-  "node_modules/font-awesome/css/font-awesome.min.css",
-  "node_modules/ionicons-npm/css/ionicons.min.css",
-  "node_modules/truly-ui/css/icons/dx-icons/dx-icons.scss",
+  "node_modules/truly-ui/css/icons/dx-icons/css/icons.scss",
+  "node_modules/truly-ui/css/icons/fa-icons/css/icons.scss",
+  "node_modules/truly-ui/css/icons/ion-icons/css/icons.scss",
+  "node_modules/truly-ui/css/icons/animations.scss"
 ]
       </textarea>
           <span class="description">3. Configure CoreModule on your <code>AppModule</code>:</span>

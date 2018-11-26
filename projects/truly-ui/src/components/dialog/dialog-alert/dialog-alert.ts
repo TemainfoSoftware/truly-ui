@@ -26,7 +26,7 @@ import { Modal } from '../../modal/modal-options';
 import { TlButton } from '../../button/button';
 
 @Modal( {
-  icon: 'ion-alert-circled',
+  icon: 'fas fa-exclamation-circle',
   title: 'Alert',
   color: 'warning',
   width: '400px',

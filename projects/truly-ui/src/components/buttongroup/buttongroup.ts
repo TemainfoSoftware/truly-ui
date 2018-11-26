@@ -38,6 +38,10 @@ export class TlButtonGroup implements AfterContentInit {
 
   @Input() height = '30px';
 
+  @Input() fontSize = '0.9em';
+
+  @Input() useSelected = true;
+
   @Output() itemSelect: EventEmitter<Object> = new EventEmitter();
 
   @ContentChildren( TlButtonGroupItem ) groupItems: QueryList<TlButtonGroupItem>;
@@ -45,9 +49,11 @@ export class TlButtonGroup implements AfterContentInit {
   constructor() {}
 
   ngAfterContentInit() {
-    const selectedTab = this.groupItems.find( tab => tab.selected );
-    if ( !selectedTab && this.groupItems.first ) {
-      this.groupItems.first.selected = true;
+    if ( this.useSelected ) {
+      const selectedTab = this.groupItems.find( tab => tab.selected );
+      if ( !selectedTab && this.groupItems.first ) {
+        this.groupItems.first.selected = true;
+      }
     }
   }
 

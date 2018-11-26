@@ -1,0 +1,127 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-permissions-theme-schema( $theme, $action ) {
+  $primary: map-deep-get($theme, 'primary');
+
+  .ui-wrapper-permissions {
+    outline: 1px solid map-deep-get($theme, $action, "default", "border");
+
+    > .ui-container-permissions {
+      background: map-deep-get($theme, $action, "default", "background");
+
+      > .ui-permissions-panel {
+        border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+
+        &::-webkit-scrollbar {
+          background: map-deep-get($theme, $action, "default", "background");
+        }
+
+        &::-webkit-scrollbar-track {
+          background: map-deep-get($theme, $action, "default", "border");
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: map-deep-get($primary, "default", "foreground");
+        }
+      }
+
+      > .ui-permissions-detail-panel {
+
+        &::-webkit-scrollbar {
+          background: map-deep-get($theme, $action, "default", "background");
+        }
+
+        &::-webkit-scrollbar-track {
+          background: map-deep-get($theme, $action, "default", "border");
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: map-deep-get($primary, "default", "background");
+        }
+      }
+
+    }
+    .nothing-shown {
+      color: map-deep-get($theme, $action, "default", "foreground");
+    }
+
+    .ui-permissions-header {
+      border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+
+      > .ui-panel-search-1 {
+        border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+      }
+
+      > .ui-panel-search-2 {
+
+        > .ui-panel-search {
+          border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+        }
+
+        > .ui-check-header {
+          background: map-deep-get($theme, $action, "default", "background");
+          div {
+            &:first-child {
+              border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+            }
+          }
+        }
+      }
+    }
+
+    .ui-permission-list {
+      > .ui-detail-list {
+        span {
+          border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+        }
+      }
+      .selected {
+        color: map-deep-get($primary, "default", "background");
+      }
+      li {
+        border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+        color: map-deep-get($theme, $action, "default", "foreground");
+        background: map-deep-get($theme, $action, "default", "background");
+        &:hover {
+          background: map-deep-get($theme, $action, "default", "background");
+        }
+        &:focus {
+          background: map-deep-get($primary, "default", "background");
+          color: map-deep-get($primary, "default", "foreground");
+        }
+        .ui-checkbox {
+          border-left: 1px solid map-deep-get($theme, $action, "default", "border");
+        }
+      }
+    }
+  }
+}
+
+@mixin tl-permissions-theme( $theme ) {
+
+  .tl-permissions {
+    &.basic {
+      @include _tl-permissions-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-permissions-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-permissions-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-permissions-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-permissions-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-permissions-theme-schema($theme, 'information')
+    }
+  }
+}

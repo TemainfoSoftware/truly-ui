@@ -7,7 +7,7 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
               <span>Basic</span>
@@ -25,12 +25,12 @@
               <tl-input
                 [mask]="{mask: 'AAA-0000', uppercase: true}"
                 [(ngModel)]="textNumber"
-                [iconBefore]="'ion-printer'">
+                [iconBefore]="'fas fa-print'">
               </tl-input>
               <app-showcase-returned-value [value]="textNumber"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input [mask]="{mask: 'AAA-0000', uppercase: true}" [(ngModel)]="textNumber" [iconBefore]="'ion-printer'"></tl-input>
+<tl-input [mask]="{mask: 'AAA-0000', uppercase: true}" [(ngModel)]="textNumber" [iconBefore]="'fas fa-print'"></tl-input>
 </textarea>
             </div>
             <div class="col-md-6">
@@ -38,12 +38,12 @@
               <tl-input
                 [mask]="{mask: 'AAA-0000', guides: false}"
                 [(ngModel)]="sGuides"
-                [iconAfter]="'ion-printer'">
+                [iconAfter]="'fas fa-print'">
               </tl-input>
               <app-showcase-returned-value [value]="sGuides"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-input [mask]="{mask: 'AAA-0000', guides: false}" [(ngModel)]="sGuides" [iconAfter]="'ion-printer'"></tl-input>
+<tl-input [mask]="{mask: 'AAA-0000', guides: false}" [(ngModel)]="sGuides" [iconAfter]="'fas fa-print'"></tl-input>
 </textarea>
             </div>
           </app-card>
@@ -53,7 +53,7 @@
 </div>
   <div class="row">
     <div class="col-md-12">
-      <app-showcase-card [title]="'Mask Pattern'" [icon]="'ion-android-bulb'">
+      <app-showcase-card [title]="'Mask Pattern'" [icon]="'far fa-lightbulb'">
         <app-card>
           <div class="pattern">
             <p>A - Alpha character (A-Z,a-z)</p>
@@ -64,12 +64,12 @@
       </app-showcase-card>
     </div>
   </div>
-  <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+  <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
       <app-showcase-table-properties [data]="maskDemoProperties"></app-showcase-table-properties>
     </app-card>
   </app-showcase-card>
-  <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+  <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
     <app-card>
       <h4><code>All <b>Angular Supported Events</b> and <b>TlInput Events</b> can be used on this Component.</code></h4>
     </app-card>

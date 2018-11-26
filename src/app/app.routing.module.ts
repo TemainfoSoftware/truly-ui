@@ -139,6 +139,26 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'
       },
       {
+        path: 'inputcurrency',
+        loadChildren: './components/inputcurrency/inputcurrencydemo.module#InputCurrencyDemoModule'
+      },
+      {
+        path: 'icons',
+        loadChildren: './components/icons/overview/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/dxicons',
+        loadChildren: './components/icons/dxicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/font-awesome',
+        loadChildren: './components/icons/font-awesome/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'icons/ionicons',
+        loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
         path: 'listbox',
         loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
       },
@@ -171,6 +191,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
       },
       {
+        path: 'permissions',
+        loadChildren: './components/permissions/permissionsdemo.module#PermissionsDemoModule'
+      },
+      {
         path: 'progressbar',
         loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
       },
@@ -199,23 +223,31 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
       },
       {
+        path: 'stopwatch',
+        loadChildren: './components/stopwatch/stopwatchdemo.module#StopwatchDemoModule'
+      },
+      {
         path: 'switch',
         loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
       },
       {
-        path: 'timepicker',
-        loadChildren: './components/timepicker/timepickerdemo.module#TimePickerDemoModule'
+        path: 'clockpicker',
+        loadChildren: './components/clockpicker/clockpickerdemo.module#ClockPickerDemoModule'
       },
       {
         path: 'timeline',
         loadChildren: './components/timeline/overview/timelinedemo.module#TimelineDemoModule'
       },
       {
+        path: 'timepicker',
+        loadChildren: './components/timepicker/timepickerdemo.module#TimepickerDemoModule'
+      },
+      {
         path: 'timeline/infinitescroll',
         loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
       },
       {
-        path: 'timeline/templatedynamic',
+        path: 'timeline/dynamictemplate',
         loadChildren: './components/timeline/templatedynamic/timelinedemo.module#TimelineDemoModule'
       },
       {

@@ -25,14 +25,14 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Create an icon Before the Input.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconAfter',
     type: 'string',
     default: 'null',
     description: 'Create an icon After the Input.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'type',
@@ -47,6 +47,13 @@ export const dataProperties = [
     default: 'null',
     description: 'Create a label together with Input Element',
     options: 'any text'
+  },
+  {
+    name: 'withBorder',
+    type: 'boolean',
+    default: 'true',
+    description: 'Define the input field border',
+    options: 'true | false'
   },
   {
     name: 'name',
@@ -89,6 +96,13 @@ export const dataProperties = [
     default: '100px',
     description: 'Width of label text',
     options: 'px | % | em'
+  },
+  {
+    name: 'flatBorder',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines if the input field has flat borders or not',
+    options: 'true | false'
   },
   {
     name: 'labelPlacement',

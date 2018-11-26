@@ -46,6 +46,9 @@
     right: 4px;
     cursor: pointer;
   }
+  .addon.-flatborders {
+    border-radius: 0;
+  }
   .addon.-predefined {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   }
@@ -53,20 +56,8 @@
     cursor: pointer;
   }
 
-  > .-clearbutton {
-    position: absolute;
-    top: 0;
-    right: 0;
-    line-height: 40px;
-    font-size: 0.8em;
-    padding-right: 5px;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
   > .ui-wrapper-input {
-    border-radius: 3px;
+    position: relative;
     > .field {
       display: table-cell;
       height: 23px;
@@ -76,8 +67,8 @@
       width: 100%;
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      transition: all 230ms ease-in-out;
       border-radius: 3px;
+      transition: all 230ms ease-in-out;
       &.-borderleft{
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -85,6 +76,9 @@
       &.-borderright {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
+      }
+      &.-flatborders {
+        border-radius: 0;
       }
     }
     > .field::placeholder {
@@ -95,6 +89,17 @@
     }
     > .field.-disabled {
       cursor: default !important;
+    }
+    > .clearButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      line-height: 40px;
+      font-size: 1em;
+      padding-right: 5px;
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 }

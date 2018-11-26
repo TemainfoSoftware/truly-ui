@@ -54,11 +54,15 @@ export class TlButton implements OnInit {
 
     @Input() disabled = null;
 
+    @Input() flatBorder = false;
+
     @Input() colorIconBefore = '';
 
     @Input() colorIconAfter = '';
 
     @Input() formResult;
+
+    @Input() outline = false;
 
     @Input() color = 'basic';
 

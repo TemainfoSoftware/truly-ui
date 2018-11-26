@@ -1,7 +1,7 @@
 .tl-timeline-scroll {
   overflow-y: scroll;
   overflow-x: auto;
-  padding: 0 21px;
+  padding: 0 5px 0 20px;
 }
 
 .ltr {
@@ -14,14 +14,6 @@
 
 .tl-timeline-scroll::-webkit-scrollbar {
   width: 8px;
-}
-
-.tl-timeline-scroll::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-}
-
-.tl-timeline-scroll::-webkit-scrollbar-track {
-  border-radius: 4px;
 }
 
 .content-head-default {

@@ -27,6 +27,7 @@ export interface ModalConfig {
   factory: ComponentFactoryResolver;
   executeAction: ActionsModal;
   identifier: string;
+  unique?: boolean;
   dataForm?: Object;
   deleteConfirmationMessage?: string;
   recordNotFoundMessage?: string;
@@ -45,6 +46,7 @@ export class ModalConfiguration implements ModalConfig {
   executeAction;
   identifier;
   dataForm?;
+  unique?;
   deleteConfirmationMessage?;
   recordNotFoundMessage?;
   parentElement?;
@@ -53,6 +55,7 @@ export class ModalConfiguration implements ModalConfig {
     this.factory = null;
     this.executeAction = ActionsModal.INSERT;
     this.identifier = 'MODAL_1';
+    this.unique = false;
     this.dataForm = null;
     this.deleteConfirmationMessage = LOCALE_I18N.Form.deleteConfirmationMessage;
     this.recordNotFoundMessage = LOCALE_I18N.Form.recordNotFoundMessage;

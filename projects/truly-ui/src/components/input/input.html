@@ -2,15 +2,27 @@
 
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
 
-  <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')" class="addon -borderleft"><i
-    [ngClass]="iconBefore"></i></span>
-  <span *ngIf="textBefore" class="addon -borderleft" [ngClass]="{'predefined' : textBefore}">{{textBefore}}</span>
+  <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')"
+        [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder }" class="addon -borderleft">
+    <tl-icon>{{ iconBefore }}</tl-icon>
+  </span>
 
-  <div class="ui-wrapper-input" [style.height]="height">
+  <span *ngIf="textBefore" class="addon -borderleft"
+        [ngClass]="
+        {
+        'predefined' : textBefore,
+        'withBorder': withBorder,
+        'withoutBorder' : !withBorder,
+        '-flatborders': flatBorder
+        }">
+    {{textBefore}}
+  </span>
+
+  <div class="ui-wrapper-input" [ngClass]="{'-flatborders': flatBorder}" [style.height]="height">
     <input [style.padding-right]="clearButton ? '20px' : '12px'"
            [style.height]="height"
            #input
-           [attr.type]="type"
+           [type]="type"
            cdkOverlayOrigin
            [tabindex]="tabindex"
            [style.text-align]="textAlign"
@@ -21,6 +33,9 @@
              'withValidators': hasValidator,
              'withoutValidators': !hasValidator,
              '-borderleft': iconBefore || textBefore,
+             '-flatborders': flatBorder,
+             'withBorder': withBorder,
+             'withoutBorder' : !withBorder,
              '-borderright': iconAfter || textAfter
              }"
            [attr.readonly]="readonly ? true : null"
@@ -32,15 +47,22 @@
            (click)="onInputClick($event)"
            (blur)="onInputBlur($event)"
            (focus)="onInputFocus($event)">
+    <tl-icon *ngIf="clearButton && value"
+             [style.lineHeight]="height"
+             (click)="clearInput($event)"
+             [lib]="'ion'"
+             [style]="'ios'"
+             class="clearButton">close</tl-icon>
   </div>
 
   <span #afterIcon *ngIf="iconAfter"
-        (click)="onClickAddon($event, 'after')" class="addon -borderright"><i
-    [ngClass]="iconAfter"></i></span>
+        (click)="onClickAddon($event, 'after')" class="addon -borderright"
+        [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder, '-borderright': iconAfter || textAfter }">
+    <tl-icon>{{ iconAfter }}</tl-icon>
+  </span>
+
   <span *ngIf="textAfter" #afterText class="addon -borderright"
-        [ngClass]="{'-predefined' : textAfter}">{{textAfter}}</span>
-  <i *ngIf="clearButton && value" [style.lineHeight]="height" (click)="clearInput($event)" class="-clearbutton ion-close-round"
-     [style.right]="clearButtonPosition + 'px'"></i>
+        [ngClass]="{ '-predefined' : textAfter, '-flatborders': flatBorder, 'withoutBorder' : !withBorder }">{{textAfter}}</span>
 </div>
 
 
@@ -49,5 +71,6 @@
              [cdkConnectedOverlayHasBackdrop]="false"
              [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
              [cdkConnectedOverlayOpen]="isShowingMessages">
-<tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors" [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
+  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
+                        [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
 </ng-template>

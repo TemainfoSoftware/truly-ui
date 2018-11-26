@@ -6,7 +6,7 @@
        [style.border-bottom]="opened ? '1px solid #DCDCDC' : 0"
        (click)="toggle()">
     <div class="ui-accordion-arrow">
-      <i [class]="!opened ? 'ion-chevron-right' : 'ion-chevron-down'"></i>
+      <tl-icon [lib]="'ion'" [style]="'ios'" [icon]="(!opened) ? 'arrow-forward' : 'arrow-down'"></tl-icon>
     </div>
     <span>{{title}}</span>
   </div>

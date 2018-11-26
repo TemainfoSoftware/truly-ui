@@ -4,7 +4,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Modal({
   title: 'Form Modal Example',
-  icon: 'ion-stats-bars',
+  icon: 'fas fa-chart-bar',
   draggable: true,
   width: '500px',
   color: 'primary',

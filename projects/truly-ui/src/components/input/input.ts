@@ -25,7 +25,7 @@ import {
   ViewChild,
   AfterViewInit,
   Output,
-  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, AfterContentInit, ChangeDetectorRef,
+  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import {
@@ -87,7 +87,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Input() iconAfter = '';
 
-  @Input() clearButton: boolean;
+  @Input() clearButton = false;
 
   @Input() readonly: boolean = null;
 
@@ -111,9 +111,9 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Input() showValidations = false;
 
-  @ViewChild( 'afterText' ) public textClearButton;
+  @Input() withBorder = true;
 
-  @ViewChild( 'afterIcon' ) public iconClearButton;
+  @Input() flatBorder = false;
 
   @ViewChild( 'input' ) input;
 
@@ -141,8 +141,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   public isShowingMessages = false;
 
-  public clearButtonPosition;
-
   public fieldMask: InputMask;
 
   public hasValidator;
@@ -158,7 +156,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   ngAfterViewInit() {
     this.setRequired();
     this.handleValidator();
-    this.validateClearButtonPosition();
     this.hasMask();
   }
 
@@ -183,19 +180,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   hasMask() {
     if ( this.mask ) {
       this.fieldMask = new InputMask( this, this.renderer, this.mask );
-    }
-  }
-
-  validateClearButtonPosition() {
-    if ( this.textClearButton ) {
-      this.clearButtonPosition = this.textClearButton.nativeElement.offsetWidth + 5;
-    }
-    if ( this.iconClearButton ) {
-      this.clearButtonPosition = this.iconClearButton.nativeElement.offsetWidth + 5;
-    }
-    if ( this.textClearButton && this.iconClearButton ) {
-      this.clearButtonPosition =
-        (this.textClearButton.nativeElement.offsetWidth + this.iconClearButton.nativeElement.offsetWidth) + 5;
     }
   }
 

@@ -49,8 +49,6 @@ export class ToasterDemoComponent {
 
   public progress = true;
 
-  public closeButton = false;
-
   public showIcon = true;
 
   public data = [];
@@ -89,7 +87,6 @@ export class ToasterDemoComponent {
       title: this.title,
       width: this.width + 'px',
       height: this.height + 'px',
-      closeButton: this.closeButton,
       progress: this.progress,
       message: this.message,
       time: this.time,

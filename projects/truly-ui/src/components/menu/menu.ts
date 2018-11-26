@@ -204,6 +204,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.iconElement = new ElementRef( this.renderer.createElement( 'i' ) );
     this.renderer.addClass( this.iconElement.nativeElement, icon );
     this.renderer.addClass( this.iconElement.nativeElement, 'icon' );
+    this.renderer.addClass( this.iconElement.nativeElement, 'fa' );
     this.renderer.setStyle( this.iconElement.nativeElement, 'height', this.itemHeight );
     this.renderer.setStyle( this.iconElement.nativeElement, 'line-height', this.itemHeight );
   }
@@ -214,7 +215,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
       this.renderer.addClass( this.iconSubElement.nativeElement, 'icon' );
       this.renderer.appendChild( this.listElement.nativeElement, this.iconSubElement.nativeElement );
       if ( subItem ) {
-        this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-right' );
+        this.renderer.addClass( this.iconSubElement.nativeElement, 'ion-ios-arrow-forward' );
       }
     }
   }

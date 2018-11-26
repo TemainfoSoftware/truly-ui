@@ -34,7 +34,7 @@ $offset-tail: 4px;
 .tl-timeline-item .tl-timeline-item-head span {
   display: block;
   text-align: center;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date {
@@ -43,15 +43,18 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-day {
-  font-size: 22px;
+  font-size: 1.5em;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-month {
-  font-size: 12px;
+  font-size: 0.7em;
+  margin-top: -3px;
+  letter-spacing: 1px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-year {
-  font-size: 11px;
+  font-size: 0.7em;
+  margin-top: 6px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-separator {
@@ -59,7 +62,7 @@ $offset-tail: 4px;
 }
 
 .tl-timeline-item .tl-timeline-item-head .head-date .date-hour {
-  font-size: 11px;
+  font-size: 0.8em;
   font-weight: bold;
 }
 
@@ -97,13 +100,13 @@ $offset-tail: 4px;
   position: absolute;
   top: 0;
   font-size: 23px;
-  font-family: "FontAwesome";
+  font-family: "Ionicons";
 }
 
 .tl-timeline-item .tl-timeline-item-content .content-head {
   display: table;
   width: 100%;
-  padding: 5px 10px 5px 10px;
+  padding: 10px;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   background: #66cc99;
@@ -181,13 +184,13 @@ $offset-tail: 4px;
 .tl-timeline-item .content-left:before,
 .tl-timeline-item .content-df-left:before,
 .tl-timeline-item .arrow-right:before {
-  content: "\f0d9";
-  left: -7px;
+  content: "\f282";
+  left: -5px;
 }
 
 .tl-timeline-item .content-right:before,
 .tl-timeline-item .content-df-right:before,
 .tl-timeline-item .arrow-left:before {
-  content: "\f0da";
-  right: -7px;
+  content: "\f284";
+  right: -5px;
 }

@@ -8,34 +8,32 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-4">
               <h5>Basic Usage</h5>
               <tl-navigator [type]="'monthyear'" (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-navigator [type]="'monthyear'"></tl-navigator>
-</textarea>
+                <tl-navigator [type]="'monthyear'"></tl-navigator>
+              </textarea>
             </div>
             <div class="col-md-4">
               <h5>With RangeYear Type</h5>
               <tl-navigator [type]="'rangeyear'" [range]="10"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-navigator [type]="'rangeyear'" [range]="10"></tl-navigator>
-</textarea>
+                <tl-navigator [type]="'rangeyear'" [range]="10"></tl-navigator>
+              </textarea>
             </div>
-
             <div class="col-md-4">
               <h5>With Year Type</h5>
               <tl-navigator [type]="'year'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-navigator [type]="'year'"></tl-navigator>
-</textarea>
+               <tl-navigator [type]="'year'"></tl-navigator>
+              </textarea>
             </div>
-
           </app-card>
           <app-card>
             <div class="col-md-4">
@@ -43,26 +41,25 @@
               <tl-navigator [type]="'day'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-navigator [type]="'day'"></tl-navigator>
-</textarea>
+               <tl-navigator [type]="'day'"></tl-navigator>
+              </textarea>
             </div>
             <div class="col-md-8">
               <h5>Without Border</h5>
               <tl-navigator [withBorder]="false"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
- <tl-navigator [withBorder]="false"></tl-navigator>
-</textarea>
+               <tl-navigator [withBorder]="false"></tl-navigator>
+              </textarea>
             </div>
           </app-card>
-
         </app-showcase-card>
-        <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+        <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
           <app-card>
             <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+        <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
           <app-card>
             <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
           </app-card>

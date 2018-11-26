@@ -1,33 +1,59 @@
+/*
+  MIT License
+
+  Copyright (c) 2018 Temainfo Software
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+*/
 import { Component, OnInit } from '@angular/core';
 
 import * as json from './timepickerdemo-dataproperties.json';
-import * as jsonEvents from './timepickerdemo-dataevents.json';
+import * as jsonEvts from './timepickerdemo.dataevents.json';
 
-@Component({
-  selector: 'app-timepickerdemo',
-  templateUrl: './timepickerdemo.component.html',
-  styleUrls: ['./timepickerdemo.component.scss']
-})
-export class TimePickerdemoComponent implements OnInit {
+@Component( {
+selector : 'app-timepicker',
+templateUrl : './timepickerdemo.component.html',
+styleUrls : [ './timepickerdemo.component.scss' ],
+} )
+export class TimepickerDemoComponent implements OnInit {
 
-  public dataProperties;
+  public dataTableProperties;
 
-  public dataPropertiesEvents;
+  public dataEvents;
 
-  public time = '18:10';
+  public dataTwo = new Date(2018, 11, 21, 17, 15);
 
-  public timeIcon = '18:10';
+  public maxHourMinuteDate = new Date(2018, 11, 21, 20, 59);
 
-  public timeButton = '18:10';
-
-  public timeClose = '18:10';
+  public minHourMinuteDate = new Date(2018, 11, 21, 0, 0);
 
   constructor() {
-    this.dataProperties = json.data;
-    this.dataPropertiesEvents = jsonEvents.data;
+    this.dataTableProperties = json.dataProperties;
+    this.dataEvents = jsonEvts.dataEvents;
   }
 
   ngOnInit() {
+
   }
 
+  onClickNow($event) {
+    console.log('Click Now', $event);
+  }
+
+
 }
+

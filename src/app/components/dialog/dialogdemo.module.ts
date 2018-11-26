@@ -14,6 +14,7 @@ import { DialogModule } from '../../../../projects/truly-ui/src/components/dialo
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
+import {IconsModule} from '../../../../projects/truly-ui/src/components/icons/index';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
     DatatableModule,
     DialogDemoRoutingModule,
     FormsModule,
+    IconsModule,
     HighlightJsModule,
     InputModule,
     DialogModule,

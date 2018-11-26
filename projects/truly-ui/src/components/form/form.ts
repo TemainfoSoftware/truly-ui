@@ -33,6 +33,7 @@ import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
 import { ModalService } from '../modal/modal.service';
 import { ActionsModal } from '../core/enums/actions-modal';
+import { Subscription } from 'rxjs';
 
 let componentFormIndex;
 
@@ -97,7 +98,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private elementsWithTabIndex = [];
 
-  private listeners = [];
+  private subscription = new Subscription();
 
   private modalInstance;
 
@@ -120,6 +121,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.addControls();
   }
 
+
+  listenModalShow() {
+    this.subscription.add(this.modalInstance.modalShow.subscribe(() => {
+      this.setInitialFocus();
+    }));
+  }
+
   handleSmartFormAction() {
     if (this.modalInstance.modalConfiguration) {
       this.actionForm.emit( this.modalInstance.modalConfiguration.executeAction );
@@ -131,6 +139,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.getElementsOfForm();
     this.clickListener();
     this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
+    this.listenModalShow();
   }
 
   handleFormGroupValues() {
@@ -439,9 +448,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   destroyListeners() {
-    this.listeners.forEach( ( value ) => {
-      value();
-    } );
+    this.subscription.unsubscribe();
   }
 
   ngOnDestroy() {

@@ -8,14 +8,16 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Basic</span>
-              </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleBasic()"></tl-switch>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Basic</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleBasic()"></tl-switch>
+                </div>
               </div>
               <div class="blockui" [tlBlockui]="basic">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -32,13 +34,15 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>With Message</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>With Message</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleMessage()"></tl-switch>
+                </div>
               </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleMessage()"></tl-switch>
-              </div>
-              <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion-load-c', 'message': 'Loading...'}">
+              <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion ion-ios-sync', 'message': 'Loading...'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -49,19 +53,21 @@
                 </p>
               </div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                 <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion-load-c', 'message': 'Loading...'}"></div>
+                 <div class="blockui" [tlBlockui]="message" [blockuiConfig]="{'spin': true, 'icon': 'ion ion-ios-sync', 'message': 'Loading...'}"></div>
               </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Spin OFF</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Spin OFF</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch  [label]="'Toggle Visibility'" (toggle)="toggleSpinOff()"></tl-switch>
+                </div>
               </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch  [label]="'Toggle Visibility'" (toggle)="toggleSpinOff()"></tl-switch>
-              </div>
-              <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'ion-close-circled'}">
+              <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'fas fa-times-circle'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -72,18 +78,19 @@
                 </p>
               </div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                 <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'ion-close-circled'}"></div>
+                 <div class="blockui" [tlBlockui]="spinOff" [blockuiConfig]="{'spin': false, 'icon': 'fas fa-times-circle'}"></div>
               </textarea>
             </div>
             <div class="col-md-6">
-              <div class="col-md-3">
-                <span>Message & Spin false</span>
+              <div class="row">
+                <div class="col-md-6">
+                  <span>Message & Spin false</span>
+                </div>
+                <div class="col-md-6">
+                  <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleSpinOffMessage()"></tl-switch>
+                </div>
               </div>
-              <div class="col-md-3 pull-right">
-                <tl-switch [label]="'Toggle Visibility'" (toggle)="toggleSpinOffMessage()"></tl-switch>
-              </div>
-
-              <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'ion-alert-circled', 'message': 'Content Blocked'}">
+              <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'fas fa-exclamation-triangle', 'message': 'Content Blocked'}">
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                   Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                   when an unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -94,12 +101,12 @@
                 </p>
               </div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                 <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'ion-alert-circled', 'message': 'Content Blocked'}"></div>
+                 <div class="blockui" [tlBlockui]="spinOffMessage" [blockuiConfig]="{'spin': false, 'icon': 'fas fa-exclamation-triangle', 'message': 'Content Blocked'}"></div>
               </textarea>
             </div>
           </app-card>
         </app-showcase-card>
-        <app-showcase-card [title]="'Properties'" [icon]="'ion-wand'">
+        <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
           <app-card>
             <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
           </app-card>

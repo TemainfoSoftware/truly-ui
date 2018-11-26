@@ -60,28 +60,28 @@ export const dataProperties = [
     type: 'string',
     default: 'null',
     description: 'Creates an icon in the addon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconAddonAfter',
     type: 'string',
     default: 'null',
     description: 'Creates an icon in the addon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconBeforeText',
     type: 'string',
     default: 'null',
     description: 'Creates an icon before the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'iconAfterText',
     type: 'string',
     default: 'null',
     description: 'Creates an icon after the text button.',
-    options: 'ion-printer | fa fa-home | any'
+    options: 'ion ion-printer | fas fa-home | any'
   },
   {
     name: 'mdResult',

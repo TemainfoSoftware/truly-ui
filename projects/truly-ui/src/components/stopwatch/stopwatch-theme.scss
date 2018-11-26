@@ -1,0 +1,47 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-stopwatch-theme-schema( $theme, $action ){
+  //SKELETON COMPONENT HERE
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  color: map-deep-get($theme, $action, "default", "foreground");
+  background: map-deep-get($theme, $action, "default", "background");
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+
+  .icon {
+    border-right: 1px solid map-deep-get($theme, $action, "default", "border");
+  }
+}
+
+@mixin tl-stopwatch-theme( $theme ) {
+
+  .tl-stopwatch{
+    &.basic {
+      @include _tl-stopwatch-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-stopwatch-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-stopwatch-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-stopwatch-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-stopwatch-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-stopwatch-theme-schema($theme, 'information')
+    }
+  }
+}

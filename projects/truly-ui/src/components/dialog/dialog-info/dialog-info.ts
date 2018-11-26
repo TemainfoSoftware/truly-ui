@@ -19,14 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { I18nService } from '../../i18n/i18n.service';
 import { DialogDefaultBehavior } from '../dialog-default-behavior';
 import { Modal } from '../../modal/modal-options';
 import { TlButton } from '../../button/button';
 
 @Modal({
-  icon: 'ion-information-circled',
+  icon: 'fas fa-info-circle',
   title: 'Information',
   color: 'information',
   width: 'auto',

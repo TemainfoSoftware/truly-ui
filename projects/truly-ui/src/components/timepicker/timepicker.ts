@@ -19,292 +19,342 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+
 import {
-  Component, EventEmitter, Input, Output, ViewChild, Renderer2, Optional, Inject, AfterContentInit,
-  OnDestroy, AfterViewInit
+  Input, AfterContentInit, Optional, Inject, Component, forwardRef, ElementRef, OnInit, ViewChild,
+  Renderer2, OnDestroy, Output, EventEmitter, AfterViewInit,
 } from '@angular/core';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import { TlInput } from '../input/input';
+import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
 import { ElementBase } from '../input/core/element-base';
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { TimePickerService } from './services/timepicker.service';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { OverlayAnimation } from '../core/directives/overlay-animation';
+import { Subscription } from 'rxjs';
+import { I18nService } from '../i18n/i18n.service';
+import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+
+export interface IncrementalSteps {
+  hour: number;
+  minute: number;
+}
+
+export enum TIME {
+  MINUTE = 'minute',
+  HOUR = 'hour'
+}
 
 @Component( {
   selector: 'tl-timepicker',
   templateUrl: './timepicker.html',
   styleUrls: [ './timepicker.scss' ],
-  providers: [ MakeProvider( TlTimePicker ), TimePickerService ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef( () => TlTimepicker ),
+    multi: true,
+  } ],
+  animations: [ OverlayAnimation ]
 } )
-export class TlTimePicker extends ElementBase<string> implements AfterViewInit, AfterContentInit, OnDestroy {
+export class TlTimepicker extends ElementBase<string> implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
+
+  @Input() format: '12' | '24' = '24';
+
+  @Input() flatBorder = false;
+
+  @Input() showTimeIcon = false;
 
   @Input() label = '';
 
-  @Input() name = '';
-
-  @Input() labelSize = '';
-
-  @Input() textAlign = 'left';
-
   @Input() labelPlacement = 'left';
 
-  @Input() readonly = false;
+  @Input() labelSize = '100px';
 
-  @Input() disabled = false;
+  @Input() height = '23px';
 
-  @Input() placeholder = 'TimePicker Field';
+  @Input() readonly: boolean = null;
 
-  @Input() clearButton = true;
+  @Input() disabled: boolean = null;
 
-  @Input() autoClose = false;
+  @Input() withBorder = true;
 
-  @Input() iconTimepicker = false;
+  @Input() steps: IncrementalSteps = { hour: 1, minute: 1 };
 
-  @Input() showButtonDone = true;
+  @Input() availableTimes = [];
 
-  @Input() buttonDoneMessage = 'Done';
+  @Input() color = 'basic';
 
-  @Input() color = 'primary';
+  @Input() name = '';
 
-  @Output() changeTime: EventEmitter<any> = new EventEmitter<any>();
+  @Input() min: Date = new Date(1999, 0, 1, 0, 0);
 
-  @ViewChild( NgModel ) model: NgModel;
+  @Input() max: Date =  new Date(1999, 0, 1, 23, 59);
 
-  @ViewChild( TlInput ) tlinput;
+  @ViewChild( 'listHour' ) listHour: ElementRef;
 
-  @ViewChild( 'timePickerContent' ) timePickerContent;
+  @ViewChild( 'listMinutes' ) listMinutes: ElementRef;
 
-  @ViewChild( 'uiClockRadius' ) uiClockRadius;
+  @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
 
-  @ViewChild( 'wrapperDialMin' ) wrapperDialMin;
+  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
 
-  @ViewChild( 'wrapperDial' ) wrapperDial;
+  @Output() now: EventEmitter<any> = new EventEmitter();
 
-  public iconAfter = '';
+  @Output() changeTime: EventEmitter<string> = new EventEmitter();
 
-  public moving = false;
+  @Output() confirm: EventEmitter<string> = new EventEmitter();
 
-  public time = { hour: '00', minute: '00' };
+  @Output() cancel: EventEmitter<string> = new EventEmitter();
 
-  public timepickerService: TimePickerService;
+  @ViewChild(NgModel) model: NgModel;
 
-  public isTimePickerAbove: boolean;
+  public isOpen = false;
 
-  private listeners = [];
+  public trigger;
 
-  private clockMeasure = { offsetX: 0, offsetY: 0, width: 0, height: 0 };
+  public nowText = this.i18n.getLocale().TimePicker.now;
 
-  private wrapperMeasure = { offsetX: 0, offsetY: 0, width: 0, height: 0 };
+  public selectedTime = '10:30 AM';
 
-  private boxCenter = [];
+  public minutes = [];
+
+  public hours = [];
+
+  public minute: number | string = 0;
+
+  public hour: number | string = 0;
+
+  public timeZone = 'AM';
+
+  public value = '';
+
+  private headerHeight = 45;
+
+  private border = 3;
+
+  private nullElements = 80;
+
+  private itemHeight = 30;
+
+  private leftPad = new TlLeftPadPipe();
+
+  private listeners: Subscription = new Subscription();
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>, private renderer: Renderer2 ) {
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private renderer: Renderer2, private i18n: I18nService ) {
     super( validators, asyncValidators );
   }
 
-  ngAfterContentInit() {
-    this.timepickerService = new TimePickerService( this.wrapperDial, this.wrapperDialMin, this.renderer );
-    this.timepickerService.createHourDial();
-    this.handleModelChange();
-    this.handleIconTimePicker();
-    this.onCloseTimePicker();
-    this.windowMouseMove();
-    this.listenDocumentScroll();
-    this.documentMouseDown();
-  }
+  ngOnInit() {}
 
+  ngAfterContentInit() {
+    this.handleCreateRing();
+    this.listenContainer();
+    this.formatTime();
+  }
 
   ngAfterViewInit() {
-    this.setPickerMeasures();
-    this.handleTimePickerPosition();
+    this.listenModelChange();
+    this.handleOpen();
   }
 
-  handleIconTimePicker() {
-    if ( this.iconTimepicker ) {
-      this.iconAfter = 'ion-clock';
+  handleCreateRing() {
+    this.createHourRing();
+    this.createMinuteRing();
+  }
+
+  createHourRing() {
+    let lastHour = this.min.getHours() - this.steps.hour;
+    for (let i = 0; i <= this.max.getHours(); i++) {
+      if ( i === ( lastHour + this.steps.hour)) {
+        this.hours.push(i);
+        lastHour = i;
+      }
     }
   }
 
-  setPickerMeasures() {
-    setTimeout( () => {
-      this.setClockOffset();
-      this.setWrapperOffset();
-      this.setBoxCenter();
-    }, 1 );
-  }
-
-  setClockOffset() {
-    this.clockMeasure.offsetX = this.uiClockRadius.nativeElement.offsetLeft;
-    this.clockMeasure.offsetY = this.uiClockRadius.nativeElement.offsetTop;
-    this.clockMeasure.width = this.uiClockRadius.nativeElement.offsetWidth;
-    this.clockMeasure.height = this.uiClockRadius.nativeElement.offsetHeight;
-  }
-
-  setWrapperOffset() {
-    this.wrapperMeasure.offsetX = this.timePickerContent.nativeElement.offsetLeft;
-    this.wrapperMeasure.offsetY = this.timePickerContent.nativeElement.offsetTop;
-    this.wrapperMeasure.width = this.timePickerContent.nativeElement.offsetWidth;
-    this.wrapperMeasure.height = this.timePickerContent.nativeElement.offsetHeight;
-  }
-
-  setBoxCenter() {
-    this.boxCenter = [
-      this.clockMeasure.offsetX + this.wrapperMeasure.offsetX + (this.clockMeasure.width / 2),
-      this.clockMeasure.offsetY + this.wrapperMeasure.offsetY - (this.clockMeasure.height / 2)
-    ];
-  }
-
-  handleModelChange() {
-    this.model.valueChanges.subscribe( ( value ) => {
-      if ( value ) {
-        this.timepickerService.setTimeClock( this.clearMask( this.model.value ) );
+  createMinuteRing() {
+    let lastMinute = this.min.getMinutes() - this.steps.minute;
+    for (let i = 0; i <= this.max.getMinutes(); i++) {
+      if ( i === ( lastMinute + this.steps.minute)) {
+        this.minutes.push(i);
+        lastMinute = i;
       }
-    } );
+    }
   }
 
-  listenDocumentScroll() {
-    this.listeners.push( this.renderer.listen( document, 'scroll', () => {
-      this.close();
+  handleOpen() {
+    !this.isOpen ? this.setPointerEvents('none') : this.setPointerEvents('auto');
+  }
+
+  changeOpened() {
+    this.isOpen = !this.isOpen;
+    this.handleOpen();
+  }
+
+  private setPointerEvents( value: string ) {
+    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
+  }
+
+  private listenContainer() {
+    this.listeners.add( this.renderer.listen( document, 'click', () => {
+      this.isOpen = false;
+      this.handleOpen();
     } ) );
   }
 
-  windowMouseMove() {
-    this.listeners.push( this.renderer.listen( document, 'mousemove', ( $event ) => {
-
-      const positionX = $event.pageX - this.boxCenter[ 0 ];
-      const positionY = -($event.pageY - ( this.boxCenter[ 1 ] + this.clockMeasure.height));
-
-      if ( this.moving ) {
-        let angle = Math.floor( Math.atan2( positionX, positionY ) * (180 / Math.PI) );
-        if ( angle < 0 ) {
-          angle = Math.floor( 360 + angle );
+  private listenModelChange() {
+    if (this.model) {
+      this.model.valueChanges.subscribe((value) => {
+        if (value instanceof Date) {
+          this.hour = value.getHours();
+          this.minute = value.getMinutes();
+          this.formatTime();
+          this.value = this.selectedTime;
+          this.onChangeValue( this.hour + ':' + this.minute );
         }
-        this.timepickerService.setAngleLineHour( angle - (angle % this.timepickerService.getDivisorAngle()) );
-        this.timepickerService.getTimeByAngle( angle );
-      }
-    } ) );
-  }
-
-  documentMouseDown() {
-    this.renderer.listen( document, 'mousedown', ( $event ) => {
-      this.isElementInPath( $event );
-    } );
-  }
-
-  isElementInPath( $event ) {
-    if ( $event.path.indexOf( this.timePickerContent.nativeElement ) < 0 ) {
-      this.close();
+      });
     }
   }
 
-  setInputValue( value ) {
-    this.tlinput.input.nativeElement.value = value.hour + ':' + value.minute;
-  }
-
-  close() {
-    this.timepickerService.closeTimePicker();
-  }
-
-  opened() {
-    return this.timepickerService.getOpened();
-  }
-
-  changeHour() {
-    this.timepickerService.createHourDial();
-  }
-
-  changeMinute() {
-    this.timepickerService.createMinuteDial();
-  }
-
-  onCloseTimePicker() {
-    this.timepickerService.change.subscribe( ( value ) => {
-      this.setInputValue( value );
-      this.changeTime.emit( value );
-    } );
-  }
-
-  onKeyUp( $event ) {
-    const replaced = this.clearMask( $event.target.value );
-    if ( replaced.length <= 2 ) {
-      this.timepickerService.setTimeClock( replaced );
-    } else {
-      this.timepickerService.setTimeClock( replaced );
-    }
-  }
-
-  clearMask( value ) {
-    return value.replace( /[^\d]+/g, '' );
-  }
-
-  open() {
-    this.timepickerService.openTimePicker();
-    this.handleTimePickerPosition();
-    this.setPickerMeasures();
-  }
-
-  onMouseDown() {
-    this.moving = true;
-  }
-
-  onMouseUp() {
-    this.moving = false;
-    if ( this.isHourDial() ) {
-      setTimeout( () => this.timepickerService.createMinuteDial() );
-    } else {
-      if ( this.autoClose ) {
-        this.timepickerService.closeTimePicker();
-      }
-    }
-  }
-
-  handleTimePickerPosition() {
-    const timePickerHeight = this.showButtonDone ? 325 : 300;
-    const totalHeight = (this.tlinput.input.nativeElement.getBoundingClientRect().top ) + timePickerHeight;
-    if ( (window.innerHeight - totalHeight) < 0 ) {
-      this.setTopPositionTop();
-      this.setLeftPosition();
-      return;
-    }
-    this.setWrapperTimePickerPositionBottom();
-  }
-
-  setTopPositionTop() {
-    this.isTimePickerAbove = true;
-    const timePickerHeight = this.showButtonDone ? 325 : 300;
-    this.timePickerContent.nativeElement.style.top =
-      ( this.tlinput.input.nativeElement.getBoundingClientRect().top - this.tlinput.input.nativeElement.offsetHeight )
-      - timePickerHeight + 'px';
-  }
-
-  setWrapperTimePickerPositionBottom() {
-    this.setTopPositionBottom();
-    this.setLeftPosition();
-  }
-
-  setTopPositionBottom() {
-    this.isTimePickerAbove = false;
-    this.timePickerContent.nativeElement.style.top =
-      ( this.tlinput.input.nativeElement.getBoundingClientRect().top + this.tlinput.input.nativeElement.offsetHeight ) + 'px';
-  }
-
-  setLeftPosition() {
-    this.timePickerContent.nativeElement.style.left = this.tlinput.input.nativeElement.getBoundingClientRect().left + 'px';
-  }
-
-
-  isHourDial() {
-    return this.timepickerService.type === 'hour';
-  }
-
-  onClearInput( $event ) {
+  mouseDownContainer( $event ) {
     $event.stopPropagation();
   }
 
-  ngOnDestroy() {
-    this.listeners.forEach( ( value ) => value() );
+  private emitClickNow() {
+    this.now.emit( this.isFormat24() ? this.selectedTime : {
+      time: this.selectedTime,
+      timeZone: this.timeZone
+    } );
   }
 
+  onClickNow() {
+    const convert = this.isFormat12() ? this.convertToAmPm( new Date().getHours() ) : new Date().getHours();
+    this.hour = this.leftPad.transform( convert, 2 );
+    this.minute = this.leftPad.transform( new Date().getMinutes(), 2 );
+    this.formatTime();
+    this.onChangeValue( this.hour + ':' + this.minute );
+    this.emitClickNow();
+    this.value = this.selectedTime;
+  }
+
+  onScrollHour( $event ) {
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    this.hour = this.steps.hour > 0 ? (scroll * this.steps.hour) : scroll;
+    this.formatTime();
+  }
+
+  onScrollMinutes( $event ) {
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    this.minute = this.steps.minute > 0 ? (scroll * this.steps.minute) : scroll;
+    this.formatTime();
+  }
+
+  onScrollAmPm( $event ) {
+    $event.target.scrollTop >= (this.itemHeight / 2) ? this.timeZone = 'PM' : this.timeZone = 'AM';
+  }
+
+  onClickCancel() {
+    this.isOpen = false;
+    this.cancel.emit( this.selectedTime );
+  }
+
+  onClickConfirm() {
+    this.isOpen = false;
+    this.confirm.emit( this.selectedTime );
+    this.value = this.selectedTime;
+  }
+
+  onChangeValue( $event ) {
+    if ( !$event ) {
+      return;
+    }
+    const split = this.cleanValue( $event ).split( ':' );
+    if ( split[ 0 ].length >= 2 ) {
+      this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( split[ 0 ] ), 2 ) : split[ 0 ];
+      this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
+    }
+    if ( split[ 1 ].length >= 2 ) {
+      this.minute = split[ 1 ];
+      this.setScrollColumn( this.listMinutes.nativeElement,  TIME.MINUTE );
+    }
+  }
+
+  private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {
+    const element: any = this.getDataIndex( type );
+    if ( element ) {
+      setTimeout(() => {
+        elementScroll.scrollTop =
+          element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+      }, 100);
+    }
+  }
+
+  private getDataIndex( type: TIME ) {
+    return type === TIME.HOUR ? this.getItemByDataIndexHour() : this.getItemByDataIndexMinute();
+  }
+
+  private convertToAmPm( hour ) {
+    const timeString = hour + ':00:00';
+    const hourEnd = timeString.indexOf( ':' );
+    const H = +timeString.substr( 0, hourEnd );
+    this.timeZone = H < 12 ? 'AM' : 'PM';
+    this.timeZone === 'AM' ? this.setAm() : this.setPm();
+    return H % 12 || 12;
+  }
+
+  private getItemByDataIndexMinute() {
+    const strDataIndex: string = 'div[dataIndexMinute="' + this.minute + '"]';
+    return document.querySelector( strDataIndex );
+  }
+
+  private getItemByDataIndexHour() {
+    const strDataIndex: string = 'div[dataIndexHour="' + this.hour + '"]';
+    return document.querySelector( strDataIndex );
+  }
+
+  private cleanValue( value ) {
+    return value.replace( /_/g, '' );
+  }
+
+  private isFormat24() {
+    return this.format === '24';
+  }
+
+  private isFormat12() {
+    return this.format === '12';
+  }
+
+  isTimeZonePM() {
+    return this.timeZone === 'PM';
+  }
+
+  isTimeZoneAM() {
+    return this.timeZone === 'AM';
+  }
+
+  clickListItem( scrollElement, $event ) {
+    scrollElement.scrollTop =
+      $event.target.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
+    setTimeout(() => { this.value = this.selectedTime; }, 100);
+  }
+
+  setAm() {
+    if ( this.listAmPm ) {
+      this.listAmPm.nativeElement.scrollTop = 0;
+    }
+  }
+
+  setPm() {
+    if ( this.listAmPm ) {
+      this.listAmPm.nativeElement.scrollTop = this.itemHeight * 2;
+    }
+  }
+
+  private formatTime() {
+    this.selectedTime = this.leftPad.transform( this.hour, 2 ) + ':' + this.leftPad.transform( this.minute, 2 );
+  }
+
+  ngOnDestroy() {
+    this.listeners.unsubscribe();
+  }
 
 }
-

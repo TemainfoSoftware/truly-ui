@@ -25,6 +25,27 @@ export const dataProperties = [
     type: 'HTML String',
     default: 'null',
     description: 'Defines the content of editor.',
-    options: 'true | false'
+    options: 'HTML String'
+  },
+  {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of header.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '300px',
+    description: 'Editor\'\s height.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'toolbarConfig',
+    type: 'Object - ToolbarConfig',
+    default: 'null',
+    description: 'The toolbar config object',
+    options: 'Object of type toolbar config'
   },
 ];

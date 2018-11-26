@@ -9,7 +9,7 @@
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-        <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
               <tl-editor></tl-editor>
@@ -20,16 +20,45 @@
       </div>
     </div>
     <div class="setup">
-      <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+      <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
         <app-card>
           <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
         </app-card>
+        <app-card>
+          <h5>ToolbarConfig</h5>
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'json'">
+font: {
+    family:    { show: boolean, tooltipText: string }
+    size:      { show: boolean, tooltipText: string }
+    bold:      { show: boolean, tooltipText: string }
+    italic:    { show: boolean, tooltipText: string }
+    underline: { show: boolean, tooltipText: string }
+    color:     { show: boolean, tooltipText: string }
+    highlight: { show: boolean, tooltipText: string }
+  }
+alignment: {
+    left:      { show: boolean, tooltipText: string }
+    center:    { show: boolean, tooltipText: string }
+    right:     { show: boolean, tooltipText: string }
+    justify:   { show: boolean, tooltipText: string }
+  }
+lists: {
+    ordered:   { show: boolean, tooltipText: string }
+    unordered: { show: boolean, tooltipText: string }
+  }
+others: {
+    link:      { show: boolean, tooltipText: string }
+    imageLink: { show: boolean, tooltipText: string }
+    quote:     { show: boolean, tooltipText: string }
+  }
+                    </textarea>
+        </app-card>
       </app-showcase-card>
-      <!--<app-showcase-card [title]="'Events'" [icon]="'ion-radio-waves'">
+      <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
         <app-card>
           <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
         </app-card>
-      </app-showcase-card>-->
+      </app-showcase-card>
     </div>
   </div>
 </div>

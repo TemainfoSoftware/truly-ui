@@ -6,6 +6,7 @@
   @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
   @include tl-dropdown-icon-theme($theme);
+  @include tl-editor-theme($theme);
   @include tl-calendar-theme($theme);
   @include tl-colorpicker-theme($theme);
   @include tl-colorpicker-content-theme($theme);
@@ -27,15 +28,18 @@
   @include tl-list-item-theme($theme);
   @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-permissions-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
+  @include tl-stopwatch-theme($theme);
   @include tl-switch-theme($theme);
   @include tl-tag-theme($theme);
   @include tl-tabcontrol-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
   @include tl-timepicker-theme($theme);
+  @include tl-clockpicker-theme($theme);
   @include tl-timeline-theme($theme);
   @include tl-timeline-item-theme($theme);
 }

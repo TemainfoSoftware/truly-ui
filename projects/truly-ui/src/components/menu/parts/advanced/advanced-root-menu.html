@@ -10,11 +10,11 @@
 
   <div class="header-advanced-menu">
     <div class="ui-header-title">
-      <i class="ion-navicon icon-header"></i>
+      <i class="fas fa-bars icon-header"></i>
       <span class="title-header">{{titleMenu}}</span>
     </div>
     <div class="wrapper-search-input">
-      <span><i class="ion-ios-search-strong"></i></span>
+      <span><i class="ion ion-ios-search"></i></span>
       <input #input type="text"
              (keydown.arrowdown)="onArrowDown($event)"
              (keydown.escape)="close()"
@@ -26,7 +26,7 @@
   <div class="ui-wrapper-not-found"
        *ngIf="nothingFound"
        [tlBlockui]="nothingFound"
-       [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+       [blockuiConfig]="{'spin': false, 'icon': 'ion ion-md-sad', 'message': filterEmptyMessage}">
   </div>
 
   <div class="ui-wrapper-items"
@@ -59,7 +59,7 @@
              [ngClass]="{'ui-advanced-submenu-opened' : isContentMath(elementList)[0]?.subMenu?.visibilitySubMenu }">
           <i [style.height]="itemHeight" [style.line-height]="itemHeight" *ngIf="item[subItem]"
              [ngClass]="{'anchor': setAnchorElement(item, elementList)}"
-             class="ion-ios-arrow-right icon"></i>
+             class="ion ion-ios-arrow-forward icon"></i>
         </div>
       </li>
     </div>

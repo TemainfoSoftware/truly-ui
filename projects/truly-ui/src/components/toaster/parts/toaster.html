@@ -1,0 +1,32 @@
+<div [class]="'ui-toaster-wrapper ' + color"
+     [@enterAnimation]="true"
+     (click)="close()"
+     [ngStyle]="{
+     'border-bottom-left-radius': !progress ? '3px' : '0',
+     'border-bottom-right-radius': !progress ? '3px' : '0',
+     'width': width,
+     'height': height}">
+  <div class="ui-toaster-content"
+  [ngStyle]="{'grid-template-columns': showIcon ? '50px 1fr' : '1fr', 'padding': !showIcon || height === 'auto' ? '20px 0' : '0'}">
+    <div *ngIf="showIcon" class="ui-toaster-icon"><tl-icon [size]="'1.2em'">{{ icon }}</tl-icon></div>
+    <div class="ui-toaster-description">
+      <p><b>{{title}}</b></p>
+      <p *ngIf="!isMessageObject()">{{message}}</p>
+      <ng-container *ngIf="isMessageObject()">
+        <p *ngFor="let item of getMessageKeys()">
+          {{ item }} {{ message[item] }}
+        </p>
+      </ng-container>
+    </div>
+  </div>
+  <tl-progressbar
+    *ngIf="progress"
+    [mode]="'determinate'"
+    [color]="color"
+    [height]="'5px'"
+    [progressInfo]="'none'"
+    [max]="time"
+    [min]="0"
+    [position]="progressBar">
+  </tl-progressbar>
+</div>

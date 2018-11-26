@@ -5,8 +5,8 @@
             'min-width': width,
             'height': height,
             'line-height': height,
-            'border-bottom-left-radius' : isOpen && positionOverlay === 'bottom' ? 0 : '5px',
-            'border-top-left-radius' : isOpen && positionOverlay === 'top' ? 0 : '5px'
+            'border-bottom-left-radius' : isOpen && positionOverlay === 'bottom' ? 0 : '3px',
+            'border-top-left-radius' : isOpen && positionOverlay === 'top' ? 0 : '3px'
           }"
           class="ui-button ripple"
           [ngClass]="{' disabled ': disabled}"
@@ -19,7 +19,7 @@
        class="split-button-actions"
        [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
     <div class="icon-arrow" [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'">
-      <i class="ion-chevron-down"></i>
+      <tl-icon [lib]="'fa'" [style]="'fas'">chevron-down</tl-icon>
     </div>
     <ng-template cdkConnectedOverlay
                  (backdropClick)="isOpen = false"

@@ -1,0 +1,189 @@
+.tl-clockpicker {
+
+  >.ui-wrapper-clockpicker-content {
+    position: fixed;
+    height: 100%;
+    z-index: 1000;
+    >.ui-clockpicker-wrapper {
+      position: absolute;
+      margin-top: 9px;
+      >.ui-clockpicker-header {
+        position: relative;
+        height: 50px;
+        font-weight: bold;
+        flex-direction: row;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        font-size: 2em;
+        font-family: sans-serif;
+        cursor: pointer;
+        user-select: none;
+      }
+      >.ui-clockpicker-content {
+        padding: 10px;
+        cursor: move;
+        position: relative;
+        >.ui-clock {
+          content: ' ';
+          height: 200px;
+          width: 200px;
+          border-radius: 50%;
+          box-sizing: border-box;
+          position: relative;
+        }
+        >.clockpicker-dial {
+          position: absolute;
+          user-select: none;
+          box-sizing: border-box;
+          top: -5px;
+          left: -5px;
+          &.dial-min {
+            font-size: 0.9em;
+          }
+          >.clock-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 1.2em;
+            animation-name: creating;
+            animation-duration: 200ms;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            transition: all ease-in-out 300ms;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      >.ui-clockpicker-footer {
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .noBorderBottom {
+    border-bottom: 0 !important;
+  }
+
+  .ui-clock-line-circle {
+    width: 30px;
+    height: 30px;
+    opacity: 0.5;
+    border-radius: 50%;
+    position: absolute;
+    left: -15px;
+    top: -30px;
+  }
+
+  .ui-translate-rotate {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+  }
+
+  .ui-clock-line {
+    position: absolute;
+    height: 70px;
+    width: 1px;
+    left: 0;
+    right: 0;
+    top: 14%;
+    margin: 0 auto;
+    transform-origin: bottom right;
+  }
+
+  .ui-point-center {
+    min-height: 0px;
+    height: 6px;
+    width: 6px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    border-radius: 50%;
+
+  }
+
+  .ui-arrow-up {
+    position: fixed;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 100;
+    border-width: 0 10px 10px 10px;
+  }
+
+  .ui-arrow-up:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -9px;
+    top: 1px;
+    border-style: solid;
+    border-width: 0 9px 9px 9px;
+  }
+
+  .ui-arrow-down {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 100;
+    border-width: 0 10px 10px 10px;
+    transform: rotate(180deg);
+  }
+
+  .ui-arrow-down:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: -9px;
+    top: 1px;
+    border-style: solid;
+    border-width: 0 9px 9px 9px;
+  }
+
+}
+
+@keyframes creating {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  25% {
+    opacity: 0.25;
+    transform: scale(0.25);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.5);
+  }
+  75% {
+    opacity: 0.75;
+    transform: scale(0.75);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

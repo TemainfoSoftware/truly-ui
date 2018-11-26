@@ -1,13 +1,13 @@
 <div class="router-outlet">
   <div class="header-title-demo">
-    <h1 class="title">Shortcut Directive <span class="module-name"><code><u>Module Name</u>: <strong>MiscModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>MiscModule</strong></code></p>
+    <h1 class="title">Shortcut Directive <span class="module-name"><code><u>Module Name</u>: <strong>ShortcutModule</strong></code></span></h1>
+    <p class="module-name-top"><code><u>Module Name</u>: <strong>ShortcutModule</strong></code></p>
     <p class="text-content">The shortcut directive is used to attach an shortcut to an Action Component (such as tl-button) or link, usually all combinations of keys are supported.</p>
   </div>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
-    <app-showcase-card [title]="'Showcase'" [icon]="'ion-monitor'">
+    <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
         <app-card>
           <div class="col-md-6">
             <span>Single Key</span><br>
@@ -47,7 +47,33 @@
           </div>
         </app-card>
     </app-showcase-card>
-    <app-showcase-card [title]="'Properties'" [icon]="'ion-clipboard'">
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <h3>Shortcut Config</h3>
+        <p>The shortcut config has the <code>disabledClass</code> attribute, is used to set a disabled class to control elements disabled, not allowing to execute
+        it.</p>
+        <textarea highlight-js [options]="{'tabReplace' : ''}" [lang]="'typescript'">
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { ShortcutModule } from 'truly-ui';
+
+@NgModule({
+  declarations: [
+    ShortcutDemoComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ShortcutModule.forRoot({ disableClass: 'ngx-disabled' }),
+  ],
+  exports: [
+    ShortcutDemoComponent
+  ]
+})
+export class ShortcutDemoModule {}
+        </textarea>
+      </app-card>
       <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
       </app-card>

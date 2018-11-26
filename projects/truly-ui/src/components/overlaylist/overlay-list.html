@@ -6,7 +6,7 @@
         (keyup)="handleKeyUp($event)"
         (keydown)="handleKeyEvents($event)"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()"
-        [iconBefore]="'ion-ios-search-strong'">
+        [iconBefore]="'ion ion-ios-search'">
       </tl-input>
     </div>
 
@@ -24,6 +24,7 @@
                       (keydown.enter)="handleClickOption(i)"
                       (click)="handleClickOption(i)"
                       [item]="item">
+          <tl-icon *ngIf="item[keyIcon]" style="padding: 0 5px">{{ item[keyIcon] }}</tl-icon>
           {{ typeOfData === 'simple' ? item : item[keyText] }}
         </tl-list-item>
     </section>

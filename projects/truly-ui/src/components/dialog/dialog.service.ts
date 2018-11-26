@@ -33,6 +33,11 @@ import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 
+export interface ConfirmCallback {
+  isYes?: any;
+  isNo?: any;
+}
+
 @Injectable()
 export class DialogService {
 
@@ -44,8 +49,8 @@ export class DialogService {
         this.setDialogOptions( options );
     }
 
-    confirmation( message: string, callback: Function, options?: ConfirmationOptions) {
-        this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, callback );
+    confirmation( message: string, callbackConfirmation: ConfirmCallback, options?: ConfirmationOptions ) {
+        this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, callbackConfirmation );
         if (options) {
             this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
         }

@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+.tl-permissions {
+  position: relative;
+}
+
+.ui-wrapper-permissions {
+  position: relative;
+  > .ui-container-permissions {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+    height: calc( 100% - 30px);
+    > .ui-permissions-panel {
+      flex: 0 0 40%;
+      height: 100%;
+      overflow-y: auto;
+      &::-webkit-scrollbar{
+        width: 7px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+      }
+    }
+    > .ui-permissions-detail-panel {
+      flex: 0 0 60%;
+      height: 100%;
+      overflow-y: auto;
+      &::-webkit-scrollbar{
+        width: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb{
+        border-radius: 3px;
+      }
+    }
+  }
+  .nothing-shown {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    i {
+      font-size: 8em;
+    }
+    .not-found-text {
+      font-size: 2em;
+    }
+  }
+}
+
+.ui-permissions-header {
+  display: flex;
+  > .ui-panel-search-1 {
+    flex: 0 0 40%;
+    height: 30px;
+    line-height: 30px;
+  }
+  > .ui-panel-search-2 {
+    display: flex;
+    flex: 0 0 60%;
+    height: 30px;
+    line-height: 30px;
+    > .ui-panel-search {
+      width: calc(100% - 100px);
+      height: 30px;
+      line-height: 30px;
+    }
+    > .ui-check-header {
+      display: flex;
+      height: 30px;
+      line-height: 30px;
+      div {
+        width: 100px;
+        text-align: center;
+        &:last-child {
+          border-right: none;
+        }
+      }
+    }
+  }
+}
+
+.ui-permission-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: "Segoe UI";
+  > .ui-detail-list {
+    display: flex;
+    width: 100%;
+    span {
+      width: calc(100% - 100px);
+    }
+    div {
+      width: 100px;
+    }
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    height: 35px;
+    line-height: 35px;
+    &:hover {
+      cursor: pointer;
+    }
+    &:focus {
+      outline: none;
+    }
+    span {
+      &:first-child {
+        padding-left: 20px;
+      }
+    }
+    .ui-checkbox {
+      text-align: center;
+      line-height: 30px;
+      &:last-child {
+        border-right: none;
+      }
+      &.permission {
+        border-left: none;
+      }
+    }
+  }
+}

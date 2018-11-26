@@ -15,6 +15,7 @@
 @import "../../../datatable/datatable-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
+@import "../../../editor/editor-theme";
 @import "../../../form/form-theme";
 @import "../../../input/input-theme";
 @import "../../../listbox/listbox-theme";
@@ -32,14 +33,17 @@
 @import "../../../overlaypanel/overlay-panel-theme";
 @import "../../../panelgroup/panelgroup-theme";
 @import "../../../progressbar/progressbar-theme";
+@import "../../../permissions/permissions-theme";
 @import "../../../radiobutton/radiobutton-theme";
 @import "../../../splitbutton/splitbutton-theme";
+@import "../../../stopwatch/stopwatch-theme";
 @import "../../../switch/switch-theme";
 @import "../../../tabcontrol/tabcontrol-theme";
-@import "../../../internals/components/tag/tag-theme";
-@import "../../../toaster/toaster-theme";
-@import "../../../toolbar/toolbar-theme";
 @import "../../../timepicker/timepicker-theme";
+@import "../../../internals/components/tag/tag-theme";
+@import "../../../toaster/parts/toaster-theme";
+@import "../../../toolbar/toolbar-theme";
+@import "../../../clockpicker/clockpicker-theme";
 @import "../../../timeline/timeline-theme";
 @import "../../../timeline/parts/timeline-item/timeline-item-theme";
 
@@ -61,6 +65,7 @@
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);
   @include tl-dropdonwlist-theme($theme);
+  @include tl-editor-theme($theme);
   @include tl-form-theme($theme);
   @include tl-input-theme($theme);
   @include tl-listbox-theme($theme);
@@ -77,15 +82,18 @@
   @include tl-overlaylist-theme($theme);
   @include tl-overlay-panel-theme($theme);
   @include tl-panelgroup-theme($theme);
+  @include tl-permissions-theme($theme);
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
+  @include tl-stopwatch-theme($theme);
   @include tl-switch-theme($theme);
   @include tl-tabcontrol-theme($theme);
+  @include tl-timepicker-theme($theme);
   @include tl-tag-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
-  @include tl-timepicker-theme($theme);
+  @include tl-clockpicker-theme($theme);
   @include tl-timeline-theme($theme);
   @include tl-timeline-item-theme($theme);
 }

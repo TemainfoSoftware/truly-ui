@@ -27,18 +27,20 @@ import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { ShortcutService } from '../core/helper/shortcut.service';
 import { SidebarService } from './sidebar.service';
 
 import { BackdropModule } from '../core/components/backdrop/index';
-import { MiscModule } from '../misc/index';
+import { IconsModule } from '../icons/index';
 import { ModalResultDirective } from './directives/modal-result.directive';
+import { ShortcutService } from '../shortcut/shortcut.service';
+import { ShortcutModule } from '../shortcut/index';
 
 @NgModule( {
     imports: [
       CommonModule,
       BackdropModule,
-      MiscModule
+      ShortcutModule,
+      IconsModule,
     ],
     declarations: [
       TlModal,

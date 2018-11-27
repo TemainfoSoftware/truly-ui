@@ -1,0 +1,22 @@
+<div [class]="'ui-time-available-picker ' + color">
+  <div class="ui-time-header">
+    <div class="ui-date-selected">
+      <span class="ui-day">{{ dateValue | date:'dd' }}</span>
+      <span class="ui-day-week">{{ dateValue | date:'EEEE' }}</span>
+    </div>
+    <div class="ui-time-selected">
+      <span *ngIf="selectedTime.length > 1">{{ selectedTime[0]?.date | date: 'HH:mm' }} - {{ selectedTime[1]?.date | date: 'HH:mm' }}</span>
+      <span *ngIf="selectedTime.length === 1">{{ selectedTime[0]?.date | date: 'HH:mm' }}</span>
+    </div>
+  </div>
+  <div class="ui-time-content">
+    <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
+      <span (keydown.enter)="setSelectedTime(item)"
+            (click)="setSelectedTime(item, i)"
+            [ngClass]="{ 'ui-selected': item.selected }"
+            tabindex="-1">
+        {{ item.date | date: 'HH:mm' }}
+      </span>
+    </div>
+  </div>
+</div>

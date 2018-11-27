@@ -1,0 +1,72 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-time-available-picker-theme-schema( $theme, $action ){
+
+  $primary: map-deep-get($theme, 'primary');
+
+  border: 1px solid map-deep-get($theme, $action, "default", "border");
+
+  > .ui-time-header {
+    border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: map-deep-get($theme, $action, "default", "background");
+    > .ui-date-selected {
+      color: map-deep-get($primary, "default", "background");
+    }
+    > .ui-time-selected {
+      span {
+        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background")
+        0%, map-deep-get($primary, "darker", "background") 100%);
+        color: white;
+      }
+    }
+  }
+  > .ui-time-content {
+    > .ui-time-item {
+      color: map-deep-get($theme, $action, "default", "foreground");
+      span {
+        &:hover {
+          border: 1px solid map-deep-get($primary, "lighter", "background") !important;
+        }
+      }
+      > .ui-selected {
+        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background")
+        0%, map-deep-get($primary, "darker", "background") 100%);
+        color: white;
+      }
+    }
+  }
+  > .ui-time-footer {
+    border-top: 1px solid map-deep-get($theme, $action, "default", "border");
+    background: map-deep-get($theme, $action, "default", "background");
+  }
+
+}
+
+@mixin tl-time-available-picker-theme( $theme ) {
+
+  .ui-time-available-picker  {
+    &.basic {
+      @include _tl-time-available-picker-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-time-available-picker-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-time-available-picker-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-time-available-picker-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-time-available-picker-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-time-available-picker-theme-schema($theme, 'information')
+    }
+  }
+}

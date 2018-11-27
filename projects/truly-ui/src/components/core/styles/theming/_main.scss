@@ -11,6 +11,7 @@
   @include tl-colorpicker-theme($theme);
   @include tl-colorpicker-content-theme($theme);
   @include tl-colorpicker-input-theme($theme);
+  @include tl-clockpicker-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-popupmenu-theme($theme);
@@ -39,7 +40,7 @@
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
   @include tl-timepicker-theme($theme);
-  @include tl-clockpicker-theme($theme);
+  @include tl-time-available-picker-theme($theme);
   @include tl-timeline-theme($theme);
   @include tl-timeline-item-theme($theme);
 }

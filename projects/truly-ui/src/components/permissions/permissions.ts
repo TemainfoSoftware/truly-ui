@@ -268,12 +268,12 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   handleSpaceSelect( $event: Event, item: PermissionDataConfig ) {
     this.stopEvent( $event );
-    if ( item[ 'checked' ] === 'indeterminate' ) {
-      item[ 'checked' ] = true;
-      return this.onCheckGroup( item[ 'checked' ] );
+    if ( item.checked === 'indeterminate' ) {
+      item.checked = true;
+      return this.onCheckGroup( item.checked );
     }
-    item[ 'checked' ] = !item[ 'checked' ];
-    this.onCheckGroup( item[ 'checked' ] );
+    item.checked = !item.checked;
+    this.onCheckGroup( item.checked );
   }
 
   stopEvent( $event: Event ) {

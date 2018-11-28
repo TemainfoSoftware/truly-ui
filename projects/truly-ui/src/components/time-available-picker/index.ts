@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { TlTimeAvailablePicker } from './time-available-picker';
 import { ButtonModule } from '../button/index';
 import { MiscModule } from '../misc/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ButtonModule,
-    MiscModule
+    MiscModule,
+    IconsModule
   ],
   declarations: [
     TlTimeAvailablePicker

@@ -149,6 +149,9 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes['availableTimes']) {
+      this.setUpData();
+    }
     if (changes['value']) {
       this.handleValueChange();
     }

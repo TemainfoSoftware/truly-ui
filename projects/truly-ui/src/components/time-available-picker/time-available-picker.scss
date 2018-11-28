@@ -44,7 +44,7 @@
     }
   }
   > .ui-time-content {
-    height: 180px;
+    min-height: 180px;
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-template-rows: 50px 50px 50px 50px;
@@ -71,6 +71,20 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+  }
+  > .ui-empty-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    flex-direction: column;
+    line-height: 30px;
+    tl-icon {
+      font-size: 4em;
+    }
+    span {
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+    }
   }
 }
 

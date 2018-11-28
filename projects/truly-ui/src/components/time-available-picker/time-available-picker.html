@@ -9,9 +9,13 @@
       <span *ngIf="selectedTime.length === 1">{{ selectedTime[0]?.date | date: 'HH:mm' }}</span>
     </div>
   </div>
-  <div class="ui-time-content">
+  <div *ngIf="!filterTimes || filterTimes.length === 0" class="ui-empty-data">
+    <tl-icon [lib]="'ion'" [style]="'md'">sad</tl-icon>
+    <span>Nothing Found !</span>
+  </div>
+  <div *ngIf="filterTimes.length > 0" class="ui-time-content">
     <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
-      <span (keydown.enter)="setSelectedTime(item)"
+      <span (keydown.enter)="setSelectedTime(item, i)"
             (click)="setSelectedTime(item, i)"
             [ngClass]="{ 'ui-selected': item.selected }"
             tabindex="-1">

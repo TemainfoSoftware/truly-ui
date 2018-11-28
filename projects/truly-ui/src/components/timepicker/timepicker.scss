@@ -105,9 +105,17 @@
       font-size: 1.2em;
       scroll-snap-align: center;
       line-height: 30px;
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     }
   }
   .selectedItem {
     font-weight: 600;
   }
+
+  .list {
+    > div:not(.ui-list-item) {
+      height: 20px;
+    }
+  }
+
 }

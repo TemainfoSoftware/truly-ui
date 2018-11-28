@@ -125,6 +125,10 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   public value = '';
 
+  public textConfirm = this.i18n.getLocale().TimePicker.textConfirm;
+
+  public textCancel = this.i18n.getLocale().TimePicker.textCancel;
+
   private headerHeight = 45;
 
   private border = 3;

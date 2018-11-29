@@ -68,7 +68,7 @@
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       border-radius: 3px;
-      transition: all 230ms ease-in-out;
+      transition: background-color 230ms ease-in-out;
       &.-borderleft{
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;

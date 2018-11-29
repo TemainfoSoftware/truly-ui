@@ -1,6 +1,5 @@
 <div [class]="'container-wrapper '+ color">
      <span [style.background]="arrowsColor"
-           [@onCreateElement]="true"
            [style.lineHeight]="height"
            (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left">
        <tl-icon [lib]="'ion'" [style]="'ios'">arrow-back</tl-icon>
@@ -12,8 +11,8 @@
                [style.width]="modalBoxWidth + 'px'"
                [style.height]="'calc(' + height  + ' - 6px)'"
                [style.lineHeight]="'calc(' + height + ' - 6px)'"
-               [style.opacity]="item.componentRef === modalService.activeModal ? 1 : 0.7"
-               *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.componentRef)">
+               *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.componentRef)"
+               [style.opacity]="item.componentRef === modalService.activeModal ? 1 : 0.7">
               <span class="ui-container-item"><tl-icon>{{ item.componentRef.instance.icon }}</tl-icon></span>
               <span class="ui-container-item">{{getTextContainerItem(item.componentRef.instance.title)}}</span>
           </div>

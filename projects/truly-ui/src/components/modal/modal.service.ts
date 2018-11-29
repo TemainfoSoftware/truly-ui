@@ -148,12 +148,15 @@ export class ModalService implements OnDestroy {
     return false;
   }
 
+  isResultNotAllowed(result) {
+    return result.mdResult === ModalResult.MRCANCEL || result.mdResult === ModalResult.MRCLOSE
+      || !this.modalConfiguration[ 'actions' ];
+  }
+
   handleEventCallbacks( resolve ) {
     this.eventCallback.subscribe( ( result: any ) => {
       resolve( result );
-      if ( result.mdResult === ModalResult.MRCANCEL
-        || result === ModalResult.MRCLOSE
-        || !this.modalConfiguration[ 'actions' ] ) {
+      if ( this.isResultNotAllowed(result)  ) {
         return;
       }
       const instantResult = result.formResult ? result.formResult.value : result;

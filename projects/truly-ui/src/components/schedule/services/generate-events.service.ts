@@ -22,7 +22,6 @@ export class GenerateEventsService {
     this.originalEvents = JSON.parse( JSON.stringify(events) );
     this.events = events;
     this.transformDateToPixel();
-
     return this.generateEvents();
   }
 
@@ -185,8 +184,10 @@ export class GenerateEventsService {
 
   private transformDateToPixel() {
     for ( let i = 0; i <= this.events.length - 1; i++) {
-       this.events[i].date.start = Math.round(this.convertMillisecondsToPixel( this.events[i].date.start ));
-       this.events[i].date.end = Math.round(this.convertMillisecondsToPixel( this.events[i].date.end ));
+       this.events[i].date = Object.assign({}, {
+          start: Math.round(this.convertMillisecondsToPixel( this.events[i].date.start )),
+          end:  Math.round(this.convertMillisecondsToPixel( this.events[i].date.end ))
+       });
     }
   }
 

@@ -49,9 +49,9 @@ export class ModalService implements OnDestroy {
 
   public view: ViewContainerRef;
 
-  public subject = new Subject();
+  public changeModal = new Subject();
 
-  public head = new Subject();
+  public frontModal = new Subject();
 
   public modalShow = new Subject();
 
@@ -93,8 +93,7 @@ export class ModalService implements OnDestroy {
     this.eventCallback = new EventEmitter();
     this.view = this.containerModal.getView();
 
-    return new Promise( ( resolve, reject ) => {
-
+    return new Promise( ( resolve ) => {
       if ( !this.isModalConfigurationType() ) {
         this.setComponentModal(factoryOrConfig, identifier);
         this.injectComponentToModal(component, factoryOrConfig);
@@ -205,7 +204,7 @@ export class ModalService implements OnDestroy {
     const componentFactory = compiler.resolveComponentFactory( TlModal );
     this.component = this.view.createComponent( componentFactory );
     this.componentList.push( { componentRef: this.component, identifier: id } );
-    this.subject.next( this.component );
+    this.changeModal.next( this.component );
     (<TlModal>this.component.instance).setServiceControl( this );
     (<TlModal>this.component.instance).setComponentRef( this.component );
     this.setActiveModal( this.component );
@@ -283,9 +282,9 @@ export class ModalService implements OnDestroy {
     return Math.max.apply( Math, arrayModals );
   }
 
-  private setActiveModal( componentRef?: ComponentRef<any> ) {
+  setActiveModal( componentRef?: ComponentRef<any> ) {
     this.activeModal = componentRef;
-    this.head.next( { activeModal: this.activeModal } );
+    this.frontModal.next( { activeModal: this.activeModal } );
   }
 
   createBackdrop( backdrop, factoryResolver ) {
@@ -322,7 +321,7 @@ export class ModalService implements OnDestroy {
       return;
     }
     this.view.remove( this.view.indexOf( component || this.selectedModal ) );
-    this.subject.next( this.componentList );
+    this.changeModal.next( this.componentList );
     this.removeOfTheList( component || this.selectedModal );
     this.removeBackdrop();
   }
@@ -383,8 +382,7 @@ export class ModalService implements OnDestroy {
       }
       if ( !(this.isMdResultEqualsOK( result.mdResult ))) {
         this.close( component );
-      }
-      if (this.modalOptions[0].closeOnOK) {
+      } else if (this.modalOptions[0].closeOnOK) {
         this.close( component );
       }
       setTimeout( () => {

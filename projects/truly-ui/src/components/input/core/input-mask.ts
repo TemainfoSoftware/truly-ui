@@ -165,7 +165,6 @@ export class InputMask {
 
   private handleNotMath() {
     if ( !this.isTextLengthMatchWithExpressionLength() ) {
-      console.log('not math');
       this.value = '';
       this.updateModel();
       this.tlInput.value = '';

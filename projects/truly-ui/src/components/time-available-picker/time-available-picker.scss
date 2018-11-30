@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+}
+
+.ui-time-available-picker {
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  border-radius: 7px;
+  -webkit-animation: shadow-drop-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  animation: shadow-drop-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  > .ui-time-header {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    > .ui-date-selected {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-left: 20px;
+      line-height: 20px;
+      height: 35px;
+      width: 50px;
+      > .ui-day {
+        font-size: 2em;
+        font-weight: bold;
+      }
+      > .ui-day-week {
+        font-size: 0.8em;
+      }
+    }
+    > .ui-time-selected {
+      padding-right: 10px;
+      span {
+        font-size: 1.3em;
+        padding: 5px 15px;
+        border-radius: 3px;
+      }
+    }
+  }
+  > .ui-time-content {
+    min-height: 180px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: 50px 50px 50px 50px;
+    > .ui-time-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      font-family: Lato;
+      height: 50px;
+      span {
+        padding: 5px 10px;
+        transition: all 150ms ease-in-out;
+        border-radius: 3px;
+        cursor: pointer;
+        outline: none;
+        border: 1px solid transparent;
+      }
+    }
+  }
+  > .ui-time-footer {
+    height: 50px;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  > .ui-empty-data {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    flex-direction: column;
+    line-height: 30px;
+    tl-icon {
+      font-size: 4em;
+    }
+    span {
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+    }
+  }
+}
+
+@-webkit-keyframes shadow-drop-bottom {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes shadow-drop-bottom {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes play18 {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: -18432px 0px;
+  }
+}

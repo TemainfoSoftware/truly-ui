@@ -30,7 +30,7 @@
     background-color: map-deep-get($theme, $action, "default", "background");
     border: 1px solid map-deep-get($theme, $action, "default", "border");
     color:  map-deep-get($theme, $action, "default", "foreground");
-    transition: background ease-in-out 100ms;
+
   }
 
 }

@@ -22,4 +22,6 @@
 
 export const TimePicker = {
   now: 'Agora',
+  textConfirm: 'Confirmar',
+  textCancel: 'Cancelar'
 };

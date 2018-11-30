@@ -42,6 +42,7 @@ export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
 export { TimelineModule } from './components/timeline/index';
 export { TimePickerModule } from './components/timepicker/index';
+export { TimeAvailablePickerModule } from './components/time-available-picker/index';
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';

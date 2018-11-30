@@ -34,23 +34,12 @@ import { Subscription } from 'rxjs';
 
 let subscribeMouseMove;
 
+let uniqueIdentifier = 0;
+
 @Component( {
   selector: 'tl-modal',
   templateUrl: './modal.html',
   styleUrls: [ './modal.scss' ],
-/*  animations: [
-    trigger(
-      'enterAnimation', [
-        transition( ':enter', [
-          style( { opacity: 0 } ),
-        ] ),
-        transition( ':leave', [
-          style( { opacity: 1 } ),
-          animate( '100ms', style( { opacity: 0 } ) )
-        ] )
-      ]
-    )
-  ]*/
 } )
 export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
@@ -94,8 +83,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @ViewChild( 'body', { read: ViewContainerRef } ) body: ViewContainerRef;
 
-  // @HostBinding( '@enterAnimation' ) public animation;
-
   @Output() show: EventEmitter<any> = new EventEmitter();
 
   @Output() minimize: EventEmitter<any> = new EventEmitter();
@@ -105,6 +92,8 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   @Output() close: EventEmitter<any> = new EventEmitter();
 
   public componentRef: ComponentRef<TlModal>;
+
+  public id = '';
 
   public subscription = new Subscription();
 
@@ -153,6 +142,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
                private sidebarService: SidebarService,
                private zone: NgZone,
                private change: ChangeDetectorRef) {
+    this.id = `tl-modal-${uniqueIdentifier++}`;
   }
 
   ngOnInit() {
@@ -254,6 +244,11 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
       this.setMousePressY( $event.clientY );
       this.moving = true;
     }
+    this.setActiveModal();
+  }
+
+  setActiveModal() {
+    this.serviceControl.setActiveModal(this.componentRef);
   }
 
   validateProperty() {

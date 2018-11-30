@@ -243,6 +243,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/timepicker/timepickerdemo.module#TimepickerDemoModule'
       },
       {
+        path: 'timeavailable',
+        loadChildren: './components/time-available-picker/time-available-pickerdemo.module#TimeAvailablePickerDemoModule'
+      },
+      {
         path: 'timeline/infinitescroll',
         loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
       },

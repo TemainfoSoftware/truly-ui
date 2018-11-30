@@ -62,7 +62,7 @@ export class ShortcutService implements OnDestroy {
   }
 
   createListener() {
-    this.subscription.add( this.modalService.head.subscribe( ( component ) => {
+    this.subscription.add( this.modalService.frontModal.subscribe( ( component ) => {
       this.headElement = component;
     } ) );
     if ( !listener ) {

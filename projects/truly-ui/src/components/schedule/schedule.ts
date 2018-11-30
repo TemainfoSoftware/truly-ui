@@ -54,6 +54,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input('events') set events( events: ScheduleDataSource[] ) {
     this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
+    this._events = JSON.parse( JSON.stringify(this._events) );
   }
   get events () {
     return this._events;

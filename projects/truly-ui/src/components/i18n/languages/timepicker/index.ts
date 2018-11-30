@@ -22,4 +22,6 @@
 
 export interface TimePickerI18nInterface {
   now: string;
+  textCancel: string;
+  textConfirm: string;
 }

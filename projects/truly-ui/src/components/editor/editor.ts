@@ -214,7 +214,7 @@ export class TlEditor implements AfterContentInit, OnChanges {
     this.recoverSelection();
     this.setContentFocus();
     this.fontSize = $event;
-    document.execCommand( 'fontSize', null, parseInt( this.fontSize, 10 ) );
+    document.execCommand( 'fontSize', null, this.fontSize );
   }
 
   onChangeFont( $event ) {

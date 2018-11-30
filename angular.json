@@ -7,6 +7,15 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "prefix": "app",
+          "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "app"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -125,6 +134,15 @@
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "prefix": "app",
+          "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "app"
+        }
+      },
       "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
@@ -151,6 +169,15 @@
       "sourceRoot": "projects/truly-ui/src",
       "projectType": "library",
       "prefix": "tl",
+      "schematics": {
+        "@schematics/angular:component": {
+          "prefix": "tl",
+          "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "tl"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
@@ -188,13 +215,4 @@
     }
   },
   "defaultProject": "truly-ui-project",
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "app",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
 }

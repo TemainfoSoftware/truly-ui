@@ -40,6 +40,7 @@
 @import "../../../switch/switch-theme";
 @import "../../../tabcontrol/tabcontrol-theme";
 @import "../../../timepicker/timepicker-theme";
+@import "../../../time-available-picker/time-available-picker-theme";
 @import "../../../internals/components/tag/tag-theme";
 @import "../../../toaster/parts/toaster-theme";
 @import "../../../toolbar/toolbar-theme";
@@ -90,6 +91,7 @@
   @include tl-switch-theme($theme);
   @include tl-tabcontrol-theme($theme);
   @include tl-timepicker-theme($theme);
+  @include tl-time-available-picker-theme($theme);
   @include tl-tag-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);

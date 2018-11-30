@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { HighlightModule } from 'ngx-highlightjs';
 import { FormSmartdemoComponent } from './form-smartdemo.component';
 import { FormSmartDemoRoutingModule } from './form-smartdemo-routing.module';
 import { ButtonModule } from '../../../../../projects/truly-ui/src/components/button/index';
@@ -41,7 +40,6 @@ import { SmartFormModalComponent } from './smart-modal/smart-modal.component';
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
-    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,

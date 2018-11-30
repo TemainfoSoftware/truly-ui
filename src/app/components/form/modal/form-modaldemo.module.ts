@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { HighlightModule } from 'ngx-highlightjs';
 
 import { FormModalDemoRoutingModule } from './form-modaldemo-routing.module';
 import { FormModaldemoComponent } from './form-modaldemo.component';
@@ -41,7 +40,6 @@ import { FormModalComponent } from './form-modal/form-modal.component';
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
-    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,

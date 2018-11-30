@@ -29,7 +29,6 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { HighlightModule } from 'ngx-highlightjs';
 import { MultiViewModule } from '../../../../projects/truly-ui/src/components/multiview/index';
 
 @NgModule({
@@ -41,7 +40,6 @@ import { MultiViewModule } from '../../../../projects/truly-ui/src/components/mu
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
-    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,

@@ -59,7 +59,6 @@
     "intl": "^1.2.5",
     "jquery": "^3.3.1",
     "ngx-highlight-js": "^2.1.1",
-    "ngx-highlightjs": "^2.0.2",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",

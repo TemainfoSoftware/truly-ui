@@ -1,9 +1,7 @@
 language: node_js
 sudo: false
 dist: dist
-cache:
-  directories:
-    - node_modules
+cache: npm
 notifications:
   email: false
   slack:

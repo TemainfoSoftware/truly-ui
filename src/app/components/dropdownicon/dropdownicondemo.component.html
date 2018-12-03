@@ -10,7 +10,7 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-dropdown-icon [data]="data"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
@@ -28,7 +28,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Diferent Dimensions</h5>
+              <h6>Diferent Dimensions</h6>
               <tl-dropdown-icon [data]="data"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
@@ -54,21 +54,22 @@
         </app-showcase-card>
         <app-showcase-card [title]="'Important'" [icon]="'ion ion-ios-information-circle'">
           <app-card>
-            <h4>Use DropdownList As Simple Array</h4>
-            <h5>There's <code>TWO</code> ways to use DropdownList, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
-              you want to. For Example:</h5>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Use DropdownList As Simple Array</h4>
+              <h6>There's <code>TWO</code> ways to use DropdownList, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
+                you want to. For Example:</h6>
+              <textarea highlight-js [options]="{}" [lang]="'typescript'">
 [
   { 'William', 'King', 'contact@domain.com' },
   { 'James', 'King', 'contact@domain.com' },
   { 'Anne', 'King', 'contact@domain.com' },
 ];
     </textarea>
-            <hr>
-            <h4>Use DropdownList As Complex Array</h4>
-            <h5>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> pass a pattern to the component.</h5>
-            <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
+              <hr>
+              <h4>Use DropdownList As Complex Array</h4>
+              <h6>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> pass a pattern to the component.</h6>
+              <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
+              <textarea highlight-js [options]="{}" [lang]="'typescript'">
 [
   { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' },
   { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' },
@@ -77,6 +78,7 @@
   { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com' }
 ];
     </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>
@@ -90,7 +92,9 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-        <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+        <div class="col-12">
+          <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+        </div>
       </app-card>
     </app-showcase-card>
   </div>

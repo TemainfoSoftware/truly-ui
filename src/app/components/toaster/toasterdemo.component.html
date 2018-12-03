@@ -50,15 +50,15 @@
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
             <h4>Step One</h4>
-            <h5>First of all, you must inject the <code>ToasterService</code>in
-              the constructor</h5>
+            <h6>First of all, you must inject the <code>ToasterService</code>in
+              the constructor</h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 constructor( private toasterService: ToasterService ) {}
                   </textarea>
             <hr>
             <h4>Step Two</h4>
-            <h5>Create a method that call the Toaster that will wish. For example: Calling the success Toaster.</h5>
-            <h5><b>Allowed Toaster Methods</b></h5>
+            <h6>Create a method that call the Toaster that will wish. For example: Calling the success Toaster.</h6>
+            <h6><b>Allowed Toaster Methods</b></h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 this.toasterService.success(object?)
 this.toasterService.danger(object?)
@@ -80,7 +80,7 @@ clickMethod() {
   );
 }
                   </textarea>
-            <h5>As parameter, you may have to pass the toaster config object.</h5>
+            <h6>As parameter, you may have to pass the toaster config object.</h6>
           </app-card>
         </app-showcase-card>
       </div>

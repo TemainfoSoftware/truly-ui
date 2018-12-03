@@ -11,7 +11,7 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Orientation Horizontal</h5>
+              <h6>Orientation Horizontal</h6>
               <tl-radio-group [name]="'Genero'" [(ngModel)]="radio" [orientation]="'horizontal'">
                 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
@@ -28,7 +28,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Orientation Vertical</h5>
+              <h6>Orientation Vertical</h6>
               <tl-radio-group [name]="'Genero'" [(ngModel)]="radio2" [orientation]="'vertical'">
                 <tl-radiobutton [label]="'Male'" [value]="'M'"></tl-radiobutton>
                 <tl-radiobutton [label]="'Female'" [value]="'F'"></tl-radiobutton>
@@ -49,16 +49,16 @@
   </div>
   <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
-      <h5>tl-radio-group</h5>
+      <h6>tl-radio-group</h6>
       <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      <h5>tl-radiobutton</h5>
+      <h6>tl-radiobutton</h6>
       <app-showcase-table-properties [data]="dataTablePropertiesRadioButton"></app-showcase-table-properties>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
     <app-card>
       <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
-      <h5>tl-radio-group</h5>
+      <h6>tl-radio-group</h6>
       <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
     </app-card>
   </app-showcase-card>

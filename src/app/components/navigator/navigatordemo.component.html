@@ -11,7 +11,7 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-4">
-              <h5>Basic Usage</h5>
+              <h6>Basic Usage</h6>
               <tl-navigator [type]="'monthyear'" (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -19,7 +19,7 @@
               </textarea>
             </div>
             <div class="col-md-4">
-              <h5>With RangeYear Type</h5>
+              <h6>With RangeYear Type</h6>
               <tl-navigator [type]="'rangeyear'" [range]="10"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -27,7 +27,7 @@
               </textarea>
             </div>
             <div class="col-md-4">
-              <h5>With Year Type</h5>
+              <h6>With Year Type</h6>
               <tl-navigator [type]="'year'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -37,7 +37,7 @@
           </app-card>
           <app-card>
             <div class="col-md-4">
-              <h5>With Day Type</h5>
+              <h6>With Day Type</h6>
               <tl-navigator [type]="'day'"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -45,7 +45,7 @@
               </textarea>
             </div>
             <div class="col-md-8">
-              <h5>Without Border</h5>
+              <h6>Without Border</h6>
               <tl-navigator [withBorder]="false"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

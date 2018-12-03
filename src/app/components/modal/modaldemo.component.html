@@ -52,8 +52,8 @@
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
             <h4>Step One</h4>
-            <h5>Declare the <code>ModalService</code> and set the <code>tlContainerModal</code> Directive on a HTML Element root, where modal going to be on it.
-            For Example: </h5>
+            <h6>Declare the <code>ModalService</code> and set the <code>tlContainerModal</code> Directive on a HTML Element root, where modal going to be on it.
+            For Example: </h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <div class="content-wrapper" tlContainerModal>
   <!-- Main content -->
@@ -65,13 +65,13 @@
             </textarea>
             <hr>
             <h4>Step Two</h4>
-            <h5>Inside of your <code>constructor</code>, you have to declare <code>ComponentFactoryResolver</code> and <code>ModalService</code>.</h5>
+            <h6>Inside of your <code>constructor</code>, you have to declare <code>ComponentFactoryResolver</code> and <code>ModalService</code>.</h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   constructor(public compiler: ComponentFactoryResolver, public modalService: ModalService) {}
         </textarea>
             <hr>
             <h4>Step Tree</h4>
-            <h5>Import your custom component that will be inside the modal as entry component the property ( <code>entryComponents</code> ) in your module. In this case is <code>NewModal</code></h5>
+            <h6>Import your custom component that will be inside the modal as entry component the property ( <code>entryComponents</code> ) in your module. In this case is <code>NewModal</code></h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 
   @NgModule({
@@ -99,7 +99,7 @@
         </textarea>
             <hr>
             <h4>Final Step</h4>
-            <h5>Create an function to call the function <code>createModal</code> passing the following parameters. For example:</h5>
+            <h6>Create an function to call the function <code>createModal</code> passing the following parameters. For example:</h6>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 this.modalService.createModal(NewModalComponent, this.compiler, null, (modalResult) => {
   this.modalResult = modalResult;

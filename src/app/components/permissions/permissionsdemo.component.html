@@ -13,7 +13,7 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-permissions [keyPermissions]="'permissions'" (changePermission)="onChangePermissions($event)" [data]="data" [permissions]="permissions"></tl-permissions>
               <br>
               <div class="spacer"></div>
@@ -34,8 +34,9 @@
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
       </app-card>
       <app-card>
-        <h5>Permission Data Config </h5>
-        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+        <div class="col-12">
+          <h6>Permission Data Config </h6>
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 export interface PermissionDataConfig {
    id?: number | string;
    description: string;
@@ -44,6 +45,7 @@ export interface PermissionDataConfig {
    checked?: boolean | string;
  }
         </textarea>
+        </div>
       </app-card>
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">

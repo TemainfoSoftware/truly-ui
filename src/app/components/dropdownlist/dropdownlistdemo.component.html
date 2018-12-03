@@ -10,7 +10,7 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-dropdown-list [data]="data"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
@@ -27,7 +27,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Auto Scroll</h5>
+              <h6>Auto Scroll</h6>
               <tl-dropdown-list [data]="bigData"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
@@ -47,7 +47,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Scroll</h5>
+              <h6>Scroll</h6>
               <tl-dropdown-list [data]="data"
                                 [keyText]="'textItem'"
                                 [(ngModel)]="itemSelected3"
@@ -65,7 +65,7 @@
   </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Placeholder</h5>
+              <h6>Placeholder</h6>
               <tl-dropdown-list [data]="data"
                                 [keyText]="'textItem'"
                                 [placeholder]="'Select item'"
@@ -87,7 +87,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Label</h5>
+              <h6>Label</h6>
               <tl-dropdown-list [data]="data"
                                 [label]="'Label keyText'"
                                 [labelSize]="'80px'"
@@ -109,7 +109,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Height</h5>
+              <h6>Height</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [itemHeight]="'30px'"
@@ -133,7 +133,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Width + Filter</h5>
+              <h6>Width + Filter</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [width]="'180px'"
@@ -157,7 +157,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Required</h5>
+              <h6>Required</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select Item'"
                                 [labelSize]="'80px'"
@@ -184,7 +184,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Disabled</h5>
+              <h6>Disabled</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [keyText]="'textItem'"
@@ -197,7 +197,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Simple Data</h5>
+              <h6>Simple Data</h6>
               <tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
               <app-showcase-returned-value [value]="itemSelected8 | json"></app-showcase-returned-value>
               <div class="spacer"></div>
@@ -209,21 +209,22 @@
         </app-showcase-card>
         <app-showcase-card [title]="'Important'" [icon]="'ion ion-ios-information-circle'">
           <app-card>
-            <h4>Use DropdownList As Simple Array</h4>
-            <h5>There's <code>TWO</code> ways to use DropdownList, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
-              you want to. For Example:</h5>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Use DropdownList As Simple Array</h4>
+              <h6>There's <code>TWO</code> ways to use DropdownList, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
+                you want to. For Example:</h6>
+              <textarea highlight-js [options]="{}" [lang]="'typescript'">
 [
   { 'William', 'King', 'contact@domain.com' },
   { 'James', 'King', 'contact@domain.com' },
   { 'Anne', 'King', 'contact@domain.com' },
 ];
     </textarea>
-            <hr>
-            <h4>Use DropdownList As Complex Array</h4>
-            <h5>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> pass a pattern to the component.</h5>
-            <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
-            <textarea highlight-js [options]="{}" [lang]="'typescript'">
+              <hr>
+              <h4>Use DropdownList As Complex Array</h4>
+              <h6>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> pass a pattern to the component.</h6>
+              <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
+              <textarea highlight-js [options]="{}" [lang]="'typescript'">
 [
   { id: 1, firstName: 'Antonio', lastName: 'King', email: 'contact@domain.com' },
   { id: 2, firstName: 'Junior', lastName: 'King', email: 'contact@domain.com' },
@@ -232,6 +233,7 @@
   { id: 5, firstName: 'Claudia', lastName: 'King', email: 'contact@domain.com' }
 ];
     </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>
@@ -245,7 +247,9 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-        <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+        <div class="col-12">
+          <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+        </div>
       </app-card>
     </app-showcase-card>
   </div>

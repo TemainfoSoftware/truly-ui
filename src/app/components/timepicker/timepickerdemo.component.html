@@ -14,7 +14,7 @@
           <app-card>
             <div class="col-md-12">
               <div class="col-md-6">
-                <h5>24Hrs Format</h5>
+                <h6>24Hrs Format</h6>
                 <tl-timepicker
                   [(ngModel)]="dataTwo"
                   [format]="'24'"
@@ -27,7 +27,7 @@
 </textarea>
               </div>
 <div class="col-md-6">
-                <h5>12Hrs Format</h5>
+                <h6>12Hrs Format</h6>
                 <tl-timepicker (now)="onClickNow($event)" [format]="'12'"></tl-timepicker>
                 <div class="spacer"></div>
                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -35,7 +35,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>Show Time Icon</h5>
+                <h6>Show Time Icon</h6>
                 <tl-timepicker [showTimeIcon]="true" (now)="onClickNow($event)"></tl-timepicker>
                 <div class="spacer"></div>
                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -43,7 +43,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>Incremental Steps</h5>
+                <h6>Incremental Steps</h6>
                 <tl-timepicker [steps]="{ hour: 2, minute: 15 }" (now)="onClickNow($event)"></tl-timepicker>
                 <div class="spacer"></div>
                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -51,7 +51,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>Max</h5>
+                <h6>Max</h6>
                 <tl-timepicker [max]="maxHourMinuteDate" (now)="onClickNow($event)"></tl-timepicker>
                 <div class="spacer"></div>
                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -59,7 +59,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>Min</h5>
+                <h6>Min</h6>
                 <tl-timepicker [min]="minHourMinuteDate" (now)="onClickNow($event)"></tl-timepicker>
                 <div class="spacer"></div>
                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

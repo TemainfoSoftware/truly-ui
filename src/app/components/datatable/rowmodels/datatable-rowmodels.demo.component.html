@@ -5,7 +5,6 @@
     <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
     <p class="text-content">Depending on your needs, the Datatable can be configured with different row models.</p>
   </div>
-<hr>
   <div class="showcase">
 
     <div class="row">
@@ -13,28 +12,29 @@
         <app-showcase-card [title]="'Row Models'" [icon]="'far fa-lightbulb'">
           <!-- In Memory -->
           <app-card>
-            <h3>In Memory</h3>
-            <p>
-              This is the default. The Datatable will load all of the data into the grid in one go.
-              The grid can then perform navigation, filtering, sorting all in memory.
-            </p>
-            <tl-datatable
-              [data]="dataInMemory"
-              [mode]="'scrollable'"
-              [rowModel]="'inmemory'"
-              [height]="297"
-              [rowsClient]="12"
-              [allowFilterColumn]="true"
-            >
-              <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
-              <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
-              <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
-              <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
-              <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+            <div class="col-12">
+              <h3>In Memory</h3>
+              <p>
+                This is the default. The Datatable will load all of the data into the grid in one go.
+                The grid can then perform navigation, filtering, sorting all in memory.
+              </p>
+              <tl-datatable
+                [data]="dataInMemory"
+                [mode]="'scrollable'"
+                [rowModel]="'inmemory'"
+                [height]="297"
+                [rowsClient]="12"
+                [allowFilterColumn]="true"
+              >
+                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
 
-            </tl-datatable>
-            <hr>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+              </tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
           <tl-datatable  [rowModel]="'inmemory'" [data]="dataInMemory" [mode]="'scrollable'" [height]="300" [rowsClient]="12" [allowFilterColumn]="true">
             <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
             <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
@@ -44,7 +44,7 @@
 </tl-datatable>
             </textarea>
 
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 export class DatatableColumnFeaturesDemoComponent {
 
   public data = [];
@@ -54,35 +54,37 @@ export class DatatableColumnFeaturesDemoComponent {
   }
 }
             </textarea>
+            </div>
           </app-card>
 
           <!-- Infinite -->
           <app-card>
-            <h3>Infinite</h3>
-            <p>
-              This will present the data to the user and load more data as the user scrolls down. Use this if you want to
-              display a large flat (not grouped) list of data.
-            </p>
-            <tl-datatable
-              [data]="dataInfinite"
-              [mode]="'scrollable'"
-              [rowModel]="'infinite'"
-              [height]="297"
-              [rowsClient]="12"
-              [rowsPage]="100"
-              (loadData)="onLoadData($event)"
-              (rowSelect)="onRowSelect($event)"
-              [allowFilterColumn]="true"
-            >
-              <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
-              <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
-              <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
-              <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
-              <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+            <div class="col-12">
+              <h3>Infinite</h3>
+              <p>
+                This will present the data to the user and load more data as the user scrolls down. Use this if you want to
+                display a large flat (not grouped) list of data.
+              </p>
+              <tl-datatable
+                [data]="dataInfinite"
+                [mode]="'scrollable'"
+                [rowModel]="'infinite'"
+                [height]="297"
+                [rowsClient]="12"
+                [rowsPage]="100"
+                (loadData)="onLoadData($event)"
+                (rowSelect)="onRowSelect($event)"
+                [allowFilterColumn]="true"
+              >
+                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
+                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
 
-            </tl-datatable>
-            <hr>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+              </tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
           <tl-datatable [data]="dataInfinite" [mode]="'scrollable'" [rowModel]="'infinite'" [height]="300" [rowsClient]="12" [rowsPage]="take"
                         (loadData)="onLoadData($event)" [allowFilterColumn]="true"
           >
@@ -94,7 +96,7 @@ export class DatatableColumnFeaturesDemoComponent {
 
 </tl-datatable>
             </textarea>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 export class DatatableRowModelsDemoComponent {
 
   public data = this.dumpDataService.createRandomData(5000);
@@ -128,6 +130,7 @@ export class DatatableRowModelsDemoComponent {
   }
 }
             </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

@@ -12,21 +12,19 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
-                <tl-input
-                  [placeholder]="'Search Icon'"
-                  [clearButton]="true"
-                  [(ngModel)]="filter"
-                  [autocomplete]="'off'">
-                </tl-input>
-              </div>
-              <div class="col-md-3">
-                <tl-switch [label]="'Show Cheatsheet'" [color]="'primary'" [checked]="cheatsheet" (toggle)="toggleCheatsheet()"></tl-switch>
-              </div>
+            <div class="col-md-6 offset-md-3">
+              <tl-input
+                [placeholder]="'Search Icon'"
+                [clearButton]="true"
+                [(ngModel)]="filter"
+                [autocomplete]="'off'">
+              </tl-input>
+            </div>
+            <div class="col-md-3">
+              <tl-switch [label]="'Show Cheatsheet'" [color]="'primary'" [checked]="cheatsheet" (toggle)="toggleCheatsheet()"></tl-switch>
             </div>
             <div class="col-md-12">
-              <h5>Material Style</h5>
+              <h6>Material Style</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(materialIcons)">
                   <div class="shadow-hover"
@@ -49,7 +47,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>iOS Style</h5>
+              <h6>iOS Style</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(iosIcons)">
                   <div class="shadow-hover"
@@ -72,7 +70,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Logos</h5>
+              <h6>Logos</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(logoIcons)">
                   <div class="shadow-hover"

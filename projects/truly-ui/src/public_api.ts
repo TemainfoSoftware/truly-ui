@@ -40,6 +40,7 @@ export { StopwatchModule } from './components/stopwatch/index';
 export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
+export { TextareaModule } from './components/textarea/index';
 export { TimelineModule } from './components/timeline/index';
 export { TimePickerModule } from './components/timepicker/index';
 export { TimeAvailablePickerModule } from './components/time-available-picker/index';

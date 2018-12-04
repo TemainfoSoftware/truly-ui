@@ -1,0 +1,31 @@
+<div [class]="'tl-textarea ' + color">
+
+  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+
+  <div class="ui-wrapper-textarea" [style.height]="height">
+    <textarea #textarea
+              class="field"
+              [style.height]="height"
+              [style.text-align]="textAlign"
+              [tabindex]="tabindex"
+              [disabled]="disabled || isDisabled"
+              [attr.name]="name"
+              [placeholder]="placeholder"
+              [attr.readonly]="readonly ? true : null"
+              [attr.maxlength]="maxlength"
+              [(ngModel)]="value"
+              (click)="onTextareaClick($event)"
+              (blur)="onTextareaBlur($event)"
+              (focus)="onTextareaFocus($event)"
+              (keydown)="onTextareaDown($event)"></textarea>
+    <tl-icon *ngIf="clearButton && value"
+             [style.lineHeight]="height"
+             (click)="clearTextarea($event)"
+             [lib]="'ion'"
+             [style]="'ios'"
+             class="clearButton">close</tl-icon>
+    <div class="count-characters">
+      {{ countLength }} characters
+    </div>
+  </div>
+</div>

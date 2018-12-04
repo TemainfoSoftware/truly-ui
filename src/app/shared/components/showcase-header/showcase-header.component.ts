@@ -13,7 +13,7 @@ export class ShowcaseHeaderComponent implements AfterViewInit {
 
   @Input() name: string;
 
-  @Input() module: string;
+  @Input() module: string = null;
 
   constructor() { }
 

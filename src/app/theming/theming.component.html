@@ -1,33 +1,35 @@
 <div class="container-fluid" style="padding: 20px">
-  <div class="header-title-demo">
-    <h1 class="title">Theming</h1>
-    <p class="text-content">Truly-UI allows you to customize some basic design aspects in order to meet the needs of UI diversity from business and brand, including primary color, contrast colors, border color, etc..</p>
-  </div>
+  <app-showcase-header name="Theming">
+    Truly-UI allows you to customize some basic design aspects in order to meet the needs of UI diversity from business and brand, including primary color, contrast colors, border color, etc..
+  </app-showcase-header>
   <app-showcase-card [title]="'What is a theme?'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
+      <div class="col-12">
+            <span class="description">
         A theme is the set of colors that will be applied to the TrulyUI components.
         In TrulyUI, a theme is created by composing multiple palettes. In particular, a theme consists of:
       </span>
-      <ul style="font-weight: normal; ">
-        <li>A <b>basic</b> palette: colors used for element backgrounds.</li>
-        <li>A <b>primary</b> palette: colors most widely used across all screens and components.</li>
-      </ul>
+        <ul style="font-weight: normal; ">
+          <li>A <b>basic</b> palette: colors used for element backgrounds.</li>
+          <li>A <b>primary</b> palette: colors most widely used across all screens and components.</li>
+        </ul>
 
-      <ul style="font-weight: normal; ">
-        <li>A <b>success</b> palette: colors used to convey success state.</li>
-        <li>A <b>danger</b> palette: colors used to convey danger state.</li>
-        <li>A <b>warning</b> palette: colors used to convey warning state.</li>
-        <li>A <b>information</b> palette: colors used to convey information state.</li>
-      </ul>
+        <ul style="font-weight: normal; ">
+          <li>A <b>success</b> palette: colors used to convey success state.</li>
+          <li>A <b>danger</b> palette: colors used to convey danger state.</li>
+          <li>A <b>warning</b> palette: colors used to convey warning state.</li>
+          <li>A <b>information</b> palette: colors used to convey information state.</li>
+        </ul>
+      </div>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Using a pre-built theme'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
+      <div class="col-12">
+              <span class="description">
         Truly-UI already counts a prepackaged package of several themes to suit any application. To use them simply specify in the creation of the TrulyUI Core Module <code> CoreModule.forRoot({{ '{' }} theme: 'default' {{ '}' }}) </code> which theme you want to use.
       </span>
-      <div class="code-area">
+        <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -47,35 +49,37 @@ import { CoreModule } from 'truly-ui';
 })
 export class AppModule { }
   </textarea>
+        </div>
+        <hr>
+        <h5>Available pre-built themes</h5>
+        <ul>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Amber </a>(<code>amber</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue </a>(<code>blue</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue Gray </a>(<code>bluegray</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Brown </a>(<code>brown</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan </a>(<code>cyan</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan Green </a>(<code>cyangreen</code>) default</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Orange </a>(<code>deeporange</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Purple </a>(<code>deeppurple</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Gray </a>(<code>gray</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Green </a>(<code>green</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Indigo </a>(<code>indigo</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Blue </a>(<code>lightblue</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Green </a>(<code>lightgreen</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Lime </a>(<code>lime</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Orange </a>(<code>orange</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Purple </a>(<code>purple</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Red </a>(<code>red</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Teal </a>(<code>teal</code>)</li>
+          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Yellow </a>(<code>yellow</code>)</li>
+        </ul>
       </div>
-      <hr>
-      <h5>Available pre-built themes</h5>
-      <ul>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Amber </a>(<code>amber</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue </a>(<code>blue</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Blue Gray </a>(<code>bluegray</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Brown </a>(<code>brown</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan </a>(<code>cyan</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Cyan Green </a>(<code>cyangreen</code>) default</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Orange </a>(<code>deeporange</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Deep Purple </a>(<code>deeppurple</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Gray </a>(<code>gray</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Green </a>(<code>green</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Indigo </a>(<code>indigo</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Blue </a>(<code>lightblue</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Light Green </a>(<code>lightgreen</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Lime </a>(<code>lime</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Orange </a>(<code>orange</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Purple </a>(<code>purple</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Red </a>(<code>red</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Teal </a>(<code>teal</code>)</li>
-        <li><a class="tl-scheme-primary -paint-link -paint-icon" href="#">Yellow </a>(<code>yellow</code>)</li>
-      </ul>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Defining a Custom theme'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
+      <div class="col-12">
+              <span class="description">
         When you want more customization than a pre-built theme offers, you can create your own theme file.<br>
         TrulyUI also allows you to perform the Runtime swapping of the themes you created. Just specify them in the
         <code>setTheme ()</code> function of the <code>CoreService</code> service.
@@ -86,15 +90,15 @@ export class AppModule { }
         <br>
         A custom theme file does three things:
       </span>
-      <ul style="list-style: decimal; font-weight: normal; ">
-        <li>It does import builder that will perform the mixin of the color palettes <code>@import "~truly-ui/css/theming/builders/basic/index";</code></li><br>
-        <li>Defines a theme data structure as the composition of multiple palettes. The Palette receives the name and its context variables (default, lighter, darker) in number(View the available palettes).</li><br>
-        <li>The object sass is passed to the truly-basic-builder-theme mixin, along with the name that will be the representation of the theme in CoreModule, which will output all of the corresponding styles for the theme.</li>
-      </ul>
-      <hr>
-      <h3>Example Single Theme</h3>
-      <span class="description">1 - Creates the Theme in style.scss</span>
-      <div class="code-area">
+        <ul style="list-style: decimal; font-weight: normal; ">
+          <li>It does import builder that will perform the mixin of the color palettes <code>@import "~truly-ui/css/theming/builders/basic/index";</code></li><br>
+          <li>Defines a theme data structure as the composition of multiple palettes. The Palette receives the name and its context variables (default, lighter, darker) in number(View the available palettes).</li><br>
+          <li>The object sass is passed to the truly-basic-builder-theme mixin, along with the name that will be the representation of the theme in CoreModule, which will output all of the corresponding styles for the theme.</li>
+        </ul>
+        <hr>
+        <h3>Example Single Theme</h3>
+        <span class="description">1 - Creates the Theme in style.scss</span>
+        <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'scss'">
 @import "~truly-ui/css/theming/builders/basic/index";
 
@@ -110,9 +114,9 @@ $snack-app-theme: (
 
 @include truly-basic-builder-theme($snack-app-theme, 'snack');
   </textarea>
-      </div>
-      <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
-      <div class="code-area">
+        </div>
+        <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
+        <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -132,11 +136,11 @@ import { CoreModule } from 'truly-ui';
 })
 export class AppModule { }
   </textarea>
-      </div>
-      <hr>
-      <h3>Example Multiple Theme</h3>
-      <span class="description">1 - Creates the Theme in style.scss</span>
-      <div class="code-area">
+        </div>
+        <hr>
+        <h3>Example Multiple Theme</h3>
+        <span class="description">1 - Creates the Theme in style.scss</span>
+        <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'scss'">
 @import "~truly-ui/css/theming/builders/basic/index";
 
@@ -165,9 +169,9 @@ $snack-app-dark-theme: (
 @include truly-basic-builder-theme($snack-app-dark-theme, 'snack-dark');
 
   </textarea>
-      </div>
-      <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
-      <div class="code-area">
+        </div>
+        <span class="description">2 - in CoreModule passes to the theme <code>key</code> the name of the theme defined in the styles.scss file</span>
+        <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -187,67 +191,72 @@ import { CoreModule } from 'truly-ui';
 })
 export class AppModule { }
   </textarea>
+        </div>
       </div>
 
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Changing Theme at Runtime'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">TrulyUI allows you to switch between preconfigured and user-created themes, just by switching to the <code>CoreService</code> service which theme you want to use.</span>
-      <div class="code-area">
-         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-import { Component, OnChanges } from '@angular/core';
-import { CoreService } from 'truly-ui/components/core/services/core.service';
+      <div class="col-12">
+        <span class="description">TrulyUI allows you to switch between preconfigured and user-created themes, just by switching to the <code>CoreService</code> service which theme you want to use.</span>
+        <div class="code-area">
+           <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  import { Component, OnChanges } from '@angular/core';
+  import { CoreService } from 'truly-ui/components/core/services/core.service';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
-})
-export class AppComponent {
+  @Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
+  })
+  export class AppComponent {
 
-  data = [
-    { themeName : 'Default', value : 'default' },
-    { themeName : 'Red', value : 'red' },
-    { themeName : 'Pink', value : 'pink' },
-    { themeName : 'Purple', value : 'purple' },
-    { themeName : 'Deep Purple', value : 'deeppurple' },
-    { themeName : 'Indigo', value : 'indigo' },
-    { themeName : 'Blue', value : 'blue' },
-    { themeName : 'Light Blue', value : 'lightblue' },
-    { themeName : 'Cyan', value : 'cyan' },
-    { themeName : 'Teal ', value : 'teal' },
-    { themeName : 'Green', value : 'green' },
-    { themeName : 'Light Green', value : 'lightgreen' },
-    { themeName : 'Lime', value : 'lime' },
-    { themeName : 'Yellow', value : 'yellow' },
-    { themeName : 'Amber', value : 'amber' },
-    { themeName : 'Orange', value : 'orange' },
-    { themeName : 'Deep Orange', value : 'deeporange' },
-    { themeName : 'Brown', value : 'brown' },
-    { themeName : 'Gray', value : 'gray' },
-    { themeName : 'Blue Gray', value : 'bluegray' },
-  ];
+    data = [
+      { themeName : 'Default', value : 'default' },
+      { themeName : 'Red', value : 'red' },
+      { themeName : 'Pink', value : 'pink' },
+      { themeName : 'Purple', value : 'purple' },
+      { themeName : 'Deep Purple', value : 'deeppurple' },
+      { themeName : 'Indigo', value : 'indigo' },
+      { themeName : 'Blue', value : 'blue' },
+      { themeName : 'Light Blue', value : 'lightblue' },
+      { themeName : 'Cyan', value : 'cyan' },
+      { themeName : 'Teal ', value : 'teal' },
+      { themeName : 'Green', value : 'green' },
+      { themeName : 'Light Green', value : 'lightgreen' },
+      { themeName : 'Lime', value : 'lime' },
+      { themeName : 'Yellow', value : 'yellow' },
+      { themeName : 'Amber', value : 'amber' },
+      { themeName : 'Orange', value : 'orange' },
+      { themeName : 'Deep Orange', value : 'deeporange' },
+      { themeName : 'Brown', value : 'brown' },
+      { themeName : 'Gray', value : 'gray' },
+      { themeName : 'Blue Gray', value : 'bluegray' },
+    ];
 
-  constructor( private coreService: CoreService ) {}
+    constructor( private coreService: CoreService ) {}
 
-  // Any function that you receive the theme name as parameter
-  themeChange(themeName: string) {
-    this.coreService.setTheme(themeName);
+    // Any function that you receive the theme name as parameter
+    themeChange(themeName: string) {
+      this.coreService.setTheme(themeName);
+    }
   }
-}
 
-  </textarea>
+    </textarea>
+        </div>
       </div>
     </app-card>
   </app-showcase-card>
 
   <app-showcase-card [title]="'Colors Palettes'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
+      <div class="col-12">
+        <span class="description">
        These color palettes, originally created by Material Design in 2014, comprises of colors designed to work together harmoniously, and can be used to develop your brand palette.
       </span>
-      <app-palette></app-palette>
+        <app-palette></app-palette>
+      </div>
     </app-card>
   </app-showcase-card>
 </div>

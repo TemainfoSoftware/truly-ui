@@ -20,14 +20,33 @@
     SOFTWARE.
 */
 
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component, ContentChild,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { CdkOverlayOrigin } from '@angular/cdk/overlay';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component({
   selector: 'tl-textarea',
   templateUrl: './textarea.html',
   styleUrls: ['./textarea.scss'],
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => TlTextarea),
+    multi: true,
+  } ],
 })
-export class TlTextarea implements OnInit {
+export class TlTextarea extends ValueAccessorBase<string> implements OnInit, AfterViewInit {
 
   @Input() label = '';
 
@@ -55,7 +74,21 @@ export class TlTextarea implements OnInit {
 
   @Input() color = 'basic';
 
+  @Input() showValidations = false;
+
+  @Input() withBorder = true;
+
+  @Input() flatBorder = false;
+
+  @Input() showCount = false;
+
   @ViewChild( 'textarea' ) textarea: ElementRef;
+
+  @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @Output() click: EventEmitter<MouseEvent> = new EventEmitter();
 
@@ -65,11 +98,46 @@ export class TlTextarea implements OnInit {
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
+  @Output() overlayOrigin: EventEmitter<any> = new EventEmitter();
+
   public countLength = 0;
 
-  constructor() {}
+  public required = false;
 
-  ngOnInit() {}
+  public isShowingMessages = false;
+
+  public hasValidator;
+
+  constructor( private change: ChangeDetectorRef ) {
+    super();
+  }
+
+  ngOnInit() {
+    this.overlayOrigin.emit( this.cdkOverlayOrigin );
+  }
+
+  ngAfterViewInit() {
+    this.setRequired();
+    this.handleValidator();
+  }
+
+  setRequired() {
+    const currentControl = this.controlName ? this.controlName : this.model;
+    if ( currentControl && currentControl.control.errors) {
+      if ( currentControl.control.errors[ 'required' ] ) {
+        this.required = true;
+        this.change.detectChanges();
+      }
+    }
+  }
+
+  handleValidator() {
+    const currentControl = this.controlName ? this.controlName : this.model;
+    if (currentControl) {
+      this.hasValidator = currentControl.control.validator;
+      this.change.detectChanges();
+    }
+  }
 
   setFocus() {
     this.textarea.nativeElement.focus();

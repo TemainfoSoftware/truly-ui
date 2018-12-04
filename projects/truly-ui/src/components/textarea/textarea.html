@@ -5,6 +5,13 @@
   <div class="ui-wrapper-textarea" [style.height]="height">
     <textarea #textarea
               class="field"
+              [ngClass]="{
+                 'invalid': controlName?.control.errors || model?.control.errors,
+                 'withValidators': hasValidator,
+                 'withoutValidators': !hasValidator,
+                 'withBorder': withBorder,
+                 'withBorder' : !withBorder
+               }"
               [style.height]="height"
               [style.text-align]="textAlign"
               [tabindex]="tabindex"
@@ -24,8 +31,17 @@
              [lib]="'ion'"
              [style]="'ios'"
              class="clearButton">close</tl-icon>
-    <div class="count-characters">
+    <div class="count-characters" *ngIf="showCount">
       {{ countLength }} characters
     </div>
   </div>
 </div>
+
+<ng-template cdkConnectedOverlay
+             *ngIf="showValidations"
+             [cdkConnectedOverlayHasBackdrop]="false"
+             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
+             [cdkConnectedOverlayOpen]="isShowingMessages">
+  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
+                        [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
+</ng-template>

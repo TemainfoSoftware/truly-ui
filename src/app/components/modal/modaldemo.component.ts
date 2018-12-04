@@ -6,7 +6,7 @@ import * as jsonEvt from './modal-dataevents.json';
 import * as jsonResult from './modal-dataresults.json';
 
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { ModalService } from '../../../../projects/truly-ui/src/components/modal/modal.service';
+import { ModalService } from '../../../../projects/truly-ui/src/components/modal/services/modal.service';
 
 @Component( {
   selector: 'app-modal',
@@ -33,13 +33,13 @@ export class ModalDemoComponent {
   }
 
   modal1() {
-    this.modalService.createModal( NewModalComponent, this.compiler, 'FORM1' )
+    this.modalService.createModal( NewModalComponent, this.compiler )
       .then( ( modalResult ) => {
         console.log( modalResult );
       });
 
-    this.modalService.on('show', ( event ) => {
+/*    this.modalService.on('show', ( event ) => {
       console.log('Show Modal', event);
-    });
+    });*/
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/modal-options';
+import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Modal({

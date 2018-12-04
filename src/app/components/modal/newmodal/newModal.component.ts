@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Modal } from '../../../../../projects/truly-ui/src/components/modal/modal-options';
+import { Modal } from '../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
 
 @Modal({
   title: 'New Modal',
@@ -9,7 +9,8 @@ import { Modal } from '../../../../../projects/truly-ui/src/components/modal/mod
   height: 'auto',
   color: 'success',
   maximizable: true,
-  minimizable: true
+  minimizable: true,
+  backdrop: false
 })
 @Component( {
   selector: 'app-new-modal',

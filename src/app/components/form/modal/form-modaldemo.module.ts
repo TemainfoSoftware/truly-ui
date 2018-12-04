@@ -29,6 +29,7 @@ import { DialogModule } from '../../../../../projects/truly-ui/src/components/di
 import { AutoCompleteModule } from '../../../../../projects/truly-ui/src/components/autocomplete/index';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
 import { FormModalComponent } from './form-modal/form-modal.component';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { FormModalComponent } from './form-modal/form-modal.component';
     MiscModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     FormModaldemoComponent,

@@ -32,6 +32,7 @@ import { EditorModule } from '../../../../projects/truly-ui/src/components/edito
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     EditorDemoComponent,

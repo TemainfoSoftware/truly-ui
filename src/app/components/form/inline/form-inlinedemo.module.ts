@@ -28,6 +28,7 @@ import { ShowcaseTablePropertiesModule } from '../../../shared/components/showca
 import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { MultiViewModule } from '../../../../../projects/truly-ui/src/components
     MultiViewModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     FormInlinedemoComponent,

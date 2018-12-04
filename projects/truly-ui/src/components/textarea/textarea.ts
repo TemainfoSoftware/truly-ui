@@ -43,7 +43,7 @@ export class TlTextarea implements OnInit {
 
   @Input() tabindex = 0;
 
-  @Input() maxlength: number = -1;
+  @Input() maxlength = -1;
 
   @Input() textAlign: 'left' | 'right' | 'center' | 'justify' = 'left';
 
@@ -65,7 +65,7 @@ export class TlTextarea implements OnInit {
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
-  public countLength: number = 0;
+  public countLength = 0;
 
   constructor() {}
 

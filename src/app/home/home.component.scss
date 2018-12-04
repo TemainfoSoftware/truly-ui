@@ -1,3 +1,8 @@
+strong{
+  font-weight: bold;
+}
+
+
 /*==========  Mobile First Method  ==========*/
 
 /* Custom, iPhone Retina */
@@ -120,6 +125,7 @@
         margin-top: 4px;
         margin-bottom: 5px;
         line-height: 1.1em;
+        font-size: 1.8em;
       }
       h3 i {
         padding-right: 5px;
@@ -140,11 +146,11 @@
     padding-bottom: 25px;
     h1 {
       color: #FFF;
-      margin-bottom: 25px;
     }
-    h3 {
+    h4 {
       color: #FFF;
       opacity: 0.6;
+      margin-top: 20px;
       margin-bottom: 25px;
     }
     .web-components-list {
@@ -402,14 +408,14 @@
   }
   .why-truly-ui {
     margin-top: 100px;
-    margin-bottom: 85px;
+    margin-bottom: 100px;
     .logo {
       img {
         width: 200px;
       }
     }
     .why-tl {
-      padding-bottom: 100px;
+     // padding-bottom: 100px;
       h1 {
         font-size: 36px;
         text-align: left;
@@ -432,10 +438,9 @@
     }
   }
   .web-components {
-    padding-top: 120px;
-    padding-bottom: 0;
+
     .web-components-header {
-      padding-bottom: 100px;
+      margin: 70px 0 100px 0;
       h1 {
         font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
         font-weight: normal;
@@ -443,10 +448,10 @@
         color: #fff;
       }
     }
-    .web-components-row {
-      padding-bottom: 100px;
+    .web-components-row{
+      margin: 80px 20px;
     }
-    .ui-box-features {
+     .ui-box-features {
       padding-left: 90px;
       padding-right: 10px;
     }

@@ -1,17 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Sidebar <span class="module-name"><code><u>Module Name</u>: <strong>SidebarModule</strong></code></span>
-    </h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>SidebarModule</strong></code></p>
-    <p class="text-content">A sidebar hides additional content beside a page.</p>
-  </div>
+  <app-showcase-header name="Sidebar" module="SidebarModule">
+    A sidebar hides additional content beside a page.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Push Usage</h5>
+              <h6>Push Usage</h6>
               <!--sidebar-->
               <div class="sidebar-demo">
                 <div class="buttons">
@@ -71,47 +68,56 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Slide Usage</h5>
-              <div class="buttons">
-                <div class="trigger" (click)="sidebarSlide.toggle()">Toggle Left</div>
-                <div class="trigger" (click)="sidebarRightSlide.toggle();">Toggle Right</div>
+              <h6>Slide Usage</h6>
+              <div class="row">
+                <div class="col-12">
+                  <div class="buttons">
+                    <div class="trigger" (click)="sidebarSlide.toggle()">Toggle Left</div>
+                    <div class="trigger" (click)="sidebarRightSlide.toggle();">Toggle Right</div>
+                  </div>
+                </div>
               </div>
-              <tl-sidebar-container>
-                <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'" >
-                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarSlide.docked}">
-                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
-                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
-                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarSlide.docked">Button</span></li>
-                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
-                  </ul>
-                </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
-                  <p class="content-text">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                    essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                    passages,
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of
-                    Lorem Ipsum.
-                  </p>
-                </tl-sidebar-content>
-                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarRightSlide>
-                  <tl-chatlist [itemsToShow]="4"
-                               [height]="225"
-                               [searchQuery]="'firstName'"
-                               [searchInput]="input"
-                               [avatar]="'avatar'"
-                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
-                               [data]="dataSource">
-                  </tl-chatlist>
-                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-                </tl-sidebar>
-              </tl-sidebar-container>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <div class="row">
+                <div class="col-12">
+                  <tl-sidebar-container>
+                    <tl-sidebar #sidebarSlide [position]="'start'" [mode]="'slide'" >
+                      <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarSlide.docked}">
+                        <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarSlide.docked">Home</span></li>
+                        <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarSlide.docked">Input</span></li>
+                        <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarSlide.docked">Button</span></li>
+                        <li><i class="ion-md-images"></i><span *ngIf="!sidebarSlide.docked">Panels</span></li>
+                      </ul>
+                    </tl-sidebar>
+                    <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                      <p class="content-text">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                        essentially unchanged.
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                        passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.
+                      </p>
+                    </tl-sidebar-content>
+                    <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarRightSlide>
+                      <tl-chatlist [itemsToShow]="4"
+                                   [height]="225"
+                                   [searchQuery]="'firstName'"
+                                   [searchInput]="input"
+                                   [avatar]="'avatar'"
+                                   [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                                   [data]="dataSource">
+                      </tl-chatlist>
+                      <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                    </tl-sidebar>
+                  </tl-sidebar-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <tl-sidebar-container>
   <tl-sidebar [position]="'start'" [mode]="'slide'">
     <!-- Sidebar Start Content -->
@@ -124,60 +130,72 @@
   </tl-sidebar>
 </tl-sidebar-container>
 </textarea>
+                </div>
+              </div>
+              <div class="spacer"></div>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Dock Usage</h5>
-              <div class="buttons">
-                <div class="trigger" (click)="sidebarDock.toggle()">Toggle Left</div>
-                <div class="trigger" (click)="sidebarDockRight.toggle();">Toggle Right</div>
+              <h6>Dock Usage</h6>
+              <div class="row">
+                <div class="col-12">
+                  <div class="buttons">
+                    <div class="trigger" (click)="sidebarDock.toggle()">Toggle Left</div>
+                    <div class="trigger" (click)="sidebarDockRight.toggle();">Toggle Right</div>
+                  </div>
+                </div>
               </div>
-              <tl-sidebar-container>
-                <tl-sidebar
-                  (open)="onOpen()"
-                  (close)="onClose()"
-                  (openedChange)="changeOpened($event)"
-                  [opened]="openedDemo"
-                  #sidebarDock
-                  [position]="'start'"
-                  [width]="200"
-                  [mode]="'slide'"
-                  [dock]="true">
-                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarDock.docked}">
-                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
-                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>
-                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarDock.docked">Button</span></li>
-                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
-                  </ul>
-                </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
-                  <p class="content-text">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                    essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                    passages,
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of
-                    Lorem Ipsum.
-                  </p>
-                </tl-sidebar-content>
-                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarDockRight>
-                  <tl-chatlist [itemsToShow]="4"
-                               [height]="225"
-                               [searchQuery]="'firstName'"
-                               [searchInput]="input"
-                               [avatar]="'avatar'"
-                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
-                               [data]="dataSource">
-                  </tl-chatlist>
-                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-                </tl-sidebar>
-              </tl-sidebar-container>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <div class="row">
+                <div class="col-12">
+                  <tl-sidebar-container>
+                    <tl-sidebar
+                      (open)="onOpen()"
+                      (close)="onClose()"
+                      (openedChange)="changeOpened($event)"
+                      [opened]="openedDemo"
+                      #sidebarDock
+                      [position]="'start'"
+                      [width]="200"
+                      [mode]="'slide'"
+                      [dock]="true">
+                      <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarDock.docked}">
+                        <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarDock.docked">Home</span></li>
+                        <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarDock.docked">Input</span></li>
+                        <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarDock.docked">Button</span></li>
+                        <li><i class="ion-md-images"></i><span *ngIf="!sidebarDock.docked">Panels</span></li>
+                      </ul>
+                    </tl-sidebar>
+                    <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                      <p class="content-text">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                        essentially unchanged.
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                        passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.
+                      </p>
+                    </tl-sidebar-content>
+                    <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarDockRight>
+                      <tl-chatlist [itemsToShow]="4"
+                                   [height]="225"
+                                   [searchQuery]="'firstName'"
+                                   [searchInput]="input"
+                                   [avatar]="'avatar'"
+                                   [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                                   [data]="dataSource">
+                      </tl-chatlist>
+                      <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                    </tl-sidebar>
+                  </tl-sidebar-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <div class="trigger left-right" (click)="sidebar.toggle()"></div>
 <tl-sidebar-container #sidebar>
   <tl-sidebar [position]="'start'" [mode]="'slide'" [dock]="true">
@@ -191,51 +209,62 @@
   </tl-sidebar>
 </tl-sidebar-container>
 </textarea>
+                </div>
+              </div>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Over Usage</h5>
-              <div class="buttons">
-                <div class="trigger" (click)="sidebarOver.toggle()">Toggle Left</div>
-                <div class="trigger" (click)="sidebarOverRight.toggle()">Toggle Right</div>
+              <h6>Over Usage</h6>
+              <div class="row">
+                <div class="col-12">
+                  <div class="buttons">
+                    <div class="trigger" (click)="sidebarOver.toggle()">Toggle Left</div>
+                    <div class="trigger" (click)="sidebarOverRight.toggle()">Toggle Right</div>
+                  </div>
+                </div>
               </div>
-              <tl-sidebar-container>
-                <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'">
-                  <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarOver.docked}">
-                    <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
-                    <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
-                    <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarOver.docked">Button</span></li>
-                    <li><i class="ion-md-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
-                  </ul>
-                </tl-sidebar>
-                <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
-                  <p class="content-text">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                    when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                    essentially unchanged.
-                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                    passages,
-                    and more recently with desktop publishing software like Aldus PageMaker including versions of
-                    Lorem Ipsum.
-                  </p>
-                </tl-sidebar-content>
-                <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarOverRight>
-                  <tl-chatlist [itemsToShow]="4"
-                               [height]="225"
-                               [searchQuery]="'firstName'"
-                               [searchInput]="input"
-                               [avatar]="'avatar'"
-                               [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
-                               [data]="dataSource">
-                  </tl-chatlist>
-                  <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-                </tl-sidebar>
-              </tl-sidebar-container>
-              <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <div class="row">
+                <div class="col-12">
+                  <tl-sidebar-container>
+                    <tl-sidebar #sidebarOver [position]="'start'" [mode]="'over'">
+                      <ul class="list-sidebar" [ngClass]="{'notDocket': !sidebarOver.docked}">
+                        <li><i class="ion-md-cafe"></i><span *ngIf="!sidebarOver.docked">Home</span></li>
+                        <li><i class="ion-md-ice-cream"></i><span *ngIf="!sidebarOver.docked">Input</span></li>
+                        <li><i class="ion-md-chatbubbles"></i><span *ngIf="!sidebarOver.docked">Button</span></li>
+                        <li><i class="ion-md-images"></i><span *ngIf="!sidebarOver.docked">Panels</span></li>
+                      </ul>
+                    </tl-sidebar>
+                    <tl-sidebar-content [height]="'300px'" #sidebarContent class="content-border">
+                      <p class="content-text">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining
+                        essentially unchanged.
+                        It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                        passages,
+                        and more recently with desktop publishing software like Aldus PageMaker including versions of
+                        Lorem Ipsum.
+                      </p>
+                    </tl-sidebar-content>
+                    <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarOverRight>
+                      <tl-chatlist [itemsToShow]="4"
+                                   [height]="225"
+                                   [searchQuery]="'firstName'"
+                                   [searchInput]="input"
+                                   [avatar]="'avatar'"
+                                   [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
+                                   [data]="dataSource">
+                      </tl-chatlist>
+                      <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
+                    </tl-sidebar>
+                  </tl-sidebar-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <tl-sidebar-container>
   <tl-sidebar [position]="'start'" [mode]="'over'" [dock]="true">
     <!--Sidebar Start Content-->
@@ -248,6 +277,8 @@
   </tl-sidebar>
 </tl-sidebar-container>
 </textarea>
+                </div>
+              </div>
             </div>
           </app-card>
         </app-showcase-card>

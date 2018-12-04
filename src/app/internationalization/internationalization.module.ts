@@ -6,6 +6,7 @@ import { ShowcaseCardModule } from '../shared/components/showcase-card/showcase-
 import { ShowcaseTableEventsModule } from '../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseTablePropertiesModule } from '../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { InternationalizationComponent } from './internationalization.component';
+import { ShowcaseHeaderModule } from '../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { InternationalizationComponent } from './internationalization.component'
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
+    ShowcaseHeaderModule,
     RouterModule.forChild( [
       { path: '', component: InternationalizationComponent }
     ] )

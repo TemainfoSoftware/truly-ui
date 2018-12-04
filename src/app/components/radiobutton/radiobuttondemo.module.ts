@@ -10,6 +10,7 @@ import {ShowcaseCardModule} from '../../shared/components/showcase-card/showcase
 import {ShowcaseTablePropertiesModule} from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import {ShowcaseTableEventsModule} from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     RadioButtonDemoComponent

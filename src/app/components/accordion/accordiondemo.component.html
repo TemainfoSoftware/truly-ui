@@ -1,18 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Accordion <span
-      class="module-name"><code><u>Module Name</u>: <strong>AccordionModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>AccordionModule</strong></code></p>
-    <p class="text-content">Displays collapsible content panels for presenting information in a limited amount of
-      space.</p>
-  </div>
+  <app-showcase-header name="Accordion" module="AccordionModule">
+    Displays collapsible content panels for presenting information in a limited amount of space.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic Usage</h5>
+              <h6>Basic Usage</h6>
               <tl-accordion [singleOpened]="true">
                 <tl-accordion-item [title]="'Title of the first content'">
                   <h4>Content 1</h4>
@@ -72,7 +68,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Nested Accordions</h5>
+              <h6>Nested Accordions</h6>
               <tl-accordion [singleOpened]="true">
                 <tl-accordion-item [opened]="true" [title]="'Title of the first content'">
                   <h4>Content 1</h4>

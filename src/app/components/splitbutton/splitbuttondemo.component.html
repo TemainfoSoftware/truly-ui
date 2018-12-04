@@ -1,15 +1,13 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">SplitButton <span class="module-name"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>SplitButtonModule</strong></code></p>
-    <p class="text-content">SplitButton is a button with a list of actions. See below</p>
-  </div>
+  <app-showcase-header name="SplitButton" module="SplitButtonModule">
+    SplitButton is a button with a list of actions. See below.
+  </app-showcase-header>
     <div class="row">
         <div class="col-md-12">
           <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
             <app-card>
               <div class="col-md-6">
-                <h5>Basic</h5>
+                <h6>Basic</h6>
                 <tl-split-button [text]="'Button'">
                   <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
@@ -25,7 +23,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>With Action Icons</h5>
+                <h6>With Action Icons</h6>
                 <tl-split-button [text]="'Button'">
                   <tl-split-button-action [label]="'Action 1'" [icon]="'fas fa-sync-alt'"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
@@ -43,7 +41,7 @@
             </app-card>
             <app-card>
               <div class="col-md-6">
-                <h5>With Action Separator</h5>
+                <h6>With Action Separator</h6>
                 <tl-split-button [text]="'Button'">
                   <tl-split-button-action [label]="'Action 1'" [separator]="true"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
@@ -61,7 +59,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-                <h5>With Click Event</h5>
+                <h6>With Click Event</h6>
                 <tl-split-button [text]="'Button'" (click)="callBackDemo($event)">
                   <tl-split-button-action [label]="'Action 1'" (click)="callBackDemo($event)"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'" (click)="callBackDemo($event)"></tl-split-button-action>
@@ -83,11 +81,11 @@
       </div>
   <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
-      <h5>tl-split-button</h5>
+      <h6>tl-split-button</h6>
       <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
     </app-card>
     <app-card>
-      <h5>tl-split-button-action</h5>
+      <h6>tl-split-button-action</h6>
       <app-showcase-table-properties [data]="dataTableProperties2"></app-showcase-table-properties>
     </app-card>
   </app-showcase-card>

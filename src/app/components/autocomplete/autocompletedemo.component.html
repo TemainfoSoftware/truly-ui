@@ -1,18 +1,15 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">AutoComplete <span class="module-name"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>AutoCompleteModule</strong></code></p>
-    <p class="text-content">The AutoComplete widgets provides suggestions while you type into the field. It can be filtered by a custom Key and supports many
-      features and events output.
-    </p>
-  </div>
+  <app-showcase-header name="AutoComplete" module="AutoCompleteModule">
+    The AutoComplete widgets provides suggestions while you type into the field. It can be filtered by a custom Key and supports many
+    features and events output.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Normal Usage</h5>
+              <h6>Normal Usage</h6>
               <tl-autocomplete [data]="dataBasic"
                                [modelValue]="'firstName'"
                                [labelSize]="'10px'"
@@ -48,7 +45,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>With Template</h5>
+              <h6>With Template</h6>
               <tl-autocomplete [data]="dataLazy"
                                [openFocus]="true"
                                [lazyMode]="true"

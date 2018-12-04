@@ -170,6 +170,7 @@ body {
   box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
   min-height: 50px;
   border-radius: 0;
+  padding: 0px;
 }
 .layout-top-nav .main-header .navbar {
   margin-left: 0;
@@ -226,6 +227,7 @@ body {
 }
 .main-header .sidebar-toggle:hover {
   color: #fff;
+  cursor: pointer;
 }
 .main-header .sidebar-toggle .icon-bar {
   color: #fff;
@@ -262,7 +264,7 @@ body {
 }
 .main-header .logo .logo-lg {
   display: block;
-  padding: 8px;
+  margin: 3px;
 }
 .main-header .logo .logo-mini {
   display: none;
@@ -475,7 +477,7 @@ body {
   padding: 0;
 }
 .sidebar-menu > li > a {
-  padding: 12px 0 12px 20px;
+  padding: 14px;
   display: block;
 }
 .sidebar-menu > li > a > tl-icon {
@@ -542,6 +544,7 @@ body {
   }
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
     margin-right: 0;
+    text-align: center;
   }
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span {
     border-top-right-radius: 4px;
@@ -595,8 +598,8 @@ body {
   position: relative !important;
   float: right;
   width: auto !important;
-  left: 180px !important;
-  top: -22px !important;
+  left: 194px !important;
+  top: -28px !important;
   z-index: 900;
 }
 .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu > li:hover > a > .pull-right-container > .label:not(:first-of-type) {

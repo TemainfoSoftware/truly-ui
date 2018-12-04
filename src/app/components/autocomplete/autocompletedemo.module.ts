@@ -43,6 +43,7 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
 import { DialogService } from '../../../../projects/truly-ui/src/components/dialog/dialog.service';
 import { PersonService } from './http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { HttpClientModule } from '@angular/common/http';
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     AutoCompleteDemoComponent,

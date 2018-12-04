@@ -1,27 +1,25 @@
 <div class="router-outlet">
-
-  <div class="header-title-demo">
-    <h1 class="title">Overview <span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
-    <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
-  </div>
+  <app-showcase-header name="Overview" module="DatatableModule">
+    The DataTable displays data in a tabular format and provides a full spectrum of configuration options.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <tl-datatable
-              [data]="data"
-              [allowResize]="true"
-              [allowFilterColumn]="true"
-              [mode]="'scrollable'"
-              [height]="357"
-              (rowSelect)="onRowSelect( $event )"
-              (sortData)="onSortData($event)"
-              (filterData)="onFilterData($event)"
-            ></tl-datatable>
-            <hr>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+            <div class="col-12">
+              <tl-datatable
+                [data]="data"
+                [allowResize]="true"
+                [allowFilterColumn]="true"
+                [mode]="'scrollable'"
+                [height]="357"
+                (rowSelect)="onRowSelect( $event )"
+                (sortData)="onSortData($event)"
+                (filterData)="onFilterData($event)"
+              ></tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-datatable
   [data]="data"
   [allowResize]="true"
@@ -32,6 +30,7 @@
   (filterData)="onFilterData($event)">
 </tl-datatable>
             </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>
@@ -40,28 +39,35 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Datatable Features'" [icon]="'far fa-lightbulb'">
           <app-card>
-            <h4>Row Models</h4>
-            <p>Lets you work with a small or large mass of data.</p>
-          </app-card>
-          <app-card>
-            <h4>Scrolling</h4>
-            <p>Allows horizontal and vertical scrolling in both Paginator and Scrollable mode.</p>
-          </app-card>
-          <app-card>
-            <h4>Column Manipulation</h4>
-            <p>Column Reordering & Resizing in all modes, normal, paginator and scrollable.</p>
-          </app-card>
-          <app-card>
-            <h4>Cliente or Server Processing </h4>
-            <p>Row Model Allow Client or Server side Pagination, Sorting & Filtration.</p>
-          </app-card>
-          <app-card>
-            <h4>Elastic Column</h4>
-            <p>Intelligent Column Width Algorithms which allow you to resize the table automatically.</p>
-          </app-card>
-          <app-card>
-            <h4>Perfomatic Navigation</h4>
-            <p>Allows you to navigate via the Keyboard( ArrowDown, ArrownUP, Home, End, etc).</p>
+            <div class="col-12">
+              <h5>Row Models</h5>
+              <p>Lets you work with a small or large mass of data.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Scrolling</h5>
+              <p>Allows horizontal and vertical scrolling in both Paginator and Scrollable mode.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Column Manipulation</h5>
+              <p>Column Reordering & Resizing in all modes, normal, paginator and scrollable.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Cliente or Server Processing </h5>
+              <p>Row Model Allow Client or Server side Pagination, Sorting & Filtration.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Elastic Column</h5>
+              <p>Intelligent Column Width Algorithms which allow you to resize the table automatically.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Perfomatic Navigation</h5>
+              <p>Allows you to navigate via the Keyboard( ArrowDown, ArrownUP, Home, End, etc).</p>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

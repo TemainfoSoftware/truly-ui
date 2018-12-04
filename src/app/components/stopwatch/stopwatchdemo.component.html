@@ -1,19 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Stopwatch<span
-      class="module-name"><code><u>Module Name</u>: <strong>StopwatchModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>StopwatchModule</strong></code></p>
-    <p class="text-content">
-      It is a digital countdown timer
-    </p>
-  </div>
+  <app-showcase-header name="Stopwatch" module="StopwatchModule">
+    It is a digital countdown timer.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-stopwatch [width]="'240px'" [height]="'45px'" [resetOnStop]="true" [initialTime]="'00:59:58'" (returnTime)="onStop($event)"></tl-stopwatch>
               <br>
               <button (click)="stopWatchService.start()" class="btn-demo">Start</button>

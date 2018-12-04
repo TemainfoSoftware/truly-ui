@@ -1,0 +1,36 @@
+.header-title-demo {
+  padding: 20px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background: #fff;
+  margin-bottom: 20px;
+}
+
+
+@media only screen and (min-width: 320px) {
+  h1 {
+    position: relative;
+  }
+  .module-name {
+    display: none;
+  }
+  .module-name-top{
+    display: block;
+    font-size: 15px;
+  }
+}
+
+@media only screen and (min-width: 558px) {
+  .module-name {
+    position: absolute;
+    font-size: 15px;
+    margin-left: 10px;
+    display: inline-block;
+    line-height: 39px;
+    top: 0;
+  }
+  .module-name-top{
+    display: none;
+  }
+}

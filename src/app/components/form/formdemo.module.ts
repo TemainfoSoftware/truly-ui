@@ -14,7 +14,6 @@ import { FormModule } from '../../../../projects/truly-ui/src/components/form';
 import { InputModule } from '../../../../projects/truly-ui/src/components/input';
 import { MiscModule } from '../../../../projects/truly-ui/src/components/misc';
 import { ModalToolbarModule } from '../../../../projects/truly-ui/src/components/modal/addons/modal-toolbar';
-import { MultiSelectModule } from '../../../../projects/truly-ui/src/components/multiselect';
 import { PanelGroupModule } from '../../../../projects/truly-ui/src/components/panelgroup';
 import { RadioButtonModule } from '../../../../projects/truly-ui/src/components/radiobutton';
 import { TabControlModule } from '../../../../projects/truly-ui/src/components/tabcontrol';
@@ -29,8 +28,8 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { HighlightModule } from 'ngx-highlightjs';
 import { MultiViewModule } from '../../../../projects/truly-ui/src/components/multiview/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { MultiViewModule } from '../../../../projects/truly-ui/src/components/mu
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
-    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,
@@ -62,7 +60,8 @@ import { MultiViewModule } from '../../../../projects/truly-ui/src/components/mu
     MiscModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     FormDemoComponent,

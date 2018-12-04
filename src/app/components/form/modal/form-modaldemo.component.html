@@ -1,34 +1,33 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Modal Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span>
-    </h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
-    <p class="text-content">The form component uses Modal, the difference between them is tabbing, and the default
-      buttons that act as a submit form.</p>
-    <p class="text-content">The way of the form appears (fullscreen) on window is relative with the parent HTML
-      element.</p>
-  </div>
+  <app-showcase-header name="Modal Form " module="FormModule">
+    The form component uses Modal, the difference between them is tabbing, and the default
+    buttons that act as a submit form.<br><br>
+    The way of the form appears (fullscreen) on window is relative with the parent HTML element.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <tl-button [text]="'Open Modal Form'" (click)="openModalForm()"></tl-button>
+            <div class="col-12">
+              <tl-button [text]="'Open Modal Form'" (click)="openModalForm()"></tl-button>
+            </div>
           </app-card>
           <app-card>
-            <div class="box-component-viewer">
-              <div class="header">
-                <ul>
-                  <li [ngClass]="{ selected: reactive === 'HTML' }" (click)="reactive = 'HTML'">
-                    newperson.component.html
-                  </li>
-                  <li [ngClass]="{ selected: reactive === 'TYPESCRIPT' }" (click)="reactive = 'TYPESCRIPT'">
-                    newperson.component.ts
-                  </li>
-                </ul>
-              </div>
-              <tl-multiview [modelValue]="reactive" (selectedChange)="reactive = $event" [backdroungColor]="'#282C34'">
-                <tl-view [value]="'HTML'">
+           <div class="col-12">
+             <div class="box-component-viewer">
+               <div class="header">
+                 <ul>
+                   <li [ngClass]="{ selected: reactive === 'HTML' }" (click)="reactive = 'HTML'">
+                     newperson.component.html
+                   </li>
+                   <li [ngClass]="{ selected: reactive === 'TYPESCRIPT' }" (click)="reactive = 'TYPESCRIPT'">
+                     newperson.component.ts
+                   </li>
+                 </ul>
+               </div>
+               <tl-multiview [modelValue]="reactive" (selectedChange)="reactive = $event" [backdroungColor]="'#282C34'">
+                 <tl-view [value]="'HTML'">
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-form [mode]="'modal'" [formGroup]="form">
 
@@ -58,8 +57,8 @@
 </tl-form>
 
                   </textarea>
-                </tl-view>
-                <tl-view [value]="'TYPESCRIPT'">
+                 </tl-view>
+                 <tl-view [value]="'TYPESCRIPT'">
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Modal } from 'truly-ui';
@@ -101,9 +100,10 @@ export class NewPersonComponent {
   }
 }
                   </textarea>
-                </tl-view>
-              </tl-multiview>
-            </div>
+                 </tl-view>
+               </tl-multiview>
+             </div>
+           </div>
           </app-card>
         </app-showcase-card>
       </div>
@@ -112,11 +112,12 @@ export class NewPersonComponent {
       <div class="col-md-12">
         <app-showcase-card [title]="'Making it work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
-            <h4>The First Step</h4>
-            <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+            <div class="col-12">
+              <h4>The First Step</h4>
+              <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <!--app.component.html-->
-<!-- Content Wrapper. Contains page content -->
+                <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" tlContainerModal>
     <!-- Main content -->
     <section class="content">
@@ -124,10 +125,10 @@ export class NewPersonComponent {
     </section>
     <!-- /.content -->
   </div>
-<!-- /.content-wrapper -->
+                <!-- /.content-wrapper -->
             </textarea>
-            <h5>App Module</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <h6>App Module</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { CoreModule, ContainerModalModule } from 'truly-ui';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -152,14 +153,16 @@ import { NgModule } from '@angular/core';
 })
 export class AppModule { }
             </textarea>
+            </div>
           </app-card>
           <app-card>
-            <h4>Imports and Declarations</h4>
-            <p>Import <code>ModalModule</code> and <code>ModalService</code> in module of the component that going to
-              call the modal method. (In this case is FormModalDemoComponent).
-              Declare as provider the <code>ModalService</code> in the Module</p>
-            <p>Note that <code>NewPersonComponent</code> was declared as <code>entryComponent</code> as well.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Imports and Declarations</h4>
+              <p>Import <code>ModalModule</code> and <code>ModalService</code> in module of the component that going to
+                call the modal method. (In this case is FormModalDemoComponent).
+                Declare as provider the <code>ModalService</code> in the Module</p>
+              <p>Note that <code>NewPersonComponent</code> was declared as <code>entryComponent</code> as well.</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { ModalService, ModalModule } from 'truly-ui';
 
 @NgModule({
@@ -178,12 +181,14 @@ import { ModalService, ModalModule } from 'truly-ui';
 })
 export class FormModalDemoModule {}
             </textarea>
+            </div>
           </app-card>
           <app-card>
-            <h4>The Component Injected</h4>
-            <p>After import, the component injected should be specified as Modal, for that, we use the annotations
-              <code>@Modal</code> of Truly-UI like bellow.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>The Component Injected</h4>
+              <p>After import, the component injected should be specified as Modal, for that, we use the annotations
+                <code>@Modal</code> of Truly-UI like bellow.</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
             import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Modal } from 'truly';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
@@ -224,16 +229,20 @@ export class NewPersonComponent {
   }
 }
             </textarea>
+            </div>
           </app-card>
           <app-card>
-            <h4>Modal Annotation (@Modal) </h4>
-            <app-showcase-table-properties [data]="dataModalOptions"></app-showcase-table-properties>
+           <div class="col-12">
+             <h4>Modal Annotation (@Modal) </h4>
+             <app-showcase-table-properties [data]="dataModalOptions"></app-showcase-table-properties>
+           </div>
           </app-card>
           <app-card>
-            <h4>Creating the Modal Form</h4>
-            <p>Firstly, you must inject the <code>ComponentFactoryResolver</code> class and the
-              <code>ModalService</code>. Create an method that calls the createModal method, as described bellow</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Creating the Modal Form</h4>
+              <p>Firstly, you must inject the <code>ComponentFactoryResolver</code> class and the
+                <code>ModalService</code>. Create an method that calls the createModal method, as described bellow</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { ModalService } from 'truly-ui';
 import { NewPersonComponent } from './newperson/newperson.component';
@@ -256,21 +265,24 @@ export class FormModaldemoComponent {
   }
 }
             </textarea>
+            </div>
           </app-card>
           <app-card>
-            <h4>The Method Create</h4>
-            <p>The method <code>createModal</code> of ModalService returns a Promisse, that can be be used to get the
-              values of modal form, such as modal result and form values.</p>
-            <p>The First Parameter is the component that going to be injected in the modal, in this case is <code>NewPersonComponent</code>
-            </p>
-            <p>The Second Parameter is going to be the factory (<code>ComponentFactoryResolver</code>) that got injected
-              in constructor</p>
-            <textarea highlight-js [options]="{'tabReplace' : ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>The Method Create</h4>
+              <p>The method <code>createModal</code> of ModalService returns a Promisse, that can be be used to get the
+                values of modal form, such as modal result and form values.</p>
+              <p>The First Parameter is the component that going to be injected in the modal, in this case is <code>NewPersonComponent</code>
+              </p>
+              <p>The Second Parameter is going to be the factory (<code>ComponentFactoryResolver</code>) that got injected
+                in constructor</p>
+              <textarea highlight-js [options]="{'tabReplace' : ''}" [lang]="'typescript'">
                            <!--The Component Created-->
 this.modalService.createModal(NewPersonComponent, this.factory).then((result) => {
   console.log('Result', result);
 })
             </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

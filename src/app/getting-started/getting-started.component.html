@@ -1,30 +1,33 @@
 <div class="container-fluid" style="padding: 20px">
-  <div class="header-title-demo">
-    <h1 class="title">Getting Started</h1>
-    <p class="text-content">We'll cover the basics and get you started from the ground up.</p>
-  </div>
+  <app-showcase-header name="Getting Started">
+    We'll cover the basics and get you started from the ground up.
+  </app-showcase-header>
     <app-showcase-card [title]="'Prerequisites'" [icon]="'fas fa-file-alt'">
       <app-card>
-        <h3>Prerequisites</h3>
-        <hr>
-        <span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>
-        <ul>
-          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>
-          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>
-          <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>
-        </ul>
+        <div class="col-12">
+          <h3>Prerequisites</h3>
+          <hr>
+          <span class="description">We assume that you have already installed the following packages at least and are already running an AngularIO project.</span>
+          <ul>
+            <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://nodejs.org">NodeJS >= 8.0.0</a></li>
+            <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://cli.angular.io">Angular Cli >= 6.0.0</a></li>
+            <li><a class="tl-scheme-primary -paint-link -paint-icon" href="https://angular.io">Angular >= 6.0.0</a></li>
+          </ul>
+        </div>
       </app-card>
+
       <app-card>
-        <h3>Installation</h3>
-        <hr>
-        <span class="description">1. Having NPM installation run the following command on your terminal to install it:</span>
-        <div class="code-area">
+        <div class="col-12">
+          <h3>Installation</h3>
+          <hr>
+          <span class="description">1. Having NPM installation run the following command on your terminal to install it:</span>
+          <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
   $ npm install truly-ui --save
   </textarea>
-          <span class="description">2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
-          <p>Inside the <code>angular.json</code> file add the following paths to the <code>styles</code> key</p>
-          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <span class="description">2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
+            <p>Inside the <code>angular.json</code> file add the following paths to the <code>styles</code> key</p>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 "styles": [
   "node_modules/@angular/cdk/overlay-prebuilt.css",
   "node_modules/truly-ui/css/icons/dx-icons/css/icons.scss",
@@ -33,8 +36,8 @@
   "node_modules/truly-ui/css/icons/animations.scss"
 ]
       </textarea>
-          <span class="description">3. Configure CoreModule on your <code>AppModule</code>:</span>
-          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <span class="description">3. Configure CoreModule on your <code>AppModule</code>:</span>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
       import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -56,11 +59,11 @@ import { CoreModule } from 'truly-ui'; //CoreModule
 })
 export class AppModule { }
       </textarea>
-          <hr>
-          <h3>Usage</h3>
-          <hr>
-          <span class="description">Import the TrulyUI module in your AppModule.</span>
-          <div class="code-area">
+            <hr>
+            <h3>Usage</h3>
+            <hr>
+            <span class="description">Import the TrulyUI module in your AppModule.</span>
+            <div class="code-area">
       <textarea highlight-js [options]="{'tabReplace': ''}" lang="'typescript'">
       import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -85,11 +88,11 @@ import { InputModule, ButtonModule } from 'truly-ui'; //Import Modules
 })
 export class AppModule { }
     </textarea>
+            </div>
           </div>
-        </div>
-        <span class="description">Once your library is imported, you can use its components, directives and pipes in your Angular application:</span>
-        <div class="code-area">
-    <textarea highlight-js [options]="{'tabReplace': ''}" lang="'html'">
+          <span class="description">Once your library is imported, you can use its components, directives and pipes in your Angular application:</span>
+          <div class="code-area">
+         <textarea highlight-js [options]="{'tabReplace': ''}" lang="'html'">
       <!-- You can now use your library component in app.component.html or other component what you want -->
    <tl-input
      ngModel="Many Properties"
@@ -100,6 +103,7 @@ export class AppModule { }
      [autocomplete]="'off'">
     </tl-input>
     </textarea>
+          </div>
         </div>
       </app-card>
     </app-showcase-card>

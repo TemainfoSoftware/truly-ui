@@ -1,64 +1,62 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Overview Form <span class="module-name"><code><u>Module Name</u>: <strong>FormModule</strong></code></span>
-    </h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>FormModule</strong></code></p>
-    <p class="text-content"> The HTML form element represents a document section that contains interactive controls for submitting information to a web server.
+  <app-showcase-header name="Overview Form " module="FormModule">
+    The HTML form element represents a document section that contains interactive controls for submitting information to a web server.
     So the truly-ui form approached is the same, but using the power of angular forms.
-    </p>
-  </div>
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <tl-form #form (submitForm)="onSubmitForm($event)"
-                     [mode]="'inline'"
-                     [textConfirm]="'Login'"
-                     [showConfirmOnChange]="true"
-                     [messageDialogConfirmation]="'Are you sure ?'">
-              <tl-tabcontrol>
-                <tl-tab [title]="'Login'">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <tl-input [name]="'name'" minlength="3" [showValidations]="true" required [labelSize]="100"
-                                  [ngModel]="person?.name" [label]="'User'"></tl-input>
+            <div class="col-12">
+              <tl-form #form (submitForm)="onSubmitForm($event)"
+                       [mode]="'inline'"
+                       [textConfirm]="'Login'"
+                       [showConfirmOnChange]="true"
+                       [messageDialogConfirmation]="'Are you sure ?'">
+                <tl-tabcontrol>
+                  <tl-tab [title]="'Login'">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <tl-input [name]="'name'" minlength="3" [showValidations]="true" required [labelSize]="100"
+                                    [ngModel]="person?.name" [label]="'User'"></tl-input>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <tl-input name="password" password [showValidations]="true" required [labelSize]="100"
-                                  [ngModel]="person?.password" [label]="'Password'"></tl-input>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <tl-input name="password" password [showValidations]="true" required [labelSize]="100"
+                                    [ngModel]="person?.password" [label]="'Password'"></tl-input>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-2 pull-right">
-                      <div class="form-group">
-                        <tl-checkbox name="remember"
-                                     [ngModel]="person?.remember" [label]="'Remember Password'"></tl-checkbox>
+                    <div class="row">
+                      <div class="col-md-2 pull-right">
+                        <div class="form-group">
+                          <tl-checkbox name="remember"
+                                       [ngModel]="person?.remember" [label]="'Remember Password'"></tl-checkbox>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </tl-tab>
-                <div class="spacer"></div>
-                <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.valid"
-                           [text]="'Login'"></tl-button>
-              </tl-tabcontrol>
-            </tl-form>
-            <div highlight="all" *ngIf="formInline">
-              <pre><code [textContent]="formInline | json"></code></pre>
+                  </tl-tab>
+                  <div class="spacer"></div>
+                  <tl-button class="pull-right" [color]="'success'" formSubmit [disabled]="!form.valid"
+                             [text]="'Login'"></tl-button>
+                </tl-tabcontrol>
+              </tl-form>
+              <div highlight="all" *ngIf="formInline">
+                <pre><code [textContent]="formInline | json"></code></pre>
+              </div>
+              <!--<div class="col-md-12 parentElementContainer" *ngIf="formInline">
+                <pre class="result">
+                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+                      {{formInline | json}}
+                   </textarea>
+                </pre>
+              </div>-->
             </div>
-            <!--<div class="col-md-12 parentElementContainer" *ngIf="formInline">
-              <pre class="result">
-                 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-                    {{formInline | json}}
-                 </textarea>
-              </pre>
-            </div>-->
           </app-card>
         </app-showcase-card>
       </div>
@@ -67,38 +65,46 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Form Features'" [icon]="'far fa-lightbulb'">
           <app-card>
-            <h4>Intelligence Tabbing</h4>
-            <p>The Form identifies all components that CAN receive focus and create a map for tabbing, even the
-              components
-              are with the <code>[tabindex]</code> set, the form will respect the <code>tabindex</code> of the component
-              and
-              will organize the others components based on user's component config.</p>
-          </app-card>
-          <app-card>
-            <h4>Angular Reactive Forms Compatibility</h4>
-            <p>The Truly-ui form is compatible with reactive forms of angular, using the same directives used on native elements. see more of reactive forms:
-              <a target="_blank" href="https://angular.io/guide/reactive-forms" style="color: #adadad;">https://angular.io/guide/reactive-forms</a></p>
-          </app-card>
-          <app-card>
-            <h4>Smart Form (CRUD)</h4>
-            <p>The expression "Smart Form" is basically the same modal approach, what changes and ends up
-              becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
-              and manages to create a form with these actions defined and tasked to execute upon completion.</p>
-          </app-card>
-          <app-card>
-            <h4>Form Validation</h4>
-            <p>The Form validations works together with the Angular Validations, can be used as <code>Template Driven</code> or<code>Reactive Forms</code>
-          </app-card>
-          <app-card>
-            <h4>Keyboard Navigation</h4>
-            <p>The Form allow users to control tabbing by key <code>Enter</code>, <code>ArrowUp</code> and
-              <code>ArrowDown</code> to navigation through components.</p>
-          </app-card>
-          <app-card>
-            <h4>Form Result (Template Driven)</h4>
-            <p>The Form Result is a JSON of values of all components with <code>[ngModel]</code> in the form. The form
-              gets
-              these values and return to the origin component.</p>
+            <div class="col-12">
+              <h5>Intelligence Tabbing</h5>
+              <p>The Form identifies all components that CAN receive focus and create a map for tabbing, even the
+                components
+                are with the <code>[tabindex]</code> set, the form will respect the <code>tabindex</code> of the component
+                and
+                will organize the others components based on user's component config.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Angular Reactive Forms Compatibility</h5>
+              <p>The Truly-ui form is compatible with reactive forms of angular, using the same directives used on native elements. see more of reactive forms:
+                <a target="_blank" href="https://angular.io/guide/reactive-forms" style="color: #adadad;">https://angular.io/guide/reactive-forms</a>
+              </p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Smart Form (CRUD)</h5>
+              <p>The expression "Smart Form" is basically the same modal approach, what changes and ends up
+                becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
+                and manages to create a form with these actions defined and tasked to execute upon completion.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Form Validation</h5>
+              <p>The Form validations works together with the Angular Validations, can be used as <code>Template Driven</code> or<code>Reactive Forms</code>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Keyboard Navigation</h5>
+              <p>The Form allow users to control tabbing by key <code>Enter</code>, <code>ArrowUp</code> and
+                <code>ArrowDown</code> to navigation through components.</p>
+              <hr>
+            </div>
+            <div class="col-12">
+              <h5>Form Result (Template Driven)</h5>
+              <p>The Form Result is a JSON of values of all components with <code>[ngModel]</code> in the form. The form
+                gets
+                these values and return to the origin component.</p>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

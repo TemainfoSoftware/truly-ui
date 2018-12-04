@@ -3,7 +3,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-import { HighlightModule } from 'ngx-highlightjs';
 
 import { FormInlinedemoComponent } from './form-inlinedemo.component';
 import { FormInlineDemoRoutingModule } from './form-inlinedemo-routing.module';
@@ -29,6 +28,7 @@ import { ShowcaseTablePropertiesModule } from '../../../shared/components/showca
 import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,6 @@ import { MultiViewModule } from '../../../../../projects/truly-ui/src/components
     ButtonModule,
     RadioButtonModule,
     DatatableModule,
-    HighlightModule.forRoot(),
     DropDownListModule,
     InputModule,
     ValidatorsModule,
@@ -61,7 +60,8 @@ import { MultiViewModule } from '../../../../../projects/truly-ui/src/components
     MultiViewModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     FormInlinedemoComponent,

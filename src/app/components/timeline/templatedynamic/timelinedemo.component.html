@@ -1,19 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Template Dynamic<span
-      class="module-name"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></p>
-    <p class="text-content">
-      You can use the Timeline in several ways including Template Dynamic.
-    </p>
-  </div>
+  <app-showcase-header name="Template Dynamic" module="TimelineModule">
+    You can use the Timeline in several ways including Template Dynamic.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Template Dynamic</h5>
+              <h6>Template Dynamic</h6>
               <tl-timeline
                 [data]="dataAdvanced"
                 [height]="'400px'">

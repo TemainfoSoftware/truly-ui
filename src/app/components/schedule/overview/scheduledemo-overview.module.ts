@@ -9,6 +9,7 @@ import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-t
 import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ScheduleDemoOverviewRoutingModule } from './scheduledemo-overview-routing.module';
 import { ScheduleDemoOverviewComponent } from './scheduledemo-overview.component';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { ScheduleDemoOverviewComponent } from './scheduledemo-overview.component
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   declarations: [
     ScheduleDemoOverviewComponent

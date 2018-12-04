@@ -1,16 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Calendar <span class="module-name"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>CalendarModule</strong></code></p>
-    <p class="text-content">The Calendar is a form component that represents a graphical Gregorian calendar..</p>
-  </div>
+  <app-showcase-header name="Calendar" module="CalendarModule">
+    The Calendar is a form component that represents a graphical Gregorian calendar.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
             <app-card>
               <div class="col-md-6">
-                <h5>Basic</h5>
+                <h6>Basic</h6>
                 <tl-calendar></tl-calendar>
                 <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -18,7 +16,7 @@
 </textarea>
               </div>
               <div class="col-md-6">
-              <h5>Without Today Button</h5>
+              <h6>Without Today Button</h6>
               <tl-calendar (selectDay)="onSelect($event)" [todayButton]="false"></tl-calendar>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

@@ -7,6 +7,7 @@ import { ShowcaseTableEventsModule } from '../shared/components/showcase-table-e
 import { ShowcaseTablePropertiesModule } from '../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { PaletteComponent, PaletteColorTagComponent } from './components/palette/palette.component';
 import { ThemingComponent } from './theming.component';
+import { ShowcaseHeaderModule } from '../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { ThemingComponent } from './theming.component';
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
+    ShowcaseHeaderModule,
     RouterModule.forChild( [
       { path: '', component: ThemingComponent }
     ] )

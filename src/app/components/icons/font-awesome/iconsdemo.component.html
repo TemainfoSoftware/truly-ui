@@ -1,19 +1,13 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Icons | Font Awesome<span
-      class="module-name"><code><u>Module Name</u>: <strong>IconsModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>IconsModule</strong></code></p>
-    <p class="text-content">
-      The Truly-UI Icons unites the main packages of icons available on the web: DXIcons, Font-Awesome, Ionicons.
-    </p>
-  </div>
+  <app-showcase-header name="Icons | Font Awesome" module="IconsModule">
+    The Truly-UI Icons unites the main packages of icons available on the web: DXIcons, Font-Awesome, Ionicons.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <div class="row">
-              <div class="col-md-6 col-md-offset-3">
+              <div class="col-md-6 offset-md-3">
                 <tl-input
                   [placeholder]="'Search Icon'"
                   [clearButton]="true"
@@ -24,9 +18,8 @@
               <div class="col-md-3">
                 <tl-switch [label]="'Show Cheatsheet'" [color]="'primary'" [checked]="cheatsheet" (toggle)="toggleCheatsheet()"></tl-switch>
               </div>
-            </div>
             <div class="col-md-12">
-              <h5>Solid Style</h5>
+              <h6>Solid Style</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(solidIcons)">
                   <div class="shadow-hover"
@@ -49,7 +42,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Regular Style</h5>
+              <h6>Regular Style</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(redularIcons)">
                   <div class="shadow-hover"
@@ -72,7 +65,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Brands</h5>
+              <h6>Brands</h6>
               <ul class="row">
                 <li class="col-md-2" *ngFor="let icon of filterIcon(brandsIcons)">
                   <div class="shadow-hover"

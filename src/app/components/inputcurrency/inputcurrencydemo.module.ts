@@ -11,6 +11,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { InputModule } from '../../../../projects/truly-ui/src/components/input/index';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
     ShowcaseReturnedValueModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     InputCurrencyDemoComponent

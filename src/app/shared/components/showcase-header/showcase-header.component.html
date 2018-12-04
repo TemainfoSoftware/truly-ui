@@ -1,0 +1,12 @@
+<div class="header-title-demo">
+  <h1 class="title">{{name}}
+    <span *ngIf="module" class="module-name">
+      <code><u>Module Name</u>: <strong>{{module}}</strong></code>
+    </span>
+  </h1>
+  <p *ngIf="module" class="module-name-top"><code><u>Module Name</u>: <strong>{{module}}</strong></code></p>
+  <p class="text-content">
+    <ng-content></ng-content>
+  </p>
+</div>
+

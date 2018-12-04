@@ -1,16 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">CheckBox <span class="module-name"><code><u>Module Name</u>: <strong>CheckBoxModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>CheckBoxModule</strong></code></p>
-    <p class="text-content">The CheckBox component allows the user to select many options.</p>
-  </div>
+  <app-showcase-header name="CheckBox" module="CheckBoxModule">
+    The CheckBox component allows the user to select many options.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-checkbox [label]="'Option 1'"></tl-checkbox>
               <tl-checkbox [label]="'Option 2'"></tl-checkbox>
               <tl-checkbox [label]="'Option 3'"></tl-checkbox>
@@ -22,7 +20,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Pre Selected Value</h5>
+              <h6>Pre Selected Value</h6>
               <tl-checkbox [label]="'Option 1'"></tl-checkbox>
               <tl-checkbox [checked]="true" [label]="'Option 2'"></tl-checkbox>
               <tl-checkbox [label]="'Option 3'"></tl-checkbox>
@@ -36,7 +34,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Custom Color Checkbox</h5>
+              <h6>Custom Color Checkbox</h6>
               <tl-checkbox [label]="'Option 1'" [color]="'basic'" [checked]="true" ></tl-checkbox>
               <tl-checkbox [label]="'Option 2'" [color]="'primary'" [checked]="true"></tl-checkbox>
               <tl-checkbox [label]="'Option 3'" [color]="'warning'" [checked]="true"></tl-checkbox>

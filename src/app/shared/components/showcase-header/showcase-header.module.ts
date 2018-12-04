@@ -19,40 +19,21 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { CommonModule } from '@angular/common';
+import { CommonModule  } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-
-import { HighlightJsModule } from 'ngx-highlight-js';
-
-import { EditorDemoRoutingModule } from './editordemo-routing.module';
-import { EditorDemoComponent } from './editordemo.component';
-import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
-import { EditorModule } from '../../../../projects/truly-ui/src/components/editor/index';
-import { ShowcaseCardModule } from '../../shared/components/showcase-card/showcase-card.module';
-import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
-import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
-import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
-
+import { ShowcaseHeaderComponent } from './showcase-header.component';
 
 @NgModule({
   declarations: [
-    EditorDemoComponent
+    ShowcaseHeaderComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    HighlightJsModule,
-    EditorModule,
-    EditorDemoRoutingModule,
-    ShowcaseTablePropertiesModule,
-    ShowcaseCardModule,
-    ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule,
-    ShowcaseHeaderModule
   ],
   exports: [
-    EditorDemoComponent,
-  ],
+    ShowcaseHeaderComponent
+  ]
 })
-export class EditorDemoModule { }
+export class ShowcaseHeaderModule {}

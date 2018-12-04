@@ -1,19 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Badge <span
-      class="module-name"><code><u>Module Name</u>: <strong>BadgeModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>BadgeModule</strong></code></p>
-    <p class="text-content">
-      Badge normally appears in proximity to notifications or user avatars with eye-catching appeal, typically displaying unread messages count.
-    </p>
-  </div>
+  <app-showcase-header name="Badge" module="BadgeModule">
+    Badge normally appears in proximity to notifications or user avatars with eye-catching appeal, typically displaying unread messages count.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <div class="badge-wrapper">
                 <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
               </div>
@@ -24,7 +19,7 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Standalone</h5>
+              <h6>Standalone</h6>
               <div class="badge-wrapper-stand">
                 <tl-badge [count]="25" [color]="'danger'"></tl-badge>
               </div>
@@ -45,7 +40,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Overflow Count</h5>
+              <h6>Overflow Count</h6>
               <div class="badge-wrapper">
                 <tl-badge [count]="99" [color]="'danger'"><span class="head-example"></span></tl-badge>
               </div>
@@ -70,7 +65,7 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Dynamic</h5>
+              <h6>Dynamic</h6>
               <div class="badge-wrapper">
                 <tl-badge [count]="count" [color]="'danger'"><span class="head-example"></span></tl-badge>
               </div>
@@ -95,7 +90,7 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h5>Status Color</h5>
+              <h6>Status Color</h6>
               <div class="badge-wrapper">
                 <tl-badge [onlyDot]="true" [color]="'basic'"></tl-badge>
               </div>
@@ -163,7 +158,7 @@
               </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Clickable</h5>
+              <h6>Clickable</h6>
               <tl-badge [count]="5" [color]="'danger'"><span class="head-example"></span></tl-badge>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

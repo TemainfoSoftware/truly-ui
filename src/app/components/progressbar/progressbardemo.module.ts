@@ -32,6 +32,7 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
 import { ProgressBarComponent } from './progressbardemo.component';
 import { ProgressBarDemoRoutingModule } from './progressbardemo-routing.module';
 import { ProgressBarModule } from '../../../../projects/truly-ui/src/components/progressbar/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ProgressBarModule } from '../../../../projects/truly-ui/src/components/
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     ProgressBarComponent,

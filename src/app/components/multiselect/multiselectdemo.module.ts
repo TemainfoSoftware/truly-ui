@@ -11,6 +11,7 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { FormModule } from '../../../../projects/truly-ui/src/components/form/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormModule } from '../../../../projects/truly-ui/src/components/form/in
     ShowcaseTablePropertiesModule,
     HighlightJsModule,
     MultiSelectDemoRoutingModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     MultiSelectDemoComponent

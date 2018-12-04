@@ -14,6 +14,7 @@ import { SwitchModule } from '../../../../projects/truly-ui/src/components/switc
 import { ButtonModule } from '../../../../projects/truly-ui/src/components/button';
 import { ButtonGroupModule } from '../../../../projects/truly-ui/src/components/buttongroup';
 import { IconsModule } from '../../../../projects/truly-ui/src/components/icons';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { IconsModule } from '../../../../projects/truly-ui/src/components/icons'
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     BadgeDemoComponent

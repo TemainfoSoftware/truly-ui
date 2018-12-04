@@ -11,6 +11,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 import { DropDownIconModule } from '../../../../projects/truly-ui/src/components/dropdownicon/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { DropDownIconModule } from '../../../../projects/truly-ui/src/components
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   declarations: [
     DropDownIconDemoComponent

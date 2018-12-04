@@ -1,15 +1,15 @@
 <div class="container-fluid" style="padding: 20px">
-  <div class="header-title-demo">
-    <h1 class="title">Internationalization</h1>
-    <p class="text-content">The default language of Truly-UI is English(<code>en_US</code>) as of yet. If you want to use other languages, you can follow the instructions below.</p>
-  </div>
+  <app-showcase-header name="Internationalization">
+    The default language of Truly-UI is English(<code>en_US</code>) as of yet. If you want to use other languages, you can follow the instructions below.
+  </app-showcase-header>
   <app-showcase-card [title]="'Configuration'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
+      <div class="col-12">
+        <span class="description">
         Truly-UI provides a way to set the language of the components in the main module, so all Truly components will
         be translated into the configured language. To configure, simply pass the <code>language</code> key to the <code>CoreModule.forRoot()</code>
       </span>
-      <div class="code-area">
+        <div class="code-area">
         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
       import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -36,56 +36,61 @@ import { CoreModule, pt_BR } from 'truly-ui'; //CoreModule
 export class AppModule { }
       </textarea>
         </div>
+      </div>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Changing Language at Runtime'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <span class="description">
-        The Truly-UI Internationalization API also provides a Runtime Language Changing service. Just use the <code>I18nService</code> service as an injection dependency on other services / components of your application and use the <code>setLocale()</code> method, passing as parameter the language.
-      </span>
-      <div class="code-area">
-        <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-import { Injectable } from '@angular/core';
+      <div class="col-12">
+        <span class="description">
+          The Truly-UI Internationalization API also provides a Runtime Language Changing service. Just use the <code>I18nService</code> service as an injection dependency on other services / components of your application and use the <code>setLocale()</code> method, passing as parameter the language.
+        </span>
+        <div class="code-area">
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  import { Injectable } from '@angular/core';
 
-import { I18nService, I18nInterface, en_US } from 'truly-ui';
+  import { I18nService, I18nInterface, en_US } from 'truly-ui';
 
-@Injectable()
-export class MyService {
+  @Injectable()
+  export class MyService {
 
-    constructor( private i18nService: I18nService ) {}
+      constructor( private i18nService: I18nService ) {}
 
-    setLocale(locale: I18nInterface = en_US): void {
-      this.i18nService.setLocale(locale);
-    }
-}
-      </textarea>
+      setLocale(locale: I18nInterface = en_US): void {
+        this.i18nService.setLocale(locale);
+      }
+  }
+        </textarea>
+        </div>
       </div>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Supported languages'" [icon]="'fas fa-file-alt'">
     <app-card>
-      <div class="table-box">
-        <table class="table table-truly">
-          <thead class="table-truly-head">
-          <tr>
-            <th>Language</th>
-            <th>Packagename</th>
-          </tr>
-          </thead>
-          <tbody class="table-truly-body">
-          <tr>
-            <td><span>English</span></td>
-            <td><span class="badge">en_US</span></td>
-          </tr>
-          </tbody>
-          <tbody class="table-truly-body">
-          <tr>
-            <td><span>Portuguese (Brazil)</span></td>
-            <td><span class="badge">pt_BR</span></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+     <div class="col-12">
+       <div class="table-box">
+         <table class="table table-truly">
+           <thead class="table-truly-head">
+           <tr>
+             <th>Language</th>
+             <th>Packagename</th>
+           </tr>
+           </thead>
+           <tbody class="table-truly-body">
+           <tr>
+             <td><span>English</span></td>
+             <td><span class="badge">en_US</span></td>
+           </tr>
+           </tbody>
+           <tbody class="table-truly-body">
+           <tr>
+             <td><span>Portuguese (Brazil)</span></td>
+             <td><span class="badge">pt_BR</span></td>
+           </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
     </app-card>
   </app-showcase-card>
 </div>

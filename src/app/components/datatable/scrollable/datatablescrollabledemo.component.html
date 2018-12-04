@@ -1,16 +1,12 @@
 <div class="router-outlet">
-
-  <div class="header-title-demo">
-    <h1 class="title">DataTable Scrollable <span class="module-name"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>DatatableModule</strong></code></p>
-    <p class="text-content">The DataTable displays data in a tabular format and provides a full spectrum of configuration options.</p>
-  </div>
-<hr>
+  <app-showcase-header name="DataTable Scrollable" module="DatatableModule">
+    The DataTable displays data in a tabular format and provides a full spectrum of configuration options.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <div class="group-component">
-          <h5>Mode Scrollable</h5>
+          <h6>Mode Scrollable</h6>
           <tl-datatable [data]="data" (rowSelect)="onRowSelect( $event )" [allowFilterColumn]="true" [mode]="'scrollable'" [rowsPage]="50" [height]="310"> </tl-datatable>
           <div>Row Selected:<span> {{rowSelected | json}} </span></div>
         </div>
@@ -73,14 +69,14 @@
   <!--<div class="examples">-->
     <!--<h3 class="title">Examples</h3>-->
     <!--<div class="group-component">-->
-      <!--<h5 class="title">Mode Normal</h5>-->
+      <!--<h5 class="title">Mode Normal</h6>-->
       <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
       <!--<tl-datatable [data]="dataArray" (rowSelect)="onRowSelect($event, index )"></tl-datatable>-->
     <!--</textarea>-->
     <!--</div>-->
 
     <!--<div class="group-component">-->
-      <!--<h5 class="title">Mode Normal - Global Filter</h5>-->
+      <!--<h5 class="title">Mode Normal - Global Filter</h6>-->
       <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
          <!--<tl-datatable-->
            <!--[data]="data"-->
@@ -92,13 +88,13 @@
     <!--</div>-->
 
     <!--<div class="group-component">-->
-      <!--<h5 class="title">Mode Scrollable</h5>-->
+      <!--<h5 class="title">Mode Scrollable</h6>-->
       <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
         <!--<tl-datatable [data]="data" (rowSelect)="onRowSelect($event, index )" [mode]="'scrollable'"> </tl-datatable>-->
     <!--</textarea>-->
     <!--</div>-->
     <!--<div class="group-component">-->
-      <!--<h5 class="title">Mode Scrollable + LazyLoad</h5>-->
+      <!--<h5 class="title">Mode Scrollable + LazyLoad</h6>-->
       <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
      <!--<tl-datatable-->
        <!--[data]="dataLazy"-->

@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MiscModule } from '../../../../projects/truly-ui/src/components/misc/index';
 import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/validators/index';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-re
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     DatePickerDemoComponent

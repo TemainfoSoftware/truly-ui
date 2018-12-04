@@ -25,6 +25,7 @@ import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
+    ShowcaseHeaderModule,
     ShowcaseHeaderModule
   ],
   exports: [

@@ -34,6 +34,7 @@ import { MultiViewModule } from '../../../../projects/truly-ui/src/components/mu
 import { RadioButtonModule } from '../../../../projects/truly-ui/src/components/radiobutton/index';
 import { InputModule } from '../../../../projects/truly-ui/src/components/input/index';
 import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/validators/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/v
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule
+    ShowcaseReturnedValueModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     MultiViewDemoComponent,

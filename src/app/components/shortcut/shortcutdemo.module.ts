@@ -12,6 +12,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { DialogModule } from '../../../../projects/truly-ui/src/components/dialog/index';
 import { ShortcutModule } from '../../../../projects/truly-ui/src/components/shortcut/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ShortcutModule } from '../../../../projects/truly-ui/src/components/sho
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     ShortcutDemoComponent

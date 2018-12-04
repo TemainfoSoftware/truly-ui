@@ -1,12 +1,7 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Overview<span
-      class="module-name"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>TimelineModule</strong></code></p>
-    <p class="text-content">
-      The Truly-UI Timeline displays data in a timeline format and provides a full spectrum of configuration options.
-    </p>
-  </div>
+  <app-showcase-header name="Overview" module="TimelineModule">
+    The Truly-UI Timeline displays data in a timeline format and provides a full spectrum of configuration options.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
@@ -15,7 +10,7 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-6">
-                  <h5>Basic</h5>
+                  <h6>Basic</h6>
                   <tl-timeline [data]="dataBasic" [height]="'300px'" [keyTitle]="'title'" [keyText]="'text'"></tl-timeline>
                   <br>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -23,7 +18,7 @@
                   </textarea>
                 </div>
                 <div class="col-md-6">
-                  <h5>Basic with Date</h5>
+                  <h6>Basic with Date</h6>
                   <tl-timeline [data]="dataAdvanced" [height]="'300px'" [keyTitle]="'title'" [keyText]="'text'" [keyDate]="'date'"></tl-timeline>
                   <br>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -37,7 +32,7 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-6">
-                  <h5>Align - Right</h5>
+                  <h6>Align - Right</h6>
                   <tl-timeline [data]="dataBasic" [height]="'300px'" [keyTitle]="'title'" [keyText]="'text'" [align]="'right'"></tl-timeline>
                   <br>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -45,7 +40,7 @@
                   </textarea>
                 </div>
                 <div class="col-md-6">
-                  <h5>Align - Center</h5>
+                  <h6>Align - Center</h6>
                   <tl-timeline [data]="dataAdvanced" [height]="'300px'" [keyTitle]="'title'" [keyText]="'text'" [keyDate]="'date'" [align]="'center'"></tl-timeline>
                   <br>
                   <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

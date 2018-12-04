@@ -8,6 +8,7 @@ import { DatatableFilteringDemoComponent } from './datatable-filtering.demo.comp
 import { DatatableFilteringDemoRoutingModule } from './datatable-filtering.demo.routing.module';
 import { DatatableModule } from '../../../../../projects/truly-ui/src/components/datatable';
 import { InputModule } from '../../../../../projects/truly-ui/src/components/input';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { InputModule } from '../../../../../projects/truly-ui/src/components/inp
     FormsModule,
     HighlightJsModule,
     InputModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     DatatableFilteringDemoComponent

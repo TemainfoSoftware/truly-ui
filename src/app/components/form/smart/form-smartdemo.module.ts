@@ -28,6 +28,7 @@ import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-t
 import { DumpDataService } from '../../../shared/services/dumpdata';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
 import { SmartFormModalComponent } from './smart-modal/smart-modal.component';
+import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { SmartFormModalComponent } from './smart-modal/smart-modal.component';
     MiscModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     FormSmartdemoComponent,

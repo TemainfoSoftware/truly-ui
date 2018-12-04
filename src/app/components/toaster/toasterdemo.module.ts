@@ -15,6 +15,7 @@ import { InputModule } from '../../../../projects/truly-ui/src/components/input/
 import { DropDownListModule } from '../../../../projects/truly-ui/src/components/dropdownlist/index';
 import { CheckBoxModule } from '../../../../projects/truly-ui/src/components/checkbox/index';
 import { PanelGroupModule } from '../../../../projects/truly-ui/src/components/panelgroup/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule( {
   declarations: [
@@ -33,7 +34,8 @@ import { PanelGroupModule } from '../../../../projects/truly-ui/src/components/p
     RadioButtonModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     ToasterDemoComponent

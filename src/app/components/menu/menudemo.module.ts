@@ -11,6 +11,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
 import { MenuDemoComponent } from './menudemo.component';
 import { SwitchModule } from '../../../../projects/truly-ui/src/components/switch/index';
 import { MenuModule } from '../../../../projects/truly-ui/src/components/menu/index';
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MenuModule } from '../../../../projects/truly-ui/src/components/menu/in
     HighlightJsModule,
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
-    ShowcaseTableEventsModule
+    ShowcaseTableEventsModule,
+    ShowcaseHeaderModule
   ],
   exports: [
     MenuDemoComponent

@@ -226,6 +226,7 @@ body {
 }
 .main-header .sidebar-toggle:hover {
   color: #fff;
+  cursor: pointer;
 }
 .main-header .sidebar-toggle .icon-bar {
   color: #fff;
@@ -262,7 +263,7 @@ body {
 }
 .main-header .logo .logo-lg {
   display: block;
-  padding: 8px;
+  margin: 3px;
 }
 .main-header .logo .logo-mini {
   display: none;
@@ -475,7 +476,7 @@ body {
   padding: 0;
 }
 .sidebar-menu > li > a {
-  padding: 12px 0 12px 20px;
+  padding: 12px;
   display: block;
 }
 .sidebar-menu > li > a > tl-icon {
@@ -542,6 +543,7 @@ body {
   }
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
     margin-right: 0;
+    text-align: center;
   }
   .sidebar-mini.sidebar-collapse .sidebar-menu > li > a > span {
     border-top-right-radius: 4px;

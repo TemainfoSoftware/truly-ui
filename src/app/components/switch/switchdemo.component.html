@@ -1,16 +1,14 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Switch <span class="module-name"><code><u>Module Name</u>: <strong>SwitchModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>SwitchModule</strong></code></p>
-    <p class="text-content">The Switch component allow's user to execute an action immediately.</p>
-  </div>
+  <app-showcase-header name="Switch" module="SwitchModule">
+    The Switch component allow's user to execute an action immediately.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-6">
-              <h5>Basic</h5>
+              <h6>Basic</h6>
               <tl-switch [label]="'Option 1'" [(ngModel)]="basic"></tl-switch><br>
               <app-showcase-returned-value [value]="basic"></app-showcase-returned-value>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
@@ -20,7 +18,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h5>Pre Selected Value</h5>
+              <h6>Pre Selected Value</h6>
               <tl-switch [label]="'Option 1'"></tl-switch>
               <tl-switch [checked]="true" [label]="'Option 2'"></tl-switch>
               <tl-switch [label]="'Option 3'"></tl-switch>
@@ -34,7 +32,7 @@
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h5>Custom Color Checkbox</h5>
+              <h6>Custom Color Checkbox</h6>
               <tl-switch [label]="'Option 1'" [color]="'primary'" [checked]="true"></tl-switch>
               <tl-switch [label]="'Option 2'" [color]="'warning'" [checked]="true"></tl-switch>
               <tl-switch [label]="'Option 3'" [color]="'danger'" [checked]="true"></tl-switch>

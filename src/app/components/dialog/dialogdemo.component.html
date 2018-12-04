@@ -1,41 +1,36 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Dialog <span
-      class="module-name"><code><u>Module Name</u>: <strong>DialogModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>DialogModule</strong></code></p>
-    <p class="text-content">Dialog is an overlay component service that can be used as message, confirmation, alert and
-      to show an error exception.</p>
-  </div>
+  <app-showcase-header name="Dialog" module="DialogModule">
+    Dialog is an overlay component service that can be used as message, confirmation, alert and
+    to show an error exception.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-3">
-              <h5>Show Dialog Info</h5>
-              <tl-icon [lib]="'ion'" [style]="'md'">add-circle</tl-icon>
+              <h6>Show Dialog Info</h6>
               <tl-button [text]="'Show Dialog Info'"
                          [color]="'information'"
                          [iconAddonBefore]="'fas fa-info-circle'"
                          (click)="info()"></tl-button>
             </div>
-
             <div class="col-md-3">
-              <h5>Show Dialog Confirmation</h5>
+              <h6>Show Dialog Confirmation</h6>
               <tl-button [text]="'Show Dialog Confirmation'"
                          [color]="'success'"
                          [iconAddonBefore]="'fas fa-check'"
                          (click)="confirmation()"></tl-button>
             </div>
             <div class="col-md-3">
-              <h5>Show Dialog Alert</h5>
+              <h6>Show Dialog Alert</h6>
               <tl-button [text]="'Show Dialog Alert'"
                          [color]="'warning'"
                          [iconAddonBefore]="'fas fa-exclamation-circle'"
                          (click)="alert()"></tl-button>
             </div>
             <div class="col-md-3">
-              <h5>Show Dialog Error</h5>
+              <h6>Show Dialog Error</h6>
               <tl-button [text]="'Show Dialog Error'"
                          [color]="'danger'"
                          [iconAddonBefore]="'fas fa-times-circle'"
@@ -45,15 +40,16 @@
         </app-showcase-card>
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
-            <h4>Step One</h4>
-            <h5>Inject the <code>DialogService</code> in your <code>constructor</code>.</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Step One</h4>
+              <h6>Inject the <code>DialogService</code> in your <code>constructor</code>.</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   constructor( public dialogService: DialogService ) {}
         </textarea>
-            <hr>
-            <h4>Final Step</h4>
-            <h5>Create an function to call the dialog type method of the DialogService. For example:</h5>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <hr>
+              <h4>Final Step</h4>
+              <h6>Create an function to call the dialog type method of the DialogService. For example:</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 
   showDialogConfirmation() {
     this.dialogService.confirmation( 'Are you sure ?', ({
@@ -62,13 +58,15 @@
     }));
   }
         </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>
     </div>
     <app-showcase-card [title]="'Dialog Results'" [icon]="'fas fa-clipboard-list'">
       <app-card>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+        <div class="col-12">
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   export enum ModalResult {
       MRFREE = -1,
       MRCUSTOM = 0,
@@ -82,6 +80,7 @@
       MRCLOSE = 8,
   }
 </textarea>
+        </div>
       </app-card>
     </app-showcase-card>
     <app-showcase-card [title]="'Methods'" [icon]="'fas fa-clipboard-list'">
@@ -96,7 +95,9 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-        <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+       <div class="col-12">
+         <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+       </div>
       </app-card>
     </app-showcase-card>
   </div>

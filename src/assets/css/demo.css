@@ -170,6 +170,7 @@ body {
   box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06), 0 4px 5px 0 rgba(0,0,0,0.06), 0 1px 10px 0 rgba(0,0,0,0.08);
   min-height: 50px;
   border-radius: 0;
+  padding: 0px;
 }
 .layout-top-nav .main-header .navbar {
   margin-left: 0;
@@ -476,7 +477,7 @@ body {
   padding: 0;
 }
 .sidebar-menu > li > a {
-  padding: 12px;
+  padding: 12px 0 12px 20px;
   display: block;
 }
 .sidebar-menu > li > a > tl-icon {

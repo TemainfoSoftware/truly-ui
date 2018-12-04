@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,48 +19,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { I18nService } from '../../i18n/i18n.service';
-import { DialogDefaultBehavior } from '../dialog-default-behavior';
-import { Modal } from '../../modal/interfaces/modal-options';
-import { TlButton } from '../../button/button';
+import { ComponentFactoryResolver, ComponentRef } from '@angular/core';
+import { TlModal } from '../modal';
+import { Subject } from 'rxjs';
+import { SmartFormConfiguration } from '../classes/modal-smart-form';
+import { ModalOptions } from './modal-options';
 
-@Modal({
-  icon: 'fas fa-info-circle',
-  title: 'Information',
-  color: 'information',
-  width: 'auto',
-  height: 'auto',
-  draggable: false,
-  maximizable: false,
-  minimizable: false,
-  backdrop: true,
-  closeOnOK: true
-})
-@Component({
-    selector: 'tl-dialog-info',
-    templateUrl: './dialog-info.html',
-    styleUrls: ['../dialog.scss']
-})
-export class TlDialogInfo extends DialogDefaultBehavior implements OnInit {
-
-    title = '';
-
-    message = '';
-
-    get textOk() {
-      return this.i18n.getLocale().Dialog.textOk;
-    }
-
-    @ViewChild( TlButton ) button: TlButton;
-
-    constructor( private i18n: I18nService ) {
-        super();
-    }
-
-    ngOnInit() {
-      this.button.setFocus();
-    }
-
+export interface ModalInstance {
+  id: string;
+  modal: ComponentRef<TlModal>;
+  componentInjected: ComponentRef<any>;
+  modalOptions: ModalOptions;
+  eventCallback: Subject<any>;
+  smartForm: ComponentFactoryResolver | SmartFormConfiguration;
 }
-

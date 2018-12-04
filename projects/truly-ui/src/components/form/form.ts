@@ -31,7 +31,7 @@ import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
-import { ModalService } from '../modal/modal.service';
+import { ModalService } from '../modal/services/modal.service';
 import { ActionsModal } from '../core/enums/actions-modal';
 import { Subscription } from 'rxjs';
 

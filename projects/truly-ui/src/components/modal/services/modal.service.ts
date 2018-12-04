@@ -1,0 +1,440 @@
+/*
+ MIT License
+
+ Copyright (c) 2018 Temainfo Software
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+import {
+  ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
+  ComponentRef, EventEmitter,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { SmartFormConfiguration } from '../classes/modal-smart-form';
+import { ModalOptions } from '../interfaces/modal-options';
+import { ContainerModalService } from '../addons/container-modal/container-modal.service';
+import { TlModal } from '../modal';
+import { TlBackdrop } from '../../core/components/backdrop/backdrop';
+import { ActionsModal } from '../../core/enums/actions-modal';
+import { ModalResult } from '../../core/enums/modal-result';
+import { TlDialogConfirmation } from '../../dialog/dialog-confirmation/dialog-confirmation';
+import { ModalFormConfig } from '../interfaces/modal-smart-form-config';
+import { ModalInstance } from '../interfaces/modal-instance';
+import { TlDialogInfo } from '../../dialog/dialog-info/dialog-info';
+
+let lastZIndex = 1;
+
+@Injectable()
+export class ModalService implements OnDestroy {
+
+  public instanceComponent: ModalInstance;
+
+  public componentList: ModalInstance[] = [];
+
+  public changeModal = new Subject();
+
+  public frontModal = new Subject();
+
+  public activeModal: ComponentRef<any>;
+
+  public componentInjected: ComponentRef<any>;
+
+  private modalShow = new Subject();
+
+  private component: ComponentRef<TlModal>;
+
+  private view: ViewContainerRef;
+
+  private modalConfiguration: SmartFormConfiguration;
+
+  private selectedModal: ModalInstance;
+
+  private modalOptions: ModalOptions;
+
+  private backdrop: ComponentRef<TlBackdrop>;
+
+  private eventCallback: EventEmitter<any>;
+
+  private visibleModals = [];
+
+  constructor( private containerModal: ContainerModalService ) {}
+
+  createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
+    this.view = this.containerModal.getView();
+    return new Promise( ( resolve ) => {
+      this.setComponentModal( component, factoryResolver, null, null, mdOptions );
+      this.handleCallbackModal( resolve );
+    } );
+  }
+
+  createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver,
+               identifier: string = '', parentElement: ElementRef = null, mdOptions?: ModalOptions ) {
+    this.view = this.containerModal.getView();
+    return new Promise( ( resolve ) => {
+      this.setComponentModal( component, factoryOrConfig, identifier, parentElement, mdOptions );
+      this.handleCallbackModal( resolve );
+    } );
+  }
+
+  createSmartFormModal( component: Type<any>, formConfig: ModalFormConfig, mdOptions?: ModalOptions ) {
+    this.view = this.containerModal.getView();
+    this.modalConfiguration = Object.assign( new SmartFormConfiguration(), formConfig );
+    return new Promise( ( resolve ) => {
+      this.setComponentModal( component, this.modalConfiguration, null, null, mdOptions );
+      this.handleCallbackModal( resolve );
+    } );
+  }
+
+  private handleCallbackModal( resolve ) {
+    if ( this.instanceComponent ) {
+      this.instanceComponent.eventCallback.subscribe( ( value ) => {
+        resolve( value );
+      } );
+    }
+  }
+
+  private isConfigSmartForm( config ) {
+    return config instanceof SmartFormConfiguration;
+  }
+
+  private setInjectedComponent( factory, component ) {
+    const factoryInject = factory.resolveComponentFactory( component );
+    this.componentInjected = (<TlModal>this.component.instance).body.createComponent( factoryInject );
+  }
+
+  private createComponentWrapper( factory: ComponentFactoryResolver ) {
+    const componentFactory = factory.resolveComponentFactory( TlModal );
+    this.component = this.view.createComponent( componentFactory );
+    (<TlModal>this.component.instance).setServiceControl( this );
+    (<TlModal>this.component.instance).setComponentRef( this.component );
+  }
+
+  private setModalOptions( mdOptions: ModalOptions ) {
+    this.modalOptions = Reflect.getOwnMetadata( 'annotations',
+      Object.getPrototypeOf( this.componentInjected.instance ).constructor );
+    this.modalOptions = Object.assign( this.modalOptions[ 0 ], mdOptions );
+  }
+
+  private setComponentWrapperProperties( config, identifier, parentElement ) {
+    (<TlModal>this.component.instance).setOptions( this.modalOptions );
+    (<TlModal>this.component.instance).setIdentifier( this.isConfigSmartForm( config ) ? config[ 'identifier' ] : identifier );
+    (<TlModal>this.component.instance).setParentElement( this.isConfigSmartForm( config ) ? config[ 'parentElement' ] : parentElement );
+  }
+
+  private setInstanceComponent( config: ComponentFactoryResolver | SmartFormConfiguration ) {
+    this.instanceComponent = {
+      id: this.component.instance.id,
+      modal: this.component,
+      componentInjected: this.componentInjected,
+      modalOptions: this.modalOptions,
+      eventCallback: new Subject(),
+      smartForm: config
+    };
+  }
+
+  private isModalExists( config ) {
+    return this.componentList.filter( ( value, index, array ) => config.identifier === value.id )[ 0 ];
+  }
+
+  private isUniqueSmartForm( config ) {
+    return config.unique;
+  }
+
+  private validateUnique( config ) {
+    return this.isConfigSmartForm( config ) && this.isModalExists( config ) && this.isUniqueSmartForm( config );
+  }
+
+  private isSmartFormUpdateDeleteAction( config ) {
+    return this.isConfigSmartForm( config ) && (this.isUpdateAction( config ) || this.isDeleteAction( config ));
+  }
+
+  private setComponentModal( component: Type<any>,
+                             config: SmartFormConfiguration | ComponentFactoryResolver,
+                             identifier?, parentElement?, mdOptions?: ModalOptions ) {
+
+    const factory = this.isConfigSmartForm( config ) ? config[ 'factory' ] : config;
+    if ( this.isSmartFormUpdateDeleteAction( config ) && !this.validateDataFormUpdate( config ) ) {
+      return;
+    }
+
+    if ( this.validateUnique( config ) ) {
+      this.showModal(this.isModalExists( config ).modal);
+      return;
+    }
+
+    this.createComponentWrapper( factory );
+    this.setInitialZIndex();
+    this.setInjectedComponent( factory, component );
+    this.setModalOptions( mdOptions );
+    this.handleBackDrop( factory );
+    this.setComponentWrapperProperties( config, identifier, parentElement );
+    this.setInstanceComponent( config );
+    this.setActiveModal( this.component );
+    this.addNewComponent();
+    this.emitChangeListModals();
+    this.handleDeleteSmartForm( config );
+  }
+
+  private addNewComponent() {
+    this.componentList.push( this.instanceComponent );
+  }
+
+  private emitChangeListModals() {
+    this.changeModal.next();
+  }
+
+  private handleDeleteSmartForm( config: SmartFormConfiguration | ComponentFactoryResolver ) {
+    if ( this.isConfigSmartForm( config ) ) {
+      if ( this.isDeleteAction( config ) ) {
+        this.confirmDelete( this.instanceComponent );
+      }
+    }
+  }
+
+  private isUpdateAction( component ) {
+    return component.executeAction === ActionsModal.UPDATE;
+  }
+
+  private validateDataFormUpdate( component ) {
+    if ( Object.keys( component[ 'dataForm' ] ).length === 0 ) {
+      this.createModalDialog( TlDialogInfo, component[ 'factory' ], null );
+      this.componentInjected.instance.message = component[ 'recordNotFoundMessage' ];
+      return false;
+    }
+    return true;
+  }
+
+  close( id ?: string ) {
+    if ( id ) {
+      const itemList = this.getComponentById( id );
+      this.removeOfView( itemList.modal );
+      this.removeOfList( id );
+      return;
+    }
+    this.removeOfView( this.selectedModal.modal );
+    this.removeOfList( this.selectedModal.id );
+  }
+
+  private removeOfView( modal ) {
+    this.view.remove( this.view.indexOf( modal ) );
+    this.removeBackdrop();
+  }
+
+  private removeOfList( id: string ) {
+    this.componentList = this.componentList.filter( ( item ) => item.id !== id );
+  }
+
+  getModal( identifier: string ) {
+    this.selectedModal = this.componentList.filter( ( item ) => item.id === identifier )[ 0 ];
+    return this;
+  }
+
+  private handleBackDrop( factory: ComponentFactoryResolver ) {
+    if ( this.modalOptions.backdrop ) {
+      this.createBackdrop( TlBackdrop, factory );
+    }
+  }
+
+  private setInitialZIndex() {
+    lastZIndex++;
+    (<TlModal>this.component.instance).modal.nativeElement.style.zIndex = lastZIndex;
+  }
+
+  private setZIndex( componentRef: ComponentRef<TlModal> ) {
+    const element = componentRef.instance.getElementModal();
+    lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
+    element.nativeElement.style.zIndex = lastZIndex + 1;
+  }
+
+  private getZIndexModals() {
+    const maxZIndex = [];
+    const modals = this.getVisibleModals();
+    for ( let index = 0; index < modals.length; index++ ) {
+      const element: any = modals[ index ];
+      maxZIndex.push( element.firstElementChild.style.zIndex );
+    }
+    return maxZIndex;
+  }
+
+  private getHighestZIndexModals( arrayModals: Array<any> ) {
+    return Math.max.apply( Math, arrayModals );
+  }
+
+  setActiveModal( componentRef: ComponentRef<any> ) {
+    this.setZIndex( componentRef );
+    this.activeModal = componentRef;
+    this.frontModal.next( { activeModal: this.activeModal } );
+  }
+
+  private createBackdrop( backdrop: Type<any>, factoryResolver: ComponentFactoryResolver ) {
+    this.view = this.containerModal.getView();
+    const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
+    this.backdrop = this.view.createComponent( backdropFactory );
+    (<TlBackdrop>this.backdrop.instance).setBackdropOptions( { 'zIndex': 1 } );
+    this.reallocateBackdrop();
+  }
+
+  private reallocateBackdrop() {
+    this.view.element.nativeElement.insertAdjacentElement( 'afterbegin', (<TlBackdrop>this.backdrop.instance).backdrop.nativeElement );
+  }
+
+  showModal( item: ComponentRef<any> ) {
+    lastZIndex++;
+    item.location.nativeElement.firstElementChild[ 'style' ].zIndex = lastZIndex;
+    item.instance.element.nativeElement.style.display = 'block';
+    this.setActiveModal( item );
+    this.modalShow.next();
+  }
+
+  minimize( component: ComponentRef<any> ) {
+    component.instance.element.nativeElement.style.display = 'none';
+    this.handleActiveWindow();
+  }
+
+  private getVisibleHighestZIndex() {
+    return this.getHighestZIndexModals( this.getZIndexModals() );
+  }
+
+  private handleActiveWindow() {
+    const highest = this.getVisibleHighestZIndex();
+    this.componentList.forEach( ( value ) => {
+      if ( this.visibleModals.length === 0 ) {
+        return this.activeModal = null;
+      }
+      if ( Number( value.modal.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
+        return this.setActiveModal( value.modal );
+      }
+    } );
+  }
+
+  private getVisibleModals() {
+    this.visibleModals = [];
+    const modals = document.querySelectorAll( 'tl-modal' );
+    for ( let index = 0; index < modals.length; index++ ) {
+      const element: any = modals[ index ];
+      if ( element.style.display !== 'none' ) {
+        this.visibleModals.push( modals[ index ] );
+      }
+    }
+    return this.visibleModals;
+  }
+
+  private removeBackdrop() {
+    if ( this.backdrop ) {
+      this.backdrop.destroy();
+    }
+  }
+
+  private getComponentById( id: string ) {
+    return this.componentList.filter( ( item ) => item.id === id )[ 0 ];
+  }
+
+  execCallBack( result: any, id: string ): Promise<any> {
+    const componentModal = this.getComponentById( id );
+    return new Promise( ( resolve ) => {
+      if ( this.isResultUndefined( result.mdResult ) ) {
+        return;
+      }
+      if ( !(this.isMdResultEqualsOK( result.mdResult )) ) {
+        this.close( id );
+      } else if ( componentModal.modalOptions.closeOnOK ) {
+        this.close( id );
+      }
+      setTimeout( () => {
+        this.resultCallback( componentModal, result );
+        this.handleActiveWindow();
+        resolve();
+      }, 500 );
+    } );
+  }
+
+  private resultCallback( component, result ) {
+    component.eventCallback.next( result );
+    this.handleSmartFormCallback( component, result );
+  }
+
+  private confirmDelete( component: ModalInstance ) {
+    if ( component.smartForm[ 'executeAction' ] === ActionsModal.DELETE ) {
+      const smartComponent = component;
+      this.createModalDialog( TlDialogConfirmation, smartComponent.smartForm[ 'factory' ], null ).then( ( value: any ) => {
+        if ( value.mdResult === ModalResult.MRYES ) {
+          this.handleSmartFormCallback( smartComponent, ModalResult.MRYES );
+        }
+      } );
+      this.componentInjected.instance.message = smartComponent.smartForm[ 'deleteConfirmationMessage' ];
+      return true;
+    }
+    return false;
+  }
+
+  private isDeleteAction( component ) {
+    return component.executeAction === ActionsModal.DELETE;
+  }
+
+  private handleSmartFormCallback( component: ModalInstance, result ) {
+    if ( this.isResultNotAllowed( component.smartForm, result )
+      || !this.isConfigSmartForm(component.smartForm )) {
+      return;
+    }
+    if ( this.mathActionsModal(component.smartForm).length === 0 ) {
+      throw Error( 'The Action provided is not valid or is undefined' );
+    }
+    this.executeAction( component.smartForm, result );
+  }
+
+  private mathActionsModal( component: ComponentFactoryResolver | SmartFormConfiguration ) {
+    return Object.keys( ActionsModal ).filter( ( value, index, array ) =>
+    ActionsModal[ value ] === component['executeAction'] );
+  }
+
+  private executeAction( smartForm: ComponentFactoryResolver | SmartFormConfiguration, result ) {
+    const actions = {
+      'I': () => {
+        smartForm[ 'actions' ].insertCall( result.formResult.value );
+      },
+      'U': () => {
+        smartForm[ 'actions' ].updateCall( result.formResult.value );
+      },
+      'D': () => {
+        smartForm[ 'actions' ].deleteCall();
+        this.close( smartForm['identifier'] );
+      },
+      'V': () => {
+        smartForm[ 'actions' ].viewCall();
+      }
+    };
+    return actions[ smartForm[ 'executeAction' ] ]();
+  }
+
+  private isResultNotAllowed( smartForm: ComponentFactoryResolver | SmartFormConfiguration, result ) {
+    return result.mdResult === ModalResult.MRCANCEL || result.mdResult === ModalResult.MRCLOSE
+      || !smartForm[ 'actions' ];
+  }
+
+  private isResultUndefined( result: ModalResult ) {
+    return result === undefined;
+  }
+
+  private isMdResultEqualsOK( result: ModalResult ) {
+    return Number( result ) === Number( ModalResult.MROK );
+  }
+
+  ngOnDestroy() {
+    lastZIndex = 1;
+  }
+
+}

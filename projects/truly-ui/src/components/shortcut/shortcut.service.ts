@@ -22,7 +22,7 @@
 
 import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ModalService } from '../modal/modal.service';
+import { ModalService } from '../modal/services/modal.service';
 import { TlButton } from '../button/button';
 import { ShortcutConfig } from './shortcut.config';
 

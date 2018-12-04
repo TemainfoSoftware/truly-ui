@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 export interface ModalOptions {
-    icon: string;
+    icon?: string;
     title: string;
     color?: string;
     height?: string;

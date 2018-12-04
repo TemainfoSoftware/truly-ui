@@ -22,7 +22,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
 import { I18nService } from '../../i18n/i18n.service';
-import { Modal } from '../../modal/modal-options';
+import { Modal } from '../../modal/interfaces/modal-options';
 
 @Modal({
   icon: 'fas fa-check',

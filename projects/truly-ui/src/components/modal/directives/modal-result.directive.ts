@@ -23,9 +23,8 @@ import {
   Input, OnInit, Directive, HostListener, ContentChild, ComponentRef, ElementRef
 } from '@angular/core';
 import { ModalResult } from '../../core/enums/modal-result';
-import { ModalService } from '../modal.service';
+import { ModalService } from '../services/modal.service';
 import { TlButton } from '../../button/button';
-import { TlModal } from '../modal';
 
 @Directive( {
   selector: '[mdResult]'
@@ -38,19 +37,19 @@ export class ModalResultDirective implements OnInit {
 
   @ContentChild( TlButton ) button;
 
-  private modalInstance: ComponentRef<TlModal>;
+  private modalId: string;
 
   @HostListener( 'click' )
   onClick() {
     if (!this.button.disabled) {
-      this.dispatchCallback();
+      this.emitCallback();
     }
   }
 
   @HostListener( 'keydown.enter' )
   onKeyDown() {
     if (!this.button.disabled) {
-      this.dispatchCallback();
+      this.emitCallback();
     }
   }
 
@@ -58,15 +57,15 @@ export class ModalResultDirective implements OnInit {
   }
 
   ngOnInit() {
-    this.modalInstance = this.modalService.getParentModalInjectedView();
+    this.modalId = this.modalService.instanceComponent.id;
   }
 
-  dispatchCallback(): Promise<any> {
+  emitCallback(): Promise<any> {
     return new Promise( ( resolve ) => {
       if ( !this.mdResult || ModalResult.MRCUSTOM ) {
         return;
       }
-      this.modalService.execCallBack( this.getResult(), this.modalInstance );
+      this.modalService.execCallBack( this.getResult(), this.modalId );
     } );
   }
 

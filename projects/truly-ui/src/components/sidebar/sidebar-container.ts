@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import { TlSidebar } from './parts/sidebar/sidebar';
 import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
-import { SidebarService } from '../modal/sidebar.service';
+import { SidebarService } from '../modal/services/sidebar.service';
 import { Subscription } from 'rxjs';
 
 @Component( {

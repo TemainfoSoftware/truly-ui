@@ -25,11 +25,10 @@ import {
   Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
 } from '@angular/core';
 import { ContainerModalService } from './addons/container-modal/container-modal.service';
-import { ModalService } from './modal.service';
-import { animate, style, transition, trigger } from '@angular/animations';
+import { ModalService } from './services/modal.service';
 import { ModalResult } from '../core/enums/modal-result';
-import { ModalOptions } from './modal-options';
-import { SidebarService } from './sidebar.service';
+import { ModalOptions } from './interfaces/modal-options';
+import { SidebarService } from './services/sidebar.service';
 import { Subscription } from 'rxjs';
 
 let subscribeMouseMove;
@@ -248,7 +247,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   setActiveModal() {
-    this.serviceControl.setActiveModal(this.componentRef);
+    // this.serviceControl.setActiveModal(this.componentRef);
   }
 
   validateProperty() {
@@ -326,11 +325,23 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     this.setNewTopPosition();
   }
 
-  setOptions( options: Array<ModalOptions> ) {
+  setOptions( options: ModalOptions ) {
     const self = this;
     Object.keys( options ).forEach( function ( key ) {
       self[ key ] = options[ key ];
     } );
+  }
+
+  setIdentifier(id: string) {
+    if (id) {
+      this.id = id;
+    }
+  }
+
+  setParentElement(parentElement: HTMLElement) {
+    if (this.parentElement) {
+      this.parentElement = parentElement;
+    }
   }
 
   setLeftLimitOfArea() {
@@ -390,9 +401,12 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     return event.clientX < this.offsetLeftContent;
   }
 
-  setZIndex() {
-    this.serviceControl.setZIndex( this.componentRef, this.modal );
-    this.serviceControl.sortComponentsByZIndex();
+  setActive() {
+    this.serviceControl.setActiveModal( this.componentRef );
+  }
+
+  getElementModal() {
+    return this.modal;
   }
 
   isMouseOutOfTheWindowRight( event ) {
@@ -427,7 +441,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   closeModal() {
     if ( this.closable ) {
-      this.serviceControl.execCallBack( { mdResult: ModalResult.MRCLOSE } , this.componentRef );
+      this.serviceControl.execCallBack( { mdResult: ModalResult.MRCLOSE }, this.id );
       this.close.emit( this.componentRef.instance );
     }
   }

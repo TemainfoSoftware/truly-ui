@@ -50,8 +50,8 @@ export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
 // Interfaces
-export { ModalOptions, Modal } from './components/modal/modal-options';
-export { ModalConfig } from './components/modal/modal-config';
+export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
+export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
@@ -63,7 +63,7 @@ export { ModalResult } from './components/core/enums/modal-result';
 
 // Services
 export { DialogService } from './components/dialog/dialog.service';
-export { ModalService } from './components/modal/modal.service';
+export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';

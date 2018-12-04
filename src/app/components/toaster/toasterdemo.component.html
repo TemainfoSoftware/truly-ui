@@ -10,7 +10,7 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <tl-panelgroup [backgroundColor]="'#fafafa'" [height]="'290px'" [labelGroup]="'Toaster Configuration'">
                 <tl-dropdown-list [data]="data"
                                   [labelSize]="100"
@@ -35,8 +35,6 @@
                   <tl-checkbox [color]="'primary'" [label]="'Show Icon'" [(ngModel)]="showIcon"></tl-checkbox>
                 </div>
               </tl-panelgroup>
-            </div>
-            <div class="col-md-12">
               <div class="spacer"></div>
               <div class="type-buttons">
                 <tl-button [color]="'success'" (click)="success()" [text]="'Toaster Success'"></tl-button>
@@ -49,23 +47,24 @@
         </app-showcase-card>
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
-            <h4>Step One</h4>
-            <h6>First of all, you must inject the <code>ToasterService</code>in
-              the constructor</h6>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Step One</h4>
+              <h6>First of all, you must inject the <code>ToasterService</code>in
+                the constructor</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 constructor( private toasterService: ToasterService ) {}
                   </textarea>
-            <hr>
-            <h4>Step Two</h4>
-            <h6>Create a method that call the Toaster that will wish. For example: Calling the success Toaster.</h6>
-            <h6><b>Allowed Toaster Methods</b></h6>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <hr>
+              <h4>Step Two</h4>
+              <h6>Create a method that call the Toaster that will wish. For example: Calling the success Toaster.</h6>
+              <h6><b>Allowed Toaster Methods</b></h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 this.toasterService.success(object?)
 this.toasterService.danger(object?)
 this.toasterService.information(object?)
 this.toasterService.warning(object?)
                 </textarea>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 clickMethod() {
   this.toasterService.success(
         title: 'My title'
@@ -80,7 +79,8 @@ clickMethod() {
   );
 }
                   </textarea>
-            <h6>As parameter, you may have to pass the toaster config object.</h6>
+              <h6>As parameter, you may have to pass the toaster config object.</h6>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

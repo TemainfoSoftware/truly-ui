@@ -32,8 +32,7 @@ import { ShowcaseTableEventsModule } from '../../shared/components/showcase-tabl
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 import { AccordiondemoComponent } from './accordiondemo.component';
 import { AccordionDemoRoutingModule } from './accordiondemo-routing.module';
-
-
+import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
 
 @NgModule({
   declarations: [
@@ -48,6 +47,7 @@ import { AccordionDemoRoutingModule } from './accordiondemo-routing.module';
     ShowcaseTablePropertiesModule,
     ShowcaseCardModule,
     ShowcaseTableEventsModule,
+    ShowcaseHeaderModule,
     ShowcaseReturnedValueModule
   ],
   exports: [

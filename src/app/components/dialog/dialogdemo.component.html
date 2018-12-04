@@ -13,13 +13,11 @@
           <app-card>
             <div class="col-md-3">
               <h6>Show Dialog Info</h6>
-              <tl-icon [lib]="'ion'" [style]="'md'">add-circle</tl-icon>
               <tl-button [text]="'Show Dialog Info'"
                          [color]="'information'"
                          [iconAddonBefore]="'fas fa-info-circle'"
                          (click)="info()"></tl-button>
             </div>
-
             <div class="col-md-3">
               <h6>Show Dialog Confirmation</h6>
               <tl-button [text]="'Show Dialog Confirmation'"
@@ -45,15 +43,16 @@
         </app-showcase-card>
         <app-showcase-card [title]="'Making it Work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
-            <h4>Step One</h4>
-            <h6>Inject the <code>DialogService</code> in your <code>constructor</code>.</h6>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Step One</h4>
+              <h6>Inject the <code>DialogService</code> in your <code>constructor</code>.</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   constructor( public dialogService: DialogService ) {}
         </textarea>
-            <hr>
-            <h4>Final Step</h4>
-            <h6>Create an function to call the dialog type method of the DialogService. For example:</h6>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+              <hr>
+              <h4>Final Step</h4>
+              <h6>Create an function to call the dialog type method of the DialogService. For example:</h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 
   showDialogConfirmation() {
     this.dialogService.confirmation( 'Are you sure ?', ({
@@ -62,13 +61,15 @@
     }));
   }
         </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>
     </div>
     <app-showcase-card [title]="'Dialog Results'" [icon]="'fas fa-clipboard-list'">
       <app-card>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+        <div class="col-12">
+          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
   export enum ModalResult {
       MRFREE = -1,
       MRCUSTOM = 0,
@@ -82,6 +83,7 @@
       MRCLOSE = 8,
   }
 </textarea>
+        </div>
       </app-card>
     </app-showcase-card>
     <app-showcase-card [title]="'Methods'" [icon]="'fas fa-clipboard-list'">
@@ -96,7 +98,9 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-        <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+       <div class="col-12">
+         <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+       </div>
       </app-card>
     </app-showcase-card>
   </div>

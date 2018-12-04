@@ -9,14 +9,24 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <tl-button class="btn-actions" [text]="'SmartForm [INSERT]'" [color]="'success'" (click)="openModal('I')"></tl-button>
-            <tl-button class="btn-actions" [text]="'SmartForm [UPDATE]'" [color]="'warning'" (click)="openModal('U')"></tl-button>
-            <tl-button class="btn-actions" [text]="'SmartForm [DELETE]'" [color]="'danger'" (click)="openModal('D')"></tl-button>
-            <code>Open Console (F12) to view the returns :)</code>
-            <blockquote>The expression "Smart Form" is basically the same modal approach, what changes and ends up
-              becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
-              and manages to create a form with these actions defined and tasked to execute upon completion.
-            </blockquote>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <tl-button class="btn-actions" [text]="'SmartForm [INSERT]'" [color]="'success'" (click)="openModal('I')"></tl-button>
+                <tl-button class="btn-actions" [text]="'SmartForm [UPDATE]'" [color]="'warning'" (click)="openModal('U')"></tl-button>
+                <tl-button class="btn-actions" [text]="'SmartForm [DELETE]'" [color]="'danger'" (click)="openModal('D')"></tl-button>
+                <code>Open Console (F12) to view the returns :)</code>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <blockquote>The expression "Smart Form" is basically the same modal approach, what changes and ends up
+                  becoming a form has a functionality to work in the form of CRUD (Create, Read, Update and Delete)
+                  and manages to create a form with these actions defined and tasked to execute upon completion.
+                </blockquote>
+              </div>
+            </div>
+          </div>
           </app-card>
         </app-showcase-card>
       </div>
@@ -25,11 +35,12 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Making it work'" [icon]="'ion ion-ios-hammer'">
           <app-card>
-            <h4>The First Step</h4>
-            <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+           <div class="col-12">
+             <h4>The First Step</h4>
+             <p>The First Step of the form creation is declare in your application the <code>tlContainerModal</code> directive and its Module that calls <code>ContainerModalModule</code>.In this demo application its declared on app.component.html. This directive is used to place the modal on the window, it will lock the modal on that region while dragging for example.</p>
+             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <!--app.component.html-->
-<!-- Content Wrapper. Contains page content -->
+               <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" tlContainerModal>
     <!-- Main content -->
     <section class="content">
@@ -37,10 +48,10 @@
     </section>
     <!-- /.content -->
   </div>
-<!-- /.content-wrapper -->
+               <!-- /.content-wrapper -->
             </textarea>
-            <h6>App Module</h6>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+             <h6>App Module</h6>
+             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 import { CoreModule, ContainerModalModule } from 'truly-ui';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,11 +76,13 @@ import { NgModule } from '@angular/core';
 })
 export class AppModule { }
             </textarea>
+           </div>
           </app-card>
           <app-card>
-            <h4>Creating the CRUD Form</h4>
-            <p>To create a CRUD form in truly-ui we should pass some the parameter <code>ModalConfiguration</code> like described bellow.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Creating the CRUD Form</h4>
+              <p>To create a CRUD form in truly-ui we should pass some the parameter <code>ModalConfiguration</code> like described bellow.</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
     this.modalService.createModal( NewPersonComponent, {
       factory: this.factory,
       executeAction: ActionsModal.INSERT,
@@ -102,28 +115,37 @@ export class AppModule { }
       console.log('Result', result);
     });
             </textarea>
-            <h4>Modal Configuration</h4>
-            <app-showcase-table-properties [data]="modalConfig"></app-showcase-table-properties>
+            </div>
           </app-card>
           <app-card>
-            <h4>Using Primary Key Property</h4>
-            <p>The smart form has a property ( <code> [primaryKey] </code> ) to approach the primary key field on the the form, that allows the form to disable it but still return the value when the action is <code>Update</code></p>
-            <p>See bellow an example of the use.</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Modal Configuration</h4>
+              <app-showcase-table-properties [data]="modalConfig"></app-showcase-table-properties>
+            </div>
+          </app-card>
+          <app-card>
+           <div class="col-12">
+             <h4>Using Primary Key Property</h4>
+             <p>The smart form has a property ( <code> [primaryKey] </code> ) to approach the primary key field on the the form, that allows the form to disable it but still return the value when the action is <code>Update</code></p>
+             <p>See bellow an example of the use.</p>
+             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 <tl-form [mode]="'modal'" [formGroup]="form" [primaryKey]="'id'">
   <tl-input formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
   <tl-input formControlName="name" [labelSize]="100" [label]="'Name'"></tl-input>
 </tl-form>
             </textarea>
+           </div>
           </app-card>
           <app-card>
-            <h4>Closing Form</h4>
-            <p>When using <code>CloseOnOK</code> property as <code>false</code> the modal form does not going to close, but the modal service provides a method to close the modals
-            using the id passed in the moment of the creation</p>
-            <p> To use the method, just call:</p>
-            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+            <div class="col-12">
+              <h4>Closing Form</h4>
+              <p>When using <code>CloseOnOK</code> property as <code>false</code> the modal form does not going to close, but the modal service provides a method to close the modals
+                using the id passed in the moment of the creation</p>
+              <p> To use the method, just call:</p>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
                this.modalService.getModal('MODAL-IDENTIFIER').close();
             </textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

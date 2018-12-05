@@ -78,7 +78,7 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   @Input() withBorder = true;
 
-  @Input() flatBorder = false;
+  @Input() resize = false;
 
   @Input() showCount = false;
 

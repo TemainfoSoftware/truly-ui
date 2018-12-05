@@ -16,9 +16,6 @@
 
   > .ui-wrapper-textarea {
     position: relative;
-    > textarea {
-      resize: none;
-    }
     > textarea::-webkit-scrollbar {
       width: 8px;
     }
@@ -36,9 +33,10 @@
     }
     > .count-characters {
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      text-align: right;
       font-size: 0.8em;
-      margin-top: -5px;
+      position: absolute;
+      right: 0;
+      margin: -22px 11px 0 0;
     }
     > .field::placeholder {
       @include textTextarea;

@@ -43,7 +43,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
   providers: [ {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => TlTextarea),
-    multi: true,
+    multi: true
   } ],
 })
 export class TlTextarea extends ValueAccessorBase<string> implements OnInit, AfterViewInit {
@@ -99,8 +99,6 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
   @Output() overlayOrigin: EventEmitter<any> = new EventEmitter();
-
-  public countLength = 0;
 
   public required = false;
 
@@ -160,12 +158,8 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
   }
 
   onTextareaBlur( $event ) {
-    this.isShowingMessages = true;
+    this.isShowingMessages = false;
     this.blur.emit( $event );
-  }
-
-  onTextareaDown() {
-    this.countLength = this.textarea.nativeElement.textLength;
   }
 
   clearTextarea( $event? ) {

@@ -352,7 +352,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.setFocusCancel();
         break;
       case KeyEvent.TAB:
-        $event.preventDefault();
+        if (!this.isTextArea()) {
+          $event.preventDefault();
+        }
         this.forwardTabbing();
         break;
       case KeyEvent.ENTER:

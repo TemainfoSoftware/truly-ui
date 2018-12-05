@@ -51,10 +51,6 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/blockui/blockuidemo.module#BlockUIDemoModule'
       },
       {
-        path: 'calendar',
-        loadChildren: './components/switchcalendar/calendardemo.module#CalendarDemoModule'
-      },
-      {
         path: 'colorpicker',
         loadChildren: './components/colorpicker/colorpickerdemo.module#ColorPickerDemoModule'
       },

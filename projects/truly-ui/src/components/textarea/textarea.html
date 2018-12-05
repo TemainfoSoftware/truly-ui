@@ -25,15 +25,16 @@
               [(ngModel)]="value"
               (click)="onTextareaClick($event)"
               (blur)="onTextareaBlur($event)"
-              (focus)="onTextareaFocus($event)"
-              (keydown)="onTextareaDown($event)"></textarea>
+              (focus)="onTextareaFocus($event)"></textarea>
     <tl-icon *ngIf="clearButton && value"
              [style.lineHeight]="height"
              (click)="clearTextarea($event)"
              [lib]="'ion'"
              [style]="'ios'"
              class="clearButton">close</tl-icon>
-    <div class="count-characters" *ngIf="showCount">{{ countLength }}</div>
+    <div class="count-characters" *ngIf="showCount">
+      {{ ( maxlength > 0 ) ? ( maxlength - textarea.value.length ) : textarea.value.length | number }}
+    </div>
   </div>
 </div>
 

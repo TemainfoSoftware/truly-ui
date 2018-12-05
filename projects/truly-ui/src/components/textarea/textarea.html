@@ -1,6 +1,10 @@
 <div [class]="'tl-textarea ' + color">
 
-  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+  <tl-label *ngIf="label"
+            [style.vertical-align]="'top'"
+            [labelTitle]="label"
+            [labelPlacement]="labelPlacement"
+            [labelSize]="labelSize"></tl-label>
 
   <div class="ui-wrapper-textarea" [style.height]="height">
     <textarea #textarea
@@ -33,7 +37,7 @@
              [style]="'ios'"
              class="clearButton">close</tl-icon>
     <div class="count-characters" *ngIf="showCount">
-      {{ ( maxlength > 0 ) ? ( maxlength - textarea.value.length ) : textarea.value.length | number }}
+      {{ ( maxlength > 0 ) ? textarea.value.length + '/' + maxlength : textarea.value.length | number }}
     </div>
   </div>
 </div>

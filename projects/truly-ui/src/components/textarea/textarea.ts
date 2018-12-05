@@ -160,7 +160,7 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
   }
 
   onTextareaBlur( $event ) {
-    this.isShowingMessages = true;
+    this.isShowingMessages = false;
     this.blur.emit( $event );
   }
 

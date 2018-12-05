@@ -232,8 +232,10 @@ export class ModalService implements OnDestroy {
       this.removeOfList( id );
       return;
     }
-    this.removeOfView( this.selectedModal.modal );
-    this.removeOfList( this.selectedModal.id );
+    if (this.selectedModal) {
+      this.removeOfView( this.selectedModal.modal );
+      this.removeOfList( this.selectedModal.id );
+    }
   }
 
   private removeOfView( modal ) {

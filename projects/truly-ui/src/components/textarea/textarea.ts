@@ -23,8 +23,8 @@
 import {
   AfterViewInit,
   ChangeDetectorRef,
-  Component, ContentChild,
-  ElementRef,
+  Component,
+  ContentChild,
   EventEmitter,
   forwardRef,
   Input,
@@ -82,7 +82,7 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   @Input() showCount = false;
 
-  @ViewChild( 'textarea' ) textarea: ElementRef;
+  @ViewChild( 'textarea' ) textarea;
 
   @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
 
@@ -133,7 +133,7 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   handleValidator() {
     const currentControl = this.controlName ? this.controlName : this.model;
-    if (currentControl) {
+    if ( currentControl ) {
       this.hasValidator = currentControl.control.validator;
       this.change.detectChanges();
     }
@@ -150,14 +150,17 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   onTextareaClick( $event: MouseEvent ) {
     this.stopEvent($event);
+    this.isShowingMessages = true;
     this.click.emit( $event );
   }
 
   onTextareaFocus( $event ) {
+    this.isShowingMessages = true;
     this.focus.emit( $event );
   }
 
   onTextareaBlur( $event ) {
+    this.isShowingMessages = true;
     this.blur.emit( $event );
   }
 

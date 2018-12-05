@@ -511,7 +511,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscribeResize();
+    if (this.subscribeResize) {
+      this.subscribeResize();
+    }
     this.change.detach();
     this.subscription.unsubscribe();
   }

@@ -71,7 +71,9 @@ export class ModalService implements OnDestroy {
 
   private visibleModals = [];
 
-  constructor( private containerModal: ContainerModalService ) {}
+  constructor( private containerModal: ContainerModalService ) {
+    console.log( 'modal service', this );
+  }
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
     this.view = this.containerModal.getView();
@@ -171,8 +173,8 @@ export class ModalService implements OnDestroy {
       return;
     }
 
-    if ( this.validateUnique( config ) ) {
-      this.showModal(this.isModalExists( config ).modal);
+    if ( this.validateUnique( config ) && !this.isDeleteAction( config ) ) {
+      this.showModal( this.isModalExists( config ).modal );
       return;
     }
 
@@ -201,6 +203,11 @@ export class ModalService implements OnDestroy {
     if ( this.isConfigSmartForm( config ) ) {
       if ( this.isDeleteAction( config ) ) {
         this.confirmDelete( this.instanceComponent );
+      }
+    } else {
+      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration ) {
+        this.componentList = this.componentList.filter((value, index, array) => index !== 0);
+        this.view.remove( 0 );
       }
     }
   }
@@ -372,7 +379,7 @@ export class ModalService implements OnDestroy {
       const smartComponent = component;
       this.createModalDialog( TlDialogConfirmation, smartComponent.smartForm[ 'factory' ], null ).then( ( value: any ) => {
         if ( value.mdResult === ModalResult.MRYES ) {
-          this.handleSmartFormCallback( smartComponent, ModalResult.MRYES );
+          this.handleSmartFormCallback( smartComponent, { formResult: { value: smartComponent.smartForm['dataForm'] } } );
         }
       } );
       this.componentInjected.instance.message = smartComponent.smartForm[ 'deleteConfirmationMessage' ];
@@ -387,10 +394,10 @@ export class ModalService implements OnDestroy {
 
   private handleSmartFormCallback( component: ModalInstance, result ) {
     if ( this.isResultNotAllowed( component.smartForm, result )
-      || !this.isConfigSmartForm(component.smartForm )) {
+      || !this.isConfigSmartForm( component.smartForm ) ) {
       return;
     }
-    if ( this.mathActionsModal(component.smartForm).length === 0 ) {
+    if ( this.mathActionsModal( component.smartForm ).length === 0 ) {
       throw Error( 'The Action provided is not valid or is undefined' );
     }
     this.executeAction( component.smartForm, result );
@@ -398,7 +405,7 @@ export class ModalService implements OnDestroy {
 
   private mathActionsModal( component: ComponentFactoryResolver | SmartFormConfiguration ) {
     return Object.keys( ActionsModal ).filter( ( value, index, array ) =>
-    ActionsModal[ value ] === component['executeAction'] );
+    ActionsModal[ value ] === component[ 'executeAction' ] );
   }
 
   private executeAction( smartForm: ComponentFactoryResolver | SmartFormConfiguration, result ) {
@@ -410,8 +417,7 @@ export class ModalService implements OnDestroy {
         smartForm[ 'actions' ].updateCall( result.formResult.value );
       },
       'D': () => {
-        smartForm[ 'actions' ].deleteCall();
-        this.close( smartForm['identifier'] );
+        smartForm[ 'actions' ].deleteCall( result.formResult.value );
       },
       'V': () => {
         smartForm[ 'actions' ].viewCall();

@@ -52,7 +52,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       {
         path: 'calendar',
-        loadChildren: './components/calendar/calendardemo.module#CalendarDemoModule'
+        loadChildren: './components/switchcalendar/calendardemo.module#CalendarDemoModule'
       },
       {
         path: 'colorpicker',
@@ -229,6 +229,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'switch',
         loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
+      },
+      {
+        path: 'textarea',
+        loadChildren: './components/textarea/textareademo.module#TextareaDemoModule'
       },
       {
         path: 'clockpicker',

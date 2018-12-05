@@ -39,6 +39,7 @@
 @import "../../../stopwatch/stopwatch-theme";
 @import "../../../switch/switch-theme";
 @import "../../../tabcontrol/tabcontrol-theme";
+@import "../../../textarea/textarea-theme";
 @import "../../../timepicker/timepicker-theme";
 @import "../../../time-available-picker/time-available-picker-theme";
 @import "../../../internals/components/tag/tag-theme";
@@ -90,6 +91,7 @@
   @include tl-stopwatch-theme($theme);
   @include tl-switch-theme($theme);
   @include tl-tabcontrol-theme($theme);
+  @include tl-textarea-theme($theme);
   @include tl-timepicker-theme($theme);
   @include tl-time-available-picker-theme($theme);
   @include tl-tag-theme($theme);

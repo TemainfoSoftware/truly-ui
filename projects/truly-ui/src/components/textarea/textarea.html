@@ -1,0 +1,47 @@
+<div [class]="'tl-textarea ' + color">
+
+  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+
+  <div class="ui-wrapper-textarea" [style.height]="height">
+    <textarea #textarea
+              class="field"
+              cdkOverlayOrigin
+              [ngClass]="{
+                 'invalid': controlName?.control.errors || model?.control.errors,
+                 'withValidators': hasValidator,
+                 'withoutValidators': !hasValidator,
+                 'withBorder': withBorder,
+                 'withoutBorder': !withBorder
+               }"
+              [style.resize]="resize ? 'auto' : 'none'"
+              [style.height]="height"
+              [style.text-align]="textAlign"
+              [tabindex]="tabindex"
+              [disabled]="disabled || isDisabled"
+              [attr.name]="name"
+              [placeholder]="placeholder"
+              [attr.readonly]="readonly ? true : null"
+              [attr.maxlength]="maxlength"
+              [(ngModel)]="value"
+              (click)="onTextareaClick($event)"
+              (blur)="onTextareaBlur($event)"
+              (focus)="onTextareaFocus($event)"
+              (keydown)="onTextareaDown($event)"></textarea>
+    <tl-icon *ngIf="clearButton && value"
+             [style.lineHeight]="height"
+             (click)="clearTextarea($event)"
+             [lib]="'ion'"
+             [style]="'ios'"
+             class="clearButton">close</tl-icon>
+    <div class="count-characters" *ngIf="showCount">{{ countLength }}</div>
+  </div>
+</div>
+
+<ng-template cdkConnectedOverlay
+             *ngIf="showValidations"
+             [cdkConnectedOverlayHasBackdrop]="false"
+             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
+             [cdkConnectedOverlayOpen]="isShowingMessages">
+  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
+                        [width]="textarea.offsetWidth + 'px'"></tl-messagevalidation>
+</ng-template>

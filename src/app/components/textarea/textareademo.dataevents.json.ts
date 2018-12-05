@@ -21,13 +21,15 @@
 */
 export const dataEvents = [
   {
-    name: 'selected',
-    parameters: [
-      {
-        event: 'selected',
-        description: 'Action Selected'
-      }
-    ],
-    description: 'Callback to invoke when toogle event.',
+    name: 'clear',
+    description: 'Callback to invoke when button clear is clicked.',
   },
+  {
+    name: 'focus',
+    description: 'Callback to invoke when input receives focus.',
+  },
+  {
+    name: 'blur',
+    description: 'Callback to invoke when input lost focus.',
+  }
 ];

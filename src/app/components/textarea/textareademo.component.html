@@ -1,13 +1,7 @@
 <div class="router-outlet">
-  <div class="header-title-demo">
-    <h1 class="title">Textarea<span
-      class="module-name"><code><u>Module Name</u>: <strong>TextareaModule</strong></code></span></h1>
-    <p class="module-name-top"><code><u>Module Name</u>: <strong>TextareaModule</strong></code></p>
-    <p class="text-content">
-      The Truly-UI Textarea are styles for actions in forms, dialogs, and more with support for multiple sizes, states
-      and many properties for customization
-    </p>
-  </div>
+  <app-showcase-header name="Textarea" module="TextareaModule">
+    Input specifies an input field where the user can enter text.
+  </app-showcase-header>
   <div class="showcase">
     <div class="row">
       <div class="col-md-12">
@@ -23,8 +17,8 @@
                            [name]="'descricao'"
                            [placeholder]="'Descrição'"
                            [textAlign]="'justify'"
-                           [clearButton]="true"
-                           [color]="'primary'"></tl-textarea>
+                           [color]="'primary'"
+                           [showCount]="false"></tl-textarea>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

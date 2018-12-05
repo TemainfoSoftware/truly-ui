@@ -10,7 +10,10 @@
       <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
     </div>
     <div class="form-group">
-      <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
+      <tl-input formControlName="email" [showValidations]="true" [label]="'Email'"></tl-input>
+    </div>
+    <div class="form-group">
+      <tl-textarea formControlName="description" [label]="'Description'"  [height]="'30px'" [labelSize]="'100px'" [showValidations]="true"></tl-textarea>
     </div>
   </tl-panelgroup>
   <div class="spacer"></div>

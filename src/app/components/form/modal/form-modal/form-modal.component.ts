@@ -26,6 +26,7 @@ export class FormModalComponent {
     name: new FormControl('',  Validators.required),
     nickname: new FormControl('',  Validators.required),
     email: new FormControl('', [Validators.email, Validators.required]),
+    description: new FormControl('', [Validators.required, Validators.minLength(8)]),
     user: new FormControl('', Validators.required),
     password: new FormControl('', [
       Validators.required,

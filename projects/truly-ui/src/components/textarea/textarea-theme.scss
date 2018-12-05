@@ -93,9 +93,7 @@
       }
     }
     > .count-characters {
-      background-color: map-deep-get($basic, "lighter", "background");
       color: map-deep-get($basic, "default", "foreground");
-      border: 1px solid map-deep-get($basic, "default", "border");
     }
   }
 

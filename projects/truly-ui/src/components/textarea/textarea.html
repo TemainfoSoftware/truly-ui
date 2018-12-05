@@ -25,8 +25,7 @@
               [(ngModel)]="value"
               (click)="onTextareaClick($event)"
               (blur)="onTextareaBlur($event)"
-              (focus)="onTextareaFocus($event)"
-              (keydown)="onTextareaDown($event)"></textarea>
+              (focus)="onTextareaFocus($event)"></textarea>
     <tl-icon *ngIf="clearButton && value"
              [style.lineHeight]="height"
              (click)="clearTextarea($event)"

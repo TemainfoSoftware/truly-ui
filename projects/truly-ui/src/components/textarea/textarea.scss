@@ -35,10 +35,9 @@
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       font-size: 0.7em;
       position: absolute;
-      margin: -22px 0 0 0;
+      right: 0;
+      margin: -22px 2px 0 0;
       padding: 0 10px;
-      -webkit-border-bottom-left-radius: 3px;
-      -moz-border-radius-bottomleft: 3px;
       border-bottom-left-radius: 3px;
     }
     > .field::placeholder {

@@ -77,13 +77,6 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
-    name: 'flatBorder',
-    type: 'boolean',
-    default: 'false',
-    description: 'Defines if the input field has flat borders or not',
-    options: 'true | false'
-  },
-  {
     name: 'labelPlacement',
     type: 'string',
     default: 'left',

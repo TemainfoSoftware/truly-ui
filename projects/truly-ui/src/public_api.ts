@@ -50,6 +50,13 @@ export { TooltipModule } from './components/tooltip/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
+
+// Dialog Interfaces
+export { InfoOptions } from './components/dialog/dialog-info/info-options';
+export { ErrorOptions } from './components/dialog/dialog-error/error-options';
+export { AlertOptions } from './components/dialog/dialog-alert/alert-options';
+export { ConfirmationOptions } from './components/dialog/dialog-confirmation/confirmation-options';
+
 // Interfaces
 export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
 export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';

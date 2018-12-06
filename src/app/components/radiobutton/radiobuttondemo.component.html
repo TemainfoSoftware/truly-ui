@@ -46,17 +46,21 @@
   </div>
   <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
-      <h6>tl-radio-group</h6>
-      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      <h6>tl-radiobutton</h6>
-      <app-showcase-table-properties [data]="dataTablePropertiesRadioButton"></app-showcase-table-properties>
+      <div class="col-12">
+        <h6>tl-radio-group</h6>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        <h6>tl-radiobutton</h6>
+        <app-showcase-table-properties [data]="dataTablePropertiesRadioButton"></app-showcase-table-properties>
+      </div>
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
     <app-card>
-      <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
-      <h6>tl-radio-group</h6>
-      <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      <div class="col-12">
+        <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
+        <h6>tl-radio-group</h6>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </div>
     </app-card>
   </app-showcase-card>
 </div>

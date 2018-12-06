@@ -22,8 +22,9 @@
           <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
         </app-card>
         <app-card>
-          <h6>ToolbarConfig</h6>
-          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'json'">
+          <div class="col-12">
+            <h6>ToolbarConfig</h6>
+            <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'json'">
 font: {
     family:    { show: boolean, tooltipText: string }
     size:      { show: boolean, tooltipText: string }
@@ -49,6 +50,7 @@ others: {
     quote:     { show: boolean, tooltipText: string }
   }
                     </textarea>
+          </div>
         </app-card>
       </app-showcase-card>
       <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">

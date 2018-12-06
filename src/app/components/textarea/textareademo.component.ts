@@ -35,6 +35,18 @@ export class TextareaDemoComponent {
 
   public dataEvents;
 
+  public basic;
+
+  public readonly = 'I\'m an Truly Ui Textarea (Selectable)';
+
+  public disabled = 'I\'m an Truly Ui Textarea (Not Selectable)';
+
+  public clear = 'Click at the button side';
+
+  public uppercase = '';
+
+  public lowercase = '';
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;

@@ -20,7 +20,8 @@
     SOFTWARE.
 */
 
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import * as md5 from 'md5';
 
 @Component({
   selector: 'tl-avatar',
@@ -29,8 +30,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TlAvatar implements OnInit {
 
-  constructor() {}
+  @Input() shape = 'square';
 
-  ngOnInit() {}
+  @Input() size = '100px';
+
+  @Input() src: string;
+
+  @Input() gravatar: string;
+
+  @Input() icon: string;
+
+  @Input() text: string;
+
+  @Input() gender: 'female' | 'male' = 'male';
+
+  constructor() {
+  }
+
+  ngOnInit() {
+    this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${md5(this.gravatar)}?s=${this.size}&d=mm` : this.src;
+  }
 
 }

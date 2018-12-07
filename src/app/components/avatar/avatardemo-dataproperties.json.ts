@@ -21,10 +21,52 @@
 */
 export const dataProperties = [
   {
+    name: 'shape',
+    type: 'string',
+    default: 'square',
+    description: 'Displays a text.',
+    options: 'square | circle'
+  },
+  {
+    name: 'size',
+    type: 'string',
+    default: '100px',
+    description: 'Displays a text.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'src',
+    type: 'string',
+    default: 'null',
+    description: 'Displays a text.',
+    options: 'url image'
+  },
+  {
+    name: 'icon',
+    type: 'string',
+    default: 'null',
+    description: 'Displays a text.',
+    options: 'cheatsheet icon'
+  },
+  {
     name: 'text',
     type: 'string',
     default: 'null',
     description: 'Displays a text.',
     options: 'any text'
   },
+  {
+    name: 'gravatar',
+    type: 'string',
+    default: 'null',
+    description: 'Displays a text.',
+    options: 'email gravatar'
+  },
+  {
+    name: 'gender',
+    type: 'string',
+    default: 'female',
+    description: 'Displays a text.',
+    options: 'male | female'
+  }
 ];

@@ -142,46 +142,50 @@ Once your library is imported, you can use its components, directives and pipes 
 |------------------|--------------------------------------------------------|--------------|
 | accordion        |                                                        |   [Docs][1]  |
 | autocomplete     |                                                        |   [Docs][2]  |
-| badge            |                                                        |   [Docs][3]  |
-| blockui          |                                                        |   [Docs][4]  |
-| button           |                                                        |   [Docs][5]  |
-| buttongroup      |                                                        |   [Docs][6]  |
-| calendar         |                                                        |   [Docs][7]  |
-| chatlist         |                                                        |   [Docs][8]  |
-| checkbox         |                                                        |   [Docs][9]  |
-| colorpicker      |                                                        |   [Docs][10] |
-| contextmenu      |                                                        |   [Docs][11] |
-| datatable        |                                                        |   [Docs][12] |
-| datepicker       |                                                        |   [Docs][13] |
-| dialog           |                                                        |   [Docs][14] |
-| dropdownlist     |                                                        |   [Docs][15] |
-| editor           |                                                        |   [Docs][16] |
-| form             |                                                        |   [Docs][17] |
-| icon             |                                                        |   [Docs][18] |
-| input            |                                                        |   [Docs][19] |
-| listbox          |                                                        |   [Docs][20] |
-| menu             |                                                        |   [Docs][21] |
-| shortcut         |                                                        |   [Docs][22] |
-| modal            |                                                        |   [Docs][23] |
-| multiselect      |                                                        |   [Docs][24] |
-| multiview        |                                                        |   [Docs][25] |
-| navigator        |                                                        |   [Docs][26] |
-| overlaypanel     |                                                        |   [Docs][27] |
-| panelgroup       |                                                        |   [Docs][28] |
-| popupmenu        |                                                        |   [Docs][29] |
-| progressbar      |                                                        |   [Docs][30] |
-| radiobutton      |                                                        |   [Docs][31] |
-| sidebar          |                                                        |   [Docs][32] |
-| splitbutton      |                                                        |   [Docs][33] |
-| stopwatch        |                                                        |   [Docs][34] |
-| switch           |                                                        |   [Docs][35] |
-| tabcontrol       |                                                        |   [Docs][36] |
-| theming          |                                                        |   [Docs][37] |
-| timeline         |                                                        |   [Docs][38] |
-| toaster          |                                                        |   [Docs][39] |
-| toolbar          |                                                        |   [Docs][40] |
-| tooltip          |                                                        |   [Docs][41] |
-| validators       |                                                        |   [Docs][42] |
+| avatar           |                                                        |   [Docs][3]  |
+| badge            |                                                        |   [Docs][4]  |
+| blockui          |                                                        |   [Docs][5]  |
+| button           |                                                        |   [Docs][6]  |
+| buttongroup      |                                                        |   [Docs][7]  |
+| calendar         |                                                        |   [Docs][8]  |
+| chatlist         |                                                        |   [Docs][9]  |
+| checkbox         |                                                        |   [Docs][10]  |
+| colorpicker      |                                                        |   [Docs][11] |
+| contextmenu      |                                                        |   [Docs][12] |
+| datatable        |                                                        |   [Docs][13] |
+| datepicker       |                                                        |   [Docs][14] |
+| dialog           |                                                        |   [Docs][15] |
+| dropdownlist     |                                                        |   [Docs][16] |
+| editor           |                                                        |   [Docs][17] |
+| form             |                                                        |   [Docs][18] |
+| icon             |                                                        |   [Docs][19] |
+| input            |                                                        |   [Docs][20] |
+| listbox          |                                                        |   [Docs][21] |
+| menu             |                                                        |   [Docs][22] |
+| shortcut         |                                                        |   [Docs][23] |
+| modal            |                                                        |   [Docs][24] |
+| multiselect      |                                                        |   [Docs][25] |
+| multiview        |                                                        |   [Docs][26] |
+| navigator        |                                                        |   [Docs][27] |
+| overlaypanel     |                                                        |   [Docs][28] |
+| panelgroup       |                                                        |   [Docs][29] |
+| popupmenu        |                                                        |   [Docs][30] |
+| progressbar      |                                                        |   [Docs][31] |
+| radiobutton      |                                                        |   [Docs][32] |
+| sidebar          |                                                        |   [Docs][33] |
+| splitbutton      |                                                        |   [Docs][34] |
+| stopwatch        |                                                        |   [Docs][35] |
+| switch           |                                                        |   [Docs][36] |
+| tabcontrol       |                                                        |   [Docs][37] |
+| textarea         |                                                        |   [Docs][38] |
+| theming          |                                                        |   [Docs][39] |
+| timeavaliable    |                                                        |   [Docs][40] |
+| timeline         |                                                        |   [Docs][41] |
+| timepicker       |                                                        |   [Docs][42] |
+| toaster          |                                                        |   [Docs][43] |
+| toolbar          |                                                        |   [Docs][44] |
+| tooltip          |                                                        |   [Docs][45] |
+| validators       |                                                        |   [Docs][46] |
 
 
 #### In progress, planned, and non-planned features
@@ -189,8 +193,7 @@ Once your library is imported, you can use its components, directives and pipes 
 | Feature          | Status                              | Docs         | Issue          |
 |------------------|-------------------------------------|--------------|----------------|
 | datetimepicker   |                         non-planned |              |                |
-| timepicker       |        In-progress, planned S2 2018 |              |                |
-| clockpicker      |        In-progress, planned S2 2018 |              |                |
+| clockpicker      |        In-progress, planned S1 2019 |              |                |
 | monthyearpicker  |                         non-planned |              |                |
 | paginator        |        In-progress, planned S1 2019 |              |                |
 | schedule         |        In-progress, planned S1 2019 |              |                |
@@ -198,46 +201,50 @@ Once your library is imported, you can use its components, directives and pipes 
 
  [1]: http://truly-ui.com/accordion
  [2]: http://truly-ui.com/autocomplete
- [3]: http://truly-ui.com/badge
- [4]: http://truly-ui.com/blockui
- [5]: http://truly-ui.com/button
- [6]: http://truly-ui.com/buttongroup
- [7]: http://truly-ui.com/calendar
- [8]: http://truly-ui.com/chatlist
- [9]: http://truly-ui.com/checkbox
-[10]: http://truly-ui.com/colorpicker
-[11]: http://truly-ui.com/contextmenu
-[12]: http://truly-ui.com/datatable
-[13]: http://truly-ui.com/datepicker
-[14]: http://truly-ui.com/dialog
-[15]: http://truly-ui.com/dropdownlist
-[16]: http://truly-ui.com/editor
-[17]: http://truly-ui.com/form
-[18]: http://truly-ui.com/icon
-[19]: http://truly-ui.com/input
-[20]: http://truly-ui.com/listbox
-[21]: http://truly-ui.com/menu
-[22]: http://truly-ui.com/misc
-[23]: http://truly-ui.com/modal
-[24]: http://truly-ui.com/multiselect
-[25]: http://truly-ui.com/multiview
-[26]: http://truly-ui.com/navigator
-[27]: http://truly-ui.com/overlaypanel
-[28]: http://truly-ui.com/panelgroup
-[29]: http://truly-ui.com/popupmenu
-[30]: http://truly-ui.com/progressbar
-[31]: http://truly-ui.com/radiobutton
-[32]: http://truly-ui.com/sidebar
-[33]: http://truly-ui.com/splitbutton
-[34]: http://truly-ui.com/stopwatch
-[35]: http://truly-ui.com/switch
-[36]: http://truly-ui.com/tabcontrol
-[37]: http://truly-ui.com/theming
-[38]: http://truly-ui.com/timeline
-[39]: http://truly-ui.com/toaster
-[40]: http://truly-ui.com/toolbar
-[41]: http://truly-ui.com/tooltip
-[42]: http://truly-ui.com/validators
+ [3]: http://truly-ui.com/avatar
+ [4]: http://truly-ui.com/badge
+ [5]: http://truly-ui.com/blockui
+ [6]: http://truly-ui.com/button
+ [7]: http://truly-ui.com/buttongroup
+ [8]: http://truly-ui.com/calendar
+ [9]: http://truly-ui.com/chatlist
+ [10]: http://truly-ui.com/checkbox
+[11]: http://truly-ui.com/colorpicker
+[12]: http://truly-ui.com/contextmenu
+[13]: http://truly-ui.com/datatable
+[14]: http://truly-ui.com/datepicker
+[15]: http://truly-ui.com/dialog
+[16]: http://truly-ui.com/dropdownlist
+[17]: http://truly-ui.com/editor
+[18]: http://truly-ui.com/form
+[19]: http://truly-ui.com/icon
+[20]: http://truly-ui.com/input
+[21]: http://truly-ui.com/listbox
+[22]: http://truly-ui.com/menu
+[23]: http://truly-ui.com/misc
+[24]: http://truly-ui.com/modal
+[25]: http://truly-ui.com/multiselect
+[26]: http://truly-ui.com/multiview
+[27]: http://truly-ui.com/navigator
+[28]: http://truly-ui.com/overlaypanel
+[29]: http://truly-ui.com/panelgroup
+[30]: http://truly-ui.com/popupmenu
+[31]: http://truly-ui.com/progressbar
+[32]: http://truly-ui.com/radiobutton
+[33]: http://truly-ui.com/sidebar
+[34]: http://truly-ui.com/splitbutton
+[35]: http://truly-ui.com/stopwatch
+[36]: http://truly-ui.com/switch
+[37]: http://truly-ui.com/tabcontrol
+[38]: http://truly-ui.com/tabcontrol
+[39]: http://truly-ui.com/theming
+[40]: http://truly-ui.com/timeavaliable
+[41]: http://truly-ui.com/timeline
+[42]: http://truly-ui.com/timepicker
+[43]: http://truly-ui.com/toaster
+[44]: http://truly-ui.com/toolbar
+[45]: http://truly-ui.com/tooltip
+[46]: http://truly-ui.com/validators
 
 ## Feedback
 Feedback is always welcome.

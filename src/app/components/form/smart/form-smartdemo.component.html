@@ -81,7 +81,7 @@ export class AppModule { }
               <h4>Creating the CRUD Form</h4>
               <p>To create a CRUD form in truly-ui we should pass some the parameter <code>ModalConfiguration</code> like described bellow.</p>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-    this.modalService.createModal( NewPersonComponent, {
+    this.modalService.createSmartFormModal( NewPersonComponent, {
       factory: this.factory,
       executeAction: ActionsModal.INSERT,
       deleteMessage: 'Are you sure ?',

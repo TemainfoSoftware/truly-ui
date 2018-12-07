@@ -83,6 +83,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Input() label = '';
 
+  @Input() color = 'basic';
+
   @Input() iconBefore = '';
 
   @Input() iconAfter = '';

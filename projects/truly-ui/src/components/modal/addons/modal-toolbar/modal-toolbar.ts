@@ -21,7 +21,7 @@
  */
 
 import { ChangeDetectorRef, Component, ComponentRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalService } from '../../modal.service';
+import { ModalService } from '../../services/modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
 
@@ -88,7 +88,6 @@ export class TlModalToolbar implements OnInit {
   }
 
   showWindow( item: ComponentRef<any> ) {
-    this.modalService.setActiveModal( item );
     this.modalService.showModal( item );
   }
 

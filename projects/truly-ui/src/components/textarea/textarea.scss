@@ -1,0 +1,64 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@mixin textTextarea {
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-size: 0.9em;
+}
+
+.tl-textarea {
+  width: 100%;
+  position: relative;
+  display: table;
+  border-collapse: separate;
+
+  > .ui-wrapper-textarea {
+    position: relative;
+    > textarea::-webkit-scrollbar {
+      width: 8px;
+    }
+    > .field {
+      display: table-cell;
+      height: 23px;
+      padding: 4px 6px;
+      padding-right: 20px;
+      font-size: 12px;
+      width: 100%;
+      font-weight: normal;
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      border-radius: 3px;
+      transition: background-color 230ms ease-in-out;
+    }
+    > .count-characters {
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      font-size: 0.7em;
+      position: absolute;
+      right: 0;
+      margin: -22px 2px 0 0;
+      padding: 0 10px;
+      border-bottom-left-radius: 3px;
+    }
+    > .field::placeholder {
+      @include textTextarea;
+    }
+    > .field.-cursorblocked {
+      cursor: not-allowed;
+    }
+    > .field.-disabled {
+      cursor: default !important;
+    }
+    > .clearButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      line-height: 40px;
+      font-size: 1em;
+      padding-right: 15px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

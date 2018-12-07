@@ -1,4 +1,4 @@
-<div class="tl-input-box" #inputBox>
+<div [class]="'tl-input-box ' + color" #inputBox>
 
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
 
@@ -49,6 +49,7 @@
            (focus)="onInputFocus($event)">
     <tl-icon *ngIf="clearButton && value"
              [style.lineHeight]="height"
+             [size]="'1.5em'"
              (click)="clearInput($event)"
              [lib]="'ion'"
              [style]="'ios'"

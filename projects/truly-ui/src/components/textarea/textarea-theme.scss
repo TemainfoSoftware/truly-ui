@@ -1,0 +1,129 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-textarea-theme-schema( $theme, $action ){
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  textarea::-webkit-scrollbar-thumb {
+    background-color: map-deep-get($theme, $action, "default", "background");
+  }
+
+  textarea::-webkit-scrollbar-track {
+    background-color: map-deep-get($theme, $action, "default", "border");
+  }
+
+  .-clearbutton {
+    color: map-deep-get($basic, "lighter", "foreground");
+  }
+
+  .label {
+    color: map-deep-get($basic, "default", "foreground");
+    &.-validation {
+      color: map-deep-get($danger, "default", "background");
+    }
+  }
+
+  .ui-wrapper-textarea {
+    > .field {
+      background-color: map-deep-get($basic, "lighter", "background");
+      color: map-deep-get($basic, "lighter", "foreground");
+      -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+
+      &.withBorder {
+        border: 1px solid map-deep-get($basic, "default", "border");
+      }
+
+      &.withoutBorder {
+        border: none !important;
+      }
+
+      &::placeholder {
+        color: map-deep-get($basic, "lighter", "foreground");
+        opacity: 0.6;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus:not(.ng-dirty) {
+        background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
+        outline: none;
+        border: 1px solid map-deep-get($warning, "default", "border");
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        filter: Alpha(Opacity=70);
+        cursor: default !important;
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &:read-only {
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &.ng-touched.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+        outline: none;
+      }
+
+      &.ng-dirty.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+        outline: none;
+      }
+
+      &.ng-touched.invalid::placeholder {
+        color: rgba(map-deep-get($danger, "default", "background"), 0.8);
+      }
+
+      &.ng-valid.ng-touched:not(.invalid):not(.withoutValidators) {
+        border: 1px solid map-deep-get($success, "default", "border");
+        background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
+        outline: none;
+      }
+    }
+    > .count-characters {
+      color: map-deep-get($basic, "default", "foreground");
+    }
+  }
+
+}
+
+@mixin tl-textarea-theme( $theme ) {
+
+  .tl-textarea {
+    &.basic {
+      @include _tl-textarea-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-textarea-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-textarea-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-textarea-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-textarea-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-textarea-theme-schema($theme, 'information')
+    }
+  }
+}

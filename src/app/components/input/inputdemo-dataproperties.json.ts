@@ -28,6 +28,13 @@ export const dataProperties = [
     options: 'ion ion-printer | fas fa-home | any'
   },
   {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the input addons.',
+    options: 'basic | primary | success | information | warning | danger'
+  },
+  {
     name: 'iconAfter',
     type: 'string',
     default: 'null',

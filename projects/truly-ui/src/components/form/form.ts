@@ -31,7 +31,7 @@ import { TlInput } from '../input/input';
 import { FormGroup, NgForm, NgModel } from '@angular/forms';
 import { TlButton } from '../button/button';
 import { FormSubmitDirective } from './form-submit.directive';
-import { ModalService } from '../modal/modal.service';
+import { ModalService } from '../modal/services/modal.service';
 import { ActionsModal } from '../core/enums/actions-modal';
 import { Subscription } from 'rxjs';
 
@@ -223,7 +223,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   getElementsOfForm() {
     const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
     for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
-      if ( listFormComponents[ childFormComponents ].tagName === 'INPUT' &&
+      if ( (listFormComponents[ childFormComponents ].tagName === 'INPUT'
+        || listFormComponents[ childFormComponents ].tagName === 'TEXTAREA') &&
         !this.taggedNotForm( listFormComponents[ childFormComponents ] ) ) {
         this.focusElements.push( listFormComponents[ childFormComponents ] );
       }
@@ -351,11 +352,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.setFocusCancel();
         break;
       case KeyEvent.TAB:
-        $event.preventDefault();
+        if (!this.isTextArea()) {
+          $event.preventDefault();
+        }
         this.forwardTabbing();
         break;
       case KeyEvent.ENTER:
-        $event.preventDefault();
+        if (!this.isTextArea()) {
+          $event.preventDefault();
+        }
         this.forwardTabbing();
         break;
     }
@@ -384,12 +389,19 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     if ( this.isLastTabIndexOfForm() ) {
       return this.focusElements[ 0 ].focus();
     }
+    if ( this.isTextArea() ) {
+      return;
+    }
     const nextElement = (document.activeElement as HTMLElement).tabIndex + 1;
     for ( let element = nextElement; element < this.focusElements.length; element++ ) {
       if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
         return this.focusElements[ element ].focus();
       }
     }
+  }
+
+  isTextArea() {
+    return (document.activeElement as HTMLElement).localName === 'textarea';
   }
 
   isLastTabIndexOfForm() {

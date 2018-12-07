@@ -37,6 +37,7 @@
   @include tl-switch-theme($theme);
   @include tl-tag-theme($theme);
   @include tl-tabcontrol-theme($theme);
+  @include tl-textarea-theme($theme);
   @include tl-toaster-theme($theme);
   @include tl-toolbar-theme($theme);
   @include tl-timepicker-theme($theme);

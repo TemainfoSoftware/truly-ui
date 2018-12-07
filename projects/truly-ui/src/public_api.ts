@@ -40,6 +40,7 @@ export { StopwatchModule } from './components/stopwatch/index';
 export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { TabControlModule } from './components/tabcontrol/index';
+export { TextareaModule } from './components/textarea/index';
 export { TimelineModule } from './components/timeline/index';
 export { TimePickerModule } from './components/timepicker/index';
 export { TimeAvailablePickerModule } from './components/time-available-picker/index';
@@ -49,9 +50,16 @@ export { TooltipModule } from './components/tooltip/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
+
+// Dialog Interfaces
+export { InfoOptions } from './components/dialog/dialog-info/info-options';
+export { ErrorOptions } from './components/dialog/dialog-error/error-options';
+export { AlertOptions } from './components/dialog/dialog-alert/alert-options';
+export { ConfirmationOptions } from './components/dialog/dialog-confirmation/confirmation-options';
+
 // Interfaces
-export { ModalOptions, Modal } from './components/modal/modal-options';
-export { ModalConfig } from './components/modal/modal-config';
+export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
+export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
@@ -63,7 +71,7 @@ export { ModalResult } from './components/core/enums/modal-result';
 
 // Services
 export { DialogService } from './components/dialog/dialog.service';
-export { ModalService } from './components/modal/modal.service';
+export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';

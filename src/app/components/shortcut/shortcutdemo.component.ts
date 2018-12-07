@@ -42,8 +42,8 @@ export class ShortcutDemoComponent {
   }
 
   showDialog(text) {
-    this.dialogService.info( text, ( modalResult ) => {
-      console.log('Return', modalResult);
+    this.dialogService.info( text ).then(value => {
+      console.log('Return', value);
     });
   }
 

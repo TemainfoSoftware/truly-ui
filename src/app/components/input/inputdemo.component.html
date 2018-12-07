@@ -200,6 +200,31 @@
 </tl-input>
 </textarea>
             </div>
+            <div class="col-md-12">
+              <div class="spacer"></div>
+              <span>With theme</span>
+              <tl-input
+                [iconBefore]="'fas fa-print'"
+                [placeholder]="'With Placeholder'"
+                [textAfter]="'US'"
+                [color]="'primary'"
+                [clearButton]="true"
+                ngModel="With theme"
+                [autocomplete]="'off'">
+              </tl-input>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input
+  [iconBefore]="'fas fa-print'"
+  [placeholder]="'With Placeholder'"
+  [textAfter]="'US'"
+  [color]="'primary'"
+  [clearButton]="true"
+  ngModel="With theme"
+  [autocomplete]="'off'">
+</tl-input>
+</textarea>
+            </div>
           </app-card>
         </app-showcase-card>
       </div>

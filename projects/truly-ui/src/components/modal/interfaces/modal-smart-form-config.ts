@@ -19,11 +19,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { ActionsModal } from '../core/enums/actions-modal';
-import { LOCALE_I18N } from '../i18n/i18n.service';
 import { ComponentFactoryResolver, ElementRef } from '@angular/core';
+import { ActionsModal } from '../../core/enums/actions-modal';
 
-export interface ModalConfig {
+export interface ModalFormConfig {
   factory: ComponentFactoryResolver;
   executeAction: ActionsModal;
   identifier: string;
@@ -38,28 +37,4 @@ export interface ModalConfig {
     deleteCall?: Function;
     viewCall?: Function;
   };
-}
-
-export class ModalConfiguration implements ModalConfig {
-
-  factory;
-  executeAction;
-  identifier;
-  dataForm?;
-  unique?;
-  deleteConfirmationMessage?;
-  recordNotFoundMessage?;
-  parentElement?;
-
-  constructor() {
-    this.factory = null;
-    this.executeAction = ActionsModal.INSERT;
-    this.identifier = 'MODAL_1';
-    this.unique = false;
-    this.dataForm = null;
-    this.deleteConfirmationMessage = LOCALE_I18N.Form.deleteConfirmationMessage;
-    this.recordNotFoundMessage = LOCALE_I18N.Form.recordNotFoundMessage;
-    this.parentElement = null;
-  }
-
 }

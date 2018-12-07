@@ -83,9 +83,11 @@ export class TlRadioGroup extends ValueAccessorBase<string> implements AfterView
   }
 
   listenModelChange() {
-    this.model.valueChanges.subscribe((value) => {
-      this.handleModelValue();
-    });
+    if ( this.model ) {
+      this.model.valueChanges.subscribe((value) => {
+        this.handleModelValue();
+      });
+    }
   }
 
   validateProperty() {

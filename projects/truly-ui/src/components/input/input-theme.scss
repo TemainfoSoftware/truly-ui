@@ -1,19 +1,61 @@
 @import "../core/styles/theming/theming";
 
-@mixin tl-input-theme($theme) {
+@mixin _tl-input-theme-schema($theme, $action) {
 
   $basic: map-deep-get($theme, 'basic');
   $danger: map-deep-get($theme, 'danger');
   $success: map-deep-get($theme, 'success');
   $warning: map-deep-get($theme, 'warning');
 
-  .tl-input-box {
-    // Addon Element
-    .addon {
-      border-top: 1px solid map-deep-get($basic, "default", "border");
-      border-bottom: 1px solid map-deep-get($basic, "default", "border");
-      background-color: map-deep-get($basic, "default", "background");
+  // Addon Element
+  .addon {
+    border-top: 1px solid map-deep-get($theme, $action, "default", "border");
+    border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+
+    &.withBorder {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &.withoutBorder {
+      border: none !important;
+    }
+
+    &.-borderleft {
+      border-left: 1px solid map-deep-get($basic, "default", "border");
+    }
+    &.-borderright {
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+    }
+    &.-clearbutton {
       color: map-deep-get($basic, "default", "foreground");
+      background-color: transparent;
+    }
+    &.-clearbutton:hover {
+      opacity: 0.7;
+    }
+  }
+
+  .-clearbutton {
+    color: map-deep-get($basic, "lighter", "foreground");
+  }
+
+  .label {
+    color: map-deep-get($basic, "default", "foreground");
+    &.-validation {
+      color: map-deep-get($danger, "default", "background");
+    }
+  }
+
+  > .ui-wrapper-input {
+    background-color: map-deep-get($basic, "default", "background");
+    > .field {
+      background-color: map-deep-get($basic, "lighter", "background");
+      color: map-deep-get($basic, "lighter", "foreground");
+      -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+      box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
 
       &.withBorder {
         border: 1px solid map-deep-get($basic, "default", "border");
@@ -23,103 +65,85 @@
         border: none !important;
       }
 
-      &.-borderleft {
-        border-left: 1px solid map-deep-get($basic, "default", "border");
-      }
-      &.-borderright {
-        border-right: 1px solid map-deep-get($basic, "default", "border");
-      }
-      &.-clearbutton {
-        color: map-deep-get($basic, "default", "foreground");
-        background-color: transparent;
-      }
-      &.-clearbutton:hover {
-        opacity: 0.7;
-      }
-      &.-predefined {
-        color: map-deep-get($basic, "default", "foreground");
-        background-color: map-deep-get($basic, "default", "background");
-      }
-    }
-
-    .-clearbutton {
-      color: map-deep-get($basic, "lighter", "foreground");
-    }
-
-    .label {
-      color: map-deep-get($basic, "default", "foreground");
-      &.-validation {
-        color: map-deep-get($danger, "default", "background");
-      }
-    }
-
-    > .ui-wrapper-input {
-      background-color: map-deep-get($basic, "default", "background");
-      > .field {
-        background-color: map-deep-get($basic, "lighter", "background");
+      &::placeholder {
         color: map-deep-get($basic, "lighter", "foreground");
-        -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-        -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-        box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
-
-        &.withBorder {
-          border: 1px solid map-deep-get($basic, "default", "border");
-        }
-
-        &.withoutBorder {
-          border: none !important;
-        }
-
-        &::placeholder {
-          color: map-deep-get($basic, "lighter", "foreground");
-          opacity: 0.6;
-        }
-
-        &:focus {
-          outline: none;
-        }
-
-        &:focus:not(.ng-dirty) {
-          background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
-          outline: none;
-          border: 1px solid map-deep-get($warning, "default", "border");
-        }
-
-        &:disabled {
-          opacity: 0.35;
-          filter: Alpha(Opacity=70);
-          cursor: default !important;
-          background-color: map-deep-get($basic, "default", "background");
-          color: map-deep-get($basic, "default", "foreground");
-        }
-
-        &:read-only {
-          background-color: map-deep-get($basic, "default", "background");
-          color: map-deep-get($basic, "default", "foreground");
-        }
-
-        &.ng-touched.invalid {
-          border: 1px solid map-deep-get($danger, "default", "border");
-          background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
-          outline: none;
-        }
-
-        &.ng-dirty.invalid {
-          border: 1px solid map-deep-get($danger, "default", "border");
-          background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
-          outline: none;
-        }
-
-        &.ng-touched.invalid::placeholder {
-          color: rgba(map-deep-get($danger, "default", "background"), 0.8);
-        }
-
-        &.ng-valid.ng-touched:not(.invalid):not(.withoutValidators) {
-          border: 1px solid map-deep-get($success, "default", "border");
-          background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
-          outline: none;
-        }
+        opacity: 0.6;
       }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus:not(.ng-dirty) {
+        background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
+        outline: none;
+        border: 1px solid map-deep-get($warning, "default", "border");
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        filter: Alpha(Opacity=70);
+        cursor: default !important;
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &:read-only {
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &.ng-touched.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+        outline: none;
+      }
+
+      &.ng-dirty.invalid {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+        outline: none;
+      }
+
+      &.ng-touched.invalid::placeholder {
+        color: rgba(map-deep-get($danger, "default", "background"), 0.8);
+      }
+
+      &.ng-valid.ng-touched:not(.invalid):not(.withoutValidators) {
+        border: 1px solid map-deep-get($success, "default", "border");
+        background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
+        outline: none;
+      }
+    }
+  }
+}
+
+@mixin tl-input-theme( $theme ) {
+
+  .tl-input-box {
+
+    &.basic {
+      @include _tl-input-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-input-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-input-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-input-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-input-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-input-theme-schema($theme, 'information')
     }
   }
 }

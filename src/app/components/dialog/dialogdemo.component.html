@@ -60,6 +60,17 @@
         </textarea>
             </div>
           </app-card>
+          <app-card>
+            <div class="col-12">
+              <h6>The others methods types are the same template </h6>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+  showDialogInfo() {
+    this.dialogService.info( 'This is an Info Dialog' ).then( value => {
+      console.log( 'Return', value );
+  } );
+        </textarea>
+            </div>
+          </app-card>
         </app-showcase-card>
       </div>
     </div>
@@ -95,9 +106,9 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-       <div class="col-12">
-         <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
-       </div>
+        <div class="col-12">
+          <h4><code>All <b>Modal (tl-modal) Events</b> can be used on this component.</code></h4>
+        </div>
       </app-card>
     </app-showcase-card>
   </div>

@@ -9,27 +9,6 @@
           <tl-input formControlName="name" [showValidations]="true" [labelSize]="100" [label]="'Name'"></tl-input>
         </div>
       </div>
-      <div class="form-group">
-        <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
-      </div>
-      <div class="form-group">
-        <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
-      </div>
-      <div class="form-group">
-        <tl-multiselect formControlName="select" [data]="['James', 'Nicolas', 'Joe', 'Rachel' ]" [label]="'Select'" [labelSize]="'100'"></tl-multiselect>
-      </div>
-    </div>
-  </tl-panelgroup>
-  <div class="spacer"></div>
-  <tl-panelgroup [labelGroup]="'Access Informations'" fxLayout="column">
-    <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
-      <div class="form-group">
-        <tl-input formControlName="user" [showValidations]="true" [labelSize]="100" [label]="'User'"></tl-input>
-      </div>
-      <div class="form-group">
-      <tl-input password formControlName="password" [showValidations]="true" [labelSize]="100"
-                [label]="'Password'"></tl-input>
-      </div>
     </div>
   </tl-panelgroup>
 </tl-form>

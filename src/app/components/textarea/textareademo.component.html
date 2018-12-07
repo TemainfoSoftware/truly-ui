@@ -1,0 +1,126 @@
+<div class="router-outlet">
+  <app-showcase-header name="Textarea" module="TextareaModule">
+    Input specifies an input field where the user can enter text.
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-6">
+              <span>Basic</span>
+              <tl-textarea [(ngModel)]="basic"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [(ngModel)]="basic"></tl-textarea>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Label</span>
+              <tl-textarea [labelSize]="'20px'" [label]="'Description'"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [labelSize]="'20px'" [label]="'Description'"></tl-textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>Clear Button</span>
+              <tl-textarea [(ngModel)]="clear" [clearButton]="true"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [(ngModel)]="clear" [clearButton]="true"></tl-textarea>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Disabled</span>
+              <tl-textarea [(ngModel)]="disabled" [disabled]="true"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [(ngModel)]="disabled" [disabled]="true"></tl-textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>ReadOnly</span>
+              <tl-textarea [(ngModel)]="readonly" [readonly]="true"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [(ngModel)]="readonly" [readonly]="true"></tl-textarea>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Placeholder</span>
+              <tl-textarea [placeholder]="'With Placeholder'"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [placeholder]="'With Placeholder'"></tl-textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>Text Alignment Justify</span>
+              <tl-textarea [textAlign]="'justify'"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [textAlign]="'justify'"></tl-textarea>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <span>Resize</span>
+              <tl-textarea [resize]="true"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea [resize]="true"></tl-textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <span>With Directive Charcase(Uppercase)</span>
+              <tl-textarea charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea charcase="UPPERCASE" [(ngModel)]="uppercase"></tl-textarea>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <span>With Directive Charcase(Lowercase)</span>
+              <tl-textarea charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-textarea>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-textarea charcase="LOWERCASE" [(ngModel)]="lowercase"></tl-textarea>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

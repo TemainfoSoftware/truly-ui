@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { Injectable, ComponentFactoryResolver } from '@angular/core';
-import { ModalService } from '../modal/modal.service';
+import { ModalService } from '../modal/services/modal.service';
 
 import { TlDialogInfo } from './dialog-info/dialog-info';
 import { TlDialogAlert } from './dialog-alert/dialog-alert';
@@ -31,7 +31,8 @@ import { ConfirmationOptions } from './dialog-confirmation/confirmation-options'
 import { ErrorOptions } from './dialog-error/error-options';
 import { AlertOptions } from './dialog-alert/alert-options';
 import { InfoOptions } from './dialog-info/info-options';
-import { TlBackdrop } from '../core/components/backdrop/backdrop';
+import { ModalOptions } from '../modal/interfaces/modal-options';
+import { ModalResult } from '../core/enums/modal-result';
 
 export interface ConfirmCallback {
   isYes?: any;
@@ -41,48 +42,54 @@ export interface ConfirmCallback {
 @Injectable()
 export class DialogService {
 
-    constructor( private modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {}
+  constructor( private modalService: ModalService, private factoryResolver: ComponentFactoryResolver ) {
+  }
 
-    info( message: string, callback?: Function, options?: InfoOptions ) {
-        this.modalService.createModalDialog( TlDialogInfo, this.factoryResolver,  callback );
-        this.modalService.componentInjected.instance.message = message;
-        this.setDialogOptions( options );
-    }
+  info( message: string, options: InfoOptions = {}, mdOptions?: ModalOptions ) {
+    return new Promise( ( resolve ) => {
+      this.modalService.createModalDialog( TlDialogInfo, this.factoryResolver, mdOptions ).then( value => {
+        resolve( value );
+      } );
+      const optionsObj = Object.assign( options, { message: message } );
+      this.setDialogOptions( optionsObj );
+    } );
+  }
 
-    confirmation( message: string, callbackConfirmation: ConfirmCallback, options?: ConfirmationOptions ) {
-        this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, callbackConfirmation );
-        if (options) {
-            this.modalService.componentInjected.instance.defaultOK = options.defaultOK;
-        }
-        this.modalService.componentInjected.instance.message = message;
-        this.setDialogOptions( options );
-    }
+  alert( message: string, options: AlertOptions = {}, mdOptions?: ModalOptions ) {
+    return new Promise( ( resolve ) => {
+      this.modalService.createModalDialog( TlDialogAlert, this.factoryResolver, mdOptions ).then( value => {
+        resolve( value );
+      } );
+      const optionsObj = Object.assign( options, { message: message } );
+      this.setDialogOptions( optionsObj );
+    } );
+  }
 
-    alert( message: string, callback: Function, options?: AlertOptions ) {
-        this.modalService.createModalDialog( TlDialogAlert, this.factoryResolver, callback );
-        this.modalService.componentInjected.instance.message = message;
-        this.setDialogOptions( options );
-    }
+  error( message: string, options: ErrorOptions = {}, mdOptions?: ModalOptions ) {
+    return new Promise( ( resolve ) => {
+      this.modalService.createModalDialog( TlDialogError, this.factoryResolver, mdOptions ).then( value => {
+        resolve( value );
+      } );
+      const optionsObj = Object.assign( options, { message: message } );
+      this.setDialogOptions( optionsObj );
+    } );
+  }
 
-    error( message: string, callback?: Function, options?: ErrorOptions ) {
-        this.modalService.createModalDialog( TlDialogError, this.factoryResolver, callback );
-        this.modalService.componentInjected.instance.message = message;
-        this.setDialogOptions( options );
-    }
+  confirmation( message: string, callbackConfirmation: ConfirmCallback, options: ConfirmationOptions = {}, mdOptions?: ModalOptions ) {
+    this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, mdOptions ).then((value: any) => {
+      if ( value.mdResult === ModalResult.MRYES ) {
+        callbackConfirmation.isYes(ModalResult.MRYES);
+      } else if (value.mdResult === ModalResult.MRNO) {
+        callbackConfirmation.isYes(ModalResult.MRNO);
+      }
+    });
+    const optionsObj = Object.assign( options, { message: message } );
+    this.setDialogOptions( optionsObj );
+  }
 
-    private setDialogOptions( options ) {
-        if ( !this.existOptions( options ) ) {
-            return;
-        }
-        Object.keys( options ).forEach( ( value ) => {
-            this.modalService.componentInjected.instance[ value ] = options[ value ];
-        } );
-    }
-
-    private existOptions( options ) {
-        if (options === undefined) {
-            return false;
-        }
-        return Object.keys(options).length > 0;
-    }
+  private setDialogOptions( options ) {
+    Object.keys( options ).forEach( ( value ) => {
+      this.modalService.componentInjected.instance[ value ] = options[ value ];
+    } );
+  }
 }

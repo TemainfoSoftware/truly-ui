@@ -1,4 +1,4 @@
-<div #modal (mousedown)="setZIndex(); mousemoveListener()" (mouseup)="mouseupListener()" [ngClass]="{'tl-modal-container':true}" [class]="color">
+<div #modal (mousedown)="setActive(); mousemoveListener()" (mouseup)="mouseupListener()" [ngClass]="{'tl-modal-container':true}" [class]="color">
     <div class="header" #headerBox>
         <div class="bar"
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"

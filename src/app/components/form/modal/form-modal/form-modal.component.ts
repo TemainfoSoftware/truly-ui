@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/modal-options';
+import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Modal({
@@ -26,6 +26,7 @@ export class FormModalComponent {
     name: new FormControl('',  Validators.required),
     nickname: new FormControl('',  Validators.required),
     email: new FormControl('', [Validators.email, Validators.required]),
+    description: new FormControl('', [Validators.required, Validators.minLength(8)]),
     user: new FormControl('', Validators.required),
     password: new FormControl('', [
       Validators.required,

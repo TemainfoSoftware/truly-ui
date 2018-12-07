@@ -11,10 +11,10 @@
                [style.width]="modalBoxWidth + 'px'"
                [style.height]="'calc(' + height  + ' - 6px)'"
                [style.lineHeight]="'calc(' + height + ' - 6px)'"
-               *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.componentRef)"
-               [style.opacity]="item.componentRef === modalService.activeModal ? 1 : 0.7">
-              <span class="ui-container-item"><tl-icon>{{ item.componentRef.instance.icon }}</tl-icon></span>
-              <span class="ui-container-item">{{getTextContainerItem(item.componentRef.instance.title)}}</span>
+               *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.modal)"
+               [style.opacity]="item?.modal === modalService?.activeModal ? 1 : 0.7">
+              <span class="ui-container-item"><tl-icon>{{ item?.modal?.instance?.icon }}</tl-icon></span>
+              <span class="ui-container-item">{{item?.modal?.instance?.title}}</span>
           </div>
       </div>
     </div>

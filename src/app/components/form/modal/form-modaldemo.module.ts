@@ -11,6 +11,7 @@ import { RadioButtonModule } from '../../../../../projects/truly-ui/src/componen
 import { DatatableModule } from '../../../../../projects/truly-ui/src/components/datatable/index';
 import { DropDownListModule } from '../../../../../projects/truly-ui/src/components/dropdownlist/index';
 import { InputModule } from '../../../../../projects/truly-ui/src/components/input/index';
+import { TextareaModule } from '../../../../../projects/truly-ui/src/components/textarea';
 import { DumpDataService } from '../../../shared/services/dumpdata';
 import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
@@ -43,6 +44,7 @@ import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header
     DatatableModule,
     DropDownListModule,
     InputModule,
+    TextareaModule,
     ValidatorsModule,
     CheckBoxModule,
     FormModalDemoRoutingModule,

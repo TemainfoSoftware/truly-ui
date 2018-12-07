@@ -22,18 +22,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ModalService } from './modal.service';
 import { TlModal } from './modal';
 import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
-import { SidebarService } from './sidebar.service';
-
 import { BackdropModule } from '../core/components/backdrop/index';
 import { IconsModule } from '../icons/index';
 import { ModalResultDirective } from './directives/modal-result.directive';
 import { ShortcutService } from '../shortcut/shortcut.service';
 import { ShortcutModule } from '../shortcut/index';
+import { ModalService } from './services/modal.service';
+import { SidebarService } from './services/sidebar.service';
 
 @NgModule( {
     imports: [

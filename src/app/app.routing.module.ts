@@ -35,6 +35,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
       },
       {
+        path: 'avatar',
+        loadChildren: './components/avatar/avatardemo.module#AvatarDemoModule'
+      },
+      {
         path: 'badge',
         loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
       },

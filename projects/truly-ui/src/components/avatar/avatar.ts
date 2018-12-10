@@ -21,9 +21,9 @@
 */
 
 import {
-  Component,
+  Component, EventEmitter,
   Input,
-  OnInit
+  OnInit, Output
 } from '@angular/core';
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -44,15 +44,23 @@ export class TlAvatar implements OnInit {
 
   @Input() icon: string;
 
-  @Input() text = 'G';
+  @Input() text: string;
+
+  @Input() bgColor: string;
 
   @Input() gender: 'female' | 'male' = 'female';
+
+  @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
   }
 
   ngOnInit() {
     this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${this.size}&d=mm` : this.src;
+  }
+
+  public selectedAvatar($event) {
+    this.selected.emit($event);
   }
 
 }

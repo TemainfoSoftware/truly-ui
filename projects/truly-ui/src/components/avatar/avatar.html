@@ -4,7 +4,7 @@
      [ngStyle]="src ? {'background-image'   : 'url(' + src + ')',
                        'background-repeat'  : 'no-repeat',
                        'background-size'    : 'cover',
-                       'background-position': 'center'} : null">
+                       'background-position': 'center'} : {'background' : bgColor}" (click)="selectedAvatar($event)">
   <div *ngIf="!src">
     <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * 0.7)'}" *ngIf="icon">{{ icon }}</tl-icon>
     <span *ngIf="text && !icon">{{ text }}</span>

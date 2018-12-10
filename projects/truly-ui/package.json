@@ -31,6 +31,6 @@
     "@angular/core": "^7.1.0",
     "@angular/cdk": "~7.1.0",
     "string-format": "^2.0.0",
-    "md5": "^2.2.1"
+    "ts-md5": "^1.2.4"
   }
 }

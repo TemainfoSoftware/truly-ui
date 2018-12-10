@@ -44,19 +44,28 @@ export class TlAvatar implements OnInit {
 
   @Input() icon: string;
 
-  @Input() text: string;
+  @Input() text: 'string';
+
+  @Input() fontColor: string;
 
   @Input() bgColor: string;
 
   @Input() gender: 'female' | 'male' = 'female';
 
+  @Input() color = 'basic';
+
   @Output() selected: EventEmitter<any> = new EventEmitter<any>();
+
+  public fontSize = '1em';
 
   constructor() {
   }
 
   ngOnInit() {
     this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${this.size}&d=mm` : this.src;
+    if ( this.text && this.text.length === 1 ) {
+      this.fontSize = '2em';
+    }
   }
 
   public selectedAvatar($event) {

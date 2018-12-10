@@ -1,12 +1,19 @@
 @import "../core/styles/theming/theming";
 
 @mixin _tl-avatar-theme-schema( $theme, $action ){
-  //SKELETON COMPONENT HERE
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  background: map-deep-get($basic, "default", "background");
+  color: map-deep-get($basic, "default", "foreground");
 }
 
 @mixin tl-avatar-theme( $theme ) {
 
-  .tl-avatar{
+  .tl-avatar {
+
     &.basic {
       @include _tl-avatar-theme-schema($theme, 'basic')
     }
@@ -30,5 +37,6 @@
     &.information {
       @include _tl-avatar-theme-schema($theme, 'information')
     }
+
   }
 }

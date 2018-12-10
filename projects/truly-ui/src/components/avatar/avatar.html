@@ -1,15 +1,17 @@
-<div [class]="'tl-avatar ' + shape"
+<div [class]="'tl-avatar ' + color + ' ' + shape"
      [style.width]="size"
      [style.height]="size"
      [ngStyle]="src ? {'background-image'   : 'url(' + src + ')',
                        'background-repeat'  : 'no-repeat',
                        'background-size'    : 'cover',
                        'background-position': 'center'} : {'background' : bgColor}" (click)="selectedAvatar($event)">
-  <div *ngIf="!src">
+  <div *ngIf="!src" [style.color]="fontColor">
     <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * 0.7)'}" *ngIf="icon">{{ icon }}</tl-icon>
-    <span *ngIf="text && !icon">{{ text }}</span>
+    <div [ngStyle]="{'font-size': 'calc(' + size + ' * 0.2)'}">
+      <span [ngStyle]="{'font-size': fontSize}" *ngIf="text && !icon">{{ text }}</span>
+    </div>
     <div *ngIf="!text && !icon">
-      <tl-svg [size]="size" [gender]="gender" [shape]="shape"></tl-svg>
+      <tl-svg [size]="size" [gender]="gender" [shape]="shape" [fontColor]="fontColor"></tl-svg>
     </div>
   </div>
 </div>

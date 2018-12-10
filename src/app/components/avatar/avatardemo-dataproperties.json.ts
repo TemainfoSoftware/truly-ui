@@ -72,8 +72,15 @@ export const dataProperties = [
   {
     name: 'bgColor',
     type: 'string',
-    default: '#CCCCCC',
+    default: 'null',
     description: 'Changes the default color of the background.',
+    options: 'hex | rgb | rgba'
+  },
+  {
+    name: 'fontColor',
+    type: 'string',
+    default: 'null',
+    description: 'Changes the default color of the font.',
     options: 'hex | rgb | rgba'
   }
 ];

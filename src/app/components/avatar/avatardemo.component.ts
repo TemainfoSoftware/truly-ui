@@ -39,5 +39,9 @@ export class AvatarDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  public alert($event) {
+    console.log('Event click', $event);
+  }
 }
 

@@ -25,9 +25,9 @@ export const dataEvents = [
     parameters: [
       {
         event: 'selected',
-        description: 'Action Selected'
+        description: 'Avatar Selected'
       }
     ],
-    description: 'Callback to invoke when toogle event.',
+    description: 'Callback to invoke when clicking the avatar.',
   },
 ];

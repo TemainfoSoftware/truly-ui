@@ -1,0 +1,21 @@
+.tl-avatar {
+  position: relative;
+  background: #ccc;
+  color: #fff;
+}
+
+.tl-avatar tl-icon, span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.square {
+  border-radius: 3px;
+}
+
+.circle {
+  border-radius: 50%;
+}

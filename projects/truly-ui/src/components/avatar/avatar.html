@@ -1,0 +1,15 @@
+<div [class]="'tl-avatar ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [ngStyle]="src ? {'background-image'   : 'url(' + src + ')',
+                       'background-repeat'  : 'no-repeat',
+                       'background-size'    : 'cover',
+                       'background-position': 'center'} : null">
+  <div *ngIf="!src">
+    <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * 0.7)'}" *ngIf="icon">{{ icon }}</tl-icon>
+    <span *ngIf="text && !icon">{{ text }}</span>
+    <div *ngIf="!text && !icon">
+      <tl-svg [size]="size" [gender]="gender" [shape]="shape"></tl-svg>
+    </div>
+  </div>
+</div>

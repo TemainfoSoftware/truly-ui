@@ -37,7 +37,10 @@ export class TlLabel {
 
   @Input() labelTitle = '';
 
-  @HostBinding( 'style.width' ) public width: string = this.labelSize;
+  @HostBinding( 'style.width' )
+  get width() {
+    return this.labelSize;
+  }
 
   @HostBinding( 'class.label-left' )
   get left() {

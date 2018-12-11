@@ -12,7 +12,7 @@
          (click)="!disabled ? isOpen = !isOpen : null"
          (keydown)="onKeyDown($event)"
          class="ui-dropdown-wrapper-list"
-         [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight, 'width': width}"
+         [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
          #trigger="cdkOverlayOrigin">
         <label>{{ selectedDescription ? selectedDescription : placeholder }}</label>
         <div class="dropdown-list-icon"

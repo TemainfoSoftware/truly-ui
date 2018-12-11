@@ -1,7 +1,6 @@
 <div class="router-outlet">
   <app-showcase-header name="Avatar" module="AvatarModule">
-    The Truly-UI Avatar are styles for actions in forms, dialogs, and more with support for multiple sizes, states
-    and many properties for customization
+    Avatars can be used to represent people or objects. It supports images, Icons, or letters.
   </app-showcase-header>
   <div class="showcase">
     <div class="row">
@@ -53,13 +52,13 @@
             </div>
             <div class="col-md-6">
               <h6>Gravatar</h6>
-              <tl-avatar [gravatar]="'genesson_sauer@hotmail.com'" [size]="'60px'"></tl-avatar>
-              <tl-avatar [gravatar]="'genesson_sauer@hotmail.com'" [size]="'60px'" [shape]="'circle'"></tl-avatar>
+              <tl-avatar [gravatar]="emailGravatar" [size]="'60px'"></tl-avatar>
+              <tl-avatar [gravatar]="emailGravatar" [size]="'60px'" [shape]="'circle'"></tl-avatar>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-                <tl-avatar [gravatar]="'genesson_sauer@hotmail.com'" [size]="'60px'"></tl-avatar>
-<tl-avatar [gravatar]="'genesson_sauer@hotmail.com'" [size]="'60px'" [shape]="'circle'"></tl-avatar>
+                <tl-avatar [gravatar]="emailGravatar" [size]="'60px'"></tl-avatar>
+<tl-avatar [gravatar]="emailGravatar" [size]="'60px'" [shape]="'circle'"></tl-avatar>
               </textarea>
             </div>
           </app-card>

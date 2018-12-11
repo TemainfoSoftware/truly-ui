@@ -35,6 +35,8 @@ export class AvatarDemoComponent {
 
   public dataEvents;
 
+  public emailGravatar = 'genesson_sauer@hotmail.com';
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;

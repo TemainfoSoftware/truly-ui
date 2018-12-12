@@ -71,9 +71,7 @@ export class ModalService implements OnDestroy {
 
   private visibleModals = [];
 
-  constructor( private containerModal: ContainerModalService ) {
-    console.log( 'modal service', this );
-  }
+  constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
     this.view = this.containerModal.getView();
@@ -205,7 +203,8 @@ export class ModalService implements OnDestroy {
         this.confirmDelete( this.instanceComponent );
       }
     } else {
-      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration ) {
+      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration &&
+          this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation) {
         this.componentList = this.componentList.filter((value, index, array) => index !== 0);
         this.view.remove( 0 );
       }

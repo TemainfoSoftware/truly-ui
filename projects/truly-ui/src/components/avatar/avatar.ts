@@ -21,9 +21,12 @@
 */
 
 import {
-  Component, EventEmitter,
+  Component,
+  EventEmitter,
   Input,
-  OnInit, Output
+  OnInit,
+  OnChanges,
+  Output
 } from '@angular/core';
 import { Md5 } from 'ts-md5/dist/md5';
 
@@ -32,7 +35,7 @@ import { Md5 } from 'ts-md5/dist/md5';
   templateUrl: './avatar.html',
   styleUrls: ['./avatar.scss'],
 })
-export class TlAvatar implements OnInit {
+export class TlAvatar implements OnInit, OnChanges {
 
   @Input() shape = 'square';
 
@@ -50,7 +53,7 @@ export class TlAvatar implements OnInit {
 
   @Input() bgColor: string;
 
-  @Input() gender: 'female' | 'male' = 'female';
+  @Input() gender: 'female' | 'male' = 'male';
 
   @Input() color = 'basic';
 
@@ -62,14 +65,26 @@ export class TlAvatar implements OnInit {
   }
 
   ngOnInit() {
-    this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${this.size}&d=mm` : this.src;
-    if ( this.text && this.text.length === 1 ) {
+    this.setSource();
+    if ( this.isOneCharacter() ) {
       this.fontSize = '2em';
     }
   }
 
-  public selectedAvatar($event) {
+  setSource() {
+    this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${this.size}&d=mm` : this.src;
+  }
+
+  isOneCharacter() {
+    return this.text && this.text.length === 1;
+  }
+
+  selectedAvatar($event) {
     this.selected.emit($event);
+  }
+
+  ngOnChanges( changes ) {
+    this.setSource();
   }
 
 }

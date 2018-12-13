@@ -8,12 +8,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayListModule } from '../overlaylist/index';
 import { InternalsModule } from '../internals/index';
+import { IconsModule } from '../icons/index';
 
 @NgModule( {
   imports: [
     CommonModule,
     InputModule,
     OverlayListModule,
+    IconsModule,
     OverlayModule,
     A11yModule,
     InternalsModule,

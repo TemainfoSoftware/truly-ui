@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'tl-svg',
@@ -7,7 +7,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SvgComponent implements OnInit {
 
-  @Input() size: string;
+  @Input() width: string;
+
+  @Input() height: string;
 
   @Input() gender: string;
 

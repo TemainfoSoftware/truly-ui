@@ -47,7 +47,7 @@ export class TlAvatar implements OnInit, OnChanges {
 
   @Input() icon: string;
 
-  @Input() text: 'string';
+  @Input() text: string;
 
   @Input() fontColor: string;
 
@@ -59,20 +59,47 @@ export class TlAvatar implements OnInit, OnChanges {
 
   @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
-  public fontSize = '1em';
+  public type = 'gender';
+
+  public multiplierIcon;
+
+  public multiplierText;
+
+  public fontSize;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.setSource();
-    if ( this.isOneCharacter() ) {
-      this.fontSize = '2em';
+    this.defineType();
+  }
+
+  defineType() {
+    if ( this.src && this.src !== '' ) {
+      this.type = 'src';
+      return;
+    }
+    if ( this.gravatar && this.gravatar !== '' ) {
+      const sizeGravatar = ( this.isPercentage() ) ? '200px' : this.size;
+      this.gravatar = `//www.gravatar.com/avatar/${Md5.hashStr('genesson_sauer@hotmail.com')}?s=${sizeGravatar}&d=mm`;
+      this.type = 'gravatar';
+      return;
+    }
+    if ( this.icon && this.icon !== '' ) {
+      this.multiplierIcon = ( this.isPercentage() ) ? 25 : 0.7;
+      this.type = 'icon';
+      return;
+    }
+    if ( this.text && this.text !== '' ) {
+      this.multiplierText = ( this.isPercentage() ) ? 8 : 0.2;
+      this.fontSize = ( this.isOneCharacter() ) ? '2em' : '1em';
+      this.type = 'text';
+      return;
     }
   }
 
-  setSource() {
-    this.src = (this.gravatar) ? `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${this.size}&d=mm` : this.src;
+  isPercentage() {
+    return this.size.substr(this.size.length - 1) === '%';
   }
 
   isOneCharacter() {
@@ -84,7 +111,7 @@ export class TlAvatar implements OnInit, OnChanges {
   }
 
   ngOnChanges( changes ) {
-    this.setSource();
+    this.defineType();
   }
 
 }

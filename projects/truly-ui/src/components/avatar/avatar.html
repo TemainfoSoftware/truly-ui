@@ -1,17 +1,37 @@
-<div [class]="'tl-avatar ' + color + ' ' + shape"
+<div *ngIf="type === 'src'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
      [style.width]="size"
      [style.height]="size"
-     [ngStyle]="src ? {'background-image'   : 'url(' + src + ')',
-                       'background-repeat'  : 'no-repeat',
-                       'background-size'    : 'cover',
-                       'background-position': 'center'} : {'background' : bgColor}" (click)="selectedAvatar($event)">
-  <div *ngIf="!src" [style.color]="fontColor">
-    <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * 0.7)'}" *ngIf="icon">{{ icon }}</tl-icon>
-    <div [ngStyle]="{'font-size': 'calc(' + size + ' * 0.2)'}">
-      <span [ngStyle]="{'font-size': fontSize}" *ngIf="text && !icon">{{ text }}</span>
-    </div>
-    <div *ngIf="!text && !icon">
-      <tl-svg [size]="size" [gender]="gender" [shape]="shape" [fontColor]="fontColor"></tl-svg>
-    </div>
+     [ngStyle]="{'background-image'   : 'url(' + src + ')',
+                 'background-repeat'  : 'no-repeat',
+                 'background-size'    : 'cover',
+                 'background-position': 'center'}">
+</div>
+<div *ngIf="type === 'gravatar'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size">
+  <img [src]="gravatar" [style.width]="size" [class]="shape">
+</div>
+<div *ngIf="type === 'icon'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * ' + multiplierIcon + ')'}" [style.color]="fontColor">{{ icon }}</tl-icon>
+</div>
+<div *ngIf="type === 'text'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <div [ngStyle]="{'font-size': 'calc(' + size + ' * ' + multiplierText + ')'}">
+    <span [ngStyle]="{'font-size': fontSize}" [style.color]="fontColor">{{ text }}</span>
   </div>
+</div>
+<div *ngIf="type === 'gender'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor" #avatar>
+  <tl-svg [width]="avatar.offsetWidth" [height]="avatar.offsetHeight" [gender]="gender" [shape]="shape" [fontColor]="fontColor"></tl-svg>
 </div>

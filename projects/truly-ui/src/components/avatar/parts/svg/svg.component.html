@@ -2,14 +2,14 @@
   <svg enable-background="new 0 0 50 40"
     version="1.1"
     viewBox="0 0 50 40"
-    [style.width]="size"
-    [style.height]="size"
+    [style.width]="width"
+    [style.height]="height"
     [style.fill]="fontColor"
     [style.border-radius]="(shape === 'square') ? '3px' : '50%'"
     class="svg"
     xml:space="preserve"
     xmlns="http://www.w3.org/2000/svg">
-      <rect fill="none" [style.width]="size" [style.height]="size"/>
+      <rect fill="none" [style.width]="width" [style.height]="height"/>
       <path [attr.d]="(gender === 'female') ? pathFemale : pathMale"/>
   </svg>
 </div>

@@ -26,6 +26,7 @@ import {
   ComponentRef,
   Directive,
   ElementRef,
+  HostListener,
   Input,
   OnChanges,
   Renderer2,
@@ -54,6 +55,12 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
                private renderer: Renderer2,
                private change: ChangeDetectorRef,
                private compiler: ComponentFactoryResolver ) {
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize( changes ) {
+    this.hide();
+    this.show();
   }
 
   ngOnChanges( changes ) {
@@ -103,7 +110,7 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
 
       this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'table' );
 
-    }, 50);
+    }, 0);
   }
 
   private getElementRefFromInstance() {

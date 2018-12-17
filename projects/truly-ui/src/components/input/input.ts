@@ -25,7 +25,9 @@ import {
   ViewChild,
   AfterViewInit,
   Output,
-  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef,
+  Optional,
+  Inject,
+  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnChanges,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import {
@@ -34,6 +36,7 @@ import {
 } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { ValueAccessorBase } from './core/value-accessor';
+import { INPUT_CONFIG, InputConfig } from './core/input.config';
 
 /**
  * Input Component personalized with few features.
@@ -147,8 +150,11 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   public hasValidator;
 
-  constructor( private tlInput: ElementRef, private renderer: Renderer2, private change: ChangeDetectorRef ) {
+  constructor( @Optional() @Inject( INPUT_CONFIG ) private inputConfig: InputConfig,
+               private tlInput: ElementRef, private renderer: Renderer2,
+               private change: ChangeDetectorRef ) {
     super();
+    this.setOptions(this.inputConfig);
   }
 
   ngOnInit() {
@@ -194,6 +200,13 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
     this.stopEvent($event);
     this.isShowingMessages = true;
     this.click.emit( $event );
+  }
+
+  setOptions( options: InputConfig ) {
+    const self = this;
+    Object.keys( options ).forEach( function ( key ) {
+      self[ key ] = options[ key ];
+    } );
   }
 
   stopEvent($event) {

@@ -68,7 +68,7 @@ import { INPUT_CONFIG, InputConfig } from './core/input.config';
   styleUrls: [ './input.scss' ],
   providers: [ {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TlInput),
+    useExisting: forwardRef( () => TlInput ),
     multi: true,
   } ],
 } )
@@ -154,7 +154,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
                private tlInput: ElementRef, private renderer: Renderer2,
                private change: ChangeDetectorRef ) {
     super();
-    this.setOptions(this.inputConfig);
+    this.setOptions( this.inputConfig );
   }
 
   ngOnInit() {
@@ -169,7 +169,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   setRequired() {
     const currentControl = this.controlName ? this.controlName : this.model;
-    if ( currentControl && currentControl.control.errors) {
+    if ( currentControl && currentControl.control.errors ) {
       if ( currentControl.control.errors[ 'required' ] ) {
         this.required = true;
         this.change.detectChanges();
@@ -179,7 +179,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   handleValidator() {
     const currentControl = this.controlName ? this.controlName : this.model;
-    if (currentControl) {
+    if ( currentControl ) {
       this.hasValidator = currentControl.control.validator;
       this.change.detectChanges();
     }
@@ -192,24 +192,26 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   }
 
   onClickAddon( $event, side ) {
-    this.stopEvent($event);
+    this.stopEvent( $event );
     this.clickAddon.emit( { $event, side } );
   }
 
   onInputClick( $event: MouseEvent ) {
-    this.stopEvent($event);
+    this.stopEvent( $event );
     this.isShowingMessages = true;
     this.click.emit( $event );
   }
 
   setOptions( options: InputConfig ) {
-    const self = this;
-    Object.keys( options ).forEach( function ( key ) {
-      self[ key ] = options[ key ];
-    } );
+    if ( options ) {
+      const self = this;
+      Object.keys( options ).forEach( function ( key ) {
+        self[ key ] = options[ key ];
+      } );
+    }
   }
 
-  stopEvent($event) {
+  stopEvent( $event ) {
     $event.preventDefault();
     $event.stopPropagation();
   }

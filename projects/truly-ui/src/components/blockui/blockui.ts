@@ -20,13 +20,11 @@
  SOFTWARE.
  */
 import {
-  AfterContentInit,
   ChangeDetectorRef,
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
-  HostListener,
   Input,
   OnChanges,
   Renderer2,
@@ -38,7 +36,7 @@ import { TlBlockUIComponent } from './blockui.component';
 @Directive( {
   selector: '[tlBlockui]'
 } )
-export class TlBlockUI implements OnChanges, AfterContentInit {
+export class TlBlockUI implements OnChanges {
 
   @Input() tlBlockui: boolean;
 
@@ -57,33 +55,45 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
                private compiler: ComponentFactoryResolver ) {
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize( changes ) {
-    this.hide();
-    this.show();
-  }
-
-  ngOnChanges( changes ) {
-    if ( changes[ 'tlBlockui' ] && (!changes[ 'tlBlockui' ].firstChange) ) {
-      this.toggleLoader( changes[ 'tlBlockui' ].currentValue );
-    }
-  }
-
-  ngAfterContentInit() {
+  initializeBlockUi() {
     this.createElementInstance();
     this.getElementRefFromInstance();
     this.setConfigToElement();
-    this.buildLoadingElement();
-    this.toggleLoader( this.tlBlockui );
+    this.setStyleElementHidden();
+  }
+
+  setStyleElementHidden() {
+    this.renderer.setStyle(this.elementRef.nativeElement, 'position', 'relative');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'hidden');
+  }
+
+  setStyleElementVisible() {
+    this.renderer.setStyle(this.elementRef.nativeElement, 'position', 'relative');
+    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'auto');
+  }
+
+  private getElementRefFromInstance() {
+    this.overlayElement = this.overlayElementInstance.instance.element;
+  }
+
+  private setConfigToElement() {
+    this.overlayElementInstance.instance.config = this.blockuiConfig;
   }
 
   private createElementInstance() {
     const componentFactory = this.compiler.resolveComponentFactory( TlBlockUIComponent );
     this.overlayElementInstance = this.viewContainerRef.createComponent( componentFactory );
+    this.insertElement();
   }
 
-  private setConfigToElement() {
-    this.overlayElementInstance.instance.config = this.blockuiConfig;
+  private insertElement() {
+    this.elementRef.nativeElement.insertAdjacentElement( 'beforeend', this.overlayElementInstance.location.nativeElement );
+  }
+
+  ngOnChanges( changes ) {
+    if ( changes[ 'tlBlockui' ] ) {
+      this.toggleLoader( changes[ 'tlBlockui' ].currentValue );
+    }
   }
 
   private toggleLoader( showLoading: boolean ) {
@@ -91,59 +101,12 @@ export class TlBlockUI implements OnChanges, AfterContentInit {
   }
 
   private show() {
-    setTimeout(() => {
-      if ( this.happenedResize() ) {
-        this.buildLoadingElement();
-      }
-      this.renderer.setStyle( this.elementRef.nativeElement, 'filter', 'blur(1px)' );
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'top', this.elementRef.nativeElement.offsetTop + 'px' );
-
-      if (this.dimensionsFrom === 'client') {
-        this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px' );
-        this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px' );
-      } else {
-        this.renderer.setStyle( this.overlayElement.nativeElement, 'height',
-          this.elementRef.nativeElement.offsetParent.clientHeight + 'px' );
-        this.renderer.setStyle( this.overlayElement.nativeElement, 'width',
-          this.elementRef.nativeElement.offsetParent.clientWidth + 'px' );
-      }
-
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'table' );
-
-    }, 0);
-  }
-
-  private getElementRefFromInstance() {
-    this.overlayElement = this.overlayElementInstance.instance.element;
+    this.initializeBlockUi();
   }
 
   private hide() {
-    this.renderer.setStyle( this.elementRef.nativeElement, 'filter', 'blur(0px)' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'none' );
+    this.viewContainerRef.clear();
+    this.setStyleElementVisible();
   }
 
-  private happenedResize() {
-    if ( this.overlayElement.nativeElement.style.height !== this.elementRef.nativeElement.clientHeight + 'px' ) {
-      return true;
-    }
-    if ( this.overlayElement.nativeElement.style.width !== this.elementRef.nativeElement.clientWidth + 'px' ) {
-      return true;
-    }
-  }
-
-  private buildLoadingElement() {
-
-    if (this.dimensionsFrom === 'client') {
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.clientHeight + 'px' );
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.clientWidth + 'px' );
-    } else {
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'height', this.elementRef.nativeElement.offsetParent.clientHeight + 'px' );
-      this.renderer.setStyle( this.overlayElement.nativeElement, 'width', this.elementRef.nativeElement.offsetParent.clientWidth + 'px' );
-    }
-
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'position', 'absolute' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'display', 'none' );
-    this.renderer.setStyle( this.overlayElement.nativeElement, 'background-color', 'rgba(245, 245, 245, 0.8)' );
-    this.change.detectChanges();
-  }
 }

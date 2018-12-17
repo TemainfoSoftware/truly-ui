@@ -25,13 +25,7 @@ import { BlockUIConfig } from './blockui-config';
 
 @Component({
     selector: 'tl-blockui-component',
-    template: `
-      <div id="blockui">
-        <div class="blockui-content">
-          <tl-icon [size]="'3em'" [animation]="config.spin ? 'spin' : null">{{ config.icon }}</tl-icon>
-          <span *ngIf="config.message">{{ config.message }}</span>
-        </div>
-      </div>`,
+    templateUrl: './blockui.component.html',
     styleUrls: ['./blockui.scss']
 })
 export class TlBlockUIComponent {

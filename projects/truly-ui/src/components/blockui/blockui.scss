@@ -1,17 +1,25 @@
-#blockui {
+.blockui-wrapper {
   position: absolute;
-  top: calc(50% - 75px);
-  left: calc(50% - 75px);
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(245, 245, 245, 0.8);
+}
 
+#blockui {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .blockui-content {
-  display: inline-block;
+  display: flex;
+  place-content: start center;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
@@ -19,26 +27,4 @@
   position: relative;
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   color: #a5a3a2;
-}
-
-.blockui-content tl-icon {
-  display: flex;
-  width: 150px;
-  color: #a5a3a2;
-  align-items: center;
-  justify-content: center;
-}
-
-.spin {
-  -webkit-animation: rotation 800ms infinite linear;
-  transform-origin: 50% 50% !important;
-}
-
-@-webkit-keyframes rotation {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(359deg);
-  }
 }

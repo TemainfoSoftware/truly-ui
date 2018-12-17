@@ -27,7 +27,7 @@ import {
   Inject,
   Optional,
   ViewChild,
-  ElementRef
+  ElementRef, OnChanges
 } from '@angular/core';
 
 import { debounceTime } from 'rxjs/internal/operators';
@@ -38,6 +38,7 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
 import { ListItemMeta } from '../overlaylist/overlay-list';
+import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
 
 @Component( {
   selector: 'tl-dropdown-list',
@@ -48,7 +49,7 @@ import { ListItemMeta } from '../overlaylist/overlay-list';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements AfterViewInit, OnInit {
+export class TlDropDownList extends ElementBase<string> implements OnInit, OnChanges {
 
   @Input( 'data' ) data: any[] = [];
 
@@ -62,7 +63,7 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   @Input( 'debounceTime' ) debounceTime = 200;
 
-  @Input( 'disabled' ) disabled = null;
+  @Input( 'disabled' ) disabled = true;
 
   @Input( 'labelPlacement' ) labelPlacement = 'left';
 
@@ -100,29 +101,36 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
 
   public datasource = [];
 
+  public isLoading = true;
+
   private subject = new Subject();
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any> ) {
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig,
+               @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
+    this.setOptions( dropdownConfig );
   }
 
   ngOnInit() {
-    this.datasource = this.data;
     this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
       this.handleSearch( searchTextValue );
     } );
   }
 
-  ngAfterViewInit() {
+  initializeComponent() {
+    this.setUpComponent();
     this.validateData();
     this.listenModelChange();
   }
 
+  setUpComponent() {
+    this.datasource = this.data;
+    this.disabled = false;
+    this.isLoading = false;
+  }
+
   validateData() {
-    if ( ( this.data[ 0 ] === undefined ) ) {
-      throw new EvalError( 'You must pass some valid data to the DATA property of the tl-dropdown-list element.' );
-    }
     const key = Object.keys( this.data )[ 0 ];
     if ( typeof this.data[ key ] === 'string' ) {
       this.typeOfData = 'simple';
@@ -174,6 +182,15 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
     } );
   }
 
+  setOptions( options: DropdownConfig ) {
+    if ( options ) {
+      const self = this;
+      Object.keys( options ).forEach( function ( key ) {
+        self[ key ] = options[ key ];
+      } );
+    }
+  }
+
   getCompare( value ) {
     return this.isSimpleData() ? value : value[ this.keyValue ];
   }
@@ -191,6 +208,14 @@ export class TlDropDownList extends ElementBase<string> implements AfterViewInit
           this.isOpen = true;
         }
         break;
+    }
+  }
+
+  ngOnChanges(changes) {
+    if (changes['data']) {
+      if (changes['data'].currentValue) {
+        this.initializeComponent();
+      }
     }
   }
 

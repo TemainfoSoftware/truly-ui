@@ -24,7 +24,7 @@ import { KeyEvent } from '../../core/enums/key-events';
 import { I18nService } from '../../i18n/i18n.service';
 import { Modal } from '../../modal/interfaces/modal-options';
 
-@Modal({
+@Modal( {
   icon: 'fas fa-check',
   title: 'Confirmation',
   color: 'success',
@@ -35,61 +35,59 @@ import { Modal } from '../../modal/interfaces/modal-options';
   minimizable: false,
   backdrop: true,
   closeOnOK: true
-})
-@Component({
-    selector: 'tl-dialog-confirmation',
-    templateUrl: './dialog-confirmation.html',
-    styleUrls: ['../dialog.scss']
-})
+} )
+@Component( {
+  selector: 'tl-dialog-confirmation',
+  templateUrl: './dialog-confirmation.html',
+  styleUrls: [ '../dialog.scss' ]
+} )
 export class TlDialogConfirmation implements OnInit {
 
-    message = '';
+  message = '';
 
-    get textNo() {
-      return this.i18n.getLocale().Dialog.textNo;
+  get textNo() {
+    return this.i18n.getLocale().Dialog.textNo;
+  }
+
+  get textYes() {
+    return this.i18n.getLocale().Dialog.textYes;
+  }
+
+  @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
+
+  @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
+
+  private defaultOK;
+
+  constructor( private i18n: I18nService ) {
+  }
+
+  ngOnInit() {
+    this.defaultOK === true || this.defaultOK === undefined ? this.buttonDialogOk.buttonElement.nativeElement.focus() :
+      this.buttonDialogCancel.buttonElement.nativeElement.focus();
+  }
+
+  onkeyup( $event: KeyboardEvent ) {
+    switch ( $event.keyCode ) {
+      case KeyEvent.ARROWLEFT:
+        this.setPreviousButton();
+        break;
+      case KeyEvent.ARROWRIGHT:
+        this.setNextButton();
+        break;
+      case KeyEvent.TAB:
+        $event.preventDefault();
+        document.activeElement === this.buttonDialogOk.buttonElement.nativeElement
+          ? this.setNextButton() : this.setPreviousButton();
+        break;
     }
+  }
 
-    get textYes() {
-      return this.i18n.getLocale().Dialog.textYes;
-    }
+  private setPreviousButton() {
+    this.buttonDialogOk.buttonElement.nativeElement.focus();
+  }
 
-    @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
-
-    @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
-
-    private defaultOK;
-
-    constructor(  private i18n: I18nService ) {}
-
-    ngOnInit() {
-      this.defaultOK === true || this.defaultOK === undefined ? this.buttonDialogOk.buttonElement.nativeElement.focus() :
-        this.buttonDialogCancel.buttonElement.nativeElement.focus();
-    }
-
-    onkeyup( $event: KeyboardEvent ) {
-        switch ( $event.keyCode ) {
-            case KeyEvent.ARROWLEFT:
-                this.setPreviousButton();
-            break;
-            case KeyEvent.ARROWRIGHT:
-                this.setNextButton();
-                break;
-            case KeyEvent.TAB:
-                $event.preventDefault();
-                document.activeElement === this.buttonDialogOk.buttonElement.nativeElement
-                    ? this.setNextButton() : this.setPreviousButton();
-                break;
-            case KeyEvent.ESCAPE:
-                this.buttonDialogCancel.dispatchCallback();
-                break;
-        }
-    }
-
-    private setPreviousButton() {
-        this.buttonDialogOk.buttonElement.nativeElement.focus();
-    }
-
-    private setNextButton() {
-        this.buttonDialogCancel.buttonElement.nativeElement.focus();
-    }
+  private setNextButton() {
+    this.buttonDialogCancel.buttonElement.nativeElement.focus();
+  }
 }

@@ -17,6 +17,13 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   width: 100%;
   position: relative;
   display: table;
+
+  > tl-icon {
+    position: absolute;
+    right: 30px;
+    opacity: 0.3;
+  }
+
   > .ui-dropdown-wrapper {
     border-radius:3px;
     width: 100%;

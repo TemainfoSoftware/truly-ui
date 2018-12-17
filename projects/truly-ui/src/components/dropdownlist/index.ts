@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TlDropDownList } from './dropdownlist';
@@ -9,6 +9,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { OverlayListModule } from '../overlaylist/index';
 import { InternalsModule } from '../internals/index';
 import { IconsModule } from '../icons/index';
+import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
 
 @NgModule( {
   imports: [
@@ -29,4 +30,12 @@ import { IconsModule } from '../icons/index';
   ],
 } )
 export class DropDownListModule {
+  static forRoot(config: DropdownConfig = null): ModuleWithProviders {
+    return {
+      ngModule: DropDownListModule,
+      providers: [
+        { provide: DROPDOWN_CONFIG, useValue: config },
+      ]
+    };
+  }
 }

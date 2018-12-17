@@ -102,6 +102,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() rowsClient = 5;
 
+  @Input() addNewItem = true;
+
   @Input() addNewMessage = 'Add New';
 
   @ViewChild( NgModel ) model: NgModel;

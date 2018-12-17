@@ -182,11 +182,8 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
       for (let i = 0; i < this.elementListTabs.length; i++) {
         this.widthTabs = this.widthTabs + Number(this.elementListTabs[i].offsetWidth);
       }
-      this.topPosition =
-        Math.floor((this.wrapper.nativeElement.offsetTop) -
-          (this.line.nativeElement.offsetHeight / 2) + (parseInt(this.tabsHeight, 10)));
-      this.widthSeparator = 'calc(100% - ' + ((this.widthTabs) + this.wrapper.nativeElement.offsetLeft +
-        this.line.nativeElement.offsetLeft) + 'px' + ' )';
+      this.topPosition = (this.line.nativeElement.offsetHeight / 2) - 1;
+      this.widthSeparator = 'calc(100% - ' + (this.widthTabs) + 'px' + ' )';
     }
 
     resetTabsSelected() {

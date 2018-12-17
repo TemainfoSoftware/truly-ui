@@ -3,6 +3,7 @@
 }
 
 .wrapper-tabcontrol {
+  position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -10,13 +11,14 @@
   box-sizing: border-box;
 
   >.line-separator {
+    left: 0;
+    position: absolute;
     box-sizing: border-box;
     font-size: 12px;
     height: 26px;
     line-height: 26px;
     overflow: hidden;
     width: 100%;
-    position: absolute;
   }
   >.line-separator:after {
     display: inline-block;

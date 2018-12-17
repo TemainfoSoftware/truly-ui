@@ -1,21 +1,21 @@
-<div class="wrapper-tabcontrol" #wrapperTab>
-  <ng-template #tabsHeader let-tabs="tabs">
-    <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
-      <li *ngFor="let tab of tabs"
-          [ngStyle]="{'height': tabsHeight, 'line-height': tabsHeight}"
-          [ngClass]="{'tab-selected': tab.selected}" (click)="selectTab(tab)">
-        {{tab.title}}
-      </li>
-    </ul>
-  </ng-template>
+  <div class="wrapper-tabcontrol" #wrapperTab>
+    <ng-template #tabsHeader let-tabs="tabs">
+      <ul class="tab-panel-buttons" [style.display]="tabs ? 'block' : 'none'">
+        <li *ngFor="let tab of tabs"
+            [ngStyle]="{'height': tabsHeight, 'line-height': tabsHeight}"
+            [ngClass]="{'tab-selected': tab.selected}" (click)="selectTab(tab)">
+          {{tab.title}}
+        </li>
+      </ul>
+    </ng-template>
 
-  <div class="line-separator"
-        #line
-        [style.width]="widthSeparator"
-        [style.top]="topPosition - 1 + 'px'"
-        [style.left]="(widthTabs + wrapper.nativeElement.offsetLeft) - 1 +'px'">
+    <div class="line-separator"
+          #line
+          [style.width]="widthSeparator"
+          [style.top]="topPosition - 1 + 'px'"
+          [style.left]="(widthTabs) +'px'">
+    </div>
+
+    <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
+    <ng-content></ng-content>
   </div>
-
-  <ng-container *ngTemplateOutlet="tabsHeader; context: tabsContext"></ng-container>
-  <ng-content></ng-content>
-</div>

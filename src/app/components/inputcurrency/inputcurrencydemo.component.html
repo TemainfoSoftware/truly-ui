@@ -47,7 +47,8 @@
     </div>
     <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
       <app-card>
-        <h6>Currency Options Type</h6>
+        <div class="col-md-12">
+          <h6>Currency Options</h6>
         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
  export interface CurrencyConfig {
   align: string;
@@ -61,6 +62,7 @@
   nullable: boolean;
 }
         </textarea>
+        </div>
       </app-card>
       <app-card>
         <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>

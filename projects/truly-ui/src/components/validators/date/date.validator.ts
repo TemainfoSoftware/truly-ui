@@ -24,14 +24,14 @@ import { LOCALE_I18N } from '../../i18n/i18n.service';
 
 import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
 
-export function DateValidator( formatDate ): ValidatorFn {
+export function DateValidator( formatDate, isoDate = false ): ValidatorFn {
   return ( c: AbstractControl ) => {
 
     if ( !stringUnmasked( c ) && c.touched ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
     }
 
-    if ( (stringUnmasked( c ).length) !== formatDate.length ) {
+    if ( (stringUnmasked( c ).length) !== formatDate.length && !isoDate ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
     }
 
@@ -49,4 +49,3 @@ export function DateValidator( formatDate ): ValidatorFn {
 function stringUnmasked( c ) {
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
 }
-

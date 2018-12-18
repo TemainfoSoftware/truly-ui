@@ -19,7 +19,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-export function ReverseFormatDate( value, formatDate ): Object {
+
+export interface DateFormat {
+  day: number;
+  month: number;
+  year: number;
+}
+
+export function ReverseFormatDate( value, formatDate ): DateFormat {
   formatDate = formatDate.toLowerCase();
   const formatTmp = formatDate.replace( /[a-z]/gi, '' );
   const formatArray = formatTmp.split( '' );

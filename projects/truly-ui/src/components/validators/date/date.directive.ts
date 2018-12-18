@@ -72,7 +72,7 @@ export class DateDirective implements Validator, AfterContentInit {
     if (this.tlinput.value) {
       return (this.tlinput.value.replace( /_/gi, '' ).replace( /\//gi, '' )).trim();
     }
-    return null;
+    return [];
   }
 
   getDatePipeFormat( value ) {

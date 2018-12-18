@@ -107,10 +107,8 @@ export class AddNewRenderService {
   }
 
   handleAddNewSelected() {
-    if ( this.listBox.addNew ) {
-      if ( this.addNewElement.nativeElement.className.includes( 'selected' ) ) {
-        this.listBox.handleClickAddNew();
-      }
+    if ( this.addNewElement.nativeElement.className.includes( 'selected' ) ) {
+      this.listBox.handleClickAddNew();
     }
   }
 }

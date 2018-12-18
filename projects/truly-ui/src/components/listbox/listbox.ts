@@ -461,7 +461,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) );
     }
     $event.preventDefault();
-    this.addNewRenderService.handleAddNewSelected();
+    if (this.addNew) {
+      this.addNewRenderService.handleAddNewSelected();
+    }
   }
 
   handleKeyArrowDown( $event ) {

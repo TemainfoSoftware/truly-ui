@@ -149,9 +149,15 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-  handleClickOption( index: number ) {
+  handleClickOption( index: number, $event ) {
+    this.stopEvent($event);
     this.keyManager.setActiveItem( index );
     this.emitSelectOption();
+  }
+
+  stopEvent($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 
   searching() {

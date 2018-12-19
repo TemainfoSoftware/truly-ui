@@ -39,7 +39,7 @@ export class TlPanelGroup implements AfterViewInit {
 
     @Input() fontColorCaption = '';
 
-    @Input() fontSizeCaption = '';
+    @Input() fontSizeCaption = '1em';
 
     constructor() {}
 

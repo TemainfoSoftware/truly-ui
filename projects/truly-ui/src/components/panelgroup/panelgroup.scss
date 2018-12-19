@@ -18,10 +18,15 @@
 }
 
 .header-group span {
-  font-size: 12px;
   overflow: hidden;
   display: table-cell;
   vertical-align: middle;
+}
+
+.header-group {
+  > .group-caption {
+    font-weight: 600;
+  }
 }
 
 .header-group span.spacer-left {

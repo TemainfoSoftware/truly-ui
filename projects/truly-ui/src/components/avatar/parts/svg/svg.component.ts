@@ -7,9 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class SvgComponent implements OnInit {
 
-  @Input() width: string;
-
-  @Input() height: string;
+  @Input() size: string;
 
   @Input() gender: string;
 

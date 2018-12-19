@@ -91,7 +91,6 @@ export class ToasterService {
 
   private addToaster() {
     this.listToasters = [ ...this.listToasters, this.toaster ];
-    console.log( 'list', this.listToasters );
   }
 
   close( id: string ) {

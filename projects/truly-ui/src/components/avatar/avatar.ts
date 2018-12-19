@@ -81,7 +81,7 @@ export class TlAvatar implements OnInit, OnChanges {
     }
     if ( this.gravatar && this.gravatar !== '' ) {
       const sizeGravatar = ( this.isPercentage() ) ? '200px' : this.size;
-      this.gravatar = `//www.gravatar.com/avatar/${Md5.hashStr('genesson_sauer@hotmail.com')}?s=${sizeGravatar}&d=mm`;
+      this.gravatar = `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${sizeGravatar}&d=mm`;
       this.type = 'gravatar';
       return;
     }

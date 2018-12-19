@@ -216,7 +216,7 @@ export class ModalService implements OnDestroy {
   }
 
   private validateDataFormUpdate( component ) {
-    if ( Object.keys( component[ 'dataForm' ] ).length === 0 ) {
+    if ( !component[ 'dataForm' ] ) {
       this.createModalDialog( TlDialogInfo, component[ 'factory' ], null );
       this.componentInjected.instance.message = component[ 'recordNotFoundMessage' ];
       return false;

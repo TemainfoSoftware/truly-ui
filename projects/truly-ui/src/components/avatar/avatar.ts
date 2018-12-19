@@ -67,6 +67,8 @@ export class TlAvatar implements OnInit, OnChanges {
 
   public fontSize;
 
+  public gravatarImg;
+
   constructor() {
   }
 
@@ -75,34 +77,66 @@ export class TlAvatar implements OnInit, OnChanges {
   }
 
   defineType() {
-    if ( this.src && this.src !== '' ) {
-      this.type = 'src';
+    if ( this.isSrc() ) {
+      this.setSrc();
       return;
     }
-    if ( this.gravatar && this.gravatar !== '' ) {
-      const sizeGravatar = ( this.isPercentage() ) ? '200px' : this.size;
-      this.gravatar = `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${sizeGravatar}&d=mm`;
-      this.type = 'gravatar';
+    if ( this.isGravatar() ) {
+      this.setGravatar();
       return;
     }
-    if ( this.icon && this.icon !== '' ) {
-      this.multiplierIcon = ( this.isPercentage() ) ? 25 : 0.7;
-      this.type = 'icon';
+    if ( this.isIcon() ) {
+      this.setIcon();
       return;
     }
-    if ( this.text && this.text !== '' ) {
-      this.multiplierText = ( this.isPercentage() ) ? 8 : 0.2;
-      this.fontSize = ( this.isOneCharacter() ) ? '2em' : '1em';
-      this.type = 'text';
+    if ( this.isText() ) {
+      this.setText();
       return;
     }
   }
 
-  isPercentage() {
+  private isSrc() {
+    return this.src && this.src !== '';
+  }
+
+  private isGravatar() {
+    return this.gravatar && this.gravatar !== '';
+  }
+
+  private isIcon() {
+    return this.icon && this.icon !== '';
+  }
+
+  private isText() {
+    return this.text && this.text !== '';
+  }
+
+  private setSrc() {
+    this.type = 'src';
+  }
+
+  private setGravatar() {
+    const sizeGravatar = ( this.isPercentage() ) ? '200px' : this.size;
+    this.gravatarImg = `//www.gravatar.com/avatar/${Md5.hashStr(this.gravatar)}?s=${sizeGravatar}&d=mm`;
+    this.type = 'gravatar';
+  }
+
+  private setIcon() {
+    this.multiplierIcon = ( this.isPercentage() ) ? 25 : 0.7;
+    this.type = 'icon';
+  }
+
+  private setText() {
+    this.multiplierText = ( this.isPercentage() ) ? 8 : 0.2;
+    this.fontSize = ( this.isOneCharacter() ) ? '2em' : '1em';
+    this.type = 'text';
+  }
+
+  private isPercentage() {
     return this.size.substr(this.size.length - 1) === '%';
   }
 
-  isOneCharacter() {
+  private isOneCharacter() {
     return this.text && this.text.length === 1;
   }
 
@@ -111,7 +145,9 @@ export class TlAvatar implements OnInit, OnChanges {
   }
 
   ngOnChanges( changes ) {
-    this.defineType();
+    if ( changes['gravatar'] ) {
+      this.defineType();
+    }
   }
 
 }

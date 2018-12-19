@@ -69,7 +69,7 @@ export class DateDirective implements Validator, AfterContentInit {
   }
 
   clearMask() {
-    if (this.tlinput.value) {
+    if ( this.tlinput.value ) {
       return (this.tlinput.value.replace( /_/gi, '' ).replace( /\//gi, '' )).trim();
     }
     return [];
@@ -83,11 +83,18 @@ export class DateDirective implements Validator, AfterContentInit {
     if ( this.clearMask().length > 0 && this.isoDate ) {
       const dateString = this.tlinput.input.nativeElement.value;
       const date = ReverseFormatDate( this.tlinput.input.nativeElement.value, this.formatDate );
-      this.tlinput.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+      if ( this.isLogicalDate( date ) ) {
+        this.tlinput.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+      }
       setTimeout( () => {
         this.tlinput.input.nativeElement.value = dateString;
       }, 1 );
     }
+  }
+
+  isLogicalDate( date ) {
+    const isValidDate = new Date(  date.year + '-' + date.month + '-' +  date.day );
+    return isValidDate.toDateString() !== 'Invalid Date';
   }
 
   getInput() {

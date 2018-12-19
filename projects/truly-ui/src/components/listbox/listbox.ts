@@ -1087,7 +1087,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this.scrollListener();
+    if (this.scrollListener) {
+      this.scrollListener();
+    }
   }
 
 }

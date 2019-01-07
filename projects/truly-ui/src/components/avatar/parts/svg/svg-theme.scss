@@ -1,0 +1,43 @@
+@import "../../../core/styles/theming/theming";
+
+@mixin _tl-avatar-svg-theme( $theme, $action ){
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+  .svg {
+    fill: map-deep-get($basic, "default", "foreground");
+  }
+}
+
+@mixin tl-avatar-svg-theme( $theme ) {
+
+  .tl-svg {
+
+    &.basic {
+      @include _tl-avatar-svg-theme($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-avatar-svg-theme($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-avatar-svg-theme($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-avatar-svg-theme($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-avatar-svg-theme($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-avatar-svg-theme($theme, 'information')
+    }
+
+  }
+}

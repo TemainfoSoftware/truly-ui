@@ -26,7 +26,7 @@ $default-outline: none;
     padding-left: 10px;
     padding-right: 30px;
   }
-  > .dropdown-list-icon {
+  > .ui-dropdown-icon {
     position: absolute;
     display: table-cell;
     cursor: $default-cursorHover;
@@ -35,10 +35,6 @@ $default-outline: none;
     text-align: center;
     width: 30px;
     height: 100%;
-  }
-  > .dropdown-list-icon i {
-    font-size: 0.7em;
-    vertical-align: middle;
   }
   > .dropdown-list-wrapper-select {
     z-index: 10;

@@ -1,27 +1,26 @@
 <div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight}">
-
+  <tl-icon *ngIf="isLoading" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
   <tl-label *ngIf="label"
             [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"
             [labelPlacement]="labelPlacement"
             [labelSize]="labelSize"
             [labelTitle]="label">
   </tl-label>
-    <div #wrapper
-         tabindex="-1"
-         cdkOverlayOrigin
+  <input cdkOverlayOrigin
+         #wrapper
+         #trigger="cdkOverlayOrigin"
+         readonly
          (click)="!disabled ? isOpen = !isOpen : null"
          (keydown)="onKeyDown($event)"
-         class="ui-dropdown-wrapper-list"
-         [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight, 'width': width}"
-         #trigger="cdkOverlayOrigin">
-        <label>{{ selectedDescription ? selectedDescription : placeholder }}</label>
-        <div class="dropdown-list-icon"
+         value="{{ selectedDescription ? selectedDescription : placeholder }}"
+         [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
+         class="ui-dropdown-wrapper">
+        <div class="ui-dropdown-icon"
              (click)="setInputFocus()"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{' disabled ': disabled}">
-            <i class="fas fa-angle-down"></i>
+          <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
         </div>
-    </div>
   <input readonly notform class="ui-hidden-input" [(ngModel)]="value">
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
@@ -42,7 +41,7 @@
       [datasource]="datasource"
       [maxHeight]="maxHeight"
       [itemHeight]="itemHeight"
-      [width]="width"
+      [width]="wrapper.offsetWidth + 'px'"
       [icon]="icon"
       [keyText]="keyText"
       [searchOnList]="searchOnList">

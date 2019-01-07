@@ -1,0 +1,37 @@
+<div *ngIf="type === 'src'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [ngStyle]="{'background-image'   : 'url(' + src + ')',
+                 'background-repeat'  : 'no-repeat',
+                 'background-size'    : 'cover',
+                 'background-position': 'center'}">
+</div>
+<div *ngIf="type === 'gravatar'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size">
+  <img [src]="gravatarImg" [style.width]="size" [class]="shape">
+</div>
+<div *ngIf="type === 'icon'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <tl-icon [ngStyle]="{'font-size': 'calc(' + size + ' * ' + multiplierIcon + ')'}" [style.color]="fontColor">{{ icon }}</tl-icon>
+</div>
+<div *ngIf="type === 'text'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <div [ngStyle]="{'font-size': 'calc(' + size + ' * ' + multiplierText + ')'}">
+    <span [ngStyle]="{'font-size': fontSize}" [style.color]="fontColor">{{ text }}</span>
+  </div>
+</div>
+<div *ngIf="type === 'gender'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <tl-svg [size]="size" [gender]="gender" [shape]="shape" [fontColor]="fontColor"></tl-svg>
+</div>

@@ -3,7 +3,7 @@
 @mixin _tl-badge-theme-schema( $theme, $action ){
   &.badge-count {
     background: map-deep-get($theme, $action, "default", "background");
-    color: map-deep-get($theme, $action, "default", "foreground");;
+    color: map-deep-get($theme, $action, "default", "foreground");
     box-shadow: 0 0 0 1px #fff;
   }
 

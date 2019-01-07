@@ -24,22 +24,25 @@ import { LOCALE_I18N } from '../../i18n/i18n.service';
 
 import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
 
-export function DateValidator( formatDate ): ValidatorFn {
+let dateExpressFormat;
+
+export function DateValidator( formatDate, isoDate = false ): ValidatorFn {
+  dateExpressFormat = formatDate;
   return ( c: AbstractControl ) => {
 
     if ( !stringUnmasked( c ) && c.touched ) {
-      return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
-    if ( (stringUnmasked( c ).length) !== formatDate.length ) {
-      return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + formatDate.toUpperCase() + ' ]' };
+    if ( (stringUnmasked( c ).length) !== dateExpressFormat.length && !isoDate ) {
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
-    const formattedDate = ReverseFormatDate(stringUnmasked(c), formatDate);
+    const formattedDate = ReverseFormatDate(stringUnmasked(c), dateExpressFormat);
     const date = new Date( formattedDate['year'] + '-' + formattedDate['month'] + '-' + formattedDate['day'] );
 
     if ( date.toDateString() === 'Invalid Date' ) {
-      return { date: LOCALE_I18N.Validators.invalidDatePattern +  ' [ ' + formatDate.toUpperCase() + ' ]' };
+      return { date: LOCALE_I18N.Validators.invalidDatePattern +  ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
     return null;
@@ -50,3 +53,6 @@ function stringUnmasked( c ) {
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
 }
 
+function isDateString( x ) {
+  return !isNaN( Date.parse( x ) );
+}

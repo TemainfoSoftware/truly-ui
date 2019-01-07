@@ -6,7 +6,7 @@ $default-cursorHover: pointer;
 $default-cursor: default;
 $default-outline: none;
 
-$button-font-size: 0.9em;
+$button-font-size: 1em;
 $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 
 * {
@@ -14,21 +14,30 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 }
 
 .ui-dropdown-box {
+  width: 100%;
+  position: relative;
   display: table;
-}
 
-.ui-dropdown-wrapper-list {
-  border-radius:3px;
-  grid-template-columns: 1fr 30px;
-  display: grid;
-  label {
-    margin: 0;
+  > tl-icon {
+    position: absolute;
+    right: 30px;
+    opacity: 0.3;
+  }
+
+  > .ui-dropdown-wrapper {
+    border-radius:3px;
+    width: 100%;
+    color: #666;
+    padding-left: 5px;
+    cursor: pointer;
     font-size: $default-fontSize;
     font-family: $default-fontFamily;
     font-weight: normal;
-    padding-left: 10px;
   }
-  > .dropdown-list-icon {
+  > .ui-dropdown-icon {
+    position: absolute;
+    top: 0;
+    right: 10px;
     text-align: center;
     font-size: $default-fontSize;
     font-family: $default-fontFamily;
@@ -37,27 +46,13 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       padding: 0;
     }
   }
+  > .ui-hidden-input {
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    width: 0;
+    bottom: 0;
+  }
 }
 
-.select {
-  height: 20px;
-  width: 100%;
-  border: 0;
-  background: transparent;
-  outline: none;
-}
 
-.ui-hidden-input {
-  position: absolute;
-  left: 0;
-  opacity: 0;
-  width: 0;
-  bottom: 0;
-}
-
-.ui-icon{
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  display: inline-block;
-}

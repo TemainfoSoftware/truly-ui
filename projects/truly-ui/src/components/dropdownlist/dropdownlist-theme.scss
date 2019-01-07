@@ -7,48 +7,41 @@
   $primary: map-deep-get($theme, 'primary');
 
   .ui-dropdown-box {
-    > .labeltext {
-      color: map-deep-get($basic, "default", "foreground");
-      > b.required {
-        color: map-deep-get($danger, "default", "foreground");
+
+    > .ui-dropdown-wrapper {
+      background: map-deep-get($basic, "default", "background");
+      border: 1px solid map-deep-get($basic, "default", "border");
+
+      &:hover {
+        background-color: map-deep-get($basic, "default", "background");
       }
+
+      &:focus {
+        border-color: #40a9ff;
+        outline: 0;
+        box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        border-right-width: 1px !important;
+      }
+
+      &:active {
+        background-color: map-deep-get($basic, "default", "background");
+      }
+
+      > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
+        border: 1px solid map-deep-get($danger, "default", "border");
+        background-color: #FFF1F1;
+      }
+
+      > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
+        border: 1px solid map-deep-get($primary, "default", "border");
+        background-color: map-deep-get($primary, "default", "background");
+      }
+
+      > .ui-dropdown-icon i {
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
     }
   }
 
-  .ui-dropdown-wrapper-list {
-    background: map-deep-get($basic, "default", "background");
-    border: 1px solid map-deep-get($basic, "default", "border");
-
-    > label {
-      color: map-deep-get($basic, "default", "foreground");
-    }
-
-    &:hover {
-      background-color: map-deep-get($basic, "default", "background");
-    }
-
-    &:focus {
-      border-color: #40a9ff;
-      outline: 0;
-      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
-      border-right-width: 1px !important;
-    }
-
-    &:active {
-      background-color: map-deep-get($basic, "default", "background");
-    }
-
-    > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
-      border: 1px solid map-deep-get($danger, "default", "border");
-      background-color: #FFF1F1;
-    }
-    > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
-      border: 1px solid map-deep-get($primary, "default", "border");
-      background-color: map-deep-get($primary, "default", "background");
-    }
-    > .dropdown-list-icon i {
-      color: map-deep-get($basic, "default", "foreground");
-    }
-
-  }
 }

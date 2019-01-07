@@ -3,6 +3,7 @@
 }
 
 .wrapper-tabcontrol {
+  position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -10,13 +11,14 @@
   box-sizing: border-box;
 
   >.line-separator {
+    left: 0;
+    position: absolute;
     box-sizing: border-box;
     font-size: 12px;
     height: 26px;
     line-height: 26px;
     overflow: hidden;
     width: 100%;
-    position: absolute;
   }
   >.line-separator:after {
     display: inline-block;
@@ -37,7 +39,7 @@
   >.tab-panel-buttons li {
     display: inline-block;
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-    font-size: 0.8em;
+    font-size: 1em;
     min-width: 70px;
     text-align: center;
     padding: 0 10px;

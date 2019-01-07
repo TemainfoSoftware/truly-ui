@@ -13,6 +13,7 @@
 
     <div #itemContainer class="list-box-container"
          tabindex="-1"
+         (mousedown)="clickWrap($event)"
          [tlBlockui]="loadingMoreData"
          [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
          [style.height]="fixedHeight ? 'calc(' + height + ')' : getListBoxHeight() + 'px'">

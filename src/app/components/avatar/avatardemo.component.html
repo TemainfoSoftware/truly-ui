@@ -1,0 +1,99 @@
+<div class="router-outlet">
+  <app-showcase-header name="Avatar" module="AvatarModule">
+    Avatars can be used to represent people or objects. It supports images, Icons, or letters.
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-6">
+              <h6>Basic</h6>
+              <tl-avatar [size]="'60px'" [gender]="'female'" [shape]="'circle'"></tl-avatar>
+              <tl-avatar [size]="'50px'" [gender]="'female'" [shape]="'circle'"></tl-avatar>
+              <tl-avatar [size]="'40px'" [gender]="'female'" [shape]="'circle'"></tl-avatar>
+              <tl-avatar [size]="'30px'" [gender]="'female'" [shape]="'circle'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <tl-avatar [size]="'60px'" [gender]="'male'" [shape]="'square'"></tl-avatar>
+              <tl-avatar [size]="'50px'" [gender]="'male'" [shape]="'square'"></tl-avatar>
+              <tl-avatar [size]="'40px'" [gender]="'male'" [shape]="'square'"></tl-avatar>
+              <tl-avatar [size]="'30px'" [gender]="'male'" [shape]="'square'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar [size]="'60px'" [gender]="'female'" [shape]="'circle'"></tl-avatar>
+<tl-avatar [size]="'60px'" [gender]="'male'" [shape]="'square'"></tl-avatar>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>Text</h6>
+              <tl-avatar [text]="'USER'" [shape]="'square'"></tl-avatar>
+              <tl-avatar [text]="'U'" [shape]="'circle'" [fontColor]="'#FFFFFF'" [bgColor]="'#87d068'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar [text]="'USER'" [shape]="'square'"></tl-avatar>
+<tl-avatar [text]="'U'" [shape]="'circle'" [fontColor]="'#FFFFFF'" [bgColor]="'#87d068'"></tl-avatar>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h6>Icons</h6>
+              <tl-avatar [size]="'60px'" [icon]="'fas fa-user'"></tl-avatar>
+              <tl-avatar [size]="'60px'" [icon]="'ion ion-md-alarm'" [fontColor]="'#f56a00'" [bgColor]="'#fde3cf'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar [size]="'60px'" [icon]="'fas fa-user'"></tl-avatar>
+<tl-avatar [size]="'60px'" [icon]="'ion ion-md-alarm'" [fontColor]="'f56a00'" [bgColor]="'#fde3cf'"></tl-avatar>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>Gravatar</h6>
+              <tl-avatar [gravatar]="emailGravatar" [size]="'60px'"></tl-avatar>
+              <tl-avatar [gravatar]="emailGravatar" [size]="'60px'" [shape]="'circle'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar [gravatar]="emailGravatar" [size]="'60px'"></tl-avatar>
+<tl-avatar [gravatar]="emailGravatar" [size]="'60px'" [shape]="'circle'"></tl-avatar>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h6>Source</h6>
+              <tl-avatar [src]="'https://cdn-images-1.medium.com/max/800/1*s5-dwoaVAETzY4uSVFT3dA.png'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar [src]="'https://cdn-images-1.medium.com/max/800/1*s5-dwoaVAETzY4uSVFT3dA.png'"></tl-avatar>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>Event on Click</h6>
+              <tl-avatar (selected)="alert($event)" [shape]="'circle'"></tl-avatar>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-avatar (selected)="alert($event)" [shape]="'circle'"></tl-avatar>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

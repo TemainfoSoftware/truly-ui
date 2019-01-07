@@ -125,10 +125,17 @@ export class InputMask {
     } );
   }
 
+  isDateString( x ) {
+    return !isNaN( Date.parse( x ) );
+  }
+
   private applyMaskOnInit() {
     setTimeout( () => {
       if ( this.value !== this.maskGuideExpression ) {
         if ( this.value.length > 0 ) {
+          if (this.isDateString(this.value )) {
+            return;
+          }
           this.value = this.cleanValue( this.value );
           this.setValueOnInitialize();
           this.applyGuides();
@@ -408,7 +415,7 @@ export class InputMask {
 
   private replaceValidChar( charInputted, cursor, inputArray ) {
     if ( this.isValidSymbolMask( charInputted, this.maskExpression[ cursor ] ) &&
-    this.validateHourMatch( charInputted, this.maskExpression[ cursor ] )) {
+      this.validateHourMatch( charInputted, this.maskExpression[ cursor ] ) ) {
       this.value = this.replaceUnderscoreForChar( inputArray, charInputted, cursor );
       this.setPosition( cursor + 1 );
     }
@@ -432,11 +439,11 @@ export class InputMask {
       && (this.maskAwaliablePatterns[ maskSymbolChar ].test( inputSymbol ));
   }
 
-  private validateHourMatch(inputSymbol, maskSymbolChar) {
-    if (maskSymbolChar !== 'h') {
+  private validateHourMatch( inputSymbol, maskSymbolChar ) {
+    if ( maskSymbolChar !== 'h' ) {
       return true;
     }
-    if (Number( this.value[0] ) < 2) {
+    if ( Number( this.value[ 0 ] ) < 2 ) {
       return true;
     }
     return maskSymbolChar === 'h' && Number( inputSymbol ) <= 3;

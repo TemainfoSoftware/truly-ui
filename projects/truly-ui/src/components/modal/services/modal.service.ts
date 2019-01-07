@@ -71,9 +71,7 @@ export class ModalService implements OnDestroy {
 
   private visibleModals = [];
 
-  constructor( private containerModal: ContainerModalService ) {
-    console.log( 'modal service', this );
-  }
+  constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
     this.view = this.containerModal.getView();
@@ -205,7 +203,8 @@ export class ModalService implements OnDestroy {
         this.confirmDelete( this.instanceComponent );
       }
     } else {
-      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration ) {
+      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration &&
+          this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation) {
         this.componentList = this.componentList.filter((value, index, array) => index !== 0);
         this.view.remove( 0 );
       }
@@ -217,7 +216,7 @@ export class ModalService implements OnDestroy {
   }
 
   private validateDataFormUpdate( component ) {
-    if ( Object.keys( component[ 'dataForm' ] ).length === 0 ) {
+    if ( !component[ 'dataForm' ] ) {
       this.createModalDialog( TlDialogInfo, component[ 'factory' ], null );
       this.componentInjected.instance.message = component[ 'recordNotFoundMessage' ];
       return false;

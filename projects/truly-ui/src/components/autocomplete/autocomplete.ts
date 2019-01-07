@@ -102,6 +102,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
 
   @Input() rowsClient = 5;
 
+  @Input() addNewItem = true;
+
   @Input() addNewMessage = 'Add New';
 
   @ViewChild( NgModel ) model: NgModel;
@@ -154,7 +156,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, After
   }
 
   listenContainer() {
-    this.listeners.add(this.renderer.listen( document, 'click', () => {
+    this.listeners.add(this.renderer.listen( document, 'mousedown', () => {
       this.isOpen = false;
       this.setPointerEvents( 'none' );
     } ));

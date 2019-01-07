@@ -12,6 +12,7 @@ import { IconsModule } from '../icons/index';
 import { InternalsModule } from '../internals/index';
 import { CurrencyDirective } from './directives/currency/currency.directive';
 import { CURRENCY_MASK_CONFIG, CurrencyConfig } from './directives/currency/currency-mask.config';
+import { INPUT_CONFIG, InputConfig } from './core/input.config';
 
 @NgModule( {
   imports: [
@@ -36,13 +37,13 @@ import { CURRENCY_MASK_CONFIG, CurrencyConfig } from './directives/currency/curr
   ],
 } )
 export class InputModule {
-  static forRoot(config: CurrencyConfig): ModuleWithProviders {
+  static forRoot(config: CurrencyConfig = null, inputConfig: InputConfig = null): ModuleWithProviders {
     return {
       ngModule: InputModule,
-      providers: [{
-        provide: CURRENCY_MASK_CONFIG,
-        useValue: config,
-      }]
+      providers: [
+        { provide: CURRENCY_MASK_CONFIG, useValue: config },
+        { provide: INPUT_CONFIG, useValue: inputConfig },
+      ]
     };
   }
 }

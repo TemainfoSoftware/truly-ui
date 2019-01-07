@@ -421,6 +421,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
+  clickWrap($event) {
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
   handleHome( $event ) {
     this.disableKeyEvent( $event );
     this.itemContainer.nativeElement.scrollTop = 0;
@@ -456,7 +461,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
         this.listBox.nativeElement.children[ index ].getAttribute( 'data-indexnumber' ) );
     }
     $event.preventDefault();
-    this.addNewRenderService.handleAddNewSelected();
+    if (this.addNew) {
+      this.addNewRenderService.handleAddNewSelected();
+    }
   }
 
   handleKeyArrowDown( $event ) {
@@ -745,13 +752,15 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   renderPageData() {
-    const data = this.lazyMode ? this.data[ 'data' ] : this.data;
-    if ( this.filtering && !this.lazyMode ) {
-      this.dataService.updateDataSource( this.filteredData.slice( this.skip, this.take ) );
-      this.handleRenderList();
-      return;
+    if ( this.data ) {
+      const data = this.lazyMode ? this.data[ 'data' ] : this.data;
+      if ( this.filtering && !this.lazyMode ) {
+        this.dataService.updateDataSource( this.filteredData.slice( this.skip, this.take ) );
+        this.handleRenderList();
+        return;
+      }
+      this.lazyMode ? this.getDataLazy() : this.getDataMemory();
     }
-    this.lazyMode ? this.getDataLazy() : this.getDataMemory();
   }
 
   getDataMemory() {
@@ -1059,8 +1068,8 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     if ( change[ 'templateRef' ] ) {
       this.template = change[ 'templateRef' ].currentValue;
     }
-    this.validateDataType();
     if ( this.data ) {
+      this.validateDataType();
       const data = this.lazyMode ? this.data.data : this.data;
       if ( data.length > 0 ) {
         this.dataService.updateDataSource( data ).then( value => {
@@ -1074,12 +1083,13 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       }
       this.nothingToShow = true;
       this.loadingMoreData = false;
-      console.log( 'NOTHING FOUND' );
     }
   }
 
   ngOnDestroy() {
-    this.scrollListener();
+    if (this.scrollListener) {
+      this.scrollListener();
+    }
   }
 
 }

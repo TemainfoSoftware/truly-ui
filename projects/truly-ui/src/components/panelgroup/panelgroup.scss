@@ -14,7 +14,7 @@
   line-height: 1.5em;
   white-space: nowrap;
   position: absolute;
-  top: -10.8px;
+  top: -10.6px;
 }
 
 .header-group span {
@@ -23,10 +23,8 @@
   vertical-align: middle;
 }
 
-.header-group {
-  > .group-caption {
-    font-weight: 600;
-  }
+.header-group .group-caption {
+  font-weight: 600;
 }
 
 .header-group span.spacer-left {

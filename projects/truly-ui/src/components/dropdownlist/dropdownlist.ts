@@ -113,6 +113,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngOnInit() {
+    this.listenModelChange();
     this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
       this.handleSearch( searchTextValue );
     } );
@@ -121,7 +122,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   initializeComponent() {
     this.setUpComponent();
     this.validateData();
-    this.listenModelChange();
+    this.getModelValue();
   }
 
   setUpComponent() {
@@ -173,12 +174,16 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   listenModelChange() {
     this.model.valueChanges.subscribe( () => {
-      this.datasource.forEach( ( value, index ) => {
-        if ( this.getCompare( value ) === this.model.model ) {
-          this.selectedDescription = this.getDescription( value );
-          this.indexOptionSelectedModel = index;
-        }
-      } );
+      this.getModelValue();
+    } );
+  }
+
+  getModelValue() {
+    this.datasource.forEach( ( value, index ) => {
+      if ( this.getCompare( value ) === this.model.model ) {
+        this.selectedDescription = this.getDescription( value );
+        this.indexOptionSelectedModel = index;
+      }
     } );
   }
 

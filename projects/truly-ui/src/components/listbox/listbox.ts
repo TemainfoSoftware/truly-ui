@@ -519,7 +519,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   setHandlerFocus() {
-    if ( this.dynamicFocus && !this.dynamicShowHide ) {
+    if ( this.dynamicFocus && !this.dynamicShowHide && this.searchElement ) {
       setTimeout( () => {
         this.searchElement.input.nativeElement.focus();
       }, 1 );

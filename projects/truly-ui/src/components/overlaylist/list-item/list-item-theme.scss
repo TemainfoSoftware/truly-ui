@@ -7,6 +7,9 @@
       background-color: map-deep-get($theme, $action, "default", "background");
       color:  map-deep-get($theme, $action, "default", "foreground");
     }
+    &:hover:not(:focus) {
+      background-color:  rgba(map-deep-get($theme, $action, "default", "foreground"), 0.8);
+    }
   }
 
 }

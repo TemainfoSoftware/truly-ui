@@ -42,7 +42,7 @@ import { DatePipe } from '@angular/common';
     }
   ]
 } )
-export class DateDirective implements Validator, AfterContentInit {
+export class DateDirective implements Validator, AfterContentInit, AfterViewInit {
 
   @Input() formatDate = 'dd.mm.yyyy';
 
@@ -65,6 +65,14 @@ export class DateDirective implements Validator, AfterContentInit {
           this.getDatePipeFormat( this.formatDate.toLowerCase() ) );
         this.tlinput.value = dateValue;
       }, 1 );
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.isoDate) {
+      setTimeout(() => {
+        this.convertToIsoDate();
+      }, 1);
     }
   }
 

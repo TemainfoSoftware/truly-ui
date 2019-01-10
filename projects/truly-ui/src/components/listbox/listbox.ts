@@ -672,11 +672,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     if ( this.lastChildElement().getBoundingClientRect() ) {
       if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
         if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+
           this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-          this.take = this.lastRowViewport + this.quantityInVisibleRows;
+
           const data = this.filtering ? this.filteredData : this.data;
           const dataLength = this.lazyMode ? data.total : data.length;
-          this.take = this.take > dataLength ? dataLength : this.take;
+
+          const take = this.skip + (this.quantityInVisibleRows * 2) + this.quantityVisibleRows;
+          this.take = take > dataLength ? dataLength : take;
           this.renderPageData();
         }
       } else {

@@ -62,4 +62,11 @@ export const dataProperties = [
     description: 'Allows you to block the ordering for a given column.',
     options: 'true | false'
   },
+  {
+    name: 'format',
+    type: 'string',
+    default: 'shortDate',
+    description: 'Formats the date type according to the DatePipe, when the cell is of type Date.',
+    options: 'https://angular.io/api/common/DatePipe'
+  },
 ];

@@ -1,7 +1,7 @@
 <div class="wrapper-display"
-     [tlBlockui]="nothingToShow"
+     [tlBlockui]="nothingToShow || loadingMoreData"
      (mouseup)="mouseUpList($event)"
-     [blockuiConfig]="{'spin': false, 'icon': 'ion-sad-outline', 'message': filterEmptyMessage}">
+     [blockuiConfig]="{'spin': loadingMoreData, 'icon': 'ion ion-ios-sync', 'message': filterEmptyMessage}">
   <div class="listbox-wrapper">
 
     <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows"
@@ -14,7 +14,6 @@
     <div #itemContainer class="list-box-container"
          tabindex="-1"
          (mousedown)="clickWrap($event)"
-         [tlBlockui]="loadingMoreData"
          [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
          [style.height]="fixedHeight ? 'calc(' + height + ')' : getListBoxHeight() + 'px'">
       <ul containerDirective #list class="list" [style.position]="'relative'"

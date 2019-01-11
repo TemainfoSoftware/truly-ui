@@ -157,6 +157,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   public scrollFinish = false;
 
   get filterEmptyMessage() {
+    if (this.loadingMoreData) {
+      return null;
+    }
     return this.i18n.getLocale().Listbox.notFoundText;
   }
 
@@ -214,16 +217,18 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           this.handleSearchAsDefaultData();
           return false;
         }
+        return;
       } )
-    ).subscribe( searchTextValue => {
-      this.handleSearch( searchTextValue );
-      this.filterData.emit( this.filteredData );
+    ).subscribe((searchTerm) => {
+      this.handleSearch( searchTerm );
+      this.filterData.emit( this.lazyMode ?
+        { skip: this.skip, take: this.take, filters: this.getFilters(searchTerm) } : this.filteredData );
       setTimeout( () => {
         this.removeSelected();
         this.resetCursors();
         this.addClassSelected( 0 );
       }, 1 );
-    } );
+    });
   }
 
   ngAfterViewInit() {
@@ -608,7 +613,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleSearchAsFoundData( searchTerm ) {
-    if ( this.lazyMode ) {
+    if ( this.lazyMode && !this.filtering ) {
       this.getDataLazy( searchTerm );
       return;
     }
@@ -774,8 +779,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   getDataLazy( term? ) {
     this.loadingMoreData = true;
-    const fields = {};
+    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: this.getFilters(term) } );
+  }
 
+  getFilters( term? ) {
+    const fields = {};
     Array( this.searchQuery ).forEach( ( item ) => {
       const keyName = item;
       fields[ keyName ] = { matchMode: 'contains', value: term };
@@ -784,8 +792,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       fields: fields,
       operator: 'or'
     };
-
-    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filterBy } );
+    return filterBy;
   }
 
   renderList() {

@@ -20,245 +20,122 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChild, EventEmitter,
-  Input, OnDestroy, Output, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit, OnChanges, Renderer2,
+  Component, Input, Optional, Inject, OnInit, OnChanges,
+  EventEmitter, Output, ChangeDetectorRef,
 } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
-import { TlListBox } from '../listbox/listbox';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { DataSourceAutocomplete } from './parts/classes/datasource-autocomplete';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 
 @Component( {
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
   styleUrls: [ './autocomplete.scss' ],
-  animations: [
-    trigger(
-      'enterAnimation', [
-        state( 'true', style( { opacity: 1, transform: 'translate(0%,0%)' } ) ),
-        state( 'false', style( { opacity: 0, transform: 'translate(0%,-3%)', flex: '0' } ) ),
-        transition( '1 => 0', animate( '100ms' ) ),
-        transition( '0 => 1', animate( '100ms' ) ),
-      ]
-    )
-  ],
-  providers: [ MakeProvider( TlAutoComplete ) ]
+  providers: [ MakeProvider( TlAutoComplete ) ],
 } )
+export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges {
 
-export class TlAutoComplete extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  @Input() data = [];
 
-  @Input() data: Array<any>;
+  @Input() totalLength = 1000;
 
-  @Input() label = 'AutoComplete 1';
-
-  @Input() labelSize;
-
-  @Input() iconBefore;
-
-  @Input() iconAfter;
-
-  @Input() textBefore;
-
-  @Input() textAfter;
-
-  @Input() textAlign = 'left';
-
-  @Input() labelPlacement = 'left';
-
-  @Input() readonly = false;
-
-  @Input() disabled = true;
-
-  @Input() autocomplete = 'off';
-
-  @Input() placeholder;
-
-  @Input() clearButton = false;
-
-  @Input() id = '';
-
-  @Input() modelValue = '';
-
-  @Input() labelDetail = '';
-
-  @Input() labelName = '';
-
-  @Input() openFocus = false;
+  @Input() pageSize = 100;
 
   @Input() lazyMode = false;
 
-  @Input() searchQuery = [];
+  @Input() itemSize = 50;
 
-  @Input() rowHeight = 30;
+  @Input() debounceTime = 200;
 
-  @Input() listStripped = false;
+  @Input() keyText = '';
 
-  @Input() charsToSearch = 2;
+  @Input() keyValue = '';
 
-  @Input() rowsClient = 5;
+  @Input() labelPlacement = 'left';
 
-  @Input() rowsPage = 50;
+  @Input() labelSize = '100px';
 
-  @Input() addNewItem = true;
+  @Input() label = '';
 
-  @Input() addNewMessage = 'Add New';
-
-  @ViewChild( NgModel ) model: NgModel;
-
-  @ViewChild( 'inputWriter' ) tlinput;
-
-  @ViewChild( TlListBox ) listBox: TlListBox;
-
-  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
-
-  @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
-
-  @ContentChild( FormControlName ) controlName: FormControlName;
-
-  @Output() addNew: EventEmitter<any> = new EventEmitter();
-
-  @Output() clickItem: EventEmitter<any> = new EventEmitter();
-
-  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+  @Input() placeholder = 'Search...';
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-  public widthInput;
+  public dataSource: DataSourceAutocomplete;
 
-  public loading = true;
+  public model: NgModel;
+
+  public selected = null;
 
   public isOpen = false;
 
-  public trigger;
+  public focused = false;
 
-  private listeners: Subscription = new Subscription();
+  public positionOverlay;
+
+  public searchControl = new FormControl( '' );
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private renderer: Renderer2 ) {
+    asyncValidators: Array<any>, private change: ChangeDetectorRef ) {
     super( validators, asyncValidators );
   }
 
   ngOnInit() {
-    this.getWidth();
+    this.setUpData();
+    this.listenLoadData();
   }
 
-  ngAfterViewInit() {
-    this.validateModelValueProperty();
-    this.validationProperty();
-    this.listenContainer();
+  selectItem($event) {
+    this.selected = $event[this.keyText];
+    this.value = $event[this.keyValue];
   }
 
-  setPointerEvents( value: string ) {
-    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
+  setUpData() {
+    this.dataSource = new DataSourceAutocomplete( {
+      dataSource: this.data,
+      pageSize: this.pageSize,
+      totalLength: this.totalLength,
+      lazyMode: this.lazyMode
+    } );
   }
 
-  listenContainer() {
-    this.listeners.add(this.renderer.listen( document, 'mousedown', () => {
-      this.isOpen = false;
-      this.setPointerEvents( 'none' );
-    } ));
+  clearValues() {
+    this.selected = null;
+    this.value = null;
   }
 
-  handleModelInit() {
-    setTimeout( () => {
-      if ( this.model.model ) {
-        for ( let item = 0; item < this.data.length; item++ ) {
-          if ( String( this.getValueNested( this.modelValue, this.data[ item ] ) ) === String( this.model.viewModel ) ) {
-            this.clickItem.emit( { index: item, row: this.data[ item ] } );
-            return this.tlinput.value = this.getValueNested( this.labelName, this.data[ item ] );
-          }
-        }
-      }
-    }, 1 );
+  listenLoadData() {
+    this.dataSource.loadMoreData.subscribe( ( data: any ) => {
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit } );
+    } );
   }
 
-  getValueNested( nestedKeys: string, data: Array<any> ) {
-    return nestedKeys.split( '.' ).reduce( ( a, b ) => a[ b ], data );
+  onPositionChange( $event: ConnectedOverlayPositionChange ) {
+    this.positionOverlay = $event.connectionPair.originY;
+    this.change.detectChanges();
   }
 
-  onClearInput() {
-    this.value = '';
-  }
-
-  validationProperty() {
-    if ( (!this.labelName && !this.listBox.isDataArrayString()) ) {
-      throw new Error( 'The [labelName] property is required to show the content on input while selecting' );
+  onFilter( $event ) {
+    if ($event.length === 0) {
+      this.setUpData();
+      return;
     }
+    this.setUpFilterData($event);
   }
 
-  onFocusInput() {
-    this.getWidth();
-    this.handleOpenOnFocus();
+  setUpFilterData(data) {
+    this.dataSource = new DataSourceAutocomplete( {
+      dataSource: data,
+      pageSize: this.pageSize,
+      totalLength: this.totalLength,
+      lazyMode: this.lazyMode
+    } );
   }
 
-  handleOpenOnFocus() {
-    if ( (this.openFocus) && (this.isAvailableInput()) ) {
-      this.isOpen = true;
-      this.setPointerEvents( 'auto' );
-    }
-  }
-
-  isAvailableInput() {
-    return !this.tlinput.disabled && !this.tlinput.readonly;
-  }
-
-  onAddNew() {
-    this.addNew.emit();
-  }
-
-  onClickItemList( $event ) {
-    if ( $event ) {
-      this.clickItem.emit( $event );
-      this.setInputValue( $event );
-      this.tlinput.input.nativeElement.focus();
-      this.isOpen = false;
-      this.setPointerEvents( 'none' );
-    }
-  }
-
-  onSelectItemList( $event ) {
-    if ( $event ) {
-      this.selectItem.emit( $event );
-      this.setInputValue( $event );
-      this.tlinput.input.nativeElement.focus();
-    }
-  }
-
-  setInputValue( $event ) {
-    this.tlinput.value = this.getValueNested( this.labelName, $event.row );
-    this.value = !this.listBox.isDataArrayString() ? this.getValueNested( this.modelValue, $event.row ) : $event.row;
-    this.listBox.detectChanges();
-  }
-
-  getWidth() {
-    this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
-  }
-
-  onLazyLoadAutocomplete( $event ) {
-    this.lazyLoad.emit( $event );
-  }
-
-  validateModelValueProperty() {
-    if ( !this.modelValue ) {
-      throw new Error( 'The [modelValue] property must be specified.' );
-    }
-  }
-
-  ngOnDestroy() {
-    this.listeners.unsubscribe();
-  }
-
-  ngOnChanges( changes ) {
-    if ( (!changes.data.previousValue) && (changes.data.currentValue) ) {
-      this.loading = false;
-      this.disabled = false;
-      this.handleModelInit();
-    }
-  }
+  ngOnChanges( changes ) {}
 
 }

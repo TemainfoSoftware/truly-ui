@@ -1,65 +1,46 @@
-<div class="ui-autocomplete-box" #autoComplete>
-  <div class="ui-autocomplete-wrapper" #autocompleteList>
-    <div *ngIf="loading" class="ui-loader">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+<div class="ui-autocomplete-box">
+  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+  <div class="ui-autocomplete-wrapper">
+    <div class="ui-wrapper-filter" #input
+         [class.opened]="isOpen && positionOverlay !== 'top'"
+         [class.openedAbove]="positionOverlay === 'top' && isOpen">
+      <tl-icon *ngIf="selected || searchControl.value"
+               (click)="clearValues()"
+               class="ui-clearbutton" [size]="'1.5em'" [lib]="'ion'" [style]="'ios'">close-circle-outline</tl-icon>
+      <input #input
+             #trigger="cdkOverlayOrigin"
+             cdkOverlayOrigin
+             (click)="isOpen = !isOpen"
+             [attr.placeholder]="placeholder"
+             (focus)="focused = true"
+             (focusout)="focused = false"
+             [value]="selected"
+             [formControl]="searchControl"
+             (input)="selected = null"
+             class="ui-input">
+      <input readonly notform class="ui-model-input" [(ngModel)]="value">
+      <div class="ui-selected-wrapper" *ngIf="selected && !focused"></div>
     </div>
-    <tl-input class="ui-autocomplete-model" #input [name]="'notform'" [(ngModel)]="value"></tl-input>
-    <tl-input #inputWriter
-              [label]="label"
-              (overlayOrigin)="trigger = $event"
-              (click)="isOpen = true"
-              (keydown)="isOpen = true"
-              (keydown.enter)="isOpen = false"
-              (keydown.tab)="isOpen = false"
-              (blur)="isOpen = false"
-              (focus)="onFocusInput()"
-              (clear)="onClearInput()"
-              [labelSize]="labelSize"
-              [iconBefore]="iconBefore"
-              [iconAfter]="iconAfter"
-              [textAfter]="textAfter"
-              [textBefore]="textBefore"
-              [textAlign]="textAlign"
-              [labelPlacement]="labelPlacement"
-              [readonly]="readonly ? true : null"
-              [disabled]="disabled ? true : null"
-              [autocomplete]="autocomplete"
-              [placeholder]="placeholder"
-              [clearButton]="clearButton">
-    </tl-input>
-    <ng-template cdkConnectedOverlay
-                 [cdkConnectedOverlayOrigin]="trigger"
-                 [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-                 [cdkConnectedOverlayOpen]="true">
-      <tl-listbox
-        [data]="data"
-        [id]="id"
-        [label]="labelName"
-        [templateRef]="customTemplate"
-        [style.width.px]="widthInput"
-        [style.visibility]="isOpen ? 'visible' : 'hidden'"
-        [labelDetail]="labelDetail"
-        [lazyMode]="lazyMode"
-        [rowsClient]="rowsClient"
-        [rowsPage]="rowsPage"
-        [searchQuery]="searchQuery"
-        [dynamicShowHide]="true"
-        [charsToSearch]="charsToSearch"
-        (clickAddNew)="onAddNew()"
-        (lazyLoad)="onLazyLoadAutocomplete($event)"
-        (clickItem)="onClickItemList($event)"
-        (selectItem)="onSelectItemList($event)"
-        [searchElement]="inputWriter"
-        [listStripped]="listStripped"
-        [showArrows]="false"
-        [fixedHeight]="false"
-        [addNew]="addNewItem"
-        [rowHeight]="rowHeight">
-      </tl-listbox>
-    </ng-template>
+    <tl-filter-container [searchTerm]="searchControl.value"
+                         [source]="data"
+                         [debounceTime]="debounceTime"
+                         (filter)="onFilter($event)"
+                         [searchBy]="'firstName'">
+      <ng-template cdkConnectedOverlay
+                   (backdropClick)="isOpen = false"
+                   (positionChange)="onPositionChange($event)"
+                   [cdkConnectedOverlayHasBackdrop]="true"
+                   [cdkConnectedOverlayOrigin]="trigger"
+                   [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+                   [cdkConnectedOverlayOpen]="isOpen">
+        <cdk-virtual-scroll-viewport *ngIf="isOpen" [style.width]="input.offsetWidth + 'px'"
+                                     [itemSize]="itemSize" class="ui-scroll-view"
+                                     [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
+                                     [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
+          <div *cdkVirtualFor="let item of dataSource" [style.height]="itemSize + 'px'"
+               class="ui-list-item" (click)="selectItem(item)">{{ item[keyText] || 'Loading...' }}</div>
+        </cdk-virtual-scroll-viewport>
+      </ng-template>
+    </tl-filter-container>
   </div>
-  <ng-content></ng-content>
 </div>

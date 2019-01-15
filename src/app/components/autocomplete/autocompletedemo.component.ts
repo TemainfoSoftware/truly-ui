@@ -27,6 +27,7 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 import { TlAutoComplete } from '../../../../projects/truly-ui/src/components/autocomplete/autocomplete';
 import { HttpClient } from '@angular/common/http';
 import { PersonService } from './http.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component( {
   selector: 'app-autocomplete',
@@ -40,58 +41,28 @@ export class AutoCompleteDemoComponent implements OnInit {
 
   public dataEvents;
 
-  public dataLazy;
-
   public dataBasic;
 
-  public timeout;
-
-  public take = 70;
-
-  public formOptions1;
+  public dataLazy;
 
   public result;
 
-  public result2;
-
   public example = '{{item.firstName}}';
 
-  @ViewChild( TlAutoComplete ) autocomplete;
+  public formGroup = new FormGroup({
+    client: new FormControl('')
+  });
 
-  constructor( public dataDumpService: DumpDataService, private personService: PersonService ) {
+  constructor( public dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
-    this.dataBasic = this.dataDumpService.createRandomData( 1000 );
-
-    this.formOptions1 = {
-      title: 'New Client',
-      icon: 'ion-person-add',
-      draggable: true,
-      width: '500px',
-      height: '500px',
-      maximizable: true,
-      minimizable: true,
-      fullscreen: false
-    };
-
+    this.dataBasic = this.dataDumpService.createRandomData(20);
   }
 
-  ngOnInit() {
-    const data = [];
-    this.dataLazy = {
-      'data': data,
-      'total': 100
-    };
-  }
+  ngOnInit() {}
 
   onLazyLoad( event ) {
-    const inputValue = event['filters']['fields']['name']['value'];
-    this.personService.getCategories(inputValue).subscribe((data) => {
-      this.dataLazy = {
-        'data': data['location_suggestions'],
-        'total': data['location_suggestions'].length
-      };
-    });
+    // this.dataBasic = this.dataLazy.splice(event.skip, event.limit);
   }
 
 }

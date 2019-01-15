@@ -10,22 +10,17 @@
           <app-card>
             <div class="col-md-12">
               <h6>Normal Usage</h6>
-              <tl-autocomplete [data]="dataBasic"
-                               [modelValue]="'firstName'"
-                               [labelSize]="'10px'"
-                               [openFocus]="true"
-                               [name]="'clients'"
-                               [id]="'id'"
-                               [label]="'Clients'"
-                               [clearButton]="true"
-                               [searchQuery]="['firstName']"
-                               [rowHeight]="35"
-                               [placeholder]="'Search...'"
-                               [labelName]="'firstName'"
-                               [(ngModel)]="result">
-              </tl-autocomplete>
-              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
-              <div class="spacer"></div>
+              <form [formGroup]="formGroup">
+                <tl-autocomplete [data]="dataBasic"
+                                 [itemSize]="40"
+                                 [keyText]="'firstName'"
+                                 formControlName="client"
+                                 [keyValue]="'id'"
+                                 (lazyLoad)="onLazyLoad($event)">
+                </tl-autocomplete>
+              </form>
+              <app-showcase-returned-value [value]="formGroup.get('client').value"></app-showcase-returned-value>
+<!--              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-autocomplete
   [data]="data"
@@ -40,10 +35,10 @@
   [labelName]="'firstName'"
   [(ngModel)]="result">
 </tl-autocomplete>
-      </textarea>
+      </textarea>-->
             </div>
           </app-card>
-          <app-card>
+          <!--<app-card>
             <div class="col-md-12">
               <h6>With Template</h6>
               <tl-autocomplete [data]="dataLazy"
@@ -97,7 +92,7 @@
               <p><code>Atention:</code> The example above needs to be interpolated <code>{{example}}</code> for example. Not
                 allowed to used here on highlight code.</p>
             </div>
-          </app-card>
+          </app-card>-->
         </app-showcase-card>
       </div>
     </div>

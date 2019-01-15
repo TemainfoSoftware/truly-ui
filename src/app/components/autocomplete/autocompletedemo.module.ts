@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
@@ -56,6 +56,7 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
     AutoCompleteModule,
     CommonModule,
     DialogModule,
+    ReactiveFormsModule,
     FormsModule,
     InputModule,
     FormModule,

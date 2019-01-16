@@ -1,7 +1,8 @@
 <div class="tab-wrapper"
      [style.height]="height"
      [ngClass]="{'tab-wrapper-selected': selected}"
-     [style.display]="selected ? 'block' : 'none'">
+     [style.display]="selected ? 'block' : 'none'"
+     [class.fix-padding]="padding">
 
   <div #tabComponents>
     <ng-content></ng-content>

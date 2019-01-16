@@ -34,6 +34,8 @@ export class TlTab implements AfterViewInit {
 
   @Input() title = 'New Tab';
 
+  @Input() padding = true;
+
   @ViewChild( 'tabComponents' ) tabComponents: ElementRef;
 
   public height = 'auto';

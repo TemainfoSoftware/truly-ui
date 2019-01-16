@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 
 import * as json from './autocompletedemo-dataproperties.json';
 import * as jsonEvt from './autocompletedemo-events.json';
@@ -43,26 +43,57 @@ export class AutoCompleteDemoComponent implements OnInit {
 
   public dataBasic;
 
-  public dataLazy;
+  public dataLazy = [];
+
+  public lazy = [];
 
   public result;
 
+  public data;
+
+  public length = 1000;
+
   public example = '{{item.firstName}}';
 
+  public lazyCut = [];
+
   public formGroup = new FormGroup({
-    client: new FormControl('')
+    client: new FormControl(''),
+    clientLazy: new FormControl('')
   });
 
   constructor( public dataDumpService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvt.events;
-    this.dataBasic = this.dataDumpService.createRandomData(20);
+    this.dataBasic = this.dataDumpService.createRandomData( 100 );
+    this.dataLazy = this.dataDumpService.createRandomData( 1000 );
+    this.data = this.dataLazy.slice();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    setTimeout(() => {
+      this.lazy = this.data.splice(0, 50);
+    }, 2000);
+  }
+
+  onFilter( event ) {
+    const termo = event['fields']['firstName']['value'];
+    setTimeout(() => {
+      this.lazyCut = this.dataLazy.filter((item) => String(item.firstName).toLowerCase().includes(String(termo).toLowerCase()) );
+      this.length = this.lazyCut.length;
+      this.lazy = this.lazyCut.slice(0, 50);
+    }, Math.random() * 1000 + 200);
+  }
 
   onLazyLoad( event ) {
-    // this.dataBasic = this.dataLazy.splice(event.skip, event.limit);
+    setTimeout(() => {
+      if (event.term.length > 0) {
+        const filter = this.lazyCut.filter((item) => String(item.firstName).toLowerCase().includes(String(event.term).toLowerCase()));
+        this.lazy = filter.splice(event.skip, event.limit);
+        return;
+      }
+      this.lazy = this.dataLazy.slice(event.skip, event.limit);
+    }, Math.random() * 1000 + 200);
   }
 
 }

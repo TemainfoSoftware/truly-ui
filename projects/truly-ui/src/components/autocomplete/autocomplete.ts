@@ -20,8 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, Input, Optional, Inject, OnInit, OnChanges,
-  EventEmitter, Output, ChangeDetectorRef,
+  Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -30,6 +30,9 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { DataSourceAutocomplete } from './parts/classes/datasource-autocomplete';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ListOptionDirective } from '../misc/listoption.directive';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -37,7 +40,7 @@ import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
   styleUrls: [ './autocomplete.scss' ],
   providers: [ MakeProvider( TlAutoComplete ) ],
 } )
-export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges {
+export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
 
   @Input() data = [];
 
@@ -55,15 +58,27 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() keyValue = '';
 
-  @Input() labelPlacement = 'left';
+  @Input() labelPlacement: 'top' | 'left' = 'left';
 
   @Input() labelSize = '100px';
+
+  @Input() height = '23px';
+
+  @Input() searchBy = '';
 
   @Input() label = '';
 
   @Input() placeholder = 'Search...';
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
+
+  @Output() filter: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
+
+  @ViewChildren( ListOptionDirective ) items: QueryList<ListOptionDirective>;
+
+  public keyManager: FocusKeyManager<ListOptionDirective>;
 
   public dataSource: DataSourceAutocomplete;
 
@@ -77,7 +92,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public positionOverlay;
 
+  public nothingFound = false;
+
   public searchControl = new FormControl( '' );
+
+  public messageLoading = 'Carregando...';
+
+  public filtering = false;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
     asyncValidators: Array<any>, private change: ChangeDetectorRef ) {
@@ -85,16 +106,23 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngOnInit() {
-    this.setUpData();
-    this.listenLoadData();
   }
 
-  selectItem($event) {
-    this.selected = $event[this.keyText];
-    this.value = $event[this.keyValue];
+  ngAfterViewInit() {
+    this.keyManager = new FocusKeyManager( this.items );
+    this.keyManager.withWrap();
   }
 
-  setUpData() {
+  handleKeyEvents( $event: KeyboardEvent ) {
+    this.keyManager.onKeydown( $event );
+  }
+
+  selectItem( $event ) {
+    this.selected = $event[ this.keyText ];
+    this.value = $event[ this.keyValue ];
+  }
+
+  private setUpData() {
     this.dataSource = new DataSourceAutocomplete( {
       dataSource: this.data,
       pageSize: this.pageSize,
@@ -103,14 +131,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
-  clearValues() {
-    this.selected = null;
-    this.value = null;
-  }
-
-  listenLoadData() {
+  private listenLoadData() {
+    if ( !this.dataSource ) {
+      return;
+    }
     this.dataSource.loadMoreData.subscribe( ( data: any ) => {
-      this.lazyLoad.emit( { skip: data.skip, limit: data.limit } );
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, term: this.searchControl.value } );
     } );
   }
 
@@ -119,23 +145,75 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.change.detectChanges();
   }
 
+  getItemDescription( item ) {
+    if ( !item ) {
+      return undefined;
+    }
+    return item[ this.keyText ];
+  }
+
+  getFilters( term: string ) {
+    const fields = {};
+    fields[ this.searchBy ] = { matchMode: 'contains', value: term };
+    return  { fields: fields, operator: 'or' };
+  }
+
+  setScrollVirtual() {
+    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+  }
+
   onFilter( $event ) {
-    if ($event.length === 0) {
+    this.setScrollVirtual();
+    this.setFiltering( true );
+    setTimeout( () => {
+      if ( this.lazyMode ) {
+        this.filter.emit( this.getFilters( $event ) );
+        return;
+      }
+      if ( $event.length === 0 ) {
+        this.setFiltering( false );
+        this.setUpFilterData( $event );
+        return;
+      }
+    }, 100 );
+    this.setUpFilterData( $event );
+  }
+
+  private setFiltering( value: boolean ) {
+    this.filtering = value;
+  }
+
+  private setNotFound( value: boolean ) {
+    this.nothingFound = value;
+  }
+
+  private setUpFilterData( data ) {
+    this.setNotFound( data.length === 0 );
+    this.dataSource = new DataSourceAutocomplete({
+      dataSource: data,
+      lazyMode: this.lazyMode,
+      totalLength: this.totalLength,
+      pageSize: this.pageSize
+    });
+  }
+
+  ngOnChanges( changes ) {
+    if ( changes[ 'data' ].firstChange ) {
       this.setUpData();
+      this.listenLoadData();
       return;
     }
-    this.setUpFilterData($event);
+    if ( this.filtering ) {
+      this.setUpFilterData( changes[ 'data' ].currentValue );
+      this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.dataSource.addPage( 0 );
+      this.listenLoadData();
+      return;
+    }
+    if ( this.dataSource ) {
+      this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.listenLoadData();
+    }
   }
-
-  setUpFilterData(data) {
-    this.dataSource = new DataSourceAutocomplete( {
-      dataSource: data,
-      pageSize: this.pageSize,
-      totalLength: this.totalLength,
-      lazyMode: this.lazyMode
-    } );
-  }
-
-  ngOnChanges( changes ) {}
 
 }

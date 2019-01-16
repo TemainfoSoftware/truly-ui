@@ -52,6 +52,8 @@ export class TlFilterContainer implements AfterContentInit, OnDestroy {
 
   @Input() searchBy = '';
 
+  @Input() lazyMode = '';
+
   @Input() debounceTime = 200;
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
@@ -71,13 +73,13 @@ export class TlFilterContainer implements AfterContentInit, OnDestroy {
   }
 
   search( searchTerm: string ) {
+    if (this.lazyMode) {
+      return searchTerm;
+    }
     const filtered = [];
     this.source.forEach( ( value ) => {
       if ( String( value[ this.searchBy ].toLowerCase() ).indexOf( String(searchTerm.toLowerCase().trim()) ) > -1 ) {
         filtered.push(value);
-        this.handleHighlighters( value[this.searchBy], searchTerm );
-      } else {
-        this.handleHighlighters( value[this.searchBy], '' );
       }
     } );
     return filtered;

@@ -23,8 +23,6 @@
   border-radius: 0 0 3px 3px;
   outline: 0;
   left: -1px;
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
   box-sizing: content-box;
   background: #ffffff;
   &::-webkit-scrollbar {
@@ -87,7 +85,7 @@
   }
   .ui-input {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-    font-size: 1em;
+    font-size: 12px;
     border: 0;
     outline: none;
     height: 100%;
@@ -97,6 +95,8 @@
     color: #383737;
   }
   .ui-model-input {
+    left: 0;
+    position: absolute;
     visibility: hidden;
   }
 }
@@ -124,8 +124,17 @@
   padding: 10px;
   background: #fff;
   cursor: pointer;
-  &:nth-of-type(odd) {
-    background: #fdfdfd;
+  transition: background linear 200ms;
+  > .ui-icon {
+    padding-right: 5px;
+  }
+  &:focus {
+    opacity: 1;
+    background: #6c9 !important;
+    color: #ffff;
+  }
+  &:hover {
+    background: #eeeeee;
   }
 }
 

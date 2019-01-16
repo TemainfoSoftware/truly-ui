@@ -24,6 +24,7 @@ import { BehaviorSubject, Observable, Subscription, Subject } from 'rxjs';
 import { DataSourceInterface } from '../interfaces';
 
 export class DataSourceAutocomplete extends DataSource<string | undefined> {
+
   public dataStream: BehaviorSubject<any>;
 
   public loadMoreData = new Subject();
@@ -40,13 +41,16 @@ export class DataSourceAutocomplete extends DataSource<string | undefined> {
 
   private subscription = new Subscription();
 
+  private arrayTotal = [];
+
+  private currentPage = 0;
+
   constructor( public config: DataSourceInterface ) {
     super();
-    this.totalLength = this.config.totalLength;
-    this.pageSize = this.config.pageSize;
-    this.lazyMode = this.config.lazyMode;
+    this.setProprieties(config);
     this.cachedData = this.config.dataSource;
-    this.dataStream = new BehaviorSubject<(any | undefined)[]>( this.cachedData );
+    this.arrayTotal = Array.from<string>( { length: this.totalLength } );
+    this.dataStream = new BehaviorSubject<(any | undefined)[]>( this.arrayTotal );
   }
 
   connect( collectionViewer: CollectionViewer ): Observable<(string | undefined)[]> {
@@ -64,22 +68,43 @@ export class DataSourceAutocomplete extends DataSource<string | undefined> {
     this.subscription.unsubscribe();
   }
 
+  addPage(page: number) {
+    this.fetchedPages.add( page );
+  }
+
+  private setProprieties(config) {
+    Object.keys(config).forEach((value) => {
+      this[value] = config[value];
+    });
+  }
+
+  public setData(data: Array<any>) {
+    this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize,
+      ...data);
+    this.dataStream.next(this.arrayTotal);
+  }
+
   private getPageForIndex( index: number ): number {
     return Math.floor( index / this.pageSize );
   }
 
+  private emitCachedData(skip: number) {
+    this.cachedData.slice( skip, this.pageSize );
+    this.dataStream.next( this.cachedData );
+  }
+
+  private emitLoadData(skip: number) {
+    this.loadMoreData.next( { skip: skip, limit: this.pageSize + skip } );
+  }
+
   private fetchPage( page: number ) {
+    this.currentPage = page;
     if ( this.fetchedPages.has( page ) ) {
       return;
     }
-    this.fetchedPages.add( page );
+    this.addPage(page);
     const skip = page * this.pageSize;
-    this.cachedData.slice( skip, this.pageSize );
-
-    if ( !this.lazyMode ) {
-      this.dataStream.next( this.cachedData );
-    } else {
-      this.loadMoreData.next( { skip: skip, limit: this.pageSize } );
-    }
+    !this.lazyMode ? this.emitCachedData(skip) : this.emitLoadData(skip);
   }
+
 }

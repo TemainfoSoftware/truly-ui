@@ -2,43 +2,54 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div class="ui-autocomplete-wrapper">
     <div class="ui-wrapper-filter" #input
+         [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
          [class.openedAbove]="positionOverlay === 'top' && isOpen">
-      <tl-icon *ngIf="selected || searchControl.value"
-               (click)="clearValues()"
-               class="ui-clearbutton" [size]="'1.5em'" [lib]="'ion'" [style]="'ios'">close-circle-outline</tl-icon>
       <input #input
              #trigger="cdkOverlayOrigin"
              cdkOverlayOrigin
              (click)="isOpen = !isOpen"
              [attr.placeholder]="placeholder"
-             (focus)="focused = true"
-             (focusout)="focused = false"
              [value]="selected"
              [formControl]="searchControl"
-             (input)="selected = null"
+             (keydown.escape)="$event.stopPropagation(); isOpen = false"
+             (focus)="focused = true"
+             (focusout)="focused = false"
+             (input)="selected = null; filtering = true"
              class="ui-input">
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
       <div class="ui-selected-wrapper" *ngIf="selected && !focused"></div>
     </div>
     <tl-filter-container [searchTerm]="searchControl.value"
-                         [source]="data"
                          [debounceTime]="debounceTime"
+                         [lazyMode]="lazyMode"
+                         [source]="data"
                          (filter)="onFilter($event)"
                          [searchBy]="'firstName'">
       <ng-template cdkConnectedOverlay
-                   (backdropClick)="isOpen = false"
+                   (backdropClick)="isOpen = false; filtering = false"
                    (positionChange)="onPositionChange($event)"
                    [cdkConnectedOverlayHasBackdrop]="true"
                    [cdkConnectedOverlayOrigin]="trigger"
                    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                    [cdkConnectedOverlayOpen]="isOpen">
-        <cdk-virtual-scroll-viewport *ngIf="isOpen" [style.width]="input.offsetWidth + 'px'"
-                                     [itemSize]="itemSize" class="ui-scroll-view"
+        <cdk-virtual-scroll-viewport *ngIf="isOpen"
+                                     class="ui-scroll-view"
+                                     [itemSize]="itemSize"
+                                     [style.width]="input.offsetWidth + 'px'"
+                                     (scrolledIndexChange)="filtering = false"
+                                     [tlBlockui]="nothingFound"
+                                     [blockuiConfig]="{ 'message': 'Nothing Found' }"
                                      [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
                                      [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
-          <div *cdkVirtualFor="let item of dataSource" [style.height]="itemSize + 'px'"
-               class="ui-list-item" (click)="selectItem(item)">{{ item[keyText] || 'Loading...' }}</div>
+          <div *cdkVirtualFor="let item of dataSource" [style.height]="itemSize + 'px'" role="option"
+               tabindex="-1"
+               (keydown)="handleKeyEvents($event)"
+               (keydown.enter)="selectItem(item); isOpen = false"
+               class="ui-list-item" (click)="selectItem(item)">
+            <tl-icon class="ui-icon" *ngIf="!getItemDescription(item)" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
+            {{ getItemDescription(item) || messageLoading }}
+          </div>
         </cdk-virtual-scroll-viewport>
       </ng-template>
     </tl-filter-container>

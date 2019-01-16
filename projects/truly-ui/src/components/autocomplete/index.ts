@@ -37,6 +37,8 @@ import { TlFilterContainer } from './parts/filter-container';
 import { SearchableHighlightDirective } from './parts/directives/searchable-highlight.directive';
 import { FilterService } from './filter.service';
 import { IconsModule } from '../icons/index';
+import { MiscModule } from '../misc/index';
+import { BlockUIModule } from '../blockui/index';
 
 @NgModule( {
   imports: [
@@ -46,9 +48,11 @@ import { IconsModule } from '../icons/index';
     ScrollingModule,
     InputModule,
     FormsModule,
+    BlockUIModule,
     IconsModule,
     ReactiveFormsModule,
-    InternalsModule
+    InternalsModule,
+    MiscModule
   ],
   declarations: [
     TlAutoComplete,

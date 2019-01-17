@@ -177,6 +177,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       }
     }, 100 );
     this.setUpFilterData( $event );
+    if (!this.lazyMode) {
+      this.dataSource.dataStream.next($event);
+    }
   }
 
   private setFiltering( value: boolean ) {
@@ -198,6 +201,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngOnChanges( changes ) {
+    if (changes['totalLength']) {
+       if (!changes['totalLength'].firstChange) {
+         this.setUpData();
+         this.dataSource.setData( this.data );
+         this.dataSource.addPage( 0 );
+         this.setNotFound( this.data.length === 0 );
+         this.listenLoadData();
+         return;
+       }
+    }
     if ( changes[ 'data' ].firstChange ) {
       this.setUpData();
       this.listenLoadData();

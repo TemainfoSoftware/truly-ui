@@ -1,10 +1,10 @@
+* {
+  box-sizing: border-box;
+}
+
 .ui-autocomplete-box {
   display: table;
   width: 100%;
-}
-
-.ui-selected-wrapper {
-  display: table-cell;
 }
 
 .scrollOpenedAbove {
@@ -18,7 +18,6 @@
   height: 200px;
   width: 100%;
   border: 1px solid #40a9ff;
-  border-top: 0;
   -webkit-border-radius: 0 0 3px 3px;
   border-radius: 0 0 3px 3px;
   outline: 0;
@@ -35,7 +34,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #fff;
+    background: #f0f0f0;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -50,6 +49,7 @@
 }
 
 .ui-selected-wrapper {
+  display: table-cell;
   position: absolute;
   top: 0;
   background: #c3c3c3;
@@ -59,9 +59,9 @@
   height: calc(100% - 6px);
   padding: 0 5px;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: .2;
   z-index: 0;
-  border: 1px solid #59655f;
+  box-sizing: border-box;
 }
 
 .ui-wrapper-filter {
@@ -90,7 +90,7 @@
     outline: none;
     height: 100%;
     width: 100%;
-    padding: 0 10px;
+    padding-left: 10px;
     border-radius: 3px;
     color: #383737;
   }
@@ -110,7 +110,6 @@
 
 .opened {
   outline: 0;
-  border-bottom: 0;
   -webkit-border-radius: 3px 3px 0 0 !important;
   border-radius: 3px 3px 0 0 !important;
   border-color: #40a9ff;
@@ -125,6 +124,7 @@
   background: #fff;
   cursor: pointer;
   transition: background linear 200ms;
+  outline: none;
   > .ui-icon {
     padding-right: 5px;
   }

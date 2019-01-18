@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateValidator } from '../../../../../projects/truly-ui/src/components/validators/date/date.validator';
 
 export class User {
   name: string;
@@ -30,7 +29,7 @@ export class FormInlinedemoComponent implements OnInit {
   public form = new FormGroup({
     name: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    birthday: new FormControl('', [ DateValidator('dd.mm.yyyy'), Validators.required ]),
+    birthday: new FormControl(''),
     active: new FormControl(false)
   });
 

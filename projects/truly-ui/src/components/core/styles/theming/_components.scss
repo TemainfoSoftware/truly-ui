@@ -15,6 +15,7 @@
 @import "../../../colorpicker/parts/colorpicker-input/colorpicker-input-theme";
 @import "../../../core/core";
 @import "../../../datatable/datatable-theme";
+@import "../../../date/date-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../editor/editor-theme";
@@ -68,6 +69,7 @@
   @include tl-colorpicker-content-theme($theme);
   @include tl-colorpicker-input-theme($theme);
   @include tl-core-theme($theme);
+  @include tl-date-theme($theme);
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);
   @include tl-dropdonwlist-theme($theme);

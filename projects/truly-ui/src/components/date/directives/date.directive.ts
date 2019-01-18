@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Sistemas
+ Copyright (c) 2018 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,37 +19,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
-import { CPFDirective } from './cpf/cpf.directive';
-import { CNPJDirective } from './cnpj/cnpj.directive';
-import { NumberDirective } from './number/number.directive';
-import { EmailDirective } from './email/email.directive';
-import { CreditCardDirective } from './creditcard/creditcard.directive';
-import { PasswordDirective } from './password/password.directive';
+import {
+  Input, Directive, forwardRef,
+  AfterViewInit,
+} from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+import { DateValidator } from '../validators/date.validator';
 
-@NgModule( {
-  imports: [
-    CommonModule,
-    FormsModule
-  ],
-  declarations: [
-    CreditCardDirective,
-    CPFDirective,
-    CNPJDirective,
-    EmailDirective,
-    NumberDirective,
-    PasswordDirective
-  ],
-  exports: [
-    CreditCardDirective,
-    CPFDirective,
-    CNPJDirective,
-    EmailDirective,
-    NumberDirective,
-    PasswordDirective
+@Directive( {
+  selector: '[date][ngModel],[date][formControl],[date][formControlName]',
+  providers: [
+    {
+      multi: true,
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef( () => DateDirective ),
+    }
   ]
 } )
-export class ValidatorsModule {}
+export class DateDirective implements Validator, AfterViewInit {
+
+  @Input() formatDate = 'dd.mm.yyyy';
+
+  ngAfterViewInit() {}
+
+  validate( control: AbstractControl ): ValidationErrors | any {
+    return DateValidator( this.formatDate )( control );
+  }
+
+
+}

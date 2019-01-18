@@ -1,0 +1,23 @@
+<div [class]="'ui-wrapper-date ' + color">
+  <tl-label [labelTitle]="label" [labelSize]="labelSize" [labelPlacement]="labelPlacement"></tl-label>
+  <div class="ui-input-wrapper">
+    <input #input
+           class="ui-input-date"
+           [placeholder]="placeholder"
+           (focus)="touched = true"
+           [ngClass]="{
+             'withBorder': withBorder,
+             'withoutBorder' : !withBorder,
+             'ng-touched': touched,
+             'ng-valid': model.valid,
+             'ng-invalid': model.invalid,
+             'ng-dirty': model.dirty,
+             'flatBorders': flatBorders
+           }"
+           [attr.disabled]="disabled ? true : null"
+           [attr.readonly]="readonly ? true : null"
+           (focusout)="focusOut()"
+           [attr.value]="mockValue">
+    <input date [formatDate]="formatDate" [(ngModel)]="value" notform class="ui-input" type="text">
+  </div>
+</div>

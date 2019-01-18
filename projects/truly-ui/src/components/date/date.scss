@@ -1,0 +1,25 @@
+.ui-wrapper-date {
+  display: table;
+}
+
+.ui-input-wrapper {
+  display: table-cell;
+  width: 100%;
+}
+
+.ui-input-date {
+  width: 100%;
+  height: 25px;
+  border: 1px solid #ccc;
+  padding: 0 5px;
+  border-radius: 3px;
+  &.flatBorders {
+    border-radius: 0;
+  }
+}
+
+.ui-input {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+}

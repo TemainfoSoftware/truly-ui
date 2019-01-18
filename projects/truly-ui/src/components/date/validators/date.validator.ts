@@ -26,15 +26,21 @@ import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
 
 let dateExpressFormat;
 
-export function DateValidator( formatDate, isoDate = false ): ValidatorFn {
+export function DateValidator( formatDate ): ValidatorFn {
   dateExpressFormat = formatDate;
   return ( c: AbstractControl ) => {
+
+    const isoDate = new Date(c.value);
+
+    if (isoDate.toDateString() !== 'Invalid Date') {
+      return null;
+    }
 
     if ( !stringUnmasked( c ) && c.touched ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
-    if ( (stringUnmasked( c ).length) !== dateExpressFormat.length && !isoDate ) {
+    if ( (stringUnmasked( c ).length) !== dateExpressFormat.length ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 

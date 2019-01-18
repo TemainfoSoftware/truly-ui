@@ -1,0 +1,105 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-date-theme-schema( $theme, $action ) {
+
+  $basic: map-deep-get($theme, 'basic');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+
+   .ui-input-date {
+    background-color: map-deep-get($basic, "lighter", "background");
+    color: map-deep-get($basic, "lighter", "foreground");
+    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+
+    &.withBorder {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &.withoutBorder {
+      border: none !important;
+    }
+
+    &::placeholder {
+      color: map-deep-get($basic, "lighter", "foreground");
+      opacity: 0.6;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus:not(.ng-dirty) {
+      background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
+      outline: none;
+      border: 1px solid map-deep-get($warning, "default", "border");
+    }
+
+    &:disabled {
+      opacity: 0.35;
+      filter: Alpha(Opacity=70);
+      cursor: default !important;
+      background-color: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &:read-only {
+      background-color: map-deep-get($basic, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &.ng-touched.ng-invalid {
+      border: 1px solid map-deep-get($danger, "default", "border");
+      background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+      outline: none;
+    }
+
+    &.ng-dirty.ng-invalid {
+      border: 1px solid map-deep-get($danger, "default", "border");
+      background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
+      outline: none;
+    }
+
+    &.ng-touched.ng-invalid::placeholder {
+      color: rgba(map-deep-get($danger, "default", "background"), 0.8);
+    }
+
+    &.ng-valid.ng-touched {
+      border: 1px solid map-deep-get($success, "default", "border");
+      background-color: rgba(map-deep-get($success, "default", "background"), 0.2);
+      outline: none;
+    }
+  }
+}
+
+  @mixin tl-date-theme( $theme ) {
+
+    .ui-wrapper-date {
+
+      &.basic {
+        @include _tl-date-theme-schema($theme, 'basic')
+      }
+
+      &.primary {
+        @include _tl-date-theme-schema($theme, 'primary')
+      }
+
+      &.success {
+        @include _tl-date-theme-schema($theme, 'success')
+      }
+
+      &.danger {
+        @include _tl-date-theme-schema($theme, 'danger')
+      }
+
+      &.warning {
+        @include _tl-date-theme-schema($theme, 'warning')
+      }
+
+      &.information {
+        @include _tl-date-theme-schema($theme, 'information')
+      }
+    }
+  }

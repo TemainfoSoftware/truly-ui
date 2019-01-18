@@ -21,7 +21,7 @@
  */
 import {
   Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
-  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild, ContentChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -33,6 +33,7 @@ import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from '../misc/listoption.directive';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { map } from 'rxjs/operators';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -58,6 +59,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() keyValue = '';
 
+  @Input() openFocus = false;
+
   @Input() labelPlacement: 'top' | 'left' = 'left';
 
   @Input() labelSize = '100px';
@@ -74,6 +77,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild( NgModel ) model: NgModel;
+
   @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
   @ViewChildren( ListOptionDirective ) items: QueryList<ListOptionDirective>;
@@ -82,9 +87,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public dataSource: DataSourceAutocomplete;
 
-  public model: NgModel;
-
   public selected = null;
+
+  public selectedIndex = null;
 
   public isOpen = false;
 
@@ -100,6 +105,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public filtering = false;
 
+  private modelInitialized = false;
+
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
     asyncValidators: Array<any>, private change: ChangeDetectorRef ) {
     super( validators, asyncValidators );
@@ -111,15 +118,56 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   ngAfterViewInit() {
     this.keyManager = new FocusKeyManager( this.items );
     this.keyManager.withWrap();
+    this.handleModel();
+  }
+
+  handleModel() {
+    this.model.valueChanges.subscribe( ( value ) => {
+      if ( this.dataSource && !this.modelInitialized) {
+        this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
+      }
+    } );
+  }
+
+  handleModelLazy() {
+    this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
+  }
+
+  handleModelCached() {
+    this.dataSource.getCachedData().forEach( ( value, index ) => {
+      if ( String( value[ this.keyValue ] ) === String( this.model.model ) ) {
+        this.selectedIndex = index;
+        this.selected = value[ this.keyText ];
+      }
+    } );
   }
 
   handleKeyEvents( $event: KeyboardEvent ) {
     this.keyManager.onKeydown( $event );
   }
 
-  selectItem( $event ) {
+  public handleBlur() {
+    this.isOpen = false;
+  }
+
+  public handleFocus() {
+    this.focused = true;
+    if ( this.openFocus ) {
+      this.isOpen = true;
+    }
+  }
+
+  selectItem( $event, index: number ) {
+    this.selectedIndex = index;
     this.selected = $event[ this.keyText ];
     this.value = $event[ this.keyValue ];
+    this.isOpen = false;
+  }
+
+  setActiveItemFirst() {
+    setTimeout( () => {
+      this.keyManager.setFirstItemActive();
+    }, 100 );
   }
 
   private setUpData() {
@@ -155,7 +203,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   getFilters( term: string ) {
     const fields = {};
     fields[ this.searchBy ] = { matchMode: 'contains', value: term };
-    return  { fields: fields, operator: 'or' };
+    return { fields: fields, operator: 'or' };
   }
 
   setScrollVirtual() {
@@ -177,8 +225,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       }
     }, 100 );
     this.setUpFilterData( $event );
-    if (!this.lazyMode) {
-      this.dataSource.dataStream.next($event);
+    if ( !this.lazyMode ) {
+      this.dataSource.dataStream.next( $event );
     }
   }
 
@@ -192,24 +240,28 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private setUpFilterData( data ) {
     this.setNotFound( data.length === 0 );
-    this.dataSource = new DataSourceAutocomplete({
+    this.dataSource = new DataSourceAutocomplete( {
       dataSource: data,
       lazyMode: this.lazyMode,
       totalLength: this.totalLength,
       pageSize: this.pageSize
-    });
+    } );
   }
 
   ngOnChanges( changes ) {
-    if (changes['totalLength']) {
-       if (!changes['totalLength'].firstChange) {
-         this.setUpData();
-         this.dataSource.setData( this.data );
-         this.dataSource.addPage( 0 );
-         this.setNotFound( this.data.length === 0 );
-         this.listenLoadData();
-         return;
-       }
+    if ( changes[ 'data' ] && this.model.model && !this.modelInitialized) {
+      this.selected = changes[ 'data' ].currentValue[ 0 ][ this.keyText ];
+      this.modelInitialized = true;
+    }
+    if ( changes[ 'totalLength' ] ) {
+      if ( !changes[ 'totalLength' ].firstChange ) {
+        this.setUpData();
+        this.dataSource.setData( this.data );
+        this.dataSource.addPage( 0 );
+        this.setNotFound( this.data.length === 0 );
+        this.listenLoadData();
+        return;
+      }
     }
     if ( changes[ 'data' ].firstChange ) {
       this.setUpData();

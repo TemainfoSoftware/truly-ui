@@ -13,10 +13,12 @@
              [attr.placeholder]="placeholder"
              [value]="selected"
              [formControl]="searchControl"
+             (keydown.ArrowDown)="setActiveItemFirst()"
              (keydown.escape)="$event.stopPropagation(); isOpen = false"
-             (focus)="focused = true"
+             (keydown.tab)="handleBlur()"
+             (focus)="handleFocus()"
              (focusout)="focused = false"
-             (input)="selected = null; filtering = true"
+             (input)="filtering = true"
              class="ui-input">
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
       <div class="ui-selected-wrapper" *ngIf="selected && !focused"></div>
@@ -43,11 +45,13 @@
                                      [blockuiConfig]="{ 'message': 'Nothing Found' }"
                                      [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
                                      [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
-          <div *cdkVirtualFor="let item of dataSource" [style.height]="itemSize + 'px'" role="option"
-               tabindex="-1"
+          <div *cdkVirtualFor="let item of dataSource; let i = index" [style.height]="itemSize + 'px'" role="option"
+               tabindex="0"
+               [class.selected]="selectedIndex === i"
                (keydown)="handleKeyEvents($event)"
-               (keydown.enter)="selectItem(item); isOpen = false"
-               class="ui-list-item" (click)="selectItem(item)">
+               (keydown.enter)="selectItem(item, i);"
+               (click)="selectItem(item, i)"
+               class="ui-list-item">
             <tl-icon class="ui-icon" *ngIf="!getItemDescription(item)" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
             {{ getItemDescription(item) || messageLoading }}
           </div>

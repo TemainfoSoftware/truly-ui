@@ -123,18 +123,27 @@
   padding: 10px;
   background: #fff;
   cursor: pointer;
-  transition: background linear 200ms;
   outline: none;
+  border-top: 1px solid #cccccc2e;
+  color: #000000c4;
   > .ui-icon {
     padding-right: 5px;
   }
-  &:focus {
+  &:focus:not(.selected) {
     opacity: 1;
-    background: #6c9 !important;
-    color: #ffff;
+    background: #d5d5d56b !important;
+    color: #000000c4 !important;
   }
+
   &:hover {
+    transition: background linear 200ms;
     background: #eeeeee;
+  }
+
+  &.selected {
+    opacity: 1;
+    background: #6c9;
+    color: #ffff !important;
   }
 }
 

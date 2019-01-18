@@ -14,7 +14,7 @@
                *ngFor="let item of modalService.componentList; let i = index" (click)="showWindow(item.modal)"
                [style.opacity]="item?.modal === modalService?.activeModal ? 1 : 0.7">
               <span class="ui-container-item ui-container-icon"><tl-icon>{{ item?.modal?.instance?.icon }}</tl-icon></span>
-              <span class="ui-container-item ui-container-text">Cadastro de Paciente</span>
+              <span class="ui-container-item ui-container-text">{{item?.modal?.instance?.title}}</span>
           </div>
       </div>
     </div>

@@ -1,0 +1,37 @@
+<div class="router-outlet">
+  <app-showcase-header name="Date" module="DateModule">
+    The Truly-UI Date are styles for actions in forms, dialogs, and more with support for multiple sizes, states
+    and many properties for customization
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Basic</h5>
+              <form [formGroup]="formGroup">
+                <tl-date formControlName="dateString"></tl-date>
+              </form>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-date></tl-date>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

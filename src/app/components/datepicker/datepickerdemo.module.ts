@@ -14,6 +14,7 @@ import { MiscModule } from '../../../../projects/truly-ui/src/components/misc/in
 import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/validators/index';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
+import { DateModule } from '../../../../projects/truly-ui/src/components/date/index';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
     MiscModule,
     HighlightJsModule,
     CommonModule,
+    DateModule,
     FormsModule,
     ValidatorsModule,
     DatePickerDemoRoutingModule,

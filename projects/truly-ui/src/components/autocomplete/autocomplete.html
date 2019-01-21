@@ -2,7 +2,7 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div class="ui-autocomplete-wrapper">
     <div class="ui-wrapper-filter"
-         #input
+         #wrapper
          [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
          [class.openedAbove]="positionOverlay === 'top' && isOpen">
@@ -18,7 +18,7 @@
              (keydown.tab)="handleBlur()"
              (focus)="handleFocus()"
              (focusout)="focused = false"
-             (input)="filtering = true"
+             (input)="filtering = true; isOpen = true"
              class="ui-input">
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
       <div class="ui-selected-wrapper" *ngIf="selected && !focused"></div>
@@ -48,8 +48,7 @@
           <div *cdkVirtualFor="let item of dataSource; let i = index" [style.height]="itemSize + 'px'" role="option"
                tabindex="0"
                [class.selected]="selectedIndex === i"
-               (keydown)="handleKeyEvents($event)"
-               (keydown.enter)="selectItem(item, i);"
+               (keydown)="handleKeyEvents($event, item, i)"
                (click)="selectItem(item, i)"
                class="ui-list-item">
             <tl-icon class="ui-icon" *ngIf="!getItemDescription(item)" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>

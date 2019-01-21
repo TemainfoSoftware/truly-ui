@@ -21,7 +21,7 @@
  */
 import {
   Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
-  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild, ContentChild,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild, ContentChild, ElementRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
@@ -34,6 +34,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from '../misc/listoption.directive';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
+import { KeyEvent } from '../core/enums/key-events';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -78,6 +79,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( NgModel ) model: NgModel;
+
+  @ViewChild( 'input' ) input: ElementRef;
 
   @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
@@ -142,8 +145,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
-  handleKeyEvents( $event: KeyboardEvent ) {
+  handleKeyEvents( $event: KeyboardEvent, item, i ) {
     this.keyManager.onKeydown( $event );
+    if ($event.keyCode === KeyEvent.ENTER) {
+      this.selectItem(item, i);
+      this.setFocus();
+    }
   }
 
   public handleBlur() {
@@ -198,6 +205,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       return undefined;
     }
     return item[ this.keyText ];
+  }
+
+  setFocus() {
+    setTimeout(() => {
+      this.input.nativeElement.focus();
+    }, 100);
   }
 
   getFilters( term: string ) {

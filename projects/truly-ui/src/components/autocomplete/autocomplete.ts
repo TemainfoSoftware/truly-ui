@@ -162,6 +162,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
   }
 
+  handleArrowDown($event) {
+    if (this.isOpen) {
+      $event.stopPropagation();
+    }
+    this.setActiveItemFirst();
+  }
+
   handleFocus() {
     this.focused = true;
     if ( this.openFocus ) {

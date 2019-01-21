@@ -13,7 +13,7 @@
              [attr.placeholder]="placeholder"
              [value]="selected"
              [formControl]="searchControl"
-             (keydown.ArrowDown)="setActiveItemFirst()"
+             (keydown.ArrowDown)="handleArrowDown($event)"
              (keydown.escape)="$event.stopPropagation(); isOpen = false"
              (keydown.tab)="handleBlur()"
              (focus)="handleFocus()"

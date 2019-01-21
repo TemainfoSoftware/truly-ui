@@ -171,7 +171,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   handleFocus() {
     this.focused = true;
-    if ( this.openFocus ) {
+    if ( this.openFocus && !this.selected) {
       this.isOpen = true;
     }
   }
@@ -181,6 +181,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.selected = $event[ this.keyText ];
     this.value = $event[ this.keyValue ];
     this.isOpen = false;
+    this.change.detectChanges();
   }
 
   setActiveItemFirst() {

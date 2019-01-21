@@ -71,7 +71,7 @@
   }
 
   .ui-selected-wrapper {
-    background: map-deep-get($basic, "darker", "background");
+    background: rgba(map-deep-get($basic, "darker", "foreground"), 0.3);
   }
 }
 

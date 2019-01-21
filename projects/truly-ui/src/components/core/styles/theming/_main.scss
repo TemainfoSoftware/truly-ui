@@ -4,6 +4,7 @@
   @include tl-accordion-theme($theme);
   @include tl-accordion-item-theme($theme);
   @include tl-avatar-theme($theme);
+  @include tl-autocomplete-theme($theme);
   @include tl-avatar-svg-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-theme($theme);

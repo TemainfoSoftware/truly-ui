@@ -1,6 +1,6 @@
 <div class="ui-autocomplete-box">
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
-  <div class="ui-autocomplete-wrapper">
+  <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
          #wrapper
          [style.height]="height"
@@ -39,10 +39,11 @@
         <cdk-virtual-scroll-viewport *ngIf="isOpen"
                                      class="ui-scroll-view"
                                      [itemSize]="itemSize"
+                                     CdkScrollable
                                      [style.width]="input.offsetWidth + 'px'"
                                      (scrolledIndexChange)="filtering = false"
                                      [tlBlockui]="nothingFound"
-                                     [blockuiConfig]="{ 'message': 'Nothing Found' }"
+                                     [blockuiConfig]="{ 'message': nothingFoundMessage }"
                                      [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
                                      [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
           <div *cdkVirtualFor="let item of dataSource; let i = index" [style.height]="itemSize + 'px'" role="option"

@@ -32,9 +32,10 @@ import { DataSourceAutocomplete } from './parts/classes/datasource-autocomplete'
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from '../misc/listoption.directive';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { CdkScrollable, CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
 import { KeyEvent } from '../core/enums/key-events';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -61,6 +62,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   @Input() keyValue = '';
 
   @Input() openFocus = false;
+
+  @Input() color = 'basic';
 
   @Input() labelPlacement: 'top' | 'left' = 'left';
 
@@ -104,14 +107,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public searchControl = new FormControl( '' );
 
-  public messageLoading = 'Carregando...';
+  public messageLoading = this.i18n.getLocale().AutoComplete.messageLoading;
+
+  public nothingFoundMessage = this.i18n.getLocale().AutoComplete.nothingFoundMessage;
 
   public filtering = false;
 
   private modelInitialized = false;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private change: ChangeDetectorRef ) {
+    asyncValidators: Array<any>, private change: ChangeDetectorRef, private i18n: I18nService ) {
     super( validators, asyncValidators );
   }
 
@@ -124,19 +129,19 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.handleModel();
   }
 
-  handleModel() {
-    this.model.valueChanges.subscribe( ( value ) => {
+  private handleModel() {
+    this.model.valueChanges.subscribe( () => {
       if ( this.dataSource && !this.modelInitialized) {
         this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
       }
     } );
   }
 
-  handleModelLazy() {
+  private handleModelLazy() {
     this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
   }
 
-  handleModelCached() {
+  private handleModelCached() {
     this.dataSource.getCachedData().forEach( ( value, index ) => {
       if ( String( value[ this.keyValue ] ) === String( this.model.model ) ) {
         this.selectedIndex = index;
@@ -153,11 +158,11 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  public handleBlur() {
+  handleBlur() {
     this.isOpen = false;
   }
 
-  public handleFocus() {
+  handleFocus() {
     this.focused = true;
     if ( this.openFocus ) {
       this.isOpen = true;
@@ -207,19 +212,19 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     return item[ this.keyText ];
   }
 
-  setFocus() {
+  private setFocus() {
     setTimeout(() => {
       this.input.nativeElement.focus();
     }, 100);
   }
 
-  getFilters( term: string ) {
+  private getFilters( term: string ) {
     const fields = {};
     fields[ this.searchBy ] = { matchMode: 'contains', value: term };
     return { fields: fields, operator: 'or' };
   }
 
-  setScrollVirtual() {
+  private setScrollVirtual() {
     this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
   }
 

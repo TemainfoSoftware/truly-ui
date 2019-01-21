@@ -31,9 +31,11 @@ import { OverlayList } from './overlaylist/pt_BR';
 import { Editor } from './editor/pt_BR';
 import { Permissions } from './permissions/pt_BR';
 import { TimePicker } from './timepicker/pt_BR';
+import { AutoComplete } from './autocomplete/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
+  AutoComplete,
   Button,
   Calendar,
   Datatable,

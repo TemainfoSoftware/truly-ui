@@ -10,6 +10,7 @@ import { OverlayI18nInterface } from './languages/overlaylist/index';
 import { EditorI18nInterface } from './languages/editor/index';
 import { PermissionsI18nInterface } from './languages/permissions/index';
 import { TimePickerI18nInterface } from './languages/timepicker/index';
+import { AutoCompleteI18nInterface } from './languages/autocomplete/index';
 
 export interface I18nInterface {
   locale: string;
@@ -25,4 +26,5 @@ export interface I18nInterface {
   Validators: ValidatorsI18nInterface;
   Permissions: PermissionsI18nInterface;
   TimePicker: TimePickerI18nInterface;
+  AutoComplete: AutoCompleteI18nInterface;
 }

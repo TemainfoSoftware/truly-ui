@@ -19,33 +19,7 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import { Button } from './button/en_US';
-import { Calendar } from './calendar/en_US';
-import { Datatable } from './datatable/en_US';
-import { Dialog } from './dialog/en_US';
-import { Form } from './form/en_US';
-import { Listbox } from './listbox/en_US';
-import { Navigator } from './navigator/en_US';
-import { Validators } from './validators/en_US';
-import { OverlayList } from './overlaylist/en_US';
-import { Editor } from './editor/en_US';
-import { Permissions } from './permissions/en_US';
-import { TimePicker } from './timepicker/en_US';
-import { AutoComplete } from './autocomplete/en_US';
-
-export const en_US = {
-  locale: 'en-US',
-  AutoComplete,
-  Button,
-  Calendar,
-  Datatable,
-  Dialog,
-  Editor,
-  Form,
-  Listbox,
-  Navigator,
-  Validators,
-  OverlayList,
-  Permissions,
-  TimePicker
+export const AutoComplete = {
+  messageLoading: 'Loading...',
+  nothingFoundMessage: 'Nothing Found',
 };

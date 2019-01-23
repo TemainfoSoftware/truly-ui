@@ -30,12 +30,6 @@ export function DateValidator( formatDate ): ValidatorFn {
   dateExpressFormat = formatDate;
   return ( c: AbstractControl ) => {
 
-    const isoDate = new Date(c.value);
-
-    if (isoDate.toDateString() !== 'Invalid Date') {
-      return null;
-    }
-
     if ( !stringUnmasked( c ) && c.touched ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
@@ -57,8 +51,4 @@ export function DateValidator( formatDate ): ValidatorFn {
 
 function stringUnmasked( c ) {
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
-}
-
-function isDateString( x ) {
-  return !isNaN( Date.parse( x ) );
 }

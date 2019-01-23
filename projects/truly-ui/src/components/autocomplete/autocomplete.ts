@@ -79,6 +79,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
+  @Output() select: EventEmitter<any> = new EventEmitter();
+
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( NgModel ) model: NgModel;
@@ -181,6 +183,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.selected = $event[ this.keyText ];
     this.value = $event[ this.keyValue ];
     this.isOpen = false;
+    this.select.emit($event);
     this.change.detectChanges();
   }
 

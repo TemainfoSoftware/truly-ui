@@ -83,6 +83,7 @@ export class DataSourceAutocomplete extends DataSource<string | undefined> {
   }
 
   public setData(data: Array<any>) {
+    this.cachedData = data;
     this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize,
       ...data);
     this.dataStream.next(this.arrayTotal);

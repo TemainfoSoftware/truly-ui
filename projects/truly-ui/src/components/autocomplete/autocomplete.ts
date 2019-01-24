@@ -139,14 +139,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private handleModel() {
     this.model.valueChanges.subscribe( () => {
-      if ( this.dataSource && !this.modelInitialized ) {
+      if ( this.dataSource ) {
         this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
       }
     } );
   }
 
   private handleModelLazy() {
-    this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
+    if (!this.modelInitialized) {
+      this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
+    }
   }
 
   private handleModelCached() {
@@ -370,6 +372,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
     if ( this.dataSource ) {
       this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.handleModelCached();
       this.listenLoadData();
     }
   }

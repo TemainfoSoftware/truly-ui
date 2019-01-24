@@ -36,6 +36,7 @@ import { CdkScrollable, CdkVirtualScrollViewport, ScrollDispatcher } from '@angu
 import { map } from 'rxjs/operators';
 import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -117,9 +118,14 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private modelInitialized = false;
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private change: ChangeDetectorRef, private i18n: I18nService ) {
+  private lastIndexScrolled = 0;
+
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private change: ChangeDetectorRef, private i18n: I18nService ) {
     super( validators, asyncValidators );
+    this.setOptions( autoCompleteConfig );
   }
 
   ngOnInit() {
@@ -133,7 +139,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private handleModel() {
     this.model.valueChanges.subscribe( () => {
-      if ( this.dataSource && !this.modelInitialized) {
+      if ( this.dataSource && !this.modelInitialized ) {
         this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
       }
     } );
@@ -152,11 +158,22 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
+  private setOptions( options: AutoCompleteConfig ) {
+    if ( options ) {
+      const self = this;
+      Object.keys( options ).forEach( function ( key ) {
+        self[ key ] = options[ key ];
+      } );
+    }
+  }
+
   handleKeyEvents( $event: KeyboardEvent, item, i ) {
     this.keyManager.onKeydown( $event );
-    if ($event.keyCode === KeyEvent.ENTER) {
-      this.selectItem(item, i);
+    if ( this.isKeyArrowDown($event) && this.isKeyArrowUp($event) ) {
       this.setFocus();
+    }
+    if ( this.isKeyEnter($event) ) {
+      this.selectItem( item, i );
     }
   }
 
@@ -164,8 +181,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
   }
 
-  handleArrowDown($event) {
-    if (this.isOpen) {
+  handleArrowDown( $event ) {
+    if ( this.isOpen ) {
       $event.stopPropagation();
     }
     this.setActiveItemFirst();
@@ -173,7 +190,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   handleFocus() {
     this.focused = true;
-    if ( this.openFocus && !this.selected) {
+    if ( this.openFocus && !this.selected ) {
       this.isOpen = true;
     }
   }
@@ -183,8 +200,14 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.selected = $event[ this.keyText ];
     this.value = $event[ this.keyValue ];
     this.isOpen = false;
-    this.select.emit($event);
+    this.select.emit( $event );
     this.change.detectChanges();
+  }
+
+  setElementScrollTo() {
+    if ( this.cdkVirtualScroll ) {
+      this.cdkVirtualScroll.scrollToIndex( this.lastIndexScrolled );
+    }
   }
 
   setActiveItemFirst() {
@@ -216,6 +239,23 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.change.detectChanges();
   }
 
+  scrollIndex( index: number ) {
+    this.filtering = false;
+    if ( this.lastIndexScrolled !== 0 && index === 0 ) {
+      this.setElementScrollTo();
+      return;
+    }
+    this.lastIndexScrolled = index;
+  }
+
+  setIsOpen( value: boolean ) {
+    this.isOpen = value;
+  }
+
+  toggleIsOpen() {
+    this.isOpen = !this.isOpen;
+  }
+
   getItemDescription( item ) {
     if ( !item ) {
       return undefined;
@@ -224,9 +264,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private setFocus() {
-    setTimeout(() => {
+    setTimeout( () => {
       this.input.nativeElement.focus();
-    }, 100);
+    }, 100 );
   }
 
   private getFilters( term: string ) {
@@ -277,8 +317,32 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
+  hasModel() {
+    return this.model.model;
+  }
+
+  isModelInitialized() {
+    return this.modelInitialized;
+  }
+
+  isKeyArrowUp($event) {
+    return $event.keyCode !== KeyEvent.ARROWUP;
+  }
+
+  isKeyArrowDown($event) {
+    return $event.keyCode !== KeyEvent.ARROWDOWN;
+  }
+
+  isKeyEnter($event) {
+    return $event.keyCode === KeyEvent.ENTER;
+  }
+
+  isLazy() {
+    return this.lazyMode;
+  }
+
   ngOnChanges( changes ) {
-    if ( changes[ 'data' ] && this.model.model && !this.modelInitialized) {
+    if ( changes[ 'data' ] && this.hasModel() && !this.isModelInitialized() && this.isLazy() ) {
       this.selected = changes[ 'data' ].currentValue[ 0 ][ this.keyText ];
       this.modelInitialized = true;
     }

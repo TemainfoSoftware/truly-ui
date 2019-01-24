@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -39,6 +39,7 @@ import { FilterService } from './filter.service';
 import { IconsModule } from '../icons/index';
 import { MiscModule } from '../misc/index';
 import { BlockUIModule } from '../blockui/index';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
 
 @NgModule( {
   imports: [
@@ -69,4 +70,12 @@ import { BlockUIModule } from '../blockui/index';
   ]
 } )
 export class AutoCompleteModule {
+  static forRoot(config: AutoCompleteConfig = null ): ModuleWithProviders {
+    return {
+      ngModule: AutoCompleteModule,
+      providers: [
+        { provide: AUTOCOMPLETE_CONFIG, useValue: config },
+      ]
+    };
+  }
 }

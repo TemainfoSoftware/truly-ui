@@ -41,10 +41,12 @@ export class DateDirective implements Validator, AfterViewInit {
 
   @Input() formatDate = 'dd.mm.yyyy';
 
+  @Input() isoDate = true;
+
   ngAfterViewInit() {}
 
   validate( control: AbstractControl ): ValidationErrors | any {
-    return DateValidator( this.formatDate )( control );
+    return DateValidator( this.formatDate, this.isoDate )( control );
   }
 
 

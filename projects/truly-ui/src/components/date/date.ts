@@ -93,14 +93,13 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   handleModelChangeInit() {
     if ( this.model ) {
       this.model.valueChanges.subscribe( ( value ) => {
-        if ( value ) {
+        if (this.isoDate) {
           const date = new Date( value );
-          if ( this.isValidDate( date ) && this.isoDate ) {
+          setTimeout( () => {
             this.mockValue = this.getDateByFormat( date );
-            this.handleIsoDateModel();
-          } else {
-            this.mockValue = value;
-          }
+          }, 100 );
+        } else {
+          this.mockValue = value;
         }
       } );
     }
@@ -117,30 +116,19 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
     return formattedDate;
   }
 
-  stringParse( date ) {
-    return date.year + '/' + date.month + '/' + date.day;
-  }
-
-  isValidDate( date ) {
-    if ( date === 'Invalid Date' ) {
-      return false;
-    }
-    return date !== 'Invalid Date';
+  isIsoDate( str ) {
+    if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) { return false; }
+    const d = new Date( str );
+    return d.toISOString() === str;
   }
 
   handleIsoDateModel() {
-    let date;
-    const object = new Date( this.value ).toLocaleDateString();
-    if ( this.isValidDate( object ) ) {
-      date = ReverseFormatDate( object, this.formatDate );
-    } else {
-      date = ReverseFormatDate( this.value, this.formatDate );
-    }
-    const isValidDate = Date.parse( this.stringParse( date ) );
-    if ( isNaN( isValidDate ) || isNaN( date.day ) || isNaN( date.month ) || isNaN( date.year ) ) {
-      return false;
-    }
-    this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+    setTimeout( () => {
+      if ( !this.isIsoDate( this.value ) && this.model.valid ) {
+        const date = ReverseFormatDate( this.value, this.formatDate );
+        this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+      }
+    }, 100 );
   }
 
   focusOut() {

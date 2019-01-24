@@ -18,6 +18,6 @@
            [attr.readonly]="readonly ? true : null"
            (focusout)="focusOut()"
            [attr.value]="mockValue">
-    <input date [formatDate]="formatDate" [(ngModel)]="value" notform class="ui-input" type="text">
+    <input date [formatDate]="formatDate" [isoDate]="isoDate" [(ngModel)]="value" notform class="ui-input" type="text">
   </div>
 </div>

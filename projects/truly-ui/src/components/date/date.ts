@@ -93,7 +93,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   handleModelChangeInit() {
     if ( this.model ) {
       this.model.valueChanges.subscribe( ( value ) => {
-        if (this.isoDate) {
+        if (this.isoDate && value.length > 0) {
           const date = new Date( value );
           setTimeout( () => {
             this.mockValue = this.getDateByFormat( date );

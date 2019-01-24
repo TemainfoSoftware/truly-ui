@@ -78,11 +78,21 @@ export class TlButton implements OnInit {
       return this._textLoading || this.i18nService.getLocale().Button.loadingText;
     }
 
+    set modalContext( modal ) {
+      this._modalContext = modal;
+    }
+
+    get modalContext() {
+      return this._modalContext;
+    }
+
     @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
 
     private _textLoading: string;
+
+    private _modalContext;
 
     constructor( public button: ElementRef, private i18nService: I18nService ) {}
 

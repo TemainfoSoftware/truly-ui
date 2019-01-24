@@ -35,7 +35,7 @@ export class ModalResultDirective implements OnInit {
 
   @Input( 'formResult' ) formResult;
 
-  @ContentChild( TlButton ) button;
+  @ContentChild( TlButton ) button: TlButton;
 
   private modalId: string;
 
@@ -58,6 +58,7 @@ export class ModalResultDirective implements OnInit {
 
   ngOnInit() {
     this.modalId = this.modalService.instanceComponent.id;
+    this.button.modalContext = this.modalService.instanceComponent.modal;
   }
 
   emitCallback(): Promise<any> {

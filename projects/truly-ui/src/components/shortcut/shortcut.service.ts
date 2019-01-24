@@ -20,20 +20,27 @@
  SOFTWARE.
  */
 
-import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
+import { ComponentRef, Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../modal/services/modal.service';
 import { TlButton } from '../button/button';
 import { ShortcutConfig } from './shortcut.config';
+import { TlModal } from '../modal/modal';
+
+export interface ElementShortcut {
+  id: string;
+  shortcut: string;
+  element: any;
+}
 
 let listener;
 
-let buttonElements = [];
+let buttonElements: Array<ElementShortcut> = [];
 
 @Injectable()
 export class ShortcutService implements OnDestroy {
 
-  public elementsListener = [];
+  public elementsListener: Array<ElementShortcut> = [];
 
   private renderer: Renderer2;
 
@@ -45,7 +52,7 @@ export class ShortcutService implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
 
-  private headElement = {};
+  private activeModal: any;
 
   private config: ShortcutConfig;
 
@@ -62,8 +69,8 @@ export class ShortcutService implements OnDestroy {
   }
 
   createListener() {
-    this.subscription.add( this.modalService.frontModal.subscribe( ( component ) => {
-      this.headElement = component;
+    this.subscription.add( this.modalService.frontModal.subscribe( ( component: any ) => {
+      this.activeModal = component.activeModal;
     } ) );
     if ( !listener ) {
       this.subscription.add( document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
@@ -126,6 +133,8 @@ export class ShortcutService implements OnDestroy {
     return this.activeHighestButtonElement();
   }
 
+
+
   handleEqualElement() {
     this.orderElementsByZindex();
     this.elementsListener[ this.elementsListener.indexOf( this.highestZindexElement ) ].element.nativeElement.click();
@@ -136,10 +145,26 @@ export class ShortcutService implements OnDestroy {
     const buttonToClick = buttonElements.filter( ( value ) => {
       return (this.currentShortcut === value.shortcut);
     } );
-    this.sortButtons( buttonToClick )[ 0 ].element.button.nativeElement.click();
+
+    const modalContextArray = this.getExistModalContext();
+
+    if (modalContextArray.length > 0) {
+      modalContextArray.forEach((item) => {
+        if (item.element.modalContext === this.activeModal) {
+          return item.element.button.nativeElement.click();
+        }
+      });
+    } else {
+      this.sortButtons( buttonToClick )[ 0 ].element.button.nativeElement.click();
+    }
+
     setTimeout( () => {
       this.handleElementsOfView();
     }, 520 );
+  }
+
+  getExistModalContext() {
+    return buttonElements.filter((item) => item.element.modalContext);
   }
 
   sortButtons( buttonToClick ) {

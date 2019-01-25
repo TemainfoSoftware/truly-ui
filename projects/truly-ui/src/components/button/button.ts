@@ -60,8 +60,6 @@ export class TlButton implements OnInit {
 
     @Input() colorIconAfter = '';
 
-    @Input() formResult;
-
     @Input() outline = false;
 
     @Input() color = 'basic';

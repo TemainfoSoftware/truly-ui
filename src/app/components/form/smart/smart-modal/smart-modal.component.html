@@ -6,7 +6,14 @@
           <tl-input fxFlex="30" formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
         </div>
         <div class="form-group">
-          <tl-input formControlName="name" [showValidations]="true" [labelSize]="100" [label]="'Name'"></tl-input>
+          <tl-autocomplete [data]="dataBasic"
+                           [itemSize]="40"
+                           [labelSize]="'60px'"
+                           [keyText]="'firstName'"
+                           [label]="'Cliente'"
+                           formControlName="cliente"
+                           [keyValue]="'id'">
+          </tl-autocomplete>
         </div>
       </div>
     </div>

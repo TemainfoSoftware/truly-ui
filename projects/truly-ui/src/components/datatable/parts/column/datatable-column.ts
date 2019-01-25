@@ -38,6 +38,8 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('type') type = 'text';
 
+    @Input('format') format = 'shortDate';
+
     @Input('showFilter') showFilter = true;
 
     @Input('sortable') sortable = true;

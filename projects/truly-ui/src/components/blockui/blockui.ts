@@ -50,8 +50,6 @@ export class TlBlockUI implements OnChanges {
 
   constructor( private elementRef: ElementRef,
                private viewContainerRef: ViewContainerRef,
-               private renderer: Renderer2,
-               private change: ChangeDetectorRef,
                private compiler: ComponentFactoryResolver ) {
   }
 
@@ -59,17 +57,6 @@ export class TlBlockUI implements OnChanges {
     this.createElementInstance();
     this.getElementRefFromInstance();
     this.setConfigToElement();
-    this.setStyleElementHidden();
-  }
-
-  setStyleElementHidden() {
-    this.renderer.setStyle(this.elementRef.nativeElement, 'position', 'relative');
-    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'hidden');
-  }
-
-  setStyleElementVisible() {
-    this.renderer.setStyle(this.elementRef.nativeElement, 'position', 'relative');
-    this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'auto');
   }
 
   private getElementRefFromInstance() {
@@ -87,7 +74,7 @@ export class TlBlockUI implements OnChanges {
   }
 
   private insertElement() {
-    this.elementRef.nativeElement.insertAdjacentElement( 'beforeend', this.overlayElementInstance.location.nativeElement );
+    this.elementRef.nativeElement.insertAdjacentElement( 'afterBegin', this.overlayElementInstance.location.nativeElement );
   }
 
   ngOnChanges( changes ) {
@@ -106,7 +93,6 @@ export class TlBlockUI implements OnChanges {
 
   private hide() {
     this.viewContainerRef.clear();
-    this.setStyleElementVisible();
   }
 
 }

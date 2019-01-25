@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { DumpDataService } from '../../../../shared/services/dumpdata';
 
 @Modal({
   title: 'Form Modal Example',
@@ -21,13 +22,18 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 } )
 export class SmartFormModalComponent {
 
+
   public form = new FormGroup({
     id: new FormControl(''),
-    name: new FormControl('',  Validators.required),
+    cliente: new FormControl('',  Validators.required),
   });
 
-  constructor() {
+  public dataBasic = [];
+
+  constructor( private dataDumpService: DumpDataService ) {
     this.form.get('id').disable();
+    this.dataBasic = this.dataDumpService.createRandomData(15);
   }
+
 
 }

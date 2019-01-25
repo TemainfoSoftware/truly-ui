@@ -1,5 +1,6 @@
 @import "../../../accordion/accordion-theme";
 @import "../../../accordion/parts/accordion-item/accordion-item-theme";
+@import "../../../autocomplete/autocomplete-theme";
 @import "../../../avatar/avatar-theme";
 @import "../../../avatar/parts/svg/svg-theme";
 @import "../../../badge/badge-theme";
@@ -15,6 +16,7 @@
 @import "../../../colorpicker/parts/colorpicker-input/colorpicker-input-theme";
 @import "../../../core/core";
 @import "../../../datatable/datatable-theme";
+@import "../../../date/date-theme";
 @import "../../../dialog/dialog-error/dialog-error-theme";
 @import "../../../dropdownlist/dropdownlist-theme";
 @import "../../../editor/editor-theme";
@@ -54,6 +56,7 @@
 @mixin truly-all-components($theme) {
   @include tl-accordion-theme($theme);
   @include tl-accordion-item-theme($theme);
+  @include tl-autocomplete-theme($theme);
   @include tl-avatar-theme($theme);
   @include tl-avatar-svg-theme($theme);
   @include tl-badge-theme($theme);
@@ -68,6 +71,7 @@
   @include tl-colorpicker-content-theme($theme);
   @include tl-colorpicker-input-theme($theme);
   @include tl-core-theme($theme);
+  @include tl-date-theme($theme);
   @include tl-datatable-theme($theme);
   @include tl-dialog-error-theme($theme);
   @include tl-dropdonwlist-theme($theme);

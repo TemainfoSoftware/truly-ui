@@ -30,13 +30,14 @@ import { I18nService } from '../../../i18n/i18n.service';
 import { TlDatatable } from '../../datatable';
 import { KeyEvent } from '../../../core/enums/key-events';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
+import { DatePipe } from '@angular/common';
 
 @Component( {
     selector: 'tl-datatable-scrollable-mode',
     templateUrl: './datatable-scrollable-mode.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
-    providers: [DatatableHelpersService]
+    providers: [DatatableHelpersService, DatePipe]
 } )
 export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
 
@@ -98,7 +99,8 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
                  private renderer: Renderer2,
                  private cd: ChangeDetectorRef,
                  private helperService: DatatableHelpersService,
-                 private i18n: I18nService
+                 private i18n: I18nService,
+                 private datePipe: DatePipe
     ) {}
 
     ngAfterContentInit() {
@@ -334,9 +336,19 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
             this.renderer.addClass(  this.elementTD.nativeElement, 'ui-cel' );
             this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
             this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.dt.rowHeight + 'px' );
-            this.elementTD.nativeElement.innerHTML = dataSource[ row ][ this.dt.columns[ collumn ].field ];
+            this.elementTD.nativeElement.innerHTML = this.getContentCell( row, collumn, dataSource );
             this.renderer.appendChild( this.listBody.nativeElement.children[ row ],  this.elementTD.nativeElement );
         }
+    }
+
+    private getContentCell( row, collumn, dataSource ) {
+      switch ( this.dt.columns[ collumn ].type ) {
+        case 'date' : {
+          const content = dataSource[ row ][ this.dt.columns[ collumn ].field ];
+          return this.datePipe.transform( content, this.dt.columns[ collumn ].format );
+        }
+        default : return dataSource[ row ][ this.dt.columns[ collumn ].field ];
+      }
     }
 
     private removeChilds() {

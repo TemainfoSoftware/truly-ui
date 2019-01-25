@@ -5,8 +5,7 @@
       <tl-input
         (keyup)="handleKeyUp($event)"
         (keydown)="handleKeyEvents($event)"
-        (keydown.enter)="emitSelectOption(); $event.preventDefault()"
-        [iconBefore]="'ion ion-ios-search'">
+        (keydown.enter)="emitSelectOption(); $event.preventDefault()">
       </tl-input>
     </div>
 

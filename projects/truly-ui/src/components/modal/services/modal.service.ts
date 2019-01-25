@@ -71,6 +71,8 @@ export class ModalService implements OnDestroy {
 
   private visibleModals = [];
 
+  private referenceSmartForm;
+
   constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
@@ -203,10 +205,9 @@ export class ModalService implements OnDestroy {
         this.confirmDelete( this.instanceComponent );
       }
     } else {
-      if ( this.componentList[ 0 ].smartForm instanceof SmartFormConfiguration &&
-          this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation) {
-        this.componentList = this.componentList.filter((value, index, array) => index !== 0);
-        this.view.remove( 0 );
+      if ( this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation ) {
+        this.removeOfList(this.referenceSmartForm.id);
+        this.view.remove( this.view.indexOf(this.referenceSmartForm.modal) );
       }
     }
   }
@@ -377,13 +378,13 @@ export class ModalService implements OnDestroy {
 
   private confirmDelete( component: ModalInstance ) {
     if ( component.smartForm[ 'executeAction' ] === ActionsModal.DELETE ) {
-      const smartComponent = component;
-      this.createModalDialog( TlDialogConfirmation, smartComponent.smartForm[ 'factory' ], null ).then( ( value: any ) => {
+      this.referenceSmartForm = component;
+      this.createModalDialog( TlDialogConfirmation, this.referenceSmartForm.smartForm[ 'factory' ], null ).then( ( value: any ) => {
         if ( value.mdResult === ModalResult.MRYES ) {
-          this.handleSmartFormCallback( smartComponent, { formResult: { value: smartComponent.smartForm['dataForm'] } } );
+          this.handleSmartFormCallback( this.referenceSmartForm, { formResult: { value: this.referenceSmartForm.smartForm['dataForm'] } } );
         }
       } );
-      this.componentInjected.instance.message = smartComponent.smartForm[ 'deleteConfirmationMessage' ];
+      this.componentInjected.instance.message = this.referenceSmartForm.smartForm[ 'deleteConfirmationMessage' ];
       return true;
     }
     return false;

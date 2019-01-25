@@ -42,12 +42,20 @@
       margin-right: 0;
       box-sizing: border-box;
       > .ui-container-item {
-        padding: 10px;
+        display: block;
+        float: left;
         font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
         font-size: 13px;
       }
-      > .ui-container-item:first-child {
-        padding: 0 0 0 10px;
+      > .ui-container-icon {
+        width: 20%;
+        text-align: center;
+      }
+      > .ui-container-text {
+        width: 80%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
     }
   }

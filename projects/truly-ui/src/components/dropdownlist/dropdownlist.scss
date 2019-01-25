@@ -42,6 +42,7 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     font-size: $default-fontSize;
     font-family: $default-fontFamily;
     font-weight: normal;
+    transition: transform linear 200ms;
     i {
       padding: 0;
     }

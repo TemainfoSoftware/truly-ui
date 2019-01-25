@@ -24,6 +24,7 @@ import {
   QueryList, Renderer2, Output,
   ViewChild,
   forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild, Injector,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
@@ -102,7 +103,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private modalInstance;
 
-  constructor( private renderer: Renderer2, private i18n: I18nService, private injector: Injector ) {
+  constructor( private renderer: Renderer2, private i18n: I18nService,
+               private change: ChangeDetectorRef,
+               private injector: Injector ) {
     this.modalInstance = this.injector.get(ModalService);
   }
 
@@ -184,8 +187,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   listenMouseDownButtonForm() {
-    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'mousedown', $event => {
-      $event.stopPropagation();
+    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
       this.onClickButtonOk();
     } );
   }
@@ -218,6 +220,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
     this.formResult = this.formGroup ? this.formGroup : this.form;
     this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
+    this.change.detectChanges();
   }
 
   getElementsOfForm() {

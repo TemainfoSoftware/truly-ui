@@ -29,7 +29,6 @@ import { NumberDirective } from './number/number.directive';
 import { EmailDirective } from './email/email.directive';
 import { CreditCardDirective } from './creditcard/creditcard.directive';
 import { PasswordDirective } from './password/password.directive';
-import { DateDirective } from './date/date.directive';
 
 @NgModule( {
   imports: [
@@ -40,7 +39,6 @@ import { DateDirective } from './date/date.directive';
     CreditCardDirective,
     CPFDirective,
     CNPJDirective,
-    DateDirective,
     EmailDirective,
     NumberDirective,
     PasswordDirective
@@ -49,7 +47,6 @@ import { DateDirective } from './date/date.directive';
     CreditCardDirective,
     CPFDirective,
     CNPJDirective,
-    DateDirective,
     EmailDirective,
     NumberDirective,
     PasswordDirective

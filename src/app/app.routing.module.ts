@@ -95,6 +95,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'
       },
       {
+        path: 'date',
+        loadChildren: './components/date/datedemo.module#DateDemoModule'
+      },
+      {
         path: 'dropdownlist',
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },

@@ -31,9 +31,11 @@ import { OverlayList } from './overlaylist/en_US';
 import { Editor } from './editor/en_US';
 import { Permissions } from './permissions/en_US';
 import { TimePicker } from './timepicker/en_US';
+import { AutoComplete } from './autocomplete/en_US';
 
 export const en_US = {
   locale: 'en-US',
+  AutoComplete,
   Button,
   Calendar,
   Datatable,

@@ -1,6 +1,7 @@
 <div class="router-outlet">
   <app-showcase-header name="AutoComplete" module="AutoCompleteModule">
-    The AutoComplete widgets provides suggestions while you type into the field. It can be filtered by a custom Key and supports many
+    The AutoComplete widgets provides suggestions while you type into the field. It can be filtered by a custom Key and
+    supports many
     features and events output.
   </app-showcase-header>
   <div class="showcase">
@@ -10,108 +11,84 @@
           <app-card>
             <div class="col-md-12">
               <h6>Normal Usage</h6>
-              <tl-autocomplete [data]="dataBasic"
-                               [modelValue]="'firstName'"
-                               [labelSize]="'10px'"
-                               [openFocus]="true"
-                               [name]="'clients'"
-                               [id]="'id'"
-                               [label]="'Clients'"
-                               [clearButton]="true"
-                               [searchQuery]="['firstName']"
-                               [rowHeight]="35"
-                               [placeholder]="'Search...'"
-                               [labelName]="'firstName'"
-                               [(ngModel)]="result">
-              </tl-autocomplete>
-              <app-showcase-returned-value [value]="result"></app-showcase-returned-value>
+              <form [formGroup]="formGroup">
+                <tl-autocomplete [data]="dataBasic"
+                                 [itemSize]="40"
+                                 [pageSize]="50"
+                                 [totalLength]="100"
+                                 [keyText]="'firstName'"
+                                 [keyValue]="'id'"
+                                 [searchBy]="'firstName'"
+                                 formControlName="client">
+                </tl-autocomplete>
+              </form>
+              <app-showcase-returned-value [value]="formGroup.get('client').value"></app-showcase-returned-value>
               <div class="spacer"></div>
-              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-autocomplete
-  [data]="data"
-  [id]="'id'"
-  [labelSize]="'10px'"
-  [openFocus]="true"
-  [name]="'clients'"
-  [label]="'Clients'"
-  [clearButton]="true"
-  [rowHeight]="35"
-  [placeholder]="'Search...'"
-  [labelName]="'firstName'"
-  [(ngModel)]="result">
-</tl-autocomplete>
-      </textarea>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+  <tl-autocomplete [data]="dataBasic"
+                   [itemSize]="40"
+                   [pageSize]="50"
+                   [totalLength]="length"
+                   [keyText]="'firstName'"
+                   [keyValue]="'id'"
+                   [searchBy]="'firstName'"
+                   formControlName="client">
+  </tl-autocomplete>
+</textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-12">
-              <h6>With Template</h6>
-              <tl-autocomplete [data]="dataLazy"
-                               [openFocus]="true"
-                               [lazyMode]="true"
-                               [clearButton]="true"
-                               [modelValue]="'name'"
-                               [labelSize]="'10px'"
-                               [name]="'clients'"
-                               [label]="'Clients'"
-                               [searchQuery]="['name']"
-                               [labelName]="'name'"
-                               (lazyLoad)="onLazyLoad($event)"
-                               [placeholder]="'Search...'"
-                               [rowHeight]="35"
-                               [(ngModel)]="result2">
-                <ng-template let-item="item" let-index="index">
-                  <li class="list-template-demo">
-                    <img class="img-circle" src="{{item.country_flag_url}}"
-                         height="20"
-                         width="20"><span>{{item.name}}</span>
-                  </li>
-                </ng-template>
-              </tl-autocomplete>
-              <span class="returned-value">Returned Value: {{result2 | json}}</span>
+              <h6>Lazy Load</h6>
+              <form [formGroup]="formGroup">
+                <tl-autocomplete [data]="lazy"
+                                 [itemSize]="40"
+                                 [pageSize]="50"
+                                 [totalLength]="length"
+                                 [keyText]="'firstName'"
+                                 [keyValue]="'id'"
+                                 [searchBy]="'firstName'"
+                                 formControlName="clientLazy"
+                                 [lazyMode]="true"
+                                 (filter)="onFilter($event)"
+                                 (lazyLoad)="onLazyLoad($event)">
+                </tl-autocomplete>
+              </form>
+              <app-showcase-returned-value [value]="formGroup.get('clientLazy').value"></app-showcase-returned-value>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-autocomplete
-  [data]="dataLazy"
-  [openFocus]="true"
-  [lazyMode]="true"
-  [clearButton]="true"
-  [id]="'id'"
-  [labelSize]="'10px'"
-  [name]="'clients'"
-  [label]="'Clients'"
-  (lazyLoad)="onLazyLoad($event)"
-  [placeholder]="'Search...'"
-  [labelName]="'firstName'"
-  [rowHeight]="35"
-  [(ngModel)]="result2">
-<ng-template let-item="item" let-index="index">
-  <li class="list-template-demo">
-    <img class="img-circle" src="../assets/img/avatar.png"
-         width="20">item.firstName - <span>item.lastName</span>
-    <span class="list-bagde badge">item.id</span>
-  </li>
-</ng-template>
-</tl-autocomplete>
-    </textarea>
-              <p><code>Atention:</code> The example above needs to be interpolated <code>{{example}}</code> for example. Not
+  <tl-autocomplete [data]="lazy"
+                   [itemSize]="40"
+                   [pageSize]="50"
+                   [totalLength]="length"
+                   [keyText]="'firstName'"
+                   [keyValue]="'id'"
+                   [searchBy]="'firstName'"
+                   formControlName="client"
+                   [lazyMode]="true"
+                   (filter)="onFilter($event)"
+                   (lazyLoad)="onLazyLoad($event)">
+  </tl-autocomplete>
+</textarea>
+              <p><code>Atention:</code> The example above needs to be interpolated <code>{{example}}</code> for example.
+                Not
                 allowed to used here on highlight code.</p>
             </div>
           </app-card>
         </app-showcase-card>
       </div>
     </div>
-  <div class="setup">
-    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
-      <app-card>
-        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-      </app-card>
-    </app-showcase-card>
-    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
-      <app-card>
-        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
-      </app-card>
-    </app-showcase-card>
+    <div class="setup">
+      <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+        <app-card>
+          <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        </app-card>
+      </app-showcase-card>
+      <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+        <app-card>
+          <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+        </app-card>
+      </app-showcase-card>
+    </div>
   </div>
-</div>
 </div>

@@ -29,6 +29,7 @@ import { DumpDataService } from '../../../shared/services/dumpdata';
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
 import { SmartFormModalComponent } from './smart-modal/smart-modal.component';
 import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
+import { DateModule } from '../../../../../projects/truly-ui/src/components/date/index';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header
     DropDownListModule,
     InputModule,
     ValidatorsModule,
+    DateModule,
     CheckBoxModule,
     FormSmartDemoRoutingModule,
     MultiViewModule,

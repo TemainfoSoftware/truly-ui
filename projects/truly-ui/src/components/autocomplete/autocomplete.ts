@@ -20,242 +20,360 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChild, EventEmitter,
-  Input, OnDestroy, Output, TemplateRef, ViewChild,
-  Optional, Inject, OnInit, AfterViewInit, OnChanges, Renderer2,
+  Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, NgZone, ViewChild, ContentChild, ElementRef,
 } from '@angular/core';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
-import { TlListBox } from '../listbox/listbox';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { CdkConnectedOverlay } from '@angular/cdk/overlay';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { DataSourceAutocomplete } from './parts/classes/datasource-autocomplete';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ListOptionDirective } from '../misc/listoption.directive';
+import { CdkScrollable, CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { map } from 'rxjs/operators';
+import { KeyEvent } from '../core/enums/key-events';
+import { I18nService } from '../i18n/i18n.service';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
 
 @Component( {
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
   styleUrls: [ './autocomplete.scss' ],
-  animations: [
-    trigger(
-      'enterAnimation', [
-        state( 'true', style( { opacity: 1, transform: 'translate(0%,0%)' } ) ),
-        state( 'false', style( { opacity: 0, transform: 'translate(0%,-3%)', flex: '0' } ) ),
-        transition( '1 => 0', animate( '100ms' ) ),
-        transition( '0 => 1', animate( '100ms' ) ),
-      ]
-    )
-  ],
-  providers: [ MakeProvider( TlAutoComplete ) ]
+  providers: [ MakeProvider( TlAutoComplete ) ],
 } )
+export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
 
-export class TlAutoComplete extends ElementBase<string> implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  @Input() data = [];
 
-  @Input() data: Array<any>;
+  @Input() totalLength = 1000;
 
-  @Input() label = 'AutoComplete 1';
-
-  @Input() labelSize;
-
-  @Input() iconBefore;
-
-  @Input() iconAfter;
-
-  @Input() textBefore;
-
-  @Input() textAfter;
-
-  @Input() textAlign = 'left';
-
-  @Input() labelPlacement = 'left';
-
-  @Input() readonly = false;
-
-  @Input() disabled = true;
-
-  @Input() autocomplete = 'off';
-
-  @Input() placeholder;
-
-  @Input() clearButton = false;
-
-  @Input() id = '';
-
-  @Input() modelValue = '';
-
-  @Input() labelDetail = '';
-
-  @Input() labelName = '';
-
-  @Input() openFocus = false;
+  @Input() pageSize = 100;
 
   @Input() lazyMode = false;
 
-  @Input() searchQuery = [];
+  @Input() itemSize = 50;
 
-  @Input() rowHeight = 30;
+  @Input() debounceTime = 200;
 
-  @Input() listStripped = false;
+  @Input() keyText = '';
 
-  @Input() charsToSearch = 2;
+  @Input() keyValue = '';
 
-  @Input() rowsClient = 5;
+  @Input() openFocus = false;
 
-  @Input() addNewItem = true;
+  @Input() color = 'basic';
 
-  @Input() addNewMessage = 'Add New';
+  @Input() labelPlacement: 'top' | 'left' = 'left';
 
-  @ViewChild( NgModel ) model: NgModel;
+  @Input() labelSize = '100px';
 
-  @ViewChild( 'inputWriter' ) tlinput;
+  @Input() height = '23px';
 
-  @ViewChild( TlListBox ) listBox: TlListBox;
+  @Input() searchBy = '';
 
-  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
+  @Input() label = '';
 
-  @ContentChild( TemplateRef ) customTemplate: TemplateRef<any>;
-
-  @ContentChild( FormControlName ) controlName: FormControlName;
-
-  @Output() addNew: EventEmitter<any> = new EventEmitter();
-
-  @Output() clickItem: EventEmitter<any> = new EventEmitter();
-
-  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+  @Input() placeholder = 'Search...';
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-  public widthInput;
+  @Output() select: EventEmitter<any> = new EventEmitter();
 
-  public loading = true;
+  @Output() filter: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild( NgModel ) model: NgModel;
+
+  @ViewChild( 'input' ) input: ElementRef;
+
+  @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
+
+  @ViewChildren( ListOptionDirective ) items: QueryList<ListOptionDirective>;
+
+  public keyManager: FocusKeyManager<ListOptionDirective>;
+
+  public dataSource: DataSourceAutocomplete;
+
+  public selected = null;
+
+  public selectedIndex = null;
 
   public isOpen = false;
 
-  public trigger;
+  public focused = false;
 
-  private listeners: Subscription = new Subscription();
+  public positionOverlay;
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any>, private renderer: Renderer2 ) {
+  public nothingFound = false;
+
+  public searchControl = new FormControl( '' );
+
+  public messageLoading = this.i18n.getLocale().AutoComplete.messageLoading;
+
+  public nothingFoundMessage = this.i18n.getLocale().AutoComplete.nothingFoundMessage;
+
+  public filtering = false;
+
+  private modelInitialized = false;
+
+  private lastIndexScrolled = 0;
+
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private change: ChangeDetectorRef, private i18n: I18nService ) {
     super( validators, asyncValidators );
+    this.setOptions( autoCompleteConfig );
   }
 
   ngOnInit() {
-    this.getWidth();
   }
 
   ngAfterViewInit() {
-    this.validateModelValueProperty();
-    this.validationProperty();
-    this.listenContainer();
+    this.keyManager = new FocusKeyManager( this.items );
+    this.keyManager.withWrap();
+    this.handleModel();
   }
 
-  setPointerEvents( value: string ) {
-    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
-  }
-
-  listenContainer() {
-    this.listeners.add(this.renderer.listen( document, 'mousedown', () => {
-      this.isOpen = false;
-      this.setPointerEvents( 'none' );
-    } ));
-  }
-
-  handleModelInit() {
-    setTimeout( () => {
-      if ( this.model.model ) {
-        for ( let item = 0; item < this.data.length; item++ ) {
-          if ( String( this.getValueNested( this.modelValue, this.data[ item ] ) ) === String( this.model.viewModel ) ) {
-            this.clickItem.emit( { index: item, row: this.data[ item ] } );
-            return this.tlinput.value = this.getValueNested( this.labelName, this.data[ item ] );
-          }
-        }
+  private handleModel() {
+    this.model.valueChanges.subscribe( () => {
+      if ( this.dataSource ) {
+        this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
       }
-    }, 1 );
+    } );
   }
 
-  getValueNested( nestedKeys: string, data: Array<any> ) {
-    return nestedKeys.split( '.' ).reduce( ( a, b ) => a[ b ], data );
-  }
-
-  onClearInput() {
-    this.value = '';
-  }
-
-  validationProperty() {
-    if ( (!this.labelName && !this.listBox.isDataArrayString()) ) {
-      throw new Error( 'The [labelName] property is required to show the content on input while selecting' );
+  private handleModelLazy() {
+    if (!this.modelInitialized) {
+      this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
     }
   }
 
-  onFocusInput() {
-    this.getWidth();
-    this.handleOpenOnFocus();
+  private handleModelCached() {
+    this.dataSource.getCachedData().forEach( ( value, index ) => {
+      if ( String( value[ this.keyValue ] ) === String( this.model.model ) ) {
+        this.selectedIndex = index;
+        this.selected = value[ this.keyText ];
+      }
+    } );
   }
 
-  handleOpenOnFocus() {
-    if ( (this.openFocus) && (this.isAvailableInput()) ) {
+  private setOptions( options: AutoCompleteConfig ) {
+    if ( options ) {
+      const self = this;
+      Object.keys( options ).forEach( function ( key ) {
+        self[ key ] = options[ key ];
+      } );
+    }
+  }
+
+  handleKeyEvents( $event: KeyboardEvent, item, i ) {
+    this.keyManager.onKeydown( $event );
+    if ( this.isKeyArrowDown($event) && this.isKeyArrowUp($event) ) {
+      this.setFocus();
+    }
+    if ( this.isKeyEnter($event) ) {
+      this.selectItem( item, i );
+    }
+  }
+
+  handleBlur() {
+    this.isOpen = false;
+  }
+
+  handleArrowDown( $event ) {
+    if ( this.isOpen ) {
+      $event.stopPropagation();
+    }
+    this.setActiveItemFirst();
+  }
+
+  handleFocus() {
+    this.focused = true;
+    if ( this.openFocus && !this.selected ) {
       this.isOpen = true;
-      this.setPointerEvents( 'auto' );
     }
   }
 
-  isAvailableInput() {
-    return !this.tlinput.disabled && !this.tlinput.readonly;
+  selectItem( $event, index: number ) {
+    this.selectedIndex = index;
+    this.selected = $event[ this.keyText ];
+    this.value = $event[ this.keyValue ];
+    this.isOpen = false;
+    this.select.emit( $event );
+    this.change.detectChanges();
   }
 
-  onAddNew() {
-    this.addNew.emit();
-  }
-
-  onClickItemList( $event ) {
-    if ( $event ) {
-      this.clickItem.emit( $event );
-      this.setInputValue( $event );
-      this.tlinput.input.nativeElement.focus();
-      this.isOpen = false;
-      this.setPointerEvents( 'none' );
+  setElementScrollTo() {
+    if ( this.cdkVirtualScroll ) {
+      this.cdkVirtualScroll.scrollToIndex( this.lastIndexScrolled );
     }
   }
 
-  onSelectItemList( $event ) {
-    if ( $event ) {
-      this.selectItem.emit( $event );
-      this.setInputValue( $event );
-      this.tlinput.input.nativeElement.focus();
+  setActiveItemFirst() {
+    setTimeout( () => {
+      this.keyManager.setFirstItemActive();
+    }, 100 );
+  }
+
+  private setUpData() {
+    this.dataSource = new DataSourceAutocomplete( {
+      dataSource: this.data,
+      pageSize: this.pageSize,
+      totalLength: this.totalLength,
+      lazyMode: this.lazyMode
+    } );
+  }
+
+  private listenLoadData() {
+    if ( !this.dataSource ) {
+      return;
+    }
+    this.dataSource.loadMoreData.subscribe( ( data: any ) => {
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, term: this.searchControl.value } );
+    } );
+  }
+
+  onPositionChange( $event: ConnectedOverlayPositionChange ) {
+    this.positionOverlay = $event.connectionPair.originY;
+    this.change.detectChanges();
+  }
+
+  scrollIndex( index: number ) {
+    this.filtering = false;
+    if ( this.lastIndexScrolled !== 0 && index === 0 ) {
+      this.setElementScrollTo();
+      return;
+    }
+    this.lastIndexScrolled = index;
+  }
+
+  setIsOpen( value: boolean ) {
+    this.isOpen = value;
+  }
+
+  toggleIsOpen() {
+    this.isOpen = !this.isOpen;
+  }
+
+  getItemDescription( item ) {
+    if ( !item ) {
+      return undefined;
+    }
+    return item[ this.keyText ];
+  }
+
+  private setFocus() {
+    setTimeout( () => {
+      this.input.nativeElement.focus();
+    }, 100 );
+  }
+
+  private getFilters( term: string ) {
+    const fields = {};
+    fields[ this.searchBy ] = { matchMode: 'contains', value: term };
+    return { fields: fields, operator: 'or' };
+  }
+
+  private setScrollVirtual() {
+    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+  }
+
+  onFilter( $event ) {
+    this.setScrollVirtual();
+    this.setFiltering( true );
+    setTimeout( () => {
+      if ( this.lazyMode ) {
+        this.filter.emit( this.getFilters( $event ) );
+        return;
+      }
+      if ( $event.length === 0 ) {
+        this.setFiltering( false );
+        this.setUpFilterData( $event );
+        return;
+      }
+    }, 100 );
+    this.setUpFilterData( $event );
+    if ( !this.lazyMode ) {
+      this.dataSource.dataStream.next( $event );
     }
   }
 
-  setInputValue( $event ) {
-    this.tlinput.value = this.getValueNested( this.labelName, $event.row );
-    this.value = !this.listBox.isDataArrayString() ? this.getValueNested( this.modelValue, $event.row ) : $event.row;
-    this.listBox.detectChanges();
+  private setFiltering( value: boolean ) {
+    this.filtering = value;
   }
 
-  getWidth() {
-    this.widthInput = this.tlinput.input.nativeElement.offsetWidth;
+  private setNotFound( value: boolean ) {
+    this.nothingFound = value;
   }
 
-  onLazyLoadAutocomplete( $event ) {
-    this.lazyLoad.emit( $event );
+  private setUpFilterData( data ) {
+    this.setNotFound( data.length === 0 );
+    this.dataSource = new DataSourceAutocomplete( {
+      dataSource: data,
+      lazyMode: this.lazyMode,
+      totalLength: this.totalLength,
+      pageSize: this.pageSize
+    } );
   }
 
-  validateModelValueProperty() {
-    if ( !this.modelValue ) {
-      throw new Error( 'The [modelValue] property must be specified.' );
-    }
+  hasModel() {
+    return this.model.model;
   }
 
-  ngOnDestroy() {
-    this.listeners.unsubscribe();
+  isModelInitialized() {
+    return this.modelInitialized;
+  }
+
+  isKeyArrowUp($event) {
+    return $event.keyCode !== KeyEvent.ARROWUP;
+  }
+
+  isKeyArrowDown($event) {
+    return $event.keyCode !== KeyEvent.ARROWDOWN;
+  }
+
+  isKeyEnter($event) {
+    return $event.keyCode === KeyEvent.ENTER;
+  }
+
+  isLazy() {
+    return this.lazyMode;
   }
 
   ngOnChanges( changes ) {
-    if ( (!changes.data.previousValue) && (changes.data.currentValue) ) {
-      this.loading = false;
-      this.disabled = false;
-      this.handleModelInit();
+    if ( changes[ 'data' ] && this.hasModel() && !this.isModelInitialized() && this.isLazy() ) {
+      this.selected = changes[ 'data' ].currentValue[ 0 ][ this.keyText ];
+      this.modelInitialized = true;
+    }
+    if ( changes[ 'totalLength' ] ) {
+      if ( !changes[ 'totalLength' ].firstChange ) {
+        this.setUpData();
+        this.dataSource.setData( this.data );
+        this.dataSource.addPage( 0 );
+        this.setNotFound( this.data.length === 0 );
+        this.listenLoadData();
+        return;
+      }
+    }
+    if ( changes[ 'data' ].firstChange ) {
+      this.setUpData();
+      this.listenLoadData();
+      return;
+    }
+    if ( this.filtering ) {
+      this.setUpFilterData( changes[ 'data' ].currentValue );
+      this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.dataSource.addPage( 0 );
+      this.listenLoadData();
+      return;
+    }
+    if ( this.dataSource ) {
+      this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.handleModelCached();
+      this.listenLoadData();
     }
   }
 

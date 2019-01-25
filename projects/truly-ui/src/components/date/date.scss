@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+.ui-wrapper-date {
+  display: table;
+}
+
+.ui-input-wrapper {
+  display: table-cell;
+  width: 100%;
+}
+
+.ui-input-date {
+  width: 100%;
+  height: 25px;
+  padding: 0 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: normal;
+  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  &.flatBorders {
+    border-radius: 0;
+  }
+}
+
+.ui-input {
+  visibility: hidden;
+  position: absolute;
+  left: 0;
+}

@@ -19,9 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TlAutoComplete } from './autocomplete';
 import { TabIndexService } from '../form/tabIndex.service';
@@ -31,25 +31,51 @@ import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { ListBoxModule } from '../listbox/index';
 import { InputModule } from '../input/index';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { InternalsModule } from '../internals/index';
+import { TlFilterContainer } from './parts/filter-container';
+import { SearchableHighlightDirective } from './parts/directives/searchable-highlight.directive';
+import { FilterService } from './filter.service';
+import { IconsModule } from '../icons/index';
+import { MiscModule } from '../misc/index';
+import { BlockUIModule } from '../blockui/index';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
 
 @NgModule( {
-    imports : [
-        CommonModule,
-        ListBoxModule,
-        OverlayModule,
-        InputModule,
-        FormsModule
-    ],
-    declarations : [
-        TlAutoComplete
-    ],
-    exports : [
-        TlAutoComplete
-    ],
-    providers : [
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService
-    ]
+  imports: [
+    CommonModule,
+    ListBoxModule,
+    OverlayModule,
+    ScrollingModule,
+    InputModule,
+    FormsModule,
+    BlockUIModule,
+    IconsModule,
+    ReactiveFormsModule,
+    InternalsModule,
+    MiscModule
+  ],
+  declarations: [
+    TlAutoComplete,
+    TlFilterContainer,
+    SearchableHighlightDirective
+  ],
+  exports: [
+    TlAutoComplete,
+    TlFilterContainer,
+    SearchableHighlightDirective
+  ],
+  providers: [
+    FilterService
+  ]
 } )
-export class AutoCompleteModule {}
+export class AutoCompleteModule {
+  static forRoot(config: AutoCompleteConfig = null ): ModuleWithProviders {
+    return {
+      ngModule: AutoCompleteModule,
+      providers: [
+        { provide: AUTOCOMPLETE_CONFIG, useValue: config },
+      ]
+    };
+  }
+}

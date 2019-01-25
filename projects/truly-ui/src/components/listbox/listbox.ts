@@ -157,6 +157,9 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   public scrollFinish = false;
 
   get filterEmptyMessage() {
+    if (this.loadingMoreData) {
+      return null;
+    }
     return this.i18n.getLocale().Listbox.notFoundText;
   }
 
@@ -214,16 +217,18 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
           this.handleSearchAsDefaultData();
           return false;
         }
+        return;
       } )
-    ).subscribe( searchTextValue => {
-      this.handleSearch( searchTextValue );
-      this.filterData.emit( this.filteredData );
+    ).subscribe((searchTerm) => {
+      this.handleSearch( searchTerm );
+      this.filterData.emit( this.lazyMode ?
+        { skip: this.skip, take: this.take, filters: this.getFilters(searchTerm) } : this.filteredData );
       setTimeout( () => {
         this.removeSelected();
         this.resetCursors();
         this.addClassSelected( 0 );
       }, 1 );
-    } );
+    });
   }
 
   ngAfterViewInit() {
@@ -519,7 +524,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   setHandlerFocus() {
-    if ( this.dynamicFocus && !this.dynamicShowHide ) {
+    if ( this.dynamicFocus && !this.dynamicShowHide && this.searchElement ) {
       setTimeout( () => {
         this.searchElement.input.nativeElement.focus();
       }, 1 );
@@ -608,7 +613,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   }
 
   handleSearchAsFoundData( searchTerm ) {
-    if ( this.lazyMode ) {
+    if ( this.lazyMode && !this.filtering ) {
       this.getDataLazy( searchTerm );
       return;
     }
@@ -672,11 +677,14 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
     if ( this.lastChildElement().getBoundingClientRect() ) {
       if ( ( this.lastChildElement().offsetTop >= this.scrollTop ) && (  this.listBox.nativeElement.children.length > 0 ) ) {
         if ( this.lastChildElement().getBoundingClientRect().bottom < this.parentElement().bottom + (5 * this.rowHeight) ) {
+
           this.skip = this.lastRowViewport - this.quantityInVisibleRows - this.quantityVisibleRows;
-          this.take = this.lastRowViewport + this.quantityInVisibleRows;
+
           const data = this.filtering ? this.filteredData : this.data;
           const dataLength = this.lazyMode ? data.total : data.length;
-          this.take = this.take > dataLength ? dataLength : this.take;
+
+          const take = this.skip + (this.quantityInVisibleRows * 2) + this.quantityVisibleRows;
+          this.take = take > dataLength ? dataLength : take;
           this.renderPageData();
         }
       } else {
@@ -771,8 +779,11 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
   getDataLazy( term? ) {
     this.loadingMoreData = true;
-    const fields = {};
+    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: this.getFilters(term) } );
+  }
 
+  getFilters( term? ) {
+    const fields = {};
     Array( this.searchQuery ).forEach( ( item ) => {
       const keyName = item;
       fields[ keyName ] = { matchMode: 'contains', value: term };
@@ -781,8 +792,7 @@ export class TlListBox implements OnInit, AfterViewInit, OnDestroy, OnChanges {
       fields: fields,
       operator: 'or'
     };
-
-    this.lazyLoad.emit( { skip: this.skip, take: this.take, filters: filterBy } );
+    return filterBy;
   }
 
   renderList() {

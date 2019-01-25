@@ -1,0 +1,106 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-autocomplete-theme-schema($theme, $action) {
+
+  $basic: map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $danger: map-deep-get($theme, 'danger');
+  $success: map-deep-get($theme, 'success');
+  $warning: map-deep-get($theme, 'warning');
+  $blueBorder: #40a9ff;
+
+  .ui-wrapper-filter {
+    background-color: map-deep-get($basic, "lighter", "background");
+    color: map-deep-get($basic, "lighter", "foreground");
+    -webkit-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    -moz-box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    box-shadow: inset 0px 5px 7px -5px rgba(0, 0, 0, 0.10);
+    border: 1px solid map-deep-get($basic, "default", "border");
+
+    &.withBorder {
+      border: 1px solid map-deep-get($basic, "default", "border");
+    }
+
+    &.withoutBorder {
+      border: none !important;
+    }
+
+    &.opened {
+      border-color: $blueBorder !important;
+    }
+
+    &.ui-input {
+      background: transparent;
+
+      &::placeholder {
+        color: map-deep-get($basic, "lighter", "foreground");
+        opacity: 0.6;
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &:focus:not(.ng-dirty) {
+        background-color: rgba(map-deep-get($warning, "lighter", "background"), 0.25);
+        outline: none;
+        border: 1px solid map-deep-get($warning, "default", "border");
+      }
+
+      &:disabled {
+        opacity: 0.35;
+        filter: Alpha(Opacity=70);
+        cursor: default !important;
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      &:read-only {
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+      }
+    }
+  }
+
+  .scrollOpenedAbove {
+    border-top: 1px solid $blueBorder !important;
+  }
+
+  .openedAbove {
+    border: 1px solid $blueBorder;
+  }
+
+  .ui-selected-wrapper {
+    background: rgba(map-deep-get($basic, "darker", "foreground"), 0.3);
+  }
+}
+
+@mixin tl-autocomplete-theme( $theme ) {
+
+  .ui-autocomplete-wrapper {
+
+    &.basic {
+      @include _tl-autocomplete-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-autocomplete-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-autocomplete-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-autocomplete-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-autocomplete-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-autocomplete-theme-schema($theme, 'information')
+    }
+  }
+}

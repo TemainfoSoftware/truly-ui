@@ -4,11 +4,10 @@
   @include tl-accordion-theme($theme);
   @include tl-accordion-item-theme($theme);
   @include tl-avatar-theme($theme);
+  @include tl-autocomplete-theme($theme);
   @include tl-avatar-svg-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
-  @include tl-dropdown-icon-theme($theme);
-  @include tl-editor-theme($theme);
   @include tl-calendar-theme($theme);
   @include tl-colorpicker-theme($theme);
   @include tl-colorpicker-content-theme($theme);
@@ -16,6 +15,8 @@
   @include tl-clockpicker-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
+  @include tl-date-theme($theme);
+  @include tl-editor-theme($theme);
   @include tl-popupmenu-theme($theme);
   @include tl-modal-toolbar-theme($theme);
   @include tl-datatable-theme($theme);

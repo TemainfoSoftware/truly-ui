@@ -34,6 +34,9 @@ export class ModalResultDirective implements OnInit {
   @Input( 'mdResult' ) mdResult: ModalResult;
 
   @Input( 'formResult' ) formResult;
+  set formResultValue(value) {
+    this.formResult = value;
+  }
 
   @ContentChild( TlButton ) button: TlButton;
 

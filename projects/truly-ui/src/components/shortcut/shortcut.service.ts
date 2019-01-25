@@ -56,6 +56,8 @@ export class ShortcutService implements OnDestroy {
 
   private config: ShortcutConfig;
 
+  private modalContextArray = [];
+
   constructor( private modalService: ModalService ) {
   }
 
@@ -115,12 +117,14 @@ export class ShortcutService implements OnDestroy {
   }
 
   handleClickComponentWithEqualsKeys() {
+    this.setModalContextArray();
     this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
       this.handleEqualButton() :
       this.handleEqualElement();
   }
 
   handleClickComponentWithoutEqualsKeys() {
+    this.setModalContextArray();
     this.isElementInstanceOfButton( this.elementsListener[ this.elementIndex ] ) ?
       this.activeElementButton( this.elementIndex ) :
       this.elementsListener[ this.elementIndex ].element.nativeElement.click();
@@ -133,7 +137,9 @@ export class ShortcutService implements OnDestroy {
     return this.activeHighestButtonElement();
   }
 
-
+  setModalContextArray() {
+    this.modalContextArray = this.getExistModalContext();
+  }
 
   handleEqualElement() {
     this.orderElementsByZindex();
@@ -146,25 +152,31 @@ export class ShortcutService implements OnDestroy {
       return (this.currentShortcut === value.shortcut);
     } );
 
-    const modalContextArray = this.getExistModalContext();
-
-    if (modalContextArray.length > 0) {
-      modalContextArray.forEach((item) => {
-        if (item.element.modalContext === this.activeModal) {
-          return item.element.button.nativeElement.click();
-        }
-      });
+    if ( this.hasModalContextArray() ) {
+      const button = this.getModalContextEqualActiveModal()[ 0 ];
+      if ( button ) {
+        button.element.button.nativeElement.click();
+      }
     } else {
       this.sortButtons( buttonToClick )[ 0 ].element.button.nativeElement.click();
     }
-
     setTimeout( () => {
       this.handleElementsOfView();
     }, 520 );
   }
 
+  hasModalContextArray() {
+    return this.modalContextArray.length > 0;
+  }
+
+  getModalContextEqualActiveModal() {
+    return this.modalContextArray.filter( ( item ) =>
+    (item.element.modalContext === this.activeModal) &&
+    (item.shortcut === this.elementsListener[this.elementIndex].shortcut));
+  }
+
   getExistModalContext() {
-    return buttonElements.filter((item) => item.element.modalContext);
+    return buttonElements.filter( ( item ) => item.element.modalContext );
   }
 
   sortButtons( buttonToClick ) {
@@ -176,7 +188,10 @@ export class ShortcutService implements OnDestroy {
   }
 
   activeElementButton( element ) {
-    this.elementsListener[ element ].element.buttonElement.nativeElement.click();
+    const button = this.hasModalContextArray() ?
+      this.getModalContextEqualActiveModal()[ 0 ] : this.elementsListener[ element ];
+
+    button.element.buttonElement.nativeElement.click();
     setTimeout( () => {
       this.handleElementsOfView();
     }, 520 );

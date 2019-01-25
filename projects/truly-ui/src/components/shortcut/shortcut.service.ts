@@ -148,17 +148,13 @@ export class ShortcutService implements OnDestroy {
   }
 
   activeHighestButtonElement() {
-    const buttonToClick = buttonElements.filter( ( value ) => {
-      return (this.currentShortcut === value.shortcut);
-    } );
-
     if ( this.hasModalContextArray() ) {
       const button = this.getModalContextEqualActiveModal()[ 0 ];
       if ( button ) {
         button.element.button.nativeElement.click();
       }
     } else {
-      this.sortButtons( buttonToClick )[ 0 ].element.button.nativeElement.click();
+      this.sortButtons()[ 0 ].element.button.nativeElement.click();
     }
     setTimeout( () => {
       this.handleElementsOfView();
@@ -179,12 +175,15 @@ export class ShortcutService implements OnDestroy {
     return buttonElements.filter( ( item ) => item.element.modalContext );
   }
 
-  sortButtons( buttonToClick ) {
-    buttonToClick.sort( ( a, b ) => {
+  getButtonsOfCurrentShortCut() {
+    return buttonElements.filter( ( value ) => (this.currentShortcut === value.shortcut));
+  }
+
+  sortButtons() {
+    return this.getButtonsOfCurrentShortCut().sort( ( a, b ) => {
       return parseInt( a.element.indexShortcut, 10 ) -
         parseInt( b.element.indexShortcut, 10 );
     } );
-    return buttonToClick;
   }
 
   activeElementButton( element ) {
@@ -309,7 +308,7 @@ export class ShortcutService implements OnDestroy {
   }
 
   isButtonDisabled() {
-    return buttonElements[ buttonElements.length - 1 ].element.buttonElement.nativeElement.disabled;
+    return this.elementsListener[ this.elementIndex ].element.buttonElement.nativeElement.disabled;
   }
 
   getEqualKeys( shortcut ) {

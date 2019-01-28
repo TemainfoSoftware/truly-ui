@@ -24,6 +24,8 @@ import { Injectable, ChangeDetectorRef } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { Observable ,  Subject } from 'rxjs';
 
+import * as objectPath from 'object-path';
+
 @Injectable()
 export class TlDatatableSortService {
 
@@ -51,10 +53,10 @@ export class TlDatatableSortService {
     if ( scrolling ) { return this.sortedData; }
 
     data.sort((a, b) => {
-      if (a[this.sort.sorts.column] > b[this.sort.sorts.column]) {
+      if ( objectPath.get(a, this.sort.sorts.column) > objectPath.get(b, this.sort.sorts.column)) {
         return 1;
       }
-      if (a[this.sort.sorts.column] < b[this.sort.sorts.column]) {
+      if (objectPath.get(a, this.sort.sorts.column) < objectPath.get(b, this.sort.sorts.column)) {
         return -1;
       }
       return 0;

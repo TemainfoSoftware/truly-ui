@@ -23,8 +23,10 @@
 import { Injectable } from '@angular/core';
 import { TlDatatable } from '../datatable';
 import { Observable ,  Subject } from 'rxjs';
- import { TlDatatableFilterConstraints } from './datatable-filter-constraints.service';
- import { FilterEventMetadata } from '../metadatas/filter.metadata';
+import { TlDatatableFilterConstraints } from './datatable-filter-constraints.service';
+import { FilterEventMetadata } from '../metadatas/filter.metadata';
+
+import * as objectPath from 'object-path';
 
 @Injectable()
 export class TlDatatableFilterService {
@@ -76,9 +78,8 @@ export class TlDatatableFilterService {
         this.filtredData = [];
         data.forEach( value => {
           let match = true;
-
           for ( let valueIndex = 0; valueIndex < this.filterArray.length; valueIndex++ ) {
-            const dataValue = value[ this.filterArray[ valueIndex ] ];
+            const dataValue = objectPath.get(value, this.filterArray[ valueIndex ]);
             const filterValue = this.filter.filters[ this.filterArray[ valueIndex ] ].value.toLowerCase();
             const matchMode = this.filter.filters[ this.filterArray[ valueIndex ] ].matchMode;
             if ( ! this.filterConstraints[matchMode]( dataValue, filterValue) ) {

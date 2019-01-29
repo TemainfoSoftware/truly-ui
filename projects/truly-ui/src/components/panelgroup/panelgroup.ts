@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Component, AfterViewInit, Input } from '@angular/core';
+import { Component, AfterViewInit, Input, TemplateRef } from '@angular/core';
 
 @Component( {
     selector: 'tl-panelgroup',
@@ -38,6 +38,8 @@ export class TlPanelGroup implements AfterViewInit {
     @Input() height = '100%';
 
     @Input() fontColorCaption = '';
+
+    @Input() customTemplate: TemplateRef<any>;
 
     @Input() fontSizeCaption = '1em';
 

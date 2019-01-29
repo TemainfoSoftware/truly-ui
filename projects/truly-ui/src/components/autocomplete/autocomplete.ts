@@ -151,7 +151,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   private handleModelLazy() {
     if ( !this.modelInitialized && this.lazyMode && this.model.value) {
       this.selected = this.model.value[this.keyText];
+      this.handleKeyModelValue(this.model.value);
       this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
+      this.modelInitialized = true;
     }
   }
 

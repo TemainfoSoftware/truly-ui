@@ -71,6 +71,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'itemHeight' ) itemHeight = '23px';
 
+  @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
+
   @Input( 'keyValue' ) keyValue = 'value';
 
   @Input( 'maxHeight' ) maxHeight = '150px';
@@ -152,7 +154,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   onSelectOption( $event: ListItemMeta ) {
     this.optionSelected = $event;
     this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
-    this.value = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyValue ];
+    this.value = this.isSimpleData() ? $event.option.item : this.handleKeyModelValue( $event.option.item );
     this.isOpen = false;
     this.setInputFocus();
   }
@@ -178,11 +180,18 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
+  handleKeyModelValue( value: object ) {
+    this.value = this.keyValue.length > 0 ? value[ this.keyValue ] : value;
+  }
+
   getModelValue() {
     this.datasource.forEach( ( value, index ) => {
-      if ( this.getCompare( value ) === this.model.model ) {
-        this.selectedDescription = this.getDescription( value );
-        this.indexOptionSelectedModel = index;
+      if ( this.model.value ) {
+        if ( this.getCompare( value ) === this.getCompareModel() ) {
+          this.selectedDescription = this.getDescription( value );
+          this.indexOptionSelectedModel = index;
+          this.handleKeyModelValue(value);
+        }
       }
     } );
   }
@@ -194,6 +203,14 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
         self[ key ] = options[ key ];
       } );
     }
+  }
+
+  isModelModeString() {
+    return this.modelMode === 'string';
+  }
+
+  getCompareModel() {
+    return this.isModelModeString() ? this.model.value : this.model.value[ this.keyValue ];
   }
 
   getCompare( value ) {
@@ -216,9 +233,9 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  ngOnChanges(changes) {
-    if (changes['data']) {
-      if (changes['data'].currentValue) {
+  ngOnChanges( changes ) {
+    if ( changes[ 'data' ] ) {
+      if ( changes[ 'data' ].currentValue ) {
         this.initializeComponent();
       }
     }

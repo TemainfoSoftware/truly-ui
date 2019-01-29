@@ -78,6 +78,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() placeholder = 'Search...';
 
+  @Input() modelMode: 'string' | 'object' = 'object';
+
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
   @Output() select: EventEmitter<any> = new EventEmitter();
@@ -140,24 +142,33 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   private handleModel() {
     this.model.valueChanges.subscribe( () => {
       if ( this.dataSource ) {
-        this.lazyMode ? this.handleModelLazy() : this.handleModelCached();
+        this.handleModelLazy();
+        this.handleModelCached();
       }
     } );
   }
 
   private handleModelLazy() {
-    if (!this.modelInitialized) {
+    if ( !this.modelInitialized && this.lazyMode && this.model.value) {
+      this.selected = this.model.value[this.keyText];
       this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
     }
   }
 
   private handleModelCached() {
     this.dataSource.getCachedData().forEach( ( value, index ) => {
-      if ( String( value[ this.keyValue ] ) === String( this.model.model ) ) {
-        this.selectedIndex = index;
-        this.selected = value[ this.keyText ];
+      if ( this.model.value ) {
+        if ( String( value[ this.keyValue ] ) === String( this.getCompareModel() ) ) {
+          this.selectedIndex = index;
+          this.selected = value[ this.keyText ];
+          this.handleKeyModelValue( value );
+        }
       }
     } );
+  }
+
+  private handleKeyModelValue( value: object ) {
+    this.value = this.keyValue.length > 0 ? value[ this.keyValue ] : value;
   }
 
   private setOptions( options: AutoCompleteConfig ) {
@@ -171,12 +182,20 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   handleKeyEvents( $event: KeyboardEvent, item, i ) {
     this.keyManager.onKeydown( $event );
-    if ( this.isKeyArrowDown($event) && this.isKeyArrowUp($event) ) {
+    if ( this.isKeyArrowDown( $event ) && this.isKeyArrowUp( $event ) ) {
       this.setFocus();
     }
-    if ( this.isKeyEnter($event) ) {
+    if ( this.isKeyEnter( $event ) ) {
       this.selectItem( item, i );
     }
+  }
+
+  isModelModeString() {
+    return this.modelMode === 'string';
+  }
+
+  getCompareModel() {
+    return this.isModelModeString() ? this.model.value : this.model.value[ this.keyValue ];
   }
 
   handleBlur() {
@@ -200,7 +219,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   selectItem( $event, index: number ) {
     this.selectedIndex = index;
     this.selected = $event[ this.keyText ];
-    this.value = $event[ this.keyValue ];
+    this.handleKeyModelValue( $event );
     this.isOpen = false;
     this.select.emit( $event );
     this.change.detectChanges();
@@ -320,22 +339,22 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   hasModel() {
-    return this.model.model;
+    return this.model.value;
   }
 
   isModelInitialized() {
     return this.modelInitialized;
   }
 
-  isKeyArrowUp($event) {
+  isKeyArrowUp( $event ) {
     return $event.keyCode !== KeyEvent.ARROWUP;
   }
 
-  isKeyArrowDown($event) {
+  isKeyArrowDown( $event ) {
     return $event.keyCode !== KeyEvent.ARROWDOWN;
   }
 
-  isKeyEnter($event) {
+  isKeyEnter( $event ) {
     return $event.keyCode === KeyEvent.ENTER;
   }
 

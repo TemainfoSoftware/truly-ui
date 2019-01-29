@@ -30,8 +30,6 @@
 </div>
 <div *ngIf="type === 'gender'"
      [class]="'tl-avatar ' + color + ' ' + shape"
-     [style.width]="size"
-     [style.height]="size"
-     [style.background]="bgColor">
-  <tl-svg [size]="size" [gender]="gender" [shape]="shape" [fontColor]="fontColor"></tl-svg>
+     [style.width]="size">
+  <tl-image [size]="size" [gender]="gender" [shape]="shape"></tl-image>
 </div>

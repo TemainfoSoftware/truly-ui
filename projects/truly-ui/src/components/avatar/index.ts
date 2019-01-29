@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IconsModule } from '../icons/index';
 
 import { TlAvatar } from './avatar';
-import { SvgComponent } from './parts/svg/svg.component';
+import { ImageComponent } from './parts/image/image.component';
 
 @NgModule({
   imports: [
@@ -14,7 +14,7 @@ import { SvgComponent } from './parts/svg/svg.component';
   ],
   declarations: [
     TlAvatar,
-    SvgComponent
+    ImageComponent
   ],
   exports: [
     TlAvatar

@@ -10,6 +10,7 @@ export interface DropdownConfig {
   keyText?: string;
   keyValue?: string;
   debounceTime?: number;
+  modelMode?: string;
 }
 
 export let DROPDOWN_CONFIG = new InjectionToken<DropdownConfig>('dropdown.config');

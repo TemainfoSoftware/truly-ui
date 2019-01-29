@@ -39,6 +39,8 @@ export class FilterOptionsService {
         return this.getOptionsText();
       case 'number' :
         return this.getOptionsNumber();
+      case 'date' :
+        return this.getOptionsDate();
       default :
         return this.getOptionsDefault();
     }
@@ -118,6 +120,34 @@ export class FilterOptionsService {
   }
 
   getOptionsNumber() {
+    return [ {
+      description : this.optionDescription().filterOptionEquals,
+      valueItem : 'equals',
+      icon : 'dx-icon-filter-operation-equals'
+    }, {
+      description : this.optionDescription().filterOptionNotEquals,
+      valueItem : 'notEquals',
+      icon : 'dx-icon-filter-operation-not-equals'
+    }, {
+      description : this.optionDescription().filterOptionLessThan,
+      valueItem : 'lessThan',
+      icon : 'dx-icon-filter-operation-less'
+    }, {
+      description : this.optionDescription().filterOptionGreaterThan,
+      valueItem : 'greaterThan',
+      icon : 'dx-icon-filter-operation-greater'
+    }, {
+      description : this.optionDescription().filterOptionLessThanOrEqual,
+      valueItem : 'lessThanOrEqual',
+      icon : 'dx-icon-filter-operation-less-equal'
+    }, {
+      description : this.optionDescription().filterOptionGreaterThanOrEqual,
+      valueItem : 'greaterThanOrEqual',
+      icon : 'dx-icon-filter-operation-greater-equal'
+    } ];
+  }
+
+  getOptionsDate() {
     return [ {
       description : this.optionDescription().filterOptionEquals,
       valueItem : 'equals',

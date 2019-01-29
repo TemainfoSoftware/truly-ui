@@ -32,6 +32,8 @@ import { KeyEvent } from '../../../core/enums/key-events';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { DatePipe } from '@angular/common';
 
+import * as objectPath from 'object-path';
+
 @Component( {
     selector: 'tl-datatable-scrollable-mode',
     templateUrl: './datatable-scrollable-mode.html',
@@ -330,25 +332,29 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     private createElementsTD( row, dataSource ) {
         for ( let collumn = 0; collumn < this.dt.columns.length; collumn++ ) {
 
-            const classAlignColumn = this.helperService.getClassAlignment(this.dt.columns[ collumn ].alignment );
+            const classAlignColumn = this.helperService.getClassAlignment( this.dt.columns[ collumn ].alignment );
 
             this.elementTD = new ElementRef( this.renderer.createElement( 'td' ) );
             this.renderer.addClass(  this.elementTD.nativeElement, 'ui-cel' );
             this.renderer.addClass(  this.elementTD.nativeElement, classAlignColumn );
             this.renderer.setStyle(  this.elementTD.nativeElement, 'height', this.dt.rowHeight + 'px' );
-            this.elementTD.nativeElement.innerHTML = this.getContentCell( row, collumn, dataSource );
+            this.elementTD.nativeElement.innerHTML = this.getContentFormated( row, collumn, dataSource );
             this.renderer.appendChild( this.listBody.nativeElement.children[ row ],  this.elementTD.nativeElement );
         }
     }
 
-    private getContentCell( row, collumn, dataSource ) {
+    private getContentFormated( row, collumn, dataSource ) {
+      const content = this.getContent( row, collumn, dataSource );
       switch ( this.dt.columns[ collumn ].type ) {
         case 'date' : {
-          const content = dataSource[ row ][ this.dt.columns[ collumn ].field ];
           return this.datePipe.transform( content, this.dt.columns[ collumn ].format );
         }
-        default : return dataSource[ row ][ this.dt.columns[ collumn ].field ];
+        default : return content;
       }
+    }
+
+    private getContent( row, collumn, dataSource ) {
+      return objectPath.get(dataSource[ row ], this.dt.columns[ collumn ].field);
     }
 
     private removeChilds() {

@@ -154,7 +154,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   onSelectOption( $event: ListItemMeta ) {
     this.optionSelected = $event;
     this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
-    this.value = this.isSimpleData() ? $event.option.item : this.handleKeyModelValue( $event.option.item );
+    this.handleKeyModelValue( $event.option.item );
     this.isOpen = false;
     this.setInputFocus();
   }
@@ -174,6 +174,10 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.typeOfData === 'simple';
   }
 
+  isKeyValueLengthMoreThanZero() {
+    return this.keyValue.length > 0;
+  }
+
   listenModelChange() {
     this.model.valueChanges.subscribe( () => {
       this.getModelValue();
@@ -181,7 +185,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   handleKeyModelValue( value: object ) {
-    this.value = this.keyValue.length > 0 ? value[ this.keyValue ] : value;
+    this.value = (this.isKeyValueLengthMoreThanZero()) && (!this.isSimpleData()) ? value[ this.keyValue ] : value;
   }
 
   getModelValue() {

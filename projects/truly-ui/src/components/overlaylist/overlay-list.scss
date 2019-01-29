@@ -105,3 +105,10 @@ $default-outline: none;
     padding: 5px;
   }
 }
+
+.default-option {
+  padding: 0 5px;
+  > i {
+    padding: 0 5px
+  }
+}

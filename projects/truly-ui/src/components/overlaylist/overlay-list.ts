@@ -155,6 +155,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.emitSelectOption();
   }
 
+  defaultOptionClick() {
+    this.defaultOption.emit();
+  }
+
   stopEvent($event) {
     $event.preventDefault();
     $event.stopPropagation();

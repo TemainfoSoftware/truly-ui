@@ -16,6 +16,10 @@
         [style.maxHeight]="maxHeight"
         tabindex="0">
         <div class="ui-label-notfound" *ngIf="notFound">{{ emptyList }}</div>
+        <div tabindex="-1" (click)="defaultOptionClick()" class="default-option" [style.lineHeight]="itemHeight" [style.height]="itemHeight">
+          <i *ngIf="defaultIcon" class="{{ defaultIcon }}"></i>
+          {{ defaultOptionText }}
+        </div>
         <tl-list-item *ngFor="let item of datasource; let i = index"
                       (searchEmit)="searching()"
                       [searchOnList]="searchOnList"

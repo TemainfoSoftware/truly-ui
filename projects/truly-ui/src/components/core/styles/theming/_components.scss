@@ -2,7 +2,6 @@
 @import "../../../accordion/parts/accordion-item/accordion-item-theme";
 @import "../../../autocomplete/autocomplete-theme";
 @import "../../../avatar/avatar-theme";
-@import "../../../avatar/parts/svg/svg-theme";
 @import "../../../badge/badge-theme";
 @import "../../../button/button-theme";
 @import "../../../buttongroup/buttongroup-theme";
@@ -58,7 +57,6 @@
   @include tl-accordion-item-theme($theme);
   @include tl-autocomplete-theme($theme);
   @include tl-avatar-theme($theme);
-  @include tl-avatar-svg-theme($theme);
   @include tl-badge-theme($theme);
   @include tl-button-group-theme($theme);
   @include tl-button-theme($theme);

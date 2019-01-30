@@ -56,6 +56,13 @@ export const dataProperties = [
     options: 'Hex | RGBA'
   },
   {
+    name: 'showButtonAction',
+    type: 'boolean',
+    default: 'false',
+    description: 'Property that shows or not an action button after panel label',
+    options: 'true | false'
+  },
+  {
     name: 'fontSizeCaption',
     type: 'string',
     default: 'null',

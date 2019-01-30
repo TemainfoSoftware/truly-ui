@@ -238,6 +238,12 @@ export class ModalService implements OnDestroy {
     }
   }
 
+  minimizeAll() {
+    this.componentList.forEach((item: ModalInstance) => {
+      this.minimize(item.modal);
+    });
+  }
+
   private removeOfView( modal ) {
     this.view.remove( this.view.indexOf( modal ) );
     this.removeBackdrop();

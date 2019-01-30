@@ -3,10 +3,17 @@
 @mixin tl-panelgroup-theme($theme) {
 
   $basic:   map-deep-get($theme, 'basic');
+  $primary:   map-deep-get($theme, 'primary');
 
   .panelgroup-container {
     border: 1px solid map-deep-get($basic, "default", "border");
     background-color: map-deep-get($basic, "default", "background");
+  }
+
+  .header-group {
+    > .ui-button-action {
+      background-color: map-deep-get($primary, "default", "background");
+    }
   }
 
   .header-group span {

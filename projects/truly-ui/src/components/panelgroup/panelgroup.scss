@@ -15,6 +15,17 @@
   white-space: nowrap;
   position: absolute;
   top: -10.6px;
+  > .ui-button-action {
+    width: 18px;
+    height: 18px;
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    place-content: center;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+  }
 }
 
 .header-group span {

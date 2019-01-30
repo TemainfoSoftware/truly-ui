@@ -3,6 +3,7 @@
         <span class="spacer spacer-left"></span>
         <span class="group-caption" [style.color]="fontColorCaption" [style.font-size]="fontSizeCaption">{{labelGroup}}</span>
         <ng-container *ngTemplateOutlet="customTemplate"></ng-container>
+        <div *ngIf="showButtonAction" (click)="onClickButtonAction($event)" class="ui-button-action"><tl-icon [lib]="'ion'" [style]="'md'">add</tl-icon></div>
         <span class="spacer spacer-right"></span>
     </div>
     <div class="panelgroup-body">

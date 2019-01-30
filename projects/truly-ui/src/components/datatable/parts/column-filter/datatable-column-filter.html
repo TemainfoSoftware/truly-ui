@@ -22,6 +22,7 @@
             <div  class="ui-input">
                 <tl-input *ngIf="column?.showFilter"
                           [clearButton]="true"
+                          [height]="'23px'"
                           [ngModel]="filters.value[column.field]"
                           (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
                           [placeholder]="filterPlaceholder"

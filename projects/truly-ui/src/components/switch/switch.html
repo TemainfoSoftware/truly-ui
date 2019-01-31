@@ -11,7 +11,7 @@
              [tabindex]="tabindex"
              [(ngModel)]="value">
       <span class="slider round" [ngClass]="{'disabled': disabled}"></span>
-      <label (click)="switchToggle(value)" class="label">{{label}}</label>
+      <label (click)="switchToggle(value)" class="label" [style.width]="labelSize">{{label}}</label>
     </label>
   </div>
 </div>

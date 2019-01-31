@@ -160,9 +160,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   listenSidebarChange() {
-    this.sidebarService.changes.subscribe((value) => {
+    this.subscription.add(this.sidebarService.changes.subscribe(() => {
       this.handleChangeSidebarWhenMaximized();
-    });
+    }));
   }
 
   handleChangeSidebarWhenMaximized() {
@@ -247,11 +247,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
       this.setMousePressY( $event.clientY );
       this.moving = true;
     }
-    this.setActiveModal();
-  }
-
-  setActiveModal() {
-    // this.serviceControl.setActiveModal(this.componentRef);
   }
 
   validateProperty() {

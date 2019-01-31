@@ -40,7 +40,7 @@ export class TlSwitch extends ElementBase<boolean> implements OnInit {
 
   @Input() label = '';
 
-  @Input() labelSize = '250px';
+  @Input() labelSize = '100px';
 
   @Input() checked = false;
 

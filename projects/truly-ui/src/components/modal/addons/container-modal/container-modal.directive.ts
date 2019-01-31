@@ -32,7 +32,7 @@ export class TlContainerModalDirective implements OnInit {
   constructor( private viewContainerRef: ViewContainerRef, private containerModal: ContainerModalService) {}
 
   ngOnInit() {
-    this.containerModal.setView(this.viewContainerRef);
+    this.containerModal.view = this.viewContainerRef;
   }
 
 }

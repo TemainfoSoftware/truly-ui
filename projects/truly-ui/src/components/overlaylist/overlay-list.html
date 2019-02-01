@@ -16,7 +16,11 @@
         [style.maxHeight]="maxHeight"
         tabindex="0">
         <div class="ui-label-notfound" *ngIf="notFound">{{ emptyList }}</div>
-        <div tabindex="-1" (click)="defaultOptionClick()" class="default-option" [style.lineHeight]="itemHeight" [style.height]="itemHeight">
+        <div tabindex="-1" *ngIf="hasDefaultOption"
+             (click)="defaultOptionClick()"
+             class="default-option"
+             [style.lineHeight]="itemHeight"
+             [style.height]="itemHeight">
           <i *ngIf="defaultIcon" class="{{ defaultIcon }}"></i>
           {{ defaultOptionText }}
         </div>

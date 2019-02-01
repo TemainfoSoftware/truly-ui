@@ -59,6 +59,8 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() defaultOptionText = 'Select...';
 
+  @Input() hasDefaultOption = true;
+
   @Input() keyText = 'text';
 
   @Input() keyValue = 'value';

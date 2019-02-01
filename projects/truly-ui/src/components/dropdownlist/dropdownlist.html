@@ -30,8 +30,9 @@
     <tl-overlay-list
       @overlay
       (selectOption)="onSelectOption($event)"
-      (search)="handleSearch($event)"
+      (search)="onSearch($event)"
       (defaultOption)="onDefaultOption()"
+      (findByLetter)="onFindByLetter($event)"
       [customInput]="wrapper"
       [typeOfData]="typeOfData"
       [defaultOptionText]="placeholder"

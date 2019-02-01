@@ -24,6 +24,7 @@
                       (searchEmit)="searching()"
                       [searchOnList]="searchOnList"
                       [height]="itemHeight"
+                      (keydown)="handleSearchByLetter($event)"
                       (keydown.enter)="handleClickOption(i, $event)"
                       (click)="handleClickOption(i, $event)"
                       [item]="item">

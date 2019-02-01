@@ -37,8 +37,9 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
-import { ListItemMeta } from '../overlaylist/overlay-list';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
+import { ListItemInterface } from './interfaces/list-item';
+import { TlListItem } from '../overlaylist/list-item/list-item';
 
 @Component( {
   selector: 'tl-dropdown-list',
@@ -117,30 +118,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   ngOnInit() {
     this.listenModelChange();
     this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
-      this.handleSearch( searchTextValue );
+      this.onSearch( searchTextValue );
     } );
   }
 
-  initializeComponent() {
-    this.setUpComponent();
-    this.validateData();
-    this.getModelValue();
-  }
-
-  setUpComponent() {
-    this.datasource = this.data;
-    this.disabled = false;
-    this.isLoading = false;
-  }
-
-  validateData() {
-    const key = Object.keys( this.data )[ 0 ];
-    if ( typeof this.data[ key ] === 'string' ) {
-      this.typeOfData = 'simple';
-    }
-  }
-
-  handleSearch( searchTextValue ) {
+  onSearch( searchTextValue ) {
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
@@ -151,11 +133,23 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.datasource = filter;
   }
 
-  onSelectOption( $event: ListItemMeta ) {
+  onKeyDown( $event ) {
+    this.handleSelectInLetter( $event.key );
+    const keyEvent = {
+      [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
+    };
+    keyEvent[ $event.keyCode ]();
+  }
+
+  onFindByLetter( value: string ) {
+    this.handleSelectInLetter( value );
+  }
+
+  onSelectOption( $event: ListItemInterface ) {
+    this.isOpen = false;
     this.optionSelected = $event;
     this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
     this.handleKeyModelValue( $event.option.item );
-    this.isOpen = false;
     this.setInputFocus();
   }
 
@@ -166,41 +160,67 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
   }
 
-  setInputFocus() {
+  private handleKeySpace( $event ) {
+    this.stopEvent( $event );
+    if ( !this.isOpen ) {
+      this.isOpen = true;
+    }
+  }
+
+  private initializeComponent() {
+    this.setUpComponent();
+    this.validateData();
+    this.getModelValue();
+  }
+
+  private setUpComponent() {
+    this.datasource = this.data;
+    this.disabled = false;
+    this.isLoading = false;
+  }
+
+  private validateData() {
+    const key = Object.keys( this.data )[ 0 ];
+    if ( typeof this.data[ key ] === 'string' ) {
+      this.typeOfData = 'simple';
+    }
+  }
+
+  private setInputFocus() {
     this.wrapper.nativeElement.focus();
   }
 
-  isSimpleData() {
+  private isSimpleData() {
     return this.typeOfData === 'simple';
   }
 
-  isKeyValueLengthMoreThanZero() {
+  private isKeyValueLengthMoreThanZero() {
     return this.keyValue.length > 0;
   }
 
-  listenModelChange() {
+  private listenModelChange() {
     this.model.valueChanges.subscribe( () => {
       this.getModelValue();
     } );
   }
 
-  handleKeyModelValue( value: object ) {
+  private handleKeyModelValue( value: object ) {
     this.value = (this.isKeyValueLengthMoreThanZero()) && (!this.isSimpleData()) ? value[ this.keyValue ] : value;
   }
 
-  getModelValue() {
+  private getModelValue() {
     this.datasource.forEach( ( value, index ) => {
       if ( this.model.value ) {
         if ( this.getCompare( value ) === this.getCompareModel() ) {
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
-          this.handleKeyModelValue(value);
+          this.handleKeyModelValue( value );
         }
       }
     } );
   }
 
-  setOptions( options: DropdownConfig ) {
+  private setOptions( options: DropdownConfig ) {
     if ( options ) {
       const self = this;
       Object.keys( options ).forEach( function ( key ) {
@@ -209,32 +229,53 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  isModelModeString() {
+  private isModelModeString() {
     return this.modelMode === 'string';
   }
 
-  getCompareModel() {
+  private getCompareModel() {
     return this.isModelModeString() ? this.model.value : this.model.value[ this.keyValue ];
   }
 
-  getCompare( value ) {
+  private getCompare( value ) {
     return this.isSimpleData() ? value : value[ this.keyValue ];
   }
 
-  getDescription( value ) {
+  private getDescription( value ) {
     return this.isSimpleData() ? value : value[ this.keyText ];
   }
 
-  onKeyDown( $event ) {
-    switch ( $event.keyCode ) {
-      case KeyEvent.SPACE:
-        $event.stopPropagation();
-        $event.preventDefault();
-        if ( !this.isOpen ) {
-          this.isOpen = true;
-        }
-        break;
+  private handleSelectInLetter( keyInput: string ) {
+    const selected = this.selectByFirst( keyInput );
+    if ( selected ) {
+      this.selectedDescription = selected.option[ this.keyText ];
+      this.optionSelected = { option: selected.option, index: selected.index };
+      this.handleKeyModelValue( selected.option );
     }
+  }
+
+  private stopEvent( $event ) {
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
+  private selectByFirst( keyInput: string ): ListItemInterface {
+    let selected: ListItemInterface = null;
+    this.datasource.forEach( ( option: TlListItem, index: number ) => {
+      if ( this.getFirstLetterOfItem( option ) === this.getKeyInputLowerCase( keyInput ) ) {
+        selected = <ListItemInterface>{ option, index };
+        return;
+      }
+    } );
+    return selected;
+  }
+
+  private getKeyInputLowerCase( keyInput: string ): string {
+    return String( keyInput ).toLowerCase();
+  }
+
+  private getFirstLetterOfItem( item ): string {
+    return String( item[ this.keyText ] ).substring( 0, 1 ).toLowerCase();
   }
 
   ngOnChanges( changes ) {

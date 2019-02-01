@@ -33,6 +33,8 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     font-size: $default-fontSize;
     font-family: $default-fontFamily;
     font-weight: normal;
+    user-select: none;
+    -webkit-user-select: none;
   }
   > .ui-dropdown-icon {
     position: absolute;

@@ -9,6 +9,10 @@
     background-color: map-deep-get($theme, $action, "default", "background") !important;
   }
 
+  &.-paint-border {
+    border-color: map-deep-get($theme, $action, "default", "background") !important;
+  }
+
   &.-paint-svg {
     stroke: map-deep-get($theme, $action, "default", "background") !important;
     fill: map-deep-get($theme, $action, "default", "background") !important;

@@ -142,7 +142,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   handleModelOption() {
-    if ( this.inputModelIndex ) {
+    if ( this.inputModelIndex && this.items ) {
       this.keyManager.setActiveItem( this.inputModelIndex );
     }
   }

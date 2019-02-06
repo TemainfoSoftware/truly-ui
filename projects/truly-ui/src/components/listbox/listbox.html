@@ -1,6 +1,7 @@
-<cdk-virtual-scroll-viewport [itemSize]="rowHeight" class="ui-list-viewport" tabindex="-1"
+<cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
+                             [style.height]="height"
                              [tlBlockui]="nothingToShow"
-                             [blockuiConfig]="{ message: 'Nothing to Show' }"
+                             [blockuiConfig]="{ message: nothingToShowMessage }"
                              (scroll)="onScroll()"
                              (wheel)="onWheel()">
   <tl-filter-container [searchTerm]="searchControl?.value"
@@ -9,7 +10,7 @@
                        [searchBy]="searchBy"
                        (filter)="onFilter($event)">
     <div itemSelected #select="selectItem"
-         [ngStyle]="{ height: rowHeight + 'px', lineHeight: rowHeight + 'px' }"
+         [ngStyle]="{ height: rowHeight + 'px' }"
          [indexSelected]="i"
          [attr.index]="i"
          *cdkVirtualFor="let item of dataSource; let i = index"
@@ -18,7 +19,13 @@
       <div *ngIf="!template">
         {{ item[keyText] }}
       </div>
-      <tl-listbox-template *ngIf="template" [template]="template" [item]="item" [index]="i"></tl-listbox-template>
+      <tl-listbox-template
+        [style.width]="'100%'"
+        *ngIf="template"
+        [template]="template"
+        [item]="item"
+        [index]="i">
+      </tl-listbox-template>
     </div>
   </tl-filter-container>
 </cdk-virtual-scroll-viewport>

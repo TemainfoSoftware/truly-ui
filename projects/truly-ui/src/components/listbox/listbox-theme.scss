@@ -1,12 +1,41 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-listbox-theme-schema( $theme, $action ){
-  //SKELETON COMPONENT HERE
+@mixin _tl-listbox-theme-schema( $theme, $action ) {
+
+  $basic: map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+
+  border: 1px solid map-deep-get($basic, "default", "border");
+  background: rgba( map-deep-get($basic, "lighter", "background"), 0.5);
+
+  &::-webkit-scrollbar {
+    background: map-deep-get($basic, "lighter", "background");
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: map-deep-get($basic, "lighter", "background");
+  }
+
+  &::-webkit-scrollbar-track {
+    background: map-deep-get($basic, "default", "border");
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background:  map-deep-get($primary, "default", "background");
+  }
+
+  .ui-list-viewport-item {
+    &.selected {
+      background: map-deep-get($primary, "default", "background");
+      color: map-deep-get($basic, "default", "foreground");
+    }
+  }
 }
 
 @mixin tl-listbox-theme( $theme ) {
 
-  .tl-listbox-test{
+  .ui-list-viewport {
+
     &.basic {
       @include _tl-listbox-theme-schema($theme, 'basic')
     }

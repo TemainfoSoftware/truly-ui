@@ -34,6 +34,7 @@ import { FormControl } from '@angular/forms';
 import { DataSourceList } from '../core/classes/datasource-list';
 import { TlInput } from '../input/input';
 import { TlItemSelectedDirective } from './parts/directives/item-selected.directive';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-listbox',
@@ -70,11 +71,17 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
 
   @Input() keyText = 'description';
 
+  @Input() color = 'basic';
+
   @Input() searchControl: FormControl;
+
+  @Input() height = '200px';
 
   @Input() debounceTime = 200;
 
   @Input() searchBy = 'description';
+
+  @Input() nothingToShowMessage = this.i18nService.getLocale().Listbox.notFoundText;
 
   @Input() totalLength = 100;
 
@@ -96,9 +103,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
 
   public dataSource: DataSourceList;
 
-  public nothingToShow = false;
+  public nothingToShow = true;
 
-  constructor(private renderer: Renderer2) {
+  constructor(private renderer: Renderer2, private i18nService: I18nService) {
     super();
   }
 
@@ -174,6 +181,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
       totalLength: this.totalLength,
       lazyMode: this.lazyMode
     } );
+    this.nothingToShow = false;
     this.dataSource.dataStream.next( value || this.data );
   }
 

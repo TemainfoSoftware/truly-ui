@@ -1,49 +1,23 @@
 .ui-list-viewport {
-  height: 200px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   -ms-scroll-snap-type: mandatory;
   scroll-snap-stop: always;
   width: 100%;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0px 2px 15px 0px #d6d6d6;
+  outline: none;
   &::-webkit-scrollbar {
-    background: #fff;
     border-radius: 5px;
     width: 8px;
   }
-
-  &::-webkit-scrollbar-corner {
-    background: #DCDCDC;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f0f0f0;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #66cc99;
-  }
-}
-
-.custom-input {
-  height: 32px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding-left: 5px;
-  margin-bottom: 5px;
 }
 
 .ui-list-viewport-item {
   height: 50px;
-  line-height: 50px;
   padding: 0 10px;
   scroll-snap-align: center;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  &.selected {
-    background: #66cc99;
-    color: white;
-  }
 
 }

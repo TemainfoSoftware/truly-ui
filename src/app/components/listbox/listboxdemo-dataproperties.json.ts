@@ -28,79 +28,44 @@ export const dataProperties = [
     options: 'Array<Object>'
   },
   {
-    name: 'id',
-    type: 'string',
-    default: 'null',
-    description: 'The text shown as ID when using the default list',
-    options: 'any text'
-  },
-  {
-    name: 'label',
-    type: 'string',
-    default: 'null',
-    description: 'The text which will display on line when using the default list',
-    options: 'any text'
-  },
-  {
-    name: 'labelSize',
-    type: 'string',
-    default: '1em',
-    description: 'The size of the label when using the default list.',
-    options: 'px | % | em'
-  },
-  {
-    name: 'labelDetail',
-    type: 'string',
-    default: 'null',
-    description: 'The text of labelDetail shown just above of label when using default list.',
-    options: 'any text'
-  },
-  {
-    name: 'labelDetailSize',
-    type: 'string',
-    default: '0.7em',
-    description: 'The size of the labelDetailSize when using the default list.',
-    options: 'px | % | em'
-  },
-  {
     name: 'rowHeight',
     type: 'number',
-    default: '50',
+    default: '40',
     description: 'The row height in the list.',
     options: 'any number'
   },
   {
-    name: 'searchElement',
+    name: 'searchControl',
     type: 'ElementRef',
     default: 'null',
     description: 'Receives an ElementRef input used for search on list.',
     options: 'ElementRef'
   },
   {
-    name: 'charsToSearch',
+    name: 'debounceTime',
     type: 'number',
-    default: '3',
-    description: 'Number of the charts to component begin to search on list.',
-    options: 'any number'
+    default: '200',
+    description: 'Debounce time of list search',
+    options: 'number'
   },
   {
-    name: 'dynamicFocus',
-    type: 'boolean',
-    default: 'true',
-    description: 'Property to work with focus and class selected.',
-    options: 'true | false'
+    name: 'totalLength',
+    type: 'number',
+    default: '100',
+    description: 'Total length of datasource when using lazy mode',
+    options: 'number'
   },
   {
-    name: 'rowsClient',
-    type: 'number',
-    default: '10',
-    description: 'Number of lines that going to be visible on list.',
-    options: 'any number'
+    name: 'inputElement',
+    type: 'ElementRef',
+    default: 'null',
+    description: 'Input element used to control list.',
+    options: 'ElementRef'
   },
   {
     name: 'rowsPage',
     type: 'number',
-    default: '50',
+    default: '10',
     description: 'Number of lines that going to be shown on list, created on DOM',
     options: 'any number'
   },
@@ -112,46 +77,10 @@ export const dataProperties = [
     options: 'any css measure'
   },
   {
-    name: 'fixedHeight',
-    type: 'boolean',
-    default: 'false',
-    description: 'When it\'s true, the Wrapper Height of the list is controlled by height property,' +
-    ' otherwise is through the height of row (rowHeight) and number of rows client (rowsClient)',
-    options: 'any css measure'
-  },
-  {
-    name: 'addNew',
-    type: 'boolean',
-    default: 'false',
-    description: 'Controls if the listBox will have the Add New element at the end of the list.',
-    options: 'true | false'
-  },
-  {
     name: 'lazyMode',
     type: 'boolean',
     default: 'false',
     description: 'Define if list will work lazy load or not.',
-    options: 'true | false'
-  },
-  {
-    name: 'dynamicShowHide',
-    type: 'boolean',
-    default: 'false',
-    description: 'Controls the state of list (showed or hide) when searchElement focus is triggered',
-    options: 'true | false'
-  },
-  {
-    name: 'hiddenScroll',
-    type: 'boolean',
-    default: 'false',
-    description: 'Controls if going to have scroll or not',
-    options: 'true | false'
-  },
-  {
-    name: 'showArrows',
-    type: 'boolean',
-    default: 'true',
-    description: 'Controls if going to have Arrows Up and Down to navigate through the list',
     options: 'true | false'
   },
   {
@@ -162,11 +91,11 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
-    name: 'focusOnScroll',
-    type: 'boolean',
-    default: 'true',
-    description: 'Controls if will set focus while scrolling',
-    options: 'true | false'
+    name: 'template',
+    type: 'TemplateRef<any>',
+    default: 'null',
+    description: 'Template of item list',
+    options: 'TemplateRef'
   },
   {
     name: 'filterEmptyMessage',
@@ -176,17 +105,10 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'addNewMessage',
+    name: 'searchBy',
     type: 'string',
-    default: '\'Add New\'',
-    description: 'Text shown in Add New element',
-    options: 'any text'
-  },
-  {
-    name: 'searchQuery',
-    type: 'Array<String>',
-    default: 'null',
-    description: 'Array of string to receive the key that\'s going to be used to search on list',
+    default: 'description',
+    description: 'string to receive the key that\'s going to be used to search on list',
     options: 'any text'
   },
   ];

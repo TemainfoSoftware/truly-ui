@@ -138,7 +138,9 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     const keyEvent = {
       [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
     };
-    keyEvent[ $event.keyCode ]();
+    if (keyEvent[$event.keyCode]) {
+      keyEvent[ $event.keyCode ]();
+    }
   }
 
   onFindByLetter( value: string ) {

@@ -1,0 +1,24 @@
+<cdk-virtual-scroll-viewport [itemSize]="rowHeight" class="ui-list-viewport" tabindex="-1"
+                             [tlBlockui]="nothingToShow"
+                             [blockuiConfig]="{ message: 'Nothing to Show' }"
+                             (scroll)="onScroll()"
+                             (wheel)="onWheel()">
+  <tl-filter-container [searchTerm]="searchControl?.value"
+                       [debounceTime]="debounceTime"
+                       [source]="data"
+                       [searchBy]="searchBy"
+                       (filter)="onFilter($event)">
+    <div itemSelected #select="selectItem"
+         [ngStyle]="{ height: rowHeight + 'px', lineHeight: rowHeight + 'px' }"
+         [indexSelected]="i"
+         [attr.index]="i"
+         *cdkVirtualFor="let item of dataSource; let i = index"
+         (click)="setSelected(select); onClickItem(item)"
+         class="ui-list-viewport-item">
+      <div *ngIf="!template">
+        {{ item[keyText] }}
+      </div>
+      <tl-listbox-template *ngIf="template" [template]="template" [item]="item" [index]="i"></tl-listbox-template>
+    </div>
+  </tl-filter-container>
+</cdk-virtual-scroll-viewport>

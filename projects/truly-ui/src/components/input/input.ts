@@ -220,6 +220,10 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
     this.input.nativeElement.focus();
   }
 
+  getNativeInput() {
+    return this.input.nativeElement;
+  }
+
   onInputFocus( $event ) {
     this.isShowingMessages = true;
     this.focus.emit( $event );

@@ -27,7 +27,7 @@
   .ui-list-viewport-item {
     &.selected {
       background: map-deep-get($primary, "default", "background");
-      color: map-deep-get($basic, "default", "foreground");
+      color: white;
     }
   }
 }

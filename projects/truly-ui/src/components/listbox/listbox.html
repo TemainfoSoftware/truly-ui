@@ -12,6 +12,7 @@
     <div itemSelected #select="selectItem"
          [ngStyle]="{ height: rowHeight + 'px' }"
          [indexSelected]="i"
+         [style.padding]="!template ? '0 10px' : '0'"
          [attr.index]="i"
          *cdkVirtualFor="let item of dataSource; let i = index"
          (click)="setSelected(select); onClickItem(item)"

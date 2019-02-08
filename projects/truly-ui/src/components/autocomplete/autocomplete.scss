@@ -14,15 +14,20 @@
 }
 
 .ui-scroll-view {
-  height: 200px;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -ms-scroll-snap-type: mandatory;
+  scroll-snap-stop: always;
   width: 100%;
+  outline: none;
+  height: 200px;
   border: 1px solid #40a9ff;
   border-top: 0;
   -webkit-border-radius: 0 0 3px 3px;
   border-radius: 0 0 3px 3px;
   outline: 0;
   left: -1px;
-  box-sizing: content-box;
+  box-sizing: border-box;
   background: #ffffff;
   &::-webkit-scrollbar {
     background: #fff;
@@ -133,7 +138,6 @@
   }
 
   &:hover {
-    transition: background linear 200ms;
     background: #eeeeee;
   }
 

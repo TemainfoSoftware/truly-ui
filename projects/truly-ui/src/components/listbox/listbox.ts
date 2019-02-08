@@ -33,8 +33,8 @@ import { Subscription } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DataSourceList } from '../core/classes/datasource-list';
 import { TlInput } from '../input/input';
-import { TlItemSelectedDirective } from './parts/directives/item-selected.directive';
 import { I18nService } from '../i18n/i18n.service';
+import { TlItemSelectedDirective } from '../core/directives/itemSelected/item-selected.directive';
 
 @Component( {
   selector: 'tl-listbox',

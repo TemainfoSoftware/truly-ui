@@ -7,6 +7,7 @@ export interface AutoCompleteConfig {
   flatBorder?: string;
   withBorder?: string;
   labelPlacement?: string;
+  identifier?: string;
   color?: string;
 }
 

@@ -32,6 +32,8 @@ export class TlItemSelectedDirective implements Highlightable {
 
   @Input() indexSelected = 0;
 
+  @Input() itemSelected;
+
   @HostBinding( 'class.selected') get isSelected() {
     return this.selected;
   }

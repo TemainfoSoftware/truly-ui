@@ -26,17 +26,18 @@ import {
 import { FormControl } from '@angular/forms';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
+import { isVisibleInList } from '../core/helper/check-element-on-list';
 import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import { DataSourceAutocomplete } from './parts/classes/datasource-autocomplete';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { ListOptionDirective } from '../misc/listoption.directive';
-import { CdkScrollable, CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
-import { map } from 'rxjs/operators';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
 import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
+import { DataSourceList } from '../core/classes/datasource-list';
+import { TlItemSelectedDirective } from '../core/directives/itemSelected/item-selected.directive';
 
 @Component( {
   selector: 'tl-autocomplete',
@@ -46,15 +47,22 @@ import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/auto
 } )
 export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
 
-  @Input() data = [];
+  @Input( 'data' )
+  set data( value ) {
+    this._data = value;
+  }
+
+  get data() {
+    return this._data;
+  }
 
   @Input() totalLength = 1000;
 
-  @Input() pageSize = 100;
+  @Input() rowsPage = 100;
 
   @Input() lazyMode = false;
 
-  @Input() itemSize = 50;
+  @Input() rowHeight = 40;
 
   @Input() debounceTime = 200;
 
@@ -92,15 +100,15 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
-  @ViewChildren( ListOptionDirective ) items: QueryList<ListOptionDirective>;
+  @ViewChildren( TlItemSelectedDirective ) listItems: QueryList<TlItemSelectedDirective>;
 
-  public keyManager: FocusKeyManager<ListOptionDirective>;
+  public keyManager: ActiveDescendantKeyManager<TlItemSelectedDirective>;
 
-  public dataSource: DataSourceAutocomplete;
+  public dataSource: DataSourceList;
 
   public selected = null;
 
-  public selectedIndex = null;
+  private _data;
 
   public isOpen = false;
 
@@ -118,9 +126,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public filtering = false;
 
-  private modelInitialized = false;
-
   private lastIndexScrolled = 0;
+
+  private activeItem;
+
+  private container;
+
+  private identifier;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
@@ -134,9 +146,11 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngAfterViewInit() {
-    this.keyManager = new FocusKeyManager( this.items );
+    this.keyManager = new ActiveDescendantKeyManager( this.listItems );
     this.keyManager.withWrap();
     this.handleModel();
+    this.handleInitList();
+    this.change.detectChanges();
   }
 
   private handleModel() {
@@ -149,28 +163,39 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleModelLazy() {
-    if ( !this.modelInitialized && this.lazyMode && this.model.value) {
-      this.selected = this.model.value[this.keyText];
-      this.handleKeyModelValue(this.model.value);
-      this.lazyLoad.emit( { term: this.model.model, modelValue: true } );
-      this.modelInitialized = true;
+    if ( this.model.value ) {
+      if (this.isModelModeString()) {
+        this.setDescriptionValue( this.model.value[ this.keyText ] );
+      }
+      this.handleKeyModelValue( this.model.value );
     }
   }
 
+  private setDescriptionValue(value: string) {
+    this.input.nativeElement.value = value;
+  }
+
   private handleModelCached() {
-    this.dataSource.getCachedData().forEach( ( value, index ) => {
+    this.dataSource.getCachedData().forEach( ( value ) => {
       if ( this.model.value ) {
-        if ( String( value[ this.keyValue ] ) === String( this.getCompareModel() ) ) {
-          this.selectedIndex = index;
-          this.selected = value[ this.keyText ];
+        if ( String( this.getItemCompare(value) ) === String( this.getCompareModel() ) ) {
+          this.setDescriptionValue( value[ this.keyText ] );
           this.handleKeyModelValue( value );
         }
       }
     } );
   }
 
+  private getItemCompare(value) {
+    return !this.isModelModeString() ? value[this.identifier] : value;
+  }
+
+  private setContainer() {
+    this.container = this.cdkVirtualScroll.elementRef.nativeElement;
+  }
+
   private handleKeyModelValue( value: object ) {
-    this.value = this.keyValue.length > 0 ? value[ this.keyValue ] : value;
+    this.value = this.keyValue ? value[ this.keyValue ] : value;
   }
 
   private setOptions( options: AutoCompleteConfig ) {
@@ -182,33 +207,89 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  handleKeyEvents( $event: KeyboardEvent, item, i ) {
-    this.keyManager.onKeydown( $event );
-    if ( this.isKeyArrowDown( $event ) && this.isKeyArrowUp( $event ) ) {
-      this.setFocus();
+  private setSelected( item: TlItemSelectedDirective ) {
+    this.keyManager.setActiveItem( item );
+  }
+
+  handleKeyArrowDown( $event ) {
+    this.stopEvent( $event );
+    if ( this.isIndexSelectedEqualLastItem() ) {
+      return;
     }
-    if ( this.isKeyEnter( $event ) ) {
-      this.selectItem( item, i );
+    this.keyManager.onKeydown( $event );
+    this.setActiveItem();
+    if ( !isVisibleInList( this.activeItem.element.nativeElement, this.container, this.rowHeight ) ) {
+      this.patchScrollValue( this.rowHeight );
     }
   }
 
-  isModelModeString() {
+  private stopEvent( $event ) {
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
+  handleKeyArrowUp( $event ) {
+    this.stopEvent( $event );
+    if (this.isIndexSelectedEqualFirst()) {
+      return;
+    }
+    this.keyManager.onKeydown( $event );
+    this.setActiveItem();
+    if ( !isVisibleInList( this.activeItem.element.nativeElement, this.container, this.rowHeight ) ) {
+      this.decreaseScrollValue( this.rowHeight );
+      return;
+    }
+    if ( this.isIndexSelectedLowerThanOne() && this.isScrollTopGreaterThanZero() ) {
+      this.resetScrollValue();
+    }
+  }
+
+  private isIndexSelectedEqualLastItem() {
+    return this.keyManager.activeItem[ 'indexSelected' ] === this.dataSource.getCachedData().length - 1;
+  }
+
+  private patchScrollValue( value: number ) {
+    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop += value;
+  }
+
+  private isScrollTopGreaterThanZero() {
+    return this.cdkVirtualScroll.elementRef.nativeElement.scrollTop > 0;
+  }
+
+  private isIndexSelectedEqualFirst() {
+    return this.activeItem.indexSelected === 0;
+  }
+
+  private isIndexSelectedLowerThanOne() {
+    return this.activeItem.indexSelected <= 1;
+  }
+
+  private setActiveItem() {
+    this.activeItem = this.keyManager.activeItem as TlItemSelectedDirective;
+  }
+
+  private resetScrollValue() {
+    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+    this.change.detectChanges();
+  }
+
+  private decreaseScrollValue( value: number ) {
+    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop -= value;
+  }
+
+  private isModelModeString() {
     return this.modelMode === 'string';
   }
 
-  getCompareModel() {
-    return this.isModelModeString() ? this.model.value : this.model.value[ this.keyValue ];
+  private getCompareModel() {
+    return this.isModelModeString() ? this.model.value : this.model.value[ this.identifier ];
   }
 
   handleBlur() {
+    this.setSelected( this.activeItem );
+    this.setDescriptionValue( this.activeItem.itemSelected[this.keyText] );
+    this.handleKeyModelValue( this.activeItem.itemSelected );
     this.isOpen = false;
-  }
-
-  handleArrowDown( $event ) {
-    if ( this.isOpen ) {
-      $event.stopPropagation();
-    }
-    this.setActiveItemFirst();
   }
 
   handleFocus() {
@@ -218,34 +299,29 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  selectItem( $event, index: number ) {
-    this.selectedIndex = index;
-    this.selected = $event[ this.keyText ];
-    this.handleKeyModelValue( $event );
+  selectItem( value, item: TlItemSelectedDirective ) {
+    this.setDescriptionValue(value[ this.keyText ]);
+    this.setSelected( item );
+    this.handleKeyModelValue( value );
+    this.input.nativeElement.focus();
+    this.select.emit( value );
     this.isOpen = false;
-    this.select.emit( $event );
     this.change.detectChanges();
   }
 
-  setElementScrollTo() {
-    if ( this.cdkVirtualScroll ) {
-      this.cdkVirtualScroll.scrollToIndex( this.lastIndexScrolled );
+  private setUpData( value? ) {
+    if ( !this.dataSource ) {
+      this.dataSource = new DataSourceList( {
+        dataSource: value,
+        pageSize: this.rowsPage,
+        totalLength: this.totalLength,
+        lazyMode: this.lazyMode
+      } );
+      this.dataSource.addPage( 0 );
     }
-  }
-
-  setActiveItemFirst() {
-    setTimeout( () => {
-      this.keyManager.setFirstItemActive();
-    }, 100 );
-  }
-
-  private setUpData() {
-    this.dataSource = new DataSourceAutocomplete( {
-      dataSource: this.data,
-      pageSize: this.pageSize,
-      totalLength: this.totalLength,
-      lazyMode: this.lazyMode
-    } );
+    this.listenLoadData();
+    this.setNotFound( false );
+    this.dataSource.setData( value );
   }
 
   private listenLoadData() {
@@ -262,21 +338,24 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.change.detectChanges();
   }
 
-  scrollIndex( index: number ) {
-    this.filtering = false;
-    if ( this.lastIndexScrolled !== 0 && index === 0 ) {
-      this.setElementScrollTo();
-      return;
-    }
-    this.lastIndexScrolled = index;
-  }
-
   setIsOpen( value: boolean ) {
     this.isOpen = value;
+    this.handleInitList();
   }
 
   toggleIsOpen() {
     this.isOpen = !this.isOpen;
+    this.handleInitList();
+    this.input.nativeElement.focus();
+  }
+
+  private handleInitList() {
+    if ( this.isOpen ) {
+      setTimeout( () => {
+        this.setContainer();
+        this.setSelected( this.listItems.toArray()[ 0 ] );
+      } );
+    }
   }
 
   getItemDescription( item ) {
@@ -284,12 +363,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       return undefined;
     }
     return item[ this.keyText ];
-  }
-
-  private setFocus() {
-    setTimeout( () => {
-      this.input.nativeElement.focus();
-    }, 100 );
   }
 
   private getFilters( term: string ) {
@@ -305,24 +378,19 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   onFilter( $event ) {
     this.setScrollVirtual();
     this.setFiltering( true );
-    setTimeout( () => {
-      if ( this.lazyMode ) {
-        this.filter.emit( this.getFilters( $event ) );
-        return;
-      }
-      if ( $event.length === 0 ) {
-        this.setFiltering( false );
-        this.setUpFilterData( $event );
-        return;
-      }
-    }, 100 );
-    this.setUpFilterData( $event );
-    if ( !this.lazyMode ) {
-      this.dataSource.dataStream.next( $event );
+    if ( this.lazyMode ) {
+      this.filter.emit( this.getFilters( $event ) );
+      return;
     }
+    if ( $event ) {
+      this.setUpData( $event );
+      return;
+    }
+    this.dataSource.dataStream.next( [] );
+    this.setNotFound( true );
   }
 
-  private setFiltering( value: boolean ) {
+  setFiltering( value: boolean ) {
     this.filtering = value;
   }
 
@@ -330,70 +398,20 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.nothingFound = value;
   }
 
-  private setUpFilterData( data ) {
-    this.setNotFound( data.length === 0 );
-    this.dataSource = new DataSourceAutocomplete( {
-      dataSource: data,
-      lazyMode: this.lazyMode,
-      totalLength: this.totalLength,
-      pageSize: this.pageSize
-    } );
-  }
-
-  hasModel() {
-    return this.model.value;
-  }
-
-  isModelInitialized() {
-    return this.modelInitialized;
-  }
-
-  isKeyArrowUp( $event ) {
-    return $event.keyCode !== KeyEvent.ARROWUP;
-  }
-
-  isKeyArrowDown( $event ) {
-    return $event.keyCode !== KeyEvent.ARROWDOWN;
-  }
-
-  isKeyEnter( $event ) {
-    return $event.keyCode === KeyEvent.ENTER;
-  }
-
-  isLazy() {
-    return this.lazyMode;
-  }
-
-  ngOnChanges( changes ) {
-    if ( changes[ 'data' ] && this.hasModel() && !this.isModelInitialized() && this.isLazy() ) {
-      this.selected = changes[ 'data' ].currentValue[ 0 ][ this.keyText ];
-      this.modelInitialized = true;
-    }
-    if ( changes[ 'totalLength' ] ) {
-      if ( !changes[ 'totalLength' ].firstChange ) {
-        this.setUpData();
-        this.dataSource.setData( this.data );
-        this.dataSource.addPage( 0 );
-        this.setNotFound( this.data.length === 0 );
-        this.listenLoadData();
-        return;
-      }
-    }
-    if ( changes[ 'data' ].firstChange ) {
-      this.setUpData();
-      this.listenLoadData();
+  ngOnChanges( { data, totalLength }: any ) {
+    if ( data && !data[ 'firstChange' ] && this.lazyMode) {
+      this.setUpData( data[ 'currentValue' ] );
       return;
+    }
+    if (data && data['currentValue']) {
+      this.setUpData( data[ 'currentValue' ] );
+    }
+    if ( totalLength && !totalLength['firstChange']) {
+      this.dataSource.setArray(totalLength['currentValue']);
     }
     if ( this.filtering ) {
-      this.setUpFilterData( changes[ 'data' ].currentValue );
-      this.dataSource.setData( changes[ 'data' ].currentValue );
+      this.setUpData( data[ 'currentValue' ] );
       this.dataSource.addPage( 0 );
-      this.listenLoadData();
-      return;
-    }
-    if ( this.dataSource ) {
-      this.dataSource.setData( changes[ 'data' ].currentValue );
-      this.handleModelCached();
       this.listenLoadData();
     }
   }

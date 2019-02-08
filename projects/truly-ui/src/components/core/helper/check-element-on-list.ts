@@ -22,17 +22,22 @@
  SOFTWARE.
  */
  export function isVisibleInList( element: HTMLElement, container: HTMLElement, itemHeight: number ) {
-   const itemsByScroll = Math.floor(container.scrollTop / itemHeight);
+   const itemsByScroll = Math.round(container.scrollTop / itemHeight);
    const containerHeight = container.offsetHeight;
 
    let itemTop;
    if ( itemsByScroll > 0 ) {
-     itemTop = document.querySelectorAll( `[index="${itemsByScroll}"]` )[ 0 ];
+     itemTop = container.querySelectorAll( `[index="${itemsByScroll}"]` )[ 0 ];
    }
 
    const offsetItem = itemsByScroll > 0 ? itemTop.offsetTop : 0;
 
-   const elemTop = ((element.offsetTop - offsetItem) - (container.clientTop - 1));
+   const elemTop = element.offsetTop - offsetItem;
    const elemBottom = elemTop + element.offsetHeight;
+
+   if (elemTop < 0 || elemBottom < 0) {
+     return false;
+   }
+
    return (elemTop >= 0 && elemBottom <= containerHeight);
  }

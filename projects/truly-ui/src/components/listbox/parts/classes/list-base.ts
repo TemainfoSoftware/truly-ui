@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { TlItemSelectedDirective } from '../directives/item-selected.directive';
+import { TlItemSelectedDirective } from '../../../core/directives/itemSelected/item-selected.directive';
 
 export class ListBase {
   private _scrollTop = 0;

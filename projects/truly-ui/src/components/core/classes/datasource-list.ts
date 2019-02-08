@@ -49,7 +49,7 @@ export class DataSourceList extends DataSource<string | undefined> {
     super();
     this.setProprieties(config);
     this.cachedData = this.config.dataSource;
-    this.arrayTotal = Array.from<string>( { length: this.totalLength } );
+    this.setArray();
     this.dataStream = new BehaviorSubject<(any | undefined)[]>( this.arrayTotal );
   }
 
@@ -70,6 +70,10 @@ export class DataSourceList extends DataSource<string | undefined> {
 
   addPage(page: number) {
     this.fetchedPages.add( page );
+  }
+
+  public setArray(length?) {
+    this.arrayTotal = Array.from<string>( { length: length || this.totalLength } );
   }
 
   private setProprieties(config) {

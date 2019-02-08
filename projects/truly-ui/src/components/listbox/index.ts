@@ -8,7 +8,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { TlListBoxTemplate } from './parts/components/listbox-template';
 import { FilterContainerModule } from '../core/components/filter/filter-container.module';
 import { BlockUIModule } from '../blockui/index';
-import { TlItemSelectedDirective } from './parts/directives/item-selected.directive';
+import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
 
 @NgModule({
   imports: [
@@ -17,12 +17,12 @@ import { TlItemSelectedDirective } from './parts/directives/item-selected.direct
     ScrollingModule,
     A11yModule,
     BlockUIModule,
-    FilterContainerModule
+    FilterContainerModule,
+    ItemSelectedModule
   ],
   declarations: [
     TlListBox,
     TlListBoxTemplate,
-    TlItemSelectedDirective,
   ],
   exports: [
     TlListBox

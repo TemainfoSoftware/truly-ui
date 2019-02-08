@@ -1,3 +1,7 @@
+.ui-listbox-wrapper {
+  position: relative;
+}
+
 .ui-list-viewport {
   overflow-y: scroll;
   scroll-snap-type: y mandatory;

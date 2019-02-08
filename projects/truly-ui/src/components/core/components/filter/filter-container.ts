@@ -75,6 +75,9 @@ export class TlFilterContainer implements AfterContentInit, OnDestroy {
     if ( this.lazyMode ) {
       return searchTerm;
     }
+    if (!this.searchBy) {
+      throw Error('Property [searchBy] is null, declare a key to search on list');
+    }
     const filtered = [];
     this.source.forEach( ( value ) => {
       if ( String( value[ this.searchBy ].toLowerCase() ).indexOf( String( searchTerm.toLowerCase().trim() ) ) > -1 ) {

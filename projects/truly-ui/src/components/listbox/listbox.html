@@ -1,32 +1,32 @@
-<cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
-                             [style.height]="height"
-                             [tlBlockui]="nothingToShow"
-                             [blockuiConfig]="{ message: nothingToShowMessage }"
-                             (scroll)="onScroll()"
-                             (wheel)="onWheel()">
-  <tl-filter-container [searchTerm]="searchControl?.value"
-                       [debounceTime]="debounceTime"
-                       [source]="data"
-                       [searchBy]="searchBy"
-                       (filter)="onFilter($event)">
-    <div itemSelected #select="selectItem"
-         [ngStyle]="{ height: rowHeight + 'px' }"
-         [indexSelected]="i"
-         [style.padding]="!template ? '0 10px' : '0'"
-         [attr.index]="i"
-         *cdkVirtualFor="let item of dataSource; let i = index"
-         (click)="setSelected(select); onClickItem(item)"
-         class="ui-list-viewport-item">
-      <div *ngIf="!template">
-        {{ item[keyText] }}
+<div class="ui-listbox-wrapper" [tlBlockui]="loading || nothingFound" [blockuiConfig]="{ message: getMessage(), spin: true, icon: loading ? 'fas fa-circle-notch' : null, color: '#ccc' }">
+  <cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
+                               [style.height]="height"
+                               (scroll)="onScroll()"
+                               (wheel)="onWheel()">
+    <tl-filter-container [searchTerm]="searchControl?.value"
+                         [debounceTime]="debounceTime"
+                         [source]="data"
+                         [searchBy]="searchBy"
+                         (filter)="onFilter($event)">
+      <div itemSelected #select="selectItem"
+           [ngStyle]="{ height: rowHeight + 'px' }"
+           [indexSelected]="i"
+           [style.padding]="!template ? '0 10px' : '0'"
+           [attr.index]="i"
+           *cdkVirtualFor="let item of dataSource; let i = index"
+           (click)="setSelected(select); onClickItem(item)"
+           class="ui-list-viewport-item">
+        <div *ngIf="!template">
+          {{ item[keyText] }}
+        </div>
+        <tl-listbox-template
+          [style.width]="'100%'"
+          *ngIf="template"
+          [template]="template"
+          [item]="item"
+          [index]="i">
+        </tl-listbox-template>
       </div>
-      <tl-listbox-template
-        [style.width]="'100%'"
-        *ngIf="template"
-        [template]="template"
-        [item]="item"
-        [index]="i">
-      </tl-listbox-template>
-    </div>
-  </tl-filter-container>
-</cdk-virtual-scroll-viewport>
+    </tl-filter-container>
+  </cdk-virtual-scroll-viewport>
+</div>

@@ -22,7 +22,7 @@
 
 import {
   AfterViewInit, Component, Output, Input, QueryList, ViewChildren, ViewChild,
-  TemplateRef, Renderer2, EventEmitter, OnDestroy
+  TemplateRef, Renderer2, EventEmitter, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -41,12 +41,12 @@ import { TlItemSelectedDirective } from '../core/directives/itemSelected/item-se
   templateUrl: './listbox.html',
   styleUrls: [ './listbox.scss' ],
 } )
-export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
+export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input('data')
   set data( value ) {
     this._data = value;
-    this.setUpData();
+    this.setUpData( value );
   }
 
   get data() {
@@ -73,15 +73,17 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
 
   @Input() color = 'basic';
 
+  @Input() loading = true;
+
   @Input() searchControl: FormControl;
 
   @Input() height = '200px';
 
   @Input() debounceTime = 200;
 
-  @Input() searchBy = 'description';
+  @Input() searchBy = null;
 
-  @Input() nothingToShowMessage = this.i18nService.getLocale().Listbox.notFoundText;
+  @Input() nothingFoundMessage = this.i18nService.getLocale().Listbox.notFoundText;
 
   @Input() totalLength = 100;
 
@@ -103,7 +105,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
 
   public dataSource: DataSourceList;
 
-  public nothingToShow = true;
+  public nothingFound = true;
 
   constructor(private renderer: Renderer2, private i18nService: I18nService) {
     super();
@@ -175,14 +177,27 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
   }
 
   private setUpData(value?) {
-    this.dataSource = new DataSourceList( {
-      dataSource: value || this.data,
-      pageSize: this.rowsPage,
-      totalLength: this.totalLength,
-      lazyMode: this.lazyMode
-    } );
-    this.nothingToShow = false;
-    this.dataSource.dataStream.next( value || this.data );
+    if (value.length > 0) {
+      this.dataSource = new DataSourceList( {
+        dataSource: value || this.data,
+        pageSize: this.rowsPage,
+        totalLength: this.totalLength,
+        lazyMode: this.lazyMode
+      } );
+      this.loading = false;
+      this.nothingFound = false;
+      this.dataSource.dataStream.next( value || this.data );
+    } else {
+      this.loading = false;
+      this.nothingFound = true;
+    }
+  }
+
+  getMessage() {
+    if (this.nothingFound) {
+      return this.nothingFoundMessage;
+    }
+    return null;
   }
 
   onScroll() {
@@ -201,11 +216,11 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
     if ($event) {
       this.setScrollVirtual();
       this.setUpData( $event );
-      this.nothingToShow = false;
       return;
     }
+    this.nothingFound = true;
+    this.loading = false;
     this.dataSource.dataStream.next( [] );
-    this.nothingToShow = true;
   }
 
   onWheel() {
@@ -289,6 +304,13 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy {
 
   private isScrollDown() {
     return this.scrollTop > this.lastScrollTop;
+  }
+
+  ngOnChanges({ loading }: SimpleChanges) {
+    if (loading && loading['currentValue']) {
+      this.loading = true;
+      this.nothingFound = false;
+    }
   }
 
   ngOnDestroy() {

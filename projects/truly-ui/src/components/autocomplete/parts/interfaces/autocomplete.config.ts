@@ -8,6 +8,7 @@ export interface AutoCompleteConfig {
   withBorder?: string;
   labelPlacement?: string;
   identifier?: string;
+  modelMode?: string;
   color?: string;
 }
 

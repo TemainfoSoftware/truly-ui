@@ -31,9 +31,7 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { ListOptionDirective } from '../misc/listoption.directive';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { KeyEvent } from '../core/enums/key-events';
 import { I18nService } from '../i18n/i18n.service';
 import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
 import { DataSourceList } from '../core/classes/datasource-list';
@@ -68,7 +66,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() keyText = '';
 
-  @Input() keyValue = '';
+  @Input() keyValue = null;
 
   @Input() openFocus = false;
 
@@ -128,7 +126,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public filtering = false;
 
-  private activeItem;
+  public modelInitialized = false;
+
+  public activeItem;
 
   private container;
 
@@ -148,7 +148,15 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.keyManager.withWrap();
     this.handleModel();
     this.handleInitList();
+    this.validateKeyValue();
     this.change.detectChanges();
+  }
+
+  private validateKeyValue() {
+    if (!this.isModelModeString() && !this.keyValue && !this.identifier) {
+      throw Error('The AutoComplete should have an [identifier] key property, ' +
+        ' because the property [keyValue] is null and the list is working on [modelMode] \'object\'');
+    }
   }
 
   private handleModel() {
@@ -161,9 +169,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleModelLazy() {
-    if ( this.model.value && this.lazyMode ) {
+    if ( this.model.value && this.lazyMode && !this.modelInitialized) {
       if (!this.isModelModeString()) {
-        this.setDescriptionValue( this.model.value[ this.keyText ] );
+        this.setDescriptionValue(this.model.value[this.keyText]);
+      } else {
+        console.warn('The item provided is was not found, emitting filter');
+        this.filter.emit( this.getFilters( this.model.value ) );
       }
       this.handleKeyModelValue( this.model.value );
     }
@@ -196,6 +207,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleKeyModelValue( value ) {
+    this.modelInitialized = true;
     if ( !this.isModelModeString() && this.keyValue ) {
       this.value = value[ this.keyValue ];
       return;

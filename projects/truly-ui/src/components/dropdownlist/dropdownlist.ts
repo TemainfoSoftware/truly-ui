@@ -72,17 +72,19 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'itemHeight' ) itemHeight = '23px';
 
-  @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
-
-  @Input( 'keyValue' ) keyValue = 'value';
+  @Input( 'keyValue' ) keyValue = null;
 
   @Input( 'maxHeight' ) maxHeight = '150px';
+
+  @Input( 'identifier' ) identifier = null;
 
   @Input( 'preSelected' ) preSelected = '';
 
   @Input( 'width' ) width = '120px';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
+
+  @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
 
   @Input( 'searchOnList' ) searchOnList = false;
 
@@ -162,6 +164,10 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
   }
 
+  private isModelModeString() {
+    return this.modelMode === 'string';
+  }
+
   private handleKeySpace( $event ) {
     this.stopEvent( $event );
     if ( !this.isOpen ) {
@@ -196,18 +202,20 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.typeOfData === 'simple';
   }
 
-  private isKeyValueLengthMoreThanZero() {
-    return this.keyValue.length > 0;
-  }
-
   private listenModelChange() {
     this.model.valueChanges.subscribe( () => {
       this.getModelValue();
     } );
   }
 
-  private handleKeyModelValue( value: object ) {
-    this.value = (this.isKeyValueLengthMoreThanZero()) && (!this.isSimpleData()) ? value[ this.keyValue ] : value;
+  private handleKeyModelValue( itemValue ) {
+    if (this.isSimpleData()) {
+      return this.value = itemValue;
+    }
+    if (!this.keyValue) {
+      return this.value = itemValue;
+    }
+    return this.value = itemValue[this.keyValue];
   }
 
   private getModelValue() {
@@ -217,6 +225,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
           this.handleKeyModelValue( value );
+          return;
         }
       }
     } );
@@ -231,26 +240,40 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  private isModelModeString() {
-    return this.modelMode === 'string';
-  }
-
   private getCompareModel() {
-    return this.isModelModeString() ? this.model.value : this.model.value[ this.keyValue ];
+    if (this.isSimpleData()) {
+      return this.model.value;
+    }
+    if (!this.keyValue) {
+      return this.model.value[this.identifier];
+    }
+    if (this.isModelModeString()) {
+      return this.model.value;
+    }
+    return this.model.value[this.keyValue];
   }
 
   private getCompare( value ) {
-    return this.isSimpleData() ? value : value[ this.keyValue ];
+    if (this.isSimpleData()) {
+      return value;
+    }
+    if (!this.keyValue) {
+      return value[this.identifier];
+    }
+    return value[this.keyValue];
   }
 
   private getDescription( value ) {
-    return this.isSimpleData() ? value : value[ this.keyText ];
+    if (this.isSimpleData()) {
+      return value;
+    }
+    return value[this.keyText];
   }
 
   private handleSelectInLetter( keyInput: string ) {
     const selected = this.selectByFirst( keyInput );
     if ( selected ) {
-      this.selectedDescription = selected.option[ this.keyText ];
+      this.selectedDescription = this.getDescription(selected.option);
       this.optionSelected = { option: selected.option, index: selected.index };
       this.handleKeyModelValue( selected.option );
     }

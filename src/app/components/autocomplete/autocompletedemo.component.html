@@ -13,8 +13,8 @@
               <h6>Normal Usage</h6>
               <form [formGroup]="formGroup">
                 <tl-autocomplete [data]="dataBasic"
-                                 [itemSize]="40"
-                                 [pageSize]="50"
+                                 [rowHeight]="40"
+                                 [rowsPage]="50"
                                  [totalLength]="100"
                                  [keyText]="'firstName'"
                                  [keyValue]="'id'"
@@ -26,8 +26,8 @@
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
   <tl-autocomplete [data]="dataBasic"
-                   [itemSize]="40"
-                   [pageSize]="50"
+                   [rowHeight]="40"
+                   [rowsPage]="50"
                    [totalLength]="length"
                    [keyText]="'firstName'"
                    [keyValue]="'id'"
@@ -42,8 +42,8 @@
               <h6>Lazy Load</h6>
               <form [formGroup]="formGroup">
                 <tl-autocomplete [data]="lazy"
-                                 [itemSize]="40"
-                                 [pageSize]="50"
+                                 [rowHeight]="40"
+                                 [rowsPage]="50"
                                  [totalLength]="length"
                                  [keyText]="'firstName'"
                                  [keyValue]="'id'"
@@ -58,8 +58,8 @@
               <div class="spacer"></div>
               <textarea highlight-js [options]="{}" [lang]="'html'">
   <tl-autocomplete [data]="lazy"
-                   [itemSize]="40"
-                   [pageSize]="50"
+                   [rowHeight]="40"
+                   [rowsPage]="50"
                    [totalLength]="length"
                    [keyText]="'firstName'"
                    [keyValue]="'id'"

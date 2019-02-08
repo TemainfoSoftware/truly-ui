@@ -18,10 +18,10 @@
 }
 
 .ui-list-viewport-item {
+  box-sizing: border-box;
   height: 50px;
   scroll-snap-align: center;
   display: flex;
   align-items: center;
   cursor: pointer;
-
 }

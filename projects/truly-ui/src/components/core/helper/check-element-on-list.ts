@@ -21,16 +21,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+ let itemTop;
+
  export function isVisibleInList( element: HTMLElement, container: HTMLElement, itemHeight: number ) {
    const itemsByScroll = Math.round(container.scrollTop / itemHeight);
    const containerHeight = container.offsetHeight;
 
-   let itemTop;
    if ( itemsByScroll > 0 ) {
-     itemTop = container.querySelectorAll( `[index="${itemsByScroll}"]` )[ 0 ];
+       itemTop = container.querySelectorAll( `[index="${itemsByScroll}"]` )[ 0 ];
    }
 
-   const offsetItem = itemsByScroll > 0 ? itemTop.offsetTop : 0;
+   const offsetItem = itemTop ? itemTop.offsetTop : 0;
 
    const elemTop = element.offsetTop - offsetItem;
    const elemBottom = elemTop + element.offsetHeight;

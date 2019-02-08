@@ -15,7 +15,7 @@
              (keydown.ArrowUp)="handleKeyArrowUp($event)"
              (keydown.ArrowDown)="handleKeyArrowDown($event)"
              (keydown.escape)="$event.stopPropagation(); setIsOpen(false)"
-             (keydown.tab)="handleBlur()"
+             (keyup.tab)="handleBlur()"
              (keydown.enter)="handleBlur()"
              (focus)="handleFocus()"
              (focusout)="focused = false"
@@ -37,29 +37,26 @@
                    [cdkConnectedOverlayOrigin]="trigger"
                    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                    [cdkConnectedOverlayOpen]="isOpen">
-        <div class="clearFix">
-          <cdk-virtual-scroll-viewport *ngIf="isOpen"
-                                       class="ui-scroll-view"
-                                       [itemSize]="rowHeight"
-                                       [style.width]="input.offsetWidth + 'px'"
-                                       [tlBlockui]="nothingFound"
-                                       [blockuiConfig]="{ 'message': nothingFoundMessage }"
-                                       [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
-                                       [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
-            <div [style.height]="rowHeight + 'px'"
-                 [itemSelected]="item"
-                 #select="selectItem"
-                 [indexSelected]="i"
-                 [attr.index]="i"
-                 *cdkVirtualFor="let item of dataSource; let i = index"
-                 (click)="selectItem(item, select)"
-                 class="ui-list-item">
-              <tl-icon class="ui-icon" *ngIf="!getItemDescription(item)" [lib]="'fa'" [animation]="'spin'">spinner
-              </tl-icon>
-              {{ getItemDescription(item) + i || messageLoading }}
-            </div>
-          </cdk-virtual-scroll-viewport>
-        </div>
+        <cdk-virtual-scroll-viewport class="ui-scroll-view"
+                                     [itemSize]="rowHeight"
+                                     [style.width]="input.offsetWidth + 'px'"
+                                     [tlBlockui]="nothingFound"
+                                     [blockuiConfig]="{ 'message': nothingFoundMessage }"
+                                     [class.scrollOpenedAbove]="positionOverlay === 'top' && isOpen"
+                                     [class.scrollOpened]="isOpen && positionOverlay !== 'top'">
+          <div [style.height]="rowHeight + 'px'"
+               [itemSelected]="item"
+               #select="selectItem"
+               [indexSelected]="i"
+               [attr.index]="i"
+               *cdkVirtualFor="let item of dataSource; let i = index"
+               (click)="selectItem(item, select)"
+               class="ui-list-item">
+            <tl-icon class="ui-icon" *ngIf="!getItemDescription(item)" [lib]="'fa'" [animation]="'spin'">spinner
+            </tl-icon>
+            {{ getItemDescription(item) || messageLoading }}
+          </div>
+        </cdk-virtual-scroll-viewport>
       </ng-template>
     </tl-filter-container>
   </div>

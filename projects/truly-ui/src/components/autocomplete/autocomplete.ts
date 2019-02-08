@@ -84,6 +84,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() label = '';
 
+  @Input() identifier = null;
+
   @Input() placeholder = 'Search...';
 
   @Input() modelMode: 'string' | 'object' = 'object';
@@ -126,13 +128,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public filtering = false;
 
-  private lastIndexScrolled = 0;
-
   private activeItem;
 
   private container;
-
-  private identifier;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
@@ -163,22 +161,22 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleModelLazy() {
-    if ( this.model.value ) {
-      if (this.isModelModeString()) {
+    if ( this.model.value && this.lazyMode ) {
+      if (!this.isModelModeString()) {
         this.setDescriptionValue( this.model.value[ this.keyText ] );
       }
       this.handleKeyModelValue( this.model.value );
     }
   }
 
-  private setDescriptionValue(value: string) {
+  private setDescriptionValue( value: string ) {
     this.input.nativeElement.value = value;
   }
 
   private handleModelCached() {
     this.dataSource.getCachedData().forEach( ( value ) => {
       if ( this.model.value ) {
-        if ( String( this.getItemCompare(value) ) === String( this.getCompareModel() ) ) {
+        if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
           this.setDescriptionValue( value[ this.keyText ] );
           this.handleKeyModelValue( value );
         }
@@ -186,16 +184,31 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     } );
   }
 
-  private getItemCompare(value) {
-    return !this.isModelModeString() ? value[this.identifier] : value;
+  private getItemCompare( value ) {
+    if ( !this.keyValue || this.isModelModeString()) {
+      return value[ this.identifier ];
+    }
+    return value[this.keyValue];
   }
 
   private setContainer() {
     this.container = this.cdkVirtualScroll.elementRef.nativeElement;
   }
 
-  private handleKeyModelValue( value: object ) {
-    this.value = this.keyValue ? value[ this.keyValue ] : value;
+  private handleKeyModelValue( value ) {
+    if ( !this.isModelModeString() && this.keyValue ) {
+      this.value = value[ this.keyValue ];
+      return;
+    }
+    if ( this.isModelModeString() && !this.keyValue ) {
+      this.value = value[this.identifier];
+      return;
+    }
+    if ( this.isModelModeString() && this.keyValue ) {
+      this.value = value[this.keyValue];
+      return;
+    }
+    this.value = value;
   }
 
   private setOptions( options: AutoCompleteConfig ) {
@@ -208,7 +221,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private setSelected( item: TlItemSelectedDirective ) {
-    this.keyManager.setActiveItem( item );
+    setTimeout(() => {
+      this.keyManager.setActiveItem( item );
+    });
   }
 
   handleKeyArrowDown( $event ) {
@@ -230,7 +245,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   handleKeyArrowUp( $event ) {
     this.stopEvent( $event );
-    if (this.isIndexSelectedEqualFirst()) {
+    if ( this.isIndexSelectedEqualFirst() ) {
       return;
     }
     this.keyManager.onKeydown( $event );
@@ -282,12 +297,18 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getCompareModel() {
-    return this.isModelModeString() ? this.model.value : this.model.value[ this.identifier ];
+    if (this.keyValue && !this.isModelModeString()) {
+      return this.model.value[this.keyValue];
+    }
+    if (!this.isModelModeString() && !this.keyValue) {
+      return this.model.value[this.identifier];
+    }
+    return this.model.value;
   }
 
   handleBlur() {
     this.setSelected( this.activeItem );
-    this.setDescriptionValue( this.activeItem.itemSelected[this.keyText] );
+    this.setDescriptionValue( this.activeItem.itemSelected[ this.keyText ] );
     this.handleKeyModelValue( this.activeItem.itemSelected );
     this.isOpen = false;
   }
@@ -300,7 +321,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   selectItem( value, item: TlItemSelectedDirective ) {
-    this.setDescriptionValue(value[ this.keyText ]);
+    this.setDescriptionValue( value[ this.keyText ] );
     this.setSelected( item );
     this.handleKeyModelValue( value );
     this.input.nativeElement.focus();
@@ -329,7 +350,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       return;
     }
     this.dataSource.loadMoreData.subscribe( ( data: any ) => {
-      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, term: this.searchControl.value } );
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters(this.searchControl.value) } );
     } );
   }
 
@@ -384,6 +405,8 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
     if ( $event ) {
       this.setUpData( $event );
+      this.dataSource.dataStream.next( $event );
+      this.setSelected(this.listItems.toArray()[0]);
       return;
     }
     this.dataSource.dataStream.next( [] );
@@ -399,19 +422,20 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngOnChanges( { data, totalLength }: any ) {
-    if ( data && !data[ 'firstChange' ] && this.lazyMode) {
+    if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
       this.setUpData( data[ 'currentValue' ] );
       return;
     }
-    if (data && data['currentValue']) {
+    if ( data && data[ 'currentValue' ] ) {
       this.setUpData( data[ 'currentValue' ] );
     }
-    if ( totalLength && !totalLength['firstChange']) {
-      this.dataSource.setArray(totalLength['currentValue']);
+    if ( totalLength && !totalLength[ 'firstChange' ] ) {
+      this.dataSource.setArray( totalLength[ 'currentValue' ] );
     }
     if ( this.filtering ) {
       this.setUpData( data[ 'currentValue' ] );
       this.dataSource.addPage( 0 );
+      this.dataSource.dataStream.next( data[ 'currentValue' ] );
       this.listenLoadData();
     }
   }

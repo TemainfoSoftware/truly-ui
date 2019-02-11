@@ -22,7 +22,7 @@
              (input)="onInput()"
              class="ui-input">
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
-      <div class="ui-selected-wrapper" *ngIf="activeItem && !focused"></div>
+      <div class="ui-selected-wrapper" *ngIf="keyManager.activeItem && !focused"></div>
     </div>
     <tl-filter-container [searchTerm]="searchControl.value"
                          [debounceTime]="debounceTime"

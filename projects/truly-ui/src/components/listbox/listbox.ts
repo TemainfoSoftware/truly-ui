@@ -32,7 +32,7 @@ import {Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {DataSourceList} from '../core/classes/datasource-list';
 import {TlInput} from '../input/input';
-import {I18nService} from '../i18n';
+import {I18nService} from '../i18n/i18n.service';
 import {TlItemSelectedDirective} from '../core/directives/itemSelected/item-selected.directive';
 import {scrollIntoView} from '../core/helper/scrollIntoView';
 

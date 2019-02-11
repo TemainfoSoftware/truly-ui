@@ -31,7 +31,7 @@ import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel} from '@angular/forms';
 import {ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {I18nService} from '../i18n';
+import {I18nService} from '../i18n/i18n.service';
 import {AUTOCOMPLETE_CONFIG, AutoCompleteConfig} from './interfaces/autocomplete.config';
 import {DataSourceList} from '../core/classes/datasource-list';
 import {TlItemSelectedDirective} from '../core/directives/itemSelected/item-selected.directive';

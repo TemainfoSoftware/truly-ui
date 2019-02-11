@@ -24,29 +24,29 @@ import {
   AfterViewInit, Component, Output, Input, QueryList, ViewChildren, ViewChild,
   TemplateRef, Renderer2, EventEmitter, OnDestroy, OnChanges, SimpleChanges
 } from '@angular/core';
-import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { ListBase } from './parts/classes/list-base';
-import { isVisibleInList } from '../core/helper/check-element-on-list';
-import { KeyEvent } from '../core/enums/key-events';
-import { Subscription } from 'rxjs';
-import { FormControl } from '@angular/forms';
-import { DataSourceList } from '../core/classes/datasource-list';
-import { TlInput } from '../input/input';
-import { I18nService } from '../i18n/i18n.service';
-import { TlItemSelectedDirective } from '../core/directives/itemSelected/item-selected.directive';
+import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ListBase} from './classes/list-base';
+import {KeyEvent} from '../core/enums/key-events';
+import {Subscription} from 'rxjs';
+import {FormControl} from '@angular/forms';
+import {DataSourceList} from '../core/classes/datasource-list';
+import {TlInput} from '../input/input';
+import {I18nService} from '../i18n';
+import {TlItemSelectedDirective} from '../core/directives/itemSelected/item-selected.directive';
+import {scrollIntoView} from '../core/helper/scrollIntoView';
 
-@Component( {
+@Component({
   selector: 'tl-listbox',
   templateUrl: './listbox.html',
-  styleUrls: [ './listbox.scss' ],
-} )
+  styleUrls: ['./listbox.scss'],
+})
 export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input('data')
-  set data( value ) {
+  set data(value) {
     this._data = value;
-    this.setUpData( value );
+    this.setUpData(value);
   }
 
   get data() {
@@ -93,9 +93,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
 
-  @ViewChildren( TlItemSelectedDirective ) listItems: QueryList<TlItemSelectedDirective>;
+  @ViewChildren(TlItemSelectedDirective) listItems: QueryList<TlItemSelectedDirective>;
 
   private subscription = new Subscription();
 
@@ -112,7 +112,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   }
 
   ngAfterViewInit() {
-    this.listKeyManager = new ActiveDescendantKeyManager( this.listItems );
+    this.listKeyManager = new ActiveDescendantKeyManager(this.listItems);
+    this.listKeyManager.withTypeAhead();
     setTimeout(() => {
       this.initializeListBox();
       this.handleListeners();
@@ -122,18 +123,13 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   private handleListeners() {
     this.subscription.add(this.renderer.listen(this.getElementTarget(), 'keydown', ($event) => {
       const event = {
-        [KeyEvent.ARROWDOWN] : () => this.handleKeyArrowDown($event),
-        [KeyEvent.ARROWUP] : () => this.handleKeyArrowUp($event)
+        [KeyEvent.ARROWDOWN]: () => this.handleKeyArrowDown($event),
+        [KeyEvent.ARROWUP]: () => this.handleKeyArrowUp($event)
       };
       if (event[$event.keyCode]) {
         event[$event.keyCode]();
       }
     }));
-  }
-
-  private stopEvent($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
   }
 
   private getElementTarget() {
@@ -151,8 +147,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.scrollTop = this.cdkVirtualScroll.elementRef.nativeElement.scrollTop;
   }
 
-  setSelected( item: TlItemSelectedDirective ) {
-    this.listKeyManager.setActiveItem( item );
+  setSelected(item: TlItemSelectedDirective) {
+    this.listKeyManager.setActiveItem(item);
     this.setInputFocus();
   }
 
@@ -178,15 +174,15 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   private setUpData(value?) {
     if (value.length > 0) {
-      this.dataSource = new DataSourceList( {
+      this.dataSource = new DataSourceList({
         dataSource: value || this.data,
         pageSize: this.rowsPage,
         totalLength: this.totalLength,
         lazyMode: this.lazyMode
-      } );
+      });
       this.loading = false;
       this.nothingFound = false;
-      this.dataSource.dataStream.next( value || this.data );
+      this.dataSource.dataStream.next(value || this.data);
     } else {
       this.loading = false;
       this.nothingFound = true;
@@ -212,19 +208,19 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     }
   }
 
-  onFilter( $event ) {
+  onWheel() {
+    this.scrollingByArrows = false;
+  }
+
+  onFilter($event) {
     if ($event) {
       this.setScrollVirtual();
-      this.setUpData( $event );
+      this.setUpData($event);
       return;
     }
     this.nothingFound = true;
     this.loading = false;
-    this.dataSource.dataStream.next( [] );
-  }
-
-  onWheel() {
-    this.scrollingByArrows = false;
+    this.dataSource.dataStream.next([]);
   }
 
   private getItemByIndex(index: number) {
@@ -252,61 +248,25 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.activeItem = this.listKeyManager.activeItem as TlItemSelectedDirective;
   }
 
-  handleKeyArrowUp( $event ) {
-    this.stopEvent($event);
+  handleKeyArrowUp($event) {
     this.scrollingByArrows = true;
-    this.listKeyManager.onKeydown( $event );
+    this.listKeyManager.onKeydown($event);
     this.setActiveItem();
-    if ( !isVisibleInList( this.activeItem.element.nativeElement, this.container, this.rowHeight ) ) {
-      this.decreaseScrollValue(this.rowHeight);
-    }
-    if ( this.isIndexSelectedEqualFirst() && this.isScrollTopGreaterThanZero()) {
-      this.resetScrollValue();
-    }
+    scrollIntoView(this.activeItem.element.nativeElement);
   }
 
-  handleKeyArrowDown( $event ) {
-    this.stopEvent($event);
+  handleKeyArrowDown($event) {
     this.scrollingByArrows = true;
-    if ( this.isIndexSelectedEqualLastItem() ) {
-      return;
-    }
-    this.listKeyManager.onKeydown( $event );
+    this.listKeyManager.onKeydown($event);
     this.setActiveItem();
-    if ( !isVisibleInList( this.activeItem.element.nativeElement, this.container, this.rowHeight ) ) {
-      this.patchScrollValue(this.rowHeight);
-    }
-  }
-
-  private resetScrollValue() {
-    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
-  }
-
-  private decreaseScrollValue( value: number ) {
-    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop -= value;
-  }
-
-  private patchScrollValue( value: number ) {
-    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop += value;
-  }
-
-  private isScrollTopGreaterThanZero() {
-    return this.cdkVirtualScroll.elementRef.nativeElement.scrollTop > 0;
-  }
-
-  private isIndexSelectedEqualFirst() {
-    return this.activeItem.indexSelected === 0;
-  }
-
-  private isIndexSelectedEqualLastItem() {
-    return this.listKeyManager.activeItem['indexSelected'] === this.dataSource.getCachedData().length - 1;
+    scrollIntoView(this.activeItem.element.nativeElement);
   }
 
   private isScrollDown() {
     return this.scrollTop > this.lastScrollTop;
   }
 
-  ngOnChanges({ loading }: SimpleChanges) {
+  ngOnChanges({loading}: SimpleChanges) {
     if (loading && loading['currentValue']) {
       this.loading = true;
       this.nothingFound = false;

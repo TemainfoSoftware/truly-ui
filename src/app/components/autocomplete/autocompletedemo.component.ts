@@ -86,8 +86,9 @@ export class AutoCompleteDemoComponent implements OnInit {
   }
 
   onLazyLoad( event ) {
+    const termo = event['fields']['firstName']['value'];
     setTimeout(() => {
-      if (event.term.length > 0) {
+      if (termo.length > 0) {
         const filter = this.lazyCut.filter((item) => String(item.firstName).toLowerCase().includes(String(event.term).toLowerCase()));
         this.lazy = filter.splice(event.skip, event.limit);
         return;

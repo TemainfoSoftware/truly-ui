@@ -30,7 +30,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InternalsModule } from '../internals/index';
 import { IconsModule } from '../icons/index';
 import { BlockUIModule } from '../blockui/index';
-import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './interfaces/autocomplete.config';
 import { FilterContainerModule } from '../core/components/filter/filter-container.module';
 import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
 import { A11yModule } from '@angular/cdk/a11y';

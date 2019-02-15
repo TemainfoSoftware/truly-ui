@@ -54,7 +54,14 @@ We assume that you have already installed the following packages at least and ar
     $ npm install truly-ui --save
     ```
     
-2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):
+2. Because NPM does not install `peerDependencies`, you should manually install the dependencies:
+    
+        ```bash
+        $ npm install string-format ts-md5 object-path --save
+        $ npm install @types/object-path --save-dev
+        ```
+    
+3. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):
     
     Inside the `angular.json` file add the following paths to the `styles` key
 
@@ -68,7 +75,7 @@ We assume that you have already installed the following packages at least and ar
     ]
     ```
     
-3. Configure CoreModule on your AppModule:
+4. Configure CoreModule on your AppModule:
 
    ```typescript
    import { BrowserModule } from '@angular/platform-browser';

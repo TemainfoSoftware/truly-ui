@@ -26,6 +26,12 @@ $button-font-size: 1em;
   > .split-button-actions tl-icon {
     padding: 0 15px;
   }
+
+  > .ui-button {
+    :hover {
+      cursor: pointer;
+    }
+  }
 }
 
 .icon-arrow {

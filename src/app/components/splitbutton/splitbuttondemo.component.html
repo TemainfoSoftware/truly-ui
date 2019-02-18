@@ -8,14 +8,14 @@
             <app-card>
               <div class="col-md-6">
                 <h6>Basic</h6>
-                <tl-split-button [text]="'Button'">
+                <tl-split-button [text]="'Button'" (buttonClick)="onButtonClick($event)">
                   <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
                 </tl-split-button>
                 <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-split-button [text]="'Button'">
+<tl-split-button [text]="'Button'" (buttonClick)="onButtonClick($event)">
   <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
   <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>

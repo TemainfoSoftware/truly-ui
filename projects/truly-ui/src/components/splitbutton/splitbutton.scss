@@ -28,7 +28,7 @@ $button-font-size: 1em;
   }
 
   > .ui-button {
-    :hover {
+   &:hover {
       cursor: pointer;
     }
   }

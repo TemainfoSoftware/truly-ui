@@ -56,10 +56,10 @@ We assume that you have already installed the following packages at least and ar
     
 2. Because NPM does not install `peerDependencies`, you should manually install the dependencies:
     
-        ```bash
-        $ npm install string-format ts-md5 object-path --save
-        $ npm install @types/object-path --save-dev
-        ```
+    ```bash
+    $ npm install string-format ts-md5 object-path --save
+    $ npm install @types/object-path --save-dev
+    ```
     
 3. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):
     

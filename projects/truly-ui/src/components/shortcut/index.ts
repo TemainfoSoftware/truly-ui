@@ -16,18 +16,17 @@ import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
   exports: [
     ShortcutDirective,
   ],
-  providers: [
-    ShortcutService,
-  ]
 } )
 export class ShortcutModule {
-  static forRoot(config?: ShortcutConfig ): ModuleWithProviders {
+  static forRoot( config?: ShortcutConfig ): ModuleWithProviders {
     return {
       ngModule: ShortcutModule,
-      providers: [{
+      providers: [ {
         provide: SHORTCUT_CONFIG,
         useValue: config,
-      }]
+      },
+        ShortcutService
+      ]
     };
   }
 }

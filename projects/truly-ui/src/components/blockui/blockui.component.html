@@ -1,7 +1,7 @@
 <div class="blockui-wrapper">
   <div id="blockui">
     <div class="blockui-content">
-      <tl-icon [size]="'3em'" [animation]="config.spin ? 'spin' : null">{{ config.icon }}</tl-icon>
+      <tl-icon [size]="'3em'" [color]="config.color" [animation]="config.spin ? 'spin' : null">{{ config.icon }}</tl-icon>
       <span *ngIf="config.message">{{ config.message }}</span>
     </div>
   </div>

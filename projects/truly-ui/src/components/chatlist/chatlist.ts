@@ -58,7 +58,7 @@ export class TlChatList implements AfterViewInit, OnInit {
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
-  @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
+  // @ViewChildren( forwardRef( () => TlListBox ) ) listBoxes: QueryList<TlListBox>;
 
   public filtering = false;
 
@@ -75,19 +75,19 @@ export class TlChatList implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.chatListService.data = this.data;
+/*    this.chatListService.data = this.data;
     this.filterDataStatus( this.chatListService.data );
     this.handleStatusConfig();
     this.handleSearchInput();
-    this.listenInput();
+    this.listenInput();*/
   }
 
   ngAfterViewInit() {
-    this.subscribeStatusChange();
-    this.detectChangesOfLists();
+/*    this.subscribeStatusChange();
+    this.detectChangesOfLists();*/
    }
 
-  private subscribeStatusChange() {
+/*  private subscribeStatusChange() {
     this.chatListService.subjectStatus.subscribe( ( value ) => {
       this.change.detectChanges();
       this.renderListBoxes();
@@ -171,7 +171,7 @@ export class TlChatList implements AfterViewInit, OnInit {
 
   private isNotOffline( value ) {
     return value.status.toLowerCase() !== this.statusConfig[ 'offline' ].toLowerCase();
-  }
+  }*/
 
 }
 

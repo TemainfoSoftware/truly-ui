@@ -1,20 +1,8 @@
-.list-template-demo {
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
+.item-list {
+  list-style: none;
+  margin: 0;
+  border-bottom: 1px solid #eeeeee;
+  img {
+    border-radius: 50%;
+  }
 }
-
-.list-template-demo img {
-  margin: 10px
-}
-
-.list-bagde {
-  float: right;
-  margin: 12px
-}
-
-.selected {
-  background-color: #13BBB6;
-  outline: none;
-  color: #fff;
-}
-

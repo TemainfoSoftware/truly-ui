@@ -20,13 +20,11 @@
  SOFTWARE.
  */
 import {
-  Component, OnDestroy, Input, Output, Optional, Inject, ViewChild, AfterViewInit, OnChanges, Renderer2,
-  ChangeDetectionStrategy, AfterContentInit, EventEmitter, QueryList, ViewChildren,
+  Component, OnDestroy, Input, Output,
+  AfterContentInit, EventEmitter,
 } from '@angular/core';
-import { SearchableHighlightDirective } from './directives/searchable-highlight.directive';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { FilterService } from '../filter.service';
 
 @Component( {
   selector: 'tl-filter-container',
@@ -37,7 +35,9 @@ import { FilterService } from '../filter.service';
 } )
 export class TlFilterContainer implements AfterContentInit, OnDestroy {
 
-  constructor( private filterService: FilterService) {}
+  constructor() {
+  }
+
   @Input( 'searchTerm' )
   set term( searchTerm: string ) {
     this._term = searchTerm || '';
@@ -67,33 +67,27 @@ export class TlFilterContainer implements AfterContentInit, OnDestroy {
       debounceTime( this.debounceTime ),
       distinctUntilChanged( ( oldValue, newValue ) => oldValue === newValue ),
     ).subscribe( ( term: string ) => {
-      const filter = this.search( term );
-      this.filter.emit( filter );
+      this.filter.emit( this.search( term ) );
     } );
   }
 
   search( searchTerm: string ) {
-    if (this.lazyMode) {
+    if ( this.lazyMode ) {
       return searchTerm;
+    }
+    if (!this.searchBy) {
+      throw Error('Property [searchBy] is null, declare a key to search on list');
     }
     const filtered = [];
     this.source.forEach( ( value ) => {
-      if ( String( value[ this.searchBy ].toLowerCase() ).indexOf( String(searchTerm.toLowerCase().trim()) ) > -1 ) {
-        filtered.push(value);
+      if ( String( value[ this.searchBy ].toLowerCase() ).indexOf( String( searchTerm.toLowerCase().trim() ) ) > -1 ) {
+        filtered.push( value );
       }
     } );
-    return filtered;
-  }
-
-  private handleHighlighters( token, searchTerm: string ) {
-    const highlighters = this.filterService.getHighlighters();
-    for (let i = 0; i < highlighters.length; i++) {
-      highlighters[i].highlight( token, searchTerm );
-    }
+    return filtered.length > 0 ? filtered : null;
   }
 
   ngOnDestroy() {
-
   }
 
 }

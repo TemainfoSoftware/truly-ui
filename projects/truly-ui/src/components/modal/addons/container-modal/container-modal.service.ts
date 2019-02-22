@@ -25,13 +25,14 @@ import { Injectable, ViewContainerRef } from '@angular/core';
 @Injectable()
 export class ContainerModalService {
 
-  private view: ViewContainerRef;
+  private _view: ViewContainerRef;
 
-  setView(view: ViewContainerRef) {
-    this.view = view;
+  get view() {
+    return this._view;
   }
 
-  getView(): ViewContainerRef {
-    return this.view;
+  set view(view: ViewContainerRef) {
+    this._view = view;
   }
+
 }

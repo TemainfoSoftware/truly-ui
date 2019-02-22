@@ -21,25 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from '@angular/core';
- @Injectable()
- export class FilterService {
+ import { TlListItem } from '../../overlaylist/list-item/list-item';
 
-   private _highlighters = [];
-
-   constructor() {}
-
-   setHighlighters(item) {
-     this._highlighters.push(item);
-   }
-
-   getHighlighters() {
-     return this._highlighters;
-   }
-
-   removeHighlight(item) {
-     this._highlighters = this._highlighters.filter((value, index, array) => value !== item);
-   }
-
-
+ export interface ListItemInterface {
+   option: TlListItem;
+   index: number;
  }

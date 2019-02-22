@@ -16,7 +16,6 @@
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
          class="ui-dropdown-wrapper">
         <div class="ui-dropdown-icon"
-             (click)="setInputFocus()"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{' disabled ': disabled}">
           <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
@@ -31,8 +30,9 @@
     <tl-overlay-list
       @overlay
       (selectOption)="onSelectOption($event)"
-      (search)="handleSearch($event)"
+      (search)="onSearch($event)"
       (defaultOption)="onDefaultOption()"
+      (findByLetter)="onFindByLetter($event)"
       [customInput]="wrapper"
       [typeOfData]="typeOfData"
       [defaultOptionText]="placeholder"

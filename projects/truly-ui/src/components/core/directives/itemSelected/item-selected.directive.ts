@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,20 +19,33 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+import { Directive, ElementRef, HostBinding, Input } from '@angular/core';
+import { Highlightable } from '@angular/cdk/a11y';
 
-import { Injectable } from '@angular/core';
+@Directive( {
+  selector: '[itemSelected]',
+  exportAs: 'selectItem'
+} )
+export class TlItemSelectedDirective implements Highlightable {
 
-@Injectable()
-export class ListBoxDataSourceService {
+  public selected = false;
 
-    public datasource: any = [];
+  @Input() indexSelected = 0;
 
-    constructor() {}
+  @Input() itemSelected;
 
-    updateDataSource(data): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.datasource = data;
-            resolve();
-        });
-    }
+  @HostBinding( 'class.selected') get isSelected() {
+    return this.selected;
+  }
+
+  constructor( public element: ElementRef ) {}
+
+  setActiveStyles(): void {
+    this.selected = true;
+  }
+
+  setInactiveStyles(): void {
+    this.selected = false;
+  }
+
 }

@@ -28,11 +28,7 @@ import { KeyEvent } from '../core/enums/key-events';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
-
-export interface ListItemMeta {
-  option?: TlListItem;
-  index?: number;
-}
+import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 
 @Component( {
   selector: 'tl-overlay-list',
@@ -73,11 +69,13 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'hasDefaultOption' ) hasDefaultOption = false;
 
-  @Output() selectOption: EventEmitter<ListItemMeta> = new EventEmitter();
+  @Output() selectOption: EventEmitter<ListItemInterface> = new EventEmitter();
 
   @Output() defaultOption: EventEmitter<any> = new EventEmitter();
 
   @Output() search: EventEmitter<any> = new EventEmitter();
+
+  @Output() findByLetter: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'list' ) list: ElementRef;
 
@@ -144,15 +142,23 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   handleModelOption() {
-    if ( this.inputModelIndex ) {
+    if ( this.inputModelIndex && this.items ) {
       this.keyManager.setActiveItem( this.inputModelIndex );
     }
+  }
+
+  handleSearchByLetter($event) {
+    this.findByLetter.emit($event.key);
   }
 
   handleClickOption( index: number, $event ) {
     this.stopEvent($event);
     this.keyManager.setActiveItem( index );
     this.emitSelectOption();
+  }
+
+  defaultOptionClick() {
+    this.defaultOption.emit();
   }
 
   stopEvent($event) {
@@ -165,7 +171,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   emitSelectOption() {
-    this.selectOption.emit( <ListItemMeta>{ option: this.keyManager.activeItem, index: this.keyManager.activeItemIndex } );
+    this.selectOption.emit( <ListItemInterface>{
+      option: this.keyManager.activeItem,
+      index: this.keyManager.activeItemIndex
+    });
   }
 
   keydownSearch( $event ) {
@@ -181,6 +190,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.handleActiveItem();
     if (changes['datasource']) {
       this.setNotFound();
+    }
+    if (changes['inputModelIndex']) {
+      this.handleModelOption();
     }
   }
 }

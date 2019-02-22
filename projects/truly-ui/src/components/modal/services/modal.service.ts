@@ -76,7 +76,7 @@ export class ModalService implements OnDestroy {
   constructor( private containerModal: ContainerModalService ) {}
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
-    this.view = this.containerModal.getView();
+    this.view = this.containerModal.view;
     return new Promise( ( resolve ) => {
       this.setComponentModal( component, factoryResolver, null, null, mdOptions );
       this.handleCallbackModal( resolve );
@@ -85,7 +85,7 @@ export class ModalService implements OnDestroy {
 
   createModal( component: Type<any>, factoryOrConfig: ComponentFactoryResolver,
                identifier: string = '', parentElement: ElementRef = null, mdOptions?: ModalOptions ) {
-    this.view = this.containerModal.getView();
+    this.view = this.containerModal.view;
     return new Promise( ( resolve ) => {
       this.setComponentModal( component, factoryOrConfig, identifier, parentElement, mdOptions );
       this.handleCallbackModal( resolve );
@@ -93,7 +93,7 @@ export class ModalService implements OnDestroy {
   }
 
   createSmartFormModal( component: Type<any>, formConfig: ModalFormConfig, mdOptions?: ModalOptions ) {
-    this.view = this.containerModal.getView();
+    this.view = this.containerModal.view;
     this.modalConfiguration = Object.assign( new SmartFormConfiguration(), formConfig );
     return new Promise( ( resolve ) => {
       this.setComponentModal( component, this.modalConfiguration, null, null, mdOptions );
@@ -238,6 +238,12 @@ export class ModalService implements OnDestroy {
     }
   }
 
+  minimizeAll() {
+    this.componentList.forEach((item: ModalInstance) => {
+      this.minimize(item.modal);
+    });
+  }
+
   private removeOfView( modal ) {
     this.view.remove( this.view.indexOf( modal ) );
     this.removeBackdrop();
@@ -290,7 +296,7 @@ export class ModalService implements OnDestroy {
   }
 
   private createBackdrop( backdrop: Type<any>, factoryResolver: ComponentFactoryResolver ) {
-    this.view = this.containerModal.getView();
+    this.view = this.containerModal.view;
     const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
     this.backdrop = this.view.createComponent( backdropFactory );
     (<TlBackdrop>this.backdrop.instance).setBackdropOptions( { 'zIndex': 1 } );

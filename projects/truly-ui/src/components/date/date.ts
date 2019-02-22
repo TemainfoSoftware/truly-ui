@@ -93,6 +93,9 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   handleModelChangeInit() {
     if ( this.model ) {
       this.model.valueChanges.subscribe( ( value ) => {
+        if (!value) {
+          return ;
+        }
         if (this.isoDate && value.length > 0) {
           const date = new Date( value );
           setTimeout( () => {

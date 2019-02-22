@@ -30,6 +30,6 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
   ],
   exports: [
     ListBoxDemoComponent
-  ]
+  ],
 })
 export class ListBoxDemoModule {}

@@ -20,4 +20,8 @@ export class SplitButtonDemoComponent {
   callBackDemo($event) {
     console.log($event);
   }
+
+  onButtonClick( event ) {
+    console.log( event );
+  }
 }

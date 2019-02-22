@@ -25,12 +25,13 @@ import {
   AfterContentInit,
   ContentChildren,
   QueryList,
-  ChangeDetectorRef
+  ChangeDetectorRef, Output, EventEmitter
 } from '@angular/core';
 
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { TlSplitButtonAction } from './splitbutton-action';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { EventListener } from '../../../../../node_modules/@angular/core/src/debug/debug_node';
 
 @Component( {
   selector: 'tl-split-button',
@@ -49,6 +50,8 @@ export class TlSplitButton implements AfterContentInit {
   @Input() disabled: boolean = null;
 
   @Input() color = 'basic';
+
+  @Output() buttonClick: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren( TlSplitButtonAction ) actions: QueryList<TlSplitButtonAction>;
 

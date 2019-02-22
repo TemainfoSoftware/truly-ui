@@ -25,7 +25,13 @@
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
   $ npm install truly-ui --save
   </textarea>
-            <span class="description">2. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
+            <span class="description">2. Because NPM does not install <code>peerDependencies</code>, you should manually install the dependencies:</span>
+            <div class="code-area">
+         <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
+  $ npm install string-format ts-md5 object-path --save
+  $ npm install @types/object-path --save-dev
+  </textarea>
+            <span class="description">3. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
             <p>Inside the <code>angular.json</code> file add the following paths to the <code>styles</code> key</p>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 "styles": [
@@ -36,7 +42,7 @@
   "node_modules/truly-ui/css/icons/animations.scss"
 ]
       </textarea>
-            <span class="description">3. Configure CoreModule on your <code>AppModule</code>:</span>
+            <span class="description">4. Configure CoreModule on your <code>AppModule</code>:</span>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
       import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -104,6 +110,7 @@ export class AppModule { }
     </tl-input>
     </textarea>
           </div>
+        </div>
         </div>
       </app-card>
     </app-showcase-card>

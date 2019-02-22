@@ -1,6 +1,4 @@
-
-
- /*
+/*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -21,9 +19,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- export interface DataSourceInterface {
-   dataSource: Array<any>;
-   totalLength: number;
-   pageSize: number;
-   lazyMode: boolean;
- }
+export enum MultiSelectErrorMessages {
+  NOTSIMPLE_AND_NOTKEYVALUE = 'You must pass the [keyValue] property when not using an ArrayString as DataSource',
+  NOTDETAIL_AND_WITHDETAILTAG = 'You have to declare the [detail] property',
+  DATAUNDEFINED = 'The property [data] and property [query] are Required when using a complex array object Example :' +
+    ' <tl-multiselect [data]=\'source\' [query]=\'name\''
+}

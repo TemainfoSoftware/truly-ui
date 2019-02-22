@@ -24,7 +24,7 @@ export const dataProperties = [
     name: 'label',
     type: 'string',
     default: 'null',
-    description: 'The text which will display front of switch',
+    description: 'The text which will display front of switch.',
     options: 'any text'
   },
   {
@@ -41,4 +41,11 @@ export const dataProperties = [
     description: 'Changes the default color of the button.',
     options: 'basic | primary | success | information | warning | danger | light | dark'
   },
-  ];
+  {
+    name: 'labelSize',
+    type: 'string',
+    default: '100px',
+    description: 'Width of label text.',
+    options: 'px | % | em'
+  },
+];

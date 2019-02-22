@@ -1,69 +1,63 @@
 @import "../core/styles/theming/theming";
 
-@mixin tl-listbox-theme($theme) {
+@mixin _tl-listbox-theme-schema( $theme, $action ) {
 
-  $basic:   map-deep-get($theme, 'basic');
+  $basic: map-deep-get($theme, 'basic');
   $primary: map-deep-get($theme, 'primary');
 
-  .list-box-container {
+  border: 1px solid map-deep-get($basic, "default", "border");
+  background: rgba( map-deep-get($basic, "lighter", "background"), 0.5);
+
+  &::-webkit-scrollbar {
     background: map-deep-get($basic, "lighter", "background");
-    border: 1px solid  map-deep-get($basic, "default", "border");
-    border-radius: 3px;
+  }
 
-    &::-webkit-scrollbar{
-      background:  map-deep-get($basic, "lighter", "background");
-    }
+  &::-webkit-scrollbar-corner {
+    background: map-deep-get($basic, "lighter", "background");
+  }
 
-    &::-webkit-scrollbar-corner{
-      background: map-deep-get($primary, "default", "foreground");
-    }
+  &::-webkit-scrollbar-track {
+    background: map-deep-get($basic, "default", "border");
+  }
 
-    &::-webkit-scrollbar-track{
-      background: map-deep-get($basic, "default", "background");
-      border-left: 1px solid map-deep-get($basic, "default", "border");
-    }
+  &::-webkit-scrollbar-thumb {
+    background:  map-deep-get($primary, "default", "background");
+  }
 
-    &::-webkit-scrollbar-thumb{
+  .ui-list-viewport-item {
+    &.selected {
       background: map-deep-get($primary, "default", "background");
-      border-radius: 3px;
+      color: white !important;
     }
   }
+}
 
-  .listbox-wrapper{
-    > .showmore {
-      background-color: map-deep-get($primary, "default", "background");
+@mixin tl-listbox-theme( $theme ) {
+
+  .ui-list-viewport {
+
+    &.basic {
+      @include _tl-listbox-theme-schema($theme, 'basic')
     }
 
-    > .showmore i {
-      color: map-deep-get($primary, "default", "foreground");
+    &.primary {
+      @include _tl-listbox-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-listbox-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-listbox-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-listbox-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-listbox-theme-schema($theme, 'information')
     }
   }
-
-  .item {
-    border-bottom: 1px solid map-deep-get($basic, "default", "border");
-    color: map-deep-get($basic, "default", "foreground");
-  }
-
-  .item-selected-listbox {
-    background-color: map-deep-get($primary, "default", "background") !important;
-    color: map-deep-get($primary, "default", "foreground") !important;
-  }
-
-  .item.stripped:nth-of-type(odd){
-    background: map-deep-get($basic, "default", "background");
-  }
-
-  .item.stripped:nth-of-type(even){
-    background: map-deep-get($basic, "lighter", "background");
-  }
-
-  .nothingToShow {
-    color: map-deep-get($basic, "default", "foreground");
-  }
-
-  .list li:focus {
-    background-color: map-deep-get($primary, "default", "background");
-    color: map-deep-get($primary, "default", "foreground");
-  }
-
 }

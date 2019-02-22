@@ -74,7 +74,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() maximizeShortcut = '';
 
-  @Input() parentElement;
+  @Input() parentElement = null;
 
   @ViewChild( 'headerBox' ) headerBox: ElementRef;
 
@@ -160,9 +160,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   listenSidebarChange() {
-    this.subscription.add(this.sidebarService.sidebarChange.subscribe( () => {
+    this.subscription.add(this.sidebarService.changes.subscribe(() => {
       this.handleChangeSidebarWhenMaximized();
-    } ));
+    }));
   }
 
   handleChangeSidebarWhenMaximized() {
@@ -180,6 +180,10 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   handleInitialPositionModal() {
+    if (this.parentElement) {
+      this.setModalCenterParent();
+      return;
+    }
     this.setModalCenterWindow();
   }
 
@@ -243,11 +247,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
       this.setMousePressY( $event.clientY );
       this.moving = true;
     }
-    this.setActiveModal();
-  }
-
-  setActiveModal() {
-    // this.serviceControl.setActiveModal(this.componentRef);
   }
 
   validateProperty() {
@@ -339,7 +338,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   setParentElement(parentElement: HTMLElement) {
-    if (this.parentElement) {
+    if (!this.parentElement) {
       this.parentElement = parentElement;
     }
   }
@@ -505,7 +504,7 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   }
 
   getBoundingContent() {
-    this.parent = this.containerService.getView().element.nativeElement;
+    this.parent = !this.parentElement ? this.containerService.view.element.nativeElement : this.parentElement;
     this.offsetLeftContent = this.parent.getBoundingClientRect().left;
     this.offsetTopContent = this.parent.getBoundingClientRect().top;
   }

@@ -5,9 +5,10 @@
                  *ngIf="column?.showFilterOptions && column?.filterOptions.length"
                  [ngClass]="{'-without-dropdown': !column?.showFilterOptions}">
 
+
               <tl-dropdown-icon
                 [data]="column?.filterOptions"
-                [widthItems]="'175px'"
+                [widthItems]="'185px'"
                 [heightItems]="'25px'"
                 [keyIcon]="'icon'"
                 [keyText]="'description'"
@@ -21,6 +22,7 @@
             <div  class="ui-input">
                 <tl-input *ngIf="column?.showFilter"
                           [clearButton]="true"
+                          [height]="'23px'"
                           [ngModel]="filters.value[column.field]"
                           (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
                           [placeholder]="filterPlaceholder"

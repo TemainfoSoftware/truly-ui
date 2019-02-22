@@ -1,6 +1,4 @@
-
-
- /*
+/*
  MIT License
 
  Copyright (c) 2017 Temainfo Sistemas
@@ -22,17 +20,24 @@
  SOFTWARE.
  */
 import { Injectable } from '@angular/core';
- import { Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class SidebarService {
 
-  public sidebarChange: Subject<string> = new Subject();
+  private change;
+
+  private transitionTime = 200;
+
+  public changes = new Subject();
 
   constructor() {}
 
-  setChange(value) {
-    this.sidebarChange.next(value);
+  setChange( value ) {
+    this.change = value;
+    setTimeout(() => {
+      this.changes.next(this.change);
+    }, this.transitionTime);
   }
 
 }

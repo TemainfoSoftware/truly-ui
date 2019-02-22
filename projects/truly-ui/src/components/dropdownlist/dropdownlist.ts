@@ -37,8 +37,9 @@ import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
-import { ListItemMeta } from '../overlaylist/overlay-list';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
+import { ListItemInterface } from './interfaces/list-item';
+import { TlListItem } from '../overlaylist/list-item/list-item';
 
 @Component( {
   selector: 'tl-dropdown-list',
@@ -71,15 +72,19 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'itemHeight' ) itemHeight = '23px';
 
-  @Input( 'keyValue' ) keyValue = 'value';
+  @Input( 'keyValue' ) keyValue = null;
 
   @Input( 'maxHeight' ) maxHeight = '150px';
+
+  @Input( 'identifier' ) identifier = null;
 
   @Input( 'preSelected' ) preSelected = '';
 
   @Input( 'width' ) width = '120px';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
+
+  @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
 
   @Input( 'searchOnList' ) searchOnList = false;
 
@@ -115,30 +120,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   ngOnInit() {
     this.listenModelChange();
     this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
-      this.handleSearch( searchTextValue );
+      this.onSearch( searchTextValue );
     } );
   }
 
-  initializeComponent() {
-    this.setUpComponent();
-    this.validateData();
-    this.getModelValue();
-  }
-
-  setUpComponent() {
-    this.datasource = this.data;
-    this.disabled = false;
-    this.isLoading = false;
-  }
-
-  validateData() {
-    const key = Object.keys( this.data )[ 0 ];
-    if ( typeof this.data[ key ] === 'string' ) {
-      this.typeOfData = 'simple';
-    }
-  }
-
-  handleSearch( searchTextValue ) {
+  onSearch( searchTextValue ) {
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
@@ -149,11 +135,25 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.datasource = filter;
   }
 
-  onSelectOption( $event: ListItemMeta ) {
+  onKeyDown( $event ) {
+    this.handleSelectInLetter( $event.key );
+    const keyEvent = {
+      [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
+    };
+    if (keyEvent[$event.keyCode]) {
+      keyEvent[ $event.keyCode ]();
+    }
+  }
+
+  onFindByLetter( value: string ) {
+    this.handleSelectInLetter( value );
+  }
+
+  onSelectOption( $event: ListItemInterface ) {
+    this.isOpen = false;
     this.optionSelected = $event;
     this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
-    this.value = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyValue ];
-    this.isOpen = false;
+    this.handleKeyModelValue( $event.option.item );
     this.setInputFocus();
   }
 
@@ -164,30 +164,74 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
   }
 
-  setInputFocus() {
+  private isModelModeString() {
+    return this.modelMode === 'string';
+  }
+
+  private handleKeySpace( $event ) {
+    this.stopEvent( $event );
+    if ( !this.isOpen ) {
+      this.isOpen = true;
+    }
+  }
+
+  private initializeComponent() {
+    this.setUpComponent();
+    this.validateData();
+    this.getModelValue();
+  }
+
+  private setUpComponent() {
+    this.datasource = this.data;
+    this.disabled = false;
+    this.isLoading = false;
+  }
+
+  private validateData() {
+    const key = Object.keys( this.data )[ 0 ];
+    if ( typeof this.data[ key ] === 'string' ) {
+      this.typeOfData = 'simple';
+    }
+  }
+
+  private setInputFocus() {
     this.wrapper.nativeElement.focus();
   }
 
-  isSimpleData() {
+  private isSimpleData() {
     return this.typeOfData === 'simple';
   }
 
-  listenModelChange() {
+  private listenModelChange() {
     this.model.valueChanges.subscribe( () => {
       this.getModelValue();
     } );
   }
 
-  getModelValue() {
+  private handleKeyModelValue( itemValue ) {
+    if (this.isSimpleData()) {
+      return this.value = itemValue;
+    }
+    if (!this.keyValue) {
+      return this.value = itemValue;
+    }
+    return this.value = itemValue[this.keyValue];
+  }
+
+  private getModelValue() {
     this.datasource.forEach( ( value, index ) => {
-      if ( this.getCompare( value ) === this.model.model ) {
-        this.selectedDescription = this.getDescription( value );
-        this.indexOptionSelectedModel = index;
+      if ( this.model.value ) {
+        if ( this.getCompare( value ) === this.getCompareModel() ) {
+          this.selectedDescription = this.getDescription( value );
+          this.indexOptionSelectedModel = index;
+          this.handleKeyModelValue( value );
+          return;
+        }
       }
     } );
   }
 
-  setOptions( options: DropdownConfig ) {
+  private setOptions( options: DropdownConfig ) {
     if ( options ) {
       const self = this;
       Object.keys( options ).forEach( function ( key ) {
@@ -196,29 +240,72 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  getCompare( value ) {
-    return this.isSimpleData() ? value : value[ this.keyValue ];
+  private getCompareModel() {
+    if (this.isSimpleData()) {
+      return this.model.value;
+    }
+    if (!this.keyValue) {
+      return this.model.value[this.identifier];
+    }
+    if (this.isModelModeString()) {
+      return this.model.value;
+    }
+    return this.model.value[this.keyValue];
   }
 
-  getDescription( value ) {
-    return this.isSimpleData() ? value : value[ this.keyText ];
+  private getCompare( value ) {
+    if (this.isSimpleData()) {
+      return value;
+    }
+    if (!this.keyValue) {
+      return value[this.identifier];
+    }
+    return value[this.keyValue];
   }
 
-  onKeyDown( $event ) {
-    switch ( $event.keyCode ) {
-      case KeyEvent.SPACE:
-        $event.stopPropagation();
-        $event.preventDefault();
-        if ( !this.isOpen ) {
-          this.isOpen = true;
-        }
-        break;
+  private getDescription( value ) {
+    if (this.isSimpleData()) {
+      return value;
+    }
+    return value[this.keyText];
+  }
+
+  private handleSelectInLetter( keyInput: string ) {
+    const selected = this.selectByFirst( keyInput );
+    if ( selected ) {
+      this.selectedDescription = this.getDescription(selected.option);
+      this.optionSelected = { option: selected.option, index: selected.index };
+      this.handleKeyModelValue( selected.option );
     }
   }
 
-  ngOnChanges(changes) {
-    if (changes['data']) {
-      if (changes['data'].currentValue) {
+  private stopEvent( $event ) {
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
+  private selectByFirst( keyInput: string ): ListItemInterface {
+    let selected: ListItemInterface = null;
+    this.datasource.forEach( ( option: TlListItem, index: number ) => {
+      if ( this.getFirstLetterOfItem( option ) === this.getKeyInputLowerCase( keyInput ) ) {
+        selected = <ListItemInterface>{ option, index };
+        return;
+      }
+    } );
+    return selected;
+  }
+
+  private getKeyInputLowerCase( keyInput: string ): string {
+    return String( keyInput ).toLowerCase();
+  }
+
+  private getFirstLetterOfItem( item ): string {
+    return String( item[ this.keyText ] ).substring( 0, 1 ).toLowerCase();
+  }
+
+  ngOnChanges( changes ) {
+    if ( changes[ 'data' ] ) {
+      if ( changes[ 'data' ].currentValue ) {
         this.initializeComponent();
       }
     }

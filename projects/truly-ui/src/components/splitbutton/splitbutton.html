@@ -9,6 +9,7 @@
             'border-top-left-radius' : isOpen && positionOverlay === 'top' ? 0 : '3px'
           }"
           class="ui-button ripple"
+          (click)="buttonClick.emit($event)"
           [ngClass]="{' disabled ': disabled}"
           [disabled]="disabled ? true : null">
     <span class="textButton" [ngStyle]="{'line-height': height}">{{text}}</span>

@@ -10,151 +10,56 @@
           <app-card>
             <div class="col-md-6">
               <h6>Basic Usage - Normal Mode</h6>
-              <tl-input [iconAfter]="'ion ion-ios-search'" [clearButton]="true" #inputBasic
-                        [autocomplete]="'off'"
-                        [placeholder]="'Search...'"></tl-input>
-              <tl-listbox
-                [data]="dataBasic"
-                [rowsClient]="5"
-                [searchElement]="inputBasic"
-                [addNew]="true"
-                [id]="'id'"
-                [label]="'firstName'"
-                [labelDetail]="'city'"
-                [rowHeight]="50">
-              </tl-listbox>
+              <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-listbox
-  [data]="dataBasic"
-  [rowsClient]="5"
-  [searchElement]="inputBasic"
-  [id]="'id'"
-  [label]="'firstName'"
-  [labelDetail]="'city'"
-  [rowHeight]="50">
-</tl-listbox>
-</textarea>
+              <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>
+              </textarea>
             </div>
             <div class="col-md-6">
               <h6>Basic Usage - Lazy Mode</h6>
-              <tl-input [iconAfter]="'ion ion-ios-search'" [clearButton]="true" #inputBasicLazy
-                        [autocomplete]="'off'"
-                        [placeholder]="'Search...'"></tl-input>
-              <tl-listbox
-                [data]="dataLazy"
-                [rowsClient]="5"
-                [lazyMode]="true"
-                (lazyLoad)="onLazyLoad($event)"
-                [searchElement]="inputBasicLazy"
-                [id]="'id'"
-                [label]="'firstName'"
-                [labelDetail]="'city'"
-                [rowHeight]="50">
-              </tl-listbox>
+              <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>
               <hr>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-listbox
-  [data]="dataLazy"
-  [rowsClient]="5"
-  [lazyMode]="true"
-  (lazyLoad)="onLazyLoad($event)"
-  [searchElement]="inputBasicLazy"
-  [id]="'id'"
-  [label]="'firstName'"
-  [labelDetail]="'city'"
-  [rowHeight]="50">
-</tl-listbox>
+              <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>
 </textarea>
             </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
               <h6>Custom Template Normal Mode</h6>
-              <tl-input [iconAfter]="'ion ion-ios-search'" [clearButton]="true" #inputCustomNormal
-                        [autocomplete]="'off'"
-                        [placeholder]="'Search...'"></tl-input>
-              <tl-listbox
-                [data]="dataCustom"
-                [rowsClient]="5"
-                [searchElement]="inputCustomNormal"
-                [height]="'100vh - 400px'"
-                [fixedHeight]="true"
-                [rowHeight]="50">
-                <ng-template let-item="item" let-index="index">
-                  <li class="list-template-demo">
-                    <img class="img-circle" src="../assets/img/avatar.png"
-                         width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
-                    <span class="list-bagde badge">{{item.id}}</span>
-                  </li>
-                </ng-template>
-              </tl-listbox>
+              <tl-listbox [data]="dataBasic" [template]="template" [keyText]="'firstName'"></tl-listbox>
               <hr>
               <p><code>Atention:</code> The example below needs to be interpolated <code>{{example}}</code> for example. Not allowed to used here on highlight code.</p>
 <textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-listbox
-  [data]="data"
-  (clickItem)="onClickItem($event)"
-  [rowsClient]="10"
-  [searchElement]="input"
-  [id]="'id'"
-  [label]="'firstName'"
-  [labelDetail]="'city'"
-  [rowHeight]="50">
-  <ng-template let-item="item" let-index="index">
-    <li class="list-template-demo">
-      <img class="img-circle" src="../assets/img/avatar.png"
-           width="30"> item.firstName - <span> item.lastName </span>
-      <span class="list-bagde badge"> item.id </span>
+              <tl-listbox [data]="dataBasic" [template]="template" [keyText]="'firstName'"></tl-listbox>
+<ng-template let-item="item" #template>
+    <li class="item-list">
+      <img src="assets/img/avatar.png" height="30" width="30">
+      item.firstName
     </li>
-  </ng-template>
-</tl-listbox>
+</ng-template>
     </textarea>
             </div>
             <div class="col-md-6">
               <h6>Custom Template Lazy Mode</h6>
-              <tl-input [iconAfter]="'ion ion-ios-search'" [clearButton]="true" #inputCustomLazy
-                        [autocomplete]="'off'"
-                        [placeholder]="'Search...'"></tl-input>
-              <tl-listbox
-                [data]="dataLazy"
-                [rowsClient]="5"
-                [searchElement]="inputCustomLazy"
-                [id]="'id'"
-                [lazyMode]="true"
-                (lazyLoad)="onLazyLoad($event)"
-                [label]="'firstName'"
-                [labelDetail]="'city'"
-                [rowHeight]="50">
-                <ng-template let-item="item" let-index="index">
-                  <li class="list-template-demo">
-                    <img class="img-circle" src="../assets/img/avatar.png"
-                         width="30">{{item.firstName}} - <span>{{item.lastName}}</span>
-                    <span class="list-bagde badge">{{item.id}}</span>
-                  </li>
-                </ng-template>
-              </tl-listbox>
+              <tl-listbox [data]="dataBasic" [template]="template" [keyText]="'firstName'"></tl-listbox>
+              <ng-template let-item="item" #template>
+                <li class="item-list">
+                  <img src="assets/img/avatar.png" height="30" width="30">
+                  {{ item.firstName }}
+                </li>
+              </ng-template>
               <hr>
               <p><code>Atention:</code> The example below needs to be interpolated <code>{{example}}</code> for example. Not allowed to used here on highlight code.</p>
               <textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-listbox
-  [data]="dataLazy"
-  [rowsClient]="5"
-  [searchElement]="inputCustomLazy"
-  [id]="'id'"
-  [lazyMode]="true"
-  (lazyLoad)="onLazyLoad($event)"
-  [label]="'firstName'"
-  [labelDetail]="'city'"
-  [rowHeight]="50">
-  <ng-template let-item="item" let-index="index">
-    <li class="list-template-demo">
-      <img class="img-circle" src="../assets/img/avatar.png"
-           width="30"> item.firstName - <span> item.lastName </span>
-      <span class="list-bagde badge"> item.id </span>
+              <tl-listbox [data]="dataBasic" [template]="template" [keyText]="'firstName'"></tl-listbox>
+<ng-template let-item="item" #template>
+    <li>
+      <img src="assets/img/avatar.png">
+      item.firstName
     </li>
-  </ng-template>
-</tl-listbox>
+</ng-template>
     </textarea>
             </div>
           </app-card>

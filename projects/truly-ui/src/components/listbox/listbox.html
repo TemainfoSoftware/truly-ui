@@ -1,33 +1,32 @@
-<div class="wrapper-display"
-     [tlBlockui]="nothingToShow || loadingMoreData"
-     (mouseup)="mouseUpList($event)"
-     [blockuiConfig]="{'spin': loadingMoreData, 'icon': loadingMoreData ? 'ion ion-ios-sync' : '', 'message': filterEmptyMessage}">
-  <div class="listbox-wrapper">
-
-    <div [@enterAnimation]="true" *ngIf="scrollTop >= 12 && showArrows"
-         (mouseleave)="onShowMoreMouseOut()"
-         (mouseup)="onShowMoreMouseOut()"
-         (mousedown)="onShowMoreMouseIn('up')" class="showmore up">
-      <tl-icon>ion ion-ios-arrow-up</tl-icon>
-    </div>
-
-    <div #itemContainer class="list-box-container"
-         tabindex="-1"
-         (mousedown)="clickWrap($event)"
-         [style.overflow]="hiddenScroll ? 'hidden' : 'auto'"
-         [style.height]="fixedHeight ? 'calc(' + height + ')' : getListBoxHeight() + 'px'">
-      <ul containerDirective #list class="list" [style.position]="'relative'"
-          [style.height]="filtering ? (filteredData?.length * rowHeight) + 'px' : ((lazyMode ? data?.total : data?.length) * rowHeight) + 'px'">
-        <ng-content></ng-content>
-      </ul>
-    </div>
-
-    <div [@enterAnimation]="true" *ngIf="!scrollFinish && showArrows"
-         (mouseleave)="onShowMoreMouseOut()"
-         (mouseup)="onShowMoreMouseOut()"
-         (mousedown)="onShowMoreMouseIn('down')" class="showmore down">
-      <tl-icon>ion ion-ios-arrow-down</tl-icon>
-    </div>
-
-  </div>
+<div class="ui-listbox-wrapper" [tlBlockui]="loading || nothingFound" [blockuiConfig]="{ message: getMessage(), spin: true, icon: loading ? 'fas fa-circle-notch' : null, color: '#ccc' }">
+  <cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
+                               [style.height]="height"
+                               (wheel)="onWheel()"
+                               (scrolledIndexChange)="onScroll()">
+    <tl-filter-container [searchTerm]="searchControl?.value"
+                         [debounceTime]="debounceTime"
+                         [source]="data"
+                         [searchBy]="searchBy"
+                         (filter)="onFilter($event)">
+      <div itemSelected #select="selectItem"
+           [ngStyle]="{ height: rowHeight + 'px' }"
+           [indexSelected]="i"
+           [style.padding]="!template ? '0 10px' : '0'"
+           [attr.index]="i"
+           *cdkVirtualFor="let item of dataSource; let i = index"
+           (click)="setSelected(select); onClickItem(item)"
+           class="ui-list-viewport-item">
+        <div *ngIf="!template">
+          {{ item[keyText] }}
+        </div>
+        <tl-listbox-template
+          [style.width]="'100%'"
+          *ngIf="template"
+          [template]="template"
+          [item]="item"
+          [index]="i">
+        </tl-listbox-template>
+      </div>
+    </tl-filter-container>
+  </cdk-virtual-scroll-viewport>
 </div>

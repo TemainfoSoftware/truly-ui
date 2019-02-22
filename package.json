@@ -5,7 +5,7 @@
   "version": "0.0.0-development",
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
-  "homepage": "http://truly-ui.tk",
+  "homepage": "http://truly-ui.com",
   "keywords": [
     "angular",
     "ui",
@@ -59,6 +59,7 @@
     "intl": "^1.2.5",
     "jquery": "^3.3.1",
     "ngx-highlight-js": "^2.1.1",
+    "object-path": "^0.11.4",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
@@ -70,7 +71,11 @@
   "peerDependencies": {
     "@angular/cdk": "~7.1.0",
     "@angular/common": "~7.1.0",
-    "@angular/core": "~7.1.0"
+    "@angular/core": "~7.1.0",
+    "@types/object-path": "^0.11.0",
+    "object-path": "^0.11.4",
+    "string-format": "^2.0.0",
+    "ts-md5": "^1.2.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.10.6",
@@ -80,6 +85,7 @@
     "@angular/language-service": "^7.1.0",
     "@types/jest": "^23.3.9",
     "@types/node": "~10.12.10",
+    "@types/object-path": "^0.11.0",
     "@types/reflect-metadata": "^0.1.0",
     "codelyzer": "~4.5.0",
     "gulp": "^3.9.1",

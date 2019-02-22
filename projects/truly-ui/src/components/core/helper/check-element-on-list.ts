@@ -1,7 +1,9 @@
-/*
+
+
+ /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2017 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -19,14 +21,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
+ let itemTop;
 
-import { Directive, ViewContainerRef } from '@angular/core';
+ export function isVisibleInList( element: HTMLElement, container: HTMLElement, itemHeight: number ) {
+   const itemsByScroll = Math.round(container.scrollTop / itemHeight);
+   const containerHeight = container.offsetHeight;
 
-@Directive({
-    selector: '[containerDirective]'
-})
- export class ListBoxContainerDirective {
+   if ( itemsByScroll > 0 ) {
+       itemTop = container.querySelectorAll( `[index="${itemsByScroll}"]` )[ 0 ];
+   }
 
-    constructor(public viewList: ViewContainerRef) {}
+   const offsetItem = itemTop ? itemTop.offsetTop : 0;
 
+   const elemTop = element.offsetTop - offsetItem;
+   const elemBottom = elemTop + element.offsetHeight;
+
+   if (elemTop < 0 || elemBottom < 0) {
+     return false;
+   }
+
+   return (elemTop >= 0 && elemBottom <= containerHeight);
  }

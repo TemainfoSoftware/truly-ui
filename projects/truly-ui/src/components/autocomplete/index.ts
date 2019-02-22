@@ -24,50 +24,38 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { TlAutoComplete } from './autocomplete';
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-
-import { ListBoxModule } from '../listbox/index';
 import { InputModule } from '../input/index';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { InternalsModule } from '../internals/index';
-import { TlFilterContainer } from './parts/filter-container';
-import { SearchableHighlightDirective } from './parts/directives/searchable-highlight.directive';
-import { FilterService } from './filter.service';
 import { IconsModule } from '../icons/index';
-import { MiscModule } from '../misc/index';
 import { BlockUIModule } from '../blockui/index';
-import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './parts/interfaces/autocomplete.config';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './interfaces/autocomplete.config';
+import { FilterContainerModule } from '../core/components/filter/filter-container.module';
+import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule( {
   imports: [
     CommonModule,
-    ListBoxModule,
     OverlayModule,
     ScrollingModule,
     InputModule,
     FormsModule,
     BlockUIModule,
+    A11yModule,
     IconsModule,
     ReactiveFormsModule,
     InternalsModule,
-    MiscModule
+    FilterContainerModule,
+    ItemSelectedModule,
   ],
   declarations: [
     TlAutoComplete,
-    TlFilterContainer,
-    SearchableHighlightDirective
   ],
   exports: [
     TlAutoComplete,
-    TlFilterContainer,
-    SearchableHighlightDirective
   ],
-  providers: [
-    FilterService
-  ]
 } )
 export class AutoCompleteModule {
   static forRoot(config: AutoCompleteConfig = null ): ModuleWithProviders {

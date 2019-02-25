@@ -266,12 +266,24 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.itemSelectedService.itemSelected = item;
   }
 
+  stopEvent($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
   handleKeyArrowDown($event) {
+    if (this.isOpen) {
+      this.stopEvent($event);
+    }
     this.keyManager.onKeydown($event);
     scrollIntoView(this.keyManager.activeItem.element.nativeElement);
+
   }
 
   handleKeyArrowUp($event) {
+    if (this.isOpen) {
+      this.stopEvent($event);
+    }
     this.keyManager.onKeydown($event);
     scrollIntoView(this.keyManager.activeItem.element.nativeElement);
   }

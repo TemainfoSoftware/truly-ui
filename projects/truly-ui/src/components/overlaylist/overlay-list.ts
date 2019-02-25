@@ -120,9 +120,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   handleInputFocus() {
-    setTimeout(() => {
-      this.tlInput.setFocus();
-    }, 1);
+    if (this.searchOnList) {
+      setTimeout(() => {
+        this.tlInput.setFocus();
+      }, 1);
+    }
   }
 
   hasDataOnDataSource() {

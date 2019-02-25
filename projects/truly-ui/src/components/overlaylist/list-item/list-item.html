@@ -1,6 +1,10 @@
 <div class="ui-wrapper-list-item primary">
-  <div class="ui-list-item" (keydown)="onKeyDown($event)"
-       #listElement tabindex="-1" [style.line-height]="height" [class.disabled]="disabled" [style.height]="height">
+  <div class="ui-list-item"
+       #listElement
+       [class.selected]="selected"
+       [style.line-height]="height"
+       [class.disabled]="disabled"
+       [style.height]="height">
     <ng-content></ng-content>
   </div>
 </div>

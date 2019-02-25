@@ -37,6 +37,7 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { MultiSelectErrorMessages } from './enums/error-messages';
+import { scrollIntoView } from '../core/helper/scrollIntoView';
 
 @Component( {
   selector: 'tl-multiselect',
@@ -208,7 +209,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private getCompare( item, value ) {
-    return value[ this.keyValue ] ? (item[this.keyValue] === value[ this.keyValue ]) : (item[this.keyValue] === value);
+    return value[ this.keyValue ] ? (item[ this.keyValue ] === value[ this.keyValue ]) : (item[ this.keyValue ] === value);
   }
 
   private handleValidator() {
@@ -311,13 +312,26 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
       [KeyEvent.ARROWLEFT]: () => this.handleArrowLeft( $event ),
       [KeyEvent.ARROWRIGHT]: () => this.handleArrowRight( $event )
     };
-    keyEvent[ $event.keyCode ]();
+    if ( keyEvent[ $event.keyCode ] ) {
+      keyEvent[ $event.keyCode ]();
+    }
   }
 
   private handleOverlayList() {
     if ( this.filteredItems.length === 0 ) {
       this.isOpen = false;
     }
+  }
+
+  handleClickWrapper() {
+    if (!this.disabled) {
+      this.isOpen = !this.isOpen;
+    }
+    this.setInputFocus();
+  }
+
+  setInputFocus() {
+    this.input.nativeElement.focus();
   }
 
   private handleIsOpen( $event ) {
@@ -327,9 +341,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private handleKeyDelete( $event ) {
-  this.stopEventKeyDown( $event );
-  this.deleteTagSelected();
-}
+    this.stopEventKeyDown( $event );
+    this.deleteTagSelected();
+  }
 
   private handleKeyBackspace() {
     this.isOpen = true;
@@ -395,7 +409,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   private setFilteredItems() {
     this.validateEmptySearch();
     if ( !this.isTagsLengthMoreThanZero() ) {
-      if ( this.isFilteredLengthEqualsDataLength() ) {
+      if ( this.isFilteredLengthEqualsDataLength() || this.filteredItems.length === 0 ) {
         this.filteredItems = this.data;
         this.sortFilteredItems();
       }
@@ -414,13 +428,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.tags[ this.selectTag ][ 'selected' ] = true;
   }
 
-  private setInputFocus() {
-    this.input.nativeElement.focus();
-  }
-
-  handleArrowDown($event) {
-    if (this.isOpen) {
-      this.stopEventKeyDown($event);
+  handleArrowDown( $event ) {
+    if ( this.isOpen ) {
+      this.stopEventKeyDown( $event );
     }
   }
 
@@ -440,7 +450,6 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   private handleAllSelected() {
     if ( this.filteredItems.length === 0 ) {
       this.isOpen = false;
-      this.setInputFocus();
     }
   }
 
@@ -495,17 +504,9 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     return value.length >= this.minLengthSearch;
   }
 
-  private selectTagCtrlBindClick() {
-    this.setInputFocus();
-  }
-
-  selectTagClick( event, index, item? ) {
+  selectTagClick( index, item? ) {
     this.tagClick.emit( item );
     this.selectTag = index;
-    if ( event.ctrlKey ) {
-      return this.selectTagCtrlBindClick();
-    }
-    this.setInputFocus();
   }
 
   private changePlaceholder() {
@@ -517,19 +518,17 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   private removeTagOnBackspace() {
     if ( this.isInputValueEqualsEmpty() && this.isTagsLengthMoreThanZero() ) {
       this.removeTag( this.tags.length - 1 );
-      this.setInputFocus();
     } else {
       this.setFilteredItems();
     }
   }
 
   removeTag( index, item? ) {
-    this.filteredItems.push( item ? item : this.tags[ index ]);
+    this.filteredItems.push( item ? item : this.tags[ index ] );
     this.tagRemove.emit( item ? item : this.tags[ index ] );
     this.getSelecteds.emit( this.tags );
     this.tags.splice( index, 1 );
     this.changePlaceholder();
-    this.setInputFocus();
     this.setModelValue();
     this.sortFilteredItems();
     this.cleanInput();

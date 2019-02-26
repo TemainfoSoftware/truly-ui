@@ -5,7 +5,7 @@
       class="input-wrapper-multiselect"
       cdkOverlayOrigin #trigger="cdkOverlayOrigin"
       #element
-      (click)="!disabled ? isOpen = !isOpen : null;"
+      (click)="handleClickWrapper()"
       [ngClass]="
       {
       'ng-touched': touched,
@@ -18,7 +18,7 @@
         <tl-tag *ngFor="let tag of tags; let i = index"
                 [title]="isSimpleData() ? tag : tag[labelTag]"
                 (close)="removeTag(i, tag)"
-                (click)="selectTagClick($event, i, tag)">
+                (click)="selectTagClick(i, tag)">
         </tl-tag>
 
         <input autocomplete="off"

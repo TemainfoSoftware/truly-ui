@@ -30,7 +30,7 @@ export function CNPJValidator( ): ValidatorFn {
         return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
-      if ( this.isAllCharacteresEquals( c ) ) {
+      if ( isAllCharacteresEquals( c ) ) {
         return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
@@ -76,7 +76,6 @@ export function CNPJValidator( ): ValidatorFn {
 function  cnpjUnmasked( c ) {
   return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
 }
-
 
 function isAllCharacteresEquals( c ) {
   let result = true;

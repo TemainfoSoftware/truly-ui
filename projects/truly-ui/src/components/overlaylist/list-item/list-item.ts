@@ -20,35 +20,33 @@
  SOFTWARE.
  */
 import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Highlightable } from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-list-item',
   templateUrl: './list-item.html',
   styleUrls: [ './list-item.scss' ],
 } )
-export class TlListItem {
+export class TlListItem implements Highlightable {
+
+  constructor() {}
+
+  public selected = false;
+
   @Input() item;
 
   @Input() disabled = false;
 
   @Input() height = '30px';
 
-  @Input() searchOnList = false;
+  @ViewChild('listElement') element: ElementRef;
 
-  @Output() searchEmit: EventEmitter<any> = new EventEmitter();
-
-  @ViewChild( 'listElement' ) listElement: ElementRef;
-
-  constructor() {}
-
-  focus() {
-    this.listElement.nativeElement.focus();
+  setActiveStyles(): void {
+    this.selected = true;
   }
 
-  onKeyDown( $event ) {
-    if (this.searchOnList) {
-      this.searchEmit.emit( $event );
-    }
+  setInactiveStyles(): void {
+    this.selected = false;
   }
 
 }

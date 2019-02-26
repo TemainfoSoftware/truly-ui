@@ -22,9 +22,9 @@
 
 import {
   Component, OnInit, forwardRef, Input, Renderer2, ElementRef, ViewChild,
-  ChangeDetectorRef, AfterViewInit, OnChanges
+  ChangeDetectorRef, AfterViewInit, OnChanges, ContentChild
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { InputMask } from '../input/core/input-mask';
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
@@ -62,7 +62,9 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
 
   @Input() labelPlacement: 'left' | 'top' = 'left';
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: NgModel;
 
   @ViewChild( 'input' ) input: ElementRef;
 
@@ -87,25 +89,36 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   ngAfterViewInit() {
     this.setDateMask();
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
+    this.getMockValue( this.value );
     this.handleModelChangeInit();
+    this.change.detectChanges();
   }
 
   handleModelChangeInit() {
-    if ( this.model ) {
-      this.model.valueChanges.subscribe( ( value ) => {
-        if (!value) {
-          return ;
-        }
-        if (this.isoDate && value.length > 0) {
-          const date = new Date( value );
-          setTimeout( () => {
-            this.mockValue = this.getDateByFormat( date );
-          }, 100 );
-        } else {
-          this.mockValue = value;
-        }
+    const model = this.getModel();
+    if ( model ) {
+      model.valueChanges.subscribe( ( value ) => {
+        this.getMockValue( value );
       } );
     }
+  }
+
+  getMockValue( value ) {
+    if ( !value ) {
+      return;
+    }
+    if ( this.isoDate && value.length > 0 ) {
+      const date = new Date( value );
+      setTimeout( () => {
+        this.mockValue = this.getDateByFormat( date );
+      }, 100 );
+      return;
+    }
+    this.mockValue = value;
+  }
+
+  getModel() {
+    return this.model ? this.model : this.controlName;
   }
 
   getDateByFormat( date ) {
@@ -120,18 +133,29 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   }
 
   isIsoDate( str ) {
-    if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) { return false; }
+    if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) {
+      return false;
+    }
     const d = new Date( str );
     return d.toISOString() === str;
   }
 
   handleIsoDateModel() {
     setTimeout( () => {
-      if ( !this.isIsoDate( this.value ) && this.model.valid ) {
+      if ( this.value.length === 0 && this.isControlValid() ) {
+        this.value = null;
+        return;
+      }
+      if ( !this.isIsoDate( this.value ) && this.isControlValid() ) {
         const date = ReverseFormatDate( this.value, this.formatDate );
         this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
       }
     }, 100 );
+  }
+
+  isControlValid() {
+    const model = this.model ? this.model : this.controlName;
+    return model.valid;
   }
 
   focusOut() {

@@ -26,6 +26,7 @@ import {
   OnInit,
   Inject,
   Optional,
+  ContentChild,
   ViewChild,
   ElementRef, OnChanges
 } from '@angular/core';
@@ -34,7 +35,7 @@ import { debounceTime } from 'rxjs/internal/operators';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { Subject } from 'rxjs';
 import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
@@ -50,7 +51,7 @@ import { TlListItem } from '../overlaylist/list-item/list-item';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements OnInit, OnChanges {
+export class TlDropDownList extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
 
   @Input( 'data' ) data: any[] = [];
 
@@ -80,6 +81,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'preSelected' ) preSelected = '';
 
+  @Input( 'defaultOption' ) defaultOption = false;
+
   @Input( 'width' ) width = '120px';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
@@ -90,7 +93,9 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'placeholderIcon' ) placeholderIcon = 'ion-navicon-round';
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) model: NgModel;
+
+  @ContentChild( FormControlName ) controlName: FormControlName;
 
   @ViewChild( 'wrapper' ) wrapper: ElementRef;
 
@@ -118,10 +123,13 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   ngOnInit() {
-    this.listenModelChange();
     this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
       this.onSearch( searchTextValue );
     } );
+  }
+
+  ngAfterViewInit() {
+    this.listenModelChange();
   }
 
   onSearch( searchTextValue ) {
@@ -139,8 +147,10 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.handleSelectInLetter( $event.key );
     const keyEvent = {
       [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
+      [KeyEvent.ARROWDOWN]: () => this.stopEvent( $event ),
+      [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
     };
-    if (keyEvent[$event.keyCode]) {
+    if ( keyEvent[ $event.keyCode ] ) {
       keyEvent[ $event.keyCode ]();
     }
   }
@@ -202,25 +212,34 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.typeOfData === 'simple';
   }
 
+  private getModel() {
+    return this.model ? this.model : this.controlName;
+  }
+
   private listenModelChange() {
-    this.model.valueChanges.subscribe( () => {
-      this.getModelValue();
-    } );
+    if (this.getModel()) {
+      this.getModel().valueChanges.subscribe( () => {
+        this.getModelValue();
+      } );
+    }
   }
 
   private handleKeyModelValue( itemValue ) {
-    if (this.isSimpleData()) {
+    if ( this.isSimpleData() ) {
       return this.value = itemValue;
     }
-    if (!this.keyValue) {
+    if ( !this.keyValue ) {
       return this.value = itemValue;
     }
-    return this.value = itemValue[this.keyValue];
+    return this.value = itemValue[ this.keyValue ];
   }
 
   private getModelValue() {
+    if (!this.getModel()) {
+      return;
+    }
     this.datasource.forEach( ( value, index ) => {
-      if ( this.model.value ) {
+      if ( this.getModel().value ) {
         if ( this.getCompare( value ) === this.getCompareModel() ) {
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
@@ -241,39 +260,39 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getCompareModel() {
-    if (this.isSimpleData()) {
-      return this.model.value;
+    if ( this.isSimpleData() ) {
+      return this.getModel().value;
     }
-    if (!this.keyValue) {
-      return this.model.value[this.identifier];
+    if ( !this.keyValue ) {
+      return this.getModel().value[ this.identifier ];
     }
-    if (this.isModelModeString()) {
-      return this.model.value;
+    if ( this.isModelModeString() ) {
+      return this.getModel().value;
     }
-    return this.model.value[this.keyValue];
+    return this.getModel().value[ this.keyValue ];
   }
 
   private getCompare( value ) {
-    if (this.isSimpleData()) {
+    if ( this.isSimpleData() ) {
       return value;
     }
-    if (!this.keyValue) {
-      return value[this.identifier];
+    if ( !this.keyValue ) {
+      return value[ this.identifier ];
     }
-    return value[this.keyValue];
+    return value[ this.keyValue ];
   }
 
   private getDescription( value ) {
-    if (this.isSimpleData()) {
+    if ( this.isSimpleData() ) {
       return value;
     }
-    return value[this.keyText];
+    return value[ this.keyText ];
   }
 
   private handleSelectInLetter( keyInput: string ) {
     const selected = this.selectByFirst( keyInput );
     if ( selected ) {
-      this.selectedDescription = this.getDescription(selected.option);
+      this.selectedDescription = this.getDescription( selected.option );
       this.optionSelected = { option: selected.option, index: selected.index };
       this.handleKeyModelValue( selected.option );
     }

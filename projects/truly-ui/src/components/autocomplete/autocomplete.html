@@ -15,14 +15,13 @@
              (keydown.ArrowUp)="handleKeyArrowUp($event)"
              (keydown.ArrowDown)="handleKeyArrowDown($event)"
              (keydown.escape)="handleKeyEscape($event)"
-             (keyup.tab)="handleBlur()"
-             (keydown.enter)="handleBlur()"
+             (blur)="handleBlur()"
+             (keyup.enter)="handleBlur()"
              (focus)="handleFocus()"
              (focusout)="focused = false"
              (input)="onInput()"
              class="ui-input">
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
-      <!--<div class="ui-selected-wrapper" *ngIf="keyManager.activeItem && !focused"></div>-->
     </div>
     <tl-filter-container [searchTerm]="searchControl.value"
                          [debounceTime]="debounceTime"

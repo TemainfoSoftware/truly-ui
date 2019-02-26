@@ -31,6 +31,9 @@ export function DateValidator( formatDate, isoDate ): ValidatorFn {
   dateExpressFormat = formatDate;
   return ( c: AbstractControl ) => {
 
+    if (!c.value) {
+      return null;
+    }
 
     if ( !stringUnmasked( c ) && c.touched ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };

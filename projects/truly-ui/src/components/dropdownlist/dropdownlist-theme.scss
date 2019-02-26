@@ -8,6 +8,10 @@
 
   .ui-dropdown-box {
 
+    > .ui-dropdown-icon.ng-invalid {
+      color: rgba(map-deep-get($danger, "default", "background"), 0.5) !important;
+    }
+
     > .ui-dropdown-wrapper {
       background: map-deep-get($basic, "default", "background");
       border: 1px solid map-deep-get($basic, "default", "border");
@@ -27,6 +31,11 @@
         background-color: map-deep-get($basic, "default", "background");
       }
 
+      &.ng-invalid {
+        border: 1px solid rgba(map-deep-get($danger, "default", "background"), 0.5) !important;
+        color: rgba(map-deep-get($danger, "default", "background"), 0.5) !important;
+      }
+
       > .select.-hasValidation.ng-invalid.ng-touched:not(dropdown) {
         border: 1px solid map-deep-get($danger, "default", "border");
         background-color: #FFF1F1;
@@ -35,10 +44,6 @@
       > .select.-hasValidation.ng-valid[required], .select.-hasValidation.ng-valid.required {
         border: 1px solid map-deep-get($primary, "default", "border");
         background-color: map-deep-get($primary, "default", "background");
-      }
-
-      > .ui-dropdown-icon i {
-        color: map-deep-get($basic, "default", "foreground");
       }
 
     }

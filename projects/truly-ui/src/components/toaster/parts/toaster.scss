@@ -30,6 +30,7 @@
     font-size: 1.1em;
     height: 100%;
     box-sizing: border-box;
+    place-content: center;
 
     > .ui-toaster-icon {
       text-align: center;
@@ -39,6 +40,12 @@
     > .ui-toaster-description {
       word-break: break-all;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      &:first-child {
+        font-size: 16px;
+      }
+      &:last-child {
+        font-size: 14px;
+      }
     }
 
   }

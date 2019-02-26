@@ -30,7 +30,6 @@ import { ToasterConfig } from '../../toaster-config';
    height = 'auto';
    position = 'top-right';
    time = 3000;
-   closeButton = false;
    showIcon = false;
    progress = true;
    id = '';

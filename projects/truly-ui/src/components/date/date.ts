@@ -89,25 +89,36 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   ngAfterViewInit() {
     this.setDateMask();
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
+    this.getMockValue( this.value );
     this.handleModelChangeInit();
+    this.change.detectChanges();
   }
 
   handleModelChangeInit() {
-    if ( this.model ) {
-      this.model.valueChanges.subscribe( ( value ) => {
-        if (!value) {
-          return ;
-        }
-        if (this.isoDate && value.length > 0) {
-          const date = new Date( value );
-          setTimeout( () => {
-            this.mockValue = this.getDateByFormat( date );
-          }, 100 );
-        } else {
-          this.mockValue = value;
-        }
+    const model = this.getModel();
+    if ( model ) {
+      model.valueChanges.subscribe( ( value ) => {
+        this.getMockValue( value );
       } );
     }
+  }
+
+  getMockValue( value ) {
+    if ( !value ) {
+      return;
+    }
+    if ( this.isoDate && value.length > 0 ) {
+      const date = new Date( value );
+      setTimeout( () => {
+        this.mockValue = this.getDateByFormat( date );
+      }, 100 );
+      return;
+    }
+    this.mockValue = value;
+  }
+
+  getModel() {
+    return this.model ? this.model : this.controlName;
   }
 
   getDateByFormat( date ) {
@@ -122,14 +133,16 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
   }
 
   isIsoDate( str ) {
-    if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) { return false; }
+    if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) {
+      return false;
+    }
     const d = new Date( str );
     return d.toISOString() === str;
   }
 
   handleIsoDateModel() {
     setTimeout( () => {
-      if (this.value.length === 0 && this.isControlValid()) {
+      if ( this.value.length === 0 && this.isControlValid() ) {
         this.value = null;
         return;
       }

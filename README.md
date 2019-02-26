@@ -56,6 +56,8 @@
 - 🚀 See it in action on [Stackblitz](https://stackblitz.com/edit/truly-ui-simple)
 - 😎 Checkout the [sample application](integration)
 - 📝 Learn about updates from the [changelog](CHANGELOG.md)
+- 💬 Get to know the latest news first through [slack](https://trulyui.slack.com)
+
 
 
 ## Motivation
@@ -285,17 +287,17 @@ Once your library is imported, you can use its components, directives and pipes 
 Feedback is always welcome.
 
 ## For google
-angular 2 components, angular 4 components, angular electron, angular 5 components ng2 nw ng components
+angular ui components angular 2 components, angular 4 components, angular electron, angular 5 components ng2 nw ng components
 ng-components ng2-components angular2 components angular4 electron angular 5 components angular 6 components 
 angular 7 components angular electron components desktop applications library ui components desktop electron angular
-components electron angular
+components electron angular 
 
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2018 [Temainfo Software](mailto:suporte@temainfo.com.br)
+Copyright (c) 2019 [Temainfo Software](mailto:suporte@temainfo.com.br)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
 software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:

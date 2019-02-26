@@ -1,7 +1,7 @@
 /*
   MIT License
 
-  Copyright (c) 2018 Temainfo Software
+  Copyright (c) 2019 Temainfo Software
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -35,11 +35,11 @@ export class TimepickerDemoComponent implements OnInit {
 
   public dataEvents;
 
-  public dataTwo = new Date(2018, 11, 21, 17, 15);
+  public dataTwo = new Date(2019, 11, 21, 17, 15);
 
-  public maxHourMinuteDate = new Date(2018, 11, 21, 20, 59);
+  public maxHourMinuteDate = new Date(2019, 11, 21, 20, 59);
 
-  public minHourMinuteDate = new Date(2018, 11, 21, 0, 0);
+  public minHourMinuteDate = new Date(2019, 11, 21, 0, 0);
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

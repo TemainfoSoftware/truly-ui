@@ -9,9 +9,9 @@
              'withBorder': withBorder,
              'withoutBorder' : !withBorder,
              'ng-touched': touched,
-             'ng-valid': model.valid,
-             'ng-invalid': model.invalid,
-             'ng-dirty': model.dirty,
+             'ng-valid': model?.valid ||  controlName?.valid,
+             'ng-invalid': model?.invalid || controlName?.invalid,
+             'ng-dirty': model?.dirty || controlName?.dirty,
              'flatBorders': flatBorders
            }"
            [attr.disabled]="disabled ? true : null"

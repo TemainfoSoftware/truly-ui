@@ -49,7 +49,7 @@
                [indexSelected]="i"
                #select="selectItem"
                *cdkVirtualFor="let item of dataSource; let i = index"
-               (click)="selectItem(item, select)"
+               (mousedown)="selectItem(item, select)"
                class="ui-list-item">
             <span *ngIf="item; else loading">
               {{ item[ keyText ] }}

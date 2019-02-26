@@ -37,6 +37,7 @@
 -------
 
 <p align="center">
+    <a href="#quick-links">Quick Links</a> &bull;
     <a href="#motivation">Motivation</a> &bull;
     <a href="#prerequisites">Prerequisites</a> &bull;
     <a href="#installation">Installation</a> &bull;
@@ -47,6 +48,7 @@
 </p>
 
 -------
+  <br/>
 
 ## Quick Links
 

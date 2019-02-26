@@ -69,7 +69,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() keyValue = null;
 
-  @Input() openFocus = false;
+  @Input() openFocus = true;
 
   @Input() color = 'basic';
 
@@ -294,10 +294,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   handleBlur() {
+    if (this.keyManager.activeItem && this.isOpen) {
+      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem);
+      this.setDescriptionValue(this.keyManager.activeItem.itemSelected[this.keyText]);
+      this.handleKeyModelValue(this.keyManager.activeItem.itemSelected);
+    }
     this.setIsOpen(false);
-    this.setSelected(this.keyManager.activeItem);
-    this.setDescriptionValue(this.keyManager.activeItem.itemSelected[this.keyText]);
-    this.handleKeyModelValue(this.keyManager.activeItem.itemSelected);
   }
 
   handleFocus() {
@@ -390,7 +392,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     if ($event) {
       this.setUpData($event);
       this.dataSource.dataStream.next($event);
-      this.setSelected(this.listItems.toArray()[0]);
+      setTimeout(() => {
+        this.setSelected(this.listItems.toArray()[0]);
+      }, 100);
       return;
     }
     this.dataSource.dataStream.next([]);
@@ -408,6 +412,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   ngOnChanges({data, totalLength}: any) {
     if (data && !data['firstChange'] && this.lazyMode) {
       this.setUpData(data['currentValue']);
+      this.dataSource.dataStream.next(data['currentValue']);
       return;
     }
     if (data && data['currentValue']) {

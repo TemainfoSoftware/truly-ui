@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2019 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +69,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Input() keyValue = null;
 
-  @Input() openFocus = false;
+  @Input() openFocus = true;
 
   @Input() color = 'basic';
 
@@ -266,12 +266,24 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.itemSelectedService.itemSelected = item;
   }
 
+  stopEvent($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+  }
+
   handleKeyArrowDown($event) {
+    if (this.isOpen) {
+      this.stopEvent($event);
+    }
     this.keyManager.onKeydown($event);
     scrollIntoView(this.keyManager.activeItem.element.nativeElement);
+
   }
 
   handleKeyArrowUp($event) {
+    if (this.isOpen) {
+      this.stopEvent($event);
+    }
     this.keyManager.onKeydown($event);
     scrollIntoView(this.keyManager.activeItem.element.nativeElement);
   }
@@ -282,10 +294,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   handleBlur() {
+    if (this.keyManager.activeItem && this.isOpen) {
+      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem);
+      this.setDescriptionValue(this.keyManager.activeItem.itemSelected[this.keyText]);
+      this.handleKeyModelValue(this.keyManager.activeItem.itemSelected);
+    }
     this.setIsOpen(false);
-    this.setSelected(this.keyManager.activeItem);
-    this.setDescriptionValue(this.keyManager.activeItem.itemSelected[this.keyText]);
-    this.handleKeyModelValue(this.keyManager.activeItem.itemSelected);
   }
 
   handleFocus() {
@@ -378,7 +392,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     if ($event) {
       this.setUpData($event);
       this.dataSource.dataStream.next($event);
-      this.setSelected(this.listItems.toArray()[0]);
+      setTimeout(() => {
+        this.setSelected(this.listItems.toArray()[0]);
+      }, 100);
       return;
     }
     this.dataSource.dataStream.next([]);
@@ -396,6 +412,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   ngOnChanges({data, totalLength}: any) {
     if (data && !data['firstChange'] && this.lazyMode) {
       this.setUpData(data['currentValue']);
+      this.dataSource.dataStream.next(data['currentValue']);
       return;
     }
     if (data && data['currentValue']) {

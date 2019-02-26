@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2019 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -246,6 +246,12 @@ export class ModalService implements OnDestroy {
 
   private removeOfView( modal ) {
     this.view.remove( this.view.indexOf( modal ) );
+    this.removeBackdrop();
+  }
+
+  closeAll() {
+    this.view.clear();
+    this.componentList = [];
     this.removeBackdrop();
   }
 

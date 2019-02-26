@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2019 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ export function CNPJValidator( ): ValidatorFn {
         return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
-      if ( this.isAllCharacteresEquals( c ) ) {
+      if ( isAllCharacteresEquals( c ) ) {
         return { cnpj: LOCALE_I18N.Validators.invalidCNPJ };
       }
 
@@ -76,7 +76,6 @@ export function CNPJValidator( ): ValidatorFn {
 function  cnpjUnmasked( c ) {
   return String( c.value ).replace( /(\/|\.|-|_|\(|\)|:|\+)/gi, '' );
 }
-
 
 function isAllCharacteresEquals( c ) {
   let result = true;

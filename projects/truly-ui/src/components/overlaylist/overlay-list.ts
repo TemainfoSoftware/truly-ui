@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2019 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -23,12 +23,13 @@ import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
   AfterViewInit, SimpleChanges, OnChanges, Renderer2,
 } from '@angular/core';
-import { FocusKeyManager } from '@angular/cdk/a11y';
+import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
+import { scrollIntoView } from '../core/helper/scrollIntoView';
 
 @Component( {
   selector: 'tl-overlay-list',
@@ -79,12 +80,13 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild( 'list' ) list: ElementRef;
 
-  @ViewChild( TlInput ) inputSearch: TlInput;
+  @ViewChild( TlInput ) tlInput: TlInput;
 
   @ViewChild( 'defaultPlaceholder' ) defaultPlaceholder: ElementRef;
 
   @ViewChildren(TlListItem) items: QueryList<TlListItem>;
-  public keyManager: FocusKeyManager<TlListItem>;
+
+  public keyManager: ActiveDescendantKeyManager<TlListItem>;
 
   public notFound = false;
 
@@ -94,11 +96,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   constructor( private renderer: Renderer2, private i18n: I18nService ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngAfterViewInit() {
     this.handleCustomInputEvents();
-    this.keyManager = new FocusKeyManager( this.items );
+    this.keyManager = new ActiveDescendantKeyManager( this.items );
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
@@ -106,13 +109,21 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   handleCustomInputEvents() {
     if (this.customInput) {
+      this.handleInputFocus();
       this.renderer.listen( this.customInput, 'keydown', ($event) => {
         if (this.isKeyCodeEnter($event) && this.hasDataOnDataSource()) {
-          this.handleActiveItem();
           this.emitSelectOption();
         }
         this.handleKeyEvents($event);
       });
+    }
+  }
+
+  handleInputFocus() {
+    if (this.searchOnList) {
+      setTimeout(() => {
+        this.tlInput.setFocus();
+      }, 1);
     }
   }
 
@@ -126,16 +137,41 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   handleActiveItem() {
     setTimeout(() => {
-      this.optionSelected ?
-        this.keyManager.setActiveItem( this.optionSelected.index ) : this.keyManager.setFirstItemActive();
+      if (this.optionSelected) {
+        this.setActiveItem( this.optionSelected.index );
+        return;
+      }
+      this.setFirstItemActive();
     }, 1);
+  }
+
+  setFirstItemActive() {
+    this.removeSelectedAll();
+    this.keyManager.setFirstItemActive();
+  }
+
+  setActiveItem(index: number) {
+    this.removeSelectedAll();
+    this.keyManager.setActiveItem(index);
+    this.handleScrollIntoView();
+  }
+
+  removeSelectedAll() {
+    this.items.forEach((item) => item.selected = false);
   }
 
   handleKeyEvents( $event: KeyboardEvent ) {
     this.keyManager.onKeydown( $event );
+    this.handleScrollIntoView();
   }
 
-  handleKeyUp( $event ) {
+  handleScrollIntoView() {
+    if (this.keyManager.activeItem) {
+      scrollIntoView(this.keyManager.activeItem.element.nativeElement);
+    }
+  }
+
+  handleInput( $event ) {
     if ( this.searchOnList ) {
       this.keydownSearch( $event );
     }
@@ -166,10 +202,6 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     $event.stopPropagation();
   }
 
-  searching() {
-    this.customFocus ? this.customFocus.focus() : this.inputSearch.setFocus();
-  }
-
   emitSelectOption() {
     this.selectOption.emit( <ListItemInterface>{
       option: this.keyManager.activeItem,
@@ -186,7 +218,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges ) {
-    this.keyManager = new FocusKeyManager( this.items );
+    this.keyManager = new ActiveDescendantKeyManager( this.items );
     this.handleActiveItem();
     if (changes['datasource']) {
       this.setNotFound();

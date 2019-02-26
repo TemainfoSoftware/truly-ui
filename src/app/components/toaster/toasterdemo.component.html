@@ -10,7 +10,7 @@
             <div class="col-md-12">
               <tl-panelgroup [backgroundColor]="'#fafafa'" [height]="'290px'" [labelGroup]="'Toaster Configuration'">
                 <tl-dropdown-list [data]="data"
-                                  [labelSize]="100"
+                                  [labelSize]="'100px'"
                                   [keyText]="'textItem'"
                                   [label]="'Position'"
                                   [keyValue]="'value'"
@@ -63,17 +63,16 @@ this.toasterService.warning(object?)
                 </textarea>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 clickMethod() {
-  this.toasterService.success(
-        title: 'My title'
+  this.toasterService.success({
+        title: 'My title',
         message: 'My test message',
-        position: 'top-right'
+        position: 'top-right',
         width: '400px',
         height: '70px',
-        closeButton: true,
         progress: true,
         showIcon: true,
         time: 3000,
-  );
+  });
 }
                   </textarea>
               <h6>As parameter, you may have to pass the toaster config object.</h6>

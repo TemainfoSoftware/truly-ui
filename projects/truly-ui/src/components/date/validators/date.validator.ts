@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2018 Temainfo Software
+ Copyright (c) 2019 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,9 @@ export function DateValidator( formatDate, isoDate ): ValidatorFn {
   dateExpressFormat = formatDate;
   return ( c: AbstractControl ) => {
 
+    if (!c.value) {
+      return null;
+    }
 
     if ( !stringUnmasked( c ) && c.touched ) {
       return { date: LOCALE_I18N.Validators.invalidDatePattern + ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };

@@ -7,17 +7,31 @@
   font-family: 'Open Sans'
   " src="src/assets/img/logo-readme.svg" width="500">
   <br />
-  Web Components for Desktop Applications.
+  Truly-UI is a UI Framework for creating rich desktop applications
   <br /><br />
-  
-  [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-  [![Dependency Status](https://david-dm.org/TemainfoSoftware/truly-ui.svg)](https://david-dm.org/TemainfoSoftware/truly-ui) 
-  [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+    <a href="http://commitizen.github.io/cz-cli/">
+      <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?branch=master" />
+    </a>
+    <a href="https://david-dm.org/TemainfoSoftware/truly-ui/">
+      <img src="https://david-dm.org/TemainfoSoftware/truly-ui.svg" />
+    </a>
+    <a href="https://github.com/semantic-release/semantic-release">
+      <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" />
+    </a> 
+    <br />
+    <a href="https://github.com/TemainfoSoftware/truly-ui/blob/master/LICENSE.md">
+      <img src="https://img.shields.io/badge/license-MIT-green.svg" />
+    </a>
+    <a href="https://greenkeeper.io/">
+      <img src="https://badges.greenkeeper.io/TemainfoSoftware/truly-ui.svg" />
+    </a>
+    <a href="https://www.codacy.com/app/mister-x59/truly-ui?utm_source=github.com&utm_medium=referral&utm_content=TemainfoSoftware/truly-ui&utm_campaign=badger">
+      <img src="https://api.codacy.com/project/badge/Grade/666b375858d540d08c7dccb9fe8e5a30" />
+    </a> 
+    <a href="https://travis-ci.org/TemainfoSoftware/truly-ui">
+      <img src="https://travis-ci.org/TemainfoSoftware/truly-ui.svg?branch=master" />
+    </a>
   <br/>
-  [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/TemainfoSoftware/truly-ui/blob/master/LICENSE.md)
-  [![Greenkeeper badge](https://badges.greenkeeper.io/TemainfoSoftware/truly-ui.svg)](https://greenkeeper.io/)
-  [![Codacy Badge](https://api.codacy.com/project/badge/Grade/666b375858d540d08c7dccb9fe8e5a30)](https://www.codacy.com/app/mister-x59/truly-ui?utm_source=github.com&utm_medium=referral&utm_content=TemainfoSoftware/truly-ui&utm_campaign=badger)
-  [![Build Status](https://travis-ci.org/TemainfoSoftware/truly-ui.svg?branch=master)](https://travis-ci.org/TemainfoSoftware/truly-ui)
 </p>
 
 -------
@@ -41,7 +55,6 @@
 - 😎 Checkout the [sample application](integration)
 - 📝 Learn about updates from the [changelog](CHANGELOG.md)
 
-----
 
 ## Motivation
 TrulyUI is an Angular Framework especially developed for Desktop Applications based on Web Components using the greatest technologies of the world. TrulyUI is based on Angular, maintained by world-wide community. By the way, we believe that Angular is the most promising Web Framework. We developed TrulyUI thinking to fill a gap on open-source Web Technologies that's poor when it's about applications on Desktop.
@@ -60,7 +73,7 @@ We assume that you have already installed the following packages at least and ar
 1. Having NPM installation run the following command on your terminal to install it:
 
     ```bash
-    $ npm install --save truly-ui @angular/animations 
+    $ npm install --save truly-ui @angular/animations @angular/cdk 
     ```
     
 2. Because NPM does not install `peerDependencies`, you should manually install the dependencies:

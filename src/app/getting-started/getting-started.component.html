@@ -23,18 +23,20 @@
           <span class="description">1. Having NPM installation run the following command on your terminal to install it:</span>
           <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
-  $ npm install truly-ui --save
+  $ npm install --save truly-ui @angular/animations
   </textarea>
             <span class="description">2. Because NPM does not install <code>peerDependencies</code>, you should manually install the dependencies:</span>
             <div class="code-area">
          <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'bash'">
-  $ npm install string-format ts-md5 object-path --save
-  $ npm install @types/object-path --save-dev
+  $ npm install --save string-format ts-md5 object-path reflect-metadata
+  $ npm install --save-dev @types/object-path
   </textarea>
             <span class="description">3. Configure styles of used font packages (Icon Packages are already installed when running npm install truly-ui):</span>
             <p>Inside the <code>angular.json</code> file add the following paths to the <code>styles</code> key</p>
             <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 "styles": [
+  src/styles.css",
+  ...
   "node_modules/@angular/cdk/overlay-prebuilt.css",
   "node_modules/truly-ui/css/icons/dx-icons/css/icons.scss",
   "node_modules/truly-ui/css/icons/fa-icons/css/icons.scss",
@@ -78,7 +80,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Import your library, for example the InputComponent:
-import { InputModule, ButtonModule } from 'truly-ui'; //Import Modules
+import { InputModule, ButtonModule, CoreModule } from 'truly-ui'; //Import Modules
 
 @NgModule({
   declarations: [
@@ -86,6 +88,9 @@ import { InputModule, ButtonModule } from 'truly-ui'; //Import Modules
   ],
   imports: [
     BrowserModule,
+    CoreModule.forRoot({theme: 'default'}),
+
+    // Specify your library as an import
     InputModule,
     ButtonModule
   ],

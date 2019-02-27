@@ -13,7 +13,7 @@ async function main() {
   commit = commit.slice(0, 7);
 
   const version = parse(json.version);
-  const newVersion = `${version.major}.${version.minor}.${version.patch}-dev-develop-${commit}`;
+  const newVersion = `${version.major}.${version.minor}.${version.patch}-development-develop-${commit}`;
   console.log('publishing new version', newVersion);
 
   await publishPackagesToNpm(newVersion, 'dev');

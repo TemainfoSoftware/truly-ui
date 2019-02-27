@@ -23,7 +23,7 @@ script:
   - npm run copy:assets
   - npm run copy:marckdowns
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then publish:dev; fi
+  - if [[ "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run publish:dev; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run semantic-release; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run build:showcase; fi
 deploy:

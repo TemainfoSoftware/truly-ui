@@ -10,7 +10,7 @@
 <div *ngIf="type === 'gravatar'"
      [class]="'tl-avatar ' + color + ' ' + shape"
      [style.width]="size">
-  <img [src]="gravatarImg" [style.width]="size" [class]="shape">
+  <img [src]="gravatarImg" [style.width]="size" [style.height]="!isPercentage() ? size : null" [class]="shape">
 </div>
 <div *ngIf="type === 'icon'"
      [class]="'tl-avatar ' + color + ' ' + shape"

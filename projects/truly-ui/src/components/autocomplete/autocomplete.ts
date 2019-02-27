@@ -21,33 +21,34 @@
  */
 import {
   Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
-  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy,
 } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
-import {MakeProvider} from '../core/base/value-accessor-provider';
-import {ElementBase} from '../input/core/element-base';
-import {NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel} from '@angular/forms';
-import {ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
-import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
-import {I18nService} from '../i18n/i18n.service';
-import {AUTOCOMPLETE_CONFIG, AutoCompleteConfig} from './interfaces/autocomplete.config';
-import {DataSourceList} from '../core/classes/datasource-list';
-import {TlItemSelectedDirective} from '../core/directives/itemSelected/item-selected.directive';
-import {scrollIntoView} from '../core/helper/scrollIntoView';
-import {SelectedItemService} from './services/selected-item.service';
+import { MakeProvider } from '../core/base/value-accessor-provider';
+import { ElementBase } from '../input/core/element-base';
+import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { I18nService } from '../i18n/i18n.service';
+import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './interfaces/autocomplete.config';
+import { DataSourceList } from '../core/classes/datasource-list';
+import { TlItemSelectedDirective } from '../core/directives/itemSelected/item-selected.directive';
+import { scrollIntoView } from '../core/helper/scrollIntoView';
+import { SelectedItemService } from './services/selected-item.service';
+import { Subscription } from 'rxjs';
 
-@Component({
+@Component( {
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
-  styleUrls: ['./autocomplete.scss'],
-  providers: [MakeProvider(TlAutoComplete), SelectedItemService],
-})
-export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
+  styleUrls: [ './autocomplete.scss' ],
+  providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
+} )
+export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
-  @Input('data')
-  set data(value) {
+  @Input( 'data' )
+  set data( value ) {
     this._data = value;
   }
 
@@ -95,13 +96,13 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(NgModel) model: NgModel;
+  @ViewChild( NgModel ) model: NgModel;
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild( 'input' ) input: ElementRef;
 
-  @ViewChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+  @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
-  @ViewChildren(TlItemSelectedDirective) listItems: QueryList<TlItemSelectedDirective>;
+  @ViewChildren( TlItemSelectedDirective ) listItems: QueryList<TlItemSelectedDirective>;
 
   public keyManager: ActiveDescendantKeyManager<TlItemSelectedDirective>;
 
@@ -115,7 +116,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   public nothingFound = false;
 
-  public searchControl = new FormControl('');
+  public searchControl = new FormControl( '' );
 
   public messageLoading = this.i18n.getLocale().AutoComplete.messageLoading;
 
@@ -127,185 +128,196 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private lastItemScrolled = 0;
 
+  private subscription: Subscription = new Subscription();
+
   private _data = [];
 
-  constructor(@Optional() @Inject(NG_VALIDATORS) validators: Array<any>,
-              @Optional() @Inject(AUTOCOMPLETE_CONFIG) autoCompleteConfig: AutoCompleteConfig,
-              @Optional() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<any>,
-              private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService) {
-    super(validators, asyncValidators);
-    this.setOptions(autoCompleteConfig);
+  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
+               @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
+               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
+               private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService ) {
+    super( validators, asyncValidators );
+    this.setOptions( autoCompleteConfig );
   }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    this.keyManager = new ActiveDescendantKeyManager(this.listItems);
+    this.keyManager = new ActiveDescendantKeyManager( this.listItems );
     this.handleModel();
     this.validateKeyValue();
     this.change.detectChanges();
   }
 
   private validateKeyValue() {
-    if (!this.isModelModeString() && !this.keyValue && !this.identifier) {
-      throw Error('The AutoComplete should have an [identifier] key property, ' +
-        ' because the property [keyValue] is null and the list is working on [modelMode] \'object\'');
+    if ( !this.isModelModeString() && !this.keyValue && !this.identifier ) {
+      throw Error( 'The AutoComplete should have an [identifier] key property, ' +
+        ' because the property [keyValue] is null and the list is working on [modelMode] \'object\'' );
     }
   }
 
   private handleModel() {
-    this.model.valueChanges.subscribe(() => {
-      if (this.dataSource) {
+    this.model.valueChanges.subscribe( () => {
+      if ( this.dataSource ) {
         this.handleModelLazy();
         this.handleModelCached();
       }
-    });
+    } );
   }
 
   private handleItemSelected() {
-    if (this.itemSelectedService.itemSelected) {
-      this.scrollToIndex().then(value => {
-        setTimeout(() => {
-          this.keyManager.setActiveItem(this.itemSelectedService.itemSelected.indexSelected);
-        }, 200);
-      });
+    if ( this.itemSelectedService.itemSelected ) {
+      this.scrollToIndex().then( value => {
+        setTimeout( () => {
+          this.keyManager.setActiveItem( this.itemSelectedService.itemSelected.indexSelected );
+        }, 200 );
+      } );
     }
   }
 
 
   private scrollToIndex() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        this.cdkVirtualScroll.scrollToIndex(this.lastItemScrolled);
+    return new Promise( ( resolve, reject ) => {
+      setTimeout( () => {
+        this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
         this.change.markForCheck();
         resolve();
-      }, 200);
-    });
+      }, 200 );
+    } );
   }
 
 
-  onScrollIndexChange($event) {
-    if ($event > 0) {
+  onScrollIndexChange( $event ) {
+    if ( $event > 0 ) {
       this.lastItemScrolled = $event;
     }
   }
 
   onInput() {
-    this.setIsOpen(true);
-    this.setFiltering(true);
+    this.setIsOpen( true );
+    this.setFiltering( true );
   }
 
   onBackdropClick() {
-    this.setIsOpen(false);
-    this.setFiltering(false);
+    this.setIsOpen( false );
+    this.setFiltering( false );
   }
 
   private handleModelLazy() {
-    if (this.model.value && this.lazyMode && !this.modelInitialized) {
-      if (!this.isModelModeString()) {
-        this.setDescriptionValue(this.model.value[this.keyText]);
+    if ( this.model.value && this.lazyMode && !this.modelInitialized ) {
+      if ( !this.isModelModeString() ) {
+        this.setDescriptionValue( this.model.value[ this.keyText ] );
       } else {
-        console.warn('The item provided is was not found, emitting filter');
-        this.filter.emit(this.getFilters(this.model.value));
+        console.warn( 'The item provided is was not found, emitting filter' );
+        this.filter.emit( this.getFilters( this.model.value ) );
       }
-      this.handleKeyModelValue(this.model.value);
+      this.handleKeyModelValue( this.model.value );
     }
   }
 
-  private setDescriptionValue(value: string) {
+  private setDescriptionValue( value: string ) {
     this.input.nativeElement.value = value;
   }
 
   private handleModelCached() {
-    this.dataSource.getCachedData().forEach((value) => {
-      if (this.model.value) {
-        if (String(this.getItemCompare(value)) === String(this.getCompareModel())) {
-          this.setDescriptionValue(value[this.keyText]);
-          this.handleKeyModelValue(value);
+    this.dataSource.getCachedData().forEach( ( value ) => {
+      if ( this.model.value ) {
+        if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
+          this.setDescriptionValue( value[ this.keyText ] );
+          this.handleKeyModelValue( value );
         }
       }
-    });
+    } );
   }
 
-  private getItemCompare(value) {
-    if (!this.keyValue || this.isModelModeString()) {
-      return value[this.identifier];
+  private getItemCompare( value ) {
+    if ( !this.keyValue || this.isModelModeString() ) {
+      return value[ this.identifier ];
     }
-    return value[this.keyValue];
+    return value[ this.keyValue ];
   }
 
-  private handleKeyModelValue(value) {
+  private handleKeyModelValue( value ) {
     this.modelInitialized = true;
-    if (!this.isModelModeString() && this.keyValue) {
-      this.value = value[this.keyValue];
+    if ( !this.isModelModeString() && this.keyValue ) {
+      this.value = value[ this.keyValue ];
       return;
     }
-    if (this.isModelModeString() && !this.keyValue) {
-      this.value = value[this.identifier];
+    if ( this.isModelModeString() && !this.keyValue ) {
+      this.value = value[ this.identifier ];
       return;
     }
-    if (this.isModelModeString() && this.keyValue) {
-      this.value = value[this.keyValue];
+    if ( this.isModelModeString() && this.keyValue ) {
+      this.value = value[ this.keyValue ];
       return;
     }
     this.value = value;
   }
 
-  private setOptions(options: AutoCompleteConfig) {
-    if (options) {
+  private setOptions( options: AutoCompleteConfig ) {
+    if ( options ) {
       const self = this;
-      Object.keys(options).forEach(function (key) {
-        self[key] = options[key];
-      });
+      Object.keys( options ).forEach( function ( key ) {
+        self[ key ] = options[ key ];
+      } );
     }
   }
 
-  private setSelected(item: TlItemSelectedDirective) {
-    this.keyManager.setActiveItem(item);
+  private setSelected( item: TlItemSelectedDirective ) {
+    this.keyManager.setActiveItem( item );
     this.itemSelectedService.itemSelected = item;
   }
 
-  stopEvent($event) {
+  stopEvent( $event ) {
     $event.preventDefault();
     $event.stopPropagation();
   }
 
-  handleKeyArrowDown($event) {
-    if (this.isOpen) {
-      this.stopEvent($event);
+  handleKeyArrowDown( $event ) {
+    this.handleEventOpenList( $event );
+    if ( !this.keyManager.activeItem ) {
+      this.keyManager.setFirstItemActive();
+      return;
     }
-    this.keyManager.onKeydown($event);
-    scrollIntoView(this.keyManager.activeItem.element.nativeElement);
-
+    this.keyManager.onKeydown( $event );
+    scrollIntoView( this.keyManager.activeItem.element.nativeElement );
   }
 
-  handleKeyArrowUp($event) {
-    if (this.isOpen) {
-      this.stopEvent($event);
+  handleKeyArrowUp( $event ) {
+    this.handleEventOpenList( $event );
+    if ( !this.keyManager.activeItem ) {
+      this.keyManager.setFirstItemActive();
+      return;
     }
-    this.keyManager.onKeydown($event);
-    scrollIntoView(this.keyManager.activeItem.element.nativeElement);
+    this.keyManager.onKeydown( $event );
+    scrollIntoView( this.keyManager.activeItem.element.nativeElement );
   }
 
-  handleKeyEscape($event) {
+  handleEventOpenList( $event ) {
+    if ( this.isOpen ) {
+      this.stopEvent( $event );
+    }
+  }
+
+  handleKeyEscape( $event ) {
     $event.stopPropagation();
-    this.setIsOpen(false);
+    this.setIsOpen( false );
   }
 
   handleBlur() {
-    if (this.keyManager.activeItem && this.isOpen) {
-      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem);
-      this.setDescriptionValue(this.keyManager.activeItem.itemSelected[this.keyText]);
-      this.handleKeyModelValue(this.keyManager.activeItem.itemSelected);
+    if ( this.keyManager.activeItem && this.isOpen ) {
+      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
+      this.setDescriptionValue( this.keyManager.activeItem.itemSelected[ this.keyText ] );
+      this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
     }
-    this.setIsOpen(false);
+    this.setIsOpen( false );
   }
 
   handleFocus() {
     this.focused = true;
-    if (this.openFocus && !this.keyManager.activeItem) {
-      this.setIsOpen(true);
+    if ( this.openFocus && !this.keyManager.activeItem ) {
+      this.setIsOpen( true );
     }
   }
 
@@ -314,55 +326,63 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getCompareModel() {
-    if (this.keyValue && !this.isModelModeString()) {
-      return this.model.value[this.keyValue];
+    if ( this.keyValue && !this.isModelModeString() ) {
+      return this.model.value[ this.keyValue ];
     }
-    if (!this.isModelModeString() && !this.keyValue) {
-      return this.model.value[this.identifier];
+    if ( !this.isModelModeString() && !this.keyValue ) {
+      return this.model.value[ this.identifier ];
     }
     return this.model.value;
   }
 
-  selectItem(value: any, item: TlItemSelectedDirective) {
-    this.setDescriptionValue(value[this.keyText]);
-    this.handleKeyModelValue(value);
+  selectItem( value: any, item: TlItemSelectedDirective ) {
+    this.setDescriptionValue( value[ this.keyText ] );
+    this.handleKeyModelValue( value );
     this.input.nativeElement.focus();
-    this.select.emit(value);
-    this.setIsOpen(false);
-    this.setSelected(item);
+    this.select.emit( value );
+    this.setIsOpen( false );
+    this.setSelected( item );
     this.change.detectChanges();
   }
 
-  private setUpData(value?) {
-    if (!this.dataSource) {
-      this.dataSource = new DataSourceList({
+  private setUpData( value? ) {
+    if ( !this.dataSource ) {
+      this.dataSource = new DataSourceList( {
         dataSource: value,
         pageSize: this.rowsPage,
         totalLength: this.totalLength,
         lazyMode: this.lazyMode
-      });
-      this.dataSource.addPage(0);
+      } );
+      this.listenLoadData();
     }
-    this.listenLoadData();
-    this.setNotFound(false);
-    this.dataSource.setData(value);
+    this.dataSource.setData( value );
+    this.setNotFound( value.length === 0 );
+    this.setFirstItemActive();
+  }
+
+  private setFirstItemActive() {
+    if ( this.keyManager ) {
+      setTimeout( () => {
+        this.keyManager.setFirstItemActive();
+      }, 100 );
+    }
   }
 
   private listenLoadData() {
-    if (!this.dataSource) {
+    if ( !this.dataSource ) {
       return;
     }
-    this.dataSource.loadMoreData.subscribe((data: any) => {
-      this.lazyLoad.emit({skip: data.skip, limit: data.limit, ...this.getFilters(this.searchControl.value)});
-    });
+    this.subscription.add(this.dataSource.loadMoreData.subscribe( ( data: any ) => {
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.searchControl.value ) } );
+    } ));
   }
 
-  onPositionChange($event: ConnectedOverlayPositionChange) {
+  onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
     this.change.detectChanges();
   }
 
-  private setIsOpen(value: boolean) {
+  private setIsOpen( value: boolean ) {
     this.isOpen = value;
   }
 
@@ -372,61 +392,59 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.handleItemSelected();
   }
 
-  private getFilters(term: string) {
+  private getFilters( term: string ) {
     const fields = {};
-    fields[this.searchBy] = {matchMode: 'contains', value: term};
-    return {fields: fields, operator: 'or'};
+    fields[ this.searchBy ] = { matchMode: 'contains', value: term };
+    return { fields: fields, operator: 'or' };
   }
 
   private setScrollVirtual() {
     this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
   }
 
-  onFilter($event) {
+  onFilter( $event ) {
     this.setScrollVirtual();
-    this.setFiltering(true);
-    if (this.lazyMode) {
-      this.filter.emit(this.getFilters($event));
+    this.setFiltering( true );
+    this.dataSource.resetPages();
+    if ( this.lazyMode ) {
+      this.filter.emit( this.getFilters( $event ) );
       return;
     }
-    if ($event) {
-      this.setUpData($event);
-      this.dataSource.dataStream.next($event);
-      setTimeout(() => {
-        this.setSelected(this.listItems.toArray()[0]);
-      }, 100);
+    if ( $event ) {
+      this.dataSource.setArray( $event );
+      this.setUpData( $event );
+      setTimeout( () => {
+        this.setSelected( this.listItems.toArray()[ 0 ] );
+      }, 100 );
       return;
     }
-    this.dataSource.dataStream.next([]);
-    this.setNotFound(true);
+    this.dataSource.setData( $event );
+    this.setNotFound( true );
   }
 
-  private setFiltering(value: boolean) {
+  private setFiltering( value: boolean ) {
     this.filtering = value;
   }
 
-  private setNotFound(value: boolean) {
+  private setNotFound( value: boolean ) {
     this.nothingFound = value;
   }
 
-  ngOnChanges({data, totalLength}: any) {
-    if (data && !data['firstChange'] && this.lazyMode) {
-      this.setUpData(data['currentValue']);
-      this.dataSource.dataStream.next(data['currentValue']);
+  ngOnChanges( { data, totalLength }: any ) {
+    if ( totalLength && !totalLength[ 'firstChange' ] ) {
+      this.dataSource.setArray( totalLength[ 'currentValue' ] );
+    }
+    if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
+      this.setUpData( data[ 'currentValue' ] );
       return;
     }
-    if (data && data['currentValue']) {
-      this.setUpData(data['currentValue']);
+    if ( data && data[ 'currentValue' ] && !this.lazyMode ) {
+      this.setUpData( data[ 'currentValue' ] );
     }
-    if (totalLength && !totalLength['firstChange']) {
-      this.dataSource.setArray(totalLength['currentValue']);
-    }
-    if (this.filtering) {
-      this.setUpData(data['currentValue']);
-      this.dataSource.addPage(0);
-      this.dataSource.dataStream.next(data['currentValue']);
-      this.listenLoadData();
-    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -145,7 +145,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager( this.listItems );
-    this.handleModel();
+    this.listenModelChanges();
+    this.handleModelLazy();
+    this.handleModelCached();
     this.validateKeyValue();
     this.change.detectChanges();
   }
@@ -157,7 +159,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     }
   }
 
-  private handleModel() {
+  private listenModelChanges() {
     this.model.valueChanges.subscribe( () => {
       if ( this.dataSource ) {
         this.handleModelLazy();
@@ -205,14 +207,14 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleModelLazy() {
-    if ( this.model.value && this.lazyMode && !this.modelInitialized ) {
+    if ( this.value && this.lazyMode && !this.modelInitialized ) {
       if ( !this.isModelModeString() ) {
-        this.setDescriptionValue( this.model.value[ this.keyText ] );
+        this.setDescriptionValue( this.value[ this.keyText ] );
       } else {
         console.warn( 'The item provided is was not found, emitting filter' );
-        this.filter.emit( this.getFilters( this.model.value ) );
+        this.filter.emit( this.getFilters( this.value ) );
       }
-      this.handleKeyModelValue( this.model.value );
+      this.handleKeyModelValue( this.value );
     }
   }
 

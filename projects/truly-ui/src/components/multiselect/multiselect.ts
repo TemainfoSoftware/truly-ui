@@ -150,6 +150,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   ngAfterViewInit() {
+    this.validateHasModel();
     this.setControl();
     this.setRequired();
     this.setDisabled();

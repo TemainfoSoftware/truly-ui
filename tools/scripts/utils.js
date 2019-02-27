@@ -18,7 +18,7 @@ module.exports = {
   publishPackagesToNpm: async (version, tag) => {
     const buildPath = resolve(__dirname, '../../dist/');
     const packageDescription = `${buildPath} ${version} @${tag}`;
-    const script = `npm publish --access public --non-interactive --no-git-tag-version --new-version ${version} --tag ${tag}`;
+    const script = `npm publish --access public --tag ${tag}`;
 
     await module.exports.execute(script, { cwd: buildPath })
       .then(( output )=>{

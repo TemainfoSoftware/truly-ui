@@ -12,11 +12,12 @@ async function main() {
   // shorten commit
   commit = commit.slice(0, 7);
 
-  const version = parse(json.version);
-  const newVersion = `${version.major}.${version.minor}.${version.patch}-development.develop-${commit}`;
-  console.log('publishing new version', newVersion);
+  await execute(`npm view ${json.name} version`).then( async ( version )=> {
+    const newVersion = (version + '-develop-' + commit);
+    console.log('publishing new version', newVersion);
+    await publishPackagesToNpm(newVersion, 'dev');
+  });
 
-  await publishPackagesToNpm(newVersion, 'dev');
 }
 
 main();

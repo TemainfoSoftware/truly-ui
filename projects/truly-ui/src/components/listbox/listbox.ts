@@ -186,6 +186,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     } else {
       this.loading = false;
       this.nothingFound = true;
+      this.dataSource.dataStream.next([]);
     }
   }
 

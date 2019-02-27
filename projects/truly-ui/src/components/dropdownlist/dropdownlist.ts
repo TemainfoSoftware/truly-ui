@@ -185,7 +185,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.modelMode === 'string';
   }
 
-  private handleOpenList( $event ) {
+  public handleOpenList( $event ) {
     this.stopEvent( $event );
     if ( !this.isOpen && !this.disabled ) {
       this.isOpen = true;

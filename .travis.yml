@@ -26,6 +26,8 @@ after_success:
   - if [[ "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run publish:dev; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run semantic-release; fi
   - if [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then npm run build:showcase; fi
+before_deploy:
+  - if [[ "$TRAVIS_BRANCH" == "develop" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then cd dist; fi
 deploy:
   - provider: s3
     local_dir: showcase
@@ -35,6 +37,13 @@ deploy:
     bucket: "truly-ui.com"
     region: us-east-1
     acl: public_read
+  - provider: npm
+    skip_cleanup: true
+    email: "truly@temainfo.com.br"
+    api_key: $NPM_TOKEN
+    tag: dev
+    on:
+      branch: develop
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

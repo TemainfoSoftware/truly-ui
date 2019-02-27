@@ -15,11 +15,9 @@ async function main() {
   commit = commit.slice(0, 7);
 
   await execute(`npm view ${json.name} version`).then( async ( version ) => {
-    console.log( buildPath);
-    await execute(`npm version ${version}`, { cwd: buildPath }).then( async () => {
-      const newVersion = (version + '-develop-' + commit);
-      console.log('publishing new version', newVersion);
-      await publishPackagesToNpm(newVersion, 'dev');
+    const newVersion = (version.replace(/\n|\r/g, "") + '-dev-' + commit);
+    await execute(`npm version ${newVersion}`, { cwd: buildPath }).then( async () => {
+      console.log('Publishing new version', newVersion);
     });
   });
 

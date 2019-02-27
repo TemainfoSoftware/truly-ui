@@ -312,6 +312,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
       this.setDescriptionValue( this.keyManager.activeItem.itemSelected[ this.keyText ] );
       this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
+      this.select.emit( this.keyManager.activeItem.itemSelected );
     }
     this.setIsOpen( false );
   }

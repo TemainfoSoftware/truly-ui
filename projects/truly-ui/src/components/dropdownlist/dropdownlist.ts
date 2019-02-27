@@ -65,7 +65,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'debounceTime' ) debounceTime = 200;
 
-  @Input( 'disabled' ) disabled = true;
+  @Input( 'disabled' ) disabled = false;
 
   @Input( 'labelPlacement' ) labelPlacement = 'left';
 
@@ -136,17 +136,24 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
-      if ( (item[ this.keyText ].substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
+      if ( (this.getItemText(item).substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
         filter.push( item );
       }
     } );
     this.datasource = filter;
   }
 
+  getItemText(item) {
+    if (this.typeOfData === 'simple') {
+      return item;
+    }
+    return item[ this.keyText ];
+  }
+
   onKeyDown( $event ) {
     this.handleSelectInLetter( $event.key );
     const keyEvent = {
-      [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
+      [KeyEvent.SPACE]: () => this.handleOpenList( $event ),
       [KeyEvent.ARROWDOWN]: () => this.stopEvent( $event ),
       [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
     };
@@ -178,10 +185,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.modelMode === 'string';
   }
 
-  private handleKeySpace( $event ) {
+  private handleOpenList( $event ) {
     this.stopEvent( $event );
-    if ( !this.isOpen ) {
+    if ( !this.isOpen && !this.disabled ) {
       this.isOpen = true;
+      this.setUpComponent();
     }
   }
 
@@ -193,8 +201,9 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   private setUpComponent() {
     this.datasource = this.data;
-    this.disabled = false;
-    this.isLoading = false;
+    if (this.data.length > 0) {
+      this.isLoading = false;
+    }
   }
 
   private validateData() {

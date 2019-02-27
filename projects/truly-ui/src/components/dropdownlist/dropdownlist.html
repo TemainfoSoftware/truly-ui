@@ -10,7 +10,8 @@
          #wrapper
          readonly
          #trigger="cdkOverlayOrigin"
-         (click)="!disabled ? isOpen = !isOpen : null"
+         [attr.disabled]="disabled ? true : null"
+         (click)="handleOpenList($event)"
          (keydown)="onKeyDown($event)"
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
          [ngClass]="{ 'ng-invalid' : model?.invalid || controlName?.invalid }"

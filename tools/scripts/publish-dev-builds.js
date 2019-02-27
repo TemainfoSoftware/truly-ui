@@ -1,5 +1,4 @@
-const { parse } = require('semver');
-const { execute, publishPackagesToNpm } = require('./utils');
+const { execute } = require('./utils');
 const { resolve } = require('path');
 
 async function main() {

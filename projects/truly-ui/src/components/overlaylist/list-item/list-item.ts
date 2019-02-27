@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
 
 @Component( {
@@ -29,15 +29,13 @@ import { Highlightable } from '@angular/cdk/a11y';
 } )
 export class TlListItem implements Highlightable {
 
-  constructor() {}
-
-  public selected = false;
-
   @Input() item;
 
   @Input() disabled = false;
 
   @Input() height = '30px';
+
+  public selected = false;
 
   @ViewChild('listElement') element: ElementRef;
 

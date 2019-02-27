@@ -38,6 +38,7 @@
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase && npm run copy:marckdowns && npm run copy:assets",
     "copy:assets": "node ./tools/scripts/copy-assets.js",
     "copy:marckdowns": "node ./tools/scripts/copy-marckdowns-assets.js",
+    "publish:dev": "node ./tools/scripts/publish-dev-builds.js",
     "semantic-release": "semantic-release"
   },
   "private": false,
@@ -72,7 +73,6 @@
     "@angular/cdk": "~7.1.0",
     "@angular/common": "~7.1.0",
     "@angular/core": "~7.1.0",
-    "@angular/animations ": "~7.1.0",
     "@types/object-path": "^0.11.0",
     "object-path": "^0.11.4",
     "reflect-metadata": "^0.1.12",
@@ -104,6 +104,7 @@
     "protractor": "~5.4.1",
     "rimraf": "^2.6.2",
     "semantic-release": "^15.12.1",
+    "semver": "^5.6.0",
     "ts-node": "^7.0.1",
     "tsickle": "^0.34.0",
     "tslib": "^1.9.3",

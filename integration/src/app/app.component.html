@@ -1,0 +1,36 @@
+<div class="wrapper">
+  <img src="https://raw.githubusercontent.com/TemainfoSoftware/truly-ui/develop/src/assets/img/logo-readme.svg?sanitize=true" width="500" style="max-width:100%;">
+  <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+    <div class="input-gap">
+      <tl-input formControlName="user"
+                [showValidations]="true"
+                [height]="'40px'"
+                [placeholder]="'User'"
+                [iconBefore]="'fas fa-user'"></tl-input>
+    </div>
+    <div class="input-gap">
+      <tl-input formControlName="email"
+                [showValidations]="true"
+                [height]="'40px'"
+                [placeholder]="'Email'"
+                [iconBefore]="'fas fa-envelope'"></tl-input>
+    </div>
+    <div class="input-gap">
+      <tl-input formControlName="password"
+                type="password"
+                [showValidations]="true"
+                [height]="'40px'"
+                [placeholder]="'Password'"
+                [iconBefore]="'fas fa-lock'"></tl-input>
+    </div>
+    <div class="button">
+      <tl-button type="submit"
+                 [text]="'Register'"
+                 [width]="'100%'"
+                 [height]="'40px'"
+                 [iconAddonBefore]="'fas fa-paper-plane'"
+                 [color]="'primary'"
+                 [disabled]="!form.valid"></tl-button>
+    </div>
+  </form>
+</div>

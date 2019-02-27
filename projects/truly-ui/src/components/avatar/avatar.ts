@@ -132,7 +132,7 @@ export class TlAvatar implements OnInit, OnChanges {
     this.type = 'text';
   }
 
-  private isPercentage() {
+  public isPercentage() {
     return this.size.substr(this.size.length - 1) === '%';
   }
 

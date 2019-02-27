@@ -9,6 +9,7 @@
   "coveragePathIgnorePatterns":[
     "<rootDir>/node_modules/",
     "<rootDir>/demo/",
+    "<rootDir>/integration/",
     "<rootDir>/dist/",
     "<rootDir>/src/*.d.ts"
   ],
@@ -19,6 +20,7 @@
     "<rootDir>/demo/",
     "<rootDir>/docs/",
     "<rootDir>/dist/",
+    "<rootDir>/integration/",
     "<rootDir>/node_modules/",
     "<rootDir>/e2e/",
     "<rootDir>/tools/"

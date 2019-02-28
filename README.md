@@ -55,7 +55,7 @@
 - ✨ Learn about it on the [docs site](http://truly-ui.com/)
 - 🚀 See it in action on [Stackblitz](https://stackblitz.com/edit/truly-ui-simple)
 - 😎 Checkout the [sample application](integration)
-- 📝 Learn about updates from the [changelog](CHANGELOG.md)
+- 📝 Learn about updates from the [changelog](https://github.com/TemainfoSoftware/truly-ui/releases)
 - 💬 Get to know the latest news first through [slack](https://trulyui.slack.com)
 
 

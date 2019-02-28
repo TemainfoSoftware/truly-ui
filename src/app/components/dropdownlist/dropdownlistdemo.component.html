@@ -87,7 +87,7 @@
             <div class="col-md-6">
               <h6>Label</h6>
               <tl-dropdown-list [data]="data"
-                                [label]="'Label keyText'"
+                                [label]="'Label'"
                                 [labelSize]="'80px'"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
@@ -98,7 +98,7 @@
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [label]="'Label keyText'"
+  [label]="'Label'"
   [labelSize]="'80px'"
   [keyText]="'textItem'"
   [keyValue]="'value'"
@@ -107,7 +107,7 @@
 </textarea>
             </div>
             <div class="col-md-6">
-              <h6>Height</h6>
+              <h6>Custom Height</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [itemHeight]="'30px'"
@@ -131,11 +131,12 @@
           </app-card>
           <app-card>
             <div class="col-md-6">
-              <h6>Width + Filter</h6>
+              <h6>Custom Width + Filter</h6>
               <tl-dropdown-list [data]="data"
                                 [placeholder]="'Select item'"
                                 [width]="'180px'"
                                 [searchOnList]="true"
+                                [groupBy]="'olhos'"
                                 [keyText]="'textItem'"
                                 [keyValue]="'value'"
                                 [(ngModel)]="itemSelected7">
@@ -170,9 +171,10 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-dropdown-list
   [data]="data"
-  [label]="'Label keyText'"
+  [label]="'Label'"
   [labelSize]="'80px'"
-  [labelPlacement]="top"
+  [labelPlacement]="'top'"
+  required
   [keyText]="'textItem'"
   [keyValue]="'value'"
   [(ngModel)]="itemSelected9">
@@ -196,11 +198,52 @@
             </div>
             <div class="col-md-6">
               <h6>Simple Data</h6>
-              <tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
-              <app-showcase-returned-value [value]="itemSelected8 | json"></app-showcase-returned-value>
+              <tl-dropdown-list [data]="[ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5' ]" [(ngModel)]="itemSelected8"></tl-dropdown-list>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-dropdown-list [data]="simpleData" [(ngModel)]="itemSelected8"></tl-dropdown-list>
+<tl-dropdown-list [data]="[ 'Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5' ]" [(ngModel)]="itemSelected8"></tl-dropdown-list>
+</textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h6>GroupBy</h6>
+              <tl-dropdown-list [data]="groupData"
+                                [placeholder]="'Select item'"
+                                [keyText]="'textItem'"
+                                [groupBy]="'gender'"
+                                [keyValue]="'value'">
+              </tl-dropdown-list>
+              <div class="spacer"></div>
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list
+  [data]="groupData"
+  [placeholder]="'Select item'"
+  [keyText]="'textItem'"
+  [groupBy]="'gender'"
+  [keyValue]="'value'">
+</tl-dropdown-list>
+</textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>Custom With Icon</h6>
+              <tl-dropdown-list [data]="dataWithIcon"
+                                [placeholder]="'Select item'"
+                                [keyText]="'textItem'"
+                                [icon]="'icon'"
+                                [groupBy]="'gender'"
+                                [keyValue]="'value'">
+              </tl-dropdown-list>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-dropdown-list
+  [data]="groupData"
+  [placeholder]="'Select item'"
+  [keyText]="'textItem'"
+  [icon]="'icon'"
+  [groupBy]="'gender'"
+  [keyValue]="'value'">
+</tl-dropdown-list>
 </textarea>
             </div>
           </app-card>
@@ -208,18 +251,14 @@
         <app-showcase-card [title]="'Important'" [icon]="'ion ion-ios-information-circle'">
           <app-card>
             <div class="col-12">
-              <h4>Use DropdownList As Simple Array</h4>
+              <h5>Use DropdownList As Simple Array</h5>
               <h6>There's <code>TWO</code> ways to use DropdownList, the first one is using an <code>Simple Array of Objects</code>, passing only the data that
                 you want to. For Example:</h6>
               <textarea highlight-js [options]="{}" [lang]="'typescript'">
-[
-  { 'William', 'King', 'contact@domain.com' },
-  { 'James', 'King', 'contact@domain.com' },
-  { 'Anne', 'King', 'contact@domain.com' },
-];
+[ 'William', 'James', 'Anne', 'Sara' ]
     </textarea>
               <hr>
-              <h4>Use DropdownList As Complex Array</h4>
+              <h5>Use DropdownList As Complex Array</h5>
               <h6>The other one is a <code>Complex Array of Objects</code> where you <code>must</code> pass a pattern to the component.</h6>
               <code> Note: The Keys inside those objects can be custom, referenced through the properties.</code>
               <textarea highlight-js [options]="{}" [lang]="'typescript'">

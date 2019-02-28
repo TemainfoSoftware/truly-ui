@@ -55,13 +55,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'data' ) data: any[] = [];
 
-  @Input( 'keyText' ) keyText = 'keyText';
+  @Input( 'keyText' ) keyText = null;
 
   @Input( 'icon' ) icon = null;
 
   @Input( 'label' ) label: string;
-
-  @Input( 'showOnlyIcon' ) showOnlyIcon = false;
 
   @Input( 'debounceTime' ) debounceTime = 200;
 
@@ -79,8 +77,6 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'identifier' ) identifier = null;
 
-  @Input( 'preSelected' ) preSelected = '';
-
   @Input( 'defaultOption' ) defaultOption = false;
 
   @Input( 'groupBy' ) groupBy = null;
@@ -92,8 +88,6 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
 
   @Input( 'searchOnList' ) searchOnList = false;
-
-  @Input( 'placeholderIcon' ) placeholderIcon = 'ion-navicon-round';
 
   @ContentChild( NgModel ) model: NgModel;
 

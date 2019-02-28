@@ -41,7 +41,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   @Input( 'datasource' )
   set dataSource(data) {
     this._datasource = data;
-    this.getGroups();
+    this.getFilteredData();
   }
 
   get dataSource() {
@@ -121,11 +121,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
-    this.getGroups();
+    this.getFilteredData();
   }
 
-  getGroups() {
+  getFilteredData() {
     this.groups = [];
+    this.unGrouped = [];
     this.dataSource.forEach( ( value ) => {
       if (!value[this.groupBy]) {
         this.unGrouped = this.getItemsGroup(value[this.groupBy]);

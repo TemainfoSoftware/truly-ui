@@ -147,7 +147,6 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.keyManager = new ActiveDescendantKeyManager( this.listItems );
     this.listenModelChanges();
     this.handleModelLazy();
-    this.handleModelCached();
     this.validateKeyValue();
     this.change.detectChanges();
   }
@@ -223,14 +222,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   }
 
   private handleModelCached() {
-    this.dataSource.getCachedData().forEach( ( value ) => {
-      if ( this.model.value ) {
-        if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
-          this.setDescriptionValue( value[ this.keyText ] );
-          this.handleKeyModelValue( value );
+    if ( this.dataSource && !this.lazyMode ) {
+      this.dataSource.getCachedData().forEach( ( value ) => {
+        if ( this.value ) {
+          if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
+            this.setDescriptionValue( value[ this.keyText ] );
+            this.handleKeyModelValue( value );
+          }
         }
-      }
-    } );
+      } );
+    }
   }
 
   private getItemCompare( value ) {
@@ -330,12 +331,12 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private getCompareModel() {
     if ( this.keyValue && !this.isModelModeString() ) {
-      return this.model.value[ this.keyValue ];
+      return this.value[ this.keyValue ];
     }
     if ( !this.isModelModeString() && !this.keyValue ) {
-      return this.model.value[ this.identifier ];
+      return this.value[ this.identifier ];
     }
-    return this.model.value;
+    return this.value;
   }
 
   selectItem( value: any, item: TlItemSelectedDirective ) {
@@ -361,6 +362,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     this.dataSource.setData( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
+    this.handleModelCached();
   }
 
   private setFirstItemActive() {
@@ -375,9 +377,9 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
     if ( !this.dataSource ) {
       return;
     }
-    this.subscription.add(this.dataSource.loadMoreData.subscribe( ( data: any ) => {
+    this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
       this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.searchControl.value ) } );
-    } ));
+    } ) );
   }
 
   onPositionChange( $event: ConnectedOverlayPositionChange ) {

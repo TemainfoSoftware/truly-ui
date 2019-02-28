@@ -38,7 +38,15 @@ import { scrollIntoView } from '../core/helper/scrollIntoView';
 } )
 export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
-  @Input( 'datasource' ) datasource = [];
+  @Input( 'datasource' )
+  set dataSource(data) {
+    this._datasource = data;
+    this.getGroups();
+  }
+
+  get dataSource() {
+    return this._datasource;
+  }
 
   @Input( 'searchOnList' ) searchOnList = false;
 
@@ -52,7 +60,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'keyText' ) keyText = 'text';
 
-  @Input() keyIcon = 'icon';
+  @Input( 'groupBy' ) groupBy = null;
+
+  @Input( 'keyIcon' ) keyIcon = 'icon';
 
   @Input( 'icon' ) icon = null;
 
@@ -90,6 +100,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   public notFound = false;
 
+  public groups = [];
+
+  public unGrouped = [];
+
+  private _datasource = [];
+
   get emptyList() {
     return this.i18n.getLocale().OverlayList.emptyList;
   }
@@ -105,6 +121,36 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
+    this.getGroups();
+  }
+
+  getGroups() {
+    this.groups = [];
+    this.dataSource.forEach( ( value ) => {
+      if (!value[this.groupBy]) {
+        this.unGrouped = this.getItemsGroup(value[this.groupBy]);
+        return;
+      }
+      if ( !this.existGroup( value[ this.groupBy ] ) ) {
+        this.groups.push( {
+          description: value[ this.groupBy ],
+          items: this.getItemsGroup( value[ this.groupBy ] )
+        } );
+      }
+    } );
+  }
+
+  existGroup( group ) {
+    for ( const item of this.groups ) {
+      if ( item.description === group ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getItemsGroup( group ) {
+    return this.dataSource.filter( ( item ) => item[ this.groupBy ] === group);
   }
 
   handleCustomInputEvents() {
@@ -128,7 +174,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   hasDataOnDataSource() {
-    return this.datasource.length > 0;
+    return this.dataSource.length > 0;
   }
 
   isKeyCodeEnter($event) {
@@ -211,10 +257,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   keydownSearch( $event ) {
     this.search.emit( $event.target.value );
+    this.unGrouped = [];
   }
 
   setNotFound() {
-    this.notFound = this.datasource.length === 0;
+    this.notFound = this.dataSource.length === 0;
   }
 
   ngOnChanges(changes: SimpleChanges ) {

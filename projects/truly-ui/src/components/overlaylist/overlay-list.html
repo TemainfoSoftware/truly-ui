@@ -10,22 +10,36 @@
     </div>
 
     <section class="dropdown-list-select"
-        (keydown)="handleKeyEvents($event)"
-        (keydown.space)="$event.preventDefault()"
-        (keydown.enter)="emitSelectOption(); $event.preventDefault()"
-        [style.maxHeight]="maxHeight"
-        tabindex="0">
-        <div class="ui-label-notfound" *ngIf="notFound">{{ emptyList }}</div>
-        <div *ngIf="hasDefaultOption"
-             tabindex="-1"
-             class="default-option"
-             (click)="defaultOptionClick()"
-             [style.lineHeight]="itemHeight" [style.height]="itemHeight">
-          <i *ngIf="defaultIcon" class="{{ defaultIcon }}"></i>
-          {{ defaultOptionText }}
-        </div>
-        <tl-list-item *ngFor="let item of datasource; let i = index"
+             (keydown)="handleKeyEvents($event)"
+             (keydown.space)="$event.preventDefault()"
+             (keydown.enter)="emitSelectOption(); $event.preventDefault()"
+             [style.maxHeight]="maxHeight"
+             tabindex="0">
+      <div class="ui-label-notfound" *ngIf="notFound">{{ emptyList }}</div>
+      <div *ngIf="hasDefaultOption"
+           tabindex="-1"
+           class="default-option"
+           (click)="defaultOptionClick()"
+           [style.lineHeight]="itemHeight" [style.height]="itemHeight">
+        <i *ngIf="defaultIcon" class="{{ defaultIcon }}"></i>
+        {{ defaultOptionText }}
+      </div>
+
+      <div *ngFor="let group of groups" class="group-list">
+        <span *ngIf="group.description" class="group-description">{{ group.description }}</span>
+        <tl-list-item *ngFor="let item of group.items; let i = index"
                       [height]="itemHeight"
+                      (keydown)="handleSearchByLetter($event)"
+                      (keydown.enter)="handleClickOption(i, $event)"
+                      (click)="handleClickOption(i, $event)"
+                      [item]="item">
+          <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
+          {{ typeOfData === 'simple' ? item : item[keyText] }}
+        </tl-list-item>
+      </div>
+        <tl-list-item *ngFor="let item of unGrouped; let i = index"
+                      [height]="itemHeight"
+                      [grouped]="false"
                       (keydown)="handleSearchByLetter($event)"
                       (keydown.enter)="handleClickOption(i, $event)"
                       (click)="handleClickOption(i, $event)"

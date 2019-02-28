@@ -33,6 +33,8 @@ export class TlListItem implements Highlightable {
 
   @Input() disabled = false;
 
+  @Input() grouped = true;
+
   @Input() height = '30px';
 
   public selected = false;

@@ -83,6 +83,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'defaultOption' ) defaultOption = false;
 
+  @Input( 'groupBy' ) groupBy = null;
+
   @Input( 'width' ) width = '120px';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
@@ -187,7 +189,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   public handleOpenList( $event ) {
     this.stopEvent( $event );
-    if ( !this.isOpen && !this.disabled ) {
+    if ( !this.isOpen && !this.disabled && !this.isLoading ) {
       this.isOpen = true;
       this.setUpComponent();
     }

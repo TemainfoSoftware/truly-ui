@@ -34,7 +34,7 @@
                       (click)="handleClickOption(i, $event)"
                       [item]="item">
           <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
-          {{ typeOfData === 'simple' ? item : item[keyText] }}
+          {{ getItemText(item) }}
         </tl-list-item>
       </div>
         <tl-list-item *ngFor="let item of unGrouped; let i = index"
@@ -45,7 +45,7 @@
                       (click)="handleClickOption(i, $event)"
                       [item]="item">
           <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
-          {{ typeOfData === 'simple' ? item : item[keyText] }}
+          {{ getItemText(item) }}
         </tl-list-item>
     </section>
   </div>

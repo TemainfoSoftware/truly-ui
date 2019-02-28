@@ -30,6 +30,7 @@ import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { scrollIntoView } from '../core/helper/scrollIntoView';
+import * as objectPath from 'object-path';
 
 @Component( {
   selector: 'tl-overlay-list',
@@ -127,15 +128,19 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   getFilteredData() {
     this.groups = [];
     this.unGrouped = [];
+    if (!this.groupBy) {
+      this.unGrouped = this.dataSource;
+      return;
+    }
     this.dataSource.forEach( ( value ) => {
-      if (!value[this.groupBy]) {
-        this.unGrouped = this.getItemsGroup(value[this.groupBy]);
+      if (!objectPath.get(value, this.groupBy)) {
+        this.unGrouped = this.getItemsGroup(objectPath.get(value, this.groupBy));
         return;
       }
-      if ( !this.existGroup( value[ this.groupBy ] ) ) {
+      if ( !this.existGroup( objectPath.get(value, this.groupBy) ) ) {
         this.groups.push( {
-          description: value[ this.groupBy ],
-          items: this.getItemsGroup( value[ this.groupBy ] )
+          description: objectPath.get(value, this.groupBy),
+          items: this.getItemsGroup( objectPath.get(value, this.groupBy) )
         } );
       }
     } );
@@ -150,8 +155,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     return false;
   }
 
+  getItemText(item) {
+    return this.typeOfData === 'simple' ? item : objectPath.get(item, this.keyText);
+  }
+
   getItemsGroup( group ) {
-    return this.dataSource.filter( ( item ) => item[ this.groupBy ] === group);
+    return this.dataSource.filter( ( item ) => objectPath.get(item, this.groupBy) === group);
   }
 
   handleCustomInputEvents() {

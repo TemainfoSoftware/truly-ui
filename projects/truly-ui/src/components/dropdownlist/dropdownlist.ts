@@ -31,6 +31,8 @@ import {
   ElementRef, OnChanges
 } from '@angular/core';
 
+import * as objectPath from 'object-path';
+
 import { debounceTime } from 'rxjs/internal/operators';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { Subject } from 'rxjs';
@@ -143,7 +145,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     if (this.typeOfData === 'simple') {
       return item;
     }
-    return item[ this.keyText ];
+    return objectPath.get(item, this.keyText);
   }
 
   onKeyDown( $event ) {
@@ -165,7 +167,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   onSelectOption( $event: ListItemInterface ) {
     this.isOpen = false;
     this.optionSelected = $event;
-    this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
+    this.selectedDescription = this.isSimpleData() ? $event.option.item : objectPath.get($event.option.item, this.keyText );
     this.handleKeyModelValue( $event.option.item );
     this.setInputFocus();
   }
@@ -236,7 +238,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     if ( !this.keyValue ) {
       return this.value = itemValue;
     }
-    return this.value = itemValue[ this.keyValue ];
+    return this.value = objectPath.get(itemValue, this.keyValue);
+    console.log('val', this.value);
   }
 
   private getModelValue() {
@@ -269,12 +272,12 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return this.getModel().value;
     }
     if ( !this.keyValue ) {
-      return this.getModel().value[ this.identifier ];
+      return objectPath.get(this.getModel().value, this.identifier);
     }
     if ( this.isModelModeString() ) {
       return this.getModel().value;
     }
-    return this.getModel().value[ this.keyValue ];
+    return objectPath.get(this.getModel().value, this.keyValue);
   }
 
   private getCompare( value ) {
@@ -282,16 +285,16 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return value;
     }
     if ( !this.keyValue ) {
-      return value[ this.identifier ];
+      return objectPath.get(value, this.identifier);
     }
-    return value[ this.keyValue ];
+    return objectPath.get(value, this.keyValue );
   }
 
   private getDescription( value ) {
     if ( this.isSimpleData() ) {
       return value;
     }
-    return value[ this.keyText ];
+    return objectPath.get(value, this.keyText );
   }
 
   private handleSelectInLetter( keyInput: string ) {
@@ -324,7 +327,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getFirstLetterOfItem( item ): string {
-    return String( item[ this.keyText ] ).substring( 0, 1 ).toLowerCase();
+    return String( objectPath.get(item, this.keyText ) ).substring( 0, 1 ).toLowerCase();
   }
 
   ngOnChanges( changes ) {

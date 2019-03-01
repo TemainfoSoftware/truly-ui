@@ -57,6 +57,11 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     bottom: 0;
   }
 
+  .ui-loading-icon {
+    z-index: 1;
+    right: 35px;
+  }
+
   tl-icon {
     position: absolute;
     right: 5px;

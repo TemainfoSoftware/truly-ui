@@ -6,6 +6,7 @@
             [labelSize]="labelSize"
             [labelTitle]="label">
   </tl-label>
+  <div class="ui-dropdown-wrapper">
   <input cdkOverlayOrigin
          #wrapper
          readonly
@@ -16,12 +17,14 @@
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
          [ngClass]="{ 'ng-invalid' : model?.invalid || controlName?.invalid }"
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
-         class="ui-dropdown-wrapper">
+         class="ui-dropdown">
         <div class="ui-dropdown-icon"
+             [style.height]="itemHeight"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{ 'disabled': disabled, 'ng-invalid' : model?.invalid || controlName?.invalid }">
           <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
         </div>
+  </div>
   <input readonly notform class="ui-hidden-input" [(ngModel)]="value">
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"

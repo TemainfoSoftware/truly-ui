@@ -26,6 +26,7 @@ import { Highlightable } from '@angular/cdk/a11y';
   selector: 'tl-list-item',
   templateUrl: './list-item.html',
   styleUrls: [ './list-item.scss' ],
+  exportAs: 'listItem'
 } )
 export class TlListItem implements Highlightable {
 

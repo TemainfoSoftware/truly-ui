@@ -27,22 +27,24 @@
 
       <div *ngFor="let group of groups" class="group-list">
         <span *ngIf="group.description" class="group-description">{{ group.description }}</span>
-        <tl-list-item *ngFor="let item of group.items; let i = index"
+        <tl-list-item *ngFor="let item of group.items"
                       [height]="itemHeight"
+                      #listItem="listItem"
                       (keydown)="handleSearchByLetter($event)"
-                      (keydown.enter)="handleClickOption(i, $event)"
-                      (click)="handleClickOption(i, $event)"
+                      (keydown.enter)="handleClickOption($event, listItem)"
+                      (click)="handleClickOption($event, listItem)"
                       [item]="item">
           <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
           {{ getItemText(item) }}
         </tl-list-item>
       </div>
-        <tl-list-item *ngFor="let item of unGrouped; let i = index"
+        <tl-list-item *ngFor="let item of unGrouped"
                       [height]="itemHeight"
                       [grouped]="false"
+                      #listItem="listItem"
                       (keydown)="handleSearchByLetter($event)"
-                      (keydown.enter)="handleClickOption(i, $event)"
-                      (click)="handleClickOption(i, $event)"
+                      (keydown.enter)="handleClickOption($event, listItem)"
+                      (click)="handleClickOption($event, listItem)"
                       [item]="item">
           <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
           {{ getItemText(item) }}

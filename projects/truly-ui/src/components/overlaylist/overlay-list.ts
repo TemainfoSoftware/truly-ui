@@ -107,6 +107,8 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   private _datasource = [];
 
+  private numberItems = 0;
+
   get emptyList() {
     return this.i18n.getLocale().OverlayList.emptyList;
   }
@@ -160,7 +162,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   getItemsGroup( group ) {
-    return this.dataSource.filter( ( item ) => objectPath.get(item, this.groupBy) === group);
+    const filter = this.dataSource.filter( ( item ) => objectPath.get(item, this.groupBy) === group);
+    this.numberItems += filter.length;
+    return filter;
   }
 
   handleCustomInputEvents() {
@@ -243,9 +247,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.findByLetter.emit($event.key);
   }
 
-  handleClickOption( index: number, $event ) {
+  handleClickOption( $event, item: TlListItem ) {
     this.stopEvent($event);
-    this.keyManager.setActiveItem( index );
+    this.keyManager.setActiveItem( item );
     this.emitSelectOption();
   }
 

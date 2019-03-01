@@ -24,12 +24,12 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { ShowcaseCardComponent } from './showcase-card.component';
-import { CardComponent } from './card/card.component';
+import { ShowcaseCardItemComponent } from './card/showcase-card-item.component';
 
 @NgModule({
   declarations: [
     ShowcaseCardComponent,
-    CardComponent
+    ShowcaseCardItemComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +37,7 @@ import { CardComponent } from './card/card.component';
   ],
   exports: [
     ShowcaseCardComponent,
-    CardComponent
+    ShowcaseCardItemComponent
   ]
 })
 export class ShowcaseCardModule {}

@@ -39,13 +39,15 @@ import { scrollIntoView } from '../core/helper/scrollIntoView';
 import { SelectedItemService } from './services/selected-item.service';
 import { Subscription } from 'rxjs';
 
+import * as objectPath from 'object-path';
+
 @Component( {
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
   styleUrls: [ './autocomplete.scss' ],
   providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
 } )
-export class TlAutoComplete extends ElementBase<string> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
 
   @Input( 'data' )
   set data( value ) {
@@ -208,7 +210,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   private handleModelLazy() {
     if ( this.value && this.lazyMode && !this.modelInitialized ) {
       if ( !this.isModelModeString() ) {
-        this.setDescriptionValue( this.value[ this.keyText ] );
+        this.setDescriptionValue( objectPath.get(this.value, this.keyText ) );
       } else {
         console.warn( 'The item provided is was not found, emitting filter' );
         this.filter.emit( this.getFilters( this.value ) );
@@ -226,7 +228,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
       this.dataSource.getCachedData().forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
-            this.setDescriptionValue( value[ this.keyText ] );
+            this.setDescriptionValue( objectPath.get(value, this.keyText ) );
             this.handleKeyModelValue( value );
           }
         }
@@ -236,23 +238,23 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private getItemCompare( value ) {
     if ( !this.keyValue || this.isModelModeString() ) {
-      return value[ this.identifier ];
+      return objectPath.get(value, this.identifier );
     }
-    return value[ this.keyValue ];
+    return objectPath.get(value, this.keyValue);
   }
 
   private handleKeyModelValue( value ) {
     this.modelInitialized = true;
     if ( !this.isModelModeString() && this.keyValue ) {
-      this.value = value[ this.keyValue ];
+      this.value = objectPath.get(value, this.keyValue );
       return;
     }
     if ( this.isModelModeString() && !this.keyValue ) {
-      this.value = value[ this.identifier ];
+      this.value = objectPath.get(value, this.identifier );
       return;
     }
     if ( this.isModelModeString() && this.keyValue ) {
-      this.value = value[ this.keyValue ];
+      this.value = objectPath.get(value, this.keyValue );
       return;
     }
     this.value = value;
@@ -311,7 +313,7 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
   handleBlur() {
     if ( this.keyManager.activeItem && this.isOpen ) {
       this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
-      this.setDescriptionValue( this.keyManager.activeItem.itemSelected[ this.keyText ] );
+      this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
       this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
       this.select.emit( this.keyManager.activeItem.itemSelected );
     }
@@ -331,16 +333,16 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private getCompareModel() {
     if ( this.keyValue && !this.isModelModeString() ) {
-      return this.value[ this.keyValue ];
+      return objectPath.get(this.value, this.keyValue);
     }
     if ( !this.isModelModeString() && !this.keyValue ) {
-      return this.value[ this.identifier ];
+      return objectPath.get(this.value, this.identifier );
     }
     return this.value;
   }
 
   selectItem( value: any, item: TlItemSelectedDirective ) {
-    this.setDescriptionValue( value[ this.keyText ] );
+    this.setDescriptionValue( objectPath.get(value, this.keyText ) );
     this.handleKeyModelValue( value );
     this.input.nativeElement.focus();
     this.select.emit( value );
@@ -389,6 +391,10 @@ export class TlAutoComplete extends ElementBase<string> implements OnInit, OnCha
 
   private setIsOpen( value: boolean ) {
     this.isOpen = value;
+  }
+
+  getItemText(item) {
+    return objectPath.get(item, this.keyText);
   }
 
   toggleIsOpen() {

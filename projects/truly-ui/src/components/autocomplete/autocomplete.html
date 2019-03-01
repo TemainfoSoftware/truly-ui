@@ -52,7 +52,7 @@
                (mousedown)="selectItem(item, select)"
                class="ui-list-item">
             <span *ngIf="item; else loading">
-              {{ item[ keyText ] }}
+              {{ getItemText(item) }}
             </span>
           </div>
         </cdk-virtual-scroll-viewport>

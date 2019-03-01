@@ -1,4 +1,4 @@
-<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight}">
+<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight, 'width': width}">
   <tl-icon *ngIf="isLoading" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
   <tl-label *ngIf="label"
             [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"

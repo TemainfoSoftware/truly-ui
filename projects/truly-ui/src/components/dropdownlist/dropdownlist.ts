@@ -83,7 +83,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'groupBy' ) groupBy = null;
 
-  @Input( 'width' ) width = '120px';
+  @Input( 'width' ) width = '100%';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
 

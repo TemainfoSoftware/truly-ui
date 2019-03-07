@@ -1,5 +1,5 @@
 <div class="wrapper-content-progress">
-  <div class="ui-progressbar-wrapper" [ngClass]="color">
+  <div class="ui-progressbar-wrapper" [class.border-rounded]="shape === 'rounded'" [ngClass]="color">
     <div *ngIf="mode === 'determinate'" class="ui-progress-description" [style.lineHeight]="height">
       <span *ngIf="progressInfo === 'percentage' || progressInfo === 'detailed'">{{getProgressDescription()}} %</span>
       <span class="ui-progress-detail" *ngIf="progressInfo === 'detailed'" [style.lineHeight]="height">({{position}} {{unit}} / {{max}} {{unit}})</span>

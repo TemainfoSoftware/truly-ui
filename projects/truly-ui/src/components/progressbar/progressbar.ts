@@ -40,6 +40,8 @@ export class TlProgressBar implements OnInit, OnChanges {
 
   @Input() height = '15px';
 
+  @Input() shape: 'default' | 'rounded' = 'rounded';
+
   @Input() progressInfo: 'none' | 'percentage' | 'detailed' = 'percentage';
 
   @Input() mode: 'determinate' | 'indeterminate' = 'determinate';

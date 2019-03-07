@@ -43,6 +43,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
       },
       {
+        path: 'card',
+        loadChildren: './components/card/carddemo.module#CardDemoModule'
+      },
+      {
         path: 'button',
         loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
       },

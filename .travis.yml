@@ -10,6 +10,7 @@ notifications:
     rooms:
       - temainfo:QGzy1iQZdygEHxsEuylBqC1e#truly-ui
       - temainfo:QGzy1iQZdygEHxsEuylBqC1e#builds
+      - trulyui:76h7TWRl73PnVEjb7ab0F5S2#builds
 node_js:
   - '8'
   - '10'

@@ -93,7 +93,7 @@ We assume that you have already installed the following packages at least and ar
 
     ```
     "styles": [
-          src/styles.css",
+          "src/styles.css",
           ...
           "node_modules/@angular/cdk/overlay-prebuilt.css",
           "node_modules/truly-ui/css/icons/dx-icons/css/icons.scss",

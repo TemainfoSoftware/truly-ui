@@ -6,6 +6,7 @@ export { BadgeModule } from './components/badge/index';
 export { ButtonModule } from './components/button/index';
 export { ButtonGroupModule } from './components/buttongroup/index';
 export { BlockUIModule } from './components/blockui/index';
+export { CardModule } from './components/card/index';
 export { CheckBoxModule } from './components/checkbox/index';
 export { ChatListModule } from './components/chatlist/index';
 export { CalendarModule } from './components/calendar/index';

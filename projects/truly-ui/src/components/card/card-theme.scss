@@ -1,0 +1,61 @@
+@import "../core/styles/theming/theming";
+
+@mixin _tl-card-theme-schema( $theme, $action ) {
+
+  $basic: map-deep-get($theme, 'basic');
+
+  /deep/ tl-card-header {
+    .ui-card-header {
+      background: #fff;
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
+    }
+  }
+
+  /deep/ tl-card-body {
+    .ui-card-body {
+      background: #fff;
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+      border-left: 1px solid map-deep-get($basic, "default", "border");
+    }
+  }
+
+  /deep/ tl-card-footer {
+    .ui-card-footer {
+      background: map-deep-get($basic, "default", "background");
+      border: 1px solid map-deep-get($basic, "default", "border");
+      color: map-deep-get($basic, "default", "foreground");
+      border-top: 0;
+    }
+  }
+
+}
+
+@mixin tl-card-theme( $theme ) {
+
+  .ui-wrapper-card {
+    &.basic {
+      @include _tl-card-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-card-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-card-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-card-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-card-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-card-theme-schema($theme, 'information')
+    }
+  }
+}

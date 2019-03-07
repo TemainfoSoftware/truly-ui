@@ -1,0 +1,27 @@
+.ui-wrapper-card {
+  background: #fff;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  place-content: flex-start;
+  flex-flow: column;
+  border-radius: 5px;
+  transition: border-color, box-shadow 300ms linear;
+  box-sizing: border-box;
+
+  &:hover {
+    border-color: rgba(0,0,0,.09);
+    box-shadow: 0 2px 8px rgba(0,0,0,.09);
+  }
+
+  @keyframes infinitePulse {
+    0% {
+      transform: scale(1, 1);
+    }
+    100% {
+      transform: scale(1.2, 1.2);
+      opacity: 0.3;
+    }
+  }
+
+}

@@ -1,0 +1,9 @@
+<div class="tooltip-text"
+     [style.width]="options?.width"
+     [style.color]="options?.fontColor"
+     [style.background]="options?.color">
+  <span>{{ options?.text }}</span>
+  <div [style.border-color]="options?.color"
+       [class]="'arrow ' + getClassByPlacement()"></div>
+</div>
+

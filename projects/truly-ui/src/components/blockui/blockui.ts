@@ -63,7 +63,14 @@ export class TlBlockUI implements OnChanges {
     this.overlayElement = this.overlayElementInstance.instance.element;
   }
 
+  private getPaddingElementRef() {
+    return window.getComputedStyle(this.elementRef.nativeElement).padding;
+  }
+
   private setConfigToElement() {
+    this.blockuiConfig.width = this.elementRef.nativeElement.offsetWidth - 2 + 'px';
+    this.blockuiConfig.height = this.elementRef.nativeElement.offsetHeight + 'px';
+    this.blockuiConfig.padding = this.getPaddingElementRef();
     this.overlayElementInstance.instance.config = this.blockuiConfig;
   }
 

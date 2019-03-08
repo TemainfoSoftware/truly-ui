@@ -24,5 +24,8 @@ export class BlockUIConfig {
     public icon = 'fas fa-sync-alt';
     public spin = true;
     public message = '';
+    public width = '';
+    public height = '';
     public color = '';
+    public padding = '';
 }

@@ -1,0 +1,42 @@
+<div class="router-outlet">
+  <app-showcase-header name="Loader" module="LoaderModule">
+    The Truly-UI Loader are styles for actions in forms, dialogs, and more with support for multiple sizes, states
+    and many properties for customization
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-3">
+              <h6>Basic</h6>
+              <div class="loader-box">
+                <tl-loader></tl-loader>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Stroke Width</h6>
+              <div class="loader-box">
+                <tl-loader [strokeWidth]="3"></tl-loader>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Custom Color</h6>
+              <div class="loader-box">
+                <tl-loader [color]="'#66cc99'"></tl-loader>
+              </div>
+              <br>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

@@ -171,6 +171,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
       },
       {
+        path: 'loader',
+        loadChildren: './components/loader/loaderdemo.module#LoaderDemoModule'
+      },
+      {
         path: 'listbox',
         loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
       },

@@ -35,6 +35,13 @@ export const dataProperties = [
     options: 'any text'
   },
   {
+    name: 'formatDate',
+    type: 'string',
+    default: 'dd.mm.yyyy',
+    description: 'The format of date',
+    options: 'dd.mm.yyyy | mm.dd.yyyy | yyyy.mm.dd'
+  },
+  {
     name: 'labelSize',
     type: 'string',
     default: '100px',

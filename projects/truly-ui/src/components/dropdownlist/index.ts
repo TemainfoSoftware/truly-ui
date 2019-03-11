@@ -10,6 +10,7 @@ import { OverlayListModule } from '../overlaylist/index';
 import { InternalsModule } from '../internals/index';
 import { IconsModule } from '../icons/index';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
+import { LoaderModule } from '../loader/index';
 
 @NgModule( {
   imports: [
@@ -17,6 +18,7 @@ import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
     InputModule,
     OverlayListModule,
     IconsModule,
+    LoaderModule,
     OverlayModule,
     A11yModule,
     InternalsModule,

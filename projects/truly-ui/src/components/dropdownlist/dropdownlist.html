@@ -1,6 +1,8 @@
 <div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight, 'width': width}">
 
-  <tl-icon class="ui-loading-icon" *ngIf="isLoading" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
+  <div class="ui-loading-icon">
+    <tl-loader *ngIf="isLoading"></tl-loader>
+  </div>
 
   <tl-label *ngIf="label"
             [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"

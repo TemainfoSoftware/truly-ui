@@ -4,6 +4,8 @@ import {
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
 import { GenerateEventsService } from '../../services/generate-events.service';
+import { SlotSettingsType } from '../../types/slot-settings.type';
+import { WorkScaleType } from '../../types/work-scale.type';
 
 @Component({
   selector: 'tl-view-day',
@@ -12,8 +14,6 @@ import { GenerateEventsService } from '../../services/generate-events.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
-
-  @Input() duration = 30;
 
   @Input() currentDate = new Date();
 
@@ -27,9 +27,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() showNowIndicator = false;
 
-  @Input() slatHightRows = 43;
+  @Input() slotSettings: SlotSettingsType;
 
-  @Input() slatNumberRows = 2;
+  @Input() workScale: WorkScaleType;
 
   @Input() slatNumberRowsAsArray: Array<Number>;
 
@@ -57,6 +57,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     this.generateTimes();
+    console.log( this.timeScale);
   }
 
   ngAfterViewInit() {
@@ -90,8 +91,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   rowDbClick( time, index) {
 
-    const minutesToStart = index > 0 ? ( this.duration / this.slatNumberRows ) * ( index ) : 0;
-    const minutesToEnd = ( this.duration / this.slatNumberRows ) * ( index + 1 );
+    const minutesToStart = index > 0 ? ( this.workScale.interval / this.timeScale.slotCount ) * ( index ) : 0;
+    const minutesToEnd = ( this.workScale.interval / this.timeScale.slotCount ) * ( index + 1 );
 
     this.onRowDbClick.emit({
       start: new Date(time).setMinutes( minutesToStart ),
@@ -109,7 +110,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
     while ( currentHour_ms < this.endDayMilliseconds ) {
       if ( currentHour_ms === nextHourBreak_ms  ) {
         this.timesCollection.push( new Date(nextHourBreak_ms) );
-        nextHourBreak_ms =  nextHourBreak_ms + (this.duration * MIN_TO_MILLESECOND);
+        nextHourBreak_ms =  nextHourBreak_ms + (this.workScale.interval * MIN_TO_MILLESECOND);
       }
       currentHour_ms++;
     }

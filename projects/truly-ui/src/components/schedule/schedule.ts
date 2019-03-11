@@ -25,6 +25,8 @@ import {
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
 import { ViewType } from './types/view.type';
+import { SlotSettingsType } from './types/slot-settings.type';
+import { WorkScaleType } from './types/work-scale.type';
 
 @Component( {
   selector: 'tl-schedule',
@@ -44,13 +46,11 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() height = '550px';
 
-  @Input() duration = 30;
+  @Input() slotSettings: SlotSettingsType = new SlotSettingsType(  2, 43);
+
+  @Input() workScale: WorkScaleType = new WorkScaleType( '08:00', '18:00', 30 );
 
   @Input() showNowIndicator = false;
-
-  @Input() slatHightRows = 43;
-
-  @Input() slatNumberRows = 2;
 
   @Input('events') set events( events: ScheduleDataSource[] ) {
     this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
@@ -60,18 +60,10 @@ export class TlSchedule implements OnInit, OnChanges {
     return this._events;
   }
 
-  @Input('startDayHour') set startDayHour( hours: string ) {
-    this._startDayHour = hours;
-    this.startDayMilliseconds = this.transformHourToMileseconds( hours );
-  }
   get startDayHour () {
     return this._startDayHour;
   }
 
-  @Input('endDayHour') set setEndDayHour( hours: string ) {
-    this._endDayHour = hours;
-    this.endDayMilliseconds = this.transformHourToMileseconds( hours );
-  }
   get endDayHour () {
     return this._endDayHour;
   }
@@ -115,6 +107,18 @@ export class TlSchedule implements OnInit, OnChanges {
   }
 
   ngOnChanges( changes: SimpleChanges ) {
+
+    if ( changes['workScale'] !== undefined ) {
+      if ( changes[ 'workScale' ].firstChange ) {
+        this._startDayHour = changes[ 'workScale' ].currentValue.start;
+        this.startDayMilliseconds = this.transformHourToMileseconds( changes[ 'workScale' ].currentValue.start );
+
+        this._endDayHour = changes[ 'workScale' ].currentValue.end;
+        this.endDayMilliseconds = this.transformHourToMileseconds( changes[ 'workScale' ].currentValue.end );
+
+      }
+    }
+
 
     if ( changes['events'] !== undefined ) {
       if ( !changes[ 'events' ].firstChange ) {
@@ -171,7 +175,7 @@ export class TlSchedule implements OnInit, OnChanges {
   }
 
   private convertSlarNumberToArray() {
-    this.slatNumberRowsAsArray = Array( this.slatNumberRows );
+    this.slatNumberRowsAsArray = Array( this.slotSettings.slotCount );
     this.changeDetection.detectChanges();
   }
 }

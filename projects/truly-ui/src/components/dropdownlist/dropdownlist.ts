@@ -67,7 +67,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'disabled' ) disabled = false;
 
-  @Input( 'labelPlacement' ) labelPlacement = 'left';
+  @Input( 'labelPlacement' ) labelPlacement = 'top';
 
   @Input( 'labelSize' ) labelSize = '100px';
 

@@ -5,11 +5,11 @@
   </div>
 
   <tl-label *ngIf="label"
-            [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"
             [labelPlacement]="labelPlacement"
             [labelSize]="labelSize"
             [labelTitle]="label">
   </tl-label>
+
   <div class="ui-dropdown-wrapper">
   <input cdkOverlayOrigin
          #wrapper

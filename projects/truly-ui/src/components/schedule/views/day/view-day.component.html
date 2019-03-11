@@ -32,7 +32,7 @@
               width: event.positions.width + 'px'
            }"
            [style.borderLeftColor]="statusConfig ? statusConfig[event.data.status].color : '#FFFFFF'"
-           [tooltip]="{text: statusConfig ? statusConfig[event.data.status].description : '' , placement: 'top'}"
+           [tooltip]="{text: statusConfig ? statusConfig[event.data.status].description : '' , placement: 'top-center'}"
            (click)="onEventClick.emit(event.data)"
            (dblclick)="onEventDbClick.emit(event.data)"
            (mouseover)="onEventMouseout.emit(event.data)"

@@ -1,6 +1,6 @@
 <div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight, 'width': width}">
 
-  <div class="ui-loading-icon">
+  <div class="ui-loading-icon" [style.height]="itemHeight">
     <tl-loader *ngIf="isLoading"></tl-loader>
   </div>
 

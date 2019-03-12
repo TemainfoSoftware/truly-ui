@@ -25,9 +25,9 @@ import * as json from './calendardemo-dataproperties.json';
 import * as jsonEvts from './calendardemo.dataevents.json';
 
 @Component( {
-  selector : 'app-calendar',
-  templateUrl : './calendardemo.component.html',
-  styleUrls : [ './calendardemo.component.scss' ]
+  selector: 'app-calendar',
+  templateUrl: './calendardemo.component.html',
+  styleUrls: [ './calendardemo.component.scss' ]
 } )
 export class CalendarDemoComponent {
 
@@ -35,13 +35,25 @@ export class CalendarDemoComponent {
 
   public dataEvents;
 
+  public month = new Date().getMonth();
+
+  public day = new Date().getDate();
+
+  public year = new Date().getFullYear();
+
+  public status = [
+    { id: '1', date: new Date( this.year, this.month, this.day + 3 ), total: 50, current: 15 },
+    { id: '2', date: new Date( this.year, this.month, this.day + 5 ), total: 50, current: 40 },
+    { id: '3', date: new Date( this.year, this.month, this.day + 10  ), total: 50, current: 10 },
+  ];
+
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
 
-  onSelect($event) {
-    console.log($event);
+  onSelect( $event ) {
+    console.log( $event );
   }
 
 }

@@ -1,39 +1,36 @@
 import {
   Component, OnInit, OnChanges, AfterViewInit, ChangeDetectorRef, Input, ViewChild, ElementRef, SimpleChanges,
-  ChangeDetectionStrategy, Output, EventEmitter
+  ChangeDetectionStrategy, Output, EventEmitter, ViewChildren, QueryList
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
 import { GenerateEventsService } from '../../services/generate-events.service';
 import { SlotSettingsType } from '../../types/slot-settings.type';
 import { WorkScaleType } from '../../types/work-scale.type';
+import { EventService } from '../../services/event.service';
+import { WorkScaleService } from '../../services/work-scale.service';
 
 @Component({
   selector: 'tl-view-day',
   templateUrl: './view-day.component.html',
   styleUrls: ['./view-day.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() currentDate = new Date();
 
-  @Input() events: ScheduleDataSource[];
-
   @Input() statusConfig: {StatusType};
-
-  @Input() startDayMilliseconds: number;
-
-  @Input() endDayMilliseconds: number;
 
   @Input() showNowIndicator = false;
 
   @Input() slotSettings: SlotSettingsType;
 
-  @Input() workScale: WorkScaleType;
+  @Input() workScale: WorkScaleType | WorkScaleType[];
 
   @Input() slatNumberRowsAsArray: Array<Number>;
 
-  @ViewChild('scheduleSlats') scheduleSlats: ElementRef;
+  @ViewChildren('scheduleSlats') scheduleSlats: QueryList<any>;
 
   @Output() onRowDbClick = new EventEmitter();
 
@@ -49,25 +46,37 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   public timesCollection: Array<Date> = [];
 
+  public periodCollection = [];
+
   public currentTime = new Date();
 
   public eventsWithPositions = [];
 
-  constructor( private changeDetectionRef: ChangeDetectorRef, private generateEvents: GenerateEventsService ) { }
+  constructor(
+    private changeDetectionRef: ChangeDetectorRef,
+    private generateEvents: GenerateEventsService,
+    private eventService: EventService,
+    private workScaleService: WorkScaleService) { }
+
 
   ngOnInit() {
     this.generateTimes();
-    console.log( this.timeScale);
+    this.eventService.updateEvents.subscribe(( event ) => {
+      this.generateEvents.initializeArray(
+        this.workScaleService.workScaleInMileseconds,
+        this.scheduleSlats
+      );
+      this.generateEventsPositions( event );
+      this.inicializeNowIndicator( );
+      this.changeDetectionRef.detectChanges();
+    });
   }
 
   ngAfterViewInit() {
-    this.generateEvents.initialize(
-      this.startDayMilliseconds,
-      this.endDayMilliseconds,
-      this.scheduleSlats.nativeElement.offsetHeight,
-      this.scheduleSlats.nativeElement.offsetWidth
+    this.generateEvents.initializeArray(
+      this.workScaleService.workScaleInMileseconds,
+      this.scheduleSlats
     );
-    this.generateEventsPositions();
     this.inicializeNowIndicator();
     this.changeDetectionRef.detectChanges();
   }
@@ -75,56 +84,37 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnChanges( changes: SimpleChanges ) {
     if ( changes['events'] !== undefined ) {
       if ( !changes[ 'events' ].firstChange ) {
-        this.generateEvents.initialize(
-          this.startDayMilliseconds,
-          this.endDayMilliseconds,
-          this.scheduleSlats.nativeElement.offsetHeight,
-          this.scheduleSlats.nativeElement.offsetWidth
-        );
-        this.generateEventsPositions();
-        this.inicializeNowIndicator();
-        this.changeDetectionRef.detectChanges();
+        this.eventService.loadEvents(changes[ 'events' ].currentValue);
       }
     }
     this.changeDetectionRef.detectChanges();
   }
 
-  rowDbClick( time, index) {
-
-    const minutesToStart = index > 0 ? ( this.workScale.interval / this.timeScale.slotCount ) * ( index ) : 0;
-    const minutesToEnd = ( this.workScale.interval / this.timeScale.slotCount ) * ( index + 1 );
+  rowDbClick( time, index, periodIndex) {
+    const workScaleInterval = this.workScaleService.workScale[periodIndex].interval;
+    const minutesToStart = index > 0 ? ( workScaleInterval / this.slotSettings.slotCount ) * ( index ) : 0;
+    const minutesToEnd = ( workScaleInterval / this.slotSettings.slotCount ) * ( index + 1 );
 
     this.onRowDbClick.emit({
-      start: new Date(time).setMinutes( minutesToStart ),
-      end: new Date(time).setMinutes( minutesToEnd )
+      start: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToStart ),
+      end: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToEnd ),
     });
   }
 
   private generateTimes() {
-    const MIN_TO_MILLESECOND = 60000;
-
-    let currentHour_ms = this.startDayMilliseconds;
-    let nextHourBreak_ms = this.startDayMilliseconds;
-    this.timesCollection = [];
-
-    while ( currentHour_ms < this.endDayMilliseconds ) {
-      if ( currentHour_ms === nextHourBreak_ms  ) {
-        this.timesCollection.push( new Date(nextHourBreak_ms) );
-        nextHourBreak_ms =  nextHourBreak_ms + (this.workScale.interval * MIN_TO_MILLESECOND);
-      }
-      currentHour_ms++;
-    }
+    this.timesCollection = this.workScaleService.timesCollection;
+    this.periodCollection = this.workScaleService.periodCollection;
     this.changeDetectionRef.detectChanges();
   }
 
   private inicializeNowIndicator() {
-    this.nowIndicatorPositionTop = this.showNowIndicator ? this.generateEvents.convertMillisecondsToPixel() : -1000;
+    // this.nowIndicatorPositionTop = this.showNowIndicator ? this.generateEvents.convertMillisecondsToPixel() : -1000;
     this.changeDetectionRef.detectChanges();
   }
 
-  private generateEventsPositions() {
-    if ( this.events !== undefined && this.events.length > 0 ) {
-      this.eventsWithPositions = this.generateEvents.with( this.events );
+  private generateEventsPositions( events ) {
+    if ( events !== undefined && events.length > 0 ) {
+      this.eventsWithPositions = this.generateEvents.with( events );
     }
   }
 

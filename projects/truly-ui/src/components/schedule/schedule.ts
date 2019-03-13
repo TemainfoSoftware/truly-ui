@@ -27,6 +27,8 @@ import { StatusType } from './types/status.type';
 import { ViewType } from './types/view.type';
 import { SlotSettingsType } from './types/slot-settings.type';
 import { WorkScaleType } from './types/work-scale.type';
+import { WorkScaleService } from './services/work-scale.service';
+import { EventService } from './services/event.service';
 
 @Component( {
   selector: 'tl-schedule',
@@ -48,24 +50,13 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() slotSettings: SlotSettingsType = new SlotSettingsType(  2, 43);
 
-  @Input() workScale: WorkScaleType = new WorkScaleType( '08:00', '18:00', 30 );
+  @Input() workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '18:00', 30 );
 
   @Input() showNowIndicator = false;
 
   @Input('events') set events( events: ScheduleDataSource[] ) {
     this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
     this._events = JSON.parse( JSON.stringify(this._events) );
-  }
-  get events () {
-    return this._events;
-  }
-
-  get startDayHour () {
-    return this._startDayHour;
-  }
-
-  get endDayHour () {
-    return this._endDayHour;
   }
 
   @Output() changeView = new EventEmitter<ViewType>();
@@ -84,25 +75,21 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() newEventClick = new EventEmitter();
 
-  public startDayMilliseconds: number;
-
-  public endDayMilliseconds: number;
-
   public slatNumberRowsAsArray: Array<Number>;
-
-  public eventsOfDay: ScheduleDataSource[];
 
   private _events: ScheduleDataSource[];
 
-  private _startDayHour: string;
-
-  private _endDayHour: string;
-
-  constructor( private changeDetection: ChangeDetectorRef ) {}
+  constructor(
+    private changeDetection: ChangeDetectorRef,
+    private workScaleService: WorkScaleService,
+    private eventService: EventService
+  ) {}
 
   ngOnInit() {
     this.convertSlarNumberToArray();
-    this.getEventsOfDay();
+    this.eventService.loadEvents( this._events );
+
+    this.eventService.getEventsOfDay();
     this.changeDetection.detectChanges();
   }
 
@@ -110,29 +97,25 @@ export class TlSchedule implements OnInit, OnChanges {
 
     if ( changes['workScale'] !== undefined ) {
       if ( changes[ 'workScale' ].firstChange ) {
-        this._startDayHour = changes[ 'workScale' ].currentValue.start;
-        this.startDayMilliseconds = this.transformHourToMileseconds( changes[ 'workScale' ].currentValue.start );
-
-        this._endDayHour = changes[ 'workScale' ].currentValue.end;
-        this.endDayMilliseconds = this.transformHourToMileseconds( changes[ 'workScale' ].currentValue.end );
-
+        this.workScaleService.reload( changes[ 'workScale' ].currentValue );
       }
     }
 
 
     if ( changes['events'] !== undefined ) {
       if ( !changes[ 'events' ].firstChange ) {
-        this.refreshStartAndEndDay();
-        this.getEventsOfDay();
+       // this.refreshStartAndEndDay();
+        this.eventService.loadEvents( this._events );
+        this.eventService.getEventsOfDay();
       }
     }
-
-    if ( changes['currentDate'] !== undefined ) {
-      if ( ! changes['currentDate'].firstChange) {
-        this.refreshStartAndEndDay();
-        this.getEventsOfDay();
-      }
-    }
+    //
+    // if ( changes['currentDate'] !== undefined ) {
+    //   if ( ! changes['currentDate'].firstChange) {
+    //     this.refreshStartAndEndDay();
+    //     this.getEventsOfDay();
+    //   }
+    // }
     this.changeDetection.detectChanges();
   }
 
@@ -143,35 +126,11 @@ export class TlSchedule implements OnInit, OnChanges {
 
   onChangeDate($event) {
     this.currentDate = new Date( $event.year, $event.month, $event.day);
-    this.refreshStartAndEndDay();
-    this.getEventsOfDay();
+    this.workScaleService.currentDate = new Date( $event.year, $event.month, $event.day);
+    this.workScaleService.refreshStartAndEndDay();
+    this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
     this.changeDetection.detectChanges();
-  }
-
-  private transformHourToMileseconds( fullHour: string ) {
-    const hourSplited = fullHour.split(':');
-
-    const hours = Number(hourSplited[0]);
-    const minutes = Number(hourSplited[1]);
-    const year =  this.currentDate.getFullYear();
-    const month =  this.currentDate.getMonth();
-    const date =  this.currentDate.getDate();
-
-    return new Date(year, month, date, hours, minutes).getTime();
-  }
-
-  private refreshStartAndEndDay() {
-    this.endDayMilliseconds = this.transformHourToMileseconds( this.endDayHour );
-    this.startDayMilliseconds = this.transformHourToMileseconds( this.startDayHour );
-  }
-
-
-  private getEventsOfDay() {
-    if ( this.events === undefined ) { return []; }
-    this.eventsOfDay = this.events.filter( ( event ) => {
-      return ( event.date.start >= this.startDayMilliseconds ) && ( event.date.end <= this.endDayMilliseconds );
-    });
   }
 
   private convertSlarNumberToArray() {

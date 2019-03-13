@@ -17,14 +17,10 @@
     <tl-view-day
       *ngSwitchCase="'day'"
       [currentDate]="currentDate"
-      [events]="eventsOfDay"
-      [startDayMilliseconds]="startDayMilliseconds"
-      [endDayMilliseconds]="endDayMilliseconds"
       [showNowIndicator]="showNowIndicator"
       [statusConfig]="statusConfig"
 
       [slotSettings]="slotSettings"
-      [workScale]="workScale"
       [slatNumberRowsAsArray]="slatNumberRowsAsArray"
 
       (onRowDbClick)="rowDbClick.emit($event)"
@@ -34,16 +30,16 @@
       (onEventMouseout)="eventMouseout.emit($event)"
     ></tl-view-day>
 
-    <tl-day-list
-      *ngSwitchCase="'dayList'"
-      [events]="eventsOfDay"
-      [currentDate]="currentDate"
-      [statusConfig]="statusConfig"
-      (onEventClick)="eventClick.emit($event)"
-      (onEventDbClick)="eventDbClick.emit($event)"
-      (onEventMouseover)="eventMouseover.emit($event)"
-      (onEventMouseout)="eventMouseout.emit($event)"
-    ></tl-day-list>
+    <!--<tl-day-list-->
+      <!--*ngSwitchCase="'dayList'"-->
+      <!--[events]="eventsOfDay"-->
+      <!--[currentDate]="currentDate"-->
+      <!--[statusConfig]="statusConfig"-->
+      <!--(onEventClick)="eventClick.emit($event)"-->
+      <!--(onEventDbClick)="eventDbClick.emit($event)"-->
+      <!--(onEventMouseover)="eventMouseover.emit($event)"-->
+      <!--(onEventMouseout)="eventMouseout.emit($event)"-->
+    <!--&gt;</tl-day-list>-->
   </div>
 
   <!-- SCHEDULE FOOTER -->

@@ -35,7 +35,7 @@ export class ScheduleDemoOverviewComponent {
 
   public slotSettings: SlotSettingsType = new SlotSettingsType(  2, 40);
 
-  public workScale: WorkScaleType | WorkScaleType[] =  new WorkScaleType( '08:00', '12:00', 30 );
+  public workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '12:00', 30 );
 
   public dataTableProperties;
 
@@ -48,7 +48,7 @@ export class ScheduleDemoOverviewComponent {
     missed: { status : 'missed', color : '#FF385C', description : 'Missed' },
     notmet: { status : 'notmet', color : '#1d8bff', description : 'Not Met' }
   };
-
+ // public data = [];
   public data = [
     {
       value: '1',
@@ -233,12 +233,23 @@ export class ScheduleDemoOverviewComponent {
     this.dataEvents = jsonEvts.dataEvents;
 
     setTimeout(() => {
+
+      this.getWorkScale().then(( workScale: WorkScaleType | WorkScaleType[] ) => {
+        this.workScale = workScale;
+      });
+
       this.getDataSource()
         .then((data: Array<any>) => {
           this.dataSource = data;
           this.change.detectChanges();
         });
     }, 3000);
+  }
+
+  getWorkScale() {
+    return new Promise((resolve) => {
+      resolve( new WorkScaleType( '08:00', '12:00', 30 ) );
+    });
   }
 
   getDataSource() {

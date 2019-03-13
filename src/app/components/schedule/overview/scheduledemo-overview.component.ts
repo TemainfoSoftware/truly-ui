@@ -35,10 +35,7 @@ export class ScheduleDemoOverviewComponent {
 
   public slotSettings: SlotSettingsType = new SlotSettingsType(  2, 40);
 
-  public workScale: WorkScaleType | WorkScaleType[] = [
-    ( new WorkScaleType( '08:00', '12:00', 30 ) ),
-    ( new WorkScaleType( '12:00', '15:00', 30 ) )
-  ];
+  public workScale: WorkScaleType | WorkScaleType[] =  new WorkScaleType( '08:00', '12:00', 30 );
 
   public dataTableProperties;
 

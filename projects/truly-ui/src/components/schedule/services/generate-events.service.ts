@@ -31,13 +31,6 @@ export class GenerateEventsService {
     return this.generateEvents();
   }
 
-  initialize( startDayMilliseconds, endDayMilliseconds, heightSchedule, widthSchedule  ) {
-    this.startDayMilliseconds = startDayMilliseconds;
-    this.endDayMilliseconds = endDayMilliseconds;
-    this.heightSchedule = heightSchedule;
-    this.widthSchedule = widthSchedule;
-  }
-
   initializeArray( workScaleInMileseconds, scheduleSlats: QueryList<any>  ) {
     this.workScaleInMileseconds = workScaleInMileseconds;
     this.scheduleSlats = scheduleSlats;

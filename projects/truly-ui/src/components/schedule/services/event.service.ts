@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { WorkScaleService } from './work-scale.service';
 import { ScheduleDataSource } from '../types/datasource.type';
-import { EventListener } from '../../../../../../node_modules/@angular/core/src/debug/debug_node';
 
 @Injectable()
 export class EventService {

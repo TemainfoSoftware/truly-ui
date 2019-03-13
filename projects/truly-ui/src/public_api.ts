@@ -1,4 +1,6 @@
 // Modules
+import { SlotSettingsType } from './components/schedule/types/slot-settings.type';
+
 export { AccordionModule } from './components/accordion/index';
 export { AutoCompleteModule } from './components/autocomplete/index';
 export { AvatarModule } from './components/avatar/index';
@@ -82,6 +84,13 @@ export { ToasterService } from './components/toaster/services/toaster.service';
 
 // Classes
 export { Permission } from './components/permissions/parts/models/permission.model';
+
+// Types
+export { ScheduleDataSource } from './components/schedule/types/datasource.type';
+export { SlotSettingsType } from './components/schedule/types/slot-settings.type';
+export { StatusType } from './components/schedule/types/status.type';
+export { ViewType } from './components/schedule/types/view.type';
+export { WorkScaleType } from './components/schedule/types/work-scale.type';
 
 // Languages
 export { I18nService } from './components/i18n/i18n.service';

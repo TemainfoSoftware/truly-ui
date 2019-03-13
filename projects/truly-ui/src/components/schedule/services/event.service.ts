@@ -19,10 +19,10 @@ export class EventService {
   }
 
   getEventsOfDay() {
-    if ( this.events === undefined ) { return []; }
-    this.eventsOfDay = this.events.filter( ( event ) => {
-      return ( event.date.start >= this.workScaleService.startDayMilliseconds )
-        && ( event.date.end <= this.workScaleService.endDayMilliseconds );
-    });
+    // if ( this.events === undefined ) { return []; }
+    // this.eventsOfDay = this.events.filter( ( event ) => {
+    //   return ( event.date.start >= this.workScaleService.startDayMilliseconds )
+    //     && ( event.date.end <= this.workScaleService.endDayMilliseconds );
+    // });
   }
 }

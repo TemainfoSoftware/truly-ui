@@ -1,6 +1,7 @@
 import { Injectable, QueryList } from '@angular/core';
 import { Cluster, Graph, Node } from '../types/graph';
 import { elvis } from '../../core/helper/elvis';
+import { ScheduleDataSource } from '../types/datasource.type';
 
 @Injectable()
 export class GenerateEventsService {
@@ -13,30 +14,29 @@ export class GenerateEventsService {
 
   private originalEvents = [];
 
-  private startDayMilliseconds = 0;
-
-  private endDayMilliseconds = 0;
-
   private workScaleInMileseconds = [];
 
   private scheduleSlats: QueryList<any>;
 
   constructor() {}
 
-  with( events ) {
-    this.originalEvents = JSON.parse( JSON.stringify(events) );
-    this.events = events;
-
-    this.transformDateToPixel();
+  with(  events: ScheduleDataSource[] ) {
+    if ( events.length > 0 && this.scheduleSlats ) {
+      this.originalEvents = JSON.parse( JSON.stringify(events) );
+      this.events = events;
+      this.transformDateToPixel();
+    }
     return this.generateEvents();
   }
 
   initializeArray( workScaleInMileseconds, scheduleSlats: QueryList<any>  ) {
-    this.workScaleInMileseconds = workScaleInMileseconds;
-    this.scheduleSlats = scheduleSlats;
+    if ( scheduleSlats.length > 0) {
+      this.workScaleInMileseconds = workScaleInMileseconds;
+      this.scheduleSlats = scheduleSlats;
 
-    this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
-    this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth;
+      this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
+      this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth;
+    }
   }
 
   private transformDateToPixel() {

@@ -87,8 +87,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   ngOnInit() {
     this.convertSlarNumberToArray();
+    this.workScaleService.load( this.workScale );
     this.eventService.loadEvents( this._events );
-
     this.eventService.getEventsOfDay();
     this.changeDetection.detectChanges();
   }
@@ -96,7 +96,7 @@ export class TlSchedule implements OnInit, OnChanges {
   ngOnChanges( changes: SimpleChanges ) {
 
     if ( changes['workScale'] !== undefined ) {
-      if ( changes[ 'workScale' ].firstChange ) {
+      if ( changes[ 'workScale' ].currentValue ) {
         this.workScaleService.reload( changes[ 'workScale' ].currentValue );
       }
     }
@@ -104,18 +104,17 @@ export class TlSchedule implements OnInit, OnChanges {
 
     if ( changes['events'] !== undefined ) {
       if ( !changes[ 'events' ].firstChange ) {
-       // this.refreshStartAndEndDay();
         this.eventService.loadEvents( this._events );
         this.eventService.getEventsOfDay();
       }
     }
-    //
-    // if ( changes['currentDate'] !== undefined ) {
-    //   if ( ! changes['currentDate'].firstChange) {
-    //     this.refreshStartAndEndDay();
-    //     this.getEventsOfDay();
-    //   }
-    // }
+
+    if ( changes['currentDate'] !== undefined ) {
+      if ( ! changes['currentDate'].firstChange) {
+        this.eventService.loadEvents( this._events );
+        this.eventService.getEventsOfDay();
+      }
+    }
     this.changeDetection.detectChanges();
   }
 
@@ -127,7 +126,6 @@ export class TlSchedule implements OnInit, OnChanges {
   onChangeDate($event) {
     this.currentDate = new Date( $event.year, $event.month, $event.day);
     this.workScaleService.currentDate = new Date( $event.year, $event.month, $event.day);
-    this.workScaleService.refreshStartAndEndDay();
     this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
     this.changeDetection.detectChanges();

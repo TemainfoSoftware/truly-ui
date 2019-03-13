@@ -44,9 +44,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   public nowIndicatorPositionTop: number;
 
-  public timesCollection: Array<Date> = [];
-
-  public periodCollection = [];
+  public timesCollection: Array<Array<Date>>;
 
   public currentTime = new Date();
 
@@ -60,12 +58,14 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
 
   ngOnInit() {
-    this.generateTimes();
+
+    this.workScaleService.updateScale.subscribe(( timesCollection) => {
+      this.timesCollection = timesCollection;
+      this.changeDetectionRef.detectChanges();
+    });
+
     this.eventService.updateEvents.subscribe(( event ) => {
-      this.generateEvents.initializeArray(
-        this.workScaleService.workScaleInMileseconds,
-        this.scheduleSlats
-      );
+      this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.generateEventsPositions( event );
       this.inicializeNowIndicator( );
       this.changeDetectionRef.detectChanges();
@@ -73,6 +73,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngAfterViewInit() {
+
     this.generateEvents.initializeArray(
       this.workScaleService.workScaleInMileseconds,
       this.scheduleSlats
@@ -99,12 +100,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
       start: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToStart ),
       end: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToEnd ),
     });
-  }
-
-  private generateTimes() {
-    this.timesCollection = this.workScaleService.timesCollection;
-    this.periodCollection = this.workScaleService.periodCollection;
-    this.changeDetectionRef.detectChanges();
   }
 
   private inicializeNowIndicator() {

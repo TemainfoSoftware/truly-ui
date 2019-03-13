@@ -67,7 +67,8 @@ export class GenerateEventsService {
     this.workScaleInMileseconds.forEach(( item, index, array) => {
       if ( date > this.workScaleInMileseconds[index].start ) {
         position++;
-        offsetHeight = offsetHeight + elvis(this.scheduleSlats.find( (slot, idx) => idx === ( index - 1)), 'nativeElement.offsetHeight') || 0;
+        const slotObject = this.scheduleSlats.find( (slot, idx) => idx === ( index - 1));
+        offsetHeight = offsetHeight + elvis(slotObject, 'nativeElement.offsetHeight') || 0;
       }
     });
 

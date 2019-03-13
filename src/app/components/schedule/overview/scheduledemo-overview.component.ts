@@ -19,10 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Input } from '@angular/core';
 
 import * as json from './scheduledemo-overview-dataproperties.json';
 import * as jsonEvts from './scheduledemo-overview.dataevents.json';
+import { SlotSettingsType } from '../../../../../projects/truly-ui/src/components/schedule/types/slot-settings.type';
+import { WorkScaleType } from '../../../../../projects/truly-ui/src/components/schedule/types/work-scale.type';
 
 @Component( {
   selector : 'app-schedule',
@@ -30,6 +32,13 @@ import * as jsonEvts from './scheduledemo-overview.dataevents.json';
   styleUrls : [ './scheduledemo-overview.component.scss' ]
 } )
 export class ScheduleDemoOverviewComponent {
+
+  public slotSettings: SlotSettingsType = new SlotSettingsType(  2, 40);
+
+  public workScale: WorkScaleType | WorkScaleType[] = [
+    ( new WorkScaleType( '08:00', '12:00', 30 ) ),
+    ( new WorkScaleType( '12:00', '15:00', 30 ) )
+  ];
 
   public dataTableProperties;
 
@@ -50,7 +59,7 @@ export class ScheduleDemoOverviewComponent {
       detail: 'Consulta | Particular',
       status: 'missed',
       allday: false,
-      date: { start: new Date().getTime() - 3600000 , end:   new Date().getTime() - 1800000}
+      date: { start: new Date(new Date().setHours(8, 0)).getTime() , end: new Date( new Date().setHours(8, 30) ).getTime() }
     },
    {
     value: '2',
@@ -58,7 +67,7 @@ export class ScheduleDemoOverviewComponent {
     detail: 'Consulta | Particular',
     status: 'attended',
     allday: false,
-    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+    date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 0 )).getTime() }
   },
     {
       value: '3',
@@ -66,7 +75,7 @@ export class ScheduleDemoOverviewComponent {
       detail: 'Consulta | Particular',
       allday: false,
       status: 'attended',
-      date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
     },
   {
     value: '4',
@@ -74,16 +83,16 @@ export class ScheduleDemoOverviewComponent {
     detail: 'Consulta | Unimed',
     allday: false,
     status: 'missed',
-    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() + 1800000 }
+    date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
   },
-  {
-    value: '5',
-    title: 'Jerson Algo - 5',
-    detail: 'Consulta | Unimed',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() + 1800000 }
-  },
+  // {
+  //   value: '5',
+  //   title: 'Jerson Algo - 5',
+  //   detail: 'Consulta | Unimed',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 0 )).getTime() }
+  // },
   {
     value: '6',
     title: 'Maicon Aguera - 6',
@@ -186,7 +195,7 @@ export class ScheduleDemoOverviewComponent {
     detail: 'Consulta | Copel',
     allday: false,
     status: 'attended',
-    date: { start: new Date().getTime() + 5400000 , end: new Date().getTime() + 10800000 }
+    date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0 )).getTime() }
   },
   {
     value: '19',
@@ -194,8 +203,32 @@ export class ScheduleDemoOverviewComponent {
     detail: 'Consulta | Copel',
     allday: false,
     status: 'notmet',
-    date: { start: new Date().getTime() + 5400000 , end: new Date().getTime() + 7200000 }
-  }
+    date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0)).getTime() }
+  },
+    {
+      value: '20',
+      title: 'Jaisson Buccio - 20',
+      detail: 'Consulta | Copel',
+      allday: false,
+      status: 'attended',
+      date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30 )).getTime() }
+    },
+    {
+      value: '21',
+      title: 'Jaisson Buccio - 21',
+      detail: 'Consulta | Copel',
+      allday: false,
+      status: 'notmet',
+      date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30)).getTime() }
+    },
+    {
+      value: '22',
+      title: 'Jaisson Buccio - 22',
+      detail: 'Consulta | Copel',
+      allday: false,
+      status: 'notmet',
+      date: { start: new Date(new Date().setHours(14, 30)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
+    }
   ];
 
   constructor( private change: ChangeDetectorRef ) {

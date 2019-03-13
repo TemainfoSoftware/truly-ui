@@ -13,12 +13,11 @@
 
                 <tl-schedule
                   [events]="dataSource"
-                  [startDayHour]="'08:00'"
-                  [endDayHour]="'22:00'"
-                  [duration]="30"
-                  [showNowIndicator]="true"
-                  [slatNumberRows]="2"
-                  [slatHightRows]="40"
+
+                  [slotSettings]="slotSettings"
+                  [workScale]="workScale"
+
+                  [showNowIndicator]="false"
                   [statusConfig]="statusConfig"
                   (rowDbClick)="onRowClick($event)"
                   (eventDbClick)="onEventDbClick($event)"

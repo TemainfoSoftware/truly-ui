@@ -1,6 +1,6 @@
 import {
   Component, OnInit, OnChanges, AfterViewInit, ChangeDetectorRef, Input, ViewChild, ElementRef, SimpleChanges,
-  ChangeDetectionStrategy, Output, EventEmitter, ViewChildren, QueryList
+  ChangeDetectionStrategy, Output, EventEmitter, ViewChildren, QueryList, OnDestroy
 } from '@angular/core';
 import { ScheduleDataSource } from '../../types/datasource.type';
 import { GenerateEventsService } from '../../services/generate-events.service';
@@ -8,6 +8,7 @@ import { SlotSettingsType } from '../../types/slot-settings.type';
 import { WorkScaleType } from '../../types/work-scale.type';
 import { EventService } from '../../services/event.service';
 import { WorkScaleService } from '../../services/work-scale.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tl-view-day',
@@ -16,7 +17,7 @@ import { WorkScaleService } from '../../services/work-scale.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
-export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
+export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
   @Input() currentDate = new Date();
 
@@ -50,6 +51,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   public eventsWithPositions = [];
 
+  private subscriptions = new Subscription();
+
   constructor(
     private changeDetectionRef: ChangeDetectorRef,
     private generateEvents: GenerateEventsService,
@@ -59,17 +62,17 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
 
-    this.workScaleService.updateScale.subscribe(( timesCollection) => {
+    this.subscriptions.add(this.workScaleService.updateScale.subscribe(( timesCollection) => {
       this.timesCollection = timesCollection;
       this.changeDetectionRef.detectChanges();
-    });
+    }));
 
-    this.eventService.updateEvents.subscribe(( event ) => {
+    this.subscriptions.add(this.eventService.updateEvents.subscribe(( event ) => {
       this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.generateEventsPositions( event );
       this.inicializeNowIndicator( );
       this.changeDetectionRef.detectChanges();
-    });
+    }));
   }
 
   ngAfterViewInit() {
@@ -111,6 +114,10 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges {
     if ( events !== undefined && events.length > 0 ) {
       this.eventsWithPositions = this.generateEvents.with( events );
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
 }

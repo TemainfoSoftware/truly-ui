@@ -8,8 +8,6 @@
   flex-direction: column;
   width: 250px;
   border-radius: 7px;
-  -webkit-animation: shadow-drop-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: shadow-drop-bottom 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   > .ui-time-header {
     height: 70px;
     width: 100%;
@@ -52,7 +50,7 @@
       align-items: center;
       justify-content: center;
       font-size: 1em;
-      font-family: Lato;
+      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       height: 50px;
       span {
         padding: 5px 10px;

@@ -54,7 +54,6 @@ export { TooltipModule } from './components/tooltip/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
-
 // Dialog Interfaces
 export { InfoOptions } from './components/dialog/dialog-info/info-options';
 export { ErrorOptions } from './components/dialog/dialog-error/error-options';
@@ -65,6 +64,7 @@ export { ConfirmationOptions } from './components/dialog/dialog-confirmation/con
 export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
 export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
+export { CalendarStatus } from './components/calendar/calendar';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 

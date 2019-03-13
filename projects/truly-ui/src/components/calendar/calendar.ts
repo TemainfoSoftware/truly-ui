@@ -34,6 +34,13 @@ import { NavigatorService } from '../navigator/services/navigator.service';
 import { CalendarService } from './services/calendar.service';
 import { I18nService } from '../i18n/i18n.service';
 
+export interface CalendarStatus {
+  id?: string;
+  date: Date;
+  current: number;
+  total: number;
+}
+
 @Component( {
   selector: 'tl-calendar',
   templateUrl: './calendar.html',
@@ -45,6 +52,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   @Input() todayButton = true;
 
   @Input() inputControlFocus;
+
+  @Input() status: Array<CalendarStatus>;
 
   @Input() date = new Date();
 
@@ -713,6 +722,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   ngOnChanges( changes: SimpleChanges ) {
+    if (changes.status) {
+      if (!changes.status.firstChange) {
+        this.calendarService.changeStatus();
+      }
+    }
     if (changes.date) {
       if ( !changes.date.firstChange ) {
         this.setDateChange();

@@ -35,6 +35,13 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'status',
+    type: 'Array<CalendarStatus>',
+    default: 'null',
+    description: 'Status used as indication on cell',
+    options: 'Array<CalendarStatus>'
+  },
+  {
     name: 'inputControlFocus',
     type: 'TlInput',
     default: 'null',

@@ -80,6 +80,10 @@ export class CalendarService {
     this.relocateTable();
   }
 
+  changeStatus() {
+    (<TlCalendarDays>this.component.instance).changeStatus();
+  }
+
   createTableDays() {
     this.handleComponentCreated();
     const componentFactory = this.compiler.resolveComponentFactory( TlCalendarDays );

@@ -84,6 +84,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   public slatNumberRowsAsArray: Array<Number>;
 
+  public existsScale = false;
+
   private _events: ScheduleDataSource[];
 
   constructor(
@@ -104,7 +106,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
     if ( changes['workScale'] !== undefined ) {
       if ( changes[ 'workScale' ].currentValue ) {
-
+        this.existsScale = ( ( this.workScale as WorkScaleType).hasOwnProperty('interval')
+          || (this.workScale as Array<WorkScaleType>).length > 0 );
         this.workScaleService.reload( changes[ 'workScale' ].currentValue );
       }
     }

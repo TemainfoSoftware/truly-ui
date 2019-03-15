@@ -4,7 +4,7 @@
       <tl-button-group [height]="'30px'" >
         <tl-button-group-item *ngFor="let view of views"
                               [width]="'100px'"
-                              [text]="view | uppercase"
+                              [text]="texts.views[view]"
                               [selected]="view === defaultView"
                               (click)="changeView.emit(view)"
         >
@@ -22,6 +22,6 @@
     </tl-navigator>
   </div>
   <div class="ui-schedule-heading-tools">
-    <tl-button (click)="newEventClick.emit()" [text]="'Add Event'" [iconBeforeText]="'fas fa-plus'" [width]="'80px'" color="primary"></tl-button>
+    <tl-button (click)="newEventClick.emit()" [text]="texts.buttons.addEvent" [iconBeforeText]="'fas fa-plus'" [width]="'80px'" color="primary"></tl-button>
   </div>
 </div>

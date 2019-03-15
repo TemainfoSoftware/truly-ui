@@ -29,6 +29,7 @@ import { SlotSettingsType } from './types/slot-settings.type';
 import { WorkScaleType } from './types/work-scale.type';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
+import { ScheduleI18n } from './i18n/schedule-i18n';
 
 @Component( {
   selector: 'tl-schedule',
@@ -53,6 +54,8 @@ export class TlSchedule implements OnInit, OnChanges {
   @Input() workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '18:00', 30 );
 
   @Input() showNowIndicator = false;
+
+  @Input() texts = ScheduleI18n;
 
   @Input('events') set events( events: ScheduleDataSource[]) {
     if ( !events) {

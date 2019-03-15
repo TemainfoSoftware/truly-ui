@@ -17,14 +17,23 @@ export class WorkScaleService {
   constructor( ) {}
 
   load( workScale: WorkScaleType | WorkScaleType[] ) {
-    this.setWorkScale(workScale);
-    this.generateTimes();
+    if ( workScale ) {
+      if ( ( workScale as WorkScaleType).hasOwnProperty('interval') || (workScale as Array<WorkScaleType>).length > 0 ) {
+        this.setWorkScale(workScale);
+        this.createWorkScaleMileseconds();
+        this.generateTimes();
+      }
+    }
   }
 
   reload( workScale: WorkScaleType | WorkScaleType[] ) {
-    this.setWorkScale(workScale);
-    this.createWorkScaleMileseconds();
-    this.generateTimes();
+    if ( workScale ) {
+      if ( ( workScale as WorkScaleType ).hasOwnProperty( 'interval' ) || ( workScale as Array<WorkScaleType> ).length > 0 ) {
+        this.setWorkScale( workScale );
+        this.createWorkScaleMileseconds();
+        this.generateTimes();
+      }
+    }
   }
 
   private setWorkScale( workScale: WorkScaleType | WorkScaleType[] ) {

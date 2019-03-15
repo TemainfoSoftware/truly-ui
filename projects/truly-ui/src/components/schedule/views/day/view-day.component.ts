@@ -9,6 +9,7 @@ import { WorkScaleType } from '../../types/work-scale.type';
 import { EventService } from '../../services/event.service';
 import { WorkScaleService } from '../../services/work-scale.service';
 import { Subscription } from 'rxjs';
+import { ScheduleI18n } from '../../i18n/schedule-i18n';
 
 @Component({
   selector: 'tl-view-day',
@@ -30,6 +31,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   @Input() workScale: WorkScaleType | WorkScaleType[];
 
   @Input() slatNumberRowsAsArray: Array<Number>;
+
+  @Input() texts = ScheduleI18n;
 
   @ViewChildren('scheduleSlats') scheduleSlats: QueryList<any>;
 

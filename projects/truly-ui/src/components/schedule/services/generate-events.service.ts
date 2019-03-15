@@ -3,6 +3,8 @@ import { Cluster, Graph, Node } from '../types/graph';
 import { elvis } from '../../core/helper/elvis';
 import { ScheduleDataSource } from '../types/datasource.type';
 
+const WIDTH_SCROLL = 17;
+
 @Injectable()
 export class GenerateEventsService {
 
@@ -35,7 +37,7 @@ export class GenerateEventsService {
       this.scheduleSlats = scheduleSlats;
 
       this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
-      this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth;
+      this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
     }
   }
 

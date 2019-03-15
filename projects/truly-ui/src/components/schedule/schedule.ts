@@ -104,6 +104,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
     if ( changes['workScale'] !== undefined ) {
       if ( changes[ 'workScale' ].currentValue ) {
+
         this.workScaleService.reload( changes[ 'workScale' ].currentValue );
       }
     }

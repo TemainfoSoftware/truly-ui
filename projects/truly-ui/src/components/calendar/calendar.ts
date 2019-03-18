@@ -716,6 +716,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   setDateChange() {
+    this.date = new Date(this.date);
     this.day = this.date.getDate();
     this.month = this.date.getMonth();
     this.year = this.date.getFullYear();

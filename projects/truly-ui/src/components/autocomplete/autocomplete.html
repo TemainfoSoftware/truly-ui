@@ -3,12 +3,14 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
+         [class.disabled]="disabled || isDisabled"
          [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
          [class.openedAbove]="positionOverlay === 'top' && isOpen">
       <input #input
              #trigger="cdkOverlayOrigin"
              cdkOverlayOrigin
+             [attr.disabled]="disabled || isDisabled"
              (click)="toggleIsOpen()"
              [attr.placeholder]="placeholder"
              [formControl]="searchControl"

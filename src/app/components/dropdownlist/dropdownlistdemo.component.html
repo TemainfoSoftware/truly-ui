@@ -284,9 +284,7 @@
     </app-showcase-card>
     <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
       <app-card>
-        <div class="col-12">
-          <h4><code>All <b>Angular Supported Events</b> can be used on this component.</code></h4>
-        </div>
+        <app-showcase-table-events [data]="dataTableEvents"></app-showcase-table-events>
       </app-card>
     </app-showcase-card>
   </div>

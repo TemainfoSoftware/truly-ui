@@ -74,6 +74,8 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   @Input() openFocus = true;
 
+  @Input() disabled: boolean = null;
+
   @Input() color = 'basic';
 
   @Input() labelPlacement: 'top' | 'left' = 'left';
@@ -322,7 +324,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   handleFocus() {
     this.focused = true;
-    if ( this.openFocus && !this.keyManager.activeItem ) {
+    if ( this.openFocus && !this.keyManager.activeItem && !this.isDisabled && !this.disabled) {
       this.setIsOpen( true );
     }
   }
@@ -398,9 +400,12 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   toggleIsOpen() {
-    this.isOpen = !this.isOpen;
-    this.input.nativeElement.focus();
-    this.handleItemSelected();
+    console.log('isDisabled', this.isDisabled);
+    if (!this.disabled && !this.isDisabled) {
+      this.isOpen = !this.isOpen;
+      this.input.nativeElement.focus();
+      this.handleItemSelected();
+    }
   }
 
   private getFilters( term: string ) {

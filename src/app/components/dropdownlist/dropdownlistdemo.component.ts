@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import * as json from './dropdownlistdemo-dataproperties.json';
+import * as jsonEvt from './dropdownlistdemo-dataevents.json';
 
 @Component( {
   selector: 'app-dropdown-list',
@@ -10,6 +11,8 @@ import * as json from './dropdownlistdemo-dataproperties.json';
 export class DropDownListDemoComponent {
 
   public dataTableProperties;
+
+  public dataTableEvents;
 
   public itemSelected: any;
 
@@ -39,6 +42,7 @@ export class DropDownListDemoComponent {
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
+    this.dataTableEvents = jsonEvt.dataProperties;
     this.data = [
       { textItem: 'Wallace', value: '1' },
       { textItem: 'Wilson', value: '2' },

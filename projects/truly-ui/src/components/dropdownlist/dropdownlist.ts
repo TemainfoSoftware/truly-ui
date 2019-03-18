@@ -23,12 +23,13 @@ import {
   AfterViewInit,
   Component,
   Input,
+  Output,
   OnInit,
   Inject,
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges
+  ElementRef, OnChanges, EventEmitter
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
@@ -90,6 +91,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   @Input( 'modelMode' ) modelMode: 'string' | 'object' = 'object';
 
   @Input( 'searchOnList' ) searchOnList = false;
+
+  @Output('selectItem') selectItem: EventEmitter<any> = new EventEmitter();
 
   @ContentChild( NgModel ) model: NgModel;
 
@@ -168,6 +171,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     this.isOpen = false;
     this.optionSelected = $event;
     this.selectedDescription = this.isSimpleData() ? $event.option.item : objectPath.get($event.option.item, this.keyText );
+    this.selectItem.emit( $event.option.item );
     this.handleKeyModelValue( $event.option.item );
     this.setInputFocus();
   }

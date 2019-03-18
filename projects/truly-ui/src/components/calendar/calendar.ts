@@ -57,11 +57,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   @Input() date = new Date();
 
-  @Input() year = this.date.getFullYear();
+  @Input() year = this.date ? this.date.getFullYear() : new Date().getFullYear();
 
-  @Input() month = this.date.getMonth();
+  @Input() month = this.date ? this.date.getMonth() : new Date().getMonth();
 
-  @Input() day = this.date.getDate();
+  @Input() day = this.date ? this.date.getDate() : new Date().getDate();
 
   @Input() typingDay = false;
 

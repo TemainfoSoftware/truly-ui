@@ -23,21 +23,26 @@ export class GenerateEventsService {
   constructor() {}
 
   with(  events: ScheduleDataSource[] ) {
-    if ( events.length > 0 && this.scheduleSlats ) {
-      this.originalEvents = JSON.parse( JSON.stringify(events) );
-      this.events = events;
-      this.transformDateToPixel();
+    if (  this.scheduleSlats ) {
+      if ( events.length > 0 && this.scheduleSlats.length > 0 ) {
+        this.originalEvents = JSON.parse( JSON.stringify( events ) );
+        this.events = events;
+        this.transformDateToPixel();
+        return this.generateEvents();
+      }
     }
-    return this.generateEvents();
+
   }
 
   initializeArray( workScaleInMileseconds, scheduleSlats: QueryList<any>  ) {
-    if ( scheduleSlats.length > 0) {
-      this.workScaleInMileseconds = workScaleInMileseconds;
-      this.scheduleSlats = scheduleSlats;
+    if ( scheduleSlats && scheduleSlats) {
+      if ( scheduleSlats.length > 0 && workScaleInMileseconds.length > 0 ) {
+        this.workScaleInMileseconds = workScaleInMileseconds;
+        this.scheduleSlats = scheduleSlats;
 
-      this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
-      this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
+        this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
+        this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
+      }
     }
   }
 

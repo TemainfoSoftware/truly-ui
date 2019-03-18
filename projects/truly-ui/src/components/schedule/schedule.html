@@ -3,6 +3,7 @@
   <!-- SCHEDULE HEADER -->
   <div class="ui-schedule-header">
     <tl-schedule-heading
+      [texts]="texts"
       [views]="views"
       [defaultView]="defaultView"
       [currentDate]="currentDate"
@@ -13,7 +14,10 @@
   </div>
 
   <!-- SCHEDULE BODY -->
-  <div  class="ui-schedule-body" [ngStyle]="{height: 'calc(' + height +' - 52px)'}" [ngSwitch]="defaultView">
+  <div  class="ui-schedule-body"
+        [tlBlockui]="!workScale || !existsScale"
+        [blockuiConfig]="{ message: texts.scaleNotFound, icon: 'fas fa-address-book', color: '#ccc' }"
+        [ngStyle]="{height: 'calc(' + height +' - 52px)', overflowY: !existsScale ? 'hidden' : 'visible'}" [ngSwitch]="defaultView">
     <tl-view-day
       *ngSwitchCase="'day'"
       [currentDate]="currentDate"

@@ -34,6 +34,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   @Input() texts = ScheduleI18n;
 
+  @Input('events') events: ScheduleDataSource[];
+
   @ViewChildren('scheduleSlats') scheduleSlats: QueryList<any>;
 
   @Output() onRowDbClick = new EventEmitter();
@@ -60,39 +62,52 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     private changeDetectionRef: ChangeDetectorRef,
     private generateEvents: GenerateEventsService,
     private eventService: EventService,
-    private workScaleService: WorkScaleService) { }
-
-
-  ngOnInit() {
+    private workScaleService: WorkScaleService) {
 
     this.subscriptions.add(this.workScaleService.updateScale.subscribe(( timesCollection) => {
       this.timesCollection = timesCollection;
+      this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.changeDetectionRef.detectChanges();
     }));
 
     this.subscriptions.add(this.eventService.updateEvents.subscribe(( event ) => {
-      this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.generateEventsPositions( event );
       this.inicializeNowIndicator( );
       this.changeDetectionRef.detectChanges();
     }));
   }
 
-  ngAfterViewInit() {
 
-    this.generateEvents.initializeArray(
-      this.workScaleService.workScaleInMileseconds,
-      this.scheduleSlats
-    );
-    this.inicializeNowIndicator();
-    this.changeDetectionRef.detectChanges();
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    // this.timesCollection = this.workScaleService.timesCollection;
+    // this.generateEvents.initializeArray(
+    //   this.workScaleService.workScaleInMileseconds,
+    //   this.scheduleSlats
+    // );
+    // this.inicializeNowIndicator();
+    // this.changeDetectionRef.detectChanges();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
-    if ( changes['events'] !== undefined ) {
-      if ( !changes[ 'events' ].firstChange ) {
-        this.eventService.loadEvents(changes[ 'events' ].currentValue);
-      }
+
+    if ( changes['workScale'] !== undefined ) {
+      this.workScaleService.reload( changes[ 'workScale' ].currentValue );
+    }
+
+
+    if ( changes['events'] !== undefined  ) {
+        this.eventService.loadEvents( changes[ 'events' ].currentValue );
+        this.eventService.getEventsOfDay();
+
+    }
+
+    if ( changes['currentDate'] !== undefined ) {
+
+        this.eventService.loadEvents( changes[ 'events' ].currentValue  );
+        this.eventService.getEventsOfDay();
+
     }
     this.changeDetectionRef.detectChanges();
   }

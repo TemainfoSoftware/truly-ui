@@ -88,6 +88,10 @@ export class TlSchedule implements OnInit, OnChanges {
 
   private _events: ScheduleDataSource[];
 
+  get events(): ScheduleDataSource[] {
+    return this._events;
+  }
+
   constructor(
     public workScaleService: WorkScaleService,
     private changeDetection: ChangeDetectorRef,
@@ -96,35 +100,11 @@ export class TlSchedule implements OnInit, OnChanges {
 
   ngOnInit() {
     this.convertSlarNumberToArray();
-    this.workScaleService.load( this.workScale );
-    this.eventService.loadEvents( this._events );
-    this.eventService.getEventsOfDay();
     this.changeDetection.detectChanges();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
-
-    if ( changes['workScale'] !== undefined ) {
-      if ( changes[ 'workScale' ].currentValue ) {
-        this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
-        this.workScaleService.reload( changes[ 'workScale' ].currentValue );
-      }
-    }
-
-
-    if ( changes['events'] !== undefined ) {
-      if ( !changes[ 'events' ].firstChange ) {
-        this.eventService.loadEvents( this._events );
-        this.eventService.getEventsOfDay();
-      }
-    }
-
-    if ( changes['currentDate'] !== undefined ) {
-      if ( ! changes['currentDate'].firstChange) {
-        this.eventService.loadEvents( this._events );
-        this.eventService.getEventsOfDay();
-      }
-    }
+    this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
     this.changeDetection.detectChanges();
   }
 

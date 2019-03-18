@@ -16,20 +16,10 @@ export class WorkScaleService {
 
   constructor( ) {}
 
-  load( workScale: WorkScaleType | WorkScaleType[] ) {
-    if ( this.exitsWorkScale( workScale ) ) {
-      this.setWorkScale(workScale);
-      this.createWorkScaleMileseconds();
-      this.generateTimes();
-    }
-  }
-
   reload( workScale: WorkScaleType | WorkScaleType[] ) {
-    if ( this.exitsWorkScale( workScale ) ) {
-      this.setWorkScale( workScale );
-      this.createWorkScaleMileseconds();
-      this.generateTimes();
-    }
+    this.setWorkScale( workScale );
+    this.createWorkScaleMileseconds();
+    this.generateTimes();
   }
 
   exitsWorkScale ( workScale ) {
@@ -40,28 +30,37 @@ export class WorkScaleService {
   }
 
   private setWorkScale( workScale: WorkScaleType | WorkScaleType[] ) {
-    if ( workScale ) {
-      if ( !( (workScale as Array<WorkScaleType>).length > 0 ) ) {
-        this.workScale = new Array<WorkScaleType>(1).fill( workScale as WorkScaleType);
-      } else {
-        this.workScale = workScale as WorkScaleType[];
-      }
+
+    if ( !this.exitsWorkScale( workScale ) ) {
+     return this.workScale = [];
     }
+
+    if ( ( workScale as WorkScaleType ).hasOwnProperty('interval')  ) {
+      return this.workScale = new Array<WorkScaleType>(1).fill( workScale as WorkScaleType);
+    }
+
+    if ( ( workScale as Array<WorkScaleType> ).length > 0 ) {
+      this.workScale = workScale as WorkScaleType[];
+    }
+
   }
 
   private createWorkScaleMileseconds() {
-    if ( this.workScale ) {
-      if ( (this.workScale as Array<WorkScaleType>).length > 0 ) {
-        this.workScaleInMileseconds = [];
-        (this.workScale as Array<WorkScaleType>).forEach(( value: WorkScaleType, index, array) => {
+
+    this.workScaleInMileseconds = [];
+
+    if ( (this.workScale as Array<WorkScaleType>).length > 0 ) {
+      (this.workScale as Array<WorkScaleType>).forEach(( value: WorkScaleType, index, array) => {
+        if ( array.length > 0 ) {
           this.workScaleInMileseconds.push({
             start: this.transformHourToMileseconds( value.start ),
             end: this.transformHourToMileseconds( value.end ),
             interval: value.interval
           });
-        });
-      }
+        }
+      });
     }
+
   }
 
 
@@ -95,7 +94,8 @@ export class WorkScaleService {
           currentHour_ms++;
         }
       });
-      this.updateScale.emit( this.timesCollection );
     }
+
+    this.updateScale.emit( this.timesCollection );
   }
 }

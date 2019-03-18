@@ -17,7 +17,7 @@
   <div  class="ui-schedule-body"
         [tlBlockui]="!workScale || !existsScale"
         [blockuiConfig]="{ message: texts.scaleNotFound, icon: 'fas fa-address-book', color: '#ccc' }"
-        [ngStyle]="{height: 'calc(' + height +' - 52px)', overflowY: workScale.length === 0 ? 'hidden' : 'visible'}" [ngSwitch]="defaultView">
+        [ngStyle]="{height: 'calc(' + height +' - 52px)', overflowY: !existsScale ? 'hidden' : 'visible'}" [ngSwitch]="defaultView">
     <tl-view-day
       *ngSwitchCase="'day'"
       [currentDate]="currentDate"

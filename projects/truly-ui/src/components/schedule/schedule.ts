@@ -89,8 +89,8 @@ export class TlSchedule implements OnInit, OnChanges {
   private _events: ScheduleDataSource[];
 
   constructor(
+    public workScaleService: WorkScaleService,
     private changeDetection: ChangeDetectorRef,
-    private workScaleService: WorkScaleService,
     private eventService: EventService
   ) {}
 
@@ -106,8 +106,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
     if ( changes['workScale'] !== undefined ) {
       if ( changes[ 'workScale' ].currentValue ) {
-        this.existsScale = ( ( this.workScale as WorkScaleType).hasOwnProperty('interval')
-          || (this.workScale as Array<WorkScaleType>).length > 0 );
+        this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
         this.workScaleService.reload( changes[ 'workScale' ].currentValue );
       }
     }

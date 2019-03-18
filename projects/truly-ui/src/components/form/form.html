@@ -1,4 +1,9 @@
 <div class="formBox" (keydown)="handleKeysForm($event)">
+  <div class="loading" *ngIf="isLoading">
+    <div class="loader">
+      <tl-loader></tl-loader>
+    </div>
+  </div>
     <div class="formContent" #content [style.padding]="padding">
       <form novalidate #form="ngForm">
         <ng-content></ng-content>

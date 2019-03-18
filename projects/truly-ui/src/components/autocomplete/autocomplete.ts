@@ -247,6 +247,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   private handleKeyModelValue( value ) {
     this.modelInitialized = true;
+    this.select.emit( value );
     if ( !this.isModelModeString() && this.keyValue ) {
       this.value = objectPath.get(value, this.keyValue );
       return;
@@ -317,7 +318,6 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
       this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
       this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
-      this.select.emit( this.keyManager.activeItem.itemSelected );
     }
     this.setIsOpen( false );
   }
@@ -347,7 +347,6 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.setDescriptionValue( objectPath.get(value, this.keyText ) );
     this.handleKeyModelValue( value );
     this.input.nativeElement.focus();
-    this.select.emit( value );
     this.setIsOpen( false );
     this.setSelected( item );
     this.change.detectChanges();

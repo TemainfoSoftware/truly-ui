@@ -14,7 +14,6 @@ export class EventService {
   constructor( private workScaleService: WorkScaleService ) { }
 
   loadEvents( events: ScheduleDataSource[] ) {
-    console.log( events );
     this.events = events;
     this.updateEvents.emit( this.events );
   }

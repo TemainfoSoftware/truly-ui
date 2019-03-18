@@ -102,8 +102,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         this.eventService.getEventsOfDay();
     }
 
-    if ( changes['currentDate'] !== undefined && changes[ 'events' ].currentValue !== undefined ) {
-        this.eventService.loadEvents( changes[ 'events' ].currentValue  );
+    if ( changes['currentDate'] !== undefined ) {
+        this.eventService.loadEvents( this.events );
         this.eventService.getEventsOfDay();
     }
     this.changeDetectionRef.detectChanges();

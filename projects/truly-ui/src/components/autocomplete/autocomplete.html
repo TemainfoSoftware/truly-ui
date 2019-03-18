@@ -10,7 +10,7 @@
       <input #input
              #trigger="cdkOverlayOrigin"
              cdkOverlayOrigin
-             [attr.disabled]="disabled || isDisabled"
+             [attr.disabled]="disabled || isDisabled ? true : null"
              (click)="toggleIsOpen()"
              [attr.placeholder]="placeholder"
              [formControl]="searchControl"

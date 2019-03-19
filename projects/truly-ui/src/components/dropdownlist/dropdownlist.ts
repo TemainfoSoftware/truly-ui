@@ -24,7 +24,6 @@ import {
   Component,
   Input,
   Output,
-  OnInit,
   Inject,
   Optional,
   ContentChild,
@@ -54,7 +53,7 @@ import { TlListItem } from '../overlaylist/list-item/list-item';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
+export class TlDropDownList extends ElementBase<string> implements OnChanges, AfterViewInit {
 
   @Input( 'data' ) data: any[] = [];
 
@@ -92,7 +91,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'searchOnList' ) searchOnList = false;
 
-  @Output('selectItem') selectItem: EventEmitter<any> = new EventEmitter();
+  @Output( 'selectItem' ) selectItem: EventEmitter<any> = new EventEmitter();
 
   @ContentChild( NgModel ) model: NgModel;
 
@@ -114,19 +113,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   public isLoading = true;
 
-  private subject = new Subject();
-
   constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig,
                @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
     this.setOptions( dropdownConfig );
-  }
-
-  ngOnInit() {
-    this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
-      this.onSearch( searchTextValue );
-    } );
   }
 
   ngAfterViewInit() {
@@ -137,18 +128,18 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
-      if ( (this.getItemText(item).substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
+      if ( (this.getItemText( item ).substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
         filter.push( item );
       }
     } );
     this.datasource = filter;
   }
 
-  getItemText(item) {
-    if (this.typeOfData === 'simple') {
+  getItemText( item ) {
+    if ( this.typeOfData === 'simple' ) {
       return item;
     }
-    return objectPath.get(item, this.keyText);
+    return objectPath.get( item, this.keyText );
   }
 
   onKeyDown( $event ) {
@@ -170,7 +161,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   onSelectOption( $event: ListItemInterface ) {
     this.isOpen = false;
     this.optionSelected = $event;
-    this.selectedDescription = this.isSimpleData() ? $event.option.item : objectPath.get($event.option.item, this.keyText );
+    this.selectedDescription = this.isSimpleData() ? $event.option.item : objectPath.get( $event.option.item, this.keyText );
     this.selectItem.emit( $event.option.item );
     this.handleKeyModelValue( $event.option.item );
     this.setInputFocus();
@@ -203,7 +194,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   private setUpComponent() {
     this.datasource = this.data;
-    if (this.data.length > 0) {
+    if ( this.data.length > 0 ) {
       this.isLoading = false;
     }
   }
@@ -228,7 +219,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private listenModelChange() {
-    if (this.getModel()) {
+    if ( this.getModel() ) {
       this.getModel().valueChanges.subscribe( () => {
         this.getModelValue();
       } );
@@ -242,12 +233,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     if ( !this.keyValue ) {
       return this.value = itemValue;
     }
-    return this.value = objectPath.get(itemValue, this.keyValue);
-    console.log('val', this.value);
+    return this.value = objectPath.get( itemValue, this.keyValue );
   }
 
   private getModelValue() {
-    if (!this.getModel()) {
+    if ( !this.getModel() ) {
       return;
     }
     this.datasource.forEach( ( value, index ) => {
@@ -276,12 +266,12 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return this.getModel().value;
     }
     if ( !this.keyValue ) {
-      return objectPath.get(this.getModel().value, this.identifier);
+      return objectPath.get( this.getModel().value, this.identifier );
     }
     if ( this.isModelModeString() ) {
       return this.getModel().value;
     }
-    return objectPath.get(this.getModel().value, this.keyValue);
+    return objectPath.get( this.getModel().value, this.keyValue );
   }
 
   private getCompare( value ) {
@@ -289,16 +279,16 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return value;
     }
     if ( !this.keyValue ) {
-      return objectPath.get(value, this.identifier);
+      return objectPath.get( value, this.identifier );
     }
-    return objectPath.get(value, this.keyValue );
+    return objectPath.get( value, this.keyValue );
   }
 
   private getDescription( value ) {
     if ( this.isSimpleData() ) {
       return value;
     }
-    return objectPath.get(value, this.keyText );
+    return objectPath.get( value, this.keyText );
   }
 
   private handleSelectInLetter( keyInput: string ) {
@@ -331,7 +321,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getFirstLetterOfItem( item ): string {
-    return String( objectPath.get(item, this.keyText ) ).substring( 0, 1 ).toLowerCase();
+    return String( objectPath.get( item, this.keyText ) ).substring( 0, 1 ).toLowerCase();
   }
 
   ngOnChanges( changes ) {

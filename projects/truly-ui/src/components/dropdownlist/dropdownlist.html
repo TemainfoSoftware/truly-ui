@@ -16,8 +16,8 @@
          readonly
          #trigger="cdkOverlayOrigin"
          [attr.disabled]="disabled ? true : null"
-         (click)="handleOpenList($event)"
          (keydown)="onKeyDown($event)"
+         (click)="handleOpenList($event)"
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
          [ngClass]="{ 'ng-invalid' : model?.invalid || controlName?.invalid }"
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"

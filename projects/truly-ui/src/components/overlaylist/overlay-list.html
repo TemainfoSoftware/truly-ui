@@ -4,7 +4,8 @@
     <div class="search-input" *ngIf="searchOnList && !customFocus">
       <tl-input
         (input)="handleInput($event)"
-        (keydown)="handleKeyEvents($event)"
+        (keydown.ArrowUp)="keyManager.setPreviousItemActive()"
+        (keydown.ArrowDown)="keyManager.setNextItemActive()"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()">
       </tl-input>
     </div>

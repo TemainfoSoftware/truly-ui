@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, TemplateRef } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
 
 @Component( {
@@ -37,6 +37,8 @@ export class TlListItem implements Highlightable {
   @Input() grouped = true;
 
   @Input() height = '30px';
+
+  @Input() template: TemplateRef<any>;
 
   public selected = false;
 

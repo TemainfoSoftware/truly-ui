@@ -6,6 +6,6 @@
        [style.line-height]="height"
        [class.disabled]="disabled"
        [style.height]="height">
-    <ng-content></ng-content>
+    <ng-container *ngTemplateOutlet="template"></ng-container>
   </div>
 </div>

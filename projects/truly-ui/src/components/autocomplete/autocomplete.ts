@@ -98,7 +98,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-  @Output() select: EventEmitter<any> = new EventEmitter();
+  @Output() selectItem: EventEmitter<any> = new EventEmitter();
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
@@ -220,11 +220,12 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   onClickClose() {
     this.value = '';
-    this.setDescriptionValue('');
-    this.searchControl.setValue('');
+    this.setDescriptionValue( '' );
+    this.searchControl.setValue( '' );
     this.closeHover = false;
-    this.setSelected(null);
+    this.selected = null;
     this.setInputFocus();
+    this.setIsOpen(true);
   }
 
   private setInputFocus() {
@@ -239,7 +240,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   private handleModelLazy() {
     if ( this.value && this.lazyMode && !this.modelInitialized ) {
       if ( !this.isModelModeString() ) {
-        this.setDescriptionValue( objectPath.get(this.value, this.keyText ) );
+        this.setDescriptionValue( objectPath.get( this.value, this.keyText ) );
       } else {
         console.warn( 'The item provided is was not found, emitting filter' );
         this.filter.emit( this.getFilters( this.value ) );
@@ -253,11 +254,11 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private handleModelCached() {
-    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData()) {
+    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData() ) {
       this.dataSource.getCachedData().forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
-            this.setDescriptionValue( objectPath.get(value, this.keyText ) );
+            this.setDescriptionValue( objectPath.get( value, this.keyText ) );
             this.handleKeyModelValue( value );
           }
         }
@@ -267,24 +268,24 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   private getItemCompare( value ) {
     if ( !this.keyValue || this.isModelModeString() ) {
-      return objectPath.get(value, this.identifier );
+      return objectPath.get( value, this.identifier );
     }
-    return objectPath.get(value, this.keyValue);
+    return objectPath.get( value, this.keyValue );
   }
 
   private handleKeyModelValue( value ) {
     this.modelInitialized = true;
-    this.select.emit( value );
+    this.selected = value;
     if ( !this.isModelModeString() && this.keyValue ) {
-      this.value = objectPath.get(value, this.keyValue );
+      this.value = objectPath.get( value, this.keyValue );
       return;
     }
     if ( this.isModelModeString() && !this.keyValue ) {
-      this.value = objectPath.get(value, this.identifier );
+      this.value = objectPath.get( value, this.identifier );
       return;
     }
     if ( this.isModelModeString() && this.keyValue ) {
-      this.value = objectPath.get(value, this.keyValue );
+      this.value = objectPath.get( value, this.keyValue );
       return;
     }
     this.value = value;
@@ -299,10 +300,10 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     }
   }
 
-  private setSelected( item: TlItemSelectedDirective ) {
-    this.selected = item;
-    this.keyManager.setActiveItem( item );
-    this.itemSelectedService.itemSelected = item;
+  private setSelected( itemDirective: TlItemSelectedDirective ) {
+    this.selected = itemDirective.itemSelected;
+    this.keyManager.setActiveItem( itemDirective );
+    this.itemSelectedService.itemSelected = itemDirective;
   }
 
   stopEvent( $event ) {
@@ -343,9 +344,10 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   handleKeyEnter() {
     if ( this.keyManager.activeItem && this.isOpen ) {
-      if (this.keyManager.activeItem.itemSelected) {
+      if ( this.keyManager.activeItem.itemSelected ) {
+        this.selectItem.emit( this.keyManager.activeItem.itemSelected );
         this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
-        this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
+        this.setDescriptionValue( objectPath.get( this.keyManager.activeItem.itemSelected, this.keyText ) );
         this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
       }
     }
@@ -354,7 +356,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   handleFocus() {
     this.focused = true;
-    if ( this.openFocus && !this.keyManager.activeItem && !this.isDisabled && !this.disabled) {
+    if ( this.openFocus && !this.keyManager.activeItem && !this.isDisabled && !this.disabled ) {
       this.setIsOpen( true );
     }
   }
@@ -365,21 +367,22 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   private getCompareModel() {
     if ( this.keyValue && !this.isModelModeString() ) {
-      return objectPath.get(this.value, this.keyValue);
+      return objectPath.get( this.value, this.keyValue );
     }
     if ( !this.isModelModeString() && !this.keyValue ) {
-      return objectPath.get(this.value, this.identifier );
+      return objectPath.get( this.value, this.identifier );
     }
     return this.value;
   }
 
-  selectItem( value: any, item: TlItemSelectedDirective ) {
-    this.setDescriptionValue( objectPath.get(value, this.keyText ) );
+  onSelectItem( value: any, item: TlItemSelectedDirective ) {
+    this.setDescriptionValue( objectPath.get( value, this.keyText ) );
     this.handleKeyModelValue( value );
     this.input.nativeElement.focus();
     this.setIsOpen( false );
     this.setSelected( item );
     this.change.detectChanges();
+    this.selectItem.emit( value );
   }
 
   private setUpData( value? ) {
@@ -396,7 +399,6 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.dataSource.setData( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
-    this.handleModelCached();
   }
 
   private setFirstItemActive() {
@@ -425,12 +427,12 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.isOpen = value;
   }
 
-  getItemText(item) {
-    return objectPath.get(item, this.keyText);
+  getItemText( item ) {
+    return objectPath.get( item, this.keyText );
   }
 
   toggleIsOpen() {
-    if (!this.disabled && !this.isDisabled) {
+    if ( !this.disabled && !this.isDisabled ) {
       this.isOpen = !this.isOpen;
       this.input.nativeElement.focus();
       this.handleItemSelected();
@@ -444,7 +446,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private setScrollVirtual() {
-    if (this.cdkVirtualScroll) {
+    if ( this.cdkVirtualScroll ) {
       this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
     }
   }
@@ -461,12 +463,13 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       this.dataSource.setArray( $event );
       this.setUpData( $event );
       setTimeout( () => {
-        this.setSelected( this.listItems.toArray()[ 0 ] );
+        this.keyManager.setActiveItem( 0 );
       }, 100 );
       return;
     }
     this.dataSource.setData( [] );
     this.setNotFound( true );
+    this.selected = null;
   }
 
   private setFiltering( value: boolean ) {

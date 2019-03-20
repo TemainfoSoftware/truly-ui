@@ -23,7 +23,8 @@
              (keydown.ArrowUp)="handleKeyArrowUp($event)"
              (keydown.ArrowDown)="handleKeyArrowDown($event)"
              (keydown.escape)="handleKeyEscape($event)"
-             (keyup.enter)="handleKeyEnter()"
+             (keydown.enter)="handleKeyEnter()"
+             (keydown.tab)="isOpen = false"
              (focus)="handleFocus()"
              (focusout)="focused = false"
              (input)="onInput()"
@@ -56,7 +57,7 @@
                [indexSelected]="i"
                #select="selectItem"
                *cdkVirtualFor="let item of dataSource; let i = index"
-               (mousedown)="selectItem(item, select)"
+               (mousedown)="onSelectItem(item, select)"
                class="ui-list-item">
             <span *ngIf="item; else loadingMessage">
               {{ getItemText(item) }}

@@ -35,7 +35,7 @@ export class ScheduleDemoOverviewComponent {
 
   public slotSettings: SlotSettingsType = new SlotSettingsType(  2, 40);
 
-  public workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '12:00', 30 );
+  public workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '18:00', 30 );
 
   public dataTableProperties;
 
@@ -43,11 +43,8 @@ export class ScheduleDemoOverviewComponent {
 
   public dataSource = [];
 
-  public statusConfig = {
-    attended : { status : 'attended', color : '#90ED5D', description : 'Attended' },
-    missed: { status : 'missed', color : '#FF385C', description : 'Missed' },
-    notmet: { status : 'notmet', color : '#1d8bff', description : 'Not Met' }
-  };
+  public statusConfig = {};
+
  // public data = [];
   public data = [
     {
@@ -238,6 +235,10 @@ export class ScheduleDemoOverviewComponent {
         this.workScale = workScale;
       });
 
+      this.getStatusConfig().then((  statusConfig ) => {
+        this.statusConfig = statusConfig;
+      });
+
       this.getDataSource()
         .then((data: Array<any>) => {
           this.dataSource = data;
@@ -246,9 +247,20 @@ export class ScheduleDemoOverviewComponent {
     }, 3000);
   }
 
+  getStatusConfig() {
+    return new Promise((resolve) => {
+      resolve( {
+        attended : { status : 'attended', color : '#90ED5D', description : 'Attended' },
+        missed: { status : 'missed', color : '#FF385C', description : 'Missed' },
+        notmet: { status : 'notmet', color : '#1d8bff', description : 'Not Met' }
+      } );
+    });
+  }
+
+
   getWorkScale() {
     return new Promise((resolve) => {
-      resolve( new WorkScaleType( '08:00', '12:00', 30 ) );
+      resolve( new WorkScaleType( '08:00', '18:00', 30 ) );
     });
   }
 
@@ -256,6 +268,23 @@ export class ScheduleDemoOverviewComponent {
     return new Promise((resolve) => {
       resolve(this.data);
     });
+  }
+
+  onNewEventClick( event ) {
+    const id = Math.floor((Math.random() * 100) + 1).toString(10);
+    this.dataSource = [...this.dataSource, {
+      value: id,
+      title: 'William Aguera - ' + id,
+      detail: 'Consulta | Particular',
+      status: 'missed',
+      allday: false,
+      date: {
+        start: new Date(new Date().setHours(14, 30)).getTime() ,
+        end: new Date( new Date().setHours(15, 0) ).getTime()
+      }
+    }];
+
+    console.log( 'NEW DATA: ', this.dataSource);
   }
 
   onEventDbClick( event ) {

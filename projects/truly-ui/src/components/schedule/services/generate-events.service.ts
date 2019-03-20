@@ -26,7 +26,7 @@ export class GenerateEventsService {
     if (  this.scheduleSlats ) {
       if ( events.length > 0 && this.scheduleSlats.length > 0 ) {
         this.originalEvents = JSON.parse( JSON.stringify( events ) );
-        this.events = events;
+        this.events = this.originalEvents;
         this.transformDateToPixel();
         return this.generateEvents();
       }
@@ -71,6 +71,10 @@ export class GenerateEventsService {
         offsetHeight = offsetHeight + elvis(slotObject, 'nativeElement.offsetHeight') || 0;
       }
     });
+
+    if ( position < 0 && offsetHeight <= 0) {
+      return -1000;
+    }
 
     startDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].start / 100000 );
     endDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].end / 100000 );

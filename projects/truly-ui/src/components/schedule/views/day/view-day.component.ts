@@ -126,7 +126,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   }
 
   private generateEventsPositions( events ) {
-    if ( events !== undefined && events.length > 0 ) {
+    if ( events !== undefined ) {
       this.eventsWithPositions = this.generateEvents.with( events );
     }
   }

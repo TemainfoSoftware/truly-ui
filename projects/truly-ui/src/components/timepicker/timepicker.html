@@ -2,6 +2,8 @@
 
   <tl-input (overlayOrigin)="trigger = $event"
             (click)="changeOpened()"
+            (keydown.shift.tab)="isOpen = false"
+            (keydown.tab)="isOpen = false"
             [mask]="'Hh:Mm'"
             [ngModel]="value"
             (ngModelChange)="onChangeValue($event)"
@@ -20,12 +22,12 @@
 
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
-               [cdkConnectedOverlayHasBackdrop]="false"
+               [cdkConnectedOverlayHasBackdrop]="true"
                [cdkConnectedOverlayOrigin]="trigger"
-               [cdkConnectedOverlayOpen]="true"
+               [cdkConnectedOverlayOpen]="isOpen"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'">
 
-    <div [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)" [style.visibility]="isOpen ? 'visible' : 'hidden'">
+    <div  @overlay [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)">
       <div class="ui-timepicker-header">
         <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
         <tl-button *ngIf="steps.hour === 1 && steps.minute === 1"
@@ -84,15 +86,9 @@
           </div>
         </div>
         <div *ngIf="format === '12'" class="ui-ampm-content">
-          <div class="list" #listAmPm (scroll)="onScrollAmPm($event)">
-            <div> </div>
-            <div> </div>
-            <div> </div>
+          <div class="list" [style.top]="isTimeZoneAM() ? 'calc(50% - 23px)' : 'calc(50% - 54px)'">
             <div [ngClass]="{ 'selectedItem': isTimeZoneAM() }" class="ui-list-item" (click)="setAm()">AM</div>
             <div [ngClass]="{ 'selectedItem': isTimeZonePM() }" class="ui-list-item" (click)="setPm()">PM</div>
-            <div> </div>
-            <div> </div>
-            <div> </div>
           </div>
         </div>
       </div>
@@ -101,7 +97,6 @@
         <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="textConfirm" [color]="'primary'"></tl-button>
       </div>
     </div>
-
   </ng-template>
 
 </div>

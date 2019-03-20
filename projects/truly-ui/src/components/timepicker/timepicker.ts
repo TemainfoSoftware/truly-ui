@@ -30,7 +30,6 @@ import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subscription } from 'rxjs';
 import { I18nService } from '../i18n/i18n.service';
-import { CdkConnectedOverlay } from '@angular/cdk/overlay';
 
 export interface IncrementalSteps {
   hour: number;
@@ -93,8 +92,6 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
 
-  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
-
   @Output() now: EventEmitter<any> = new EventEmitter();
 
   @Output() changeTime: EventEmitter<string> = new EventEmitter();
@@ -143,7 +140,7 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
-               private renderer: Renderer2, private i18n: I18nService ) {
+               private i18n: I18nService ) {
     super( validators, asyncValidators );
   }
 
@@ -151,13 +148,11 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   ngAfterContentInit() {
     this.handleCreateRing();
-    this.listenContainer();
     this.formatTime();
   }
 
   ngAfterViewInit() {
     this.listenModelChange();
-    this.handleOpen();
   }
 
   handleCreateRing() {
@@ -185,24 +180,8 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     }
   }
 
-  handleOpen() {
-    !this.isOpen ? this.setPointerEvents('none') : this.setPointerEvents('auto');
-  }
-
   changeOpened() {
     this.isOpen = !this.isOpen;
-    this.handleOpen();
-  }
-
-  private setPointerEvents( value: string ) {
-    this.cdkOverlay.overlayRef.overlayElement.style.pointerEvents = value;
-  }
-
-  private listenContainer() {
-    this.listeners.add( this.renderer.listen( document, 'click', () => {
-      this.isOpen = false;
-      this.handleOpen();
-    } ) );
   }
 
   private listenModelChange() {
@@ -252,10 +231,6 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.formatTime();
   }
 
-  onScrollAmPm( $event ) {
-    $event.target.scrollTop >= (this.itemHeight / 2) ? this.timeZone = 'PM' : this.timeZone = 'AM';
-  }
-
   onClickCancel() {
     this.isOpen = false;
     this.cancel.emit( this.selectedTime );
@@ -274,11 +249,15 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     const split = this.cleanValue( $event ).split( ':' );
     if ( split[ 0 ].length >= 2 ) {
       this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( split[ 0 ] ), 2 ) : split[ 0 ];
-      this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
+      if (this.listHour) {
+        this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
+      }
     }
     if ( split[ 1 ].length >= 2 ) {
       this.minute = split[ 1 ];
-      this.setScrollColumn( this.listMinutes.nativeElement,  TIME.MINUTE );
+      if (this.listMinutes) {
+        this.setScrollColumn( this.listMinutes.nativeElement,  TIME.MINUTE );
+      }
     }
   }
 
@@ -342,15 +321,11 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   }
 
   setAm() {
-    if ( this.listAmPm ) {
-      this.listAmPm.nativeElement.scrollTop = 0;
-    }
+    this.timeZone = 'AM';
   }
 
   setPm() {
-    if ( this.listAmPm ) {
-      this.listAmPm.nativeElement.scrollTop = this.itemHeight * 2;
-    }
+    this.timeZone = 'PM';
   }
 
   private formatTime() {

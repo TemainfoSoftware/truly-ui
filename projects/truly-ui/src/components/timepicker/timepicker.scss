@@ -40,6 +40,7 @@
       width: 220px;
       position: absolute;
       top: calc(50% - 5px);
+      z-index: 10;
       > .double-dot {
         position: absolute;
         line-height: 25px;
@@ -63,11 +64,14 @@
     }
     > .ui-ampm-content {
       width: 100%;
-      display: flex;
-      justify-content: center;
       transition: background 200ms linear;
+      position: relative;
       > .list {
-        line-height: 27px;
+        position: absolute;
+        overflow: hidden;
+        transition: top 150ms linear;
+        height: 60px;
+        top: calc(50% - 23px);
       }
     }
 

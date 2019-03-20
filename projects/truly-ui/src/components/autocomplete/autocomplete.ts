@@ -74,6 +74,8 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   @Input() openFocus = true;
 
+  @Input() loading = true;
+
   @Input() disabled: boolean = null;
 
   @Input() color = 'basic';
@@ -115,6 +117,10 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   public isOpen = false;
 
   public focused = false;
+
+  public closeHover = false;
+
+  public selected;
 
   public positionOverlay: 'top' | 'bottom' | 'center';
 
@@ -204,6 +210,26 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.setFiltering( true );
   }
 
+  onHoverClose() {
+    this.closeHover = true;
+  }
+
+  onLeaveClose() {
+    this.closeHover = false;
+  }
+
+  onClickClose() {
+    this.value = '';
+    this.setDescriptionValue('');
+    this.searchControl.setValue('');
+    this.setSelected(null);
+    this.setInputFocus();
+  }
+
+  private setInputFocus() {
+    this.input.nativeElement.focus();
+  }
+
   onBackdropClick() {
     this.setIsOpen( false );
     this.setFiltering( false );
@@ -273,6 +299,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private setSelected( item: TlItemSelectedDirective ) {
+    this.selected = item;
     this.keyManager.setActiveItem( item );
     this.itemSelectedService.itemSelected = item;
   }
@@ -362,6 +389,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       } );
       this.listenLoadData();
     }
+    this.loading = false;
     this.dataSource.setData( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
@@ -399,7 +427,6 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   toggleIsOpen() {
-    console.log('isDisabled', this.isDisabled);
     if (!this.disabled && !this.isDisabled) {
       this.isOpen = !this.isOpen;
       this.input.nativeElement.focus();

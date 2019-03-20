@@ -7,6 +7,12 @@
          [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
          [class.openedAbove]="positionOverlay === 'top' && isOpen">
+      <div *ngIf="loading" class="ui-loading" [style.height]="height">
+        <tl-loader></tl-loader>
+      </div>
+      <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
+        <i [class]="!closeHover ? 'ion ion-ios-close-circle-outline' : 'ion ion-ios-close-circle'"></i>
+      </div>
       <input #input
              #trigger="cdkOverlayOrigin"
              cdkOverlayOrigin
@@ -53,13 +59,13 @@
                *cdkVirtualFor="let item of dataSource; let i = index"
                (mousedown)="selectItem(item, select)"
                class="ui-list-item">
-            <span *ngIf="item; else loading">
+            <span *ngIf="item; else loadingMessage">
               {{ getItemText(item) }}
             </span>
           </div>
         </cdk-virtual-scroll-viewport>
       </ng-template>
-      <ng-template #loading>
+      <ng-template #loadingMessage>
         {{ messageLoading }}
       </ng-template>
     </tl-filter-container>

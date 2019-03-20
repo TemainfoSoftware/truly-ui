@@ -93,6 +93,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
 
+  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+
   @ViewChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
 
   @ViewChildren(TlItemSelectedDirective) listItems: QueryList<TlItemSelectedDirective>;
@@ -124,7 +126,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.subscription.add(this.renderer.listen(this.getElementTarget(), 'keydown', ($event) => {
       const event = {
         [KeyEvent.ARROWDOWN]: () => this.handleKeyArrowDown($event),
-        [KeyEvent.ARROWUP]: () => this.handleKeyArrowUp($event)
+        [KeyEvent.ARROWUP]: () => this.handleKeyArrowUp($event),
+        [KeyEvent.ENTER]: () => this.onKeyEnter()
       };
       if (event[$event.keyCode]) {
         event[$event.keyCode]();
@@ -147,9 +150,18 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.scrollTop = this.cdkVirtualScroll.elementRef.nativeElement.scrollTop;
   }
 
+  select(index: number) {
+    this.listKeyManager.setActiveItem( index );
+    this.selectItem.emit((this.listKeyManager.activeItem as TlItemSelectedDirective).itemSelected);
+  }
+
   setSelected(item: TlItemSelectedDirective) {
     this.listKeyManager.setActiveItem(item);
     this.setInputFocus();
+  }
+
+  onKeyEnter() {
+    this.selectItem.emit((this.listKeyManager.activeItem as TlItemSelectedDirective).itemSelected);
   }
 
   onClickItem(item: any) {

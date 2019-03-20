@@ -222,6 +222,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.value = '';
     this.setDescriptionValue('');
     this.searchControl.setValue('');
+    this.closeHover = false;
     this.setSelected(null);
     this.setInputFocus();
   }
@@ -252,7 +253,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private handleModelCached() {
-    if ( this.dataSource && !this.lazyMode ) {
+    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData()) {
       this.dataSource.getCachedData().forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
@@ -340,11 +341,13 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.setIsOpen( false );
   }
 
-  handleBlur() {
+  handleKeyEnter() {
     if ( this.keyManager.activeItem && this.isOpen ) {
-      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
-      this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
-      this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
+      if (this.keyManager.activeItem.itemSelected) {
+        this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
+        this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
+        this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
+      }
     }
     this.setIsOpen( false );
   }
@@ -441,7 +444,9 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private setScrollVirtual() {
-    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+    if (this.cdkVirtualScroll) {
+      this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+    }
   }
 
   onFilter( $event ) {
@@ -460,7 +465,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       }, 100 );
       return;
     }
-    this.dataSource.setData( $event );
+    this.dataSource.setData( [] );
     this.setNotFound( true );
   }
 

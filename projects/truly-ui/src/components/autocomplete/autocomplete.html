@@ -24,6 +24,7 @@
              (keydown.ArrowDown)="handleKeyArrowDown($event)"
              (keydown.escape)="handleKeyEscape($event)"
              (keydown.enter)="handleKeyEnter()"
+             (keydown.shift.tab)="isOpen = false"
              (keydown.tab)="isOpen = false"
              (focus)="handleFocus()"
              (focusout)="focused = false"

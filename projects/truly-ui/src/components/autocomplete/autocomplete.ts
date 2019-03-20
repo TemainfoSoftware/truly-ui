@@ -74,6 +74,8 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
 
   @Input() openFocus = true;
 
+  @Input() loading = true;
+
   @Input() disabled: boolean = null;
 
   @Input() color = 'basic';
@@ -115,6 +117,10 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   public isOpen = false;
 
   public focused = false;
+
+  public closeHover = false;
+
+  public selected;
 
   public positionOverlay: 'top' | 'bottom' | 'center';
 
@@ -204,6 +210,27 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.setFiltering( true );
   }
 
+  onHoverClose() {
+    this.closeHover = true;
+  }
+
+  onLeaveClose() {
+    this.closeHover = false;
+  }
+
+  onClickClose() {
+    this.value = '';
+    this.setDescriptionValue('');
+    this.searchControl.setValue('');
+    this.closeHover = false;
+    this.setSelected(null);
+    this.setInputFocus();
+  }
+
+  private setInputFocus() {
+    this.input.nativeElement.focus();
+  }
+
   onBackdropClick() {
     this.setIsOpen( false );
     this.setFiltering( false );
@@ -226,7 +253,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private handleModelCached() {
-    if ( this.dataSource && !this.lazyMode ) {
+    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData()) {
       this.dataSource.getCachedData().forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
@@ -273,6 +300,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private setSelected( item: TlItemSelectedDirective ) {
+    this.selected = item;
     this.keyManager.setActiveItem( item );
     this.itemSelectedService.itemSelected = item;
   }
@@ -313,11 +341,13 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
     this.setIsOpen( false );
   }
 
-  handleBlur() {
+  handleKeyEnter() {
     if ( this.keyManager.activeItem && this.isOpen ) {
-      this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
-      this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
-      this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
+      if (this.keyManager.activeItem.itemSelected) {
+        this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
+        this.setDescriptionValue( objectPath.get(this.keyManager.activeItem.itemSelected, this.keyText ) );
+        this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
+      }
     }
     this.setIsOpen( false );
   }
@@ -362,6 +392,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       } );
       this.listenLoadData();
     }
+    this.loading = false;
     this.dataSource.setData( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
@@ -399,7 +430,6 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   toggleIsOpen() {
-    console.log('isDisabled', this.isDisabled);
     if (!this.disabled && !this.isDisabled) {
       this.isOpen = !this.isOpen;
       this.input.nativeElement.focus();
@@ -414,7 +444,9 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   private setScrollVirtual() {
-    this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+    if (this.cdkVirtualScroll) {
+      this.cdkVirtualScroll.elementRef.nativeElement.scrollTop = 0;
+    }
   }
 
   onFilter( $event ) {
@@ -433,7 +465,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       }, 100 );
       return;
     }
-    this.dataSource.setData( $event );
+    this.dataSource.setData( [] );
     this.setNotFound( true );
   }
 

@@ -23,7 +23,7 @@
   > .ui-time-content {
     > .ui-time-item {
       color: map-deep-get($theme, $action, "default", "foreground");
-      span {
+      .ui-range-wrapper {
         &:hover {
           border: 1px solid map-deep-get($primary, "lighter", "background") !important;
         }

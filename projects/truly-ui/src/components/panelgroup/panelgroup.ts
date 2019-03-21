@@ -41,7 +41,7 @@ export class TlPanelGroup implements AfterViewInit {
 
     @Input() customTemplate: TemplateRef<any>;
 
-    @Input() fontSizeCaption = '1em';
+    @Input() fontSizeCaption = '12px';
 
     @Input() showButtonAction = false;
 

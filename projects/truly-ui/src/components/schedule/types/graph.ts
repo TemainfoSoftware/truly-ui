@@ -10,7 +10,7 @@ export class Cluster {
 }
 
 export class Node {
-  id = 0;
+  id = '';
   start = 0;
   end = 0;
   neighbours = {};

@@ -26,7 +26,9 @@ export class GenerateEventsService {
     if (  this.scheduleSlats ) {
       if ( events.length > 0 && this.scheduleSlats.length > 0 ) {
         this.originalEvents = JSON.parse( JSON.stringify( events ) );
-        this.events = this.originalEvents;
+        events = JSON.parse( JSON.stringify( events ) );
+
+        this.events = events;
         this.transformDateToPixel();
         return this.generateEvents();
       }
@@ -105,7 +107,7 @@ export class GenerateEventsService {
               height: node.end - node.start,
               width: node.cluster.width
             },
-            data: this.originalEvents.filter(( e ) => parseInt(e.value, 10) === node.id )[0]
+            data: this.originalEvents.filter(( e ) => e.value === node.id )[0]
           };
           eventsWithPositioning.push(event);
         }
@@ -126,7 +128,7 @@ export class GenerateEventsService {
     this.events.forEach( (event) => {
       for ( let i = event.date.start; i <= event.date.end - 1; i++ ) {
         if ( minutes[i] ) {
-          minutes[i].push(parseInt((event.value), 10));
+          minutes[i].push(event.value);
         }
       }
     });
@@ -139,7 +141,7 @@ export class GenerateEventsService {
 
     // creating the nodes
     this.events.forEach( (event) => {
-      const node = new Node(parseInt(event.value, 10), event.date.start, event.date.end);
+      const node = new Node(event.value, event.date.start, event.date.end);
       nodeMap[node.id] = node;
     });
 

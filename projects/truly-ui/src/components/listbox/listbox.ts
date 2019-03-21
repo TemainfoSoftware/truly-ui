@@ -152,7 +152,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   select(index: number) {
     this.listKeyManager.setActiveItem( index );
-    this.selectItem.emit((this.listKeyManager.activeItem as TlItemSelectedDirective).itemSelected);
+    if (this.listKeyManager.activeItem) {
+      this.selectItem.emit((this.listKeyManager.activeItem as TlItemSelectedDirective).itemSelected);
+    }
   }
 
   setSelected(item: TlItemSelectedDirective) {

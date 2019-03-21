@@ -729,8 +729,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
       }
     }
     if (changes.date) {
+      this.setDateChange();
       if ( !changes.date.firstChange ) {
-        this.setDateChange();
         this.setDateNavigator();
         this.generateDays();
       }

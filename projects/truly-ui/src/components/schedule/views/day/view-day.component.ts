@@ -92,6 +92,11 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   ngOnChanges( changes: SimpleChanges ) {
 
+    if ( changes['currentDate'] !== undefined ) {
+      this.workScaleService.currentDate = changes[ 'currentDate' ].currentValue;
+      this.eventService.getEventsOfDay();
+    }
+
     if ( changes['workScale'] !== undefined ) {
       this.workScaleService.reload( changes[ 'workScale' ].currentValue );
     }
@@ -102,10 +107,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         this.eventService.getEventsOfDay();
     }
 
-    if ( changes['currentDate'] !== undefined ) {
-        this.eventService.loadEvents( this.events );
-        this.eventService.getEventsOfDay();
-    }
     this.changeDetectionRef.detectChanges();
   }
 

@@ -26,6 +26,8 @@ import {
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
+import * as objectPath from 'object-path';
+
 @Component( {
   selector: 'tl-filter-container',
   template: `
@@ -80,7 +82,7 @@ export class TlFilterContainer implements AfterContentInit, OnDestroy {
     }
     const filtered = [];
     this.source.forEach( ( value ) => {
-      if ( String( value[ this.searchBy ].toLowerCase() ).indexOf( String( searchTerm.toLowerCase().trim() ) ) > -1 ) {
+      if ( String( objectPath.get( value, this.searchBy ).toLowerCase() ).indexOf( String( searchTerm.toLowerCase().trim() ) ) > -1 ) {
         filtered.push( value );
       }
     } );

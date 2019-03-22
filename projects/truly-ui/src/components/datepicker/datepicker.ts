@@ -53,6 +53,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @Input() labelPlacement = 'left';
 
+  @Input() formatDate = 'dd.mm.yyyy';
+
   @Input() readonly = false;
 
   @Input() disabled = false;
@@ -73,7 +75,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @ViewChild( TlCalendar ) calendar;
 
-  @ViewChild( TlInput ) tlinput;
+  @ViewChild( TlInput ) tlInput: TlInput;
 
   @ViewChild( 'calendarContent' ) calendarContent;
 
@@ -84,8 +86,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   public positionOverlay = '';
 
   public iconAfter = '';
-
-  public formatDate = '';
 
   public trigger;
 
@@ -103,6 +103,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   ngOnInit() {
     this.handleDateChange();
+    this.setDateMask();
     if ( this.iconCalendar ) {
       this.iconAfter = 'ion-calendar';
     }
@@ -110,6 +111,17 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   ngAfterViewInit() {
     this.validateDateDirective();
+  }
+
+  setDateMask() {
+    this.tlInput.mask = this.getMask();
+  }
+
+  getMask() {
+    const format = this.formatDate.toLowerCase();
+    const dd = format.replace('dd', '00');
+    const mm = dd.replace('mm', '00');
+    return mm.replace('yyyy', '0000');
   }
 
   validateDateDirective() {
@@ -145,7 +157,6 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
     this.setValue( $event );
     this.setDateValues($event);
     this.handleAutoClose();
-    this.tlinput.input.nativeElement.focus();
   }
 
   setDateValues($event) {

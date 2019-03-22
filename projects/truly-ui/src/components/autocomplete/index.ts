@@ -34,12 +34,14 @@ import { AUTOCOMPLETE_CONFIG, AutoCompleteConfig } from './interfaces/autocomple
 import { FilterContainerModule } from '../core/components/filter/filter-container.module';
 import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
 import { A11yModule } from '@angular/cdk/a11y';
+import { LoaderModule } from '../loader/index';
 
 @NgModule( {
   imports: [
     CommonModule,
     OverlayModule,
     ScrollingModule,
+    LoaderModule,
     InputModule,
     FormsModule,
     BlockUIModule,

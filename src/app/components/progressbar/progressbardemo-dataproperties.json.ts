@@ -63,6 +63,13 @@ export const dataProperties = [
     options: 'percentage | detailed | none'
   },
   {
+    name: 'shape',
+    type: 'string',
+    default: 'default',
+    description: 'Shape of progress bar, default or rounded',
+    options: 'default | rounded'
+  },
+  {
     name: 'mode',
     type: 'string',
     default: 'determinate',

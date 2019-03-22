@@ -1,0 +1,69 @@
+<div class="router-outlet">
+  <app-showcase-header name="Card" module="CardModule">
+    The Truly-UI Card are styles for actions in forms, dialogs, and more with support for multiple sizes, states
+    and many properties for customization
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Basic</h5>
+              <tl-card>
+                <tl-card-header>
+                  <div class="header">
+                    <img class="ui-card-img" src="https://avatars3.githubusercontent.com/u/1606954?s=460&v=4">
+                    <div class="ui-img-pulse"></div>
+                    <div class="ui-info">
+                      <span>William Aguera</span>
+                      <span>Developer</span>
+                    </div>
+                    <div class="ui-icons">
+                      <tl-icon [lib]="'ion'" [style]="'md'">heart</tl-icon>
+                    </div>
+                  </div>
+                </tl-card-header>
+                <tl-card-body>
+                  <div class="ui-info-item">
+                    <span>RG</span>
+                    <span>12.575.659.12-2</span>
+                  </div>
+                  <div class="ui-info-item">
+                    <span>CPF</span>
+                    <span>078.880.369-70</span>
+                  </div>
+                  <div class="ui-info-item">
+                    <span>Data Nascimento</span>
+                    <span>22/05/1994</span>
+                  </div>
+                  <div class="ui-info-item">
+                    <span>Estado Civil</span>
+                    <span>Solteiro</span>
+                  </div>
+                  <div class="ui-info-item">
+                    <span>Genero</span>
+                    <span>Masculino</span>
+                  </div>
+                </tl-card-body>
+                <tl-card-footer>
+
+                </tl-card-footer>
+              </tl-card>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

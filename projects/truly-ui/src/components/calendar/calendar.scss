@@ -70,6 +70,7 @@
     }
 
     & .ui-table-line .ui-table-cell {
+      position: relative;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       font-size: 0.9em;
       text-align: center;
@@ -94,6 +95,35 @@
   & .selected {
     font-weight: normal !important;
   }
+}
+
+.ui-status-wrapper {
+  width: 20px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.ui-cell-status {
+  width: 18px;
+  height: 4px;
+  margin: 0 auto;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 3px;
+  z-index: 1;
+  transition: width 500ms ease-in-out;
+}
+
+.ui-status-backdrop {
+  height: 4px;
+  margin: 0 auto;
+  border-radius: 2px;
+  position: absolute;
+  bottom: 3px;
+  background: #fff;
+  width: 100%;
+  z-index: 0;
+  border: 1px solid #ccc;
 }
 
 @keyframes creating {

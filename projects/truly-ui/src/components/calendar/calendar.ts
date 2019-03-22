@@ -34,6 +34,13 @@ import { NavigatorService } from '../navigator/services/navigator.service';
 import { CalendarService } from './services/calendar.service';
 import { I18nService } from '../i18n/i18n.service';
 
+export interface CalendarStatus {
+  id?: string;
+  date: Date;
+  current: number;
+  total: number;
+}
+
 @Component( {
   selector: 'tl-calendar',
   templateUrl: './calendar.html',
@@ -46,13 +53,15 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   @Input() inputControlFocus;
 
+  @Input() status: Array<CalendarStatus>;
+
   @Input() date = new Date();
 
-  @Input() year = this.date.getFullYear();
+  @Input() year = this.date ? this.date.getFullYear() : new Date().getFullYear();
 
-  @Input() month = this.date.getMonth();
+  @Input() month = this.date ? this.date.getMonth() : new Date().getMonth();
 
-  @Input() day = this.date.getDate();
+  @Input() day = this.date ? this.date.getDate() : new Date().getDate();
 
   @Input() typingDay = false;
 
@@ -707,15 +716,21 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   }
 
   setDateChange() {
+    this.date = new Date(this.date);
     this.day = this.date.getDate();
     this.month = this.date.getMonth();
     this.year = this.date.getFullYear();
   }
 
   ngOnChanges( changes: SimpleChanges ) {
+    if (changes.status) {
+      if (!changes.status.firstChange) {
+        this.calendarService.changeStatus();
+      }
+    }
     if (changes.date) {
+      this.setDateChange();
       if ( !changes.date.firstChange ) {
-        this.setDateChange();
         this.setDateNavigator();
         this.generateDays();
       }

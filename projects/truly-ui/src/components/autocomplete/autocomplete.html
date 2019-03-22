@@ -3,20 +3,29 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
+         [class.disabled]="disabled || isDisabled"
          [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
          [class.openedAbove]="positionOverlay === 'top' && isOpen">
+      <div *ngIf="loading" class="ui-loading" [style.height]="height">
+        <tl-loader></tl-loader>
+      </div>
+      <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
+        <i [class]="!closeHover ? 'ion ion-ios-close-circle-outline' : 'ion ion-ios-close-circle'"></i>
+      </div>
       <input #input
              #trigger="cdkOverlayOrigin"
              cdkOverlayOrigin
+             [attr.disabled]="disabled || isDisabled ? true : null"
              (click)="toggleIsOpen()"
              [attr.placeholder]="placeholder"
              [formControl]="searchControl"
              (keydown.ArrowUp)="handleKeyArrowUp($event)"
              (keydown.ArrowDown)="handleKeyArrowDown($event)"
              (keydown.escape)="handleKeyEscape($event)"
-             (blur)="handleBlur()"
-             (keyup.enter)="handleBlur()"
+             (keydown.enter)="handleKeyEnter()"
+             (keydown.shift.tab)="isOpen = false"
+             (keydown.tab)="isOpen = false"
              (focus)="handleFocus()"
              (focusout)="focused = false"
              (input)="onInput()"
@@ -49,15 +58,15 @@
                [indexSelected]="i"
                #select="selectItem"
                *cdkVirtualFor="let item of dataSource; let i = index"
-               (mousedown)="selectItem(item, select)"
+               (mousedown)="onSelectItem(item, select)"
                class="ui-list-item">
-            <span *ngIf="item; else loading">
-              {{ item[ keyText ] }}
+            <span *ngIf="item; else loadingMessage">
+              {{ getItemText(item) }}
             </span>
           </div>
         </cdk-virtual-scroll-viewport>
       </ng-template>
-      <ng-template #loading>
+      <ng-template #loadingMessage>
         {{ messageLoading }}
       </ng-template>
     </tl-filter-container>

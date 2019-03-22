@@ -22,7 +22,7 @@
 
 import { NavigatorService } from '../../navigator/services/navigator.service';
 import { Component, ElementRef } from '@angular/core';
-import { TlCalendar } from '../calendar';
+import { CalendarStatus, TlCalendar } from '../calendar';
 
 @Component( {
   selector: 'tl-calendar-days',
@@ -37,9 +37,14 @@ export class TlCalendarDays {
 
   private dayOfMonth = [];
 
-  constructor() {}
+  private statusElements = [];
 
-  setCalendar(calendar) {
+  private status;
+
+  constructor() {
+  }
+
+  setCalendar( calendar ) {
     this.calendar = calendar;
     this.initializeTable();
   }
@@ -98,6 +103,17 @@ export class TlCalendarDays {
     }
   }
 
+  changeStatus() {
+    for (let day = 0; day < this.dayOfMonth.length; day++ ) {
+      const date = new Date( this.calendar.year, this.calendar.month, day + 1 );
+      this.calendar.status.forEach( ( value, index ) => {
+        if ( value.date.getTime() === date.getTime() ) {
+          this.setStatus(value, this.statusElements[index].nativeElement);
+        }
+      });
+    }
+  }
+
   appendDays() {
     for ( let day = 0; day < this.dayOfMonth.length; day++ ) {
       if ( this.dayOfMonth[ day ].dayOfWeek === 0 ) {
@@ -105,38 +121,72 @@ export class TlCalendarDays {
         this.calendar.renderer.addClass( this.week.nativeElement, 'ui-table-line' );
         this.calendar.renderer.appendChild( this.calendar.tbody.nativeElement, this.week.nativeElement );
       }
+
       const td = new ElementRef( this.calendar.renderer.createElement( 'td' ) );
       this.calendar.renderer.addClass( td.nativeElement, 'ui-table-cell' );
       td.nativeElement.innerHTML = this.dayOfMonth[ day ].day;
+
+      if ( this.calendar.status ) {
+
+        const date = new Date( this.calendar.year, this.calendar.month, day + 1 );
+        this.calendar.status.forEach( ( value ) => {
+          if ( value.date.getTime() === date.getTime() ) {
+
+            const statusWrapper = new ElementRef( this.calendar.renderer.createElement( 'div' ) );
+            this.calendar.renderer.addClass( statusWrapper.nativeElement, 'ui-status-wrapper' );
+
+            this.status = new ElementRef( this.calendar.renderer.createElement( 'div' ) );
+            this.calendar.renderer.addClass( this.status.nativeElement, 'ui-cell-status' );
+
+            this.calendar.renderer.setAttribute( this.status.nativeElement, 'day', day.toString());
+            this.statusElements.push(this.status);
+
+            const statusBackdrop = new ElementRef( this.calendar.renderer.createElement( 'div' ) );
+            this.calendar.renderer.addClass( statusBackdrop.nativeElement, 'ui-status-backdrop' );
+
+            this.calendar.renderer.appendChild( statusWrapper.nativeElement, this.status.nativeElement );
+            this.calendar.renderer.appendChild( statusWrapper.nativeElement, statusBackdrop.nativeElement );
+            this.calendar.renderer.appendChild( td.nativeElement, statusWrapper.nativeElement );
+
+            this.setStatus( value );
+          }
+
+        } );
+      }
 
       this.markToday( this.dayOfMonth[ day ].day, td );
       this.selectDay( this.dayOfMonth[ day ].day, td );
 
       this.createClickListenerDay( td );
-
       this.calendar.renderer.appendChild( this.week.nativeElement, td.nativeElement );
     }
   }
 
-  selectDay(day, cell) {
-    if (day === this.calendar.day) {
-      this.calendar.renderer.addClass(cell.nativeElement, 'selected');
+  setStatus( item: CalendarStatus, element? ) {
+    const percent = (100 * item.current) / item.total;
+    this.calendar.renderer.setStyle( element ? element : this.status.nativeElement, 'width', percent + '%' );
+    this.calendar.renderer.addClass( element ? element : this.status.nativeElement, percent === 100 ? 'danger' : 'primary' );
+  }
+
+  selectDay( day, cell ) {
+    if ( day === this.calendar.day ) {
+      this.calendar.renderer.addClass( cell.nativeElement, 'selected' );
       this.calendar.selectedDay = cell.nativeElement;
     }
   }
 
-  markToday(day, cell) {
+  markToday( day, cell ) {
     if ( (day === new Date().getDate()) && (this.calendar.month === new Date().getMonth() )
       && (this.calendar.year === new Date().getFullYear()) ) {
-      this.calendar.renderer.addClass(cell.nativeElement, 'today');
+      this.calendar.renderer.addClass( cell.nativeElement, 'today' );
       this.calendar.todayIndex = cell;
     }
   }
 
-  createClickListenerDay(cell) {
-    this.calendar.renderer.listen(cell.nativeElement, 'click', $event => {
+  createClickListenerDay( cell ) {
+    this.calendar.renderer.listen( cell.nativeElement, 'click', $event => {
       this.setSelectedDay( cell.nativeElement, $event, $event.target );
-    });
+    } );
   }
 
   setSelectedDay( cell, $event, target? ) {

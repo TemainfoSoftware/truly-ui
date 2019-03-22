@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2019 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -76,6 +76,11 @@ export class DataSourceList extends DataSource<string | undefined> {
     this.arrayTotal = Array.from<string>( { length: length || this.totalLength } );
   }
 
+  public resetPages() {
+    this.fetchedPages = new Set<number>();
+    this.fetchedPages.add(0);
+  }
+
   private setProprieties(config) {
     Object.keys(config).forEach((value) => {
       this[value] = config[value];
@@ -89,8 +94,8 @@ export class DataSourceList extends DataSource<string | undefined> {
   public setData(data: Array<any>) {
     this.cachedData = data;
     this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize,
-      ...data);
-    this.dataStream.next(this.arrayTotal);
+        ...data);
+    this.dataStream.next( this.arrayTotal );
   }
 
   private getPageForIndex( index: number ): number {

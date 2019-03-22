@@ -26,11 +26,11 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ContentChild, AfterViewInit, ChangeDetectorRef,
+  ContentChild, AfterViewInit, ChangeDetectorRef, OnDestroy,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subject, Subscription } from 'rxjs';
@@ -48,7 +48,7 @@ import { scrollIntoView } from '../core/helper/scrollIntoView';
     [ MakeProvider( TlMultiSelect ) ]
   ]
 } )
-export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, AfterViewInit {
+export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() keyColor: string;
 
@@ -134,6 +134,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   private subscription: Subscription = new Subscription();
 
+  private control;
+
   constructor( private change: ChangeDetectorRef ) {
     super();
   }
@@ -149,9 +151,17 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   ngAfterViewInit() {
     this.validateHasModel();
+    this.setControl();
     this.setRequired();
     this.setDisabled();
     this.handleValidator();
+    this.listenControlChanges();
+  }
+
+  private listenControlChanges() {
+    this.subscription.add(this.control.valueChanges.subscribe(() => {
+      this.validateHasModel();
+    }));
   }
 
   private setDisabled() {
@@ -183,6 +193,10 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
         this.required = true;
       }
     }
+  }
+
+  private setControl() {
+    this.control = this.model ? this.model : this.controlName;
   }
 
   private validateHasModel() {
@@ -554,6 +568,10 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   private isFilteredLengthEqualsDataLength() {
     return this.filteredItems.length === this.dataSource.length;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

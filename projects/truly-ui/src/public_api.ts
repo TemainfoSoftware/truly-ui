@@ -1,4 +1,6 @@
 // Modules
+import { SlotSettingsType } from './components/schedule/types/slot-settings.type';
+
 export { AccordionModule } from './components/accordion/index';
 export { AutoCompleteModule } from './components/autocomplete/index';
 export { AvatarModule } from './components/avatar/index';
@@ -6,6 +8,7 @@ export { BadgeModule } from './components/badge/index';
 export { ButtonModule } from './components/button/index';
 export { ButtonGroupModule } from './components/buttongroup/index';
 export { BlockUIModule } from './components/blockui/index';
+export { CardModule } from './components/card/index';
 export { CheckBoxModule } from './components/checkbox/index';
 export { ChatListModule } from './components/chatlist/index';
 export { CalendarModule } from './components/calendar/index';
@@ -53,7 +56,6 @@ export { TooltipModule } from './components/tooltip/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
-
 // Dialog Interfaces
 export { InfoOptions } from './components/dialog/dialog-info/info-options';
 export { ErrorOptions } from './components/dialog/dialog-error/error-options';
@@ -64,6 +66,7 @@ export { ConfirmationOptions } from './components/dialog/dialog-confirmation/con
 export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
 export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
+export { CalendarStatus } from './components/calendar/calendar';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 
@@ -81,6 +84,13 @@ export { ToasterService } from './components/toaster/services/toaster.service';
 
 // Classes
 export { Permission } from './components/permissions/parts/models/permission.model';
+
+// Types
+export { ScheduleDataSource } from './components/schedule/types/datasource.type';
+export { SlotSettingsType } from './components/schedule/types/slot-settings.type';
+export { StatusType } from './components/schedule/types/status.type';
+export { ViewType } from './components/schedule/types/view.type';
+export { WorkScaleType } from './components/schedule/types/work-scale.type';
 
 // Languages
 export { I18nService } from './components/i18n/i18n.service';

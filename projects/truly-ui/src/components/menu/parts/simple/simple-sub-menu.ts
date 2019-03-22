@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2017 Temainfo Sistemas
+ Copyright (c) 2019 Temainfo Sistemas
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -72,6 +72,10 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
     if (item[this.subItem] && this.alreadyTaken(element).length === 0) {
       this.anchorElements.push({'rootElement': element, 'subItems': item[this.subItem]});
     }
+  }
+
+  isRouterActive(item) {
+    return this.router.url === item[this.link];
   }
 
   alreadyTaken(element) {

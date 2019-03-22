@@ -8,7 +8,7 @@
                          [source]="data"
                          [searchBy]="searchBy"
                          (filter)="onFilter($event)">
-      <div itemSelected #select="selectItem"
+      <div [itemSelected]="item" #select="selectItem"
            [ngStyle]="{ height: rowHeight + 'px' }"
            [indexSelected]="i"
            [style.padding]="!template ? '0 10px' : '0'"

@@ -3,6 +3,7 @@
   <!-- SCHEDULE HEADER -->
   <div class="ui-schedule-header">
     <tl-schedule-heading
+      [texts]="texts"
       [views]="views"
       [defaultView]="defaultView"
       [currentDate]="currentDate"
@@ -13,20 +14,19 @@
   </div>
 
   <!-- SCHEDULE BODY -->
-  <div  class="ui-schedule-body" [ngStyle]="{height: 'calc(' + height +' - 52px)'}" [ngSwitch]="defaultView">
+  <div  class="ui-schedule-body"
+        [tlBlockui]="!workScale || !existsScale"
+        [blockuiConfig]="{ message: texts.scaleNotFound, icon: 'fas fa-address-book', color: '#ccc' }"
+        [ngStyle]="{height: 'calc(' + height +' - 52px)', overflowY: !existsScale ? 'hidden' : 'visible'}" [ngSwitch]="defaultView">
     <tl-view-day
       *ngSwitchCase="'day'"
-      [duration]="duration"
       [currentDate]="currentDate"
-      [events]="eventsOfDay"
-      [startDayMilliseconds]="startDayMilliseconds"
-      [endDayMilliseconds]="endDayMilliseconds"
       [showNowIndicator]="showNowIndicator"
       [statusConfig]="statusConfig"
-
-      [slatHightRows]="slatHightRows"
-      [slatNumberRows]="slatNumberRows"
+      [events]="events"
+      [slotSettings]="slotSettings"
       [slatNumberRowsAsArray]="slatNumberRowsAsArray"
+      [workScale]="workScale"
 
       (onRowDbClick)="rowDbClick.emit($event)"
       (onEventClick)="eventClick.emit($event)"
@@ -35,16 +35,16 @@
       (onEventMouseout)="eventMouseout.emit($event)"
     ></tl-view-day>
 
-    <tl-day-list
-      *ngSwitchCase="'dayList'"
-      [events]="eventsOfDay"
-      [currentDate]="currentDate"
-      [statusConfig]="statusConfig"
-      (onEventClick)="eventClick.emit($event)"
-      (onEventDbClick)="eventDbClick.emit($event)"
-      (onEventMouseover)="eventMouseover.emit($event)"
-      (onEventMouseout)="eventMouseout.emit($event)"
-    ></tl-day-list>
+    <!--<tl-day-list-->
+      <!--*ngSwitchCase="'dayList'"-->
+      <!--[events]="eventsOfDay"-->
+      <!--[currentDate]="currentDate"-->
+      <!--[statusConfig]="statusConfig"-->
+      <!--(onEventClick)="eventClick.emit($event)"-->
+      <!--(onEventDbClick)="eventDbClick.emit($event)"-->
+      <!--(onEventMouseover)="eventMouseover.emit($event)"-->
+      <!--(onEventMouseout)="eventMouseout.emit($event)"-->
+    <!--&gt;</tl-day-list>-->
   </div>
 
   <!-- SCHEDULE FOOTER -->

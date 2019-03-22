@@ -22,7 +22,7 @@
 export interface TooltipOptions {
     text: string;
     color?: string;
-    placement?: string;
+    placement?: 'left-top' | 'left-center' | 'left-bottom' | 'right-top' | 'right-center' | 'right-bottom' | 'top-center' | 'bottom-center';
     fontColor?: string;
     width?: string;
 }

@@ -8,11 +8,11 @@
 
   .ui-dropdown-box {
 
-    > .ui-dropdown-icon.ng-invalid {
+    .ui-dropdown-icon.ng-invalid {
       color: rgba(map-deep-get($danger, "default", "background"), 0.5) !important;
     }
 
-    > .ui-dropdown-wrapper {
+    .ui-dropdown {
       background: map-deep-get($basic, "default", "background");
       border: 1px solid map-deep-get($basic, "default", "border");
 

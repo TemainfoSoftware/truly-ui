@@ -43,6 +43,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
       },
       {
+        path: 'card',
+        loadChildren: './components/card/carddemo.module#CardDemoModule'
+      },
+      {
         path: 'button',
         loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
       },
@@ -53,6 +57,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'blockui',
         loadChildren: './components/blockui/blockuidemo.module#BlockUIDemoModule'
+      },
+      {
+        path: 'calendar',
+        loadChildren: './components/calendar/calendardemo.module#CalendarDemoModule'
       },
       {
         path: 'colorpicker',
@@ -161,6 +169,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'icons/ionicons',
         loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
+      },
+      {
+        path: 'loader',
+        loadChildren: './components/loader/loaderdemo.module#LoaderDemoModule'
       },
       {
         path: 'listbox',

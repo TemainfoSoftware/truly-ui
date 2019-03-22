@@ -106,6 +106,14 @@ $default-outline: none;
   }
 }
 
+.group-list {
+  .group-description {
+    font-weight: 600;
+    color: #ababab;
+    padding: 0 5px;
+  }
+}
+
 .default-option {
   padding: 0 5px;
   > i {

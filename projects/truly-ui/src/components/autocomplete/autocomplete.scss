@@ -2,6 +2,27 @@
   box-sizing: border-box;
 }
 
+.ui-loading {
+  position: absolute;
+  width: 20px;
+  right: 5px;
+}
+
+.ui-close {
+  position: absolute;
+  right: 5px;
+  height: 18px;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  place-content: center;
+  font-size: 1.6em;
+  opacity: 0.3;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .ui-autocomplete-box {
   display: table;
   width: 100%;
@@ -18,6 +39,7 @@
   scroll-snap-type: y mandatory;
   -ms-scroll-snap-type: mandatory;
   scroll-snap-stop: always;
+  overflow-x: hidden;
   width: 100%;
   outline: none;
   height: 200px;
@@ -73,6 +95,8 @@
   height: 30px;
   border-radius: 3px;
   position: relative;
+  display: flex;
+  align-items: center;
   .ui-clearbutton {
     right: 10px;
     position: absolute;
@@ -94,7 +118,7 @@
     outline: none;
     height: 100%;
     width: 100%;
-    padding-left: 10px;
+    padding-left: 6px;
     border-radius: 3px;
     background: transparent;
   }

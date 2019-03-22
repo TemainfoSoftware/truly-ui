@@ -1,19 +1,20 @@
-<div class="ui-schedule-slats">
+<div class="ui-schedule-slats"
+     *ngFor="let times of timesCollection; let timesIndex = index">
 
   <!-- CREATE TIMES BOXES-->
   <div class="ui-schedule-times">
-    <div class="ui-schedule-time-row" [ngStyle]="{height: (slatNumberRows * slatHightRows) + 'px'}" *ngFor="let time of timesCollection">
+    <div class="ui-schedule-time-row" [ngStyle]="{height: (slotSettings.slotCount * slotSettings.slotHight) + 'px'}" *ngFor="let time of times">
       <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
     </div>
   </div>
 
   <!-- CREATE WIDGET CONTENT-->
   <div #scheduleSlats class="ui-schedule-widget-content">
-    <div *ngFor="let time of timesCollection; let last = last; let first = first" class="ui-schedule-widget-rows">
-      <div class="ui-schedule-row" *ngFor="let row of slatNumberRowsAsArray; let index = index"
-           [ngStyle]="{height: slatHightRows + 'px'}"
+    <div *ngFor="let time of times; let last = last; let first = first;" class="ui-schedule-widget-rows">
+      <div class="ui-schedule-row" *ngFor="let slot of slatNumberRowsAsArray; let index = index"
+           [ngStyle]="{height: slotSettings.slotHight + 'px'}"
            [ngClass]="{last: last, first: first}"
-           (dblclick)="rowDbClick( time, index )"></div>
+           (dblclick)="rowDbClick( time, index, timesIndex )"></div>
     </div>
   </div>
 
@@ -26,29 +27,29 @@
       <div class="ui-schedule-event-box"
            *ngFor="let event of eventsWithPositions; let index = index"
            [ngStyle]="{
-              top: event.positions.top + 'px',
-              left: event.positions.left + 'px',
-              height: event.positions.height + 'px',
-              width: event.positions.width + 'px'
+              top: event?.positions.top + 'px',
+              left: event?.positions.left + 'px',
+              height: event?.positions.height + 'px',
+              width: event?.positions.width + 'px'
            }"
-           [style.borderLeftColor]="statusConfig ? statusConfig[event.data.status].color : '#FFFFFF'"
-           [tooltip]="{text: statusConfig ? statusConfig[event.data.status].description : '' , placement: 'top'}"
-           (click)="onEventClick.emit(event.data)"
-           (dblclick)="onEventDbClick.emit(event.data)"
-           (mouseover)="onEventMouseout.emit(event.data)"
-           (mouseout)="onEventMouseout.emit(event.data)"
+           [style.borderLeftColor]="statusConfig ? statusConfig[event?.data?.status]?.color : '#FFFFFF'"
+           [tooltip]="{text: statusConfig ? statusConfig[event?.data?.status]?.description : '' , placement: 'top-center'}"
+           (click)="onEventClick.emit(event?.data)"
+           (dblclick)="onEventDbClick.emit(event?.data)"
+           (mouseover)="onEventMouseout.emit(event?.data)"
+           (mouseout)="onEventMouseout.emit(event?.data)"
       >
         <div class="ui-schedule-description">
-          <div class="ui-event-title">{{event.data.title}}</div>
-          <div class="ui-event-detail">{{event.data.detail}}</div>
+          <div class="ui-event-title">{{event?.data?.title}}</div>
+          <div class="ui-event-detail">{{event?.data?.detail}}</div>
         </div>
-        <div class="ui-event-hour">{{event.data.date.start | date: 'HH:mm'}} - {{event.data.date.end | date: 'HH:mm'}}</div>
+        <div class="ui-event-hour">{{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}</div>
       </div>
 
     </div>
   </div>
-  <div class="ui-schedule-now-indicator ui-schedule-now-arrow"
-       [tooltip]="{text: currentTime | date: 'HH:mm', placement: 'right'}"
-       [ngStyle]="{top: nowIndicatorPositionTop + 'px'}">
-  </div>
+  <!--<div class="ui-schedule-now-indicator ui-schedule-now-arrow"-->
+       <!--[tooltip]="{text: currentTime | date: 'HH:mm', placement: 'right'}"-->
+       <!--[ngStyle]="{top: nowIndicatorPositionTop + 'px'}">-->
+  <!--</div>-->
 </div>

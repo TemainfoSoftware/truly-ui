@@ -1,32 +1,19 @@
 import {
-  ComponentFactoryResolver, Directive, HostListener, Input, OnDestroy, ViewContainerRef, Renderer2
+  ComponentFactoryResolver, Directive, HostListener, Input, ViewContainerRef, Renderer2
 } from '@angular/core';
 import { TlToolTip } from '../tooltip';
 import { TooltipOptions } from '../tooltipOptions';
+import { TlToolTipContainer } from '../parts/tooltip-container';
 
 
 @Directive( {
   selector: '[tooltip]'
 } )
-export class TooltipDirective implements OnDestroy {
+export class TooltipDirective  {
 
   @Input() tooltip: TooltipOptions;
 
-  private listenerWheel;
-
-  constructor(
-    private view: ViewContainerRef,
-    private compiler: ComponentFactoryResolver,
-    private renderer: Renderer2
-  ) {
-
-   if (!this.listenerWheel) {
-     this.listenerWheel = this.renderer.listen(this.view.element.nativeElement, 'mousewheel', (event) => {
-       this.hide();
-     });
-   }
-
-  }
+  constructor( private view: ViewContainerRef, private compiler: ComponentFactoryResolver ) {}
 
   @HostListener( 'mouseenter' )
   onMouseEnter() {
@@ -38,21 +25,17 @@ export class TooltipDirective implements OnDestroy {
     this.hide();
   }
 
-  show() {
+  private show() {
     if ( this.tooltip.text !== '' ) {
-      const componentFactory = this.compiler.resolveComponentFactory( TlToolTip );
+      const componentFactory = this.compiler.resolveComponentFactory( TlToolTipContainer );
       const componentRef = this.view.createComponent( componentFactory );
-      (<TlToolTip>componentRef.instance).setOptions( this.tooltip );
-      (<TlToolTip>componentRef.instance).setPosition( this.view.element );
+      (<TlToolTipContainer>componentRef.instance).setOptions( this.tooltip );
+      (<TlToolTipContainer>componentRef.instance).setElement( this.view.element );
     }
   }
 
-  hide() {
+  private hide() {
     this.view.clear();
-  }
-
-  ngOnDestroy() {
-   this.listenerWheel();
   }
 
 }

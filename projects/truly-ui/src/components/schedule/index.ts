@@ -14,6 +14,8 @@ import { BlockUIModule } from '../blockui/index';
 import { ButtonModule } from '../button/index';
 import { ButtonGroupModule } from '../buttongroup/index';
 import { GenerateEventsService } from './services/generate-events.service';
+import { WorkScaleService } from './services/work-scale.service';
+import { EventService } from './services/event.service';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { GenerateEventsService } from './services/generate-events.service';
       TlSchedule,
     ],
     providers: [
-      GenerateEventsService
+      GenerateEventsService,
+      WorkScaleService,
+      EventService
     ]
 })
 export class ScheduleModule {}

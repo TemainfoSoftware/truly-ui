@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, QueryList } from '@angular/core';
 import { Cluster, Graph, Node } from '../types/graph';
+import { elvis } from '../../core/helper/elvis';
+import { ScheduleDataSource } from '../types/datasource.type';
+
+const WIDTH_SCROLL = 17;
 
 @Injectable()
 export class GenerateEventsService {
@@ -12,24 +16,76 @@ export class GenerateEventsService {
 
   private originalEvents = [];
 
-  private startDayMilliseconds = 0;
+  private workScaleInMileseconds = [];
 
-  private endDayMilliseconds = 0;
+  private scheduleSlats: QueryList<any>;
 
   constructor() {}
 
-  with( events ) {
-    this.originalEvents = JSON.parse( JSON.stringify(events) );
-    this.events = events;
-    this.transformDateToPixel();
-    return this.generateEvents();
+  with(  events: ScheduleDataSource[] ) {
+    if (  this.scheduleSlats ) {
+      if ( events.length > 0 && this.scheduleSlats.length > 0 ) {
+        this.originalEvents = JSON.parse( JSON.stringify( events ) );
+        events = JSON.parse( JSON.stringify( events ) );
+
+        this.events = events;
+        this.transformDateToPixel();
+        return this.generateEvents();
+      }
+    }
+
   }
 
-  initialize( startDayMilliseconds, endDayMilliseconds, heightSchedule, widthSchedule  ) {
-    this.startDayMilliseconds = startDayMilliseconds;
-    this.endDayMilliseconds = endDayMilliseconds;
-    this.heightSchedule = heightSchedule;
-    this.widthSchedule = widthSchedule;
+  initializeArray( workScaleInMileseconds, scheduleSlats: QueryList<any>  ) {
+    if ( scheduleSlats && scheduleSlats) {
+      if ( scheduleSlats.length > 0 && workScaleInMileseconds.length > 0 ) {
+        this.workScaleInMileseconds = workScaleInMileseconds;
+        this.scheduleSlats = scheduleSlats;
+
+        this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
+        this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
+      }
+    }
+  }
+
+  private transformDateToPixel() {
+    for ( let i = 0; i <= this.events.length - 1; i++) {
+      this.events[i].date = Object.assign({}, {
+        start: Math.round(this.convertMillisecondsToPixel( this.events[i].date.start )),
+        end:  Math.round(this.convertMillisecondsToPixel( this.events[i].date.end ))
+      });
+    }
+  }
+
+  private convertMillisecondsToPixel(date = new Date().getTime()) {
+    let heightBody;
+    let startDayMilliseconds;
+    let endDayMilliseconds;
+    let converted;
+    let currentDate;
+    let position = -1;
+    let offsetHeight = 0;
+
+    this.workScaleInMileseconds.forEach(( item, index, array) => {
+      if ( date > this.workScaleInMileseconds[index].start ) {
+        position++;
+        const slotObject = this.scheduleSlats.find( (slot, idx) => idx === ( index - 1));
+        offsetHeight = offsetHeight + elvis(slotObject, 'nativeElement.offsetHeight') || 0;
+      }
+    });
+
+    if ( position < 0 && offsetHeight <= 0) {
+      return -1000;
+    }
+
+    startDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].start / 100000 );
+    endDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].end / 100000 );
+    heightBody = this.scheduleSlats.find( (item, idx) => idx === position).nativeElement.offsetHeight;
+    date = Math.floor(date / 100000 );
+    currentDate = date - startDayMilliseconds;
+    converted = ( heightBody * currentDate ) / ( endDayMilliseconds - startDayMilliseconds);
+
+    return converted > heightBody  ? -1000 : ( converted + offsetHeight );
   }
 
   private generateEvents() {
@@ -37,22 +93,24 @@ export class GenerateEventsService {
     const histogram = this.createHistogram();
     const graph = this.createTheGraph( histogram );
     this.setClusterWidth( graph );
-    this.setNodesPosition(graph);
+    this.setNodesPosition( graph );
 
     for ( const nodeId in graph.nodes ) {
       if ( graph.nodes.hasOwnProperty(nodeId) ) {
-        const node = graph.nodes[nodeId];
-        const event = {
-          positions: {
-            id: node.id,
-            top: node.start,
-            left: node.position * node.cluster.width,
-            height: node.end + 1 - node.start,
-            width: node.cluster.width
-          },
-          data: this.originalEvents.filter(( e ) => parseInt(e.value, 10) === node.id )[0]
-        };
-        eventsWithPositioning.push(event);
+        if ( graph.nodes[nodeId].cluster ) {
+          const node = graph.nodes[nodeId];
+          const event = {
+            positions: {
+              id: node.id,
+              top: node.start,
+              left: node.position * node.cluster.width,
+              height: node.end - node.start,
+              width: node.cluster.width
+            },
+            data: this.originalEvents.filter(( e ) => e.value === node.id )[0]
+          };
+          eventsWithPositioning.push(event);
+        }
       }
     }
     return eventsWithPositioning;
@@ -69,10 +127,11 @@ export class GenerateEventsService {
     // setting which events occurs at each minute
     this.events.forEach( (event) => {
       for ( let i = event.date.start; i <= event.date.end - 1; i++ ) {
-        minutes[i].push(parseInt((event.value), 10));
+        if ( minutes[i] ) {
+          minutes[i].push(event.value);
+        }
       }
     });
-
     return minutes;
   }
 
@@ -82,7 +141,7 @@ export class GenerateEventsService {
 
     // creating the nodes
     this.events.forEach( (event) => {
-      const node = new Node(parseInt(event.value, 10), event.date.start, event.date.end - 1);
+      const node = new Node(event.value, event.date.start, event.date.end);
       nodeMap[node.id] = node;
     });
 
@@ -94,10 +153,13 @@ export class GenerateEventsService {
     minutes.forEach( (minute, index, arrayMinutes ) => {
       if (minute.length > 0) {
 
-        if ( ( minute[0] !== arrayMinutes[index - 1][0] ) && ( minute.length !== arrayMinutes[index - 1].length )  && cluster) {
-          graph.clusters.push(cluster);
-          cluster = null;
+        if ( arrayMinutes[index - 1] ) {
+          if ( ( minute[0] !== arrayMinutes[index - 1][0] ) && ( minute.length !== arrayMinutes[index - 1].length )  && cluster) {
+            graph.clusters.push(cluster);
+            cluster = null;
+          }
         }
+
 
         cluster = cluster || new Cluster();
         minute.forEach( ( eventId ) => {
@@ -136,7 +198,6 @@ export class GenerateEventsService {
     });
 
     graph.nodes = nodeMap;
-
     return graph;
   }
 
@@ -182,21 +243,5 @@ export class GenerateEventsService {
     });
   }
 
-  private transformDateToPixel() {
-    for ( let i = 0; i <= this.events.length - 1; i++) {
-       this.events[i].date = Object.assign({}, {
-          start: Math.round(this.convertMillisecondsToPixel( this.events[i].date.start )),
-          end:  Math.round(this.convertMillisecondsToPixel( this.events[i].date.end ))
-       });
-    }
-  }
-
-  convertMillisecondsToPixel(date = new Date().getTime()) {
-    const heightBody = this.heightSchedule;
-    const currentDate = date - this.startDayMilliseconds;
-    const converted = ( heightBody * currentDate ) / ( this.endDayMilliseconds - this.startDayMilliseconds);
-
-    return converted > heightBody ? -1000 : converted;
-  }
 
 }

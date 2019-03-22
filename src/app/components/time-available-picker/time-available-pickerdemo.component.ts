@@ -36,21 +36,41 @@ export class TimeAvailablePickerDemoComponent {
   public dataEvents;
 
   public data = [
-    new Date( 1999, 1, 1, 10, 45 ),
-    new Date( 1999, 1, 1, 8, 32 ),
-    new Date( 1999, 1, 1, 14, 10 ),
-    new Date( 1999, 1, 1, 20, 30 ),
-    new Date( 1999, 1, 1, 19, 17 ),
-    new Date( 1999, 1, 1, 18, 15 ),
-    new Date( 1999, 1, 1, 18, 35 ),
-    new Date( 1999, 1, 1, 19, 0 ),
-    new Date( 1999, 1, 1, 14, 30 ),
-    new Date( 1999, 1, 1, 16, 30 ),
+    {
+      start: new Date( 1999, 1, 1, 8, 0 ),
+      end: new Date( 1999, 1, 1, 8, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 0 ),
+      end: new Date( 1999, 1, 1, 9, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
   ];
 
   public value = [
-    new Date( 1999, 1, 1, 19, 17 ),
-    new Date( 1999, 1, 1, 18, 15 ),
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
   ];
 
   constructor() {

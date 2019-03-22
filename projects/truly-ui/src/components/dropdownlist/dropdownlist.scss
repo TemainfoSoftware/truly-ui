@@ -18,45 +18,60 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   position: relative;
   display: table;
 
-  > tl-icon {
-    position: absolute;
-    right: 30px;
-    opacity: 0.3;
-  }
-
-  > .ui-dropdown-wrapper {
-    border-radius:3px;
-    width: 100%;
-    color: #666;
-    padding-left: 5px;
-    cursor: pointer;
-    font-size: $default-fontSize;
-    font-family: $default-fontFamily;
-    font-weight: normal;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  > .ui-dropdown-icon {
-    position: absolute;
-    top: 0;
-    right: 10px;
-    text-align: center;
-    font-size: $default-fontSize;
-    font-family: $default-fontFamily;
-    font-weight: normal;
-    transition: transform linear 200ms;
-    pointer-events: none;
-    i {
-      padding: 0;
+  >.ui-dropdown-wrapper {
+    position: relative;
+    >.ui-dropdown {
+      border-radius: 3px;
+      width: 100%;
+      color: #666;
+      padding-left: 5px;
+      cursor: pointer;
+      font-size: $default-fontSize;
+      font-family: $default-fontFamily;
+      font-weight: normal;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    >.ui-dropdown-icon {
+      position: absolute;
+      top: 0;
+      width: 20px;
+      right: 10px;
+      text-align: center;
+      font-size: $default-fontSize;
+      font-family: $default-fontFamily;
+      font-weight: normal;
+      transition: transform linear 200ms;
+      pointer-events: none;
+      i {
+        padding: 0;
+      }
     }
   }
-  > .ui-hidden-input {
+
+  >.ui-hidden-input {
     position: absolute;
     left: 0;
     opacity: 0;
     width: 0;
     bottom: 0;
   }
+
+  .ui-loading-icon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    z-index: 1;
+    margin: 0;
+    right: 35px;
+  }
+
+  tl-icon {
+    position: absolute;
+    right: 5px;
+    opacity: 0.5;
+  }
+
 }
 
 

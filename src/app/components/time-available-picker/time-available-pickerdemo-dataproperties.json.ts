@@ -22,10 +22,17 @@
 export const dataProperties = [
   {
     name: 'availableTimes',
-    type: 'Array<Date>',
+    type: 'Array<DateRange>',
     default: 'null',
     description: 'Array of available times.',
-    options: 'Array<Date>'
+    options: 'Array<DateRange>'
+  },
+  {
+    name: 'width',
+    type: 'number',
+    default: '300',
+    description: 'The Box width.',
+    options: 'number pixels'
   },
   {
     name: 'color',
@@ -43,9 +50,9 @@ export const dataProperties = [
   },
   {
     name: 'value',
-    type: 'Array<Date>',
+    type: 'Array<DateRange>',
     default: 'null',
     description: 'Value of selected times',
-    options: 'Array<Date>'
+    options: 'Array<DateRange>'
   },
 ];

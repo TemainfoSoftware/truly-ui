@@ -23,13 +23,15 @@ import {
   AfterViewInit,
   Component,
   Input,
-  OnInit,
+  Output,
   Inject,
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges
+  ElementRef, OnChanges, EventEmitter
 } from '@angular/core';
+
+import * as objectPath from 'object-path';
 
 import { debounceTime } from 'rxjs/internal/operators';
 import { MakeProvider } from '../core/base/value-accessor-provider';
@@ -51,21 +53,19 @@ import { TlListItem } from '../overlaylist/list-item/list-item';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements OnInit, OnChanges, AfterViewInit {
+export class TlDropDownList extends ElementBase<string> implements OnChanges, AfterViewInit {
 
   @Input( 'data' ) data: any[] = [];
 
-  @Input( 'keyText' ) keyText = 'keyText';
+  @Input( 'keyText' ) keyText = null;
 
   @Input( 'icon' ) icon = null;
 
   @Input( 'label' ) label: string;
 
-  @Input( 'showOnlyIcon' ) showOnlyIcon = false;
-
   @Input( 'debounceTime' ) debounceTime = 200;
 
-  @Input( 'disabled' ) disabled = true;
+  @Input( 'disabled' ) disabled = false;
 
   @Input( 'labelPlacement' ) labelPlacement = 'left';
 
@@ -79,11 +79,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'identifier' ) identifier = null;
 
-  @Input( 'preSelected' ) preSelected = '';
-
   @Input( 'defaultOption' ) defaultOption = false;
 
-  @Input( 'width' ) width = '120px';
+  @Input( 'groupBy' ) groupBy = null;
+
+  @Input( 'width' ) width = '100%';
 
   @Input( 'placeholder' ) placeholder = 'Select Item';
 
@@ -91,7 +91,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   @Input( 'searchOnList' ) searchOnList = false;
 
-  @Input( 'placeholderIcon' ) placeholderIcon = 'ion-navicon-round';
+  @Output( 'selectItem' ) selectItem: EventEmitter<any> = new EventEmitter();
 
   @ContentChild( NgModel ) model: NgModel;
 
@@ -113,19 +113,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   public isLoading = true;
 
-  private subject = new Subject();
-
   constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig,
                @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
     this.setOptions( dropdownConfig );
-  }
-
-  ngOnInit() {
-    this.subject.pipe( debounceTime( this.debounceTime ) ).subscribe( searchTextValue => {
-      this.onSearch( searchTextValue );
-    } );
   }
 
   ngAfterViewInit() {
@@ -136,17 +128,24 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
-      if ( (item[ this.keyText ].substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
+      if ( (this.getItemText( item ).substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
         filter.push( item );
       }
     } );
     this.datasource = filter;
   }
 
+  getItemText( item ) {
+    if ( this.typeOfData === 'simple' ) {
+      return item;
+    }
+    return objectPath.get( item, this.keyText );
+  }
+
   onKeyDown( $event ) {
     this.handleSelectInLetter( $event.key );
     const keyEvent = {
-      [KeyEvent.SPACE]: () => this.handleKeySpace( $event ),
+      [KeyEvent.SPACE]: () => this.handleOpenList( $event ),
       [KeyEvent.ARROWDOWN]: () => this.stopEvent( $event ),
       [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
     };
@@ -162,7 +161,8 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   onSelectOption( $event: ListItemInterface ) {
     this.isOpen = false;
     this.optionSelected = $event;
-    this.selectedDescription = this.isSimpleData() ? $event.option.item : $event.option.item[ this.keyText ];
+    this.selectedDescription = this.isSimpleData() ? $event.option.item : objectPath.get( $event.option.item, this.keyText );
+    this.selectItem.emit( $event.option.item );
     this.handleKeyModelValue( $event.option.item );
     this.setInputFocus();
   }
@@ -178,10 +178,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     return this.modelMode === 'string';
   }
 
-  private handleKeySpace( $event ) {
+  public handleOpenList( $event ) {
     this.stopEvent( $event );
-    if ( !this.isOpen ) {
+    if ( !this.isOpen && !this.disabled && !this.isLoading ) {
       this.isOpen = true;
+      this.setUpComponent();
     }
   }
 
@@ -193,8 +194,9 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
 
   private setUpComponent() {
     this.datasource = this.data;
-    this.disabled = false;
-    this.isLoading = false;
+    if ( this.data.length > 0 ) {
+      this.isLoading = false;
+    }
   }
 
   private validateData() {
@@ -217,7 +219,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private listenModelChange() {
-    if (this.getModel()) {
+    if ( this.getModel() ) {
       this.getModel().valueChanges.subscribe( () => {
         this.getModelValue();
       } );
@@ -231,11 +233,11 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
     if ( !this.keyValue ) {
       return this.value = itemValue;
     }
-    return this.value = itemValue[ this.keyValue ];
+    return this.value = objectPath.get( itemValue, this.keyValue );
   }
 
   private getModelValue() {
-    if (!this.getModel()) {
+    if ( !this.getModel() ) {
       return;
     }
     this.datasource.forEach( ( value, index ) => {
@@ -264,12 +266,12 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return this.getModel().value;
     }
     if ( !this.keyValue ) {
-      return this.getModel().value[ this.identifier ];
+      return objectPath.get( this.getModel().value, this.identifier );
     }
     if ( this.isModelModeString() ) {
       return this.getModel().value;
     }
-    return this.getModel().value[ this.keyValue ];
+    return objectPath.get( this.getModel().value, this.keyValue );
   }
 
   private getCompare( value ) {
@@ -277,16 +279,16 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
       return value;
     }
     if ( !this.keyValue ) {
-      return value[ this.identifier ];
+      return objectPath.get( value, this.identifier );
     }
-    return value[ this.keyValue ];
+    return objectPath.get( value, this.keyValue );
   }
 
   private getDescription( value ) {
     if ( this.isSimpleData() ) {
       return value;
     }
-    return value[ this.keyText ];
+    return objectPath.get( value, this.keyText );
   }
 
   private handleSelectInLetter( keyInput: string ) {
@@ -319,7 +321,7 @@ export class TlDropDownList extends ElementBase<string> implements OnInit, OnCha
   }
 
   private getFirstLetterOfItem( item ): string {
-    return String( item[ this.keyText ] ).substring( 0, 1 ).toLowerCase();
+    return String( objectPath.get( item, this.keyText ) ).substring( 0, 1 ).toLowerCase();
   }
 
   ngOnChanges( changes ) {

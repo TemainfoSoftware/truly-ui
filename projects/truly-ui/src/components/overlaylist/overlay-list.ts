@@ -21,24 +21,33 @@
  */
 import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
-  AfterViewInit, SimpleChanges, OnChanges, Renderer2,
+  AfterViewInit, SimpleChanges, OnChanges, Renderer2, OnDestroy,
 } from '@angular/core';
 import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
-import { KeyEvent } from '../core/enums/key-events';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { scrollIntoView } from '../core/helper/scrollIntoView';
+import * as path from 'object-path';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-overlay-list',
   templateUrl: './overlay-list.html',
   styleUrls: [ './overlay-list.scss' ],
 } )
-export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
+export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
-  @Input( 'datasource' ) datasource = [];
+  @Input( 'datasource' )
+  set dataSource(data) {
+    this._datasource = data;
+    this.getFilteredData();
+  }
+
+  get dataSource() {
+    return this._datasource;
+  }
 
   @Input( 'searchOnList' ) searchOnList = false;
 
@@ -52,7 +61,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   @Input( 'keyText' ) keyText = 'text';
 
-  @Input() keyIcon = 'icon';
+  @Input( 'groupBy' ) groupBy = null;
+
+  @Input( 'keyIcon' ) keyIcon = 'icon';
 
   @Input( 'icon' ) icon = null;
 
@@ -90,11 +101,24 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   public notFound = false;
 
+  public groups = [];
+
+  public unGrouped = [];
+
+  public objectPath = path;
+
+  private _datasource = [];
+
+  private numberItems = 0;
+
+  private subscription = new Subscription();
+
   get emptyList() {
     return this.i18n.getLocale().OverlayList.emptyList;
   }
 
-  constructor( private renderer: Renderer2, private i18n: I18nService ) {}
+  constructor( private renderer: Renderer2,
+               private i18n: I18nService ) {}
 
   ngOnInit() {
   }
@@ -105,22 +129,69 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
+    this.getFilteredData();
+  }
+
+  getFilteredData() {
+    this.groups = [];
+    this.unGrouped = [];
+    if (!this.groupBy) {
+      this.unGrouped = this.dataSource;
+      return;
+    }
+    this.dataSource.forEach( ( value ) => {
+      if (!this.objectPath.get(value, this.groupBy)) {
+        this.unGrouped = this.getItemsGroup(this.objectPath.get(value, this.groupBy));
+        return;
+      }
+      if ( !this.existGroup( this.objectPath.get(value, this.groupBy) ) ) {
+        this.groups.push( {
+          description: this.objectPath.get(value, this.groupBy),
+          items: this.getItemsGroup( this.objectPath.get(value, this.groupBy) )
+        } );
+      }
+    } );
+  }
+
+  existGroup( group ) {
+    for ( const item of this.groups ) {
+      if ( item.description === group ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getItemsGroup( group ) {
+    const filter = this.dataSource.filter( ( item ) => this.objectPath.get(item, this.groupBy) === group);
+    this.numberItems += filter.length;
+    return filter;
   }
 
   handleCustomInputEvents() {
     if (this.customInput) {
       this.handleInputFocus();
-      this.renderer.listen( this.customInput, 'keydown', ($event) => {
-        if (this.isKeyCodeEnter($event) && this.hasDataOnDataSource()) {
+
+      this.subscription.add(this.renderer.listen( this.customInput, 'keydown.enter', () => {
+        if (this.hasDataOnDataSource()) {
           this.emitSelectOption();
         }
-        this.handleKeyEvents($event);
-      });
+      }));
+
+      this.subscription.add(this.renderer.listen( this.customInput, 'keydown.arrowdown', () => {
+        this.keyManager.setNextItemActive();
+        this.handleScrollIntoView();
+      }));
+
+      this.subscription.add(this.renderer.listen( this.customInput, 'keydown.arrowup', () => {
+        this.keyManager.setPreviousItemActive();
+        this.handleScrollIntoView();
+      }));
     }
   }
 
   handleInputFocus() {
-    if (this.searchOnList) {
+    if (this.searchOnList && !this.customFocus) {
       setTimeout(() => {
         this.tlInput.setFocus();
       }, 1);
@@ -128,11 +199,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   }
 
   hasDataOnDataSource() {
-    return this.datasource.length > 0;
-  }
-
-  isKeyCodeEnter($event) {
-    return $event.keyCode === KeyEvent.ENTER;
+    return this.dataSource.length > 0;
   }
 
   handleActiveItem() {
@@ -153,16 +220,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
   setActiveItem(index: number) {
     this.removeSelectedAll();
     this.keyManager.setActiveItem(index);
-    this.handleScrollIntoView();
   }
 
   removeSelectedAll() {
     this.items.forEach((item) => item.selected = false);
-  }
-
-  handleKeyEvents( $event: KeyboardEvent ) {
-    this.keyManager.onKeydown( $event );
-    this.handleScrollIntoView();
   }
 
   handleScrollIntoView() {
@@ -187,9 +248,9 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
     this.findByLetter.emit($event.key);
   }
 
-  handleClickOption( index: number, $event ) {
+  handleClickOption( $event, item: TlListItem ) {
     this.stopEvent($event);
-    this.keyManager.setActiveItem( index );
+    this.keyManager.setActiveItem( item );
     this.emitSelectOption();
   }
 
@@ -211,10 +272,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
 
   keydownSearch( $event ) {
     this.search.emit( $event.target.value );
+    this.unGrouped = [];
   }
 
   setNotFound() {
-    this.notFound = this.datasource.length === 0;
+    this.notFound = this.dataSource.length === 0;
   }
 
   ngOnChanges(changes: SimpleChanges ) {
@@ -227,5 +289,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges {
       this.handleModelOption();
     }
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 }
 

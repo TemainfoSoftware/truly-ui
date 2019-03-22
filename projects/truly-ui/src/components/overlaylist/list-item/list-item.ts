@@ -19,25 +19,28 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, TemplateRef } from '@angular/core';
 import { Highlightable } from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-list-item',
   templateUrl: './list-item.html',
   styleUrls: [ './list-item.scss' ],
+  exportAs: 'listItem'
 } )
 export class TlListItem implements Highlightable {
-
-  constructor() {}
-
-  public selected = false;
 
   @Input() item;
 
   @Input() disabled = false;
 
+  @Input() grouped = true;
+
   @Input() height = '30px';
+
+  @Input() template: TemplateRef<any>;
+
+  public selected = false;
 
   @ViewChild('listElement') element: ElementRef;
 

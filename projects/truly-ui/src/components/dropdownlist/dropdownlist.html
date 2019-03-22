@@ -1,26 +1,34 @@
-<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight}">
-  <tl-icon *ngIf="isLoading" [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
+<div class="ui-dropdown-box"  [ngStyle]="{'line-height' : itemHeight, 'width': width}">
+
+  <div class="ui-loading-icon" [style.height]="itemHeight">
+    <tl-loader *ngIf="isLoading"></tl-loader>
+  </div>
+
   <tl-label *ngIf="label"
-            [style.display]="labelPlacement === 'left' ? 'table-cell' : 'block'"
             [labelPlacement]="labelPlacement"
             [labelSize]="labelSize"
             [labelTitle]="label">
   </tl-label>
+
+  <div class="ui-dropdown-wrapper">
   <input cdkOverlayOrigin
          #wrapper
          readonly
          #trigger="cdkOverlayOrigin"
-         (click)="!disabled ? isOpen = !isOpen : null"
+         [attr.disabled]="disabled ? true : null"
          (keydown)="onKeyDown($event)"
+         (click)="handleOpenList($event)"
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
          [ngClass]="{ 'ng-invalid' : model?.invalid || controlName?.invalid }"
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
-         class="ui-dropdown-wrapper">
+         class="ui-dropdown">
         <div class="ui-dropdown-icon"
+             [style.height]="itemHeight"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
              [ngClass]="{ 'disabled': disabled, 'ng-invalid' : model?.invalid || controlName?.invalid }">
           <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
         </div>
+  </div>
   <input readonly notform class="ui-hidden-input" [(ngModel)]="value">
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
@@ -38,6 +46,7 @@
       [typeOfData]="typeOfData"
       [hasDefaultOption]="defaultOption"
       [defaultOptionText]="placeholder"
+      [groupBy]="groupBy"
       [optionSelected]="optionSelected"
       [inputModelIndex]="indexOptionSelectedModel"
       [datasource]="datasource"

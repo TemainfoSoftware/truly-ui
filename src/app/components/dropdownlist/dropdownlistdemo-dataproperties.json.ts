@@ -9,15 +9,38 @@ export const dataProperties = [
   {
     name: 'keyText',
     type: 'string',
-    default: 'text',
+    default: 'null',
     description: 'Sets the data item field that represents the item text.',
     options: 'any text'
   },
   {
+    name: 'identifier',
+    type: 'string',
+    default: 'null',
+    description: 'String key used to compare values when model mode is string.',
+    options: 'any text'
+  },
+  {
+    name: 'modelMode',
+    type: 'string',
+    default: 'object',
+    description: 'Operating mode of model values, some servers uses ID hash of value' +
+    ' fields and others the object itself. The model mode is used to compare value of models' +
+    ' with dropdown dataSource when angular is loading the form values.',
+    options: 'string | object'
+  },
+  {
     name: 'keyValue',
     type: 'string',
-    default: 'value',
+    default: 'null',
     description: 'Sets the data item field that represents the item value.',
+    options: 'any text'
+  },
+  {
+    name: 'groupBy',
+    type: 'string',
+    default: 'null',
+    description: 'Key that would be used to group items',
     options: 'any text'
   },
   {
@@ -44,7 +67,7 @@ export const dataProperties = [
   {
     name: 'labelSize',
     type: 'string',
-    default: '100',
+    default: '100px',
     description: 'Sets the label width.',
     options: 'px | % | em'
   },
@@ -65,7 +88,7 @@ export const dataProperties = [
   {
     name: 'width',
     type: 'string',
-    default: '87px',
+    default: '120px',
     description: 'Sets the width of Dropdown List.',
     options: 'px | % | em'
   },
@@ -77,9 +100,23 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'defaultOption',
+    type: 'boolean',
+    default: 'false',
+    description: 'Handle if will have the null option',
+    options: 'true | false'
+  },
+  {
+    name: 'debounceTime',
+    type: 'boolean',
+    default: '200',
+    description: 'Delay of time used on searching',
+    options: 'number'
+  },
+  {
     name: 'placeholder',
     type: 'string',
-    default: 'null',
+    default: 'Select item',
     description: 'Display a help text on dropdown list.',
     options: 'any text'
   },

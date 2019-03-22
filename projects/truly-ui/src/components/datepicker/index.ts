@@ -31,6 +31,7 @@ import { InputModule } from '../input/index';
 import { TlDatePickerContent } from './datepicker-content/datepicker-content';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
+import { DateModule } from '../date/index';
 
 @NgModule( {
   imports: [
@@ -40,6 +41,7 @@ import { PortalModule } from '@angular/cdk/portal';
     FormsModule,
     OverlayModule,
     PortalModule,
+    DateModule,
     InputModule
   ],
   declarations: [

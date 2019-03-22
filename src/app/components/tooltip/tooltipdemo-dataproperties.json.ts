@@ -19,12 +19,12 @@ export const data = [
     type: 'string',
     default: 'left',
     description: 'Position place of the Tooltip',
-    options: 'top | right | bottom | left'
+    options: 'left-top | left-center | left-bottom | right-top | right-center | right-bottom | top-center | bottom-center'
   },
   {
     name: 'tooltip.color',
     type: 'string',
-    default: '#000',
+    default: '#242525',
     description: 'Hex Color for background color',
     options: 'Hex | RGBA'
   },

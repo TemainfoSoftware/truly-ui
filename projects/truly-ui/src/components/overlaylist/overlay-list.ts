@@ -129,6 +129,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
     this.keyManager.withWrap();
     this.handleActiveItem();
     this.handleModelOption();
+    this.getFilteredData();
   }
 
   getFilteredData() {

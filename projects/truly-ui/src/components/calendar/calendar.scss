@@ -79,6 +79,7 @@
       user-select: none;
       animation-name: creating;
       animation-duration: 200ms;
+      border: 1px solid transparent;
       &:hover {
         cursor: pointer;
       }

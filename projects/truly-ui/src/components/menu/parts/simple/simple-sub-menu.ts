@@ -74,6 +74,10 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
     }
   }
 
+  isRouterActive(item) {
+    return this.router.url === item[this.link];
+  }
+
   alreadyTaken(element) {
     const anchor = this.anchorElements.filter((value) => {
       return value.rootElement === element;

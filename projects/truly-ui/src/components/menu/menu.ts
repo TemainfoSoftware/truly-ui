@@ -21,7 +21,7 @@
  */
 import {
   Input, Component, OnDestroy,
-  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef, ChangeDetectorRef,
+  Renderer2, ViewChild, ElementRef, OnChanges, SimpleChanges, AfterContentInit, ViewContainerRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubMenuService } from './services/submenu.service';
@@ -167,6 +167,9 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   createElementList( item ) {
     this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
     this.renderer.addClass( this.listElement.nativeElement, 'ui-menulist-item' );
+    if (this.isRouterActive(item)) {
+      this.renderer.addClass( this.listElement.nativeElement, 'router-active');
+    }
     this.listenClickElementList( item );
     this.setStyleListElement();
   }
@@ -175,6 +178,10 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.renderer.listen( document, 'click', ( $event ) => {
       this.subMenuService.closeMenu();
     } );
+  }
+
+  isRouterActive(item) {
+    return this.router.url === item[this.link];
   }
 
   listenClickElementList( item ) {

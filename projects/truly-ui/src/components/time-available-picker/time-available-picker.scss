@@ -6,8 +6,9 @@
   user-select: none;
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 300px;
   border-radius: 7px;
+  box-sizing: border-box;
   > .ui-time-header {
     height: 70px;
     width: 100%;
@@ -32,7 +33,9 @@
       }
     }
     > .ui-time-selected {
-      padding-right: 10px;
+      width: 170px;
+      display: flex;
+      place-content: space-around;
       span {
         font-size: 1.3em;
         padding: 5px 15px;
@@ -43,8 +46,11 @@
   > .ui-time-content {
     min-height: 180px;
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: 50px 50px 50px 50px;
+    grid-template-rows: repeat(auto-fill, 50px);
+    grid-auto-flow: row;
+    grid-gap: 4px;
+    position: relative;
+    place-content: center;
     > .ui-time-item {
       display: flex;
       align-items: center;
@@ -52,7 +58,8 @@
       font-size: 1em;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       height: 50px;
-      span {
+      .ui-range-wrapper {
+        display: flex;
         padding: 5px 10px;
         transition: background 150ms ease-in-out;
         border-radius: 3px;

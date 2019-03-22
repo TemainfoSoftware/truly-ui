@@ -2,6 +2,7 @@
 
 @mixin tl-simple-sub-menu-theme( $theme ) {
   $basic:   map-deep-get($theme, 'basic');
+  $primary:   map-deep-get($theme, 'primary');
 
   .ui-simple-list-item {
     background: map-deep-get($basic, "default", "background");
@@ -12,6 +13,11 @@
     }
     > .label {
       color: map-deep-get($basic, "default", "foreground");
+    }
+
+    &.router-active {
+      background: map-deep-get($basic, "hover", "background");
+      border-right: 3px solid map-deep-get($primary, "default", "background");
     }
 
     &:hover {

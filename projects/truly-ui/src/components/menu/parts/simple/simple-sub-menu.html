@@ -3,6 +3,7 @@
     [style.width]="width"
     [style.top]="'-' + itemHeight" #subMenuList>
   <li #elementList class="ui-simple-list-item" [style.height]="itemHeight"
+      [class.router-active]="isRouterActive(item)"
       [style.line-height]="itemHeight"
       (keydown.enter)="callbackListElement($event, item)"
       (click)="callbackListElement($event, item)"

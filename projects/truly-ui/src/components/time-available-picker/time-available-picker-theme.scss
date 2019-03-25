@@ -34,6 +34,9 @@
         color: white;
       }
     }
+    &::-webkit-scrollbar-thumb {
+      background: map-deep-get($primary, "default", "background");
+    }
   }
   > .ui-time-footer {
     border-top: 1px solid map-deep-get($theme, $action, "default", "border");

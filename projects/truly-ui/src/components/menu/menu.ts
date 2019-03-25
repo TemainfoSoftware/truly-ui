@@ -25,6 +25,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { SubMenuService } from './services/submenu.service';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-menu',
@@ -84,9 +85,13 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   private iconSubElement;
 
+  private elements =  [];
+
   private indexSubMenu = 0;
 
   private callBack = Function();
+
+  private subscription = new Subscription();
 
   constructor( private renderer: Renderer2,
                private router: Router,
@@ -98,6 +103,17 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.initializeMenu();
     this.listenWindowResize();
     this.listenDocumentClick();
+    this.listenRouteChange();
+  }
+
+
+  listenRouteChange() {
+    this.subscription.add(this.router.events.subscribe(() => {
+      this.elements.forEach((value, index, array) => {
+        this.isRouterActive(value.item) ? this.renderer.addClass( value.element, 'router-active') :
+          this.renderer.removeClass(value.element, 'router-active');
+      });
+    }));
   }
 
   createList() {
@@ -172,12 +188,13 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     }
     this.listenClickElementList( item );
     this.setStyleListElement();
+    this.elements.push({ item: item, element: this.listElement.nativeElement });
   }
 
   listenDocumentClick() {
-    this.renderer.listen( document, 'click', ( $event ) => {
+    this.subscription.add(this.renderer.listen( document, 'click', ( $event ) => {
       this.subMenuService.closeMenu();
-    } );
+    } ));
   }
 
   isRouterActive(item) {
@@ -185,7 +202,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   listenClickElementList( item ) {
-    this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
+    this.subscription.add(this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
       if ( item[ this.link ] ) {
         this.router.navigate( [ item[ this.link ] ] );
         this.subMenuService.closeMenu();
@@ -196,7 +213,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
         this.callBack( MouseEvent );
         this.subMenuService.closeMenu();
       }
-    } );
+    } ));
   }
 
   setStyleListElement() {
@@ -228,19 +245,19 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   listenWindowResize() {
-    this.renderer.listen( window, 'resize', () => {
+    this.subscription.add(this.renderer.listen( window, 'resize', () => {
       this.subMenuService.setRootHeightChange( this.maxHeight );
-    } );
+    } ));
   }
 
   listenClickListElement() {
     if ( this.mode === 'advanced' ) {
-      this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
+      this.subscription.add(this.renderer.listen( this.listElement.nativeElement, 'click', ( $event ) => {
         if ( this.isTargetOnListElement( $event ) ) {
           this.subMenuService.getListComponents()[ 0 ].instance.toggleVisibility();
           this.handleVisibilitySubMenu();
         }
-      } );
+      } ));
     }
   }
 
@@ -327,6 +344,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

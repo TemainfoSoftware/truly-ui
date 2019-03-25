@@ -150,6 +150,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
         const date = ReverseFormatDate( this.value, this.formatDate );
         this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
       }
+      this.propagateTouched();
     }, 100 );
   }
 
@@ -176,6 +177,12 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
     this.mask = formatArray.toString().replace( /,/gi, '' );
     this.placeholder = this.formatDate.toUpperCase();
     this.change.detectChanges();
+  }
+
+  onBlur() {
+    setTimeout(() => {
+      this.propagateTouched();
+    }, 100);
   }
 
 }

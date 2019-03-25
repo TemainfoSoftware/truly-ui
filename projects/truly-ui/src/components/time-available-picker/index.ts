@@ -6,6 +6,7 @@ import { TlTimeAvailablePicker } from './time-available-picker';
 import { ButtonModule } from '../button/index';
 import { MiscModule } from '../misc/index';
 import { IconsModule } from '../icons/index';
+import { LoaderModule } from '../loader/index';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { IconsModule } from '../icons/index';
     FormsModule,
     ButtonModule,
     MiscModule,
-    IconsModule
+    IconsModule,
+    LoaderModule
   ],
   declarations: [
     TlTimeAvailablePicker

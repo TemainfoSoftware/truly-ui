@@ -23,6 +23,7 @@ import {
   Input, Component, Output, AfterViewInit, EventEmitter, ChangeDetectorRef, SimpleChanges,
   OnChanges
 } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 
 export interface FilterTime {
   range: DateRange;
@@ -45,6 +46,8 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   @Input() color = 'basic';
 
+  @Input() loading = true;
+
   @Input() maxHeight = '180px';
 
   @Input() width = '260px';
@@ -59,7 +62,9 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   public selectedTime: Array<FilterTime> = [];
 
-  constructor( private change: ChangeDetectorRef ) {}
+  public notFoundMessage = this.i18nService.getLocale().TimeAvailablePicker.notFound;
+
+  constructor( private change: ChangeDetectorRef, private i18nService: I18nService ) {}
 
   ngAfterViewInit() {
     this.handleValueChange();
@@ -69,6 +74,7 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
     this.availableTimes.forEach( ( value ) => {
       this.filterTimes.push( { range: value, selected: false } );
     } );
+    this.loading = false;
   }
 
   private handleValueChange() {

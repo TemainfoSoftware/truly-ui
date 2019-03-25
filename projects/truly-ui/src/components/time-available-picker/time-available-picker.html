@@ -11,9 +11,14 @@
   </div>
   <div *ngIf="!filterTimes || filterTimes.length === 0" class="ui-empty-data">
     <tl-icon [lib]="'ion'" [style]="'md'">sad</tl-icon>
-    <span>Nothing Found !</span>
+    <span>{{ notFoundMessage }}</span>
   </div>
   <div *ngIf="filterTimes.length > 0" class="ui-time-content" [style.maxHeight]="maxHeight">
+    <div *ngIf="loading" class="ui-loader-wrapper">
+      <div class="ui-loader">
+        <tl-loader></tl-loader>
+      </div>
+    </div>
     <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
       <div  (keydown.enter)="setSelectedTime(item, i)"
             class="ui-range-wrapper"

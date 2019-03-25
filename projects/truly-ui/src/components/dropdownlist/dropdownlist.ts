@@ -28,14 +28,12 @@ import {
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter
+  ElementRef, OnChanges, EventEmitter, AfterContentInit
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
 
-import { debounceTime } from 'rxjs/internal/operators';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { Subject } from 'rxjs';
 import { ElementBase } from '../input/core/element-base';
 import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
@@ -53,7 +51,7 @@ import { TlListItem } from '../overlaylist/list-item/list-item';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements OnChanges, AfterViewInit {
+export class TlDropDownList extends ElementBase<string> implements OnChanges, AfterContentInit, AfterViewInit {
 
   @Input( 'data' ) data: any[] = [];
 
@@ -118,6 +116,10 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
                @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any> ) {
     super( validators, asyncValidators );
     this.setOptions( dropdownConfig );
+  }
+
+  ngAfterContentInit() {
+    this.getModelValue();
   }
 
   ngAfterViewInit() {

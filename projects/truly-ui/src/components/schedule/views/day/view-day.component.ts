@@ -66,7 +66,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
     this.subscriptions.add(this.workScaleService.updateScale.subscribe(( timesCollection) => {
       this.timesCollection = timesCollection;
-      this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.changeDetectionRef.detectChanges();
     }));
 
@@ -80,17 +79,14 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
-    // this.timesCollection = this.workScaleService.timesCollection;
-    // this.generateEvents.initializeArray(
-    //   this.workScaleService.workScaleInMileseconds,
-    //   this.scheduleSlats
-    // );
-    // this.inicializeNowIndicator();
-    // this.changeDetectionRef.detectChanges();
-  }
+  ngAfterViewInit() {}
 
   ngOnChanges( changes: SimpleChanges ) {
+
+    if ( changes['currentDate'] !== undefined ) {
+      this.workScaleService.currentDate = changes[ 'currentDate' ].currentValue;
+      this.eventService.getEventsOfDay();
+    }
 
     if ( changes['workScale'] !== undefined ) {
       this.workScaleService.reload( changes[ 'workScale' ].currentValue );
@@ -102,10 +98,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         this.eventService.getEventsOfDay();
     }
 
-    if ( changes['currentDate'] !== undefined ) {
-        this.eventService.loadEvents( this.events );
-        this.eventService.getEventsOfDay();
-    }
     this.changeDetectionRef.detectChanges();
   }
 
@@ -127,6 +119,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   private generateEventsPositions( events ) {
     if ( events !== undefined ) {
+      this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.eventsWithPositions = this.generateEvents.with( events );
     }
   }

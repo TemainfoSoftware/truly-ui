@@ -232,6 +232,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   onInputBlur( $event ) {
     this.isShowingMessages = false;
     this.blur.emit( $event );
+    this.propagateTouched();
   }
 
   clearInput( $event? ) {

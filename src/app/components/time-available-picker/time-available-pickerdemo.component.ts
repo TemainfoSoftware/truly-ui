@@ -68,8 +68,12 @@ export class TimeAvailablePickerDemoComponent {
 
   public value = [
     {
-      start: new Date( 1999, 1, 1, 11, 0 ),
-      end: new Date( 1999, 1, 1, 11, 30 ),
+      start: new Date( 1999, 1, 1, 9, 0 ),
+      end: new Date( 1999, 1, 1, 9, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
     },
   ];
 

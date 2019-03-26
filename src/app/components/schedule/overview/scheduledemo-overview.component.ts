@@ -293,6 +293,10 @@ export class ScheduleDemoOverviewComponent {
     console.log( 'NEW DATA: ', this.dataSource);
   }
 
+  onChangeDate( event ) {
+    console.log('EVENT CHANGE DATE: ', event);
+  }
+
   onEventDbClick( event ) {
     console.log('EVENT CLICK: ', event);
   }

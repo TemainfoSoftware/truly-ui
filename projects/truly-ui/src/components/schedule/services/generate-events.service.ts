@@ -67,7 +67,7 @@ export class GenerateEventsService {
     let offsetHeight = 0;
 
     this.workScaleInMileseconds.forEach(( item, index, array) => {
-      if ( date > this.workScaleInMileseconds[index].start ) {
+      if ( date >= this.workScaleInMileseconds[index].start ) {
         position++;
         const slotObject = this.scheduleSlats.find( (slot, idx) => idx === ( index - 1));
         offsetHeight = offsetHeight + elvis(slotObject, 'nativeElement.offsetHeight') || 0;

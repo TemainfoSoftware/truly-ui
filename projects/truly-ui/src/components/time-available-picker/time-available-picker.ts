@@ -128,6 +128,7 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
     }
     if ( readySelected < 0 ) {
       time.selected = !time.selected;
+      this.updateTime();
       return;
     }
     time.selected = !time.selected;

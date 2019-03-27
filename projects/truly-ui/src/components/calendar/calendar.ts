@@ -190,7 +190,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
         'year': this.year,
         'month': this.month + 1,
         'day': this.day,
-        'fullDate': new Date( this.year, this.month, this.day ),
+        'fullDate': new Date( this.year, this.month, this.day, new Date().getHours(), new Date().getMinutes() ),
       }, );
   }
 

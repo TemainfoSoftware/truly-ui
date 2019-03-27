@@ -35,7 +35,10 @@ export class ScheduleDemoOverviewComponent {
 
   public slotSettings: SlotSettingsType = new SlotSettingsType(  2, 40);
 
-  public workScale: WorkScaleType | WorkScaleType[] = new WorkScaleType( '08:00', '18:00', 30 );
+  public workScale: WorkScaleType | WorkScaleType[] = [
+    new WorkScaleType( '08:00', '12:00', 30 ),
+    new WorkScaleType( '13:00', '18:00', 30 )
+  ];
 
   public dataTableProperties;
 
@@ -260,7 +263,10 @@ export class ScheduleDemoOverviewComponent {
 
   getWorkScale() {
     return new Promise((resolve) => {
-      resolve( new WorkScaleType( '08:00', '18:00', 30 ) );
+      resolve( [
+        new WorkScaleType( '08:00', '12:00', 30 ),
+        new WorkScaleType( '13:00', '18:00', 30 )
+      ] );
     });
   }
 
@@ -285,6 +291,10 @@ export class ScheduleDemoOverviewComponent {
     }];
 
     console.log( 'NEW DATA: ', this.dataSource);
+  }
+
+  onChangeDate( event ) {
+    console.log('EVENT CHANGE DATE: ', event);
   }
 
   onEventDbClick( event ) {

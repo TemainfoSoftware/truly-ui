@@ -4,8 +4,9 @@
             (click)="changeOpened()"
             (keydown.shift.tab)="isOpen = false"
             (keydown.tab)="isOpen = false"
+            (keydown.enter)="isOpen = false"
             [mask]="'Hh:Mm'"
-            [ngModel]="value"
+            [ngModel]="selectedTime"
             (ngModelChange)="onChangeValue($event)"
             [flatBorder]="flatBorder"
             [label]="label"
@@ -19,6 +20,7 @@
             [textAfter]="format === '12' ? timeZone : null"
             [iconAfter]="showTimeIcon ? 'far fa-clock' : null">
   </tl-input>
+  <input notform class="hidden-control" [value]="value">
 
   <ng-template cdkConnectedOverlay
                (backdropClick)="isOpen = false"
@@ -26,7 +28,6 @@
                [cdkConnectedOverlayOrigin]="trigger"
                [cdkConnectedOverlayOpen]="isOpen"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'">
-
     <div  @overlay [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)">
       <div class="ui-timepicker-header">
         <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
@@ -93,8 +94,8 @@
         </div>
       </div>
       <div class="ui-timepicker-footer">
-        <tl-button (click)="onClickCancel()" [flatBorder]="true" [width]="'110px'" [text]="textCancel"></tl-button>
-        <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="textConfirm" [color]="'primary'"></tl-button>
+        <tl-button (click)="onClickCancel()" [flatBorder]="true" [width]="'100%'" [text]="textCancel"></tl-button>
+        <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'100%'" [text]="textConfirm" [color]="'primary'"></tl-button>
       </div>
     </div>
   </ng-template>

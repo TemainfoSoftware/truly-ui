@@ -2,6 +2,13 @@
   box-sizing: border-box;
 }
 
+.ui-timepicker-wrapper {
+  position: relative;
+  .hidden-control {
+    display: none;
+  }
+}
+
 .ui-wrapper-content {
   display: flex;
   flex-direction: column;
@@ -21,7 +28,12 @@
     }
   }
   > .ui-timepicker-footer {
-    height: 30px;
+    display: flex;
+    align-items: center;
+    place-content: space-between;
+    border: 1px solid #ccc;
+    background: #fff;
+    padding: 10px;
   }
   > .ui-timepicker-content {
     display: flex;
@@ -39,7 +51,7 @@
       height: 30px;
       width: 220px;
       position: absolute;
-      top: calc(50% - 5px);
+      top: calc(50% - 15px);
       z-index: 10;
       > .double-dot {
         position: absolute;
@@ -86,10 +98,6 @@
       font-weight: bold;
     }
   }
-  > .ui-timepicker-footer {
-    display: flex;
-    align-items: center;
-  }
   .list {
     margin: 0;
     padding: 0;
@@ -112,6 +120,7 @@
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     }
   }
+
   .selectedItem {
     font-weight: 600;
   }

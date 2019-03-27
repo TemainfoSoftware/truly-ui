@@ -16,6 +16,7 @@ import { ButtonGroupModule } from '../buttongroup/index';
 import { GenerateEventsService } from './services/generate-events.service';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
+import { LoaderModule } from '../loader';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { EventService } from './services/event.service';
       TooltipModule,
       ButtonGroupModule,
       BlockUIModule,
-      ButtonModule
+      ButtonModule,
+      LoaderModule
     ],
     declarations: [
       TlSchedule,

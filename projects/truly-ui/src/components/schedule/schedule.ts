@@ -57,6 +57,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() texts = ScheduleI18n;
 
+  @Input() isLoading = false;
+
   @Input('events') set events( events: ScheduleDataSource[]) {
     if ( !events) {
       this._events = [];

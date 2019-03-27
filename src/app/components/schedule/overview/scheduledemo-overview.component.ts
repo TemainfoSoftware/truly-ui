@@ -48,6 +48,8 @@ export class ScheduleDemoOverviewComponent {
 
   public statusConfig = {};
 
+  public isLoading = true;
+
  // public data = [];
   public data = [
     {
@@ -231,7 +233,7 @@ export class ScheduleDemoOverviewComponent {
   constructor( private change: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
-
+    this.isLoading = true;
     setTimeout(() => {
 
       this.getWorkScale().then(( workScale: WorkScaleType | WorkScaleType[] ) => {
@@ -244,6 +246,7 @@ export class ScheduleDemoOverviewComponent {
 
       this.getDataSource()
         .then((data: Array<any>) => {
+          this.isLoading = false;
           this.dataSource = data;
           this.change.detectChanges();
         });
@@ -293,7 +296,7 @@ export class ScheduleDemoOverviewComponent {
     console.log( 'NEW DATA: ', this.dataSource);
   }
 
-  onChangeDate( event ) {
+  onChangeDate( event  ) {
     console.log('EVENT CHANGE DATE: ', event);
   }
 

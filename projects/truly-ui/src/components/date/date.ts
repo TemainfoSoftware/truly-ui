@@ -22,13 +22,14 @@
 
 import {
   Component, OnInit, forwardRef, Input, Renderer2, ElementRef, ViewChild,
-  ChangeDetectorRef, AfterViewInit, OnChanges, ContentChild
+  ChangeDetectorRef, AfterViewInit, OnChanges, ContentChild, OnDestroy
 } from '@angular/core';
 import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { InputMask } from '../input/core/input-mask';
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-date',
@@ -40,7 +41,7 @@ import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
     multi: true,
   } ],
 } )
-export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterViewInit {
+export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() formatDate = 'dd/mm/yyyy';
 
@@ -64,19 +65,23 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
 
   @ContentChild( NgModel ) model: NgModel;
 
+  @ViewChild( NgModel ) hiddenModel: NgModel;
+
   @ContentChild( FormControlName ) controlName: NgModel;
 
   @ViewChild( 'input' ) input: ElementRef;
 
-  public mockValue;
+  public mockValue: string;
 
   public touched = false;
 
-  public fieldMask: InputMask;
+  private fieldMask: InputMask;
 
-  public placeholder;
+  public placeholder: string;
 
-  public mask;
+  private mask: string;
+
+  private subscription = new Subscription();
 
   constructor( private renderer: Renderer2,
                private change: ChangeDetectorRef ) {
@@ -91,7 +96,14 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
     this.getMockValue( this.value );
     this.handleModelChangeInit();
+    this.listenMaskComplete();
     this.change.detectChanges();
+  }
+
+  listenMaskComplete() {
+    this.subscription.add(this.fieldMask.complete.subscribe(() => {
+      this.getModel().control.setErrors(this.hiddenModel.errors);
+    }));
   }
 
   handleModelChangeInit() {
@@ -179,10 +191,8 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, AfterVi
     this.change.detectChanges();
   }
 
-  onBlur() {
-    setTimeout(() => {
-      this.propagateTouched();
-    }, 100);
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

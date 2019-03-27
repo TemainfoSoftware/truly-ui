@@ -33,7 +33,6 @@ import { DropDownListModule } from '../dropdownlist/index';
 import { ButtonModule } from '../button/index';
 import { ModalModule } from '../modal/index';
 import { ShortcutModule } from '../shortcut/index';
-import { BlockUIModule } from '../blockui/index';
 import { LoaderModule } from '../loader/index';
 
 @NgModule( {

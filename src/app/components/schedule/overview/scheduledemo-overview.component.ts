@@ -92,142 +92,142 @@ export class ScheduleDemoOverviewComponent {
   //   status: 'attended',
   //   date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 0 )).getTime() }
   // },
-  {
-    value: '6',
-    title: 'Maicon Aguera - 6',
-    detail: 'Consulta | Unimed',
-    allday: false,
-    status: 'missed',
-    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
-  },
-    {
-      value: '7',
-      title: 'Adilson Nascimento - 7',
-      detail: 'Consulta | UNIPREV',
-      allday: false,
-      status: 'notmet',
-      date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-    },
-  {
-    value: '8',
-    title: 'Adilson Nascimento - 8',
-    detail: 'Consulta | UNIPREV',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  },
-  {
-    value: '9',
-    title: 'Adilson Nascimento - 9',
-    detail: 'Consulta | UNIPREV',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  },
-  {
-    value: '10',
-    title: 'Edevaldo Nascimento - 10',
-    detail: 'Consulta | UNIPREV',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  },
-  {
-    value: '11',
-    title: 'Adilson Nascimento - 11',
-    detail: 'Consulta | UNIPREV',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
-  },
-  {
-    value: '12',
-    title: 'Jaisson Buccio - 12',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
-  },
-  {
-    value: '13',
-    title: 'Jaisson Buccio - 13',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
-  },
-  {
-    value: '14',
-    title: 'Jaisson Buccio - 14',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  },
-  {
-    value: '15',
-    title: 'Jaisson Buccio - 15',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  },
-  {
-    value: '16',
-    title: 'Jaisson Buccio - 16',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  },
-  {
-    value: '17',
-    title: 'Jaisson Buccio - 17',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  },
-  {
-    value: '18',
-    title: 'Jaisson Buccio - 18',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'attended',
-    date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0 )).getTime() }
-  },
-  {
-    value: '19',
-    title: 'Jaisson Buccio - 19',
-    detail: 'Consulta | Copel',
-    allday: false,
-    status: 'notmet',
-    date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0)).getTime() }
-  },
-    {
-      value: '20',
-      title: 'Jaisson Buccio - 20',
-      detail: 'Consulta | Copel',
-      allday: false,
-      status: 'attended',
-      date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30 )).getTime() }
-    },
-    {
-      value: '21',
-      title: 'Jaisson Buccio - 21',
-      detail: 'Consulta | Copel',
-      allday: false,
-      status: 'notmet',
-      date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30)).getTime() }
-    },
-    {
-      value: '22',
-      title: 'Jaisson Buccio - 22',
-      detail: 'Consulta | Copel',
-      allday: false,
-      status: 'notmet',
-      date: { start: new Date(new Date().setHours(14, 30)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
-    }
+  // {
+  //   value: '6',
+  //   title: 'Maicon Aguera - 6',
+  //   detail: 'Consulta | Unimed',
+  //   allday: false,
+  //   status: 'missed',
+  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+  // },
+  //   {
+  //     value: '7',
+  //     title: 'Adilson Nascimento - 7',
+  //     detail: 'Consulta | UNIPREV',
+  //     allday: false,
+  //     status: 'notmet',
+  //     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  //   },
+  // {
+  //   value: '8',
+  //   title: 'Adilson Nascimento - 8',
+  //   detail: 'Consulta | UNIPREV',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  // },
+  // {
+  //   value: '9',
+  //   title: 'Adilson Nascimento - 9',
+  //   detail: 'Consulta | UNIPREV',
+  //   allday: false,
+  //   status: 'notmet',
+  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  // },
+  // {
+  //   value: '10',
+  //   title: 'Edevaldo Nascimento - 10',
+  //   detail: 'Consulta | UNIPREV',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  // },
+  // {
+  //   value: '11',
+  //   title: 'Adilson Nascimento - 11',
+  //   detail: 'Consulta | UNIPREV',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
+  // },
+  // {
+  //   value: '12',
+  //   title: 'Jaisson Buccio - 12',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+  // },
+  // {
+  //   value: '13',
+  //   title: 'Jaisson Buccio - 13',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'notmet',
+  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
+  // },
+  // {
+  //   value: '14',
+  //   title: 'Jaisson Buccio - 14',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'notmet',
+  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  // },
+  // {
+  //   value: '15',
+  //   title: 'Jaisson Buccio - 15',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'notmet',
+  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  // },
+  // {
+  //   value: '16',
+  //   title: 'Jaisson Buccio - 16',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  // },
+  // {
+  //   value: '17',
+  //   title: 'Jaisson Buccio - 17',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  // },
+  // {
+  //   value: '18',
+  //   title: 'Jaisson Buccio - 18',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'attended',
+  //   date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0 )).getTime() }
+  // },
+  // {
+  //   value: '19',
+  //   title: 'Jaisson Buccio - 19',
+  //   detail: 'Consulta | Copel',
+  //   allday: false,
+  //   status: 'notmet',
+  //   date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0)).getTime() }
+  // },
+  //   {
+  //     value: '20',
+  //     title: 'Jaisson Buccio - 20',
+  //     detail: 'Consulta | Copel',
+  //     allday: false,
+  //     status: 'attended',
+  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30 )).getTime() }
+  //   },
+  //   {
+  //     value: '21',
+  //     title: 'Jaisson Buccio - 21',
+  //     detail: 'Consulta | Copel',
+  //     allday: false,
+  //     status: 'notmet',
+  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30)).getTime() }
+  //   },
+  //   {
+  //     value: '22',
+  //     title: 'Jaisson Buccio - 22',
+  //     detail: 'Consulta | Copel',
+  //     allday: false,
+  //     status: 'notmet',
+  //     date: { start: new Date(new Date().setHours(14, 30)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
+  //   }
   ];
 
   constructor( private change: ChangeDetectorRef ) {

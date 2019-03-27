@@ -96,14 +96,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
     this.getMockValue( this.value );
     this.handleModelChangeInit();
-    this.listenMaskComplete();
     this.change.detectChanges();
-  }
-
-  listenMaskComplete() {
-    this.subscription.add(this.fieldMask.complete.subscribe(() => {
-      this.getModel().control.setErrors(this.hiddenModel.errors);
-    }));
   }
 
   handleModelChangeInit() {
@@ -167,11 +160,11 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
   }
 
   isControlValid() {
-    const model = this.model ? this.model : this.controlName;
-    return model.valid;
+    return this.hiddenModel.valid;
   }
 
   focusOut() {
+    this.getModel().control.setErrors(this.hiddenModel.control.errors);
     if ( this.isoDate ) {
       this.handleIsoDateModel();
     }

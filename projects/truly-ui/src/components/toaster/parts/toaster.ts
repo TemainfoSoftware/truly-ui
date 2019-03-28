@@ -1,4 +1,7 @@
-import { Input, Component, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import {
+  Input, Component, OnInit, OnChanges, OnDestroy, Output, EventEmitter, ElementRef, ViewChild,
+  Renderer2
+} from '@angular/core';
 import { ToasterService } from '../services/toaster.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 
@@ -6,16 +9,6 @@ import { trigger, transition, style, animate } from '@angular/animations';
   selector: 'tl-toaster',
   templateUrl: './toaster.html',
   styleUrls: [ './toaster.scss' ],
-  animations: [
-    trigger(
-      'enterAnimation', [
-        transition( ':enter', [
-          style( { transform: 'translateY(-20%)', opacity: 0 } ),
-          animate( '200ms', style( { transform: 'translateY(0)', opacity: 1 } ) )
-        ] ),
-      ]
-    )
-  ],
 } )
 export class TlToaster implements OnInit, OnChanges, OnDestroy {
 
@@ -43,16 +36,26 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
 
   @Input() showIcon = true;
 
+  @Output() afterClose = new EventEmitter();
+
+  @ViewChild('container') container: ElementRef;
+
   public interval;
 
   public timeout;
 
-  constructor( private toasterService: ToasterService ) {}
+  constructor( private toasterService: ToasterService, private renderer: Renderer2 ) {}
 
   ngOnInit() {
     this.interval = setInterval( () => {
       this.progressBar += 100;
     }, 100 );
+  }
+
+  animationDone(event: AnimationEvent) {
+    if (event.animationName === 'toasterOut') {
+      this.toasterService.close( this.toasterID );
+    }
   }
 
   handleClose() {
@@ -70,7 +73,7 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
   }
 
   close() {
-    this.toasterService.close( this.toasterID );
+    this.renderer.setStyle(this.container.nativeElement, 'animation', 'toasterOut 0.3s');
   }
 
   ngOnChanges(changes) {

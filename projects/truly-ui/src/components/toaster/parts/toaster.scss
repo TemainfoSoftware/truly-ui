@@ -2,11 +2,11 @@
   margin: 10px;
   height: auto;
   width: 300px;
-  transition: all 0.5s cubic-bezier(0.75, 0, 0.25, 1) 0.1s;
   -webkit-border-radius: 3px 3px 3px 3px;
   border-radius: 3px 3px 3px 3px;
   user-select: none;
   box-sizing: border-box;
+  animation: toasterIn 0.3s;
 
   &:hover {
     cursor: pointer;
@@ -47,7 +47,6 @@
         font-size: 14px;
       }
     }
-
   }
 
   p {
@@ -84,4 +83,21 @@
 .top-right {
   top: 0;
   right: 0;
+}
+
+@keyframes toasterIn {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes toasterOut {
+  to {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }

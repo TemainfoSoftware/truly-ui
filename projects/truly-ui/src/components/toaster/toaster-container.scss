@@ -1,10 +1,6 @@
 .ui-toaster-container {
   position: fixed;
   z-index: 100000 !important;
-  div {
-    animation: all;
-    position: relative;
-  }
 
   &.top-right {
     top: 0;

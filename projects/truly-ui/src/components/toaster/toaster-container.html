@@ -1,9 +1,8 @@
 <div [class]="'ui-toaster-container ' + position"
      [ngStyle]="
      {'left' : position === 'bottom-center' || position === 'top-center' ? 'calc( 50% - ' + getWidth() + ' ) ' : null }">
-  <div>
     <ng-container *ngFor="let item of toasterService.getListToasters()">
-      <div class="ui-toaster" [@enterAnimation]="true" *ngIf="!item.closed">
+      <div class="ui-toaster" *ngIf="!item.closed">
         <tl-toaster [title]="item.title"
                     [color]="item.color"
                     [showIcon]="item.showIcon"
@@ -17,5 +16,4 @@
         </tl-toaster>
       </div>
     </ng-container>
-  </div>
 </div>

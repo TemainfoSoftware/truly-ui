@@ -1,6 +1,7 @@
 <div [class]="'ui-toaster-wrapper ' + color"
-     [@enterAnimation]="true"
+     (animationend)="animationDone($event)"
      (click)="close()"
+     #container
      [ngStyle]="{
      'border-bottom-left-radius': !progress ? '3px' : '0',
      'border-bottom-right-radius': !progress ? '3px' : '0',

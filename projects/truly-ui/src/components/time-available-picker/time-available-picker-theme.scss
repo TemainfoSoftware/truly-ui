@@ -19,8 +19,11 @@
       }
     }
   }
+  > .ui-empty-data {
+    color: rgba(map-deep-get($theme, $action, "default", "foreground"), 0.5);
+  }
   > .ui-time-content {
-    background: linear-gradient(45deg, map-deep-get($theme, $action, "lighter", "background"));
+    background: white;
     > .ui-time-item {
       color: map-deep-get($theme, $action, "default", "foreground");
       .ui-range-wrapper {

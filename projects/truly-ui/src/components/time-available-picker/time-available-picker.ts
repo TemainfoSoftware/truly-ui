@@ -71,11 +71,16 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
   }
 
   private setUpData() {
-    this.filterTimes = [];
+    this.resetArrays();
     this.availableTimes.forEach( ( value ) => {
       this.filterTimes.push( { range: value, selected: false } );
     } );
     this.loading = false;
+  }
+
+  private resetArrays() {
+    this.filterTimes = [];
+    this.selectedTime = [];
   }
 
   private handleValueChange() {

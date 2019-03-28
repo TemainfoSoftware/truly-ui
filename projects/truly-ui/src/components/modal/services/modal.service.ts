@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
+  ComponentFactoryResolver, Injectable, Inject, ViewContainerRef, OnDestroy, Type, ElementRef,
   ComponentRef, EventEmitter,
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -36,7 +36,7 @@ import { ModalFormConfig } from '../interfaces/modal-smart-form-config';
 import { ModalInstance } from '../interfaces/modal-instance';
 import { TlDialogInfo } from '../../dialog/dialog-info/dialog-info';
 
-let lastZIndex = 1;
+let lastZIndex = 1000;
 
 @Injectable()
 export class ModalService implements OnDestroy {
@@ -73,7 +73,8 @@ export class ModalService implements OnDestroy {
 
   private referenceSmartForm;
 
-  constructor( private containerModal: ContainerModalService ) {}
+  constructor( private containerModal: ContainerModalService ) {
+  }
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
     this.view = this.containerModal.view;
@@ -123,6 +124,7 @@ export class ModalService implements OnDestroy {
     this.component = this.view.createComponent( componentFactory );
     (<TlModal>this.component.instance).setServiceControl( this );
     (<TlModal>this.component.instance).setComponentRef( this.component );
+    this.reallocateComponent();
   }
 
   private setModalOptions( mdOptions: ModalOptions ) {
@@ -206,8 +208,8 @@ export class ModalService implements OnDestroy {
       }
     } else {
       if ( this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation ) {
-        this.removeOfList(this.referenceSmartForm.id);
-        this.view.remove( this.view.indexOf(this.referenceSmartForm.modal) );
+        this.removeOfList( this.referenceSmartForm.id );
+        this.view.remove( this.view.indexOf( this.referenceSmartForm.modal ) );
       }
     }
   }
@@ -229,30 +231,32 @@ export class ModalService implements OnDestroy {
     if ( id ) {
       const itemList = this.getComponentById( id );
       this.removeOfView( itemList.modal );
+      this.removeBackdrop( itemList.modal );
       this.removeOfList( id );
       return;
     }
-    if (this.selectedModal) {
+    if ( this.selectedModal ) {
       this.removeOfView( this.selectedModal.modal );
+      this.removeBackdrop( this.selectedModal.modal );
       this.removeOfList( this.selectedModal.id );
     }
   }
 
   minimizeAll() {
-    this.componentList.forEach((item: ModalInstance) => {
-      this.minimize(item.modal);
-    });
+    this.componentList.forEach( ( item: ModalInstance ) => {
+      this.minimize( item.modal );
+    } );
   }
 
   private removeOfView( modal ) {
     this.view.remove( this.view.indexOf( modal ) );
-    this.removeBackdrop();
+    this.view.element.nativeElement.removeChild( modal.location.nativeElement );
   }
 
   closeAll() {
     this.view.clear();
     this.componentList = [];
-    this.removeBackdrop();
+    this.destroyBackdrop();
   }
 
   private removeOfList( id: string ) {
@@ -278,7 +282,14 @@ export class ModalService implements OnDestroy {
   private setZIndex( componentRef: ComponentRef<TlModal> ) {
     const element = componentRef.instance.getElementModal();
     lastZIndex = this.getHighestZIndexModals( this.getZIndexModals() );
-    element.nativeElement.style.zIndex = lastZIndex + 1;
+    element.nativeElement.style.zIndex = lastZIndex + 10;
+    this.updateZIndexBackdrop( lastZIndex + 5, this.hasBackdrop( componentRef ) );
+  }
+
+  private updateZIndexBackdrop( index: number, hasBackdrop: boolean ) {
+    if ( this.backdrop && hasBackdrop ) {
+      (<TlBackdrop>this.backdrop.instance).setBackdropOptions( { 'zIndex': index } );
+    }
   }
 
   private getZIndexModals() {
@@ -295,18 +306,36 @@ export class ModalService implements OnDestroy {
     return Math.max.apply( Math, arrayModals );
   }
 
+  hasBackdrop( componentRef ) {
+    const modalOptions = this.getCurrentModalOptions( componentRef );
+    if ( modalOptions.length > 0 ) {
+      return modalOptions[ 0 ].modalOptions.backdrop;
+    }
+    return false;
+  }
+
   setActiveModal( componentRef: ComponentRef<any> ) {
     this.setZIndex( componentRef );
     this.activeModal = componentRef;
     this.frontModal.next( { activeModal: this.activeModal } );
   }
 
+  getCurrentModalOptions( compRef: ComponentRef<any> ) {
+    return this.componentList.filter( ( item, index, array ) => item.modal === compRef );
+  }
+
   private createBackdrop( backdrop: Type<any>, factoryResolver: ComponentFactoryResolver ) {
-    this.view = this.containerModal.view;
-    const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
-    this.backdrop = this.view.createComponent( backdropFactory );
-    (<TlBackdrop>this.backdrop.instance).setBackdropOptions( { 'zIndex': 1 } );
-    this.reallocateBackdrop();
+    if ( !this.backdrop ) {
+      this.view = this.containerModal.view;
+      const backdropFactory = factoryResolver.resolveComponentFactory( backdrop );
+      this.backdrop = this.view.createComponent( backdropFactory );
+      (<TlBackdrop>this.backdrop.instance).setBackdropOptions( { 'zIndex': lastZIndex - 1 } );
+      this.reallocateBackdrop();
+    }
+  }
+
+  private reallocateComponent() {
+    this.view.element.nativeElement.insertAdjacentElement( 'afterbegin', (this.component.location.nativeElement) );
   }
 
   private reallocateBackdrop() {
@@ -317,12 +346,14 @@ export class ModalService implements OnDestroy {
     lastZIndex++;
     item.location.nativeElement.firstElementChild[ 'style' ].zIndex = lastZIndex;
     item.instance.element.nativeElement.style.display = 'block';
+    this.handleShowBackdrop( this.hasBackdrop( item ) );
     this.setActiveModal( item );
     this.modalShow.next();
   }
 
   minimize( component: ComponentRef<any> ) {
     component.instance.element.nativeElement.style.display = 'none';
+    this.handleHideBackdrop( this.hasBackdrop( component ) );
     this.handleActiveWindow();
   }
 
@@ -334,12 +365,31 @@ export class ModalService implements OnDestroy {
     const highest = this.getVisibleHighestZIndex();
     this.componentList.forEach( ( value ) => {
       if ( this.visibleModals.length === 0 ) {
+        this.hideBackdrop();
         return this.activeModal = null;
       }
       if ( Number( value.modal.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
         return this.setActiveModal( value.modal );
       }
     } );
+  }
+
+  hideBackdrop() {
+    if ( this.backdrop ) {
+      this.backdrop.instance.hideBackdrop();
+    }
+  }
+
+  private handleHideBackdrop( hasBackdrop: boolean ) {
+    if ( this.backdrop && hasBackdrop ) {
+      this.backdrop.instance.hideBackdrop();
+    }
+  }
+
+  private handleShowBackdrop( hasBackdrop: boolean ) {
+    if ( this.backdrop && hasBackdrop ) {
+      this.backdrop.instance.showBackdrop();
+    }
   }
 
   private getVisibleModals() {
@@ -354,10 +404,16 @@ export class ModalService implements OnDestroy {
     return this.visibleModals;
   }
 
-  private removeBackdrop() {
-    if ( this.backdrop ) {
-      this.backdrop.destroy();
+  private removeBackdrop( compRef: ComponentRef<any> ) {
+    if ( this.backdrop && this.hasBackdrop( compRef ) ) {
+      this.destroyBackdrop();
     }
+  }
+
+  private destroyBackdrop() {
+    this.backdrop.destroy();
+    this.view.element.nativeElement.removeChild( this.backdrop.location.nativeElement );
+    this.backdrop = null;
   }
 
   private getComponentById( id: string ) {
@@ -375,11 +431,9 @@ export class ModalService implements OnDestroy {
       } else if ( componentModal.modalOptions.closeOnOK ) {
         this.close( id );
       }
-      setTimeout( () => {
-        this.resultCallback( componentModal, result );
-        this.handleActiveWindow();
-        resolve();
-      }, 500 );
+      this.resultCallback( componentModal, result );
+      this.handleActiveWindow();
+      resolve();
     } );
   }
 
@@ -393,7 +447,8 @@ export class ModalService implements OnDestroy {
       this.referenceSmartForm = component;
       this.createModalDialog( TlDialogConfirmation, this.referenceSmartForm.smartForm[ 'factory' ], null ).then( ( value: any ) => {
         if ( value.mdResult === ModalResult.MRYES ) {
-          this.handleSmartFormCallback( this.referenceSmartForm, { formResult: { value: this.referenceSmartForm.smartForm['dataForm'] } } );
+          this.handleSmartFormCallback( this.referenceSmartForm,
+            { formResult: { value: this.referenceSmartForm.smartForm[ 'dataForm' ] } } );
         }
       } );
       this.componentInjected.instance.message = this.referenceSmartForm.smartForm[ 'deleteConfirmationMessage' ];

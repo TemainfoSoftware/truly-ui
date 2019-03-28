@@ -1,5 +1,6 @@
 <div class="backdrop-dialog"
      (click)="clickBackdrop($event)"
+     [style.display]="hidden ? 'none' : 'block'"
      [ngStyle]="{'width': width, 'height': height, 'zIndex': position.zIndex}"
      style="z-index:0;">
 </div>

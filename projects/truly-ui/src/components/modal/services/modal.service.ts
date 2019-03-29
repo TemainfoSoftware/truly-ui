@@ -366,13 +366,19 @@ export class ModalService implements OnDestroy {
     this.componentList.forEach( ( value ) => {
       if ( this.visibleModals.length === 0 ) {
         this.hideBackdrop();
-        this.resetZIndex();
         return this.activeModal = null;
       }
       if ( Number( value.modal.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
         return this.setActiveModal( value.modal );
       }
     } );
+    this.handleResetIndex();
+  }
+
+  handleResetIndex() {
+    if (this.componentList.length === 0) {
+      this.resetZIndex();
+    }
   }
 
   private resetZIndex() {

@@ -338,7 +338,9 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
   }
 
   handleKeyEscape( $event ) {
-    $event.stopPropagation();
+    if (this.isOpen) {
+      $event.stopPropagation();
+    }
     this.setIsOpen( false );
   }
 

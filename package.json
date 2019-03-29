@@ -97,7 +97,7 @@
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^23.6.0",
     "jest-preset-angular": "^6.0.1",
-    "ng-packagr": "^4.4.0",
+    "ng-packagr": "^5.0.1",
     "node-sass": "^4.10.0",
     "plop": "^2.1.0",
     "pre-commit": "^1.2.2",

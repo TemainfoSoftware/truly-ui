@@ -162,8 +162,8 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
     if (this.getControl()) {
       this.getControl().control.valueChanges.subscribe(( date: Date) => {
         if (!this.loaded) {
-          this.minute = new Date(date).getMinutes();
-          this.hour = new Date(date).getHours();
+          this.minute = this.leftPad.transform(new Date(date).getMinutes(), 2);
+          this.hour = this.leftPad.transform(new Date(date).getHours(), 2);
           this.formatTime();
           this.loaded = true;
         }
@@ -206,8 +206,8 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   private setModelValue( value ) {
     if ( value instanceof Date ) {
-      this.hour = value.getHours();
-      this.minute = value.getMinutes();
+      this.hour = this.leftPad.transform(value.getHours(), 2);
+      this.minute = this.leftPad.transform(value.getMinutes(), 2);
       this.formatTime();
       this.onChangeValue( this.hour + ':' + this.minute );
     }
@@ -281,7 +281,6 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
     if ( !stringTime ) {
       return;
     }
-
     const split = this.cleanValue( stringTime ).split( ':' );
     const hour = this.leftPad.transform(split[0], 2);
     const min = this.leftPad.transform(split[1], 2);
@@ -391,6 +390,7 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   private formatTime() {
     this.selectedTime = this.getFormattedHour();
+
   }
 
   ngOnChanges( changes: SimpleChanges ) {

@@ -14,7 +14,7 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   }
 
   set value(value: T) {
-    if (value instanceof Date) {
+    if ( (value instanceof Date) && this.innerValue) {
       if ( (<Date><any>this.innerValue).getTime() === (<Date><any>value).getTime()) {
         return;
       }

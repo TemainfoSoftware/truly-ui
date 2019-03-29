@@ -148,6 +148,9 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   ngAfterContentInit() {
     this.handleCreateRing();
+    if (!this.value) {
+      this.value = new Date();
+    }
     this.setModelValue( new Date(this.value) );
   }
 
@@ -156,14 +159,16 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
   }
 
   listenControlChanges() {
-    this.getControl().control.valueChanges.subscribe(( date: Date) => {
-      if (!this.loaded) {
-        this.minute = date.getMinutes();
-        this.hour = date.getHours();
-        this.formatTime();
-        this.loaded = true;
-      }
-    });
+    if (this.getControl()) {
+      this.getControl().control.valueChanges.subscribe(( date: Date) => {
+        if (!this.loaded) {
+          this.minute = new Date(date).getMinutes();
+          this.hour = new Date(date).getHours();
+          this.formatTime();
+          this.loaded = true;
+        }
+      });
+    }
   }
 
   private handleCreateRing() {
@@ -194,9 +199,9 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
   changeOpened() {
     this.isOpen = !this.isOpen;
     setTimeout(() => {
-      this.onChangeValue( this.hour + ':' + this.minute);
+      this.onChangeValue( this.selectedTime );
+      this.loaded = true;
     });
-    this.loaded = true;
   }
 
   private setModelValue( value ) {
@@ -229,6 +234,7 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
     this.minute = this.leftPad.transform( new Date().getMinutes(), 2 );
     this.formatTime();
     this.onChangeValue( this.hour + ':' + this.minute );
+    this.setValue();
     this.emitClickNow();
   }
 
@@ -266,27 +272,34 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
   onClickConfirm() {
     this.isOpen = false;
     this.setValue();
+    this.formatTime();
     this.confirm.emit( this.value );
   }
 
   onChangeValue( stringTime ) {
+    this.selectedTime = stringTime;
     if ( !stringTime ) {
       return;
     }
+
     const split = this.cleanValue( stringTime ).split( ':' );
-    if ( split[ 0 ].length >= 2 ) {
-      this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( split[ 0 ] ), 2 ) : split[ 0 ];
+    const hour = this.leftPad.transform(split[0], 2);
+    const min = this.leftPad.transform(split[1], 2);
+
+    if ( min.length >= 2 ) {
+      this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( hour ), 2 ) : hour;
       if ( this.listHour ) {
         this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
+        this.setValue();
       }
     }
-    if ( split[ 1 ].length >= 2 ) {
-      this.minute = split[ 1 ];
+    if ( hour.length >= 2 ) {
+      this.minute = min;
       if ( this.listMinutes ) {
         this.setScrollColumn( this.listMinutes.nativeElement, TIME.MINUTE );
+        this.setValue();
       }
     }
-    this.setValue();
   }
 
   private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {
@@ -370,7 +383,6 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
   onClose() {
     this.isOpen = false;
     this.loaded = true;
-    this.setValue();
   }
 
   getFormattedHour() {

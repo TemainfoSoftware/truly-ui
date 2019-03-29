@@ -36,7 +36,7 @@ import { ModalFormConfig } from '../interfaces/modal-smart-form-config';
 import { ModalInstance } from '../interfaces/modal-instance';
 import { TlDialogInfo } from '../../dialog/dialog-info/dialog-info';
 
-let lastZIndex = 1000;
+let lastZIndex = 500;
 
 @Injectable()
 export class ModalService implements OnDestroy {
@@ -366,12 +366,17 @@ export class ModalService implements OnDestroy {
     this.componentList.forEach( ( value ) => {
       if ( this.visibleModals.length === 0 ) {
         this.hideBackdrop();
+        this.resetZIndex();
         return this.activeModal = null;
       }
       if ( Number( value.modal.instance.modal.nativeElement.style.zIndex ) === Number( highest ) ) {
         return this.setActiveModal( value.modal );
       }
     } );
+  }
+
+  private resetZIndex() {
+    lastZIndex = 500;
   }
 
   hideBackdrop() {

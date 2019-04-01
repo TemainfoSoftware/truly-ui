@@ -27,7 +27,7 @@ import {
   Output,
   Optional,
   Inject,
-  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnChanges,
+  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnDestroy,
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import {
@@ -37,6 +37,7 @@ import {
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { ValueAccessorBase } from './core/value-accessor';
 import { INPUT_CONFIG, InputConfig } from './core/input.config';
+import { Subscription } from 'rxjs';
 
 /**
  * Input Component personalized with few features.
@@ -72,7 +73,7 @@ import { INPUT_CONFIG, InputConfig } from './core/input.config';
     multi: true,
   } ],
 } )
-export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterViewInit {
+export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() textBefore = '';
 
@@ -142,13 +143,17 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
 
   @Output() blur: EventEmitter<any> = new EventEmitter();
 
-  public required = false;
+  @Output() valid: EventEmitter<boolean> = new EventEmitter();
+
+  @Output() completeMask: EventEmitter<boolean> = new EventEmitter();
 
   public isShowingMessages = false;
 
   public fieldMask: InputMask;
 
   public hasValidator;
+
+  private subscription = new Subscription();
 
   constructor( @Optional() @Inject( INPUT_CONFIG ) private inputConfig: InputConfig,
                private tlInput: ElementRef, private renderer: Renderer2,
@@ -162,32 +167,27 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
   }
 
   ngAfterViewInit() {
-    this.setRequired();
     this.handleValidator();
-    this.hasMask();
+    this.handleMask();
   }
 
-  setRequired() {
-    const currentControl = this.controlName ? this.controlName : this.model;
-    if ( currentControl && currentControl.control.errors ) {
-      if ( currentControl.control.errors[ 'required' ] ) {
-        this.required = true;
-        this.change.detectChanges();
-      }
-    }
+  getControl() {
+    return this.controlName ? this.controlName : this.model;
   }
 
   handleValidator() {
-    const currentControl = this.controlName ? this.controlName : this.model;
-    if ( currentControl ) {
-      this.hasValidator = currentControl.control.validator;
+    if ( this.getControl() ) {
+      this.hasValidator = this.getControl().control.validator;
       this.change.detectChanges();
     }
   }
 
-  hasMask() {
+  handleMask() {
     if ( this.mask ) {
       this.fieldMask = new InputMask( this, this.renderer, this.mask );
+      this.subscription.add( this.fieldMask.complete.subscribe(() => {
+        this.completeMask.emit(true);
+      }));
     }
   }
 
@@ -239,6 +239,10 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, AfterV
     this.value = '';
     this.input.nativeElement.focus();
     this.clear.emit( $event );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

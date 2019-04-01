@@ -264,12 +264,14 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   onClickCancel() {
     this.isOpen = false;
+    this.loaded = false;
     this.setValue();
     this.cancel.emit( this.value );
   }
 
   onClickConfirm() {
     this.isOpen = false;
+    this.loaded = false;
     this.setValue();
     this.formatTime();
     this.confirm.emit( this.value );
@@ -380,7 +382,7 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   onClose() {
     this.isOpen = false;
-    this.loaded = true;
+    this.loaded = false;
   }
 
   getFormattedHour() {

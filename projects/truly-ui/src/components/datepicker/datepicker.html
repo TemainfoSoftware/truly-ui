@@ -7,6 +7,8 @@
           (click)="isOpen = !isOpen"
           (keydown)="handleArrowKeys($event)"
           (keypress)="handleDateChange()"
+          (ngModelChange)="onChange($event)"
+          (completeMask)="onCompleteMask()"
           (clear)="onClearInput($event)"
           [iconAfter]="iconAfter"
           date
@@ -15,10 +17,11 @@
           [labelPlacement]="labelPlacement"
           [readonly]="readonly ? true : null"
           [disabled]="disabled ? true : null"
-          [(ngModel)]="value"
+          [(ngModel)]="description"
           [placeholder]="placeholder"
           [clearButton]="clearButton">
 </tl-input>
+<input class="hidden-input" notform [value]="value">
 <ng-template cdkConnectedOverlay
             (backdropClick)="backDropClick()"
             (positionChange)="onPositionChange($event)"

@@ -21,18 +21,18 @@
  */
 import {
   Component,
-  Optional, Inject, ViewChild, Output,
-  Input, OnInit, EventEmitter, ElementRef, AfterViewInit
+  Optional, ContentChild, ViewChild, Output,
+  Input, OnInit, EventEmitter, ElementRef, AfterViewInit, AfterContentInit
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { TlInput } from '../input/input';
 import { TlCalendar } from '../calendar/calendar';
 
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { KeyEvent } from '../core/enums/key-events';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -41,7 +41,7 @@ import { KeyEvent } from '../core/enums/key-events';
   providers: [ MakeProvider( TlDatePicker ) ]
 } )
 
-export class TlDatePicker extends ElementBase<string> implements OnInit, AfterViewInit {
+export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterViewInit, AfterContentInit {
 
   @Input() label = '';
 
@@ -51,9 +51,11 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @Input() textAlign = 'left';
 
+  @Input() isoDate = true;
+
   @Input() labelPlacement = 'left';
 
-  @Input() formatDate = 'dd.mm.yyyy';
+  @Input() formatDate = 'dd/mm/yyyy';
 
   @Input() readonly = false;
 
@@ -71,7 +73,9 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel ) ngModel: NgModel;
+
+  @ContentChild( FormControlName ) control: NgModel;
 
   @ViewChild( TlCalendar ) calendar;
 
@@ -87,6 +91,8 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   public iconAfter = '';
 
+  public description = '';
+
   public trigger;
 
   public year = new Date().getFullYear();
@@ -95,22 +101,48 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   public day = new Date().getDate();
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
-               private datePicker: ElementRef ) {
-    super( validators, asyncValidators );
+  constructor( private datePicker: ElementRef ) {
+    super();
   }
 
   ngOnInit() {
-    this.handleDateChange();
     this.setDateMask();
     if ( this.iconCalendar ) {
       this.iconAfter = 'ion-calendar';
     }
   }
 
+  ngAfterContentInit() {
+    this.decomposeDate( this.value );
+  }
+
   ngAfterViewInit() {
-    this.validateDateDirective();
+    this.listenControlChanges();
+  }
+
+  private getControl() {
+    return this.control ? this.control : this.ngModel;
+  }
+
+  listenControlChanges() {
+    if (this.getControl()) {
+      this.getControl().control.valueChanges.subscribe(( date: Date) => {
+        if (!this.isOpen) {
+          this.decomposeDate(date);
+        }
+      });
+    }
+  }
+
+  decomposeDate(date) {
+    if (date && this.value) {
+      const dateStr = new Date(date).toLocaleDateString();
+      const format = ReverseFormatDate( this.stringUnmasked( dateStr ), this.formatDate );
+      this.description = this.getFormattedDate( format );
+      this.day = format.day;
+      this.month = format.month;
+      this.year = format.year;
+    }
   }
 
   setDateMask() {
@@ -119,26 +151,26 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   getMask() {
     const format = this.formatDate.toLowerCase();
-    const dd = format.replace('dd', '00');
-    const mm = dd.replace('mm', '00');
-    return mm.replace('yyyy', '0000');
+    const dd = format.replace( 'dd', '00' );
+    const mm = dd.replace( 'mm', '00' );
+    return mm.replace( 'yyyy', '0000' );
   }
 
-  validateDateDirective() {
-    let hasDate = false;
-    for ( const item of this.datePicker.nativeElement.attributes ) {
-      if ( item.localName === 'date' ) {
-        return hasDate = true;
-      }
+  onCompleteMask() {
+    if ( this.isoDate ) {
+      setTimeout( () => {
+        this.value = new Date( this.year, this.month, this.day ).toISOString();
+      } );
     }
-    if ( !hasDate ) {
-      throw new Error( 'The Directive [date] must be specified' );
-    }
+  }
+
+  onChange( $event ) {
+    this.value = $event;
   }
 
   onDateInputFocus() {
     if ( this.value && !this.isOpen ) {
-      const inputDate = ReverseFormatDate( this.stringUnmasked( this.value ), this.formatDate );
+      const inputDate = ReverseFormatDate( this.stringUnmasked( this.description ), this.formatDate );
       this.day = inputDate[ 'day' ];
       this.month = inputDate[ 'month' ] - 1;
       this.year = inputDate[ 'year' ];
@@ -147,7 +179,7 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   }
 
   handleOpenOnFocus() {
-    if (this.openOnFocus) {
+    if ( this.openOnFocus ) {
       this.isOpen = true;
     }
   }
@@ -155,11 +187,11 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   onSelectDay( $event ) {
     this.selectDay.emit( $event );
     this.setValue( $event );
-    this.setDateValues($event);
+    this.setDateValues( $event );
     this.handleAutoClose();
   }
 
-  setDateValues($event) {
+  setDateValues( $event ) {
     this.day = $event.day;
     this.month = $event.month - 1;
     this.year = $event.year;
@@ -190,8 +222,9 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
 
   setValue( $event ) {
     setTimeout( () => {
-      this.value = this.getFormattedDate( $event );
-    }, 0 );
+      this.description = this.getFormattedDate( $event );
+      this.value = $event.fullDate.toISOString();
+    } );
   }
 
   onClearInput( $event ) {
@@ -206,43 +239,41 @@ export class TlDatePicker extends ElementBase<string> implements OnInit, AfterVi
   }
 
   handleDateChange() {
-    if ( this.value ) {
-      const inputDate = ReverseFormatDate( this.value, this.formatDate );
-      const dateKeys = Object.keys( inputDate );
-      for ( let key = 0; key < dateKeys.length; key++ ) {
-        if ( inputDate[ dateKeys[ key ] ] ) {
-          if ( dateKeys[ key ] === 'month' ) {
-            this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ] - 1;
-          } else {
-            this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ];
-          }
+    const inputDate = ReverseFormatDate( this.description, this.formatDate );
+    const dateKeys = Object.keys( inputDate );
+    for ( let key = 0; key < dateKeys.length; key++ ) {
+      if ( inputDate[ dateKeys[ key ] ] ) {
+        if ( dateKeys[ key ] === 'month' ) {
+          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ] - 1;
+        } else {
+          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ];
         }
       }
     }
   }
 
-  handleArrowKeys($event) {
-    switch ($event.keyCode) {
+  handleArrowKeys( $event ) {
+    switch ( $event.keyCode ) {
       case KeyEvent.ARROWUP:
-        if (this.isOpen) {
+        if ( this.isOpen ) {
           $event.preventDefault();
           $event.stopPropagation();
         }
         break;
       case KeyEvent.TAB:
-        if (this.isOpen) {
+        if ( this.isOpen ) {
           this.isOpen = false;
         }
         break;
       case KeyEvent.ESCAPE:
-        if (this.isOpen) {
+        if ( this.isOpen ) {
           $event.preventDefault();
           $event.stopPropagation();
           this.isOpen = false;
         }
         break;
       case KeyEvent.ARROWDOWN:
-        if (this.isOpen) {
+        if ( this.isOpen ) {
           $event.preventDefault();
           $event.stopPropagation();
         }

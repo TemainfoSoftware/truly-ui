@@ -165,7 +165,6 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
           this.minute = this.leftPad.transform(new Date(date).getMinutes(), 2);
           this.hour = this.leftPad.transform(new Date(date).getHours(), 2);
           this.formatTime();
-          this.loaded = true;
         }
       });
     }

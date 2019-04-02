@@ -22,7 +22,7 @@
 import {
   Component,
   Optional, ContentChild, ViewChild, Output,
-  Input, OnInit, EventEmitter, ElementRef, AfterViewInit, AfterContentInit
+  Input, OnInit, EventEmitter, ElementRef, AfterViewInit, AfterContentInit, OnDestroy
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
@@ -33,6 +33,7 @@ import { ReverseFormatDate } from '../core/helper/reverseformatdate';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { KeyEvent } from '../core/enums/key-events';
 import { ValueAccessorBase } from '../input/core/value-accessor';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'tl-datepicker',
@@ -41,7 +42,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
   providers: [ MakeProvider( TlDatePicker ) ]
 } )
 
-export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterViewInit, AfterContentInit {
+export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
   @Input() label = '';
 
@@ -73,6 +74,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() completeMask: EventEmitter<any> = new EventEmitter<any>();
+
   @ContentChild( NgModel ) ngModel: NgModel;
 
   @ContentChild( FormControlName ) control: NgModel;
@@ -101,6 +104,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   public day = new Date().getDate();
 
+  private subscription = new Subscription();
+
   constructor( private datePicker: ElementRef ) {
     super();
   }
@@ -125,18 +130,18 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   }
 
   listenControlChanges() {
-    if (this.getControl()) {
-      this.getControl().control.valueChanges.subscribe(( date: Date) => {
-        if (!this.isOpen) {
-          this.decomposeDate(date);
+    if ( this.getControl() ) {
+      this.subscription.add( this.getControl().control.valueChanges.subscribe( ( date: Date ) => {
+        if ( !this.isOpen ) {
+          this.decomposeDate( date );
         }
-      });
+      } ) );
     }
   }
 
-  decomposeDate(date) {
-    if (date && this.value) {
-      const dateStr = new Date(date).toLocaleDateString();
+  decomposeDate( date ) {
+    if ( date && this.value ) {
+      const dateStr = new Date( date ).toLocaleDateString();
       const format = ReverseFormatDate( this.stringUnmasked( dateStr ), this.formatDate );
       this.description = this.getFormattedDate( format );
       this.day = format.day;
@@ -156,12 +161,26 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
     return mm.replace( 'yyyy', '0000' );
   }
 
+  onBlur() {
+    this.propagateTouched();
+  }
+
   onCompleteMask() {
-    if ( this.isoDate ) {
-      setTimeout( () => {
+    setTimeout( () => {
+      if ( this.isoDate ) {
         this.value = new Date( this.year, this.month, this.day ).toISOString();
-      } );
-    }
+      }
+      this.completeMask.emit( this.getObjectValues() );
+    } );
+  }
+
+  getObjectValues() {
+    return {
+      day: this.day,
+      fullDate: new Date( this.value ),
+      month: this.month,
+      year: this.year
+    };
   }
 
   onChange( $event ) {
@@ -289,6 +308,10 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   stringUnmasked( value ) {
     return String( value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

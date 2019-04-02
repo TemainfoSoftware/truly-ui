@@ -9,6 +9,7 @@
           (keypress)="handleDateChange()"
           (ngModelChange)="onChange($event)"
           (completeMask)="onCompleteMask()"
+          (blur)="onBlur()"
           (clear)="onClearInput($event)"
           [iconAfter]="iconAfter"
           date

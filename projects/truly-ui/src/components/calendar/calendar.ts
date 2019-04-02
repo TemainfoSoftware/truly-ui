@@ -21,7 +21,7 @@
  */
 import {
   Component, ElementRef, AfterViewInit, Renderer2, ViewChild, Output,
-  EventEmitter, Input, QueryList, ViewChildren, ViewContainerRef, SimpleChanges, OnChanges,
+  EventEmitter, Input, QueryList, ViewChildren, ViewContainerRef, SimpleChanges, OnChanges, OnDestroy,
 } from '@angular/core';
 
 import { TabIndexService } from '../form/tabIndex.service';
@@ -33,6 +33,7 @@ import { TlNavigator } from '../navigator/navigator';
 import { NavigatorService } from '../navigator/services/navigator.service';
 import { CalendarService } from './services/calendar.service';
 import { I18nService } from '../i18n/i18n.service';
+import { Subscription } from 'rxjs';
 
 export interface CalendarStatus {
   id?: string;
@@ -47,7 +48,7 @@ export interface CalendarStatus {
   styleUrls: [ './calendar.scss' ],
   providers: [ NavigatorService, CalendarService ]
 } )
-export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, OnChanges {
+export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, OnChanges, OnDestroy {
 
   @Input() todayButton = true;
 
@@ -76,6 +77,8 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   @ViewChild( 'wrapper' ) wrapper;
 
   @ViewChildren( TlNavigator ) tlnavigator: QueryList<TlNavigator>;
+
+  private subscription = new Subscription();
 
   get todayText(): string {
     return this.i18n.getLocale().Calendar.today;
@@ -300,9 +303,9 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
   createKeyboardListener() {
     const rootControlElement = this.inputControlFocus ?
       this.inputControlFocus.input.nativeElement : this.wrapper.nativeElement;
-    this.renderer.listen( rootControlElement, 'keydown', $event => {
+    this.subscription.add(this.renderer.listen( rootControlElement, 'keydown', $event => {
       this.handleKeyDown( $event );
-    } );
+    } ));
   }
 
   handleKeyDown( $event ) {
@@ -753,6 +756,10 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
         this.generateDays();
       }
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

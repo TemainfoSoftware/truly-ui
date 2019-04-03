@@ -98,6 +98,27 @@ export const dataProperties = [
     options: 'false | true'
   },
   {
+    name: 'loaderColor',
+    type: 'string',
+    default: '#ccc',
+    description: 'Color of loader.',
+    options: 'HEX'
+  },
+  {
+    name: 'template',
+    type: 'TemplateRef<any>',
+    default: 'null',
+    description: 'TemplateRef to be renderer inside of button',
+    options: 'TemplateRef<any>'
+  },
+  {
+    name: 'outline',
+    type: 'boolean',
+    default: 'false',
+    description: 'When passed as TRUE the button will be ghost mode, just the outline colors and font.',
+    options: 'false | true'
+  },
+  {
     name: 'textLoading',
     type: 'string',
     default: 'null',

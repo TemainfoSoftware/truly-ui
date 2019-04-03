@@ -396,6 +396,7 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
         lazyMode: this.lazyMode
       } );
       this.listenLoadData();
+      this.handleModelCached();
     }
     this.loading = false;
     this.dataSource.setData( value );
@@ -490,8 +491,10 @@ export class TlAutoComplete extends ElementBase<any> implements OnInit, OnChange
       this.setUpData( data[ 'currentValue' ] );
       return;
     }
-    if ( data && data[ 'currentValue' ] && !this.lazyMode ) {
-      this.setUpData( data[ 'currentValue' ] );
+    if ( data && data[ 'currentValue' ] !== undefined && !this.lazyMode ) {
+      if (data['currentValue'].length > 0) {
+        this.setUpData( data[ 'currentValue' ] );
+      }
     }
   }
 

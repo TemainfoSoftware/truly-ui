@@ -25,7 +25,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output,
+  Output, TemplateRef,
   ViewChild
 } from '@angular/core';
 import { I18nService } from '../i18n/i18n.service';
@@ -34,7 +34,6 @@ import { I18nService } from '../i18n/i18n.service';
     selector: 'tl-button',
     templateUrl: './button.html',
     styleUrls: [ './button.scss' ]
-
 } )
 export class TlButton implements OnInit {
 
@@ -50,7 +49,7 @@ export class TlButton implements OnInit {
 
     @Input() height = '30px';
 
-    @Input() width = '120px';
+    @Input() width = 'auto';
 
     @Input() disabled = null;
 
@@ -60,9 +59,13 @@ export class TlButton implements OnInit {
 
     @Input() colorIconAfter = '';
 
+    @Input() template: TemplateRef<any>;
+
     @Input() outline = false;
 
     @Input() color = 'basic';
+
+    @Input() loaderColor = '#ccc';
 
     @Input() isLoading = false;
 

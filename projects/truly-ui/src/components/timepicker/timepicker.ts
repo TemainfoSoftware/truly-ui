@@ -21,8 +21,19 @@
  */
 
 import {
-  Input, AfterContentInit, Component, forwardRef, ElementRef, ContentChild, OnInit, ViewChild,
-  Renderer2, OnDestroy, Output, EventEmitter, AfterViewInit, SimpleChanges, ChangeDetectorRef, OnChanges,
+  Input,
+  AfterContentInit,
+  Component,
+  forwardRef,
+  ElementRef,
+  ContentChild,
+  ViewChild,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
 import { OverlayAnimation } from '../core/directives/overlay-animation';

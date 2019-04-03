@@ -1,4 +1,3 @@
-
 //Default
 $button-height: 37px;
 $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
@@ -8,30 +7,41 @@ $button-font-size: 1em;
   border-radius: 3px 0 0 3px;
 }
 
-.tl-split-button-box {
+.split-wrapper {
   font-family: $button-font-family;
   font-size: $button-font-size;
   display: inline-block;
   position: relative;
-  > .split-button-actions {
-    margin: 0;
-    padding: 0;
-    line-height: $button-height;
-    cursor: pointer;
-    float: right;
-    user-select: none;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-  }
-  > .split-button-actions tl-icon {
-    padding: 0 15px;
-  }
 
-  > .ui-button {
-   &:hover {
+  > .split-content {
+    display: flex;
+    > ::ng-deep tl-button {
+      button {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+      }
+    }
+    > .split-button-actions {
+      margin: 0;
+      padding: 0;
+      line-height: $button-height;
       cursor: pointer;
+      float: right;
+      user-select: none;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+    > .split-button-actions tl-icon {
+      padding: 0 15px;
+    }
+
+    > .ui-button {
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
+
 }
 
 .icon-arrow {
@@ -39,19 +49,20 @@ $button-font-size: 1em;
 }
 
 .actions-menu {
-  left:0;
+  position: absolute;
+  left: 0;
   margin: 0;
   padding: 0;
-  border-top: 0;
-  height:auto;
-  display:inline;
+  height: auto;
+  display: inline;
   overflow: hidden;
   list-style: none;
-  min-width: 125px;
+  box-shadow: 0px 0px 3px #c1c1c16e;
   z-index: 1;
   cursor: auto;
-  border-radius: 0 0 3px 3px;
+  border-radius: 3px;
   box-sizing: border-box;
+  top: 2px;
 }
 
 .border-top {

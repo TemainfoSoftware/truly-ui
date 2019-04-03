@@ -42,7 +42,7 @@
     border: 1px solid map-deep-get($theme, 'basic', "default", "border");
   }
 
-  .tl-split-button-box {
+  .split-wrapper {
 
     &.basic {
       @include _tl-splitbutton-theme-schema($theme, 'basic')

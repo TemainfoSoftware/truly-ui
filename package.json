@@ -93,7 +93,7 @@
     "gulp": "^3.9.1",
     "gulp-inline-ng2-template": "^5.0.1",
     "inquirer-directory": "^2.1.0",
-    "jasmine-core": "~3.3.0",
+    "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^23.6.0",
     "jest-preset-angular": "^6.0.1",

@@ -4,6 +4,7 @@
     <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
                [text]="text"
                [disabled]="disabled"
+               (click)="buttonClick.emit()"
                [width]="width"
                [height]="height">
     </tl-button>

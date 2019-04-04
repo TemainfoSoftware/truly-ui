@@ -14,6 +14,7 @@
         <div class="controls" *ngIf="mode !== 'inline'">
           <tl-button  #buttonFormCancel
                        [text]="textCancel"
+                       [width]="'120px'"
                        mdResult="MRCANCEL"
                        [color]="'basic'"
                        [style.padding-right]="'5px'"
@@ -25,6 +26,7 @@
                        [text]="textConfirm"
                        [isLoading]="isLoading"
                        mdResult="MROK"
+                       [width]="'120px'"
                        [color]="'success'"
                        [shortcut]="submitShortcut"
                        [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"

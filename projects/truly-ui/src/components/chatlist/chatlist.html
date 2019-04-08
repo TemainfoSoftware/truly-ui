@@ -1,64 +1,59 @@
-<!--
-<div class="ui-chat-wrapper">
-    <div class="ui-chat-overflow">
-        <div class="ui-chat-lists">
-            <div class="ui-chat-content">
-                <div class="ui-status">ONLINE ({{filteredOnline.length}})</div>
-                <tl-listbox
-                  [data]="chatListService.online"
-                  [rowsClient]="itemsToShow"
-                  (clickItem)="onClickItemChat($event, 'list1')"
-                  (filterData)="onFilterData($event, 'list1')"
-                  [label]="label"
-                  [searchElement]="searchInput"
-                  [height]="height"
-                  [fixedHeight]="true"
-                  [showArrows]="false"
-                  [dynamicFocus]="false"
-                  [focusOnScroll]="false"
-                  [rowHeight]="50">
-                  <ng-template let-item="item" let-index="index">
-                        <li class="ui-chat-template">
-                            <img class="img-circle" src="{{item[avatar]}}" width="30">
-                            <div class="ui-chat-infowrapper">
-                                <span class="ui-chat-name">{{item[label]}}</span>
-                                <span class="ui-chat-sector">{{item[labelDetail]}}</span>
-                            </div>
-                            <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status)"
-                                  [style.margin-top]="((50 / 2) - 4) + 'px'">
-                             </span>
-                        </li>
-                    </ng-template>
-                </tl-listbox>
-                <div class="ui-status">OFFLINE ({{filteredOffline.length}})</div>
-                <tl-listbox
-                  [data]="chatListService.offline"
-                  [rowsClient]="itemsToShow"
-                  (clickItem)="onClickItemChat($event, 'list2')"
-                  (filterData)="onFilterData($event, 'list2')"
-                  [label]="labelDetail"
-                  [height]="height"
-                  [searchElement]="searchInput"
-                  [showArrows]="false"
-                  [fixedHeight]="true"
-                  [dynamicFocus]="false"
-                  [focusOnScroll]="false"
-                  [rowHeight]="50">
-                    <ng-template let-item="item" let-index="index">
-                        <li class="ui-chat-template">
-                            <img class="img-circle" src="{{item[avatar]}}" width="30">
-                            <div class="ui-chat-infowrapper">
-                                <span class="ui-chat-name">{{item[label]}}</span>
-                                <span class="ui-chat-sector">{{item[labelDetail]}}</span>
-                            </div>
-                            <span [class]="'ui-chat-bagde ui-status-' + getStatus(item.status) "
-                                  [style.margin-top]="((50 / 2) - 4) + 'px'">
-                             </span>
-                        </li>
-                    </ng-template>
-                </tl-listbox>
-            </div>
+<div class="chat-wrapper" [style.width]="width">
+  <div class="chat-header">
+    <ng-container *ngIf="!insideChat; else selectedPartner">
+      <div class="chat-wrapper-status">
+        <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'">
+          <div class="chat-arrow"></div>
         </div>
+        <div class="chat-status" [class.selected]="selected === 'chat'" (click)="selectStatus('chat')">
+          <span>Chats</span></div>
+        <div class="chat-status" [class.selected]="selected === 'online'" (click)="selectStatus('online')">
+          <span>Online</span>
+        </div>
+        <div class="chat-status" [class.selected]="selected === 'offline'" (click)="selectStatus('offline')">
+          <span>Offline</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <ng-container *ngIf="!insideChat; else chatContent">
+    <div #content class="chat-content" (animationend)="animationContentDone($event)" [style.height]="maxHeight">
+      <ng-container *ngIf="selected === 'online'">
+        <ng-container *ngFor="let item of contacts | status:[online,busy]">
+          <ng-container *ngTemplateOutlet="contactTemplate; context: { contact: item }"></ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="selected === 'offline'">
+        <ng-container *ngFor="let item of contacts | status:[offline]">
+          <ng-container *ngTemplateOutlet="contactTemplate; context: { contact: item }"></ng-container>
+        </ng-container>
+      </ng-container>
     </div>
+  </ng-container>
 </div>
--->
+
+<ng-template #contactTemplate let-item="contact">
+  <div class="chat-item" (click)="selectPartner(item)">
+    <img class="chat-img" [style.border]="'2px solid ' + chatStatus[item.status]" src="assets/img/avatar.png">
+    <div class="chat-item-detail">
+      <span>{{ item.name }}</span>
+      <span>{{ item.description }}</span>
+    </div>
+    <div *ngIf="item.id === user.id">Me</div>
+    <div *ngIf="getUnreadMessages(item.id)?.length > 0"
+         class="chat-unread-messages">{{ getUnreadMessages(item.id)?.length }}</div>
+  </div>
+</ng-template>
+
+<ng-template #selectedPartner>
+  <div class="chat-partner-wrapper">
+    <div (click)="insideChat = false" class="arrow"><tl-icon [lib]="'ion'" [style]="'ios'">arrow-back</tl-icon></div>
+    <div class="chat-partner">
+      <span>{{ partner?.name }}</span>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #chatContent>
+  <tl-chat-content [user]="user" [partner]="partner" (message)="onMessage($event)" [messages]="messages"></tl-chat-content>
+</ng-template>

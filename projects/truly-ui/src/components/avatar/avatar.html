@@ -29,6 +29,15 @@
     <span [ngStyle]="{'font-size': fontSize}" [style.color]="fontColor">{{ text }}</span>
   </div>
 </div>
+<div *ngIf="type === 'char'"
+     [class]="'tl-avatar ' + color + ' ' + shape"
+     [style.width]="size"
+     [style.height]="size"
+     [style.background]="bgColor">
+  <div [ngStyle]="{'font-size': 'calc(' + size + ' * ' + multiplierText + ')'}">
+    <span [ngStyle]="{'font-size': fontSize}" [style.color]="fontColor">{{ char }}</span>
+  </div>
+</div>
 <div *ngIf="type === 'gender'"
      [class]="'tl-avatar ' + color + ' ' + shape"
      [style.width]="size">

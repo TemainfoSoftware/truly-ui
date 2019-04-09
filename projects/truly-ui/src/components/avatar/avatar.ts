@@ -49,6 +49,8 @@ export class TlAvatar implements OnInit, OnChanges {
 
   @Input() text: string;
 
+  @Input() char: string;
+
   @Input() fontColor: string;
 
   @Input() bgColor: string;
@@ -69,8 +71,7 @@ export class TlAvatar implements OnInit, OnChanges {
 
   public gravatarImg;
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit() {
     this.defineType();
@@ -93,6 +94,10 @@ export class TlAvatar implements OnInit, OnChanges {
       this.setText();
       return;
     }
+    if ( this.isChar() ) {
+      this.setChar();
+      return;
+    }
   }
 
   private isSrc() {
@@ -109,6 +114,10 @@ export class TlAvatar implements OnInit, OnChanges {
 
   private isText() {
     return this.text && this.text !== '';
+  }
+
+  private isChar() {
+    return this.char && this.char !== '';
   }
 
   private setSrc() {
@@ -130,6 +139,13 @@ export class TlAvatar implements OnInit, OnChanges {
     this.multiplierText = ( this.isPercentage() ) ? 8 : 0.2;
     this.fontSize = ( this.isOneCharacter() ) ? '2em' : '1em';
     this.type = 'text';
+  }
+
+  private setChar() {
+    this.multiplierText = ( this.isPercentage() ) ? 8 : 0.2;
+    this.fontSize = '2em';
+    this.type = 'char';
+    this.char = this.char.substr(0, 1).toUpperCase();
   }
 
   public isPercentage() {

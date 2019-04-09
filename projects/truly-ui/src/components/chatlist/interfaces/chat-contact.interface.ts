@@ -28,4 +28,5 @@
    name: string;
    description: string;
    status: Status;
+   avatar?: string;
  }

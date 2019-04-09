@@ -52,7 +52,9 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Input('contacts')
   set contacts( data: ChatContact[] ) {
-    this._dataSource = data.filter((item) => item.id !== this.user.id);
+    if (data && data.length > 0) {
+      this._dataSource = data.filter((item) => item.id !== this.user.id);
+    }
   }
 
   get contacts(): ChatContact[] {

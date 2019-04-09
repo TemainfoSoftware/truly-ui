@@ -9,11 +9,13 @@ import { TlChatContent } from './parts/chat-content';
 import { IconsModule } from '../icons/index';
 import { TlStatusFilterPipe } from './pipes/status-filter.pipe';
 import { ChatService } from './services/chat.service';
+import { AvatarModule } from '../avatar/index';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        AvatarModule,
         ReactiveFormsModule,
         MiscModule,
         ListBoxModule,

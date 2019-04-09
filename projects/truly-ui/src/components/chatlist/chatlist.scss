@@ -1,14 +1,13 @@
 .chat-wrapper {
-  border-radius: 5px;
   overflow: hidden;
-  border: 1px solid #eae7e7ee;
   min-width: 300px !important;
+  background: #f1f1f1;
   .chat-header {
     display: flex;
     position: relative;
     align-items: center;
     place-content: space-evenly;
-    height: 40px;
+    height: 35px;
     flex-wrap: wrap;
     background: rgb(102,204,153);
     background: linear-gradient(90deg, rgba(102,204,153,1) 0%, rgba(116,222,130,1) 100%);
@@ -31,9 +30,10 @@
       border-radius: 10px;
       height: 100%;
       transition: transform 300ms ease-in-out;
+      box-sizing: border-box;
       .chat-arrow {
         border: solid 10px transparent;
-        margin: 15px 0 0 22px;
+        margin: 12px 0 0 22px;
         border-right-color: #F0F0F0;
         position: absolute;
         transform: rotateZ(90deg);
@@ -63,13 +63,13 @@
 
   .chat-content {
     padding: 10px;
-    background: #f1f1f1;
     overflow-y: auto;
     overflow-x: hidden;
     >.chat-item {
       display: flex;
       align-items: center;
       padding: 10px;
+      height: 65px;
       box-sizing: border-box;
       background: white;
       margin: 5px 0;
@@ -81,12 +81,12 @@
       border: 1px solid transparent;
 
       .chat-img {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
         padding: 2px;
+        border-radius: 50%;
         border-style: solid;
         border-width: 2px;
+        place-content: center;
+        display: flex;
       }
 
       .chat-item-detail {
@@ -154,7 +154,12 @@
       padding: 0 8px;
     }
   }
-  .chat-partner {
+  > .chat-img {
+    position: absolute;
+    right: 10px;
+    border-radius: 50%;
+  }
+  > .chat-partner {
     padding: 0 10px;
   }
 }

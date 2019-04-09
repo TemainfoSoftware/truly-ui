@@ -1,17 +1,13 @@
-<div class="chat-content-wrapper" [style.height]="maxHeight">
+<div class="chat-content-wrapper" [style.height]="'calc(' + maxHeight + ' - 35px)'">
 
-  <div class="cha-messages-content" #messageContent>
-
+  <div class="cha-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 35px)'">
     <ng-container *ngFor="let item of messages">
-
       <ng-container *ngIf="item?.from.id === partner?.id">
         <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: item }"></ng-container>
       </ng-container>
-
       <ng-container *ngIf="item?.from.id === user?.id">
         <ng-container *ngTemplateOutlet="userTemplate; context: { message: item }"></ng-container>
       </ng-container>
-
     </ng-container>
   </div>
 
@@ -35,7 +31,6 @@
 
 <ng-template #partnerTemplate let-message="message">
   <div class="chat-partner">
-    <img src="assets/img/avatar.png">
     <div class="chat-text-content">
       <div class="chat-arrow"></div>
       <p>{{ message?.message }}</p>

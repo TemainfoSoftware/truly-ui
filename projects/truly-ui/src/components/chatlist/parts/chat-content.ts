@@ -26,6 +26,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ChatContact } from '../interfaces/chat-contact.interface';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
+import { ChatStatus } from '../interfaces/chat-status.interface';
 
 @Component( {
   selector: 'tl-chat-content',
@@ -41,6 +42,12 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() user: ChatContact;
 
   @Input() messages: ChatMessage[] = [];
+
+  @Input() chatStatus: ChatStatus = {
+    busy: '#ffc019',
+    online: '#66cc99',
+    offline: '#ff3100'
+  };
 
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();
 

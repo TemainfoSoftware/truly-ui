@@ -9,12 +9,14 @@
           <app-card>
             <div class="col-12">
               <tl-overlay-panel [elementOrigin]="buttonBasic">
-                <p style="word-wrap: break-word">
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
-                  Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form,
-                  accompanied by English versions from the 1914 translation by H. Rackham.
-                </p>
+                <div class="overlay-wrapper basic">
+                  <p style="word-wrap: break-word">
+                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+                    exact original form,
+                    accompanied by English versions from the 1914 translation by H. Rackham.
+                  </p>
+                </div>
               </tl-overlay-panel>
               <tl-button [text]="'Show Basic Panel'" #buttonBasic></tl-button>
               <div class="spacer"></div>
@@ -28,18 +30,20 @@
           </app-card>
           <app-card>
             <div class="col-12">
-              <tl-overlay-panel [elementOrigin]="buttonPrimary" [color]="'primary'">
-                <p style="word-wrap: break-word">
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
-                  Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form,
-                  accompanied by English versions from the 1914 translation by H. Rackham.
-                </p>
+              <tl-overlay-panel [elementOrigin]="buttonPrimary">
+                <div class="overlay-wrapper primary">
+                  <p style="word-wrap: break-word">
+                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+                    exact original form,
+                    accompanied by English versions from the 1914 translation by H. Rackham.
+                  </p>
+                </div>
               </tl-overlay-panel>
               <tl-button [text]="'Show Primary Panel'" #buttonPrimary></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-overlay-panel [elementOrigin]="buttonPrimary"  [color]="'primary'">
+<tl-overlay-panel [elementOrigin]="buttonPrimary">
   <!--Your Content Here-->
 </tl-overlay-panel>
 <tl-button [text]="'Show Panel'" #buttonPrimary></tl-button>
@@ -48,13 +52,15 @@
           </app-card>
           <app-card>
             <div class="col-12">
-              <tl-overlay-panel [elementOrigin]="buttonSuccess" [color]="'success'">
-                <p style="word-wrap: break-word">
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
-                  Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form,
-                  accompanied by English versions from the 1914 translation by H. Rackham.
-                </p>
+              <tl-overlay-panel [elementOrigin]="buttonSuccess">
+                <div class="overlay-wrapper success">
+                  <p style="word-wrap: break-word">
+                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+                    exact original form,
+                    accompanied by English versions from the 1914 translation by H. Rackham.
+                  </p>
+                </div>
               </tl-overlay-panel>
               <tl-button [text]="'Show Success Panel'" #buttonSuccess></tl-button>
               <div class="spacer"></div>
@@ -68,13 +74,15 @@
           </app-card>
           <app-card>
             <div class="col-12">
-              <tl-overlay-panel [elementOrigin]="buttonInfo" [color]="'information'">
-                <p style="word-wrap: break-word">
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
-                  Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form,
-                  accompanied by English versions from the 1914 translation by H. Rackham.
-                </p>
+              <tl-overlay-panel [elementOrigin]="buttonInfo">
+                <div class="overlay-wrapper info">
+                  <p style="word-wrap: break-word">
+                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+                    exact original form,
+                    accompanied by English versions from the 1914 translation by H. Rackham.
+                  </p>
+                </div>
               </tl-overlay-panel>
               <tl-button [text]="'Show Information Panel'" #buttonInfo></tl-button>
               <div class="spacer"></div>
@@ -88,18 +96,20 @@
           </app-card>
           <app-card>
             <div class="col-12">
-              <tl-overlay-panel [elementOrigin]="buttonWarning" [color]="'warning'">
-                <p style="word-wrap: break-word">
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
-                  Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
-                  exact original form,
-                  accompanied by English versions from the 1914 translation by H. Rackham.
-                </p>
+              <tl-overlay-panel [elementOrigin]="buttonWarning">
+                <div class="overlay-wrapper warning">
+                  <p style="word-wrap: break-word">
+                    The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. <br>
+                    Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+                    exact original form,
+                    accompanied by English versions from the 1914 translation by H. Rackham.
+                  </p>
+                </div>
               </tl-overlay-panel>
               <tl-button [text]="'Show Warning Panel'" #buttonWarning></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-overlay-panel [elementOrigin]="buttonWarning" [color]="'warning'">
+<tl-overlay-panel [elementOrigin]="buttonWarning">
   <!--Your Content Here-->
 </tl-overlay-panel>
 <tl-button [text]="'Show Panel'" #buttonWarning></tl-button>

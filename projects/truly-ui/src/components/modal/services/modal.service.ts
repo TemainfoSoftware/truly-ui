@@ -254,9 +254,11 @@ export class ModalService implements OnDestroy {
   }
 
   closeAll() {
-    this.view.clear();
-    this.componentList = [];
-    this.destroyBackdrop();
+    if (this.view) {
+      this.view.clear();
+      this.componentList = [];
+      this.destroyBackdrop();
+    }
   }
 
   private removeOfList( id: string ) {

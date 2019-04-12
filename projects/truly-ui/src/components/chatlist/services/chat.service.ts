@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { EventEmitter, Injectable, Inject, forwardRef } from '@angular/core';
+import { EventEmitter, Injectable, Inject, forwardRef, SkipSelf } from '@angular/core';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { TlChatList } from '../chatlist';
 import { Status } from '../enums/status.enum';
@@ -27,7 +27,17 @@ import { Status } from '../enums/status.enum';
 @Injectable()
 export class ChatService {
 
-  constructor( @Inject( forwardRef( () => TlChatList ) ) public chat: TlChatList, ) {
+  private chatList: TlChatList;
+
+  constructor() {
+  }
+
+  set chat( chat ) {
+    this.chatList = chat;
+  }
+
+  get chat() {
+    return this.chatList;
   }
 
   loadMessages( messages: ChatMessage[] ) {

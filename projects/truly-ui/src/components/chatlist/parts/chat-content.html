@@ -1,6 +1,6 @@
 <div class="chat-content-wrapper" [style.height]="'calc(' + maxHeight + ' - 35px)'">
 
-  <div class="cha-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 35px)'">
+  <div class="cha-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
     <ng-container *ngFor="let item of messages">
       <ng-container *ngIf="item?.from.id === partner?.id">
         <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: item }"></ng-container>

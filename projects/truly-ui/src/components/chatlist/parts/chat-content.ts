@@ -27,6 +27,7 @@ import { ChatContact } from '../interfaces/chat-contact.interface';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
 import { ChatStatus } from '../interfaces/chat-status.interface';
+import { ChatService } from '../services/chat.service';
 
 @Component( {
   selector: 'tl-chat-content',
@@ -78,7 +79,7 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   filterMessages() {
-    this.messages.filter((item: ChatMessage, index, array) =>
+    this.messages = this.messages.filter((item: ChatMessage, index, array) =>
       (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
       (item.from.id === this.partner.id) && (item.to.id === this.user.id)
     );

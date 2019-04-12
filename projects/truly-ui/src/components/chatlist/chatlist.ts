@@ -28,6 +28,7 @@ import { ChatContact } from './interfaces/chat-contact.interface';
 import { ChatMessage } from './interfaces/chat-message.interface';
 import { Status } from './enums/status.enum';
 import { Subscription } from 'rxjs';
+import { ChatService } from './services/chat.service';
 
 @Component( {
   selector: 'tl-chatlist',
@@ -79,7 +80,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private chatService: ChatService) {}
 
   get online() {
     return Status.ONLINE;
@@ -94,6 +95,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    this.chatService.chat = this;
   }
 
   animationContentDone(event: AnimationEvent) {
@@ -103,8 +105,11 @@ export class TlChatList implements AfterViewInit, OnDestroy {
   }
 
   getUnreadMessages(id: string) {
-    return this.messages.filter((item: ChatMessage) =>
-    (!item.viewed && item.from.id === id) && (item.to.id === this.user.id) );
+    if (this.messages.length > 0) {
+      return this.messages.filter((item: ChatMessage) =>
+      (!item.viewed && item.from.id === id) && (item.to.id === this.user.id) );
+    }
+    return [];
   }
 
   selectPartner(item: ChatContact) {

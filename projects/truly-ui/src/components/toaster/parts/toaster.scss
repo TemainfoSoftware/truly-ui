@@ -38,8 +38,10 @@
     }
 
     > .ui-toaster-description {
-      word-break: break-all;
+      word-break: break-word;
+      text-align: justify;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+      white-space: pre-wrap;
       &:first-child {
         font-size: 16px;
       }

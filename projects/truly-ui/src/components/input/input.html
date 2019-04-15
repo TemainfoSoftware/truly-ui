@@ -29,7 +29,8 @@
            [disabled]="disabled || isDisabled"
            class="field"
            [ngClass]="{
-             'invalid': controlName?.control.errors || model?.control.errors,
+             'ng-invalid': control?.errors,
+             'ng-valid': !control?.errors,
              'withValidators': hasValidator,
              'withoutValidators': !hasValidator,
              '-borderleft': iconBefore || textBefore,
@@ -72,6 +73,6 @@
              [cdkConnectedOverlayHasBackdrop]="false"
              [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
              [cdkConnectedOverlayOpen]="isShowingMessages">
-  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
+  <tl-messagevalidation [errors]="control?.errors"
                         [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
 </ng-template>

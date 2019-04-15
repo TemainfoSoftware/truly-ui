@@ -31,7 +31,8 @@ import {
 } from '@angular/core';
 import { InputMask } from './core/input-mask';
 import {
-  FormControlName, NG_VALUE_ACCESSOR,
+  FormControl,
+  FormControlName, NG_VALUE_ACCESSOR, NgControl,
   NgModel
 } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
@@ -115,6 +116,22 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   @Input() height = '23px';
 
+  @Input('control')
+  set control(item: FormControl) {
+    this._control = item;
+  }
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.controlName || this.model) {
+      return this.controlName.control ? this.controlName.control : this.model.control;
+    }
+    return this._control;
+  }
+
+
   @Input() showValidations = false;
 
   @Input() withBorder = true;
@@ -155,6 +172,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   private subscription = new Subscription();
 
+  private _control: FormControl = new FormControl();
+
   constructor( @Optional() @Inject( INPUT_CONFIG ) private inputConfig: InputConfig,
                private tlInput: ElementRef, private renderer: Renderer2,
                private change: ChangeDetectorRef ) {
@@ -171,13 +190,9 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
     this.handleMask();
   }
 
-  getControl() {
-    return this.controlName ? this.controlName : this.model;
-  }
-
   handleValidator() {
-    if ( this.getControl() ) {
-      this.hasValidator = this.getControl().control.validator;
+    if ( this.control ) {
+      this.hasValidator = this.control.validator;
       this.change.detectChanges();
     }
   }

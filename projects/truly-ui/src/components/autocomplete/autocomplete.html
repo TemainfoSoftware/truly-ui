@@ -3,6 +3,7 @@
   <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
+         #wrapper
          [class.disabled]="disabled || isDisabled"
          [style.height]="height"
          [class.opened]="isOpen && positionOverlay !== 'top'"
@@ -13,23 +14,25 @@
       <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
         <i [class]="!closeHover ? 'ion ion-ios-close-circle-outline' : 'ion ion-ios-close-circle'"></i>
       </div>
-      <input #input
-             #trigger="cdkOverlayOrigin"
-             cdkOverlayOrigin
-             [attr.disabled]="disabled || isDisabled ? true : null"
-             (click)="toggleIsOpen()"
-             [attr.placeholder]="placeholder"
-             [formControl]="searchControl"
-             (keydown.ArrowUp)="handleKeyArrowUp($event)"
-             (keydown.ArrowDown)="handleKeyArrowDown($event)"
-             (keydown.escape)="handleKeyEscape($event)"
-             (keydown.enter)="handleKeyEnter()"
-             (keydown.shift.tab)="isOpen = false"
-             (keydown.tab)="isOpen = false"
-             (focus)="handleFocus()"
-             (focusout)="focused = false"
-             (input)="onInput()"
-             class="ui-input">
+
+      <tl-input
+        (overlayOrigin)="trigger = $event"
+        [disabled]="disabled || isDisabled"
+        [placeholder]="placeholder"
+        (click)="toggleIsOpen()"
+        (keydown.ArrowUp)="handleKeyArrowUp($event)"
+        (keydown.ArrowDown)="handleKeyArrowDown($event)"
+        (keydown.escape)="handleKeyEscape($event)"
+        class="ui-input"
+        [control]="control"
+        [(ngModel)]="description"
+        (keydown.enter)="handleKeyEnter()"
+        (keydown.shift.tab)="isOpen = false"
+        (keydown.tab)="isOpen = false"
+        (focus)="handleFocus()"
+        (focusout)="focused = false"
+        (input)="onInput()">
+      </tl-input>
       <input readonly notform class="ui-model-input" [(ngModel)]="value">
     </div>
     <tl-filter-container [searchTerm]="searchControl.value"
@@ -47,7 +50,7 @@
                    [cdkConnectedOverlayOpen]="isOpen">
         <cdk-virtual-scroll-viewport class="ui-scroll-view"
                                      [itemSize]="rowHeight"
-                                     [style.width]="input.offsetWidth + 'px'"
+                                     [style.width]="wrapper.offsetWidth - 2 + 'px'"
                                      (scrolledIndexChange)="onScrollIndexChange($event)"
                                      [tlBlockui]="nothingFound"
                                      [blockuiConfig]="{ 'message': nothingFoundMessage }"

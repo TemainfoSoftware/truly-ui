@@ -41,6 +41,7 @@ import { LoaderModule } from '../loader/index';
     CommonModule,
     OverlayModule,
     ScrollingModule,
+    InputModule,
     LoaderModule,
     InputModule,
     FormsModule,

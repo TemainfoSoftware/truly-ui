@@ -1,10 +1,8 @@
-<div class="chat-wrapper" [style.width]="width" [style.height]="maxHeight">
+<div [class]="'chat-wrapper ' + color" [style.width]="width" [style.height]="maxHeight">
   <div class="chat-header">
     <ng-container *ngIf="!insideChat; else selectedPartner">
       <div class="chat-wrapper-status">
-        <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'">
-          <div class="chat-arrow"></div>
-        </div>
+        <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'"></div>
         <div class="chat-status" [class.selected]="selected === 'chat'" (click)="selectStatus('chat')">
           <span>Chats</span></div>
         <div class="chat-status" [class.selected]="selected === 'online'" (click)="selectStatus('online')">

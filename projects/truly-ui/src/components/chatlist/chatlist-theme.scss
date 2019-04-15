@@ -1,9 +1,89 @@
-@mixin tl-chatlist-theme($theme) {
+@import "../core/styles/theming/theming";
+
+@mixin _tl-chatlist-theme-schema($theme, $action) {
 
   $basic:   map-deep-get($theme, 'basic');
   $primary: map-deep-get($theme, 'primary');
   $danger:  map-deep-get($theme, 'danger');
   $success: map-deep-get($theme, 'success');
   $warning: map-deep-get($theme, 'warning');
+
+  background: map-deep-get($basic, "lighter", "background");
+
+  .chat-header {
+    background: map-deep-get($primary, "default", "background");
+
+    .chat-status-selection {
+      background: map-deep-get($basic, "lighter", "background");
+    }
+    .chat-status {
+      color: white;
+      &.selected {
+        span {
+          color: map-deep-get($primary, "default", "background");
+        }
+      }
+    }
+  }
+
+  .chat-content {
+
+     background: map-deep-get($theme, $action, "lighter", "background");
+     border: 1px solid map-deep-get($theme, $action, "default", "border");
+
+    .chat-item {
+      background: white;
+      box-shadow: 0 0px 4px 1px rgba(222, 222, 222, 0.87);
+      &:hover {
+        border: 1px solid rgba(map-deep-get($primary, "default", "background"), 0.3) !important;
+        background: rgba(map-deep-get($primary, "default", "background"), 0.1);
+      }
+
+      .chat-unread-messages {
+        background: map-deep-get($danger, "default", "background");
+        color: map-deep-get($danger, "default", "foreground");
+      }
+
+    }
+
+
+  }
+
+
+
+
+}
+
+
+@mixin tl-chatlist-theme( $theme ) {
+
+
+  .chat-wrapper {
+
+    &.basic {
+      @include _tl-chatlist-theme-schema($theme, 'basic')
+    }
+
+    &.primary {
+      @include _tl-chatlist-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-chatlist-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-chatlist-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-chatlist-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-chatlist-theme-schema($theme, 'information')
+    }
+
+  }
 
 }

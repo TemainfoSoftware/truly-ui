@@ -1,7 +1,6 @@
 .chat-wrapper {
   overflow: hidden;
   min-width: 300px !important;
-  background: #f1f1f1;
   .chat-header {
     display: flex;
     position: relative;
@@ -9,7 +8,6 @@
     place-content: space-evenly;
     height: 35px;
     flex-wrap: wrap;
-    background: rgb(102,204,153);
     section {
       width: 100%;
       text-align: center;
@@ -24,19 +22,17 @@
     .chat-status-selection {
       position: absolute;
       width: 100px;
-      background: white;
       padding: 0 15px;
       border-radius: 10px;
       height: 100%;
       transition: transform 300ms ease-in-out;
       box-sizing: border-box;
-      .chat-arrow {
+/*      .chat-arrow {
         border: solid 10px transparent;
         margin: 12px 0 0 22px;
-        border-right-color: #F0F0F0;
         position: absolute;
         transform: rotateZ(90deg);
-      }
+      }*/
     }
 
     .chat-status {
@@ -48,14 +44,10 @@
       align-items: center;
       z-index: 0;
       cursor: pointer;
-      color: #fff;
       font-size: 1.1em;
       font-variant: all-petite-caps;
       &.selected {
         transition: all 250ms ease-in-out;
-        span {
-          color: #66cc99;
-        }
       }
     }
   }
@@ -64,16 +56,15 @@
     padding: 10px;
     overflow-y: auto;
     overflow-x: hidden;
+    border-top: 0;
     >.chat-item {
       display: flex;
       align-items: center;
       padding: 10px;
       height: 65px;
       box-sizing: border-box;
-      background: white;
       margin: 5px 0;
       border-radius: 5px;
-      box-shadow: 0 0px 4px 1px #e8e8e8;
       animation: showInChatItem 250ms ease-in forwards;
       transition: background, border 300ms linear;
       cursor: pointer;
@@ -103,8 +94,6 @@
       }
 
       .chat-unread-messages {
-        background: #FF6666;
-        color: white;
         width: 25px;
         height: 25px;
         border-radius: 50%;
@@ -112,11 +101,6 @@
         place-content: center;
         align-items: center;
         animation: shadow-pulse 1s infinite;
-      }
-
-      &:hover {
-        border: 1px solid #dedede;
-        background: #f5fff4;
       }
     }
     &::-webkit-scrollbar {

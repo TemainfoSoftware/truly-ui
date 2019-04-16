@@ -78,7 +78,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @ContentChild( NgModel ) ngModel: NgModel;
 
-  @ContentChild( FormControlName ) control: NgModel;
+  @ContentChild( FormControlName ) control: FormControlName;
 
   @ViewChild( TlCalendar ) calendar;
 
@@ -168,7 +168,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   onCompleteMask() {
     setTimeout( () => {
       if ( this.isoDate ) {
-        this.value = new Date( this.year, this.month, this.day ).toISOString();
+        const str = ReverseFormatDate( this.stringUnmasked( this.description ), this.formatDate );
+        this.value = new Date( str.stringFormat ).toISOString();
       }
       this.completeMask.emit( this.getObjectValues() );
     } );

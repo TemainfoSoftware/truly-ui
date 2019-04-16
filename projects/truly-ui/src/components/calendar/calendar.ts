@@ -131,6 +131,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.calendarService.setView( this.view );
     this.calendarService.setConfigCalendar( this );
     this.navigatorService.setNavigator( this.tlnavigator.toArray()[ 0 ] );
+    this.setDateNavigator();
 
     this.setElement( this.calendar, 'calendar' );
     this.createKeyboardListener();

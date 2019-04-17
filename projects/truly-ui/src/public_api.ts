@@ -26,6 +26,7 @@ export { FormModule } from './components/form/index';
 export { IconsModule } from './components/icons/index';
 export { InputModule } from './components/input/index';
 export { ListBoxModule} from './components/listbox/index';
+export { LoaderModule } from './components/loader/index';
 export { MenuModule } from './components/menu/index';
 export { MiscModule } from './components/misc/index';
 export { ModalToolbarModule } from './components/modal/addons/modal-toolbar/index';

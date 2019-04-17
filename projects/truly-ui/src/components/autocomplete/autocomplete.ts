@@ -60,6 +60,21 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
     return this._data;
   }
 
+  @Input('control')
+  set control(item: FormControl) {
+    this._control = item;
+  }
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.controlName || this.model) {
+      return this.controlName.control ? this.controlName.control : this.model.control;
+    }
+    return this._control;
+  }
+
   @Input() totalLength = 1000;
 
   @Input() rowsPage = 100;
@@ -136,8 +151,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
 
   public nothingFound = false;
 
-  public searchControl = new FormControl( '' );
-
   public messageLoading = this.i18n.getLocale().AutoComplete.messageLoading;
 
   public nothingFoundMessage = this.i18n.getLocale().AutoComplete.nothingFoundMessage;
@@ -152,6 +165,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
 
   private _data = [];
 
+  private _control = new FormControl();
+
   constructor( @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
                private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService ) {
     super();
@@ -159,11 +174,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   }
 
   ngOnInit() {
+    this.listenModelChanges();
   }
 
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager( this.listItems );
-    this.listenModelChanges();
     this.handleModelLazy();
     this.validateKeyValue();
     this.change.detectChanges();
@@ -181,12 +196,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   }
 
   private listenModelChanges() {
-    this.control.valueChanges.subscribe( () => {
-      if ( this.dataSource ) {
-        this.handleModelLazy();
-        this.handleModelCached();
-      }
-    } );
+    if ( this.control ) {
+      this.control.valueChanges.subscribe( () => {
+        if ( this.dataSource ) {
+          this.handleModelLazy();
+          this.handleModelCached();
+        }
+      } );
+    }
   }
 
   private handleItemSelected() {
@@ -233,11 +250,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   onClickClose() {
     this.value = '';
     this.setDescriptionValue( '' );
-    this.searchControl.setValue( '' );
     this.closeHover = false;
     this.selected = null;
     this.tlinput.setFocus();
-    this.setIsOpen(true);
+    this.setIsOpen( true );
   }
 
   onBackdropClick() {
@@ -346,7 +362,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   }
 
   handleKeyEscape( $event ) {
-    if (this.isOpen) {
+    if ( this.isOpen ) {
       $event.stopPropagation();
     }
     this.setIsOpen( false );
@@ -425,7 +441,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
       return;
     }
     this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
-      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.searchControl.value ) } );
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.description ) } );
     } ) );
   }
 
@@ -448,10 +464,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
       this.tlinput.setFocus();
       this.handleItemSelected();
     }
-  }
-
-  get control() {
-    return this.controlName.control ? this.controlName.control : this.model.control;
   }
 
   private getFilters( term: string ) {
@@ -504,7 +516,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
       return;
     }
     if ( data && data[ 'currentValue' ] !== undefined && !this.lazyMode ) {
-      if (data['currentValue'].length > 0) {
+      if ( data[ 'currentValue' ].length > 0 ) {
         this.setUpData( data[ 'currentValue' ] );
       }
     }

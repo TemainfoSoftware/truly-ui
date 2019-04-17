@@ -147,6 +147,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.getElementsOfForm();
     this.clickListener();
     this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
+    this.setInitialFocus();
   }
 
   handleFormGroupValues() {

@@ -28,19 +28,20 @@ import {
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter, AfterContentInit
+  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
+import { FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
 import { ListItemInterface } from './interfaces/list-item';
 import { TlListItem } from '../overlaylist/list-item/list-item';
+import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component( {
   selector: 'tl-dropdown-list',
@@ -51,9 +52,34 @@ import { TlListItem } from '../overlaylist/list-item/list-item';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ElementBase<string> implements OnChanges, AfterContentInit, AfterViewInit {
+export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, OnInit, AfterViewInit {
 
-  @Input( 'data' ) data: any[] = [];
+  @Input( 'data' )
+  set data( data: any[] ) {
+    if ( data ) {
+      this._data = data;
+      this.initializeComponent();
+    }
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  @Input('control')
+  set control(item: FormControl) {
+    this._control = item;
+  }
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.controlName || this.model) {
+      return this.controlName.control ? this.controlName.control : this.model.control;
+    }
+    return this._control;
+  }
 
   @Input( 'keyText' ) keyText = null;
 
@@ -95,11 +121,13 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
 
   @ContentChild( FormControlName ) controlName: FormControlName;
 
-  @ViewChild( 'wrapper' ) wrapper: ElementRef;
+  @ViewChild( 'input' ) input: ElementRef;
 
   public typeOfData = 'complex';
 
   public selectedDescription = '';
+
+  public _data;
 
   public indexOptionSelectedModel;
 
@@ -111,19 +139,19 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
 
   public isLoading = true;
 
-  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig,
-               @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any> ) {
-    super( validators, asyncValidators );
+  private _control = new FormControl();
+
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig) {
+    super();
     this.setOptions( dropdownConfig );
   }
 
-  ngAfterContentInit() {
-    this.getModelValue();
+  ngOnInit() {
+    this.listenModelChange();
   }
 
   ngAfterViewInit() {
-    this.listenModelChange();
+    this.getModelValue();
   }
 
   onSearch( searchTextValue ) {
@@ -154,6 +182,10 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
     if ( keyEvent[ $event.keyCode ] ) {
       keyEvent[ $event.keyCode ]();
     }
+  }
+
+  getNativeInput() {
+    return this.input.nativeElement;
   }
 
   onFindByLetter( value: string ) {
@@ -209,20 +241,16 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
   }
 
   private setInputFocus() {
-    this.wrapper.nativeElement.focus();
+    this.input.nativeElement.focus();
   }
 
   private isSimpleData() {
     return this.typeOfData === 'simple';
   }
 
-  private getModel() {
-    return this.model ? this.model : this.controlName;
-  }
-
   private listenModelChange() {
-    if ( this.getModel() ) {
-      this.getModel().valueChanges.subscribe( () => {
+    if ( this.control ) {
+      this.control.valueChanges.subscribe( () => {
         this.getModelValue();
       } );
     }
@@ -239,11 +267,11 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
   }
 
   private getModelValue() {
-    if ( !this.getModel() ) {
+    if ( !this.control ) {
       return;
     }
     this.datasource.forEach( ( value, index ) => {
-      if ( this.getModel().value ) {
+      if ( this.control.value ) {
         if ( this.getCompare( value ) === this.getCompareModel() ) {
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
@@ -265,15 +293,15 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
 
   private getCompareModel() {
     if ( this.isSimpleData() ) {
-      return this.getModel().value;
+      return this.control.value;
     }
     if ( !this.keyValue ) {
-      return objectPath.get( this.getModel().value, this.identifier );
+      return objectPath.get( this.control.value, this.identifier );
     }
     if ( this.isModelModeString() ) {
-      return this.getModel().value;
+      return this.control.value;
     }
-    return objectPath.get( this.getModel().value, this.keyValue );
+    return objectPath.get( this.control.value, this.keyValue );
   }
 
   private getCompare( value ) {
@@ -327,11 +355,6 @@ export class TlDropDownList extends ElementBase<string> implements OnChanges, Af
   }
 
   ngOnChanges( changes ) {
-    if ( changes[ 'data' ] ) {
-      if ( changes[ 'data' ].currentValue ) {
-        this.initializeComponent();
-      }
-    }
   }
 
 }

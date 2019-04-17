@@ -169,6 +169,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
     this.change.detectChanges();
   }
 
+  getNativeInput() {
+    return this.tlinput.getNativeInput();
+  }
+
   private validateKeyValue() {
     if ( !this.isModelModeString() && !this.keyValue && !this.identifier ) {
       throw Error( 'The AutoComplete should have an [identifier] key property, ' +

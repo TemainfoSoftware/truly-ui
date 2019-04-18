@@ -52,7 +52,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, OnInit, AfterViewInit {
+export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit, AfterViewInit {
 
   @Input( 'data' )
   set data( data: any[] ) {
@@ -67,7 +67,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
   }
 
   @Input('control')
-  set control(item: FormControl) {
+  set control(item) {
     this._control = item;
   }
 
@@ -76,7 +76,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
       return this._control;
     }
     if (this.controlName || this.model) {
-      return this.controlName.control ? this.controlName.control : this.model.control;
+      return this.controlName ? this.controlName : this.model;
     }
     return this._control;
   }
@@ -139,14 +139,14 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   public isLoading = true;
 
-  private _control = new FormControl();
+  private _control;
 
   constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig) {
     super();
     this.setOptions( dropdownConfig );
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     this.listenModelChange();
   }
 
@@ -158,7 +158,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
     const filter = [];
     this.datasource = this.data.slice();
     this.datasource.filter( ( item ) => {
-      if ( (this.getItemText( item ).substr( 0, searchTextValue.length ).toLowerCase()) === (searchTextValue.toLowerCase()) ) {
+      if ( this.getItemText( item ).toLowerCase().includes(searchTextValue.toLowerCase()) ) {
         filter.push( item );
       }
     } );

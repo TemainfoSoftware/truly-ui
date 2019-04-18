@@ -19,13 +19,13 @@
          (keydown)="onKeyDown($event)"
          (click)="handleOpenList($event)"
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
-         [ngClass]="{ 'ng-invalid' : control.invalid, 'disabled': disabled }"
+         [ngClass]="{ 'ng-invalid' : control?.invalid, 'disabled': disabled }"
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
          class="ui-dropdown">
         <div class="ui-dropdown-icon"
              [style.height]="itemHeight"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
-             [ngClass]="{ 'disabled': disabled, 'ng-invalid' : control.invalid }">
+             [ngClass]="{ 'disabled': disabled, 'ng-invalid' : control?.invalid }">
           <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
         </div>
   </div>

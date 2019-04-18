@@ -22,6 +22,7 @@
 import {
   Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
+  AfterContentInit,
 } from '@angular/core';
 import { FormControl, FormControlName } from '@angular/forms';
 
@@ -49,7 +50,7 @@ import { TlInput } from '../input/input';
   styleUrls: [ './autocomplete.scss' ],
   providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
 } )
-export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, OnChanges, OnDestroy, AfterViewInit {
+export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
 
   @Input( 'data' )
   set data( value ) {
@@ -177,11 +178,15 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
     this.listenModelChanges();
   }
 
+  ngAfterContentInit() {
+    this.handleModelLazy();
+    this.handleModelCached();
+    this.change.markForCheck();
+  }
+
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager( this.listItems );
-    this.handleModelLazy();
     this.validateKeyValue();
-    this.change.detectChanges();
   }
 
   getNativeInput() {
@@ -197,7 +202,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
 
   private listenModelChanges() {
     if ( this.control ) {
-      this.control.valueChanges.subscribe( () => {
+      this.control.valueChanges.subscribe( ( value ) => {
         if ( this.dataSource ) {
           this.handleModelLazy();
           this.handleModelCached();

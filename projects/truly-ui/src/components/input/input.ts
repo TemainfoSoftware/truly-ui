@@ -117,7 +117,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
   @Input() height = '23px';
 
   @Input('control')
-  set control(item: FormControl) {
+  set control(item) {
     this._control = item;
   }
 
@@ -126,7 +126,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
       return this._control;
     }
     if (this.controlName || this.model) {
-      return this.controlName.control ? this.controlName.control : this.model.control;
+      return this.controlName ? this.controlName : this.model;
     }
     return this._control;
   }
@@ -172,7 +172,7 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   private subscription = new Subscription();
 
-  private _control: FormControl = new FormControl();
+  private _control;
 
   constructor( @Optional() @Inject( INPUT_CONFIG ) private inputConfig: InputConfig,
                private tlInput: ElementRef, private renderer: Renderer2,

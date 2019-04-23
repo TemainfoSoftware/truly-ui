@@ -11,27 +11,27 @@ import { TlStatusFilterPipe } from './pipes/status-filter.pipe';
 import { ChatService } from './services/chat.service';
 import { AvatarModule } from '../avatar/index';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        AvatarModule,
-        ReactiveFormsModule,
-        MiscModule,
-        ListBoxModule,
-        IconsModule
-    ],
-    declarations: [
-        TlChatList,
-        TlChatContent,
-        TlStatusFilterPipe
-    ],
-    exports: [
-        TlChatList,
-        TlChatContent,
-        TlStatusFilterPipe
-    ]
-})
+@NgModule( {
+  imports: [
+    CommonModule,
+    FormsModule,
+    AvatarModule,
+    ReactiveFormsModule,
+    MiscModule,
+    ListBoxModule,
+    IconsModule
+  ],
+  declarations: [
+    TlChatList,
+    TlChatContent,
+    TlStatusFilterPipe
+  ],
+  exports: [
+    TlChatList,
+    TlChatContent,
+    TlStatusFilterPipe
+  ]
+} )
 export class ChatListModule {
   static forRoot(): ModuleWithProviders {
     return {

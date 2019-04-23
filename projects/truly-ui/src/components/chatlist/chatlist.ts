@@ -68,6 +68,8 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
 
+  @Output() selectContact: EventEmitter<any> = new EventEmitter();
+
   @ViewChild('content') content: ElementRef;
 
   public transform = '100px';
@@ -106,7 +108,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     }
   }
 
-  getUnreadMessages(id: string) {
+  getUnreadMessages(id: string | number) {
     if (this.messages.length > 0) {
       return this.messages.filter((item: ChatMessage) =>
       (!item.viewed && item.from.id === id) && (item.to.id === this.user.id) );
@@ -116,6 +118,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
+    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item.id) });
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
   }
 

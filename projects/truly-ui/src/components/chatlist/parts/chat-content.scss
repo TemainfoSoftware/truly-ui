@@ -2,7 +2,7 @@
   background: #f1f1f1;
   position: relative;
 
-  .cha-messages-content {
+  .chat-messages-content {
     overflow-y: auto;
     height: 410px;
     &::-webkit-scrollbar {
@@ -23,6 +23,22 @@
       border-radius: 5px;
     }
   }
+}
+
+.chat-time {
+  padding: 5px 7px;
+  background: #e2e2e2;
+  border-radius: 5px;
+  width: 100px;
+  position: relative;
+  left: calc(50% - 50px);
+  text-align: center;
+  font-family: Segoe UI, serif;
+  font-size: 0.9em;
+  color: #565656;
+  margin: 5px 0;
+  user-select: none;
+  box-shadow: 1px 1px 1px #ccc;
 }
 
 .chat-partner {

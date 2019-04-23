@@ -20,7 +20,8 @@
  SOFTWARE.
  */
 import {
-  Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges
+  Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
+  LOCALE_ID
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChatContact } from '../interfaces/chat-contact.interface';
@@ -28,6 +29,9 @@ import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
 import { ChatStatus } from '../interfaces/chat-status.interface';
 import { ChatService } from '../services/chat.service';
+import { message } from '../../input/core/validate';
+import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
+import { DatePipe } from '@angular/common';
 
 @Component( {
   selector: 'tl-chat-content',
@@ -60,6 +64,10 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   public control = new FormControl(null, Validators.required);
 
+  public groupMessages = [];
+
+  public datePipe = new DatePipe('en-US');
+
   private subscription = new Subscription();
 
   constructor() {
@@ -69,7 +77,6 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   ngAfterViewInit() {
     setTimeout(() => {
       this.setViewedMessages();
-      this.filterMessages();
       this.setInputFocus();
     });
   }
@@ -83,7 +90,25 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
       (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
       (item.from.id === this.partner.id) && (item.to.id === this.user.id)
     );
+    this.sortMessages();
+    this.handleGroupMessages();
     this.setScrollBottom();
+  }
+
+  currentDate( date ) {
+    const yesterday = new Date(new Date().setDate((new Date().getDate() - 1)));
+    if ( this.getDate(date) === this.getDate() ) {
+      return 'HOJE';
+    } else if ( (this.getDate(yesterday) === this.getDate(date)) ) {
+      return 'ONTEM';
+    } else {
+       return this.datePipe.transform( new Date(date), 'longDate' );
+    }
+  }
+
+  getDate( date = new Date() ) {
+    const newDate = new Date( date );
+    return new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0, 0).getTime();
   }
 
   setScrollBottom() {
@@ -104,9 +129,51 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
+  handleGroupMessages() {
+    this.groupMessages = [];
+    this.messages.forEach((value) => {
+      if ( !this.hasDateGroup( value.time ) ) {
+        this.groupMessages.push({
+          date: this.formatDate( value.time ),
+          messages: [value]
+        });
+      } else {
+        const index = this.findIndexByDate( this.formatDate( value.time ) );
+        console.log('index', index);
+        this.groupMessages[index].messages = [ ...this.groupMessages[index].messages, value ];
+      }
+    });
+    console.log('messages handle', this.groupMessages);
+
+  }
+
+  sortMessages() {
+    this.messages = this.messages.sort((a, b) => {
+      return new Date(a.time).getTime() - new Date(b.time).getTime();
+    });
+  }
+
+  findIndexByDate( date: number ) {
+    return this.groupMessages.findIndex((value, index, obj) => value.date === date);
+  }
+
+  formatDate( date: Date ) {
+    return new Date( date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0).getTime();
+  }
+
+  hasDateGroup( date: Date) {
+    if (this.groupMessages.length === 0) {
+      return false;
+    }
+    return this.groupMessages.filter((value, index, array) =>
+      this.formatDate( new Date(value.date)) === this.formatDate(date)).length > 0;
+  }
+
   ngOnChanges( { messages }: SimpleChanges ) {
     if (messages && messages['currentValue'].length > 0) {
+      console.log('messages', messages);
       this.filterMessages();
+
     }
   }
 

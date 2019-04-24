@@ -78,13 +78,8 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.setViewedMessages();
       this.setInputFocus();
     });
-  }
-
-  setViewedMessages() {
-    this.messages.forEach((item: ChatMessage, index, array) => item.viewed = true );
   }
 
   filterMessages() {
@@ -145,7 +140,6 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
         this.groupMessages[index].messages = [ ...this.groupMessages[index].messages, value ];
       }
     });
-
   }
 
   sortMessages() {

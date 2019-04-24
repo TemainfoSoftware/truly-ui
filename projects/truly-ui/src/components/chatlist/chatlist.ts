@@ -70,7 +70,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
 
-  @Output() allReadMessages: EventEmitter<boolean> = new EventEmitter();
+  @Output() newMessages: EventEmitter<boolean> = new EventEmitter();
 
   @Output() selectContact: EventEmitter<any> = new EventEmitter();
 
@@ -120,14 +120,30 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     return [];
   }
 
-  hasReadMessages() {
-    return this.messages.filter((value, index, array) => value.viewed).length > 0;
+  hasMessages() {
+    return this.messages.filter((value) => !value.viewed && (value.to.id === this.user.id)).length > 0;
   }
 
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
     this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item.id) });
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
+    this.readMessages( this.getUnreadMessages(item.id) );
+    this.newMessages.emit( this.hasMessages() );
+  }
+
+  readMessages( messages: ChatMessage[] ) {
+    this.messages.forEach((item) => {
+      messages.forEach((value) => {
+        if (JSON.stringify(item) === JSON.stringify(value)) {
+          item.viewed = true;
+        }
+      });
+    });
+  }
+
+  readAllMessages() {
+    this.messages.forEach((item: ChatMessage, index, array) => item.viewed = true );
   }
 
   updatePartner(item: ChatContact) {
@@ -136,12 +152,12 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   loadMessages(messages: ChatMessage[]) {
     this.messages = messages;
-    this.allReadMessages.emit( this.hasReadMessages() );
+    this.newMessages.emit( this.hasMessages() );
   }
 
   appendMessage(message: ChatMessage) {
     this.messages = [ ...this.messages, message ];
-    this.allReadMessages.emit( this.hasReadMessages() );
+    this.newMessages.emit( this.hasMessages() );
   }
 
   setStatus(status: Status) {

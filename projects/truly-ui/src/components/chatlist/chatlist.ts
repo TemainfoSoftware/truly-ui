@@ -43,6 +43,8 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Input() color = 'basic';
 
+  @Input() loadingMessages = false;
+
   @Input() chatStatus: ChatStatus = {
     busy: '#ffc019',
     online: '#66cc99',

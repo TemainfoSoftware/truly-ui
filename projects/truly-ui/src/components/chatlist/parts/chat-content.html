@@ -1,22 +1,30 @@
 <div class="chat-content-wrapper" [style.height]="'calc(' + maxHeight + ' - 35px)'">
 
   <div class="chat-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
-    <ng-container *ngFor="let item of groupMessages">
 
-        <div class="chat-time">  {{ currentDate(item.date) }}</div>
-        <ng-container *ngFor="let msg of item.messages">
+    <ng-container *ngIf="loadingMessages">
+      <ng-container *ngTemplateOutlet="loadMessagesTemplate"></ng-container>
+    </ng-container>
 
-          <ng-container *ngIf="msg?.from.id === partner?.id">
-            <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: msg }"></ng-container>
-          </ng-container>
+    <ng-container *ngIf="!loadingMessages">
+      <ng-container *ngFor="let item of groupMessages">
 
-          <ng-container *ngIf="msg?.from.id === user?.id">
-            <ng-container *ngTemplateOutlet="userTemplate; context: { message: msg }"></ng-container>
-          </ng-container>
+          <div class="chat-time">  {{ currentDate(item.date) }}</div>
+          <ng-container *ngFor="let msg of item.messages">
+
+            <ng-container *ngIf="msg?.from.id === partner?.id">
+              <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: msg }"></ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="msg?.from.id === user?.id">
+              <ng-container *ngTemplateOutlet="userTemplate; context: { message: msg }"></ng-container>
+            </ng-container>
+
+        </ng-container>
 
       </ng-container>
-
     </ng-container>
+
   </div>
 
   <div class="chat-type">
@@ -37,10 +45,20 @@
   </div>
 </ng-template>
 
+<ng-template #loadMessagesTemplate>
+  <div class="chat-loader-wrapper">
+    <div class="chat-loader">
+      <tl-loader [strokeWidth]="3"></tl-loader>
+    </div>
+    <span class="chat-loader-message">Loading Messages...</span>
+  </div>
+</ng-template>
+
 <ng-template #partnerTemplate let-message="message">
   <div class="chat-partner">
     <div class="chat-text-content">
       <div class="chat-arrow"></div>
+
       <p>{{ message?.message }}</p>
       <span>{{ message.time | date:'HH:mm' }}</span>
     </div>

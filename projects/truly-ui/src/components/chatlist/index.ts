@@ -10,6 +10,7 @@ import { IconsModule } from '../icons/index';
 import { TlStatusFilterPipe } from './pipes/status-filter.pipe';
 import { ChatService } from './services/chat.service';
 import { AvatarModule } from '../avatar/index';
+import { LoaderModule } from '../loader/index';
 
 @NgModule( {
   imports: [
@@ -19,6 +20,7 @@ import { AvatarModule } from '../avatar/index';
     ReactiveFormsModule,
     MiscModule,
     ListBoxModule,
+    LoaderModule,
     IconsModule
   ],
   declarations: [

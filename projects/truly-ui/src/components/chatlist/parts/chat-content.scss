@@ -26,19 +26,22 @@
 }
 
 .chat-time {
-  padding: 5px 7px;
-  background: #e2e2e2;
+  padding: 2px 0;
+  background: #e6e6e6;
+  border: 1px solid #dedede;
   border-radius: 5px;
   width: 100px;
   position: relative;
   left: calc(50% - 50px);
   text-align: center;
-  font-family: Segoe UI, serif;
-  font-size: 0.9em;
-  color: #565656;
-  margin: 5px 0;
+  font-family: Segoe UI,serif;
+  font-size: .9em;
+  color: #868686;
+  margin: 8px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
-  box-shadow: 1px 1px 1px #ccc;
 }
 
 .chat-partner {
@@ -49,26 +52,30 @@
   > .chat-text-content {
     display: flex;
     align-items: flex-end;
-    flex-flow: column;
+    flex-flow: wrap;
+    place-content: center;
     background: white;
     color: #464646;
     position: relative;
     top: 5px;
-    border-radius: 5px;
-    border-top-left-radius: 2px;
-    padding: 10px;
+    border-radius: 2px 5px 5px 5px;
+    padding: 10px 0 10px 10px;
     margin: 10px;
     box-shadow: 1px 1px 2px 0px #d0d0d0;
     > p {
       margin: 0;
+      line-height: 20px;
+      font-family: Segoe UI, serif;
     }
     > span {
-      font-size: 0.8em;
+      font-size: .8em;
       float: right;
       color: #adadad;
       position: relative;
       bottom: 0;
       right: 0;
+      top: 25px;
+      font-family: Segoe UI, serif;
     }
     .chat-arrow {
       border: solid 10px transparent;
@@ -99,25 +106,30 @@
   > .chat-text-content {
     display: flex;
     align-items: flex-end;
-    flex-flow: column;
+    flex-flow: wrap;
+    place-content: center;
     background: #e3fdf4;
     color: #464646;
     position: relative;
     top: 0px;
     border-radius: 5px;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
     margin: 10px;
     box-shadow: 1px 1px 2px 0px #d0d0d0;
     > p {
       margin: 0;
+      line-height: 20px;
+      font-family: Segoe UI;
     }
     > span {
-      font-size: 0.8em;
+      font-size: .8em;
       float: right;
       color: #adadad;
       position: relative;
       bottom: 0;
       right: 0;
+      top: 25px;
+      font-family: Segoe UI, serif;
     }
   }
 }
@@ -162,6 +174,25 @@
       background: rgb(102,204,153);
       background: linear-gradient(90deg, rgba(102,204,153,1) 0%, rgba(116,222,130,1) 100%);
     }
+  }
+}
+
+.chat-loader-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  place-content: center;
+  align-items: center;
+  flex-flow: column;
+  > .chat-loader {
+    width: 40px;
+    height: 40px;
+  }
+  > .chat-loader-message {
+    font-size: 1em;
+    font-family: "Segoe UI", serif;
+    color: #ccc;
+    margin: 10px 0;
   }
 }
 

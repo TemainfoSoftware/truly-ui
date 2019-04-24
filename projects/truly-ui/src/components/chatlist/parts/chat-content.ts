@@ -46,6 +46,8 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input() user: ChatContact;
 
+  @Input() loadingMessages = true;
+
   @Input() messages: ChatMessage[] = [];
 
   @Input() chatStatus: ChatStatus = {
@@ -92,6 +94,7 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
     );
     this.sortMessages();
     this.handleGroupMessages();
+    this.loadingMessages = false;
     this.setScrollBottom();
   }
 
@@ -139,11 +142,9 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
         });
       } else {
         const index = this.findIndexByDate( this.formatDate( value.time ) );
-        console.log('index', index);
         this.groupMessages[index].messages = [ ...this.groupMessages[index].messages, value ];
       }
     });
-    console.log('messages handle', this.groupMessages);
 
   }
 
@@ -171,9 +172,7 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   ngOnChanges( { messages }: SimpleChanges ) {
     if (messages && messages['currentValue'].length > 0) {
-      console.log('messages', messages);
       this.filterMessages();
-
     }
   }
 

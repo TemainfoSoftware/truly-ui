@@ -52,14 +52,15 @@
   > .chat-text-content {
     display: flex;
     align-items: flex-end;
-    flex-flow: wrap;
+    flex-flow: column;
     place-content: center;
+    word-break: break-all;
     background: white;
     color: #464646;
     position: relative;
     top: 5px;
     border-radius: 2px 5px 5px 5px;
-    padding: 10px 0 10px 10px;
+    padding: 10px;
     margin: 10px;
     box-shadow: 1px 1px 2px 0px #d0d0d0;
     > p {
@@ -74,7 +75,7 @@
       position: relative;
       bottom: 0;
       right: 0;
-      top: 25px;
+      top: 5px;
       font-family: Segoe UI, serif;
     }
     .chat-arrow {
@@ -87,7 +88,6 @@
       -webkit-transform: rotateZ(90deg);
       transform: rotateZ(0);
     }
-
   }
   img {
     width: 40px;
@@ -106,14 +106,15 @@
   > .chat-text-content {
     display: flex;
     align-items: flex-end;
-    flex-flow: wrap;
+    flex-flow: column;
     place-content: center;
+    word-break: break-all;
     background: #e3fdf4;
     color: #464646;
     position: relative;
     top: 0px;
     border-radius: 5px;
-    padding: 10px 0 10px 10px;
+    padding: 10px;
     margin: 10px;
     box-shadow: 1px 1px 2px 0px #d0d0d0;
     > p {
@@ -128,7 +129,7 @@
       position: relative;
       bottom: 0;
       right: 0;
-      top: 25px;
+      top: 5px;
       font-family: Segoe UI, serif;
     }
   }

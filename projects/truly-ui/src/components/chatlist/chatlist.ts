@@ -70,6 +70,8 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
 
+  @Output() allReadMessages: EventEmitter<boolean> = new EventEmitter();
+
   @Output() selectContact: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('content') content: ElementRef;
@@ -118,6 +120,10 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     return [];
   }
 
+  hasReadMessages() {
+    return this.messages.filter((value, index, array) => value.viewed).length > 0;
+  }
+
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
     this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item.id) });
@@ -130,10 +136,12 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   loadMessages(messages: ChatMessage[]) {
     this.messages = messages;
+    this.allReadMessages.emit( this.hasReadMessages() );
   }
 
   appendMessage(message: ChatMessage) {
     this.messages = [ ...this.messages, message ];
+    this.allReadMessages.emit( this.hasReadMessages() );
   }
 
   setStatus(status: Status) {

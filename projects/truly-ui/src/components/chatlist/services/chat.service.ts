@@ -48,6 +48,10 @@ export class ChatService {
     this.chat.appendMessage( message );
   }
 
+  readAll() {
+    this.chat.readAllMessages();
+  }
+
   setStatus(status: Status) {
     this.chat.setStatus(status);
   }

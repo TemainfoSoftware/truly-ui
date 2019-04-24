@@ -1,4 +1,4 @@
-<div *ngIf="errors" [style.width]="width" class="ui-wrapper-messages">
+<div *ngIf="control?.errors && control?.dirty" [style.width]="width" class="ui-wrapper-messages">
   <ul>
     <li *ngFor="let item of messages"><i class="ion-android-cancel"></i>{{item}}</li>
   </ul>

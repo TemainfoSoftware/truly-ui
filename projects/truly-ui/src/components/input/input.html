@@ -73,6 +73,7 @@
              [cdkConnectedOverlayHasBackdrop]="false"
              [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
              [cdkConnectedOverlayOpen]="isShowingMessages">
-  <tl-messagevalidation [errors]="control?.errors"
+  <tl-messagevalidation [control]="control"
+                        [errors]="control?.errors"
                         [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
 </ng-template>

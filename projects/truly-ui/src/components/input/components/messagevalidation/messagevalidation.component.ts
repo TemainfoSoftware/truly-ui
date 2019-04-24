@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnChanges } from '@angular/core';
 import { I18nService } from '../../../i18n/i18n.service';
 import * as stringFormat from 'string-format';
+import { FormControl } from '@angular/forms';
 const format = stringFormat;
 
 @Component({
@@ -9,6 +10,8 @@ const format = stringFormat;
   styleUrls: ['./messagevalidation.component.scss'],
 })
 export class TlMessageValidationComponent implements OnChanges {
+
+  @Input() control: FormControl;
 
   @Input() errors = [];
 
@@ -20,14 +23,14 @@ export class TlMessageValidationComponent implements OnChanges {
 
   setMessages() {
     this.messages = [];
-    if (this.errors) {
-      Object.keys(this.errors).forEach(( key ) => {
+    if (this.control && this.control.errors) {
+      Object.keys(this.control.errors).forEach(( key ) => {
         if (key === 'required') {
           this.messages.push(this.i18n.getLocale().Validators.fieldRequired);
           return;
         }
         if (key === 'minlength') {
-          const requiredLength = this.errors['minlength']['requiredLength'];
+          const requiredLength = this.control.errors['minlength']['requiredLength'];
           this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
           return;
         }
@@ -39,7 +42,7 @@ export class TlMessageValidationComponent implements OnChanges {
           this.messages.push(this.i18n.getLocale().Validators.patternNotMatch);
           return;
         }
-        this.messages.push(this.errors[key]);
+        this.messages.push(this.control.errors[key]);
       });
     }
   }

@@ -180,14 +180,7 @@
                       </p>
                     </tl-sidebar-content>
                     <tl-sidebar [position]="'end'" [mode]="'slide'" #sidebarDockRight>
-                      <tl-chatlist [itemsToShow]="4"
-                                   [height]="225"
-                                   [searchQuery]="'firstName'"
-                                   [searchInput]="input"
-                                   [avatar]="'avatar'"
-                                   [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
-                                   [data]="dataSource">
-                      </tl-chatlist>
+                      Content Chat
                       <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
                     </tl-sidebar>
                   </tl-sidebar-container>

@@ -66,8 +66,6 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   public control = new FormControl(null, Validators.required);
 
-  public groupMessages = [];
-
   public datePipe = new DatePipe('en-US');
 
   private subscription = new Subscription();
@@ -88,7 +86,6 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
       (item.from.id === this.partner.id) && (item.to.id === this.user.id)
     );
     this.sortMessages();
-    this.handleGroupMessages();
     this.loadingMessages = false;
     this.setScrollBottom();
   }
@@ -127,41 +124,10 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
     }
   }
 
-  handleGroupMessages() {
-    this.groupMessages = [];
-    this.messages.forEach((value) => {
-      if ( !this.hasDateGroup( value.time ) ) {
-        this.groupMessages.push({
-          date: this.formatDate( value.time ),
-          messages: [value]
-        });
-      } else {
-        const index = this.findIndexByDate( this.formatDate( value.time ) );
-        this.groupMessages[index].messages = [ ...this.groupMessages[index].messages, value ];
-      }
-    });
-  }
-
   sortMessages() {
     this.messages = this.messages.sort((a, b) => {
       return new Date(a.time).getTime() - new Date(b.time).getTime();
     });
-  }
-
-  findIndexByDate( date: number ) {
-    return this.groupMessages.findIndex((value, index, obj) => value.date === date);
-  }
-
-  formatDate( date: Date ) {
-    return new Date( date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0).getTime();
-  }
-
-  hasDateGroup( date: Date) {
-    if (this.groupMessages.length === 0) {
-      return false;
-    }
-    return this.groupMessages.filter((value, index, array) =>
-      this.formatDate( new Date(value.date)) === this.formatDate(date)).length > 0;
   }
 
   ngOnChanges( { messages }: SimpleChanges ) {

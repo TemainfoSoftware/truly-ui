@@ -7,7 +7,7 @@
     </ng-container>
 
     <ng-container *ngIf="!loadingMessages">
-      <ng-container *ngFor="let item of groupMessages">
+      <ng-container *ngFor="let item of messages | filterMessage">
 
           <div class="chat-time">  {{ currentDate(item.date) }}</div>
           <ng-container *ngFor="let msg of item.messages">

@@ -11,6 +11,7 @@ import { TlStatusFilterPipe } from './pipes/status-filter.pipe';
 import { ChatService } from './services/chat.service';
 import { AvatarModule } from '../avatar/index';
 import { LoaderModule } from '../loader/index';
+import { TlMessageFilterPipe } from './pipes/message-filter.pipe';
 
 @NgModule( {
   imports: [
@@ -26,12 +27,14 @@ import { LoaderModule } from '../loader/index';
   declarations: [
     TlChatList,
     TlChatContent,
-    TlStatusFilterPipe
+    TlStatusFilterPipe,
+    TlMessageFilterPipe
   ],
   exports: [
     TlChatList,
     TlChatContent,
-    TlStatusFilterPipe
+    TlStatusFilterPipe,
+    TlMessageFilterPipe
   ]
 } )
 export class ChatListModule {

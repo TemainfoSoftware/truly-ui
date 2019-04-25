@@ -44,7 +44,7 @@ export class TlOverlayPanel implements OnInit, AfterContentInit {
 
   @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
 
-  public isOpen = false;
+  @Input() isOpen = false;
 
   constructor( private renderer: Renderer2 ) {}
 

@@ -7,55 +7,17 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <div class="col-md-3">
-              <tl-button [text]="'Change to Online'" [color]="'success'" (click)="changeOnline()"></tl-button>
+            <div class="col-md-4">
+              <app-chat2 (send)="onSendMessage($event)" [user]="user2" [contacts]="contacts"></app-chat2>
+              usuario > BAIANO para partner > WILLIAM
             </div>
-            <div class="col-md-3">
-              <tl-button [text]="'Change to Busy'" [color]="'danger'" (click)="changeBusy()"></tl-button>
+            <div class="col-md-4">
+              <app-chat3 (send)="onSendMessage($event)" [user]="user3" [contacts]="contacts"></app-chat3>
+              usuario > WILLIAM para partner > BAIANO
             </div>
-            <div class="col-md-3">
-              <tl-button [text]="'Change to Away'" [color]="'warning'" (click)="changeAway()"></tl-button>
-            </div>
-            <div class="col-md-3">
-              <tl-button [text]="'Change to Offline'" [color]="'basic'" (click)="changeOffline()"></tl-button>
-            </div>
-          </app-card>
-          <app-card>
-            <div class="col-md-6">
-              <tl-chatlist [itemsToShow]="3"
-                           (clickItem)="clickChat($event)"
-                           [searchQuery]="'firstName'"
-                           [searchInput]="input"
-                           [avatar]="'avatar'"
-                           [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
-                           [data]="dataSource">
-              </tl-chatlist>
-              <tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-            </div>
-            <div class="col-md-6">
-<textarea highlight-js [options]="{}" [lang]="'html'">
-<tl-chatlist
-  [itemsToShow]="3"
- (clickItem)="clickChat($event)"
- [searchQuery]="'firstName'"
- [searchInput]="input"
- [statusConfig]="{busy: 'Busy', online: 'Online', offline: 'Offline', away: 'Away'}"
- [data]="dataSource">
-</tl-chatlist>
-<tl-input #input [placeholder]="'Search...'" [clearButton]="true"></tl-input>
-</textarea>
-<textarea highlight-js [options]="{}" [lang]="'typescript'">
-  constructor( public chatListService: ChatListService ) {}
+            <div class="col-md-4">
 
-  setOffline() {
-     this.chatListService.changeStatus( this.selected, 'Offline' );
-  }
-
-  setOnline() {
-     this.chatListService.changeStatus( this.selected, 'Online' );
-  }
-
-</textarea>
+              usuario > GENESSON para
             </div>
           </app-card>
         </app-showcase-card>
@@ -64,12 +26,12 @@
   </div>
   <app-showcase-card [title]="'Methods'" [icon]="'ion-md-color-wand'">
     <app-card>
-      <app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>
+      <!--<app-showcase-table-events [data]="dataMethods"></app-showcase-table-events>-->
     </app-card>
   </app-showcase-card>
   <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
     <app-card>
-      <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      <!--<app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>-->
     </app-card>
   </app-showcase-card>
 </div>

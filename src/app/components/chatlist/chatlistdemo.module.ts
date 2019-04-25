@@ -16,14 +16,17 @@ import { ShowcaseCardModule } from '../../shared/components/showcase-card/showca
 import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
+import { Chat2Module } from './chat2/chat2.module';
+import { Chat3Module } from './chat3/chat3.module';
 
 @NgModule( {
   declarations: [
-    ChatListDemoComponent
+    ChatListDemoComponent,
   ],
   imports: [
     ChatListDemoRoutingModule,
-    ChatListModule,
+    Chat2Module,
+    Chat3Module,
     InputModule,
     CommonModule,
     ButtonModule,

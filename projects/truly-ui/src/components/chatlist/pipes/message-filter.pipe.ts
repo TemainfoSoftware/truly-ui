@@ -20,8 +20,6 @@
  SOFTWARE.
  */
 import { PipeTransform, Pipe } from '@angular/core';
-import { ChatContact } from '../interfaces/chat-contact.interface';
-import { Status } from '../enums/status.enum';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 
 @Pipe( {

@@ -22,7 +22,7 @@
  SOFTWARE.
  */
  export enum Status {
-   ONLINE = 'online',
-   OFFLINE = 'offline',
-   BUSY = 'busy'
+   ONLINE = 'ONLINE',
+   OFFLINE = 'OFFLINE',
+   BUSY = 'BUSY'
  }

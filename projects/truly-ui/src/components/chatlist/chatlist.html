@@ -3,12 +3,12 @@
     <ng-container *ngIf="!insideChat; else selectedPartner">
       <div class="chat-wrapper-status">
         <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'"></div>
-        <div class="chat-status" [class.selected]="selected === 'chat'" (click)="selectStatus('chat')">
+        <div class="chat-status" [class.selected]="selected === 'CHAT'" (click)="selectStatus('CHAT')">
           <span>Chats</span></div>
-        <div class="chat-status" [class.selected]="selected === 'online'" (click)="selectStatus('online')">
+        <div class="chat-status" [class.selected]="selected === 'ONLINE'" (click)="selectStatus('ONLINE')">
           <span>Online</span>
         </div>
-        <div class="chat-status" [class.selected]="selected === 'offline'" (click)="selectStatus('offline')">
+        <div class="chat-status" [class.selected]="selected === 'OFFLINE'" (click)="selectStatus('OFFLINE')">
           <span>Offline</span>
         </div>
       </div>

@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, EventEmitter, Input, OnChanges, Renderer2, SimpleChanges, ViewChild, Output, AfterViewInit,
+  Component, ElementRef, EventEmitter, Input, Renderer2, ViewChild, Output, AfterViewInit,
   OnDestroy
 } from '@angular/core';
 import { ChatStatus } from './interfaces/chat-status.interface';
@@ -46,9 +46,9 @@ export class TlChatList implements AfterViewInit, OnDestroy {
   @Input() loadingMessages = false;
 
   @Input() chatStatus: ChatStatus = {
-    busy: '#ffc019',
-    online: '#66cc99',
-    offline: '#ff3100'
+    BUSY: '#ffc019',
+    ONLINE: '#66cc99',
+    OFFLINE: '#ff3100'
   };
 
   @Input() partner: ChatContact;
@@ -78,7 +78,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   public transform = '100px';
 
-  public selected = 'online';
+  public selected = 'ONLINE';
 
   public insideChat = false;
 
@@ -177,15 +177,15 @@ export class TlChatList implements AfterViewInit, OnDestroy {
   }
 
   selectStatus(status) {
-    if (status === 'online') {
+    if (status === 'ONLINE') {
       this.transform = '100px';
-      this.selected = 'online';
-    } else if (status === 'offline') {
+      this.selected = 'ONLINE';
+    } else if (status === 'OFFLINE') {
       this.transform = '200px';
-      this.selected = 'offline';
+      this.selected = 'OFFLINE';
     } else {
       this.transform = '0';
-      this.selected = 'chat';
+      this.selected = 'CHAT';
     }
   }
 

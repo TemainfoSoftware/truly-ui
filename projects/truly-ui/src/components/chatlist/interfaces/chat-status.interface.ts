@@ -22,7 +22,7 @@
  SOFTWARE.
  */
  export interface ChatStatus {
-   busy: string;
-   online: string;
-   offline: string;
+   BUSY: string;
+   ONLINE: string;
+   OFFLINE: string;
  }

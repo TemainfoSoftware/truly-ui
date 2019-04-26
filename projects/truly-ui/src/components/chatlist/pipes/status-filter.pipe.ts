@@ -28,7 +28,7 @@ import { Status } from '../enums/status.enum';
 } )
 export class TlStatusFilterPipe implements PipeTransform {
 
-  transform( value: ChatContact[], status: Status[]): any {
+  transform( value: ChatContact[], status: any): any {
     if (value && value.length > 0) {
       return value.filter((item: ChatContact) => status.indexOf(item.status) >= 0 );
     }

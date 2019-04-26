@@ -27,6 +27,6 @@
    id: string | number;
    name: string;
    description: string;
-   status: Status;
+   status: Status | string;
    avatar?: string;
  }

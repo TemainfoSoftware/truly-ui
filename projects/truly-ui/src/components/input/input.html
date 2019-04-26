@@ -66,14 +66,3 @@
   <span *ngIf="textAfter" #afterText class="addon -borderright"
         [ngClass]="{ '-predefined' : textAfter, '-flatborders': flatBorder, 'withoutBorder' : !withBorder }">{{textAfter}}</span>
 </div>
-
-
-<ng-template cdkConnectedOverlay
-             *ngIf="showValidations"
-             [cdkConnectedOverlayHasBackdrop]="false"
-             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
-             [cdkConnectedOverlayOpen]="isShowingMessages">
-  <tl-messagevalidation [control]="control"
-                        [errors]="control?.errors"
-                        [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
-</ng-template>

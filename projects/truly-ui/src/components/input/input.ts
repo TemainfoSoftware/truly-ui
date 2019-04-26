@@ -131,9 +131,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
     return this._control;
   }
 
-
-  @Input() showValidations = false;
-
   @Input() withBorder = true;
 
   @Input() flatBorder = false;

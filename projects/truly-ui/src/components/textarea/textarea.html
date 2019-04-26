@@ -9,7 +9,6 @@
   <div class="ui-wrapper-textarea" [style.height]="height">
     <textarea #textarea
               class="field"
-              cdkOverlayOrigin
               [ngClass]="{
                  'invalid': controlName?.control.errors || model?.control.errors,
                  'withValidators': hasValidator,
@@ -41,12 +40,3 @@
     </div>
   </div>
 </div>
-
-<ng-template cdkConnectedOverlay
-             *ngIf="showValidations"
-             [cdkConnectedOverlayHasBackdrop]="false"
-             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
-             [cdkConnectedOverlayOpen]="isShowingMessages">
-  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
-                        [width]="textarea.offsetWidth + 'px'"></tl-messagevalidation>
-</ng-template>

@@ -74,8 +74,6 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   @Input() color = 'basic';
 
-  @Input() showValidations = false;
-
   @Input() withBorder = true;
 
   @Input() resize = false;

@@ -1,7 +1,7 @@
-import { Component, ElementRef, Input, OnChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 import { I18nService } from '../../../i18n/i18n.service';
 import * as stringFormat from 'string-format';
-import { FormControl } from '@angular/forms';
+import { FormControlName, NgModel } from '@angular/forms';
 const format = stringFormat;
 
 @Component({
@@ -9,46 +9,49 @@ const format = stringFormat;
   templateUrl: './messagevalidation.component.html',
   styleUrls: ['./messagevalidation.component.scss'],
 })
-export class TlMessageValidationComponent implements OnChanges {
+export class TlMessageValidationComponent {
 
-  @Input() control: FormControl;
+  private errors = {};
 
-  @Input() errors = [];
+  public control = null;
 
-  @Input() width = '';
+  public width = '';
 
   public messages = [];
 
-  constructor( public element: ElementRef, private i18n: I18nService ) { }
+  private keyErrors = {
+    required: Function(),
+    minlength: Function(),
+    email: Function(),
+    pattern: Function(),
+  };
+
+  constructor( public element: ElementRef, private i18n: I18nService, private changes: ChangeDetectorRef ) { }
+
+  init( control: NgModel | FormControlName, width: string ) {
+    this.control = control;
+    this.width = width;
+    this.changes.detectChanges();
+  }
 
   setMessages() {
     this.messages = [];
+    this.setKeyErrors();
     if (this.control && this.control.errors) {
-      Object.keys(this.control.errors).forEach(( key ) => {
-        if (key === 'required') {
-          this.messages.push(this.i18n.getLocale().Validators.fieldRequired);
-          return;
-        }
-        if (key === 'minlength') {
-          const requiredLength = this.control.errors['minlength']['requiredLength'];
-          this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
-          return;
-        }
-        if (key === 'email') {
-          this.messages.push(format(this.i18n.getLocale().Validators.invalidEmail));
-          return;
-        }
-        if (key === 'pattern') {
-          this.messages.push(this.i18n.getLocale().Validators.patternNotMatch);
-          return;
-        }
-        this.messages.push(this.control.errors[key]);
-      });
+      Object.keys(this.control.errors).forEach(( key ) => this.keyErrors[key]());
     }
   }
 
-  ngOnChanges() {
-    this.setMessages();
+  setKeyErrors() {
+    this.keyErrors = {
+      required: () => this.messages.push(this.i18n.getLocale().Validators.fieldRequired),
+      minlength: () => {
+        const requiredLength = this.control.errors['minlength']['requiredLength'];
+        this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
+      },
+      email: () => this.messages.push(format(this.i18n.getLocale().Validators.invalidEmail)),
+      pattern: () => this.messages.push(this.i18n.getLocale().Validators.patternNotMatch)
+    };
   }
 
 }

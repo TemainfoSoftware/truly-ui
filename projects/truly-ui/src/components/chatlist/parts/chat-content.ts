@@ -21,16 +21,12 @@
  */
 import {
   Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
-  LOCALE_ID
 } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ChatContact } from '../interfaces/chat-contact.interface';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
 import { ChatStatus } from '../interfaces/chat-status.interface';
-import { ChatService } from '../services/chat.service';
-import { message } from '../../input/core/validate';
-import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
 import { DatePipe } from '@angular/common';
 
 @Component( {
@@ -51,9 +47,9 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   @Input() messages: ChatMessage[] = [];
 
   @Input() chatStatus: ChatStatus = {
-    busy: '#ffc019',
-    online: '#66cc99',
-    offline: '#ff3100'
+    BUSY: '#ffc019',
+    ONLINE: '#66cc99',
+    OFFLINE: '#ff3100'
   };
 
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();

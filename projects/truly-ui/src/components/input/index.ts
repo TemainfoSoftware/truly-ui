@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { TlInput } from './input';
-import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 import { CharcaseDirective } from './directives/charcase.directive';
 
 import { ValidatorsModule } from '../validators/index';
@@ -27,13 +26,11 @@ import { INPUT_CONFIG, InputConfig } from './core/input.config';
     TlInput,
     CharcaseDirective,
     CurrencyDirective,
-    TlMessageValidationComponent,
   ],
   exports: [
     TlInput,
     CharcaseDirective,
     CurrencyDirective,
-    TlMessageValidationComponent
   ],
 } )
 export class InputModule {

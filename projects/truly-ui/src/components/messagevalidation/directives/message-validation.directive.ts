@@ -31,7 +31,7 @@ import {
 import { FormControlName, NgModel } from '@angular/forms';
 import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { TlMessageValidationComponent } from '../input/components/messagevalidation/messagevalidation.component';
+import { TlMessageValidationComponent } from '../messagevalidation.component';
 import { Subscription, throwError } from 'rxjs';
 
 @Directive( {

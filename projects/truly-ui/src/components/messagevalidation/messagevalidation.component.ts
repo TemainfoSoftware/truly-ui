@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
-import { I18nService } from '../../../i18n/i18n.service';
+import { I18nService } from '../i18n/i18n.service';
 import * as stringFormat from 'string-format';
 import { FormControlName, NgModel } from '@angular/forms';
 const format = stringFormat;

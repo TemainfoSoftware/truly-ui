@@ -29,6 +29,7 @@ export { ListBoxModule} from './components/listbox/index';
 export { LoaderModule } from './components/loader/index';
 export { MenuModule } from './components/menu/index';
 export { MiscModule } from './components/misc/index';
+export { MessageValidationModule } from './components/messagevalidation/index';
 export { ModalToolbarModule } from './components/modal/addons/modal-toolbar/index';
 export { ModalModule } from './components/modal/index';
 export { MultiSelectModule } from './components/multiselect/index';

@@ -12,11 +12,13 @@ import { PermissionsI18nInterface } from './languages/permissions/index';
 import { TimePickerI18nInterface } from './languages/timepicker/index';
 import { AutoCompleteI18nInterface } from './languages/autocomplete/index';
 import { TimeAvailablePickerI18nInterface } from './languages/time-available-picker/index';
+import {ChatListI18nInterface} from './languages/chatlist';
 
 export interface I18nInterface {
   locale: string;
   Button: ButtonI18nInterface;
   Calendar: CalendarI18nInterface;
+  ChatList: ChatListI18nInterface;
   OverlayList: OverlayI18nInterface;
   Datatable: DatatableI18nInterface;
   Dialog: DialogI18nInterface;

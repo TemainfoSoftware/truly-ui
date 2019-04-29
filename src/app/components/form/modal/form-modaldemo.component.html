@@ -36,10 +36,10 @@
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
       <div fxLayout="row" fxLayoutAlign="space-between stretch">
         <tl-input fxFlex="30" formControlName="id" [labelSize]="100" [label]="'ID'"></tl-input>
-        <tl-input formControlName="name" [showValidations]="true" [labelSize]="100" [label]="'Name'"></tl-input>
+        <tl-input formControlName="name" showValidations [labelSize]="100" [label]="'Name'"></tl-input>
       </div>
-      <tl-input formControlName="nickname" [showValidations]="true" [labelSize]="100" [label]="'Nickname'"></tl-input>
-      <tl-input formControlName="email" [showValidations]="true" [labelSize]="100" [label]="'Email'"></tl-input>
+      <tl-input formControlName="nickname" showValidations [labelSize]="100" [label]="'Nickname'"></tl-input>
+      <tl-input formControlName="email" showValidations [labelSize]="100" [label]="'Email'"></tl-input>
     </div>
 
   </tl-panelgroup>
@@ -47,8 +47,8 @@
   <tl-panelgroup [labelGroup]="'Access Informations'" fxLayout="column">
 
     <div fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="5px">
-      <tl-input formControlName="user" [showValidations]="true" [labelSize]="100" [label]="'User'"></tl-input>
-      <tl-input password formControlName="password" [showValidations]="true" [labelSize]="100"
+      <tl-input formControlName="user" showValidations [labelSize]="100" [label]="'User'"></tl-input>
+      <tl-input password formControlName="password" showValidations [labelSize]="100"
                 [label]="'Password'"></tl-input>
     </div>
 

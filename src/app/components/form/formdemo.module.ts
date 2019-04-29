@@ -30,6 +30,7 @@ import { ShowcaseTablePropertiesModule } from '../../shared/components/showcase-
 import { ShowcaseTableEventsModule } from '../../shared/components/showcase-table-events/showcase-table-events.module';
 import { MultiViewModule } from '../../../../projects/truly-ui/src/components/multiview/index';
 import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
+import {MessageValidationModule} from '../../../../projects/truly-ui/src/components/messagevalidation';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
     DropDownListModule,
     InputModule,
     ValidatorsModule,
+    MessageValidationModule,
     CheckBoxModule,
     FormDemoRoutingModule,
     FormModule,

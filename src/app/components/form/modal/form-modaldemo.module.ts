@@ -31,6 +31,7 @@ import { AutoCompleteModule } from '../../../../../projects/truly-ui/src/compone
 import { MultiViewModule } from '../../../../../projects/truly-ui/src/components/multiview/index';
 import { FormModalComponent } from './form-modal/form-modal.component';
 import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
+import {MessageValidationModule} from '../../../../../projects/truly-ui/src/components/messagevalidation';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header
     AutoCompleteModule,
     FormsModule,
     ReactiveFormsModule,
+    MessageValidationModule,
     MultiViewModule,
     DatePickerModule,
     PanelGroupModule,

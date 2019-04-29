@@ -3,8 +3,8 @@
     <ng-container *ngIf="!insideChat; else selectedPartner">
       <div class="chat-wrapper-status">
         <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'"></div>
-        <div class="chat-status" [class.selected]="selected === 'CHAT'" (click)="selectStatus('CHAT')">
-          <span>Chats</span></div>
+        <!--<div class="chat-status" [class.selected]="selected === 'CHAT'" (click)="selectStatus('CHAT')">
+          <span>Chats</span></div>-->
         <div class="chat-status" [class.selected]="selected === 'ONLINE'" (click)="selectStatus('ONLINE')">
           <span>Online</span>
         </div>
@@ -23,23 +23,28 @@
 </div>
 
 <ng-template #contactTemplate let-statusSelected="status">
-  <ng-container *ngFor="let item of contacts | status: ((statusSelected === offline) ? [offline] : [online, busy]);">
-    <div class="chat-item" (click)="selectPartner(item)">
-      <tl-avatar [size]="'45px'"
-                 class="chat-img"
-                 [text]="item?.name"
-                 [style.border]="'2px solid ' + chatStatus[item.status]"
-                 [gravatar]="item?.avatar" [shape]="'circle'">
-      </tl-avatar>
-      <div class="chat-item-detail">
-        <span>{{ item.name }}</span>
-        <span>{{ item.description }}</span>
+  <ng-container *ngIf="(contacts | status: ((statusSelected === offline) ? [offline] : [online, busy])).length > 0; else withoutContacts">
+
+    <ng-container *ngFor="let item of contacts | status: ((statusSelected === offline) ? [offline] : [online, busy]);">
+      <div class="chat-item" (click)="selectPartner(item)">
+        <tl-avatar [size]="'45px'"
+                   class="chat-img"
+                   [text]="item?.name"
+                   [style.border]="'2px solid ' + chatStatus[item.status]"
+                   [gravatar]="item?.avatar" [shape]="'circle'">
+        </tl-avatar>
+        <div class="chat-item-detail">
+          <span>{{ item.name }}</span>
+          <span>{{ item.description }}</span>
+        </div>
+        <div *ngIf="getUnreadMessages(item?.id)?.length > 0"
+             class="chat-unread-messages">{{ getUnreadMessages(item?.id)?.length }}
+        </div>
       </div>
-      <div *ngIf="getUnreadMessages(item.id)?.length > 0"
-           class="chat-unread-messages">{{ getUnreadMessages(item.id)?.length }}
-      </div>
-    </div>
+    </ng-container>
+
   </ng-container>
+
 </ng-template>
 
 <ng-template #selectedPartner>
@@ -67,4 +72,11 @@
     (message)="onMessage($event)"
     [messages]="messages">
   </tl-chat-content>
+</ng-template>
+
+<ng-template #withoutContacts>
+  <div class="chat-without-contacts">
+    <tl-icon class="icon" [lib]="'fa'" [style]="'far'">sad-tear</tl-icon>
+    <span class="label">{{ noContactsFound }}</span>
+  </div>
 </ng-template>

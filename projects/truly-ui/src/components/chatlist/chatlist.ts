@@ -76,9 +76,11 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
 
-  public transform = '100px';
+  public transform = '0';
 
   public selected = 'ONLINE';
+
+  public noContactsFound = 'No Contacts Found';
 
   public insideChat = false;
 
@@ -178,14 +180,11 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   selectStatus(status) {
     if (status === 'ONLINE') {
-      this.transform = '100px';
+      this.transform = '0';
       this.selected = 'ONLINE';
     } else if (status === 'OFFLINE') {
-      this.transform = '200px';
+      this.transform = '100px';
       this.selected = 'OFFLINE';
-    } else {
-      this.transform = '0';
-      this.selected = 'CHAT';
     }
   }
 

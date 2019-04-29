@@ -28,6 +28,7 @@ import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
 import { ChatStatus } from '../interfaces/chat-status.interface';
 import { DatePipe } from '@angular/common';
+import {I18nService} from '../../i18n';
 
 @Component( {
   selector: 'tl-chat-content',
@@ -62,11 +63,17 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   public control = new FormControl(null, Validators.required);
 
-  public datePipe = new DatePipe('en-US');
+  public datePipe = new DatePipe(this.i18nService.getLocale().locale);
 
   private subscription = new Subscription();
 
-  constructor() {
+  private today = this.i18nService.getLocale().ChatList.today;
+
+  private yesterday = this.i18nService.getLocale().ChatList.yesterday;
+
+  public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
+
+  constructor(private i18nService: I18nService) {
     this.opened = true;
   }
 
@@ -89,9 +96,9 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   currentDate( date ) {
     const yesterday = new Date(new Date().setDate((new Date().getDate() - 1)));
     if ( this.getDate(date) === this.getDate() ) {
-      return 'HOJE';
+      return this.today;
     } else if ( (this.getDate(yesterday) === this.getDate(date)) ) {
-      return 'ONTEM';
+      return this.yesterday;
     } else {
        return this.datePipe.transform( new Date(date), 'longDate' );
     }

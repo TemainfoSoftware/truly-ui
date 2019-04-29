@@ -48,9 +48,9 @@
 <ng-template #loadMessagesTemplate>
   <div class="chat-loader-wrapper">
     <div class="chat-loader">
-      <tl-loader [strokeWidth]="3"></tl-loader>
+      <tl-loader [strokeWidth]="3" [color]="'#6b6b6b'"></tl-loader>
     </div>
-    <span class="chat-loader-message">Loading Messages...</span>
+    <span class="chat-loader-message">{{ loadingMessagesLabel }}</span>
   </div>
 </ng-template>
 

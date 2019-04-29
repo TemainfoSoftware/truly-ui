@@ -12,9 +12,11 @@ import { TlMessageValidationDirective } from './directives/message-validation.di
     PortalModule
   ],
   declarations: [
+    TlMessageValidationComponent,
     TlMessageValidationDirective
   ],
   exports: [
+    TlMessageValidationComponent,
     TlMessageValidationDirective
   ],
   entryComponents: [ TlMessageValidationComponent ]

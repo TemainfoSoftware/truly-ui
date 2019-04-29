@@ -424,9 +424,11 @@ export class ModalService implements OnDestroy {
   }
 
   private destroyBackdrop() {
-    this.backdrop.destroy();
-    this.view.element.nativeElement.removeChild( this.backdrop.location.nativeElement );
-    this.backdrop = null;
+    if (this.backdrop) {
+      this.backdrop.destroy();
+      this.view.element.nativeElement.removeChild( this.backdrop.location.nativeElement );
+      this.backdrop = null;
+    }
   }
 
   private getComponentById( id: string ) {

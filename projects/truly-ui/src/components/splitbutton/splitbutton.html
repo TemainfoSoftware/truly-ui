@@ -1,40 +1,35 @@
-<div class="tl-split-button-box" [ngClass]="color">
-  <button tabindex="0"
-          cdkOverlayOrigin #trigger="cdkOverlayOrigin"
-          [ngStyle]="{
-            'min-width': width,
-            'height': height,
-            'line-height': height,
-            'border-bottom-left-radius' : isOpen && positionOverlay === 'bottom' ? 0 : '3px',
-            'border-top-left-radius' : isOpen && positionOverlay === 'top' ? 0 : '3px'
-          }"
-          class="ui-button ripple"
-          (click)="buttonClick.emit($event)"
-          [ngClass]="{' disabled ': disabled}"
-          [disabled]="disabled ? true : null">
-    <span class="textButton" [ngStyle]="{'line-height': height}">{{text}}</span>
-  </button>
+<div class="split-wrapper" [ngClass]="color">
 
-  <div [ngClass]="{'active': isOpen === true }"
-       (click)="isOpen = !isOpen"
-       class="split-button-actions"
-       [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
-    <div class="icon-arrow" [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'">
-      <tl-icon [lib]="'fa'" [style]="'fas'">chevron-down</tl-icon>
+  <div class="split-content" #split>
+    <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+               [text]="text"
+               [disabled]="disabled"
+               (click)="buttonClick.emit()"
+               [width]="width"
+               [height]="height">
+    </tl-button>
+    <div [class.active]="isOpen"
+         (click)="isOpen = !isOpen"
+         class="split-button-actions"
+         [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
+      <div class="icon-arrow" [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'">
+        <tl-icon [lib]="'fa'" [style]="'fas'">chevron-down</tl-icon>
+      </div>
+      <ng-template cdkConnectedOverlay
+                   (backdropClick)="isOpen = false"
+                   (positionChange)="onPositionChange($event)"
+                   [cdkConnectedOverlayHasBackdrop]="true"
+                   [cdkConnectedOverlayOrigin]="trigger"
+                   [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+                   [cdkConnectedOverlayOpen]="isOpen">
+        <ul @overlay
+            [style.width]="split.offsetWidth + 'px'"
+            [class.border-top]="positionOverlay === 'top'"
+            class="actions-menu">
+            <ng-content></ng-content>
+        </ul>
+      </ng-template>
     </div>
-    <ng-template cdkConnectedOverlay
-                 (backdropClick)="isOpen = false"
-                 (positionChange)="onPositionChange($event)"
-                 [cdkConnectedOverlayHasBackdrop]="true"
-                 [cdkConnectedOverlayOrigin]="trigger"
-                 [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
-                 [cdkConnectedOverlayOpen]="isOpen">
-      <ul @overlay
-          [style.width]="width"
-          [ngClass]="{'border-top': positionOverlay === 'top'}"
-          class="actions-menu">
-          <ng-content></ng-content>
-      </ul>
-    </ng-template>
   </div>
+
 </div>

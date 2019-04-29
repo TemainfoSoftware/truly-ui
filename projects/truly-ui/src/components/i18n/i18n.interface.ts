@@ -11,6 +11,7 @@ import { EditorI18nInterface } from './languages/editor/index';
 import { PermissionsI18nInterface } from './languages/permissions/index';
 import { TimePickerI18nInterface } from './languages/timepicker/index';
 import { AutoCompleteI18nInterface } from './languages/autocomplete/index';
+import { TimeAvailablePickerI18nInterface } from './languages/time-available-picker/index';
 
 export interface I18nInterface {
   locale: string;
@@ -26,5 +27,6 @@ export interface I18nInterface {
   Validators: ValidatorsI18nInterface;
   Permissions: PermissionsI18nInterface;
   TimePicker: TimePickerI18nInterface;
+  TimeAvailablePicker: TimeAvailablePickerI18nInterface;
   AutoComplete: AutoCompleteI18nInterface;
 }

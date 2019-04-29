@@ -1,5 +1,6 @@
 import { Renderer2 } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
+import { Subject } from 'rxjs';
 
 export class InputMask {
 
@@ -27,6 +28,8 @@ export class InputMask {
 
   private maskSpecialCharacters: string[] = [ '/', '(', ')', '.', ':', '-', ' ', '+' ];
 
+  public complete: Subject<boolean>;
+
   private maskAwaliablePatterns: { [key: string]: RegExp } = {
     '0': /\d/,
     '9': /\d/,
@@ -42,6 +45,7 @@ export class InputMask {
     this.input = element.input;
     this.setMaskExpression( maskValue );
     this.initializeMask();
+    this.complete = new Subject();
   }
 
   setMaskExpression( value ) {
@@ -424,6 +428,7 @@ export class InputMask {
   private onComplete() {
     if ( this.isTextLengthMatchWithExpressionLength() ) {
       this.tlInput.value = this.value;
+      this.complete.next(true);
     }
   }
 

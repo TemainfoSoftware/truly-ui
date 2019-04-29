@@ -33,6 +33,7 @@
     bottom: 0;
     -webkit-transition: .2s;
     transition: .2s;
+    border: 1px solid transparent;
   }
 
   .label {
@@ -50,19 +51,17 @@
     content: "";
     height: 14px;
     width: 14px;
-    left: 4px;
-    bottom: 2px;
+    left: 3px;
     transition: .2s;
+    top: 1px;
   }
 
   input:checked + .slider:before {
     -webkit-transform: translateX(13px);
     -ms-transform: translateX(13px);
     transform: translateX(13px);
-    bottom: 1px;
   }
 
-  /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
   }

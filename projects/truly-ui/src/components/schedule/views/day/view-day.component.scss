@@ -2,6 +2,7 @@
   display: grid;
   position: relative;
   grid-template-columns: 60px auto;
+  border-top: 1px solid #D6D6D6;
 }
 
 .ui-schedule-times{
@@ -35,6 +36,9 @@
     }
     &:last-child:not(.last){
       border-bottom: 1px #D6D6D6 solid;
+    }
+    &:last-child{
+      border-bottom: none;
     }
   }
 }

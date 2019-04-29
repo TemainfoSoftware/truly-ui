@@ -45,7 +45,18 @@ let componentFormIndex;
 } )
 export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
-  @Input() initialFocus: TlInput;
+  @Input( 'initialFocus' )
+  set initialFocus( value ) {
+    if ( value ) {
+      this._initialFocus = value;
+      this.change.detectChanges();
+      this.setInitialFocus();
+    }
+  }
+
+  get initialFocus() {
+    return this._initialFocus;
+  }
 
   @Input() showConfirmOnChange = false;
 
@@ -99,6 +110,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   private elementsWithTabIndex = [];
 
+  private _initialFocus;
+
   private subscription = new Subscription();
 
   private modalInstance;
@@ -106,7 +119,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   constructor( private renderer: Renderer2, private i18n: I18nService,
                private change: ChangeDetectorRef,
                private injector: Injector ) {
-    this.modalInstance = this.injector.get(ModalService);
+    this.modalInstance = this.injector.get( ModalService );
   }
 
   get valid() {
@@ -124,40 +137,32 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.addControls();
   }
 
-
-  listenModalShow() {
-    this.subscription.add(this.modalInstance.modalShow.subscribe(() => {
-      this.setInitialFocus();
-    }));
-  }
-
   handleSmartFormAction() {
-    if (this.modalInstance.modalConfiguration) {
+    if ( this.modalInstance.modalConfiguration ) {
       this.actionForm.emit( this.modalInstance.modalConfiguration.executeAction );
     }
   }
 
   ngAfterViewInit() {
-    this.setInitialFocus();
     this.getElementsOfForm();
     this.clickListener();
     this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
-    this.listenModalShow();
+    this.setInitialFocus();
   }
 
   handleFormGroupValues() {
-    if (this.formGroup) {
-      if (this.modalInstance.modalConfiguration &&
+    if ( this.formGroup ) {
+      if ( this.modalInstance.modalConfiguration &&
         this.modalInstance.modalConfiguration.executeAction !== ActionsModal.INSERT &&
-        this.modalInstance.modalConfiguration.dataForm) {
+        this.modalInstance.modalConfiguration.dataForm ) {
         this.formGroup.patchValue( this.modalInstance.modalConfiguration.dataForm );
       }
     }
   }
 
   setPrimaryKeyDisabled() {
-    if (this.primaryKey && this.formGroup) {
-      this.formGroup.get(this.primaryKey).disable();
+    if ( this.primaryKey && this.formGroup ) {
+      this.formGroup.get( this.primaryKey ).disable();
     }
   }
 
@@ -215,8 +220,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   getFormValues() {
-    if (this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE) {
-      this.formGroup.get(this.primaryKey).enable();
+    if ( this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE ) {
+      this.formGroup.get( this.primaryKey ).enable();
     }
     this.formResult = this.formGroup ? this.formGroup : this.form;
     this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
@@ -355,13 +360,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.setFocusCancel();
         break;
       case KeyEvent.TAB:
-        if (!this.isTextArea()) {
+        if ( !this.isTextArea() ) {
           $event.preventDefault();
         }
         this.forwardTabbing();
         break;
       case KeyEvent.ENTER:
-        if (!this.isTextArea()) {
+        if ( !this.isTextArea() ) {
           $event.preventDefault();
         }
         this.forwardTabbing();
@@ -423,10 +428,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   setInitialFocus() {
-    setTimeout( () => {
-      this.initialFocus ? this.initialFocus.input.nativeElement.focus()
+    setTimeout(() => {
+      this.initialFocus ? this.initialFocus.getNativeInput().focus()
         : this.setFocusOnFirstInput();
-    } );
+    }, 250);
   }
 
   setFocusOK() {
@@ -442,16 +447,14 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   setFocusOnFirstInput() {
-    let element;
-    for ( const item in this.inputList.toArray() ) {
-      if ( !(this.inputList.toArray()[ item ].input.nativeElement.disabled) ) {
-        element = this.inputList.toArray()[ item ].input.nativeElement;
-        break;
-      }
+    const enableElement = this.inputArray.filter( ( value ) => !value.disabled );
+    if ( enableElement.length > 0 ) {
+      enableElement[ 0 ].focus();
     }
-    if ( element ) {
-      element.focus();
-    }
+  }
+
+  get inputArray() {
+    return this.inputList.map( ( item ) => item.getNativeInput() );
   }
 
   isActiveElementButtonOk() {

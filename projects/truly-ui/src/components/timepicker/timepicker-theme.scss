@@ -2,9 +2,11 @@
 
 @mixin _tl-timepicker-theme-schema( $theme, $action ) {
 
+  $basic: map-deep-get($theme, 'basic');
+
   > .ui-timepicker-header {
     border: 1px solid map-deep-get($theme, $action, "default", "border");
-    background: map-deep-get($theme, $action, "default", "background");
+    background: white;
   }
   > .ui-timepicker-content {
     border-left: 1px solid map-deep-get($theme, $action, "default", "border");
@@ -40,7 +42,7 @@
     background: map-deep-get($theme, $action, "default", "background");
   }
   > .ui-timepicker-footer {
-    background: map-deep-get($theme, $action, "default", "background");
+    background: white;
   }
   .list {
     color: map-deep-get($theme, $action, "default", "foreground");

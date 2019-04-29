@@ -36,11 +36,11 @@ export class TlOverlayPanel implements OnInit, AfterContentInit {
 
   @Input() elementOrigin;
 
-  @Input() color = 'basic';
-
   @Input() width = '100%';
 
   @Output() show: EventEmitter<any> = new EventEmitter();
+
+  @Output() hide: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
 
@@ -60,7 +60,7 @@ export class TlOverlayPanel implements OnInit, AfterContentInit {
   private listenElementOrigin() {
     if ( this.elementOrigin ) {
       this.renderer.listen( this.getTargetElement(), 'click', () => {
-        this.isOpen = !this.isOpen;
+        this.toggle();
       } );
     }
   }
@@ -79,16 +79,23 @@ export class TlOverlayPanel implements OnInit, AfterContentInit {
     return this.elementOrigin instanceof TlButton;
   }
 
+  onBackdropClick() {
+    this.close();
+  }
+
   open() {
     this.isOpen = true;
+    this.show.emit();
   }
 
   close() {
     this.isOpen = false;
+    this.hide.emit();
   }
 
   toggle() {
     this.isOpen = !this.isOpen;
+    this.isOpen ? this.show.emit() : this.hide.emit();
   }
 
 

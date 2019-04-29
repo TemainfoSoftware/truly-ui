@@ -50,7 +50,8 @@
           color: map-deep-get($danger, "default", "background");
         }
         &:hover:not(.ui-table-cell-empty) {
-          outline: 1px solid map-deep-get($basic, "default", "border");
+          border: 1px solid map-deep-get($basic, "default", "border") !important;
+          border-radius: 20%;
         }
       }
     }
@@ -59,12 +60,14 @@
     }
 
     & .navigator {
-      outline: 2px solid map-deep-get($basic, "default", "border");
+      border: 1px solid map-deep-get($basic, "default", "border") !important;
+      border-radius: 20%;
     }
 
     & .selected {
       background-color: map-deep-get($primary, "default", "background");
       color: map-deep-get($primary, "default", "foreground") !important;
+      border-radius: 20%;
     }
   }
 }

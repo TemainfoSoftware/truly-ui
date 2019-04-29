@@ -5,8 +5,6 @@
 
   & .header {
     background-color: map-deep-get($theme, $action, "default", "background");
-  }
-  & .header .bar {
     outline: 1px solid map-deep-get($theme, $action, "default", "background");
   }
   & .header .-active {

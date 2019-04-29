@@ -1,6 +1,7 @@
 <div [class]="'ui-toaster-wrapper ' + color"
-     [@enterAnimation]="true"
+     (animationend)="animationDone($event)"
      (click)="close()"
+     #container
      [ngStyle]="{
      'border-bottom-left-radius': !progress ? '3px' : '0',
      'border-bottom-right-radius': !progress ? '3px' : '0',
@@ -11,7 +12,7 @@
     <div *ngIf="showIcon" class="ui-toaster-icon"><tl-icon [size]="'1.2em'">{{ icon }}</tl-icon></div>
     <div class="ui-toaster-description">
       <p><b>{{title}}</b></p>
-      <p *ngIf="!isMessageObject()">{{message}}</p>
+      <p *ngIf="!isMessageObject()" [innerHTML]="message"></p>
       <ng-container *ngIf="isMessageObject()">
         <p *ngFor="let item of getMessageKeys()">
           {{ item }} {{ message[item] }}

@@ -17,18 +17,17 @@
     align-items: center;
     white-space: nowrap;
 
-    > ::ng-deep span,
-      ::ng-deep h1,
-      ::ng-deep h2,
-      ::ng-deep h3,
-      ::ng-deep h4,
-      ::ng-deep h5,
-      ::ng-deep h6,
-      ::ng-deep i{
-        margin: 0;
-        padding: 0 16px;
+    >  span,
+       h1,
+       h2,
+       h3,
+       h4,
+       h5,
+       h6,
+       i {
+      margin: 0;
+      padding: 0 50px;
     }
-
   }
 
 }

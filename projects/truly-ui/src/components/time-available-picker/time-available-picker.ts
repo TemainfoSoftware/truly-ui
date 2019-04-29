@@ -23,6 +23,7 @@ import {
   Input, Component, Output, AfterViewInit, EventEmitter, ChangeDetectorRef, SimpleChanges,
   OnChanges
 } from '@angular/core';
+import { I18nService } from '../i18n/i18n.service';
 
 export interface FilterTime {
   range: DateRange;
@@ -45,7 +46,11 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   @Input() color = 'basic';
 
-  @Input() width = 300;
+  @Input() loading = true;
+
+  @Input() maxHeight = '180px';
+
+  @Input() width = '260px';
 
   @Input() dateValue: Date = new Date();
 
@@ -57,16 +62,25 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   public selectedTime: Array<FilterTime> = [];
 
-  constructor( private change: ChangeDetectorRef ) {}
+  public notFoundMessage = this.i18nService.getLocale().TimeAvailablePicker.notFound;
+
+  constructor( private change: ChangeDetectorRef, private i18nService: I18nService ) {}
 
   ngAfterViewInit() {
     this.handleValueChange();
   }
 
   private setUpData() {
+    this.resetArrays();
     this.availableTimes.forEach( ( value ) => {
       this.filterTimes.push( { range: value, selected: false } );
     } );
+    this.loading = false;
+  }
+
+  private resetArrays() {
+    this.filterTimes = [];
+    this.selectedTime = [];
   }
 
   private handleValueChange() {
@@ -83,8 +97,8 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   private getDateOnFilter( date: DateRange ) {
     return this.filterTimes.findIndex( ( item: FilterTime ) =>
-      (item.range.start.getTime() === date.start.getTime()) &&
-    (item.range.end.getTime() === date.end.getTime())
+      (new Date(item.range.start).getTime() === new Date(date.start).getTime()) &&
+    (new Date(item.range.end).getTime() === new Date(date.end).getTime())
     );
   }
 
@@ -117,8 +131,13 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
       this.handleDeselect( time );
       return;
     }
+    if ( readySelected < 0 ) {
+      time.selected = !time.selected;
+      this.updateTime();
+      return;
+    }
     time.selected = !time.selected;
-    this.selectMany( time, readySelected, index );
+    this.selectMany( readySelected, index );
 
   }
 
@@ -130,12 +149,8 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
     return index === this.filterTimes.length - 1 ? index : index + 1;
   }
 
-  private selectMany( time: FilterTime, readySelected: number, index: number ) {
+  private selectMany( readySelected: number, index: number ) {
     this.filterTimes.forEach( ( value, index2, array ) => {
-      if ( readySelected < 0 ) {
-        time.selected = !time.selected;
-        return;
-      }
       if ( index2 > readySelected && index2 <= index ) {
         value.selected = true;
       }

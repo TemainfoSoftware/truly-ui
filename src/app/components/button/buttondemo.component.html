@@ -50,20 +50,30 @@
           <app-card>
             <div class="col-md-12">
               <h6>Button Icon</h6>
-              <tl-button width="'40px'" [color]="'basic'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-              <tl-button width="'40px'" [color]="'primary'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-              <tl-button width="'40px'" [color]="'success'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-              <tl-button width="'40px'" [color]="'danger'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-              <tl-button width="'40px'" [color]="'warning'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-              <tl-button width="'40px'" [color]="'information'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+              <ng-template #icon>
+                <div style="padding: 0 10px">
+                  <tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon>
+                </div>
+              </ng-template>
+              <tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
+              <tl-button width="'40px'" [template]="icon" [color]="'primary'"></tl-button>
+              <tl-button width="'40px'" [template]="icon" [color]="'success'"></tl-button>
+              <tl-button width="'40px'" [template]="icon" [color]="'danger'"></tl-button>
+              <tl-button width="'40px'" [template]="icon" [color]="'warning'"></tl-button>
+              <tl-button width="'40px'" [template]="icon" [color]="'information'"></tl-button>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-button width="'40px'" [color]="'basic'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-<tl-button width="'40px'" [color]="'primary'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-<tl-button width="'40px'" [color]="'success'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-<tl-button width="'40px'" [color]="'danger'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-<tl-button width="'40px'" [color]="'warning'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
-<tl-button width="'40px'" [color]="'information'"><tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon></tl-button>
+<ng-template #icon>
+  <div style="padding: 0 10px">
+    <tl-icon [lib]="'fa'" [style]="'fas'">home</tl-icon>
+  </div>
+</ng-template>
+<tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
+<tl-button width="'40px'" [template]="icon" [color]="'primary'"></tl-button>
+<tl-button width="'40px'" [template]="icon" [color]="'success'"></tl-button>
+<tl-button width="'40px'" [template]="icon" [color]="'danger'"></tl-button>
+<tl-button width="'40px'" [template]="icon" [color]="'warning'"></tl-button>
+<tl-button width="'40px'" [template]="icon" [color]="'information'"></tl-button>
               </textarea>
             </div>
           </app-card>

@@ -37,9 +37,5 @@ export class ModalDemoComponent {
       .then( ( modalResult ) => {
         console.log( modalResult );
       });
-
-/*    this.modalService.on('show', ( event ) => {
-      console.log('Show Modal', event);
-    });*/
   }
 }

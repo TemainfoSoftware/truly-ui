@@ -93,19 +93,19 @@
         color: map-deep-get($basic, "default", "foreground");
       }
 
-      &.ng-touched.invalid {
+      &.ng-touched.ng-invalid {
         border: 1px solid map-deep-get($danger, "default", "border");
         background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
         outline: none;
       }
 
-      &.ng-dirty.invalid {
+      &.ng-dirty.ng-invalid {
         border: 1px solid map-deep-get($danger, "default", "border");
         background-color: rgba(map-deep-get($danger, "default", "background"), 0.2);
         outline: none;
       }
 
-      &.ng-touched.invalid::placeholder {
+      &.ng-touched.ng-invalid::placeholder {
         color: rgba(map-deep-get($danger, "default", "background"), 0.8);
       }
 

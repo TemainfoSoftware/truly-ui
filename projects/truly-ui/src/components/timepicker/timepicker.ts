@@ -21,15 +21,26 @@
  */
 
 import {
-  Input, AfterContentInit, Optional, Inject, Component, forwardRef, ElementRef, OnInit, ViewChild,
-  Renderer2, OnDestroy, Output, EventEmitter, AfterViewInit,
+  Input,
+  AfterContentInit,
+  Component,
+  forwardRef,
+  ElementRef,
+  ContentChild,
+  ViewChild,
+  OnDestroy,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subscription } from 'rxjs';
 import { I18nService } from '../i18n/i18n.service';
+import { ValueAccessorBase } from '../input/core/value-accessor';
+import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 
 export interface IncrementalSteps {
   hour: number;
@@ -52,7 +63,7 @@ export enum TIME {
   } ],
   animations: [ OverlayAnimation ]
 } )
-export class TlTimepicker extends ElementBase<string> implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
+export class TlTimepicker extends ValueAccessorBase<Date | string> implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
 
   @Input() format: '12' | '24' = '24';
 
@@ -82,9 +93,11 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @Input() name = '';
 
-  @Input() min: Date = new Date(1999, 0, 1, 0, 0);
+  @Input() isoModel = false;
 
-  @Input() max: Date =  new Date(1999, 0, 1, 23, 59);
+  @Input() min: Date = new Date( 1999, 0, 1, 0, 0 );
+
+  @Input() max: Date = new Date( 1999, 0, 1, 23, 59 );
 
   @ViewChild( 'listHour' ) listHour: ElementRef;
 
@@ -92,15 +105,17 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
 
+  @ContentChild( NgModel ) ngModel: NgModel;
+
+  @ContentChild( FormControlName ) control: NgModel;
+
   @Output() now: EventEmitter<any> = new EventEmitter();
 
   @Output() changeTime: EventEmitter<string> = new EventEmitter();
 
-  @Output() confirm: EventEmitter<string> = new EventEmitter();
+  @Output() confirm: EventEmitter<Date | string> = new EventEmitter();
 
-  @Output() cancel: EventEmitter<string> = new EventEmitter();
-
-  @ViewChild(NgModel) model: NgModel;
+  @Output() cancel: EventEmitter<Date | string> = new EventEmitter();
 
   public isOpen = false;
 
@@ -120,8 +135,6 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   public timeZone = 'AM';
 
-  public value = '';
-
   public textConfirm = this.i18n.getLocale().TimePicker.textConfirm;
 
   public textCancel = this.i18n.getLocale().TimePicker.textCancel;
@@ -134,47 +147,60 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   private itemHeight = 30;
 
+  private loaded = false;
+
   private leftPad = new TlLeftPadPipe();
 
   private listeners: Subscription = new Subscription();
 
-  constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>,
-               @Optional() @Inject( NG_ASYNC_VALIDATORS ) asyncValidators: Array<any>,
-               private i18n: I18nService ) {
-    super( validators, asyncValidators );
+  constructor( private i18n: I18nService ) {
+    super();
   }
-
-  ngOnInit() {}
 
   ngAfterContentInit() {
     this.handleCreateRing();
-    this.formatTime();
+    if (!this.value) {
+      this.value = new Date();
+    }
+    this.setModelValue( new Date(this.value) );
   }
 
   ngAfterViewInit() {
-    this.listenModelChange();
+    this.listenControlChanges();
   }
 
-  handleCreateRing() {
+  listenControlChanges() {
+    if (this.getControl()) {
+      this.getControl().control.valueChanges.subscribe(( date: Date) => {
+        if (!this.loaded) {
+          this.minute = this.leftPad.transform(new Date(date).getMinutes(), 2);
+          this.hour = this.leftPad.transform(new Date(date).getHours(), 2);
+          this.formatTime();
+        }
+      });
+    }
+  }
+
+  private handleCreateRing() {
     this.createHourRing();
     this.createMinuteRing();
   }
 
-  createHourRing() {
+  private createHourRing() {
     let lastHour = this.min.getHours() - this.steps.hour;
-    for (let i = 0; i <= this.max.getHours(); i++) {
-      if ( i === ( lastHour + this.steps.hour)) {
-        this.hours.push(i);
+    for ( let i = 0; i <= this.max.getHours(); i++ ) {
+      if ( i === ( lastHour + this.steps.hour) ) {
+        this.hours.push( i );
         lastHour = i;
       }
     }
   }
 
-  createMinuteRing() {
+  private createMinuteRing() {
     let lastMinute = this.min.getMinutes() - this.steps.minute;
-    for (let i = 0; i <= this.max.getMinutes(); i++) {
-      if ( i === ( lastMinute + this.steps.minute)) {
-        this.minutes.push(i);
+    for ( let i = 0; i <= this.max.getMinutes(); i++ ) {
+      if ( i === ( lastMinute + this.steps.minute) ) {
+        this.minutes.push( i );
         lastMinute = i;
       }
     }
@@ -182,31 +208,34 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
 
   changeOpened() {
     this.isOpen = !this.isOpen;
+    setTimeout(() => {
+      this.onChangeValue( this.selectedTime );
+      this.loaded = true;
+    });
   }
 
-  private listenModelChange() {
-    if (this.model) {
-      this.model.valueChanges.subscribe((value) => {
-        if (value instanceof Date) {
-          this.hour = value.getHours();
-          this.minute = value.getMinutes();
-          this.formatTime();
-          this.value = this.selectedTime;
-          this.onChangeValue( this.hour + ':' + this.minute );
-        }
-      });
+  private setModelValue( value ) {
+    if ( value instanceof Date ) {
+      this.hour = this.leftPad.transform(value.getHours(), 2);
+      this.minute = this.leftPad.transform(value.getMinutes(), 2);
+      this.formatTime();
+      this.onChangeValue( this.hour + ':' + this.minute );
     }
   }
 
-  mouseDownContainer( $event ) {
+  onMouseDownContainer( $event ) {
     $event.stopPropagation();
   }
 
   private emitClickNow() {
-    this.now.emit( this.isFormat24() ? this.selectedTime : {
+    this.now.emit( this.isFormat24() ? this.value : {
       time: this.selectedTime,
       timeZone: this.timeZone
     } );
+  }
+
+  onBlur() {
+    this.propagateTouched();
   }
 
   onClickNow() {
@@ -215,48 +244,71 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.minute = this.leftPad.transform( new Date().getMinutes(), 2 );
     this.formatTime();
     this.onChangeValue( this.hour + ':' + this.minute );
+    this.setValue();
     this.emitClickNow();
-    this.value = this.selectedTime;
+  }
+
+  private getControl() {
+    return this.control ? this.control : this.ngModel;
+  }
+
+  private setValue() {
+    const dateSt = new Date(this.value);
+    const year = dateSt.getFullYear();
+    const month = dateSt.getMonth();
+    const date = dateSt.getDate();
+    const hour = parseInt( <string>this.hour, 10);
+    const minute = parseInt( <string>this.minute, 10);
+    this.value = this.isoModel ? new Date( year, month, date, hour, minute ).toISOString() :
+      new Date( year, month, date, hour, minute );
   }
 
   onScrollHour( $event ) {
-    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight ) );
     this.hour = this.steps.hour > 0 ? (scroll * this.steps.hour) : scroll;
-    this.formatTime();
   }
 
   onScrollMinutes( $event ) {
-    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight )  );
+    const scroll = Math.round( ( $event.target.scrollTop / this.itemHeight ) );
     this.minute = this.steps.minute > 0 ? (scroll * this.steps.minute) : scroll;
-    this.formatTime();
   }
 
   onClickCancel() {
     this.isOpen = false;
-    this.cancel.emit( this.selectedTime );
+    this.loaded = false;
+    this.setValue();
+    this.cancel.emit( this.value );
   }
 
   onClickConfirm() {
     this.isOpen = false;
-    this.confirm.emit( this.selectedTime );
-    this.value = this.selectedTime;
+    this.loaded = false;
+    this.setValue();
+    this.formatTime();
+    this.confirm.emit( this.value );
   }
 
-  onChangeValue( $event ) {
-    if ( !$event ) {
+  onChangeValue( stringTime ) {
+    this.selectedTime = stringTime;
+    if ( !stringTime ) {
       return;
     }
-    const split = this.cleanValue( $event ).split( ':' );
-    if ( split[ 0 ].length >= 2 ) {
-      this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( split[ 0 ] ), 2 ) : split[ 0 ];
-      if (this.listHour) {
+    const split = this.cleanValue( stringTime ).split( ':' );
+    const hour = this.leftPad.transform(split[0], 2);
+    const min = this.leftPad.transform(split[1], 2);
+
+    if ( min.length >= 2 ) {
+      this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( hour ), 2 ) : hour;
+      if ( this.listHour ) {
         this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
+        this.setValue();
       }
     }
-    if ( split[ 1 ].length >= 2 ) {
-      this.minute = split[ 1 ];
-      if (this.listMinutes) {
-        this.setScrollColumn( this.listMinutes.nativeElement,  TIME.MINUTE );
+    if ( hour.length >= 2 ) {
+      this.minute = min;
+      if ( this.listMinutes ) {
+        this.setScrollColumn( this.listMinutes.nativeElement, TIME.MINUTE );
+        this.setValue();
       }
     }
   }
@@ -264,10 +316,10 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
   private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {
     const element: any = this.getDataIndex( type );
     if ( element ) {
-      setTimeout(() => {
+      setTimeout( () => {
         elementScroll.scrollTop =
           element.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
-      }, 100);
+      }, 100 );
     }
   }
 
@@ -314,10 +366,21 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     return this.timeZone === 'AM';
   }
 
+  setMinute(minute: number) {
+    this.minute = minute;
+    this.formatTime();
+    this.setValue();
+  }
+
+  setHour(hour: number) {
+    this.hour = hour;
+    this.formatTime();
+    this.setValue();
+  }
+
   clickListItem( scrollElement, $event ) {
     scrollElement.scrollTop =
       $event.target.offsetTop - ( this.nullElements + this.headerHeight + this.border ) - this.itemHeight;
-    setTimeout(() => { this.value = this.selectedTime; }, 100);
   }
 
   setAm() {
@@ -328,8 +391,21 @@ export class TlTimepicker extends ElementBase<string> implements OnInit, AfterCo
     this.timeZone = 'PM';
   }
 
+  onClose() {
+    this.isOpen = false;
+    this.loaded = false;
+  }
+
+  getFormattedHour() {
+    return this.leftPad.transform( this.hour, 2 ) + ':' + this.leftPad.transform( this.minute, 2 );
+  }
+
   private formatTime() {
-    this.selectedTime = this.leftPad.transform( this.hour, 2 ) + ':' + this.leftPad.transform( this.minute, 2 );
+    this.selectedTime = this.getFormattedHour();
+
+  }
+
+  ngOnChanges( changes: SimpleChanges ) {
   }
 
   ngOnDestroy() {

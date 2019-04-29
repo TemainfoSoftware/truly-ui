@@ -32,6 +32,7 @@ import { Editor } from './editor/en_US';
 import { Permissions } from './permissions/en_US';
 import { TimePicker } from './timepicker/en_US';
 import { AutoComplete } from './autocomplete/en_US';
+import { TimeAvailablePicker } from './time-available-picker/en_US';
 
 export const en_US = {
   locale: 'en-US',
@@ -47,5 +48,6 @@ export const en_US = {
   Validators,
   OverlayList,
   Permissions,
-  TimePicker
+  TimePicker,
+  TimeAvailablePicker
 };

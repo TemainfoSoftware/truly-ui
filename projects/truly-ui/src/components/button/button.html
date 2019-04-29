@@ -1,38 +1,28 @@
 <button #tlbutton
         attr.tabindex="-1"
         cdkTrapFocus
-        [ngStyle]="
-            {
-             'min-width': width,
-             'height': height,
-             'border-radius': flatBorder ? '0' : '3px',
-             'line-height': height
-             }"
+        [ngStyle]="{'width': width, 'height': height, 'border-radius': flatBorder ? '0' : '3px', 'line-height': height }"
         [ngClass]="{'disabled ': disabled, 'outline': outline}"
         [class]="'tl-button ripple '+ color"
-        [disabled]="( disabled || isLoading ) ? true : null"
-        >
-    <tl-icon *ngIf="iconAddonBefore"
-          [class]="color + ' iconAddonBefore'"
-          [ngStyle]="{'line-height' : 'calc(' + height + ' - 1px)'}"
-          [style.color]="colorIconBefore">{{ iconAddonBefore }}
-    </tl-icon>
-    <tl-icon *ngIf="iconAddonAfter"
-          [style.color]="colorIconAfter"
-          [class]="color + ' iconAddonAfter'"
-          [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">{{ iconAddonAfter }}
-    </tl-icon>
-
-    <!-- WHEN IS LOADING-->
-    <span *ngIf="isLoading"  class="textButton -isLoading" [ngStyle]="{'line-height': height}">
-      <i *ngIf="isLoading" ngClass="fa fa-circle-o-notch fa-spin fa-fw"></i>
-      <tl-icon [lib]="'fa'" [animation]="'spin'">spinner</tl-icon>
-      {{ textLoading }}
-    </span>
-    <span *ngIf="!isLoading" class="textButton" [ngStyle]="{'line-height': height}">
-      <tl-icon *ngIf="iconBeforeText">{{ iconBeforeText }}</tl-icon>
-        {{text}}<ng-content></ng-content>
-      <tl-icon *ngIf="iconAfterText" class="iconAfterText">{{ iconAfterText }}</tl-icon>
-    </span>
+        [disabled]="( disabled || isLoading ) ? true : null">
+  <ng-container *ngTemplateOutlet="template ? template : templateContent"></ng-container>
 </button>
+<ng-template #templateContent>
+  <tl-icon *ngIf="iconAddonBefore"
+           [class]="color + ' iconAddonBefore'"
+           [ngStyle]="{'line-height' : 'calc(' + height + ' - 1px)'}"
+           [style.color]="colorIconBefore">{{ iconAddonBefore }}
+  </tl-icon>
+  <div class="button-content" [style.lineHeight]="height">
+    <tl-icon *ngIf="iconBeforeText">{{ iconBeforeText }}</tl-icon>
+    <span class="label">{{ text }}</span>
+    <tl-loader [color]="loaderColor" *ngIf="isLoading"></tl-loader>
+    <tl-icon *ngIf="iconAfterText">{{ iconAfterText }}</tl-icon>
+  </div>
+  <tl-icon *ngIf="iconAddonAfter"
+           [style.color]="colorIconAfter"
+           [class]="color + ' iconAddonAfter'"
+           [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">{{ iconAddonAfter }}
+  </tl-icon>
+</ng-template>
 

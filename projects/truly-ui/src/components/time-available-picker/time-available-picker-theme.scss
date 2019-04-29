@@ -1,6 +1,6 @@
 @import "../core/styles/theming/theming";
 
-@mixin _tl-time-available-picker-theme-schema( $theme, $action ){
+@mixin _tl-time-available-picker-theme-schema( $theme, $action ) {
 
   $primary: map-deep-get($theme, 'primary');
 
@@ -14,13 +14,16 @@
     }
     > .ui-time-selected {
       span {
-        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background")
-        0%, map-deep-get($primary, "darker", "background") 100%);
-        color: white;
+        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background") 0%, map-deep-get($primary, "darker", "background") 100%);
+        color: map-deep-get($theme, $action, "lighter", "background");
       }
     }
   }
+  > .ui-empty-data {
+    color: rgba(map-deep-get($theme, $action, "default", "foreground"), 0.5);
+  }
   > .ui-time-content {
+    background: white;
     > .ui-time-item {
       color: map-deep-get($theme, $action, "default", "foreground");
       .ui-range-wrapper {
@@ -29,11 +32,25 @@
         }
       }
       > .ui-selected {
-        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background")
-        0%, map-deep-get($primary, "darker", "background") 100%);
-        color: white;
+        background: linear-gradient(45deg, map-deep-get($primary, "lighter", "background") 0%, map-deep-get($primary, "darker", "background") 100%);
+        color: map-deep-get($theme, $action, "lighter", "background")
       }
     }
+    &::-webkit-scrollbar-thumb {
+      background: map-deep-get($primary, "default", "background");
+    }
+    &::-webkit-scrollbar-corner {
+      background: map-deep-get($theme, $action, "lighter", "background");
+    }
+
+    &::-webkit-scrollbar-track {
+      background: map-deep-get($theme, $action, "lighter", "background");
+    }
+
+    > .ui-loader-wrapper {
+      background: map-deep-get($theme, $action, "lighter", "background");
+    }
+
   }
   > .ui-time-footer {
     border-top: 1px solid map-deep-get($theme, $action, "default", "border");
@@ -44,7 +61,7 @@
 
 @mixin tl-time-available-picker-theme( $theme ) {
 
-  .ui-time-available-picker  {
+  .ui-time-available-picker {
     &.basic {
       @include _tl-time-available-picker-theme-schema($theme, 'basic')
     }

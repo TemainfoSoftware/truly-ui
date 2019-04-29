@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
 import { HeadingComponent } from './parts/heading/heading.component';
 import { TlSchedule } from './schedule';
 import { DayListComponent } from './views/day-list/day-list.component';
@@ -13,6 +12,7 @@ import { TooltipModule } from '../tooltip/index';
 import { BlockUIModule } from '../blockui/index';
 import { ButtonModule } from '../button/index';
 import { ButtonGroupModule } from '../buttongroup/index';
+import { LoaderModule } from '../loader/index';
 import { GenerateEventsService } from './services/generate-events.service';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
@@ -26,7 +26,8 @@ import { EventService } from './services/event.service';
       TooltipModule,
       ButtonGroupModule,
       BlockUIModule,
-      ButtonModule
+      ButtonModule,
+      LoaderModule
     ],
     declarations: [
       TlSchedule,

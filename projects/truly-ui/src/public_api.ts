@@ -26,8 +26,10 @@ export { FormModule } from './components/form/index';
 export { IconsModule } from './components/icons/index';
 export { InputModule } from './components/input/index';
 export { ListBoxModule} from './components/listbox/index';
+export { LoaderModule } from './components/loader/index';
 export { MenuModule } from './components/menu/index';
 export { MiscModule } from './components/misc/index';
+export { MessageValidationModule } from './components/messagevalidation/index';
 export { ModalToolbarModule } from './components/modal/addons/modal-toolbar/index';
 export { ModalModule } from './components/modal/index';
 export { MultiSelectModule } from './components/multiselect/index';
@@ -70,10 +72,16 @@ export { CalendarStatus } from './components/calendar/calendar';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 
+// Chat Interfaces
+export { ChatContact } from './components/chatlist/interfaces/chat-contact.interface';
+export { ChatMessage } from './components/chatlist/interfaces/chat-message.interface';
+export { ChatStatus } from './components/chatlist/interfaces/chat-status.interface';
+
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';
 export { KeyEvent } from './components/core/enums/key-events';
 export { ModalResult } from './components/core/enums/modal-result';
+export { Status } from './components/chatlist/enums/status.enum';
 
 // Services
 export { DialogService } from './components/dialog/dialog.service';
@@ -81,6 +89,7 @@ export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
+export { ChatService } from './components/chatlist/services/chat.service';
 
 // Classes
 export { Permission } from './components/permissions/parts/models/permission.model';

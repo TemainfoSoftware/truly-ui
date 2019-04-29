@@ -10,7 +10,7 @@
           <app-card>
             <div class="col-md-6">
               <h6>Basic</h6>
-              <tl-time-available-picker (onChangeSelect)="onChangeSelect($event)" [availableTimes]="data"></tl-time-available-picker>
+              <tl-time-available-picker (changeSelect)="onChangeSelect($event)" [availableTimes]="data"></tl-time-available-picker>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

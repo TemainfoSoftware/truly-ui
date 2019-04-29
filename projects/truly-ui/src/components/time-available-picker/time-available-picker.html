@@ -1,4 +1,4 @@
-<div [class]="'ui-time-available-picker ' + color" [style.width]="width + 'px'">
+<div [class]="'ui-time-available-picker ' + color" [style.width]="width">
   <div class="ui-time-header">
     <div class="ui-date-selected">
       <span class="ui-day">{{ dateValue | date:'dd' }}</span>
@@ -11,18 +11,21 @@
   </div>
   <div *ngIf="!filterTimes || filterTimes.length === 0" class="ui-empty-data">
     <tl-icon [lib]="'ion'" [style]="'md'">sad</tl-icon>
-    <span>Nothing Found !</span>
+    <span>{{ notFoundMessage }}</span>
   </div>
-  <div *ngIf="filterTimes.length > 0" class="ui-time-content"
-       [ngStyle]="{ 'grid-template-columns' : 'repeat(auto-fill, ' + ((width / (width / 100)) - 4) + 'px)' }">
+  <div *ngIf="filterTimes.length > 0" class="ui-time-content" [style.maxHeight]="maxHeight">
+    <div *ngIf="loading" class="ui-loader-wrapper">
+      <div class="ui-loader">
+        <tl-loader></tl-loader>
+      </div>
+    </div>
     <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
       <div  (keydown.enter)="setSelectedTime(item, i)"
             class="ui-range-wrapper"
             (click)="setSelectedTime(item, i)"
             [ngClass]="{ 'ui-selected': item.selected }"
             tabindex="-1">
-        <span class="item-range">{{ item.range.start | date: 'HH:mm' }}</span> -
-        <span class="item-range">{{ item.range.end | date: 'HH:mm' }}</span>
+        <span class="item-range">{{ item.range.start | date: 'HH:mm' }}</span>
       </div>
     </div>
   </div>

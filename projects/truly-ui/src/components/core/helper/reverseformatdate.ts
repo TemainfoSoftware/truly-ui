@@ -24,6 +24,7 @@ export interface DateFormat {
   day: number;
   month: number;
   year: number;
+  stringFormat: string;
 }
 
 export function ReverseFormatDate( value, formatDate ): DateFormat {
@@ -54,6 +55,11 @@ export function ReverseFormatDate( value, formatDate ): DateFormat {
     }
   }
 
-  return { 'day': parseInt( day, 10 ), 'month': parseInt( month, 10 ), 'year': parseInt( year, 10 ) };
+  return {
+    'day': parseInt( day, 10 ),
+    'month': parseInt( month, 10 ),
+    'year': parseInt( year, 10 ),
+    'stringFormat': `${parseInt( year, 10 )}-${parseInt( month, 10 )}-${parseInt( day, 10 )}`
+  };
 
 }

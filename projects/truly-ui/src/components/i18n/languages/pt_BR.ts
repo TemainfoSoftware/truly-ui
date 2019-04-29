@@ -32,6 +32,7 @@ import { Editor } from './editor/pt_BR';
 import { Permissions } from './permissions/pt_BR';
 import { TimePicker } from './timepicker/pt_BR';
 import { AutoComplete } from './autocomplete/pt_BR';
+import { TimeAvailablePicker } from './time-available-picker/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
@@ -47,5 +48,6 @@ export const pt_BR = {
   Validators,
   OverlayList,
   Permissions,
-  TimePicker
+  TimePicker,
+  TimeAvailablePicker
 };

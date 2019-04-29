@@ -7,7 +7,6 @@ import { TlTextarea } from './textarea';
 import { InternalsModule } from '../internals/index';
 import { IconsModule } from '../icons/index';
 import { ValidatorsModule } from '../validators/index';
-import { TlMessageValidationComponent } from './components/messagevalidation/messagevalidation.component';
 
 @NgModule({
   imports: [
@@ -20,11 +19,9 @@ import { TlMessageValidationComponent } from './components/messagevalidation/mes
   ],
   declarations: [
     TlTextarea,
-    TlMessageValidationComponent
   ],
   exports: [
     TlTextarea,
-    TlMessageValidationComponent
   ]
 })
 export class TextareaModule {}

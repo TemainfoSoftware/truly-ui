@@ -1,4 +1,5 @@
 import {ControlValueAccessor} from '@angular/forms';
+import { EventEmitter, Inject, Optional } from '@angular/core';
 
 export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;
@@ -13,6 +14,12 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   }
 
   set value(value: T) {
+    if ( (value instanceof Date) && this.innerValue) {
+      const innerDate = new Date(<string><any>this.innerValue);
+      if ( (<Date><any>innerDate).getTime() === (<Date><any>value).getTime()) {
+        return;
+      }
+    }
     if (this.innerValue !== value) {
       this.innerValue = value;
       this.propagateChange(value);

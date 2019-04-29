@@ -19,63 +19,56 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
 import * as jsonMethods from './chatlistdemo-methods.json';
-
-
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { ChatListService } from '../../../../projects/truly-ui/src/components/chatlist/chatlist.service';
+import { Status } from '../../../../projects/truly-ui/src/components/chatlist/enums/status.enum';
+import { ChatContact } from '../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
+import { Chat2Component } from './chat2/chat2.component';
+import { Chat3Component } from './chat3/chat3.component';
+import { ChatService } from '../../../../projects/truly-ui/src/components/chatlist/services/chat.service';
 
 @Component( {
   selector : 'app-chat',
   templateUrl : './chatlistdemo.component.html',
   styleUrls : [ './chatlistdemo.component.scss' ],
-  providers: [ChatListService]
 } )
-export class ChatListDemoComponent {
+export class ChatListDemoComponent implements AfterViewInit {
 
   public dataTableProperties;
 
-  public dataSource = [];
+  public contacts: ChatContact[] = [
+    { id: '1', name: 'William Aguera', description: 'Médico Ortopedista', status:  Status.ONLINE, avatar: 'williamaguera.m@hotmail.com' },
+    { id: '200', name: 'Genesson', description: 'Médico Geriatra', status:  Status.ONLINE, avatar: 'genesson_sauer@hotmail.com'  },
+    { id: '300', name: 'Adilson', description: 'Médico Otorrino', status:  Status.BUSY, avatar: 'adilson@temainfo.com.br' }
+  ];
 
-  public dataMethods = [];
+  public user2 =  { id: '1', name: 'William Aguera', description: 'Médico Ortopedista', status:  Status.ONLINE };
 
-  public selected;
+  public user3 =  { id: '200', name: 'Genesson', description: 'Médico Geriatra', status:  Status.ONLINE };
 
-  constructor( public dataDumpService: DumpDataService, public chatListService: ChatListService ) {
+  public appendChat2;
+
+  public appendChat3;
+
+  constructor(private chatService: ChatService) {
     this.dataTableProperties = json.dataProperties;
-    this.dataMethods = jsonMethods.dataMethods;
-    this.dataSource = this.dataDumpService.createRandomData( 100 );
   }
 
-  clickChat( $event ) {
-    this.selected = $event;
+  ngAfterViewInit() {
   }
 
-  changeBusy() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Busy' );
+  onSendMessage($event) {
+    console.log('evt to', $event);
+    switch ($event.to.id) {
+      case this.user3.id: this.chatService.appendMessage($event);
+      break;
+      case this.user2.id: this.chatService.appendMessage($event);
+      break;
     }
   }
 
-  changeOnline() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Online' );
-    }
-  }
-
-  changeOffline() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Offline' );
-    }
-  }
-
-  changeAway() {
-    if ( this.selected ) {
-      this.chatListService.changeStatus( this.selected, 'Away' );
-    }
-  }
 }
 

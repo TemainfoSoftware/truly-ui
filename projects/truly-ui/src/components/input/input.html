@@ -29,7 +29,8 @@
            [disabled]="disabled || isDisabled"
            class="field"
            [ngClass]="{
-             'invalid': controlName?.control.errors || model?.control.errors,
+             'ng-invalid': control?.errors,
+             'ng-valid': !control?.errors,
              'withValidators': hasValidator,
              'withoutValidators': !hasValidator,
              '-borderleft': iconBefore || textBefore,
@@ -65,13 +66,3 @@
   <span *ngIf="textAfter" #afterText class="addon -borderright"
         [ngClass]="{ '-predefined' : textAfter, '-flatborders': flatBorder, 'withoutBorder' : !withBorder }">{{textAfter}}</span>
 </div>
-
-
-<ng-template cdkConnectedOverlay
-             *ngIf="showValidations"
-             [cdkConnectedOverlayHasBackdrop]="false"
-             [cdkConnectedOverlayOrigin]="cdkOverlayOrigin"
-             [cdkConnectedOverlayOpen]="isShowingMessages">
-  <tl-messagevalidation [errors]="controlName?.control.errors || model?.control.errors"
-                        [width]="input.offsetWidth + 'px'"></tl-messagevalidation>
-</ng-template>

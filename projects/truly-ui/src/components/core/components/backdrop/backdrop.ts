@@ -41,12 +41,22 @@ export class TlBackdrop {
 
     @Output() click = new EventEmitter();
 
+    public hidden = false;
+
     constructor( public backdrop: ElementRef) {}
 
     setBackdropOptions(object) {
       this.width = object.width;
       this.height = object.height;
       this.position.zIndex = object.zIndex;
+    }
+
+    hideBackdrop() {
+      this.hidden = true;
+    }
+
+    showBackdrop() {
+      this.hidden = false;
     }
 
     clickBackdrop($event) {

@@ -13,13 +13,14 @@
 
                 <tl-schedule
                   [events]="dataSource"
-
+                  [isLoading]="isLoading"
                   [slotSettings]="slotSettings"
                   [workScale]="workScale"
 
                   [showNowIndicator]="false"
                   [statusConfig]="statusConfig"
                   (rowDbClick)="onRowClick($event)"
+                  (changeDate)="onChangeDate( $event )"
                   (newEventClick)="onNewEventClick( $event )"
                   (eventDbClick)="onEventDbClick($event)"
                 >

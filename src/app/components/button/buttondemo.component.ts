@@ -36,11 +36,15 @@ export class ButtonDemoComponent {
 
   public dataEvents;
 
-  public isLoading = false;
+  public isLoading = true;
 
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 3000);
   }
 
   onClickButtonLoading() {

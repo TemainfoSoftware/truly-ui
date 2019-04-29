@@ -1,0 +1,20 @@
+.overlay-wrapper {
+  padding: 20px;
+  border-radius: 5px;
+  color: white;
+  &.basic {
+    background: #e2e2e2;
+  }
+  &.primary {
+    background: #66cc99;
+  }
+  &.success {
+    background: #63cc65;
+  }
+  &.info {
+    background: #00c0ef;
+  }
+  &.warning {
+    background: #efcb74;
+  }
+}

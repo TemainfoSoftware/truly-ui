@@ -43,7 +43,7 @@ export class TlSplitButton implements AfterContentInit {
 
   @Input() text = '';
 
-  @Input() width = '125px';
+  @Input() width = '100%';
 
   @Input() height = '30px';
 

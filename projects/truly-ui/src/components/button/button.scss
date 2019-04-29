@@ -16,19 +16,35 @@ $button-text-align: center;
   cursor: pointer;
   box-sizing: border-box;
 
-  > .iconAddonBefore{
+  > .iconAddonBefore {
     box-sizing: border-box;
     float: left;
     padding: 0 15px;
     pointer-events: none;
   }
-  > .iconAddonAfter{
+  > .iconAddonAfter {
     box-sizing: border-box;
     float: right;
     padding: 0 15px;
     pointer-events: none;
   }
-  > .textButton{
+  > .button-content {
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+    place-content: center;
+    .label {
+      padding: 0 10px;
+    }
+    tl-loader {
+      position: relative;
+      width: 15px;
+      box-sizing: border-box;
+      margin: 0 5px;
+    }
+  }
+
+/*  > .textButton{
     padding: 0 15px;
     margin: 0;
     width: 500px !important;
@@ -39,7 +55,7 @@ $button-text-align: center;
         transform-origin: 50% calc(50% - .5px) !important;
       }
     }
-  }
+  }*/
 }
 
 .iconAfterText{

@@ -2,11 +2,13 @@
 
   <tl-input (overlayOrigin)="trigger = $event"
             (click)="changeOpened()"
-            (keydown.shift.tab)="isOpen = false"
-            (keydown.tab)="isOpen = false"
+            (keydown.shift.tab)="onClose()"
+            (keydown.tab)="onClose()"
+            (keydown.enter)="onClose()"
             [mask]="'Hh:Mm'"
-            [ngModel]="value"
+            [ngModel]="selectedTime"
             (ngModelChange)="onChangeValue($event)"
+            (blur)="onBlur()"
             [flatBorder]="flatBorder"
             [label]="label"
             [labelPlacement]="labelPlacement"
@@ -19,17 +21,20 @@
             [textAfter]="format === '12' ? timeZone : null"
             [iconAfter]="showTimeIcon ? 'far fa-clock' : null">
   </tl-input>
+  <input notform class="hidden-control" [value]="value">
 
   <ng-template cdkConnectedOverlay
-               (backdropClick)="isOpen = false"
+               (backdropClick)="onClose()"
                [cdkConnectedOverlayHasBackdrop]="true"
                [cdkConnectedOverlayOrigin]="trigger"
                [cdkConnectedOverlayOpen]="isOpen"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'">
-
-    <div  @overlay [class]="'ui-wrapper-content ' + color" (click)="mouseDownContainer($event)">
+    <div  @overlay [class]="'ui-wrapper-content ' + color" (click)="onMouseDownContainer($event)">
       <div class="ui-timepicker-header">
-        <div class="ui-selected-time">{{ selectedTime }} {{ format === '12' ? timeZone : null }}</div>
+        <div class="ui-selected-time">
+          {{ format === '12' ? (value | date:'hh:mm') : (value | date:'HH:mm') }}
+          {{ format === '12' ? timeZone : null }}
+        </div>
         <tl-button *ngIf="steps.hour === 1 && steps.minute === 1"
                    [flatBorder]="true"
                    (click)="onClickNow()"
@@ -57,7 +62,7 @@
             <div> </div>
             <div
               class="ui-list-item"
-              (click)="clickListItem(listHour, $event)"
+              (click)="clickListItem(listHour, $event); setHour(index)"
               *ngFor="let index of hours"
               [attr.dataIndexHour]="index | leftpad:2"
               [ngClass]="{ 'selectedItem': hour === index }">{{ index | leftpad:2 }}</div>
@@ -75,7 +80,7 @@
             <div> </div>
             <div
               class="ui-list-item"
-              (click)="clickListItem(listMinutes, $event)"
+              (click)="clickListItem(listMinutes, $event); setMinute(index)"
               [attr.dataIndexMinute]="index | leftpad:2"
               *ngFor="let index of minutes"
               [ngClass]="{ 'selectedItem': minute === index }">{{ index | leftpad:2 }}</div>
@@ -93,8 +98,8 @@
         </div>
       </div>
       <div class="ui-timepicker-footer">
-        <tl-button (click)="onClickCancel()" [flatBorder]="true" [width]="'110px'" [text]="textCancel"></tl-button>
-        <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'110px'" [text]="textConfirm" [color]="'primary'"></tl-button>
+        <tl-button (click)="onClickCancel()" [flatBorder]="true" [width]="'100%'" [text]="textCancel"></tl-button>
+        <tl-button (click)="onClickConfirm()" [flatBorder]="true" [outline]="true" [width]="'100%'" [text]="textConfirm" [color]="'primary'"></tl-button>
       </div>
     </div>
   </ng-template>

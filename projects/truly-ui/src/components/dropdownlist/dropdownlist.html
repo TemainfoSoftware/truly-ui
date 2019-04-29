@@ -12,20 +12,20 @@
 
   <div class="ui-dropdown-wrapper">
   <input cdkOverlayOrigin
-         #wrapper
+         #input
          readonly
          #trigger="cdkOverlayOrigin"
          [attr.disabled]="disabled ? true : null"
          (keydown)="onKeyDown($event)"
          (click)="handleOpenList($event)"
          value="{{ selectedDescription ? selectedDescription : placeholder }}"
-         [ngClass]="{ 'ng-invalid' : model?.invalid || controlName?.invalid }"
+         [ngClass]="{ 'ng-invalid' : control?.invalid, 'disabled': disabled }"
          [ngStyle]="{'height' : itemHeight, 'line-height' : itemHeight}"
          class="ui-dropdown">
         <div class="ui-dropdown-icon"
              [style.height]="itemHeight"
              [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'"
-             [ngClass]="{ 'disabled': disabled, 'ng-invalid' : model?.invalid || controlName?.invalid }">
+             [ngClass]="{ 'disabled': disabled, 'ng-invalid' : control?.invalid }">
           <tl-icon [lib]="'ion'" [style]="'ios'">arrow-down</tl-icon>
         </div>
   </div>
@@ -42,7 +42,7 @@
       (search)="onSearch($event)"
       (defaultOption)="onDefaultOption()"
       (findByLetter)="onFindByLetter($event)"
-      [customInput]="wrapper"
+      [customInput]="input"
       [typeOfData]="typeOfData"
       [hasDefaultOption]="defaultOption"
       [defaultOptionText]="placeholder"
@@ -52,7 +52,7 @@
       [datasource]="datasource"
       [maxHeight]="maxHeight"
       [itemHeight]="itemHeight"
-      [width]="wrapper.offsetWidth + 'px'"
+      [width]="input.offsetWidth + 'px'"
       [icon]="icon"
       [keyText]="keyText"
       [searchOnList]="searchOnList">

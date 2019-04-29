@@ -84,7 +84,9 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
 
   listenFocus() {
     this.subscription.add( this.renderer.listen( this.getNativeInput(), 'focus', () => {
-      this.create();
+      if (!this.validationsRef) {
+        this.create();
+      }
     } ) );
   }
 
@@ -97,7 +99,9 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   listenValueChanges() {
     if (this.control) {
       this.subscription.add( this.control.valueChanges.subscribe( () => {
-        this.create();
+        if (!this.validationsRef) {
+          this.create();
+        }
       } ) );
     }
   }

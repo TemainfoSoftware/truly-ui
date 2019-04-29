@@ -21,7 +21,6 @@
  */
 import { PipeTransform, Pipe } from '@angular/core';
 import { ChatContact } from '../interfaces/chat-contact.interface';
-import { Status } from '../enums/status.enum';
 
 @Pipe( {
   name: 'status'
@@ -32,6 +31,7 @@ export class TlStatusFilterPipe implements PipeTransform {
     if (value && value.length > 0) {
       return value.filter((item: ChatContact) => status.indexOf(item.status) >= 0 );
     }
+    return [];
   }
 
 }

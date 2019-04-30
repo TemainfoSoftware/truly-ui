@@ -13,7 +13,7 @@ import {ShowcaseTableEventsModule} from '../../shared/components/showcase-table-
 import { ValidatorsModule } from '../../../../projects/truly-ui/src/components/validators/index';
 import { ShowcaseReturnedValueModule } from '../../shared/components/showcase-returned-value/showcase-returned-value.module';
 import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/showcase-header.module';
-import {MessageValidationModule} from '../../../../projects/truly-ui/src/components/messagevalidation';
+import {MessageValidationModule} from '../../../../projects/truly-ui/src/components/messagevalidation/index';
 
 @NgModule({
   declarations: [

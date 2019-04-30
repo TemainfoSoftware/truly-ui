@@ -29,7 +29,6 @@ import { ChatMessage } from './interfaces/chat-message.interface';
 import { Status } from './enums/status.enum';
 import { Subscription } from 'rxjs';
 import { ChatService } from './services/chat.service';
-import {I18nService} from '../i18n';
 
 @Component( {
   selector: 'tl-chatlist',
@@ -94,7 +93,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private renderer: Renderer2, private chatService: ChatService, private i18nService: I18nService) {}
+  constructor(private renderer: Renderer2, private chatService: ChatService) {}
 
   get online() {
     return Status.ONLINE;

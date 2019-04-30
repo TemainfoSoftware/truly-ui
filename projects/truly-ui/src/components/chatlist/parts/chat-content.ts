@@ -109,6 +109,10 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
     return new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0, 0).getTime();
   }
 
+  trackByFn(index) {
+    return index;
+  }
+
   setScrollBottom() {
     setTimeout(() => {
       this.messageContent.nativeElement.scrollTop =

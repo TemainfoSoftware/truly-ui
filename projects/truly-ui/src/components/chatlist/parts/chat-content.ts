@@ -28,7 +28,7 @@ import { ChatMessage } from '../interfaces/chat-message.interface';
 import { Subscription } from 'rxjs';
 import { ChatStatus } from '../interfaces/chat-status.interface';
 import { DatePipe } from '@angular/common';
-import {I18nService} from '../../i18n';
+import {I18nService} from '../../i18n/i18n.service';
 
 @Component( {
   selector: 'tl-chat-content',

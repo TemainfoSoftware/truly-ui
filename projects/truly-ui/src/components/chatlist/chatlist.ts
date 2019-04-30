@@ -117,10 +117,13 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     }
   }
 
-  getUnreadMessages(id: string | number) {
+  getUnreadMessages(item: ChatContact) {
+    if (!item || !item.id) {
+      return [];
+    }
     if (this.messages.length > 0) {
-      return this.messages.filter((item: ChatMessage) =>
-      (!item.viewed && item.from.id === id) && (item.to.id === this.user.id) );
+      return this.messages.filter((message: ChatMessage) =>
+      (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id) );
     }
     return [];
   }
@@ -131,9 +134,9 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
-    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item.id) });
+    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item) });
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
-    this.readMessages( this.getUnreadMessages(item.id) );
+    this.readMessages( this.getUnreadMessages(item) );
     this.newMessages.emit( this.hasMessages() );
   }
 

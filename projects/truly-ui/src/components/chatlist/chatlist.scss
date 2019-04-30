@@ -1,6 +1,7 @@
 .chat-wrapper {
   overflow: hidden;
   min-width: 300px !important;
+  position: relative;
   .chat-header {
     display: flex;
     position: relative;
@@ -8,6 +9,7 @@
     place-content: space-evenly;
     height: 35px;
     flex-wrap: wrap;
+    z-index: 1;
     section {
       width: 100%;
       text-align: center;
@@ -18,6 +20,7 @@
       position: relative;
       grid-template-columns: min(100px) min(100px);
       grid-auto-flow: column;
+      grid-template-rows: 20px;
     }
     .chat-status-selection {
       position: absolute;

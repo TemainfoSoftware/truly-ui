@@ -37,8 +37,8 @@
           <span>{{ item.name }}</span>
           <span>{{ item.description }}</span>
         </div>
-        <div *ngIf="getUnreadMessages(item?.id)?.length > 0"
-             class="chat-unread-messages">{{ getUnreadMessages(item?.id)?.length }}
+        <div *ngIf="getUnreadMessages(item)?.length > 0"
+             class="chat-unread-messages">{{ getUnreadMessages(item)?.length }}
         </div>
       </div>
     </ng-container>
@@ -67,6 +67,7 @@
   <tl-chat-content
     [user]="user"
     [maxHeight]="maxHeight"
+    [loadingMessages]="loadingMessages"
     [chatStatus]="chatStatus"
     [partner]="partner"
     (message)="onMessage($event)"

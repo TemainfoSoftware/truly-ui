@@ -38,11 +38,11 @@ export class TlContextMenu implements OnInit, AfterContentInit, OnDestroy {
 
   @Input() items = [];
 
-  @Input() label = '';
+  @Input() label = 'label';
 
-  @Input() icon = '';
+  @Input() icon = 'icon';
 
-  @Input() subItem = '';
+  @Input() subItem = 'subItem';
 
   @Input() target = '';
 
@@ -51,6 +51,8 @@ export class TlContextMenu implements OnInit, AfterContentInit, OnDestroy {
   @Input() itemHeight = '30px';
 
   @Output() show: EventEmitter<any> = new EventEmitter();
+
+  @Output() clicked: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
 
@@ -178,6 +180,7 @@ export class TlContextMenu implements OnInit, AfterContentInit, OnDestroy {
       if ( item[ 'callback' ] ) {
         this.callBack = item[ 'callback' ];
         this.callBack( MouseEvent );
+        this.clicked.emit();
       }
     } );
   }

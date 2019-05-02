@@ -6,6 +6,7 @@ import { TlSimpleSubMenu } from '../menu/parts/simple/simple-sub-menu';
 
 import { MenuModule } from '../menu/index';
 import { PopupMenuModule } from '../popupmenu/index';
+import { ContextmenuService } from './contextmenu.service';
 
 @NgModule( {
   imports: [
@@ -20,7 +21,11 @@ import { PopupMenuModule } from '../popupmenu/index';
     TlContextMenu,
   ],
   entryComponents: [
-    TlSimpleSubMenu
+    TlSimpleSubMenu,
+    TlContextMenu
+  ],
+  providers: [
+    ContextmenuService
   ]
 } )
 export class ContextMenuModule {

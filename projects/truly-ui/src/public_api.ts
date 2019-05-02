@@ -90,6 +90,7 @@ export { NavigatorService } from './components/navigator/services/navigator.serv
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
 export { ChatService } from './components/chatlist/services/chat.service';
+export { ContextmenuService } from './components/contextmenu/contextmenu.service';
 
 // Classes
 export { Permission } from './components/permissions/parts/models/permission.model';

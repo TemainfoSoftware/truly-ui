@@ -19,6 +19,7 @@
 
                   [showNowIndicator]="false"
                   [statusConfig]="statusConfig"
+                  (eventContextmenu)="onEventContextmenu($event)"
                   (rowDbClick)="onRowClick($event)"
                   (changeDate)="onChangeDate( $event )"
                   (newEventClick)="onNewEventClick( $event )"

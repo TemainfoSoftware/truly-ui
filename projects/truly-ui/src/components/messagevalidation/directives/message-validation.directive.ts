@@ -99,9 +99,7 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   listenValueChanges() {
     if (this.control) {
       this.subscription.add( this.control.valueChanges.subscribe( () => {
-        if (!this.validationsRef) {
-          this.create();
-        }
+        !this.validationsRef ? this.create() : this.validationsRef.instance.setMessages();
       } ) );
     }
   }

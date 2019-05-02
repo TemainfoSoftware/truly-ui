@@ -36,28 +36,28 @@ export function PasswordValidator( passwordRule: PasswordRule ): ValidatorFn {
     if ( passwordRule['digits'] ) {
       regex = new RegExp( digits );
       if (!regex.test(control.value)) {
-        return { password: LOCALE_I18N.Validators.invalidPasswordRuleDigits };
+        return { invalidPasswordRuleDigits: LOCALE_I18N.Validators.invalidPasswordRuleDigits };
       }
     }
 
     if ( passwordRule['uppercase'] ) {
       regex = new RegExp( uppercase );
       if (!regex.test(control.value)) {
-        return { password: LOCALE_I18N.Validators.invalidPasswordRuleUppercase };
+        return { invalidPasswordRuleUppercase: LOCALE_I18N.Validators.invalidPasswordRuleUppercase };
       }
     }
 
     if ( passwordRule['special'] ) {
       regex = new RegExp( special );
       if (!regex.test(control.value)) {
-        return { password: LOCALE_I18N.Validators.invalidPasswordRuleSpecial };
+        return { invalidPasswordRuleSpecial: LOCALE_I18N.Validators.invalidPasswordRuleSpecial };
       }
     }
 
     if ( passwordRule['lowercase'] ) {
       regex = new RegExp( lowercase );
       if (!regex.test(control.value)) {
-        return { password: LOCALE_I18N.Validators.invalidPasswordRuleLowerCase };
+        return { invalidPasswordRuleLowerCase: LOCALE_I18N.Validators.invalidPasswordRuleLowerCase };
       }
     }
 

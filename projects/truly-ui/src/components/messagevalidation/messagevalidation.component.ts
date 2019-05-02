@@ -24,6 +24,10 @@ export class TlMessageValidationComponent {
     minlength: Function(),
     email: Function(),
     pattern: Function(),
+    invalidPasswordRuleDigits: Function(),
+    invalidPasswordRuleUppercase: Function(),
+    invalidPasswordRuleSpecial: Function(),
+    invalidPasswordRuleLowerCase: Function()
   };
 
   constructor( public element: ElementRef, private i18n: I18nService, private changes: ChangeDetectorRef ) { }
@@ -38,7 +42,11 @@ export class TlMessageValidationComponent {
     this.messages = [];
     this.setKeyErrors();
     if (this.control && this.control.errors) {
-      Object.keys(this.control.errors).forEach(( key ) => this.keyErrors[key]());
+      Object.keys(this.control.errors).forEach(( key ) => {
+        if (this.keyErrors[key]) {
+          this.keyErrors[key]();
+        }
+      });
     }
   }
 
@@ -49,6 +57,10 @@ export class TlMessageValidationComponent {
         const requiredLength = this.control.errors['minlength']['requiredLength'];
         this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
       },
+      invalidPasswordRuleDigits: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleDigits),
+      invalidPasswordRuleUppercase: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleUppercase),
+      invalidPasswordRuleSpecial: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleSpecial),
+      invalidPasswordRuleLowerCase: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleLowerCase),
       email: () => this.messages.push(format(this.i18n.getLocale().Validators.invalidEmail)),
       pattern: () => this.messages.push(this.i18n.getLocale().Validators.patternNotMatch)
     };

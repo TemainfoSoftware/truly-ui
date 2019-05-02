@@ -37,10 +37,11 @@
            }"
            [style.borderLeftColor]="statusConfig ? statusConfig[event?.data?.status]?.color : '#FFFFFF'"
            [tooltip]="{text: statusConfig ? statusConfig[event?.data?.status]?.description : '' , placement: 'top-center'}"
-           (click)="onEventClick.emit(event?.data)"
-           (dblclick)="onEventDbClick.emit(event?.data)"
-           (mouseover)="onEventMouseout.emit(event?.data)"
-           (mouseout)="onEventMouseout.emit(event?.data)"
+           (contextmenu)="onEventContextmenu.emit( { event: $event, data: event?.data } ); false"
+           (click)="onEventClick.emit( event?.data )"
+           (dblclick)="onEventDbClick.emit( event?.data )"
+           (mouseover)="onEventMouseout.emit( event?.data )"
+           (mouseout)="onEventMouseout.emit( event?.data )"
       >
         <div class="ui-schedule-description">
           <div class="ui-event-title">{{event?.data?.title}}</div>

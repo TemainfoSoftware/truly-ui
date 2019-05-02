@@ -48,6 +48,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   @Output() onEventMouseout = new EventEmitter();
 
+  @Output() onEventContextmenu = new EventEmitter();
+
   public nowIndicatorPositionTop: number;
 
   public timesCollection: Array<Array<Date>>;

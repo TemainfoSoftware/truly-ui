@@ -19,12 +19,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, ViewContainerRef } from '@angular/core';
 
 import * as json from './scheduledemo-overview-dataproperties.json';
 import * as jsonEvts from './scheduledemo-overview.dataevents.json';
 import { SlotSettingsType } from '../../../../../projects/truly-ui/src/components/schedule/types/slot-settings.type';
 import { WorkScaleType } from '../../../../../projects/truly-ui/src/components/schedule/types/work-scale.type';
+import { ContextmenuService } from '../../../../../projects/truly-ui/src/components/contextmenu/contextmenu.service';
 
 @Component( {
   selector : 'app-schedule',
@@ -230,7 +231,11 @@ export class ScheduleDemoOverviewComponent {
   //   }
   ];
 
-  constructor( private change: ChangeDetectorRef ) {
+  constructor(
+    private change: ChangeDetectorRef,
+    private contextmenuService: ContextmenuService,
+    private container: ViewContainerRef
+  ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
     this.isLoading = true;
@@ -302,6 +307,16 @@ export class ScheduleDemoOverviewComponent {
 
   onEventContextmenu( event ) {
     console.log('CONTEXT MENU EVENT : ', event);
+    this.contextmenuService.create( event.event, this.container, [
+      { label: 'Desmarcar agendamento', icon: '', callback: console.log.bind(this, event.data) },
+      { label: 'Enviar Lembrete', icon: '',
+        subItem: [
+          { label: 'Via WhatsApp', icon: '', callback: console.log.bind(this, event.data)  },
+          { label: 'Via Email', icon: '',  },
+          { label: 'Via SMS', icon: '', callback: console.log.bind(this, event.data)  }
+        ]
+      },
+    ]);
   }
 
   onEventDbClick( event ) {

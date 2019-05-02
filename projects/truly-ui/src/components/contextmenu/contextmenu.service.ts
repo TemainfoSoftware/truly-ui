@@ -34,5 +34,6 @@ export class ContextmenuService {
     const factory = this.resolver.resolveComponentFactory(TlContextMenu);
     const componentRef =  container.createComponent(factory);
     componentRef.instance.items = items;
+    componentRef.instance.clicked.subscribe(() => container.clear() );
   }
 }

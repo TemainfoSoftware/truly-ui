@@ -300,6 +300,10 @@ export class ScheduleDemoOverviewComponent {
     console.log('EVENT CHANGE DATE: ', event);
   }
 
+  onEventContextmenu( event ) {
+    console.log('CONTEXT MENU EVENT : ', event);
+  }
+
   onEventDbClick( event ) {
     console.log('EVENT CLICK: ', event);
   }

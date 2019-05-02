@@ -28,14 +28,13 @@ import {
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit
+  ElementRef, OnChanges, EventEmitter, AfterContentInit,
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
+import { FormControlName, NgModel, } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
@@ -141,7 +140,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   private _control;
 
-  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig) {
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig ) {
     super();
     this.setOptions( dropdownConfig );
   }
@@ -223,7 +222,6 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
   private initializeComponent() {
     this.setUpComponent();
     this.validateData();
-    this.getModelValue();
   }
 
   private setUpComponent() {

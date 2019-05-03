@@ -122,8 +122,11 @@ export class TlChatList implements AfterViewInit, OnDestroy {
       return [];
     }
     if (this.messages.length > 0) {
-      return this.messages.filter((message: ChatMessage) =>
-      (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id) );
+      return this.messages.filter((message: ChatMessage) => {
+        if ( message.from && message.to ) {
+         return (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id);
+        }
+      });
     }
     return [];
   }

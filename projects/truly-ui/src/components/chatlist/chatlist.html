@@ -37,8 +37,8 @@
           <span>{{ item.name }}</span>
           <span>{{ item.description }}</span>
         </div>
-        <div *ngIf="getUnreadMessages(item)?.length > 0"
-             class="chat-unread-messages">{{ getUnreadMessages(item)?.length }}
+        <div *ngIf="getUnreadMessages(item)?.length as messages"
+             class="chat-unread-messages">{{ messages }}
         </div>
       </div>
     </ng-container>

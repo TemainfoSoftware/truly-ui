@@ -52,7 +52,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit, AfterViewInit {
+export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit {
 
   @Input( 'data' )
   set data( data: any[] ) {
@@ -148,9 +148,6 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   ngAfterContentInit() {
     this.listenModelChange();
-  }
-
-  ngAfterViewInit() {
     this.getModelValue();
   }
 

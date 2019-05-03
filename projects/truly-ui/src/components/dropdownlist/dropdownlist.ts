@@ -141,7 +141,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   private _control;
 
-  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig, private change: ChangeDetectorRef) {
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig, private changes: ChangeDetectorRef ) {
     super();
     this.setOptions( dropdownConfig );
   }
@@ -223,6 +223,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
   private initializeComponent() {
     this.setUpComponent();
     this.validateData();
+    this.getModelValue();
   }
 
   private setUpComponent() {
@@ -257,12 +258,12 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   private handleKeyModelValue( itemValue ) {
     if ( this.isSimpleData() ) {
-      return this.writeValue(itemValue);
+      return this.value = itemValue;
     }
     if ( !this.keyValue ) {
-      return this.writeValue(itemValue);
+      return this.value = itemValue;
     }
-    return this.writeValue( objectPath.get( itemValue, this.keyValue ) );
+    return this.value = objectPath.get( itemValue, this.keyValue );
   }
 
   private getModelValue() {
@@ -274,8 +275,8 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
         if ( this.getCompare( value ) === this.getCompareModel() ) {
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
+          this.changes.detectChanges();
           this.handleKeyModelValue( value );
-          this.change.detectChanges();
           return;
         }
       }

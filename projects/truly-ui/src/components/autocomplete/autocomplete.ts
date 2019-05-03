@@ -253,7 +253,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   }
 
   onClickClose() {
-    this.writeValue('');
+    this.value = '';
     this.setDescriptionValue( '' );
     this.closeHover = false;
     this.selected = null;
@@ -306,18 +306,18 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
     this.modelInitialized = true;
     this.selected = value;
     if ( !this.isModelModeString() && this.keyValue ) {
-      this.writeValue(objectPath.get( value, this.keyValue ));
+      this.value = objectPath.get( value, this.keyValue );
       return;
     }
     if ( this.isModelModeString() && !this.keyValue ) {
-      this.writeValue(objectPath.get( value, this.identifier ));
+      this.value = objectPath.get( value, this.identifier );
       return;
     }
     if ( this.isModelModeString() && this.keyValue ) {
-      this.writeValue(objectPath.get( value, this.keyValue ));
+      this.value = objectPath.get( value, this.keyValue );
       return;
     }
-    this.writeValue(value);
+    this.value = value;
   }
 
   private setOptions( options: AutoCompleteConfig ) {

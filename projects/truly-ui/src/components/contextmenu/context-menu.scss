@@ -1,35 +1,76 @@
-.ui-wrapper-context-menu {
-  position: fixed;
-  z-index: 1000;
-  min-width: 250px;
-}
-
-.ui-menu-list {
-  list-style: none;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-}
-
-.ui-context-menu {
-  position: relative;
+.ui-menu-context-wrapper {
   width: 100%;
+  position: fixed;
   height: 100%;
 }
 
-.ui-context-item {
-  display: grid;
-
-  .ui-icon {
-    text-align: center;
-  }
-
+.ui-item-context {
+  list-style: none;
+  margin: 0;
+  font-size: 10pt;
+  z-index: 1000;
+  padding: 10px 15px;
+  opacity: 1.0;
+  display: inline-grid;
+  grid-template-columns: 20px 1fr;
+  text-align: left;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 100%;
   &:hover {
     cursor: pointer;
   }
+}
 
-  &:hover > ::ng-deep tl-simple-sub-menu {
-    visibility: visible;
-  }
+.no-icon {
+  grid-template-columns: 1fr !important;
+}
 
+.ui-menu-context {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 10pt;
+  z-index: 1000;
+  opacity:1.0;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  position: absolute;
+}
+
+ul.ui-menu-context li {
+  margin: 0;
+  position: relative;
+}
+
+ul.ui-menu-context li ul {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 2em;
+  font-size: 14px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 99;
+  transition: opacity .2s ease-in-out;
+}
+
+ul.ui-menu-context li:hover > ul {
+  opacity: 1;
+  visibility: visible;
+  left: 100%;
+  top: 0;
+}
+
+ul.ui-menu-context li > ul  ul {
+  top: 0;
+  left: 90%;
+}
+
+ul.ui-menu-context li > ul li:hover ul {
+  left: 100%;
 }

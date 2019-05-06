@@ -1,32 +1,31 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { TlContextMenu } from './context-menu';
-import { TlSimpleSubMenu } from '../menu/parts/simple/simple-sub-menu';
+import {PortalModule} from '@angular/cdk/portal';
+import {OverlayModule} from '@angular/cdk/overlay';
+import {IconsModule} from '../icons';
+import {TlContextMenuComponent} from './context-menu';
+import {ContextMenuService} from './services/contextmenu.service';
 
-import { MenuModule } from '../menu/index';
-import { PopupMenuModule } from '../popupmenu/index';
-import { ContextmenuService } from './contextmenu.service';
-
-@NgModule( {
+@NgModule({
   imports: [
     CommonModule,
-    PopupMenuModule,
-    MenuModule
+    FormsModule,
+    PortalModule,
+    OverlayModule,
+    IconsModule
   ],
   declarations: [
-    TlContextMenu,
+    TlContextMenuComponent,
   ],
   exports: [
-    TlContextMenu,
+    TlContextMenuComponent,
   ],
   entryComponents: [
-    TlSimpleSubMenu,
-    TlContextMenu
+    TlContextMenuComponent
   ],
-  providers: [
-    ContextmenuService
-  ]
-} )
+  providers: [ ContextMenuService ]
+})
 export class ContextMenuModule {
 }

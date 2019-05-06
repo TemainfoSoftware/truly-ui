@@ -1,6 +1,42 @@
-<div #wrapperContextMenu [ngStyle]="{'left': position.left + 'px', 'top': position.top + 'px'}" class="ui-wrapper-context-menu"
-     [style.display]="open ? 'block' : 'none'">
-  <div class="ui-context-menu">
-    <ul class="ui-menu-list" #menuList></ul>
-  </div>
+<ng-template #templateList let-item>
+  <li class="ui-item-context" (click)="onClickItem(item?.callback)" [class.no-icon]="!item?.icon || item?.template">
+    <ng-container *ngIf="item?.template; else listDefault">
+      <ng-container *ngTemplateOutlet="item?.template"></ng-container>
+    </ng-container>
+
+    <ng-template #listDefault>
+      <tl-icon [size]="'15px'" *ngIf="item?.icon">{{ item?.icon }}</tl-icon>
+      <span class="ui-item-label">{{ item?.label }}</span>
+    </ng-template>
+
+    <ng-container *ngIf="item?.children">
+      <ng-container *ngTemplateOutlet="templateUL; context: { $implicit: item?.children }"></ng-container>
+    </ng-container>
+
+  </li>
+</ng-template>
+
+<div class="ui-menu-context-wrapper">
+  <ul class="ui-menu-context">
+    <ng-template ngFor let-item [ngForOf]="contextMenu">
+      <ng-template
+        [ngTemplateOutlet]="templateList"
+        [ngTemplateOutletContext]="{ $implicit: item }">
+      </ng-template>
+    </ng-template>
+  </ul>
 </div>
+
+<ng-template #templateUL let-children>
+  <ul class="ui-menu-context">
+    <ng-template ngFor let-item [ngForOf]="children">
+      <ng-template
+        [ngTemplateOutlet]="templateList"
+        [ngTemplateOutletContext]="{ $implicit: item }">
+      </ng-template>
+    </ng-template>
+  </ul>
+</ng-template>
+
+
+

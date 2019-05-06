@@ -4,16 +4,18 @@
   $basic:   map-deep-get($theme, 'basic');
   $primary: map-deep-get($theme, 'primary');
 
-  .ui-wrapper-context-menu {
+  .ui-menu-context {
     background: map-deep-get($basic, "default", "background");
-    color: map-deep-get($basic, "default", "foreground");
-    border: 1px solid map-deep-get($basic, "default", "background");
   }
 
-  .ui-context-item {
+  .ui-item-context {
+    background: map-deep-get($basic, "default", "background");
+    color: map-deep-get($basic, "default", "foreground");
     &:hover {
       background-color: map-deep-get($primary, "default", "background");
       color: map-deep-get($primary, "default", "foreground");
     }
   }
+
+
 }

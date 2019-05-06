@@ -6,44 +6,38 @@
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
-          <tl-context-menu [items]="itemsContextGlobal" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
-          <tl-context-menu [items]="itemsContext" [target]="target1" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
-          <tl-context-menu [items]="itemsContext2" [target]="target2" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
+
           <app-card>
-            <div class="col-md-6">
-              <div class="target" #target1 style="background: #5796c3">
-                <span>TARGET 1</span>
-              </div>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-context-menu [items]="itemsContext" [target]="target1" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
-</textarea>
+            <div class="col-md-12">
+              <ul class="list">
+                <li #element (contextmenu)="open($event, element, item)" class="list-item" *ngFor="let item of items">{{ item }}</li>
+              </ul>
             </div>
-            <div class="col-md-6">
-              <div class="target" #target2 style="background: #c37f7a">
-                <span>TARGET 2</span>
-              </div>
-              <div class="spacer"></div>
-<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-context-menu [items]="itemsContext2" [target]="target2" [subItem]="'subMenu'" [label]="'label'" [icon]="'icon'"></tl-context-menu>
-</textarea>
-            </div>
+
           </app-card>
         </app-showcase-card>
         <app-showcase-card [title]="'Menu Configuration'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
-this.items = [
-  { label: 'The Target 2 Context Menu Item 1', icon: '', callBack: this.functionContext2 },
-  { label: 'The Target 2 Context Menu Item 2', icon: '',
-  subMenu: [
-      { label: 'The Target 2 Context Menu Item 3', icon: '' },
-      { label: 'The Target 2 Context Menu Item 4', icon: '' },
-      { label: 'The Target 2 Context Menu Item 5', icon: '' }
-    ]
-  },
-];
+export interface ContextMenuInterface {
+  label: string;
+  icon?: string;
+  callback?: Function;
+  children?: ContextMenuInterface[];
+  template?: TemplateRef<any>;
+}
+</textarea>
+            </div>
+            <div class="col-md-12">
+<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+
+this.contextMenuService.create($event, element, [
+  { label: 'Remove Item', callback: (event) => console.log(`remove item ${event}`) },
+  { label: 'View Item', callback: (event) => console.log(`view item ${event}`) },
+  { label: 'Open Item', callback: (event) => console.log(`open item ${event}`) }
+], context);
+
 </textarea>
             </div>
           </app-card>

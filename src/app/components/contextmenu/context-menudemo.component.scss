@@ -1,12 +1,24 @@
-.target {
-  height: 250px;
-  width: 100%;
-  text-align: center;
-  display: inline-block;
-  span {
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    font-size: 15px
+.list {
+  background: white;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px 1px #dedede;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+.list-item {
+  cursor: pointer;
+  line-height: 25px;
+  padding: 10px;
+  border-bottom: 1px dashed #e0e0e0;
+  &:last-child {
+    border: 0;
+  }
+  &:hover {
+    background: #00acc1;
+    color: white;
   }
 }

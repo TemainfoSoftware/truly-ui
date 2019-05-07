@@ -80,7 +80,7 @@ export class DialogService {
       if ( value.mdResult === ModalResult.MRYES ) {
         callbackConfirmation.isYes(ModalResult.MRYES);
       } else if (value.mdResult === ModalResult.MRNO) {
-        callbackConfirmation.isYes(ModalResult.MRNO);
+        callbackConfirmation.isNo(ModalResult.MRNO);
       }
     });
     const optionsObj = Object.assign( options, { message: message } );

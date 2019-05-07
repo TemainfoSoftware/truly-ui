@@ -208,8 +208,10 @@ export class ModalService implements OnDestroy {
       }
     } else {
       if ( this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation ) {
-        this.removeOfList( this.referenceSmartForm.id );
-        this.view.remove( this.view.indexOf( this.referenceSmartForm.modal ) );
+        if ( this.referenceSmartForm ) {
+          this.removeOfList( this.referenceSmartForm.id );
+          this.view.remove( this.view.indexOf( this.referenceSmartForm.modal ) );
+        }
       }
     }
   }

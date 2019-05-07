@@ -19,6 +19,12 @@
         <app-showcase-card [title]="'Menu Configuration'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
+constructor( private contextMenuService: ContextMenuService) {}
+              </textarea>
+            </div>
+            <div class="spacer"></div>
+            <div class="col-md-12">
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'typescript'">
 export interface ContextMenuInterface {
   label: string;
@@ -40,16 +46,6 @@ this.contextMenuService.create($event, element, [
 
 </textarea>
             </div>
-          </app-card>
-        </app-showcase-card>
-        <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
-          <app-card>
-            <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
-          </app-card>
-        </app-showcase-card>
-        <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
-          <app-card>
-            <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
           </app-card>
         </app-showcase-card>
       </div>

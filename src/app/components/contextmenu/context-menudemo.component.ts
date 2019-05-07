@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-import * as jsonEvts from './context-menudemo-events.json';
 import { slideToLeft } from '../../shared/animations/router.animations';
 import {ContextMenuService} from '../../../../projects/truly-ui/src/components/contextmenu/services/contextmenu.service';
 
@@ -11,9 +10,6 @@ import {ContextMenuService} from '../../../../projects/truly-ui/src/components/c
   styleUrls: [ './context-menudemo.component.scss' ]
 } )
 export class ContextMenuDemoComponent {
-  public dataTableProperties;
-
-  public dataEvents;
 
   public itemsContext = [];
 
@@ -24,7 +20,6 @@ export class ContextMenuDemoComponent {
   public items = Array.from({ length: 5}).map((value, index) => `Item ${index}`);
 
   constructor( private contextMenuService: ContextMenuService) {
-    this.dataEvents = jsonEvts.dataEvents;
   }
 
   open($event, element, context) {

@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {PortalModule} from '@angular/cdk/portal';
 import {OverlayModule} from '@angular/cdk/overlay';
-import {IconsModule} from '../icons';
+import {IconsModule} from '../icons/index';
 import {TlContextMenuComponent} from './context-menu';
 import {ContextMenuService} from './services/contextmenu.service';
 

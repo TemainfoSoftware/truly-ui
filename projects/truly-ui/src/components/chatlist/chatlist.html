@@ -31,6 +31,7 @@
                    class="chat-img"
                    [text]="item?.name"
                    [style.border]="'2px solid ' + chatStatus[item.status]"
+                   [src]="item?.avatar"
                    [gravatar]="item?.avatar" [shape]="'circle'">
         </tl-avatar>
         <div class="chat-item-detail">

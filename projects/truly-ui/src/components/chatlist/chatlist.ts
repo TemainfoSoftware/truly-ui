@@ -30,6 +30,8 @@ import { Status } from './enums/status.enum';
 import { Subscription } from 'rxjs';
 import { ChatService } from './services/chat.service';
 
+let uniqueIdentifier = 0;
+
 @Component( {
   selector: 'tl-chatlist',
   templateUrl: './chatlist.html',
@@ -52,6 +54,8 @@ export class TlChatList implements AfterViewInit, OnDestroy {
   };
 
   @Input() partner: ChatContact;
+
+  @Input() id = `tl-chatlist-${uniqueIdentifier++}`;
 
   @Input() user: ChatContact;
 

@@ -36,7 +36,7 @@ export class ChatService {
     this.chatList = [ ...this.chatList, chat ];
   }
 
-  getChat( id: string ) {
+  private getChat( id: string ) {
     return this.chatList.filter((item) => item.id === id)[0];
   }
 

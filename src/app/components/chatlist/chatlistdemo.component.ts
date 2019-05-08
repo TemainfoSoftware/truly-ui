@@ -19,15 +19,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
-import * as jsonMethods from './chatlistdemo-methods.json';
-import { DumpDataService } from '../../shared/services/dumpdata';
+import * as jsonEvents from './chatlistdemo-methods.json';
 import { Status } from '../../../../projects/truly-ui/src/components/chatlist/enums/status.enum';
 import { ChatContact } from '../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
-import { Chat2Component } from './chat2/chat2.component';
-import { Chat3Component } from './chat3/chat3.component';
 import { ChatService } from '../../../../projects/truly-ui/src/components/chatlist/services/chat.service';
 
 @Component( {
@@ -35,37 +32,33 @@ import { ChatService } from '../../../../projects/truly-ui/src/components/chatli
   templateUrl : './chatlistdemo.component.html',
   styleUrls : [ './chatlistdemo.component.scss' ],
 } )
-export class ChatListDemoComponent implements AfterViewInit {
+export class ChatListDemoComponent {
 
   public dataTableProperties;
 
+  public dataTableEvents;
+
   public contacts: ChatContact[] = [
-    { id: '1', name: 'William Aguera', description: 'Médico Ortopedista', status:  Status.ONLINE, avatar: 'williamaguera.m@hotmail.com' },
-    { id: '200', name: 'Genesson', description: 'Médico Geriatra', status:  Status.ONLINE, avatar: 'genesson_sauer@hotmail.com'  },
-    { id: '300', name: 'Adilson', description: 'Médico Otorrino', status:  Status.BUSY, avatar: 'adilson@temainfo.com.br' }
+    { id: '1', name: 'Brad Pitt', description: 'Actor', status:  Status.ONLINE,
+      avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg' },
+    { id: '200', name: 'Angelina Jolie', description: 'Actress', status:  Status.ONLINE,
+      avatar: 'http://midias.gazetaonline.com.br/_midias/jpg/2018/06/13/32703323_241643243091103_7264540910321401856_n-5653514.jpg' },
   ];
 
-  public user2 =  { id: '1', name: 'William Aguera', description: 'Médico Ortopedista', status:  Status.ONLINE };
+  public userONE =  { id: '1', name: 'Brad Pitt', description: 'Actor', status:  Status.ONLINE };
 
-  public user3 =  { id: '200', name: 'Genesson', description: 'Médico Geriatra', status:  Status.ONLINE };
-
-  public appendChat2;
-
-  public appendChat3;
+  public userTWO =  { id: '200', name: 'Angelina Jolie', description: 'Actress', status:  Status.ONLINE };
 
   constructor(private chatService: ChatService) {
     this.dataTableProperties = json.dataProperties;
-  }
-
-  ngAfterViewInit() {
+    this.dataTableEvents = jsonEvents.dataMethods;
   }
 
   onSendMessage($event) {
-    console.log('evt to', $event);
     switch ($event.to.id) {
-      case this.user3.id: this.chatService.appendMessage($event);
+      case this.userTWO.id: this.chatService.appendMessage($event, 'CHAT-TWO');
       break;
-      case this.user2.id: this.chatService.appendMessage($event);
+      case this.userONE.id: this.chatService.appendMessage($event, 'CHAT-ONE');
       break;
     }
   }

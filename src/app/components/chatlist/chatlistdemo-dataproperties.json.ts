@@ -21,66 +21,70 @@
  */
 export const dataProperties = [
   {
-    name: 'data',
-    type: 'Array<Object>',
-    default: 'null',
-    description: 'Array of data to shown on list',
-    options: 'Array'
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the button.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
   },
   {
-    name: 'label',
+    name: 'width',
+    type: 'string',
+    default: '400px',
+    description: 'The width of chat container',
+    options: 'px | % | em'
+  },
+  {
+    name: 'maxHeight',
+    type: 'string',
+    default: '450px',
+    description: 'The max height of chatlist container',
+    options: 'px | % | em'
+  },
+  {
+    name: 'loadingMessages',
+    type: 'boolean',
+    default: 'false',
+    description: 'Control loading spin',
+    options: 'true | false'
+  },
+  {
+    name: 'chatStatus',
+    type: 'ChatStatus',
+    default: '{\n' +
+      '    BUSY: \'#ffc019\',\n' +
+      '    ONLINE: \'#66cc99\',\n' +
+      '    OFFLINE: \'#ff3100\'\n' +
+      '  };',
+    description: 'Object of chat status',
+    options: 'Object<ChatStatus>'
+  },
+  {
+    name: 'partner',
+    type: 'ChatContact',
+    default: 'null',
+    description: 'Object of ChatContact, the partner of conversation',
+    options: 'ChatContact'
+  },
+  {
+    name: 'id',
     type: 'string',
     default: 'null',
-    description: 'The text which will display on line.',
-    options: 'any text'
-  },
-  {
-    name: 'avatar',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object that going to be used as avatar.',
-    options: 'any text'
-  },
-  {
-    name: 'labelDetail',
-    type: 'string',
-    default: 'null',
-    description: 'The text of labelDetail shown just above of label.',
-    options: 'any text'
-  },
-  {
-    name: 'height',
-    type: 'number',
-    default: '300',
-    description: 'Height(In Pixel) of the scroll viewport.',
-    options: 'any number'
-  },
-  {
-    name: 'searchQuery',
-    type: 'string',
-    default: 'null',
-    description: 'Key of object that going to be used to search on list',
-    options: 'any key'
-  },
-  {
-    name: 'rowsClient',
-    type: 'number',
-    default: '5',
-    description: 'Number of lines of each box (Online | Offline)',
-    options: 'any number'
-  },
-  {
-    name: 'statusConfig',
-    type: 'Object',
-    default: 'null',
-    description: 'Object required to set up keys of chat status',
+    description: '',
     options: 'object'
   },
   {
-    name: 'searchInput',
-    type: 'ElementRef<TlInput>',
+    name: 'user',
+    type: 'ChatContact',
     default: 'null',
-    description: 'Variable of element TlInput',
-    options: 'ElementRef<TlInput>'
+    description: 'Object of ChatContact, the user owner of conversation',
+    options: 'ChatContact'
+  },
+  {
+    name: 'contacts',
+    type: 'ChatContact[]',
+    default: 'null',
+    description: 'List of contacts of chat',
+    options: 'ChatContact[]'
   },
 ];

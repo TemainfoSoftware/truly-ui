@@ -25,7 +25,7 @@
 
   <div class="chat-type">
    <textarea [formControl]="control" #input (keydown.enter)="$event.preventDefault(); sendMessage()"
-             class="chat-input" placeholder="Digite algo"></textarea>
+             class="chat-input" [placeholder]="saySomething"></textarea>
     <div class="icon-send" (click)="sendMessage()">
       <tl-icon [lib]="'ion'" [style]="'md'">send</tl-icon>
     </div>

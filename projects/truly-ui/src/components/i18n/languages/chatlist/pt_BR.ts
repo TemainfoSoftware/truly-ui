@@ -24,5 +24,6 @@ export const ChatList = {
   noContactsFound: 'Não há contatos.',
   today: 'HOJE',
   yesterday: 'ONTEM',
-  loadingMessages: 'Carregando Mensagens...'
+  loadingMessages: 'Carregando Mensagens...',
+  saySomething: 'Digite algo...'
 };

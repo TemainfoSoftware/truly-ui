@@ -71,6 +71,8 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   private yesterday = this.i18nService.getLocale().ChatList.yesterday;
 
+  public saySomething = this.i18nService.getLocale().ChatList.saySomething;
+
   public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
 
   constructor(private i18nService: I18nService) {

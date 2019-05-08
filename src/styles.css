@@ -18,7 +18,8 @@
   background: #f7f9f9; }
 
 .table-box {
-  border: 1px solid #dbdddd; }
+  box-shadow: 0 2px 2px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.12);
+}
 
 .table-truly-head {
   background-color: #fff;
@@ -26,7 +27,8 @@
 
 .table-truly {
   margin: 0;
-  border-collapse: inherit; }
+  border-collapse: inherit;
+}
 
 .router-outlet {
   padding: 20px; }
@@ -38,121 +40,8 @@
   font-size: 12px;
   color: #9d9d9d; }
 
-
-
 .link-copy {
   color: #81D5AB;
 }
-
-.buttonClass1 {
-  background-color: #81D5AB !important;
-  border: 1px solid #6FB793 !important;
-  color: #FFF !important;
-  font-size: 12px !important; }
-
-.buttonClass1:hover {
-  background-color: #7acda3 !important; }
-
-.buttonClass1:active {
-  background-color: #74c79d !important; }
-
-.buttonClass2 {
-  background-color: #1B95E0 !important;
-  color: #FFF !important;
-  font-size: 16px !important;
-  border: 1px solid #1778b9 !important; }
-
-.buttonClass2:hover {
-  background-color: #1b8ad6 !important; }
-
-.buttonClass2:active, .toggleClass2 {
-  background-color: #1b86d0 !important; }
-
-.buttonAddonBeforeClass2 {
-  background-color: #FFF !important;
-  color: #1B95E0 !important;
-  border-right: 1px solid #1778b9 !important; }
-
-.textIconAfterClass2 {
-  color: #02f5f3 !important; }
-
-/** SPLIT BUTTON - CUSTOM STYLE **/
-.buttonClass3 {
-  background-color: #e0e000 !important;
-  color: #5d1b00 !important;
-  font-size: 14px !important;
-  border: 1px solid #b9b900 !important; }
-
-.buttonClass3:hover {
-  background-color: #d6d600 !important; }
-
-.buttonClass3:active {
-  background-color: #d0d000 !important; }
-
-.buttonAddonBeforeClass3 {
-  border-right: 1px solid #b9b900 !important; }
-
-.splitButtonClass3, .actionMenuClass3 {
-  background-color: #e0e000 !important;
-  border-top: 1px solid #b9b900 !important;
-  border-right: 1px solid #b9b900 !important;
-  border-bottom: 1px solid #b9b900 !important; }
-
-.splitButtonClass3:hover, .splitButtonClass3.active, .actionMenuClass3 li:hover {
-  background-color: #d6d600 !important; }
-
-.splitButtonClass3:active, .actionMenuClass3 li:active, .toggleClass3 {
-  background-color: #d0d000 !important; }
-
-.splitButtonClass3 i, .actionMenuClass3 li {
-  color: #5d1b00 !important; }
-
-.actionMenuClass3 li.separator {
-  border-bottom: 1px solid #b9b900 !important; }
-
-/** MODAL - CUSTOM STYLE **/
-.botao {
-  color: #616161; }
-
-.iconCadUsuario i {
-  color: #616161 !important; }
-
-.overlay-modal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  /*dim the background*/ }
-
-.infoDialog {
-  background-color: #0090D9 !important;
-  color: #fff !important; }
-
-.infoDialog i {
-  color: #fff !important; }
-
-.errorDialog {
-  background-color: #F25757 !important;
-  color: #fff !important; }
-
-.errorDialog i {
-  color: #fff !important; }
-
-.alertDialog {
-  background-color: #FFC284 !important;
-  color: #fff !important; }
-
-.alertDialog i {
-  color: #fff !important; }
-
-.confirmDialog {
-  background-color: #719CC9 !important;
-  color: #fff !important; }
-
-.confirmDialog i {
-  color: #fff !important; }
 
 /*# sourceMappingURL=styles.css.map */

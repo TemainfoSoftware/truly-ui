@@ -1,22 +1,23 @@
 <div class="col-12">
   <div class="table-box">
+
     <table class="table table-truly">
       <thead class="table-truly-head">
       <tr>
         <th>Name</th>
         <th>Type</th>
-        <th>Default</th>
+        <th *ngIf="hasDefault">Default</th>
         <th>Description</th>
-        <th>Options</th>
+        <th *ngIf="hasOptions">Options</th>
       </tr>
       </thead>
       <tbody class="table-truly-body" *ngFor="let item of data; let i = index">
       <tr>
         <td><span>{{ item.name }}</span></td>
         <td><span class="badge">{{ item.type }}</span></td>
-        <td><code>{{ item.default }}</code></td>
+        <td *ngIf="hasDefault"><code>{{ item.default }}</code></td>
         <td>{{ item.description }}</td>
-        <td><code> {{ item.options }} </code></td>
+        <td *ngIf="hasOptions"><code> {{ item.options }} </code></td>
       </tr>
       </tbody>
     </table>

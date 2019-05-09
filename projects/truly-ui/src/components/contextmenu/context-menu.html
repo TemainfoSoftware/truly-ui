@@ -5,7 +5,7 @@
     </ng-container>
 
     <ng-template #listDefault>
-      <tl-icon [size]="'15px'" *ngIf="item?.icon">{{ item?.icon }}</tl-icon>
+      <tl-icon [color]="item?.iconColor" [size]="'15px'" *ngIf="item?.icon">{{ item?.icon }}</tl-icon>
       <span class="ui-item-label">{{ item?.label }}</span>
     </ng-template>
 

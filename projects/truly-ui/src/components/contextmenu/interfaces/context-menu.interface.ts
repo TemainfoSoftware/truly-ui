@@ -6,5 +6,6 @@ export interface ContextMenuInterface {
   callback?: Function;
   children?: ContextMenuInterface[];
   template?: TemplateRef<any>;
+  iconColor?: string;
 }
 

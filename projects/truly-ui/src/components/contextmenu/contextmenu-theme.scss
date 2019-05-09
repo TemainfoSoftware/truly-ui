@@ -6,6 +6,7 @@
 
   .ui-menu-context {
     background: map-deep-get($basic, "default", "background");
+    border: 1px solid map-deep-get($basic, "default", "border");
   }
 
   .ui-item-context {

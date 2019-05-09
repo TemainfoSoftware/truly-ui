@@ -9,7 +9,7 @@
   margin: 0;
   font-size: 10pt;
   z-index: 1000;
-  padding: 10px 15px;
+  padding: 10px;
   opacity: 1.0;
   display: inline-grid;
   grid-template-columns: 20px 1fr;
@@ -19,13 +19,32 @@
   -ms-user-select: none;
   user-select: none;
   width: 100%;
+  box-sizing: border-box;
+
   &:hover {
     cursor: pointer;
   }
+
+  &.no-icon {
+    grid-template-columns: 1fr !important;
+  }
+
+  &.hasChildren {
+    grid-template-columns: 1fr 30px !important;
+  }
+
+  &.hasChildren:not(.no-icon) {
+    grid-template-columns: 30px 1fr 30px !important;
+  }
 }
 
-.no-icon {
-  grid-template-columns: 1fr !important;
+.ui-item-label {
+  white-space: nowrap;
+}
+
+
+.ui-item-arrow {
+  text-align: right;
 }
 
 .ui-menu-context {
@@ -34,7 +53,7 @@
   padding: 0;
   font-size: 10pt;
   z-index: 1000;
-  opacity:1.0;
+  opacity: 1.0;
   display: flex;
   align-items: center;
   flex-flow: column;
@@ -66,7 +85,7 @@ ul.ui-menu-context li:hover > ul {
   top: 0;
 }
 
-ul.ui-menu-context li > ul  ul {
+ul.ui-menu-context li > ul ul {
   top: 0;
   left: 90%;
 }

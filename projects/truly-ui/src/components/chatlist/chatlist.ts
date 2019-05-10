@@ -29,7 +29,7 @@ import { ChatMessage } from './interfaces/chat-message.interface';
 import { Status } from './enums/status.enum';
 import { Subscription } from 'rxjs';
 import { ChatService } from './services/chat.service';
-import {I18nService} from '../i18n';
+import { I18nService } from '../i18n/index';
 
 let uniqueIdentifier = 0;
 

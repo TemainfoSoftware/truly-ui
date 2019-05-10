@@ -25,5 +25,6 @@ export const ChatList = {
   today: 'HOJE',
   yesterday: 'ONTEM',
   loadingMessages: 'Carregando Mensagens...',
-  saySomething: 'Digite algo...'
+  saySomething: 'Digite algo...',
+  searchContact: 'Pesquisar Contatos...'
 };

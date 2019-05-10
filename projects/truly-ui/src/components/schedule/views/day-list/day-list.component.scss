@@ -6,7 +6,7 @@
 
 .ui-schedule-event-box{
   background-color: #FFFFFF;
-  font-size: 12px;
+  font-size: 1em;
   border-top-width: 5px;
   border-top-style: solid;
   border-bottom: 1px #D6D6D6 solid;
@@ -20,7 +20,7 @@
 
   > .ui-event-hour{
     justify-content: center;
-    font-size: 12px;
+    font-size: 1em;
     color: #454e58;
     align-items: center;
     display: flex;
@@ -39,7 +39,7 @@
     }
     > .ui-event-detail{
       color: #949799;
-      font-size: 10px;
+      font-size: 0.9em;
       white-space: nowrap;
       text-overflow: ellipsis;
     }

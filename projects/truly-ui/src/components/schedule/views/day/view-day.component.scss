@@ -99,7 +99,7 @@
   box-sizing: border-box;
   position: absolute;
   > .ui-event-hour{
-    font-size: 0.9em;
+    font-size: 0.8em;
     color: #454e58;
     justify-content: flex-end;
     margin-right: 10px;
@@ -112,14 +112,14 @@
     width: 65%;
     line-height: 1.2em;
     > .ui-event-title{
-      font-size: 1em;
+      font-size: 0.9em;
       font-weight: 600;
       color: #454e58;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
     > .ui-event-detail{
-      font-size: 0.9em;
+      font-size: 0.8em;
       color: #949799;
       white-space: nowrap;
       text-overflow: ellipsis;

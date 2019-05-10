@@ -9,6 +9,8 @@
           <app-card>
             <div class="col-md-4">
               <app-chat2 (send)="onSendMessage($event)" [user]="userONE" [contacts]="contacts"></app-chat2>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-chatlist
    (sendMessage)="send.emit($event)"
@@ -20,6 +22,8 @@
             </div>
             <div class="col-md-4">
               <app-chat3 (send)="onSendMessage($event)" [user]="userTWO" [contacts]="contacts"></app-chat3>
+              <div class="spacer"></div>
+              <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-chatlist
    (sendMessage)="send.emit($event)"

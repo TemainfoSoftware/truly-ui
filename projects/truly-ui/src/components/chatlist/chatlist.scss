@@ -51,6 +51,8 @@
   .ui-wrapper-chat {
     padding: 10px;
     position: relative;
+    height: calc(100% - 35px);
+    box-sizing: border-box;
   }
 
   .chat-content {
@@ -120,6 +122,7 @@
   .chat-filter-icon {
     font-size: 1.5em;
     position: absolute;
+    line-height: 30px;
     padding: 0 10px;
     color: #989898;
   }

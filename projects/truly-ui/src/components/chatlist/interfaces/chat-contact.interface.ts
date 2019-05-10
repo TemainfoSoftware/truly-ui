@@ -28,5 +28,6 @@
    name: string;
    description: string;
    status: Status | string;
-   avatar?: string;
+   gravatar?: string;
+   image?: string;
  }

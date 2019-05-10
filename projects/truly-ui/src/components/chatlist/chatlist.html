@@ -34,8 +34,8 @@
           <tl-avatar [size]="'45px'"
                      class="chat-img"
                      [style.border]="'2px solid ' + chatStatus[item.status]"
-                     [src]="item?.avatar"
-                     [gravatar]="item?.avatar" [shape]="'circle'">
+                     [src]="item?.image"
+                     [gravatar]="item?.gravatar" [shape]="'circle'">
           </tl-avatar>
           <div class="chat-item-detail">
             <span [innerHTML]="item.name | highlight:filterControl"></span>
@@ -60,7 +60,8 @@
     </div>
     <tl-avatar [size]="'30px'"
                class="chat-img"
-               [gravatar]="partner?.avatar" [shape]="'circle'">
+               [src]="partner?.image"
+               [gravatar]="partner?.gravatar" [shape]="'circle'">
     </tl-avatar>
   </div>
 </ng-template>

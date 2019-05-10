@@ -27,23 +27,25 @@
 </div>
 
 <ng-template #contactTemplate let-statusSelected="status">
-  <ng-container *ngIf="(contacts | status: getFilter(statusSelected)).length > 0; else withoutContacts">
-    <ng-container *ngFor="let item of contacts | status: getFilter(statusSelected); trackBy:trackByFn">
-      <div *ngIf="item" class="chat-item" (click)="selectPartner(item)">
-        <tl-avatar [size]="'45px'"
-                   class="chat-img"
-                   [style.border]="'2px solid ' + chatStatus[item.status]"
-                   [src]="item?.avatar"
-                   [gravatar]="item?.avatar" [shape]="'circle'">
-        </tl-avatar>
-        <div class="chat-item-detail">
-          <span [innerHTML]="item.name | highlight:filterControl"></span>
-          <span>{{ item.description }}</span>
+  <ng-container *ngIf="(contacts | status: getFilter(statusSelected)) as filtered">
+    <ng-container *ngIf="filtered.length > 0; else withoutContacts">
+      <ng-container *ngFor="let item of filtered; trackBy:trackByFn">
+        <div *ngIf="item" class="chat-item" (click)="selectPartner(item)">
+          <tl-avatar [size]="'45px'"
+                     class="chat-img"
+                     [style.border]="'2px solid ' + chatStatus[item.status]"
+                     [src]="item?.avatar"
+                     [gravatar]="item?.avatar" [shape]="'circle'">
+          </tl-avatar>
+          <div class="chat-item-detail">
+            <span [innerHTML]="item.name | highlight:filterControl"></span>
+            <span>{{ item.description }}</span>
+          </div>
+          <div *ngIf="getUnreadMessages(item)?.length as messages"
+               class="chat-unread-messages">{{ messages }}
+          </div>
         </div>
-        <div *ngIf="getUnreadMessages(item)?.length as messages"
-             class="chat-unread-messages">{{ messages }}
-        </div>
-      </div>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-template>

@@ -5,6 +5,7 @@ import { FixedPositionDirective } from './fixed-position.directive';
 import { RelativeWindowPosition } from './relative-window-position.directive';
 import { ScrollManager } from './scroll-manager.directive';
 import { ListOptionDirective } from './listoption.directive';
+import {HighlightPipe} from './highlight.pipe';
 
 @NgModule( {
   imports: [
@@ -15,13 +16,15 @@ import { ListOptionDirective } from './listoption.directive';
     RelativeWindowPosition,
     FixedPositionDirective,
     ListOptionDirective,
-    ScrollManager
+    ScrollManager,
+    HighlightPipe
   ],
   exports: [
     RelativeWindowPosition,
     FixedPositionDirective,
     ListOptionDirective,
-    ScrollManager
+    ScrollManager,
+    HighlightPipe
   ]
 } )
 export class MiscModule {

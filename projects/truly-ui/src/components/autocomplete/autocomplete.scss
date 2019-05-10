@@ -153,6 +153,9 @@
     opacity: 1;
     background: #6c9;
     color: #ffff !important;
+    /deep/ span {
+      background: transparent !important;
+    }
   }
 }
 

@@ -14,6 +14,9 @@
       .selected {
         background-color: map-deep-get($primary, "default", "background");
         color: map-deep-get($primary, "default", "foreground");
+        /deep/ span {
+          background: transparent !important;
+        }
       }
       > li {
         color: map-deep-get($basic, "default", "foreground");

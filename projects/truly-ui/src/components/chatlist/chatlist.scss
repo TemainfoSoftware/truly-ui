@@ -1,5 +1,4 @@
 .chat-wrapper {
-  overflow: hidden;
   min-width: 300px !important;
   position: relative;
   .chat-header {
@@ -49,8 +48,12 @@
     }
   }
 
-  .chat-content {
+  .ui-wrapper-chat {
     padding: 10px;
+    position: relative;
+  }
+
+  .chat-content {
     overflow-y: auto;
     overflow-x: hidden;
     border-top: 0;
@@ -113,6 +116,25 @@
   }
 }
 
+.chat-filter-wrapper {
+  .chat-filter-icon {
+    font-size: 1.5em;
+    position: absolute;
+    padding: 0 10px;
+    color: #989898;
+  }
+  .chat-filter-contact {
+    height: 30px;
+    width: 100%;
+    margin-bottom: 10px;
+    outline: none;
+    border-radius: 3px;
+    padding-left: 30px;
+    box-sizing: border-box;
+    font-family: Segoe UI, serif;
+  }
+}
+
 
 .chat-partner-wrapper {
   display: flex;
@@ -130,7 +152,7 @@
     cursor: pointer;
     &:hover {
       background: #fff;
-      color: #66cc99;
+      color: #848484;
       padding: 0 8px;
     }
   }
@@ -162,25 +184,14 @@
 }
 
 @keyframes showInChatItem {
-  from {
-    opacity: 0;
-  }
-  to  {
-    opacity: 1;
-  }
+  from {opacity: 0}
+  to  {opacity: 1}
 }
 
 @keyframes showOffContent {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to  {
-    transform: translateX(-400px);
-    opacity: 0;
-  }
+  from {opacity: 1}
+  to  {opacity: 0}
 }
-
 
 @keyframes shadow-pulse
 {

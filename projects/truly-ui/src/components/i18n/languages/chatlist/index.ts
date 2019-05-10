@@ -26,4 +26,5 @@ export interface ChatListI18nInterface {
   yesterday: string;
   loadingMessages: string;
   saySomething: string;
+  searchContact: string;
 }

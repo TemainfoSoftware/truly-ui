@@ -27,9 +27,11 @@ import { ChatContact } from '../interfaces/chat-contact.interface';
 } )
 export class TlStatusFilterPipe implements PipeTransform {
 
-  transform( value: ChatContact[], status: any): any {
+  transform( value: ChatContact[], param: { filter: string, status: Array<string> } ): any {
     if (value && value.length > 0) {
-      return value.filter((item: ChatContact) => status.indexOf(item.status) >= 0 );
+      return value.filter((item: ChatContact) =>
+        (param.status.indexOf(item.status) >= 0) &&
+        (item.name.toLocaleLowerCase().includes( param.filter.toLocaleLowerCase() )) );
     }
     return [];
   }

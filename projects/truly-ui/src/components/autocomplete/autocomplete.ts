@@ -27,8 +27,7 @@ import {
 import { FormControl, FormControlName } from '@angular/forms';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';

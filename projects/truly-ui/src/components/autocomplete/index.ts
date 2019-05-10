@@ -35,6 +35,7 @@ import { FilterContainerModule } from '../core/components/filter/filter-containe
 import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
 import { A11yModule } from '@angular/cdk/a11y';
 import { LoaderModule } from '../loader/index';
+import { MiscModule } from '../misc/index';
 
 @NgModule( {
   imports: [
@@ -43,11 +44,11 @@ import { LoaderModule } from '../loader/index';
     ScrollingModule,
     InputModule,
     LoaderModule,
-    InputModule,
     FormsModule,
     BlockUIModule,
     A11yModule,
     IconsModule,
+    MiscModule,
     ReactiveFormsModule,
     InternalsModule,
     FilterContainerModule,

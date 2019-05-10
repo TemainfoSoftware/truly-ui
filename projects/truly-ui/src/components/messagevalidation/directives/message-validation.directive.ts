@@ -28,20 +28,20 @@ import {
   ElementRef, OnDestroy,
   OnInit, Renderer2
 } from '@angular/core';
-import { FormControlName, NgModel } from '@angular/forms';
-import { Overlay, OverlayPositionBuilder, OverlayRef } from '@angular/cdk/overlay';
-import { ComponentPortal } from '@angular/cdk/portal';
-import { TlMessageValidationComponent } from '../messagevalidation.component';
-import { Subscription, throwError } from 'rxjs';
+import {FormControlName, NgModel} from '@angular/forms';
+import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
+import {ComponentPortal} from '@angular/cdk/portal';
+import {TlMessageValidationComponent} from '../messagevalidation.component';
+import {Subscription, throwError} from 'rxjs';
 
-@Directive( {
+@Directive({
   selector: '[showValidations]',
-} )
+})
 export class TlMessageValidationDirective implements AfterContentInit, AfterViewInit, OnDestroy {
 
-  @ContentChild( NgModel ) ngModel: NgModel;
+  @ContentChild(NgModel) ngModel: NgModel;
 
-  @ContentChild( FormControlName ) ngControl: FormControlName;
+  @ContentChild(FormControlName) ngControl: FormControlName;
 
   private overlayRef: OverlayRef;
 
@@ -53,66 +53,75 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
     return this.ngModel ? this.ngModel : this.ngControl;
   }
 
-  constructor( private overlayPositionBuilder: OverlayPositionBuilder,
-               private elementRef: ElementRef,
-               private renderer: Renderer2,
-               private overlay: Overlay ) {
+  constructor(private overlayPositionBuilder: OverlayPositionBuilder,
+              private elementRef: ElementRef,
+              private renderer: Renderer2,
+              private overlay: Overlay) {
   }
 
   ngAfterContentInit() {
     const positionStrategy = this.overlayPositionBuilder
-      .flexibleConnectedTo( this.getNativeInput() )
-      .withPositions( [ {
+      .flexibleConnectedTo(this.getNativeInput())
+      .withPositions([{
         originX: 'center',
         originY: 'bottom',
         overlayX: 'center',
         overlayY: 'top',
-      } ] );
-    this.overlayRef = this.overlay.create( {
+      }]);
+    this.overlayRef = this.overlay.create({
       positionStrategy,
       hasBackdrop: true,
       disposeOnNavigation: true,
       backdropClass: 'cdk-overlay-transparent-backdrop'
-    } );
+    });
   }
 
   ngAfterViewInit() {
     this.listenBlur();
     this.listenFocus();
     this.listenValueChanges();
+    this.listenBackdrop();
   }
 
   listenFocus() {
-    this.subscription.add( this.renderer.listen( this.getNativeInput(), 'focus', () => {
+    this.subscription.add(this.renderer.listen(this.getNativeInput(), 'focus', () => {
       if (!this.validationsRef) {
         this.create();
       }
-    } ) );
+    }));
   }
 
   listenBlur() {
-    this.subscription.add( this.renderer.listen( this.getNativeInput(), 'blur', () => {
+    this.subscription.add(this.renderer.listen(this.getNativeInput(), 'blur', () => {
       this.remove();
-    } ) );
+    }));
+  }
+
+  listenBackdrop() {
+    if (this.overlayRef) {
+      this.subscription.add(this.overlayRef.backdropClick().subscribe(() => {
+        this.remove();
+      }));
+    }
   }
 
   listenValueChanges() {
     if (this.control) {
-      this.subscription.add( this.control.valueChanges.subscribe( () => {
+      this.subscription.add(this.control.valueChanges.subscribe(() => {
         !this.validationsRef ? this.create() : this.validationsRef.instance.setMessages();
-      } ) );
+      }));
     }
   }
 
   create() {
-    setTimeout( () => {
-      if ( this.control && this.control.errors && this.control.dirty ) {
-        const validationsPortal = new ComponentPortal( TlMessageValidationComponent );
-        this.validationsRef = this.overlayRef.attach( validationsPortal );
-        this.validationsRef.instance.init( this.control, this.getElementWidth() );
+    setTimeout(() => {
+      if (this.control && this.control.errors && this.control.dirty && !this.overlayRef.hasAttached()) {
+        const validationsPortal = new ComponentPortal(TlMessageValidationComponent);
+        this.validationsRef = this.overlayRef.attach(validationsPortal);
+        this.validationsRef.instance.init(this.control, this.getElementWidth());
         this.validationsRef.instance.setMessages();
       }
-    } );
+    });
   }
 
   remove() {
@@ -121,9 +130,9 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   }
 
   getNativeInput() {
-    const nativeInput = this.elementRef.nativeElement.querySelector( 'input' ) ||
-      this.elementRef.nativeElement.querySelector( 'textarea' );
-    return nativeInput ? nativeInput : throwError( `There's no input element relative with origin element` );
+    const nativeInput = this.elementRef.nativeElement.querySelector('input') ||
+      this.elementRef.nativeElement.querySelector('textarea');
+    return nativeInput ? nativeInput : throwError(`There's no input element relative with origin element`);
   }
 
   getElementWidth() {

@@ -2,9 +2,7 @@
   <div class="chat-header">
     <ng-container *ngIf="!insideChat; else selectedPartner">
       <div class="chat-wrapper-status">
-        <div class="chat-status-selection" [style.transform]="'translateX('+transform+')'"></div>
-        <!--<div class="chat-status" [class.selected]="selected === 'CHAT'" (click)="selectStatus('CHAT')">
-          <span>Chats</span></div>-->
+        <div class="chat-status-selection" [style.transform]="'translateX(' + transform + ')'"></div>
         <div class="chat-status" [class.selected]="selected === 'ONLINE'" (click)="selectStatus('ONLINE')">
           <span>Online</span>
         </div>
@@ -15,27 +13,31 @@
     </ng-container>
   </div>
   <ng-container *ngIf="!insideChat; else chatContent">
-    <div #content class="chat-content" (animationend)="animationContentDone($event)"
-         [style.height]="'calc(' + maxHeight + ' - 35px)'">
-      <ng-container *ngTemplateOutlet="contactTemplate; context: { status: selected }"></ng-container>
+    <div class="ui-wrapper-chat">
+      <div class="chat-filter-wrapper">
+        <tl-icon class="chat-filter-icon" [lib]="'ion'" [style]="'ios'">search</tl-icon>
+        <input class="chat-filter-contact" [placeholder]="searchContact" [(ngModel)]="filterControl">
+      </div>
+      <div #content class="chat-content" (animationend)="animationContentDone($event)"
+           [style.height]="'calc(' + maxHeight + ' - 95px)'">
+        <ng-container *ngTemplateOutlet="contactTemplate; context: { status: selected }"></ng-container>
+      </div>
     </div>
   </ng-container>
 </div>
 
 <ng-template #contactTemplate let-statusSelected="status">
-  <ng-container *ngIf="(contacts | status: ((statusSelected === offline) ? [offline] : [online, busy])).length > 0; else withoutContacts">
-
-    <ng-container *ngFor="let item of contacts | status: ((statusSelected === offline) ? [offline] : [online, busy]);">
+  <ng-container *ngIf="(contacts | status: getFilter(statusSelected)).length > 0; else withoutContacts">
+    <ng-container *ngFor="let item of contacts | status: getFilter(statusSelected); trackBy:trackByFn">
       <div *ngIf="item" class="chat-item" (click)="selectPartner(item)">
         <tl-avatar [size]="'45px'"
                    class="chat-img"
-                   [text]="item?.name"
                    [style.border]="'2px solid ' + chatStatus[item.status]"
                    [src]="item?.avatar"
                    [gravatar]="item?.avatar" [shape]="'circle'">
         </tl-avatar>
         <div class="chat-item-detail">
-          <span>{{ item.name }}</span>
+          <span [innerHTML]="item.name | highlight:filterControl"></span>
           <span>{{ item.description }}</span>
         </div>
         <div *ngIf="getUnreadMessages(item)?.length as messages"
@@ -43,9 +45,7 @@
         </div>
       </div>
     </ng-container>
-
   </ng-container>
-
 </ng-template>
 
 <ng-template #selectedPartner>
@@ -58,7 +58,6 @@
     </div>
     <tl-avatar [size]="'30px'"
                class="chat-img"
-               [text]="partner?.name"
                [gravatar]="partner?.avatar" [shape]="'circle'">
     </tl-avatar>
   </div>

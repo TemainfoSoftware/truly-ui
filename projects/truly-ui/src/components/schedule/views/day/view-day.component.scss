@@ -56,7 +56,6 @@
 }
 
 .ui-schedule-skeleton{
-  //position: absolute;
   >.ui-schedule-now-indicator{
     margin-top: -5px;
     position: absolute;
@@ -71,8 +70,6 @@
   }
 }
 
-
-//GRID EVENTS
 .ui-schedule-grid-events{
   position: absolute;
   top: 0;
@@ -83,7 +80,6 @@
 }
 
 .ui-schedule-list-events{
-  //  padding: 2px;
   position: relative;
 }
 
@@ -98,15 +94,10 @@
   border-right: 1px #D6D6D6 solid;
   border-bottom: 1px #D6D6D6 solid;
   user-select: none;
-  //margin: 2px 2px 2px 0px;
   cursor: pointer;
-  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-
-
   display: flex;
   box-sizing: border-box;
   position: absolute;
-
   > .ui-event-hour{
     justify-content: flex-end;
     margin-right: 10px;

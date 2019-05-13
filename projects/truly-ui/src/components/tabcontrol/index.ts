@@ -7,8 +7,8 @@ import { TlTab } from './tab/tab';
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule
+      CommonModule,
+      FormsModule
     ],
     declarations: [
       TlTabControl,

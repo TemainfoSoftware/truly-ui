@@ -23,10 +23,6 @@ import {
   Component, ContentChildren, QueryList, forwardRef, Input, AfterContentInit, ViewChild, AfterViewInit, Renderer2,
 } from '@angular/core';
 
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { TlTab } from './tab/tab';
 import { TlModal } from '../modal/modal';
 import { KeyEvent } from '../core/enums/key-events';
@@ -36,7 +32,7 @@ import { KeyEvent } from '../core/enums/key-events';
     templateUrl: './tabcontrol.html',
     styleUrls: [ './tabcontrol.scss' ]
 } )
-export class TlTabControl extends ComponentDefaultBase implements AfterContentInit, AfterViewInit {
+export class TlTabControl implements AfterContentInit, AfterViewInit {
 
     @Input( 'height' ) height = 'auto';
 
@@ -62,10 +58,7 @@ export class TlTabControl extends ComponentDefaultBase implements AfterContentIn
 
     public topPosition = 0;
 
-    constructor( tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService,
-                 private renderer: Renderer2 ) {
-          super( tabIndexService, idService, nameService );
-      }
+    constructor(private renderer: Renderer2 ) {}
 
     ngAfterContentInit() {
       const selectedTab = this.tabs.find(tab => tab.selected);

@@ -208,8 +208,10 @@ export class ModalService implements OnDestroy {
       }
     } else {
       if ( this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation ) {
-        this.removeOfList( this.referenceSmartForm.id );
-        this.view.remove( this.view.indexOf( this.referenceSmartForm.modal ) );
+        if ( this.referenceSmartForm ) {
+          this.removeOfList( this.referenceSmartForm.id );
+          this.view.remove( this.view.indexOf( this.referenceSmartForm.modal ) );
+        }
       }
     }
   }
@@ -424,9 +426,11 @@ export class ModalService implements OnDestroy {
   }
 
   private destroyBackdrop() {
-    this.backdrop.destroy();
-    this.view.element.nativeElement.removeChild( this.backdrop.location.nativeElement );
-    this.backdrop = null;
+    if (this.backdrop) {
+      this.backdrop.destroy();
+      this.view.element.nativeElement.removeChild( this.backdrop.location.nativeElement );
+      this.backdrop = null;
+    }
   }
 
   private getComponentById( id: string ) {

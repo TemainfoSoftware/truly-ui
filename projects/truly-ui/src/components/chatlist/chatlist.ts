@@ -29,6 +29,9 @@ import { ChatMessage } from './interfaces/chat-message.interface';
 import { Status } from './enums/status.enum';
 import { Subscription } from 'rxjs';
 import { ChatService } from './services/chat.service';
+import { I18nService } from '../i18n/i18n.service';
+
+let uniqueIdentifier = 0;
 
 @Component( {
   selector: 'tl-chatlist',
@@ -53,11 +56,16 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Input() partner: ChatContact;
 
+  @Input() id = `tl-chatlist-${uniqueIdentifier++}`;
+
   @Input() user: ChatContact;
 
   @Input('contacts')
   set contacts( data: ChatContact[] ) {
-    if (data && data.length > 0) {
+    if (data && data.length > 0 && this.user) {
+      if (!this.user.id) {
+        throw Error('User id not found');
+      }
       this._dataSource = data.filter((item) => item.id !== this.user.id);
     }
   }
@@ -76,11 +84,17 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @ViewChild('content') content: ElementRef;
 
-  public transform = '100px';
+  public transform = '0';
 
   public selected = 'ONLINE';
 
+  public noContactsFound = this.i18nService.getLocale().ChatList.noContactsFound;
+
+  public searchContact = this.i18nService.getLocale().ChatList.searchContact;
+
   public insideChat = false;
+
+  public filterControl = '';
 
   public messages: ChatMessage[] = [];
 
@@ -88,7 +102,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private renderer: Renderer2, private chatService: ChatService) {}
+  constructor(private renderer: Renderer2, private chatService: ChatService, private i18nService: I18nService ) {}
 
   get online() {
     return Status.ONLINE;
@@ -112,23 +126,45 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     }
   }
 
-  getUnreadMessages(id: string | number) {
+  getUnreadMessages(item: ChatContact) {
+    if (!item || !item.id) {
+      return [];
+    }
     if (this.messages.length > 0) {
-      return this.messages.filter((item: ChatMessage) =>
-      (!item.viewed && item.from.id === id) && (item.to.id === this.user.id) );
+      return this.messages.filter((message: ChatMessage) => {
+        if ( message.from && message.to ) {
+         return (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id);
+        }
+      });
     }
     return [];
   }
 
+  getFilter( statusSelected ) {
+    if (statusSelected === this.offline) {
+      return { filter: this.filterControl, status: [this.offline] };
+    }
+    return { filter: this.filterControl, status: [this.online, this.busy] };
+  }
+
+  trackByFn(index) {
+    return index;
+  }
+
   hasMessages() {
-    return this.messages.filter((value) => !value.viewed && (value.to.id === this.user.id)).length > 0;
+    const messages = this.messages.filter((value) => {
+      if (value.to && this.user) {
+        return !value.viewed && (value.to.id === this.user.id);
+      }
+    });
+    return messages.length > 0;
   }
 
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
-    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item.id) });
+    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item) });
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
-    this.readMessages( this.getUnreadMessages(item.id) );
+    this.readMessages( this.getUnreadMessages(item) );
     this.newMessages.emit( this.hasMessages() );
   }
 
@@ -178,14 +214,11 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   selectStatus(status) {
     if (status === 'ONLINE') {
-      this.transform = '100px';
+      this.transform = '0';
       this.selected = 'ONLINE';
     } else if (status === 'OFFLINE') {
-      this.transform = '200px';
+      this.transform = '100px';
       this.selected = 'OFFLINE';
-    } else {
-      this.transform = '0';
-      this.selected = 'CHAT';
     }
   }
 

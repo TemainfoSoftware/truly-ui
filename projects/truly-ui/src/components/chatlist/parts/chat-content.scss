@@ -1,11 +1,14 @@
 .chat-content-wrapper {
   background: #f1f1f1;
   position: relative;
+  display: contents;
 
   .chat-messages-content {
     overflow-y: auto;
     height: 410px;
+    scroll-behavior: smooth;
     background: rgb(229, 221, 213);
+    text-align: center;
     &:before {
       content: '';
       // background: url("assets/images/bgchat.png") repeat repeat;
@@ -45,9 +48,9 @@
   text-align: center;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
   border: 1px solid #dedede;
-  width: 100px;
+  width: fit-content;
   position: relative;
-  left: calc(50% - 50px);
+  display: inline-block;
   font-family: Segoe UI,serif;
   font-size: .9em;
   color: #868686;
@@ -207,7 +210,7 @@
   > .chat-loader-message {
     font-size: 1em;
     font-family: "Segoe UI", serif;
-    color: #ccc;
+    color: #6b6b6b;
     margin: 10px 0;
   }
 }

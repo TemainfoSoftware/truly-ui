@@ -23,7 +23,7 @@ import {
   Component, EventEmitter, OnInit, Output, Input, ViewChild, ElementRef, ViewChildren, QueryList,
   AfterViewInit, SimpleChanges, OnChanges, Renderer2, OnDestroy,
 } from '@angular/core';
-import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
+import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { TlListItem } from './list-item/list-item';
 import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
@@ -31,6 +31,12 @@ import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { scrollIntoView } from '../core/helper/scrollIntoView';
 import * as path from 'object-path';
 import { Subscription } from 'rxjs';
+
+
+export class GroupList {
+  description: string;
+  items: Array<any>;
+}
 
 @Component( {
   selector: 'tl-overlay-list',
@@ -101,11 +107,13 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
 
   public notFound = false;
 
-  public groups = [];
+  public groups: GroupList[] = [];
 
   public unGrouped = [];
 
   public objectPath = path;
+
+  public searchText = '';
 
   private _datasource = [];
 
@@ -160,6 +168,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
       }
     }
     return false;
+  }
+
+  getTextContent( item ) {
+    return this.typeOfData === 'simple' ? item : this.objectPath.get(item, this.keyText);
   }
 
   getItemsGroup( group ) {
@@ -271,6 +283,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
   }
 
   keydownSearch( $event ) {
+    this.searchText = $event.target.value;
     this.search.emit( $event.target.value );
     this.unGrouped = [];
   }

@@ -64,7 +64,7 @@
                (mousedown)="onSelectItem(item, select)"
                class="ui-list-item">
             <span *ngIf="item; else loadingMessage">
-              {{ getItemText(item) }}
+              <span [innerHTML]="getItemText(item) | highlight:description"></span>
             </span>
           </div>
         </cdk-virtual-scroll-viewport>

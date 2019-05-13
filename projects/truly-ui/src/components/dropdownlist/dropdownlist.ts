@@ -28,7 +28,7 @@ import {
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit
+  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit, ChangeDetectorRef
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
@@ -52,7 +52,7 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
     [ MakeProvider( TlDropDownList ) ]
   ]
 } )
-export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit, AfterViewInit {
+export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit {
 
   @Input( 'data' )
   set data( data: any[] ) {
@@ -141,16 +141,13 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   private _control;
 
-  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig) {
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig, private changes: ChangeDetectorRef ) {
     super();
     this.setOptions( dropdownConfig );
   }
 
   ngAfterContentInit() {
     this.listenModelChange();
-  }
-
-  ngAfterViewInit() {
     this.getModelValue();
   }
 
@@ -275,6 +272,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
         if ( this.getCompare( value ) === this.getCompareModel() ) {
           this.selectedDescription = this.getDescription( value );
           this.indexOptionSelectedModel = index;
+          this.changes.detectChanges();
           this.handleKeyModelValue( value );
           return;
         }

@@ -82,6 +82,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() eventMouseout = new EventEmitter();
 
+  @Output() eventContextmenu = new EventEmitter();
+
   @Output() newEventClick = new EventEmitter();
 
   public slatNumberRowsAsArray: Array<Number>;

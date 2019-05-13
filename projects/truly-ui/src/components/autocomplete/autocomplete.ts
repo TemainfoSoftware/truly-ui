@@ -27,8 +27,7 @@ import {
 import { FormControl, FormControlName } from '@angular/forms';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -50,7 +49,7 @@ import { TlInput } from '../input/input';
   styleUrls: [ './autocomplete.scss' ],
   providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
 } )
-export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
+export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
 
   @Input( 'data' )
   set data( value ) {
@@ -62,7 +61,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
   }
 
   @Input('control')
-  set control(item: FormControl) {
+  set control(item) {
     this._control = item;
   }
 
@@ -71,7 +70,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
       return this._control;
     }
     if (this.controlName || this.model) {
-      return this.controlName.control ? this.controlName.control : this.model.control;
+      return this.controlName ? this.controlName : this.model;
     }
     return this._control;
   }
@@ -166,7 +165,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
 
   private _data = [];
 
-  private _control = new FormControl();
+  private _control;
 
   constructor( @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
                private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService ) {
@@ -174,13 +173,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnInit, On
     this.setOptions( autoCompleteConfig );
   }
 
-  ngOnInit() {
-    this.listenModelChanges();
-  }
-
   ngAfterContentInit() {
     this.handleModelLazy();
     this.handleModelCached();
+    this.listenModelChanges();
     this.change.markForCheck();
   }
 

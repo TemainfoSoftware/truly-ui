@@ -1,14 +1,54 @@
 export const dataMethods = [
   {
-    name: 'changeStatus',
+    name: 'loadMessages',
     parameters: [
       {
-        event: 'selectedItem', description: 'Selected item of chat, returned by (clickItem) event',
+        event: 'message',
+        description: 'The Message Object of Type ChatMessage'
       },
       {
-        event: 'status', description: 'String of status that will be set: Busy | Online | Offline | Away'
+        event: 'chatId?',
+        description: 'ID of chat'
       }
     ],
-    description: 'Method used to change status of item selected. Inject ChatListService to use',
+    description: 'Method used to a list of messages',
+  },
+  {
+    name: 'appendMessage',
+    parameters: [
+      {
+        event: 'message',
+        description: 'The Message Object of Type ChatMessage'
+      },
+      {
+        event: 'chatId?',
+        description: 'ID of chat'
+      }
+    ],
+    description: 'Method used append messages on chat',
+  },
+  {
+    name: 'readAll',
+    parameters: [
+      {
+        event: 'chatId?',
+        description: 'ID of chat'
+      }
+    ],
+    description: 'Method used to read all messages',
+  },
+  {
+    name: 'setStatus',
+    parameters: [
+      {
+        event: 'status',
+        description: 'Status of contact'
+      },
+      {
+        event: 'chatId?',
+        description: 'ID of chat'
+      }
+    ],
+    description: 'Method used to set status of chat owner',
   },
 ];

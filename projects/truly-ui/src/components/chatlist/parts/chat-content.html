@@ -2,15 +2,11 @@
 
   <div class="chat-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
 
-    <ng-container *ngIf="loadingMessages">
-      <ng-container *ngTemplateOutlet="loadMessagesTemplate"></ng-container>
-    </ng-container>
-
-    <ng-container *ngIf="!loadingMessages">
-      <ng-container *ngFor="let item of messages | filterMessage">
+    <ng-container *ngIf="!loadingMessages; else loadMessagesTemplate">
+      <ng-container *ngFor="let item of messages | filterMessage; trackBy:trackByFn">
 
           <div class="chat-time">  {{ currentDate(item.date) }}</div>
-          <ng-container *ngFor="let msg of item.messages">
+          <ng-container *ngFor="let msg of item.messages; trackBy:trackByFn">
 
             <ng-container *ngIf="msg?.from.id === partner?.id">
               <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: msg }"></ng-container>
@@ -29,7 +25,7 @@
 
   <div class="chat-type">
    <textarea [formControl]="control" #input (keydown.enter)="$event.preventDefault(); sendMessage()"
-             class="chat-input" placeholder="Digite algo"></textarea>
+             class="chat-input" [placeholder]="saySomething"></textarea>
     <div class="icon-send" (click)="sendMessage()">
       <tl-icon [lib]="'ion'" [style]="'md'">send</tl-icon>
     </div>
@@ -48,9 +44,9 @@
 <ng-template #loadMessagesTemplate>
   <div class="chat-loader-wrapper">
     <div class="chat-loader">
-      <tl-loader [strokeWidth]="3"></tl-loader>
+      <tl-loader [strokeWidth]="3" [color]="'#6b6b6b'"></tl-loader>
     </div>
-    <span class="chat-loader-message">Loading Messages...</span>
+    <span class="chat-loader-message">{{ loadingMessagesLabel }}</span>
   </div>
 </ng-template>
 

@@ -19,7 +19,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { EventEmitter, Injectable, Inject, forwardRef, SkipSelf } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ChatMessage } from '../interfaces/chat-message.interface';
 import { TlChatList } from '../chatlist';
 import { Status } from '../enums/status.enum';
@@ -27,33 +27,37 @@ import { Status } from '../enums/status.enum';
 @Injectable()
 export class ChatService {
 
-  private chatList: TlChatList;
+  private chatList: TlChatList[] = [];
 
   constructor() {
   }
 
   set chat( chat ) {
-    this.chatList = chat;
+    this.chatList = [ ...this.chatList, chat ];
   }
 
-  get chat() {
-    return this.chatList;
+  private getChat( id: string ) {
+    return this.chatList.filter((item) => item.id === id)[0];
   }
 
-  loadMessages( messages: ChatMessage[] ) {
-    this.chat.loadMessages( messages );
+  loadMessages( messages: ChatMessage[], chatId?: string ) {
+     this.getChat(chatId || this.getFirstChat() ).loadMessages( messages );
   }
 
-  appendMessage( message: ChatMessage ) {
-    this.chat.appendMessage( message );
+  appendMessage( message: ChatMessage, chatId?: string ) {
+    this.getChat(chatId || this.getFirstChat()).appendMessage( message );
   }
 
-  readAll() {
-    this.chat.readAllMessages();
+  readAll( chatId?: string ) {
+    this.getChat(chatId || this.getFirstChat()).readAllMessages();
   }
 
-  setStatus(status: Status) {
-    this.chat.setStatus(status);
+  setStatus(status: Status, chatId?: string ) {
+    this.getChat(chatId || this.getFirstChat()).setStatus(status);
+  }
+
+  private getFirstChat() {
+    return this.chatList[0].id;
   }
 
 }

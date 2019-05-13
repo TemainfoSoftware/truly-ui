@@ -11,6 +11,10 @@ export class ShowcaseTablePropertiesComponent implements OnInit {
 
   @Input('data') data = [];
 
+  @Input() hasDefault = true;
+
+  @Input() hasOptions = true;
+
   public environment;
 
   constructor() { }

@@ -1,6 +1,5 @@
 <div class="ui-wrapper-list">
-  <div class="dropdown-list-wrapper-select"
-       [ngStyle]="{'width': width}">
+  <div class="dropdown-list-wrapper-select" [style.width]="width">
     <div class="search-input" *ngIf="searchOnList && !customFocus">
       <tl-input
         (input)="handleInput($event)"
@@ -34,7 +33,7 @@
                       [item]="item">
           <ng-template #groupTemplate>
             <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
-            {{ typeOfData === 'simple' ? item : objectPath.get(item, keyText) }}
+            <span [innerHTML]="getTextContent(item) | highlight:searchText"></span>
           </ng-template>
         </tl-list-item>
       </div>
@@ -49,7 +48,7 @@
                       [item]="item">
           <ng-template #ungroupTemplate>
             <i *ngIf="item[keyIcon]" class="{{ item[keyIcon] }}" style="padding: 0 5px"></i>
-            {{ typeOfData === 'simple' ? item : objectPath.get(item, keyText) }}
+            <span [innerHTML]="getTextContent(item) | highlight:searchText"></span>
           </ng-template>
         </tl-list-item>
     </section>

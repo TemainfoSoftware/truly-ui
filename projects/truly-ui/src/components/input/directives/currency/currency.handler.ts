@@ -2,9 +2,17 @@ import {CurrencyService} from './currency.service';
 
 export class CurrencyHandler {
 
-  private inputService: CurrencyService;
+  private _inputService: CurrencyService;
   private onModelChange: Function;
   private onModelTouched: Function;
+
+  get inputService() {
+    return this._inputService;
+  }
+
+  set inputService( value: CurrencyService ) {
+    this._inputService = value;
+  }
 
   constructor(htmlInputElement: HTMLInputElement, options: any) {
     this.inputService = new CurrencyService(htmlInputElement, options);

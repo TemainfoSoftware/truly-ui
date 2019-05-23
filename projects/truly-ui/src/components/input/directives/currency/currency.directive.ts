@@ -62,7 +62,9 @@ export class CurrencyDirective implements AfterContentInit, AfterViewInit, DoChe
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.inputHandler.inputService.rawValue = this.inputHandler.inputService.applyMask( true, this.inputHandler.inputService.rawValue );
+      if ( this.inputHandler.inputService.rawValue ) {
+        this.inputHandler.inputService.rawValue = this.inputHandler.inputService.applyMask( true, this.inputHandler.inputService.rawValue );
+      }
     });
   }
 

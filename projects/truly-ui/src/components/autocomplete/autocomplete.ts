@@ -24,7 +24,7 @@ import {
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
   AfterContentInit,
 } from '@angular/core';
-import { FormControl, FormControlName } from '@angular/forms';
+import { FormControlName } from '@angular/forms';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { NgModel } from '@angular/forms';
@@ -94,6 +94,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input() loading = true;
 
   @Input() disabled: boolean = null;
+
+  @Input() required: boolean = null;
 
   @Input() color = 'basic';
 
@@ -354,6 +356,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     }
     this.keyManager.onKeydown( $event );
     scrollIntoView( this.keyManager.activeItem.element.nativeElement );
+  }
+
+  handleKeyBackspace() {
+    this.value = null;
   }
 
   handleEventOpenList( $event ) {

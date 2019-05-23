@@ -11,6 +11,7 @@
 .ui-close {
   position: absolute;
   right: 5px;
+  top: 3px;
   height: 18px;
   width: 18px;
   display: flex;
@@ -47,7 +48,6 @@
   border: 1px solid #ccc;
   border-top: 0;
   border-radius: 0 0 3px 3px;
-  box-sizing: border-box;
   outline: 0;
   top: -3px;
   box-sizing: content-box;

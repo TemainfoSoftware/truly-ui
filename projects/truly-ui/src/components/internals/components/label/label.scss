@@ -19,6 +19,11 @@ $default-fontSize: 1em;
   box-sizing: border-box;
 }
 
+.ui-required {
+  color: red;
+  padding-left: 2px;
+}
+
 span {
   font-family: $default-fontFamily;
   box-sizing: border-box;

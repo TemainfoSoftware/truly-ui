@@ -33,6 +33,8 @@ export class TlLabel {
 
   @Input() labelPlacement = 'left';
 
+  @Input() required = null;
+
   @Input() labelSize = '100px';
 
   @Input() labelTitle = '';

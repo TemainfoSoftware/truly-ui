@@ -98,6 +98,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   @Input() readonly: boolean = null;
 
+  @Input() required: boolean = null;
+
   @Input() disabled: boolean = null;
 
   @Input() autocomplete = 'off';

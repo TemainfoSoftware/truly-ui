@@ -1,6 +1,6 @@
 <div [class]="'tl-input-box ' + color" #inputBox>
 
-  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+  <tl-label *ngIf="label" [required]="required" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
 
   <span *ngIf="iconBefore" (click)="onClickAddon($event, 'before')"
         [ngClass]="{ 'withoutBorder' : !withBorder, '-flatborders': flatBorder }" class="addon -borderleft">
@@ -40,6 +40,7 @@
              '-borderright': iconAfter || textAfter
              }"
            [attr.readonly]="readonly ? true : null"
+           [attr.required]="required ? true : null"
            [attr.autocomplete]="autocomplete"
            [attr.maxlength]="maxlength"
            [attr.name]="name"

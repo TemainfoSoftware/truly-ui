@@ -19,7 +19,7 @@
         <input class="chat-filter-contact" [placeholder]="searchContact" [(ngModel)]="filterControl">
       </div>
       <div #content class="chat-content" (animationend)="animationContentDone($event)"
-           [style.height]="'calc(' + maxHeight + ' - 95px)'">
+           [style.height]="'calc(100% - 40px)'">
         <ng-container *ngTemplateOutlet="contactTemplate; context: { status: selected }"></ng-container>
       </div>
     </div>

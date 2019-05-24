@@ -303,7 +303,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private handleKeyModelValue( value ) {
     this.modelInitialized = true;
     this.selected = value;
-    this.selectItem.emit( value );
     if ( !this.isModelModeString() && this.keyValue ) {
       this.value = objectPath.get( value, this.keyValue );
       return;
@@ -379,6 +378,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   handleKeyEnter() {
     if ( this.keyManager.activeItem && this.isOpen ) {
       if ( this.keyManager.activeItem.itemSelected ) {
+        this.selectItem.emit( this.keyManager.activeItem.itemSelected );
         this.setSelected( <TlItemSelectedDirective>this.keyManager.activeItem );
         this.setDescriptionValue( objectPath.get( this.keyManager.activeItem.itemSelected, this.keyText ) );
         this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
@@ -415,6 +415,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setIsOpen( false );
     this.setSelected( item );
     this.change.detectChanges();
+    this.selectItem.emit( value );
   }
 
   private setUpData( value? ) {

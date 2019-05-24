@@ -72,7 +72,7 @@
         </cdk-virtual-scroll-viewport>
       </ng-template>
       <ng-template #loadingMessage>
-        {{ messageLoading }}
+        {{ !nothingFound ? messageLoading : ' ' }}
       </ng-template>
     </tl-filter-container>
   </div>

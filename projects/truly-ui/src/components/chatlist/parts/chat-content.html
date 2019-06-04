@@ -8,11 +8,11 @@
           <div class="chat-time">  {{ currentDate(item.date) }}</div>
           <ng-container *ngFor="let msg of item.messages; trackBy:trackByFn">
 
-            <ng-container *ngIf="msg?.from.id === partner?.id">
+            <ng-container *ngIf="msg?.from?.id === partner?.id">
               <ng-container *ngTemplateOutlet="partnerTemplate; context: { message: msg }"></ng-container>
             </ng-container>
 
-            <ng-container *ngIf="msg?.from.id === user?.id">
+            <ng-container *ngIf="msg?.from?.id === user?.id">
               <ng-container *ngTemplateOutlet="userTemplate; context: { message: msg }"></ng-container>
             </ng-container>
 

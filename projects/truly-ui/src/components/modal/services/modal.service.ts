@@ -445,10 +445,10 @@ export class ModalService implements OnDestroy {
       }
       if ( !(this.isMdResultEqualsOK( result.mdResult )) ) {
         this.close( id );
-        this.resultSmartFormClose( componentModal );
+        this.handleRelativeDataSource( componentModal );
       } else if ( componentModal.modalOptions.closeOnOK ) {
         this.close( id );
-        this.resultSmartFormClose( componentModal );
+        this.handleRelativeDataSource( componentModal );
       }
       this.resultCallback( componentModal, result );
       this.handleActiveWindow();
@@ -456,8 +456,8 @@ export class ModalService implements OnDestroy {
     } );
   }
 
-  private resultSmartFormClose( componentModal: ModalInstance ) {
-    if ( componentModal.smartForm ) {
+  private handleRelativeDataSource( componentModal: ModalInstance ) {
+    if ( componentModal.smartForm && componentModal.smartForm['relativeDataSource'] ) {
       componentModal.smartForm['relativeDataSource'].setFocus();
     }
   }

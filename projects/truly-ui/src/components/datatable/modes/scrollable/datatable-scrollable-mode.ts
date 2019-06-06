@@ -109,6 +109,7 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
         this.setProprertiesFromTable();
         this.addListenerToDataSource();
         this.addListenerToScroll();
+        this.addListenerReceiveFocus();
         this.firstRender();
     }
 
@@ -419,6 +420,14 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
       });
     }
 
+    private addListenerReceiveFocus() {
+      this.subscriptions.add(this.dt.receiveFocus.subscribe(( activeItem ) => {
+        const queryElementBy = 'tr[row="' + activeItem  + '"]';
+        const elementToFind = this.listBody.nativeElement.querySelector(queryElementBy);
+        this.setFocus( elementToFind );
+      }));
+    }
+
     private addEventClickToListElement( row, dataSource , lastRow ) {
         this.elementTR.nativeElement.addEventListener( 'click', () => {
             this.handleClickItem( dataSource[ row ], row + lastRow );
@@ -426,14 +435,14 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     }
 
     private handleRowSelectItem( item, index ) {
-      this.dt.onRowSelect( item, index );
       this.setActiveElement();
+      this.dt.onRowSelect( item, index );
       this.getCursorViewPortPosition();
     }
 
     private handleClickItem( item, index ) {
-        this.dt.onRowClick( item, index );
         this.setActiveElement();
+        this.dt.onRowClick( item, index );
         this.getCursorViewPortPosition();
     }
 

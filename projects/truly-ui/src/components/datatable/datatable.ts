@@ -97,6 +97,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ViewChild( 'datatableBox' ) datatableBox: ElementRef;
 
+    public receiveFocus = new Subject();
+
     public columns: any[] = [];
 
     public heightViewPort = 0;
@@ -110,6 +112,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     public scrollingHorizontalSubject = new Subject<any>();
 
     private loadingSubject = new Subject<any>();
+
+    private activeItem;
 
     private _loading = false;
     set loading(value) {
@@ -154,16 +158,22 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     onRowClick( row, index ) {
+        this.activeItem = index;
         this.setTabIndex( index );
         this.rowClick.emit( this.getObjectRow( row, index ) );
     }
 
     onRowSelect( row, index ) {
+        this.activeItem = index;
         this.rowSelect.emit( this.getObjectRow( row, index ) );
     }
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
+    }
+
+    setFocus() {
+        this.receiveFocus.next( this.activeItem );
     }
 
     getLoading(): Observable<any> {

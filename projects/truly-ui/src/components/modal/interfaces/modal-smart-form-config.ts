@@ -21,6 +21,7 @@
  */
 import { ComponentFactoryResolver, ElementRef } from '@angular/core';
 import { ActionsModal } from '../../core/enums/actions-modal';
+import { TlDatatable } from '../../datatable/datatable';
 
 export interface ModalFormConfig {
   factory: ComponentFactoryResolver;
@@ -37,4 +38,5 @@ export interface ModalFormConfig {
     deleteCall?: Function;
     viewCall?: Function;
   };
+  relativeDataSource?: TlDatatable;
 }

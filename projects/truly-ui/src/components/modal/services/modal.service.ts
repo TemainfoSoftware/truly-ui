@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  ComponentFactoryResolver, Injectable, Inject, ViewContainerRef, OnDestroy, Type, ElementRef,
+  ComponentFactoryResolver, Injectable, ViewContainerRef, OnDestroy, Type, ElementRef,
   ComponentRef, EventEmitter,
 } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -445,13 +445,21 @@ export class ModalService implements OnDestroy {
       }
       if ( !(this.isMdResultEqualsOK( result.mdResult )) ) {
         this.close( id );
+        this.resultSmartFormClose( componentModal );
       } else if ( componentModal.modalOptions.closeOnOK ) {
         this.close( id );
+        this.resultSmartFormClose( componentModal );
       }
       this.resultCallback( componentModal, result );
       this.handleActiveWindow();
       resolve();
     } );
+  }
+
+  private resultSmartFormClose( componentModal: ModalInstance ) {
+    if ( componentModal.smartForm ) {
+      componentModal.smartForm['relativeDataSource'].setFocus();
+    }
   }
 
   private resultCallback( component, result ) {

@@ -516,7 +516,9 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   ngOnChanges( { data, totalLength }: any ) {
     if ( totalLength && !totalLength[ 'firstChange' ] ) {
-      this.dataSource.setArray( totalLength[ 'currentValue' ] );
+      if ( this.dataSource ) {
+        this.dataSource.setArray( totalLength[ 'currentValue' ] );
+      }
     }
     if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
       this.setUpData( data[ 'currentValue' ] );

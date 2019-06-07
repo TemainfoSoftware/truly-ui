@@ -126,6 +126,10 @@ export class TlDatatableDataSource implements DatasourceService {
             this.datatable.totalRows =  data.length;
             return;
         }
+
+        if (this.datatable.recordsCount >= 0 ) {
+          return this.datatable.totalRows = this.datatable.recordsCount;
+        }
         this.datatable.totalRows = data.total;
     }
 

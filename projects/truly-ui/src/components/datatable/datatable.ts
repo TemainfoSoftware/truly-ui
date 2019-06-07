@@ -51,6 +51,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('data') data: DataMetadata | Array<any>;
 
+    @Input('recordsCount') recordsCount = -1;
+
     @Input('mode') mode: 'normal' | 'scrollable' | 'paginator' = 'normal';
 
     @Input('rowModel') rowModel: 'inmemory' | 'infinite' = 'inmemory';

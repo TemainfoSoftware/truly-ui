@@ -397,6 +397,9 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     }
 
     private addEventEnterClickToListElement( row, dataSource , lastRow ) {
+      this.elementTR.nativeElement.addEventListener( 'keyup', (event) => {
+        this.dt.onRowSelect( dataSource[ row ], row + lastRow  );
+      });
       this.elementTR.nativeElement.addEventListener( 'keydown', (event) => {
         if ( event.keyCode === KeyEvent.ENTER ) {
           return this.handleRowSelectItem( dataSource[ row ], row + lastRow );
@@ -436,7 +439,6 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
 
     private handleRowSelectItem( item, index ) {
       this.setActiveElement();
-      this.dt.onRowSelect( item, index );
       this.getCursorViewPortPosition();
     }
 

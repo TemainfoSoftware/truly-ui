@@ -20,7 +20,16 @@
  SOFTWARE.
  */
 import {
-  Component, Input, OnChanges, SimpleChanges, OnInit, Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  TemplateRef
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
@@ -58,6 +67,8 @@ export class TlSchedule implements OnInit, OnChanges {
   @Input() texts = ScheduleI18n;
 
   @Input() isLoading = false;
+
+  @Input() eventButtonTemplate: TemplateRef<any>;
 
   @Input('events') set events( events: ScheduleDataSource[]) {
     if ( !events) {

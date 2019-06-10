@@ -2,6 +2,7 @@
 
   <div class="split-content" #split>
     <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
+               [color]="color"
                [text]="text"
                [disabled]="disabled"
                (click)="buttonClick.emit()"

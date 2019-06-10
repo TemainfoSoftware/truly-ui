@@ -7,6 +7,7 @@
       [views]="views"
       [defaultView]="defaultView"
       [currentDate]="currentDate"
+      [eventButtonTemplate]="eventButtonTemplate"
       (changeView)="onChangeView($event)"
       (changeDate)="onChangeDate($event)"
       (newEventClick)="newEventClick.emit()"
@@ -33,7 +34,6 @@
         [slotSettings]="slotSettings"
         [slatNumberRowsAsArray]="slatNumberRowsAsArray"
         [workScale]="workScale"
-
         (onEventContextmenu)="eventContextmenu.emit($event)"
         (onRowDbClick)="rowDbClick.emit($event)"
         (onEventClick)="eventClick.emit($event)"

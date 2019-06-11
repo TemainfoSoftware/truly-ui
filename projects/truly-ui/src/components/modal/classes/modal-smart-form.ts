@@ -13,6 +13,9 @@ export class SmartFormConfiguration implements ModalFormConfig {
   deleteConfirmationMessage?;
   recordNotFoundMessage?;
   parentElement?;
+  titleByAction?;
+  isInsertAction?: Function;
+  isUpdateAction?: Function;
 
   constructor() {
     this.factory = null;
@@ -23,6 +26,9 @@ export class SmartFormConfiguration implements ModalFormConfig {
     this.deleteConfirmationMessage = LOCALE_I18N.Form.deleteConfirmationMessage;
     this.recordNotFoundMessage = LOCALE_I18N.Form.recordNotFoundMessage;
     this.parentElement = null;
+    this.titleByAction = true;
+    this.isInsertAction = () => this.executeAction === ActionsModal.INSERT;
+    this.isUpdateAction = () => this.executeAction === ActionsModal.UPDATE;
   }
 
 }

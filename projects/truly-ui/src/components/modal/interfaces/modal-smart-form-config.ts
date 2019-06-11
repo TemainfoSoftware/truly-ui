@@ -32,6 +32,7 @@ export interface ModalFormConfig {
   deleteConfirmationMessage?: string;
   recordNotFoundMessage?: string;
   parentElement?: ElementRef;
+  titleByAction?: boolean;
   actions?: {
     insertCall?: Function;
     updateCall?: Function;

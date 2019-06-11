@@ -13,6 +13,7 @@ import {TimePickerI18nInterface} from './languages/timepicker/index';
 import {AutoCompleteI18nInterface} from './languages/autocomplete/index';
 import {TimeAvailablePickerI18nInterface} from './languages/time-available-picker/index';
 import {ChatListI18nInterface} from './languages/chatlist/index';
+import {ModalI18nInterface} from './languages/modal/index';
 
 export interface I18nInterface {
   locale: string;
@@ -24,6 +25,7 @@ export interface I18nInterface {
   Dialog: DialogI18nInterface;
   Editor: EditorI18nInterface;
   Form: FormI18nInterface;
+  Modal: ModalI18nInterface;
   Listbox: ListboxI18nInterface;
   Navigator: NavigatorI18nInterface;
   Validators: ValidatorsI18nInterface;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, TemplateRef} from '@angular/core';
 import { ViewType } from '../../types/view.type';
 import { ScheduleI18n } from '../../i18n/schedule-i18n';
 
@@ -16,6 +16,8 @@ export class HeadingComponent implements OnInit {
   @Input() currentDate = new Date();
 
   @Input() texts = ScheduleI18n;
+
+  @Input() eventButtonTemplate: TemplateRef<any>;
 
   @Output() changeView = new EventEmitter<ViewType>();
 

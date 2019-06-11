@@ -23,6 +23,9 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   height: 35px;
   line-height: 35px;
   box-sizing: border-box;
+  text-overflow: clip;
+  white-space: nowrap;
+  overflow: hidden;
 }
 :host li .icon-action{
   padding: 0 5px 0 0;

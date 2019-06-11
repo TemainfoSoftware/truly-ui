@@ -9,14 +9,11 @@
             <app-card>
               <div class="col-md-12">
                 <h6>Basic</h6>
-
-
                 <tl-schedule
                   [events]="dataSource"
                   [isLoading]="isLoading"
                   [slotSettings]="slotSettings"
                   [workScale]="workScale"
-
                   [showNowIndicator]="false"
                   [statusConfig]="statusConfig"
                   (eventContextmenu)="onEventContextmenu($event)"

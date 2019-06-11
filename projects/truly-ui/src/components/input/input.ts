@@ -186,7 +186,14 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   ngAfterViewInit() {
     this.handleValidator();
+    this.handleRequiredValidator();
     this.handleMask();
+  }
+
+  handleRequiredValidator() {
+    if ( this.control ) {
+      this.required = this.control.errors['required'];
+    }
   }
 
   handleValidator() {

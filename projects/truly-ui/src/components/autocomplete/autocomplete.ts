@@ -494,7 +494,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
       return;
     }
     if ( $event ) {
-      this.dataSource.setArray( $event );
+      this.dataSource.setArray( $event.length );
       this.setUpData( $event );
       setTimeout( () => {
         this.keyManager.setActiveItem( 0 );

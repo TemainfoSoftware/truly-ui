@@ -22,7 +22,7 @@
 
 import {
   Component, OnInit, forwardRef, Input, Renderer2, ElementRef, ViewChild,
-  ChangeDetectorRef, AfterViewInit, OnChanges, ContentChild, OnDestroy
+  ChangeDetectorRef, AfterViewInit, ContentChild, OnDestroy
 } from '@angular/core';
 import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
@@ -53,6 +53,8 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @Input() disabled = false;
 
+  @Input() required = false;
+
   @Input() readonly = false;
 
   @Input() color = 'basic';
@@ -71,6 +73,21 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @ViewChild( 'input' ) input: ElementRef;
 
+  @Input('control')
+  set control(item) {
+    this._control = item;
+  }
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.controlName || this.model) {
+      return this.controlName ? this.controlName : this.model;
+    }
+    return this._control;
+  }
+
   public mockValue: string;
 
   public touched = false;
@@ -80,6 +97,8 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
   public placeholder: string;
 
   private mask: string;
+
+  private _control;
 
   private subscription = new Subscription();
 
@@ -96,6 +115,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
     this.getMockValue( this.value );
     this.handleModelChangeInit();
+    this.handleRequiredValidator();
     this.change.detectChanges();
   }
 
@@ -105,6 +125,12 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
       model.valueChanges.subscribe( ( value ) => {
         this.getMockValue( value );
       } );
+    }
+  }
+
+  handleRequiredValidator() {
+    if (this.control && this.control.errors && this.control.errors.hasOwnProperty('required')) {
+      this.required = this.control.errors['required'];
     }
   }
 

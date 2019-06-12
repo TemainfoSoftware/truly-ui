@@ -22,7 +22,7 @@
 
 import {
   AfterViewInit, Component, Output, Input, QueryList, ViewChildren, ViewChild,
-  TemplateRef, Renderer2, EventEmitter, OnDestroy, OnChanges, SimpleChanges
+  TemplateRef, Renderer2, EventEmitter, OnDestroy, OnChanges, SimpleChanges, AfterContentInit
 } from '@angular/core';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
@@ -116,10 +116,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   ngAfterViewInit() {
     this.listKeyManager = new ActiveDescendantKeyManager(this.listItems);
     this.listKeyManager.withTypeAhead();
-    setTimeout(() => {
-      this.initializeListBox();
-      this.handleListeners();
-    }, 200);
+    this.initializeListBox();
+    this.handleListeners();
   }
 
   private handleListeners() {
@@ -258,7 +256,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   }
 
   private setInputFocus() {
-    this.inputElement ? this.inputElement.focus() : this.cdkVirtualScroll.elementRef.nativeElement.focus();
+    if ( this.inputElement ) {
+      this.inputElement.focus();
+    }
   }
 
   private setActiveItem() {

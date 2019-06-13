@@ -251,12 +251,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   onClickClose() {
-    this.value = '';
-    this.setDescriptionValue( '' );
-    this.closeHover = false;
-    this.selected = null;
-    this.tlinput.setFocus();
-    this.setIsOpen( true );
+    if ( !this.disabled ) {
+      this.value = '';
+      this.setDescriptionValue( '' );
+      this.closeHover = false;
+      this.selected = null;
+      this.tlinput.setFocus();
+      this.setIsOpen( true );
+    }
   }
 
   onBackdropClick() {

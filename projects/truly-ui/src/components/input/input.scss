@@ -6,12 +6,12 @@
 }
 
 @mixin textInput {
-  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  font-size: 0.9em;
+  font-family: Segoe UI, Lato, 'sans-serif', "Arial";
+  font-size: 1em;
 }
 
 @mixin actionButtons {
-  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-family: Segoe UI, Lato, 'sans-serif', "Arial";
   cursor: pointer;
 }
 

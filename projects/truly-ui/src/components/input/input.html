@@ -31,12 +31,14 @@
            [ngClass]="{
              'ng-invalid': control?.errors,
              'ng-valid': !control?.errors,
+             'ng-touched': control?.touched,
+             'ng-untouched': control.untouched,
              'withValidators': hasValidator,
              'withoutValidators': !hasValidator,
-             '-borderleft': iconBefore || textBefore,
-             '-flatborders': flatBorder,
              'withBorder': withBorder,
              'withoutBorder' : !withBorder,
+             '-borderleft': iconBefore || textBefore,
+             '-flatborders': flatBorder,
              '-borderright': iconAfter || textAfter
              }"
            [attr.readonly]="readonly ? true : null"

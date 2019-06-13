@@ -156,8 +156,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.modalInstance.modalConfiguration.executeAction !== ActionsModal.INSERT &&
         this.modalInstance.modalConfiguration.dataForm ) {
         this.formGroup.patchValue( this.modalInstance.modalConfiguration.dataForm );
+        this.markAllAsTouched();
       }
     }
+  }
+
+  markAllAsTouched() {
+    Object.keys( this.formGroup.controls ).forEach(value => {
+      this.formGroup.get( value ).markAsTouched();
+    });
   }
 
   setPrimaryKeyDisabled() {

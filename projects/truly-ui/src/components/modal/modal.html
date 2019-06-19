@@ -1,8 +1,8 @@
-<div #modal (mousedown)="mousemoveListener()" (mouseup)="mouseupListener()" [class]="'tl-modal-container ' + color">
+<div #modal (mousedown)="mousemoveListener(); setActive();" (mouseup)="mouseupListener()" [class]="'tl-modal-container ' + color">
     <div class="header" #headerBox>
         <div class="bar"
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
-             (mousedown)="mouseDown($event); setActive();"
+             (mousedown)="mouseDown($event);"
              (dblclick)="maximizeModal()">
             <span class="ui-icon"><tl-icon>{{ icon }}</tl-icon></span>
             <span class="ui-title">{{title}}</span>

@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- import { AfterContentInit, ContentChild, Directive } from '@angular/core';
+ import {AfterContentInit, ContentChild, Directive, EventEmitter, HostListener, Output} from '@angular/core';
  import { TlButton } from '../button/button';
 
 @Directive({
@@ -30,6 +30,18 @@
  export class FormSubmitDirective implements  AfterContentInit {
 
   @ContentChild( TlButton ) public button;
+
+  @Output() submit = new EventEmitter();
+
+  @HostListener('keydown.enter')
+  onEnter() {
+    this.submit.emit();
+  }
+
+  @HostListener('click')
+  onClick() {
+    this.submit.emit();
+  }
 
   constructor() {}
 

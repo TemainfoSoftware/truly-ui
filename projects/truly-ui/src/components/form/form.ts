@@ -86,21 +86,21 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input( 'formGroup' ) formGroup: FormGroup;
 
+  @ViewChild( NgForm ) public form: NgForm;
+
   @ContentChildren( forwardRef( () => TlInput ), { descendants: true } ) inputList: QueryList<TlInput>;
 
   @ContentChildren( forwardRef( () => TlButton ), { descendants: true } ) buttonList: QueryList<TlButton>;
 
   @ContentChildren( forwardRef( () => NgModel ), { descendants: true } ) models: QueryList<NgModel>;
 
-  @ContentChild( FormSubmitDirective ) submitDirective;
+  @ContentChild( FormSubmitDirective ) submitDirective: FormSubmitDirective;
 
   @ViewChild( 'buttonFormOk' ) buttonFormOk;
 
   @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
 
   @ViewChild( 'content' ) content;
-
-  @ViewChild( NgForm ) public form: NgForm;
 
   public formResult: {} = {};
 
@@ -126,6 +126,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     return this.form.valid;
   }
 
+  get formInstance() {
+    return this.formGroup ? this.formGroup : this.form.form;
+  }
+
   ngOnInit() {
     componentFormIndex = -1;
   }
@@ -145,9 +149,26 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   ngAfterViewInit() {
     this.getElementsOfForm();
-    this.clickListener();
-    this.formLoaded.emit( this.formGroup ? this.formGroup : this.form.form );
+    this.formLoaded.emit( this.formInstance );
     this.setInitialFocus();
+    this.listenFormChanges();
+    this.listenSubmitDirective();
+    this.change.detectChanges();
+  }
+
+  listenSubmitDirective() {
+    if ( this.submitDirective ) {
+      this.subscription.add( this.submitDirective.submit.subscribe(() => {
+        this.submitForm.emit( this.formInstance.value );
+      }));
+    }
+  }
+
+  listenFormChanges() {
+    this.subscription.add(this.formInstance.valueChanges.subscribe(() => {
+      this.formResult = this.formInstance.value;
+      this.change.detectChanges();
+    }));
   }
 
   handleFormGroupValues() {
@@ -185,58 +206,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
   }
 
-  clickListener() {
-    if ( this.mode === 'modal' ) {
-      this.listenMouseDownButtonForm();
-      this.listenKeyDownButtonForm();
-    } else {
-      this.listenKeyDownSubmitButton();
-      this.listenMouseDownSubmitButton();
+  onSubmitForm() {
+    this.handleFormPrimaryKey();
+    this.submitForm.emit( this.formInstance.value );
+  }
+
+  handleFormPrimaryKey() {
+    if (this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE) {
+      this.formInstance.get(this.primaryKey).enable();
     }
-  }
-
-  listenKeyDownButtonForm() {
-    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'keydown.enter', $event => {
-      $event.stopPropagation();
-      this.onClickButtonOk();
-    } );
-  }
-
-  listenMouseDownButtonForm() {
-    this.renderer.listen( this.buttonFormOk.buttonElement.nativeElement, 'click', $event => {
-      this.onClickButtonOk();
-    } );
-  }
-
-  listenKeyDownSubmitButton() {
-    if ( this.submitDirective ) {
-      this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'keydown', $event => {
-        $event.stopPropagation();
-        this.onClickButtonOk();
-      } );
-    }
-  }
-
-  listenMouseDownSubmitButton() {
-    if ( this.submitDirective ) {
-      this.renderer.listen( this.submitDirective.button.buttonElement.nativeElement, 'mousedown', $event => {
-        $event.stopPropagation();
-        this.onClickButtonOk();
-      } );
-    }
-  }
-
-  onClickButtonOk() {
-    this.getFormValues();
-  }
-
-  getFormValues() {
-    if ( this.primaryKey && this.modalInstance.modalConfiguration.executeAction === ActionsModal.UPDATE ) {
-      this.formGroup.get( this.primaryKey ).enable();
-    }
-    this.formResult = this.formGroup ? this.formGroup : this.form;
-    this.submitForm.emit( this.formGroup ? this.formGroup.value : this.form.value );
-    this.change.detectChanges();
   }
 
   getElementsOfForm() {
@@ -347,7 +325,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   handleKeysForm( $event: KeyboardEvent ) {
-    if ( $event.keyCode !== KeyEvent.ESCAPE ) {
+    if ( $event.keyCode !== KeyEvent.ESCAPE && $event.code !== this.submitShortcut) {
       $event.stopPropagation();
     }
     if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {

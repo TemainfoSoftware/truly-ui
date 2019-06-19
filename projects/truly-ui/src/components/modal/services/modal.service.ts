@@ -530,13 +530,13 @@ export class ModalService implements OnDestroy {
   private executeAction( smartForm: ComponentFactoryResolver | SmartFormConfiguration, result ) {
     const actions = {
       'I': () => {
-        smartForm[ 'actions' ].insertCall( result.formResult.value );
+        smartForm[ 'actions' ].insertCall( result.formResult );
       },
       'U': () => {
-        smartForm[ 'actions' ].updateCall( result.formResult.value );
+        smartForm[ 'actions' ].updateCall( result.formResult );
       },
       'D': () => {
-        smartForm[ 'actions' ].deleteCall( result.formResult.value );
+        smartForm[ 'actions' ].deleteCall( result.formResult );
       },
       'V': () => {
         smartForm[ 'actions' ].viewCall();

@@ -49,8 +49,8 @@ export class DataSourceList extends DataSource<string | undefined> {
     super();
     this.setProprieties(config);
     this.cachedData = this.config.dataSource;
-    this.setArray();
     this.dataStream = new BehaviorSubject<(any | undefined)[]>( this.arrayTotal );
+    this.resetData();
   }
 
   connect( collectionViewer: CollectionViewer ): Observable<(string | undefined)[]> {
@@ -72,8 +72,14 @@ export class DataSourceList extends DataSource<string | undefined> {
     this.fetchedPages.add( page );
   }
 
-  public setArray(length?) {
-    this.arrayTotal = Array.from<string>( { length: length || this.totalLength } );
+  public setArray( value ) {
+    this.arrayTotal.length = value;
+    this.dataStream.next( this.arrayTotal );
+  }
+
+  public resetData() {
+    this.arrayTotal = Array.from<string>({length: this.totalLength });
+    this.dataStream.next( this.arrayTotal );
   }
 
   public resetPages() {

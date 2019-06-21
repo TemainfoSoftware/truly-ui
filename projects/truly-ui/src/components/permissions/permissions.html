@@ -74,9 +74,7 @@
             <div class="ui-checkbox permission">
               <tl-checkbox [label]="' '"
                            [(ngModel)]="item.allow"
-                           (checkBox)="
-                         handleCheckPermission();
-                         emitChange()"
+                           (checkBox)="handleCheckPermission(); emitChange()"
                            [color]="'primary'">
               </tl-checkbox>
             </div>

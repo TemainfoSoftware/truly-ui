@@ -10,8 +10,9 @@ import { ShowcaseTablePropertiesModule } from '../../../shared/components/showca
 import { ScheduleDemoOverviewRoutingModule } from './scheduledemo-overview-routing.module';
 import { ScheduleDemoOverviewComponent } from './scheduledemo-overview.component';
 import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
-import {ContextMenuService} from '../../../../../projects/truly-ui/src/components/contextmenu/services/contextmenu.service';
-import {ContextMenuModule} from '../../../../../projects/truly-ui/src/components/contextmenu';
+import { ContextMenuService } from '../../../../../projects/truly-ui/src/components/contextmenu/services/contextmenu.service';
+import { ContextMenuModule } from '../../../../../projects/truly-ui/src/components/contextmenu';
+import { SplitButtonModule } from '../../../../../projects/truly-ui/src/components/splitbutton';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {ContextMenuModule} from '../../../../../projects/truly-ui/src/components
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
     ShowcaseHeaderModule,
-    ContextMenuModule
+    ContextMenuModule,
+    SplitButtonModule
   ],
   declarations: [
     ScheduleDemoOverviewComponent,

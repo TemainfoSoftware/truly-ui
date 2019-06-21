@@ -20,21 +20,28 @@
  SOFTWARE.
  */
 import {
-  ComponentFactoryResolver, Injectable, Inject, ViewContainerRef, OnDestroy, Type, ElementRef,
-  ComponentRef, EventEmitter,
+  ComponentFactoryResolver,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Injectable,
+  OnDestroy,
+  Type,
+  ViewContainerRef,
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SmartFormConfiguration } from '../classes/modal-smart-form';
-import { ModalOptions } from '../interfaces/modal-options';
-import { ContainerModalService } from '../addons/container-modal/container-modal.service';
-import { TlModal } from '../modal';
-import { TlBackdrop } from '../../core/components/backdrop/backdrop';
-import { ActionsModal } from '../../core/enums/actions-modal';
-import { ModalResult } from '../../core/enums/modal-result';
-import { TlDialogConfirmation } from '../../dialog/dialog-confirmation/dialog-confirmation';
-import { ModalFormConfig } from '../interfaces/modal-smart-form-config';
-import { ModalInstance } from '../interfaces/modal-instance';
-import { TlDialogInfo } from '../../dialog/dialog-info/dialog-info';
+import {Subject} from 'rxjs';
+import {SmartFormConfiguration} from '../classes/modal-smart-form';
+import {ModalOptions} from '../interfaces/modal-options';
+import {ContainerModalService} from '../addons/container-modal/container-modal.service';
+import {TlModal} from '../modal';
+import {TlBackdrop} from '../../core/components/backdrop/backdrop';
+import {ActionsModal} from '../../core/enums/actions-modal';
+import {ModalResult} from '../../core/enums/modal-result';
+import {TlDialogConfirmation} from '../../dialog/dialog-confirmation/dialog-confirmation';
+import {ModalFormConfig} from '../interfaces/modal-smart-form-config';
+import {ModalInstance} from '../interfaces/modal-instance';
+import {TlDialogInfo} from '../../dialog/dialog-info/dialog-info';
+import {I18nService} from '../../i18n/i18n.service';
 
 let lastZIndex = 500;
 
@@ -73,7 +80,8 @@ export class ModalService implements OnDestroy {
 
   private referenceSmartForm;
 
-  constructor( private containerModal: ContainerModalService ) {
+  constructor( private i18nService: I18nService,
+               private containerModal: ContainerModalService ) {
   }
 
   createModalDialog( component: Type<any>, factoryResolver, mdOptions ) {
@@ -127,7 +135,22 @@ export class ModalService implements OnDestroy {
     this.reallocateComponent();
   }
 
+  private handleSmartFormTitle( config ) {
+    if ( this.isConfigSmartForm( config ) ) {
+      if ( (<SmartFormConfiguration>this.instanceComponent.smartForm).titleByAction ) {
+        const isActionInsert = (<SmartFormConfiguration>this.instanceComponent.smartForm).isInsertAction();
+        this.replaceTitleModal( isActionInsert ? this.i18nService.getLocale().Modal.includingMessage :
+          this.i18nService.getLocale().Modal.updatingMessage );
+      }
+    }
+  }
+
+  private replaceTitleModal( value: string ) {
+    this.component.instance.title = `${value} ${this.component.instance.title}`;
+  }
+
   private setModalOptions( mdOptions: ModalOptions ) {
+    this.modalOptions = null;
     this.modalOptions = Reflect.getOwnMetadata( 'annotations',
       Object.getPrototypeOf( this.componentInjected.instance ).constructor );
     this.modalOptions = Object.assign( this.modalOptions[ 0 ], mdOptions );
@@ -138,6 +161,7 @@ export class ModalService implements OnDestroy {
     (<TlModal>this.component.instance).setIdentifier( this.isConfigSmartForm( config ) ? config[ 'identifier' ] : identifier );
     (<TlModal>this.component.instance).setParentElement( this.isConfigSmartForm( config ) ? config[ 'parentElement' ] : parentElement );
   }
+
 
   private setInstanceComponent( config: ComponentFactoryResolver | SmartFormConfiguration ) {
     this.instanceComponent = {
@@ -189,6 +213,7 @@ export class ModalService implements OnDestroy {
     this.setInstanceComponent( config );
     this.setActiveModal( this.component );
     this.addNewComponent();
+    this.handleSmartFormTitle( config );
     this.emitChangeListModals();
     this.handleDeleteSmartForm( config );
   }
@@ -445,13 +470,21 @@ export class ModalService implements OnDestroy {
       }
       if ( !(this.isMdResultEqualsOK( result.mdResult )) ) {
         this.close( id );
+        this.handleRelativeDataSource( componentModal );
       } else if ( componentModal.modalOptions.closeOnOK ) {
         this.close( id );
+        this.handleRelativeDataSource( componentModal );
       }
       this.resultCallback( componentModal, result );
       this.handleActiveWindow();
       resolve();
     } );
+  }
+
+  private handleRelativeDataSource( componentModal: ModalInstance ) {
+    if ( componentModal.smartForm && componentModal.smartForm['relativeDataSource'] ) {
+      componentModal.smartForm['relativeDataSource'].setFocus();
+    }
   }
 
   private resultCallback( component, result ) {
@@ -497,13 +530,13 @@ export class ModalService implements OnDestroy {
   private executeAction( smartForm: ComponentFactoryResolver | SmartFormConfiguration, result ) {
     const actions = {
       'I': () => {
-        smartForm[ 'actions' ].insertCall( result.formResult.value );
+        smartForm[ 'actions' ].insertCall( result.formResult );
       },
       'U': () => {
-        smartForm[ 'actions' ].updateCall( result.formResult.value );
+        smartForm[ 'actions' ].updateCall( result.formResult );
       },
       'D': () => {
-        smartForm[ 'actions' ].deleteCall( result.formResult.value );
+        smartForm[ 'actions' ].deleteCall( result.formResult );
       },
       'V': () => {
         smartForm[ 'actions' ].viewCall();

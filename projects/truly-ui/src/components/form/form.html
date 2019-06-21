@@ -26,6 +26,8 @@
                        [text]="textConfirm"
                        [isLoading]="isLoading"
                        mdResult="MROK"
+                       (click)="onSubmitForm()"
+                       (keydown.enter)="onSubmitForm()"
                        [width]="'120px'"
                        [color]="'success'"
                        [shortcut]="submitShortcut"

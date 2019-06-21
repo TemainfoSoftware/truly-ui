@@ -22,7 +22,7 @@
       </div>
 
       <div *ngFor="let group of groups" class="group-list">
-        <span *ngIf="group.description" class="group-description">{{ group.description }}</span>
+        <div *ngIf="group.description" class="group-description">{{ group.description }}</div>
         <tl-list-item *ngFor="let item of group.items"
                       [height]="itemHeight"
                       #listItem="listItem"

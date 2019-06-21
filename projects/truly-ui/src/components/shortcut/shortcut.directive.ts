@@ -20,7 +20,16 @@
  SOFTWARE.
  */
 
-import { ContentChild, Directive, ElementRef, Input, AfterContentInit, Renderer2, OnDestroy, Optional, Inject } from '@angular/core';
+import {
+  ContentChild,
+  Directive,
+  ElementRef,
+  Input,
+  Renderer2,
+  OnDestroy,
+  Optional,
+  Inject,
+} from '@angular/core';
 import { ShortcutService } from './shortcut.service';
 import { TlButton } from '../button/button';
 import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
@@ -32,13 +41,26 @@ let identifier = 0;
 @Directive( {
   selector: '[shortcut]'
 } )
-export class ShortcutDirective implements AfterContentInit, OnDestroy {
+export class ShortcutDirective implements OnDestroy {
 
-  @Input() shortcut = '';
+  @Input('shortcut')
+  set shortcut( value: string ) {
+    if ( value ) {
+      this._shortcut = value;
+      this.setComponent();
+      this.addElement();
+    }
+  }
+
+  get shortcut() {
+    return this._shortcut;
+  }
 
   @ContentChild( TlButton ) tlbutton;
 
   private component;
+
+  private _shortcut: string;
 
   private shortcutID = 'shortcut-' + identifier++;
 
@@ -48,16 +70,15 @@ export class ShortcutDirective implements AfterContentInit, OnDestroy {
     this.shortcutService.setConfig(this.shortcutConfig);
   }
 
-  ngAfterContentInit() {
+  private setComponent() {
     this.component = {
       id: this.shortcutID,
       shortcut: this.shortcut,
       element: this.tlbutton ? this.tlbutton : this.element
     };
-    this.addElement();
   }
 
-  addElement() {
+  private addElement() {
     if ( this.component.shortcut.length > 0 ) {
       elements.push( this.component );
       this.shortcutService.elementsListener = elements;
@@ -65,7 +86,7 @@ export class ShortcutDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  removeShortcut( id: string ) {
+  private removeShortcut( id: string ) {
     elements = elements.filter( ( value ) => {
       return value.id !== id;
     } );

@@ -7,6 +7,7 @@
 
 
               <tl-dropdown-icon
+                *ngIf="column?.showFilter"
                 [data]="column?.filterOptions"
                 [widthItems]="'185px'"
                 [heightItems]="'25px'"

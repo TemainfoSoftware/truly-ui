@@ -22,6 +22,9 @@
     </tl-navigator>
   </div>
   <div class="ui-schedule-heading-tools">
-    <tl-button (click)="newEventClick.emit()" [text]="texts.buttons.addEvent" [iconBeforeText]="'fas fa-plus'" color="primary"></tl-button>
+    <ng-container *ngTemplateOutlet="eventButtonTemplate?eventButtonTemplate:defaultButton"></ng-container>
+    <ng-template #defaultButton>
+      <tl-button (click)="newEventClick.emit()" [text]="texts.buttons.addEvent" [iconBeforeText]="'fas fa-plus'" color="primary"></tl-button>
+    </ng-template>
   </div>
 </div>

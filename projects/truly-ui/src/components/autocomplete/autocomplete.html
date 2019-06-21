@@ -1,6 +1,6 @@
 <div class="ui-autocomplete-box">
 
-  <tl-label *ngIf="label" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
+  <tl-label *ngIf="label" [required]="required" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
          #wrapper
@@ -11,6 +11,7 @@
       <div *ngIf="loading" class="ui-loading" [style.height]="height">
         <tl-loader></tl-loader>
       </div>
+
       <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
         <i [class]="!closeHover ? 'ion ion-ios-close-circle-outline' : 'ion ion-ios-close-circle'"></i>
       </div>
@@ -20,6 +21,7 @@
         [disabled]="disabled || isDisabled"
         [placeholder]="placeholder"
         (click)="toggleIsOpen()"
+        (keydown.backspace)="handleKeyBackspace()"
         (keydown.ArrowUp)="handleKeyArrowUp($event)"
         (keydown.ArrowDown)="handleKeyArrowDown($event)"
         (keydown.escape)="handleKeyEscape($event)"
@@ -70,7 +72,7 @@
         </cdk-virtual-scroll-viewport>
       </ng-template>
       <ng-template #loadingMessage>
-        {{ messageLoading }}
+        {{ !nothingFound ? messageLoading : ' ' }}
       </ng-template>
     </tl-filter-container>
   </div>

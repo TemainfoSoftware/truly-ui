@@ -68,6 +68,7 @@ export class DatatableColumnFeaturesDemoComponent {
                 [height]="297"
                 [rowsClient]="12"
                 [rowsPage]="100"
+                [recordsCount]="recordsCount"
                 (loadData)="onLoadData($event)"
                 (rowSelect)="onRowSelect($event)"
                 [allowFilterColumn]="true"
@@ -82,6 +83,7 @@ export class DatatableColumnFeaturesDemoComponent {
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
           <tl-datatable [data]="dataInfinite" [mode]="'scrollable'" [rowModel]="'infinite'" [height]="300" [rowsClient]="12" [rowsPage]="take"
+                        (rowSelect)="onRowSelect($event)"
                         (loadData)="onLoadData($event)" [allowFilterColumn]="true"
           >
             <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>

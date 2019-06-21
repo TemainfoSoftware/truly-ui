@@ -29,16 +29,16 @@ import {
   Inject,
   EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnDestroy,
 } from '@angular/core';
-import { InputMask } from './core/input-mask';
+import {InputMask} from './core/input-mask';
 import {
   FormControl,
   FormControlName, NG_VALUE_ACCESSOR, NgControl,
   NgModel
 } from '@angular/forms';
-import { CdkOverlayOrigin } from '@angular/cdk/overlay';
-import { ValueAccessorBase } from './core/value-accessor';
-import { INPUT_CONFIG, InputConfig } from './core/input.config';
-import { Subscription } from 'rxjs';
+import {CdkOverlayOrigin} from '@angular/cdk/overlay';
+import {ValueAccessorBase} from './core/value-accessor';
+import {INPUT_CONFIG, InputConfig} from './core/input.config';
+import {Subscription} from 'rxjs';
 
 /**
  * Input Component personalized with few features.
@@ -64,16 +64,16 @@ import { Subscription } from 'rxjs';
  * })
  */
 
-@Component( {
+@Component({
   selector: 'tl-input',
   templateUrl: './input.html',
-  styleUrls: [ './input.scss' ],
-  providers: [ {
+  styleUrls: ['./input.scss'],
+  providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef( () => TlInput ),
+    useExisting: forwardRef(() => TlInput),
     multi: true,
-  } ],
-} )
+  }],
+})
 export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() textBefore = '';
@@ -97,6 +97,8 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
   @Input() clearButton = false;
 
   @Input() readonly: boolean = null;
+
+  @Input() required: boolean = null;
 
   @Input() disabled: boolean = null;
 
@@ -135,15 +137,15 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   @Input() flatBorder = false;
 
-  @ViewChild( 'input' ) input;
+  @ViewChild('input') input;
 
-  @ViewChild( 'inputBox' ) inputBox;
+  @ViewChild('inputBox') inputBox;
 
-  @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+  @ViewChild(CdkOverlayOrigin) cdkOverlayOrigin: CdkOverlayOrigin;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild(NgModel) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild(FormControlName) controlName: FormControlName;
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
@@ -171,59 +173,67 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   private _control;
 
-  constructor( @Optional() @Inject( INPUT_CONFIG ) private inputConfig: InputConfig,
-               private tlInput: ElementRef, private renderer: Renderer2,
-               private change: ChangeDetectorRef ) {
+  constructor(@Optional() @Inject(INPUT_CONFIG) private inputConfig: InputConfig,
+              private tlInput: ElementRef, private renderer: Renderer2,
+              private change: ChangeDetectorRef) {
     super();
-    this.setOptions( this.inputConfig );
+    this.setOptions(this.inputConfig);
   }
 
   ngOnInit() {
-    this.overlayOrigin.emit( this.cdkOverlayOrigin );
+    this.overlayOrigin.emit(this.cdkOverlayOrigin);
   }
 
   ngAfterViewInit() {
     this.handleValidator();
+    this.handleRequiredValidator();
     this.handleMask();
   }
 
+  handleRequiredValidator() {
+    if (this.control && this.control.errors && this.control.errors.hasOwnProperty('required')) {
+      this.required = this.control.errors['required'];
+      this.change.detectChanges();
+    }
+  }
+
   handleValidator() {
-    if ( this.control ) {
+    if (this.control) {
       this.hasValidator = this.control.validator;
       this.change.detectChanges();
     }
   }
 
   handleMask() {
-    if ( this.mask ) {
-      this.fieldMask = new InputMask( this, this.renderer, this.mask );
-      this.subscription.add( this.fieldMask.complete.subscribe(() => {
+    if (this.mask) {
+      this.fieldMask = new InputMask(this, this.renderer, this.mask);
+      this.subscription.add(this.fieldMask.complete.subscribe(() => {
         this.completeMask.emit(true);
       }));
     }
   }
 
-  onClickAddon( $event, side ) {
-    this.stopEvent( $event );
-    this.clickAddon.emit( { $event, side } );
+  onClickAddon($event, side) {
+    this.stopEvent($event);
+    this.clickAddon.emit({$event, side});
   }
 
-  onInputClick( $event: MouseEvent ) {
-    this.stopEvent( $event );
+  onInputClick($event: MouseEvent) {
+    this.stopEvent($event);
     this.isShowingMessages = true;
-    this.click.emit( $event );
+    this.click.emit($event);
   }
 
-  setOptions( options: InputConfig ) {
-    if ( options ) {
+  setOptions(options: InputConfig) {
+    if (options) {
       const self = this;
-      Object.keys( options ).forEach( function ( key ) {
-        self[ key ] = options[ key ];
-      } );
+      Object.keys(options).forEach(function (key) {
+        self[key] = options[key];
+      });
     }
   }
 
-  stopEvent( $event ) {
+  stopEvent($event) {
     $event.preventDefault();
     $event.stopPropagation();
   }
@@ -236,21 +246,21 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
     return this.input.nativeElement;
   }
 
-  onInputFocus( $event ) {
+  onInputFocus($event) {
     this.isShowingMessages = true;
-    this.focus.emit( $event );
+    this.focus.emit($event);
   }
 
-  onInputBlur( $event ) {
+  onInputBlur($event) {
     this.isShowingMessages = false;
-    this.blur.emit( $event );
+    this.blur.emit($event);
     this.propagateTouched();
   }
 
-  clearInput( $event? ) {
+  clearInput($event?) {
     this.value = '';
     this.input.nativeElement.focus();
-    this.clear.emit( $event );
+    this.clear.emit($event);
   }
 
   ngOnDestroy() {

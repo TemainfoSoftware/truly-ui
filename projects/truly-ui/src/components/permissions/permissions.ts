@@ -206,9 +206,10 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   }
 
   filterByGroup( term ) {
-    this.dataSource = this.data.filter( ( item: PermissionDataConfig ) =>
+    const filtered = this.data.filter( ( item: PermissionDataConfig ) =>
       item[ this.keyGroup ].toLowerCase().includes( term.toLowerCase() ) );
-    this.selected = false;
+    this.dataSource = JSON.parse( JSON.stringify( filtered ) );
+    this.handleChangePermissions();
   }
 
   filterByRule( term ) {
@@ -232,6 +233,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   setUpDataSource() {
     this.dataSource = JSON.parse( JSON.stringify( this.data ) );
+    this.setFirstGroupSelected();
+    this.handleChangePermissions();
   }
 
   setRightListFocus() {
@@ -295,8 +298,6 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
     }
     if (changes['data']) {
       this.setUpDataSource();
-      this.setFirstGroupSelected();
-      this.handleChangePermissions();
     }
   }
 

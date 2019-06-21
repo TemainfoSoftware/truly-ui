@@ -8,23 +8,29 @@ import {
   KeyValueDiffers,
   Input,
   OnInit,
-  Optional, ViewChild, ContentChild, AfterContentInit
+  Optional, ContentChild, AfterContentInit, OnDestroy
 } from '@angular/core';
 
 import { CurrencyConfig, CURRENCY_MASK_CONFIG } from './currency-mask.config';
 import { CurrencyHandler } from './currency.handler';
 import { TlInput } from '../../input';
+import {NgModel} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Directive( {
-  selector: '[currency]',
+  selector: '[currency][ngModel],[currency][formControlName]',
 } )
-export class CurrencyDirective implements AfterContentInit, DoCheck, OnInit {
+export class CurrencyDirective implements AfterContentInit, AfterViewInit, DoCheck, OnInit, OnDestroy {
 
   @Input() currencyOptions: any = {};
 
   @ContentChild( TlInput ) inputCurrency: TlInput;
 
+  @ContentChild( NgModel ) model: NgModel;
+
   public inputHandler: CurrencyHandler;
+
+  private subscription = new Subscription();
 
   public keyValueDiffer: KeyValueDiffer<any, any>;
 
@@ -52,6 +58,14 @@ export class CurrencyDirective implements AfterContentInit, DoCheck, OnInit {
     this.inputCurrency.textAlign = this.currencyOptions.align ? this.currencyOptions.align : this.optionsTemplate.align;
     this.inputHandler.setOnModelChange( this.inputCurrency.propagateChange );
     this.inputHandler.setOnModelTouched( this.inputCurrency.propagateTouched );
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if ( this.inputHandler.inputService.rawValue ) {
+        this.inputHandler.inputService.rawValue = this.inputHandler.inputService.applyMask( true, this.inputHandler.inputService.rawValue );
+      }
+    });
   }
 
   ngDoCheck() {
@@ -108,6 +122,10 @@ export class CurrencyDirective implements AfterContentInit, DoCheck, OnInit {
 
   isChromeAndroid(): boolean {
     return /chrome/i.test( navigator.userAgent ) && /android/i.test( navigator.userAgent );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

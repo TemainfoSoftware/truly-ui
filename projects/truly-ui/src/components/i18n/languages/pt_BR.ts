@@ -33,7 +33,8 @@ import { Permissions } from './permissions/pt_BR';
 import { TimePicker } from './timepicker/pt_BR';
 import { AutoComplete } from './autocomplete/pt_BR';
 import { TimeAvailablePicker } from './time-available-picker/pt_BR';
-import {ChatList} from './chatlist/pt_BR';
+import { ChatList } from './chatlist/pt_BR';
+import { Modal } from './modal/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
@@ -45,6 +46,7 @@ export const pt_BR = {
   Dialog,
   Editor,
   Form,
+  Modal,
   Listbox,
   Navigator,
   Validators,

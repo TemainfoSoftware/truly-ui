@@ -175,9 +175,17 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
       [KeyEvent.SPACE]: () => this.handleOpenList( $event ),
       [KeyEvent.ARROWDOWN]: () => this.stopEvent( $event ),
       [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
+      [KeyEvent.ESCAPE]: () => this.handleEscape( $event )
     };
     if ( keyEvent[ $event.keyCode ] ) {
       keyEvent[ $event.keyCode ]();
+    }
+  }
+
+  handleEscape( $event ) {
+    if ( this.isOpen ) {
+      this.isOpen = false;
+      this.stopEvent( $event );
     }
   }
 

@@ -21,6 +21,7 @@
  */
 import { ComponentFactoryResolver, ElementRef } from '@angular/core';
 import { ActionsModal } from '../../core/enums/actions-modal';
+import { TlDatatable } from '../../datatable/datatable';
 
 export interface ModalFormConfig {
   factory: ComponentFactoryResolver;
@@ -31,10 +32,12 @@ export interface ModalFormConfig {
   deleteConfirmationMessage?: string;
   recordNotFoundMessage?: string;
   parentElement?: ElementRef;
+  titleByAction?: boolean;
   actions?: {
     insertCall?: Function;
     updateCall?: Function;
     deleteCall?: Function;
     viewCall?: Function;
   };
+  relativeDataSource?: TlDatatable;
 }

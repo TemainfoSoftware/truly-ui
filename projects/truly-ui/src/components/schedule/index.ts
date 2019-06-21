@@ -13,9 +13,11 @@ import { BlockUIModule } from '../blockui/index';
 import { ButtonModule } from '../button/index';
 import { ButtonGroupModule } from '../buttongroup/index';
 import { LoaderModule } from '../loader/index';
+
 import { GenerateEventsService } from './services/generate-events.service';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
+import {SplitButtonModule} from '../splitbutton/index';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { EventService } from './services/event.service';
       ButtonGroupModule,
       BlockUIModule,
       ButtonModule,
-      LoaderModule
+      LoaderModule,
+      SplitButtonModule
     ],
     declarations: [
       TlSchedule,

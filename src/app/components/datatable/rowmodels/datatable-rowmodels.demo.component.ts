@@ -29,6 +29,8 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
 
   public timeout;
 
+  public recordsCount = 0;
+
   private subscriptions = new Subscription();
 
   constructor(private httpCliente: HttpClient, private dumpDataService: DumpDataService, private cd: ChangeDetectorRef ) {
@@ -57,10 +59,8 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
   private getDataForInifinit(skip, take) {
     clearTimeout(this.timeout );
     this.timeout = setTimeout(() => {
-      this.dataInfinite = {
-        'data' : this.getDataFromService(skip, take),
-        'total' : this.data.length
-      };
+      this.dataInfinite = this.getDataFromService(skip, take);
+      this.recordsCount = this.data.length;
       this.cd.markForCheck();
     }, 1000);
   }

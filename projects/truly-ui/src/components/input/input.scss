@@ -6,12 +6,12 @@
 }
 
 @mixin textInput {
-  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  font-size: 0.9em;
+  font-family: Segoe UI, Lato, 'sans-serif', "Arial";
+  font-size: 1em;
 }
 
 @mixin actionButtons {
-  font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
+  font-family: Segoe UI, Lato, 'sans-serif', "Arial";
   cursor: pointer;
 }
 
@@ -63,10 +63,9 @@
       height: 23px;
       padding: 4px 6px;
       padding-right: 20px;
-      font-size: 12px;
+      @include textInput;
       width: 100%;
       font-weight: normal;
-      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
       border-radius: 3px;
       transition: background-color 230ms ease-in-out;
       &.-borderleft{
@@ -83,9 +82,6 @@
     }
     > .field::placeholder {
       @include textInput;
-    }
-    > .field.-cursorblocked {
-      cursor: not-allowed;
     }
     > .field.-disabled {
       cursor: default !important;

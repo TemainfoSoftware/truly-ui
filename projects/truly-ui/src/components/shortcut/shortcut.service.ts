@@ -20,12 +20,11 @@
  SOFTWARE.
  */
 
-import { ComponentRef, Injectable, OnDestroy, Renderer2 } from '@angular/core';
+import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ModalService } from '../modal/services/modal.service';
 import { TlButton } from '../button/button';
 import { ShortcutConfig } from './shortcut.config';
-import { TlModal } from '../modal/modal';
 
 export interface ElementShortcut {
   id: string;
@@ -187,9 +186,12 @@ export class ShortcutService implements OnDestroy {
   }
 
   activeElementButton( element ) {
-    const button = this.hasModalContextArray() ?
-      this.getModalContextEqualActiveModal()[ 0 ] : this.elementsListener[ element ];
-
+    let button;
+    if ( this.getModalContextEqualActiveModal()[ 0 ] && this.hasModalContextArray()) {
+      button = this.getModalContextEqualActiveModal()[ 0 ];
+    } else {
+      button = this.elementsListener[ element ];
+    }
     button.element.buttonElement.nativeElement.click();
     setTimeout( () => {
       this.handleElementsOfView();

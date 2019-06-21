@@ -24,7 +24,7 @@ import {
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
   AfterContentInit,
 } from '@angular/core';
-import { FormControl, FormControlName } from '@angular/forms';
+import { FormControlName } from '@angular/forms';
 
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { NgModel } from '@angular/forms';
@@ -94,6 +94,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input() loading = true;
 
   @Input() disabled: boolean = null;
+
+  @Input() required: boolean = null;
 
   @Input() color = 'basic';
 
@@ -249,12 +251,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   onClickClose() {
-    this.value = '';
-    this.setDescriptionValue( '' );
-    this.closeHover = false;
-    this.selected = null;
-    this.tlinput.setFocus();
-    this.setIsOpen( true );
+    if ( !this.control.disabled ) {
+      this.value = '';
+      this.setDescriptionValue( '' );
+      this.closeHover = false;
+      this.selected = null;
+      this.tlinput.setFocus();
+      this.setIsOpen( true );
+    }
   }
 
   onBackdropClick() {
@@ -354,6 +358,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     }
     this.keyManager.onKeydown( $event );
     scrollIntoView( this.keyManager.activeItem.element.nativeElement );
+  }
+
+  handleKeyBackspace() {
+    this.value = null;
   }
 
   handleEventOpenList( $event ) {
@@ -488,7 +496,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
       return;
     }
     if ( $event ) {
-      this.dataSource.setArray( $event );
+      this.dataSource.setArray( $event.length );
       this.setUpData( $event );
       setTimeout( () => {
         this.keyManager.setActiveItem( 0 );
@@ -510,7 +518,9 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   ngOnChanges( { data, totalLength }: any ) {
     if ( totalLength && !totalLength[ 'firstChange' ] ) {
-      this.dataSource.setArray( totalLength[ 'currentValue' ] );
+      if ( this.dataSource ) {
+        this.dataSource.setArray( totalLength[ 'currentValue' ] );
+      }
     }
     if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
       this.setUpData( data[ 'currentValue' ] );

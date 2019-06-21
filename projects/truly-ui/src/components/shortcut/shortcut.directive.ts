@@ -49,7 +49,6 @@ export class ShortcutDirective implements OnDestroy {
       this._shortcut = value;
       this.setComponent();
       this.addElement();
-      console.log('SHORTCUT', value);
     }
   }
 

@@ -69,9 +69,9 @@ Ex: Electron, App.js and NW.js
 
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
-* [NodeJS >= 8.0.0](https://nodejs.org)
-* [Angular Cli >= 6.0.0](https://cli.angular.io/)
-* [Angular >= 6.0.0](https://angular.io/)
+* [NodeJS >= 10.0.0](https://nodejs.org)
+* [Angular Cli >= 8.0.0](https://cli.angular.io/)
+* [Angular >= 8.0.0](https://angular.io/)
 
 ## Installation
 

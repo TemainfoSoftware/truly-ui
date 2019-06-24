@@ -67,17 +67,17 @@ export class TlClockPicker extends ElementBase<string> implements AfterViewInit,
 
   @Output() changeTime: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ViewChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ViewChild( TlInput ) tlinput;
+  @ViewChild( TlInput, {static: true}  ) tlinput;
 
-  @ViewChild( 'timePickerContent' ) timePickerContent;
+  @ViewChild( 'timePickerContent', {static: true}  ) timePickerContent;
 
-  @ViewChild( 'uiClockRadius' ) uiClockRadius;
+  @ViewChild( 'uiClockRadius', {static: true}  ) uiClockRadius;
 
-  @ViewChild( 'wrapperDialMin' ) wrapperDialMin;
+  @ViewChild( 'wrapperDialMin', {static: true}  ) wrapperDialMin;
 
-  @ViewChild( 'wrapperDial' ) wrapperDial;
+  @ViewChild( 'wrapperDial', {static: true}  ) wrapperDial;
 
   public iconAfter = '';
 

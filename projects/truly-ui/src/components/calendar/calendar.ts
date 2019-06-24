@@ -70,11 +70,11 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
 
   @Output() focusout: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild( 'tbody' ) tbody;
+  @ViewChild( 'tbody', {static: true}  ) tbody;
 
-  @ViewChild( 'table' ) table;
+  @ViewChild( 'table', {static: true}  ) table;
 
-  @ViewChild( 'wrapper' ) wrapper;
+  @ViewChild( 'wrapper', {static: true}  ) wrapper;
 
   @ViewChildren( TlNavigator ) tlnavigator: QueryList<TlNavigator>;
 

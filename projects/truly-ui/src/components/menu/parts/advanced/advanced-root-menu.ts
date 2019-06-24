@@ -31,6 +31,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/internal/operators';
 import { TlAdvancedSubMenu } from './parts/advanced-sub-menu';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component( {
   selector: 'tl-advanced-root-menu',
@@ -121,13 +122,13 @@ export class TlAdvancedRootMenu implements AfterContentInit {
 
   private listMenuElements;
 
-  @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
+  @ViewChild( 'subMenuList', {static: true} ) subMenuList: ElementRef;
 
-  @ViewChild( 'wrapperItemsList' ) wrapperItemsList: ElementRef;
+  @ViewChild( 'wrapperItemsList', {static: true} ) wrapperItemsList: ElementRef;
 
-  @ViewChild( 'input' ) inputElement: ElementRef;
+  @ViewChild( 'input', {static: true} ) inputElement: ElementRef;
 
-  @ViewChild( 'wrapperItems' ) wrapperItems: ElementRef;
+  @ViewChild( 'wrapperItems', {static: true} ) wrapperItems: ElementRef;
 
   constructor( private change: ChangeDetectorRef, private router: Router ) {
     this.modelChanged.pipe(

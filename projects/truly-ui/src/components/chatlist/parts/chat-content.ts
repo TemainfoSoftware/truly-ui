@@ -55,9 +55,9 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', {static: true} ) input: ElementRef;
 
-  @ViewChild('messageContent') messageContent: ElementRef;
+  @ViewChild('messageContent', {static: true} ) messageContent: ElementRef;
 
   private opened = false;
 

@@ -30,6 +30,7 @@ import { ModalResult } from '../core/enums/modal-result';
 import { ModalOptions } from './interfaces/modal-options';
 import { SidebarService } from './services/sidebar.service';
 import { Subscription } from 'rxjs';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 let subscribeMouseMove;
 
@@ -76,11 +77,11 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() parentElement = null;
 
-  @ViewChild( 'headerBox' ) headerBox: ElementRef;
+  @ViewChild( 'headerBox', {static: true} ) headerBox: ElementRef;
 
-  @ViewChild( 'modal' ) modal: ElementRef;
+  @ViewChild( 'modal', {static: true} ) modal: ElementRef;
 
-  @ViewChild( 'body', { read: ViewContainerRef } ) body: ViewContainerRef;
+  @ViewChild( 'body', { read: ViewContainerRef, static: true } ) body: ViewContainerRef;
 
   @Output() show: EventEmitter<any> = new EventEmitter();
 

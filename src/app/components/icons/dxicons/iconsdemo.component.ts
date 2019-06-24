@@ -43,7 +43,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 } )
 export class IconsDemoComponent {
 
-  @ViewChild('inputCopy') inputCopy: ElementRef<any>;
+  @ViewChild('inputCopy', {static: false}) inputCopy: ElementRef<any>;
 
   public filter: string;
 

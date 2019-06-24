@@ -53,9 +53,9 @@ export class TlDialogConfirmation implements OnInit {
     return this.i18n.getLocale().Dialog.textYes;
   }
 
-  @ViewChild( 'buttonDialogOk' ) buttonDialogOk;
+  @ViewChild( 'buttonDialogOk', {static: true}  ) buttonDialogOk;
 
-  @ViewChild( 'buttonDialogCancel' ) buttonDialogCancel;
+  @ViewChild( 'buttonDialogCancel', {static: true}  ) buttonDialogCancel;
 
   private defaultOK;
 

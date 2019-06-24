@@ -73,7 +73,7 @@ export class TlDialogError extends DialogDefaultBehavior implements OnInit {
       return this.i18n.getLocale().Dialog.exceptionBoxDescription;
     }
 
-    @ViewChild( TlButton ) button: TlButton;
+    @ViewChild( TlButton, {static: true}  ) button: TlButton;
 
     @HostBinding( '@enterAnimation' ) public animation;
 

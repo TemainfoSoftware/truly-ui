@@ -50,11 +50,11 @@ export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit, On
 
   @Input() indeterminate = false;
 
-  @ViewChild( 'checkbox' ) checkbox;
+  @ViewChild( 'checkbox', {static: true}  ) checkbox;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
 
   @Output() checkBox: EventEmitter<any> = new EventEmitter();
 

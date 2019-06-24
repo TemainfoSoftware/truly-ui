@@ -23,8 +23,7 @@
 import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
+import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { EmailValidator } from './email.validator';
 
@@ -40,7 +39,7 @@ import { EmailValidator } from './email.validator';
 } )
 export class EmailDirective implements Validator {
 
-  @ContentChild(TlInput) tlinput;
+  @ContentChild(TlInput, {static: true}) tlinput;
 
   validate( c: FormControl ): ValidationErrors {
     if (this.tlinput.input.nativeElement.value.length > 0) {

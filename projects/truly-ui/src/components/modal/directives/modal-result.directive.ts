@@ -25,6 +25,7 @@ import {
 import { ModalResult } from '../../core/enums/modal-result';
 import { ModalService } from '../services/modal.service';
 import { TlButton } from '../../button/button';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Directive( {
   selector: '[mdResult]'
@@ -38,7 +39,7 @@ export class ModalResultDirective implements OnInit {
     this.formResult = value;
   }
 
-  @ContentChild( TlButton ) button: TlButton;
+  @ContentChild( TlButton, {static: true} ) button: TlButton;
 
   private modalId: string;
 

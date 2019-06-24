@@ -107,19 +107,19 @@ export class TlColorPicker extends ValueAccessorBase<string> implements OnInit, 
 
   @Input() color = 'basic';
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
 
   @Output('selectColor') selectColor: EventEmitter<string> = new EventEmitter<string>();
 
-  @ViewChild( TlInput ) tlinput;
+  @ViewChild( TlInput, {static: true}  ) tlinput;
 
-  @ViewChild( TlButton ) tlbutton;
+  @ViewChild( TlButton, {static: true}  ) tlbutton;
 
-  @ViewChild( 'trigger' ) trigger;
+  @ViewChild( 'trigger', {static: true}  ) trigger;
 
-  @ViewChild( CdkConnectedOverlay ) connectedOverlay: CdkConnectedOverlay;
+  @ViewChild( CdkConnectedOverlay, {static: true}  ) connectedOverlay: CdkConnectedOverlay;
 
   public isOpen = false;
 

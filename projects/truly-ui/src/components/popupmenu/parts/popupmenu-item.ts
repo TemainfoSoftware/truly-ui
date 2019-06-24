@@ -41,7 +41,7 @@ export class TlPopupMenuItem implements AfterViewInit, OnDestroy {
 
   public styleConfig = { position: '', left: 0, top: 0 };
 
-  @ViewChild( 'wrapperItem' ) wrapperItem;
+  @ViewChild( 'wrapperItem', {static: true} ) wrapperItem;
 
   constructor(private renderer: Renderer2) {}
 

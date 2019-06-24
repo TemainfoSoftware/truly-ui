@@ -23,8 +23,7 @@
 import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
+import { FormControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { CreditCardValidator } from './creditcard.validator';
 
@@ -42,7 +41,7 @@ const creditCard = 0;
 } )
 export class CreditCardDirective implements Validator {
 
-  @ContentChild( TlInput ) input;
+  @ContentChild( TlInput, {static: true} ) input;
 
   constructor() {}
 

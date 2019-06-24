@@ -89,7 +89,7 @@ export class TlButton implements OnInit {
 
     @Output() selected: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild( 'tlbutton' ) buttonElement: ElementRef;
+    @ViewChild( 'tlbutton', {static: true}  ) buttonElement: ElementRef;
 
     private _textLoading: string;
 

@@ -29,6 +29,7 @@ import { MakeProvider } from '../core/base/value-accessor-provider';
 import { KeyEvent } from '../core/enums/key-events';
 import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 const Orientation = {
   VERTICAL: 'vertical',
@@ -57,11 +58,11 @@ export class TlRadioGroup extends ValueAccessorBase<string> implements AfterView
 
   @Input() colorSelected = '';
 
-  @ViewChild( 'radiobutton' ) radiobutton;
+  @ViewChild( 'radiobutton', {static: true} ) radiobutton;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true} ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
 
   @ContentChildren( TlRadioButton ) listRadioButton: QueryList<TlRadioButton>;
 

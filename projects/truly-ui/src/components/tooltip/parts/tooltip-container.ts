@@ -3,6 +3,7 @@ import { transition, trigger, style, animate } from '@angular/animations';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { TooltipOptions } from '../tooltipOptions';
 import { OverlayAnimation } from '../../core/directives/overlay-animation';
+import {FixedPositionDirective} from '../../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-tooltip-container',
@@ -18,9 +19,9 @@ import { OverlayAnimation } from '../../core/directives/overlay-animation';
 } )
 export class TlToolTipContainer implements AfterContentInit {
 
-  @ViewChild( 'tooltip' ) tooltip;
+  @ViewChild( 'tooltip', {static: true} ) tooltip;
 
-  @ViewChild( CdkConnectedOverlay ) connectedOverlay: CdkConnectedOverlay;
+  @ViewChild( CdkConnectedOverlay, {static: true} ) connectedOverlay: CdkConnectedOverlay;
 
   public options: TooltipOptions;
 

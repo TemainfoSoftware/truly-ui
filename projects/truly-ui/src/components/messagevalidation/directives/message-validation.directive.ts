@@ -33,15 +33,16 @@ import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay'
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TlMessageValidationComponent} from '../messagevalidation.component';
 import {Subscription, throwError} from 'rxjs';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Directive({
   selector: '[showValidations]',
 })
 export class TlMessageValidationDirective implements AfterContentInit, AfterViewInit, OnDestroy {
 
-  @ContentChild(NgModel) ngModel: NgModel;
+  @ContentChild(NgModel, {static: true}) ngModel: NgModel;
 
-  @ContentChild(FormControlName) ngControl: FormControlName;
+  @ContentChild(FormControlName, {static: true}) ngControl: FormControlName;
 
   private overlayRef: OverlayRef;
 

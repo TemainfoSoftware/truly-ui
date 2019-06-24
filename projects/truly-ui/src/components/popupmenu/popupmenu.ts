@@ -57,9 +57,9 @@ export class TlPopupMenu implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() hover = false;
 
-  @ViewChild( 'wrapperMenuItem', { read: ViewContainerRef } ) wrapperMenuItem: ViewContainerRef;
+  @ViewChild( 'wrapperMenuItem', { read: ViewContainerRef, static: true } ) wrapperMenuItem: ViewContainerRef;
 
-  @ViewChild( FixedPositionDirective ) fixedPos: FixedPositionDirective;
+  @ViewChild( FixedPositionDirective, {static: true} ) fixedPos: FixedPositionDirective;
 
   constructor(private menuService: MenuService, private renderer: Renderer2) {}
 

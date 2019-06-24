@@ -42,7 +42,7 @@ export class TlListItem implements Highlightable {
 
   public selected = false;
 
-  @ViewChild('listElement') element: ElementRef;
+  @ViewChild('listElement', {static: true}) element: ElementRef;
 
   setActiveStyles(): void {
     this.selected = true;

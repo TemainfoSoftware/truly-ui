@@ -52,7 +52,7 @@ export class TlDialogInfo extends DialogDefaultBehavior implements OnInit {
       return this.i18n.getLocale().Dialog.textOk;
     }
 
-    @ViewChild( TlButton ) button: TlButton;
+    @ViewChild( TlButton, {static: true}  ) button: TlButton;
 
     constructor( private i18n: I18nService ) {
         super();

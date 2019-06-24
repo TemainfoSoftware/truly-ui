@@ -24,6 +24,7 @@ import {
   AfterViewInit, Component, ElementRef, Input,
   ViewChild
 } from '@angular/core';
+import {FixedPositionDirective} from '../../misc/fixed-position.directive';
 
 @Component({
   selector: 'tl-tab',
@@ -36,7 +37,7 @@ export class TlTab implements AfterViewInit {
 
   @Input() padding = true;
 
-  @ViewChild( 'tabComponents' ) tabComponents: ElementRef;
+  @ViewChild( 'tabComponents', {static: true} ) tabComponents: ElementRef;
 
   public height = 'auto';
 

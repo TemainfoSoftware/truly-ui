@@ -21,9 +21,8 @@
 */
 
 import {
-  Injectable, ComponentFactoryResolver, Injector, Inject
+  Injectable, ComponentFactoryResolver, Injector, Inject, ComponentRef
 } from '@angular/core';
-import { ComponentRef } from '@angular/core/src/linker/component_factory';
 
 import { LazyApplicationLoaderConfig } from '../configs/application.config';
 import { TlCore } from '../core';

@@ -95,7 +95,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Output() selectItem: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(CdkVirtualScrollViewport) cdkVirtualScroll: CdkVirtualScrollViewport;
+  @ViewChild(CdkVirtualScrollViewport, {static: true} ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
   @ViewChildren(TlItemSelectedDirective) listItems: QueryList<TlItemSelectedDirective>;
 

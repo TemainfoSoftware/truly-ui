@@ -30,6 +30,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
+import {FixedPositionDirective} from '../../../misc/fixed-position.directive';
 
 @Component({
   selector: 'tl-timeline-item',
@@ -52,7 +53,7 @@ export class TlTimelineItem implements OnInit {
 
   @Output() initialize: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('view', {read: ViewContainerRef}) view: ViewContainerRef;
+  @ViewChild('view', {read: ViewContainerRef, static: true}) view: ViewContainerRef;
 
   public sideString: string;
 

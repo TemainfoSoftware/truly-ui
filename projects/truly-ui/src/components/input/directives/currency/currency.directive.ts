@@ -24,9 +24,9 @@ export class CurrencyDirective implements AfterContentInit, AfterViewInit, DoChe
 
   @Input() currencyOptions: any = {};
 
-  @ContentChild( TlInput ) inputCurrency: TlInput;
+  @ContentChild( TlInput, {static: true}  ) inputCurrency: TlInput;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
   public inputHandler: CurrencyHandler;
 

@@ -44,7 +44,7 @@ import { TlButton } from '../../button/button';
 } )
 export class TlDialogAlert extends DialogDefaultBehavior implements OnInit {
 
-  @ViewChild( TlButton ) button: TlButton;
+  @ViewChild( TlButton, {static: true}  ) button: TlButton;
 
   message = '';
 

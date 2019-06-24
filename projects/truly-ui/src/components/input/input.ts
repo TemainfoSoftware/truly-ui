@@ -137,15 +137,15 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   @Input() flatBorder = false;
 
-  @ViewChild('input') input;
+  @ViewChild('input', {static: true} ) input;
 
-  @ViewChild('inputBox') inputBox;
+  @ViewChild('inputBox', {static: true} ) inputBox;
 
-  @ViewChild(CdkOverlayOrigin) cdkOverlayOrigin: CdkOverlayOrigin;
+  @ViewChild(CdkOverlayOrigin, {static: true} ) cdkOverlayOrigin: CdkOverlayOrigin;
 
-  @ContentChild(NgModel) model: NgModel;
+  @ContentChild(NgModel, {static: true} ) model: NgModel;
 
-  @ContentChild(FormControlName) controlName: FormControlName;
+  @ContentChild(FormControlName, {static: true} ) controlName: FormControlName;
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 

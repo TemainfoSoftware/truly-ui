@@ -46,7 +46,7 @@ export class TlDatePickerContent  {
 
   @Output() selectDayContent: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(TemplateRef) template: TemplateRef<any>;
+  @ViewChild(TemplateRef, {static: true} ) template: TemplateRef<any>;
 
   constructor() {}
 

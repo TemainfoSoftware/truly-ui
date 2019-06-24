@@ -26,6 +26,7 @@ import {
 import { TlTab } from './tab/tab';
 import { TlModal } from '../modal/modal';
 import { KeyEvent } from '../core/enums/key-events';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component( {
     selector: 'tl-tabcontrol',
@@ -38,15 +39,15 @@ export class TlTabControl implements AfterContentInit, AfterViewInit {
 
     @Input( 'tabsHeight' ) tabsHeight = '25px';
 
-    @ViewChild('tabsHeader') tabsHeader;
+    @ViewChild('tabsHeader', {static: true}) tabsHeader;
 
-    @ViewChild('wrapperTab') wrapper;
+    @ViewChild('wrapperTab', {static: true}) wrapper;
 
-    @ViewChild('line') line;
+    @ViewChild('line', {static: true}) line;
 
     @ContentChildren( forwardRef(() => TlTab )) tabs: QueryList<TlTab>;
 
-    @ViewChild( forwardRef(() => TlModal )) modal: QueryList<TlModal>;
+    @ViewChild( forwardRef(() => TlModal ), {static: true}) modal: QueryList<TlModal>;
 
     private elementListTabs;
 

@@ -21,8 +21,7 @@
  */
 
 import { ContentChild, Directive, forwardRef } from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
+import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { CNPJValidator } from './cnpj.validator';
 
@@ -38,7 +37,7 @@ import { CNPJValidator } from './cnpj.validator';
 } )
 export class CNPJDirective implements Validator {
 
-    @ContentChild(TlInput) input;
+    @ContentChild(TlInput, {static: true}) input;
 
     validate( c: FormControl ): ValidationErrors {
       if ( this.input ) {

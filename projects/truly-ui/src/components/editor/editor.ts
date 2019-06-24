@@ -59,11 +59,11 @@ export class TlEditor implements AfterContentInit, OnChanges {
 
   @Input() height = '300px';
 
-  @ViewChild( 'contentEditor' ) contentEditor;
+  @ViewChild( 'contentEditor', {static: true}  ) contentEditor;
 
-  @ViewChild( 'linkBox' ) linkBox;
+  @ViewChild( 'linkBox', {static: true}  ) linkBox;
 
-  @ViewChild( 'wrapper' ) wrapper;
+  @ViewChild( 'wrapper', {static: true}  ) wrapper;
 
   @Output() saveContent = new EventEmitter();
 

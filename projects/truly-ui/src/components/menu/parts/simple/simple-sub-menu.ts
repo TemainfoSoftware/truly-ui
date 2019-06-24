@@ -23,6 +23,7 @@ import {
   Input, Component, OnDestroy, OnChanges, SimpleChanges, ViewChild, ElementRef, ChangeDetectorRef
 } from '@angular/core';
 import { Router } from '@angular/router';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component( {
   selector: 'tl-simple-sub-menu',
@@ -53,7 +54,7 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
 
   private callBack = Function();
 
-  @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
+  @ViewChild( 'subMenuList', {static: true} ) subMenuList: ElementRef;
 
   constructor( private router: Router, private change: ChangeDetectorRef ) {}
 

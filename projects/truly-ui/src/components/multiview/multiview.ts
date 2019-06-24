@@ -45,9 +45,9 @@ export class TlMultiView implements AfterViewInit, AfterContentInit, OnDestroy, 
 
   @ContentChildren( forwardRef( () => TlView ) ) views: QueryList<TlView>;
 
-  @ViewChild( 'multiViewContainer' ) multiViewContainer;
+  @ViewChild( 'multiViewContainer', {static: true} ) multiViewContainer;
 
-  @ViewChild( 'multiViewTranslate' ) multiViewTranslate;
+  @ViewChild( 'multiViewTranslate', {static: true} ) multiViewTranslate;
 
   @Output() private selectedChange: EventEmitter<any> = new EventEmitter();
 

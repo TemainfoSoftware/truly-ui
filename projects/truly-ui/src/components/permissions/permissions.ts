@@ -61,9 +61,9 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   @ViewChildren( ListOptionDirective ) permissionList: QueryList<ListOptionDirective>;
 
-  @ViewChild( 'listGroup' ) listGroup: ElementRef;
+  @ViewChild( 'listGroup', {static: true} ) listGroup: ElementRef;
 
-  @ViewChild( 'listPermission' ) listPermission: ElementRef;
+  @ViewChild( 'listPermission', {static: true} ) listPermission: ElementRef;
 
   @Output() changePermission: EventEmitter<any> = new EventEmitter();
 

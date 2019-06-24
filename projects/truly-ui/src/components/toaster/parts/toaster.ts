@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ToasterService } from '../services/toaster.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import {FixedPositionDirective} from '../../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-toaster',
@@ -38,7 +39,7 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
 
   @Output() afterClose = new EventEmitter();
 
-  @ViewChild('container') container: ElementRef;
+  @ViewChild('container', {static: true}) container: ElementRef;
 
   public interval;
 

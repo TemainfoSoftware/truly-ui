@@ -30,7 +30,7 @@
  })
  export class TlDatatablePaginatorMode {
 
-     @ViewChild( 'datatableTbody' ) datatableTbodyRef: ElementRef;
+     @ViewChild( 'datatableTbody', {static: true}  ) datatableTbodyRef: ElementRef;
 
      constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable  ) {}
 

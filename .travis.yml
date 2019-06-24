@@ -14,7 +14,6 @@ notifications:
 node_js:
   - "10"
   - "11.10.1"
-  - "12"
 before_script:
   - npm prune
   - npm run lint

@@ -35,6 +35,7 @@ import {
 import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
 import { CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { ValueAccessorBase } from '../input/core/value-accessor';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component({
   selector: 'tl-textarea',
@@ -80,13 +81,13 @@ export class TlTextarea extends ValueAccessorBase<string> implements OnInit, Aft
 
   @Input() showCount = false;
 
-  @ViewChild( 'textarea' ) textarea;
+  @ViewChild( 'textarea', {static: true} ) textarea;
 
-  @ViewChild( CdkOverlayOrigin ) cdkOverlayOrigin: CdkOverlayOrigin;
+  @ViewChild( CdkOverlayOrigin, {static: true} ) cdkOverlayOrigin: CdkOverlayOrigin;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true} ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
 
   @Output() click: EventEmitter<MouseEvent> = new EventEmitter();
 

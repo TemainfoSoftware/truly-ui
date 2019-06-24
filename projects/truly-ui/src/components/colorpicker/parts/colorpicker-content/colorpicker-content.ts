@@ -62,21 +62,21 @@ export class TlColorPickerContent implements OnInit, AfterContentInit, OnChanges
 
   @Output('selectColor') selectColor: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(TemplateRef) template: TemplateRef<any>;
+  @ViewChild(TemplateRef, {static: true} ) template: TemplateRef<any>;
 
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content', {static: true} ) content: ElementRef;
 
-  @ViewChild('scheme') scheme: ElementRef;
+  @ViewChild('scheme', {static: true} ) scheme: ElementRef;
 
-  @ViewChild('cursorScheme') cursorScheme: ElementRef;
+  @ViewChild('cursorScheme', {static: true} ) cursorScheme: ElementRef;
 
-  @ViewChild('hue') hue: ElementRef;
+  @ViewChild('hue', {static: true} ) hue: ElementRef;
 
-  @ViewChild('hueSlider') hueSlider: ElementRef;
+  @ViewChild('hueSlider', {static: true} ) hueSlider: ElementRef;
 
-  @ViewChild('alpha') alpha: ElementRef;
+  @ViewChild('alpha', {static: true} ) alpha: ElementRef;
 
-  @ViewChild('alphaSlider') alphaSlider: ElementRef;
+  @ViewChild('alphaSlider', {static: true} ) alphaSlider: ElementRef;
 
   public positionSchemeX: number;
 

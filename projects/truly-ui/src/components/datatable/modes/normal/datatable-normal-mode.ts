@@ -48,7 +48,7 @@
  })
  export class TlDatatableNormalMode {
 
-     @ViewChild( 'datatableTbody' ) datatableTbodyRef: ElementRef;
+     @ViewChild( 'datatableTbody', {static: true}  ) datatableTbodyRef: ElementRef;
 
      constructor(  @Inject(forwardRef( () => TlDatatable ) ) public datatable: TlDatatable,
                    public dataSourceService: TlDatatableDataSource,

@@ -117,11 +117,11 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   @Output( 'selectItem' ) selectItem: EventEmitter<any> = new EventEmitter();
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
 
-  @ViewChild( 'input' ) input: ElementRef;
+  @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
   public typeOfData = 'complex';
 

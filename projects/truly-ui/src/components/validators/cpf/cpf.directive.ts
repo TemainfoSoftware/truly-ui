@@ -21,11 +21,9 @@
  */
 
 import {
-  AfterViewInit,
   ContentChild, Directive, forwardRef
 } from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
+import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { CPFValidator } from './cpf.validator';
 
@@ -41,7 +39,7 @@ import { CPFValidator } from './cpf.validator';
 } )
 export class CPFDirective implements Validator {
 
-    @ContentChild(TlInput) input;
+    @ContentChild(TlInput, {static: true}) input;
 
     constructor( ) {}
 

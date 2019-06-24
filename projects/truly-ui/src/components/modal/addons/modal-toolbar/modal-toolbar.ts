@@ -24,6 +24,7 @@ import { ChangeDetectorRef, Component, ComponentRef, Input, OnInit, ViewChild } 
 import { ModalService } from '../../services/modal.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subscription } from 'rxjs';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component( {
   selector: 'tl-modal-toolbar',
@@ -58,9 +59,9 @@ export class TlModalToolbar implements OnInit {
 
   @Input() limitStringBox = 12;
 
-  @ViewChild( 'container' ) container;
+  @ViewChild( 'container', {static: true} ) container;
 
-  @ViewChild( 'wrapper' ) wrapper;
+  @ViewChild( 'wrapper', {static: true} ) wrapper;
 
   public isScrolling = false;
 

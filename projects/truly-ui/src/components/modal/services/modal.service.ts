@@ -498,7 +498,7 @@ export class ModalService implements OnDestroy {
       this.createModalDialog( TlDialogConfirmation, this.referenceSmartForm.smartForm[ 'factory' ], null ).then( ( value: any ) => {
         if ( value.mdResult === ModalResult.MRYES ) {
           this.handleSmartFormCallback( this.referenceSmartForm,
-            { formResult: { value: this.referenceSmartForm.smartForm[ 'dataForm' ] } } );
+            { formResult: this.referenceSmartForm.smartForm[ 'dataForm' ] } );
         }
       } );
       this.componentInjected.instance.message = this.referenceSmartForm.smartForm[ 'deleteConfirmationMessage' ];

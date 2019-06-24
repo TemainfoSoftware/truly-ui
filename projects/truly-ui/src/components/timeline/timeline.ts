@@ -35,6 +35,7 @@ import {
   OnChanges
 } from '@angular/core';
 import {TlTimelineItem} from './parts/timeline-item/timeline-item';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component({
   selector: 'tl-timeline',
@@ -63,9 +64,9 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('listComponent') listComponent: ElementRef;
+  @ViewChild('listComponent', {static: true}) listComponent: ElementRef;
 
-  @ContentChild(TemplateRef) customTemplate: TemplateRef<any>;
+  @ContentChild(TemplateRef, {static: true}) customTemplate: TemplateRef<any>;
 
   public side = false;
 

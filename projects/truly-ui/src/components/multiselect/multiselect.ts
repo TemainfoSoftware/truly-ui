@@ -102,11 +102,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   @Output() tagRemove: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild( 'input' ) input;
+  @ViewChild( 'input', {static: true} ) input;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true} ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
 
   public typeOfData = 'complex';
 

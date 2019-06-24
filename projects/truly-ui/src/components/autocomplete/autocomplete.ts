@@ -121,17 +121,17 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild( 'input' ) input: ElementRef;
+  @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
-  @ViewChild( CdkVirtualScrollViewport ) cdkVirtualScroll: CdkVirtualScrollViewport;
+  @ViewChild( CdkVirtualScrollViewport, {static: true}  ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
-  @ViewChildren( TlItemSelectedDirective ) listItems: QueryList<TlItemSelectedDirective>;
+  @ViewChildren( TlItemSelectedDirective  ) listItems: QueryList<TlItemSelectedDirective>;
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ContentChild( FormControlName ) controlName: FormControlName;
+  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
 
-  @ViewChild( TlInput ) tlinput: TlInput;
+  @ViewChild( TlInput, {static: true}  ) tlinput: TlInput;
 
   public keyManager: ActiveDescendantKeyManager<TlItemSelectedDirective>;
 

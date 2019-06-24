@@ -86,7 +86,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input( 'formGroup' ) formGroup: FormGroup;
 
-  @ViewChild( NgForm ) public form: NgForm;
+  @ViewChild( NgForm, {static: true}  ) public form: NgForm;
 
   @ContentChildren( forwardRef( () => TlInput ), { descendants: true } ) inputList: QueryList<TlInput>;
 
@@ -94,13 +94,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChildren( forwardRef( () => NgModel ), { descendants: true } ) models: QueryList<NgModel>;
 
-  @ContentChild( FormSubmitDirective ) submitDirective: FormSubmitDirective;
+  @ContentChild( FormSubmitDirective, {static: true}  ) submitDirective: FormSubmitDirective;
 
-  @ViewChild( 'buttonFormOk' ) buttonFormOk;
+  @ViewChild( 'buttonFormOk', {static: true}  ) buttonFormOk;
 
-  @ViewChild( 'buttonFormCancel' ) buttonFormCancel;
+  @ViewChild( 'buttonFormCancel', {static: true}  ) buttonFormCancel;
 
-  @ViewChild( 'content' ) content;
+  @ViewChild( 'content', {static: true}  ) content;
 
   public formResult: {} = {};
 

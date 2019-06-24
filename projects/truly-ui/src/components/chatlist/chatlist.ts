@@ -82,7 +82,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   @Output() selectContact: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('content') content: ElementRef;
+  @ViewChild('content', {static: true} ) content: ElementRef;
 
   public transform = '0';
 

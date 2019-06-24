@@ -65,13 +65,13 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @Input() labelPlacement: 'left' | 'top' = 'left';
 
-  @ContentChild( NgModel ) model: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ViewChild( NgModel ) hiddenModel: NgModel;
+  @ViewChild( NgModel, {static: true}  ) hiddenModel: NgModel;
 
-  @ContentChild( FormControlName ) controlName: NgModel;
+  @ContentChild( FormControlName, {static: true}  ) controlName: NgModel;
 
-  @ViewChild( 'input' ) input: ElementRef;
+  @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
   @Input('control')
   set control(item) {

@@ -14,7 +14,7 @@ export class Chat2Component implements OnInit {
 
   @Output() send: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(TlChatList) chat: TlChatList;
+  @ViewChild(TlChatList, {static: false}) chat: TlChatList;
 
   constructor() { }
 

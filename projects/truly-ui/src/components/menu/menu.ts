@@ -75,7 +75,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() link = '';
 
-  @ViewChild( 'menuList', { read: ViewContainerRef } ) menuList: ViewContainerRef;
+  @ViewChild( 'menuList', { read: ViewContainerRef, static: true } ) menuList: ViewContainerRef;
 
   private listElement;
 

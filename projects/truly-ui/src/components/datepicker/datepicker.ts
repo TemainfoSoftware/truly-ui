@@ -76,17 +76,17 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @Output() completeMask: EventEmitter<any> = new EventEmitter<any>();
 
-  @ContentChild( NgModel ) ngModel: NgModel;
+  @ContentChild( NgModel, {static: true}  ) ngModel: NgModel;
 
-  @ContentChild( FormControlName ) control: FormControlName;
+  @ContentChild( FormControlName, {static: true} ) control: FormControlName;
 
-  @ViewChild( TlCalendar ) calendar;
+  @ViewChild( TlCalendar, {static: true}  ) calendar;
 
-  @ViewChild( TlInput ) tlInput: TlInput;
+  @ViewChild( TlInput, {static: true}  ) tlInput: TlInput;
 
-  @ViewChild( 'calendarContent' ) calendarContent;
+  @ViewChild( 'calendarContent', {static: true}  ) calendarContent;
 
-  @ViewChild( 'arrow' ) arrow;
+  @ViewChild( 'arrow', {static: true}  ) arrow;
 
   public isOpen = false;
 

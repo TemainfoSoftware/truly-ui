@@ -57,7 +57,7 @@ export class TlColorPickerInput implements OnInit {
 
   @Input() color = 'basic';
 
-  @ViewChild( 'inputColor' ) inputElement;
+  @ViewChild( 'inputColor', {static: true}  ) inputElement;
 
   public saved = false;
 

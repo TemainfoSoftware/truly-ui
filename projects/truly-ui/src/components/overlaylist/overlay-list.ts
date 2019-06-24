@@ -95,11 +95,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
 
   @Output() findByLetter: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild( 'list' ) list: ElementRef;
+  @ViewChild( 'list', {static: true} ) list: ElementRef;
 
-  @ViewChild( TlInput ) tlInput: TlInput;
+  @ViewChild( TlInput, {static: true} ) tlInput: TlInput;
 
-  @ViewChild( 'defaultPlaceholder' ) defaultPlaceholder: ElementRef;
+  @ViewChild( 'defaultPlaceholder', {static: true} ) defaultPlaceholder: ElementRef;
 
   @ViewChildren(TlListItem) items: QueryList<TlListItem>;
 

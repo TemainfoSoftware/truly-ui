@@ -33,6 +33,7 @@ import {
 import { ShortcutService } from './shortcut.service';
 import { TlButton } from '../button/button';
 import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 let elements = [];
 
@@ -56,7 +57,7 @@ export class ShortcutDirective implements OnDestroy {
     return this._shortcut;
   }
 
-  @ContentChild( TlButton ) tlbutton;
+  @ContentChild( TlButton, {static: true} ) tlbutton;
 
   private component;
 

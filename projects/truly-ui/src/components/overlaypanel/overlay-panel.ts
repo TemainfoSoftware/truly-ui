@@ -42,7 +42,7 @@ export class TlOverlayPanel implements OnInit, AfterContentInit {
 
   @Output() hide: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild( CdkConnectedOverlay ) cdkOverlay: CdkConnectedOverlay;
+  @ViewChild( CdkConnectedOverlay, {static: true} ) cdkOverlay: CdkConnectedOverlay;
 
   public isOpen = false;
 

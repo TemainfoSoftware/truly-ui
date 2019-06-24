@@ -29,7 +29,7 @@
 })
  export class FormSubmitDirective implements  AfterContentInit {
 
-  @ContentChild( TlButton ) public button;
+  @ContentChild( TlButton, {static: true}  ) public button;
 
   @Output() submit = new EventEmitter();
 

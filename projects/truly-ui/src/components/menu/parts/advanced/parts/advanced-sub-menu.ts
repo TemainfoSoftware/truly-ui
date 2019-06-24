@@ -27,6 +27,7 @@ import { TlAdvancedRootMenu } from '../advanced-root-menu';
 import { RelativeWindowPosition } from '../../../../misc/relative-window-position.directive';
 import { Subject } from 'rxjs';
 import { SubMenuService } from '../../../services/submenu.service';
+import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Component( {
   selector: 'tl-advanced-sub-menu',
@@ -81,7 +82,7 @@ export class TlAdvancedSubMenu implements AfterViewInit {
 
   private relativeWindowPosition: RelativeWindowPosition = new RelativeWindowPosition();
 
-  @ViewChild( 'subMenuList' ) subMenuList: ElementRef;
+  @ViewChild( 'subMenuList', {static: true} ) subMenuList: ElementRef;
 
   constructor( private router: Router, private change: ChangeDetectorRef, private renderer: Renderer2 ) {
   }

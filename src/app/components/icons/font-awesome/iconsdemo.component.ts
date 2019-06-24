@@ -21,6 +21,7 @@
 */
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import {FixedPositionDirective} from '../../../../../projects/truly-ui/src/components/misc/fixed-position.directive';
 
 @Component({
   selector: 'app-icons',
@@ -43,7 +44,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class IconsDemoComponent {
 
-  @ViewChild('inputCopy') inputCopy: ElementRef<any>;
+  @ViewChild('inputCopy', {static: false}) inputCopy: ElementRef<any>;
 
   public filter: string;
 

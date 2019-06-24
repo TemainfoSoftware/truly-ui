@@ -51,9 +51,9 @@ export class TlIcons implements AfterViewInit {
 
   @Input() align: string;
 
-  @ViewChild('content') content: ElementRef<any>;
+  @ViewChild('content', {static: true} ) content: ElementRef<any>;
 
-  @ViewChild(TemplateRef) template: TemplateRef<any>;
+  @ViewChild(TemplateRef, {static: true} ) template: TemplateRef<any>;
 
   constructor(private change: ChangeDetectorRef) {}
 

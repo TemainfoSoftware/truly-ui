@@ -18,7 +18,7 @@ export class TlAccordionItem {
 
   @Input() opened = false;
 
-  @ViewChild( 'panel' ) panel: ElementRef;
+  @ViewChild( 'panel', {static: true} ) panel: ElementRef;
 
   public maxHeight;
 

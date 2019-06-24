@@ -41,6 +41,7 @@ import { Subscription } from 'rxjs';
 import { I18nService } from '../i18n/i18n.service';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 export interface IncrementalSteps {
   hour: number;
@@ -99,15 +100,15 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   @Input() max: Date = new Date( 1999, 0, 1, 23, 59 );
 
-  @ViewChild( 'listHour' ) listHour: ElementRef;
+  @ViewChild( 'listHour', {static: true} ) listHour: ElementRef;
 
-  @ViewChild( 'listMinutes' ) listMinutes: ElementRef;
+  @ViewChild( 'listMinutes', {static: true} ) listMinutes: ElementRef;
 
-  @ViewChild( 'listAmPm' ) listAmPm: ElementRef;
+  @ViewChild( 'listAmPm', {static: true} ) listAmPm: ElementRef;
 
-  @ContentChild( NgModel ) ngModel: NgModel;
+  @ContentChild( NgModel, {static: true} ) ngModel: NgModel;
 
-  @ContentChild( FormControlName ) control: NgModel;
+  @ContentChild( FormControlName, {static: true} ) control: NgModel;
 
   @Output() now: EventEmitter<any> = new EventEmitter();
 

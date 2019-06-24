@@ -27,6 +27,7 @@ import { TlSidebar } from './parts/sidebar/sidebar';
 import { TlSidebarContent } from './parts/sidebar-content/sidebar-content';
 import { SidebarService } from '../modal/services/sidebar.service';
 import { Subscription } from 'rxjs';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-sidebar-container',
@@ -38,7 +39,7 @@ export class TlSidebarContainer implements AfterContentInit, OnDestroy {
 
   @ContentChildren( forwardRef( () => TlSidebar ) ) sidebar: QueryList<TlSidebar>;
 
-  @ContentChild( TlSidebarContent ) sidebarContent;
+  @ContentChild( TlSidebarContent, {static: true} ) sidebarContent;
 
   private subscription: Subscription = new Subscription();
 

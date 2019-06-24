@@ -1,8 +1,9 @@
 {
   "preset": "jest-preset-angular",
-  "setupTestFrameworkScriptFile": "<rootDir>/tools/jest/jest-setup.ts",
+  "setupFilesAfterEnv": [
+    "<rootDir>/tools/jest/jest-setup.ts"
+  ],
   "collectCoverage": true,
-  "mapCoverage": true,
   "collectCoverageFrom" : [
     "src/components/**/*.ts"
   ],

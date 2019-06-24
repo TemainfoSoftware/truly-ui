@@ -21,8 +21,7 @@
  */
 
 import { ContentChild, Directive, forwardRef, HostListener } from '@angular/core';
-import { FormControl, NG_VALIDATORS, Validator } from '@angular/forms';
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
+import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { NumberValidator } from './number.validator';
 
@@ -40,7 +39,7 @@ export class NumberDirective implements Validator {
 
     private regex = new RegExp( '^[0-9]*$' );
 
-    @ContentChild(TlInput) tlinput;
+    @ContentChild(TlInput, {static: true}) tlinput;
 
     constructor() {}
 

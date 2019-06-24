@@ -43,9 +43,9 @@ import * as objectPath from 'object-path';
 } )
 export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
 
-    @ViewChild( 'listComponent' ) listComponent: ElementRef;
+    @ViewChild( 'listComponent', {static: true}  ) listComponent: ElementRef;
 
-    @ViewChild( 'listBody' ) listBody: ElementRef;
+    @ViewChild( 'listBody', {static: true}  ) listBody: ElementRef;
 
     public loading = false;
 

@@ -31,7 +31,6 @@ import {
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { TlSplitButtonAction } from './splitbutton-action';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { EventListener } from '../../../../../node_modules/@angular/core/src/debug/debug_node';
 
 @Component( {
   selector: 'tl-split-button',

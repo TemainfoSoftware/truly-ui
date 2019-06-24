@@ -31,7 +31,7 @@ export class TlView implements OnInit {
 
   @Input() value;
 
-  @ViewChild( 'viewComponents' ) viewComponents: ElementRef;
+  @ViewChild( 'viewComponents', {static: true} ) viewComponents: ElementRef;
 
   public height = 'auto';
 

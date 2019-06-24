@@ -86,36 +86,6 @@
             "browserTarget": "truly-ui-project:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/highlight.min.js",
-              "src/assets/js/demo.js"
-            ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/assets/css/atom-one-dark.min.css",
-              "src/assets/css/demo.css",
-              "projects/truly-ui/src/components/core/styles/icons/dx-icons/css/icons.scss",
-              "projects/truly-ui/src/components/core/styles/icons/fa-icons/css/icons.scss",
-              "projects/truly-ui/src/components/core/styles/icons/ion-icons/css/icons.scss",
-              "projects/truly-ui/src/components/core/styles/icons/animations.scss",
-              "src/styles.scss"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico",
-              "src/manifest.json"
-            ]
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -189,14 +159,6 @@
             "production": {
               "project": "projects/truly-ui/ng-package.prod.json"
             }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/truly-ui/src/test.ts",
-            "tsConfig": "projects/truly-ui/tsconfig.spec.json",
-            "karmaConfig": "projects/truly-ui/karma.conf.js"
           }
         },
         "lint": {

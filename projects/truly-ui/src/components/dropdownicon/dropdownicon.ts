@@ -65,7 +65,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
 
   @Input() keyValue = 'value';
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ViewChild( NgModel, {static: true}  ) model: NgModel;
 
   public optionSelected;
 

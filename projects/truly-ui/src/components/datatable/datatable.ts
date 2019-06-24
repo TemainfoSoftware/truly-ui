@@ -95,9 +95,9 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ContentChildren( TlDatatableColumn ) datatableColumns: QueryList<TlDatatableColumn>;
 
-    @ViewChild( 'tbody' ) tbody: ElementRef;
+    @ViewChild( 'tbody', {static: true}  ) tbody: ElementRef;
 
-    @ViewChild( 'datatableBox' ) datatableBox: ElementRef;
+    @ViewChild( 'datatableBox', {static: false}  ) datatableBox: ElementRef;
 
     public receiveFocus = new Subject();
 

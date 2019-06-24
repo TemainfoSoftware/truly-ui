@@ -15,7 +15,7 @@ export class Chat3Component {
 
   @Output() send: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(TlChatList) chat: TlChatList;
+  @ViewChild(TlChatList, {static: false}) chat: TlChatList;
 
   constructor() { }
 

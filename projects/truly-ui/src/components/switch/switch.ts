@@ -27,6 +27,7 @@ import {
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-switch',
@@ -50,7 +51,7 @@ export class TlSwitch extends ElementBase<boolean> implements OnInit {
 
   @Input() color = 'primary';
 
-  @ViewChild( NgModel ) model: NgModel;
+  @ViewChild( NgModel, {static: true} ) model: NgModel;
 
   @Output() toggle: EventEmitter<any> = new EventEmitter();
 

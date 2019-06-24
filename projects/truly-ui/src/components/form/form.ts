@@ -208,7 +208,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   onSubmitForm() {
     this.handleFormPrimaryKey();
+    this.formResult = this.formInstance.value;
     this.submitForm.emit( this.formInstance.value );
+    this.change.detectChanges();
   }
 
   handleFormPrimaryKey() {

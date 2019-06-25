@@ -50,7 +50,7 @@ export class ModalResultDirective implements OnInit {
     }
   }
 
-  @HostListener( 'keydown.enter' )
+  @HostListener( 'keyup.enter' )
   onKeyDown() {
     if (!this.button.disabled) {
       this.emitCallback();

@@ -22,6 +22,8 @@ export class TlMessageValidationComponent {
   private keyErrors = {
     required: Function(),
     minlength: Function(),
+    cnpj: Function(),
+    cpf: Function(),
     email: Function(),
     pattern: Function(),
     invalidPasswordRuleDigits: Function(),
@@ -57,6 +59,8 @@ export class TlMessageValidationComponent {
         const requiredLength = this.control.errors['minlength']['requiredLength'];
         this.messages.push(format(this.i18n.getLocale().Validators.invalidMinLength, requiredLength));
       },
+      cnpj: () => this.messages.push( this.i18n.getLocale().Validators.invalidCNPJ ),
+      cpf: () => this.messages.push( this.i18n.getLocale().Validators.invalidCPF ),
       invalidPasswordRuleDigits: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleDigits),
       invalidPasswordRuleUppercase: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleUppercase),
       invalidPasswordRuleSpecial: () => this.messages.push(this.i18n.getLocale().Validators.invalidPasswordRuleSpecial),

@@ -141,6 +141,7 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   }
 
   ngOnDestroy() {
+    this.remove();
     this.subscription.unsubscribe();
   }
 

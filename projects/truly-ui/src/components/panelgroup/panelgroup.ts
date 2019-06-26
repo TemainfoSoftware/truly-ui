@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import { Component, Output, AfterViewInit, Input, TemplateRef, EventEmitter } from '@angular/core';
+import { Component, Output, AfterViewInit, Input, EventEmitter } from '@angular/core';
 
 @Component( {
     selector: 'tl-panelgroup',
@@ -39,9 +39,9 @@ export class TlPanelGroup implements AfterViewInit {
 
     @Input() fontColorCaption = '';
 
-    @Input() customTemplate: TemplateRef<any>;
-
     @Input() fontSizeCaption = '12px';
+
+    @Input() shortcutAction = '';
 
     @Input() showButtonAction = false;
 

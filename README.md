@@ -1,13 +1,54 @@
-# README
+<p align="center">
+  <img style="
+  @font-face {
+      font-family: Open Sans;
+      src: url(scr/assets/fonts/opensans.TTF);
+  }
+  font-family: 'Open Sans'
+  " src="src/assets/img/logo-readme.svg" width="500">
+  <br />
+  Truly-UI is a UI Framework for creating rich desktop applications
+  <br /><br />
+    <a href="http://commitizen.github.io/cz-cli/">
+      <img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?branch=master" />
+    </a>
+    <a href="https://david-dm.org/TemainfoSoftware/truly-ui/">
+      <img src="https://david-dm.org/TemainfoSoftware/truly-ui.svg" />
+    </a>
+    <a href="https://github.com/semantic-release/semantic-release">
+      <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" />
+    </a> 
+    <br />
+    <a href="https://github.com/TemainfoSoftware/truly-ui/blob/master/LICENSE.md">
+      <img src="https://img.shields.io/badge/license-MIT-green.svg" />
+    </a>
+    <a href="https://greenkeeper.io/">
+      <img src="https://badges.greenkeeper.io/TemainfoSoftware/truly-ui.svg" />
+    </a>
+    <a href="https://www.codacy.com/app/mister-x59/truly-ui?utm_source=github.com&utm_medium=referral&utm_content=TemainfoSoftware/truly-ui&utm_campaign=badger">
+      <img src="https://api.codacy.com/project/badge/Grade/666b375858d540d08c7dccb9fe8e5a30" />
+    </a> 
+    <a href="https://travis-ci.org/TemainfoSoftware/truly-ui">
+      <img src="https://travis-ci.org/TemainfoSoftware/truly-ui.svg?branch=master" />
+    </a>
+  <br/>
+</p>
 
- ![](.gitbook/assets/logo-readme%20%281%29.svg)  
- Truly-UI is a UI Framework for creating rich desktop applications  
-  
- [![](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?branch=master)](http://commitizen.github.io/cz-cli/) [![](https://david-dm.org/TemainfoSoftware/truly-ui.svg)](https://david-dm.org/TemainfoSoftware/truly-ui/) [![](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)  
- [![](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/TemainfoSoftware/truly-ui/blob/master/LICENSE.md) [![](https://badges.greenkeeper.io/TemainfoSoftware/truly-ui.svg)](https://greenkeeper.io/) [![](https://api.codacy.com/project/badge/Grade/666b375858d540d08c7dccb9fe8e5a30)](https://www.codacy.com/app/mister-x59/truly-ui?utm_source=github.com&utm_medium=referral&utm_content=TemainfoSoftware/truly-ui&utm_campaign=badger) [![](https://travis-ci.org/TemainfoSoftware/truly-ui.svg?branch=master)](https://travis-ci.org/TemainfoSoftware/truly-ui)  
+-------
 
+<p align="center">
+    <a href="#quick-links">Quick Links</a> &bull;
+    <a href="#motivation">Motivation</a> &bull;
+    <a href="#prerequisites">Prerequisites</a> &bull;
+    <a href="#installation">Installation</a> &bull;
+    <a href="#usage">Usage</a> &bull;
+    <a href="#available-features">Available Features</a> &bull;
+    <a href="#feedback">Feedback</a> &bull;
+    <a href="#license">License</a>
+</p>
 
- [Quick Links](./#quick-links) • [Motivation](./#motivation) • [Prerequisites](./#prerequisites) • [Installation](./#installation) • [Usage](./#usage) • [Available Features](./#available-features) • [Feedback](./#feedback) • [License](./#license)
+-------
+  <br/>
 
 ## Quick Links
 

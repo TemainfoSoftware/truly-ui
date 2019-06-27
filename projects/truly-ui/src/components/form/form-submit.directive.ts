@@ -35,12 +35,16 @@
 
   @HostListener('keydown.enter')
   onEnter() {
-    this.submit.emit();
+    if ( !this.button.disabled ) {
+      this.submit.emit();
+    }
   }
 
   @HostListener('click')
   onClick() {
-    this.submit.emit();
+    if ( !this.button.disabled ) {
+      this.submit.emit();
+    }
   }
 
   constructor() {}

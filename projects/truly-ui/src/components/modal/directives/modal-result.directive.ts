@@ -25,7 +25,6 @@ import {
 import { ModalResult } from '../../core/enums/modal-result';
 import { ModalService } from '../services/modal.service';
 import { TlButton } from '../../button/button';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Directive( {
   selector: '[mdResult]'
@@ -50,7 +49,7 @@ export class ModalResultDirective implements OnInit {
     }
   }
 
-  @HostListener( 'keyup.enter' )
+  @HostListener( 'keydown.enter' )
   onKeyDown() {
     if (!this.button.disabled) {
       this.emitCallback();
@@ -67,7 +66,7 @@ export class ModalResultDirective implements OnInit {
 
   emitCallback(): Promise<any> {
     return new Promise( ( resolve ) => {
-      if ( !this.mdResult || ModalResult.MRCUSTOM ) {
+      if ( !this.mdResult ) {
         return;
       }
       this.modalService.execCallBack( this.getResult(), this.modalId );

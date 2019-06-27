@@ -123,7 +123,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
-  @ViewChild( CdkVirtualScrollViewport, {static: true}  ) cdkVirtualScroll: CdkVirtualScrollViewport;
+  @ViewChild( CdkVirtualScrollViewport, {static: false}  ) cdkVirtualScroll: CdkVirtualScrollViewport;
 
   @ViewChildren( TlItemSelectedDirective  ) listItems: QueryList<TlItemSelectedDirective>;
 

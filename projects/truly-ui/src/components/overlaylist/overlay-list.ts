@@ -97,7 +97,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
 
   @ViewChild( 'list', {static: true} ) list: ElementRef;
 
-  @ViewChild( TlInput, {static: true} ) tlInput: TlInput;
+  @ViewChild( TlInput, { static: false } ) tlInput: TlInput;
 
   @ViewChild( 'defaultPlaceholder', {static: true} ) defaultPlaceholder: ElementRef;
 

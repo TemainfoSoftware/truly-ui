@@ -33,7 +33,6 @@ import {
 import { ShortcutService } from './shortcut.service';
 import { TlButton } from '../button/button';
 import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
-import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 let elements = [];
 

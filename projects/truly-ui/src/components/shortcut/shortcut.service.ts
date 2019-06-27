@@ -58,6 +58,7 @@ export class ShortcutService implements OnDestroy {
   private modalContextArray = [];
 
   constructor( private modalService: ModalService ) {
+    this.listenHeadingModal();
   }
 
   setConfig( config: ShortcutConfig ) {
@@ -69,10 +70,13 @@ export class ShortcutService implements OnDestroy {
     this.createListener();
   }
 
-  createListener() {
+  listenHeadingModal() {
     this.subscription.add( this.modalService.frontModal.subscribe( ( component: any ) => {
       this.activeModal = component.activeModal;
     } ) );
+  }
+
+  createListener() {
     if ( !listener ) {
       this.subscription.add( document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
@@ -211,6 +215,9 @@ export class ShortcutService implements OnDestroy {
 
   isKeysShortcutEqualsKeysEvent( $event: KeyboardEvent ) {
     for ( let element = 0; element < this.elementsListener.length; element++ ) {
+      if ( !$event.key ) {
+        return;
+      }
       if ( this.getShortcutEventMultipleKey( $event ).key === this.handleShortcutMultipleKey( element ).key &&
         this.getShortcutEventMultipleKey( $event ).ctrlKey === this.handleShortcutMultipleKey( element ).ctrlKey &&
         this.getShortcutEventMultipleKey( $event ).shiftKey === this.handleShortcutMultipleKey( element ).shiftKey &&
@@ -315,7 +322,7 @@ export class ShortcutService implements OnDestroy {
 
   getEqualKeys( shortcut ) {
     return this.elementsListener.filter( ( value ) => {
-      return shortcut === value.shortcut;
+      return String(shortcut).toLocaleLowerCase() === String(value.shortcut).toLocaleLowerCase();
     } );
   }
 
@@ -332,7 +339,7 @@ export class ShortcutService implements OnDestroy {
 
   filterElementsNotEqualButton() {
     return this.elementsListener.filter( ( value, index, array ) => {
-      return !this.isElementInstanceOfButton( value );
+      return !this.isElementInstanceOfButton( value ) && ( value.shortcut === this.currentShortcut );
     } );
   }
 

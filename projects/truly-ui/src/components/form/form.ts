@@ -96,9 +96,9 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChild( FormSubmitDirective, {static: true}  ) submitDirective: FormSubmitDirective;
 
-  @ViewChild( 'buttonFormOk', {static: true}  ) buttonFormOk;
+  @ViewChild( 'buttonFormOk', {static: false}  ) buttonFormOk;
 
-  @ViewChild( 'buttonFormCancel', {static: true}  ) buttonFormCancel;
+  @ViewChild( 'buttonFormCancel', {static: false}  ) buttonFormCancel;
 
   @ViewChild( 'content', {static: true}  ) content;
 

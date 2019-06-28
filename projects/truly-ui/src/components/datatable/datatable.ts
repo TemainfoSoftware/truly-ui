@@ -61,6 +61,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @Input('allowSortColumn') allowSortColumn = true;
 
+    @Input('initializeFocus') initializeFocus = true;
+
     @Input('allowFilterColumn') allowFilterColumn = false;
 
     @Input('rowsPage') rowsPage = 30;
@@ -139,7 +141,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
         this.sortService.onInicializeSortService(this);
-        this.inicializeGlobalFilter();
+        this.initializeGlobalFilter();
         this.columnService.setColumns();
     }
 
@@ -190,7 +192,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         return { data : row, index: index };
     }
 
-    inicializeGlobalFilter() {
+    initializeGlobalFilter() {
         if ( this.globalFilter ) {
             this.globalFilterTimeout = setTimeout( () => {
                 this.render.listen(this.globalFilter.element.nativeElement, 'input', ( event ) => {

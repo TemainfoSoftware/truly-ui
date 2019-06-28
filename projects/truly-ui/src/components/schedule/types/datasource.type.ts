@@ -26,5 +26,6 @@ export class ScheduleDataSource {
   detail: string;
   allday: boolean;
   status: string;
+  type: string;
   date: { start: number, end: number };
 }

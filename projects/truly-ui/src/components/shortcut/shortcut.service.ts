@@ -76,9 +76,16 @@ export class ShortcutService implements OnDestroy {
     } ) );
   }
 
+  isKeyOnList( key: string ) {
+    return this.elementsListener.filter(value => value.shortcut.toLocaleLowerCase() === key.toLocaleLowerCase() ).length > 0;
+  }
+
   createListener() {
     if ( !listener ) {
       this.subscription.add( document.addEventListener( 'keydown', ( $event: KeyboardEvent ) => {
+        if ( !$event.key || !this.isKeyOnList( $event.key )) {
+          return;
+        }
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
           return;
         }

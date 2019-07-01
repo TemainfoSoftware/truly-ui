@@ -23,11 +23,6 @@ import {
   Component, ElementRef, AfterViewInit, Renderer2, ViewChild, Output,
   EventEmitter, Input, QueryList, ViewChildren, ViewContainerRef, SimpleChanges, OnChanges, OnDestroy,
 } from '@angular/core';
-
-import { TabIndexService } from '../form/tabIndex.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { ComponentDefaultBase } from '../core/base/component-default.base';
 import { KeyEvent } from '../core/enums/key-events';
 import { TlNavigator } from '../navigator/navigator';
 import { NavigatorService } from '../navigator/services/navigator.service';
@@ -48,7 +43,7 @@ export interface CalendarStatus {
   styleUrls: [ './calendar.scss' ],
   providers: [ NavigatorService, CalendarService ]
 } )
-export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, OnChanges, OnDestroy {
+export class TlCalendar implements AfterViewInit, OnChanges, OnDestroy {
 
   @Input() todayButton = true;
 
@@ -120,9 +115,7 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     private i18n: I18nService,
     private navigatorService: NavigatorService,
     private calendarService: CalendarService,
-    private view: ViewContainerRef,
-    tabIndexService: TabIndexService, idService: IdGeneratorService, nameService: NameGeneratorService) {
-    super( tabIndexService, idService, nameService );
+    private view: ViewContainerRef) {
     this.dateNavigator = new Date();
   }
 
@@ -133,7 +126,6 @@ export class TlCalendar extends ComponentDefaultBase implements AfterViewInit, O
     this.navigatorService.setNavigator( this.tlnavigator.toArray()[ 0 ] );
     this.setDateNavigator();
 
-    this.setElement( this.calendar, 'calendar' );
     this.createKeyboardListener();
     this.generateDays();
     this.initializeNavigator();

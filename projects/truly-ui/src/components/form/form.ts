@@ -102,7 +102,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ViewChild( 'content', {static: true}  ) content;
 
-  public formResult: {} = {};
+  public formResult;
 
   private lastTabIndex: number;
 
@@ -151,7 +151,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.getElementsOfForm();
     this.formLoaded.emit( this.formInstance );
     this.setInitialFocus();
-    this.listenFormChanges();
     this.listenSubmitDirective();
     this.change.detectChanges();
   }
@@ -162,13 +161,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.submitForm.emit( this.formInstance.value );
       }));
     }
-  }
-
-  listenFormChanges() {
-    this.subscription.add(this.formInstance.valueChanges.subscribe(() => {
-      this.formResult = this.formInstance.value;
-      this.change.detectChanges();
-    }));
   }
 
   handleFormGroupValues() {

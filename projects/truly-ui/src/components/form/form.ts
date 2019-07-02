@@ -20,28 +20,41 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, Input,
-  QueryList, Renderer2, Output,
-  ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild, Injector,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  forwardRef,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  Renderer2,
+  ViewChild,
 } from '@angular/core';
-import { KeyEvent } from '../core/enums/key-events';
-import { I18nService } from '../i18n/i18n.service';
-import { TlInput } from '../input/input';
-import { FormGroup, NgForm, NgModel } from '@angular/forms';
-import { TlButton } from '../button/button';
-import { FormSubmitDirective } from './form-submit.directive';
-import { ModalService } from '../modal/services/modal.service';
-import { ActionsModal } from '../core/enums/actions-modal';
-import { Subscription } from 'rxjs';
+import {KeyEvent} from '../core/enums/key-events';
+import {I18nService} from '../i18n/i18n.service';
+import {TlInput} from '../input/input';
+import {FormGroup, NgForm, NgModel} from '@angular/forms';
+import {TlButton} from '../button/button';
+import {FormSubmitDirective} from './form-submit.directive';
+import {ModalService} from '../modal/services/modal.service';
+import {ActionsModal} from '../core/enums/actions-modal';
+import {Subscription} from 'rxjs';
 
 let componentFormIndex;
 
 @Component( {
   selector: 'tl-form',
   templateUrl: '../form/form.html',
-  styleUrls: [ '../form/form.scss' ]
+  styleUrls: [ '../form/form.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
@@ -170,6 +183,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.modalInstance.modalConfiguration.dataForm ) {
         this.formGroup.patchValue( this.modalInstance.modalConfiguration.dataForm );
         this.markAllAsTouched( this.formGroup.controls );
+        this.change.detectChanges();
       }
     }
   }
@@ -355,6 +369,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   backwardTabbing() {
+    this.change.detectChanges();
     if ( this.isFirstTabIndexOfForm() ) {
       return this.focusElements[ this.lastTabIndex ].focus();
     }
@@ -374,6 +389,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   forwardTabbing() {
+    this.change.detectChanges();
     if ( this.isLastTabIndexOfForm() ) {
       return this.focusElements[ 0 ].focus();
     }

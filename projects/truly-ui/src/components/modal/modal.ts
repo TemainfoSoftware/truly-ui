@@ -20,17 +20,28 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
-  HostBinding,
-  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { ContainerModalService } from './addons/container-modal/container-modal.service';
-import { ModalService } from './services/modal.service';
-import { ModalResult } from '../core/enums/modal-result';
-import { ModalOptions } from './interfaces/modal-options';
-import { SidebarService } from './services/sidebar.service';
-import { Subscription } from 'rxjs';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ContainerModalService} from './addons/container-modal/container-modal.service';
+import {ModalService} from './services/modal.service';
+import {ModalResult} from '../core/enums/modal-result';
+import {ModalOptions} from './interfaces/modal-options';
+import {SidebarService} from './services/sidebar.service';
+import {Subscription} from 'rxjs';
 
 let subscribeMouseMove;
 
@@ -40,6 +51,7 @@ let uniqueIdentifier = 0;
   selector: 'tl-modal',
   templateUrl: './modal.html',
   styleUrls: [ './modal.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 

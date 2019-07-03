@@ -282,6 +282,10 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
     });
   }
 
+  trackByFn(index) {
+    return index;
+  }
+
   keydownSearch( $event ) {
     this.searchText = $event.target.value;
     this.search.emit( $event.target.value );

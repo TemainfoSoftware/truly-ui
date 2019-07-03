@@ -23,7 +23,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TlModal } from './modal';
-import { ToneColorGenerator } from '../core/helper/tonecolor-generator';
 import { TlBackdrop } from '../core/components/backdrop/backdrop';
 import { LimitStringPipe } from '../core/helper/limitstring.pipe';
 import { BackdropModule } from '../core/components/backdrop/index';
@@ -61,7 +60,6 @@ export class ModalModule {
     return {
       ngModule: ModalModule,
       providers: [
-        ToneColorGenerator,
         ModalService,
         ShortcutService,
         SidebarService

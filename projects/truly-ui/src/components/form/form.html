@@ -31,7 +31,7 @@
                        [width]="'120px'"
                        [color]="'success'"
                        [shortcut]="submitShortcut"
-                       [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
+                       [disabled]="isLoading ? true : !formInstance.valid"
                        [formResult]="formResult"
                        [iconAddonBefore]="'fas fa-check'">
             </tl-button>

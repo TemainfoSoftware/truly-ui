@@ -1,5 +1,4 @@
 import {ControlValueAccessor} from '@angular/forms';
-import { EventEmitter, Inject, Optional } from '@angular/core';
 
 export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
   private innerValue: T;

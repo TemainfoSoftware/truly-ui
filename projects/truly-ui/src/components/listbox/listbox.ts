@@ -22,7 +22,7 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -52,7 +52,6 @@ import {scrollIntoView} from '../core/helper/scrollIntoView';
   selector: 'tl-listbox',
   templateUrl: './listbox.html',
   styleUrls: ['./listbox.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnChanges {
 
@@ -157,7 +156,6 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.setItemsByRowSet();
     this.setItemsByScroll();
     this.setContainer();
-    this.change.detectChanges();
   }
 
   private setScrollTop() {
@@ -174,7 +172,6 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   setSelected(item: TlItemSelectedDirective) {
     this.listKeyManager.setActiveItem(item);
     this.setInputFocus();
-    this.change.detectChanges();
   }
 
   onKeyEnter() {
@@ -219,13 +216,6 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
         this.dataSource.dataStream.next([]);
       }
     }
-  }
-
-  getMessage() {
-    if (this.nothingFound) {
-      return this.nothingFoundMessage;
-    }
-    return null;
   }
 
   onScroll() {

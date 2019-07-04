@@ -21,7 +21,6 @@
  */
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ComponentRef,
@@ -51,7 +50,6 @@ let uniqueIdentifier = 0;
   selector: 'tl-modal',
   templateUrl: './modal.html',
   styleUrls: [ './modal.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
@@ -108,8 +106,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   public id = '';
 
   public subscription = new Subscription();
-
-  public modalResult;
 
   public status = '';
 

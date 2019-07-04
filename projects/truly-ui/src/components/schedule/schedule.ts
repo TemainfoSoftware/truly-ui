@@ -54,6 +54,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() statusConfig: StatusType;
 
+  @Input() typesConfig: any;
+
   @Input() currentDate = new Date();
 
   @Input() height = '550px';

@@ -24,6 +24,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   @Input() statusConfig: {StatusType};
 
+  @Input() typesConfig: any;
+
   @Input() showNowIndicator = false;
 
   @Input() slotSettings: SlotSettingsType;

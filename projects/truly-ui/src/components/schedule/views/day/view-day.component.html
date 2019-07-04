@@ -27,7 +27,7 @@
     <div class="ui-schedule-list-events">
 
       <!-- CREATE EVENTS BOXES-->
-      <div class="ui-schedule-event-box"
+      <div class="ui-schedule-event-box" [style.borderLeftWidth]="event?.data?.blocked ? 0 : '5px'"
            #elementBox
            *ngFor="let event of eventsWithPositions; let index = index"
            [ngStyle]="{
@@ -44,11 +44,27 @@
            (mouseover)="onEventMouseout.emit( event?.data )"
            (mouseout)="onEventMouseout.emit( event?.data )"
       >
-        <div class="ui-schedule-description">
-          <div class="ui-event-title">{{event?.data?.title}}</div>
-          <div class="ui-event-detail">{{event?.data?.detail}}</div>
-        </div>
-        <div class="ui-event-hour">{{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}</div>
+        <ng-container *ngIf="!event?.data?.blocked">
+          <div class="ui-schedule-description">
+            <div class="ui-event-title">{{event?.data?.title}}</div>
+            <div class="ui-event-detail">{{event?.data?.detail}}</div>
+          </div>
+          <div class="ui-event-hour">
+            {{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}<br>
+            {{typesConfig[event?.data?.type]?.description}}
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="event?.data?.blocked">
+          <div class="ui-schedule-event-blocked">
+            <div class="ui-event-title">{{event?.data?.title}}</div>
+            <div class="ui-event-hour">
+              <tl-icon [lib]="'fa'" [style]="'far'">clock</tl-icon>
+              {{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}<br>
+            </div>
+          </div>
+
+        </ng-container>
       </div>
 
     </div>

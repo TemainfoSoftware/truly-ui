@@ -26,7 +26,7 @@ export class TooltipDirective  {
   }
 
   private show() {
-    if ( this.tooltip.text !== '' ) {
+    if ( (this.tooltip.text !== '') && (this.tooltip.text !== null) ) {
       const componentFactory = this.compiler.resolveComponentFactory( TlToolTipContainer );
       const componentRef = this.view.createComponent( componentFactory );
       (<TlToolTipContainer>componentRef.instance).setOptions( this.tooltip );

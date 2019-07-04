@@ -165,7 +165,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.formLoaded.emit( this.formInstance );
     this.setInitialFocus();
     this.listenSubmitDirective();
-    this.change.detectChanges();
+    this.listenFormChanges();
   }
 
   listenSubmitDirective() {
@@ -174,6 +174,12 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.submitForm.emit( this.formInstance.value );
       }));
     }
+  }
+
+  listenFormChanges() {
+    this.subscription.add( this.formInstance.valueChanges.subscribe(() => {
+      this.change.detectChanges();
+    }));
   }
 
   handleFormGroupValues() {

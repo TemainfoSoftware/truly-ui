@@ -6,11 +6,12 @@
     "module": "es2015",
     "types": []
   },
-  "angularCompilerOptions":{
+  "angularCompilerOptions": {
     "strictMetadataEmit": false
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/*.stories.ts"
   ]
 }

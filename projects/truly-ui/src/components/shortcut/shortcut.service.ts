@@ -86,6 +86,7 @@ export class ShortcutService implements OnDestroy {
         if ( !$event.key || !this.isKeyOnList( $event.key )) {
           return;
         }
+        $event.preventDefault();
         if ( !this.isKeysShortcutEqualsKeysEvent( $event ) ) {
           return;
         }

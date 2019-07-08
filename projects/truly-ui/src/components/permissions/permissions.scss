@@ -50,9 +50,30 @@
     }
     .not-found-text {
       font-size: 2em;
+      font-variant: all-petite-caps;
     }
   }
 }
+
+
+.ui-loader-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  place-content: center;
+  flex-flow: column;
+  .ui-loader {
+    width: 50px;
+    height: 50px;
+  }
+  .ui-loader-message {
+    font-size: 16px;
+    white-space: nowrap;
+    font-variant: all-petite-caps;
+  }
+}
+
 
 .ui-permissions-header {
   display: flex;

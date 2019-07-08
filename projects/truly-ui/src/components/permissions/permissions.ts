@@ -49,6 +49,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   @Input() color = 'basic';
 
+  @Input() loading = false;
+
   @Input() keyGroup = 'description';
 
   @Input() keyPermissions = 'permissions';
@@ -84,6 +86,8 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   public selected = false;
 
   public dataSourceSelected: any = [];
+
+  public loadingMessage = this.i18n.getLocale().Permissions.loadingMessage;
 
   public notFound = this.i18n.getLocale().Permissions.notFound;
 

@@ -21,6 +21,13 @@ export const dataProperties = [
     options: 'monthyear | year | rangeyear | day'
   },
   {
+    name: 'color',
+    type: 'string',
+    default: 'basic',
+    description: 'Changes the default color of the navigator.',
+    options: 'basic | primary | success | information | warning | danger | light | dark'
+  },
+  {
     name: 'date',
     type: 'Date',
     default: 'Current Date',

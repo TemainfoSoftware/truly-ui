@@ -1,4 +1,4 @@
-<div class="tl-navigator">
+<div [class]="'tl-navigator '+ color">
   <div tabindex="-1"
        (click)="onClickPrevious()"
        [ngClass]="{'ui-button': true, 'ui-with-border': withBorder}"

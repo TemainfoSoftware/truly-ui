@@ -54,6 +54,8 @@ export class TlNavigator implements OnInit, OnChanges {
 
   @Input('withBorder') withBorder = true;
 
+  @Input() color = 'basic';
+
   @Output() clickPrevious: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() clickNext: EventEmitter<any> = new EventEmitter<any>();

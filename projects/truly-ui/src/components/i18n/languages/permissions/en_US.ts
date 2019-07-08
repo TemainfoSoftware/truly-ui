@@ -22,6 +22,7 @@
 
 export const Permissions = {
   notFound: 'Nothing Found',
+  loadingMessage: 'Loading Permissions...',
   searchGroup: 'Search Group...',
   searchFunctionality: 'Search Functionality...',
   allowColumnText: 'Allow'

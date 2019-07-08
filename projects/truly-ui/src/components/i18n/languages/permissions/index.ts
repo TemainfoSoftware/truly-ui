@@ -22,6 +22,7 @@
 
 export interface PermissionsI18nInterface {
   notFound: string;
+  loadingMessage: string;
   searchGroup: string;
   searchFunctionality: string;
   allowColumnText: string;

@@ -499,6 +499,8 @@ export class ModalService implements OnDestroy {
         if ( value.mdResult === ModalResult.MRYES ) {
           this.handleSmartFormCallback( this.referenceSmartForm,
             { formResult: this.referenceSmartForm.smartForm[ 'dataForm' ] } );
+        } else {
+          this.handleRelativeDataSource( component );
         }
       } );
       this.componentInjected.instance.message = this.referenceSmartForm.smartForm[ 'deleteConfirmationMessage' ];
@@ -519,6 +521,7 @@ export class ModalService implements OnDestroy {
     if ( this.mathActionsModal( component.smartForm ).length === 0 ) {
       throw Error( 'The Action provided is not valid or is undefined' );
     }
+    this.handleRelativeDataSource( component );
     this.executeAction( component.smartForm, result );
   }
 

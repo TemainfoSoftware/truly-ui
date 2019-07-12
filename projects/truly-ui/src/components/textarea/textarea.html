@@ -10,7 +10,7 @@
     <textarea #textarea
               class="field"
               [ngClass]="{
-                 'invalid': controlName?.control.errors || model?.control.errors,
+                 'invalid': controlName?.control?.errors || model?.control?.errors,
                  'withValidators': hasValidator,
                  'withoutValidators': !hasValidator,
                  'withBorder': withBorder,

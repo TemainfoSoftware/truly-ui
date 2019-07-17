@@ -8,6 +8,7 @@ import { InputModule } from '../input/index';
 import { PermissionGroupDirective } from './parts/directives/permission-group.directive';
 import { A11yModule } from '@angular/cdk/a11y';
 import { MiscModule } from '../misc/index';
+import { LoaderModule } from '../loader/index';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { MiscModule } from '../misc/index';
     FormsModule,
     InputModule,
     CheckBoxModule,
+    LoaderModule,
     MiscModule
   ],
   declarations: [

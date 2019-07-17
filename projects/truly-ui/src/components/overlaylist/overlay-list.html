@@ -21,9 +21,9 @@
         {{ defaultOptionText }}
       </div>
 
-      <div *ngFor="let group of groups" class="group-list">
+      <div *ngFor="let group of groups; trackBy: trackByFn" class="group-list">
         <div *ngIf="group.description" class="group-description">{{ group.description }}</div>
-        <tl-list-item *ngFor="let item of group.items"
+        <tl-list-item *ngFor="let item of group.items; trackBy: trackByFn"
                       [height]="itemHeight"
                       #listItem="listItem"
                       [template]="groupTemplate"
@@ -37,7 +37,7 @@
           </ng-template>
         </tl-list-item>
       </div>
-        <tl-list-item *ngFor="let item of unGrouped"
+        <tl-list-item *ngFor="let item of unGrouped; trackBy: trackByFn"
                       [height]="itemHeight"
                       [grouped]="false"
                       [template]="ungroupTemplate"

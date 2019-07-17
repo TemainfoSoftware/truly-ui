@@ -22,42 +22,51 @@
 import {
   Input, OnInit, Directive, HostListener, ContentChild,
 } from '@angular/core';
-import { ModalResult } from '../../core/enums/modal-result';
-import { ModalService } from '../services/modal.service';
-import { TlButton } from '../../button/button';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ModalResult} from '../../core/enums/modal-result';
+import {ModalService} from '../services/modal.service';
+import {TlButton} from '../../button/button';
 
-@Directive( {
+@Directive({
   selector: '[mdResult]'
-} )
+})
 export class ModalResultDirective implements OnInit {
 
-  @Input( 'mdResult' ) mdResult: ModalResult;
+  @Input('mdResult') mdResult: ModalResult;
 
-  @Input( 'formResult' ) formResult;
-  set formResultValue(value) {
-    this.formResult = value;
+  @Input('formResult')
+  set formResult(value) {
+    this._formResult = value;
   }
 
-  @ContentChild( TlButton, {static: true} ) button: TlButton;
+  get formResult() {
+    return this._formResult;
+  }
+
+  @ContentChild(TlButton, {static: true}) button: TlButton;
 
   private modalId: string;
 
-  @HostListener( 'click' )
+  private _formResult;
+
+  @HostListener('click')
   onClick() {
     if (!this.button.disabled) {
-      this.emitCallback();
+      setTimeout(() => {
+        this.emitCallback();
+      }, 1);
     }
   }
 
-  @HostListener( 'keyup.enter' )
+  @HostListener('keydown.enter')
   onKeyDown() {
-    if (!this.button.disabled) {
-      this.emitCallback();
-    }
+    setTimeout(() => {
+      if (!this.button.disabled) {
+        this.emitCallback();
+      }
+    }, 1);
   }
 
-  constructor( private modalService: ModalService ) {
+  constructor(private modalService: ModalService) {
   }
 
   ngOnInit() {
@@ -66,22 +75,22 @@ export class ModalResultDirective implements OnInit {
   }
 
   emitCallback(): Promise<any> {
-    return new Promise( ( resolve ) => {
-      if ( !this.mdResult || ModalResult.MRCUSTOM ) {
+    return new Promise(() => {
+      if (!this.mdResult || this.button.disabled) {
         return;
       }
-      this.modalService.execCallBack( this.getResult(), this.modalId );
-    } );
+      this.modalService.execCallBack(this.getResult(), this.modalId);
+    });
   }
 
   getResult() {
     if ( this.formResult ) {
       return {
-        mdResult: ModalResult[ this.mdResult ],
+        mdResult: ModalResult[this.mdResult],
         formResult: this.formResult
       };
     }
-    return { mdResult: ModalResult[ this.mdResult ] };
+    return {mdResult: ModalResult[this.mdResult]};
   }
 
 }

@@ -49,42 +49,96 @@ export class ScheduleDemoOverviewComponent {
 
   public statusConfig = {};
 
+  public types = {
+    CONSULTA : { status : 'CONSULTA', color : '#90ED5D', description : 'Consulta' },
+    EVENTO: { status : 'EVENTO', color : '#FF385C', description : 'Evento' },
+    PREAGENDAMENTO: { status : 'PREAGENDAMENTO', color : '#1d8bff', description : 'Pre Agendamento' }
+  };
+
   public isLoading = true;
 
  // public data = [];
   public data = [
-    {
-      value: '1',
-      title: 'William Aguera - 1',
-      detail: 'Consulta | Particular',
-      status: 'missed',
-      allday: false,
-      date: { start: new Date(new Date().setHours(8, 0)).getTime() , end: new Date( new Date().setHours(8, 30) ).getTime() }
-    },
-   {
-    value: '2',
-    title: 'William Aguera - 2',
-    detail: 'Consulta | Particular',
-    status: 'attended',
-    allday: false,
-    date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 0 )).getTime() }
-  },
+  //   {
+  //     value: '1',
+  //     title: 'William Aguera - 1',
+  //     detail: 'Consulta | Particular',
+  //     status: 'missed',
+  //     allday: false,
+  //     date: { start: new Date(new Date().setHours(8, 0)).getTime() , end: new Date( new Date().setHours(8, 30) ).getTime() }
+  //   },
+  //  {
+  //   value: '2',
+  //   title: 'William Aguera - 2',
+  //   detail: 'Consulta | Particular',
+  //   status: 'attended',
+  //   allday: false,
+  //   date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 0 )).getTime() }
+  // },
     {
       value: '3',
       title: 'William Aguera - 3',
       detail: 'Consulta | Particular',
       allday: false,
       status: 'attended',
+      type: 'CONSULTA',
       date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
     },
-  {
-    value: '4',
-    title: 'Jerson Algo - 4',
-    detail: 'Consulta | Unimed',
-    allday: false,
-    status: 'missed',
-    date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-  },
+    {
+      value: '32',
+      title: 'William Aguera - 32',
+      detail: 'Consulta | Particular',
+      allday: false,
+      status: 'attended',
+      type: 'CONSULTA',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+    },
+    {
+      value: '132',
+      title: 'Marcio Chagas de Brito',
+      detail: 'Consulta | Unimed | (44) 98266416',
+      allday: false,
+      status: 'attended',
+      type: 'PREAGENDAMENTO',
+      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+    },
+    {
+      value: '31',
+      title: 'William Aguera - 32',
+      detail: 'Consulta | Particular',
+      allday: false,
+      status: 'attended',
+      type: 'CONSULTA',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 15 )).getTime() }
+    },
+    {
+      value: '41',
+      title: 'Reunião na Unimed',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+    },
+    {
+      value: '42',
+      title: 'Reunião no Congresso Universitario',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+    },
+  // {
+  //   value: '4',
+  //   title: 'Jerson Algo - 4',
+  //   detail: 'Consulta | Unimed',
+  //   allday: false,
+  //   status: 'missed',
+  //   date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+  // },
   // {
   //   value: '5',
   //   title: 'Jerson Algo - 5',
@@ -255,7 +309,7 @@ export class ScheduleDemoOverviewComponent {
           this.dataSource = data;
           this.change.detectChanges();
         });
-    }, 3000);
+    }, 100);
   }
 
   getStatusConfig() {

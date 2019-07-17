@@ -100,11 +100,11 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   @Input() max: Date = new Date( 1999, 0, 1, 23, 59 );
 
-  @ViewChild( 'listHour', {static: true} ) listHour: ElementRef;
+  @ViewChild( 'listHour', {static: false} ) listHour: ElementRef;
 
-  @ViewChild( 'listMinutes', {static: true} ) listMinutes: ElementRef;
+  @ViewChild( 'listMinutes', {static: false} ) listMinutes: ElementRef;
 
-  @ViewChild( 'listAmPm', {static: true} ) listAmPm: ElementRef;
+  @ViewChild( 'listAmPm', {static: false} ) listAmPm: ElementRef;
 
   @ContentChild( NgModel, {static: true} ) ngModel: NgModel;
 

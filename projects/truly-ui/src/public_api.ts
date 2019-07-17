@@ -71,6 +71,7 @@ export { ToasterConfig } from './components/toaster/toaster-config';
 export { CalendarStatus } from './components/calendar/calendar';
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
+export { ShortcutConfig } from './components/shortcut/shortcut.config';
 
 // Chat Interfaces
 export { ChatContact } from './components/chatlist/interfaces/chat-contact.interface';
@@ -85,6 +86,7 @@ export { Status } from './components/chatlist/enums/status.enum';
 
 // Services
 export { DialogService } from './components/dialog/dialog.service';
+export { CoreService } from './components/core/services/core.service';
 export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';

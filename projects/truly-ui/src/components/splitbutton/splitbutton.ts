@@ -50,7 +50,7 @@ export class TlSplitButton implements AfterContentInit {
 
   @Input() color = 'basic';
 
-  @Output() buttonClick: EventEmitter<any> = new EventEmitter();
+  @Output() click: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren( TlSplitButtonAction ) actions: QueryList<TlSplitButtonAction>;
 
@@ -67,6 +67,12 @@ export class TlSplitButton implements AfterContentInit {
   onPositionChange( $event: ConnectedOverlayPositionChange ) {
     this.positionOverlay = $event.connectionPair.originY;
     this.change.detectChanges();
+  }
+
+  onButtonClick($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    this.click.emit($event);
   }
 
 }

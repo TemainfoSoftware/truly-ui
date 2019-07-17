@@ -12,7 +12,7 @@
     <div [ngClass]="{'clearfix': mode !== 'inline'}"></div>
     <div [ngClass]="{'forFooter': mode !== 'inline'}">
         <div class="controls" *ngIf="mode !== 'inline'">
-          <tl-button  #buttonFormCancel
+          <tl-button   #buttonFormCancel
                        [text]="textCancel"
                        [width]="'120px'"
                        mdResult="MRCANCEL"
@@ -26,12 +26,12 @@
                        [text]="textConfirm"
                        [isLoading]="isLoading"
                        mdResult="MROK"
-                       (mousedown)="onSubmitForm()"
+                       (click)="onSubmitForm()"
                        (keydown.enter)="onSubmitForm()"
                        [width]="'120px'"
                        [color]="'success'"
                        [shortcut]="submitShortcut"
-                       [disabled]="isLoading ? true : formGroup ? !formGroup.valid : !form.valid"
+                       [disabled]="isLoading ? true : !formInstance.valid"
                        [formResult]="formResult"
                        [iconAddonBefore]="'fas fa-check'">
             </tl-button>

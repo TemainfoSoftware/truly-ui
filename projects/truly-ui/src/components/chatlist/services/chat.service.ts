@@ -60,4 +60,8 @@ export class ChatService {
     return this.chatList[0].id;
   }
 
+  removeChat( chatId: string ) {
+    this.chatList = this.chatList.filter(value => value.id !== chatId );
+  }
+
 }

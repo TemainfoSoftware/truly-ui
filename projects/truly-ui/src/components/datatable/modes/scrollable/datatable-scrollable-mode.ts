@@ -23,7 +23,7 @@
 
 import {
   AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Inject, Renderer2,
-  ViewChild, OnDestroy
+  ViewChild, OnDestroy, AfterViewInit
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
@@ -41,7 +41,7 @@ import * as objectPath from 'object-path';
     styleUrls: [ './datatable-scrollable-mode.scss', '../../datatable.scss' ],
     providers: [DatatableHelpersService, DatePipe]
 } )
-export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
+export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy, AfterViewInit {
 
     @ViewChild( 'listComponent', {static: true}  ) listComponent: ElementRef;
 
@@ -113,6 +113,10 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
         this.firstRender();
     }
 
+    ngAfterViewInit() {
+      this.handleInitializeFocus();
+    }
+
     onMouseDown() {
         this.mouseClicked = true;
     }
@@ -120,7 +124,6 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
     onMouseUp() {
         this.mouseClicked = false;
     }
-
 
     onClick(event) {
         this.activeElement = event.target.parentElement;
@@ -181,6 +184,16 @@ export class TlDatatableScrollableMode implements AfterContentInit, OnDestroy {
             this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
             this.setLastScrollTop();
         });
+    }
+
+    private handleInitializeFocus() {
+      if ( this.dt.initializeFocus ) {
+        setTimeout(() => {
+          const firstElement = this.listBody.nativeElement.querySelector('tr[row="0"]');
+          this.setFocus( firstElement );
+          this.dt.onRowSelect( this.dt.dataSourceService.datasource[0], 0  );
+        }, 1000);
+      }
     }
 
     private handleScrolHorizontal() {

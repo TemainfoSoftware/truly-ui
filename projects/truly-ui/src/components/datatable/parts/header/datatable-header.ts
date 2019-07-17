@@ -36,7 +36,7 @@ import { TlDatatableSortService } from '../../services/datatable-sort.service';
 } )
 export class TlDatatableHeader implements AfterViewInit {
 
-    @ViewChild(TlDatatabaleColumnFilter, {static: true} ) columnsFilter;
+    @ViewChild(TlDatatabaleColumnFilter, {static: false} ) columnsFilter;
 
     @ViewChild('datatableHeader', {static: true} ) datatableHeader: ElementRef;
 

@@ -22,6 +22,7 @@
 
 export const Permissions = {
   notFound: 'Nada Encontrado',
+  loadingMessage: 'Carregando Permissões...',
   searchGroup: 'Procurar Grupo...',
   searchFunctionality: 'Procurar Funcionalidade...',
   allowColumnText: 'Permitir'

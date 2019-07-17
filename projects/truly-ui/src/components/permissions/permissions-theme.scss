@@ -21,7 +21,7 @@
         }
 
         &::-webkit-scrollbar-thumb {
-          background: map-deep-get($primary, "default", "foreground");
+          background: map-deep-get($primary, "default", "background");
         }
       }
 
@@ -41,8 +41,13 @@
       }
 
     }
+
+    .ui-loader-message {
+      color: rgba( map-deep-get($theme, $action, "default", "foreground"), 0.3);
+    }
+
     .nothing-shown {
-      color: map-deep-get($theme, $action, "default", "foreground");
+      color: rgba( map-deep-get($theme, $action, "default", "foreground"), 0.3);
     }
 
     .ui-permissions-header {

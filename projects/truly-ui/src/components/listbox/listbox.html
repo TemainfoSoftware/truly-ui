@@ -1,4 +1,7 @@
-<div class="ui-listbox-wrapper" [tlBlockui]="loading || nothingFound" [blockuiConfig]="{ message: getMessage(), spin: true, icon: loading ? 'fas fa-circle-notch' : null, color: '#ccc' }">
+<div class="ui-listbox-wrapper" [tlBlockui]="loading || nothingFound"
+     [blockuiConfig]="{ message: (nothingFound ? nothingFoundMessage: null),
+                        spin: true, icon: loading ? 'fas fa-circle-notch' : null,
+                        color: '#ccc' }">
   <cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
                                [style.height]="height"
                                (wheel)="onWheel()"

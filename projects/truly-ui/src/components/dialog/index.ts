@@ -2,9 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { DialogService } from './dialog.service';
-import { IdGeneratorService } from '../core/helper/idgenerator.service';
-import { NameGeneratorService } from '../core/helper/namegenerator.service';
-import { TabIndexService } from '../form/tabIndex.service';
 
 import { TlDialogAlert } from './dialog-alert/dialog-alert';
 import { TlDialogConfirmation } from './dialog-confirmation/dialog-confirmation';
@@ -42,9 +39,6 @@ import { IconsModule } from '../icons/index';
     ],
     providers: [
         DialogService,
-        TabIndexService,
-        IdGeneratorService,
-        NameGeneratorService
     ]
 } )
 export class DialogModule {

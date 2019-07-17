@@ -1,37 +1,61 @@
 @import "../core/styles/theming/theming";
 
+@mixin _tl-navigator-theme-schema( $theme, $action ) {
+  > .ui-navigator{
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+    &.ui-with-border{
+      border: 1px solid map-deep-get($theme, $action, "default", "border");
+    }
+    &:hover, &:focus{
+      background-color: map-deep-get($theme, $action, "hover", "background");
+    }
+  }
+  > .ui-button{
+    background-color: map-deep-get($theme, $action, "default", "background");
+    color: map-deep-get($theme, $action, "default", "foreground");
+    &.ui-with-border{
+      border-top: 1px solid map-deep-get($theme, $action, "default", "border");
+      border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
+    }
+    &:hover, &:focus{
+      background-color: map-deep-get($theme, $action, "hover", "background");
+      outline: none;
+    }
+    &.ui-with-border:first-child {
+      border-left: 1px solid map-deep-get($theme, $action, "default", "border");;
+    }
+    &.ui-with-border:last-child{
+      border-right: 1px solid map-deep-get($theme, $action, "default", "border");;
+    }
+  }
+}
+
 @mixin tl-navigator-theme($theme) {
 
-  $basic:   map-deep-get($theme, 'basic');
-
   .tl-navigator{
-    > .ui-navigator{
-      background-color: map-deep-get($basic, "default", "background");
-      color: map-deep-get($basic, "default", "foreground");
-      &.ui-with-border{
-        border: 1px solid map-deep-get($basic, "default", "border");
-      }
-      &:hover, &:focus{
-        background-color: map-deep-get($basic, "hover", "background");
-      }
+    &.basic {
+      @include _tl-navigator-theme-schema($theme, 'basic')
     }
-    > .ui-button{
-      background-color: map-deep-get($basic, "default", "background");
-      color: map-deep-get($basic, "default", "foreground");
-      &.ui-with-border{
-        border-top: 1px solid map-deep-get($basic, "default", "border");
-        border-bottom: 1px solid map-deep-get($basic, "default", "border");
-      }
-      &:hover, &:focus{
-        background-color: map-deep-get($basic, "hover", "background");
-        outline: none;
-      }
-      &.ui-with-border:first-child {
-        border-left: 1px solid map-deep-get($basic, "default", "border");;
-      }
-      &.ui-with-border:last-child{
-        border-right: 1px solid map-deep-get($basic, "default", "border");;
-      }
+
+    &.primary {
+      @include _tl-navigator-theme-schema($theme, 'primary')
+    }
+
+    &.success {
+      @include _tl-navigator-theme-schema($theme, 'success')
+    }
+
+    &.danger {
+      @include _tl-navigator-theme-schema($theme, 'danger')
+    }
+
+    &.warning {
+      @include _tl-navigator-theme-schema($theme, 'warning')
+    }
+
+    &.information {
+      @include _tl-navigator-theme-schema($theme, 'information')
     }
   }
 }

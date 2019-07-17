@@ -20,17 +20,27 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit, ChangeDetectorRef, Component, ComponentRef, ElementRef, EventEmitter,
-  HostBinding,
-  Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Output,
+  Renderer2,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { ContainerModalService } from './addons/container-modal/container-modal.service';
-import { ModalService } from './services/modal.service';
-import { ModalResult } from '../core/enums/modal-result';
-import { ModalOptions } from './interfaces/modal-options';
-import { SidebarService } from './services/sidebar.service';
-import { Subscription } from 'rxjs';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ContainerModalService} from './addons/container-modal/container-modal.service';
+import {ModalService} from './services/modal.service';
+import {ModalResult} from '../core/enums/modal-result';
+import {ModalOptions} from './interfaces/modal-options';
+import {SidebarService} from './services/sidebar.service';
+import {Subscription} from 'rxjs';
 
 let subscribeMouseMove;
 
@@ -96,8 +106,6 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
   public id = '';
 
   public subscription = new Subscription();
-
-  public modalResult;
 
   public status = '';
 

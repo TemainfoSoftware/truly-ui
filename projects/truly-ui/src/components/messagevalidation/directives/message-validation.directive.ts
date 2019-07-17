@@ -126,8 +126,10 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   }
 
   remove() {
-    this.overlayRef.detach();
-    this.validationsRef = null;
+    if (this.overlayRef) {
+      this.overlayRef.detach();
+      this.validationsRef = null;
+    }
   }
 
   getNativeInput() {

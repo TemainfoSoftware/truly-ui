@@ -20,28 +20,41 @@
  SOFTWARE.
  */
 import {
-  Component, ContentChildren, Input,
-  QueryList, Renderer2, Output,
-  ViewChild,
-  forwardRef, OnDestroy, OnInit, AfterViewInit, AfterContentInit, EventEmitter, ContentChild, Injector,
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ContentChildren,
+  EventEmitter,
+  forwardRef,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  Renderer2,
+  ViewChild,
 } from '@angular/core';
-import { KeyEvent } from '../core/enums/key-events';
-import { I18nService } from '../i18n/i18n.service';
-import { TlInput } from '../input/input';
-import { FormGroup, NgForm, NgModel } from '@angular/forms';
-import { TlButton } from '../button/button';
-import { FormSubmitDirective } from './form-submit.directive';
-import { ModalService } from '../modal/services/modal.service';
-import { ActionsModal } from '../core/enums/actions-modal';
-import { Subscription } from 'rxjs';
+import {KeyEvent} from '../core/enums/key-events';
+import {I18nService} from '../i18n/i18n.service';
+import {TlInput} from '../input/input';
+import {FormGroup, NgForm, NgModel} from '@angular/forms';
+import {TlButton} from '../button/button';
+import {FormSubmitDirective} from './form-submit.directive';
+import {ModalService} from '../modal/services/modal.service';
+import {ActionsModal} from '../core/enums/actions-modal';
+import {Subscription} from 'rxjs';
 
 let componentFormIndex;
 
 @Component( {
   selector: 'tl-form',
   templateUrl: '../form/form.html',
-  styleUrls: [ '../form/form.scss' ]
+  styleUrls: [ '../form/form.scss' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
@@ -96,13 +109,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @ContentChild( FormSubmitDirective, {static: true}  ) submitDirective: FormSubmitDirective;
 
-  @ViewChild( 'buttonFormOk', {static: true}  ) buttonFormOk;
+  @ViewChild( 'buttonFormOk', {static: false}  ) buttonFormOk;
 
-  @ViewChild( 'buttonFormCancel', {static: true}  ) buttonFormCancel;
+  @ViewChild( 'buttonFormCancel', {static: false}  ) buttonFormCancel;
 
   @ViewChild( 'content', {static: true}  ) content;
 
-  public formResult: {} = {};
+  public formResult;
 
   private lastTabIndex: number;
 
@@ -151,9 +164,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     this.getElementsOfForm();
     this.formLoaded.emit( this.formInstance );
     this.setInitialFocus();
-    this.listenFormChanges();
     this.listenSubmitDirective();
-    this.change.detectChanges();
+    this.listenFormChanges();
   }
 
   listenSubmitDirective() {
@@ -165,8 +177,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   listenFormChanges() {
-    this.subscription.add(this.formInstance.valueChanges.subscribe(() => {
-      this.formResult = this.formInstance.value;
+    this.subscription.add( this.formInstance.valueChanges.subscribe(() => {
       this.change.detectChanges();
     }));
   }
@@ -178,6 +189,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         this.modalInstance.modalConfiguration.dataForm ) {
         this.formGroup.patchValue( this.modalInstance.modalConfiguration.dataForm );
         this.markAllAsTouched( this.formGroup.controls );
+        this.change.detectChanges();
       }
     }
   }
@@ -327,9 +339,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   handleKeysForm( $event: KeyboardEvent ) {
-    if ( $event.keyCode !== KeyEvent.ESCAPE && $event.code !== this.submitShortcut) {
-      $event.stopPropagation();
-    }
     if ( $event.keyCode === KeyEvent.TAB && $event.shiftKey ) {
       $event.preventDefault();
       this.backwardTabbing();
@@ -366,6 +375,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   backwardTabbing() {
+    this.change.detectChanges();
     if ( this.isFirstTabIndexOfForm() ) {
       return this.focusElements[ this.lastTabIndex ].focus();
     }
@@ -385,6 +395,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   forwardTabbing() {
+    this.change.detectChanges();
     if ( this.isLastTabIndexOfForm() ) {
       return this.focusElements[ 0 ].focus();
     }

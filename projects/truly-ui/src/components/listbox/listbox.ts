@@ -21,8 +21,20 @@
  */
 
 import {
-  AfterViewInit, Component, Output, Input, QueryList, ViewChildren, ViewChild,
-  TemplateRef, Renderer2, EventEmitter, OnDestroy, OnChanges, SimpleChanges, AfterContentInit
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
@@ -109,7 +121,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   public nothingFound = true;
 
-  constructor(private renderer: Renderer2, private i18nService: I18nService) {
+  constructor(private renderer: Renderer2,
+              private change: ChangeDetectorRef,
+              private i18nService: I18nService) {
     super();
   }
 
@@ -204,13 +218,6 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     }
   }
 
-  getMessage() {
-    if (this.nothingFound) {
-      return this.nothingFoundMessage;
-    }
-    return null;
-  }
-
   onScroll() {
     if (!this.scrollingByArrows) {
       clearTimeout(this.isScrolling);
@@ -270,6 +277,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.listKeyManager.onKeydown($event);
     this.setActiveItem();
     scrollIntoView(this.activeItem.element.nativeElement);
+    this.change.detectChanges();
   }
 
   handleKeyArrowDown($event) {
@@ -277,6 +285,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     this.listKeyManager.onKeydown($event);
     this.setActiveItem();
     scrollIntoView(this.activeItem.element.nativeElement);
+    this.change.detectChanges();
   }
 
   private isScrollDown() {
@@ -292,6 +301,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.change.detach();
   }
 
 }

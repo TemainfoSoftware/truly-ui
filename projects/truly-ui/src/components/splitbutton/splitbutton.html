@@ -5,12 +5,12 @@
                [color]="color"
                [text]="text"
                [disabled]="disabled"
-               (click)="buttonClick.emit()"
+               (click)="onButtonClick($event)"
                [width]="width"
                [height]="height">
     </tl-button>
     <div [class.active]="isOpen"
-         (click)="isOpen = !isOpen"
+         (click)="isOpen = !isOpen; $event.stopPropagation()"
          class="split-button-actions"
          [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
       <div class="icon-arrow" [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'">

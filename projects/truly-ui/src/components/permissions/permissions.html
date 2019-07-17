@@ -33,7 +33,13 @@
     </div>
     <div class="ui-container-permissions">
       <div class="ui-permissions-panel">
-        <div class="nothing-shown" *ngIf="dataSource?.length === 0">
+        <div class="ui-loader-wrapper" *ngIf="loading">
+          <div class="ui-loader">
+            <tl-loader></tl-loader>
+          </div>
+          <span class="ui-loader-message">{{ loadingMessage }}</span>
+        </div>
+        <div class="nothing-shown" *ngIf="dataSource?.length === 0 && !loading">
           <span class="not-found-text">{{ notFound }}</span>
         </div>
         <ul #listGroup class="ui-permission-list" [style.display]="dataSource?.length > 0 ? 'block' : 'none'">
@@ -58,7 +64,13 @@
         </ul>
       </div>
       <div class="ui-permissions-detail-panel">
-        <div class="nothing-shown" *ngIf="!selected || dataSourceSelected?.length === 0">
+        <div class="ui-loader-wrapper" *ngIf="loading">
+          <div class="ui-loader">
+            <tl-loader></tl-loader>
+          </div>
+          <span class="ui-loader-message">{{ loadingMessage }}</span>
+        </div>
+        <div class="nothing-shown" *ngIf="(!selected || dataSourceSelected?.length === 0) && !loading">
           <i *ngIf="dataSourceSelected?.length !== 0 && !selected" class="ion-android-time"></i>
           <span *ngIf="dataSourceSelected?.length === 0" class="not-found-text">{{ notFound }}</span>
         </div>

@@ -224,6 +224,7 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.chatService.removeChat( this.id );
   }
 
 }

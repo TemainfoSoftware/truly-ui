@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
+  Component, Input, Optional, Inject, OnChanges, ViewChildren,
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
   AfterContentInit,
 } from '@angular/core';
@@ -118,6 +118,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
   @Output() selectItem: EventEmitter<any> = new EventEmitter();
+
+  @Output() changeSelected: EventEmitter<any> = new EventEmitter();
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
 
@@ -267,14 +269,13 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   private handleModelLazy() {
-    if ( this.value && this.lazyMode && !this.modelInitialized ) {
-      if ( !this.isModelModeString() ) {
-        this.setDescriptionValue( objectPath.get( this.value, this.keyText ) );
-      } else {
-        console.warn( 'The item provided is was not found, emitting filter' );
-        this.filter.emit( this.getFilters( this.value ) );
+    if (this.value && this.lazyMode) {
+      const value = objectPath.get(this.value, this.keyText);
+      if ( value ) {
+        this.setDescriptionValue(value);
+        this.handleKeyModelValue(this.value);
+        this.changeSelected.emit(this.value);
       }
-      this.handleKeyModelValue( this.value );
     }
   }
 
@@ -283,12 +284,13 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   private handleModelCached() {
-    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData() ) {
-      this.dataSource.getCachedData().forEach( ( value ) => {
+    if ( this.dataSource && !this.lazyMode && this.data.length > 0 ) {
+      this.data.forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
             this.setDescriptionValue( objectPath.get( value, this.keyText ) );
             this.handleKeyModelValue( value );
+            this.changeSelected.emit( value );
           }
         }
       } );

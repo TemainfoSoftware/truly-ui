@@ -39,6 +39,8 @@ import { WorkScaleType } from './types/work-scale.type';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
 import { ScheduleI18n } from './i18n/schedule-i18n';
+import { HolidaysType } from './types/holidays.type';
+import { HolidayService } from './services/holiday.service';
 
 @Component( {
   selector: 'tl-schedule',
@@ -72,6 +74,13 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() eventButtonTemplate: TemplateRef<any>;
 
+  @Input() holidays: Array<HolidaysType> = [{
+    date: new Date(1564023600000),
+    description: 'Aniversário de Palotina'
+  }];
+
+  @Input() allowScheduleInHolidays = false;
+
   @Input('events') set events( events: ScheduleDataSource[]) {
     if ( !events) {
       this._events = [];
@@ -103,6 +112,10 @@ export class TlSchedule implements OnInit, OnChanges {
 
   public existsScale = false;
 
+  public existsHoliday = false;
+
+  public holidayText = '';
+
   private _events: ScheduleDataSource[];
 
   get events(): ScheduleDataSource[] {
@@ -112,7 +125,8 @@ export class TlSchedule implements OnInit, OnChanges {
   constructor(
     public workScaleService: WorkScaleService,
     private changeDetection: ChangeDetectorRef,
-    private eventService: EventService
+    private eventService: EventService,
+    private holidayService: HolidayService,
   ) {}
 
   ngOnInit() {
@@ -122,6 +136,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   ngOnChanges( changes: SimpleChanges ) {
     this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
+    this.handleHoliday();
     this.changeDetection.detectChanges();
   }
 
@@ -135,7 +150,13 @@ export class TlSchedule implements OnInit, OnChanges {
     this.workScaleService.currentDate = new Date( $event.year, $event.month, $event.day);
     this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
+    this.handleHoliday();
     this.changeDetection.detectChanges();
+  }
+
+  private handleHoliday() {
+    this.existsHoliday = this.holidayService.exitsHoliday( this.holidays, this.currentDate );
+    this.holidayText = this.holidayService.getHolidayText( this.holidays, this.currentDate );
   }
 
   private convertSlarNumberToArray() {

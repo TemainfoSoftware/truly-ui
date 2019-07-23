@@ -99,6 +99,7 @@ export { Permission } from './components/permissions/parts/models/permission.mod
 
 // Types
 export { ScheduleDataSource } from './components/schedule/types/datasource.type';
+export { HolidaysType } from './components/schedule/types/holidays.type';
 export { SlotSettingsType } from './components/schedule/types/slot-settings.type';
 export { StatusType } from './components/schedule/types/status.type';
 export { ViewType } from './components/schedule/types/view.type';

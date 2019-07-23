@@ -19,6 +19,7 @@ import { IconsModule } from '../icons/index';
 import { GenerateEventsService } from './services/generate-events.service';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
+import { HolidayService } from './services/holiday.service';
 
 
 
@@ -47,7 +48,8 @@ import { EventService } from './services/event.service';
     providers: [
       GenerateEventsService,
       WorkScaleService,
-      EventService
+      EventService,
+      HolidayService
     ]
 })
 export class ScheduleModule {}

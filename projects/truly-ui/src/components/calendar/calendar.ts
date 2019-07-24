@@ -29,12 +29,19 @@ import { NavigatorService } from '../navigator/services/navigator.service';
 import { CalendarService } from './services/calendar.service';
 import { I18nService } from '../i18n/i18n.service';
 import { Subscription } from 'rxjs';
+import {TooltipService} from '../tooltip/tooltip.service';
 
 export interface CalendarStatus {
   id?: string;
   date: Date;
   current: number;
   total: number;
+}
+
+export interface CalendarHolidays {
+  date: Date;
+  description: string;
+  tooltip: boolean;
 }
 
 @Component( {
@@ -60,6 +67,8 @@ export class TlCalendar implements AfterViewInit, OnChanges, OnDestroy {
   @Input() day = this.date ? this.date.getDate() : new Date().getDate();
 
   @Input() typingDay = false;
+
+  @Input() holidays: Array<CalendarHolidays> = [];
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
@@ -112,13 +121,13 @@ export class TlCalendar implements AfterViewInit, OnChanges, OnDestroy {
   constructor(
     public calendar: ElementRef,
     public renderer: Renderer2,
+    public tooltipService: TooltipService,
     private i18n: I18nService,
     private navigatorService: NavigatorService,
     private calendarService: CalendarService,
-    private view: ViewContainerRef) {
+    public view: ViewContainerRef) {
     this.dateNavigator = new Date();
   }
-
 
   ngAfterViewInit() {
     this.calendarService.setView( this.view );

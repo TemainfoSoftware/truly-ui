@@ -35,6 +35,13 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'holidays',
+    type: 'Array<CalendarHolidays>',
+    default: 'null',
+    description: 'Holiday used as indication on cell, can pass a tooltip to describe the holiday',
+    options: 'Array<CalendarHolidays>'
+  },
+  {
     name: 'status',
     type: 'Array<CalendarStatus>',
     default: 'null',

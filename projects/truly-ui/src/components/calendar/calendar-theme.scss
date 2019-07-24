@@ -69,5 +69,9 @@
       color: map-deep-get($primary, "default", "foreground") !important;
       border-radius: 20%;
     }
+
+    & .holiday {
+      color: map-deep-get($danger, "default", "background") !important;
+    }
   }
 }

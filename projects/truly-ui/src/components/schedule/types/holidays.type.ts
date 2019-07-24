@@ -23,6 +23,8 @@
  */
 
 export class HolidaysType {
+  id: any;
   date: Date;
   description: string;
+  attend: boolean;
 }

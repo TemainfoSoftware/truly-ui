@@ -74,10 +74,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() eventButtonTemplate: TemplateRef<any>;
 
-  @Input() holidays: Array<HolidaysType> = [{
-    date: new Date(1564023600000),
-    description: 'Aniversário de Palotina'
-  }];
+  @Input() holidays: Array<HolidaysType> = [];
 
   @Input() allowScheduleInHolidays = false;
 
@@ -108,13 +105,13 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() newEventClick = new EventEmitter();
 
+  @Output() releaseSchedule = new EventEmitter();
+
   public slatNumberRowsAsArray: Array<Number>;
 
   public existsScale = false;
 
-  public existsHoliday = false;
-
-  public holidayText = '';
+  public currentHoliday: HolidaysType;
 
   private _events: ScheduleDataSource[];
 
@@ -136,7 +133,9 @@ export class TlSchedule implements OnInit, OnChanges {
 
   ngOnChanges( changes: SimpleChanges ) {
     this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
-    this.handleHoliday();
+    if ( changes['holidays'] ) {
+      this.handleHoliday( changes['holidays'].currentValue );
+    }
     this.changeDetection.detectChanges();
   }
 
@@ -154,9 +153,13 @@ export class TlSchedule implements OnInit, OnChanges {
     this.changeDetection.detectChanges();
   }
 
-  private handleHoliday() {
-    this.existsHoliday = this.holidayService.exitsHoliday( this.holidays, this.currentDate );
-    this.holidayText = this.holidayService.getHolidayText( this.holidays, this.currentDate );
+  onClickReleaseSchedule( holiday: HolidaysType ) {
+    this.releaseSchedule.emit( holiday );
+  }
+
+  private handleHoliday( holidays = this.holidays ) {
+    this.currentHoliday = this.holidayService.handleHoliday( holidays, this.currentDate );
+    this.changeDetection.detectChanges();
   }
 
   private convertSlarNumberToArray() {

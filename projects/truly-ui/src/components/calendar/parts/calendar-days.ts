@@ -126,9 +126,11 @@ export class TlCalendarDays {
       this.calendar.renderer.addClass( td.nativeElement, 'ui-table-cell' );
       td.nativeElement.innerHTML = this.dayOfMonth[ day ].day;
 
-      if ( this.calendar.status ) {
+      const date = new Date( this.calendar.year, this.calendar.month, day + 1 );
 
-        const date = new Date( this.calendar.year, this.calendar.month, day + 1 );
+      this.handleHolidayDays( date, td );
+
+      if ( this.calendar.status ) {
         this.calendar.status.forEach( ( value ) => {
           if ( value.date.getTime() === date.getTime() ) {
 
@@ -173,6 +175,37 @@ export class TlCalendarDays {
       this.calendar.renderer.addClass( cell.nativeElement, 'selected' );
       this.calendar.selectedDay = cell.nativeElement;
     }
+  }
+
+  getHoliday( currentDate: Date ) {
+    return this.calendar.holidays.filter(value => {
+      return new Date(value.date.getFullYear(), value.date.getMonth(), value.date.getDate(),
+        0, 0, 0, 0).getTime() === currentDate.getTime();
+    });
+  }
+
+  handleHolidayDays( currentDate: Date, cell ) {
+    const holiday = this.getHoliday( currentDate );
+    if ( holiday.length > 0 ) {
+      this.calendar.renderer.addClass( cell.nativeElement, 'holiday' );
+      this.listenMouseHoverCell( holiday, cell );
+      this.listenMouseLeave( cell );
+    }
+  }
+
+  listenMouseHoverCell( holiday, cell ) {
+    this.calendar.renderer.listen( cell.nativeElement, 'mouseover', () => {
+      if ( holiday[0].tooltip ) {
+        this.calendar.tooltipService.create( { text: holiday[0].description, placement: 'top-center' },
+          this.calendar.view, cell.nativeElement );
+      }
+    });
+  }
+
+  listenMouseLeave( cell ) {
+    this.calendar.renderer.listen( cell.nativeElement, 'mouseleave', () => {
+      this.calendar.tooltipService.destroy();
+    });
   }
 
   markToday( day, cell ) {

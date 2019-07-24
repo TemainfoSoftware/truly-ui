@@ -8,12 +8,14 @@ import { TlCalendarYears } from './parts/calendar-years';
 
 import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
+import { TooltipModule } from '../tooltip/index';
 
 @NgModule({
     imports: [
         CommonModule,
         MiscModule,
-        NavigatorModule
+        NavigatorModule,
+        TooltipModule
     ],
     declarations: [
         TlCalendar,

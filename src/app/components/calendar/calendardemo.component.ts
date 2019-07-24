@@ -19,16 +19,17 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import * as json from './calendardemo-dataproperties.json';
 import * as jsonEvts from './calendardemo.dataevents.json';
+import {CalendarHolidays} from '../../../../projects/truly-ui/src/components/calendar/calendar';
 
-@Component( {
+@Component({
   selector: 'app-calendar',
   templateUrl: './calendardemo.component.html',
-  styleUrls: [ './calendardemo.component.scss' ]
-} )
+  styleUrls: ['./calendardemo.component.scss']
+})
 export class CalendarDemoComponent {
 
   public dataTableProperties;
@@ -41,10 +42,18 @@ export class CalendarDemoComponent {
 
   public year = new Date().getFullYear();
 
+  public holidaysArray: CalendarHolidays[] = [
+    {
+      date: new Date(),
+      description: 'Some Holiday Today',
+      tooltip: true
+    }
+  ];
+
   public status = [
-    { id: '1', date: new Date( this.year, this.month, this.day + 3 ), total: 50, current: 15 },
-    { id: '2', date: new Date( this.year, this.month, this.day + 5 ), total: 50, current: 40 },
-    { id: '3', date: new Date( this.year, this.month, this.day + 10  ), total: 50, current: 10 },
+    {id: '1', date: new Date(this.year, this.month, this.day + 3), total: 50, current: 15},
+    {id: '2', date: new Date(this.year, this.month, this.day + 5), total: 50, current: 40},
+    {id: '3', date: new Date(this.year, this.month, this.day + 10), total: 50, current: 10},
   ];
 
   constructor() {
@@ -52,8 +61,8 @@ export class CalendarDemoComponent {
     this.dataEvents = jsonEvts.dataEvents;
   }
 
-  onSelect( $event ) {
-    console.log( $event );
+  onSelect($event) {
+    console.log($event);
   }
 
 }

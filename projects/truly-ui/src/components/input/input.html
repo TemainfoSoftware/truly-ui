@@ -7,7 +7,7 @@
     <tl-icon>{{ iconBefore }}</tl-icon>
   </span>
 
-  <span *ngIf="textBefore" class="addon -borderleft"
+  <span *ngIf="textBefore" (click)="onClickAddon($event, 'before')" class="addon -borderleft"
         [ngClass]="
         {
         'predefined' : textBefore,
@@ -66,6 +66,6 @@
     <tl-icon>{{ iconAfter }}</tl-icon>
   </span>
 
-  <span *ngIf="textAfter" #afterText class="addon -borderright"
+  <span *ngIf="textAfter" (click)="onClickAddon($event, 'after')" #afterText class="addon -borderright"
         [ngClass]="{ '-predefined' : textAfter, '-flatborders': flatBorder, 'withoutBorder' : !withBorder }">{{textAfter}}</span>
 </div>

@@ -5,6 +5,7 @@ import { TlToolTip } from './tooltip';
 import { TooltipDirective } from './directives/tooltip.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TlToolTipContainer } from './parts/tooltip-container';
+import {TooltipService} from './tooltip.service';
 
 @NgModule( {
     imports: [
@@ -23,7 +24,8 @@ import { TlToolTipContainer } from './parts/tooltip-container';
     ],
     entryComponents: [
         TlToolTipContainer
-    ]
+    ],
+    providers: [ TooltipService ]
 } )
 export class TooltipModule {
 }

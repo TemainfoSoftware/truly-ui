@@ -91,6 +91,7 @@ export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
+export { TooltipService } from './components/tooltip/tooltip.service';
 export { ChatService } from './components/chatlist/services/chat.service';
 export { ContextMenuService } from './components/contextmenu/services/contextmenu.service';
 

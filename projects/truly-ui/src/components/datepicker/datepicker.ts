@@ -21,11 +21,11 @@
  */
 import {
   Component,
-  Optional, ContentChild, ViewChild, Output,
+  ContentChild, ViewChild, Output,
   Input, OnInit, EventEmitter, ElementRef, AfterViewInit, AfterContentInit, OnDestroy
 } from '@angular/core';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { FormControlName, NgModel } from '@angular/forms';
 import { TlInput } from '../input/input';
 import { TlCalendar } from '../calendar/calendar';
 
@@ -76,9 +76,9 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @Output() completeMask: EventEmitter<any> = new EventEmitter<any>();
 
-  @ContentChild( NgModel, {static: true}  ) ngModel: NgModel;
+  @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ContentChild( FormControlName, {static: true} ) control: FormControlName;
+  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
 
   @ViewChild( TlCalendar, {static: true}  ) calendar;
 
@@ -87,6 +87,16 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   @ViewChild( 'calendarContent', {static: true}  ) calendarContent;
 
   @ViewChild( 'arrow', {static: true}  ) arrow;
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.controlName || this.model) {
+      return this.controlName ? this.controlName : this.model;
+    }
+    return this._control;
+  }
 
   public isOpen = false;
 
@@ -105,6 +115,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   public day = new Date().getDate();
 
   private subscription = new Subscription();
+
+  private _control;
 
   constructor( private datePicker: ElementRef ) {
     super();
@@ -125,13 +137,9 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
     this.listenControlChanges();
   }
 
-  private getControl() {
-    return this.control ? this.control : this.ngModel;
-  }
-
   listenControlChanges() {
-    if ( this.getControl() ) {
-      this.subscription.add( this.getControl().control.valueChanges.subscribe( ( date: Date ) => {
+    if ( this.control ) {
+      this.subscription.add( this.control.control.valueChanges.subscribe( ( date: Date ) => {
         if ( !this.isOpen ) {
           this.decomposeDate( date );
         }

@@ -10,6 +10,7 @@
           (ngModelChange)="onChange($event)"
           (completeMask)="onCompleteMask()"
           (blur)="onBlur()"
+          [control]="control"
           (clear)="onClearInput($event)"
           [iconAfter]="iconAfter"
           date

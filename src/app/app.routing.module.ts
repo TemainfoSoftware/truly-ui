@@ -123,7 +123,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/editor/editordemo.module#EditorDemoModule'
       },
       {
-        path: 'form',
+        path: 'loader.ts',
         loadChildren: './components/form/formdemo.module#FormDemoModule'
       },
       {
@@ -227,7 +227,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/shortcut/shortcutdemo.module#ShortcutDemoModule'
       },
       {
-        path: 'schedule',
+        path: 'timeline.ts',
         loadChildren: './components/schedule/overview/scheduledemo-overview.module#ScheduledemoOverviewModule'
       },
       {

@@ -26,14 +26,13 @@ import {
   ContentChild,
   Directive,
   ElementRef, OnDestroy,
-  OnInit, Renderer2
+  Renderer2
 } from '@angular/core';
 import {FormControlName, NgModel} from '@angular/forms';
 import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TlMessageValidationComponent} from '../messagevalidation.component';
 import {Subscription, throwError} from 'rxjs';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 
 @Directive({
   selector: '[showValidations]',

@@ -29,13 +29,13 @@ export class TlMessageValidationComponent {
     invalidPasswordRuleDigits: Function(),
     invalidPasswordRuleUppercase: Function(),
     invalidPasswordRuleSpecial: Function(),
-    invalidPasswordRuleLowerCase: Function()
+    invalidPasswordRuleLowerCase: Function(),
   };
 
   constructor( public element: ElementRef, private i18n: I18nService, private changes: ChangeDetectorRef ) { }
 
-  init( control: NgModel | FormControlName, width: string ) {
-    this.control = control;
+  init( formControl: NgModel | FormControlName, width: string ) {
+    this.control = ( formControl instanceof FormControlName ) ? formControl.control : formControl;
     this.width = width;
     this.changes.detectChanges();
   }
@@ -47,6 +47,8 @@ export class TlMessageValidationComponent {
       Object.keys(this.control.errors).forEach(( key ) => {
         if (this.keyErrors[key]) {
           this.keyErrors[key]();
+        } else {
+          this.messages.push( this.control.errors[key] );
         }
       });
     }

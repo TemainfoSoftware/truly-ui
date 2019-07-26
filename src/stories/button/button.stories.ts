@@ -25,12 +25,12 @@
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { text, select, withKnobs } from '@storybook/addon-knobs';
 
-import { ButtonModule } from '../../projects/truly-ui/src/components/button';
-import { CoreModule } from '../../projects/truly-ui/src/components/core';
-import { TlButton } from '../../projects/truly-ui/src/components/button/button';
+import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
+import { CoreModule } from '../../../projects/truly-ui/src/components/core';
+import { TlButton } from '../../../projects/truly-ui/src/components/button/button';
 import { action } from '@storybook/addon-actions';
 
-storiesOf('Button', module)
+storiesOf('General|Button', module)
   .addParameters({
     knobs: {
       disableDebounce: true,
@@ -47,6 +47,7 @@ storiesOf('Button', module)
       ],
     })
   )
+
   .add('with text', () => ({
       component: TlButton,
       props: {

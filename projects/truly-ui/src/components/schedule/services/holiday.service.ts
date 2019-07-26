@@ -28,24 +28,12 @@ export class HolidayService {
 
   constructor() { }
 
-  exitsHoliday( holidays: HolidaysType[], currentDate ) {
+  handleHoliday( holidays: HolidaysType[], currentDate ) {
     for (let i = 0; i < holidays.length; i++) {
       if ( this.sameDay( holidays[i].date, currentDate) ) {
-        return true;
+        return holidays[i];
       }
     }
-
-    return false;
-  }
-
-  getHolidayText( holidays: HolidaysType[], currentDate ) {
-    for (let i = 0; i < holidays.length; i++) {
-      if ( this.sameDay( holidays[i].date, currentDate) ) {
-        return holidays[i].description;
-      }
-    }
-
-    return '';
   }
 
 

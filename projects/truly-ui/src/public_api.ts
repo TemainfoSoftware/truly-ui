@@ -123,3 +123,6 @@ export { DateValidator } from './components/date/validators/date.validator';
 export { EmailValidator } from './components/validators/email/email.validator';
 export { NumberValidator } from './components/validators/number/number.validator';
 export { PasswordValidator } from './components/validators/password/password.validator';
+
+// Components
+export { TlOverlayPanel } from './components/overlaypanel/overlay-panel';

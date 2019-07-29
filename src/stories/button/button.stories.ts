@@ -31,12 +31,12 @@ import { TlButton } from '../../../projects/truly-ui/src/components/button/butto
 import { action } from '@storybook/addon-actions';
 
 storiesOf('General|Button', module)
-  .addParameters({
-    knobs: {
-      disableDebounce: true,
-    },
-  })
-  .addDecorator(withKnobs)
+  // .addParameters({
+  //   knobs: {
+  //     disableDebounce: true,
+  //   },
+  // })
+  // .addDecorator(withKnobs)
   .addDecorator(
     moduleMetadata({
       imports: [

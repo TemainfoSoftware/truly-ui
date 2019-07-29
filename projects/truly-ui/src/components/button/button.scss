@@ -12,19 +12,17 @@ $button-text-align: center;
   padding: 0;
   margin: 0;
   outline: none;
-  display: inline-block;
+  display: flex;
   cursor: pointer;
   box-sizing: border-box;
 
   > .iconAddonBefore {
     box-sizing: border-box;
-    float: left;
     padding: 0 15px;
     pointer-events: none;
   }
   > .iconAddonAfter {
     box-sizing: border-box;
-    float: right;
     padding: 0 15px;
     pointer-events: none;
   }

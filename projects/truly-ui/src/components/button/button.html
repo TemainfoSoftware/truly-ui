@@ -20,9 +20,9 @@
     <tl-icon *ngIf="iconAfterText">{{ iconAfterText }}</tl-icon>
   </div>
   <tl-icon *ngIf="iconAddonAfter"
-           [style.color]="colorIconAfter"
            [class]="color + ' iconAddonAfter'"
-           [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}">{{ iconAddonAfter }}
+           [ngStyle]="{'line-height': 'calc(' + height + ' - 1px)'}"
+           [style.color]="colorIconAfter">{{ iconAddonAfter }}
   </tl-icon>
 </ng-template>
 

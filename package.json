@@ -54,7 +54,7 @@
     "@angular/http": "^8.0.0-beta.10",
     "@angular/platform-browser": "^8.0.2",
     "@angular/platform-browser-dynamic": "^8.0.2",
-    "@angular/pwa": "^0.800.3",
+    "@angular/pwa": "^0.801.3",
     "@angular/router": "^8.0.2",
     "@angular/service-worker": "^8.0.2",
     "bootstrap": "^4.1.3",

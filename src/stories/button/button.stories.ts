@@ -28,11 +28,9 @@ import { centered } from '@storybook/addon-centered/angular';
 
 import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
-import { TlButton } from '../../../projects/truly-ui/src/components/button/button';
 import { IconsModule } from '../../../projects/truly-ui/src/components/icons';
 
-storiesOf('General|Button', module)
-  .addDecorator(
+const Story = storiesOf('General|Button', module).addDecorator(
     moduleMetadata({
       imports: [
         ButtonModule,
@@ -43,91 +41,106 @@ storiesOf('General|Button', module)
       ],
     })
   )
-  .addDecorator(centered)
-  .add('Overview', () => {
-    const colors = {
-      Primary: 'primary',
-      Warning: 'warning',
-      Information: 'information',
-      Danger: 'danger',
-    };
-    const textValue = text('text', 'With Color');
-    const color = select('color', colors, 'primary');
-    const label = 'Loading ?';
-    const isLoading = boolean(label, false);
-    return {
-      template: `<tl-button [text]="text" [isLoading]="isLoading"
-                 [width]="'130px'" [color]="color"
-                 [textLoading]="'Saving'"></tl-button>`,
-      props: {
-        text: textValue,
-        color: color,
-        isLoading: isLoading,
-      },
-    };
-  })
-  .add('Basic', () => ({
-      template: `<p><tl-button [text]="text"></tl-button></p>`,
-      props: {
-        text: 'Hello World',
-      },
-    })
-  )
-  .add('Colors', () => ({
-      template: `
-<div style="display: flex; width: 530px; justify-content: space-between;">
-  <tl-button [text]="'Basic'" [color]="'basic'"></tl-button>
-  <tl-button [text]="'Primary'" [color]="'primary'"></tl-button>
-  <tl-button [text]="'Success'" [color]="'success'"></tl-button>
-  <tl-button [text]="'Danger'" [color]="'danger'"></tl-button>
-  <tl-button [text]="'Warning'" [color]="'warning'"></tl-button>
-  <tl-button [text]="'Information'" [color]="'information'"></tl-button>
-</div>`,
-    })
-  )
-  .add('Only Icon', () => ({
-      template: `
-<ng-template #icon>
-  <div style="padding: 0 10px">
-    <tl-icon  [lib]="'fa'" [style]="'fas'">home</tl-icon>
-  </div>
-</ng-template>
-<div style="display: flex; width: 300px; justify-content: space-between;">
-  <tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
-  <tl-button width="'40px'" [template]="icon" [color]="'primary'"></tl-button>
-  <tl-button width="'40px'" [template]="icon" [color]="'success'"></tl-button>
-  <tl-button width="'40px'" [template]="icon" [color]="'danger'"></tl-button>
-  <tl-button width="'40px'" [template]="icon" [color]="'warning'"></tl-button>
-  <tl-button width="'40px'" [template]="icon" [color]="'information'"></tl-button>
-</div>`,
-    })
-  )
-  .add(' Icon Addon', () => ({
-    template: `<p><tl-button [text]="'Icon Addon Before'" [iconAddonBefore]="'fas fa-print'" ></tl-button></p>
-               <p><tl-button [text]="'Icon Addon After'" [iconAddonAfter]="'fas fa-print'"></tl-button></p>`,
-    })
-  )
-  .add(' Icon Inside', () => ({
-      template: `<p><tl-button [text]="'Icon Before Text'" [iconBeforeText]="'fas fa-print'" ></tl-button></p>
-                 <p><tl-button [text]="'Icon After Text'" [iconAfterText]="'fas fa-print'"></tl-button></p>`,
-    })
-  )
-  .add('Dimensions', () => ({
-      template: `<p><tl-button [text]="'Width Example'" [width]="'125px'"></tl-button></p>
-                 <p><tl-button [text]="'Height Example'" [height]="'40px'" ></tl-button></p>`,
-    })
-  )
-  .add('Loading Button', () => {
+  .addDecorator(centered);
 
-    const label = 'Loading ?';
-    const value = boolean(label, false);
-    return {
-      template: `<tl-button [isLoading]="isLoading"
-                  [color]="'primary'"
-                 [text]="'Save'"
-                 [textLoading]="'Saving'"></tl-button>`,
-      props: {
-        isLoading: value,
-      }
-    };
-  });
+Story.add('Overview', () => {
+  const colors = {
+    Primary: 'primary',
+    Warning: 'warning',
+    Information: 'information',
+    Danger: 'danger',
+  };
+  const textValue = text('text', 'With Color');
+  const color = select('color', colors, 'primary');
+  const label = 'Loading ?';
+  const isLoading = boolean(label, false);
+  return {
+    template: `
+      <tl-button
+        [text]="text"
+        [isLoading]="isLoading"
+        [width]="'130px'"
+        [color]="color"
+        [textLoading]="'Saving'">
+      </tl-button>`,
+    props: {
+      text: textValue,
+      color: color,
+      isLoading: isLoading,
+    },
+  };
+});
+
+Story.add('Basic', () => ({
+    template: `<tl-button [text]="text"></tl-button>`,
+    props: {
+      text: 'Hello World',
+    }
+  })
+);
+
+Story.add('Colors', () => ({
+    template: `
+      <div style="display: flex; width: 530px; justify-content: space-between;">
+        <tl-button [text]="'Basic'" [color]="'basic'"></tl-button>
+        <tl-button [text]="'Primary'" [color]="'primary'"></tl-button>
+        <tl-button [text]="'Success'" [color]="'success'"></tl-button>
+        <tl-button [text]="'Danger'" [color]="'danger'"></tl-button>
+        <tl-button [text]="'Warning'" [color]="'warning'"></tl-button>
+        <tl-button [text]="'Information'" [color]="'information'"></tl-button>
+      </div>`,
+  })
+);
+
+Story.add('Only Icon', () => ({
+    template: `
+      <ng-template #icon>
+        <div style="padding: 0 10px">
+          <tl-icon  [lib]="'fa'" [style]="'fas'">home</tl-icon>
+        </div>
+      </ng-template>
+      <div style="display: flex; width: 300px; justify-content: space-between;">
+        <tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
+        <tl-button width="'40px'" [template]="icon" [color]="'primary'"></tl-button>
+        <tl-button width="'40px'" [template]="icon" [color]="'success'"></tl-button>
+        <tl-button width="'40px'" [template]="icon" [color]="'danger'"></tl-button>
+        <tl-button width="'40px'" [template]="icon" [color]="'warning'"></tl-button>
+        <tl-button width="'40px'" [template]="icon" [color]="'information'"></tl-button>
+      </div>`,
+  })
+);
+
+Story.add(' Icon Addon', () => ({
+    template: `
+      <p><tl-button [text]="'Icon Addon Before'" [iconAddonBefore]="'fas fa-print'" ></tl-button></p>
+      <p><tl-button [text]="'Icon Addon After'" [iconAddonAfter]="'fas fa-print'"></tl-button></p>`,
+  })
+);
+
+Story.add(' Icon Inside', () => ({
+    template: `
+      <p><tl-button [text]="'Icon Before Text'" [iconBeforeText]="'fas fa-print'" ></tl-button></p>
+      <p><tl-button [text]="'Icon After Text'" [iconAfterText]="'fas fa-print'"></tl-button></p>`,
+  })
+);
+
+Story.add('Dimensions', () => ({
+    template: `
+      <p><tl-button [text]="'Width Example'" [width]="'125px'"></tl-button></p>
+      <p><tl-button [text]="'Height Example'" [height]="'40px'" ></tl-button></p>`,
+  })
+);
+
+Story.add('Loading Button', () => {
+  const label = 'Loading ?';
+  const value = boolean(label, false);
+  return {
+    template: `<tl-button [isLoading]="isLoading"
+                [color]="'primary'"
+               [text]="'Save'"
+               [textLoading]="'Saving'"></tl-button>`,
+    props: {
+      isLoading: value,
+    }
+  };
+});

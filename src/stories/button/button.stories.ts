@@ -24,6 +24,7 @@
 
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { text, select, boolean } from '@storybook/addon-knobs';
+import { centered } from '@storybook/addon-centered/angular';
 
 import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
@@ -42,10 +43,33 @@ storiesOf('General|Button', module)
       ],
     })
   )
-  .add('Basic', () => ({
-      component: TlButton,
+  .addDecorator(centered)
+  .add('Overview', () => {
+    const colors = {
+      Primary: 'primary',
+      Warning: 'warning',
+      Information: 'information',
+      Danger: 'danger',
+    };
+    const textValue = text('text', 'With Color');
+    const color = select('color', colors, 'primary');
+    const label = 'Loading ?';
+    const isLoading = boolean(label, false);
+    return {
+      template: `<tl-button [text]="text" [isLoading]="isLoading"
+                 [width]="'130px'" [color]="color"
+                 [textLoading]="'Saving'"></tl-button>`,
       props: {
-        text: 'Hello Button',
+        text: textValue,
+        color: color,
+        isLoading: isLoading,
+      },
+    };
+  })
+  .add('Basic', () => ({
+      template: `<p><tl-button [text]="text"></tl-button></p>`,
+      props: {
+        text: 'Hello World',
       },
     })
   )
@@ -99,28 +123,11 @@ storiesOf('General|Button', module)
     const value = boolean(label, false);
     return {
       template: `<tl-button [isLoading]="isLoading"
-                 [width]="'130px'" [color]="'primary'"
-                 [text]="'Click Me'"
+                  [color]="'primary'"
+                 [text]="'Save'"
                  [textLoading]="'Saving'"></tl-button>`,
       props: {
         isLoading: value,
       }
     };
-  })
-  .add('Overview', () => {
-    const colors = {
-      Primary: 'primary',
-      Warning: 'warning',
-      Information: 'information',
-      Danger: 'danger',
-    };
-    const textValue = text('text', 'With Color');
-    const color = select('color', colors, 'primary');
-    return {
-      component: TlButton,
-      props: {
-        text: textValue,
-        color: color,
-      },
-    };
-  })
+  });

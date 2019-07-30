@@ -15,7 +15,8 @@
   </tl-icon>
   <div class="button-content" [style.lineHeight]="height">
     <tl-icon *ngIf="iconBeforeText">{{ iconBeforeText }}</tl-icon>
-    <span class="label">{{ text }}</span>
+    <span class="label" *ngIf="!isLoading">{{ text }}</span>
+    <span class="label" *ngIf="isLoading">{{ textLoading }}</span>
     <tl-loader [color]="loaderColor" *ngIf="isLoading"></tl-loader>
     <tl-icon *ngIf="iconAfterText">{{ iconAfterText }}</tl-icon>
   </div>

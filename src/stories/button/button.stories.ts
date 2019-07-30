@@ -24,7 +24,6 @@
 
 import { moduleMetadata, storiesOf } from '@storybook/angular';
 import { text, select, boolean } from '@storybook/addon-knobs';
-import { centered } from '@storybook/addon-centered/angular';
 
 import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
@@ -41,9 +40,7 @@ const Story = storiesOf('General|Button', module)
         }),
       ],
     })
-  )
-
-
+  );
 
 Story.add('Overview', () => {
   const colors = {
@@ -52,10 +49,20 @@ Story.add('Overview', () => {
     Information: 'information',
     Danger: 'danger',
   };
-  const textValue = text('text', 'With Color');
-  const color = select('color', colors, 'primary');
-  const label = 'Loading ?';
-  const isLoading = boolean(label, false);
+  const textValue = text('Text', 'With Color');
+  const icon = text('Icon', 'ion ion-md-log-in');
+  const color = select('Color', colors, 'primary');
+  const isLoading = boolean('Loading ?', false);
+  const iconOn = select('Icon Placement', {
+    None: [],
+    IconAfterText: ['iconAfterText'],
+    IconBeforeText: ['iconBeforeText'],
+    IconAddonAfter: ['iconAddonAfter'],
+    IconAddonBefore: ['iconAddonBefore'],
+    OnlyIconsText: ['iconAfterText', 'iconBeforeText'],
+    OnlyIconsAddons: ['iconAddonAfter', 'iconAddonBefore'],
+    AllIcons: ['iconAddonAfter', 'iconAddonBefore', 'iconAfterText', 'iconBeforeText'],
+  }, []);
   return {
     template: `
       <tl-button
@@ -63,12 +70,18 @@ Story.add('Overview', () => {
         [isLoading]="isLoading"
         [width]="'130px'"
         [color]="color"
+        [iconAfterText]="iconOn.includes('iconAfterText') ? icon : null"
+        [iconBeforeText]="iconOn.includes('iconBeforeText') ? icon : null"
+        [iconAddonAfter]="iconOn.includes('iconAddonAfter') ? icon : null"
+        [iconAddonBefore]="iconOn.includes('iconAddonBefore') ? icon : null"
         [textLoading]="'Saving'">
       </tl-button>`,
     props: {
       text: textValue,
       color: color,
       isLoading: isLoading,
+      icon: icon,
+      iconOn: iconOn,
     },
   };
 });

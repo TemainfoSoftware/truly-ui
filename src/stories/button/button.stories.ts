@@ -30,7 +30,8 @@ import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
 import { IconsModule } from '../../../projects/truly-ui/src/components/icons';
 
-const Story = storiesOf('General|Button', module).addDecorator(
+const Story = storiesOf('General|Button', module)
+  .addDecorator(
     moduleMetadata({
       imports: [
         ButtonModule,
@@ -41,7 +42,8 @@ const Story = storiesOf('General|Button', module).addDecorator(
       ],
     })
   )
-  .addDecorator(centered);
+
+
 
 Story.add('Overview', () => {
   const colors = {

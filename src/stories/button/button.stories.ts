@@ -23,7 +23,7 @@
  */
 
 import { moduleMetadata, storiesOf } from '@storybook/angular';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { text, select, boolean, number, color } from '@storybook/addon-knobs';
 
 import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
@@ -43,16 +43,37 @@ const Story = storiesOf('General|Button', module)
   );
 
 Story.add('Overview', () => {
-  const colors = {
+  const textValue = text('Text', 'With Color');
+  const icon = text('Icon', 'ion ion-md-log-in');
+  const textToLoading = text('Loading Text', 'Saving');
+
+  const loaderColor = color('Loader Color', '#CCC');
+  const colorIconBefore = color('Color Icon After', '');
+  const colorIconAfter = color('Color Icon Before', '');
+
+  const isLoading = boolean('Loading', false);
+  const isDisable = boolean('Disable', false);
+  const isFlatBorder = boolean('Flat Border', false);
+
+  const width = number('Width', 130, {
+    range: true,
+    min: 50,
+    max: 500,
+    step: 10,
+  });
+  const height = number('Height', 30, {
+    range: true,
+    min: 30,
+    max: 500,
+    step: 10,
+  });
+
+  const colorButton = select('Color',  {
     Primary: 'primary',
     Warning: 'warning',
     Information: 'information',
     Danger: 'danger',
-  };
-  const textValue = text('Text', 'With Color');
-  const icon = text('Icon', 'ion ion-md-log-in');
-  const color = select('Color', colors, 'primary');
-  const isLoading = boolean('Loading ?', false);
+  }, 'primary');
   const iconOn = select('Icon Placement', {
     None: [],
     IconAfterText: ['iconAfterText'],
@@ -63,23 +84,39 @@ Story.add('Overview', () => {
     OnlyIconsAddons: ['iconAddonAfter', 'iconAddonBefore'],
     AllIcons: ['iconAddonAfter', 'iconAddonBefore', 'iconAfterText', 'iconBeforeText'],
   }, []);
+
   return {
     template: `
       <tl-button
         [text]="text"
         [isLoading]="isLoading"
-        [width]="'130px'"
+        [width]="width+'px'"
+        [height]="height+'px'"
         [color]="color"
+        [loaderColor]="loaderColor"
+        [disabled]="isDisable"
+        [flatBorder]="flatBorder"
+        [colorIconBefore]="colorIconBefore"
+        [colorIconAfter]="colorIconAfter"
         [iconAfterText]="iconOn.includes('iconAfterText') ? icon : null"
         [iconBeforeText]="iconOn.includes('iconBeforeText') ? icon : null"
         [iconAddonAfter]="iconOn.includes('iconAddonAfter') ? icon : null"
         [iconAddonBefore]="iconOn.includes('iconAddonBefore') ? icon : null"
-        [textLoading]="'Saving'">
+        [textLoading]="textToLoading">
       </tl-button>`,
+
     props: {
+      height: height,
+      width: width,
       text: textValue,
-      color: color,
+      flatBorder: isFlatBorder,
+      color: colorButton,
+      colorIconBefore: colorIconBefore,
+      colorIconAfter: colorIconAfter,
+      loaderColor: loaderColor,
+      isDisable: isDisable,
       isLoading: isLoading,
+      textToLoading: textToLoading,
       icon: icon,
       iconOn: iconOn,
     },
@@ -159,3 +196,19 @@ Story.add('Loading Button', () => {
     }
   };
 });
+
+
+Story.add('With Template', () => ({
+    template: `
+      <ng-template #icon>
+        <div style="padding: 0 10px">
+          <span style="padding-right: 10px">With Template</span> 
+          <tl-icon  [lib]="'fa'" [style]="'fas'">home</tl-icon>
+        </div>
+      </ng-template>
+      
+      <div style="display: flex; width: 300px; justify-content: space-between;">
+        <tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
+      </div>`,
+  })
+);

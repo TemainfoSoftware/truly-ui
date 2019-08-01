@@ -101,6 +101,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() labelPlacement: 'top' | 'left' = 'left';
 
+  @Input() textBefore = null;
+
+  @Input() textAfter = null;
+
+  @Input() iconBefore = null;
+
+  @Input() iconAfter = null;
+
   @Input() labelSize = '100px';
 
   @Input() height = '23px';
@@ -122,6 +130,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Output() changeSelected: EventEmitter<any> = new EventEmitter();
 
   @Output() filter: EventEmitter<any> = new EventEmitter();
+
+  @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
 

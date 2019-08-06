@@ -20,9 +20,10 @@
     position: absolute;
     bottom: 0;
     margin-bottom: 20px;
-    text-align: center;
     float: left;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 }
 

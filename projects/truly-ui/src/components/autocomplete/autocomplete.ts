@@ -93,6 +93,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() loading = true;
 
+  @Input() clearButton = true;
+
   @Input() disabled: boolean = null;
 
   @Input() required: boolean = null;
@@ -235,8 +237,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private scrollToIndex() {
     return new Promise( ( resolve, reject ) => {
       setTimeout( () => {
-        this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
-        this.change.markForCheck();
+        if ( this.cdkVirtualScroll ) {
+          this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
+          this.change.markForCheck();
+        }
         resolve();
       }, 200 );
     } );
@@ -254,21 +258,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setFiltering( true );
   }
 
-  onHoverClose() {
-    this.closeHover = true;
-  }
-
-  onLeaveClose() {
-    this.closeHover = false;
-  }
-
   onClickClose() {
     if ( !this.control.disabled ) {
       this.value = '';
       this.setDescriptionValue( '' );
-      this.closeHover = false;
       this.selected = null;
-      this.tlinput.setFocus();
       this.setIsOpen( true );
     }
   }

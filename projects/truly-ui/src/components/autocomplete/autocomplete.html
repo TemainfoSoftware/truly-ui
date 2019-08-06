@@ -12,19 +12,21 @@
         <tl-loader></tl-loader>
       </div>
 
-      <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
+<!--      <div *ngIf="selected && !loading" class="ui-close" (click)="onClickClose()" (mouseover)="onHoverClose()" (mouseleave)="onLeaveClose()">
         <i [class]="!closeHover ? 'ion ion-ios-close-circle-outline' : 'ion ion-ios-close-circle'"></i>
-      </div>
+      </div>-->
 
       <tl-input
         (overlayOrigin)="trigger = $event"
         [disabled]="disabled || isDisabled"
         [placeholder]="placeholder"
         [color]="color"
+        [clearButton]="clearButton"
         [iconBefore]="iconBefore"
         [iconAfter]="iconAfter"
         [textBefore]="textBefore"
         [textAfter]="textAfter"
+        (clear)="onClickClose()"
         (click)="toggleIsOpen()"
         (clickAddon)="clickAddon.emit($event)"
         (keydown.backspace)="handleKeyBackspace()"

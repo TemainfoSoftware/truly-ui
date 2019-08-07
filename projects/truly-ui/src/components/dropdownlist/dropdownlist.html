@@ -40,6 +40,7 @@
       @overlay
       (selectOption)="onSelectOption($event)"
       (search)="onSearch($event)"
+      (close)="handleCloseDropdown()"
       (defaultOption)="onDefaultOption()"
       (findByLetter)="onFindByLetter($event)"
       [customInput]="input"

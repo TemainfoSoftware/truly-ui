@@ -95,6 +95,8 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
 
   @Output() findByLetter: EventEmitter<any> = new EventEmitter();
 
+  @Output() close: EventEmitter<any> = new EventEmitter();
+
   @ViewChild( 'list', {static: true} ) list: ElementRef;
 
   @ViewChild( TlInput, { static: false } ) tlInput: TlInput;
@@ -200,6 +202,11 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
         this.handleScrollIntoView();
       }));
     }
+  }
+
+  handleEscape($event) {
+    this.stopEvent( $event );
+    this.close.emit();
   }
 
   handleInputFocus() {

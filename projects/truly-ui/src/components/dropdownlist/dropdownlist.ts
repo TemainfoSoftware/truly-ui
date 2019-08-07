@@ -245,6 +245,11 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
     }
   }
 
+  handleCloseDropdown() {
+    this.isOpen = false;
+    this.setInputFocus();
+  }
+
   private setInputFocus() {
     this.input.nativeElement.focus();
   }

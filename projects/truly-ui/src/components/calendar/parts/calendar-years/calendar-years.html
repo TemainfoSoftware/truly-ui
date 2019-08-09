@@ -1,0 +1,8 @@
+<div class="ui-wrapper-years">
+  <div class="ui-calendar-years">
+    <div class="ui-calendar-cell"
+         *ngFor="let item of rangeArray; let i = index"
+         (click)="selectDate( item )">{{ item }}
+    </div>
+  </div>
+</div>

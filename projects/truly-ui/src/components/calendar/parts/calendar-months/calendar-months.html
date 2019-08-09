@@ -1,0 +1,9 @@
+<div class="ui-wrapper-months">
+  <div class="ui-calendar-months">
+    <div class="ui-calendar-cell"
+         *ngFor="let item of months; let i = index"
+         (click)="selectDate( i )">{{ item.initials }}
+    </div>
+  </div>
+</div>
+

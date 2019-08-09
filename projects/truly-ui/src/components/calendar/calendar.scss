@@ -1,142 +1,42 @@
-.wrapper-calendar {
-  width: 260px;
-  outline: none;
-  box-sizing: content-box;
-  >.header-calendar {
-    position: relative;
-    display: -webkit-inline-box;
-    text-align: left;
-    font-size: 0.9em;
-    width: inherit;
-    font-weight: 400;
-    height: 45px;
-    line-height: 45px;
-    box-sizing: border-box;
-    >.date {
-      width: 170px;
-      & span {
-        padding: 5px;
-        transition: background ease-in-out 100ms;
-      }
-      & span:hover {
-        cursor: pointer;
-      }
-      &:first-child {
-        padding-left: 5px;
-      }
-    }
-
-    >.arrows {
-      user-select: none;
-      text-align: center;
-      position: absolute;
-      width: 60px;
-      transition: background ease-in-out 100ms;
-      > label {
-        &:first-child {
-          padding-right: 5px;
-        }
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-    >.todayButton {
-      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      font-size: 1.2em;
-      cursor: pointer;
-      text-align: center;
-      width: 85px;
-      font-weight: 600;
-      user-select: none;
-    }
-  }
-
-  & .ui-table-calendar {
-    width: 100%;
-    border-collapse: separate;
-    table-layout:fixed;
-    position: relative;
-    padding: 2.5px;
-
-    & .ui-table-thead {
-      width: 100%;
-      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      font-size: 0.8em;
-      & .ui-table-th {
-        text-align: center;
-        line-height: 15px;
-      }
-    }
-
-    & .ui-table-line .ui-table-cell {
-      position: relative;
-      font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-      font-size: 0.9em;
-      text-align: center;
-      line-height: 30px;
-      overflow: hidden;
-      user-select: none;
-      animation-name: creating;
-      animation-duration: 200ms;
-      border: 1px solid transparent;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-  & .today {
-    font-weight: bold;
-  }
-
-  & .navigator {
-    font-weight: 700;
-  }
-
-  & .selected {
-    font-weight: normal !important;
-  }
-
-  & .holiday {
-    font-weight: 600;
-  }
-}
-
-
-.ui-status-wrapper {
-  width: 20px;
-  margin: 0 auto;
+.ui-table-calendar {
   position: relative;
-}
+  display: flex;
+  align-items: flex-start;
+  place-content: flex-start;
+  flex-flow: column;
 
-.ui-cell-status {
-  width: 18px;
-  height: 4px;
-  margin: 0 auto;
-  border-radius: 2px;
-  position: absolute;
-  bottom: 3px;
-  z-index: 1;
-  transition: width 500ms ease-in-out;
-}
+  >.ui-calendar-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    place-content: space-between;
+  }
 
-.ui-status-backdrop {
-  height: 4px;
-  margin: 0 auto;
-  border-radius: 2px;
-  position: absolute;
-  bottom: 3px;
-  background: #fff;
-  width: 100%;
-  z-index: 0;
-  border: 1px solid #ccc;
-}
+  >.ui-calendar-week {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    place-content: center;
+    width: 100%;
+    >.ui-header-item {
+      width: 100%;
+      font-variant: all-petite-caps;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 0 4px;
+      text-align: center;
+    }
+  }
 
-@keyframes creating {
-  0%   {opacity:0; transform: scale(0);}
-  25%  {opacity:0.25; transform: scale(0.25);}
-  50%  {opacity:0.5; transform: scale(0.5);}
-  75%  {opacity:0.75; transform: scale(0.75);}
-  100% {opacity:1; transform: scale(1);}
-}
+  >.ui-calendar-body {
+    display: flex;
+    align-items: center;
+    place-content: center;
+    width: 100%;
+    overflow: hidden;
+  }
 
+}

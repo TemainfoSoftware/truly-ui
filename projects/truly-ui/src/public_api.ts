@@ -69,8 +69,8 @@ export { ModalOptions, Modal } from './components/modal/interfaces/modal-options
 export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
 
-export { CalendarStatus } from './components/calendar/calendar';
-export { CalendarHolidays } from './components/calendar/calendar';
+export { CalendarStatus } from './components/calendar/interfaces/calendar-status.interface';
+export { CalendarHoliday } from './components/calendar/interfaces/calendar-holiday.interface';
 
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';

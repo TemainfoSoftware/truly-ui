@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TlCalendar } from './calendar';
-import { TlCalendarDays } from './parts/calendar-days';
-import { TlCalendarMonths } from './parts/calendar-months';
-import { TlCalendarYears } from './parts/calendar-years';
 
-import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
 import { TooltipModule } from '../tooltip/index';
+import { ButtonModule } from '../button/index';
+import { TlCalendarDays } from './parts/calendar-days/calendar-days';
+import { TlCalendarMonths } from './parts/calendar-months/calendar-months';
+import { TlCalendarYears } from './parts/calendar-years/calendar-years';
 
 @NgModule({
     imports: [
         CommonModule,
-        MiscModule,
         NavigatorModule,
-        TooltipModule
+        TooltipModule,
+        ButtonModule
     ],
     declarations: [
         TlCalendar,
@@ -25,11 +24,6 @@ import { TooltipModule } from '../tooltip/index';
     ],
     exports: [
         TlCalendar,
-        TlCalendarDays,
-        TlCalendarMonths,
-        TlCalendarYears
-    ],
-    entryComponents: [
         TlCalendarDays,
         TlCalendarMonths,
         TlCalendarYears

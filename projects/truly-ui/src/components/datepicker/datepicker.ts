@@ -20,27 +20,41 @@
  SOFTWARE.
  */
 import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  ContentChild, ViewChild, Output,
-  Input, OnInit, EventEmitter, ElementRef, AfterViewInit, AfterContentInit, OnDestroy
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { FormControlName, NgModel } from '@angular/forms';
-import { TlInput } from '../input/input';
-import { TlCalendar } from '../calendar/calendar';
+import {MakeProvider} from '../core/base/value-accessor-provider';
+import {FormControlName, NgModel} from '@angular/forms';
+import {TlInput} from '../input/input';
+import {TlCalendar} from '../calendar/calendar';
 
-import { ReverseFormatDate } from '../core/helper/reverseformatdate';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
-import { KeyEvent } from '../core/enums/key-events';
-import { ValueAccessorBase } from '../input/core/value-accessor';
-import { Subscription } from 'rxjs';
+import {ReverseFormatDate} from '../core/helper/reverseformatdate';
+import {ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
+import {KeyEvent} from '../core/enums/key-events';
+import {ValueAccessorBase} from '../input/core/value-accessor';
+import {Subscription} from 'rxjs';
 
-@Component( {
+export interface DateOject {
+  day: number;
+  month: number;
+  year: number;
+}
+
+@Component({
   selector: 'tl-datepicker',
   templateUrl: './datepicker.html',
-  styleUrls: [ './datepicker.scss' ],
-  providers: [ MakeProvider( TlDatePicker ) ]
-} )
+  styleUrls: ['./datepicker.scss'],
+  providers: [MakeProvider(TlDatePicker)],
+})
 
 export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
@@ -51,6 +65,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   @Input() labelSize = '';
 
   @Input() textAlign = 'left';
+
+  @Input() iconAfter;
 
   @Input() isoDate = true;
 
@@ -68,25 +84,23 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @Input() autoClose = false;
 
-  @Input() iconCalendar = false;
-
   @Input() openOnFocus = true;
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() completeMask: EventEmitter<any> = new EventEmitter<any>();
 
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
+  @ContentChild(NgModel, {static: true}) model: NgModel;
 
-  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
+  @ContentChild(FormControlName, {static: true}) controlName: FormControlName;
 
-  @ViewChild( TlCalendar, {static: true}  ) calendar;
+  @ViewChild(TlCalendar, {static: true}) calendar;
 
-  @ViewChild( TlInput, {static: true}  ) tlInput: TlInput;
+  @ViewChild(TlInput, {static: true}) tlInput: TlInput;
 
-  @ViewChild( 'calendarContent', {static: true}  ) calendarContent;
+  @ViewChild('calendarContent', {static: true}) calendarContent;
 
-  @ViewChild( 'arrow', {static: true}  ) arrow;
+  @ViewChild('arrow', {static: true}) arrow;
 
   get control() {
     if (this._control) {
@@ -102,71 +116,123 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   public positionOverlay = '';
 
-  public iconAfter = '';
-
   public description = '';
 
   public trigger;
 
-  public year = new Date().getFullYear();
+  public date = new Date();
 
-  public month = new Date().getMonth();
+  private year = new Date().getFullYear();
 
-  public day = new Date().getDate();
+  private month = new Date().getMonth();
+
+  private day = new Date().getDate();
 
   private subscription = new Subscription();
 
   private _control;
 
-  constructor( private datePicker: ElementRef ) {
+  constructor(private changes: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit() {
     this.setDateMask();
-    if ( this.iconCalendar ) {
-      this.iconAfter = 'ion-calendar';
-    }
   }
 
   ngAfterContentInit() {
-    this.decomposeDate( this.value );
+    this.decomposeDate(this.value);
   }
 
   ngAfterViewInit() {
     this.listenControlChanges();
   }
 
-  listenControlChanges() {
-    if ( this.control ) {
-      this.subscription.add( this.control.control.valueChanges.subscribe( ( date: Date ) => {
-        if ( !this.isOpen ) {
-          this.decomposeDate( date );
+  private listenControlChanges() {
+    if (this.control) {
+      this.subscription.add(this.control.control.valueChanges.subscribe((date: Date) => {
+        if (!this.isOpen) {
+          this.decomposeDate(date);
         }
-      } ) );
+      }));
     }
   }
 
-  decomposeDate( date ) {
-    if ( date && this.value ) {
-      const dateStr = new Date( date ).toLocaleDateString();
-      const format = ReverseFormatDate( this.stringUnmasked( dateStr ), this.formatDate );
-      this.description = this.getFormattedDate( format );
-      this.day = format.day;
-      this.month = format.month;
-      this.year = format.year;
+  private decomposeDate(date) {
+    if (date && this.value) {
+      const dateStr = new Date(date).toLocaleDateString();
+      const formatted = ReverseFormatDate(this.stringUnmasked(dateStr), this.formatDate);
+      this.description = this.getFormattedDate(formatted);
+      this.setDateObject(formatted);
     }
   }
 
-  setDateMask() {
+  private setDateMask() {
     this.tlInput.mask = this.getMask();
   }
 
-  getMask() {
+  private setDateObject(dateObject: DateOject) {
+    this.day = dateObject.day;
+    this.month = dateObject.month;
+    this.year = dateObject.year;
+  }
+
+  private getMask() {
     const format = this.formatDate.toLowerCase();
-    const dd = format.replace( 'dd', '00' );
-    const mm = dd.replace( 'mm', '00' );
-    return mm.replace( 'yyyy', '0000' );
+    const dd = format.replace('dd', '00');
+    const mm = dd.replace('mm', '00');
+    return mm.replace('yyyy', '0000');
+  }
+
+  private getObjectValues() {
+    return {
+      day: this.day,
+      fullDate: new Date(this.value),
+      month: this.month,
+      year: this.year
+    };
+  }
+
+  private handleAutoClose() {
+    if (this.autoClose) {
+      this.isOpen = false;
+    }
+  }
+
+  private handleOpenOnFocus() {
+    if (this.openOnFocus) {
+      this.isOpen = true;
+    }
+  }
+
+  private getFormattedDate($event) {
+    let strDate;
+    const date = this.formatDate;
+    strDate = date.replace('dd', this.formatDayAndMonth($event.day));
+    strDate = strDate.replace('mm', this.formatDayAndMonth($event.month));
+    strDate = strDate.replace('yyyy', $event.year);
+    return strDate;
+  }
+
+  private setValue($event) {
+    this.description = this.getFormattedDate({ ...$event, month: $event.month + 1 });
+    this.value = $event.fullDate.toISOString();
+  }
+
+  private formatDayAndMonth(value) {
+    if (String(value).length === 1) {
+      return `0${value}`;
+    }
+    return value;
+  }
+
+  handleDateChange() {
+    const date = ReverseFormatDate(this.description, this.formatDate);
+    if (!isNaN(date.day) && !isNaN(date.month) && !isNaN(date.year)) {
+      this.setDateObject(date);
+      this.date = new Date(date.year, date.month - 1, date.day);
+      this.changes.detectChanges();
+    }
   }
 
   onBlur() {
@@ -174,149 +240,94 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   }
 
   onCompleteMask() {
-    setTimeout( () => {
-      if ( this.isoDate ) {
-        const str = ReverseFormatDate( this.stringUnmasked( this.description ), this.formatDate );
-        this.value = new Date( str.stringFormat ).toISOString();
+    setTimeout(() => {
+      if (this.isoDate) {
+        const str = ReverseFormatDate(this.stringUnmasked(this.description), this.formatDate);
+        this.value = new Date(str.stringFormat).toISOString();
       }
-      this.completeMask.emit( this.getObjectValues() );
-    } );
+      this.completeMask.emit(this.getObjectValues());
+    });
   }
 
-  getObjectValues() {
-    return {
-      day: this.day,
-      fullDate: new Date( this.value ),
-      month: this.month,
-      year: this.year
-    };
-  }
-
-  onChange( $event ) {
+  onChange($event) {
     this.value = $event;
+    this.changes.detectChanges();
   }
 
   onDateInputFocus() {
-    if ( this.value && !this.isOpen ) {
-      const inputDate = ReverseFormatDate( this.stringUnmasked( this.description ), this.formatDate );
-      this.day = inputDate[ 'day' ];
-      this.month = inputDate[ 'month' ] - 1;
-      this.year = inputDate[ 'year' ];
+    if (this.value && !this.isOpen) {
+      const inputDate = ReverseFormatDate(this.stringUnmasked(this.description), this.formatDate);
+      this.setDateObject(inputDate);
     }
     this.handleOpenOnFocus();
   }
 
-  handleOpenOnFocus() {
-    if ( this.openOnFocus ) {
-      this.isOpen = true;
+  onSelectDay($event) {
+    this.setDateObject($event);
+    this.date = $event.fullDate;
+    this.selectDay.emit($event);
+    this.setValue($event);
+    this.handleAutoClose();
+    this.changes.detectChanges();
+  }
+
+  onPositionChange($event: ConnectedOverlayPositionChange) {
+    this.positionOverlay = $event.connectionPair.originY;
+  }
+
+  onBackDropClick() {
+    this.isOpen = false;
+  }
+
+  onClearInput($event) {
+    $event.stopPropagation();
+  }
+
+  handleArrowKeys($event) {
+    const object = {
+      [KeyEvent.ARROWUP]: () => this.handleArrowUp($event),
+      [KeyEvent.ARROWDOWN]: () => this.handleArrowDown($event),
+      [KeyEvent.TAB]: () => this.handleTab(),
+      [KeyEvent.ESCAPE]: () => this.handleEscape($event),
+      [KeyEvent.ARROWRIGHT]: () => $event.preventDefault(),
+      [KeyEvent.ARROWLEFT]: () => $event.preventDefault(),
+    };
+    if (object[$event]) {
+      object[$event]();
     }
   }
 
-  onSelectDay( $event ) {
-    this.selectDay.emit( $event );
-    this.setValue( $event );
-    this.setDateValues( $event );
-    this.handleAutoClose();
+  private handleArrowUp($event) {
+    if (this.isOpen) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
   }
 
-  setDateValues( $event ) {
-    this.day = $event.day;
-    this.month = $event.month - 1;
-    this.year = $event.year;
+  private handleTab() {
+    if (this.isOpen) {
+      this.isOpen = false;
+      this.changes.detectChanges();
+    }
   }
 
-  handleAutoClose() {
-    if ( this.autoClose ) {
+  private handleEscape($event) {
+    if (this.isOpen) {
+      $event.preventDefault();
+      $event.stopPropagation();
       this.isOpen = false;
     }
   }
 
-  onPositionChange( $event: ConnectedOverlayPositionChange ) {
-    this.positionOverlay = $event.connectionPair.originY;
-  }
-
-  backDropClick() {
-    this.isOpen = false;
-  }
-
-  getFormattedDate( $event ) {
-    const date = this.formatDate;
-    let strDate;
-    strDate = date.replace( 'dd', this.formatDayAndMonth( $event.day ) );
-    strDate = strDate.replace( 'mm', this.formatDayAndMonth( $event.month ) );
-    strDate = strDate.replace( 'yyyy', $event.year );
-    return strDate;
-  }
-
-  setValue( $event ) {
-    setTimeout( () => {
-      this.description = this.getFormattedDate( $event );
-      this.value = $event.fullDate.toISOString();
-    } );
-  }
-
-  onClearInput( $event ) {
-    $event.stopPropagation();
-  }
-
-  formatDayAndMonth( value ) {
-    if ( String( value ).length === 1 ) {
-      return '0' + value;
-    }
-    return value;
-  }
-
-  handleDateChange() {
-    const inputDate = ReverseFormatDate( this.description, this.formatDate );
-    const dateKeys = Object.keys( inputDate );
-    for ( let key = 0; key < dateKeys.length; key++ ) {
-      if ( inputDate[ dateKeys[ key ] ] ) {
-        if ( dateKeys[ key ] === 'month' ) {
-          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ] - 1;
-        } else {
-          this[ dateKeys[ key ] ] = inputDate[ dateKeys[ key ] ];
-        }
-      }
+  private handleArrowDown($event) {
+    if (this.isOpen) {
+      $event.preventDefault();
+      $event.stopPropagation();
     }
   }
 
-  handleArrowKeys( $event ) {
-    switch ( $event.keyCode ) {
-      case KeyEvent.ARROWUP:
-        if ( this.isOpen ) {
-          $event.preventDefault();
-          $event.stopPropagation();
-        }
-        break;
-      case KeyEvent.TAB:
-        if ( this.isOpen ) {
-          this.isOpen = false;
-        }
-        break;
-      case KeyEvent.ESCAPE:
-        if ( this.isOpen ) {
-          $event.preventDefault();
-          $event.stopPropagation();
-          this.isOpen = false;
-        }
-        break;
-      case KeyEvent.ARROWDOWN:
-        if ( this.isOpen ) {
-          $event.preventDefault();
-          $event.stopPropagation();
-        }
-        break;
-      case KeyEvent.ARROWRIGHT:
-        $event.preventDefault();
-        break;
-      case KeyEvent.ARROWLEFT:
-        $event.preventDefault();
-        break;
-    }
-  }
-
-  stringUnmasked( value ) {
-    return String( value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
+  private stringUnmasked(value) {
+    return String(value).replace(/(\|-|_|\(|\)|:|\+)/gi, '');
   }
 
   ngOnDestroy() {

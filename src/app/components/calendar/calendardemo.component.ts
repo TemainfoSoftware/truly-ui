@@ -23,7 +23,6 @@ import {Component} from '@angular/core';
 
 import * as json from './calendardemo-dataproperties.json';
 import * as jsonEvts from './calendardemo.dataevents.json';
-import {CalendarHolidays} from '../../../../projects/truly-ui/src/components/calendar/calendar';
 
 @Component({
   selector: 'app-calendar',
@@ -42,7 +41,7 @@ export class CalendarDemoComponent {
 
   public year = new Date().getFullYear();
 
-  public holidaysArray: CalendarHolidays[] = [
+  public holidaysArray = [
     {
       date: new Date(),
       description: 'Some Holiday Today',

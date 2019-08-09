@@ -31,10 +31,13 @@ export const dataEvents = [
     description: 'Dispatched when day cell is clicked.',
   },
   {
-    name: 'focusout',
+    name: 'today',
     parameters: [
-      { event: 'FocusEvent', description: 'The Object FocusEvent itself' },
+      { event: 'year', description: 'Full Year selected' },
+      { event: 'month', description: 'Number of month selected' },
+      { event: 'day', description: 'Number of day selected' },
+      { event: 'fullDate', description: 'Default format date' },
     ],
-    description: 'Dispatched when calendar lost focus.',
+    description: 'Dispatched when today button is clicked.',
   },
 ];

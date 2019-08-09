@@ -84,20 +84,6 @@ export const dataProperties = [
     options: 'any text'
   },
   {
-    name: 'iconCalendar',
-    type: 'boolean',
-    default: 'false',
-    description: 'Display an calendar icon after input.',
-    options: 'true | false'
-  },
-  {
-    name: 'formatDate',
-    type: 'string',
-    default: 'dd/mm/yyyy',
-    description: 'Define the date format of datepicker.',
-    options: 'any format with dd, mm, and yyyy'
-  },
-  {
     name: 'textAlign',
     type: 'string',
     default: 'left',

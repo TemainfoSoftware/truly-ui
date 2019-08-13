@@ -24,6 +24,7 @@ import {
   EventEmitter, Input, OnInit,
 } from '@angular/core';
 import {I18nService} from '../i18n/i18n.service';
+import {CalendarHoliday} from './interfaces/calendar-holiday.interface';
 
 export interface ObjectDateCalendar {
   day: number;
@@ -40,6 +41,8 @@ export interface ObjectDateCalendar {
 export class TlCalendar implements OnInit {
 
   @Input() date = new Date();
+
+  @Input() holidays: Array<CalendarHoliday> = [];
 
   @Input() width = '260px';
 

@@ -21,6 +21,7 @@
 */
 
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {CalendarHoliday} from '../../interfaces/calendar-holiday.interface';
 
 export interface CalendarDaysInterface {
   dayOfWeek: number;
@@ -49,6 +50,8 @@ export class TlCalendarDays implements OnInit, OnChanges {
     return this._currentDate;
   }
 
+  @Input() holidays: Array<CalendarHoliday> = [];
+
   @Input() borders = false;
 
   @Input() width = '300px';
@@ -58,8 +61,6 @@ export class TlCalendarDays implements OnInit, OnChanges {
   @Output() selectDay = new EventEmitter();
 
   @Output() doubleClick = new EventEmitter();
-
-  public dataGrouped = [];
 
   public dayOfMonth: Array<CalendarDaysInterface[]> = [];
 
@@ -124,13 +125,6 @@ export class TlCalendarDays implements OnInit, OnChanges {
       this.buildCalendar();
     }
     this.selectDay.emit(this.selectedDate);
-  }
-
-  isHoliday( date: number ) {
-    if ( this.dataGrouped.length > 0 && this.dataGrouped[date] ) {
-      return this.dataGrouped[date].filter(( item ) => item.feriado.length > 0).length > 0;
-    }
-    return false;
   }
 
   setAfterDays() {

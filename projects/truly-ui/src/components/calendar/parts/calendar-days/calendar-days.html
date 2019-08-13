@@ -9,16 +9,20 @@
 </ng-template>
 
 <ng-template let-item #templateCell>
-  <div class="ui-calendar-cell"
-       [class.borders]="borders"
-       [class.today]="isToday(item?.date)"
-       (dblclick)="doubleClick.emit()"
-       (click)="selectDate( item?.date )"
-       [class.holiday]="isHoliday( item?.date?.getTime())"
-       [class.sunday]="item?.dayOfWeek === 0 && !isOtherMonth(item)"
-       [class.selected]="isCurrentDate( item?.date )"
-       [class.ui-other-month]="isOtherMonth(item)">{{ item.day }}
-  </div>
+  <ng-container *ngIf="item?.date | holiday:holidays as dayArray">
+    <div class="ui-calendar-cell"
+         [class.borders]="borders"
+         [class.today]="isToday(item?.date)"
+         (dblclick)="doubleClick.emit()"
+         (click)="selectDate( item?.date )"
+         [tooltipDay]="dayArray"
+         [tooltipHoliday]="dayArray?.length > 0"
+         [class.holiday]="dayArray?.length > 0"
+         [class.sunday]="item?.dayOfWeek === 0 && !isOtherMonth(item)"
+         [class.selected]="isCurrentDate( item?.date )"
+         [class.ui-other-month]="isOtherMonth(item)">{{ item.day }}
+    </div>
+  </ng-container>
 </ng-template>
 
 <ng-template #templateLine let-item>

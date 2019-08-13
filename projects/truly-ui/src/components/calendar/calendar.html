@@ -20,13 +20,14 @@
     </div>
     <div class="ui-calendar-week">
       <ng-container *ngIf="selectedPanel === 'days'">
-        <div class="ui-header-item" *ngFor="let item of dayOfWeek">{{item}}</div>
+        <span class="ui-header-item" *ngFor="let item of dayOfWeek">{{item}}</span>
       </ng-container>
     </div>
     <div class="ui-calendar-body" [style.height]="'calc(' + height + ' - 80px)'">
       <tl-days *ngIf="selectedPanel === 'days'"
                (selectDay)="onSelectDay($event)"
                [borders]="borders"
+               [holidays]="holidays"
                [currentDate]="date">
       </tl-days>
       <tl-months *ngIf="selectedPanel === 'months'"

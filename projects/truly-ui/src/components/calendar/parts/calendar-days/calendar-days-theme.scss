@@ -21,11 +21,9 @@
       color: map-deep-get($danger, "default", "background") !important;
     }
     &.holiday {
-      color: map-deep-get($danger, "default", "foreground") !important;
-      background: rgba(map-deep-get($danger, "default", "background"), 0.18);
+      color: map-deep-get($danger, "default", "background") !important;
     }
     &.selected.holiday {
-      box-shadow: inset 0px 0 0px 4px map-deep-get($danger, "default", "foreground");
       background: rgba(map-deep-get($danger, "default", "background"), 0.18);
     }
     &.selected:not(.holiday) {

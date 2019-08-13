@@ -39,12 +39,9 @@
   font-family: Segoe UI;
   box-sizing: border-box;
   transition: background 200ms linear;
-  &.selected.holiday {
-    transition: all 200ms ease-in;
-  }
+  border-radius: 5px;
   &.selected:not(.holiday) {
     background: rgba( 102, 204, 153, 0.1 );
-    transition: all 200ms ease-in;
   }
   &:hover {
     cursor: pointer;

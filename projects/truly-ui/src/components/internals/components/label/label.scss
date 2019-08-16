@@ -3,6 +3,7 @@ $default-cursorHover: pointer;
 $default-fontSize: 1em;
 
 :host(.label-top) {
+  position: relative;
   display: table-caption;
   text-align: left;
   padding: 0 0 5px 0;
@@ -11,6 +12,7 @@ $default-fontSize: 1em;
 }
 
 :host(.label-left) {
+  position: relative;
   display: table-cell;
   text-align: right;
   align-items: center;
@@ -20,8 +22,10 @@ $default-fontSize: 1em;
 }
 
 .ui-required {
+  position: absolute;
+  top: 0;
+  right: 2px;
   color: red;
-  padding-left: 2px;
 }
 
 span {

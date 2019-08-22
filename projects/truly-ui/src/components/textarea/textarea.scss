@@ -5,7 +5,7 @@
 
 @mixin textTextarea {
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .tl-textarea {
@@ -23,9 +23,8 @@
     > .field {
       display: table-cell;
       height: 23px;
-      padding: 4px 6px;
-      padding-right: 20px;
-      font-size: 12px;
+      padding: 4px 20px 4px 6px;
+      font-size: 1em;
       width: 100%;
       font-weight: normal;
       font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
@@ -55,7 +54,7 @@
       top: 0;
       right: 0;
       line-height: 40px;
-      font-size: 1em;
+      font-size: 16px;
       padding-right: 15px;
       &:hover {
         cursor: pointer;

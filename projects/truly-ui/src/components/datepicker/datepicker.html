@@ -10,6 +10,7 @@
           (ngModelChange)="onChange($event)"
           (completeMask)="onCompleteMask()"
           (blur)="onBlur()"
+          [control]="control"
           (clear)="onClearInput($event)"
           [iconAfter]="iconAfter"
           date
@@ -24,18 +25,16 @@
 </tl-input>
 <input class="hidden-input" notform [value]="value">
 <ng-template cdkConnectedOverlay
-            (backdropClick)="backDropClick()"
+            (backdropClick)="onBackDropClick()"
             (positionChange)="onPositionChange($event)"
             [cdkConnectedOverlayHasBackdrop]="true"
             [cdkConnectedOverlayOrigin]="trigger"
             [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
             [cdkConnectedOverlayOpen]="isOpen">
   <tl-datepicker-content
-    [overlayPosition]="positionOverlay"
-    [day]="day"
-    [year]="year"
-    [month]="month"
     [input]="tlinput"
+    [date]="date"
+    [overlayPosition]="positionOverlay"
     (selectDayContent)="onSelectDay($event)">
   </tl-datepicker-content>
 </ng-template>

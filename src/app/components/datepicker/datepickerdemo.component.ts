@@ -35,7 +35,7 @@ export class DatePickerDemoComponent {
 
   public dataEvents;
 
-  public dateBasic;
+  public dateBasic = new Date();
 
   public dateCalendar;
 

@@ -39,6 +39,8 @@ import { WorkScaleType } from './types/work-scale.type';
 import { WorkScaleService } from './services/work-scale.service';
 import { EventService } from './services/event.service';
 import { ScheduleI18n } from './i18n/schedule-i18n';
+import { HolidaysType } from './types/holidays.type';
+import { HolidayService } from './services/holiday.service';
 
 @Component( {
   selector: 'tl-schedule',
@@ -72,6 +74,10 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() eventButtonTemplate: TemplateRef<any>;
 
+  @Input() holidays: Array<HolidaysType> = [];
+
+  @Input() allowScheduleInHolidays = false;
+
   @Input('events') set events( events: ScheduleDataSource[]) {
     if ( !events) {
       this._events = [];
@@ -99,9 +105,13 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() newEventClick = new EventEmitter();
 
+  @Output() releaseSchedule = new EventEmitter();
+
   public slatNumberRowsAsArray: Array<Number>;
 
   public existsScale = false;
+
+  public currentHoliday: HolidaysType;
 
   private _events: ScheduleDataSource[];
 
@@ -112,7 +122,8 @@ export class TlSchedule implements OnInit, OnChanges {
   constructor(
     public workScaleService: WorkScaleService,
     private changeDetection: ChangeDetectorRef,
-    private eventService: EventService
+    private eventService: EventService,
+    private holidayService: HolidayService,
   ) {}
 
   ngOnInit() {
@@ -122,6 +133,9 @@ export class TlSchedule implements OnInit, OnChanges {
 
   ngOnChanges( changes: SimpleChanges ) {
     this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
+    if ( changes['holidays'] ) {
+      this.handleHoliday( changes['holidays'].currentValue );
+    }
     this.changeDetection.detectChanges();
   }
 
@@ -135,6 +149,16 @@ export class TlSchedule implements OnInit, OnChanges {
     this.workScaleService.currentDate = new Date( $event.year, $event.month, $event.day);
     this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
+    this.handleHoliday();
+    this.changeDetection.detectChanges();
+  }
+
+  onClickReleaseSchedule( holiday: HolidaysType ) {
+    this.releaseSchedule.emit( holiday );
+  }
+
+  private handleHoliday( holidays = this.holidays ) {
+    this.currentHoliday = this.holidayService.handleHoliday( holidays, this.currentDate );
     this.changeDetection.detectChanges();
   }
 

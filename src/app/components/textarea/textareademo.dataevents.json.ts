@@ -22,14 +22,18 @@
 export const dataEvents = [
   {
     name: 'clear',
-    description: 'Callback to invoke when button clear is clicked.',
+    description: 'Emit an event when button clear is clicked.',
   },
   {
     name: 'focus',
-    description: 'Callback to invoke when input receives focus.',
+    description: 'Emit an event when textarea receives focus.',
+  },
+  {
+    name: 'click',
+    description: 'Emit an event when textarea is clicked.',
   },
   {
     name: 'blur',
-    description: 'Callback to invoke when input lost focus.',
-  }
+    description: 'Emit an event when textarea lost focus.',
+  },
 ];

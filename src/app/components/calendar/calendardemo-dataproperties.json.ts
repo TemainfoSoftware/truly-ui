@@ -28,11 +28,25 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
-    name: 'typingDay',
-    type: 'boolean',
-    default: 'true',
-    description: 'Used on datepicker, this property is used to control change of Date Object while typing.',
-    options: 'true | false'
+    name: 'width',
+    type: 'string',
+    default: '260px',
+    description: 'Calendar width.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'height',
+    type: 'string',
+    default: '260px',
+    description: 'Calendar height.',
+    options: 'px | % | em'
+  },
+  {
+    name: 'holidays',
+    type: 'Array<CalendarHolidays>',
+    default: 'null',
+    description: 'Holiday used as indication on cell, can pass a tooltip to describe the holiday',
+    options: 'Array<CalendarHolidays>'
   },
   {
     name: 'status',
@@ -42,31 +56,10 @@ export const dataProperties = [
     options: 'Array<CalendarStatus>'
   },
   {
-    name: 'inputControlFocus',
-    type: 'TlInput',
-    default: 'null',
-    description: 'Define a TlInput to control focus of calendar ( used on Datepicker Component ).',
-    options: 'TlInput Instance'
-  },
-  {
-    name: 'day',
-    type: 'number',
+    name: 'date',
+    type: 'Date',
     default: 'Current Day',
-    description: 'Property to set Day of calendar will initiate.',
-    options: 'true | false'
-  },
-  {
-    name: 'month',
-    type: 'number',
-    default: 'Current Month',
-    description: 'Property to set Month of calendar will initiate.',
-    options: 'true | false'
-  },
-  {
-    name: 'year',
-    type: 'number',
-    default: 'Current Year',
-    description: 'Property to set Year of calendar will initiate.',
-    options: 'true | false'
+    description: 'Date Object to be represented on calendar',
+    options: 'Date'
   },
 ];

@@ -198,7 +198,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   }
 
   isRouterActive(item) {
-    return this.router.url === item[this.link];
+    return this.router.isActive( item[this.link], false );
   }
 
   listenClickElementList( item ) {

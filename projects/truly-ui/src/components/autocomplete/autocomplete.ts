@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, Input, Optional, Inject, OnInit, OnChanges, ViewChildren,
+  Component, Input, Optional, Inject, OnChanges, ViewChildren,
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
   AfterContentInit,
 } from '@angular/core';
@@ -93,6 +93,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() loading = true;
 
+  @Input() clearButton = true;
+
   @Input() disabled: boolean = null;
 
   @Input() required: boolean = null;
@@ -100,6 +102,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input() color = 'basic';
 
   @Input() labelPlacement: 'top' | 'left' = 'left';
+
+  @Input() textBefore = null;
+
+  @Input() textAfter = null;
+
+  @Input() iconBefore = null;
+
+  @Input() iconAfter = null;
 
   @Input() labelSize = '100px';
 
@@ -119,7 +129,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Output() selectItem: EventEmitter<any> = new EventEmitter();
 
+  @Output() changeSelected: EventEmitter<any> = new EventEmitter();
+
   @Output() filter: EventEmitter<any> = new EventEmitter();
+
+  @Output() clickAddon: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
@@ -223,8 +237,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private scrollToIndex() {
     return new Promise( ( resolve, reject ) => {
       setTimeout( () => {
-        this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
-        this.change.markForCheck();
+        if ( this.cdkVirtualScroll ) {
+          this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
+          this.change.markForCheck();
+        }
         resolve();
       }, 200 );
     } );
@@ -242,21 +258,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setFiltering( true );
   }
 
-  onHoverClose() {
-    this.closeHover = true;
-  }
-
-  onLeaveClose() {
-    this.closeHover = false;
-  }
-
   onClickClose() {
     if ( !this.control.disabled ) {
       this.value = '';
       this.setDescriptionValue( '' );
-      this.closeHover = false;
       this.selected = null;
-      this.tlinput.setFocus();
       this.setIsOpen( true );
     }
   }
@@ -267,14 +273,13 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   private handleModelLazy() {
-    if ( this.value && this.lazyMode && !this.modelInitialized ) {
-      if ( !this.isModelModeString() ) {
-        this.setDescriptionValue( objectPath.get( this.value, this.keyText ) );
-      } else {
-        console.warn( 'The item provided is was not found, emitting filter' );
-        this.filter.emit( this.getFilters( this.value ) );
+    if (this.value && this.lazyMode) {
+      const value = objectPath.get(this.value, this.keyText);
+      if ( value ) {
+        this.setDescriptionValue(value);
+        this.handleKeyModelValue(this.value);
+        this.changeSelected.emit(this.value);
       }
-      this.handleKeyModelValue( this.value );
     }
   }
 
@@ -283,12 +288,13 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   private handleModelCached() {
-    if ( this.dataSource && !this.lazyMode && this.dataSource.getCachedData() ) {
-      this.dataSource.getCachedData().forEach( ( value ) => {
+    if ( this.dataSource && !this.lazyMode && this.data.length > 0 ) {
+      this.data.forEach( ( value ) => {
         if ( this.value ) {
           if ( String( this.getItemCompare( value ) ) === String( this.getCompareModel() ) ) {
             this.setDescriptionValue( objectPath.get( value, this.keyText ) );
             this.handleKeyModelValue( value );
+            this.changeSelected.emit( value );
           }
         }
       } );

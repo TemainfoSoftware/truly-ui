@@ -1,0 +1,43 @@
+@mixin tl-calendar-days-theme($theme) {
+
+  $basic: map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+  $danger: map-deep-get($theme, 'danger');
+
+  .ui-calendar-line {
+    background: white;
+    &.borders:not(:last-child) {
+      border-right: 1px solid map-deep-get($basic, "default", "border");
+    }
+  }
+
+  .ui-other-month {
+    color: rgba(map-deep-get($basic, "default", "foreground"), 0.5) !important;
+  }
+
+  .ui-calendar-cell {
+    color: rgba(map-deep-get($basic, "default", "foreground"), 0.8);
+    &.sunday {
+      color: map-deep-get($danger, "default", "background") !important;
+    }
+    &.holiday {
+      color: map-deep-get($danger, "default", "background") !important;
+    }
+    &.selected.holiday {
+      background: rgba(map-deep-get($danger, "default", "background"), 0.18);
+    }
+    &.selected:not(.holiday) {
+      box-shadow: inset 0px 0 0px 2px map-deep-get($primary, "default", "background");
+      color: map-deep-get($primary, "default", "background");
+    }
+    &:hover {
+      background: #f5f5f5;
+    }
+    &.borders {
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
+    }
+    &.today {
+      color: map-deep-get($primary, "default", "background");
+    }
+  }
+}

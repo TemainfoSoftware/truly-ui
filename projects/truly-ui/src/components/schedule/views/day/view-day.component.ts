@@ -10,6 +10,7 @@ import { EventService } from '../../services/event.service';
 import { WorkScaleService } from '../../services/work-scale.service';
 import { Subscription } from 'rxjs';
 import { ScheduleI18n } from '../../i18n/schedule-i18n';
+import { HolidaysType } from '../../types/holidays.type';
 
 @Component({
   selector: 'tl-view-day',

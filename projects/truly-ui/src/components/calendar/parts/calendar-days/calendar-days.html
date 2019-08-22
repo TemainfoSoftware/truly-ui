@@ -1,0 +1,37 @@
+<div class="ui-calendar-days">
+  <ng-container *ngTemplateOutlet="templateGrid"></ng-container>
+</div>
+
+<ng-template #templateGrid>
+  <ng-template ngFor let-item let-index [ngForOf]="dayOfMonth">
+    <ng-container *ngTemplateOutlet="templateLine; context: { $implicit: item }"></ng-container>
+  </ng-template>
+</ng-template>
+
+<ng-template let-item #templateCell>
+  <ng-container *ngIf="item?.date | holiday:holidays as dayArray">
+    <div class="ui-calendar-cell"
+         [class.borders]="borders"
+         [class.today]="isToday(item?.date)"
+         (dblclick)="doubleClick.emit()"
+         (click)="selectDate( item?.date )"
+         [tooltipDay]="dayArray"
+         [tooltipHoliday]="dayArray?.length > 0"
+         [class.holiday]="dayArray?.length > 0"
+         [class.sunday]="item?.dayOfWeek === 0 && !isOtherMonth(item)"
+         [class.selected]="isCurrentDate( item?.date )"
+         [class.ui-other-month]="isOtherMonth(item)">{{ item.day }}
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #templateLine let-item>
+  <div class="ui-calendar-line" [class.borders]="borders">
+    <ng-template ngFor let-item [ngForOf]="item">
+      <ng-template
+        [ngTemplateOutlet]="templateCell"
+        [ngTemplateOutletContext]="{ $implicit: item }">
+      </ng-template>
+    </ng-template>
+  </div>
+</ng-template>

@@ -8,6 +8,9 @@
   @include tl-badge-theme($theme);
   @include tl-button-theme($theme);
   @include tl-calendar-theme($theme);
+  @include tl-calendar-days-theme($theme);
+  @include tl-calendar-months-theme($theme);
+  @include tl-calendar-years-theme($theme);
   @include tl-card-theme($theme);
   @include tl-colorpicker-theme($theme);
   @include tl-colorpicker-content-theme($theme);

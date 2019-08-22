@@ -58,11 +58,13 @@
 
   > .ui-wrapper-input {
     position: relative;
+    display: flex;
+    align-items: center;
+    place-content: center;
     > .field {
       display: table-cell;
       height: 23px;
-      padding: 4px 6px;
-      padding-right: 20px;
+      padding: 4px 20px 4px 6px;
       @include textInput;
       width: 100%;
       font-weight: normal;
@@ -88,11 +90,10 @@
     }
     > .clearButton {
       position: absolute;
-      top: 3px;
-      right: 0;
-      line-height: 40px;
-      font-size: 1em;
+      font-size: 22px;
       padding-right: 5px;
+      right: 0;
+      color: #ccc;
       &:hover {
         cursor: pointer;
       }

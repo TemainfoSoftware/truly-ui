@@ -49,6 +49,13 @@ export class ScheduleDemoOverviewComponent {
 
   public statusConfig = {};
 
+  public holidays = [{
+    id: 1,
+    date: new Date(1564023600000),
+    description: 'Aniversário de Palotina',
+    attend: false
+  }];
+
   public types = {
     CONSULTA : { status : 'CONSULTA', color : '#90ED5D', description : 'Consulta' },
     EVENTO: { status : 'EVENTO', color : '#FF385C', description : 'Evento' },
@@ -374,6 +381,10 @@ export class ScheduleDemoOverviewComponent {
 
   onEventDbClick( event ) {
     console.log('EVENT CLICK: ', event);
+  }
+
+  onReleaseSchedule( event ) {
+    console.log('RELEASE SCHEDULE: ', event);
   }
 
   onRowClick( event ) {

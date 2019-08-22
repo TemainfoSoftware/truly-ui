@@ -28,17 +28,10 @@ export const dataProperties = [
     options: 'HTMLElement'
   },
   {
-    name: 'color',
-    type: 'string',
-    default: 'basic',
-    description: 'Changes the default color of the button.',
-    options: 'basic | primary | success | information | warning | danger | light | dark'
-  },
-  {
     name: 'width',
     type: 'string',
-    default: '125px',
-    description: 'Button width.',
+    default: '100%',
+    description: 'Width of Panel.',
     options: 'px | % | em'
   },
   ];

@@ -4,70 +4,17 @@
   $primary: map-deep-get($theme, 'primary');
   $danger:  map-deep-get($theme, 'danger');
 
-  .wrapper-calendar {
-    border: 1px solid map-deep-get($basic, "default", "border");
-    background-color: map-deep-get($basic, "default", "background");
+  .ui-table-calendar {
+    background: white;
+    box-shadow: 0px 0px 0px 1px map-deep-get($basic, "default", "border");
 
-    >.header-calendar {
-      color: map-deep-get($basic, "default", "foreground");
-      border-bottom: 1px solid  map-deep-get($basic, "default", "border");
-
-      >.date {
-        & span:hover {
-          background: map-deep-get($basic, "hover", "background");
-        }
+    > .ui-calendar-week {
+      border-top: 1px solid map-deep-get($basic, "default", "border");
+      border-bottom: 1px solid map-deep-get($basic, "default", "border");
+      background: map-deep-get($basic, "default", "background");
+      > .ui-header-item {
+        color: rgba(map-deep-get($basic, "default", "foreground"), 0.5);
       }
-      >.todayButton {
-        color: map-deep-get($primary, "default", "background");;
-        &:hover{
-          background-color: map-deep-get($basic, "hover", "background");
-        }
-      }
-    }
-
-    .ui-cell-status {
-      &.primary {
-       background: map-deep-get($primary, "default", "background");
-      }
-      &.danger {
-        background: map-deep-get($danger, "default", "background");
-      }
-    }
-
-    & .ui-table-calendar {
-      & .ui-table-thead {
-        & .ui-table-th {
-          color: map-deep-get($basic, "default", "foreground");
-          &:first-child {
-            color: map-deep-get($danger, "default", "background");
-          }
-        }
-      }
-
-      & .ui-table-line .ui-table-cell {
-        color: map-deep-get($basic, "default", "foreground");
-        &:first-child:not(.notDay) {
-          color: map-deep-get($danger, "default", "background");
-        }
-        &:hover:not(.ui-table-cell-empty) {
-          border: 1px solid map-deep-get($basic, "default", "border") !important;
-          border-radius: 20%;
-        }
-      }
-    }
-    & .today {
-      color: map-deep-get($primary, "default", "background") !important;
-    }
-
-    & .navigator {
-      border: 1px solid map-deep-get($basic, "default", "border") !important;
-      border-radius: 20%;
-    }
-
-    & .selected {
-      background-color: map-deep-get($primary, "default", "background");
-      color: map-deep-get($primary, "default", "foreground") !important;
-      border-radius: 20%;
     }
   }
 }

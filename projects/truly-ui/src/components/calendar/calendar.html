@@ -1,43 +1,44 @@
-<div #wrapper class="wrapper-calendar" (focusout)="focusOut($event)" tabindex="-1">
-  <div class="header-calendar">
-    <div class="date">
-      <tl-navigator [type]="'monthyear'"
-                    *ngIf="!displayMonths && !displayYears"
-                    (clickPrevious)="decreaseDate($event)"
-                    (clickNext)="increaseDate($event)"
-                    [withBorder]="false"
-                    [date]="dateNavigator"
-                    (clickNavigator)="changeMonth()"
-                    [width]="todayButton ? '100px' : '187px'">
+<div class="ui-wrapper-calendar">
+  <div class="ui-table-calendar" [style.height]="height" [style.width]="width">
+    <div class="ui-calendar-header">
+      <tl-navigator
+        [date]="date"
+        [withBorder]="false"
+        (clickPrevious)="onClickPrevious($event)"
+        (clickNavigator)="onClickNavigator($event)"
+        (clickNext)="onClickNext($event)"
+        [width]="todayButton ? 'calc(' + width + ' / 2 - 20px)' : 'calc(' + width + ' - 80px)'"
+        [type]="typeNavigator">
       </tl-navigator>
-      <tl-navigator [type]="'year'"
-                    [date]="dateNavigator"
-                    *ngIf="displayMonths && !displayYears"
-                    (clickPrevious)="decreaseYear()"
-                    [withBorder]="false"
-                    (clickNext)="increaseYear()"
-                    (clickNavigator)="changeYear($event)"
-                    [width]="todayButton ? '100px' : '187px'">
-      </tl-navigator>
-      <tl-navigator [type]="'rangeyear'"
-                    *ngIf="displayYears"
-                    [date]="dateNavigator"
-                    [withBorder]="false"
-                    [range]="11"
-                    (clickNavigator)="clickNavigatorRange()"
-                    (clickPrevious)="decreaseYearRange($event)"
-                    (clickNext)="increaseYearRange($event)"
-                    [width]="todayButton ? '100px' : '187px'">
-      </tl-navigator>
+      <tl-button (click)="clickToday()"
+                 style="margin-left: 5px;"
+                 [outline]="true"
+                 *ngIf="todayButton"
+                 [text]="todayDescription"
+                 [color]="'primary'">
+      </tl-button>
     </div>
-    <div *ngIf="todayButton" class="todayButton" (click)="getToday()">{{todayText | uppercase}}</div>
+    <div class="ui-calendar-week">
+      <ng-container *ngIf="selectedPanel === 'days'">
+        <span class="ui-header-item" *ngFor="let item of dayOfWeek">{{item}}</span>
+      </ng-container>
+    </div>
+    <div class="ui-calendar-body" [style.height]="'calc(' + height + ' - 80px)'">
+      <tl-days *ngIf="selectedPanel === 'days'"
+               (selectDay)="onSelectDay($event)"
+               [borders]="borders"
+               [holidays]="holidays"
+               [currentDate]="date">
+      </tl-days>
+      <tl-months *ngIf="selectedPanel === 'months'"
+                 (selectMonth)="onSelectMonth($event)"
+                 [currentDate]="date">
+      </tl-months>
+      <tl-years *ngIf="selectedPanel === 'years'"
+                (selectYear)="onSelectYear($event)"
+                [currentRange]="currentRange"
+                [currentDate]="date">
+      </tl-years>
+    </div>
   </div>
-  <table #table border="0" cellspacing="0" cellpadding="0" class="ui-table-calendar">
-    <thead class="ui-table-thead" *ngIf="!displayMonths && !displayYears">
-      <tr>
-        <th class="ui-table-th" *ngFor="let item of dayOfWeek">{{item}}</th>
-      </tr>
-    </thead>
-    <tbody #tbody align="right"></tbody>
-  </table>
 </div>

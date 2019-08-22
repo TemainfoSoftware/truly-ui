@@ -68,7 +68,10 @@ export { ConfirmationOptions } from './components/dialog/dialog-confirmation/con
 export { ModalOptions, Modal } from './components/modal/interfaces/modal-options';
 export { ModalFormConfig } from './components/modal/interfaces/modal-smart-form-config';
 export { ToasterConfig } from './components/toaster/toaster-config';
-export { CalendarStatus } from './components/calendar/calendar';
+
+export { CalendarStatus } from './components/calendar/interfaces/calendar-status.interface';
+export { CalendarHoliday } from './components/calendar/interfaces/calendar-holiday.interface';
+
 export { IncrementalSteps } from './components/timepicker/timepicker';
 export { PermissionDataConfig } from './components/permissions/parts/interfaces/permission-dataconfig.interface';
 export { ShortcutConfig } from './components/shortcut/shortcut.config';
@@ -91,6 +94,7 @@ export { ModalService } from './components/modal/services/modal.service';
 export { NavigatorService } from './components/navigator/services/navigator.service';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
 export { ToasterService } from './components/toaster/services/toaster.service';
+export { TooltipService } from './components/tooltip/tooltip.service';
 export { ChatService } from './components/chatlist/services/chat.service';
 export { ContextMenuService } from './components/contextmenu/services/contextmenu.service';
 
@@ -99,6 +103,7 @@ export { Permission } from './components/permissions/parts/models/permission.mod
 
 // Types
 export { ScheduleDataSource } from './components/schedule/types/datasource.type';
+export { HolidaysType } from './components/schedule/types/holidays.type';
 export { SlotSettingsType } from './components/schedule/types/slot-settings.type';
 export { StatusType } from './components/schedule/types/status.type';
 export { ViewType } from './components/schedule/types/view.type';
@@ -118,3 +123,6 @@ export { DateValidator } from './components/date/validators/date.validator';
 export { EmailValidator } from './components/validators/email/email.validator';
 export { NumberValidator } from './components/validators/number/number.validator';
 export { PasswordValidator } from './components/validators/password/password.validator';
+
+// Components
+export { TlOverlayPanel } from './components/overlaypanel/overlay-panel';

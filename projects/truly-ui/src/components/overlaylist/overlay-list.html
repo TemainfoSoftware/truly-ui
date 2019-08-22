@@ -3,6 +3,7 @@
     <div class="search-input" *ngIf="searchOnList && !customFocus">
       <tl-input
         (input)="handleInput($event)"
+        (keydown.escape)="handleEscape($event)"
         (keydown.ArrowUp)="keyManager.setPreviousItemActive(); handleScrollIntoView();"
         (keydown.ArrowDown)="keyManager.setNextItemActive(); handleScrollIntoView();"
         (keydown.enter)="emitSelectOption(); $event.preventDefault()">

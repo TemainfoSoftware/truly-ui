@@ -34,11 +34,14 @@ import { OverlayAnimation } from '../../core/directives/overlay-animation';
 
 export class TlDatePickerContent  {
 
-  @Input('day') day;
+  @Input('date')
+  set date( value: Date ) {
+    this._date = value;
+  }
 
-  @Input('month') month;
-
-  @Input('year') year;
+  get date() {
+    return this._date;
+  }
 
   @Input('input') input: TlInput;
 
@@ -48,10 +51,13 @@ export class TlDatePickerContent  {
 
   @ViewChild(TemplateRef, {static: true} ) template: TemplateRef<any>;
 
+  private _date;
+
   constructor() {}
 
-  selectDay($event) {
-    this.selectDayContent.emit($event);
+  selectDay( dateObject ) {
+    this.date = dateObject.fullDate;
+    this.selectDayContent.emit(dateObject);
   }
 
 }

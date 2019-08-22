@@ -35,5 +35,5 @@ export const Calendar = {
     { name: 'November', initials: 'nov' },
     { name: 'December', initials: 'dec' }
   ],
-  dayOfWeek: [ 'S', 'M', 'T', 'W', 'T', 'F', 'S' ]
+  dayOfWeek: [ 'SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT' ]
 };

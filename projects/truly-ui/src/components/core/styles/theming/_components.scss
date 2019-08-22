@@ -8,6 +8,9 @@
 @import "../../../dropdownicon/dropdownicon-theme";
 @import "../../../card/card-theme";
 @import "../../../calendar/calendar-theme";
+@import "../../../calendar/parts/calendar-days/calendar-days-theme";
+@import "../../../calendar/parts/calendar-months/calendar-months-theme";
+@import "../../../calendar/parts/calendar-years/calendar-years-theme";
 @import "../../../chatlist/chatlist-theme";
 @import "../../../checkbox/checkbox-theme";
 @import "../../../contextmenu/contextmenu-theme";
@@ -64,6 +67,9 @@
   @include tl-dropdown-icon-theme($theme);
   @include tl-card-theme($theme);
   @include tl-calendar-theme($theme);
+  @include tl-calendar-days-theme($theme);
+  @include tl-calendar-months-theme($theme);
+  @include tl-calendar-years-theme($theme);
   @include tl-chatlist-theme($theme);
   @include tl-checkbox-theme($theme);
   @include tl-contextmenu-theme($theme);

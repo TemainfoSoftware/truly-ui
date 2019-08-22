@@ -1,0 +1,29 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-wrapper-months {
+  width: 100%;
+  height: 100%;
+  > .ui-calendar-months {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    > .ui-calendar-cell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      flex-basis: calc(100% / 3);
+      align-items: center;
+      place-content: center;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+

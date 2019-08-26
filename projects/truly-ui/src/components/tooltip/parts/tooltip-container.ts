@@ -1,9 +1,7 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { transition, trigger, style, animate } from '@angular/animations';
+import { AfterContentInit, Component, ViewChild } from '@angular/core';
 import { CdkConnectedOverlay, CdkOverlayOrigin } from '@angular/cdk/overlay';
 import { TooltipOptions } from '../tooltipOptions';
 import { OverlayAnimation } from '../../core/directives/overlay-animation';
-import {FixedPositionDirective} from '../../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-tooltip-container',

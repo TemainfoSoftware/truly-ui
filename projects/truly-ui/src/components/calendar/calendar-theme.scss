@@ -5,8 +5,8 @@
   $danger:  map-deep-get($theme, 'danger');
 
   .ui-table-calendar {
-    background: white;
-    box-shadow: 0px 0px 0px 1px map-deep-get($basic, "default", "border");
+    background: map-deep-get($basic, "default", "background");
+    border: 1px solid map-deep-get($basic, "default", "border");
 
     > .ui-calendar-week {
       border-top: 1px solid map-deep-get($basic, "default", "border");

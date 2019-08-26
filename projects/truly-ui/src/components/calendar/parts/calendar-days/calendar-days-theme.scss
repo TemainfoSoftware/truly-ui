@@ -5,7 +5,7 @@
   $danger: map-deep-get($theme, 'danger');
 
   .ui-calendar-line {
-    background: white;
+    background: map-deep-get($basic, "default", "background");
     &.borders:not(:last-child) {
       border-right: 1px solid map-deep-get($basic, "default", "border");
     }

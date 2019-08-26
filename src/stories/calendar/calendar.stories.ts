@@ -22,10 +22,34 @@
  * /
  */
 
-import { storiesOf } from '@storybook/angular';
-import { Welcome } from '@storybook/angular/demo';
+import { moduleMetadata, storiesOf } from '@storybook/angular';
+import { CoreModule } from '../../../projects/truly-ui/src/components/core';
+import { CalendarModule } from '../../../projects/truly-ui/src/components/calendar';
+import { boolean } from '@storybook/addon-knobs';
 
-storiesOf('Data Display|Calendar', module).add('Overview', () => ({
-  component: Welcome,
-  props: {},
-}));
+
+const Story = storiesOf('Data Display|Calendar', module)
+  .addDecorator(
+    moduleMetadata({
+      imports: [
+        CalendarModule,
+        CoreModule.forRoot({
+          theme: 'default',
+        }),
+      ],
+    })
+  );
+
+
+Story.add('Overview', () => {
+
+  const showTodayButton = boolean('Show Today Button', false);
+
+  return {
+    template: `<tl-calendar [todayButton]="showTodayButton"></tl-calendar>`,
+    props: {
+      showTodayButton: showTodayButton,
+    }
+  };
+});
+

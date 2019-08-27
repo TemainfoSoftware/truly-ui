@@ -28,12 +28,7 @@ import {
 
 @Component( {
   selector: 'tl-split-button-action',
-  template: `
-    <li (click)="onClickListener($event)" [class]="separator ? 'separator' : null">
-      <i *ngIf="icon" class="icon-action {{ icon }}"></i>
-      {{ label }}
-    </li>
-  `,
+  templateUrl: './splitbutton-action.html',
   styleUrls: [ './splitbutton-action.scss' ]
 } )
 export class TlSplitButtonAction {
@@ -42,6 +37,8 @@ export class TlSplitButtonAction {
 
   @Input() icon = '';
 
+  @Input() disabled = null;
+
   @Input() separator = false;
 
   @Output() click: EventEmitter<any> = new EventEmitter();
@@ -49,7 +46,9 @@ export class TlSplitButtonAction {
   onClickListener($event) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.click.emit($event);
+    if ( !this.disabled ) {
+      this.click.emit($event);
+    }
   }
 
   constructor() {}

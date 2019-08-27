@@ -28,16 +28,16 @@ import {
   ChangeDetectorRef, Output, EventEmitter
 } from '@angular/core';
 
-import { OverlayAnimation } from '../core/directives/overlay-animation';
-import { TlSplitButtonAction } from './splitbutton-action';
-import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
+import {OverlayAnimation} from '../core/directives/overlay-animation';
+import {TlSplitButtonAction} from './parts/splitbutton-action';
+import {ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
 
-@Component( {
+@Component({
   selector: 'tl-split-button',
   templateUrl: './splitbutton.html',
-  styleUrls: [ './splitbutton.scss' ],
-  animations: [ OverlayAnimation ]
-} )
+  styleUrls: ['./splitbutton.scss'],
+  animations: [OverlayAnimation]
+})
 export class TlSplitButton implements AfterContentInit {
 
   @Input() text = '';
@@ -52,27 +52,45 @@ export class TlSplitButton implements AfterContentInit {
 
   @Output() click: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren( TlSplitButtonAction ) actions: QueryList<TlSplitButtonAction>;
+  @ContentChildren(TlSplitButtonAction) actions: QueryList<TlSplitButtonAction>;
 
   public isOpen: boolean;
 
   public positionOverlay = 'bottom';
 
-  constructor(private change: ChangeDetectorRef) {}
-
-  ngAfterContentInit() {
-    this.actions.forEach( ( item ) => item.click.subscribe( () => this.isOpen = false ) );
+  constructor(private change: ChangeDetectorRef) {
   }
 
-  onPositionChange( $event: ConnectedOverlayPositionChange ) {
+  ngAfterContentInit() {
+    this.actions.forEach((item) => item.click.subscribe(() => this.isOpen = false));
+  }
+
+  onPositionChange($event: ConnectedOverlayPositionChange) {
     this.positionOverlay = $event.connectionPair.originY;
     this.change.detectChanges();
   }
 
-  onButtonClick($event) {
+  get disabledActions() {
+    return this.actions.filter((item) => item.disabled).length === this.actions.length;
+  }
+
+  open($event) {
+    this.stopEvent($event);
+    if ( !this.disabledActions ) {
+      this.isOpen = !this.isOpen;
+    }
+  }
+
+  stopEvent($event) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.click.emit($event);
+  }
+
+  onButtonClick($event) {
+    this.stopEvent($event);
+    if ( !this.disabled ) {
+      this.click.emit($event);
+    }
   }
 
 }

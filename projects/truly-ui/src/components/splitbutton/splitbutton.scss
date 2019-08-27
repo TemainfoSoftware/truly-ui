@@ -30,6 +30,7 @@ $button-font-size: 1em;
       user-select: none;
       border-top-right-radius: 3px;
       border-bottom-right-radius: 3px;
+      box-sizing: border-box;
     }
     > .split-button-actions tl-icon {
       padding: 0 15px;

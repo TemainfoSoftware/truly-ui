@@ -15,7 +15,7 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   border-radius: 3px;
 }
 
-:host li{
+.split-item {
   padding: 0 10px;
   text-decoration: none;
   display: block;
@@ -26,7 +26,10 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
   text-overflow: clip;
   white-space: nowrap;
   overflow: hidden;
-}
-:host li .icon-action{
-  padding: 0 5px 0 0;
+  > .icon-action {
+    padding: 0 5px 0 0;
+  }
+  &.disabled {
+    opacity: 0.4;
+  }
 }

@@ -22,19 +22,19 @@
 import {
   Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ChatContact } from '../interfaces/chat-contact.interface';
-import { ChatMessage } from '../interfaces/chat-message.interface';
-import { Subscription } from 'rxjs';
-import { ChatStatus } from '../interfaces/chat-status.interface';
-import { DatePipe } from '@angular/common';
+import {FormControl, Validators} from '@angular/forms';
+import {ChatContact} from '../interfaces/chat-contact.interface';
+import {ChatMessage} from '../interfaces/chat-message.interface';
+import {Subscription} from 'rxjs';
+import {ChatStatus} from '../interfaces/chat-status.interface';
+import {DatePipe} from '@angular/common';
 import {I18nService} from '../../i18n/i18n.service';
 
-@Component( {
+@Component({
   selector: 'tl-chat-content',
   templateUrl: './chat-content.html',
-  styleUrls: [ './chat-content.scss' ],
-} )
+  styleUrls: ['./chat-content.scss'],
+})
 export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input() maxHeight = '450px';
@@ -55,9 +55,9 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();
 
-  @ViewChild('input', {static: true} ) input: ElementRef;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
-  @ViewChild('messageContent', {static: true} ) messageContent: ElementRef;
+  @ViewChild('messageContent', {static: true}) messageContent: ElementRef;
 
   private opened = false;
 
@@ -86,28 +86,33 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
   }
 
   filterMessages() {
-    this.messages = this.messages.filter((item: ChatMessage, index, array) =>
-      (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
-      (item.from.id === this.partner.id) && (item.to.id === this.user.id)
-    );
-    this.sortMessages();
-    this.loadingMessages = false;
-    this.setScrollBottom();
-  }
-
-  currentDate( date ) {
-    const yesterday = new Date(new Date().setDate((new Date().getDate() - 1)));
-    if ( this.getDate(date) === this.getDate() ) {
-      return this.today;
-    } else if ( (this.getDate(yesterday) === this.getDate(date)) ) {
-      return this.yesterday;
-    } else {
-       return this.datePipe.transform( new Date(date), 'longDate' );
+    if (this.messages.length > 0) {
+      this.messages = this.messages.filter((item: ChatMessage) => {
+          if (item.from && item.to) {
+            return (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
+              (item.from.id === this.partner.id) && (item.to.id === this.user.id);
+          }
+        }
+      );
+      this.sortMessages();
+      this.loadingMessages = false;
+      this.setScrollBottom();
     }
   }
 
-  getDate( date = new Date() ) {
-    const newDate = new Date( date );
+  currentDate(date) {
+    const yesterday = new Date(new Date().setDate((new Date().getDate() - 1)));
+    if (this.getDate(date) === this.getDate()) {
+      return this.today;
+    } else if ((this.getDate(yesterday) === this.getDate(date))) {
+      return this.yesterday;
+    } else {
+      return this.datePipe.transform(new Date(date), 'longDate');
+    }
+  }
+
+  getDate(date = new Date()) {
+    const newDate = new Date(date);
     return new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0, 0).getTime();
   }
 
@@ -128,18 +133,20 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   sendMessage() {
     if (this.control.value) {
-      this.message.emit({ value: this.control.value, time: new Date() });
+      this.message.emit({value: this.control.value, time: new Date()});
       this.control.setValue(null);
     }
   }
 
   sortMessages() {
-    this.messages = this.messages.sort((a, b) => {
-      return new Date(a.time).getTime() - new Date(b.time).getTime();
-    });
+    if (this.messages.length > 0) {
+      this.messages = this.messages.sort((a, b) => {
+        return new Date(a.time).getTime() - new Date(b.time).getTime();
+      });
+    }
   }
 
-  ngOnChanges( { messages }: SimpleChanges ) {
+  ngOnChanges({messages}: SimpleChanges) {
     if (messages && messages['currentValue'].length > 0) {
       this.filterMessages();
     }

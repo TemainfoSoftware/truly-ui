@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
+  Component, AfterViewInit, Output, Input, EventEmitter, OnInit, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
 } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {ChatContact} from '../interfaces/chat-contact.interface';
@@ -29,13 +29,16 @@ import {Subscription} from 'rxjs';
 import {ChatStatus} from '../interfaces/chat-status.interface';
 import {DatePipe} from '@angular/common';
 import {I18nService} from '../../i18n/i18n.service';
+import {ChatService} from '../services/chat.service';
 
 @Component({
   selector: 'tl-chat-content',
   templateUrl: './chat-content.html',
   styleUrls: ['./chat-content.scss'],
 })
-export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
+export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+
+  @Input() id: string;
 
   @Input() maxHeight = '450px';
 
@@ -45,13 +48,13 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input() loadingMessages = true;
 
-  @Input() messages: ChatMessage[] = [];
-
   @Input() chatStatus: ChatStatus = {
     BUSY: '#ffc019',
     ONLINE: '#66cc99',
     OFFLINE: '#ff3100'
   };
+
+  @Output() readMessage = new EventEmitter();
 
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();
 
@@ -75,29 +78,39 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
 
-  constructor(private i18nService: I18nService) {
+  constructor(private i18nService: I18nService, private chatService: ChatService) {
     this.opened = true;
+  }
+
+  ngOnInit() {
+    this.chatService.append.subscribe((message) => {
+      this.readMessage.emit(message);
+      this.setScrollBottom();
+    });
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.setInputFocus();
+      this.setScrollBottom();
     });
   }
 
+  get messages() {
+    return this.chatService.getAllMessages(this.id);
+  }
+
   filterMessages() {
-    if (this.messages.length > 0) {
-      this.messages = this.messages.filter((item: ChatMessage) => {
-          if (item.from && item.to) {
-            return (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
-              (item.from.id === this.partner.id) && (item.to.id === this.user.id);
-          }
+    this.messages.filter((item: ChatMessage) => {
+        if (item.from && item.to) {
+          return (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
+            (item.from.id === this.partner.id) && (item.to.id === this.user.id);
         }
-      );
-      this.sortMessages();
-      this.loadingMessages = false;
-      this.setScrollBottom();
-    }
+      }
+    );
+    this.sortMessages();
+    this.loadingMessages = false;
+    this.setScrollBottom();
   }
 
   currentDate(date) {
@@ -140,7 +153,7 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   sortMessages() {
     if (this.messages.length > 0) {
-      this.messages = this.messages.sort((a, b) => {
+      this.messages.sort((a, b) => {
         return new Date(a.time).getTime() - new Date(b.time).getTime();
       });
     }

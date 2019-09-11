@@ -68,13 +68,14 @@
 
 <ng-template #chatContent>
   <tl-chat-content
+    [id]="id"
     [user]="user"
     [maxHeight]="maxHeight"
     [loadingMessages]="loadingMessages"
     [chatStatus]="chatStatus"
+    (readMessage)="readMessage.emit($event)"
     [partner]="partner"
-    (message)="onMessage($event)"
-    [messages]="messages">
+    (message)="onMessage($event)">
   </tl-chat-content>
 </ng-template>
 

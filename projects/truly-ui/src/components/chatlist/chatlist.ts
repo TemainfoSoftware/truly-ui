@@ -21,7 +21,7 @@
  */
 import {
   Component, ElementRef, EventEmitter, Input, Renderer2, ViewChild, Output, AfterViewInit,
-  OnDestroy
+  OnDestroy, OnInit
 } from '@angular/core';
 import { ChatStatus } from './interfaces/chat-status.interface';
 import { ChatContact } from './interfaces/chat-contact.interface';
@@ -38,7 +38,7 @@ let uniqueIdentifier = 0;
   templateUrl: './chatlist.html',
   styleUrls: [ './chatlist.scss' ],
 } )
-export class TlChatList implements AfterViewInit, OnDestroy {
+export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() maxHeight = '450px';
 
@@ -74,6 +74,8 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     return this._dataSource;
   }
 
+  @Output() readMessage: EventEmitter<ChatMessage[]> = new EventEmitter();
+
   @Output() sendMessage: EventEmitter<ChatMessage> = new EventEmitter();
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
@@ -96,8 +98,6 @@ export class TlChatList implements AfterViewInit, OnDestroy {
 
   public filterControl = '';
 
-  public messages: ChatMessage[] = [];
-
   private _dataSource;
 
   private subscription = new Subscription();
@@ -116,8 +116,20 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     return Status.BUSY;
   }
 
+  ngOnInit() {
+    this.chatService.changeStatus.subscribe(( value: { chatId: string, status: Status } ) => {
+      if ( value.chatId === this.id ) {
+        this.setStatus( value.status );
+      }
+    });
+  }
+
   ngAfterViewInit() {
-    this.chatService.chat = this;
+    this.chatService.createChat(this.id);
+  }
+
+  get messages() {
+    return this.chatService.getAllMessages(this.id);
   }
 
   animationContentDone(event: AnimationEvent) {
@@ -151,49 +163,15 @@ export class TlChatList implements AfterViewInit, OnDestroy {
     return index;
   }
 
-  hasMessages() {
-    const messages = this.messages.filter((value) => {
-      if (value.to && this.user) {
-        return !value.viewed && (value.to.id === this.user.id);
-      }
-    });
-    return messages.length > 0;
-  }
-
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
     this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item) });
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
-    this.readMessages( this.getUnreadMessages(item) );
-    this.newMessages.emit( this.hasMessages() );
-  }
-
-  readMessages( messages: ChatMessage[] ) {
-    this.messages.forEach((item) => {
-      messages.forEach((value) => {
-        if (JSON.stringify(item) === JSON.stringify(value)) {
-          item.viewed = true;
-        }
-      });
-    });
-  }
-
-  readAllMessages() {
-    this.messages.forEach((item: ChatMessage, index, array) => item.viewed = true );
+    this.chatService.readMessages( this.getUnreadMessages(item), this.id );
   }
 
   updatePartner(item: ChatContact) {
     this.partner = item;
-  }
-
-  loadMessages(messages: ChatMessage[]) {
-    this.messages = messages;
-    this.newMessages.emit( this.hasMessages() );
-  }
-
-  appendMessage(message: ChatMessage) {
-    this.messages = [ ...this.messages, message ];
-    this.newMessages.emit( this.hasMessages() );
   }
 
   setStatus(status: Status) {
@@ -209,7 +187,6 @@ export class TlChatList implements AfterViewInit, OnDestroy {
       viewed: false
     };
     this.sendMessage.emit(msm);
-    this.appendMessage(msm);
   }
 
   selectStatus(status) {

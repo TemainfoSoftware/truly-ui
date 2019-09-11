@@ -19,49 +19,78 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from '@angular/core';
-import { ChatMessage } from '../interfaces/chat-message.interface';
-import { TlChatList } from '../chatlist';
-import { Status } from '../enums/status.enum';
+import {Injectable} from '@angular/core';
+import {ChatMessage} from '../interfaces/chat-message.interface';
+import {Status} from '../enums/status.enum';
+import {Subject} from 'rxjs';
 
 @Injectable()
 export class ChatService {
 
-  private chatList: TlChatList[] = [];
+  private chatObject = {};
+
+  public append = new Subject();
+
+  public changeStatus = new Subject();
 
   constructor() {
   }
 
-  set chat( chat ) {
-    this.chatList = [ ...this.chatList, chat ];
+  createChat(chatId: string) {
+    if (!this.existChat(chatId)) {
+      this.chatObject[chatId] = {messages: [], status: Status};
+    }
   }
 
-  private getChat( id: string ) {
-    return this.chatList.filter((item) => item.id === id)[0];
+  existChat(chatId: string) {
+    return this.chatObject.hasOwnProperty(chatId);
   }
 
-  loadMessages( messages: ChatMessage[], chatId?: string ) {
-     this.getChat(chatId || this.getFirstChat() ).loadMessages( messages );
+  loadMessages(messages: ChatMessage[], chatId: string) {
+    if (this.existChat(chatId)) {
+      this.chatObject[chatId].messages = messages;
+    }
   }
 
-  appendMessage( message: ChatMessage, chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).appendMessage( message );
+  getAllMessages(chatId: string) {
+    if (this.chatObject[chatId]) {
+      return this.chatObject[chatId].messages;
+    }
+    return [];
   }
 
-  readAll( chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).readAllMessages();
+
+  appendMessage(message: ChatMessage, chatId?: string) {
+    if (this.existChat(chatId)) {
+      this.chatObject[chatId].messages = [...this.chatObject[chatId].messages, message];
+      this.append.next(message);
+    }
   }
 
-  setStatus(status: Status, chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).setStatus(status);
+  readMessages(messages: ChatMessage[], chatId?: string) {
+    messages.forEach(( val ) => {
+      const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex(( message ) => message.id === val.id );
+      if ( index >= 0 ) {
+        this.chatObject[chatId || this.getFirstChat()].messages[index].viewed = true;
+      }
+    });
+  }
+
+  readAll(chatId?: string) {
+    this.chatObject[chatId || this.getFirstChat()].messages.forEach((item: ChatMessage) => item.viewed = true);
+  }
+
+  setStatus(status: Status, chatId?: string) {
+    this.changeStatus.next({status, chatId});
   }
 
   private getFirstChat() {
-    return this.chatList[0].id;
+    const first = Object.keys(this.chatObject)[0];
+    return this.chatObject[first];
   }
 
-  removeChat( chatId: string ) {
-    this.chatList = this.chatList.filter(value => value.id !== chatId );
+  removeChat(chatId: string) {
+    delete this.chatObject[chatId];
   }
 
 }

@@ -1,4 +1,5 @@
 <tl-chatlist (sendMessage)="send.emit($event)"
+             (readMessage)="onReadMessage($event)"
              [contacts]="contacts"
              [id]="'CHAT-ONE'"
              [user]="user">

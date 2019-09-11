@@ -21,7 +21,12 @@
               </textarea>
             </div>
             <div class="col-md-4">
-              <app-chat3 (send)="onSendMessage($event)" [user]="userTWO" [contacts]="contacts"></app-chat3>
+              <app-chat3 (readMessage)="onRead($event)"
+                         (selectContact)="onSelectContact($event)"
+                         (send)="onSendMessage($event)"
+                         [user]="userTWO"
+                         [contacts]="contacts">
+              </app-chat3>
               <div class="spacer"></div>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

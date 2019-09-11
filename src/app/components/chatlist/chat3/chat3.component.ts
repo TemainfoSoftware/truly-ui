@@ -15,8 +15,20 @@ export class Chat3Component {
 
   @Output() send: EventEmitter<any> = new EventEmitter();
 
+  @Output() readMessage: EventEmitter<any> = new EventEmitter();
+
+  @Output() selectContact: EventEmitter<any> = new EventEmitter();
+
   @ViewChild(TlChatList, {static: false}) chat: TlChatList;
 
   constructor() { }
+
+  onReadMessage($event) {
+    this.readMessage.emit($event);
+  }
+
+  onSelectContact($event) {
+    this.selectContact.emit($event);
+  }
 
 }

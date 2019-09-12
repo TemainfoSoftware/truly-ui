@@ -19,19 +19,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
 import * as jsonEvents from './chatlistdemo-methods.json';
-import { Status } from '../../../../projects/truly-ui/src/components/chatlist/enums/status.enum';
-import { ChatContact } from '../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
-import { ChatService } from '../../../../projects/truly-ui/src/components/chatlist/services/chat.service';
+import {Status} from '../../../../projects/truly-ui/src/components/chatlist/enums/status.enum';
+import {ChatContact} from '../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
+import {ChatService} from '../../../../projects/truly-ui/src/components/chatlist/services/chat.service';
 
-@Component( {
-  selector : 'app-chat',
-  templateUrl : './chatlistdemo.component.html',
-  styleUrls : [ './chatlistdemo.component.scss' ],
-} )
+@Component({
+  selector: 'app-chat',
+  templateUrl: './chatlistdemo.component.html',
+  styleUrls: ['./chatlistdemo.component.scss'],
+})
 export class ChatListDemoComponent implements OnInit {
 
   public dataTableProperties;
@@ -39,16 +39,22 @@ export class ChatListDemoComponent implements OnInit {
   public dataTableEvents;
 
   public contacts: ChatContact[] = [
-    { id: '1', name: 'Brad Pitt', description: 'Actor', status:  Status.ONLINE,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg' },
-    { id: '2', name: 'Emma Watson', description: 'Actress', status:  Status.ONLINE,
+    {
+      id: '1', name: 'Brad Pitt', description: 'Actor', status: Status.ONLINE,
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg'
+    },
+    {
+      id: '2', name: 'Emma Watson', description: 'Actress', status: Status.ONLINE,
       image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Emma_Watson_2013.jpg/220px-Emma_Watson_2013.jpg'
     },
-    { id: '3', name: 'Julia Roberts', description: 'Actress', status:  Status.ONLINE,
+    {
+      id: '3', name: 'Julia Roberts', description: 'Actress', status: Status.ONLINE,
       image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/julia-roberts-transformation-1-1543325921.jpg'
     },
-    { id: '200', name: 'Angelina Jolie', description: 'Actress', status:  Status.ONLINE,
-      image: 'http://midias.gazetaonline.com.br/_midias/jpg/2018/06/13/32703323_241643243091103_7264540910321401856_n-5653514.jpg' },
+    {
+      id: '200', name: 'Angelina Jolie', description: 'Actress', status: Status.ONLINE,
+      image: 'http://midias.gazetaonline.com.br/_midias/jpg/2018/06/13/32703323_241643243091103_7264540910321401856_n-5653514.jpg'
+    },
   ];
 
   public msm = [
@@ -70,9 +76,9 @@ export class ChatListDemoComponent implements OnInit {
     },
   ];
 
-  public userONE =  { id: '1', name: 'Brad Pitt', description: 'Actor', status:  Status.ONLINE };
+  public userONE = {id: '1', name: 'Brad Pitt', description: 'Actor', status: Status.ONLINE};
 
-  public userTWO =  { id: '200', name: 'Angelina Jolie', description: 'Actress', status:  Status.ONLINE };
+  public userTWO = {id: '200', name: 'Angelina Jolie', description: 'Actress', status: Status.ONLINE};
 
   constructor(private chatService: ChatService) {
     this.dataTableProperties = json.dataProperties;
@@ -80,8 +86,8 @@ export class ChatListDemoComponent implements OnInit {
   }
 
   onSendMessage($event) {
-    this.chatService.appendMessage($event, 'CHAT-ONE');
-    this.chatService.appendMessage($event, 'CHAT-TWO');
+    this.chatService.appendMessage($event, this.userONE, 'CHAT-ONE');
+    this.chatService.appendMessage($event, this.userTWO, 'CHAT-TWO');
   }
 
   ngOnInit() {
@@ -92,11 +98,11 @@ export class ChatListDemoComponent implements OnInit {
   }
 
   onRead($event) {
-    this.chatService.readMessages([$event], 'CHAT-TWO');
+    this.chatService.readMessages([$event], this.userTWO, 'CHAT-TWO');
   }
 
   onSelectContact($event) {
-    this.chatService.readMessages( $event.unreadMessages, 'CHAT-TWO' );
+    this.chatService.readMessages($event.unreadMessages, this.userTWO, 'CHAT-TWO');
   }
 
 }

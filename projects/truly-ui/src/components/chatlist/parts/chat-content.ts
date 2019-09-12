@@ -20,23 +20,32 @@
  SOFTWARE.
  */
 import {
-  Component, AfterViewInit, Output, Input, EventEmitter, OnInit, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
+  Component,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {ChatContact} from '../interfaces/chat-contact.interface';
-import {ChatMessage} from '../interfaces/chat-message.interface';
 import {Subscription} from 'rxjs';
 import {ChatStatus} from '../interfaces/chat-status.interface';
 import {DatePipe} from '@angular/common';
 import {I18nService} from '../../i18n/i18n.service';
 import {ChatService} from '../services/chat.service';
+import {ChatMessage} from '../interfaces/chat-message.interface';
 
 @Component({
   selector: 'tl-chat-content',
   templateUrl: './chat-content.html',
   styleUrls: ['./chat-content.scss'],
 })
-export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChanges {
+export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
 
   @Input() id: string;
 
@@ -62,11 +71,17 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChange
 
   @ViewChild('messageContent', {static: true}) messageContent: ElementRef;
 
+  public messages = [];
+
   private opened = false;
 
   public control = new FormControl(null, Validators.required);
 
   public datePipe = new DatePipe(this.i18nService.getLocale().locale);
+
+  public saySomething = this.i18nService.getLocale().ChatList.saySomething;
+
+  public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
 
   private subscription = new Subscription();
 
@@ -74,19 +89,16 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChange
 
   private yesterday = this.i18nService.getLocale().ChatList.yesterday;
 
-  public saySomething = this.i18nService.getLocale().ChatList.saySomething;
-
-  public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
-
-  constructor(private i18nService: I18nService, private chatService: ChatService) {
+  constructor(private i18nService: I18nService,
+              private change: ChangeDetectorRef,
+              private chatService: ChatService) {
     this.opened = true;
   }
 
   ngOnInit() {
-    this.chatService.append.subscribe((message) => {
-      this.readMessage.emit(message);
-      this.setScrollBottom();
-    });
+    this.messages = this.chatService.getAllMessages( this.id );
+    this.listenAppendMessage();
+    this.listenChangeMessages();
   }
 
   ngAfterViewInit() {
@@ -96,21 +108,32 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChange
     });
   }
 
-  get messages() {
-    return this.chatService.getAllMessages(this.id);
+  listenAppendMessage() {
+    this.subscription.add(this.chatService.append.subscribe((message) => {
+      this.readMessage.emit(message);
+      this.setScrollBottom();
+    }));
   }
 
-  filterMessages() {
-    this.messages.filter((item: ChatMessage) => {
+  listenChangeMessages() {
+    this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
+      this.messages = this.filterMessages(messages);
+      this.loadingMessages = false;
+      this.setScrollBottom();
+      this.change.detectChanges();
+    }));
+  }
+
+  filterMessages(collection) {
+    return collection.filter((item: ChatMessage) => {
         if (item.from && item.to) {
           return (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
             (item.from.id === this.partner.id) && (item.to.id === this.user.id);
         }
       }
-    );
-    this.sortMessages();
-    this.loadingMessages = false;
-    this.setScrollBottom();
+    ).sort((a, b) => {
+      return new Date(a.time).getTime() - new Date(b.time).getTime();
+    });
   }
 
   currentDate(date) {
@@ -148,20 +171,6 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy, OnChange
     if (this.control.value) {
       this.message.emit({value: this.control.value, time: new Date()});
       this.control.setValue(null);
-    }
-  }
-
-  sortMessages() {
-    if (this.messages.length > 0) {
-      this.messages.sort((a, b) => {
-        return new Date(a.time).getTime() - new Date(b.time).getTime();
-      });
-    }
-  }
-
-  ngOnChanges({messages}: SimpleChanges) {
-    if (messages && messages['currentValue'].length > 0) {
-      this.filterMessages();
     }
   }
 

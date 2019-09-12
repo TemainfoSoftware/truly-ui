@@ -20,25 +20,25 @@
  SOFTWARE.
  */
 import {
-  Component, ElementRef, EventEmitter, Input, Renderer2, ViewChild, Output, AfterViewInit,
-  OnDestroy, OnInit
+  Component, ElementRef, EventEmitter, Input, Renderer2, ViewChild, Output,
+  OnDestroy, OnInit, ChangeDetectorRef
 } from '@angular/core';
-import { ChatStatus } from './interfaces/chat-status.interface';
-import { ChatContact } from './interfaces/chat-contact.interface';
-import { ChatMessage } from './interfaces/chat-message.interface';
-import { Status } from './enums/status.enum';
-import { Subscription } from 'rxjs';
-import { ChatService } from './services/chat.service';
-import { I18nService } from '../i18n/i18n.service';
+import {ChatStatus} from './interfaces/chat-status.interface';
+import {ChatContact} from './interfaces/chat-contact.interface';
+import {ChatMessage} from './interfaces/chat-message.interface';
+import {Status} from './enums/status.enum';
+import {Subscription} from 'rxjs';
+import {ChatService} from './services/chat.service';
+import {I18nService} from '../i18n/i18n.service';
 
 let uniqueIdentifier = 0;
 
-@Component( {
+@Component({
   selector: 'tl-chatlist',
   templateUrl: './chatlist.html',
-  styleUrls: [ './chatlist.scss' ],
-} )
-export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
+  styleUrls: ['./chatlist.scss'],
+})
+export class TlChatList implements OnInit, OnDestroy {
 
   @Input() maxHeight = '450px';
 
@@ -61,7 +61,7 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
   @Input() user: ChatContact;
 
   @Input('contacts')
-  set contacts( data: ChatContact[] ) {
+  set contacts(data: ChatContact[]) {
     if (data && data.length > 0 && this.user) {
       if (!this.user.id) {
         throw Error('User id not found');
@@ -80,11 +80,9 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
 
-  @Output() newMessages: EventEmitter<boolean> = new EventEmitter();
-
   @Output() selectContact: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('content', {static: false} ) content: ElementRef;
+  @ViewChild('content', {static: false}) content: ElementRef;
 
   public transform = '0';
 
@@ -100,9 +98,15 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
 
   private _dataSource;
 
+  public messages = [];
+
   private subscription = new Subscription();
 
-  constructor(private renderer: Renderer2, private chatService: ChatService, private i18nService: I18nService ) {}
+  constructor(private renderer: Renderer2,
+              private change: ChangeDetectorRef,
+              private chatService: ChatService,
+              private i18nService: I18nService) {
+  }
 
   get online() {
     return Status.ONLINE;
@@ -117,19 +121,24 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.chatService.changeStatus.subscribe(( value: { chatId: string, status: Status } ) => {
-      if ( value.chatId === this.id ) {
-        this.setStatus( value.status );
+    this.listenChangeStatus();
+    this.listenChangeMessages();
+    this.messages = this.chatService.getAllMessages( this.id );
+  }
+
+  listenChangeStatus() {
+    this.subscription.add(this.chatService.changeStatus.subscribe((value: { chatId: string, status: Status }) => {
+      if (value.chatId === this.id) {
+        this.setStatus(value.status);
       }
-    });
+    }));
   }
 
-  ngAfterViewInit() {
-    this.chatService.createChat(this.id);
-  }
-
-  get messages() {
-    return this.chatService.getAllMessages(this.id);
+  listenChangeMessages() {
+    this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
+      this.messages = messages;
+      this.change.detectChanges();
+    }));
   }
 
   animationContentDone(event: AnimationEvent) {
@@ -139,24 +148,21 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getUnreadMessages(item: ChatContact) {
-    if (!item || !item.id) {
-      return [];
-    }
     if (this.messages.length > 0) {
       return this.messages.filter((message: ChatMessage) => {
-        if ( message.from && message.to ) {
-         return (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id);
+        if (message.from && message.to) {
+          return (!message.viewed && message.from.id === item.id) && (message.to.id === this.user.id);
         }
       });
     }
     return [];
   }
 
-  getFilter( statusSelected ) {
+  getFilter(statusSelected) {
     if (statusSelected === this.offline) {
-      return { filter: this.filterControl, status: [this.offline] };
+      return {filter: this.filterControl, status: [this.offline]};
     }
-    return { filter: this.filterControl, status: [this.online, this.busy] };
+    return {filter: this.filterControl, status: [this.online, this.busy]};
   }
 
   trackByFn(index) {
@@ -165,9 +171,9 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
 
   selectPartner(item: ChatContact) {
     this.updatePartner(item);
-    this.selectContact.emit({ ...item, unreadMessages: this.getUnreadMessages(item) });
+    this.selectContact.emit({...item, unreadMessages: this.getUnreadMessages(item)});
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
-    this.chatService.readMessages( this.getUnreadMessages(item), this.id );
+    this.chatService.readMessages( this.getUnreadMessages(item), this.user, this.id);
   }
 
   updatePartner(item: ChatContact) {
@@ -175,7 +181,7 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setStatus(status: Status) {
-    this.changeStatus.emit({ user: this.user, status: status });
+    this.changeStatus.emit({user: this.user, status: status});
   }
 
   onMessage(message: { value: string, time: Date }) {
@@ -201,7 +207,6 @@ export class TlChatList implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-    this.chatService.removeChat( this.id );
   }
 
 }

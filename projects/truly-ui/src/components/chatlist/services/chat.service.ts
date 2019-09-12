@@ -23,6 +23,7 @@ import {Injectable} from '@angular/core';
 import {ChatMessage} from '../interfaces/chat-message.interface';
 import {Status} from '../enums/status.enum';
 import {Subject} from 'rxjs';
+import {ChatContact} from '../interfaces/chat-contact.interface';
 
 @Injectable()
 export class ChatService {
@@ -33,13 +34,11 @@ export class ChatService {
 
   public changeStatus = new Subject();
 
-  constructor() {
-  }
+  public allMessages = new Subject();
 
-  createChat(chatId: string) {
-    if (!this.existChat(chatId)) {
-      this.chatObject[chatId] = {messages: [], status: Status};
-    }
+  public newMessages = new Subject();
+
+  constructor() {
   }
 
   existChat(chatId: string) {
@@ -47,41 +46,59 @@ export class ChatService {
   }
 
   loadMessages(messages: ChatMessage[], chatId: string) {
-    if (this.existChat(chatId)) {
+    if ( !this.existChat(chatId) ) {
+      this.chatObject[chatId] = {messages: []};
+    }
+    if (messages.length > 0) {
       this.chatObject[chatId].messages = messages;
+      this.allMessages.next( this.chatObject[chatId].messages );
     }
   }
 
-  getAllMessages(chatId: string) {
-    if (this.chatObject[chatId]) {
-      return this.chatObject[chatId].messages;
-    }
-    return [];
-  }
-
-
-  appendMessage(message: ChatMessage, chatId?: string) {
+  appendMessage(message: ChatMessage, user: ChatContact, chatId: string) {
     if (this.existChat(chatId)) {
       this.chatObject[chatId].messages = [...this.chatObject[chatId].messages, message];
       this.append.next(message);
+      this.allMessages.next( this.chatObject[chatId].messages );
+      this.newMessages.next( this.hasMessages(this.chatObject[chatId].messages, user) );
     }
   }
 
-  readMessages(messages: ChatMessage[], chatId?: string) {
-    messages.forEach(( val ) => {
-      const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex(( message ) => message.id === val.id );
-      if ( index >= 0 ) {
+  hasMessages( messages, user: ChatContact ) {
+    return messages.filter((value) => {
+      if (value.to && user) {
+        return !value.viewed && (value.to.id === user.id);
+      }
+    }).length > 0;
+  }
+
+  readMessages(messages: ChatMessage[], user: ChatContact, chatId: string) {
+    messages.forEach((val) => {
+      const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex((message) => message.id === val.id);
+      if (index >= 0) {
         this.chatObject[chatId || this.getFirstChat()].messages[index].viewed = true;
       }
     });
+    setTimeout(() => {
+      this.allMessages.next( this.chatObject[chatId].messages );
+      this.newMessages.next( this.hasMessages(this.chatObject[chatId].messages, user) );
+    }, 500);
   }
 
-  readAll(chatId?: string) {
+  readAll(chatId: string) {
     this.chatObject[chatId || this.getFirstChat()].messages.forEach((item: ChatMessage) => item.viewed = true);
+    this.allMessages.next( this.chatObject[chatId].messages );
   }
 
-  setStatus(status: Status, chatId?: string) {
+  setStatus(status: Status, chatId: string) {
     this.changeStatus.next({status, chatId});
+  }
+
+  getAllMessages( chatId: string ) {
+    if ( this.existChat(chatId) ) {
+      return this.chatObject[chatId].messages;
+    }
+    return [];
   }
 
   private getFirstChat() {

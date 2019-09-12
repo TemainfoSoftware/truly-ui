@@ -4,7 +4,6 @@
 
     <ng-container *ngIf="!loadingMessages; else loadMessagesTemplate">
       <ng-container *ngFor="let item of messages | filterMessage; trackBy:trackByFn">
-
           <div class="chat-time">  {{ currentDate(item.date) }}</div>
           <ng-container *ngFor="let msg of item.messages; trackBy:trackByFn">
 
@@ -17,10 +16,8 @@
             </ng-container>
 
         </ng-container>
-
       </ng-container>
     </ng-container>
-
   </div>
 
   <div class="chat-type">

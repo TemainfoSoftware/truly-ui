@@ -42,7 +42,7 @@
 
   @HostListener('click')
   onClick() {
-    if ( !this.button.disabled ) {
+    if ( this.button.disabled && !this.button.disabled ) {
       this.submit.emit();
     }
   }

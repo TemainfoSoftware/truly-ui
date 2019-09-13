@@ -98,7 +98,7 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.messages = this.chatService.getAllMessages(this.id);
+    this.messages = this.filterMessages(this.chatService.getAllMessages(this.id));
     this.listenAppendMessage();
     this.listenChangeMessages();
   }
@@ -161,8 +161,10 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   setScrollBottom() {
-    this.messageContent.nativeElement.scrollTop =
-      (this.messageContent.nativeElement.scrollHeight - this.messageContent.nativeElement.clientHeight);
+    setTimeout(() => {
+      this.messageContent.nativeElement.scrollTop =
+        (this.messageContent.nativeElement.scrollHeight - this.messageContent.nativeElement.clientHeight);
+    }, 200);
   }
 
   setInputFocus() {

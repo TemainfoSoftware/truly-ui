@@ -1,56 +1,54 @@
-/*
-MIT License
 
-Copyright (c) 2019 Temainfo Sistemas
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-import {AfterContentInit, ContentChild, Directive, EventEmitter, HostListener, Output} from '@angular/core';
-import {TlButton} from '../button/button';
+ /*
+ MIT License
+
+ Copyright (c) 2019 Temainfo Sistemas
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ SOFTWARE.
+ */
+ import {AfterContentInit, ContentChild, Directive, EventEmitter, HostListener, Output} from '@angular/core';
+ import { TlButton } from '../button/button';
 
 @Directive({
   selector: '[formSubmit]'
 })
-export class FormSubmitDirective implements AfterContentInit {
+ export class FormSubmitDirective implements  AfterContentInit {
 
-  @ContentChild(TlButton, {static: true}) public button;
+  @ContentChild( TlButton, {static: true}  ) public button;
 
   @Output() submit = new EventEmitter();
 
   @HostListener('keydown.enter')
   onEnter() {
-    if (!this.button.disabled) {
+    if ( !this.button.disabled ) {
       this.submit.emit();
     }
   }
 
   @HostListener('click')
   onClick() {
-    if (this.button.disabled !== undefined) {
-      if (!this.button.disabled) {
-        this.submit.emit();
-      }
+    if ( !this.button.disabled ) {
+      this.submit.emit();
     }
   }
 
-  constructor() {
-  }
+  constructor() {}
 
-  ngAfterContentInit() {
-  }
+  ngAfterContentInit() {}
 
 }

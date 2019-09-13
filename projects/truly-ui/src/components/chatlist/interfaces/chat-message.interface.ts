@@ -24,7 +24,7 @@
  import { ChatContact } from './chat-contact.interface';
 
  export interface ChatMessage {
-   id?: string;
+   id: string;
    to: ChatContact;
    from: ChatContact;
    message: string;

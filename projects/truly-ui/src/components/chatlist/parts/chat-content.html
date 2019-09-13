@@ -1,6 +1,6 @@
 <div class="chat-content-wrapper" [style.height]="'calc(' + maxHeight + ' - 35px)'">
 
-  <div class="chat-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
+  <div class="chat-messages-content" [class.smooth]="smoothScroll" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
 
     <ng-container *ngIf="!loadingMessages; else loadMessagesTemplate">
       <ng-container *ngFor="let item of messages | filterMessage; trackBy:trackByFn">

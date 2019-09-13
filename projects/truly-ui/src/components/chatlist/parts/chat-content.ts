@@ -73,6 +73,8 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
 
   public messages = [];
 
+  public smoothScroll = false;
+
   private opened = false;
 
   public control = new FormControl(null, Validators.required);
@@ -96,7 +98,7 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.messages = this.chatService.getAllMessages( this.id );
+    this.messages = this.chatService.getAllMessages(this.id);
     this.listenAppendMessage();
     this.listenChangeMessages();
   }
@@ -109,7 +111,8 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   listenAppendMessage() {
-    this.subscription.add(this.chatService.append.subscribe((message) => {
+    this.subscription.add(this.chatService.appendAndRead.subscribe((message) => {
+      this.smoothScroll = true;
       this.readMessage.emit(message);
       this.setScrollBottom();
     }));
@@ -117,6 +120,7 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
 
   listenChangeMessages() {
     this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
+      this.smoothScroll = true;
       this.messages = this.filterMessages(messages);
       this.loadingMessages = false;
       this.setScrollBottom();
@@ -157,10 +161,8 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   setScrollBottom() {
-    setTimeout(() => {
-      this.messageContent.nativeElement.scrollTop =
-        (this.messageContent.nativeElement.scrollHeight - this.messageContent.nativeElement.clientHeight);
-    });
+    this.messageContent.nativeElement.scrollTop =
+      (this.messageContent.nativeElement.scrollHeight - this.messageContent.nativeElement.clientHeight);
   }
 
   setInputFocus() {

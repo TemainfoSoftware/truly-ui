@@ -30,7 +30,7 @@ export class ChatService {
 
   private chatObject = {};
 
-  public append = new Subject();
+  public appendAndRead = new Subject();
 
   public changeStatus = new Subject();
 
@@ -41,30 +41,71 @@ export class ChatService {
   constructor() {
   }
 
-  existChat(chatId: string) {
-    return this.chatObject.hasOwnProperty(chatId);
-  }
-
   loadMessages(messages: ChatMessage[], chatId: string) {
-    if ( !this.existChat(chatId) ) {
+    if (!this.existChat(chatId)) {
       this.chatObject[chatId] = {messages: []};
     }
     if (messages.length > 0) {
       this.chatObject[chatId].messages = messages;
-      this.allMessages.next( this.chatObject[chatId].messages );
+      this.allMessages.next(this.chatObject[chatId].messages);
     }
   }
 
   appendMessage(message: ChatMessage, user: ChatContact, chatId: string) {
     if (this.existChat(chatId)) {
       this.chatObject[chatId].messages = [...this.chatObject[chatId].messages, message];
-      this.append.next(message);
-      this.allMessages.next( this.chatObject[chatId].messages );
-      this.newMessages.next( this.hasMessages(this.chatObject[chatId].messages, user) );
+      this.allMessages.next(this.chatObject[chatId].messages);
+      if (message.from.id !== user.id) {
+        this.appendAndRead.next(message);
+        this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+      }
     }
   }
 
-  hasMessages( messages, user: ChatContact ) {
+  readMessages(messages: ChatMessage[], user: ChatContact, chatId: string) {
+    if ( messages.length > 0 && this.isMessagesToUser(messages, user)) {
+      messages.forEach((val) => {
+        const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex((message) => message.id === val.id);
+        if (index >= 0) {
+          this.chatObject[chatId || this.getFirstChat()].messages[index].viewed = true;
+        }
+      });
+      setTimeout(() => {
+        this.allMessages.next(this.chatObject[chatId].messages);
+        this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+      }, 500);
+    }
+  }
+
+  readAll(chatId: string) {
+    this.chatObject[chatId || this.getFirstChat()].messages.forEach((item: ChatMessage) => item.viewed = true);
+    this.allMessages.next(this.chatObject[chatId].messages);
+  }
+
+  setStatus(status: Status, chatId: string) {
+    this.changeStatus.next({status, chatId});
+  }
+
+  getAllMessages(chatId: string) {
+    if (this.existChat(chatId)) {
+      return this.chatObject[chatId].messages;
+    }
+    return [];
+  }
+
+  deleteChat(chatId: string) {
+    delete this.chatObject[chatId];
+  }
+
+  private isMessagesToUser(messages: ChatMessage[], user: ChatContact) {
+    return messages.filter((message) => message.to.id === user.id).length > 0;
+  }
+
+  private existChat(chatId: string) {
+    return this.chatObject.hasOwnProperty(chatId);
+  }
+
+  private hasMessages(messages, user: ChatContact) {
     return messages.filter((value) => {
       if (value.to && user) {
         return !value.viewed && (value.to.id === user.id);
@@ -72,42 +113,9 @@ export class ChatService {
     }).length > 0;
   }
 
-  readMessages(messages: ChatMessage[], user: ChatContact, chatId: string) {
-    messages.forEach((val) => {
-      const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex((message) => message.id === val.id);
-      if (index >= 0) {
-        this.chatObject[chatId || this.getFirstChat()].messages[index].viewed = true;
-      }
-    });
-    setTimeout(() => {
-      this.allMessages.next( this.chatObject[chatId].messages );
-      this.newMessages.next( this.hasMessages(this.chatObject[chatId].messages, user) );
-    }, 500);
-  }
-
-  readAll(chatId: string) {
-    this.chatObject[chatId || this.getFirstChat()].messages.forEach((item: ChatMessage) => item.viewed = true);
-    this.allMessages.next( this.chatObject[chatId].messages );
-  }
-
-  setStatus(status: Status, chatId: string) {
-    this.changeStatus.next({status, chatId});
-  }
-
-  getAllMessages( chatId: string ) {
-    if ( this.existChat(chatId) ) {
-      return this.chatObject[chatId].messages;
-    }
-    return [];
-  }
-
   private getFirstChat() {
     const first = Object.keys(this.chatObject)[0];
     return this.chatObject[first];
-  }
-
-  removeChat(chatId: string) {
-    delete this.chatObject[chatId];
   }
 
 }

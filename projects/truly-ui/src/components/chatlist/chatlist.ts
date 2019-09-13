@@ -186,6 +186,7 @@ export class TlChatList implements OnInit, OnDestroy {
 
   onMessage(message: { value: string, time: Date }) {
     const msm = {
+      id: String(new Date().getTime()),
       to: this.partner,
       from: this.user,
       message: message.value,

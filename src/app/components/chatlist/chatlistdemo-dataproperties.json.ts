@@ -69,9 +69,9 @@ export const dataProperties = [
   {
     name: 'id',
     type: 'string',
-    default: 'null',
-    description: '',
-    options: 'object'
+    default: 'tl-chatlist-NUMBER-OF-CHATS',
+    description: 'ID of chat',
+    options: 'string'
   },
   {
     name: 'user',

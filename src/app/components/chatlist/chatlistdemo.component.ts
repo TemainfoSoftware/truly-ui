@@ -23,6 +23,7 @@ import {Component, OnInit} from '@angular/core';
 
 import * as json from './chatlistdemo-dataproperties.json';
 import * as jsonEvents from './chatlistdemo-methods.json';
+import * as jsonEventsSelector from './chatlistdemo-methods-selector.json';
 import {Status} from '../../../../projects/truly-ui/src/components/chatlist/enums/status.enum';
 import {ChatContact} from '../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
 import {ChatService} from '../../../../projects/truly-ui/src/components/chatlist/services/chat.service';
@@ -36,7 +37,9 @@ export class ChatListDemoComponent implements OnInit {
 
   public dataTableProperties;
 
-  public dataTableEvents;
+  public dataTableMethods;
+
+  public dataTableEventsSelector;
 
   public contacts: ChatContact[] = [
     {
@@ -82,7 +85,8 @@ export class ChatListDemoComponent implements OnInit {
 
   constructor(private chatService: ChatService) {
     this.dataTableProperties = json.dataProperties;
-    this.dataTableEvents = jsonEvents.dataMethods;
+    this.dataTableMethods = jsonEvents.dataMethods;
+    this.dataTableEventsSelector = jsonEventsSelector.dataMethods;
   }
 
   onSendMessage($event) {
@@ -97,11 +101,19 @@ export class ChatListDemoComponent implements OnInit {
     }, 2000);
   }
 
-  onRead($event) {
+  onReadOne($event) {
+    this.chatService.readMessages([$event], this.userONE, 'CHAT-ONE');
+  }
+
+  onReadTwo($event) {
     this.chatService.readMessages([$event], this.userTWO, 'CHAT-TWO');
   }
 
-  onSelectContact($event) {
+  onSelectContactOne($event) {
+    this.chatService.readMessages($event.unreadMessages, this.userONE, 'CHAT-ONE');
+  }
+
+  onSelectContactTwo($event) {
     this.chatService.readMessages($event.unreadMessages, this.userTWO, 'CHAT-TWO');
   }
 

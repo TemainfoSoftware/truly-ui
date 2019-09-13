@@ -7,11 +7,29 @@ export const dataMethods = [
         description: 'The Message Object of Type ChatMessage'
       },
       {
-        event: 'chatId?',
+        event: 'chatId',
         description: 'ID of chat'
       }
     ],
     description: 'Method used to a list of messages',
+  },
+  {
+    name: 'readMessages',
+    parameters: [
+      {
+        event: 'messages',
+        description: 'Array of Messages of Type ChatMessage'
+      },
+      {
+        event: 'user',
+        description: 'User of chat'
+      },
+      {
+        event: 'chatId',
+        description: 'ID of chat'
+      }
+    ],
+    description: 'Method used read messages of chat',
   },
   {
     name: 'appendMessage',
@@ -21,7 +39,11 @@ export const dataMethods = [
         description: 'The Message Object of Type ChatMessage'
       },
       {
-        event: 'chatId?',
+        event: 'user',
+        description: 'User of chat'
+      },
+      {
+        event: 'chatId',
         description: 'ID of chat'
       }
     ],
@@ -31,11 +53,25 @@ export const dataMethods = [
     name: 'readAll',
     parameters: [
       {
-        event: 'chatId?',
+        event: 'chatId',
         description: 'ID of chat'
       }
     ],
     description: 'Method used to read all messages',
+  },
+  {
+    name: 'getAllMessages',
+    parameters: [
+      {
+        event: 'chatId',
+        description: 'ID of chat'
+      }
+    ],
+    description: 'Return all messages of chat',
+  },
+  {
+    name: 'deleteChat',
+    description: 'Remove chat and all messages of it'
   },
   {
     name: 'setStatus',

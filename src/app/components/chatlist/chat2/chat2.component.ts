@@ -16,6 +16,8 @@ export class Chat2Component implements OnInit {
 
   @Output() readMessage: EventEmitter<any> = new EventEmitter();
 
+  @Output() selectContact: EventEmitter<any> = new EventEmitter();
+
   @ViewChild(TlChatList, {static: false}) chat: TlChatList;
 
   constructor() { }
@@ -25,7 +27,11 @@ export class Chat2Component implements OnInit {
 
   onReadMessage($event) {
     this.readMessage.emit($event);
-    console.log('read', $event);
   }
+
+  onSelectContact($event) {
+    this.selectContact.emit($event);
+  }
+
 
 }

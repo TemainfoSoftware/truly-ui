@@ -11,7 +11,7 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
   height: 'auto',
   maximizable: true,
   minimizable: true,
-  fullscreen: true,
+  fullscreen: false,
   closeOnOK: true
 })
 @Component( {
@@ -22,12 +22,10 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 export class FormModalComponent {
 
   public form = new FormGroup({
-    id: new FormControl(''),
     name: new FormControl('',  Validators.required),
     nickname: new FormControl('',  Validators.required),
     email: new FormControl('', [Validators.email, Validators.required]),
     description: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    gender: new FormControl('', Validators.required),
     user: new FormControl('', Validators.required),
     password: new FormControl('', [
       Validators.required,
@@ -36,7 +34,10 @@ export class FormModalComponent {
   });
 
   constructor() {
-    this.form.get('id').disable();
+  }
+
+  onSubmitForm($event) {
+    console.log($event);
   }
 
 }

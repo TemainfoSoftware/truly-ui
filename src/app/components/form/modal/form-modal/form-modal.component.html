@@ -1,8 +1,5 @@
-<tl-form [mode]="'modal'" [formGroup]="form">
+<tl-form [mode]="'modal'" [formGroup]="form" [submitOnLastField]="true" (submitForm)="onSubmitForm($event)">
   <tl-panelgroup [labelGroup]="'General'">
-    <div class="form-group">
-      <tl-input formControlName="id" [labelSize]="'100px'" [label]="'ID'"></tl-input>
-    </div>
     <div class="form-group">
       <tl-input formControlName="name" showValidations [labelSize]="'100px'" [label]="'Name'"></tl-input>
     </div>

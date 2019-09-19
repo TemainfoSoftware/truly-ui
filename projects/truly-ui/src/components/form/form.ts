@@ -443,13 +443,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   setFocusOK() {
-    if ( this.isActiveElementButtonCancel() ) {
+    if ( this.isActiveElementButtonCancel() && this.buttonFormOk ) {
       this.buttonFormOk.buttonElement.nativeElement.focus();
     }
   }
 
   setFocusCancel() {
-    if ( this.isActiveElementButtonOk() ) {
+    if ( this.isActiveElementButtonOk() && this.buttonFormCancel ) {
       this.buttonFormCancel.buttonElement.nativeElement.focus();
     }
   }
@@ -466,10 +466,16 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   isActiveElementButtonOk() {
+    if ( !this.buttonFormOk ) {
+      return false;
+    }
     return document.activeElement === this.buttonFormOk.buttonElement.nativeElement;
   }
 
   isActiveElementButtonCancel() {
+    if ( !this.buttonFormCancel ) {
+      return false;
+    }
     return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
   }
 

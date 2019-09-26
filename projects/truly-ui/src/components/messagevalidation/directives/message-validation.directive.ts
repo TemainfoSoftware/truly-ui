@@ -70,7 +70,7 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
       }]);
     this.overlayRef = this.overlay.create({
       positionStrategy,
-      hasBackdrop: true,
+      hasBackdrop: false,
       disposeOnNavigation: true,
       backdropClass: 'cdk-overlay-transparent-backdrop'
     });

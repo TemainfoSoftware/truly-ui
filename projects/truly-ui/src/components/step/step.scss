@@ -1,0 +1,59 @@
+.step-wrapper {
+  display: flex;
+  align-items: center;
+  >.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+    >.circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #cccccc;
+      color: #7f7c7c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 300ms ease-in-out;
+      &.selected {
+        color: white;
+        background: #66CC99;
+        border: 0;
+      }
+    }
+    >.label {
+      padding: 0 10px;
+      color: #7f7c7c;
+      white-space: nowrap;
+      &.selected {
+        color: #4d4a4a;
+        font-weight: 600;
+      }
+    }
+    >.step-icon {
+      font-size: 32px;
+      color: #66CC99;
+    }
+    >.separator {
+      height: 40px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .line {
+        height: 1px;
+        background: #e0e0e0;
+        width: 100%;
+      }
+    }
+    &:last-child {
+      flex: 0;
+    }
+  }
+
+}
+

@@ -1,0 +1,15 @@
+<div class="step-wrapper">
+  <div class="step-item" *ngFor="let item of stepsArray; let i = index; let last = last">
+    <ng-container *ngIf="!item.templateIcon">
+      <div class="circle" [class.selected]="selected === i">{{ i + 1 }}</div>
+    </ng-container>
+    <div class="step-icon">
+      <ng-container *ngTemplateOutlet="item?.templateIcon"></ng-container>
+    </div>
+    <span class="label" [class.selected]="selected === i">{{ item?.label }}</span>
+    <div class="separator" *ngIf="!last"><div class="line"></div></div>
+  </div>
+</div>
+<div class="step-content">
+  <ng-content></ng-content>
+</div>

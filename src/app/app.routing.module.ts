@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HomeComponent } from './home/home.component';
 import { GettingStartedComponent } from './getting-started/getting-started.component';
 
+
 @NgModule({
   imports: [
     RouterModule.forRoot([
@@ -77,6 +78,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       {
         path: 'contextmenu',
         loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
+      },
+      {
+        path: 'step',
+        loadChildren: './components/step/stepdemo.module#StepDemoModule'
       },
       {
         path: 'datatable',

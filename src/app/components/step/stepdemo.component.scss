@@ -1,0 +1,29 @@
+.footer-step {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.step-form {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-control {
+  padding: 10px 0;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label-selector {
+  padding: 10px 10px 10px 17px;
+  font-size: 16px;
+  font-weight: 600;
+}

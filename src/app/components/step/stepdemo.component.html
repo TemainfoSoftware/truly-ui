@@ -1,0 +1,283 @@
+<div class="router-outlet">
+  <app-showcase-header name="Step" module="StepModule">
+    Steps are really useful to create interactive forms creating an nice feature to the page, increasing the space and consequently a better design.
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-12">
+              <h5>Basic</h5>
+              <div class="flex-center">
+                <div style="width: 600px">
+                  <tl-step (changeStep)="currentStep = $event">
+                    <tl-step-form [form]="formOne" [label]="'Login'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formOne" [mode]="'inline'">
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'User: '" formControlName="user"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'Password: '" [type]="'password'"
+                                        formControlName="password"></tl-input>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <tl-step-form [form]="formTwo" [label]="'Address'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formTwo" [mode]="'inline'">
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'Address: '" formControlName="address"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'City: '" formControlName="city"></tl-input>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <tl-step-form [form]="formTree" [label]="'Payment'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formTree" [mode]="'inline'">
+                            <div style="padding: 10px 0;">
+                              <tl-input [label]="'Card Number: '" formControlName="card"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0;">
+                              <tl-input [label]="'Value: '" formControlName="value" [readonly]="true"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0; display: flex; justify-content: flex-end;">
+                              <tl-checkbox [label]="'Remember'" formControlName="remember"></tl-checkbox>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <div class="footer-step">
+                      <tl-button [color]="'basic'" stepPrevious style="padding: 0 10px" [text]="'Previous'"></tl-button>
+                      <tl-button [color]="'primary'" stepNext style="padding: 0 10px"
+                                 [text]="currentStep === 0 ? 'Login' : 'Next'"></tl-button>
+                      <tl-button [color]="'primary'" stepFinish [text]="'Pay'"></tl-button>
+                    </div>
+                  </tl-step>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-step (changeStep)="currentStep = $event">
+    <tl-step-form [form]="formOne" [label]="'Login'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formOne" [mode]="'inline'">
+            <div class="form-control">
+              <tl-input [label]="'User: '" formControlName="user"></tl-input>
+            </div>
+            <div class="form-control">
+              <tl-input [label]="'Password: '" [type]="'password'" formControlName="password"></tl-input>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+    <tl-step-form [form]="formTwo" [label]="'Address'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formTwo" [mode]="'inline'">
+            <div class="form-control">
+              <tl-input [label]="'Address: '" formControlName="address"></tl-input>
+            </div>
+            <div class="form-control">
+              <tl-input [label]="'City: '" formControlName="city"></tl-input>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+    <tl-step-form [form]="formTree" [label]="'Payment'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formTree" [mode]="'inline'">
+            <div class="form-control">
+              <tl-input [label]="'Card Number: '" formControlName="card"></tl-input>
+            </div>
+            <div class="form-control">
+              <tl-input [label]="'Value: '" formControlName="value" [readonly]="true"></tl-input>
+            </div>
+            <div class="form-control">
+              <tl-checkbox [label]="'Remember'" formControlName="remember"></tl-checkbox>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+   <div class="footer-step">
+      <tl-button [color]="'basic'" stepPrevious style="padding: 0 10px" [text]="'Previous'"></tl-button>
+      <tl-button [color]="'primary'" stepNext style="padding: 0 10px"
+                 [text]="currentStep === 0 ? 'Login' : 'Next'"></tl-button>
+      <tl-button [color]="'primary'" stepFinish [text]="'Pay'"></tl-button>
+   </div>
+</tl-step>
+              </textarea>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Template Icon</h5>
+              <div class="flex-center">
+                <div style="width: 600px">
+                  <tl-step (changeStep)="currentStep = $event">
+                    <ng-template #iconLogin>
+                      <tl-icon [lib]="'ion'" [style]="'ios'">contact</tl-icon>
+                    </ng-template>
+                    <tl-step-form [form]="formOne" [templateIcon]="iconLogin" [label]="'Login'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formOne" [mode]="'inline'">
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'User: '" formControlName="user"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'Password: '" [type]="'password'"
+                                        formControlName="password"></tl-input>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <ng-template #iconAddress>
+                      <tl-icon [lib]="'ion'" [style]="'ios'">paper</tl-icon>
+                    </ng-template>
+                    <tl-step-form [form]="formTwo" [templateIcon]="iconAddress" [label]="'Address'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formTwo" [mode]="'inline'">
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'Address: '" formControlName="address"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0">
+                              <tl-input [label]="'City: '" formControlName="city"></tl-input>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <ng-template #iconPayment>
+                      <tl-icon [lib]="'ion'" [style]="'ios'">card</tl-icon>
+                    </ng-template>
+                    <tl-step-form [form]="formTree" [templateIcon]="iconPayment" [label]="'Payment'">
+                      <div class="step-form">
+                        <div style="width: 400px;">
+                          <tl-form [formGroup]="formTree" [mode]="'inline'">
+                            <div style="padding: 10px 0;">
+                              <tl-input [label]="'Card Number: '" formControlName="card"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0;">
+                              <tl-input [label]="'Value: '" formControlName="value" [readonly]="true"></tl-input>
+                            </div>
+                            <div style="padding: 10px 0; display: flex; justify-content: flex-end;">
+                              <tl-checkbox [label]="'Remember'" formControlName="remember"></tl-checkbox>
+                            </div>
+                          </tl-form>
+                        </div>
+                      </div>
+                    </tl-step-form>
+                    <div class="footer-step">
+                      <tl-button [color]="'basic'" stepPrevious style="padding: 0 10px" [text]="'Previous'"></tl-button>
+                      <tl-button [color]="'primary'" stepNext style="padding: 0 10px"
+                                 [text]="currentStep === 0 ? 'Login' : 'Next'"></tl-button>
+                      <tl-button [color]="'primary'" stepFinish [text]="'Pay'"></tl-button>
+                    </div>
+                  </tl-step>
+                </div>
+              </div>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+ <tl-step (changeStep)="currentStep = $event">
+    <ng-template #iconLogin>
+      <tl-icon [lib]="'ion'" [style]="'ios'">contact</tl-icon>
+    </ng-template>
+    <tl-step-form [form]="formOne" [templateIcon]="iconLogin" [label]="'Login'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formOne" [mode]="'inline'">
+            <div style="padding: 10px 0">
+              <tl-input [label]="'User: '" formControlName="user"></tl-input>
+            </div>
+            <div style="padding: 10px 0">
+              <tl-input [label]="'Password: '" [type]="'password'"
+                        formControlName="password"></tl-input>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+    <ng-template #iconAddress>
+      <tl-icon [lib]="'ion'" [style]="'ios'">paper</tl-icon>
+    </ng-template>
+    <tl-step-form [form]="formTwo" [templateIcon]="iconAddress" [label]="'Address'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formTwo" [mode]="'inline'">
+            <div style="padding: 10px 0">
+              <tl-input [label]="'Address: '" formControlName="address"></tl-input>
+            </div>
+            <div style="padding: 10px 0">
+              <tl-input [label]="'City: '" formControlName="city"></tl-input>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+    <ng-template #iconPayment>
+      <tl-icon [lib]="'ion'" [style]="'ios'">card</tl-icon>
+    </ng-template>
+    <tl-step-form [form]="formTree" [templateIcon]="iconPayment" [label]="'Payment'">
+      <div class="step-form">
+        <div style="width: 400px;">
+          <tl-form [formGroup]="formTree" [mode]="'inline'">
+            <div style="padding: 10px 0;">
+              <tl-input [label]="'Card Number: '" formControlName="card"></tl-input>
+            </div>
+            <div style="padding: 10px 0;">
+              <tl-input [label]="'Value: '" formControlName="value" [readonly]="true"></tl-input>
+            </div>
+            <div style="padding: 10px 0; display: flex; justify-content: flex-end;">
+              <tl-checkbox [label]="'Remember'" formControlName="remember"></tl-checkbox>
+            </div>
+          </tl-form>
+        </div>
+      </div>
+    </tl-step-form>
+    <div class="footer-step">
+      <tl-button [color]="'basic'" stepPrevious style="padding: 0 10px" [text]="'Previous'"></tl-button>
+      <tl-button [color]="'primary'" stepNext style="padding: 0 10px"
+                 [text]="currentStep === 0 ? 'Login' : 'Next'"></tl-button>
+      <tl-button [color]="'primary'" stepFinish [text]="'Pay'"></tl-button>
+    </div>
+</tl-step>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <span class="label-selector">tl-step</span>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+        <span class="label-selector">tl-step-form</span>
+        <app-showcase-table-properties [data]="dataTableProperties2"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

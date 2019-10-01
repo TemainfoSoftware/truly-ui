@@ -16,6 +16,10 @@ export class StepFinishDirective implements AfterViewInit, OnInit {
 
   @HostListener('click')
   onClick() {
+    if ( !this.stepService.isValidateForm() ) {
+      this.stepService.finish();
+      return;
+    }
     if (this.stepService.isFormValid()) {
       this.stepService.finish();
     }
@@ -36,8 +40,10 @@ export class StepFinishDirective implements AfterViewInit, OnInit {
   }
 
   private setDisabled() {
-    this.button.disabled = !this.stepService.isFormValid();
-    this.change.detectChanges();
+    if ( this.stepService.isValidateForm()) {
+      this.button.disabled = !this.stepService.isFormValid();
+      this.change.detectChanges();
+    }
   }
 
   private changes() {

@@ -47,6 +47,7 @@ export { StopwatchModule } from './components/stopwatch/index';
 export { ShortcutModule } from './components/shortcut/index';
 export { SplitButtonModule } from './components/splitbutton/index';
 export { SwitchModule } from './components/switch/index';
+export { StepModule } from './components/step/index';
 export { TabControlModule } from './components/tabcontrol/index';
 export { TextareaModule } from './components/textarea/index';
 export { TimelineModule } from './components/timeline/index';

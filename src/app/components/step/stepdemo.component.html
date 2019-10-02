@@ -1,6 +1,7 @@
 <div class="router-outlet">
   <app-showcase-header name="Step" module="StepModule">
-    Steps are really useful to create interactive forms creating an nice feature to the page, increasing the space and consequently a better design.
+    Steps are really useful to create interactive forms creating an nice feature to the page, increasing the space and
+    consequently a better design.
   </app-showcase-header>
   <div class="showcase">
     <div class="row">
@@ -10,7 +11,7 @@
             <div class="col-md-12">
               <h5>Basic</h5>
               <div class="flex-center">
-                <div style="width: 600px">
+                <div class="step-content">
                   <tl-step (changeStep)="currentStep = $event">
                     <tl-step-form [form]="formOne" [label]="'Login'">
                       <div class="step-form">
@@ -129,7 +130,7 @@
             <div class="col-md-12">
               <h5>Template Icon</h5>
               <div class="flex-center">
-                <div style="width: 600px">
+                <div class="step-content">
                   <tl-step (changeStep)="currentStep = $event">
                     <ng-template #iconLogin>
                       <tl-icon [lib]="'ion'" [style]="'ios'">contact</tl-icon>
@@ -266,6 +267,17 @@
         </app-showcase-card>
       </div>
     </div>
+    <app-card>
+      <div style="padding: 0 10px;">
+        <h4>Directives</h4>
+        <span>The directives are used to control the step, to forward, backward and finish the process.</span>
+        <div style="padding-top: 20px">
+          <p><code>stepPrevious</code> - Used to backward the step, used on tl-button components</p>
+          <p><code>stepNext</code> - Used to forward the step, used on tl-button components</p>
+          <p><code>stepFinish</code> - Used to finish the step, used on tl-button components</p>
+        </div>
+      </div>
+    </app-card>
     <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
       <app-card>
         <span class="label-selector">tl-step</span>

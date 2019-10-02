@@ -1,34 +1,35 @@
-@import "../core/styles/theming/theming";
+@mixin tl-step-theme($theme) {
 
-@mixin _tl-step-theme-schema( $theme, $action ){
-  //SKELETON COMPONENT HERE
-}
+  $basic: map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
 
-@mixin tl-step-theme( $theme ) {
+  .step-wrapper {
+    > .step-item {
+      > .circle {
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+        box-shadow: 0 0 0 1px map-deep-get($basic, "default", "border");
 
-  .tl-step{
-    &.basic {
-      @include _tl-step-theme-schema($theme, 'basic')
-    }
+        &.selected {
+          color: white;
+          background: map-deep-get($primary, "default", "background");
+          box-shadow: none;
+        }
+      }
 
-    &.primary {
-      @include _tl-step-theme-schema($theme, 'primary')
-    }
+      > .label {
+        color: map-deep-get($basic, "default", "foreground");
+      }
 
-    &.success {
-      @include _tl-step-theme-schema($theme, 'success')
-    }
+      > .step-icon {
+        color: map-deep-get($primary, "default", "background");
+      }
 
-    &.danger {
-      @include _tl-step-theme-schema($theme, 'danger')
-    }
-
-    &.warning {
-      @include _tl-step-theme-schema($theme, 'warning')
-    }
-
-    &.information {
-      @include _tl-step-theme-schema($theme, 'information')
+      > .separator {
+        > .line {
+          background: map-deep-get($basic, "default", "background");;
+        }
+      }
     }
   }
 }

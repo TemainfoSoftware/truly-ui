@@ -45,6 +45,7 @@
 @import "../../../splitbutton/splitbutton-theme";
 @import "../../../stopwatch/stopwatch-theme";
 @import "../../../switch/switch-theme";
+@import "../../../step/step-theme";
 @import "../../../tabcontrol/tabcontrol-theme";
 @import "../../../textarea/textarea-theme";
 @import "../../../timepicker/timepicker-theme";
@@ -103,6 +104,7 @@
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
   @include tl-stopwatch-theme($theme);
+  @include tl-step-theme($theme);
   @include tl-switch-theme($theme);
   @include tl-tabcontrol-theme($theme);
   @include tl-textarea-theme($theme);

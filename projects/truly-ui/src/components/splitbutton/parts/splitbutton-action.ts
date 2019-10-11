@@ -23,7 +23,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  Output
+  Output, TemplateRef, ViewChild
 } from '@angular/core';
 
 @Component( {
@@ -40,6 +40,8 @@ export class TlSplitButtonAction {
   @Input() disabled = null;
 
   @Input() separator = false;
+
+  @ViewChild('templateList', { read: TemplateRef, static: true }) templateList;
 
   @Output() click: EventEmitter<any> = new EventEmitter();
 

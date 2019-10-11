@@ -58,10 +58,13 @@ export class TlSplitButton implements AfterContentInit {
 
   public positionOverlay = 'bottom';
 
+  public listItems = [];
+
   constructor(private change: ChangeDetectorRef) {
   }
 
   ngAfterContentInit() {
+    this.listItems = this.actions.map(( item ) => item.templateList );
     this.actions.forEach((item) => item.click.subscribe(() => this.isOpen = false));
   }
 

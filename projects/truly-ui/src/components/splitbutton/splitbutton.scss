@@ -1,5 +1,4 @@
 //Default
-$button-height: 37px;
 $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 $button-font-size: 1em;
 
@@ -8,8 +7,6 @@ $button-font-size: 1em;
 }
 
 .split-wrapper {
-  font-family: $button-font-family;
-  font-size: $button-font-size;
   display: inline-block;
   position: relative;
 
@@ -24,7 +21,6 @@ $button-font-size: 1em;
     > .split-button-actions {
       margin: 0;
       padding: 0;
-      line-height: $button-height;
       cursor: pointer;
       float: right;
       user-select: none;
@@ -42,7 +38,6 @@ $button-font-size: 1em;
       }
     }
   }
-
 }
 
 .icon-arrow {

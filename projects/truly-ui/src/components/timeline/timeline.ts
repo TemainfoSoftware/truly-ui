@@ -52,6 +52,8 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Input() keyTitle = 'title';
 
+  @Input() total = 0;
+
   @Input() keyText = 'text';
 
   @Input() keyDate = 'date';
@@ -148,7 +150,7 @@ export class TlTimeline implements OnInit, OnChanges {
   }
 
   haveMoreData() {
-    return this.take < this.data['total'];
+    return this.take < this.total;
   }
 
   getDataLazy() {
@@ -167,8 +169,8 @@ export class TlTimeline implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges) {
     this.loadingMoreData = false;
     this.change.detectChanges();
-    if (change['data'].currentValue.data) {
-      this.dataFull.push(...change['data'].currentValue.data);
+    if (change['data'].currentValue) {
+      this.dataFull.push(...change['data'].currentValue);
     }
   }
 

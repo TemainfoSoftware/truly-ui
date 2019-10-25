@@ -1,0 +1,48 @@
+.ui-editor-header {
+  height: 40px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: 0;
+  .ui-tools-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: inline-flex;
+    height: inherit;
+    line-height: inherit;
+    li:not(.dropdown) {
+      padding: 0;
+      width: 40px;
+    }
+    li {
+      display: flex;
+      transition: all 200ms ease-in;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.select-font {
+  border: 1px solid #d4d4d4;
+  padding-right: 20px;
+  text-align: left;
+  font-family: Segoe UI, serif;
+  border-radius: 3px;
+}
+
+.ui-command {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  height: 40px;
+  width: 40px;
+  outline: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: #3a3a3a;
+}

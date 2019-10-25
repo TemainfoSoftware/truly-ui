@@ -32,6 +32,8 @@ import { FormModule } from '../form/index';
 import { InputModule } from '../input/index';
 import { TooltipModule } from '../tooltip/index';
 import { ColorPickerModule } from '../colorpicker/index';
+import { InternalsModule } from '../internals/index';
+import { TlEditorHeader } from './parts/editor-header/editor-header';
 
 @NgModule( {
   imports: [
@@ -43,16 +45,19 @@ import { ColorPickerModule } from '../colorpicker/index';
     FormModule,
     InputModule,
     ColorPickerModule,
+    InternalsModule,
   ],
   declarations: [
     TlEditor,
     TlEditorLinkBox,
-    TlEditorImageBox
+    TlEditorImageBox,
+    TlEditorHeader
   ],
   exports: [
     TlEditor,
     TlEditorLinkBox,
-    TlEditorImageBox
+    TlEditorImageBox,
+    TlEditorHeader
   ],
 } )
 export class EditorModule {}

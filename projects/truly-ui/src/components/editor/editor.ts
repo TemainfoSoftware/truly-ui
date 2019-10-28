@@ -29,6 +29,7 @@ import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'tl-editor',
@@ -133,7 +134,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   private onTouched: any = () => {};
 
-  constructor(private i18n: I18nService, private renderer: Renderer2) {
+  constructor(private i18n: I18nService, private renderer: Renderer2, private sanitizer: DomSanitizer) {
     this.fontCollection = [
       {description: 'Arial', value: 'Arial'},
       {description: 'Verdana', value: 'Verdana'},
@@ -464,7 +465,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   writeValue(value: any): void {
-    this.content = value;
+    this.content = this.sanitizer.bypassSecurityTrustHtml(value);
   }
 
   registerOnChange(fn: any): void {

@@ -19,49 +19,103 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Injectable } from '@angular/core';
-import { ChatMessage } from '../interfaces/chat-message.interface';
-import { TlChatList } from '../chatlist';
-import { Status } from '../enums/status.enum';
+import {Injectable} from '@angular/core';
+import {ChatMessage} from '../interfaces/chat-message.interface';
+import {Status} from '../enums/status.enum';
+import {Subject} from 'rxjs';
+import {ChatContact} from '../interfaces/chat-contact.interface';
 
 @Injectable()
 export class ChatService {
 
-  private chatList: TlChatList[] = [];
+  private chatObject = {};
+
+  public appendAndRead = new Subject();
+
+  public changeStatus = new Subject();
+
+  public allMessages = new Subject();
+
+  public newMessages = new Subject();
 
   constructor() {
   }
 
-  set chat( chat ) {
-    this.chatList = [ ...this.chatList, chat ];
+  loadMessages(messages: ChatMessage[], chatId: string) {
+    if (!this.existChat(chatId)) {
+      this.chatObject[chatId] = {messages: []};
+    }
+    if (messages.length > 0) {
+      this.chatObject[chatId].messages = messages;
+      this.allMessages.next(this.chatObject[chatId].messages);
+    }
   }
 
-  private getChat( id: string ) {
-    return this.chatList.filter((item) => item.id === id)[0];
+  appendMessage(message: ChatMessage, user: ChatContact, chatId: string) {
+    if (this.existChat(chatId)) {
+      this.chatObject[chatId].messages = [...this.chatObject[chatId].messages, message];
+      this.allMessages.next(this.chatObject[chatId].messages);
+      if (message.from.id !== user.id) {
+        this.appendAndRead.next(message);
+        this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+      }
+    }
   }
 
-  loadMessages( messages: ChatMessage[], chatId?: string ) {
-     this.getChat(chatId || this.getFirstChat() ).loadMessages( messages );
+  readMessages(messages: ChatMessage[], user: ChatContact, chatId: string) {
+    if ( messages.length > 0 && this.isMessagesToUser(messages, user)) {
+      messages.forEach((val) => {
+        const index = this.chatObject[chatId || this.getFirstChat()].messages.findIndex((message) => message.id === val.id);
+        if (index >= 0) {
+          this.chatObject[chatId || this.getFirstChat()].messages[index].viewed = true;
+        }
+      });
+      setTimeout(() => {
+        this.allMessages.next(this.chatObject[chatId].messages);
+        this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+      }, 500);
+    }
   }
 
-  appendMessage( message: ChatMessage, chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).appendMessage( message );
+  readAll(chatId: string) {
+    this.chatObject[chatId || this.getFirstChat()].messages.forEach((item: ChatMessage) => item.viewed = true);
+    this.allMessages.next(this.chatObject[chatId].messages);
   }
 
-  readAll( chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).readAllMessages();
+  setStatus(status: Status, chatId: string) {
+    this.changeStatus.next({status, chatId});
   }
 
-  setStatus(status: Status, chatId?: string ) {
-    this.getChat(chatId || this.getFirstChat()).setStatus(status);
+  getAllMessages(chatId: string) {
+    if (this.existChat(chatId)) {
+      return this.chatObject[chatId].messages;
+    }
+    return [];
+  }
+
+  deleteChat(chatId: string) {
+    delete this.chatObject[chatId];
+  }
+
+  private isMessagesToUser(messages: ChatMessage[], user: ChatContact) {
+    return messages.filter((message) => message.to.id === user.id).length > 0;
+  }
+
+  private existChat(chatId: string) {
+    return this.chatObject.hasOwnProperty(chatId);
+  }
+
+  private hasMessages(messages, user: ChatContact) {
+    return messages.filter((value) => {
+      if (value.to && user) {
+        return !value.viewed && (value.to.id === user.id);
+      }
+    }).length > 0;
   }
 
   private getFirstChat() {
-    return this.chatList[0].id;
-  }
-
-  removeChat( chatId: string ) {
-    this.chatList = this.chatList.filter(value => value.id !== chatId );
+    const first = Object.keys(this.chatObject)[0];
+    return this.chatObject[first];
   }
 
 }

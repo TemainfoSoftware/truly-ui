@@ -1,0 +1,35 @@
+@mixin tl-step-theme($theme) {
+
+  $basic: map-deep-get($theme, 'basic');
+  $primary: map-deep-get($theme, 'primary');
+
+  .step-wrapper {
+    > .step-item {
+      > .circle {
+        background-color: map-deep-get($basic, "default", "background");
+        color: map-deep-get($basic, "default", "foreground");
+        box-shadow: 0 0 0 1px map-deep-get($basic, "default", "border");
+
+        &.selected {
+          color: white;
+          background: map-deep-get($primary, "default", "background");
+          box-shadow: none;
+        }
+      }
+
+      > .label {
+        color: map-deep-get($basic, "default", "foreground");
+      }
+
+      > .step-icon {
+        color: map-deep-get($primary, "default", "background");
+      }
+
+      > .separator {
+        > .line {
+          background: map-deep-get($basic, "default", "background");;
+        }
+      }
+    }
+  }
+}

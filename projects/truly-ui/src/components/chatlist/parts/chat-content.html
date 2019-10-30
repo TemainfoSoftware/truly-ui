@@ -1,10 +1,9 @@
 <div class="chat-content-wrapper" [style.height]="'calc(' + maxHeight + ' - 35px)'">
 
-  <div class="chat-messages-content" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
+  <div class="chat-messages-content" [class.smooth]="smoothScroll" #messageContent [style.height]="'calc(' + maxHeight + ' - 75px)'">
 
     <ng-container *ngIf="!loadingMessages; else loadMessagesTemplate">
       <ng-container *ngFor="let item of messages | filterMessage; trackBy:trackByFn">
-
           <div class="chat-time">  {{ currentDate(item.date) }}</div>
           <ng-container *ngFor="let msg of item.messages; trackBy:trackByFn">
 
@@ -17,10 +16,8 @@
             </ng-container>
 
         </ng-container>
-
       </ng-container>
     </ng-container>
-
   </div>
 
   <div class="chat-type">
@@ -54,7 +51,6 @@
   <div class="chat-partner">
     <div class="chat-text-content">
       <div class="chat-arrow"></div>
-
       <p>{{ message?.message }}</p>
       <span>{{ message.time | date:'HH:mm' }}</span>
     </div>

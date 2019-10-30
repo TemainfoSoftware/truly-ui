@@ -235,6 +235,7 @@
         <tl-dropdown-list
           class="list-themes"
           [data]="data"
+          [placeholder]="'Select Theme'"
           [keyText]="'textItem'"
           [keyValue]="'value'"
           [width]="'150px'"
@@ -307,6 +308,22 @@
             <li>
               <a href="#" routerLink="splitbutton" routerLinkActive="active">
                 <tl-icon [icon]="'circle'" [lib]="'fa'" [style]="'far'" [size]="'10px'"></tl-icon> SplitButton
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <tl-icon [lib]="'fa'">list-alt</tl-icon>
+            <span>ChatList</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li>
+              <a href="#" routerLink="chatlist" routerLinkActive="active">
+                <tl-icon [icon]="'circle'" [lib]="'fa'" [style]="'far'" [size]="'10px'"></tl-icon> Overview
               </a>
             </li>
           </ul>
@@ -544,6 +561,11 @@
             <li>
               <a href="#" routerLink="panelgroup" routerLinkActive="active">
                 <tl-icon [icon]="'circle'" [lib]="'fa'" [style]="'far'" [size]="'10px'"></tl-icon> PanelGroup
+              </a>
+            </li>
+            <li>
+              <a href="#" routerLink="step" routerLinkActive="active">
+                <tl-icon [icon]="'circle'" [lib]="'fa'" [style]="'far'" [size]="'10px'"></tl-icon> Step
               </a>
             </li>
             <li>

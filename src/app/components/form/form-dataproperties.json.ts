@@ -49,6 +49,13 @@ export const dataProperties = [
     options: 'true | false'
   },
   {
+    name: 'submitOnLastField',
+    type: 'boolean',
+    default: 'false',
+    description: 'Defines if the form should submit values when enter key is pressed on last field.',
+    options: 'true | false'
+  },
+  {
     name: 'messageDialogConfirmation',
     type: 'string',
     default: 'null',

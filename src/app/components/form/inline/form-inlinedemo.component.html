@@ -13,7 +13,7 @@
                 <div class="col-12">
                   <tl-tabcontrol [height]="'250px'">
                     <tl-tab [title]="'General'">
-                      <tl-form [formGroup]="form" [mode]="'inline'" (submitForm)="onSubmit($event)">
+                      <tl-form [formGroup]="form" [mode]="'inline'" [submitOnLastField]="true" (submitForm)="onSubmit($event)">
                         <div class="form-group">
                           <tl-input [label]="'Name'" formControlName="name"></tl-input>
                         </div>
@@ -22,9 +22,6 @@
                         </div>
                         <div class="form-group">
                           <tl-input [mask]="'99.99.9999'" [label]="'Birthday'" formControlName="birthday"></tl-input>
-                        </div>
-                        <div class="form-group col-md-offset-1" style="float: left;">
-                          <tl-checkbox [color]="'primary'" [label]="'Active'" formControlName="active"></tl-checkbox>
                         </div>
                         <div class="form-group" style="float: right;">
                           <tl-button [color]="'primary'" [text]="'Submit Form'" [disabled]="!form.valid"

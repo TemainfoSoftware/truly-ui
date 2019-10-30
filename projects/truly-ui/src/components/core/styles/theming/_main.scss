@@ -39,6 +39,7 @@
   @include tl-progressbar-theme($theme);
   @include tl-radiobutton-theme($theme);
   @include tl-splitbutton-theme($theme);
+  @include tl-step-theme($theme);
   @include tl-stopwatch-theme($theme);
   @include tl-switch-theme($theme);
   @include tl-tag-theme($theme);

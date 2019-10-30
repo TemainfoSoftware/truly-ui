@@ -1,0 +1,51 @@
+.step-wrapper {
+  display: flex;
+  align-items: center;
+  >.step-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+    padding: 0 10px;
+    box-sizing: border-box;
+    >.circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 300ms ease-in-out;
+      &.selected {
+        border: 0;
+      }
+    }
+    >.label {
+      padding: 0 10px;
+      white-space: nowrap;
+      &.selected {
+        font-weight: 600;
+      }
+    }
+    >.step-icon {
+      font-size: 32px;
+    }
+    >.separator {
+      height: 40px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .line {
+        height: 1px;
+        width: 100%;
+      }
+    }
+    &:last-child {
+      flex: 0;
+    }
+  }
+
+}
+

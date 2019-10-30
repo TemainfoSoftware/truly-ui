@@ -6,7 +6,6 @@
   .chat-messages-content {
     overflow-y: auto;
     height: 410px;
-    scroll-behavior: smooth;
     background: rgb(229, 221, 213);
     text-align: center;
     &:before {
@@ -37,6 +36,9 @@
     &::-webkit-scrollbar-thumb {
       background: #e4e4e4;
       border-radius: 5px;
+    }
+    &.smooth {
+      scroll-behavior: smooth;
     }
   }
 }
@@ -86,6 +88,7 @@
       margin: 0;
       line-height: 20px;
       font-family: Segoe UI, serif;
+      text-align: left;
     }
     > span {
       font-size: .8em;

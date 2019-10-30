@@ -21,13 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
- import {AfterContentInit, ContentChild, Directive, EventEmitter, HostListener, Output} from '@angular/core';
+ import { ContentChild, Directive, EventEmitter, HostListener, Output} from '@angular/core';
  import { TlButton } from '../button/button';
 
 @Directive({
   selector: '[formSubmit]'
 })
- export class FormSubmitDirective implements  AfterContentInit {
+ export class FormSubmitDirective {
 
   @ContentChild( TlButton, {static: true}  ) public button;
 
@@ -35,20 +35,18 @@
 
   @HostListener('keydown.enter')
   onEnter() {
-    if ( !this.button.disabled ) {
+    if ( this.button && !this.button.disabled ) {
       this.submit.emit();
     }
   }
 
   @HostListener('click')
   onClick() {
-    if ( !this.button.disabled ) {
+    if ( this.button && !this.button.disabled ) {
       this.submit.emit();
     }
   }
 
   constructor() {}
-
-  ngAfterContentInit() {}
 
 }

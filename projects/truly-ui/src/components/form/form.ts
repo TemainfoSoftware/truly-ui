@@ -75,6 +75,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() isLoading = false;
 
+  @Input() submitOnLastField = false;
+
   @Input() primaryKey = '';
 
   @Input() messageDialogConfirmation = 'Are you sure ?';
@@ -369,7 +371,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         if ( !this.isTextArea() ) {
           $event.preventDefault();
         }
-        this.forwardTabbing();
+        this.forwardTabbing('enter');
         break;
     }
   }
@@ -394,7 +396,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     return (this.focusElements[ 0 ].getAttribute( 'disabled' )) && (this.focusElements[ 1 ] === document.activeElement);
   }
 
-  forwardTabbing() {
+  forwardTabbing( keyEnter?: string ) {
     this.change.detectChanges();
     if ( this.isLastTabIndexOfForm() ) {
       return this.focusElements[ 0 ].focus();
@@ -404,6 +406,10 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     }
     const nextElement = (document.activeElement as HTMLElement).tabIndex + 1;
     for ( let element = nextElement; element < this.focusElements.length; element++ ) {
+      if ( this.focusElements[element].localName === 'button' && this.submitOnLastField && keyEnter) {
+        this.onSubmitForm();
+        return;
+      }
       if ( !this.isElementDisabled( this.focusElements[ element ] ) ) {
         return this.focusElements[ element ].focus();
       }
@@ -437,13 +443,13 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   setFocusOK() {
-    if ( this.isActiveElementButtonCancel() ) {
+    if ( this.isActiveElementButtonCancel() && this.buttonFormOk ) {
       this.buttonFormOk.buttonElement.nativeElement.focus();
     }
   }
 
   setFocusCancel() {
-    if ( this.isActiveElementButtonOk() ) {
+    if ( this.isActiveElementButtonOk() && this.buttonFormCancel ) {
       this.buttonFormCancel.buttonElement.nativeElement.focus();
     }
   }
@@ -460,10 +466,16 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   }
 
   isActiveElementButtonOk() {
+    if ( !this.buttonFormOk ) {
+      return false;
+    }
     return document.activeElement === this.buttonFormOk.buttonElement.nativeElement;
   }
 
   isActiveElementButtonCancel() {
+    if ( !this.buttonFormCancel ) {
+      return false;
+    }
     return document.activeElement === this.buttonFormCancel.buttonElement.nativeElement;
   }
 

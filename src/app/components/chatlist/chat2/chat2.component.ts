@@ -14,11 +14,24 @@ export class Chat2Component implements OnInit {
 
   @Output() send: EventEmitter<any> = new EventEmitter();
 
+  @Output() readMessage: EventEmitter<any> = new EventEmitter();
+
+  @Output() selectContact: EventEmitter<any> = new EventEmitter();
+
   @ViewChild(TlChatList, {static: false}) chat: TlChatList;
 
   constructor() { }
 
   ngOnInit() {
   }
+
+  onReadMessage($event) {
+    this.readMessage.emit($event);
+  }
+
+  onSelectContact($event) {
+    this.selectContact.emit($event);
+  }
+
 
 }

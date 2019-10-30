@@ -1,58 +1,50 @@
-<div [class]="'ui-editor-wrapper ' + color" #wrapper>
-  <div class="ui-editor-header">
-    <ul class="ui-tools-list">
-      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font?.family?.show">
-        <tl-dropdown-list [data]="dataFont"
-                          (ngModelChange)="onChangeFont($event)"
-                          [keyText]="'textItem'"
-                          [keyValue]="'value'"
-                          [(ngModel)]="font">
-        </tl-dropdown-list>
-      </li>
-      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.size?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.size?.show">
-        <tl-dropdown-list [data]="dataFontSize" (ngModelChange)="onChangeFontSize($event)" [(ngModel)]="fontSize"></tl-dropdown-list>
-      </li>
-      <li [tooltip]="{text: toolbarConfig.font?.bold?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.bold?.show"><button class="ui-command fa fa-bold" [ngClass]="{'ui-active-tool': activeTools.bold}" (click)="setBold()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.font.italic?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.italic?.show"><button class="ui-command fa fa-italic" [ngClass]="{'ui-active-tool': activeTools.italic}" (click)="setItalic()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.font.underline?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.underline?.show"><button class="ui-command fa fa-underline" [ngClass]="{'ui-active-tool': activeTools.underline}" (click)="setUnderline()"></button></li>
-      <li [style.border-bottom]="'2px solid ' + colorSelected" #button  [tooltip]="{text: toolbarConfig.font.color?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.color?.show">
-        <button class="ui-command fa fa-font"></button>
-        <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true" [(ngModel)]="colorSelected" [returnFormatColor]="true" (selectColor)="onChangeColor($event)"></tl-colorpicker>
-      </li>
-      <li [tooltip]="{text: toolbarConfig.font.highlight?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.font.highlight?.show"><button class="ui-command fa fa-pencil" [ngClass]="{'ui-active-tool': cursorHighlight}" (click)="setHighlight()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.alignment?.left?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.alignment?.left?.show"><button class="ui-command fa fa-align-left" [ngClass]="{'ui-active-tool': activeTools.alignLeft}" (click)="alignContent('justifyLeft')"></button></li>
-      <li [tooltip]="{text: toolbarConfig.alignment?.center?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.alignment?.center?.show"><button class="ui-command fa fa-align-center" [ngClass]="{'ui-active-tool': activeTools.alignCenter}" (click)="alignContent('justifyCenter')"></button></li>
-      <li [tooltip]="{text: toolbarConfig.alignment?.right?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.alignment?.right?.show"><button class="ui-command fa fa-align-right" [ngClass]="{'ui-active-tool': activeTools.alignRight}" (click)="alignContent('justifyRight')"></button></li>
-      <li [tooltip]="{text: toolbarConfig.alignment?.justify?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.alignment?.justify?.show"><button class="ui-command fa fa-align-justify" [ngClass]="{'ui-active-tool': activeTools.alignJustify}" (click)="alignContent('justifyFull')"></button></li>
-      <li [tooltip]="{text: toolbarConfig.lists?.ordered?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.lists?.ordered?.show"><button class="ui-command fa fa-list-ul" [ngClass]="{'ui-active-tool': activeTools.listUnordered}" (click)="setUnorderedList()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.lists?.unordered?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.lists?.unordered?.show"><button class="ui-command fa fa-list-ol" [ngClass]="{'ui-active-tool': activeTools.listOrdered}" (click)="setOrderedList()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.others?.link?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.others?.link?.show"><button class="ui-command fa fa-link" (click)="toggleLinkBox(); setDescriptionLink();"></button></li>
-      <li [tooltip]="{text: toolbarConfig.others?.imageLink?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.others?.imageLink?.show"><button class="ui-command fa ion-image" (click)="toggleImageBox()"></button></li>
-      <li [tooltip]="{text: toolbarConfig.others?.quote?.tooltipText, placement: 'top-center'}" *ngIf="toolbarConfig.others?.quote?.show"><button class="ui-command fa ion-quote" [ngClass]="{'ui-active-tool': activeTools.blockQuote}" (click)="setQuote()"></button></li>
-    </ul>
+<div class="ui-editor">
+  <tl-label *ngIf="label" [labelTitle]="label" [labelSize]="labelSize" [labelPlacement]="labelPlacement"></tl-label>
+  <div [class]="'ui-editor-wrapper ' + color" #wrapper>
+    <tl-editor-header [toolbarConfig]="toolbarConfig"
+                      [activeTools]="activeTools"
+                      [cursorHighlight]="cursorHighlight"
+                      [color]="color"
+                      [fontCollection]="fontCollection"
+                      [fontSizeCollection]="fontSizeCollection"
+                      (changeColor)="onChangeColor($event)"
+                      (changeFont)="onChangeFont($event)"
+                      (changeFontSize)="onChangeFontSize($event)"
+                      (clickBold)="setBold()"
+                      (clickItalic)="setItalic()"
+                      (clickHighlight)="setHighlight()"
+                      (clickOrderedList)="setOrderedList()"
+                      (clickAlignContent)="alignContent($event)"
+                      (clickLink)="toggleLinkBox(); setDescriptionLink()"
+                      (clickUnorderedList)="setUnorderedList()"
+                      (clickUnderline)="setUnderline()"
+                      (clickImage)="toggleImageBox()"
+                      (clickQuote)="setQuote()">
+    </tl-editor-header>
+    <div #contentEditor
+         tabindex="-1"
+         class="ui-editor-content"
+         [style.height]="height"
+         (input)="change($event)"
+         (click)="setCursorSelection()"
+         (keydown)="onKeyDownSave($event)"
+         (mouseup)="onMouseUp()"
+         [attr.contenteditable]="contentEditable"
+         [innerHTML]="content">
+    </div>
+    <div class="ui-saved-content-message" [@enterAnimation]="saved" *ngIf="saved">
+      <i class="ion-ios-checkmark-outline"></i>
+      <span>Saved !</span>
+    </div>
+    <tl-editor-link-box [descriptionLink]="descriptionLink"
+                        *ngIf="toggleLink && !toggleImage"
+                        (onSetLink)="setLink($event)"
+                        (onToggleLink)="toggleLinkBox()">
+    </tl-editor-link-box>
+    <tl-editor-image-box *ngIf="toggleImage && !toggleLink"
+                         [imageUrl]="image.imageUrl"
+                         (onSetImage)="setImage($event)"
+                         (onToggleImage)="toggleImageBox()">
+    </tl-editor-image-box>
   </div>
-
-  <div #contentEditor
-       tabindex="-1"
-       class="ui-editor-content"
-       [style.height]="height"
-       (keydown)="onKeyDownSave($event)"
-       (mouseup)="onMouseUp()"
-       (click)="setCursorSelection()"
-       [attr.contenteditable]="contentEditable" [innerHTML]="content">
-  </div>
-  <div class="ui-saved-content-message" [@enterAnimation]="saved" *ngIf="saved">
-    <i class="ion-ios-checkmark-outline"></i>
-    <span>Saved !</span>
-  </div>
-  <tl-editor-link-box [descriptionLink]="descriptionLink"
-                      *ngIf="toggleLink && !toggleImage"
-                      (onSetLink)="setLink($event)"
-                      (onToggleLink)="toggleLinkBox()">
-  </tl-editor-link-box>
-  <tl-editor-image-box *ngIf="toggleImage && !toggleLink"
-                       [imageUrl]="image.imageUrl"
-                       (onSetImage)="setImage($event)"
-                       (onToggleImage)="toggleImageBox()">
-  </tl-editor-image-box>
 </div>

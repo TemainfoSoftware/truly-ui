@@ -1,0 +1,9 @@
+<ng-template #templateList>
+  <li class="split-item"
+      [class.disabled]="disabled"
+      [class.separator]="separator"
+      (click)="onClickListener($event)">
+    <i *ngIf="icon" class="icon-action {{ icon }}"></i>
+    {{ label }}
+  </li>
+</ng-template>

@@ -1,5 +1,4 @@
 <div class="split-wrapper" [ngClass]="color">
-
   <div class="split-content" #split>
     <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
                [color]="color"
@@ -10,9 +9,10 @@
                [height]="height">
     </tl-button>
     <div [class.active]="isOpen"
-         (click)="isOpen = !isOpen; $event.stopPropagation()"
+         (click)="open($event)"
+         [class.disabled]="disabledActions"
          class="split-button-actions"
-         [ngStyle]="{'height': height, 'line-height': height, 'box-sizing': 'border-box'}">
+         [ngStyle]="{'height': height, 'line-height': height}">
       <div class="icon-arrow" [style.transform]="isOpen ? 'rotate(180deg)' : 'rotate(0)'">
         <tl-icon [lib]="'fa'" [style]="'fas'">chevron-down</tl-icon>
       </div>
@@ -24,13 +24,14 @@
                    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                    [cdkConnectedOverlayOpen]="isOpen">
         <ul @overlay
-            [style.width]="split.offsetWidth + 'px'"
+            [style.minWidth]="split.offsetWidth + 'px'"
             [class.border-top]="positionOverlay === 'top'"
             class="actions-menu">
-            <ng-content></ng-content>
+            <ng-container *ngFor="let item of listItems">
+              <ng-container *ngTemplateOutlet="item"></ng-container>
+            </ng-container>
         </ul>
       </ng-template>
     </div>
   </div>
-
 </div>

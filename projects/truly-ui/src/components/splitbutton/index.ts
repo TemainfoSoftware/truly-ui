@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { TlSplitButton } from './splitbutton';
-import { TlSplitButtonAction } from './splitbutton-action';
+import { TlSplitButtonAction } from './parts/splitbutton-action';
 
 import { ButtonModule } from '../button/index';
 import { IconsModule } from '../icons/index';

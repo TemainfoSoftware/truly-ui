@@ -72,10 +72,10 @@ export const dataProperties2 = [
     options: 'ion-printer | fa fa-home | any'
   },
   {
-    name: 'separator',
+    name: 'disabled',
     type: 'boolean',
     default: 'false',
-    description: 'Creates a separator below action label if set to true.',
+    description: 'Disables the button if set to true.',
     options: 'true | false'
-  }
+  },
 ];

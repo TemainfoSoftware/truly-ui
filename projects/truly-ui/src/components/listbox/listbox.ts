@@ -101,6 +101,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Input() rowsPage = 10;
 
+  @Input() selectOnInitialize = true;
+
   @Input() lazyMode = false;
 
   @Output() clickItem: EventEmitter<any> = new EventEmitter();
@@ -152,7 +154,9 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
   }
 
   private initializeListBox() {
-    this.setSelected(this.listItems.toArray()[0]);
+    if ( this.selectOnInitialize ) {
+      this.setSelected(this.listItems.toArray()[0]);
+    }
     this.setItemsByRowSet();
     this.setItemsByScroll();
     this.setContainer();

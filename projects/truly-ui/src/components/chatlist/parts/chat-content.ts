@@ -20,22 +20,34 @@
  SOFTWARE.
  */
 import {
-  Component, AfterViewInit, Output, Input, EventEmitter, ViewChild, ElementRef, OnDestroy, SimpleChanges, OnChanges,
+  Component,
+  AfterViewInit,
+  Output,
+  Input,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ChatContact } from '../interfaces/chat-contact.interface';
-import { ChatMessage } from '../interfaces/chat-message.interface';
-import { Subscription } from 'rxjs';
-import { ChatStatus } from '../interfaces/chat-status.interface';
-import { DatePipe } from '@angular/common';
+import {FormControl, Validators} from '@angular/forms';
+import {ChatContact} from '../interfaces/chat-contact.interface';
+import {Subscription} from 'rxjs';
+import {ChatStatus} from '../interfaces/chat-status.interface';
+import {DatePipe} from '@angular/common';
 import {I18nService} from '../../i18n/i18n.service';
+import {ChatService} from '../services/chat.service';
+import {ChatMessage} from '../interfaces/chat-message.interface';
 
-@Component( {
+@Component({
   selector: 'tl-chat-content',
   templateUrl: './chat-content.html',
-  styleUrls: [ './chat-content.scss' ],
-} )
-export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
+  styleUrls: ['./chat-content.scss'],
+})
+export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
+
+  @Input() id: string;
 
   @Input() maxHeight = '450px';
 
@@ -45,19 +57,23 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   @Input() loadingMessages = true;
 
-  @Input() messages: ChatMessage[] = [];
-
   @Input() chatStatus: ChatStatus = {
     BUSY: '#ffc019',
     ONLINE: '#66cc99',
     OFFLINE: '#ff3100'
   };
 
+  @Output() readMessage = new EventEmitter();
+
   @Output() message: EventEmitter<{ value: string, time: Date }> = new EventEmitter();
 
-  @ViewChild('input', {static: true} ) input: ElementRef;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
-  @ViewChild('messageContent', {static: true} ) messageContent: ElementRef;
+  @ViewChild('messageContent', {static: true}) messageContent: ElementRef;
+
+  public messages = [];
+
+  public smoothScroll = false;
 
   private opened = false;
 
@@ -65,49 +81,78 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   public datePipe = new DatePipe(this.i18nService.getLocale().locale);
 
+  public saySomething = this.i18nService.getLocale().ChatList.saySomething;
+
+  public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
+
   private subscription = new Subscription();
 
   private today = this.i18nService.getLocale().ChatList.today;
 
   private yesterday = this.i18nService.getLocale().ChatList.yesterday;
 
-  public saySomething = this.i18nService.getLocale().ChatList.saySomething;
-
-  public loadingMessagesLabel = this.i18nService.getLocale().ChatList.loadingMessages;
-
-  constructor(private i18nService: I18nService) {
+  constructor(private i18nService: I18nService,
+              private change: ChangeDetectorRef,
+              private chatService: ChatService) {
     this.opened = true;
+  }
+
+  ngOnInit() {
+    this.messages = this.filterMessages(this.chatService.getAllMessages(this.id));
+    this.listenAppendMessage();
+    this.listenChangeMessages();
   }
 
   ngAfterViewInit() {
     setTimeout(() => {
       this.setInputFocus();
+      this.setScrollBottom();
     });
   }
 
-  filterMessages() {
-    this.messages = this.messages.filter((item: ChatMessage, index, array) =>
-      (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
-      (item.from.id === this.partner.id) && (item.to.id === this.user.id)
-    );
-    this.sortMessages();
-    this.loadingMessages = false;
-    this.setScrollBottom();
+  listenAppendMessage() {
+    this.subscription.add(this.chatService.appendAndRead.subscribe((message) => {
+      this.smoothScroll = true;
+      this.readMessage.emit(message);
+      this.setScrollBottom();
+    }));
   }
 
-  currentDate( date ) {
+  listenChangeMessages() {
+    this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
+      this.smoothScroll = true;
+      this.messages = this.filterMessages(messages);
+      this.loadingMessages = false;
+      this.setScrollBottom();
+      this.change.detectChanges();
+    }));
+  }
+
+  filterMessages(collection) {
+    return collection.filter((item: ChatMessage) => {
+        if (item.from && item.to) {
+          return (item.from.id === this.user.id) && (item.to.id === this.partner.id) ||
+            (item.from.id === this.partner.id) && (item.to.id === this.user.id);
+        }
+      }
+    ).sort((a, b) => {
+      return new Date(a.time).getTime() - new Date(b.time).getTime();
+    });
+  }
+
+  currentDate(date) {
     const yesterday = new Date(new Date().setDate((new Date().getDate() - 1)));
-    if ( this.getDate(date) === this.getDate() ) {
+    if (this.getDate(date) === this.getDate()) {
       return this.today;
-    } else if ( (this.getDate(yesterday) === this.getDate(date)) ) {
+    } else if ((this.getDate(yesterday) === this.getDate(date))) {
       return this.yesterday;
     } else {
-       return this.datePipe.transform( new Date(date), 'longDate' );
+      return this.datePipe.transform(new Date(date), 'longDate');
     }
   }
 
-  getDate( date = new Date() ) {
-    const newDate = new Date( date );
+  getDate(date = new Date()) {
+    const newDate = new Date(date);
     return new Date(newDate.getFullYear(), newDate.getMonth(), newDate.getDate(), 0, 0, 0, 0).getTime();
   }
 
@@ -119,7 +164,7 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
     setTimeout(() => {
       this.messageContent.nativeElement.scrollTop =
         (this.messageContent.nativeElement.scrollHeight - this.messageContent.nativeElement.clientHeight);
-    });
+    }, 200);
   }
 
   setInputFocus() {
@@ -128,20 +173,8 @@ export class TlChatContent implements AfterViewInit, OnDestroy, OnChanges {
 
   sendMessage() {
     if (this.control.value) {
-      this.message.emit({ value: this.control.value, time: new Date() });
+      this.message.emit({value: this.control.value, time: new Date()});
       this.control.setValue(null);
-    }
-  }
-
-  sortMessages() {
-    this.messages = this.messages.sort((a, b) => {
-      return new Date(a.time).getTime() - new Date(b.time).getTime();
-    });
-  }
-
-  ngOnChanges( { messages }: SimpleChanges ) {
-    if (messages && messages['currentValue'].length > 0) {
-      this.filterMessages();
     }
   }
 

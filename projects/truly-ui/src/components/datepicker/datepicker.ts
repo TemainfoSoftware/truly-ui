@@ -21,12 +21,11 @@
  */
 import {
   AfterContentInit,
-  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ContentChild,
-  EventEmitter,
-  Input,
+  EventEmitter, Inject,
+  Input, LOCALE_ID,
   OnDestroy,
   OnInit,
   Output,
@@ -56,7 +55,7 @@ export interface DateOject {
   providers: [MakeProvider(TlDatePicker)],
 })
 
-export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterContentInit, OnDestroy {
 
   @Input() label = '';
 
@@ -132,7 +131,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   private _control;
 
-  constructor(private changes: ChangeDetectorRef) {
+  constructor(private changes: ChangeDetectorRef,
+              @Inject(LOCALE_ID) public locale: string) {
     super();
   }
 
@@ -142,16 +142,13 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   ngAfterContentInit() {
     this.decomposeDate(this.value);
-  }
-
-  ngAfterViewInit() {
     this.listenControlChanges();
   }
 
   private listenControlChanges() {
     if (this.control) {
       this.subscription.add(this.control.control.valueChanges.subscribe((date: Date) => {
-        if (!this.isOpen) {
+        if (!this.isOpen && date) {
           this.decomposeDate(date);
         }
       }));
@@ -160,7 +157,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   private decomposeDate(date) {
     if (date && this.value) {
-      const dateStr = new Date(date).toLocaleDateString();
+      const dateStr = new Date(date).toLocaleDateString(this.locale, {timeZone: 'UTC'});
       const formatted = ReverseFormatDate(this.stringUnmasked(dateStr), this.formatDate);
       this.description = this.getFormattedDate(formatted);
       this.setDateObject(formatted);
@@ -173,7 +170,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   private setDateObject(dateObject: DateOject) {
     this.day = dateObject.day;
-    this.month = dateObject.month;
+    this.month = dateObject.month - 1;
     this.year = dateObject.year;
   }
 
@@ -187,7 +184,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   private getObjectValues() {
     return {
       day: this.day,
-      fullDate: new Date(this.value),
+      fullDate: this.date,
       month: this.month,
       year: this.year
     };
@@ -215,7 +212,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   }
 
   private setValue($event) {
-    this.description = this.getFormattedDate({ ...$event, month: $event.month + 1 });
+    this.description = this.getFormattedDate({...$event, month: $event.month + 1});
     this.value = $event.fullDate.toISOString();
   }
 
@@ -241,17 +238,16 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   onCompleteMask() {
     setTimeout(() => {
+      this.handleDateChange();
       if (this.isoDate) {
-        const str = ReverseFormatDate(this.stringUnmasked(this.description), this.formatDate);
-        this.value = new Date(str.stringFormat).toISOString();
+        this.value = this.getObjectValues().fullDate.toISOString();
+      } else {
+        this.value = this.getObjectValues().fullDate;
       }
+      this.changes.detectChanges();
       this.completeMask.emit(this.getObjectValues());
-    });
-  }
+    }, 500);
 
-  onChange($event) {
-    this.value = $event;
-    this.changes.detectChanges();
   }
 
   onDateInputFocus() {

@@ -51,10 +51,17 @@ export const ModalConfig = [
     options: 'text | number'
   },
   {
+    name: 'initialDataForm',
+    type: 'object',
+    default: 'null',
+    description: 'It is the form value object used to populate the fields on creation when the form action is INSERT.',
+    options: 'object'
+  },
+  {
     name: 'dataForm',
     type: 'object',
     default: 'null',
-    description: 'It is the form value object used to populate the fields on creation.',
+    description: 'It is the form value object used to populate the fields on creation when the form action is UPDATE.',
     options: 'object'
   },
   {

@@ -9,6 +9,7 @@ export class SmartFormConfiguration implements ModalFormConfig {
   executeAction;
   identifier;
   dataForm?;
+  initialDataForm?;
   unique?;
   deleteConfirmationMessage?;
   recordNotFoundMessage?;

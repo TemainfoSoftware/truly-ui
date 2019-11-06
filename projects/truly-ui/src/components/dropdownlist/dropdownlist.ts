@@ -28,7 +28,7 @@ import {
   Optional,
   ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit, ChangeDetectorRef
+  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit, ChangeDetectorRef, SimpleChanges
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
@@ -365,7 +365,11 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
     return String( objectPath.get( item, this.keyText ) ).substring( 0, 1 ).toLowerCase();
   }
 
-  ngOnChanges( changes ) {
+  ngOnChanges( { data }: SimpleChanges ) {
+    if ( data ) {
+      if (!data.firstChange && data.currentValue.length === 0) {
+        this.isLoading = false;
+      }
+    }
   }
-
 }

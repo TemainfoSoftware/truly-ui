@@ -69,6 +69,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Input() template: TemplateRef<any>;
 
+  @Input() templateNotFound: TemplateRef<any>;
+
   @Input('inputElement')
   set inputElement(value) {
     this._inputElement = value;
@@ -121,7 +123,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   public dataSource: DataSourceList;
 
-  public nothingFound = true;
+  public nothingFound = false;
 
   constructor(private renderer: Renderer2,
               private change: ChangeDetectorRef,
@@ -244,8 +246,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
       this.setUpData($event);
       return;
     }
-    this.nothingFound = true;
     this.loading = false;
+    this.nothingFound = true;
     this.dataSource.dataStream.next([]);
   }
 
@@ -296,10 +298,11 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
     return this.scrollTop > this.lastScrollTop;
   }
 
-  ngOnChanges({loading}: SimpleChanges) {
-    if (loading && loading['currentValue']) {
-      this.loading = true;
-      this.nothingFound = false;
+  ngOnChanges({data}: SimpleChanges) {
+    if ( data && !data.firstChange && data.currentValue.length === 0 ) {
+      this.loading = false;
+      this.nothingFound = true;
+      this.change.detectChanges();
     }
   }
 

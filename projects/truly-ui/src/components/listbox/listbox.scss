@@ -1,6 +1,5 @@
 .ui-listbox-wrapper {
   position: relative;
-  height: 100%;
   z-index: 1;
 }
 
@@ -22,4 +21,24 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+
+.ui-emptylist {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  z-index: 1;
+  > .ui-notfound {
+    text-align: center;
+    .message {
+      bottom: 5px;
+      position: relative;
+      color: #7b7878;
+    }
+  }
 }

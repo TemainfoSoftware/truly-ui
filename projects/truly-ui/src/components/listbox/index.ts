@@ -9,6 +9,7 @@ import { TlListBoxTemplate } from './components/listbox-template';
 import { FilterContainerModule } from '../core/components/filter/filter-container.module';
 import { BlockUIModule } from '../blockui/index';
 import { ItemSelectedModule } from '../core/directives/itemSelected/item-selected.module';
+import { LoaderModule } from '../loader/index';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { ItemSelectedModule } from '../core/directives/itemSelected/item-selecte
     A11yModule,
     BlockUIModule,
     FilterContainerModule,
-    ItemSelectedModule
+    ItemSelectedModule,
+    LoaderModule
   ],
   declarations: [
     TlListBox,

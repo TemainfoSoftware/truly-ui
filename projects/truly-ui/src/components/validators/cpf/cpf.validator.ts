@@ -28,7 +28,11 @@ export function CPFValidator( ): ValidatorFn {
     let sum = 0;
     let leftover;
 
-    if ( (cpfUnmasked( control ) === null) || (cpfUnmasked( control ).length < 9) ) {
+    if ( cpfUnmasked( control ) === null) {
+      return null;
+    }
+
+    if ( cpfUnmasked( control ) != null && cpfUnmasked( control ).length < 9 ) {
       return { cpf: LOCALE_I18N.Validators.invalidCPF };
     }
 

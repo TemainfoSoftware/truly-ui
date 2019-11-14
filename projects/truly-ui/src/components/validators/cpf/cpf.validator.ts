@@ -28,7 +28,7 @@ export function CPFValidator( ): ValidatorFn {
     let sum = 0;
     let leftover;
 
-    if ( cpfUnmasked( control ) === null) {
+    if ( cpfUnmasked( control ) === null || cpfUnmasked( control ) === '') {
       return null;
     }
 

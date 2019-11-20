@@ -46,7 +46,7 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
 
   @Input() color = 'basic';
 
-  @Input() loading = true;
+  @Input() loading = false;
 
   @Input() maxHeight = '180px';
 
@@ -75,7 +75,6 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
     this.availableTimes.forEach( ( value ) => {
       this.filterTimes.push( { range: value, selected: false } );
     } );
-    this.loading = false;
   }
 
   private resetArrays() {

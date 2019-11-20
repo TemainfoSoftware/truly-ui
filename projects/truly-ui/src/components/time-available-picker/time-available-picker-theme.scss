@@ -19,10 +19,11 @@
       }
     }
   }
-  > .ui-empty-data {
+  .ui-empty-data {
     color: rgba(map-deep-get($theme, $action, "default", "foreground"), 0.5);
   }
-  > .ui-time-content {
+
+  .ui-time-content {
     background: white;
     > .ui-time-item {
       color: map-deep-get($theme, $action, "default", "foreground");

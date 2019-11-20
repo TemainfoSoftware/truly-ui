@@ -60,7 +60,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    place-content: center;
+    justify-content: center;
     > .field {
       display: table-cell;
       height: 23px;

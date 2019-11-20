@@ -30,7 +30,7 @@ $button-text-align: center;
     display: flex;
     align-items: center;
     margin: 0 8px;
-    place-content: center;
+    justify-content: center;
     width: 100%;
     .label {
       padding: 0 10px;

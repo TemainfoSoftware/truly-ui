@@ -18,7 +18,7 @@
       flex: 1;
       flex-basis: calc(100% / 3);
       align-items: center;
-      place-content: center;
+      justify-content: center;
       &:hover {
         cursor: pointer;
       }

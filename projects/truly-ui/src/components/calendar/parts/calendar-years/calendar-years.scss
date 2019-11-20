@@ -19,7 +19,7 @@
       flex-basis: calc(100% / 3);
       color: #5a5a5a;
       align-items: center;
-      place-content: center;
+      justify-content: center;
       &:hover {
         cursor: pointer;
         background: rgba(102, 204, 153, 0.15);

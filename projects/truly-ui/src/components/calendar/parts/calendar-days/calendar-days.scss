@@ -10,7 +10,7 @@
 .ui-calendar-days {
   display: flex;
   align-items: center;
-  place-content: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 }
@@ -28,7 +28,7 @@
 .ui-calendar-cell {
   flex: 1;
   display: flex;
-  place-content: center;
+  justify-content: center;
   align-items: center;
   font-size: 1em;
   font-weight: 500;

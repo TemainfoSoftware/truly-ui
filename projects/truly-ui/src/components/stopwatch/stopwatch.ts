@@ -51,6 +51,7 @@ export class TlStopwatch implements OnInit, OnDestroy {
       this.stopWatchService.hour = parseInt( value.substr( 0, 2 ), 10 );
       this.stopWatchService.minute = parseInt( value.substr( 3, 2 ), 10 );
       this.stopWatchService.second = parseInt( value.substr( 6, 2 ), 10 );
+      this.stopWatchService.start();
       return;
     }
 
@@ -59,13 +60,13 @@ export class TlStopwatch implements OnInit, OnDestroy {
       this.stopWatchService.hour = date.getHours();
       this.stopWatchService.minute = date.getMinutes();
       this.stopWatchService.second = date.getSeconds();
+      this.stopWatchService.start();
       return;
     }
 
     this.stopWatchService.hour = 0;
     this.stopWatchService.minute = 0;
     this.stopWatchService.second = 0;
-    this.stopWatchService.start();
   }
 
   @Output() returnTime = new EventEmitter();

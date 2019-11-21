@@ -35,6 +35,8 @@ export class TimeAvailablePickerDemoComponent {
 
   public dataEvents;
 
+  public loading = true;
+
   public data = [
     {
       start: new Date( 1999, 1, 1, 8, 0 ),
@@ -64,6 +66,118 @@ export class TimeAvailablePickerDemoComponent {
       start: new Date( 1999, 1, 1, 11, 0 ),
       end: new Date( 1999, 1, 1, 11, 30 ),
     },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 0 ),
+      end: new Date( 1999, 1, 1, 9, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 0 ),
+      end: new Date( 1999, 1, 1, 9, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 9, 30 ),
+      end: new Date( 1999, 1, 1, 10, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 0 ),
+      end: new Date( 1999, 1, 1, 10, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 10, 30 ),
+      end: new Date( 1999, 1, 1, 11, 0 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 11, 0 ),
+      end: new Date( 1999, 1, 1, 11, 30 ),
+    },
+    {
+      start: new Date( 1999, 1, 1, 8, 30 ),
+      end: new Date( 1999, 1, 1, 9, 0 ),
+    },
   ];
 
   public value = [
@@ -80,6 +194,10 @@ export class TimeAvailablePickerDemoComponent {
   constructor() {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
+
+    setTimeout(() => {
+      this.loading = false;
+    }, 3000);
   }
 
   onChangeSelect($event) {

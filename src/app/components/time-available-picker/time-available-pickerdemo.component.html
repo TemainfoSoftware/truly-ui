@@ -19,7 +19,8 @@
             </div>
             <div class="col-md-6">
               <h6>Pre-Selected Value</h6>
-              <tl-time-available-picker [value]="value" [availableTimes]="data"></tl-time-available-picker>
+              <tl-time-available-picker [loading]="loading" [value]="value" [availableTimes]="[]"></tl-time-available-picker>
+
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

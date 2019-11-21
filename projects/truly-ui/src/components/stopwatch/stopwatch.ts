@@ -65,6 +65,7 @@ export class TlStopwatch implements OnInit, OnDestroy {
     this.stopWatchService.hour = 0;
     this.stopWatchService.minute = 0;
     this.stopWatchService.second = 0;
+    this.stopWatchService.start();
   }
 
   @Output() returnTime = new EventEmitter();

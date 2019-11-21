@@ -48,18 +48,27 @@ export class TlStopwatch implements OnInit, OnDestroy {
   @Input('initialTime')
   set initialTime(value: string | Date) {
     if (typeof value === 'string') {
-      this.stopWatchService.hour = parseInt( value.substr( 0, 2 ), 10 );
-      this.stopWatchService.minute = parseInt( value.substr( 3, 2 ), 10 );
-      this.stopWatchService.second = parseInt( value.substr( 6, 2 ), 10 );
+      if (value.length === 8) {
+        this.stopWatchService.hour = parseInt( value.substr( 0, 2 ), 10 );
+        this.stopWatchService.minute = parseInt( value.substr( 3, 2 ), 10 );
+        this.stopWatchService.second = parseInt( value.substr( 6, 2 ), 10 );
+      } else {
+        const diff = Math.abs(new Date().getTime() - new Date(value).getTime());
+        const seconds = diff / 1000;
+        this.stopWatchService.hour = Math.floor(seconds / (60 * 60));
+        this.stopWatchService.minute = Math.floor( ((seconds % (60 * 60)) / 60));
+        this.stopWatchService.second =  Math.ceil( ((seconds % (60 * 60)) % 60));
+      }
       this.stopWatchService.start();
       return;
     }
 
     if (value instanceof Date) {
-      const date = new Date(value);
-      this.stopWatchService.hour = date.getHours();
-      this.stopWatchService.minute = date.getMinutes();
-      this.stopWatchService.second = date.getSeconds();
+      const diff = Math.abs(new Date().getTime() - new Date(value).getTime());
+      const seconds = diff / 1000;
+      this.stopWatchService.hour = Math.floor(seconds / (60 * 60));
+      this.stopWatchService.minute = Math.floor( ((seconds % (60 * 60)) / 60));
+      this.stopWatchService.second =  Math.ceil( ((seconds % (60 * 60)) % 60));
       this.stopWatchService.start();
       return;
     }

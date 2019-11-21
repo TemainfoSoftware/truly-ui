@@ -135,14 +135,12 @@
   cursor: pointer;
   outline: none;
   border-top: 1px solid rgba(204, 204, 204, 0.3);
-  color: rgba(255, 255, 255, 0.1);
+  color: rgb(87, 86, 86);
   > .ui-icon {
     padding-right: 5px;
   }
   &:focus:not(.selected) {
     opacity: 1;
-    background: rgba(213, 213, 213, 0.4) !important;
-    color: rgba(255, 255, 255, 0.1) !important;
   }
 
   &:hover {

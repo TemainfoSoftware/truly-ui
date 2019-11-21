@@ -237,7 +237,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   }
 
   onCompleteMask() {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       this.handleDateChange();
       if (this.isoDate) {
         this.value = this.getObjectValues().fullDate.toISOString();
@@ -246,6 +246,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
       }
       this.changes.detectChanges();
       this.completeMask.emit(this.getObjectValues());
+      clearTimeout(timeout);
     }, 500);
 
   }

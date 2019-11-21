@@ -11,7 +11,7 @@
   </div>
 
   <div class="ui-container" *ngIf="loading || filterTimes.length === 0" [style.minHeight]="maxHeight">
-    <div *ngIf="loading && filterTimes.length === 0" class="ui-loader-wrapper">
+    <div *ngIf="loading" class="ui-loader-wrapper">
       <div class="ui-loader">
         <tl-loader></tl-loader>
       </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div *ngIf="filterTimes.length > 0" class="ui-time-content" [style.maxHeight]="maxHeight">
+  <div *ngIf="filterTimes.length > 0 && !loading" class="ui-time-content" [style.maxHeight]="maxHeight">
     <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
       <div  (keydown.enter)="setSelectedTime(item, i)"
             class="ui-range-wrapper"

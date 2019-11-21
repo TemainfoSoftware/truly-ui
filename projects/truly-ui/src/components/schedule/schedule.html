@@ -17,7 +17,7 @@
   <!-- SCHEDULE BODY -->
 
   <div  class="ui-schedule-body"
-        [tlBlockui]="(currentHoliday?.id && !allowScheduleInHolidays && !currentHoliday?.attend)"
+        [tlBlockui]="(currentHoliday?.id && !allowScheduleInHolidays && !currentHoliday?.attend) && existsScale"
         [blockuiConfig]="{ message: currentHoliday?.description, icon: 'fas fa-umbrella-beach', color: '#ccc' }"
         [ngStyle]="{height: 'calc(' + height +' - 52px)'} " [ngSwitch]="defaultView">
     <div class="loading" *ngIf="isLoading">
@@ -25,7 +25,7 @@
         <tl-loader></tl-loader>
       </div>
     </div>
-    <div class="holiday" *ngIf="(currentHoliday?.id && !allowScheduleInHolidays && !currentHoliday?.attend)">
+    <div class="holiday" *ngIf="(currentHoliday?.id && !allowScheduleInHolidays && !currentHoliday?.attend) && existsScale">
       <div class="ms-button-attend">
         <tl-button (click)="onClickReleaseSchedule(currentHoliday)" [text]="'Liberar Atendimento'" [color]="'primary'"></tl-button>
       </div>

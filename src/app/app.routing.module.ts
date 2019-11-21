@@ -232,7 +232,7 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/shortcut/shortcutdemo.module#ShortcutDemoModule'
       },
       {
-        path: 'timeline.ts',
+        path: 'schedule',
         loadChildren: './components/schedule/overview/scheduledemo-overview.module#ScheduledemoOverviewModule'
       },
       {

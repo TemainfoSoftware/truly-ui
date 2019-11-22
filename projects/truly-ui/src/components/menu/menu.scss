@@ -1,7 +1,9 @@
 
 .ui-wrapper-menulist {
   box-sizing: content-box;
-  transition: all 150ms ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 200ms cubic-bezier(0.69, 0.01, 0, 1);
 
   .ui-menulist {
     font-family: "Segoe UI", Lato, 'sans-serif', "Arial";

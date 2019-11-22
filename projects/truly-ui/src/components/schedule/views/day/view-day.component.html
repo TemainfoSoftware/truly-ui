@@ -6,8 +6,13 @@
     <div class="ui-schedule-time-row"
          *ngFor="let time of times"
          [ngClass]="{ firstTurn: firstTurn }"
-         [ngStyle]="{height: (slotSettings.slotCount * slotSettings.slotHight) + 'px'}">
-      <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
+         [ngStyle]="{
+          height: (slotSettings.slotCount * slotSettings.slotHight) + 'px',
+          'align-items': slotSettings.slotCount > 1 ? 'flex-start' : 'center'
+         }">
+         <div class="ui-schedule-time-description">
+           <span class="ui-hour-detail">{{time | date: 'HH'}}</span>:{{time | date: 'mm'}}
+         </div>
     </div>
   </div>
 

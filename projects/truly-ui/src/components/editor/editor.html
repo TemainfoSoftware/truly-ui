@@ -26,7 +26,8 @@
          class="ui-editor-content"
          [style.height]="height"
          (input)="change($event)"
-         (click)="setCursorSelection()"
+         (focusout)="setAnchorNode()"
+         (focus)="setCursorSelection()"
          (keydown)="onKeyDownSave($event)"
          (mouseup)="onMouseUp()"
          [attr.contenteditable]="contentEditable"
@@ -46,5 +47,8 @@
                          (onSetImage)="setImage($event)"
                          (onToggleImage)="toggleImageBox()">
     </tl-editor-image-box>
+    <div class="ui-editor-footer" *ngIf="tags.length > 0">
+      <div *ngFor="let item of tags" (click)="addTag(item)" class="ui-hashtag">{{ item }}</div>
+    </div>
   </div>
 </div>

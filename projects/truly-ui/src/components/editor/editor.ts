@@ -61,6 +61,8 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   @Input() color = 'basic';
 
+  @Input() tags = [];
+
   @Input() toolbarConfig: ToolbarConfig;
 
   @Input() height = '300px';
@@ -212,6 +214,12 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.descriptionLink = '';
   }
 
+  addTag( value: string ) {
+    this.setContentFocus();
+    this.cursorSelection.getRangeAt(0).insertNode( this.createHashTag( value ).nativeElement );
+    window.getSelection().collapseToEnd();
+  }
+
   setLink($event) {
     this.linkItself = $event.link;
     this.descriptionLink = $event.description;
@@ -237,7 +245,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onChangeFontSize($event) {
-    console.log('change font SIZE', $event);
     this.recoverSelection();
     this.setContentFocus();
     this.fontSize = $event;
@@ -245,7 +252,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onChangeFont($event) {
-    console.log('change font', $event);
     this.recoverSelection();
     this.setContentFocus();
     this.font = $event;
@@ -341,7 +347,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.fontSize = '3pt';
   }
 
-  private setAnchorNode() {
+  setAnchorNode() {
     this.anchorNodeCursor = document.getSelection();
     this.selection['start'] = this.anchorNodeCursor.baseOffset;
     this.selection['end'] = this.anchorNodeCursor.extentOffset;
@@ -422,6 +428,14 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   private isClosestParentElement(element) {
     return !!this.cursorSelection.baseNode.parentNode.closest(element);
+  }
+
+  private createHashTag( value: string ) {
+    const hashTag = new ElementRef(this.renderer.createElement('span'));
+    this.renderer.addClass(hashTag.nativeElement, 'ui-hashtag');
+    hashTag.nativeElement.innerText = value;
+    hashTag.nativeElement.setAttribute('contenteditable', false);
+    return hashTag;
   }
 
   private createImageElement() {

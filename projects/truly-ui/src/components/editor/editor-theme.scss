@@ -3,15 +3,22 @@
 @mixin _tl-editor-theme-schema( $theme, $action ) {
 
   border: 1px solid map-deep-get($theme, $action, "default", "border");
+  $primary: map-deep-get($theme, 'primary');
 
   .ui-editor-header {
     background-color: map-deep-get($theme, $action, "default", "background");
     color:  map-deep-get($theme, $action, "default", "foreground");
     transition: background ease-in-out 100ms;
+    &::-webkit-scrollbar-thumb {
+      background: map-deep-get($theme, "primary", "default", "background");
+    }
   }
 
   .ui-editor-footer {
     background-color: map-deep-get($theme, $action, "default", "background");
+    &::-webkit-scrollbar-thumb {
+      background: map-deep-get($theme, "primary", "default", "background");
+    }
   }
 
   .ui-link {
@@ -21,7 +28,7 @@
   .ui-hashtag {
     background-color: map-deep-get($theme, "primary", "default", "background");
     border: 1px solid map-deep-get($theme, "primary", "default", "border");
-    color: map-deep-get($theme, $action, "default", "foreground");
+    color: map-deep-get($primary, "default", "foreground");
   }
 
   .ui-editor-content {
@@ -34,8 +41,8 @@
   }
 
   .ui-active-tool {
-    background-color: map-deep-get($theme, "primary", "default", "background");
-    color:  map-deep-get($theme, "primary", "foreground");
+    background-color: map-deep-get($primary, "default", "background");
+    color: map-deep-get($primary, "default", "foreground");
   }
 
   .ui-command {

@@ -20,6 +20,12 @@ export class TlEditorHeader {
 
   @Input() activeTools;
 
+  @Input() colorSelected = '#000000';
+
+  @Input() fontSelected = 'Arial';
+
+  @Input() fontSizeSelected = '3pt';
+
   @Output() changeColor = new EventEmitter();
 
   @Output() changeFont = new EventEmitter();
@@ -46,12 +52,5 @@ export class TlEditorHeader {
 
   @Output() clickQuote = new EventEmitter();
 
-  public colorSelected = '#000000';
-
-  public fontSelected = 'Arial';
-
-  public fontSizeSelected = '3pt';
-
   constructor() {}
-  // toggleLinkBox(); clickDescriptionLink();
 }

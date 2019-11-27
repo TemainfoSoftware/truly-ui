@@ -29,7 +29,7 @@ import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'tl-editor',
@@ -57,7 +57,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChanges {
 
-  @Input() content;
+  @Input() content: SafeHtml;
 
   @Input() color = 'basic';
 
@@ -164,7 +164,8 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   alignContent(align) {
     this.setContentFocus();
-    document.execCommand(align, false, null);
+    const element = this.cursorSelection.baseNode.parentNode;
+    this.renderer.setStyle( element, 'text-align', align.replace('justify', '').toLocaleLowerCase());
     this.setCursorSelection();
   }
 
@@ -218,6 +219,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.setContentFocus();
     this.cursorSelection.getRangeAt(0).insertNode( this.createHashTag( value ).nativeElement );
     window.getSelection().collapseToEnd();
+    this.change( { target: this.contentEditor.nativeElement } );
   }
 
   setLink($event) {
@@ -269,6 +271,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onKeyDownSave(event) {
+    if ( event.target.innerHTML.length === 0 || event.target.innerHTML === '<br>' ) {
+      this.writeValue('<div><br></div>');
+    }
     if ((event.ctrlKey || event.metaKey) && event.which === 83) {
       event.preventDefault();
       this.save();
@@ -291,7 +296,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   setCursorSelection() {
     this.cursorSelection = window.getSelection();
-    this.handleActiveTools();
+    if ( this.cursorSelection.baseNode ) {
+      this.handleActiveTools();
+    }
   }
 
   private showSavedMessage() {
@@ -419,9 +426,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   private hasStyleParentElement(alignment: string) {
-    const childElement = this.cursorSelection.baseNode.parentNode;
-    if (childElement.attributes.length > 0) {
-      return childElement.attributes[0].value.includes(alignment);
+    const element = this.cursorSelection.baseNode.parentNode;
+    if (element.attributes.length > 0) {
+      return element.attributes[0].value.includes(alignment);
     }
     return false;
   }

@@ -262,6 +262,7 @@ export class ModalService implements OnDestroy {
         this.removeBackdrop(itemList.modal);
         this.removeOfList(id);
       }
+      this.changeModal.next();
       return;
     }
     if (this.selectedModal) {
@@ -269,6 +270,7 @@ export class ModalService implements OnDestroy {
       this.removeBackdrop(this.selectedModal.modal);
       this.removeOfList(this.selectedModal.id);
     }
+    this.changeModal.next();
   }
 
   minimizeAll() {

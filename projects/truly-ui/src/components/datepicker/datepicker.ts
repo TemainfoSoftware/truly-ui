@@ -277,6 +277,7 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   }
 
   onClearInput($event) {
+    this.value = null;
     $event.stopPropagation();
   }
 

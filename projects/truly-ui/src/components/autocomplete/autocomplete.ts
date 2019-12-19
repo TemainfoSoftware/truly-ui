@@ -91,7 +91,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() openFocus = true;
 
-  @Input() loading = true;
+  @Input() loading = false;
 
   @Input() clearButton = true;
 
@@ -226,16 +226,14 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private handleItemSelected() {
     if ( this.itemSelectedService.itemSelected ) {
       this.scrollToIndex().then( value => {
-        setTimeout( () => {
-          this.keyManager.setActiveItem( this.itemSelectedService.itemSelected.indexSelected );
-        }, 200 );
+        this.keyManager.setActiveItem( this.itemSelectedService.itemSelected.indexSelected );
       } );
     }
   }
 
 
   private scrollToIndex() {
-    return new Promise( ( resolve, reject ) => {
+    return new Promise( ( resolve ) => {
       setTimeout( () => {
         if ( this.cdkVirtualScroll ) {
           this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
@@ -347,6 +345,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   handleKeyArrowDown( $event ) {
+    if ( this.loading ) {
+      this.stopEvent($event);
+      return;
+    }
     this.handleEventOpenList( $event );
     if ( !this.keyManager.activeItem ) {
       this.keyManager.setFirstItemActive();
@@ -437,7 +439,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
       this.listenLoadData();
       this.handleModelCached();
     }
-    this.loading = false;
     this.dataSource.setData( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
@@ -452,9 +453,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   private listenLoadData() {
-    if ( !this.dataSource ) {
-      return;
-    }
     this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
       this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.description ) } );
     } ) );

@@ -1,5 +1,4 @@
 <div class="ui-autocomplete-box">
-
   <tl-label *ngIf="label" [required]="required" [labelTitle]="label" [labelPlacement]="labelPlacement" [labelSize]="labelSize"></tl-label>
   <div [class]="'ui-autocomplete-wrapper ' + color">
     <div class="ui-wrapper-filter"
@@ -21,6 +20,7 @@
         [iconAfter]="iconAfter"
         [textBefore]="textBefore"
         [textAfter]="textAfter"
+        [height]="height"
         (clear)="onClickClose()"
         (click)="toggleIsOpen()"
         (clickAddon)="clickAddon.emit($event)"

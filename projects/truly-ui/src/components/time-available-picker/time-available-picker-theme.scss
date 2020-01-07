@@ -5,7 +5,9 @@
   $primary: map-deep-get($theme, 'primary');
 
   border: 1px solid map-deep-get($theme, $action, "default", "border");
-
+  .ui-empty-data {
+    color: rgba(map-deep-get($theme, $action, "default", "foreground"), 0.5);
+  }
   > .ui-time-header {
     border-bottom: 1px solid map-deep-get($theme, $action, "default", "border");
     background: map-deep-get($theme, $action, "default", "background");
@@ -18,9 +20,6 @@
         color: map-deep-get($theme, $action, "lighter", "background");
       }
     }
-  }
-  > .ui-empty-data {
-    color: rgba(map-deep-get($theme, $action, "default", "foreground"), 0.5);
   }
   > .ui-time-content {
     background: white;

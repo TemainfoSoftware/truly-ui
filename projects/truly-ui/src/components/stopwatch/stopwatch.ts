@@ -25,16 +25,17 @@ import {
   OnInit,
   Input,
   Output,
-  EventEmitter, ChangeDetectorRef
+  EventEmitter, ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import { StopwatchService } from './services/stopwatch-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tl-stopwatch',
   templateUrl: './stopwatch.html',
   styleUrls: ['./stopwatch.scss'],
 })
-export class TlStopwatch implements OnInit {
+export class TlStopwatch implements OnInit, OnDestroy {
 
   @Input() color = 'basic';
 
@@ -45,23 +46,51 @@ export class TlStopwatch implements OnInit {
   @Input() resetOnStop = false;
 
   @Input('initialTime')
-  set initialTime(value: string) {
-    this.stopWatchService.hour = parseInt(value.substr(0, 2), 10);
-    this.stopWatchService.minute = parseInt(value.substr(3, 2), 10);
-    this.stopWatchService.second = parseInt(value.substr(6, 2), 10);
+  set initialTime(value: string | Date) {
+    if (typeof value === 'string') {
+      if (value.length === 8) {
+        this.stopWatchService.hour = parseInt( value.substr( 0, 2 ), 10 );
+        this.stopWatchService.minute = parseInt( value.substr( 3, 2 ), 10 );
+        this.stopWatchService.second = parseInt( value.substr( 6, 2 ), 10 );
+      } else {
+        const diff = Math.abs(new Date().getTime() - new Date(value).getTime());
+        const seconds = diff / 1000;
+        this.stopWatchService.hour = Math.floor(seconds / (60 * 60));
+        this.stopWatchService.minute = Math.floor( ((seconds % (60 * 60)) / 60));
+        this.stopWatchService.second =  Math.ceil( ((seconds % (60 * 60)) % 60));
+      }
+      this.stopWatchService.start();
+      return;
+    }
+
+    if (value instanceof Date) {
+      const diff = Math.abs(new Date().getTime() - new Date(value).getTime());
+      const seconds = diff / 1000;
+      this.stopWatchService.hour = Math.floor(seconds / (60 * 60));
+      this.stopWatchService.minute = Math.floor( ((seconds % (60 * 60)) / 60));
+      this.stopWatchService.second =  Math.ceil( ((seconds % (60 * 60)) % 60));
+      this.stopWatchService.start();
+      return;
+    }
+
+    this.stopWatchService.hour = 0;
+    this.stopWatchService.minute = 0;
+    this.stopWatchService.second = 0;
   }
 
   @Output() returnTime = new EventEmitter();
 
   public currentHour = '00:00:00';
 
+  private subscription = new Subscription();
+
   constructor( private stopWatchService: StopwatchService, private change: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    this.stopWatchService.refreshHour.subscribe((hour: string) => {
+    this.subscription.add(this.stopWatchService.refreshHour.subscribe((hour: string) => {
       this.currentHour = hour;
       this.change.detectChanges();
-    });
+    }));
   }
 
   start() {
@@ -76,6 +105,10 @@ export class TlStopwatch implements OnInit {
 
   reset() {
     this.stopWatchService.reset();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

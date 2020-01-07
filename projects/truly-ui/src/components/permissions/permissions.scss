@@ -61,7 +61,7 @@
   height: 100%;
   display: flex;
   align-items: center;
-  place-content: center;
+  justify-content: center;
   flex-flow: column;
   .ui-loader {
     width: 50px;

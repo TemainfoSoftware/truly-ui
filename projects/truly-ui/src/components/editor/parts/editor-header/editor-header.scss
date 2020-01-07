@@ -3,6 +3,11 @@
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
   border-bottom: 0;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 0;
+  }
   .ui-tools-list {
     margin: 0;
     padding: 0;

@@ -10,7 +10,10 @@
           <app-card>
             <div class="col-md-6">
               <h6>Basic Usage - Normal Mode</h6>
-              <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>
+              <tl-listbox [data]="dataBasic" [keyText]="'firstName'" [templateNotFound]="templateNotFound"></tl-listbox>
+              <ng-template #templateNotFound>
+                <tl-button [text]="'Adicionar'" [iconAddonBefore]="'ion ion-md-add-circle'" [color]="'primary'"></tl-button>
+              </ng-template>
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
               <tl-listbox [data]="dataBasic" [keyText]="'firstName'"></tl-listbox>

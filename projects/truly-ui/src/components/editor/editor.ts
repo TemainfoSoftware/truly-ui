@@ -29,7 +29,7 @@ import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 
 @Component({
   selector: 'tl-editor',
@@ -57,9 +57,11 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChanges {
 
-  @Input() content;
+  @Input() content: SafeHtml;
 
   @Input() color = 'basic';
+
+  @Input() tags = [];
 
   @Input() toolbarConfig: ToolbarConfig;
 
@@ -162,7 +164,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   alignContent(align) {
     this.setContentFocus();
-    document.execCommand(align, false, null);
+    const element = this.cursorSelection.baseNode.parentNode;
+    const alignment = align === 'justifyFull' ? 'justify' : align.replace('justify', '').toLocaleLowerCase();
+    this.renderer.setStyle( element, 'text-align', alignment);
     this.setCursorSelection();
   }
 
@@ -212,6 +216,13 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.descriptionLink = '';
   }
 
+  addTag( value: string ) {
+    this.setContentFocus();
+    this.cursorSelection.getRangeAt(0).insertNode( this.createHashTag( value ).nativeElement );
+    window.getSelection().collapseToEnd();
+    this.change( { target: this.contentEditor.nativeElement } );
+  }
+
   setLink($event) {
     this.linkItself = $event.link;
     this.descriptionLink = $event.description;
@@ -237,7 +248,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onChangeFontSize($event) {
-    console.log('change font SIZE', $event);
     this.recoverSelection();
     this.setContentFocus();
     this.fontSize = $event;
@@ -245,7 +255,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onChangeFont($event) {
-    console.log('change font', $event);
     this.recoverSelection();
     this.setContentFocus();
     this.font = $event;
@@ -263,6 +272,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onKeyDownSave(event) {
+    if ( event.target.innerHTML.length === 0 || event.target.innerHTML === '<br>' ) {
+      this.writeValue('<div><br></div>');
+    }
     if ((event.ctrlKey || event.metaKey) && event.which === 83) {
       event.preventDefault();
       this.save();
@@ -285,7 +297,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   setCursorSelection() {
     this.cursorSelection = window.getSelection();
-    this.handleActiveTools();
+    if ( this.cursorSelection.baseNode ) {
+      this.handleActiveTools();
+    }
   }
 
   private showSavedMessage() {
@@ -341,7 +355,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.fontSize = '3pt';
   }
 
-  private setAnchorNode() {
+  setAnchorNode() {
     this.anchorNodeCursor = document.getSelection();
     this.selection['start'] = this.anchorNodeCursor.baseOffset;
     this.selection['end'] = this.anchorNodeCursor.extentOffset;
@@ -413,15 +427,23 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   private hasStyleParentElement(alignment: string) {
-    const childElement = this.cursorSelection.baseNode.parentNode;
-    if (childElement.attributes.length > 0) {
-      return childElement.attributes[0].value.includes(alignment);
+    const element = this.cursorSelection.baseNode.parentNode;
+    if (element.attributes.length > 0) {
+      return element.attributes[0].value.includes(alignment);
     }
     return false;
   }
 
   private isClosestParentElement(element) {
     return !!this.cursorSelection.baseNode.parentNode.closest(element);
+  }
+
+  private createHashTag( value: string ) {
+    const hashTag = new ElementRef(this.renderer.createElement('span'));
+    this.renderer.addClass(hashTag.nativeElement, 'ui-hashtag');
+    hashTag.nativeElement.innerText = value;
+    hashTag.nativeElement.setAttribute('contenteditable', false);
+    return hashTag;
   }
 
   private createImageElement() {

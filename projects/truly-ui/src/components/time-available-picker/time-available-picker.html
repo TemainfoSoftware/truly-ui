@@ -9,16 +9,21 @@
       <span *ngIf="selectedTime.length === 1">{{ selectedTime[0]?.range.start | date: 'HH:mm' }} - {{ selectedTime[0]?.range.end | date: 'HH:mm' }}</span>
     </div>
   </div>
-  <div *ngIf="!filterTimes || filterTimes.length === 0" class="ui-empty-data">
-    <tl-icon [lib]="'ion'" [style]="'md'">sad</tl-icon>
-    <span>{{ notFoundMessage }}</span>
-  </div>
-  <div *ngIf="filterTimes.length > 0" class="ui-time-content" [style.maxHeight]="maxHeight">
+
+  <div class="ui-container" *ngIf="loading || filterTimes.length === 0" [style.minHeight]="maxHeight">
     <div *ngIf="loading" class="ui-loader-wrapper">
       <div class="ui-loader">
         <tl-loader></tl-loader>
       </div>
     </div>
+
+    <div *ngIf="!filterTimes || filterTimes.length === 0 && !loading" class="ui-empty-data">
+      <tl-icon [lib]="'ion'" [style]="'md'">sad</tl-icon>
+      <span>{{ notFoundMessage }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="filterTimes.length > 0 && !loading" class="ui-time-content" [style.maxHeight]="maxHeight">
     <div *ngFor="let item of filterTimes; let i = index" class="ui-time-item">
       <div  (keydown.enter)="setSelectedTime(item, i)"
             class="ui-range-wrapper"

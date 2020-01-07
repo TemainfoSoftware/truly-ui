@@ -2,9 +2,34 @@
   box-sizing: border-box;
 }
 
+:host {
+  width: 100%;
+}
+
+.ui-editor-footer {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+  width: 100%;
+  background: #e9e9e9;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 0;
+  }
+}
+
+.ui-hashtag {
+  padding: 0px 8px;
+  margin: 5px;
+  border-radius: 5px;
+  user-select: none;
+  &:hover {
+    cursor: pointer;
+  }
+}
 
 .ui-editor {
-  display: table;
   width: 100%
 }
 
@@ -55,4 +80,6 @@
   padding: 10px;
   box-sizing: border-box;
   outline: none;
+  word-break: break-word;
+  cursor: text;
 }

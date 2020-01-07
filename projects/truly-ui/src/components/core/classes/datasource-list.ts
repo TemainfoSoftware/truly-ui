@@ -83,8 +83,7 @@ export class DataSourceList extends DataSource<string | undefined> {
   }
 
   public resetPages() {
-    this.fetchedPages = new Set<number>();
-    this.fetchedPages.add(0);
+    this.fetchedPages.clear();
   }
 
   private setProprieties(config) {
@@ -102,6 +101,11 @@ export class DataSourceList extends DataSource<string | undefined> {
     this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize,
         ...data);
     this.dataStream.next( this.arrayTotal );
+    if ( data.length === this.pageSize) {
+      if ( !this.fetchedPages.has(0) ) {
+        this.fetchedPages.add(0);
+      }
+    }
   }
 
   private getPageForIndex( index: number ): number {

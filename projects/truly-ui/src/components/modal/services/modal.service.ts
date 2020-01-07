@@ -84,7 +84,7 @@ export class ModalService implements OnDestroy {
               private containerModal: ContainerModalService) {
   }
 
-  createModalDialog(component: Type<any>, factoryResolver, mdOptions) {
+  createModalDialog(component: Type<any>, factoryResolver, mdOptions?: ModalOptions) {
     this.view = this.containerModal.view;
     return new Promise((resolve) => {
       this.setComponentModal(component, factoryResolver, null, null, mdOptions);
@@ -247,7 +247,7 @@ export class ModalService implements OnDestroy {
 
   private validateDataFormUpdate(component) {
     if (!component['dataForm']) {
-      this.createModalDialog(TlDialogInfo, component['factory'], null);
+      this.createModalDialog(TlDialogInfo, component['factory'], { title: component['recordNotFoundMessage']});
       this.componentInjected.instance.message = component['recordNotFoundMessage'];
       return false;
     }
@@ -262,12 +262,16 @@ export class ModalService implements OnDestroy {
         this.removeBackdrop(itemList.modal);
         this.removeOfList(id);
       }
+      this.changeModal.next();
+      this.handleActiveWindow();
       return;
     }
     if (this.selectedModal) {
       this.removeOfView(this.selectedModal.modal);
       this.removeBackdrop(this.selectedModal.modal);
       this.removeOfList(this.selectedModal.id);
+      this.changeModal.next();
+      this.handleActiveWindow();
     }
   }
 
@@ -499,7 +503,8 @@ export class ModalService implements OnDestroy {
   private confirmDelete(component: ModalInstance) {
     if (component.smartForm['executeAction'] === ActionsModal.DELETE) {
       this.referenceSmartForm = component;
-      this.createModalDialog(TlDialogConfirmation, this.referenceSmartForm.smartForm['factory'], null).then((value: any) => {
+      this.createModalDialog(TlDialogConfirmation, this.referenceSmartForm.smartForm['factory'],
+        { title: this.referenceSmartForm.smartForm['deleteConfirmationMessage']}).then((value: any) => {
         if (value.mdResult === ModalResult.MRYES) {
           this.handleSmartFormCallback(this.referenceSmartForm,
             {formResult: this.referenceSmartForm.smartForm['dataForm']});

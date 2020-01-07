@@ -9,7 +9,7 @@
   position: absolute;
   display: flex;
   align-items: center;
-  place-content: center;
+  justify-content: center;
   .loader {
     width: 50px;
     height: 50px;
@@ -23,7 +23,6 @@
   position: absolute;
   display: flex;
   align-items: center;
-  place-content: center;
   justify-content: center;
   .ms-button-attend {
     margin-top: 120px;

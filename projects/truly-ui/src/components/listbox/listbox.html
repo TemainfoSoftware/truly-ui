@@ -1,7 +1,13 @@
-<div class="ui-listbox-wrapper" [tlBlockui]="loading || nothingFound"
-     [blockuiConfig]="{ message: (nothingFound ? nothingFoundMessage: null),
-                        spin: true, icon: loading ? 'fas fa-circle-notch' : null,
-                        color: '#ccc' }">
+<div class="ui-listbox-wrapper" [style.height]="height">
+  <div class="ui-emptylist" *ngIf="loading || nothingFound">
+    <div *ngIf="loading && !nothingFound" class="ui-loading" [style.width]="'50px'" [style.height]="'50px'">
+      <tl-loader></tl-loader>
+    </div>
+    <div *ngIf="nothingFound && !loading" class="ui-notfound">
+      <span class="message">{{ nothingFoundMessage }}</span>
+      <ng-container *ngTemplateOutlet="templateNotFound"></ng-container>
+    </div>
+  </div>
   <cdk-virtual-scroll-viewport [itemSize]="rowHeight" [class]="'ui-list-viewport ' + color" tabindex="-1"
                                [style.height]="height"
                                (wheel)="onWheel()"

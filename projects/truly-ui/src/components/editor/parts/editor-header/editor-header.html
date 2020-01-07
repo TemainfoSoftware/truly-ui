@@ -2,12 +2,6 @@
   <ul class="ui-tools-list">
      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top-center'}"
          *ngIf="toolbarConfig.font?.family?.show">
-<!--       <tl-dropdown-list [data]="dataFont"
-                         (ngModelChange)="onChangeFont($event)"
-                         [keyText]="'textItem'"
-                         [keyValue]="'value'"
-                         [(ngModel)]="font">
-       </tl-dropdown-list>-->
        <select class="select-font" [(ngModel)]="fontSelected" (ngModelChange)="changeFont.emit($event)">
          <option *ngFor="let item of fontCollection" [ngValue]="item.value">{{ item?.description }}</option>
        </select>

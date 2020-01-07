@@ -15,15 +15,20 @@
 .ui-schedule-time-row {
   box-sizing: border-box;
   border-bottom: 1px solid #D6D6D6;
-  text-align: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
   &:last-child{
     border-bottom: none;
   }
-  & .ui-hour-detail{
-    font-weight: bold;
-    font-size: 1.6em;
-    line-height: 1.5;
+  >.ui-schedule-time-description{
+    display: flex;
+    align-items: baseline;
+    & .ui-hour-detail{
+      font-weight: bold;
+      font-size: 1.6em;
+      line-height: 1.5;
+    }
   }
 }
 
@@ -116,8 +121,8 @@
     justify-content: center;
     background: repeating-linear-gradient(
         135deg,
-        #F5F5F5C4,
-        #F5F5F5C4 10px,
+        rgba(245, 245, 245, 0.7),
+        rgba(245, 245, 245, 0.7) 10px,
         #FFFFFF 10px,
         #FFFFFF 20px
     );

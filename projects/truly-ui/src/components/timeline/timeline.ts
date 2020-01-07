@@ -30,21 +30,28 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  SimpleChanges,
   ChangeDetectorRef,
-  OnChanges
 } from '@angular/core';
 import {TlTimelineItem} from './parts/timeline-item/timeline-item';
-import {FixedPositionDirective} from '../misc/fixed-position.directive';
+import {DataSourceList} from '../core/classes/datasource-list';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'tl-timeline',
   templateUrl: './timeline.html',
   styleUrls: ['./timeline.scss'],
 })
-export class TlTimeline implements OnInit, OnChanges {
+export class TlTimeline implements OnInit {
 
-  @Input() data: Array<any> = [];
+  @Input('data')
+  set data(value) {
+    this._data = value;
+    this.setUpData(value);
+  }
+
+  get data() {
+    return this._data;
+  }
 
   @Input() align = 'left';
 
@@ -52,15 +59,19 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Input() keyTitle = 'title';
 
-  @Input() total = 0;
+  @Input() totalLength = 0;
 
   @Input() keyText = 'text';
 
   @Input() keyDate = 'date';
 
-  @Input() rowData = 20;
+  @Input() rowsPage = 20;
 
   @Input() mode = 'basic';
+
+  @Input() lazyMode = false;
+
+  @Input() loading = false;
 
   @Input() color = 'primary';
 
@@ -70,108 +81,54 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @ContentChild(TemplateRef, {static: true}) customTemplate: TemplateRef<any>;
 
-  public side = false;
-
-  public dataFull: Array<any> = [];
-
-  private scrollTop = 0;
-
-  private lastScrollTop = 0;
-
-  private scrollDirection = 'DOWN';
+  public dataSource: DataSourceList;
 
   public skip = 0;
 
   public take = 20;
 
-  public PERCENTAGE_LIMIT = 0.1;
-
   public loadingMoreData = false;
+
+  public nothingFound = false;
+
+  private _data = [];
+
+  private subscription = new Subscription();
 
   constructor(public change: ChangeDetectorRef) {}
 
   ngOnInit() {}
 
-  public controlSide() {
-    this.side = !this.side;
-    return this.side;
-  }
-
-  public listenerToScroll($event) {
-    this.setScrollTop($event);
-    this.setScrollDirection();
-    this.isScrollDown() ? this.handleScrollDown() : this.handleScrollUp();
-    this.setLastScrollTop();
-  }
-
-  private setScrollTop($event) {
-    this.scrollTop = $event.target.scrollTop;
-  }
-
-  private setLastScrollTop() {
-    this.lastScrollTop = this.scrollTop;
-  }
-
-  private setScrollDirection() {
-    this.scrollDirection = (this.scrollTop > this.lastScrollTop) ? 'DOWN' : 'UP';
-  }
-
-  private isScrollDown() {
-    return this.scrollDirection === 'DOWN';
-  }
-
-  private isLimitDown() {
-    const scrollHeight = this.listComponent.nativeElement.scrollHeight;
-    const offsetHeight = this.listComponent.nativeElement.offsetHeight;
-    const limitDown = scrollHeight - (scrollHeight * this.PERCENTAGE_LIMIT) - offsetHeight;
-    return this.scrollTop > limitDown;
-  }
-
-  private isLimitUp() {
-    const scrollHeight = this.listComponent.nativeElement.scrollHeight;
-    const limitUp = scrollHeight * this.PERCENTAGE_LIMIT;
-    return this.scrollTop < limitUp;
-  }
-
-  handleScrollDown() {
-    if (this.isLimitDown()) {
-      if (!this.loadingMoreData) {
-        this.getDataLazy();
-      }
+  setUpData( value? ) {
+    if ( !this.dataSource ) {
+      this.dataSource = new DataSourceList( {
+        dataSource: value,
+        pageSize: this.rowsPage,
+        totalLength: this.totalLength,
+        lazyMode: this.lazyMode
+      } );
+      this.listenLoadData();
     }
+    this.loading = false;
+    this.dataSource.setData( value );
+    this.setNotFound( value.length === 0 );
   }
 
-  handleScrollUp() {
-    if (this.isLimitUp()) {
-      if (!this.loadingMoreData) {
-        if (this.skip > 0) {}
-      }
+  private listenLoadData() {
+    if ( !this.dataSource ) {
+      return;
     }
+    this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
+      this.lazyLoad.emit( { skip: data.skip, limit: data.limit } );
+    } ) );
   }
 
-  haveMoreData() {
-    return this.take < this.total;
-  }
-
-  getDataLazy() {
-    if (this.haveMoreData()) {
-      this.skip = this.rowData + this.skip;
-      this.take = this.skip + this.rowData;
-      this.loadingMoreData = true;
-      this.lazyLoad.emit({skip: this.skip, take: this.take});
-    }
+  private setNotFound( value: boolean ) {
+    this.nothingFound = value;
   }
 
   onInit(lineItem: TlTimelineItem, item, index) {
     lineItem.setTemplateView(item, index);
-  }
-
-  ngOnChanges(change: SimpleChanges) {
-    this.loadingMoreData = false;
-    this.change.detectChanges();
-    if (change['data'].currentValue) {
-      this.dataFull.push(...change['data'].currentValue);
-    }
   }
 
 }

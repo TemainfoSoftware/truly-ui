@@ -49,7 +49,7 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   @Input() color = 'basic';
 
-  @Input() loading = false;
+  @Input() loading = true;
 
   @Input() keyGroup = 'description';
 
@@ -302,6 +302,9 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
     }
     if (changes['data']) {
       this.setUpDataSource();
+      if (!changes['data'].firstChange) {
+        this.loading = false;
+      }
     }
   }
 

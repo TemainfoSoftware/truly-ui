@@ -6,12 +6,14 @@ import { TlTimeline } from './timeline';
 import { TlTimelineItem } from './parts/timeline-item/timeline-item';
 
 import { BlockUIModule } from '../blockui/index';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    BlockUIModule
+    BlockUIModule,
+    ScrollingModule
   ],
   declarations: [
     TlTimeline,

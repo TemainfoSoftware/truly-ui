@@ -14,16 +14,19 @@
   top: 0;
   bottom: 0;
   z-index: 800;
+  transition:
+    left  200ms cubic-bezier(0.69, 0.01, 0, 1),
+    right 200ms cubic-bezier(0.69, 0.01, 0, 1),
+    width 200ms cubic-bezier(0.69, 0.01, 0, 1);
 }
 
 .start {
-  transition: all 200ms;
   left: -1000px;
   visibility: hidden;
 }
 
 .end {
-  transition: all 200ms;
+  right: -1000px;
   visibility: hidden;
 }
 

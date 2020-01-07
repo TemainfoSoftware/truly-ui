@@ -74,7 +74,7 @@
     display: flex;
     align-items: flex-end;
     flex-flow: column;
-    place-content: center;
+    justify-content: center;
     word-break: break-all;
     background: white;
     color: #464646;
@@ -123,13 +123,13 @@
 
 .chat-user {
   display: flex;
-  place-content: flex-end;
+  justify-content: flex-end;
   animation: showIn 200ms ease-in forwards;
   > .chat-text-content {
     display: flex;
     align-items: flex-end;
     flex-flow: column;
-    place-content: center;
+    justify-content: center;
     word-break: break-all;
     background: #e3fdf4;
     color: #464646;
@@ -187,7 +187,7 @@
     color: #66cc99;
     display: flex;
     align-items: center;
-    place-content: center;
+    justify-content: center;
     font-size: 1.5em;
     background: white;
     transition: background, color 400ms ease-in-out;
@@ -204,7 +204,7 @@
   height: 100%;
   width: 100%;
   display: flex;
-  place-content: center;
+  justify-content: center;
   align-items: center;
   flex-flow: column;
   > .chat-loader {

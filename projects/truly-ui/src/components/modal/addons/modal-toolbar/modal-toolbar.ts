@@ -20,30 +20,15 @@
  SOFTWARE.
  */
 
-import { ChangeDetectorRef, Component, ComponentRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalService } from '../../services/modal.service';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Subscription } from 'rxjs';
-import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ModalService} from '../../services/modal.service';
+import {Subscription} from 'rxjs';
 
 @Component( {
   selector: 'tl-modal-toolbar',
   templateUrl: './modal-toolbar.html',
   styleUrls: [ './modal-toolbar.scss' ],
-  animations: [
-    trigger(
-      'onCreateElement', [
-        transition( ':enter', [
-          style( { opacity: 0 } ),
-          animate( '100ms ease-in', style( { opacity: 1 } ) )
-        ] ),
-        transition( ':leave', [
-          style( { opacity: 1 } ),
-          animate( '100ms ease-out', style( { opacity: 0 } ) )
-        ] )
-      ]
-    )
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlModalToolbar implements OnInit {
 
@@ -54,8 +39,6 @@ export class TlModalToolbar implements OnInit {
   @Input() color = 'basic';
 
   @Input() modalBoxWidth = 150;
-
-  @Input() arrowsColor = '';
 
   @Input() limitStringBox = 12;
 
@@ -69,7 +52,7 @@ export class TlModalToolbar implements OnInit {
 
   private subscription = new Subscription();
 
-  constructor( public modalService: ModalService ) {}
+  constructor( public modalService: ModalService, private changes: ChangeDetectorRef ) {}
 
   ngOnInit() {
     this.subscribeFrontModal();
@@ -79,12 +62,14 @@ export class TlModalToolbar implements OnInit {
   subscribeFrontModal() {
     this.subscription.add( this.modalService.frontModal.subscribe( ( value: any ) => {
       this.activeModal = value.activeModal;
+      this.changes.detectChanges();
     } ) );
   }
 
   subscribeChanges() {
     this.subscription.add( this.modalService.changeModal.subscribe( () => {
       this.validateScroll();
+      this.changes.detectChanges();
     } ) );
   }
 
@@ -115,22 +100,6 @@ export class TlModalToolbar implements OnInit {
 
   handleScrollFinish() {
     const scrollLeft = this.container.nativeElement.scrollLeft + this.container.nativeElement.offsetWidth;
-    scrollLeft >= this.wrapper.nativeElement.offsetWidth ? this.isScrolling = false : this.isScrolling = true;
-  }
-
-  getTextContainerItem( value ) {
-    if ( value.length > this.limitStringBox ) {
-      let subStr = '';
-      const strArray = value.split( '' );
-      strArray.forEach( ( value2, index, array ) => {
-        if ( index <= this.limitStringBox ) {
-          subStr += value2;
-        }
-      } );
-      subStr += '...'.trim();
-      return subStr;
-    } else {
-      return value;
-    }
+    this.isScrolling = scrollLeft >= this.wrapper.nativeElement.offsetWidth;
   }
 }

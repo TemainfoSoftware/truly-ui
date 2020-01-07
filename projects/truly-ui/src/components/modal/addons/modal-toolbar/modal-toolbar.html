@@ -1,6 +1,5 @@
 <div [class]="'container-wrapper '+ color">
-     <span [style.background]="arrowsColor"
-           [style.lineHeight]="height"
+     <span [style.lineHeight]="height"
            (click)="handleArrowLeft()" *ngIf="container.scrollLeft > 0" class="arrow-left">
        <tl-icon [lib]="'ion'" [style]="'ios'">arrow-back</tl-icon>
      </span>
@@ -18,9 +17,7 @@
           </div>
       </div>
     </div>
-    <span [style.background]="arrowsColor"
-          [style.lineHeight]="height"
-          [@onCreateElement]="true" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
+    <span [style.lineHeight]="height" (click)="handleArrowRight()" *ngIf="isScrolling" class="arrow-right">
       <tl-icon [lib]="'ion'" [style]="'ios'">arrow-forward</tl-icon>
     </span>
 </div>

@@ -5,6 +5,9 @@
                       [activeTools]="activeTools"
                       [cursorHighlight]="cursorHighlight"
                       [color]="color"
+                      [colorSelected]="colorSelected"
+                      [fontSelected]="font"
+                      [fontSizeSelected]="fontSize"
                       [fontCollection]="fontCollection"
                       [fontSizeCollection]="fontSizeCollection"
                       (changeColor)="onChangeColor($event)"
@@ -26,7 +29,12 @@
          class="ui-editor-content"
          [style.height]="height"
          (input)="change($event)"
+         (focusout)="setAnchorNode()"
          (click)="setCursorSelection()"
+         (focus)="setCursorSelection()"
+         (keydown.enter)="$event.stopPropagation()"
+         (keydown.ArrowUp)="$event.stopPropagation()"
+         (keydown.ArrowDown)="$event.stopPropagation()"
          (keydown)="onKeyDownSave($event)"
          (mouseup)="onMouseUp()"
          [attr.contenteditable]="contentEditable"
@@ -46,5 +54,8 @@
                          (onSetImage)="setImage($event)"
                          (onToggleImage)="toggleImageBox()">
     </tl-editor-image-box>
+    <div class="ui-editor-footer" *ngIf="tags.length > 0">
+      <div *ngFor="let item of tags" (click)="addTag(item)" class="ui-hashtag">{{ item }}</div>
+    </div>
   </div>
 </div>

@@ -165,7 +165,8 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   alignContent(align) {
     this.setContentFocus();
     const element = this.cursorSelection.baseNode.parentNode;
-    this.renderer.setStyle( element, 'text-align', align.replace('justify', '').toLocaleLowerCase());
+    const alignment = align === 'justifyFull' ? 'justify' : align.replace('justify', '').toLocaleLowerCase();
+    this.renderer.setStyle( element, 'text-align', alignment);
     this.setCursorSelection();
   }
 

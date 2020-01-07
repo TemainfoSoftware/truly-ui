@@ -263,14 +263,16 @@ export class ModalService implements OnDestroy {
         this.removeOfList(id);
       }
       this.changeModal.next();
+      this.handleActiveWindow();
       return;
     }
     if (this.selectedModal) {
       this.removeOfView(this.selectedModal.modal);
       this.removeBackdrop(this.selectedModal.modal);
       this.removeOfList(this.selectedModal.id);
+      this.changeModal.next();
+      this.handleActiveWindow();
     }
-    this.changeModal.next();
   }
 
   minimizeAll() {

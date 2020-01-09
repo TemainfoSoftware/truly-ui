@@ -14,4 +14,4 @@ export interface DropdownConfig {
   identifier?: string;
 }
 
-export let DROPDOWN_CONFIG = new InjectionToken<DropdownConfig>('dropdown.config');
+export let DROPDOWN_CONFIG = new InjectionToken<DropdownConfig>('dropdown.preview.js');

@@ -12,4 +12,4 @@ export interface AutoCompleteConfig {
   color?: string;
 }
 
-export let AUTOCOMPLETE_CONFIG = new InjectionToken<AutoCompleteConfig>('autocomplete.config');
+export let AUTOCOMPLETE_CONFIG = new InjectionToken<AutoCompleteConfig>('autocomplete.preview.js');

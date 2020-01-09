@@ -28,8 +28,10 @@ import { text, select, boolean, number, color } from '@storybook/addon-knobs';
 import { ButtonModule } from '../../../projects/truly-ui/src/components/button';
 import { CoreModule } from '../../../projects/truly-ui/src/components/core';
 import { IconsModule } from '../../../projects/truly-ui/src/components/icons';
+import { TlButton } from '../../../projects/truly-ui/src/components/button/button';
 
 const Story = storiesOf('General|Button', module)
+  .addParameters({ component: TlButton })
   .addDecorator(
     moduleMetadata({
       imports: [
@@ -41,6 +43,7 @@ const Story = storiesOf('General|Button', module)
       ],
     })
   );
+
 
 Story.add('Overview', () => {
   const textValue = text('Text', 'With Color');

@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'fa-icon',
-  templateUrl: './fa-icon.component.html',
-  styleUrls: ['./fa-icon.component.scss']
+  selector: 'tl-ion-icon',
+  templateUrl: './tl-ion-icon.component.html',
+  styleUrls: ['./tl-ion-icon.component.scss']
 })
-export class FaIconComponent implements OnInit, OnChanges {
+export class TlIonIconComponent implements OnInit, OnChanges {
 
   @Input() icon: string;
 
@@ -26,7 +26,7 @@ export class FaIconComponent implements OnInit, OnChanges {
 
   public format: string;
 
-  public PREFIX = 'fa-';
+  public PREFIX = 'ion ion';
 
   constructor() { }
 
@@ -36,11 +36,10 @@ export class FaIconComponent implements OnInit, OnChanges {
 
   formatClass() {
     if ( this.style === undefined ) {
-      this.style = 'fas';
+      this.style = 'md';
     }
 
-    this.format = this.style + ' ';
-    this.format += this.PREFIX + this.icon;
+    this.format = this.PREFIX + '-' + this.style + '-' + this.icon;
     this.format += (this.animation) ? ' anim-' + this.animation + ' animated' : '';
     this.format += (this.align) ? ' pull-' + this.align : '';
   }

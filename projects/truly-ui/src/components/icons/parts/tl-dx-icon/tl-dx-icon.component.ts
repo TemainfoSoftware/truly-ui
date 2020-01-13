@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'dx-icon',
-  templateUrl: './dx-icon.component.html',
-  styleUrls: ['./dx-icon.component.scss']
+  selector: 'tl-dx-icon',
+  templateUrl: './tl-dx-icon.component.html',
+  styleUrls: ['./tl-dx-icon.component.scss']
 })
-export class DxIconComponent implements OnInit, OnChanges {
+export class TlDxIconComponent implements OnInit, OnChanges {
 
   @Input() icon: string;
 

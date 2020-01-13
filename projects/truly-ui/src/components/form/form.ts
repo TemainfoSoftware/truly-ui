@@ -99,8 +99,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Output() actionForm: EventEmitter<ActionsModal> = new EventEmitter();
 
-  @Output() changeForm: EventEmitter<FormGroup> = new EventEmitter();
-
   @Input( 'formGroup' ) formGroup: FormGroup;
 
   @ViewChild( NgForm, {static: true}  ) public form: NgForm;
@@ -182,7 +180,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   listenFormChanges() {
     this.subscription.add( this.formInstance.valueChanges.subscribe(() => {
-      this.changeForm.emit( this.formInstance );
       this.change.detectChanges();
     }));
   }

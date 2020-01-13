@@ -212,7 +212,7 @@ export class IconsDemoComponent {
   copyIcon(icon, styleIcon) {
     this.onMouseLeave();
     if ( this.cheatsheet ) {
-      this.outputIcon = `ion ion-${ styleIcon }-${ icon }`;
+      this.outputIcon = `tl-ion tl-ion-${ styleIcon }-${ icon }`;
     } else {
       this.outputIcon = `<tl-icon [lib]="'ion'" [style]="'${ styleIcon }'">${ icon }</tl-icon>`;
     }

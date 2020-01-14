@@ -30,7 +30,7 @@
         <tl-button (click)="onClickReleaseSchedule(currentHoliday)" [text]="'Liberar Atendimento'" [color]="'primary'"></tl-button>
       </div>
     </div>
-    <div class="ui-schedule-views" [tlBlockui]="(!workScale || !existsScale)"
+    <div class="ui-schedule-views"  #scheduleviews [tlBlockui]="(!workScale || !existsScale)"
          [blockuiConfig]="{ message: texts.scaleNotFound, icon: 'fas fa-address-book', color: '#ccc' }"
          [ngStyle]="{overflowY: !existsScale ? 'hidden' : 'visible'}">
       <tl-view-day

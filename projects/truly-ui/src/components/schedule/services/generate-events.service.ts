@@ -57,7 +57,7 @@ export class GenerateEventsService {
     }
   }
 
-  private convertMillisecondsToPixel(date = new Date().getTime()) {
+  convertMillisecondsToPixel(date = new Date().getTime()) {
     let heightBody;
     let startDayMilliseconds;
     let endDayMilliseconds;

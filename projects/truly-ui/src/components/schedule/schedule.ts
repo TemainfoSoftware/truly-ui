@@ -164,6 +164,9 @@ export class TlSchedule implements OnInit, OnChanges {
   }
 
   private handleScrollView( date = new Date() ) {
+    if ( !this.scheduleviews ) {
+      return;
+    }
     const scroll = this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0;
     setTimeout(() => {
       this.scheduleviews.nativeElement.scrollTop = scroll;

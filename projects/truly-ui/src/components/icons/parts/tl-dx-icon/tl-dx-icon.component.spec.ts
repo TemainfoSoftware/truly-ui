@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IonIconComponent } from './ion-icon.component';
+import { TlDxIconComponent } from './tl-dx-icon.component';
 
-describe('IonIconComponent', () => {
-  let component: IonIconComponent;
-  let fixture: ComponentFixture<IonIconComponent>;
+describe('DxIconComponent', () => {
+  let component: TlDxIconComponent;
+  let fixture: ComponentFixture<TlDxIconComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IonIconComponent ]
+      declarations: [ TlDxIconComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IonIconComponent);
+    fixture = TestBed.createComponent(TlDxIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

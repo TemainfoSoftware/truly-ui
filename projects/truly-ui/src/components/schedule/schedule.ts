@@ -29,7 +29,7 @@ import {
   EventEmitter,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  TemplateRef
+  TemplateRef, ViewChild
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
@@ -41,6 +41,7 @@ import { EventService } from './services/event.service';
 import { ScheduleI18n } from './i18n/schedule-i18n';
 import { HolidaysType } from './types/holidays.type';
 import { HolidayService } from './services/holiday.service';
+import { GenerateEventsService } from './services/generate-events.service';
 
 @Component( {
   selector: 'tl-schedule',
@@ -85,6 +86,7 @@ export class TlSchedule implements OnInit, OnChanges {
       this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
       this._events = JSON.parse( JSON.stringify(this._events) );
     }
+    this.handleScrollView();
   }
 
   @Output() changeView = new EventEmitter<ViewType>();
@@ -107,6 +109,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() releaseSchedule = new EventEmitter();
 
+  @ViewChild('scheduleviews', { static: true }) scheduleviews;
+
   public slatNumberRowsAsArray: Array<Number>;
 
   public existsScale = false;
@@ -124,6 +128,7 @@ export class TlSchedule implements OnInit, OnChanges {
     private changeDetection: ChangeDetectorRef,
     private eventService: EventService,
     private holidayService: HolidayService,
+    private generateEventsService: GenerateEventsService
   ) {}
 
   ngOnInit() {
@@ -150,11 +155,29 @@ export class TlSchedule implements OnInit, OnChanges {
     this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
     this.handleHoliday();
+    this.handleScrollView( new Date($event.fullDate) );
     this.changeDetection.detectChanges();
   }
 
   onClickReleaseSchedule( holiday: HolidaysType ) {
     this.releaseSchedule.emit( holiday );
+  }
+
+  private handleScrollView( date = new Date() ) {
+    if ( !this.scheduleviews ) {
+      return;
+    }
+    const scroll = this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0;
+    setTimeout(() => {
+      this.scheduleviews.nativeElement.scrollTop = scroll;
+    }, 100);
+  }
+
+  private isSameDay( date ) {
+    const nowDate = new Date();
+    return date.getDate() === nowDate.getDate() &&
+           date.getDay() === nowDate.getDay() &&
+           date.getFullYear() === nowDate.getFullYear();
   }
 
   private handleHoliday( holidays = this.holidays ) {

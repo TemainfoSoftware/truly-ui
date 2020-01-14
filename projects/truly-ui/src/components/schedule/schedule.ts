@@ -85,8 +85,8 @@ export class TlSchedule implements OnInit, OnChanges {
     } else {
       this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
       this._events = JSON.parse( JSON.stringify(this._events) );
-      this.handleScrollView();
     }
+    this.handleScrollView();
   }
 
   @Output() changeView = new EventEmitter<ViewType>();

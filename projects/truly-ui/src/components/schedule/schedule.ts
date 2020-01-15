@@ -168,9 +168,10 @@ export class TlSchedule implements OnInit, OnChanges {
     if ( !this.scheduleviews ) {
       return;
     }
-    const scroll = this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0;
     setTimeout(() => {
-      this.scheduleviews.nativeElement.scrollTop = scroll;
+      this.scheduleviews.nativeElement.scrollTop = (
+        this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0
+      );
     }, 100);
   }
 

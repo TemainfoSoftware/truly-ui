@@ -255,7 +255,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
     for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
       if ( (listFormComponents[ childFormComponents ].tagName === 'INPUT'
-        || listFormComponents[ childFormComponents ].tagName === 'TEXTAREA') &&
+        || listFormComponents[ childFormComponents ].tagName === 'TEXTAREA'
+        || listFormComponents[childFormComponents].classList.contains('ui-editor-content')) &&
         !this.taggedNotForm( listFormComponents[ childFormComponents ] ) ) {
         this.focusElements.push( listFormComponents[ childFormComponents ] );
       }

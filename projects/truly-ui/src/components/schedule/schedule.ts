@@ -86,7 +86,6 @@ export class TlSchedule implements OnInit, OnChanges {
       this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
       this._events = JSON.parse( JSON.stringify(this._events) );
     }
-    this.handleScrollView();
   }
 
   @Output() changeView = new EventEmitter<ViewType>();
@@ -141,6 +140,9 @@ export class TlSchedule implements OnInit, OnChanges {
     if ( changes['holidays'] ) {
       this.handleHoliday( changes['holidays'].currentValue );
     }
+    if (this.existsScale ) {
+      this.handleScrollView();
+    }
     this.changeDetection.detectChanges();
   }
 
@@ -155,7 +157,6 @@ export class TlSchedule implements OnInit, OnChanges {
     this.eventService.getEventsOfDay();
     this.changeDate.emit( $event );
     this.handleHoliday();
-    this.handleScrollView( new Date($event.fullDate) );
     this.changeDetection.detectChanges();
   }
 
@@ -163,7 +164,7 @@ export class TlSchedule implements OnInit, OnChanges {
     this.releaseSchedule.emit( holiday );
   }
 
-  private handleScrollView( date = new Date() ) {
+  private handleScrollView( date = this.currentDate) {
     if ( !this.scheduleviews ) {
       return;
     }

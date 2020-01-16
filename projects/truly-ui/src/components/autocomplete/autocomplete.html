@@ -21,7 +21,7 @@
         [textBefore]="textBefore"
         [textAfter]="textAfter"
         [height]="height"
-        (clear)="onClickClose()"
+        (clear)="close()"
         (click)="toggleIsOpen()"
         (clickAddon)="clickAddon.emit($event)"
         (keydown.backspace)="handleKeyBackspace()"

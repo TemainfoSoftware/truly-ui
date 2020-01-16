@@ -95,6 +95,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() clearButton = true;
 
+  @Input() clearOnSelect = false;
+
   @Input() disabled: boolean = null;
 
   @Input() required: boolean = null;
@@ -154,8 +156,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   public isOpen = false;
 
   public focused = false;
-
-  public closeHover = false;
 
   public selected;
 
@@ -256,12 +256,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setFiltering( true );
   }
 
-  onClickClose() {
+  close() {
     if ( !this.control.disabled ) {
       this.value = '';
       this.setDescriptionValue( '' );
       this.selected = null;
-      this.setIsOpen( true );
     }
   }
 
@@ -393,14 +392,16 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
         this.setDescriptionValue( objectPath.get( this.keyManager.activeItem.itemSelected, this.keyText ) );
         this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
       }
+      this.handleClose();
     }
-    this.setIsOpen( false );
   }
 
   handleFocus() {
     this.focused = true;
     if ( this.openFocus && !this.keyManager.activeItem && !this.isDisabled && !this.disabled ) {
-      this.setIsOpen( true );
+      if ( this.openFocus ) {
+        this.setIsOpen( true );
+      }
     }
   }
 
@@ -421,11 +422,19 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   onSelectItem( value: any, item: TlItemSelectedDirective ) {
     this.setDescriptionValue( objectPath.get( value, this.keyText ) );
     this.handleKeyModelValue( value );
-    this.tlinput.setFocus();
-    this.setIsOpen( false );
     this.setSelected( item );
-    this.change.detectChanges();
     this.selectItem.emit( value );
+    this.handleClose();
+    this.change.detectChanges();
+  }
+
+  handleClose() {
+    if ( this.clearOnSelect ) {
+      this.setDescriptionValue( '' );
+      this.selected = null;
+    }
+    setTimeout(() => this.tlinput.setFocus());
+    this.setIsOpen( false );
   }
 
   private setUpData( value? ) {

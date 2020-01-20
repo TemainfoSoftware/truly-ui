@@ -16,7 +16,7 @@
            }"
            [attr.disabled]="disabled ? true : null"
            [attr.readonly]="readonly ? true : null"
-           (blur)="focusOut()"
+           (focusout)="focusOut()"
            [attr.value]="mockValue">
     <input date [formatDate]="formatDate"
            [isoDate]="isoDate" [(ngModel)]="value" notform class="ui-input" type="text">

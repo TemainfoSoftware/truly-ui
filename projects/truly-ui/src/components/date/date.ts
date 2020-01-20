@@ -182,7 +182,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
         this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
       }
       this.propagateTouched();
-    }, 100 );
+    }, 10 );
   }
 
   isControlValid() {

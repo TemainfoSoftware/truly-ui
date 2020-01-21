@@ -20,6 +20,5 @@
  SOFTWARE.
  */
  export interface InfoOptions {
-     title?: string;
      draggable?: boolean;
  }

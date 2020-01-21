@@ -20,7 +20,6 @@
  SOFTWARE.
  */
  export interface ConfirmationOptions {
-     title?: string;
      textOk?: string;
      textCancel?: string;
      defaultOK?: boolean;

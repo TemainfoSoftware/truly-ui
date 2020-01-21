@@ -1,5 +1,5 @@
 .tl-timeline-scroll {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: auto;
   padding: 0 5px 0 20px;
 }
@@ -17,7 +17,7 @@
 }
 
 .ui-timeline-content {
-  margin: 0 20px;
+  margin: 0 10px 0 20px;
 }
 
 .content-head-default {

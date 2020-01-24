@@ -150,6 +150,10 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
       this.subscription.add(this.control.control.valueChanges.subscribe((date: Date) => {
         if (!this.isOpen && date) {
           this.decomposeDate(date);
+          return;
+        }
+        if ( !date ) {
+          this.description = null;
         }
       }));
     }

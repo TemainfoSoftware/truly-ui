@@ -486,6 +486,10 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.contentEditor.nativeElement.focus();
   }
 
+  clearContent() {
+    this.writeValue('');
+  }
+
   writeValue(value: any): void {
     this.content = this.sanitizer.bypassSecurityTrustHtml(value);
   }

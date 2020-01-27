@@ -52,5 +52,7 @@ export class TlEditorHeader {
 
   @Output() clickQuote = new EventEmitter();
 
+  @Output() clickClear = new EventEmitter();
+
   constructor() {}
 }

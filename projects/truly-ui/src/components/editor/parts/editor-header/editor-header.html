@@ -83,5 +83,10 @@
       <button class="ui-command fas fa-quote-right" [ngClass]="{'ui-active-tool': activeTools.blockQuote}"
               (click)="clickQuote.emit()"></button>
     </li>
+    <li *ngIf="toolbarConfig.others?.clear?.show"
+        [tooltip]="{text: toolbarConfig.others?.clear?.tooltipText, placement: 'top-center'}">
+      <button class="ui-command far fa-trash-alt"
+              (click)="clickClear.emit()"></button>
+    </li>
   </ul>
 </div>

@@ -36,5 +36,6 @@ export const Editor = {
   listOrdered: 'Lista ordenada',
   linkText: 'Adicionar Link ao Texto',
   imageText: 'Adicionar imagem',
-  quoteText: 'Adicionar citação'
+  quoteText: 'Adicionar citação',
+  clearText: 'Limpar Conteudo',
 };

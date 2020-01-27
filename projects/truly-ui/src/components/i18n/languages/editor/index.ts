@@ -37,4 +37,5 @@ export interface EditorI18nInterface {
   linkText: string;
   imageText: string;
   quoteText: string;
+  clearText: string;
 }

@@ -17,6 +17,9 @@ import { InputModule } from '../input/index';
 import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
 import { DropDownIconModule } from '../dropdownicon/index';
+import { CellTemplateDirective } from './directives/cell-template.directive';
+import { TlDatatableRow } from './parts/column/datatable-row';
+import { TlDatatableCell } from './parts/datatable-cell';
 
 @NgModule( {
   imports: [
@@ -38,10 +41,14 @@ import { DropDownIconModule } from '../dropdownicon/index';
     TlDatatablePaginatorMode,
     TlDatatableScrollableMode,
     TlResizerDirective,
+    CellTemplateDirective,
+    TlDatatableCell,
+    TlDatatableRow
   ],
   exports: [
     TlDatatable,
-    TlDatatableColumn
+    TlDatatableColumn,
+    CellTemplateDirective
   ]
 } )
 export class DatatableModule {

@@ -16,7 +16,9 @@
         </div>
         <div [ngStyle]="{height: bodyHeight+'px'}">
             <table class="ui-datatable-table" [colgroup]="dt.columns" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
-                <tbody (click)="onClick($event)" #listBody class="ui-datatable-content-body" ></tbody>
+                <tbody (click)="onClick($event)" class="ui-datatable-content-body" #listBody>
+                  <ng-container #viewBody></ng-container>
+                </tbody>
             </table>
         </div>
     </div>

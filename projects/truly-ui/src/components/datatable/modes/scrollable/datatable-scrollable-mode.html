@@ -8,7 +8,10 @@
 
     <table style="width: 100%;" class="ui-datatable-table" [colgroup]="dt.columns">
       <tbody class="ui-datatable-content-body" (keydown)="onKeydown($event)">
-      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of data;" >
+      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of data; let index = index;"
+                        (click)="dt.onRowClick(row, index)"
+                        (dblclick)="dt.onRowClick(row, index)"
+      >
         <tl-datatable-cell class="ui-cel"
                            *ngFor="let collumn of dt.columns" [collumn]="collumn"
                            [content]="row"></tl-datatable-cell>

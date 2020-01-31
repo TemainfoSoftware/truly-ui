@@ -37,4 +37,12 @@ export class DataTableDemoComponent {
   onRowSelect( row ) {
     console.log('Row Select: ', row);
   }
+
+  onRowClick( row ) {
+    console.log('Row Click: ', row);
+  }
+
+  onRowDbClick( row ) {
+    console.log('Row DbClick: ', row);
+  }
 }

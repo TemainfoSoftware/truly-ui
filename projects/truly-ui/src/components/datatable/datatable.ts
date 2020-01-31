@@ -101,8 +101,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ViewChild( 'datatableBox', {static: false}  ) datatableBox: ElementRef;
 
-    public receiveFocus = new Subject();
-
     public columns: any[] = [];
 
     public heightViewPort = 0;
@@ -116,8 +114,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     public scrollingHorizontalSubject = new Subject<any>();
 
     private loadingSubject = new Subject<any>();
-
-    private activeItem;
 
     private _loading = false;
     set loading(value) {
@@ -157,31 +153,16 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.rowHeight = this.heightViewPort / this.rowsClient;
     }
 
-    setTabIndex( value: number ) {
-        this.tabindex = value;
-    }
-
     onRowClick( row, index ) {
-        this.activeItem = index;
-        this.setTabIndex( index );
         this.rowClick.emit( this.getObjectRow( row, index ) );
     }
 
     onRowSelect( row, index ) {
-        this.activeItem = index;
         this.rowSelect.emit( this.getObjectRow( row, index ) );
     }
 
     onRowDblclick( row, index ) {
         this.rowDblclick.emit( this.getObjectRow( row, index ) );
-    }
-
-    setFocus() {
-        this.receiveFocus.next( this.activeItem );
-    }
-
-    getLoading(): Observable<any> {
-        return this.loadingSubject.asObservable();
     }
 
     getScrollingHorizontal(): Observable<any> {
@@ -196,7 +177,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         if ( this.globalFilter ) {
             this.globalFilterTimeout = setTimeout( () => {
                 this.render.listen(this.globalFilter.element.nativeElement, 'input', ( event ) => {
-                   // this.filter( event.target.value ) ;
                     this.globalFilterTimeout = null;
                 });
             }, 0);

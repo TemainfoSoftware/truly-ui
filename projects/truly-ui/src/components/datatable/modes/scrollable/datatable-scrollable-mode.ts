@@ -23,12 +23,12 @@
 
 import {
   ChangeDetectorRef,
-  Component,
+  Component, EventEmitter,
   forwardRef,
   Inject,
   Input,
   OnChanges,
-  OnDestroy,
+  OnDestroy, Output,
   QueryList,
   Renderer2,
   SimpleChanges,
@@ -53,6 +53,8 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
 export class TlDatatableScrollableMode implements OnChanges {
 
   @Input( 'data' ) data;
+
+  @Output( 'select' ) select = new EventEmitter();
 
   public loading = false;
 

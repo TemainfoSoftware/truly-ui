@@ -20,6 +20,9 @@ import { DropDownIconModule } from '../dropdownicon/index';
 import { CellTemplateDirective } from './directives/cell-template.directive';
 import { TlDatatableRow } from './parts/column/datatable-row';
 import { TlDatatableCell } from './parts/datatable-cell';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { A11yModule } from '@angular/cdk/a11y';
+import { RowDirective } from './directives/row.directive';
 
 @NgModule( {
   imports: [
@@ -29,7 +32,9 @@ import { TlDatatableCell } from './parts/datatable-cell';
     IconsModule,
     InputModule,
     DropDownIconModule,
-    DropDownListModule
+    DropDownListModule,
+    ScrollingModule,
+    A11yModule
   ],
   declarations: [
     TlColgroupDirective,
@@ -43,7 +48,8 @@ import { TlDatatableCell } from './parts/datatable-cell';
     TlResizerDirective,
     CellTemplateDirective,
     TlDatatableCell,
-    TlDatatableRow
+    TlDatatableRow,
+    RowDirective
   ],
   exports: [
     TlDatatable,

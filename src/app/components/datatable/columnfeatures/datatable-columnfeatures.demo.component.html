@@ -96,8 +96,12 @@
                 <tl-datatable-column [field]="'firstName'" [width]="'100px'" [sortable]="false"></tl-datatable-column>
                 <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
                 <tl-datatable-column [field]="'city'" [alignment]="'right'"></tl-datatable-column>
-                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
-                <tl-datatable-column [field]="'id'" [title]="'Acoes'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'200px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'id'" [title]="'Custom Cell'"  [showFilterOptions]="false" [width]="'150px'">
+                  <ng-template let-data>
+                    <span>Custom Template: #{{data.id}}</span>
+                  </ng-template>
+                </tl-datatable-column>
               </tl-datatable>
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

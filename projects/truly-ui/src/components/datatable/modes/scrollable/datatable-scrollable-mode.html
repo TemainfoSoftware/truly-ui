@@ -1,25 +1,20 @@
-<div class="ui-datatable-scrollable"  (mousedown)="onMouseDown()"  (mouseup)="onMouseUp()" >
+<div class="ui-datatable-scrollable">
 
-    <tl-datatable-header></tl-datatable-header>
+  <tl-datatable-header></tl-datatable-header>
+  <cdk-virtual-scroll-viewport
+    [ngStyle]="{'height': dt.heightViewPort+'px' }"
+    class="ui-datatable-content-wrap"
+    itemSize="23">
 
-    <div #listComponent id="id-component"
-         class="ui-datatable-content-wrap"
-         (keydown)="onKeydown($event)"
-         [tlBlockui]="loading"
-         [ngStyle]="{'height': dt.heightViewPort+'px' }">
+    <table style="width: 100%;" class="ui-datatable-table" [colgroup]="dt.columns">
+      <tbody class="ui-datatable-content-body" (keydown)="onKeydown($event)">
+      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of data;" >
+        <tl-datatable-cell class="ui-cel"
+                           *ngFor="let collumn of dt.columns" [collumn]="collumn"
+                           [content]="row"></tl-datatable-cell>
+      </tl-datatable-row>
+      </tbody>
+    </table>
 
-        <div [ngClass]="{'ui-box-notfound-records':true, 'ui-show': !foundRecords,'ui-hide': foundRecords}" >
-            <div class="ui-container">
-                <tl-icon [lib]="'fa'" [style]="'fas'" [size]="'2em'" aria-hidden="true">filter</tl-icon>
-                <div class="ui-notfound-text">{{notFountText}}</div>
-            </div>
-        </div>
-        <div [ngStyle]="{height: bodyHeight+'px'}">
-            <table class="ui-datatable-table" [colgroup]="dt.columns" [ngStyle]="{position: 'relative', transform: 'translateY('+ translateY +'px)'}" >
-                <tbody (click)="onClick($event)" class="ui-datatable-content-body" #listBody>
-                  <ng-container #viewBody></ng-container>
-                </tbody>
-            </table>
-        </div>
-    </div>
+  </cdk-virtual-scroll-viewport>
 </div>

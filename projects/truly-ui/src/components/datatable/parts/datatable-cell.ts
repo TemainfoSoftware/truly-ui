@@ -30,13 +30,16 @@ import {
   ViewContainerRef, HostBinding, HostListener
 } from '@angular/core';
 
+import * as objectPath from 'object-path';
+import { TlDatatableColumn } from './column/datatable-column';
+import { DatePipe } from '@angular/common';
 @Component( {
   selector: 'tl-datatable-cell',
   template: `
-    <ng-container *ngIf="isTemplate; else textTemplate">
-      <ng-container *ngTemplateOutlet="templateContent; context: {$implicit: data}"></ng-container>
-    </ng-container>
-    <ng-template #textTemplate>{{ templateContent }}</ng-template>
+      <ng-container *ngIf="isTemplate; else textTemplate">
+        <ng-container *ngTemplateOutlet="collumn.template; context: {$implicit: content}"></ng-container>
+      </ng-container>
+      <ng-template #textTemplate>{{ getDeepContent(content) }}</ng-template>
     `,
   styles: [`
     :host {
@@ -49,41 +52,41 @@ import {
       white-space: nowrap;
       align-items: center;
     }
-  `]
+  `],
+  providers: [
+    DatePipe
+  ]
 })
 export class TlDatatableCell implements OnInit {
 
-  @Input('tabIndex') tabIndex: string;
+  @Input('content') content: string | object;
 
-  @Input('align') align: string;
-
-  @Input('content')
-  set content( value: TemplateRef<any> | string ) {
-    this.templateContent = value;
-  }
-
-  @Input('data') data;
-
-  get content() {
-    return this.templateContent;
-  }
+  @Input('collumn') collumn: TlDatatableColumn;
 
   @HostBinding('class.ui-cel') cellClass = true;
 
   @HostBinding('style.height') height = '0px';
 
   @HostBinding('style.text-align') get textAlign() {
-    return this.align;
+    return this.collumn.alignment;
   }
 
-  templateContent;
-
-  constructor( ) {}
+  constructor( private datePipe: DatePipe) {}
 
   ngOnInit() {}
 
   get isTemplate() {
-    return this.templateContent instanceof TemplateRef;
+    return this.collumn.template instanceof TemplateRef;
   }
 
+  getDeepContent( fullContent ) {
+      const content = objectPath.get(fullContent, this.collumn.field);
+
+      switch ( this.collumn.type ) {
+        case 'date' : {
+          return this.datePipe.transform( content, this.collumn.format );
+        }
+        default : return content;
+      }
+  }
 }

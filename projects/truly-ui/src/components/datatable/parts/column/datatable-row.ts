@@ -27,13 +27,14 @@ import {
   ContentChild,
   TemplateRef,
   ViewChild,
-  ViewContainerRef, HostBinding, HostListener
+  ViewContainerRef, HostBinding, HostListener, ElementRef
 } from '@angular/core';
 import { FilterOptionsService } from '../../services/datatable-filter-options.service';
+import { FocusableOption } from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-datatable-row',
-  template: `<ng-container #viewRow></ng-container>`,
+  template: '<ng-content></ng-content>',
   styles: [`
     :host {
         display: table-row;
@@ -41,36 +42,25 @@ import { FilterOptionsService } from '../../services/datatable-filter-options.se
         border-color: inherit;
 
         font-size: 1em;
+        height: 23px;
         outline: none;
         margin: 0;
         content: none;
     }
   `]
 } )
-export class TlDatatableRow implements OnInit {
+export class TlDatatableRow implements OnInit, FocusableOption {
 
-  @ViewChild('viewRow', {read: ViewContainerRef, static: true}) viewRow: ViewContainerRef;
+  @Input() content;
 
-  @HostBinding('class.ui-row') rowClass = true;
+  @HostBinding('attr.tabindex') tabIndex = -1;
 
-  @HostBinding('attr.tabIndex') tabIndex: string;
+  constructor(private element: ElementRef) {}
 
-  @HostBinding('attr.row') row: string;
+  ngOnInit() {}
 
-  @HostListener('keyup', ['$event'])
-  onKeyUp($event) {
-    console.log($event);
-  }
-
-  @HostListener('keydown', ['$event'])
-  onKeyDown($event) {
-    console.log($event);
-  }
-
-  constructor( ) {}
-
-  ngOnInit() {
-
+  focus() {
+    this.element.nativeElement.focus();
   }
 
 }

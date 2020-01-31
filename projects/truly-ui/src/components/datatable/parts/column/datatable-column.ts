@@ -57,7 +57,7 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('filterOptions') filterOptions = [];
 
-    @ContentChild(TemplateRef, {static: false, read: TemplateRef}) template: TemplateRef<any>;
+    @ContentChild(TemplateRef, {static: false, read: TemplateRef}) template: TemplateRef<any> | null;
 
     private filterOptionsService: FilterOptionsService;
 

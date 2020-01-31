@@ -81,7 +81,6 @@ export class TlDatatableCell implements OnInit {
 
   getDeepContent( fullContent ) {
       const content = objectPath.get(fullContent, this.collumn.field);
-
       switch ( this.collumn.type ) {
         case 'date' : {
           return this.datePipe.transform( content, this.collumn.format );

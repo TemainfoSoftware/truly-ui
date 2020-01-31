@@ -6,79 +6,79 @@
     <div class="row">
       <div class="col-md-12">
         <app-showcase-card [title]="'Column Features'" [icon]="'far fa-lightbulb'">
-<!--          &lt;!&ndash; AUTO GENERATE COLUMNS &ndash;&gt;-->
-<!--          <app-card>-->
-<!--            <div class="col-12">-->
-<!--              <h3>Auto-Generated Columns</h3>-->
-<!--              <p>-->
-<!--                If the Datatable columns are not explicitly configured, the Grid auto-generates them and establishes their number-->
-<!--                depending on the data fields the Grid is bound to.-->
-<!--              </p>-->
-<!--              <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'"> </tl-datatable>-->
-<!--              <hr>-->
-<!--              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
-<!--             <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'"></tl-datatable>-->
-<!--            </textarea>-->
-<!--            </div>-->
-<!--          </app-card>-->
+          <!-- AUTO GENERATE COLUMNS -->
+          <app-card>
+            <div class="col-12">
+              <h3>Auto-Generated Columns</h3>
+              <p>
+                If the Datatable columns are not explicitly configured, the Grid auto-generates them and establishes their number
+                depending on the data fields the Grid is bound to.
+              </p>
+              <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'"> </tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'"></tl-datatable>
+            </textarea>
+            </div>
+          </app-card>
 
-<!--          &lt;!&ndash; COLUMN RESIZING &ndash;&gt;-->
-<!--          <app-card>-->
-<!--            <div class="col-12">-->
-<!--              <h3>Column Resizing</h3>-->
-<!--              <p>-->
-<!--                The Datatable enables you to resize its columns by dragging the edges (resize handles) of the header cells.-->
-<!--                To enable column resizing, set the <code>[allowResize]</code> property of the Datatable to true.-->
-<!--              </p>-->
-<!--              <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'" [allowResize]="true"></tl-datatable>-->
-<!--              <hr>-->
-<!--              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
-<!--             <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'" [allowResize]="true"></tl-datatable>-->
-<!--            </textarea>-->
-<!--            </div>-->
-<!--          </app-card>-->
+          <!-- COLUMN RESIZING -->
+          <app-card>
+            <div class="col-12">
+              <h3>Column Resizing</h3>
+              <p>
+                The Datatable enables you to resize its columns by dragging the edges (resize handles) of the header cells.
+                To enable column resizing, set the <code>[allowResize]</code> property of the Datatable to true.
+              </p>
+              <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'" [allowResize]="true"></tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [allowSortColumn]="false"  [mode]="'scrollable'" [allowResize]="true"></tl-datatable>
+            </textarea>
+            </div>
+          </app-card>
 
-<!--          &lt;!&ndash; COLUMN FILTER &ndash;&gt;-->
-<!--          <app-card>-->
-<!--            <div class="col-12">-->
-<!--              <h3>Column Filtering</h3>-->
-<!--              <p>-->
-<!--                By default, when <code>[allowFilterColumn]</code> is enabled, the Datatable renders a filter row in its header. Based on the type of-->
-<!--                data the columns contain, the filter row displays textboxes in each column header where the user can filter-->
-<!--                string, numeric, or date inputs.-->
-<!--                <br>-->
-<!--                You can also hide the filter options for a particular column using parameter <code>[showFilterOptions]</code>-->
-<!--                or even remove a filter for a specific column using parameter <code>[showFilter]</code> in column property.-->
-<!--              </p>-->
-<!--              <tl-datatable [data]="data" [allowSortColumn]="false" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>-->
-<!--              <hr>-->
-<!--              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
-<!--             <tl-datatable [data]="data" [allowSortColumn]="false" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>-->
-<!--            </textarea>-->
-<!--            </div>-->
-<!--          </app-card>-->
+          <!-- COLUMN FILTER -->
+          <app-card>
+            <div class="col-12">
+              <h3>Column Filtering</h3>
+              <p>
+                By default, when <code>[allowFilterColumn]</code> is enabled, the Datatable renders a filter row in its header. Based on the type of
+                data the columns contain, the filter row displays textboxes in each column header where the user can filter
+                string, numeric, or date inputs.
+                <br>
+                You can also hide the filter options for a particular column using parameter <code>[showFilterOptions]</code>
+                or even remove a filter for a specific column using parameter <code>[showFilter]</code> in column property.
+              </p>
+              <tl-datatable [data]="data" [allowSortColumn]="false" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [allowSortColumn]="false" [mode]="'scrollable'" [allowFilterColumn]="true"></tl-datatable>
+            </textarea>
+            </div>
+          </app-card>
 
-<!--          &lt;!&ndash; COLUMN SORT &ndash;&gt;-->
-<!--          <app-card>-->
-<!--            <div class="col-12">-->
-<!--              <h3>Column Sorting</h3>-->
-<!--              <p>-->
-<!--                Simply enabling <code>[allowSortColumn]</code> property of Datatable to make a columns sortables.<br>-->
-<!--                You can also deactivate the ordering of a given column by passing the <code>[sorteable]</code> parameter in the column component.-->
-<!--              </p>-->
-<!--              <tl-datatable [data]="data" [mode]="'scrollable'" [allowSortColumn]="true">-->
-<!--                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>-->
-<!--                <tl-datatable-column [field]="'firstName'" [width]="'100px'" [sortable]="false"></tl-datatable-column>-->
-<!--                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>-->
-<!--                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>-->
-<!--                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>-->
-<!--              </tl-datatable>-->
-<!--              <hr>-->
-<!--              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">-->
-<!--             <tl-datatable [data]="data" [mode]="'scrollable'"  [allowSortColumn]="true"></tl-datatable>-->
-<!--            </textarea>-->
-<!--            </div>-->
-<!--          </app-card>-->
+          <!-- COLUMN SORT -->
+          <app-card>
+            <div class="col-12">
+              <h3>Column Sorting</h3>
+              <p>
+                Simply enabling <code>[allowSortColumn]</code> property of Datatable to make a columns sortables.<br>
+                You can also deactivate the ordering of a given column by passing the <code>[sorteable]</code> parameter in the column component.
+              </p>
+              <tl-datatable [data]="data" [mode]="'scrollable'" [allowSortColumn]="true">
+                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'firstName'" [width]="'100px'" [sortable]="false"></tl-datatable-column>
+                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
+                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+              </tl-datatable>
+              <hr>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+             <tl-datatable [data]="data" [mode]="'scrollable'"  [allowSortColumn]="true"></tl-datatable>
+            </textarea>
+            </div>
+          </app-card>
 
           <!-- TEMPLATES -->
           <app-showcase-card [title]="'Templates'" [icon]="'far fa-lightbulb'">

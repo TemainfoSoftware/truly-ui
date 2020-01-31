@@ -38,8 +38,8 @@ import { Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
-import { TlDatatableRow } from '../../parts/column/datatable-row';
-import { TlDatatableCell } from '../../parts/datatable-cell';
+import { TlDatatableRow } from '../../parts/row/datatable-row';
+import { TlDatatableCell } from '../../parts/cell/datatable-cell';
 import { FocusKeyManager } from '@angular/cdk/a11y';
 
 

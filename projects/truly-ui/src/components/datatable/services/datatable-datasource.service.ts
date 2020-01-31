@@ -24,12 +24,11 @@ import { Injectable, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TlDatatable } from '../datatable';
 import { DataMetadata } from '../../core/types/datametadata';
-import { DatasourceService } from '../interfaces/datasource.service';
 import { TlDatatableFilterService } from './datatable-filter.service';
 import { TlDatatableSortService } from './datatable-sort.service';
 
 @Injectable()
-export class TlDatatableDataSource implements DatasourceService {
+export class TlDatatableDataSource {
 
     public  onChangeDataSourceEmitter = new Subject();
 

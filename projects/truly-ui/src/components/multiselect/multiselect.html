@@ -17,8 +17,11 @@
       <div class="group-tags">
         <tl-tag *ngFor="let tag of tags; let i = index"
                 [title]="isSimpleData() ? tag : tag[labelTag]"
+                [closeButton]="true"
+                [color]="'primary'"
+                [height]="'18px'"
                 (close)="removeTag(i, tag)"
-                (click)="selectTagClick(i, tag)">
+                (click)="$event.stopPropagation(); selectTagClick(i, tag)">
         </tl-tag>
 
         <input autocomplete="off"

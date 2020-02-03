@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OverlayListModule } from '../overlaylist/index';
 import { InternalsModule } from '../internals/index';
+import { TagModule } from '../tag/index';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { InternalsModule } from '../internals/index';
     FormsModule,
     OverlayListModule,
     OverlayModule,
-    InternalsModule
+    InternalsModule,
+    TagModule
   ],
   declarations: [
     TlMultiSelect,

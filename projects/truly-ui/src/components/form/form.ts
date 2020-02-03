@@ -54,7 +54,6 @@ let componentFormIndex;
   selector: 'tl-form',
   templateUrl: '../form/form.html',
   styleUrls: [ '../form/form.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
@@ -183,7 +182,6 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   listenFormChanges() {
     this.subscription.add( this.formInstance.valueChanges.subscribe(() => {
       this.changeForm.emit( this.formInstance );
-      this.change.detectChanges();
     }));
   }
 

@@ -67,9 +67,9 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @ContentChild( NgModel, {static: true}  ) model: NgModel;
 
-  @ViewChild( NgModel, {static: true}  ) hiddenModel: NgModel;
-
   @ContentChild( FormControlName, {static: true}  ) controlName: NgModel;
+
+  @ViewChild( NgModel, {static: true}  ) hiddenModel: NgModel;
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
@@ -90,17 +90,17 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   public mockValue: string;
 
-  public touched = false;
-
   private fieldMask: InputMask;
 
   public placeholder: string;
 
+  public touched: boolean;
+
   private mask: string;
 
-  private _control;
-
   private subscription = new Subscription();
+
+  private _control;
 
   constructor( private renderer: Renderer2,
                private change: ChangeDetectorRef ) {
@@ -115,8 +115,25 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
     this.fieldMask = new InputMask( this, this.renderer, this.mask );
     this.getMockValue( this.value );
     this.handleModelChangeInit();
+    this.handleChangeStatus();
     this.handleRequiredValidator();
+    this.handleCompleteMask();
     this.change.detectChanges();
+  }
+
+  handleCompleteMask() {
+    this.subscription.add(this.fieldMask.complete.subscribe(() => {
+      if ( this.isoDate ) {
+        this.handleIsoDateModel();
+      }
+    }));
+  }
+
+  handleChangeStatus() {
+    this.subscription.add(this.hiddenModel.statusChanges.subscribe((value) => {
+      value === 'VALID' ? this.getModel().control.setErrors(null) :
+        this.getModel().control.setErrors(this.hiddenModel.control.errors);
+    }));
   }
 
   handleModelChangeInit() {
@@ -129,6 +146,11 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
   }
 
   handleRequiredValidator() {
+    if ( this.control.control.validator ) {
+       let validators = [ this.hiddenModel.control.validator ];
+       validators = [ ...validators, this.control.control.validator ];
+       this.hiddenModel.control.setValidators( validators );
+    }
     if (this.control && this.control.errors && this.control.errors.hasOwnProperty('required')) {
       this.required = this.control.errors['required'];
     }
@@ -140,9 +162,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
     }
     if ( this.isoDate && value.length > 0 ) {
       const date = new Date( value );
-      setTimeout( () => {
-        this.mockValue = this.getDateByFormat( date );
-      }, 100 );
+      this.mockValue = this.getDateByFormat( date );
       return;
     }
     this.mockValue = value;
@@ -177,23 +197,19 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
         this.value = null;
         return;
       }
-      if ( !this.isIsoDate( this.value ) && this.isControlValid() ) {
+      if ( !this.isIsoDate( this.value ) ) {
         const date = ReverseFormatDate( this.value, this.formatDate );
-        this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+        const parsed = Date.parse( date.stringFormat );
+        if ( !isNaN(parsed) ) {
+          this.value = new Date( date.year, date.month - 1, date.day ).toISOString();
+        }
       }
       this.propagateTouched();
-    }, 10 );
+    }, 100 );
   }
 
   isControlValid() {
     return this.hiddenModel.valid;
-  }
-
-  focusOut() {
-    this.getModel().control.setErrors(this.hiddenModel.control.errors);
-    if ( this.isoDate ) {
-      this.handleIsoDateModel();
-    }
   }
 
   setDateMask() {

@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges, ViewContainerRef } from '@angular/core';
+import {Component, OnInit, ViewContainerRef} from '@angular/core';
 
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
@@ -11,7 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: [ './multiselectdemo.component.scss' ],
   providers: [ DumpDataService ]
 } )
-export class MultiSelectDemoComponent implements OnInit, OnChanges {
+export class MultiSelectDemoComponent implements OnInit {
 
   public dataTableProperties;
 
@@ -34,11 +34,11 @@ export class MultiSelectDemoComponent implements OnInit, OnChanges {
 
     this.dataTableProperties = jsonProp.dataProperties;
     this.events = jsonEvt.events;
-    this.dataSourceStringArray = [ 'Wilhão', 'Maicão', 'Genessão', 'Marcião', 'Dilsão', 'Gersão', 'Jaissera' ];
+    this.dataSourceStringArray = [ 'Bob', 'Maria', 'Fred', 'Laura', 'Justin', 'James', 'Walt'];
 
     this.dataNoSourceBasic =
       [
-        { id: 1, firstName: 'William Aguera das Merces', lastName: 'King', email: 'contact@domain.com' },
+        { id: 1, firstName: 'Bob', lastName: 'King', email: 'contact@domain.com' },
         { id: 2, firstName: 'Maria', lastName: 'King', email: 'contact@domain.com' },
         { id: 3, firstName: 'Fred', lastName: 'King', email: 'contact@domain.com' },
         { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' },
@@ -52,18 +52,4 @@ export class MultiSelectDemoComponent implements OnInit, OnChanges {
       { id: 4, firstName: 'Laura', lastName: 'King', email: 'contact@domain.com' }, ];
     this.form.get('complex').patchValue(this.dataNoSourceBasicModel);
   }
-
-  onClickTag($event) {
-    // console.log('Clicked Tag', $event);
-    console.log('FORM', this.form.get('complex').value);
-  }
-
-  onRemoveTag($event) {
-    // console.log('Removed Tag', $event);
-  }
-
-  ngOnChanges( change: SimpleChanges ) {
-    // console.log( 'changes', change );
-  }
-
 }

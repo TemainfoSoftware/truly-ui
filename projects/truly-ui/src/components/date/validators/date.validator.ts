@@ -50,12 +50,28 @@ export function DateValidator( formatDate, isoDate ): ValidatorFn {
       return { date: LOCALE_I18N.Validators.invalidDatePattern +  ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
+    if ( (stringUnmasked( c ).length < dateExpressFormat.length) && isoDate) {
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + '[isoDate]' };
+    }
+
+    if ( !isIsoDate( c.value ) && isoDate ) {
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + '[isoDate]' };
+    }
+
     return null;
   };
 }
 
 function stringUnmasked( c ) {
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
+}
+
+function isIsoDate( str ) {
+  if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) {
+    return false;
+  }
+  const d = new Date( str );
+  return d.toISOString() === str;
 }
 
 

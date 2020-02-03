@@ -36,6 +36,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
       },
       {
+        path: 'tag',
+        loadChildren: './components/tag/tagdemo.module#TagDemoModule'
+      },
+      {
         path: 'avatar',
         loadChildren: './components/avatar/avatardemo.module#AvatarDemoModule'
       },

@@ -1,10 +1,11 @@
-@import "../../../core/styles/theming/theming";
+@import "../core/styles/theming/theming";
 
 @mixin _tl-tag-theme-schema( $theme, $action ){
   //SKELETON COMPONENT HERE
   .tag {
     background-color: map-deep-get($theme, $action, "default", "background");
     color: map-deep-get($theme, $action, "default", "foreground");
+    border: 1px solid rgba(map-deep-get($theme, $action, "default", "foreground"), 0.1);
   }
   .tag.selected {
     background-color: map-deep-get($theme, $action, "darker", "background");

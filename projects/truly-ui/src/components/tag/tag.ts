@@ -29,22 +29,48 @@ import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class TlTag implements OnInit {
 
-  @Input() color = 'primary';
-
   @Input() title = 'Title Tag';
 
-  @Input() width = 'auto';
+  @Input() width = 'fit-content';
 
-  @Input() height = '15px';
+  @Input() height = 'auto';
+
+  @Input() closeButton = false;
+
+  @Input()
+  set color( value: string ) {
+    const colors = {
+      basic: () => 'basic',
+      primary: () => 'primary',
+      success: () => 'success',
+      information: () => 'information',
+      warning: () => 'warning',
+      danger: () => 'danger',
+    };
+    if ( colors[value] ) {
+      this._color = colors[value]();
+    } else {
+      this._color = null;
+      this.customColor = value;
+    }
+  }
+
+  get color() {
+    return this._color;
+  }
 
   @Output() close: EventEmitter<any> = new EventEmitter();
+
+  private _color = 'basic';
+
+  public customColor = '';
 
   constructor() {}
 
   ngOnInit() {}
 
   onClose() {
-    this.close.emit('close');
+    this.close.emit();
   }
 
 }

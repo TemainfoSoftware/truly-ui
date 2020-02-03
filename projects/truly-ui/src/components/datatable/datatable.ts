@@ -20,36 +20,50 @@
  SOFTWARE.
  */
 import {
-  AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList,
-  Renderer2, ViewChild
+  AfterContentInit,
+  ChangeDetectionStrategy,
+  Component,
+  ContentChildren,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  QueryList,
+  Renderer2,
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { DatatableFilterOptions } from './configs/datatable-filter-options';
 import { DataMetadata } from '../core/types/datametadata';
 import { FilterOptionsService } from './services/datatable-filter-options.service';
 import { TlDatatableFilterService } from './services/datatable-filter.service';
-import { TlDatatableDataSource } from './services/datatable-datasource.service';
+import { DatatableDataSource } from './services/datatable-datasource.service';
 import { TlDatatableColumnService } from './services/datatable-column.service';
 import { TlDatatableFilterConstraints } from './services/datatable-filter-constraints.service';
 import { Subject ,  Observable } from 'rxjs';
 import { TlDatatableSortService } from './services/datatable-sort.service';
+import { DatatableHelpersService } from './services/datatable-helpers.service';
+import { DataSource } from '@angular/cdk/collections';
 
 @Component({
     selector: 'tl-datatable',
     templateUrl: './datatable.html',
     styleUrls: [ './datatable.scss' ],
     providers: [
-      TlDatatableDataSource,
       TlDatatableColumnService,
       TlDatatableFilterConstraints,
       TlDatatableFilterService,
       TlDatatableSortService,
-      FilterOptionsService
-    ]
+      FilterOptionsService,
+      DatatableHelpersService
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TlDatatable implements AfterContentInit, OnChanges {
 
-    @Input('data') data: DataMetadata | Array<any>;
+    @Input('data') data: Array<any>;
 
     @Input('recordsCount') recordsCount = -1;
 
@@ -99,7 +113,9 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ViewChild( 'tbody', {static: true}  ) tbody: ElementRef;
 
-    @ViewChild( 'datatableBox', {static: false}  ) datatableBox: ElementRef;
+    @ViewChild( 'datatableBox', {static: true}  ) datatableBox: ElementRef;
+
+    public dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
     public columns: any[] = [];
 
@@ -108,8 +124,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     public tabindex = 0;
 
     public globalFilterTimeout: any;
-
-    public totalRows: number;
 
     public scrollingHorizontalSubject = new Subject<any>();
 
@@ -125,7 +139,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     constructor( private render: Renderer2,
-                 public dataSourceService: TlDatatableDataSource,
                  public columnService: TlDatatableColumnService,
                  public filterService: TlDatatableFilterService,
                  public sortService: TlDatatableSortService
@@ -133,7 +146,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     ngAfterContentInit() {
         this.calcDimensionsHeight();
-        this.dataSourceService.onInitDataSource(this);
         this.columnService.onInitColumnService(this);
         this.filterService.onInicializeFilterService(this);
         this.sortService.onInicializeSortService(this);
@@ -141,10 +153,12 @@ export class TlDatatable implements AfterContentInit, OnChanges {
         this.columnService.setColumns();
     }
 
-    ngOnChanges(changes) {
-        if (changes['data'] !== undefined) {
-            this.dataSourceService.onChangeDataSource(changes);
-        }
+    ngOnChanges(changes: SimpleChanges) {
+      this.dataSource = new DatatableDataSource({ filter: this.filterService, sort: this.sortService }, {
+          dataSource: changes['data'].currentValue,
+          pageSize: this.rowsPage,
+          recordsCount: this.recordsCount
+      });
     }
 
     calcDimensionsHeight() {

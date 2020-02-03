@@ -48,8 +48,8 @@ export class TlDatatableColumnService {
           return;
         }
 
-        if (this.dt.dataSourceService.datasource) {
-            Object.keys( this.dt.dataSourceService.datasource[0] ).forEach( ( columnField ) => {
+        if (this.dt.data) {
+            Object.keys( this.dt.data[0] ).forEach( ( columnField ) => {
                 this.dt.columns.push( this.buildNewDataTableColumn( columnField ) );
             });
         }
@@ -64,7 +64,7 @@ export class TlDatatableColumnService {
     }
 
     private getWidthColumn() {
-        const columnsTotal = Object.keys( this.dt.dataSourceService.datasource[0] ).length;
+        const columnsTotal = Object.keys( this.dt.data[0] ).length;
         const widthScrollbar = 10;
         return (this.dt.datatableBox.nativeElement.clientWidth - widthScrollbar) / columnsTotal;
     }

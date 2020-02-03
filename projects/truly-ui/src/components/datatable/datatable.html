@@ -1,9 +1,7 @@
-<div class="tl-datatable-box" #datatableBox *ngIf="data"
+<div class="tl-datatable-box" #datatableBox
      [ngClass]="{'-borderleft': true}"
      [ngStyle]="{width: width}">
-
-    <tl-datatable-scrollable-mode *ngIf="mode === 'scrollable'" [data]="data"></tl-datatable-scrollable-mode>
-
-    <tl-datatable-paginator-mode *ngIf="mode === 'paginator'" ></tl-datatable-paginator-mode>
+    <tl-datatable-header></tl-datatable-header>
+    <tl-datatable-content [dataSource]="dataSource"></tl-datatable-content>
 </div>
 

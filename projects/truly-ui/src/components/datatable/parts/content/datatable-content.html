@@ -1,14 +1,12 @@
-<div class="ui-datatable-scrollable">
-
-  <tl-datatable-header></tl-datatable-header>
+<div class="ui-datatable-content">
   <cdk-virtual-scroll-viewport
     [ngStyle]="{'height': dt.heightViewPort+'px' }"
     class="ui-datatable-content-wrap"
     itemSize="23">
 
     <table style="width: 100%;" class="ui-datatable-table" [colgroup]="dt.columns">
-      <tbody class="ui-datatable-content-body" (keydown)="onKeydown($event)">
-      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of data; let index = index;"
+      <tbody class="ui-datatable-content-body" >
+      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of dataSource; let index = index;"
                         (click)="dt.onRowClick(row, index)"
                         (dblclick)="dt.onRowClick(row, index)"
       >
@@ -18,6 +16,5 @@
       </tl-datatable-row>
       </tbody>
     </table>
-
   </cdk-virtual-scroll-viewport>
 </div>

@@ -5,8 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TlDatatable } from './datatable';
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { TlDatatableHeader } from './parts/header/datatable-header';
-import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
-import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
+import { TlDatatableContent } from './parts/content/datatable-content';
 import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column-filter';
@@ -39,12 +38,11 @@ import { A11yModule } from '@angular/cdk/a11y';
     TlDatatable,
     TlDatatableColumn,
     TlDatatabaleColumnFilter,
-    TlDatatableHeader,
-    TlDatatablePaginatorMode,
-    TlDatatableScrollableMode,
-    TlResizerDirective,
     TlDatatableCell,
     TlDatatableRow,
+    TlDatatableHeader,
+    TlDatatableContent,
+    TlResizerDirective,
   ],
   exports: [
     TlDatatable,

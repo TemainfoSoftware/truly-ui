@@ -1,20 +1,31 @@
 <div class="ui-datatable-content">
-  <cdk-virtual-scroll-viewport
-    [ngStyle]="{'height': dt.heightViewPort+'px' }"
-    class="ui-datatable-content-wrap"
-    itemSize="23">
 
-    <table style="width: 100%;" class="ui-datatable-table" [colgroup]="dt.columns">
+  <cdk-virtual-scroll-viewport
+    class="ui-datatable-content-wrap"
+    [ngStyle]="{'height': heightViewPort+'px' }"
+    [itemSize]="rowHeight">
+
+
+    <table style="width: 100%;" class="ui-datatable-table" [class.hidden]="isEmpty()" [colgroup]="columns">
       <tbody class="ui-datatable-content-body" >
-      <tl-datatable-row class="ui-row" *cdkVirtualFor="let row of dataSource; let index = index;"
-                        (click)="dt.onRowClick(row, index)"
-                        (dblclick)="dt.onRowClick(row, index)"
-      >
-        <tl-datatable-cell class="ui-cel"
-                           *ngFor="let collumn of dt.columns" [collumn]="collumn"
-                           [content]="row"></tl-datatable-cell>
-      </tl-datatable-row>
+        <ng-container *cdkVirtualFor="let row of dataSource; let index = index; let index = index;">
+          <tl-datatable-row class="ui-row"
+                            [ngStyle]="{'height': rowHeight+'px' }"
+                            (click)="rowClick.emit({ row:row, index: index })"
+                            (dblclick)="rowDbClick.emit({ row:row, index: index })"
+          >
+            <tl-datatable-cell class="ui-cel"
+                               *ngFor="let collumn of columns" [collumn]="collumn"
+                               [content]="row"></tl-datatable-cell>
+          </tl-datatable-row>
+
+        </ng-container>
       </tbody>
     </table>
+
+    <div [ngStyle]="{'height': heightViewPort+'px' }" class="ui-box-notfound-records" [class.hidden]="!isEmpty()">
+      <tl-icon [lib]="'fa'" [style]="'fas'" [size]="'25px'">filter</tl-icon>
+      {{emptyText()}}
+    </div>
   </cdk-virtual-scroll-viewport>
 </div>

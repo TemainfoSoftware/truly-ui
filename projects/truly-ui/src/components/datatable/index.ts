@@ -15,6 +15,7 @@ import { InputModule } from '../input/index';
 import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
 import { DropDownIconModule } from '../dropdownicon/index';
+import { LoaderModule } from '../loader/index';
 import { TlDatatableRow } from './parts/row/datatable-row';
 import { TlDatatableCell } from './parts/cell/datatable-cell';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -28,6 +29,7 @@ import { A11yModule } from '@angular/cdk/a11y';
     BlockUIModule,
     IconsModule,
     InputModule,
+    LoaderModule,
     DropDownIconModule,
     DropDownListModule,
     ScrollingModule,

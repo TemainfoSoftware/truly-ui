@@ -18,7 +18,7 @@
                 [data]="dataInMemory"
                 [mode]="'scrollable'"
                 [rowModel]="'inmemory'"
-                [height]="297"
+                [height]="354"
                 [rowsClient]="12"
                 [allowFilterColumn]="true"
               >
@@ -61,25 +61,25 @@ export class DatatableColumnFeaturesDemoComponent {
                 This will present the data to the user and load more data as the user scrolls down. Use this if you want to
                 display a large flat (not grouped) list of data.
               </p>
-              <tl-datatable
-                [data]="dataInfinite"
-                [mode]="'scrollable'"
-                [rowModel]="'infinite'"
-                [height]="297"
-                [rowsClient]="12"
-                [rowsPage]="100"
-                [recordsCount]="recordsCount"
-                (loadData)="onLoadData($event)"
-                (rowSelect)="onRowSelect($event)"
-                [allowFilterColumn]="true"
-              >
-                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
-                <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
-                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>
-                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
-                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
+<!--              <tl-datatable-->
+<!--                [data]="dataInfinite"-->
+<!--                [mode]="'scrollable'"-->
+<!--                [rowModel]="'infinite'"-->
+<!--                [height]="297"-->
+<!--                [rowsClient]="12"-->
+<!--                [rowsPage]="100"-->
+<!--                [recordsCount]="recordsCount"-->
+<!--                (loadData)="onLoadData($event)"-->
+<!--                (rowSelect)="onRowSelect($event)"-->
+<!--                [allowFilterColumn]="true"-->
+<!--              >-->
+<!--                <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>-->
+<!--                <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>-->
+<!--                <tl-datatable-column [field]="'year'" [type]="'number'" [width]="'120px'"></tl-datatable-column>-->
+<!--                <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>-->
+<!--                <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>-->
 
-              </tl-datatable>
+<!--              </tl-datatable>-->
               <hr>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
           <tl-datatable [data]="dataInfinite" [mode]="'scrollable'" [rowModel]="'infinite'" [height]="300" [rowsClient]="12" [rowsPage]="take"

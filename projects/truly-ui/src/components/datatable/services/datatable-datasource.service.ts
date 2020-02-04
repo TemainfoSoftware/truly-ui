@@ -41,6 +41,10 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   private sortService: TlDatatableSortService;
   private datatable: TlDatatable;
 
+  get isEmpty() {
+    return this._cachedData.length === 0;
+  }
+
   constructor( dataSource: Array<object>, datatable: TlDatatable ) {
     super();
     this._pageSize = datatable.rowsPage;

@@ -23,16 +23,19 @@
 
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, EventEmitter,
   forwardRef,
   Inject, Input, OnChanges,
-  OnInit, SimpleChanges
+  OnInit, Output, SimpleChanges, ViewChild
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
 import { TlDatatableCell } from '../cell/datatable-cell';
 import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk/collections';
-import { TlDatatable } from '../../datatable';
+import { DataSource, isDataSource } from '@angular/cdk/collections';
+import { TlDatatableColumn } from '../column/datatable-column';
+import { I18nService } from '../../../i18n';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { DatatableDataSource } from '../../services/datatable-datasource.service';
 
 @Component( {
   selector: 'tl-datatable-content',
@@ -45,9 +48,31 @@ export class TlDatatableContent implements OnInit {
 
   @Input('dataSource') dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
-  constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable) {}
+  @Input('rowHeight') rowHeight: number;
+
+  @Input('heightViewPort') heightViewPort: number;
+
+  @Input('columns') columns: Array<TlDatatableColumn>;
+
+  @Output('rowClick') rowClick = new EventEmitter();
+
+  @Output('rowDbClick') rowDbClick = new EventEmitter();
+
+  @ViewChild('viewport', {static: true}) viewport: CdkVirtualScrollViewport;
+
+  constructor(private i18n: I18nService) {}
 
   ngOnInit(): void {}
 
+  isEmpty() {
+    return (
+      (this.dataSource as Array<any>).length === 0 ||
+      ( this.dataSource as DatatableDataSource).isEmpty
+    );
+  }
+
+  emptyText() {
+    return this.i18n.getLocale().Datatable.notFoundText;
+  }
 
 }

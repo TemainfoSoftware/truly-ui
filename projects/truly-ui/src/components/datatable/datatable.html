@@ -2,6 +2,13 @@
      [ngClass]="{'-borderleft': true}"
      [ngStyle]="{width: width}">
     <tl-datatable-header></tl-datatable-header>
-    <tl-datatable-content [dataSource]="dataSource"></tl-datatable-content>
+    <tl-datatable-content
+      [dataSource]="dataSource"
+      [rowHeight]="rowHeight"
+      [heightViewPort]="heightViewPort"
+      [columns]="columns"
+      (rowDbClick)="onRowDblclick($event.row, $event.index)"
+      (rowClick)="onRowClick($event.row, $event.index)">
+    </tl-datatable-content>
 </div>
 

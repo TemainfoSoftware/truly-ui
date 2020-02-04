@@ -3,20 +3,10 @@
 }
 
 .ui-box-notfound-records{
-  height: 100%;
-  >.ui-container{
-    text-align: center;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  &.ui-show{
-    display: block;
-  }
-
-  &.ui-hide{
-    display: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
 }
 
 .ui-datatable-content-wrap{

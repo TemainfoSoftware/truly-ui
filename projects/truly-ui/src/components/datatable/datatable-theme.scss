@@ -21,6 +21,10 @@
     border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
+  .ui-datatable-header{
+    border-right: 1px solid map-deep-get($basic, "default", "border");
+  }
+
   .ui-datatable-table-head{
     color: map-deep-get($basic, "darker", "foreground");
     > .ui-row{

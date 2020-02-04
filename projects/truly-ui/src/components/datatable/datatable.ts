@@ -154,7 +154,9 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      this.dataSource = new DatatableDataSource( changes['data'].currentValue, this);
+      if ( changes['data'] ) {
+        this.dataSource = new DatatableDataSource( changes['data'].currentValue, this);
+      }
     }
 
     calcDimensionsHeight() {

@@ -24,6 +24,7 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TlDatatableFilterService } from './datatable-filter.service';
 import { TlDatatableSortService } from './datatable-sort.service';
+import { TlDatatable } from '../datatable';
 
 export class DatatableDataSource extends DataSource<object | undefined> {
 
@@ -38,30 +39,40 @@ export class DatatableDataSource extends DataSource<object | undefined> {
 
   private filterService: TlDatatableFilterService;
   private sortService: TlDatatableSortService;
+  private datatable: TlDatatable;
 
-  constructor(services: { filter: TlDatatableFilterService, sort: TlDatatableSortService }, configuration: {
-    dataSource, pageSize: number, recordsCount?: number
-  } ) {
+  constructor( dataSource: Array<object>, datatable: TlDatatable ) {
     super();
-    this._pageSize = configuration.pageSize;
-    this._recordsCount = configuration.recordsCount || configuration.dataSource.length;
-    this._cachedData = configuration.dataSource;
-    this._dataSource = configuration.dataSource;
+    this._pageSize = datatable.rowsPage;
+    this._cachedData = dataSource;
+    this._dataSource = dataSource;
+    this._recordsCount = datatable.recordsCount || dataSource.length;
     this._dataStream = new BehaviorSubject<( object | undefined )[]>( this._cachedData );
 
-    this.filterService = services.filter;
-    this.sortService = services.sort;
+    this.datatable = datatable;
+    this.filterService = datatable.filterService;
+    this.sortService = datatable.sortService;
   }
 
   connect( collectionViewer: CollectionViewer ): Observable<( object | undefined )[] | ReadonlyArray<object | undefined>> {
-    this._subscription.add( this.filterService.onFilter().subscribe(this.dispatchData.bind(this)) );
-    this._subscription.add( this.sortService.onSort().subscribe(this.dispatchData.bind(this)) );
+    this._subscription.add( this.filterService.onFilter().subscribe(this.onFilter.bind(this)) );
+    this._subscription.add( this.sortService.onSort().subscribe(this.onSort.bind(this)) );
     this._subscription.add( collectionViewer.viewChange.subscribe( this.viewData.bind(this) ) );
     return this._dataStream;
   }
 
   disconnect( collectionViewer: CollectionViewer ): void {
     this._subscription.unsubscribe();
+  }
+
+  private onFilter( filter ) {
+    this.dispatchData(0);
+    this.datatable.filterData.emit( filter );
+  }
+
+  private onSort( sort ) {
+    this.dispatchData(0);
+    this.datatable.sortData.emit( sort );
   }
 
   private _getPageForIndex( index: number ): number {
@@ -85,9 +96,22 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   }
 
   private dispatchData(page = 0) {
-    this._cachedData = this.filterService.filterWithData(this._dataSource, false);
-    this._cachedData = this.sortService.sortWithData(this._cachedData, false);
-    this._cachedData.slice( page * this._pageSize, this._pageSize);
+    if (this.isInMemory()) {
+      this._cachedData = this.filterService.filterWithData(this._dataSource, false);
+      this._cachedData = this.sortService.sortWithData(this._cachedData, false);
+      this._cachedData.slice( page * this._pageSize, this._pageSize);
+    } else {
+      this.datatable.loadData.emit({
+        skip: page * this._pageSize,
+        take: this._pageSize,
+        filters: this.filterService.getFilter(),
+        sorts: this.sortService.getSort()
+      });
+    }
     this._dataStream.next( this._cachedData );
+  }
+
+  private isInMemory() {
+    return this.datatable.rowModel === 'inmemory';
   }
 }

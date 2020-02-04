@@ -21,4 +21,16 @@ export class DatatableColumnFeaturesDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.data = this.dumpDataService.createRandomData(1000);
   }
+
+  onFilterData( event )  {
+    console.log( event );
+  }
+
+  onSortData( event )  {
+    console.log( event );
+  }
+
+  onLoadData(event) {
+    console.log( event );
+  }
 }

@@ -154,11 +154,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      this.dataSource = new DatatableDataSource({ filter: this.filterService, sort: this.sortService }, {
-          dataSource: changes['data'].currentValue,
-          pageSize: this.rowsPage,
-          recordsCount: this.recordsCount
-      });
+      this.dataSource = new DatatableDataSource( changes['data'].currentValue, this);
     }
 
     calcDimensionsHeight() {

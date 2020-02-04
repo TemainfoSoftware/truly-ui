@@ -90,7 +90,8 @@
                 (excluding the header and footer ones) or to format the data the table cells display.
                 For more information on how to define the cell template, refer to the CellTemplateDirective API documentation.
               </p>
-              <tl-datatable [data]="data" [mode]="'scrollable'" [allowSortColumn]="true" [allowFilterColumn]="true">
+              <tl-datatable [data]="data" [mode]="'scrollable'" [rowModel]="'infinite'" [allowSortColumn]="true" [allowFilterColumn]="true"
+                            (sortData)="onSortData($event)" (filterData)="onFilterData($event)" (loadData)="onLoadData($event)">
                 <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
                 <tl-datatable-column [field]="'status'" [width]="'100px'" ></tl-datatable-column>
                 <tl-datatable-column [field]="'firstName'" [width]="'100px'" [sortable]="false"></tl-datatable-column>

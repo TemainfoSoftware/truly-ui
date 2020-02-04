@@ -30,7 +30,7 @@ import {
   OnChanges,
   Output,
   QueryList,
-  Renderer2,
+  Renderer2, SimpleChange,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -154,9 +154,11 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      if ( changes['data'] ) {
-        this.dataSource = new DatatableDataSource( changes['data'].currentValue, this);
-      }
+      this.loadDataSource( changes['data'] );
+    }
+
+    loadDataSource( change: SimpleChange ) {
+      this.dataSource = change && change.currentValue ? new DatatableDataSource( change.currentValue, this) : [];
     }
 
     calcDimensionsHeight() {

@@ -75,4 +75,12 @@ export class TlDatatableContent implements OnInit {
     return this.i18n.getLocale().Datatable.notFoundText;
   }
 
+  mouseDown($event) {
+    ( this.dataSource as DatatableDataSource).setNavigating( true );
+  }
+
+  mouseUp($event) {
+    ( this.dataSource as DatatableDataSource).setNavigating( false );
+  }
+
 }

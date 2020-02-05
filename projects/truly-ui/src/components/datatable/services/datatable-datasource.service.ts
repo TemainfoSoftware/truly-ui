@@ -31,7 +31,6 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   private _recordsCount: number;
   private _pageSize: number;
   private _cachedData: Array<object>;
-  private _dataSource: Array<object>;
   private _dataStream: BehaviorSubject<( object | undefined )[]>;
 
   private _fetchedPages = new Set<number>();
@@ -40,6 +39,9 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   private filterService: TlDatatableFilterService;
   private sortService: TlDatatableSortService;
   private datatable: TlDatatable;
+  private currentPage: number;
+
+  private navigating: boolean;
 
   get isEmpty() {
     return this._cachedData.length === 0;
@@ -48,9 +50,8 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   constructor( dataSource: Array<object>, datatable: TlDatatable ) {
     super();
     this._pageSize = datatable.rowsPage;
-    this._cachedData = dataSource;
-    this._dataSource = dataSource;
     this._recordsCount = datatable.recordsCount || dataSource.length;
+    this._cachedData = Array.from<object>({length: this._recordsCount});
     this._dataStream = new BehaviorSubject<( object | undefined )[]>( this._cachedData );
 
     this.datatable = datatable;
@@ -69,13 +70,24 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     this._subscription.unsubscribe();
   }
 
+  public setNavigating( navigate ) {
+    this.navigating = navigate;
+    if ( !this.navigating ) {
+      this.fetchPage( this.currentPage );
+    }
+  }
+
+  public loadData( data) {
+    this.dispatchData(data);
+  }
+
   private onFilter( filter ) {
-    this.dispatchData(0);
+    this.dispatchData();
     this.datatable.filterData.emit( filter );
   }
 
   private onSort( sort ) {
-    this.dispatchData(0);
+    this.dispatchData();
     this.datatable.sortData.emit( sort );
   }
 
@@ -83,13 +95,6 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     return Math.floor( index / this._pageSize );
   }
 
-  private fetchPage( page: number ) {
-    if ( this._fetchedPages.has( page ) ) {
-      return;
-    }
-    this._fetchedPages.add( page );
-    this.dispatchData(page);
-  }
 
   private viewData(range) {
     const startPage = this._getPageForIndex( range.start );
@@ -99,20 +104,46 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     }
   }
 
-  private dispatchData(page = 0) {
+  private fetchPage( page: number ) {
+    this.currentPage = page;
+
+    if ( this.navigating ) {
+      return;
+    }
+
+    if ( this._fetchedPages.has( this.currentPage ) ) {
+      return;
+    }
+    this.emitLoadData( page );
+  }
+
+  private dispatchData(data = []) {
     if (this.isInMemory()) {
-      this._cachedData = this.filterService.filterWithData(this._dataSource, false);
+      this._cachedData = this.filterService.filterWithData(this._cachedData, false);
       this._cachedData = this.sortService.sortWithData(this._cachedData, false);
-      this._cachedData.slice( page * this._pageSize, this._pageSize);
-    } else {
+      this._cachedData.slice( this.currentPage  * this._pageSize, this._pageSize);
+    }
+
+    if (this.isInfinite() && data.length > 0 ) {
+      this._cachedData.splice(this.currentPage  * this._pageSize, this._pageSize, ...data);
+    }
+    this._dataStream.next( this._cachedData );
+  }
+
+  private emitLoadData( page ) {
+    if (this.isInfinite()  ) {
       this.datatable.loadData.emit({
         skip: page * this._pageSize,
         take: this._pageSize,
         filters: this.filterService.getFilter(),
         sorts: this.sortService.getSort()
       });
+      this._fetchedPages.add( page );
     }
-    this._dataStream.next( this._cachedData );
+  }
+
+  private isInfinite() {
+    return this.datatable.rowModel === 'infinite';
   }
 
   private isInMemory() {

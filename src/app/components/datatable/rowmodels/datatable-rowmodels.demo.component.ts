@@ -49,6 +49,7 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
   }
 
   onLoadData(event) {
+    console.log('Load Data...', event);
     this.getDataForInifinit(event.skip, event.take);
   }
 
@@ -62,11 +63,11 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
       this.dataInfinite = this.getDataFromService(skip, take);
       this.recordsCount = this.data.length;
       this.cd.markForCheck();
-    }, 1000);
+    }, Math.random() * 1000 + 200);
   }
 
   private getDataFromService(skip, take) {
-    return this.data.slice(skip, take);
+    return this.data.slice(skip, skip + take);
   }
 
   ngOnDestroy() {

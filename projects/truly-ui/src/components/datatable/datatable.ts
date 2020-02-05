@@ -115,7 +115,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
     @ViewChild( 'datatableBox', {static: true}  ) datatableBox: ElementRef;
 
-    public dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
+    public dataSource: Array<any> | DataSource<any>;
 
     public columns: any[] = [];
 
@@ -154,11 +154,24 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-      this.loadDataSource( changes['data'] );
+      this.initializeDataSource( changes['data'] );
+      this.populateDataSource( changes['data'] );
     }
 
-    loadDataSource( change: SimpleChange ) {
-      this.dataSource = change && change.currentValue ? new DatatableDataSource( change.currentValue, this) : [];
+    initializeDataSource( change: SimpleChange ) {
+      if ( !(this.dataSource instanceof DatatableDataSource)) {
+        this.dataSource = change && change.currentValue ? new DatatableDataSource( change.currentValue, this ) : [];
+      }
+    }
+
+    populateDataSource( change: SimpleChange ) {
+      if ( change && change.currentValue &&  !change.firstChange && (this.rowModel === 'infinite') ) {
+        if ( this.dataSource instanceof DatatableDataSource) {
+          if (!(this.dataSource as DatatableDataSource).isEmpty) {
+            (this.dataSource as DatatableDataSource).loadData( change.currentValue );
+          }
+        }
+      }
     }
 
     calcDimensionsHeight() {

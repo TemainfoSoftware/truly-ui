@@ -5,15 +5,16 @@
     (mousedown)="mouseDown($event)"
     (mouseup)="mouseUp($event)"
     [ngStyle]="{'height': heightViewPort+'px' }"
+    [minBufferPx]="100"
+    [maxBufferPx]="500"
     [itemSize]="rowHeight">
 
-
     <table style="width: 100%;" class="ui-datatable-table" [class.hidden]="isEmpty()" [colgroup]="columns">
-      <tbody class="ui-datatable-content-body" >
+      <tbody class="ui-datatable-content-body" (keydown)="onKeydown($event)">
         <ng-container *cdkVirtualFor="let row of dataSource; let index = index; let index = index;">
           <tl-datatable-row *ngIf="row;else loadingRowTemplate" class="ui-row"
                             [ngStyle]="{'height': rowHeight+'px' }"
-                            (click)="rowClick.emit({ row:row, index: index })"
+                            (click)="onRowClick(row, index)"
                             (dblclick)="rowDbClick.emit({ row:row, index: index })"
           >
             <tl-datatable-cell class="ui-cel"

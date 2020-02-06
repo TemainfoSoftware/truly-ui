@@ -22,11 +22,12 @@
  */
 
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component, EventEmitter,
   forwardRef,
   Inject, Input, OnChanges,
-  OnInit, Output, SimpleChanges, ViewChild
+  OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
 import { TlDatatableCell } from '../cell/datatable-cell';
@@ -36,6 +37,8 @@ import { TlDatatableColumn } from '../column/datatable-column';
 import { I18nService } from '../../../i18n';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DatatableDataSource } from '../../services/datatable-datasource.service';
+import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
+import { ENTER } from '@angular/cdk/keycodes';
 
 @Component( {
   selector: 'tl-datatable-content',
@@ -44,7 +47,7 @@ import { DatatableDataSource } from '../../services/datatable-datasource.service
   entryComponents: [ TlDatatableRow, TlDatatableCell ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 } )
-export class TlDatatableContent implements OnInit {
+export class TlDatatableContent implements OnInit, AfterViewInit {
 
   @Input('dataSource') dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
@@ -60,9 +63,22 @@ export class TlDatatableContent implements OnInit {
 
   @ViewChild('viewport', {static: true}) viewport: CdkVirtualScrollViewport;
 
+  @ViewChildren(TlDatatableRow) items: QueryList<TlDatatableRow>;
+
+  private keyManager: FocusKeyManager<TlDatatableRow>;
+
   constructor(private i18n: I18nService) {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit() {
+    this.keyManager = new FocusKeyManager(this.items).withTypeAhead();
+  }
+
+  onRowClick( row, index ) {
+    this.rowClick.emit({ row: row, index: index });
+    this.keyManager.setActiveItem(index);
+  }
 
   isEmpty() {
     return (
@@ -85,6 +101,10 @@ export class TlDatatableContent implements OnInit {
     if ( this.dataSource instanceof DatatableDataSource) {
       ( this.dataSource as DatatableDataSource ).setNavigating( false );
     }
+  }
+
+  onKeydown(event) {
+    this.keyManager.onKeydown(event);
   }
 
 }

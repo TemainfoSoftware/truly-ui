@@ -76,11 +76,15 @@ export class TlDatatableContent implements OnInit {
   }
 
   mouseDown($event) {
-    ( this.dataSource as DatatableDataSource).setNavigating( true );
+    if ( this.dataSource instanceof DatatableDataSource) {
+      ( this.dataSource as DatatableDataSource ).setNavigating( true );
+    }
   }
 
   mouseUp($event) {
-    ( this.dataSource as DatatableDataSource).setNavigating( false );
+    if ( this.dataSource instanceof DatatableDataSource) {
+      ( this.dataSource as DatatableDataSource ).setNavigating( false );
+    }
   }
 
 }

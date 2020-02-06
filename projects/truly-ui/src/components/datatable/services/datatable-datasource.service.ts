@@ -57,6 +57,8 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     this.datatable = datatable;
     this.filterService = datatable.filterService;
     this.sortService = datatable.sortService;
+
+    this.initializeData( dataSource );
   }
 
   connect( collectionViewer: CollectionViewer ): Observable<( object | undefined )[] | ReadonlyArray<object | undefined>> {
@@ -76,19 +78,23 @@ export class DatatableDataSource extends DataSource<object | undefined> {
       this.fetchPage( this.currentPage );
     }
   }
+  public initializeData( data) {
+    if (this.isInMemory()  ) {
+      this._cachedData = data;
+      this._dataStream.next( data );
+    }
+  }
 
   public loadData( data) {
     this.dispatchData(data);
   }
 
-  private onFilter( filter ) {
+  private onFilter( ) {
     this.dispatchData();
-    this.datatable.filterData.emit( filter );
   }
 
-  private onSort( sort ) {
+  private onSort( ) {
     this.dispatchData();
-    this.datatable.sortData.emit( sort );
   }
 
   private _getPageForIndex( index: number ): number {
@@ -106,11 +112,9 @@ export class DatatableDataSource extends DataSource<object | undefined> {
 
   private fetchPage( page: number ) {
     this.currentPage = page;
-
     if ( this.navigating ) {
       return;
     }
-
     if ( this._fetchedPages.has( this.currentPage ) ) {
       return;
     }
@@ -119,7 +123,7 @@ export class DatatableDataSource extends DataSource<object | undefined> {
 
   private dispatchData(data = []) {
     if (this.isInMemory()) {
-      this._cachedData = this.filterService.filterWithData(this._cachedData, false);
+      this._cachedData = this.filterService.filterWithData(data, false);
       this._cachedData = this.sortService.sortWithData(this._cachedData, false);
       this._cachedData.slice( this.currentPage  * this._pageSize, this._pageSize);
     }
@@ -140,6 +144,7 @@ export class DatatableDataSource extends DataSource<object | undefined> {
       });
       this._fetchedPages.add( page );
     }
+
   }
 
   private isInfinite() {

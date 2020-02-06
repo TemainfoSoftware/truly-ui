@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { A11yModule } from '@angular/cdk/a11y';
 
 import { TlDatatable } from './datatable';
 import { TlDatatableColumn } from './parts/column/datatable-column';
@@ -18,8 +20,7 @@ import { DropDownIconModule } from '../dropdownicon/index';
 import { LoaderModule } from '../loader/index';
 import { TlDatatableRow } from './parts/row/datatable-row';
 import { TlDatatableCell } from './parts/cell/datatable-cell';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { A11yModule } from '@angular/cdk/a11y';
+
 
 
 @NgModule( {

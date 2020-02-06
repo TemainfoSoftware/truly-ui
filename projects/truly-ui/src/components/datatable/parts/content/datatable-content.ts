@@ -24,21 +24,18 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component, EventEmitter,
-  forwardRef,
-  Inject, Input, OnChanges,
-  OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren
+  Component, EventEmitter, Input,
+  OnInit, Output, QueryList, ViewChild, ViewChildren
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
 import { TlDatatableCell } from '../cell/datatable-cell';
 import { Observable } from 'rxjs';
-import { DataSource, isDataSource } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/collections';
 import { TlDatatableColumn } from '../column/datatable-column';
-import { I18nService } from '../../../i18n';
+import { I18nService } from '../../../i18n/i18n.service';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DatatableDataSource } from '../../services/datatable-datasource.service';
-import { ActiveDescendantKeyManager, FocusKeyManager } from '@angular/cdk/a11y';
-import { ENTER } from '@angular/cdk/keycodes';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-datatable-content',

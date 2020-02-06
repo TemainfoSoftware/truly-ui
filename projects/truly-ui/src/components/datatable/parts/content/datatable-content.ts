@@ -44,7 +44,7 @@ import { FocusKeyManager } from '@angular/cdk/a11y';
   entryComponents: [ TlDatatableRow, TlDatatableCell ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 } )
-export class TlDatatableContent implements OnInit, AfterViewInit {
+export class TlDatatableContent implements AfterViewInit {
 
   @Input('dataSource') dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
@@ -65,8 +65,6 @@ export class TlDatatableContent implements OnInit, AfterViewInit {
   private keyManager: FocusKeyManager<TlDatatableRow>;
 
   constructor(private i18n: I18nService) {}
-
-  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.keyManager = new FocusKeyManager(this.items).withTypeAhead();

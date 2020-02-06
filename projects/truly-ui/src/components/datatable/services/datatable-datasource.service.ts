@@ -25,6 +25,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TlDatatableFilterService } from './datatable-filter.service';
 import { TlDatatableSortService } from './datatable-sort.service';
 import { TlDatatable } from '../datatable';
+import { SimpleChanges } from '@angular/core';
 
 export class DatatableDataSource extends DataSource<object | undefined> {
 
@@ -47,18 +48,16 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     return this._cachedData.length === 0;
   }
 
-  constructor( dataSource: Array<object>, datatable: TlDatatable ) {
+  constructor( datatable: TlDatatable ) {
     super();
+    this._recordsCount = datatable.recordsCount;
     this._pageSize = datatable.rowsPage;
-    this._recordsCount = datatable.recordsCount || dataSource.length;
     this._cachedData = Array.from<object>({length: this._recordsCount});
     this._dataStream = new BehaviorSubject<( object | undefined )[]>( this._cachedData );
 
     this.datatable = datatable;
     this.filterService = datatable.filterService;
     this.sortService = datatable.sortService;
-
-    this.initializeData( dataSource );
   }
 
   connect( collectionViewer: CollectionViewer ): Observable<( object | undefined )[] | ReadonlyArray<object | undefined>> {
@@ -72,21 +71,27 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     this._subscription.unsubscribe();
   }
 
-  public setNavigating( navigate ) {
+  setNavigating( navigate ) {
     this.navigating = navigate;
     if ( !this.navigating ) {
       this.fetchPage( this.currentPage );
     }
   }
-  public initializeData( data) {
-    if (this.isInMemory()  ) {
-      this._cachedData = data;
-      this._dataStream.next( data );
-    }
-  }
 
-  public loadData( data) {
-    this.dispatchData(data);
+  changes( changes: SimpleChanges ) {
+    if ( changes['rowsPage'] && changes['rowsPage'].currentValue ) {
+      this._pageSize = changes['rowsPage'].currentValue;
+    }
+
+    if ( changes['recordsCount'] && changes['recordsCount'].currentValue ) {
+      this._recordsCount = changes['recordsCount'].currentValue;
+      this._cachedData = Array.from<object>({length: this._recordsCount});
+      this._dataStream.next( this._cachedData );
+    }
+
+    if ( changes['data'] && changes['data'].currentValue ) {
+      this.dispatchData( changes['data'].currentValue );
+    }
   }
 
   private onFilter( ) {

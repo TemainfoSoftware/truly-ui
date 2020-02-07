@@ -1,4 +1,4 @@
-<div class="ui-datatable-content">
+<div class="ui-datatable-content" (keydown)="onKeydown($event)">
 
   <cdk-virtual-scroll-viewport
     class="ui-datatable-content-wrap"
@@ -10,11 +10,14 @@
     [itemSize]="rowHeight">
 
     <table style="width: 100%;" class="ui-datatable-table" [class.hidden]="isEmpty()" [colgroup]="columns">
-      <tbody class="ui-datatable-content-body" (keydown)="onKeydown($event)">
+      <tbody class="ui-datatable-content-body" >
         <ng-container *cdkVirtualFor="let row of dataSource; let index = index; let index = index;">
           <tl-datatable-row *ngIf="row;else loadingRowTemplate" class="ui-row"
                             [ngStyle]="{'height': rowHeight+'px' }"
-                            (click)="onRowClick(row, index)"
+                            [row]="row"
+                            #rowItem="rowItem"
+                            [index]="index"
+                            (click)="onRowClick(rowItem, row, index)"
                             (dblclick)="rowDbClick.emit({ row:row, index: index })"
           >
             <tl-datatable-cell class="ui-cel"

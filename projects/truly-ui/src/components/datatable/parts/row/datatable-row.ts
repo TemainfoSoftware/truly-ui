@@ -47,11 +47,16 @@ import { FocusableOption } from '@angular/cdk/a11y';
         margin: 0;
         content: none;
     }
-  `]
+  `],
+  exportAs: 'rowItem'
 } )
 export class TlDatatableRow implements OnInit, FocusableOption {
 
   @Input() content;
+
+  @Input('row') row;
+
+  @Input('index') index;
 
   @HostBinding('attr.tabindex') tabIndex = -1;
 

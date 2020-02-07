@@ -123,8 +123,6 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
   public tabindex = 0;
 
-  public globalFilterTimeout: any;
-
   public scrollingHorizontalSubject = new Subject<any>();
 
   private loadingSubject = new Subject<any>();

@@ -24,18 +24,19 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  Component, EventEmitter, Input,
-  OnInit, Output, QueryList, ViewChild, ViewChildren
+  Component, EventEmitter, Input, OnChanges,
+  OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
 import { TlDatatableCell } from '../cell/datatable-cell';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
+import { FocusKeyManager } from '@angular/cdk/a11y';
+import { CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
+
 import { TlDatatableColumn } from '../column/datatable-column';
 import { I18nService } from '../../../i18n/i18n.service';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { DatatableDataSource } from '../../services/datatable-datasource.service';
-import { FocusKeyManager } from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-datatable-content',
@@ -48,6 +49,8 @@ export class TlDatatableContent implements AfterViewInit {
 
   @Input('dataSource') dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
+  @Input( 'data' ) data: Array<any>;
+
   @Input('rowHeight') rowHeight: number;
 
   @Input('heightViewPort') heightViewPort: number;
@@ -57,6 +60,8 @@ export class TlDatatableContent implements AfterViewInit {
   @Output('rowClick') rowClick = new EventEmitter();
 
   @Output('rowDbClick') rowDbClick = new EventEmitter();
+
+  @Output( 'rowSelect' ) rowSelect: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('viewport', {static: true}) viewport: CdkVirtualScrollViewport;
 
@@ -70,9 +75,9 @@ export class TlDatatableContent implements AfterViewInit {
     this.keyManager = new FocusKeyManager(this.items).withTypeAhead();
   }
 
-  onRowClick( row, index ) {
+  onRowClick( rowItem: TlDatatableRow, row, index ) {
     this.rowClick.emit({ row: row, index: index });
-    this.keyManager.setActiveItem(index);
+    this.keyManager.setActiveItem(rowItem);
   }
 
   isEmpty() {
@@ -100,6 +105,7 @@ export class TlDatatableContent implements AfterViewInit {
 
   onKeydown(event) {
     this.keyManager.onKeydown(event);
+    this.rowSelect.emit( this.keyManager.activeItem );
   }
 
 }

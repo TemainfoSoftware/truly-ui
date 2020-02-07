@@ -21,6 +21,7 @@
                 [rowModel]="'inmemory'"
                 [height]="354"
                 [rowsClient]="12"
+                (rowSelect)="onRowSelect($event)"
                 [allowFilterColumn]="true"
               >
                 <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>

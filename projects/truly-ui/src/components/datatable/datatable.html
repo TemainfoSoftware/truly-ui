@@ -4,11 +4,13 @@
     <tl-datatable-header></tl-datatable-header>
     <tl-datatable-content
       [dataSource]="dataSource"
+      [data]="data"
       [rowHeight]="rowHeight"
       [heightViewPort]="heightViewPort"
       [columns]="columns"
-      (rowDbClick)="onRowDblclick($event.row, $event.index)"
-      (rowClick)="onRowClick($event.row, $event.index)">
+      (rowSelect)="onRowSelect( $event.row, $event.index )"
+      (rowDbClick)="onRowDblclick( $event.row, $event.index )"
+      (rowClick)="onRowClick( $event.row, $event.index )">
     </tl-datatable-content>
 </div>
 

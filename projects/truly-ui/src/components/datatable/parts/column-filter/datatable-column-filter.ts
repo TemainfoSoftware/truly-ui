@@ -21,10 +21,10 @@
 */
 
 import {
-    Component, EventEmitter, Input, OnInit, Output
+  Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { debounceTime } from 'rxjs/internal/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
 
@@ -34,7 +34,7 @@ import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.meta
     templateUrl: './datatable-column-filter.html',
     styleUrls: ['./datatable-column-filter.scss']
 })
-export class TlDatatabaleColumnFilter implements OnInit {
+export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
 
     @Input('tlColumnFilter') tlColumnFilter;
 
@@ -52,19 +52,27 @@ export class TlDatatabaleColumnFilter implements OnInit {
 
     private subject =  new Subject();
 
+    private subscription =  new Subscription();
+
     constructor( private i18n: I18nService ) {}
 
     ngOnInit() {
-        this.subject.pipe( debounceTime(600) ).subscribe((event) => {
+        this.subscription.add(
+          this.subject.pipe( debounceTime(600) ).subscribe((event) => {
             if (event !== undefined) {
                 const filterEventObject = this.makeFilterEvent();
                 this.filterEvent.emit( filterEventObject ) ;
             }
-        });
+          })
+        );
     }
 
     onChangeFilter(event) {
-        this.subject.next(event);
+      this.subject.next(event);
+    }
+
+    onClear(event) {
+      this.subject.next(event);
     }
 
     makeFilterEvent(): FilterEventMetadata {
@@ -80,5 +88,9 @@ export class TlDatatabaleColumnFilter implements OnInit {
         });
 
         return Object.keys(filter.filters).length ? filter : { filters: {} };
+    }
+
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
     }
 }

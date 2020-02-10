@@ -7,7 +7,6 @@ import * as json from './datatable-columnfeatures.demo.dataproperties.json';
   selector: 'app-datatable-lazy',
   templateUrl: './datatable-columnfeatures.demo.component.html',
   styleUrls: [ './datatable-columnfeatures.demo.component.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [DumpDataService]
 } )
 export class DatatableColumnFeaturesDemoComponent {
@@ -21,5 +20,17 @@ export class DatatableColumnFeaturesDemoComponent {
   constructor( private dumpDataService: DumpDataService ) {
     this.dataTableProperties = json.dataProperties;
     this.data = this.dumpDataService.createRandomData(1000);
+  }
+
+  onFilterData( event )  {
+    console.log( event );
+  }
+
+  onSortData( event )  {
+    console.log( event );
+  }
+
+  onLoadData(event) {
+    console.log( event );
   }
 }

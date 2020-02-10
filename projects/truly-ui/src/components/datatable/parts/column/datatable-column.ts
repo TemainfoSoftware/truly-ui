@@ -19,7 +19,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
  */
-import { Component, Input, OnInit, Injector } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  Injector,
+  ContentChild,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import { FilterOptionsService } from '../../services/datatable-filter-options.service';
 
 @Component( {
@@ -47,6 +56,8 @@ export class TlDatatableColumn implements OnInit {
     @Input('showFilterOptions') showFilterOptions = true;
 
     @Input('filterOptions') filterOptions = [];
+
+    @ContentChild(TemplateRef, {static: false, read: TemplateRef}) template: TemplateRef<any> | null;
 
     private filterOptionsService: FilterOptionsService;
 

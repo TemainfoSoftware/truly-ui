@@ -20,128 +20,143 @@
     SOFTWARE.
 */
 
-import { Injectable, SimpleChanges, ChangeDetectorRef } from '@angular/core';
-import { Subject } from 'rxjs';
-import { TlDatatable } from '../datatable';
-import { DataMetadata } from '../../core/types/datametadata';
-import { DatasourceService } from '../interfaces/datasource.service';
+import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { TlDatatableFilterService } from './datatable-filter.service';
 import { TlDatatableSortService } from './datatable-sort.service';
+import { TlDatatable } from '../datatable';
+import { SimpleChanges } from '@angular/core';
 
-@Injectable()
-export class TlDatatableDataSource implements DatasourceService {
+export class DatatableDataSource extends DataSource<object | undefined> {
 
-    public  onChangeDataSourceEmitter = new Subject();
+  private _recordsCount: number;
+  private _pageSize: number;
+  private _cachedData: Array<object>;
+  private _dataStream: BehaviorSubject<( object | undefined )[]>;
 
-    public datasource: any;
+  private _fetchedPages = new Set<number>();
+  private _subscription = new Subscription();
 
-    private datatable: TlDatatable;
+  private filterService: TlDatatableFilterService;
+  private sortService: TlDatatableSortService;
+  private datatable: TlDatatable;
+  private currentPage: number;
 
-    constructor( private cd: ChangeDetectorRef,
-                 private filterService: TlDatatableFilterService,
-                 private sortService: TlDatatableSortService ) {}
+  private navigating: boolean;
 
-    onInitDataSource(datatableInstance) {
-        this.datatable = datatableInstance;
+  get isEmpty() {
+    return this._cachedData.length === 0;
+  }
 
-        this.filterService.onFilter().subscribe(() => {
-          this.loadMoreData(0, this.datatable.rowsPage);
-        });
+  constructor( datatable: TlDatatable ) {
+    super();
+    this._recordsCount = datatable.recordsCount;
+    this._pageSize = datatable.rowsPage;
+    this._cachedData = Array.from<object>({length: this._recordsCount});
+    this._dataStream = new BehaviorSubject<( object | undefined )[]>( this._cachedData );
 
-        this.sortService.onSort().subscribe((sort) => {
-          this.loadMoreData(0, this.datatable.rowsPage);
-        });
+    this.datatable = datatable;
+    this.filterService = datatable.filterService;
+    this.sortService = datatable.sortService;
+  }
 
-        // TODO CREATE rowModel 'direct'
-        if (this.datatable.data === undefined) {
-          return;
-        }
+  connect( collectionViewer: CollectionViewer ): Observable<( object | undefined )[] | ReadonlyArray<object | undefined>> {
+    this._subscription.add( this.filterService.onFilter().subscribe(this.onFilter.bind(this)) );
+    this._subscription.add( this.sortService.onSort().subscribe(this.onSort.bind(this)) );
+    this._subscription.add( collectionViewer.viewChange.subscribe( this.viewData.bind(this) ) );
+    return this._dataStream;
+  }
 
-        this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
-          this.datasource = res;
-          this.refreshTotalRows(this.datatable.data);
-          this.datatable.columnService.setColumns();
-        });
+  disconnect( collectionViewer: CollectionViewer ): void {
+    this._subscription.unsubscribe();
+  }
 
+  setNavigating( navigate ) {
+    this.navigating = navigate;
+    if ( !this.navigating ) {
+      this.fetchPage( this.currentPage );
+    }
+  }
+
+  changes( changes: SimpleChanges ) {
+    if ( changes['rowsPage'] && changes['rowsPage'].currentValue ) {
+      this._pageSize = changes['rowsPage'].currentValue;
     }
 
-    onChangeDataSource( data: SimpleChanges ) {
-        const dataChange = data['data'].currentValue;
-        if ( ( !data['data'].firstChange ) && dataChange ) {
-            this.datasource = dataChange.data || dataChange;
-            this.refreshTotalRows(this.datatable.data);
-
-            if (  this.datatable.rowModel === 'inmemory' ) {
-              this.getRowsInMemory( 0, this.datatable.rowsPage ).then((res) => {
-                this.datasource = res;
-                this.datatable.columnService.setColumns();
-              });
-            }
-
-            this.cd.detectChanges();
-            this.onChangeDataSourceEmitter.next(this.datasource);
-        }
+    if ( changes['recordsCount'] && changes['recordsCount'].currentValue ) {
+      this._recordsCount = changes['recordsCount'].currentValue;
+      this._cachedData = Array.from<object>({length: this._recordsCount});
+      this._dataStream.next( this._cachedData );
     }
 
-    loadMoreData(skip: number, take: number, scrolling?: boolean): Promise<boolean> {
-        return new Promise(( resolve ) => {
-            if (  this.datatable.rowModel === 'infinite' ) {
-               this.datatable.loading = true;
-               this.datatable.loadData.emit({
-                 skip: skip,
-                 take: take,
-                 filters: this.filterService.getFilter(),
-                 sorts: this.sortService.getSort()
-               });
-               return resolve();
-            }
-            this.getRowsInMemory( skip, take, scrolling ).then((res) => {
-               this.datasource = res;
-               this.onChangeDataSourceEmitter.next(this.datasource);
-               return resolve();
-            });
-        });
+    if ( changes['data'] && changes['data'].currentValue ) {
+      this.dispatchData( changes['data'].currentValue );
+    }
+  }
+
+  private onFilter( ) {
+    this.dispatchData();
+  }
+
+  private onSort( ) {
+    this.dispatchData();
+  }
+
+  private _getPageForIndex( index: number ): number {
+    return Math.floor( index / this._pageSize );
+  }
+
+
+  private viewData(range) {
+    const startPage = this._getPageForIndex( range.start );
+    const endPage = this._getPageForIndex( range.end - 1 );
+    for ( let i = startPage; i <= endPage; i++ ) {
+      this.fetchPage( i );
+    }
+  }
+
+  private fetchPage( page: number ) {
+    this.currentPage = page;
+    if ( this.navigating ) {
+      return;
+    }
+    if ( this._fetchedPages.has( this.currentPage ) ) {
+      return;
+    }
+    this.emitLoadData( page );
+  }
+
+  private dispatchData(data = []) {
+    if (this.isInMemory()) {
+      this._cachedData = this.filterService.filterWithData(data, false);
+      this._cachedData = this.sortService.sortWithData(this._cachedData, false);
+      this._cachedData.slice( this.currentPage  * this._pageSize, this._pageSize);
     }
 
+    if (this.isInfinite() && data.length > 0 ) {
+      this._cachedData.splice(this.currentPage  * this._pageSize, this._pageSize, ...data);
+    }
+    this._dataStream.next( this._cachedData );
+  }
 
-    isDataArray( data: any ) {
-        return data instanceof Array;
+  private emitLoadData( page ) {
+    if (this.isInfinite()  ) {
+      this.datatable.loadData.emit({
+        skip: page * this._pageSize,
+        take: this._pageSize,
+        filters: this.filterService.getFilter(),
+        sorts: this.sortService.getSort()
+      });
+      this._fetchedPages.add( page );
     }
 
-    private getRowsInMemory(skip: number, take: number, scrolling?: boolean): Promise<any> {
-        return new Promise((resolve) => {
-            let data: any;
-            data = this.getData();
-            data = this.filterService.filterWithData(data, scrolling);
-            data = this.sortService.sortWithData(data, scrolling);
-            this.refreshTotalRows(data);
-            data = this.sliceData(data, skip, take);
+  }
 
-            resolve( data  );
-        });
-    }
+  private isInfinite() {
+    return this.datatable.rowModel === 'infinite';
+  }
 
-    private refreshTotalRows( data: any ) {
-        if ( this.isDataArray( data ) ) {
-            if (this.datatable.recordsCount >= 0 ) {
-              return this.datatable.totalRows = this.datatable.recordsCount;
-            }
-            this.datatable.totalRows =  data.length;
-            return;
-        }
-        this.datatable.totalRows = data.total;
-    }
-
-    private getData() {
-        if (this.datatable.data === null ) {
-          this.datatable.data = [];
-          return [];
-        }
-        return this.isDataArray( this.datatable.data ) ? this.datatable.data : ( this.datatable.data as DataMetadata ).data;
-    }
-
-    private sliceData(data, skip, take) {
-        return (data as Array<any>).slice( skip, take );
-    }
-
+  private isInMemory() {
+    return this.datatable.rowModel === 'inmemory';
+  }
 }

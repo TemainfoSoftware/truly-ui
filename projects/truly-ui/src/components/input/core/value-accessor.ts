@@ -19,7 +19,7 @@ export abstract class ValueAccessorBase<T> implements ControlValueAccessor {
         return;
       }
     }
-    if (value && this.innerValue !== value) {
+    if (this.innerValue !== value) {
       this.innerValue = value;
       this.propagateChange(value);
     }

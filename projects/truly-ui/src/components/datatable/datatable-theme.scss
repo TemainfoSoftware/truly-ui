@@ -21,6 +21,10 @@
     border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
+  .ui-datatable-header{
+    border-right: 1px solid map-deep-get($basic, "default", "border");
+  }
+
   .ui-datatable-table-head{
     color: map-deep-get($basic, "darker", "foreground");
     > .ui-row{
@@ -35,8 +39,7 @@
     }
   }
 
-  //SCROLLABLE MODE
-  .ui-datatable-scrollable{
+  .ui-datatable-content{
     border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 
@@ -83,11 +86,6 @@
     > .ui-row:hover:not(.ui-selected-row){
       background: map-deep-get($basic, "lighter", "background");
     }
-  }
-
-  //NORMAL MODE
-  .ui-datatable-normal{
-    border-right: 1px solid map-deep-get($basic, "default", "border");
   }
 }
 

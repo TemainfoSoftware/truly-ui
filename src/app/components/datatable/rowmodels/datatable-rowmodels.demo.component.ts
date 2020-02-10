@@ -15,11 +15,11 @@ import * as jsonEvents from './datatable-rowmodels.demo.dataevents.json';
 } )
 export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
 
-  public dataInMemory;
+  public dataInMemory = [];
 
-  public data = this.dumpDataService.createRandomData(1000);
+  public data = this.dumpDataService.createRandomData(10000);
 
-  public dataInfinite: any;
+  public dataInfinite = [];
 
   public dataTableProperties;
 
@@ -30,6 +30,8 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
   public timeout;
 
   public recordsCount = 0;
+
+  public dataInMemoryrecordsCount = 0;
 
   private subscriptions = new Subscription();
 
@@ -43,12 +45,14 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.httpCliente.get('http://trulyui.getsandbox.com/pacientes').subscribe((data: any) => {
         this.dataInMemory = data.data;
+        this.dataInMemoryrecordsCount = data.data.length;
         this.cd.detectChanges();
       })
     );
   }
 
   onLoadData(event) {
+    console.log('Load Data...', event);
     this.getDataForInifinit(event.skip, event.take);
   }
 
@@ -62,11 +66,11 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
       this.dataInfinite = this.getDataFromService(skip, take);
       this.recordsCount = this.data.length;
       this.cd.markForCheck();
-    }, 1000);
+    }, Math.random() * 1000 + 200);
   }
 
   private getDataFromService(skip, take) {
-    return this.data.slice(skip, take);
+    return this.data.slice(skip, skip + take);
   }
 
   ngOnDestroy() {

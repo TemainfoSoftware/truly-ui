@@ -21,15 +21,30 @@
  */
 import {
   AfterContentInit,
-  Component, ElementRef, EventEmitter, forwardRef, Input, OnChanges, Output, Renderer2, SimpleChanges, ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  Output,
+  Renderer2,
+  SimpleChanges, TemplateRef,
+  ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 
 import {trigger, transition, style, animate} from '@angular/animations';
 import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormControlName, NG_VALUE_ACCESSOR, NgModel} from '@angular/forms';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {Subscription} from 'rxjs';
+import {EditorService, FieldContent, TagContent} from './editor.service';
 
 @Component({
   selector: 'tl-editor',
@@ -55,13 +70,15 @@ import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
     )
   ],
 })
-export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChanges {
+export class TlEditor implements ControlValueAccessor, AfterContentInit, AfterViewInit, OnChanges {
 
   @Input() content: SafeHtml;
 
   @Input() color = 'basic';
 
   @Input() tags = [];
+
+  @Input() fields: FieldContent[] = [];
 
   @Input() toolbarConfig: ToolbarConfig;
 
@@ -73,15 +90,34 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   @Input() label = '';
 
-  @Input() formControl;
+  @ContentChild(NgModel, {static: true}) ngModel: NgModel;
 
-  @ViewChild('contentEditor', {static: true}) contentEditor;
+  @ContentChild(FormControlName, {static: true}) formControlName: FormControlName;
+
+  @ViewChild('contentEditor', {static: true}) contentEditor: ElementRef;
 
   @ViewChild('linkBox', {static: true}) linkBox;
 
   @ViewChild('wrapper', {static: true}) wrapper;
 
+  @ViewChild('fieldTemplate', {static: true}) fieldTemplate: TemplateRef<any>;
+
   @Output() saveContent = new EventEmitter();
+
+  @Input('formControl')
+  set control(item) {
+    this._control = item;
+  }
+
+  get control() {
+    if (this._control) {
+      return this._control;
+    }
+    if (this.formControlName || this.ngModel) {
+      return this.formControlName.control ? this.formControlName.control : this.ngModel;
+    }
+    return this._control;
+  }
 
   public fontCollection = [];
 
@@ -132,11 +168,20 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   private interval;
 
+  private _control;
+
+  private listenerRegistered = false;
+
+  private subscription = new Subscription();
+
   private onChange: any = () => {};
 
   private onTouched: any = () => {};
 
-  constructor(private i18n: I18nService, private renderer: Renderer2, private sanitizer: DomSanitizer) {
+  constructor(private i18n: I18nService,
+              private renderer: Renderer2,
+              private editorService: EditorService,
+              private sanitizer: DomSanitizer) {
     this.fontCollection = [
       {description: 'Arial', value: 'Arial'},
       {description: 'Verdana', value: 'Verdana'},
@@ -160,13 +205,38 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   ngAfterContentInit() {
     this.setContentFocus();
     this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
+    this.listenChangeControl();
+  }
+
+  ngAfterViewInit() {
+    this.subscription.add(this.editorService.compileSuject.subscribe(( data: { values: TagContent[], resolve } ) => {
+
+    }));
+  }
+
+  listenChangeControl() {
+    this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
+      if (!this.listenerRegistered) {
+        setTimeout(() => {
+          this.handleFieldsPropagation();
+          this.listenerRegistered = true;
+        }, 500);
+      }
+    }));
+  }
+
+  handleFieldsPropagation() {
+    const fields = this.contentEditor.nativeElement.querySelectorAll('.ui-field');
+    for (const item of fields) {
+      this.preventPropagation(item);
+    }
   }
 
   alignContent(align) {
     this.setContentFocus();
     const element = this.cursorSelection.baseNode.parentNode;
     const alignment = align === 'justifyFull' ? 'justify' : align.replace('justify', '').toLocaleLowerCase();
-    this.renderer.setStyle( element, 'text-align', alignment);
+    this.renderer.setStyle(element, 'text-align', alignment);
     this.setCursorSelection();
   }
 
@@ -216,11 +286,19 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.descriptionLink = '';
   }
 
-  addTag( value: string ) {
+  addField( idField ) {
+    this.recoverSelection();
     this.setContentFocus();
-    this.cursorSelection.getRangeAt(0).insertNode( this.createHashTag( value ).nativeElement );
+    this.cursorSelection.getRangeAt(0).insertNode(this.createFieldText( idField ).nativeElement);
     window.getSelection().collapseToEnd();
-    this.change( { target: this.contentEditor.nativeElement } );
+    this.change();
+  }
+
+  addTag(value: string) {
+    this.setContentFocus();
+    this.cursorSelection.getRangeAt(0).insertNode(this.createHashTag(value).nativeElement);
+    window.getSelection().collapseToEnd();
+    this.change();
   }
 
   setLink($event) {
@@ -272,7 +350,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   onKeyDownSave(event) {
-    if ( event.target.innerHTML.length === 0 || event.target.innerHTML === '<br>' ) {
+    if (this.contentEditor.nativeElement.innerHTML.length === 0 || this.contentEditor.nativeElement.innerHTML === '<br>') {
       this.writeValue('<div><br></div>');
     }
     if ((event.ctrlKey || event.metaKey) && event.which === 83) {
@@ -297,7 +375,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   setCursorSelection() {
     this.cursorSelection = window.getSelection();
-    if ( this.cursorSelection.baseNode ) {
+    if (this.cursorSelection.baseNode) {
       this.handleActiveTools();
     }
   }
@@ -438,10 +516,31 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     return !!this.cursorSelection.baseNode.parentNode.closest(element);
   }
 
-  private createHashTag( value: string ) {
+
+  private preventPropagation(fieldText) {
+    this.listenerRegistered = true;
+    fieldText.addEventListener('input', (e) => {
+      e.target.setAttribute('value', e.target.value);
+    });
+    fieldText.addEventListener('keydown', (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  private createFieldText( idField ) {
+    const fieldText = new ElementRef(this.renderer.createElement('input'));
+    this.renderer.addClass(fieldText.nativeElement, 'ui-field');
+    this.preventPropagation(fieldText.nativeElement);
+    fieldText.nativeElement.setAttribute('id', idField );
+    fieldText.nativeElement.placeholder = 'Campo Livre';
+    return fieldText;
+  }
+
+  private createHashTag(value: string) {
     const hashTag = new ElementRef(this.renderer.createElement('span'));
     this.renderer.addClass(hashTag.nativeElement, 'ui-hashtag');
     hashTag.nativeElement.innerText = value;
+    hashTag.nativeElement.setAttribute('id', value);
     hashTag.nativeElement.setAttribute('contenteditable', false);
     return hashTag;
   }
@@ -502,9 +601,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.onTouched = fn;
   }
 
-  change($event) {
-    this.onChange($event.target.innerHTML);
-    this.onTouched($event.target.innerHTML);
+  change() {
+    this.onChange(this.contentEditor.nativeElement.innerHTML);
+    this.onTouched(this.contentEditor.nativeElement.innerHTML);
   }
 
   ngOnChanges(data: SimpleChanges) {

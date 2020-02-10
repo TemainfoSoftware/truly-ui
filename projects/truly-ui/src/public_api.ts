@@ -98,6 +98,7 @@ export { StopwatchService } from './components/stopwatch/services/stopwatch-serv
 export { ToasterService } from './components/toaster/services/toaster.service';
 export { TooltipService } from './components/tooltip/tooltip.service';
 export { ChatService } from './components/chatlist/services/chat.service';
+export { EditorService } from './components/editor/editor.service';
 export { ContextMenuService } from './components/contextmenu/services/contextmenu.service';
 
 // Classes

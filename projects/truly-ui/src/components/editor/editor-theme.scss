@@ -25,10 +25,30 @@
     color: map-deep-get($theme, 'information', "default", "background");
   }
 
+  .ui-field {
+    border-radius: 2px;
+    border: 0;
+    padding: 0 5px;
+    margin: 4px;
+    outline: none;
+    box-shadow: 0px 0px 0px 1px #ccc;
+    min-width: 50px;
+    &:focus {
+      box-shadow: 0px 0px 0px 1px #ffbc67;
+    }
+  }
+
   .ui-hashtag {
     background-color: map-deep-get($theme, "primary", "default", "background");
     border: 1px solid map-deep-get($theme, "primary", "default", "border");
     color: map-deep-get($primary, "default", "foreground");
+    padding: 0px 8px;
+    margin: 5px;
+    border-radius: 5px;
+    user-select: none;
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .ui-editor-content {

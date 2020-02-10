@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ToolbarConfig} from '../../interfaces/toolbar-config';
+import {FieldContent} from '../../editor.service';
 
 @Component({
   selector: 'tl-editor-header',
@@ -15,6 +16,8 @@ export class TlEditorHeader {
   @Input() fontSizeCollection = [];
 
   @Input() fontCollection = [];
+
+  @Input() fields: FieldContent[] = [];
 
   @Input() color = 'basic';
 
@@ -54,5 +57,14 @@ export class TlEditorHeader {
 
   @Output() clickClear = new EventEmitter();
 
+  @Output() clickField = new EventEmitter();
+
+  public defaultField = 'Add Field';
+
   constructor() {}
+
+  onChangeField($event) {
+    this.clickField.emit($event);
+    setTimeout(() => this.defaultField = 'Add Field');
+  }
 }

@@ -44,7 +44,8 @@ import {I18nService} from '../i18n/i18n.service';
 import {ControlValueAccessor, FormControlName, NG_VALUE_ACCESSOR, NgModel} from '@angular/forms';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
-import {EditorService, FieldContent, TagContent} from './editor.service';
+import {EditorService} from './services/editor.service';
+import {FieldContent} from './interfaces/field-content';
 
 @Component({
   selector: 'tl-editor',
@@ -70,7 +71,7 @@ import {EditorService, FieldContent, TagContent} from './editor.service';
     )
   ],
 })
-export class TlEditor implements ControlValueAccessor, AfterContentInit, AfterViewInit, OnChanges {
+export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChanges {
 
   @Input() content: SafeHtml;
 
@@ -206,12 +207,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, AfterVi
     this.setContentFocus();
     this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
     this.listenChangeControl();
-  }
-
-  ngAfterViewInit() {
-    this.subscription.add(this.editorService.compileSuject.subscribe(( data: { values: TagContent[], resolve } ) => {
-
-    }));
   }
 
   listenChangeControl() {

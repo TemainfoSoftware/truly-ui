@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ToolbarConfig} from '../../interfaces/toolbar-config';
-import {FieldContent} from '../../editor.service';
+import {FieldContent} from '../../interfaces/field-content';
 
 @Component({
   selector: 'tl-editor-header',

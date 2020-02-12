@@ -1,16 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {DomSanitizer} from '@angular/platform-browser';
-
-export interface TagContent {
-  tag: string;
-  value: string | number;
-}
-
-export interface FieldContent {
-  field: string;
-  value?: string | number;
-}
+import {TagContent} from '../interfaces/tag-content';
+import {FieldContent} from '../interfaces/field-content';
 
 @Injectable()
 export class EditorService {
@@ -64,7 +56,7 @@ export class EditorService {
     if ( field.element.innerText ) {
       return field.element.innerText;
     }
-    return field.value;
+    return field.value || '';
   }
 
   compile(html: string, tagsContent: TagContent[], fieldsContent: FieldContent[]) {

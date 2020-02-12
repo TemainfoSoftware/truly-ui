@@ -35,7 +35,7 @@ import { ColorPickerModule } from '../colorpicker/index';
 import { InternalsModule } from '../internals/index';
 import { IconsModule } from '../icons/index';
 import { TlEditorHeader } from './parts/editor-header/editor-header';
-import {EditorService} from './editor.service';
+import {EditorService} from './services/editor.service';
 
 @NgModule( {
   imports: [

@@ -89,8 +89,9 @@
               (click)="clickClear.emit()"></button>
     </li>
     <li class="dropdown">
-      <select class="select" [(ngModel)]="defaultField" (ngModelChange)="onChangeField($event)">
-        <option default>Add Field</option>
+      <select class="select" *ngIf="toolbarConfig?.others?.field" [tooltip]="{text: toolbarConfig.others?.field?.tooltipText, placement: 'top-center'}"
+              [(ngModel)]="defaultField" (ngModelChange)="onChangeField($event)">
+        <option default>{{ labelAddField }}</option>
         <option *ngFor="let item of fields" [ngValue]="item.field">{{ item?.field }}</option>
       </select>
     </li>

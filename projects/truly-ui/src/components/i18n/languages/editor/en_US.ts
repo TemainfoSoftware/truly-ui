@@ -37,5 +37,7 @@ export const Editor = {
   linkText: 'Link text',
   imageText: 'Image text',
   quoteText: 'Quote text',
-  clearText: 'Clear Content'
+  clearText: 'Clear Content',
+  fieldText: 'Add TextField',
+  labelAddField: 'Add Field'
 };

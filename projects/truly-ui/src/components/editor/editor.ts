@@ -175,6 +175,8 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   private subscription = new Subscription();
 
+  public labelAddField = this.i18n.getLocale().Editor.labelAddField;
+
   private onChange: any = () => {};
 
   private onTouched: any = () => {};
@@ -210,14 +212,16 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   }
 
   listenChangeControl() {
-    this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
-      if (!this.listenerRegistered) {
-        setTimeout(() => {
-          this.handleFieldsPropagation();
-          this.listenerRegistered = true;
-        }, 500);
-      }
-    }));
+    if ( this.control ) {
+      this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
+        if (!this.listenerRegistered) {
+          setTimeout(() => {
+            this.handleFieldsPropagation();
+            this.listenerRegistered = true;
+          }, 500);
+        }
+      }));
+    }
   }
 
   handleFieldsPropagation() {
@@ -527,7 +531,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.renderer.addClass(fieldText.nativeElement, 'ui-field');
     this.preventPropagation(fieldText.nativeElement);
     fieldText.nativeElement.setAttribute('id', idField );
-    fieldText.nativeElement.placeholder = 'Campo Livre';
+    fieldText.nativeElement.placeholder = '';
     return fieldText;
   }
 

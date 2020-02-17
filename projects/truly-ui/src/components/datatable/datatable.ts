@@ -45,6 +45,7 @@ import { TlDatatableFilterConstraints } from './services/datatable-filter-constr
 import { Observable, Subject } from 'rxjs';
 import { TlDatatableSortService } from './services/datatable-sort.service';
 import { DatatableHelpersService } from './services/datatable-helpers.service';
+import { TlDatatableContent } from './parts/content/datatable-content';
 
 @Component( {
   selector: 'tl-datatable',
@@ -114,6 +115,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
   @ViewChild( 'datatableBox', { static: true } ) datatableBox: ElementRef;
 
+  @ViewChild( TlDatatableContent, { static: true } ) datatableContent: TlDatatableContent;
+
   public dataSource = new DatatableDataSource( this );
 
   public columns: any[] = [];
@@ -170,6 +173,10 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
   onRowDblclick( row, index ) {
     this.rowDblclick.emit( this.getObjectRow( row, index ) );
+  }
+
+  setFocus() {
+    this.datatableContent.setFirstItem();
   }
 
   getScrollingHorizontal(): Observable<any> {

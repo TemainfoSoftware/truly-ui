@@ -108,4 +108,8 @@ export class TlDatatableContent implements AfterViewInit {
     this.rowSelect.emit( this.keyManager.activeItem );
   }
 
+  setFirstItem() {
+    this.keyManager.setFirstItemActive();
+  }
+
 }

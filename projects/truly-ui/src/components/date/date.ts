@@ -158,6 +158,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   getMockValue( value ) {
     if ( !value ) {
+      this.value = null;
       return;
     }
     if ( this.isoDate && value.length > 0 ) {

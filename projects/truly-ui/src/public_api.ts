@@ -83,6 +83,10 @@ export { ChatContact } from './components/chatlist/interfaces/chat-contact.inter
 export { ChatMessage } from './components/chatlist/interfaces/chat-message.interface';
 export { ChatStatus } from './components/chatlist/interfaces/chat-status.interface';
 
+// Editor Interfaces
+export { TagContent } from './components/editor/interfaces/tag-content';
+export { FieldContent } from './components/editor/interfaces/field-content';
+
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';
 export { KeyEvent } from './components/core/enums/key-events';
@@ -98,6 +102,7 @@ export { StopwatchService } from './components/stopwatch/services/stopwatch-serv
 export { ToasterService } from './components/toaster/services/toaster.service';
 export { TooltipService } from './components/tooltip/tooltip.service';
 export { ChatService } from './components/chatlist/services/chat.service';
+export { EditorService } from './components/editor/services/editor.service';
 export { ContextMenuService } from './components/contextmenu/services/contextmenu.service';
 
 // Classes

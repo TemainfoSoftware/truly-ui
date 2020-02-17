@@ -2,13 +2,13 @@
   <ul class="ui-tools-list">
      <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top-center'}"
          *ngIf="toolbarConfig.font?.family?.show">
-       <select class="select-font" [(ngModel)]="fontSelected" (ngModelChange)="changeFont.emit($event)">
+       <select class="select" [(ngModel)]="fontSelected" (ngModelChange)="changeFont.emit($event)">
          <option *ngFor="let item of fontCollection" [ngValue]="item.value">{{ item?.description }}</option>
        </select>
      </li>
         <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.size?.tooltipText, placement: 'top-center'}"
             *ngIf="toolbarConfig.font.size?.show">
-          <select class="select-font" [(ngModel)]="fontSizeSelected" (ngModelChange)="changeFontSize.emit($event)">
+          <select class="select" [(ngModel)]="fontSizeSelected" (ngModelChange)="changeFontSize.emit($event)">
             <option *ngFor="let item of fontSizeCollection" [ngValue]="item.value">{{ item?.description }}</option>
           </select>
         </li>
@@ -87,6 +87,13 @@
         [tooltip]="{text: toolbarConfig.others?.clear?.tooltipText, placement: 'top-center'}">
       <button class="ui-command far fa-trash-alt"
               (click)="clickClear.emit()"></button>
+    </li>
+    <li class="dropdown">
+      <select class="select" *ngIf="toolbarConfig?.others?.field" [tooltip]="{text: toolbarConfig.others?.field?.tooltipText, placement: 'top-center'}"
+              [(ngModel)]="defaultField" (ngModelChange)="onChangeField($event)">
+        <option default>{{ labelAddField }}</option>
+        <option *ngFor="let item of fields" [ngValue]="item.field">{{ item?.field }}</option>
+      </select>
     </li>
   </ul>
 </div>

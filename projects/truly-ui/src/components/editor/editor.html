@@ -4,6 +4,8 @@
     <tl-editor-header [toolbarConfig]="toolbarConfig"
                       [activeTools]="activeTools"
                       [cursorHighlight]="cursorHighlight"
+                      [labelAddField]="labelAddField"
+                      [fields]="fields"
                       [color]="color"
                       [colorSelected]="colorSelected"
                       [fontSelected]="font"
@@ -22,13 +24,14 @@
                       (clickUnorderedList)="setUnorderedList()"
                       (clickUnderline)="setUnderline()"
                       (clickImage)="toggleImageBox()"
+                      (clickField)="addField($event)"
                       (clickQuote)="setQuote()"
                       (clickClear)="clearContent()">
     </tl-editor-header>
     <div #contentEditor
          class="ui-editor-content"
          [style.height]="height"
-         (input)="change($event)"
+         (input)="change()"
          (focusout)="setAnchorNode()"
          (click)="setCursorSelection()"
          (focus)="setCursorSelection()"

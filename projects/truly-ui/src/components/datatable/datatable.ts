@@ -45,7 +45,6 @@ import { TlDatatableFilterConstraints } from './services/datatable-filter-constr
 import { Observable, Subject } from 'rxjs';
 import { TlDatatableSortService } from './services/datatable-sort.service';
 import { DatatableHelpersService } from './services/datatable-helpers.service';
-import { DataSource } from '@angular/cdk/collections';
 
 @Component( {
   selector: 'tl-datatable',

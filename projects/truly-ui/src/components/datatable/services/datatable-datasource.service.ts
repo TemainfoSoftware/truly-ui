@@ -95,11 +95,19 @@ export class DatatableDataSource extends DataSource<object | undefined> {
   }
 
   private onFilter( ) {
-    this.dispatchData();
+    if (this.isInMemory()) {
+      this.dispatchData();
+    } {
+      this.emitLoadData();
+    }
   }
 
   private onSort( ) {
-    this.dispatchData();
+    if (this.isInMemory()) {
+      this.dispatchData();
+    } {
+      this.emitLoadData();
+    }
   }
 
   private _getPageForIndex( index: number ): number {
@@ -126,11 +134,11 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     this.emitLoadData( page );
   }
 
-  private dispatchData(data = []) {
+  private dispatchData(data = this._cachedData) {
     if (this.isInMemory()) {
-      this._cachedData = this.filterService.filterWithData(data, false);
-      this._cachedData = this.sortService.sortWithData(this._cachedData, false);
-      this._cachedData.slice( this.currentPage  * this._pageSize, this._pageSize);
+      const cached = this.sortService.sortWithData( this.filterService.filterWithData(data) );
+      cached.slice( this.currentPage  * this._pageSize, this._pageSize);
+      return this._dataStream.next( cached );
     }
 
     if (this.isInfinite() && data.length > 0 ) {
@@ -139,7 +147,7 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     this._dataStream.next( this._cachedData );
   }
 
-  private emitLoadData( page ) {
+  private emitLoadData( page = this.currentPage ) {
     if (this.isInfinite()  ) {
       this.datatable.loadData.emit({
         skip: page * this._pageSize,

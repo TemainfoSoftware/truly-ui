@@ -60,6 +60,14 @@ export class DatatableRowModelsDemoComponent implements OnInit, OnDestroy {
     console.log($event);
   }
 
+  onSortData($event) {
+    console.log($event);
+  }
+
+  onFilterData($event) {
+    console.log($event);
+  }
+
   private getDataForInifinit(skip, take) {
     clearTimeout(this.timeout );
     this.timeout = setTimeout(() => {

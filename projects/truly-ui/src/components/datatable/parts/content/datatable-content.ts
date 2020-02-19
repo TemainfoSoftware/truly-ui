@@ -105,6 +105,9 @@ export class TlDatatableContent implements AfterViewInit {
 
   onKeydown(event) {
     this.keyManager.onKeydown(event);
+  }
+
+  onKeyup() {
     this.rowSelect.emit( this.keyManager.activeItem );
   }
 

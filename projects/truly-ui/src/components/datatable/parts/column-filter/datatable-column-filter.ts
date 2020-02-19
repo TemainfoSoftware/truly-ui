@@ -27,6 +27,7 @@ import { debounceTime } from 'rxjs/internal/operators';
 import { Subject, Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
+import { TlDatatableColumn } from '../column/datatable-column';
 
 
 @Component({
@@ -36,7 +37,7 @@ import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.meta
 })
 export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
 
-    @Input('tlColumnFilter') tlColumnFilter;
+    @Input('tlColumnFilter') tlColumnFilter: TlDatatableColumn[];
 
     @Output() filterEvent: EventEmitter<any> = new EventEmitter();
 
@@ -78,16 +79,29 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
     makeFilterEvent(): FilterEventMetadata {
         const filter: FilterEventMetadata = { filters: {} };
 
-        this.tlColumnFilter.forEach((value) => {
-            if (this.filters.value[value.field]) {
-                filter.filters[value.field] = {
-                    value: this.filters.value[value.field],
-                    matchMode: this.filters.matchMode[value.field] ? this.filters.matchMode[value.field] : 'startsWith'
+        this.tlColumnFilter.forEach((column) => {
+            if (this.filters.value[column.field]) {
+                filter.filters[column.field] = {
+                    value: this.getValueByType(column),
+                    matchMode: this.filters.matchMode[column.field] ? this.filters.matchMode[column.field] : 'startsWith'
                 };
             }
         });
 
         return Object.keys(filter.filters).length ? filter : { filters: {} };
+    }
+
+    getValueByType( column: TlDatatableColumn ): any {
+      switch ( column.type ) {
+        case 'text' :
+          return this.filters.value[column.field];
+        case 'number' :
+          return parseInt(this.filters.value[column.field], 10);
+        case 'date' :
+          return this.filters.value[column.field];
+        default :
+          return  this.filters.value[column.field];
+      }
     }
 
     ngOnDestroy(): void {

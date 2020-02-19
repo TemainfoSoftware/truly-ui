@@ -22,7 +22,7 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
+  EventEmitter, HostBinding,
   Input,
   OnInit,
   Output, TemplateRef,
@@ -51,7 +51,7 @@ export class TlButton implements OnInit {
 
     @Input() width = 'auto';
 
-    @Input() disabled = null;
+    @Input() disabled = false;
 
     @Input() flatBorder = false;
 
@@ -73,6 +73,11 @@ export class TlButton implements OnInit {
 
     @Input() set textLoading( text ) {
       this._textLoading = text;
+    }
+
+    @HostBinding('attr.disabled')
+    public get disabledButton() {
+      return this.disabled;
     }
 
     get textLoading() {

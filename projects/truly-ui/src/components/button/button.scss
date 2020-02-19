@@ -6,6 +6,10 @@ $button-font-size: 0.9em;
 $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 $button-text-align: center;
 
+:host([disabled="true"]) {
+    pointer-events: none;
+}
+
 .tl-button {
   font-family: $button-font-family;
   font-size: $button-font-size;
@@ -31,6 +35,7 @@ $button-text-align: center;
     align-items: center;
     margin: 0 8px;
     justify-content: center;
+    user-select: none;
     width: 100%;
     .label {
       padding: 0 10px;
@@ -42,19 +47,9 @@ $button-text-align: center;
       margin: 0 5px;
     }
   }
-
-/*  > .textButton{
-    padding: 0 15px;
-    margin: 0;
-    width: 500px !important;
-    &.-isLoading {
-      pointer-events: none;
-      i {
-        -webkit-transform-origin: 50% calc(50% - .5px) !important;
-        transform-origin: 50% calc(50% - .5px) !important;
-      }
-    }
-  }*/
+  &.disabled {
+    pointer-events: none;
+  }
 }
 
 .iconAfterText{

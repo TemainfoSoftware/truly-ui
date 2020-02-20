@@ -83,12 +83,25 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
             if (this.filters.value[column.field]) {
                 filter.filters[column.field] = {
                     value: this.getValueByType(column),
-                    matchMode: this.filters.matchMode[column.field] ? this.filters.matchMode[column.field] : 'startsWith'
+                    matchMode: this.filters.matchMode[column.field] ? this.filters.matchMode[column.field] : this.getDefaultMath( column )
                 };
             }
         });
 
         return Object.keys(filter.filters).length ? filter : { filters: {} };
+    }
+
+    getDefaultMath( column: TlDatatableColumn ): any {
+      switch ( column.type ) {
+        case 'text' :
+          return 'startsWith';
+        case 'number' :
+          return 'equals';
+        case 'date' :
+          return 'equals';
+        default :
+          return  'startsWith';
+      }
     }
 
     getValueByType( column: TlDatatableColumn ): any {

@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalService} from '../../services/modal.service';
 import {Subscription} from 'rxjs';
 
@@ -30,7 +30,7 @@ import {Subscription} from 'rxjs';
   styleUrls: [ './modal-toolbar.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 } )
-export class TlModalToolbar implements OnInit {
+export class TlModalToolbar implements OnInit, OnDestroy {
 
   @Input() containerColor = '';
 
@@ -101,5 +101,9 @@ export class TlModalToolbar implements OnInit {
   handleScrollFinish() {
     const scrollLeft = this.container.nativeElement.scrollLeft + this.container.nativeElement.offsetWidth;
     this.isScrolling = scrollLeft >= this.wrapper.nativeElement.offsetWidth;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

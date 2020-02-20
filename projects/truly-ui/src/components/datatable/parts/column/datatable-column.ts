@@ -45,7 +45,7 @@ export class TlDatatableColumn implements OnInit {
 
     @Input('width') width: string;
 
-    @Input('type') type = 'text';
+    @Input('type') type: 'text' | 'number' | 'date' = 'text';
 
     @Input('format') format = 'shortDate';
 

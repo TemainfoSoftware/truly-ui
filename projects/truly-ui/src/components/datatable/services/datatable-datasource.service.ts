@@ -92,6 +92,7 @@ export class DatatableDataSource extends DataSource<object | undefined> {
     if ( changes['data'] && changes['data'].currentValue ) {
       if (this.isInMemory()) {
         this._cachedData = changes['data'].currentValue;
+        this._dataStream.next( this._cachedData );
       }
       this.dispatchData( changes['data'].currentValue );
     }
@@ -146,6 +147,8 @@ export class DatatableDataSource extends DataSource<object | undefined> {
 
     if (this.isInfinite() && data.length > 0 ) {
       this._cachedData.splice(this.currentPage  * this._pageSize, this._pageSize, ...data);
+    } else {
+      this._cachedData = data;
     }
     this._dataStream.next( this._cachedData );
   }

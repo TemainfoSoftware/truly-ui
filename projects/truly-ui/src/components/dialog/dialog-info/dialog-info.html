@@ -1,6 +1,6 @@
 <div class="content-dialog" (keydown)="onKeyDown($event)">
     <div class="form">
-        <p>{{message}}</p>
+      <p [innerHTML]="message"></p>
     </div>
     <div class="header-controls">
         <tl-button [text]="'OK'"

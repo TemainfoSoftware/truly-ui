@@ -22,6 +22,7 @@
 
 export const Form =  {
   deleteConfirmationMessage: 'Are you sure ?',
+  deleteTitleConfirmation: 'Confirmation.',
   recordNotFoundMessage: 'There\'s no record selected for this action',
   textOk: 'OK',
   textCancel: 'Cancel',

@@ -22,6 +22,7 @@
 
 export interface FormI18nInterface {
   deleteConfirmationMessage: string;
+  deleteTitleConfirmation: string;
   recordNotFoundMessage: string;
   textOk: string;
   textCancel: string;

@@ -18,9 +18,9 @@ import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
 import { DropDownIconModule } from '../dropdownicon/index';
 import { LoaderModule } from '../loader/index';
+import { ContextMenuModule } from '../contextmenu/index';
 import { TlDatatableRow } from './parts/row/datatable-row';
 import { TlDatatableCell } from './parts/cell/datatable-cell';
-import { ContextMenuModule } from '../contextmenu';
 
 
 

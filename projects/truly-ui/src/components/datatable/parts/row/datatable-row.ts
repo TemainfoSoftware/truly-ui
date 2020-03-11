@@ -60,7 +60,7 @@ export class TlDatatableRow implements OnInit, FocusableOption {
 
   @HostBinding('attr.tabindex') tabIndex = -1;
 
-  constructor(private element: ElementRef) {}
+  constructor(public element: ElementRef) {}
 
   ngOnInit() {}
 

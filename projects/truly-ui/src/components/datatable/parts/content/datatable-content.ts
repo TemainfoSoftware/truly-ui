@@ -37,11 +37,14 @@ import { CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolli
 import { TlDatatableColumn } from '../column/datatable-column';
 import { I18nService } from '../../../i18n/i18n.service';
 import { DatatableDataSource } from '../../services/datatable-datasource.service';
+import { ContextMenuService } from '../../../contextmenu/services/contextmenu.service';
+import { ContextMenuInterface } from '../../../contextmenu/interfaces/context-menu.interface';
 
 @Component( {
   selector: 'tl-datatable-content',
   templateUrl: './datatable-content.html',
   styleUrls: [ './datatable-content.scss', '../../datatable.scss' ],
+  providers: [ContextMenuService],
   entryComponents: [ TlDatatableRow, TlDatatableCell ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 } )
@@ -57,6 +60,8 @@ export class TlDatatableContent implements AfterViewInit {
 
   @Input('columns') columns: Array<TlDatatableColumn>;
 
+  @Input( 'contextMenuItems' ) contextMenuItems: ContextMenuInterface[];
+
   @Output('rowClick') rowClick = new EventEmitter();
 
   @Output('rowDbClick') rowDbClick = new EventEmitter();
@@ -69,7 +74,7 @@ export class TlDatatableContent implements AfterViewInit {
 
   private keyManager: FocusKeyManager<TlDatatableRow>;
 
-  constructor(private i18n: I18nService) {}
+  constructor(private i18n: I18nService, private contextMenuService: ContextMenuService) {}
 
   ngAfterViewInit() {
     this.keyManager = new FocusKeyManager(this.items).withTypeAhead();
@@ -78,6 +83,13 @@ export class TlDatatableContent implements AfterViewInit {
   onRowClick( rowItem: TlDatatableRow, row, index ) {
     this.rowClick.emit({ row: row, index: index });
     this.keyManager.setActiveItem(rowItem);
+  }
+
+  contextmenu($event, rowItem: TlDatatableRow, row, index ) {
+    if (this.contextMenuItems && this.contextMenuItems.length > 0) {
+      this.contextMenuService.create($event, rowItem.element, this.contextMenuItems, { row: row, index: index });
+      return false;
+    }
   }
 
   isEmpty() {

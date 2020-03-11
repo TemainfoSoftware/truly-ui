@@ -20,6 +20,7 @@ import { DropDownIconModule } from '../dropdownicon/index';
 import { LoaderModule } from '../loader/index';
 import { TlDatatableRow } from './parts/row/datatable-row';
 import { TlDatatableCell } from './parts/cell/datatable-cell';
+import { ContextMenuModule } from '../contextmenu';
 
 
 
@@ -31,6 +32,7 @@ import { TlDatatableCell } from './parts/cell/datatable-cell';
     IconsModule,
     InputModule,
     LoaderModule,
+    ContextMenuModule,
     DropDownIconModule,
     DropDownListModule,
     ScrollingModule,

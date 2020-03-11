@@ -46,6 +46,7 @@ import { Observable, Subject } from 'rxjs';
 import { TlDatatableSortService } from './services/datatable-sort.service';
 import { DatatableHelpersService } from './services/datatable-helpers.service';
 import { TlDatatableContent } from './parts/content/datatable-content';
+import { ContextMenuInterface } from '../contextmenu/interfaces/context-menu.interface';
 
 @Component( {
   selector: 'tl-datatable',
@@ -70,6 +71,8 @@ export class TlDatatable implements AfterContentInit, OnChanges {
   @Input( 'mode' ) mode: 'scrollable' | 'paginator' = 'scrollable';
 
   @Input( 'rowModel' ) rowModel: 'inmemory' | 'infinite' = 'inmemory';
+
+  @Input( 'contextMenuItems' ) contextMenuItems: ContextMenuInterface[];
 
   @Input( 'allowResize' ) allowResize = false;
 

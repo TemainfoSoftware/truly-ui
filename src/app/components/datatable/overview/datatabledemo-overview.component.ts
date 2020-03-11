@@ -19,6 +19,12 @@ export class DataTableDemoComponent {
 
   public dataTableEvents;
 
+  public contextMenu = [
+    { label: 'Remove Item', callback: (event) => console.log(`remove item`, event) },
+    { label: 'View Item', callback: (event) => console.log(`view item `, event) },
+    { label: 'Open Item', callback: (event) => console.log(`open item`, event) }
+  ];
+
   constructor( private dataDummy: DumpDataService) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;

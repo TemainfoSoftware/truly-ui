@@ -56,7 +56,7 @@ export class EditorService {
     if ( field.element.innerText ) {
       return field.element.innerText;
     }
-    return field.value || '';
+    return field.value || ' ';
   }
 
   compile(html: string, tagsContent: TagContent[], fieldsContent: FieldContent[]) {
@@ -75,7 +75,7 @@ export class EditorService {
       const fields = htmlParsed.querySelectorAll('.ui-field');
       for (let i = 0; i < fields.length; i++) {
         const fieldSelected = fieldsContent.find(item => item.field === this.getAttributeValue(fields[i].attributes, 'id'));
-        const fieldValue = this.getAttributeValue(fields[i].attributes, 'value');
+        const fieldValue = this.getAttributeValue(fields[i].attributes, 'value') || ' ';
         const element = new DOMParser()
           .parseFromString(`<strong id="${fieldSelected.field}">${fieldValue}</strong>`, 'text/html').body.firstChild;
         fields[i].insertAdjacentElement('afterend', <Element>element);

@@ -11,6 +11,7 @@ export class SmartFormConfiguration implements ModalFormConfig {
   dataForm?;
   initialDataForm?;
   unique?;
+  deleteTitleConfirmation?;
   deleteConfirmationMessage?;
   recordNotFoundMessage?;
   parentElement?;
@@ -24,6 +25,7 @@ export class SmartFormConfiguration implements ModalFormConfig {
     this.identifier = 'MODAL_1';
     this.unique = false;
     this.dataForm = null;
+    this.deleteTitleConfirmation = LOCALE_I18N.Form.deleteTitleConfirmation;
     this.deleteConfirmationMessage = LOCALE_I18N.Form.deleteConfirmationMessage;
     this.recordNotFoundMessage = LOCALE_I18N.Form.recordNotFoundMessage;
     this.parentElement = null;

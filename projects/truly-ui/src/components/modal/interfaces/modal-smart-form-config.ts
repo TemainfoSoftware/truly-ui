@@ -30,6 +30,7 @@ export interface ModalFormConfig {
   unique?: boolean;
   dataForm?: Object;
   initialDataForm?: Object;
+  deleteTitleConfirmation?: string;
   deleteConfirmationMessage?: string;
   recordNotFoundMessage?: string;
   parentElement?: ElementRef;

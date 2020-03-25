@@ -10,6 +10,7 @@
             <div class="col-12">
               <tl-datatable
                 [data]="data"
+                [contextMenuItems]="contextMenu"
                 [allowResize]="true"
                 [allowFilterColumn]="true"
                 [mode]="'scrollable'"
@@ -25,9 +26,14 @@
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-datatable
   [data]="data"
+  [contextMenuItems]="contextMenu"
   [allowResize]="true"
   [allowFilterColumn]="true"
   [mode]="'scrollable'"
+  [height]="357"
+  [recordsCount]="100"
+  (rowDblclick)="onRowDbClick( $event )"
+  (rowClick)="onRowClick( $event )"
   (rowSelect)="onRowSelect( $event )"
   (sortData)="onSortData($event)"
   (filterData)="onFilterData($event)">

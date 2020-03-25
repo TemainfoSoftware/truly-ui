@@ -18,6 +18,7 @@
                             #rowItem="rowItem"
                             [index]="index"
                             (click)="onRowClick(rowItem, row, index)"
+                            (contextmenu)="contextmenu($event, rowItem, row, index)"
                             (dblclick)="rowDbClick.emit({ row:row, index: index })"
           >
             <tl-datatable-cell class="ui-cel"

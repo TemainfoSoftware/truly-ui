@@ -23,8 +23,6 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { LOCALE_I18N } from '../../i18n/i18n.service';
 
 import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
-import { TlLeftPadPipe } from '../../internals/pipes/leftpad.pipe';
-
 let dateExpressFormat;
 
 export function DateValidator( formatDate, isoDate ): ValidatorFn {
@@ -63,6 +61,9 @@ export function DateValidator( formatDate, isoDate ): ValidatorFn {
 }
 
 function stringUnmasked( c ) {
+  if ( isIsoDate( c.value )) {
+    return new Date( c.value ).toLocaleDateString();
+  }
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
 }
 

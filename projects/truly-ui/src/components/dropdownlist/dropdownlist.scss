@@ -1,13 +1,10 @@
 //Default
-$default-fontSize: 14px;
+$default-fontSize: 1em;
 $default-fontFamily: "Segoe UI", Lato, 'sans-serif', "Arial";
 $default-height: 39px;
 $default-cursorHover: pointer;
 $default-cursor: default;
 $default-outline: none;
-
-$button-font-size: 1em;
-$button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
 
 * {
   box-sizing: border-box;
@@ -23,7 +20,6 @@ $button-font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
     >.ui-dropdown {
       border-radius: 3px;
       width: 100%;
-      color: #666;
       padding-left: 5px;
       cursor: pointer;
       font-size: $default-fontSize;

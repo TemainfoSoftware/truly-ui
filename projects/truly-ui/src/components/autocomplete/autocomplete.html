@@ -31,7 +31,7 @@
         class="ui-input"
         [control]="control"
         [(ngModel)]="description"
-        (keydown.enter)="handleKeyEnter()"
+        (keydown.enter)="handleKeyEnter($event)"
         (keydown.shift.tab)="isOpen = false"
         (keydown.tab)="isOpen = false"
         (focus)="handleFocus()"
@@ -68,9 +68,18 @@
                *cdkVirtualFor="let item of dataSource; let i = index"
                (mousedown)="onSelectItem(item, select)"
                class="ui-list-item">
-            <span *ngIf="item; else loadingMessage">
-              <span [innerHTML]="getItemText(item) | highlight:description"></span>
-            </span>
+            <ng-container *ngIf="template; else templateContent">
+              <tl-autocomplete-template
+                [style.width]="'100%'"
+                *ngIf="item; else loadingMessage"
+                [template]="template"
+                [item]="item"
+                [index]="i">
+              </tl-autocomplete-template>
+            </ng-container>
+            <ng-template #templateContent>
+              <span *ngIf="item; else loadingMessage" [innerHTML]="getItemText(item) | highlight:description"></span>
+            </ng-template>
           </div>
         </cdk-virtual-scroll-viewport>
       </ng-template>

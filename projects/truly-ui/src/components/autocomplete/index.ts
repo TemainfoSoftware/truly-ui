@@ -36,6 +36,7 @@ import { ItemSelectedModule } from '../core/directives/itemSelected/item-selecte
 import { A11yModule } from '@angular/cdk/a11y';
 import { LoaderModule } from '../loader/index';
 import { MiscModule } from '../misc/index';
+import {TlAutocompleteTemplate} from './components/autocomplete-template';
 
 @NgModule( {
   imports: [
@@ -56,9 +57,11 @@ import { MiscModule } from '../misc/index';
   ],
   declarations: [
     TlAutoComplete,
+    TlAutocompleteTemplate,
   ],
   exports: [
     TlAutoComplete,
+    TlAutocompleteTemplate
   ],
 } )
 export class AutoCompleteModule {

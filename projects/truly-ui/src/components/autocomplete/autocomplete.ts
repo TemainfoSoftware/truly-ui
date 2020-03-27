@@ -22,7 +22,7 @@
 import {
   Component, Input, Optional, Inject, OnChanges, ViewChildren,
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
-  AfterContentInit,
+  AfterContentInit, TemplateRef,
 } from '@angular/core';
 import { FormControlName } from '@angular/forms';
 
@@ -82,6 +82,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input() lazyMode = false;
 
   @Input() rowHeight = 40;
+
+  @Input() template: TemplateRef<any>;
 
   @Input() debounceTime = 200;
 
@@ -384,7 +386,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setIsOpen( false );
   }
 
-  handleKeyEnter() {
+  handleKeyEnter($event) {
     if ( this.keyManager.activeItem && this.isOpen ) {
       if ( this.keyManager.activeItem.itemSelected ) {
         this.selectItem.emit( this.keyManager.activeItem.itemSelected );
@@ -392,7 +394,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
         this.setDescriptionValue( objectPath.get( this.keyManager.activeItem.itemSelected, this.keyText ) );
         this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
       }
-      this.handleClose();
+      this.handleClose($event);
     }
   }
 
@@ -428,12 +430,15 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.change.detectChanges();
   }
 
-  handleClose() {
+  handleClose($event?) {
     if ( this.clearOnSelect ) {
       this.setDescriptionValue( '' );
+      this.tlinput.setFocus();
       this.selected = null;
+      if ( $event ) {
+        $event.stopPropagation();
+      }
     }
-    setTimeout(() => this.tlinput.setFocus());
     this.setIsOpen( false );
   }
 
@@ -535,7 +540,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
         this.dataSource.setArray( totalLength[ 'currentValue' ] );
       }
     }
-    if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
+    if ( data && this.lazyMode ) {
       this.setUpData( data[ 'currentValue' ] );
       return;
     }

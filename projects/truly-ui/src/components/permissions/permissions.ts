@@ -59,6 +59,12 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
 
   @Input() keyPermissionDescription = 'description';
 
+  @Input() searchGroup = this.i18n.getLocale().Permissions.searchGroup;
+
+  @Input() searchFunctionality = this.i18n.getLocale().Permissions.searchFunctionality;
+
+  @Input() allowColumnText = this.i18n.getLocale().Permissions.allowColumnText;
+
   @ViewChildren( PermissionGroupDirective ) permissionGroup: QueryList<PermissionGroupDirective>;
 
   @ViewChildren( ListOptionDirective ) permissionList: QueryList<ListOptionDirective>;
@@ -90,12 +96,6 @@ export class TlPermissions implements OnInit, AfterContentInit, AfterViewInit, O
   public loadingMessage = this.i18n.getLocale().Permissions.loadingMessage;
 
   public notFound = this.i18n.getLocale().Permissions.notFound;
-
-  public searchGroup = this.i18n.getLocale().Permissions.searchGroup;
-
-  public searchFunctionality = this.i18n.getLocale().Permissions.searchFunctionality;
-
-  public allowColumn = this.i18n.getLocale().Permissions.allowColumnText;
 
   constructor( private changes: ChangeDetectorRef, private i18n: I18nService ) {
   }

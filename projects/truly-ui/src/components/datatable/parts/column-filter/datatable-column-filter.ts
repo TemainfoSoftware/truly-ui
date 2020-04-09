@@ -94,13 +94,13 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
     getDefaultMath( column: TlDatatableColumn ): any {
       switch ( column.type ) {
         case 'text' :
-          return 'startsWith';
+          return 'contains';
         case 'number' :
           return 'equals';
         case 'date' :
           return 'equals';
         default :
-          return  'startsWith';
+          return  'contains';
       }
     }
 

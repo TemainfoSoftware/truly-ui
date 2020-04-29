@@ -203,7 +203,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   listenClickElementList( item ) {
     this.subscription.add(this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
       if ( item[ this.link ] ) {
-        this.router.navigate( [ item[ this.link ] ] );
+        this.router.navigate( [ item[ this.link ] ], { queryParams: item['queryParams'] } );
         this.subMenuService.closeMenu();
         return;
       }

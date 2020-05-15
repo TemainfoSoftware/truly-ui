@@ -1,0 +1,43 @@
+<div class="drag-wrapper">
+  <div *ngIf="type === 'dragndrop'" class="dragndrop" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+    <ng-container *ngIf="imageList.length === 0; else imagesContainerTemplate">
+      <span><tl-icon class="icon" [lib]="'fa'" [style]="'fas'">inbox</tl-icon></span>
+      <span>Click or drag file to this area to upload</span>
+      <span>Support for a single or bulk upload.</span>
+    </ng-container>
+
+    <ng-template #imagesContainerTemplate>
+      <div class="images-container">
+        <ng-container *ngFor="let item of imageList">
+          <ng-container *ngTemplateOutlet="uploadboxTemplate; context: { $implicit: item }"></ng-container>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="uploadboxTemplate"></ng-container>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<ng-container *ngIf="type === 'box'">
+  <ng-container *ngTemplateOutlet="uploadboxTemplate"></ng-container>
+</ng-container>
+
+<ng-template #uploadboxTemplate let-item>
+  <div class="upload-box" [class.borderLess]="item">
+    <div class="upload" (click)="open()">
+      <input #fileInput type="file" style="display: none;" (change)="onChange($event)">
+      <ng-container *ngIf="!item?.image && !imageSrc; else imageTemplate">
+        <tl-icon [lib]="'dx'">add</tl-icon>
+        <div class="title">Upload</div>
+      </ng-container>
+      <ng-template #imageTemplate>
+        <div class="image-wrapper">
+          <img class="image" alt="image" [src]="item?.image || imageSrc">
+          <div class="controls">
+            <tl-icon class="icon" [lib]="'dx'">find</tl-icon>
+            <tl-icon class="icon" (click)="remove(item, imageSrc, $event)" [lib]="'dx'">trash</tl-icon>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</ng-template>

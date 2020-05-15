@@ -1,0 +1,124 @@
+.dragndrop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  padding: 10px 0;
+  font-family: Segoe UI;
+  > .images-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    > .image-item {
+      padding: 0 10px;
+    }
+  }
+  &:hover {
+    border-color: #66cc99;
+  }
+  .icon {
+    font-size: 28px;
+  }
+}
+
+.upload-box {
+  display: table;
+  float: left;
+  width: 104px;
+  height: 104px;
+  margin-right: 4px;
+  margin-left: 4px;
+  text-align: center;
+  vertical-align: top;
+  background-color: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color .3s ease;
+  &.borderLess {
+    border: 0;
+  }
+  &:first-child {
+    margin-left: 8px;
+  }
+  &:hover {
+    border-color: #66cc99;
+  }
+  > .upload {
+    display: table-cell;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    &:hover .image-wrapper:before {
+      opacity: 1;
+    }
+    > .title {
+      margin-top: 10px;
+    }
+    > .icon {
+      color: #e6e6e6;
+      cursor: pointer;
+      font-size: 22px;
+    }
+    > .image-wrapper {
+      &:hover .controls {
+        opacity: 1;
+      }
+      &:before {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: #00000080;
+        opacity: 0;
+        transition: all .3s;
+        content: " ";
+        top: 0;
+        left: 0;
+      }
+      > .image {
+        position: static;
+        display: block;
+        width: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+      }
+      > .controls {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        height: 100%;
+        color: #fff;
+        font-size: 22px;
+        z-index: 1000;
+        left: 0;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: default;
+        .icon {
+          cursor: pointer;
+          &:last-child {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}

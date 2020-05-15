@@ -88,6 +88,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/step/stepdemo.module#StepDemoModule'
       },
       {
+        path: 'upload',
+        loadChildren: './components/upload/uploaddemo.module#UploadDemoModule'
+      },
+      {
         path: 'datatable',
         loadChildren: './components/datatable/overview/datatabledemo-overview.module#DatatableDemoOverviewModule'
       },

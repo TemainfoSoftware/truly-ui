@@ -1,0 +1,14 @@
+<div class="light-box-container" (click)="stopEvent($event)">
+  <img class="image" [src]="imageSelected?.image">
+  <div class="close-button" (click)="close.emit()">
+    <tl-icon [lib]="'ion'" [style]="'ios'">close-circle</tl-icon>
+  </div>
+</div>
+<div class="light-box-controls">
+    <tl-icon class="arrow left"  (click)="previous($event)" [lib]="'ion'" [style]="'ios'">arrow-dropleft-circle</tl-icon>
+    <tl-icon class="arrow right" (click)="next($event)" [lib]="'ion'" [style]="'ios'">arrow-dropright-circle</tl-icon>
+</div>
+<div class="footer-images" (click)="stopEvent($event)">
+  <img *ngFor="let item of images" class="thumbnail" [class.selected]="item?.index === imageSelected?.index"
+       (click)="selectImage($event, item)" [src]="item?.image">
+</div>

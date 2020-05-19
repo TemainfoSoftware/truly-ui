@@ -124,6 +124,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
       },
       {
+        path: 'lightbox',
+        loadChildren: './components/lightbox/lightboxdemo.module#LightboxDemoModule'
+      },
+      {
         path: 'dropdownicon',
         loadChildren: './components/dropdownicon/dropdownicondemo.module#DropDownIconDemoModule'
       },

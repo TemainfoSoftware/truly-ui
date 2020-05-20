@@ -6,7 +6,7 @@ import { TlUpload } from './upload';
 import { IconsModule } from '../icons/index';
 import { LightboxModule } from '../lightbox/index';
 import { HttpClientModule } from '@angular/common/http';
-import { TextareaModule } from '../textarea';
+import { TextareaModule } from '../textarea/index';
 
 @NgModule({
   imports: [

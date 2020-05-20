@@ -19,7 +19,9 @@
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 */
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {LightboxService} from '../lightbox/services/lightbox.services';
+import {ImageUploadInterface} from './interfaces/image-upload.interface';
 
 @Component({
   selector: 'tl-upload',
@@ -30,22 +32,33 @@ export class TlUpload implements OnInit {
 
   @Input() type: 'dragndrop' | 'box' = 'dragndrop';
 
-  @ViewChild('fileInput', {static: false}) fileInput;
+  @Input() action = '';
 
-  public file;
+  @Input() height = '100%';
 
-  public imageList = [];
+  @Input() imageList: ImageUploadInterface[] = [];
 
-  public imageSrc;
+  @Input() imageSrc;
 
-  constructor() {
+  @Input() isLoading = false;
+
+  @ViewChild('inputMultiple', {static: false}) inputMultiple;
+
+  @ViewChild('inputSingle', {static: false}) inputSingle;
+
+  @Output() view = new EventEmitter();
+
+  @Output() upload = new EventEmitter();
+
+  constructor(private lightboxService: LightboxService) {
   }
 
   ngOnInit() {
   }
 
-  open() {
-    this.fileInput.nativeElement.click();
+  open($event) {
+    this.inputSingle ? this.inputSingle.nativeElement.click() : this.inputMultiple.nativeElement.click();
+    $event.stopPropagation();
   }
 
   onDragOver(ev) {
@@ -58,36 +71,49 @@ export class TlUpload implements OnInit {
     ev.stopPropagation();
     ev.preventDefault();
     const fileList = ev.dataTransfer.files;
-    this.readFiles( fileList );
+    this.readFiles(fileList);
   }
 
-  readFiles( fileList ) {
-    for ( let i = 0; i < fileList.length; i++) {
+  readFiles(fileList) {
+    for (let i = 0; i < fileList.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(fileList[i]);
       reader.onload = (event) => {
-        this.imageList.push( { index: i, image: (<FileReader>event.target).result } );
+        this.imageList.push({index: i, image: (<FileReader>event.target).result});
       };
     }
   }
 
-  remove( image, imgSrc, event) {
+  viewImage($event, image) {
+    $event.stopPropagation();
+    if (this.type === 'box') {
+      return this.view.emit(this.imageSrc);
+    }
+    this.lightboxService.create(this.imageList, image);
+  }
+
+  remove(image, imgSrc, event) {
     event.stopPropagation();
-    if ( imgSrc ) {
+    if (imgSrc) {
       this.imageSrc = null;
     }
-    if ( image ) {
-      this.imageList = this.imageList.filter( (item, idx) => image.index !== idx);
+    if (image) {
+      this.imageList = this.imageList.filter((item, idx) => image.index !== idx);
+      this.imageList.forEach((item, idx) => item.index = idx);
     }
   }
 
   onChange($event) {
-    this.file = $event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL($event.target.files[0]);
-    reader.onload = (event) => {
-      this.imageSrc = (<FileReader>event.target).result;
-    };
+    if ( $event.target.files.length > 0 ) {
+      if ( this.type === 'dragndrop' ) {
+        return this.readFiles($event.target.files);
+      }
+      const reader = new FileReader();
+      reader.readAsDataURL($event.target.files[0]);
+      reader.onload = (event) => {
+        this.imageSrc = (<FileReader>event.target).result;
+      };
+    }
   }
 
 }

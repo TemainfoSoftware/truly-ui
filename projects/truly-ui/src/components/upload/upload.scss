@@ -34,6 +34,18 @@
   }
 }
 
+.image-list {
+  display: flex;
+  flex-flow: column;
+  > .image-item {
+    margin-top: 10px;
+    display: flex;
+    > .image-description {
+      width: 100%;
+    }
+  }
+}
+
 .upload-box {
   display: flex;
   align-items: center;
@@ -55,6 +67,8 @@
   > .image-wrapper {
     height: 100%;
     width: 100%;
+    border-radius: 5px;
+    overflow: hidden;
     &:hover .controls {
       opacity: 1;
     }
@@ -105,6 +119,9 @@
   }
   &.borderLess {
     border: 0;
+  }
+  &.marginLess {
+    margin-left: 0px !important;
   }
   &:first-child {
     margin-left: 8px;

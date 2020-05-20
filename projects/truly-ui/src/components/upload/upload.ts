@@ -32,6 +32,8 @@ export class TlUpload implements OnInit {
 
   @Input() type: 'dragndrop' | 'box' = 'dragndrop';
 
+  @Input() showAsList = false;
+
   @Input() action = '';
 
   @Input() height = '100%';
@@ -42,13 +44,17 @@ export class TlUpload implements OnInit {
 
   @Input() isLoading = false;
 
+  @Input() deleteControl = true;
+
+  @Input() viewControl = true;
+
   @ViewChild('inputMultiple', {static: false}) inputMultiple;
 
   @ViewChild('inputSingle', {static: false}) inputSingle;
 
   @Output() view = new EventEmitter();
 
-  @Output() upload = new EventEmitter();
+  @Output() uploadChange = new EventEmitter();
 
   constructor(private lightboxService: LightboxService) {
   }
@@ -80,6 +86,7 @@ export class TlUpload implements OnInit {
       reader.readAsDataURL(fileList[i]);
       reader.onload = (event) => {
         this.imageList.push({index: i, image: (<FileReader>event.target).result});
+        this.uploadChange.emit( this.imageList );
       };
     }
   }
@@ -96,10 +103,12 @@ export class TlUpload implements OnInit {
     event.stopPropagation();
     if (imgSrc) {
       this.imageSrc = null;
+      this.uploadChange.emit(this.imageSrc);
     }
     if (image) {
       this.imageList = this.imageList.filter((item, idx) => image.index !== idx);
       this.imageList.forEach((item, idx) => item.index = idx);
+      this.uploadChange.emit(this.imageList);
     }
   }
 
@@ -112,6 +121,7 @@ export class TlUpload implements OnInit {
       reader.readAsDataURL($event.target.files[0]);
       reader.onload = (event) => {
         this.imageSrc = (<FileReader>event.target).result;
+        this.uploadChange.emit(this.imageSrc);
       };
     }
   }

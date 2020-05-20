@@ -1,32 +1,34 @@
-:host {
-  width: 100%;
-  height: 100%;
+@mixin flexCenter {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+:host {
+  width: 100%;
+  height: 100%;
+  @include flexCenter;
+  flex-flow: column;
+}
+
 .light-box-container {
-  position: absolute;
+  position: relative;
   border: 1px solid #ccc;
-  background: #fff;
+  background: #0000;
   z-index: 1000;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
   box-shadow: 1px 3px 7px 0px #000000cf;
-  max-height: calc(100vh - 200px);
   overflow: auto;
-  top: 10vh;
+  @include flexCenter;
+  flex-flow: column;
   > .close-button {
     position: fixed;
     right: 20px;
     font-size: 50px;
     cursor: pointer;
+    color: #989898;
     top: 20px;
   }
 }
-
 .light-box-controls {
   font-size: 3em;
   z-index: 1000;
@@ -34,24 +36,28 @@
     position: fixed;
     cursor: pointer;
     top: calc(50vh - 64px);
+    color: #989898;
     &.left {
-      left: 20%;
+      left: 7%;
     }
     &.right {
-      right: 20%;
+      right: 7%;
     }
   }
 }
-
+.image-info {
+  margin: 20px 0;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
 .footer-images {
   position: absolute;
   bottom: 0;
   height: 100px;
   background: #000000b0;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexCenter;
 
   .thumbnail {
     width: 80px;

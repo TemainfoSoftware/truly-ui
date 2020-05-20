@@ -23,6 +23,7 @@ export class LightboxService implements OnDestroy {
       positionStrategy,
       width: '100vw',
       height: '100vh',
+      backdropClass: 'cdk-darker-overlay-backdrop',
       scrollStrategy: this.overlay.scrollStrategies.close(),
       disposeOnNavigation: false,
       hasBackdrop: true

@@ -3,7 +3,9 @@
   <div class="close-button" (click)="close.emit()">
     <tl-icon [lib]="'ion'" [style]="'ios'">close-circle</tl-icon>
   </div>
-  <h3>{{ imageSelected?.title }}</h3>
+</div>
+<div class="image-info">
+  <h3 *ngIf="imageSelected?.title">{{ imageSelected?.title }}</h3>
   <p>{{ imageSelected?.description}}</p>
 </div>
 <div class="light-box-controls">

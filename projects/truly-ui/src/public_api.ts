@@ -26,6 +26,7 @@ export { FormModule } from './components/form/index';
 export { IconsModule } from './components/icons/index';
 export { InputModule } from './components/input/index';
 export { ListBoxModule} from './components/listbox/index';
+export { LightboxModule } from './components/lightbox/index';
 export { LoaderModule } from './components/loader/index';
 export { MenuModule } from './components/menu/index';
 export { MiscModule } from './components/misc/index';
@@ -57,6 +58,7 @@ export { TimeAvailablePickerModule } from './components/time-available-picker/in
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
+export { UploadModule } from './components/upload/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';
 
@@ -86,6 +88,9 @@ export { ChatStatus } from './components/chatlist/interfaces/chat-status.interfa
 // Editor Interfaces
 export { TagContent } from './components/editor/interfaces/tag-content';
 export { FieldContent } from './components/editor/interfaces/field-content';
+
+export { ImageLightboxInterface } from './components/lightbox/interfaces/image.interface';
+export { ImageUploadInterface } from './components/upload/interfaces/image-upload.interface';
 
 // Enumerators
 export { ActionsModal } from './components/core/enums/actions-modal';

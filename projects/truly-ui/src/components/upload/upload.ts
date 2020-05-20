@@ -32,7 +32,7 @@ export class TlUpload implements OnInit {
 
   @Input() type: 'dragndrop' | 'box' = 'dragndrop';
 
-  @Input() showAsList = false;
+  @Input() showAsList = true;
 
   @Input() action = '';
 
@@ -55,6 +55,10 @@ export class TlUpload implements OnInit {
   @Output() view = new EventEmitter();
 
   @Output() uploadChange = new EventEmitter();
+
+  @Output() deleteChange = new EventEmitter();
+
+  @Output() updateChange = new EventEmitter();
 
   constructor(private lightboxService: LightboxService) {
   }
@@ -80,12 +84,16 @@ export class TlUpload implements OnInit {
     this.readFiles(fileList);
   }
 
+  onChangeDescription() {
+    this.updateChange.emit(this.imageList);
+  }
+
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
       const reader = new FileReader();
       reader.readAsDataURL(fileList[i]);
       reader.onload = (event) => {
-        this.imageList.push({index: i, image: (<FileReader>event.target).result});
+        this.imageList = [ ...this.imageList, {index: i, image: (<FileReader>event.target).result} ];
         this.uploadChange.emit( this.imageList );
       };
     }
@@ -103,12 +111,12 @@ export class TlUpload implements OnInit {
     event.stopPropagation();
     if (imgSrc) {
       this.imageSrc = null;
-      this.uploadChange.emit(this.imageSrc);
+      this.deleteChange.emit(this.imageSrc);
     }
     if (image) {
       this.imageList = this.imageList.filter((item, idx) => image.index !== idx);
       this.imageList.forEach((item, idx) => item.index = idx);
-      this.uploadChange.emit(this.imageList);
+      this.deleteChange.emit(this.imageList);
     }
   }
 

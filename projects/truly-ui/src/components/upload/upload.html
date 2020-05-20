@@ -20,7 +20,7 @@
     <ng-container *ngFor="let item of imageList">
       <div class="image-item">
         <ng-container *ngTemplateOutlet="uploadboxTemplate; context: { $implicit: item }"></ng-container>
-        <tl-textarea class="image-description" [(ngModel)]="item.description" [placeholder]="'Image Description'"></tl-textarea>
+        <tl-textarea class="image-description" [(ngModel)]="item.description" (ngModelChange)="onChangeDescription()" [placeholder]="'Image Description'"></tl-textarea>
       </div>
     </ng-container>
   </div>

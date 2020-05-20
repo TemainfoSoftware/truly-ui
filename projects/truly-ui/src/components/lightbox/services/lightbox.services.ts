@@ -1,4 +1,4 @@
-import {ComponentRef, ElementRef, Injectable, OnDestroy} from '@angular/core';
+import {ComponentRef, Injectable, OnDestroy} from '@angular/core';
 import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {Subscription} from 'rxjs';

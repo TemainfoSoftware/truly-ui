@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TlLightbox } from './lightbox';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { LightboxService } from './services/lightbox.services';
-import { IconsModule } from '../icons';
+import { IconsModule } from '../icons/index';
 
 @NgModule({
   imports: [

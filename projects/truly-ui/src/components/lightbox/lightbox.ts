@@ -21,6 +21,7 @@
 */
 
 import {ChangeDetectorRef, Component, EventEmitter, HostListener, OnInit} from '@angular/core';
+import {ImageLightboxInterface} from './interfaces/image.interface';
 
 @Component({
   selector: 'tl-lightbox',
@@ -31,9 +32,9 @@ export class TlLightbox implements OnInit {
 
   public isOpen = true;
 
-  public images = [];
+  public images: ImageLightboxInterface[] = [];
 
-  public imageSelected: { image: string, index: number };
+  public imageSelected: ImageLightboxInterface;
 
   public close = new EventEmitter();
 
@@ -46,7 +47,7 @@ export class TlLightbox implements OnInit {
 
   ngOnInit() {}
 
-  init( images: any[], current ) {
+  init( images: ImageLightboxInterface[], current ) {
     this.images = images;
     this.imageSelected = !current ? images[0] : current;
     this.changes.detectChanges();

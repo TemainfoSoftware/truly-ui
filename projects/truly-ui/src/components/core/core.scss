@@ -1,5 +1,10 @@
 @import "../core/styles/theming/theming";
 
+
+.cdk-darker-overlay-backdrop {
+  background-color: rgba(0,0,0,0.8);
+}
+
 @mixin _tl-core-theme-schema( $theme, $action ) {
   &.-paint-icon {
     color: map-deep-get($theme, $action, "default", "background") !important;

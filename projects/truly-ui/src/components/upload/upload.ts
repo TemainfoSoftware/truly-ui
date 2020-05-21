@@ -40,7 +40,14 @@ export class TlUpload implements OnInit {
 
   @Input() height = '100%';
 
-  @Input() imageList: ImageUploadInterface[] = [];
+  @Input('imageList')
+  set imageList( value: ImageUploadInterface[] ) {
+    this._imageList = value.sort((a, b) => a.index - b.index );
+  }
+
+  get imageList() {
+    return this._imageList;
+  }
 
   @Input() imageSrc;
 
@@ -68,6 +75,8 @@ export class TlUpload implements OnInit {
 
   private subscription: Subscription = new Subscription();
 
+  private _imageList = [];
+
   constructor(private lightboxService: LightboxService) {
   }
 
@@ -83,7 +92,7 @@ export class TlUpload implements OnInit {
   }
 
   open($event) {
-    this.inputSingle ? this.inputSingle.nativeElement.click() : this.inputMultiple.nativeElement.click();
+    this.type !== 'dragndrop' ? this.inputSingle.nativeElement.click() : this.inputMultiple.nativeElement.click();
     $event.stopPropagation();
   }
 
@@ -107,8 +116,9 @@ export class TlUpload implements OnInit {
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
       this.readFile(fileList[i], i).then((value: ImageUploadInterface) => {
+        value.index = this.imageList.length;
         this.imageList = [ ...this.imageList, value ];
-        if ( this.imageList.length === fileList.length ) {
+        if ( fileList.length <= this.imageList.length ) {
           this.uploading.next( this.imageList );
         }
       });

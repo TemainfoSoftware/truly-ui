@@ -22,6 +22,8 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LightboxService} from '../lightbox/services/lightbox.services';
 import {ImageUploadInterface} from './interfaces/image-upload.interface';
+import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Subject, Subscription} from 'rxjs';
 
 @Component({
   selector: 'tl-upload',
@@ -60,10 +62,24 @@ export class TlUpload implements OnInit {
 
   @Output() updateChange = new EventEmitter();
 
+  private filtering: Subject<any> = new Subject();
+
+  private uploading: Subject<any> = new Subject();
+
+  private subscription: Subscription = new Subscription();
+
   constructor(private lightboxService: LightboxService) {
   }
 
   ngOnInit() {
+    this.filtering.pipe(
+      debounceTime(250),
+    ).subscribe((value) => {
+      this.updateChange.emit(value);
+    });
+    this.subscription.add(this.uploading.subscribe(value => {
+      this.uploadChange.emit( value );
+    }));
   }
 
   open($event) {
@@ -85,18 +101,28 @@ export class TlUpload implements OnInit {
   }
 
   onChangeDescription() {
-    this.updateChange.emit(this.imageList);
+    this.filtering.next(this.imageList);
   }
 
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
-      const reader = new FileReader();
-      reader.readAsDataURL(fileList[i]);
-      reader.onload = (event) => {
-        this.imageList = [ ...this.imageList, {index: i, image: (<FileReader>event.target).result} ];
-        this.uploadChange.emit( this.imageList );
-      };
+      this.readFile(fileList[i], i).then((value: ImageUploadInterface) => {
+        this.imageList = [ ...this.imageList, value ];
+        if ( this.imageList.length === fileList.length ) {
+          this.uploading.next( this.imageList );
+        }
+      });
     }
+  }
+
+  readFile(file, index) {
+    const reader = new FileReader();
+    return new Promise(resolve => {
+      reader.readAsDataURL(file);
+      reader.onloadend = ( event ) => {
+        resolve({index: index, image: (<FileReader>event.target).result});
+      };
+    });
   }
 
   viewImage($event, image) {
@@ -121,8 +147,8 @@ export class TlUpload implements OnInit {
   }
 
   onChange($event) {
-    if ( $event.target.files.length > 0 ) {
-      if ( this.type === 'dragndrop' ) {
+    if ($event.target.files.length > 0) {
+      if (this.type === 'dragndrop') {
         return this.readFiles($event.target.files);
       }
       const reader = new FileReader();

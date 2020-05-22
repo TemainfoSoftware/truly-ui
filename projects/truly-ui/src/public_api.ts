@@ -58,6 +58,7 @@ export { TimeAvailablePickerModule } from './components/time-available-picker/in
 export { ToasterModule } from './components/toaster/index';
 export { ToolbarModule } from './components/toolbar/index';
 export { TooltipModule } from './components/tooltip/index';
+export { ThumbnailModule } from './components/thumbnail/index';
 export { UploadModule } from './components/upload/index';
 export { ClockPickerModule } from './components/clockpicker/index';
 export { ValidatorsModule } from './components/validators/index';

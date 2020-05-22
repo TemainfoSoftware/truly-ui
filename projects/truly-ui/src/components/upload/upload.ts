@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {LightboxService} from '../lightbox/services/lightbox.services';
+import {LightboxService} from '../lightbox/services/lightbox.service';
 import {ImageUploadInterface} from './interfaces/image-upload.interface';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';

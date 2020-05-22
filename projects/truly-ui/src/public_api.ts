@@ -110,6 +110,7 @@ export { TooltipService } from './components/tooltip/tooltip.service';
 export { ChatService } from './components/chatlist/services/chat.service';
 export { EditorService } from './components/editor/services/editor.service';
 export { ContextMenuService } from './components/contextmenu/services/contextmenu.service';
+export { LightboxService } from './components/lightbox/services/lightbox.service';
 
 // Classes
 export { Permission } from './components/permissions/parts/models/permission.model';

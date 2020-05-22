@@ -31,20 +31,19 @@
 </ng-container>
 
 <ng-template #uploadboxTemplate let-item>
-  <div class="upload-box" [class.borderLess]="item" [class.marginLess]="showAsList" (click)="open($event)">
-      <input #inputSingle type="file" style="display: none;" (change)="onChange($event)">
-      <ng-container *ngIf="!item?.image && !imageSrc; else imageTemplate">
-        <tl-icon [lib]="'dx'">add</tl-icon>
-        <div class="upload-title">Upload</div>
-      </ng-container>
-      <ng-template #imageTemplate>
-        <div class="image-wrapper">
-          <img class="image" alt="image" [src]="item?.image || imageSrc">
-          <div class="controls">
-            <tl-icon *ngIf="viewControl" class="icon" (click)="viewImage($event, item || imageSrc)" [lib]="'dx'">find</tl-icon>
-            <tl-icon *ngIf="deleteControl" class="icon" (click)="remove(item, imageSrc, $event)" [lib]="'dx'">trash</tl-icon>
-          </div>
-        </div>
-      </ng-template>
-  </div>
+  <tl-thumbnail
+    [shape]="'square'"
+    [bordered]="!item"
+    [image]="item.image || imageSrc"
+    [emptyTemplate]="emptyTemplate"
+    [overlayTemplate]="controlsTemplate">
+    <ng-template #emptyTemplate>
+      <tl-icon [lib]="'dx'">add</tl-icon>
+      <div class="upload-title">Upload</div>
+    </ng-template>
+    <ng-template #controlsTemplate>
+      <tl-icon *ngIf="viewControl" style="margin-right: 5px" (click)="viewImage($event, item || imageSrc)" [lib]="'dx'">find</tl-icon>
+      <tl-icon *ngIf="deleteControl" class="icon" (click)="remove(item, imageSrc, $event)" [lib]="'dx'">trash</tl-icon>
+    </ng-template>
+  </tl-thumbnail>
 </ng-template>

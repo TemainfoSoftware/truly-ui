@@ -7,6 +7,7 @@ import { IconsModule } from '../icons/index';
 import { LightboxModule } from '../lightbox/index';
 import { HttpClientModule } from '@angular/common/http';
 import { TextareaModule } from '../textarea/index';
+import { ThumbnailModule } from '../thumbnail/index';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TextareaModule } from '../textarea/index';
     IconsModule,
     LightboxModule,
     HttpClientModule,
-    TextareaModule
+    TextareaModule,
+    ThumbnailModule
   ],
   declarations: [
     TlUpload

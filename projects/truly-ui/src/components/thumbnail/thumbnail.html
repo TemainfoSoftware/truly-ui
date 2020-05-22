@@ -1,0 +1,29 @@
+
+<div class="thumbnail-container">
+  <ng-container *ngIf="data.length > 0; else thumbTemplate">
+    <ng-container *ngFor="let item of data">
+      <ng-container *ngTemplateOutlet="thumbTemplate; context: { $implicit: item }"></ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #thumbTemplate let-item>
+  <div class="thumbnail" (click)="clickThumbnail.emit($event)"
+       [style.width]="size.width"
+       [style.height]="size.height"
+       [class.circle-shape]="isCircle"
+       [class.borderLess]="!bordered">
+    <ng-container *ngIf="!item && !image; else imageTemplate">
+      <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
+    </ng-container>
+    <ng-template #imageTemplate>
+      <div class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
+        <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item || image">
+        <div class="thumbnail-controls">
+          <ng-container *ngTemplateOutlet="overlayTemplate"></ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>
+

@@ -18,9 +18,9 @@
     </ng-container>
     <ng-template #imageTemplate>
       <div class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
-        <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item || image">
+        <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item.image || image">
         <div class="thumbnail-controls">
-          <ng-container *ngTemplateOutlet="overlayTemplate"></ng-container>
+          <ng-container *ngTemplateOutlet="overlayTemplate; context: { $implicit: item || image }"></ng-container>
         </div>
       </div>
     </ng-template>

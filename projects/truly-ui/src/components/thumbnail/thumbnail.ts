@@ -31,11 +31,11 @@ export class TlThumbnail implements OnInit {
 
   @Input() image;
 
-  @Input() data = [];
+  @Input() data: { index?: number; description?: string, image: string }[] = [];
 
   @Input() bordered = true;
 
-  @Input() shape: 'square' | 'circle' = 'circle';
+  @Input() shape: 'square' | 'circle' = 'square';
 
   @Input() size: { width: string, height: string } = { width: '80px', height: '80px' };
 

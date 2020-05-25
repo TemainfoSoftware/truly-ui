@@ -39,5 +39,17 @@ export class UploadDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  onChangeUpload($event) {
+    console.log('upload', $event);
+  }
+
+  onChangeDelete($event) {
+    console.log('delete', $event);
+  }
+
+  onChangeUpdate($event) {
+    console.log('update', $event);
+  }
 }
 

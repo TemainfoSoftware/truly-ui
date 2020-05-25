@@ -19,26 +19,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 */
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 import * as json from './thumbnaildemo-dataproperties.json';
 import * as jsonEvts from './thumbnaildemo.dataevents.json';
 
-@Component( {
-selector : 'app-thumbnail',
-templateUrl : './thumbnaildemo.component.html',
-styleUrls : [ './thumbnaildemo.component.scss' ],
-} )
+@Component({
+  selector: 'app-thumbnail',
+  templateUrl: './thumbnaildemo.component.html',
+  styleUrls: ['./thumbnaildemo.component.scss'],
+})
 export class ThumbnailDemoComponent {
 
   public dataTableProperties;
 
   public dataEvents;
 
-  public images = [
-    'https://static.matomo.org/wp-content/uploads/2019/02/healthcare-analytics-image.png',
-    'https://sph.umich.edu/pursuit/2019posts/2019images/global-health-work-inform-transform-us-healthcare_670_350.jpg'
-  ];
+  public images = [{
+    index: 0,
+    description: 'test',
+    image: 'https://static.matomo.org/wp-content/uploads/2019/02/healthcare-analytics-image.png'
+  }];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

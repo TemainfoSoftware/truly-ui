@@ -220,6 +220,10 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
         loadChildren: './components/navigator/navigatordemo.module#NavigatorDemoModule'
       },
       {
+        path: 'thumbnail',
+        loadChildren: './components/thumbnail/thumbnaildemo.module#ThumbnailDemoModule'
+      },
+      {
         path: 'panelgroup',
         loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
       },

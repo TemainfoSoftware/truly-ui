@@ -35,6 +35,7 @@ import { AutoComplete } from './autocomplete/pt_BR';
 import { TimeAvailablePicker } from './time-available-picker/pt_BR';
 import { ChatList } from './chatlist/pt_BR';
 import { Modal } from './modal/pt_BR';
+import {Upload} from './upload/pt_BR';
 
 export const pt_BR = {
   locale: 'pt-BR',
@@ -48,6 +49,7 @@ export const pt_BR = {
   Form,
   Modal,
   Listbox,
+  Upload,
   Navigator,
   Validators,
   OverlayList,

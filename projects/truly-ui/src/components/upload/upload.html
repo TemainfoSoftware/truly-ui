@@ -2,8 +2,7 @@
   <div *ngIf="type === 'dragndrop'" class="dragndrop" [style.height]="height" (click)="open($event)" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
     <ng-container *ngIf="imageList.length === 0 || showAsList; else imagesContainerTemplate">
       <span><tl-icon class="icon" [lib]="'fa'" [style]="'fas'">inbox</tl-icon></span>
-      <span>Click or drag file to this area to upload</span>
-      <span>Support for a single or bulk upload.</span>
+      <p style="white-space: pre-line">{{ boxDescription }}</p>
       <input #inputMultiple type="file" style="display: none;" (change)="onChange($event)" multiple>
     </ng-container>
 
@@ -20,30 +19,31 @@
     <ng-container *ngFor="let item of imageList">
       <div class="image-item">
         <ng-container *ngTemplateOutlet="uploadboxTemplate; context: { $implicit: item }"></ng-container>
-        <tl-textarea class="image-description" [(ngModel)]="item.description" (ngModelChange)="onChangeDescription()" [placeholder]="'Image Description'"></tl-textarea>
+        <tl-textarea class="image-description" [(ngModel)]="item.description" (ngModelChange)="onChangeDescription()" [placeholder]="placeholder"></tl-textarea>
       </div>
     </ng-container>
   </div>
 </div>
 
-<ng-container *ngIf="type === 'box'">
+<div *ngIf="type === 'box'" (click)="open($event)">
   <ng-container *ngTemplateOutlet="uploadboxTemplate"></ng-container>
-</ng-container>
+</div>
 
 <ng-template #uploadboxTemplate let-item>
+  <input #inputSingle type="file" style="display: none;" (change)="onChange($event)">
   <tl-thumbnail
     [shape]="'square'"
     [bordered]="!item"
-    [image]="item.image || imageSrc"
+    [image]="item?.image || imageSrc"
     [emptyTemplate]="emptyTemplate"
     [overlayTemplate]="controlsTemplate">
     <ng-template #emptyTemplate>
       <tl-icon [lib]="'dx'">add</tl-icon>
-      <div class="upload-title">Upload</div>
+      <div class="upload-title">{{ upload }}</div>
     </ng-template>
     <ng-template #controlsTemplate>
-      <tl-icon *ngIf="viewControl" style="margin-right: 5px" (click)="viewImage($event, item || imageSrc)" [lib]="'dx'">find</tl-icon>
-      <tl-icon *ngIf="deleteControl" class="icon" (click)="remove(item, imageSrc, $event)" [lib]="'dx'">trash</tl-icon>
+      <tl-icon *ngIf="viewControl"   style="margin-right: 5px; cursor: pointer" (click)="viewImage($event, item || imageSrc)" [lib]="'dx'">find</tl-icon>
+      <tl-icon *ngIf="deleteControl" style="cursor: pointer" (click)="remove(item, imageSrc, $event)" [lib]="'dx'">trash</tl-icon>
     </ng-template>
   </tl-thumbnail>
 </ng-template>

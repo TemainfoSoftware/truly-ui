@@ -22,8 +22,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LightboxService} from '../lightbox/services/lightbox.service';
 import {ImageUploadInterface} from './interfaces/image-upload.interface';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {debounceTime} from 'rxjs/operators';
 import {Subject, Subscription} from 'rxjs';
+import {I18nService} from '../i18n/i18n.service';
 
 @Component({
   selector: 'tl-upload',
@@ -53,6 +54,8 @@ export class TlUpload implements OnInit {
 
   @Input() isLoading = false;
 
+  @Input() debounce = 380;
+
   @Input() deleteControl = true;
 
   @Input() viewControl = true;
@@ -77,12 +80,18 @@ export class TlUpload implements OnInit {
 
   private _imageList = [];
 
-  constructor(private lightboxService: LightboxService) {
+  public boxDescription = this.i18nService.getLocale().Upload.boxDescription;
+
+  public placeholder = this.i18nService.getLocale().Upload.placeholder;
+
+  public upload = this.i18nService.getLocale().Upload.upload;
+
+  constructor(private i18nService: I18nService, private lightboxService: LightboxService) {
   }
 
   ngOnInit() {
     this.filtering.pipe(
-      debounceTime(250),
+      debounceTime( this.debounce ),
     ).subscribe((value) => {
       this.updateChange.emit(value);
     });

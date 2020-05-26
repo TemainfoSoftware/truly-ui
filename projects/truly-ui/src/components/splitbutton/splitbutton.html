@@ -1,10 +1,9 @@
-<div class="split-wrapper" [ngClass]="color">
+<div class="split-wrapper" [ngClass]="color" (click)="onButtonClick($event)">
   <div class="split-content" #split>
     <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
                [color]="color"
                [text]="text"
                [disabled]="disabled"
-               (click)="onButtonClick($event)"
                [width]="width"
                [height]="height">
     </tl-button>

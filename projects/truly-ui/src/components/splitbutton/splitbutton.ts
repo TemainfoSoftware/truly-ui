@@ -90,10 +90,10 @@ export class TlSplitButton implements AfterContentInit {
   }
 
   onButtonClick($event) {
-    this.stopEvent($event);
     if ( !this.disabled ) {
       this.click.emit($event);
     }
+    this.stopEvent($event);
   }
 
 }

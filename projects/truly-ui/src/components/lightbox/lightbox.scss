@@ -13,13 +13,16 @@
 
 .light-box-container {
   position: relative;
-  border: 1px solid #ccc;
   background: #0000;
   z-index: 1000;
-  box-shadow: 1px 3px 7px 0px #000000cf;
-  overflow: auto;
   @include flexCenter;
   flex-flow: column;
+  width: 70vw;
+  height: 70vh;
+  overflow: hidden;
+  > .image {
+    height: 100%;
+  }
   > .close-button {
     position: fixed;
     right: 20px;

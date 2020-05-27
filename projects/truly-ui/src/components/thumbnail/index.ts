@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { TlThumbnail } from './thumbnail';
 import { IconsModule } from '../icons/index';
+import { LightboxModule } from '../lightbox/index';
 
 @NgModule({
   imports: [
     CommonModule,
     IconsModule,
-    FormsModule
+    FormsModule,
+    LightboxModule
   ],
   declarations: [
     TlThumbnail

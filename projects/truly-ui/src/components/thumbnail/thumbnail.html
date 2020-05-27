@@ -19,7 +19,10 @@
     <ng-template #imageTemplate>
       <div class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
         <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item.image || image">
-        <div class="thumbnail-controls">
+        <div class="thumbnail-controls" *ngIf="!overlayTemplate">
+          <tl-icon style="margin-right: 5px" (click)="onViewImage( image )" [lib]="'dx'">find</tl-icon>
+        </div>
+        <div class="thumbnail-controls" *ngIf="overlayTemplate">
           <ng-container *ngTemplateOutlet="overlayTemplate; context: { $implicit: item || image }"></ng-container>
         </div>
       </div>

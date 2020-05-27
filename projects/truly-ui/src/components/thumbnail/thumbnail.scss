@@ -80,7 +80,7 @@
         z-index: 1000;
         left: 0;
         opacity: 0;
-        cursor: default;
+        cursor: pointer;
         @include flexCenter;
 
         .icon {

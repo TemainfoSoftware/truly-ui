@@ -45,7 +45,7 @@ export class ChatListDemoComponent implements OnInit {
     {
       id: '1', name: 'Brad Pitt', description: 'Actor', status: Status.ONLINE,
       image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg',
-      lastActivity: new Date(new Date().setDate( new Date().getHours() - 10))
+      lastActivity: new Date('2020-05-28T12:00:23.810Z')
     },
     {
       id: '2', name: 'Emma Watson', description: 'Actress', status: Status.ONLINE,

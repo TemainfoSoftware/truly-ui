@@ -234,7 +234,7 @@ export class TlChatList implements OnInit, OnDestroy {
   private getDiffMinutes(lastActivity = new Date()) {
     const currentTime = new Date().getTime();
     const lastActivityTime = new Date(lastActivity).getTime();
-    const diff = ((currentTime - lastActivityTime) / 1000 ) / 60 / 60;
+    const diff = ((currentTime - lastActivityTime) / 1000 ) / 60;
 
     return Math.abs(Math.round(diff));
   }

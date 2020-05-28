@@ -56,6 +56,8 @@ export class TlChatList implements OnInit, OnDestroy {
 
   @Input() partner: ChatContact;
 
+  @Input() lastActivityCheck = 0;
+
   @Input() id = `tl-chatlist-${uniqueIdentifier++}`;
 
   @Input() user: ChatContact;
@@ -66,7 +68,14 @@ export class TlChatList implements OnInit, OnDestroy {
       if (!this.user.id) {
         throw Error('User id not found');
       }
-      this._dataSource = data.filter((item) => item.id !== this.user.id);
+      this._dataSource = data
+        .filter((item) => item.id !== this.user.id)
+        .map((contact) => {
+        return {
+          ...contact,
+          status: this.getStatus(contact)
+        };
+      });
     }
   }
 
@@ -160,9 +169,9 @@ export class TlChatList implements OnInit, OnDestroy {
 
   getFilter(statusSelected) {
     if (statusSelected === this.offline) {
-      return {filter: this.filterControl, status: [this.offline]};
+      return {filter: this.filterControl, status: [this.offline], lastActivityCheck: this.lastActivityCheck};
     }
-    return {filter: this.filterControl, status: [this.online, this.busy]};
+    return {filter: this.filterControl, status: [this.online, this.busy], lastActivityCheck: this.lastActivityCheck};
   }
 
   trackByFn(index) {
@@ -208,6 +217,26 @@ export class TlChatList implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+
+  private getStatus(contact) {
+    if ( this.lastActivityCheck === 0 ) {
+      return contact.status;
+    }
+
+    if ( this.lastActivityCheck > 0 ) {
+      const diffMinutes = this.getDiffMinutes(contact.lastActivity);
+      return diffMinutes >= this.lastActivityCheck ? Status.OFFLINE : Status.ONLINE;
+    }
+  }
+
+  private getDiffMinutes(lastActivity = new Date()) {
+    const currentTime = new Date().getTime();
+    const lastActivityTime = new Date(lastActivity).getTime();
+    const diff = ((currentTime - lastActivityTime) / 1000 ) / 60 / 60;
+
+    return Math.abs(Math.round(diff));
   }
 
 }

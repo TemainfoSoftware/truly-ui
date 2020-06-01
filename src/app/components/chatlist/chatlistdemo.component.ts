@@ -44,19 +44,23 @@ export class ChatListDemoComponent implements OnInit {
   public contacts: ChatContact[] = [
     {
       id: '1', name: 'Brad Pitt', description: 'Actor', status: Status.ONLINE,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg'
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Brad_Pitt_Fury_2014.jpg/220px-Brad_Pitt_Fury_2014.jpg',
+      lastActivity: new Date('2020-05-28T12:00:23.810Z')
     },
     {
       id: '2', name: 'Emma Watson', description: 'Actress', status: Status.ONLINE,
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Emma_Watson_2013.jpg/220px-Emma_Watson_2013.jpg'
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Emma_Watson_2013.jpg/220px-Emma_Watson_2013.jpg',
+      lastActivity: new Date(new Date().setDate( new Date().getHours() - 12))
     },
     {
       id: '3', name: 'Julia Roberts', description: 'Actress', status: Status.ONLINE,
-      image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/julia-roberts-transformation-1-1543325921.jpg'
+      image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/julia-roberts-transformation-1-1543325921.jpg',
+      lastActivity: new Date(new Date().setDate( new Date().getHours() - 2))
     },
     {
       id: '200', name: 'Angelina Jolie', description: 'Actress', status: Status.ONLINE,
-      image: 'http://midias.gazetaonline.com.br/_midias/jpg/2018/06/13/32703323_241643243091103_7264540910321401856_n-5653514.jpg'
+      image: 'http://midias.gazetaonline.com.br/_midias/jpg/2018/06/13/32703323_241643243091103_7264540910321401856_n-5653514.jpg',
+      lastActivity: new Date(new Date().setDate( new Date().getHours() - 8))
     },
   ];
 

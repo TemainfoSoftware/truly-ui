@@ -21,6 +21,7 @@
 */
 
 import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
+import { LightboxService } from '../lightbox/services/lightbox.service';
 
 @Component({
   selector: 'tl-thumbnail',
@@ -45,12 +46,16 @@ export class TlThumbnail implements OnInit {
 
   @Output() clickThumbnail = new EventEmitter();
 
-  constructor() {}
+  constructor(private lightboxService: LightboxService) {}
 
   ngOnInit() {}
 
   get isCircle() {
     return this.shape === 'circle';
+  }
+
+  onViewImage( image ) {
+    this.lightboxService.create( this.data, image);
   }
 
 }

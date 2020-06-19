@@ -104,7 +104,7 @@
   box-sizing: border-box;
   position: absolute;
   > .ui-event-hour{
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: #454e58;
     justify-content: flex-end;
     margin-right: 10px;
@@ -144,14 +144,33 @@
     width: 65%;
     line-height: 1.3em;
     > .ui-event-title{
-      font-size: 0.9em;
-      font-weight: 600;
-      color: #454e58;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      display: flex;
+      >.title {
+        font-size: 0.9em;
+        font-weight: 600;
+        color: #454e58;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      >.tags {
+        display: flex;
+        margin-left: 10px;
+        >.tag-item{
+          border-radius: 2px;
+          margin-right: 5px;
+          min-width: 85px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #FFF;
+          font-size: 0.80em;
+          white-space: nowrap;
+        }
+      }
     }
     > .ui-event-detail{
-      font-size: 0.8em;
+      font-size: 0.85em;
       color: #949799;
       white-space: nowrap;
       text-overflow: ellipsis;

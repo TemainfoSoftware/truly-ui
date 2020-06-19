@@ -59,7 +59,10 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   public currentTime = new Date();
 
-  public eventsWithPositions = [];
+  public eventsWithPositions: {
+    positions: {id: string, top: number, left: number, height: number, width: number},
+    data: ScheduleDataSource
+  }[] = [];
 
   private subscriptions = new Subscription();
 

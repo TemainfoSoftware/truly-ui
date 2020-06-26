@@ -24,6 +24,7 @@ export class ScheduleDataSource {
   value: string;
   title: string;
   detail: string;
+  note: string;
   allday: boolean;
   blocked: boolean;
   status: string;

@@ -352,6 +352,7 @@ export class ScheduleDemoOverviewComponent {
       title: 'William Aguera - ' + id,
       detail: 'Consulta | Particular',
       status: 'missed',
+      note: 'Hi are you? My Name is Truly-UI this is note in schedule component.',
       allday: false,
       tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {

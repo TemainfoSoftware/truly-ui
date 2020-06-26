@@ -50,16 +50,21 @@
            (mouseout)="onEventMouseout.emit( event?.data )"
       >
         <ng-container *ngIf="!event?.data?.blocked">
-          <div class="ui-schedule-description">
-            <div class="ui-event-title">
-              <span class="title">{{event?.data?.title}}</span>
-              <div class="tags" *ngIf="event?.data?.tags?.length > 0 ">
-                <div class="tag-item" *ngFor="let tag of event?.data?.tags;" [style.backgroundColor]="tag.color" >
-                  {{tag.title}}
+          <div class="ui-schedule-event-content">
+            <div class="ui-event-data">
+              <div class="ui-event-title">
+                <span class="title">{{event?.data?.title}}</span>
+                <div class="tags" *ngIf="event?.data?.tags?.length > 0 ">
+                  <div class="tag-item" *ngFor="let tag of event?.data?.tags;" [style.backgroundColor]="tag.color" >
+                    {{tag.title}}
+                  </div>
                 </div>
               </div>
+              <div class="ui-event-detail">{{event?.data?.detail}}</div>
             </div>
-            <div class="ui-event-detail">{{event?.data?.detail}}</div>
+            <div class="ui-event-note">
+              {{event?.data?.note}}
+            </div>
           </div>
           <div class="ui-event-hour">
             {{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}<br>

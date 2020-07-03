@@ -20,8 +20,10 @@
   width: 70vw;
   height: 70vh;
   overflow: hidden;
+  transition: transform 0.25s ease;
   > .image {
     height: 100%;
+    user-select: none;
   }
   > .close-button {
     position: fixed;
@@ -30,6 +32,12 @@
     cursor: pointer;
     color: #989898;
     top: 20px;
+  }
+  &.zoomIn {
+    transform: scale(2);
+  }
+  &.zoomOut {
+    transform: scale(1);
   }
 }
 .light-box-controls {

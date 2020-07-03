@@ -38,6 +38,10 @@ export class TlLightbox implements OnInit {
 
   public close = new EventEmitter();
 
+  public zoomIn = false;
+
+  public transform = null;
+
   @HostListener('click')
   onClick() {
     this.close.emit();
@@ -53,18 +57,42 @@ export class TlLightbox implements OnInit {
     this.changes.detectChanges();
   }
 
+  zoomInOut() {
+    this.zoomIn = !this.zoomIn;
+    if ( !this.zoomIn ) {
+      this.transform = `translate(0, 0) scale(1)`;
+    } else {
+      this.transform = 'scale(2)';
+    }
+  }
+
   previous($event) {
     this.stopEvent($event);
-    if ( this.imageSelected.index > 0 ) {
+    if ( this.hasImagesOnRight() ) {
       this.imageSelected = this.images.find( ( item ) => ((this.imageSelected.index - 1) === item.index));
     }
   }
 
   next( $event ) {
     this.stopEvent($event);
-    if ( this.imageSelected.index < this.images.length - 1 ) {
+    if ( this.hasImagesOnLeft() ) {
       this.imageSelected = this.images.find( ( item ) => ((this.imageSelected.index + 1) === item.index));
     }
+  }
+
+  mouseMove($event) {
+    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    if ( this.zoomIn ) {
+      this.transform = `translate(${ -($event.x - target.x)}px, ${ - ($event.y - target.y)}px) scale(${ this.zoomIn ? '2' : '1'})`;
+    }
+  }
+
+  hasImagesOnLeft() {
+    return this.imageSelected.index < this.images.length - 1;
+  }
+
+  hasImagesOnRight() {
+    return this.imageSelected.index > 0;
   }
 
   selectImage( $event, item ) {

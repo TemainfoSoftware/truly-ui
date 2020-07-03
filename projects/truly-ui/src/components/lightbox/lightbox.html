@@ -1,16 +1,26 @@
-<div class="light-box-container" (click)="stopEvent($event)">
-  <img class="image" [src]="imageSelected?.image">
+<div class="light-box-container"
+     (click)="stopEvent($event)"
+     [ngClass]="zoomIn ? 'zoomIn': 'zoomOut'">
+  <img class="image"
+       [ngStyle]="{ 'transform': transform, 'cursor': zoomIn ? 'zoom-out' : 'zoom-in' }"
+       [src]="imageSelected?.image" (click)="zoomInOut()" (mousemove)="mouseMove($event)">
   <div class="close-button" (click)="close.emit()">
     <tl-icon [lib]="'ion'" [style]="'ios'">close-circle</tl-icon>
   </div>
 </div>
+
+
 <div class="image-info">
   <h3 *ngIf="imageSelected?.title">{{ imageSelected?.title }}</h3>
   <p>{{ imageSelected?.description}}</p>
 </div>
 <div class="light-box-controls">
-    <tl-icon class="arrow left"  (click)="previous($event)" [lib]="'ion'" [style]="'ios'">arrow-dropleft-circle</tl-icon>
-    <tl-icon class="arrow right" (click)="next($event)" [lib]="'ion'" [style]="'ios'">arrow-dropright-circle</tl-icon>
+  <tl-icon class="arrow left" *ngIf="images.length > 1 && hasImagesOnRight()" (click)="previous($event)" [lib]="'ion'"
+           [style]="'ios'">arrow-dropleft-circle
+  </tl-icon>
+  <tl-icon class="arrow right" *ngIf="images.length > 1 && hasImagesOnLeft()" (click)="next($event)" [lib]="'ion'"
+           [style]="'ios'">arrow-dropright-circle
+  </tl-icon>
 </div>
 <div class="footer-images" (click)="stopEvent($event)">
   <img *ngFor="let item of images" class="thumbnail" [class.selected]="item?.index === imageSelected?.index"

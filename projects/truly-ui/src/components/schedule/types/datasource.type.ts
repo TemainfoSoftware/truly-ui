@@ -24,8 +24,16 @@ export class ScheduleDataSource {
   value: string;
   title: string;
   detail: string;
+  note: string;
   allday: boolean;
+  blocked: boolean;
   status: string;
   type: string;
   date: { start: number, end: number };
+  tags: Array<ShcheduleDataSourceTags>;
+}
+
+export class ShcheduleDataSourceTags {
+  title: string;
+  color: string;
 }

@@ -102,6 +102,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
 
     if ( changes['events'] !== undefined  ) {
+        this.createWorkScaleByEvents(changes[ 'events' ].currentValue, this.workScale as WorkScaleType[] );
         this.eventService.loadEvents( changes[ 'events' ].currentValue );
         this.eventService.getEventsOfDay();
     }
@@ -130,6 +131,60 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       this.generateEvents.initializeArray( this.workScaleService.workScaleInMileseconds, this.scheduleSlats );
       this.eventsWithPositions = this.generateEvents.with( events );
     }
+  }
+
+  private createWorkScaleByEvents( events: ScheduleDataSource[], workScale: WorkScaleType[] ) {
+
+    const scales = workScale.filter( work => work.expansed === undefined);
+
+    for (let i = 0; i <= events.length - 1; i++) {
+
+      for (let index = 0; index <= workScale.length - 1; index++) {
+        const eventStartDate = new Date(new Date(events[i].date.start).setSeconds(0)).getTime();
+        const eventEndDate = new Date(new Date(events[i].date.end).setSeconds(0)).getTime();
+        const workStartDate = this.workScaleService.transformHourToMileseconds(scales[index].start);
+        const workEndDate = this.workScaleService.transformHourToMileseconds(scales[index].end);
+
+        if (eventEndDate >= workEndDate && eventStartDate > workEndDate) {
+          if (workScale.length - 1 === index) {
+            scales.push({
+              start: this.workScaleService.transformMilesecondsToHour(workEndDate),
+              end: this.workScaleService.transformMilesecondsToHour(eventEndDate),
+              interval: (scales[index].interval),
+              expansed: true,
+            });
+
+          }
+        }
+
+        if (eventEndDate <= workStartDate && eventStartDate <= workStartDate) {
+          if (index === 0) {
+            scales.push({
+              start: this.workScaleService.transformMilesecondsToHour(eventStartDate),
+              end: this.workScaleService.transformMilesecondsToHour(workStartDate),
+              interval: (scales[index].interval),
+              expansed: true,
+            });
+          }
+        }
+      }
+    }
+
+    this.workScaleService.reload( this.filterScaleStartRepeated( this.sortScaleByStart( scales) ));
+  }
+
+  private filterScaleStartRepeated( scales: WorkScaleType[]   ) {
+    return scales
+      .filter( (scale, index) => {
+      return scales[index + 1] ? scale.start !==  scales[index + 1].start : true;
+    });
+  }
+
+  private sortScaleByStart( scales: WorkScaleType[]   ) {
+    return scales.sort( (scaleA, scaleB) => {
+      return this.workScaleService.transformHourToMileseconds(scaleA.start) -
+        this.workScaleService.transformHourToMileseconds(scaleB.start);
+    });
   }
 
   ngOnDestroy() {

@@ -41,8 +41,9 @@ export class GenerateEventsService {
       if ( scheduleSlats.length > 0 && workScaleInMileseconds.length > 0 ) {
         this.workScaleInMileseconds = workScaleInMileseconds;
         this.scheduleSlats = scheduleSlats;
-
-        this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
+        this.scheduleSlats.toArray().forEach( (item) => {
+          this.heightSchedule = this.heightSchedule + item.nativeElement.offsetHeight;
+        });
         this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
       }
     }

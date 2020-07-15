@@ -24,6 +24,7 @@ export class WorkScaleType {
   constructor(
     public start: string,
     public end: string,
-    public interval: number
+    public interval: number,
+    public expansed?: boolean,
   ) {}
 }

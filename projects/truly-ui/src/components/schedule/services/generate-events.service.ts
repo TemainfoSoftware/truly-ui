@@ -81,7 +81,7 @@ export class GenerateEventsService {
 
     startDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].start / 100000 );
     endDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].end / 100000 );
-    heightBody = this.scheduleSlats.find( (item, idx) => idx === position).nativeElement.offsetHeight;
+    heightBody = elvis(this.scheduleSlats.find( (item, idx) => idx === position), 'nativeElement.offsetHeight') || 0;
     date = Math.floor(date / 100000 );
     currentDate = date - startDayMilliseconds;
     converted = ( heightBody * currentDate ) / ( endDayMilliseconds - startDayMilliseconds);

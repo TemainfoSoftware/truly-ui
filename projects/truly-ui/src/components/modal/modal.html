@@ -1,5 +1,10 @@
-<div #modal (mousedown)="mousemoveListener(); setActive();" (mouseup)="mouseupListener()" [class]="'tl-modal-container ' + color">
-    <div class="header" #headerBox>
+<div #modal
+     (mousedown)="mousemoveListener();
+     setActive();"
+     (mouseup)="mouseupListener()"
+     [ngStyle]="{'background-color': translucent ? 'transparent': 'null'}"
+     [class]="'tl-modal-container ' + color">
+    <div *ngIf="showTitlebar" class="header" #headerBox>
         <div class="bar"
              [ngClass]="serviceControl.activeModal === componentRef ? '-active' : '-inactive'"
              (mousedown)="mouseDown($event);"

@@ -72,16 +72,6 @@
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.9.1"
   },
-  "peerDependencies": {
-    "@angular/cdk": "~8.0.1",
-    "@angular/common": "~8.0.2",
-    "@angular/core": "~8.0.2",
-    "@types/object-path": "^0.11.0",
-    "object-path": "^0.11.4",
-    "reflect-metadata": "^0.1.12",
-    "string-format": "^2.0.0",
-    "ts-md5": "^1.2.4"
-  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.21",
     "@angular-devkit/build-ng-packagr": "~0.803.21",

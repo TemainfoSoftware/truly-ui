@@ -39,9 +39,7 @@ export class NumberDirective implements Validator {
 
     private regex = new RegExp( '^[0-9]*$' );
 
-    @ContentChild(TlInput, {static: true}) tlinput;
-
-    constructor() {}
+    constructor( private tlinput: TlInput ) {}
 
     @HostListener('keypress', ['$event'])
     onKeyDown($event) {

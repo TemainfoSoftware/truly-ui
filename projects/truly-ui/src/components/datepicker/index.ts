@@ -51,7 +51,6 @@ import { DateModule } from '../date/index';
   exports: [
     TlDatePicker,
     TlDatePickerContent
-  ],
-  entryComponents: [ TlCalendar ]
+  ]
 } )
 export class DatePickerModule {}

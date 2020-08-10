@@ -10,7 +10,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "prefix": "app",
-          "styleext": "scss"
+          "style": "scss"
         },
         "@schematics/angular:directive": {
           "prefix": "app"
@@ -107,7 +107,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "prefix": "app",
-          "styleext": "scss"
+          "style": "scss"
         },
         "@schematics/angular:directive": {
           "prefix": "app"
@@ -142,7 +142,7 @@
       "schematics": {
         "@schematics/angular:component": {
           "prefix": "tl",
-          "styleext": "scss"
+          "style": "scss"
         },
         "@schematics/angular:directive": {
           "prefix": "tl"
@@ -176,5 +176,8 @@
       }
     }
   },
-  "defaultProject": "truly-ui-project"
+  "defaultProject": "truly-ui-project",
+  "cli": {
+    "analytics": false
+  }
 }

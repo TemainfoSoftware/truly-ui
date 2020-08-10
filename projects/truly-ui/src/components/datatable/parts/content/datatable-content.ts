@@ -45,7 +45,6 @@ import { ContextMenuInterface } from '../../../contextmenu/interfaces/context-me
   templateUrl: './datatable-content.html',
   styleUrls: [ './datatable-content.scss', '../../datatable.scss' ],
   providers: [ContextMenuService],
-  entryComponents: [ TlDatatableRow, TlDatatableCell ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 } )
 export class TlDatatableContent implements AfterViewInit {

@@ -20,7 +20,6 @@ import { IconsModule } from '../icons/index';
   exports: [
     TlLightbox
   ],
-  providers: [ LightboxService ],
-  entryComponents: [ TlLightbox ]
+  providers: [ LightboxService ]
 })
 export class LightboxModule {}

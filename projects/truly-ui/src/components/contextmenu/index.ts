@@ -22,9 +22,6 @@ import {ContextMenuService} from './services/contextmenu.service';
   exports: [
     TlContextMenuComponent,
   ],
-  entryComponents: [
-    TlContextMenuComponent
-  ],
   providers: [ ContextMenuService ]
 })
 export class ContextMenuModule {

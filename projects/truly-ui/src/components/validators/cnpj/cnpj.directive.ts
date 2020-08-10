@@ -37,7 +37,7 @@ import { CNPJValidator } from './cnpj.validator';
 } )
 export class CNPJDirective implements Validator {
 
-    @ContentChild(TlInput, {static: true}) input;
+   constructor( private input: TlInput ) {}
 
     validate( c: FormControl ): ValidationErrors {
       if ( this.input ) {

@@ -18,8 +18,7 @@ import { TlMessageValidationDirective } from './directives/message-validation.di
   exports: [
     TlMessageValidationComponent,
     TlMessageValidationDirective
-  ],
-  entryComponents: [ TlMessageValidationComponent ]
+  ]
 } )
 export class MessageValidationModule {
 }

@@ -18,7 +18,6 @@ import { MiscModule } from '../misc/index';
   exports: [
     TlPopupMenu,
     TlPopupMenuItem
-  ],
-  entryComponents: [TlPopupMenuItem]
+  ]
 } )
 export class PopupMenuModule {}

@@ -20,7 +20,7 @@ import { IconsModule } from '../icons/index';
   ]
 })
 export class StopwatchModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<StopwatchModule> {
     return {
       ngModule: StopwatchModule,
       providers: [

@@ -11,7 +11,7 @@
 
     <table style="width: 100%;" class="ui-datatable-table" [class.hidden]="isEmpty()" [colgroup]="columns">
       <tbody class="ui-datatable-content-body" >
-        <ng-container *cdkVirtualFor="let row of dataSource; let index = index; let index = index;">
+        <ng-container *cdkVirtualFor="let row of dataSource; let index = index;">
           <tl-datatable-row *ngIf="row;else loadingRowTemplate" class="ui-row"
                             [ngStyle]="{'height': rowHeight+'px' }"
                             [row]="row"

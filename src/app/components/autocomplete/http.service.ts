@@ -20,14 +20,7 @@
  SOFTWARE.
  */
  import { Injectable } from '@angular/core';
- import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-
- import {Observable} from 'rxjs';
-
- import 'rxjs/add/operator/map';
- import 'rxjs/add/operator/catch';
- import 'rxjs/add/observable/throw';
-
+ import { HttpClient  } from '@angular/common/http';
  @Injectable()
  export class PersonService {
 
@@ -44,20 +37,4 @@
    setPerson(person) {
      this.person = person;
    }
-
-   getCategories(inputValue): Observable<any> {
-     const httpOptions = {
-       headers: new HttpHeaders({
-         'Content-Type':  'application/json',
-         'user-key': 'f733fccde721f799b91eeb7293b5ca55',
-       }),
-       params: new HttpParams({
-         fromObject: { q: !inputValue ? 'all' : inputValue, count: '1000' }
-       })
-     };
-     return this.http.get(this.url, httpOptions)
-       .map((res: Response) => res)
-       .catch((error: any) => Observable.throw(error));
-   }
-
  }

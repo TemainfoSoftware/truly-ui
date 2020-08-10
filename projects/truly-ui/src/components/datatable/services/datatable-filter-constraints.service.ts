@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 /*
     MIT License
 
@@ -20,6 +21,7 @@
     SOFTWARE.
 */
 
+@Injectable()
 export class  TlDatatableFilterConstraints {
 
     startsWith(value, filter): boolean {

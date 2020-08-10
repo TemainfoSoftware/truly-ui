@@ -34,7 +34,7 @@ import { INPUT_CONFIG, InputConfig } from './core/input.config';
   ],
 } )
 export class InputModule {
-  static forRoot(config: CurrencyConfig = null, inputConfig: InputConfig = null): ModuleWithProviders {
+  static forRoot(config: CurrencyConfig = null, inputConfig: InputConfig = null): ModuleWithProviders<InputModule> {
     return {
       ngModule: InputModule,
       providers: [

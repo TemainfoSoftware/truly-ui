@@ -42,8 +42,6 @@ export class ModalResultDirective implements OnInit {
     return this._formResult;
   }
 
-  @ContentChild(TlButton, {static: true}) button: TlButton;
-
   private modalId: string;
 
   private _formResult;
@@ -66,7 +64,7 @@ export class ModalResultDirective implements OnInit {
     }, 1);
   }
 
-  constructor(private modalService: ModalService) {
+  constructor(private modalService: ModalService, private button: TlButton) {
   }
 
   ngOnInit() {

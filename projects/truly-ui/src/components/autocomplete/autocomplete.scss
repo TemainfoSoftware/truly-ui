@@ -151,7 +151,7 @@
     opacity: 1;
     background: #6c9;
     color: #ffff !important;
-    /deep/ span {
+    ::ng-deep span {
       background: transparent !important;
     }
   }

@@ -1,5 +1,7 @@
 import {Hsla, Hsva, Rgba} from './colorpicker-formats';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class ColorPickerHelpers {
   rgbaToHex(rgba: Rgba, allowHex8?: boolean): string {
     let hex = '#' + ((1 << 24) | (rgba.r << 16) | (rgba.g << 8) | rgba.b).toString(16).substr(1);

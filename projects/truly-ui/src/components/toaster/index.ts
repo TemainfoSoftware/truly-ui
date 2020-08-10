@@ -29,12 +29,9 @@ import { IconsModule } from '../icons/index';
   providers: [
     ToasterService
   ],
-  entryComponents: [
-    TlToasterContainer
-  ]
 } )
 export class ToasterModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<ToasterModule> {
     return {
       ngModule: ToasterModule,
       providers: [

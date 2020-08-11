@@ -39,11 +39,11 @@ export class TlSidebarContainer implements AfterContentInit, OnDestroy {
 
   @ContentChildren( forwardRef( () => TlSidebar ) ) sidebar: QueryList<TlSidebar>;
 
+  @ContentChild( TlSidebarContent, {static: true} ) sidebarContent;
+
   private subscription: Subscription = new Subscription();
 
-  constructor( private sidebarService: SidebarService,
-               private renderer: Renderer2,
-               private sidebarContent: TlSidebarContent ) {}
+  constructor( private sidebarService: SidebarService, private renderer: Renderer2 ) {}
 
   ngAfterContentInit() {
     this.setSidebarMovement();

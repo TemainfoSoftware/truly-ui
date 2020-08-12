@@ -5,6 +5,7 @@
   "repository": "https://github.com/TemainfoSistemas/truly-ui.git",
   "author": "Temainfo Sistemas <suporte@temainfo.com.br>",
   "homepage": "http://truly-ui.com",
+
   "keywords": [
     "angular",
     "ui",
@@ -24,8 +25,9 @@
     "url": "https://github.com/TemainfoSistemas/truly-ui.git/issues"
   },
   "engines": {
-    "node": ">=8.0.0"
-  },
+    "node": ">=11.0.0"
+  }
+,
   "dependencies": {
     "tslib": "^2.0.0"
   }

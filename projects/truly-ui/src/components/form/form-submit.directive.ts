@@ -29,8 +29,6 @@
 })
  export class FormSubmitDirective {
 
-  @ContentChild( TlButton, {static: true}  ) public button;
-
   @Output() submit = new EventEmitter();
 
   @HostListener('keydown.enter')
@@ -40,6 +38,7 @@
     }
   }
 
+
   @HostListener('click')
   onClick() {
     if ( this.button && !this.button.disabled ) {
@@ -47,6 +46,6 @@
     }
   }
 
-  constructor() {}
+  constructor( public button: TlButton ) {}
 
 }

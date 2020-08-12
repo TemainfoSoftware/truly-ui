@@ -32,7 +32,7 @@ import { LoaderModule } from '../loader/index';
   ],
 } )
 export class DropDownListModule {
-  static forRoot(config: DropdownConfig = null): ModuleWithProviders {
+  static forRoot(config: DropdownConfig = null): ModuleWithProviders<DropDownListModule> {
     return {
       ngModule: DropDownListModule,
       providers: [

@@ -14,7 +14,7 @@
       .selected {
         background-color: map-deep-get($primary, "default", "background");
         color: map-deep-get($primary, "default", "foreground");
-        /deep/ span {
+        ::ng-deep span {
           background: transparent !important;
         }
       }

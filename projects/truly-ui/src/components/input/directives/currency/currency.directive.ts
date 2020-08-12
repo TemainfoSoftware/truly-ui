@@ -24,10 +24,6 @@ export class CurrencyDirective implements AfterContentInit, AfterViewInit, DoChe
 
   @Input() currencyOptions: any = {};
 
-  @ContentChild( TlInput, {static: true}  ) inputCurrency: TlInput;
-
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
   public inputHandler: CurrencyHandler;
 
   private subscription = new Subscription();
@@ -47,6 +43,8 @@ export class CurrencyDirective implements AfterContentInit, AfterViewInit, DoChe
   };
 
   constructor( @Optional() @Inject( CURRENCY_MASK_CONFIG ) private currencyConfig: CurrencyConfig,
+               private inputCurrency: TlInput,
+               private model: NgModel,
                private keyValueDiffers: KeyValueDiffers ) {
     if ( currencyConfig ) {
       this.optionsTemplate = currencyConfig;

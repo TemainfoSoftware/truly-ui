@@ -22,7 +22,6 @@ import { IconsModule } from '../icons/index';
     exports: [
         TlSplitButton,
         TlSplitButtonAction
-    ],
-  entryComponents: [ TlSplitButtonAction ]
+    ]
 })
 export class SplitButtonModule {}

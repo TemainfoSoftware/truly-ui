@@ -65,7 +65,7 @@ import {TlAutocompleteTemplate} from './components/autocomplete-template';
   ],
 } )
 export class AutoCompleteModule {
-  static forRoot(config: AutoCompleteConfig = null ): ModuleWithProviders {
+  static forRoot(config: AutoCompleteConfig = null ): ModuleWithProviders<AutoCompleteModule> {
     return {
       ngModule: AutoCompleteModule,
       providers: [

@@ -44,9 +44,6 @@ export function CoreServiceFactory( coreService: CoreService ) {
     exports: [
       TlCore,
     ],
-    entryComponents: [
-      TlCore
-    ],
     providers: [
       CoreService,
       I18nService,
@@ -66,7 +63,7 @@ export class CoreModule {
         }
     }
 
-    static forRoot( lazyApplicationLoaderConfig: LazyApplicationLoaderConfig ): ModuleWithProviders {
+    static forRoot( lazyApplicationLoaderConfig: LazyApplicationLoaderConfig ): ModuleWithProviders<CoreModule> {
       return {
         ngModule: CoreModule,
         providers: [

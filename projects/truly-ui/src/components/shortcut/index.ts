@@ -18,7 +18,7 @@ import { SHORTCUT_CONFIG, ShortcutConfig } from './shortcut.config';
   ],
 } )
 export class ShortcutModule {
-  static forRoot( config?: ShortcutConfig ): ModuleWithProviders {
+  static forRoot( config?: ShortcutConfig ): ModuleWithProviders<ShortcutModule> {
     return {
       ngModule: ShortcutModule,
       providers: [ {

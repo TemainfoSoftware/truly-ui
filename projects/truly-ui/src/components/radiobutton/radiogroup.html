@@ -2,7 +2,7 @@
 <div class="group-radios" [style.display]="orientation == 'vertical' ? 'grid' : 'inline-flex'">
     <div *ngFor="let item of listRadioButton.toArray()" class="radio-container" [style.padding-top]="orientation === 'vertical' ? '10px' : '0'">
         <input #radiobutton
-               type="radio"
+               [type]="'radio'"
                [attr.name]="name"
                (click)="checkRadio(item, $event)"
                [tabindex]="tabindex"

@@ -75,7 +75,6 @@ import {MessageValidationModule} from '../../../../../projects/truly-ui/src/comp
   ],
   providers: [
     DumpDataService,
-  ],
-  entryComponents: [ FormModalComponent ]
+  ]
 })
 export class FormModalDemoModule {}

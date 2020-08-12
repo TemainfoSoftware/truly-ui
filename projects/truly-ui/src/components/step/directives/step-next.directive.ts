@@ -7,11 +7,10 @@ import {TlButton} from '../../button/button';
 })
 export class StepNextDirective implements OnInit, AfterViewInit {
 
-  @ContentChild(TlButton, {static: true}) button: TlButton;
-
   constructor(private elementRef: ElementRef,
               private change: ChangeDetectorRef,
-              private stepService: StepService) {
+              private stepService: StepService,
+              private button: TlButton) {
   }
 
   @HostListener('click')

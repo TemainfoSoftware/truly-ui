@@ -22,9 +22,6 @@ import {TooltipService} from './tooltip.service';
         TlToolTipContainer,
         TooltipDirective
     ],
-    entryComponents: [
-        TlToolTipContainer
-    ],
     providers: [ TooltipService ]
 } )
 export class TooltipModule {

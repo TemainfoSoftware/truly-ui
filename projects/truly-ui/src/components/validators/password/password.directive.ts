@@ -41,16 +41,16 @@ import { PasswordRule } from './passwordrule.interface';
 } )
 export class PasswordDirective implements Validator, AfterViewInit {
 
-    @Input('passwordRule') passwordRule: PasswordRule =
-      { digits: false, uppercase: false, specials: false, lowercase: false };
+  @Input('passwordRule') passwordRule: PasswordRule =
+    { digits: false, uppercase: false, specials: false, lowercase: false };
 
-    @ContentChild(TlInput, {static: true}) tlinput;
+  constructor(private tlinput: TlInput) {}
 
-    ngAfterViewInit() {
-      this.tlinput.input.nativeElement.setAttribute('type', 'password');
-    }
+  ngAfterViewInit() {
+    this.tlinput.input.nativeElement.setAttribute('type', 'password');
+  }
 
-    validate( c: FormControl ): ValidationErrors {
-      return PasswordValidator( this.passwordRule )( c );
-    }
+  validate( c: FormControl ): ValidationErrors {
+    return PasswordValidator( this.passwordRule )( c );
+  }
 }

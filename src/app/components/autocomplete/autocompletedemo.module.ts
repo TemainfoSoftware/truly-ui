@@ -79,7 +79,6 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
     DataClientService,
     DumpDataService,
     PersonService
-  ],
-  entryComponents: [ NewClientComponent ]
+  ]
 })
 export class AutoCompleteDemoModule { }

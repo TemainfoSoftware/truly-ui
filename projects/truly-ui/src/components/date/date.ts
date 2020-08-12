@@ -65,10 +65,6 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @Input() labelPlacement: 'left' | 'top' = 'left';
 
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true}  ) controlName: NgModel;
-
   @ViewChild( NgModel, {static: true}  ) hiddenModel: NgModel;
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
@@ -103,7 +99,9 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
   private _control;
 
   constructor( private renderer: Renderer2,
-               private change: ChangeDetectorRef ) {
+               private change: ChangeDetectorRef,
+               public controlName: NgModel,
+               public model: NgModel) {
     super();
   }
 

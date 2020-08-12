@@ -39,7 +39,7 @@ import { EmailValidator } from './email.validator';
 } )
 export class EmailDirective implements Validator {
 
-  @ContentChild(TlInput, {static: true}) tlinput;
+  constructor( private tlinput: TlInput ) {}
 
   validate( c: FormControl ): ValidationErrors {
     if (this.tlinput.input.nativeElement.value.length > 0) {

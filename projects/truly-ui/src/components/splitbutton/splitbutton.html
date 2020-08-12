@@ -24,7 +24,9 @@
                    [cdkConnectedOverlayOpen]="isOpen">
         <ul @overlay
             [style.minWidth]="split.offsetWidth + 'px'"
-            [class.border-top]="positionOverlay === 'top'"
+            [class.margin-top]="positionOverlay === 'bottom'"
+            [class.margin-bottom]="positionOverlay === 'top'"
+            [class.border-top]="positionOverlay === 'bottom'"
             class="actions-menu">
             <ng-container *ngFor="let item of listItems">
               <ng-container *ngTemplateOutlet="item"></ng-container>
@@ -34,3 +36,4 @@
     </div>
   </div>
 </div>
+

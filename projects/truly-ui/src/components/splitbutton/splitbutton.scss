@@ -45,7 +45,7 @@ $button-font-size: 1em;
 }
 
 .actions-menu {
-  position: absolute;
+  position: relative;
   left: 0;
   margin: 0;
   padding: 0;
@@ -58,7 +58,12 @@ $button-font-size: 1em;
   cursor: auto;
   border-radius: 3px;
   box-sizing: border-box;
-  top: 2px;
+  &.margin-top {
+    margin-top: 2px;
+  }
+  &.margin-bottom {
+    margin-bottom: 2px;
+  }
 }
 
 .border-top {

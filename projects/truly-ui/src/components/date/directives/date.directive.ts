@@ -43,10 +43,12 @@ export class DateDirective implements Validator, AfterViewInit {
 
   @Input() isoDate = true;
 
+  @Input() control: AbstractControl;
+
   ngAfterViewInit() {}
 
   validate( control: AbstractControl ): ValidationErrors | any {
-    return DateValidator( this.formatDate, this.isoDate )( control );
+    return DateValidator( this.formatDate, this.isoDate )( this.control || control );
   }
 
 

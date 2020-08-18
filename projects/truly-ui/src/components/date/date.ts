@@ -21,10 +21,10 @@
  */
 
 import {
-  Component, OnInit, forwardRef, Input, Renderer2, ElementRef, ViewChild,
-  ChangeDetectorRef, AfterViewInit, ContentChild, OnDestroy
+  Component, Input, Renderer2, ElementRef, ViewChild,
+  ChangeDetectorRef, AfterViewInit, OnDestroy, Self, Optional,
 } from '@angular/core';
-import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
+import { NgControl, NgModel } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { InputMask } from '../input/core/input-mask';
 import { ReverseFormatDate } from '../core/helper/reverseformatdate';
@@ -34,14 +34,9 @@ import { Subscription } from 'rxjs';
 @Component( {
   selector: 'tl-date',
   templateUrl: './date.html',
-  styleUrls: [ './date.scss' ],
-  providers: [ {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef( () => TlDate ),
-    multi: true,
-  } ],
+  styleUrls: [ './date.scss' ]
 } )
-export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestroy, AfterViewInit {
+export class TlDate extends ValueAccessorBase<string> implements OnDestroy, AfterViewInit {
 
   @Input() formatDate = 'dd/mm/yyyy';
 
@@ -65,28 +60,9 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   @Input() labelPlacement: 'left' | 'top' = 'left';
 
-  @ContentChild( NgModel, {static: true} ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
-
   @ViewChild( NgModel, {static: true}  ) hiddenModel: NgModel;
 
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
-
-  @Input('control')
-  set control(item) {
-    this._control = item;
-  }
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
-  }
 
   public mockValue: string;
 
@@ -100,14 +76,21 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   private subscription = new Subscription();
 
-  private _control;
-
   constructor( private renderer: Renderer2,
-               private change: ChangeDetectorRef) {
+               private change: ChangeDetectorRef,
+               @Optional() @Self() public ngControl: NgControl ) {
     super();
+    this.setControl();
   }
 
-  ngOnInit() {
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngAfterViewInit() {
@@ -131,28 +114,27 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
 
   handleChangeStatus() {
     this.subscription.add(this.hiddenModel.statusChanges.subscribe((value) => {
-      value === 'VALID' ? this.getModel().control.setErrors(null) :
-        this.getModel().control.setErrors(this.hiddenModel.control.errors);
+      value === 'VALID' ? this.ngControl.control.setErrors(null) :
+        this.ngControl.control.setErrors(this.hiddenModel.control.errors);
     }));
   }
 
   handleModelChangeInit() {
-    const model = this.getModel();
-    if ( model ) {
-      model.valueChanges.subscribe( ( value ) => {
+    if ( this.ngControl ) {
+      this.ngControl.valueChanges.subscribe( ( value ) => {
         this.getMockValue( value );
       } );
     }
   }
 
   handleRequiredValidator() {
-    if ( this.control.control.validator ) {
+    if ( this.ngControl.control.validator ) {
        let validators = [ this.hiddenModel.control.validator ];
-       validators = [ ...validators, this.control.control.validator ];
+       validators = [ ...validators, this.ngControl.control.validator ];
        this.hiddenModel.control.setValidators( validators );
     }
-    if (this.control && this.control.errors && this.control.errors.hasOwnProperty('required')) {
-      this.required = this.control.errors['required'];
+    if (this.ngControl.control && this.ngControl.control.errors && this.ngControl.control.errors.hasOwnProperty('required')) {
+      this.required = this.ngControl.control.errors['required'];
     }
   }
 
@@ -167,10 +149,6 @@ export class TlDate extends ValueAccessorBase<string> implements OnInit, OnDestr
       return;
     }
     this.mockValue = value;
-  }
-
-  getModel() {
-    return this.model ? this.model : this.controlName;
   }
 
   getDateByFormat( date ) {

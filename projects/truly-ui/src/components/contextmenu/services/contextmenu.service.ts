@@ -1,12 +1,13 @@
 import {ComponentRef, ElementRef, Injectable, OnDestroy} from '@angular/core';
 import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
-import {Subscription} from 'rxjs';
+import {fromEvent, Subscription} from 'rxjs';
 import {TlContextMenuComponent} from '../context-menu';
 import {ContextMenuInterface} from '../interfaces/context-menu.interface';
+import {filter} from 'rxjs/operators';
 
 @Injectable()
-export class ContextMenuService implements OnDestroy {
+export class ContextMenuService {
 
   private menuRef: ComponentRef<TlContextMenuComponent>;
 
@@ -25,7 +26,7 @@ export class ContextMenuService implements OnDestroy {
       .flexibleConnectedTo({ x: coords.x, y: coords.y })
       .withPositions([
         {
-          originX: 'start',
+          originX: 'end',
           originY: 'bottom',
           overlayX: 'end',
           overlayY: 'top',
@@ -34,8 +35,6 @@ export class ContextMenuService implements OnDestroy {
     this.overlayRef = this.overlay.create({
       positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.close(),
-      hasBackdrop: true,
-      backdropClass: 'cdk-overlay-transparent-backdrop'
     });
     const menuPortal = new ComponentPortal( TlContextMenuComponent );
     this.menuRef = this.overlayRef.attach( menuPortal );
@@ -47,9 +46,13 @@ export class ContextMenuService implements OnDestroy {
 
   listenBackDropClick() {
     if (this.menuRef) {
-      this.subscription.add(this.overlayRef.backdropClick().subscribe(() => {
-        this.close();
-      }));
+      this.subscription = fromEvent<MouseEvent>(document, 'click')
+        .pipe(
+          filter(eventClick => {
+            const clickTarget = eventClick.target as HTMLElement;
+            return !!this.overlayRef && !this.overlayRef.overlayElement.contains(clickTarget);
+          }),
+        ).subscribe(() => this.close());
     }
   }
 
@@ -62,14 +65,11 @@ export class ContextMenuService implements OnDestroy {
   }
 
   close() {
+    this.subscription.unsubscribe();
     if (this.overlayRef) {
       this.overlayRef.dispose();
       this.overlayRef = null;
     }
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 }

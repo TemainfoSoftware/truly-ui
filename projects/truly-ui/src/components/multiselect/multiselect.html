@@ -10,7 +10,7 @@
       {
       'ng-touched': touched,
       'ng-disabled': disabled,
-      'invalid': controlName?.control.errors || model?.control.errors,
+      'invalid': control.errors,
       'withValidators': hasValidator,
       'inputFormOpenFilter': isOpen && filteredItems.length !== 0
       }">
@@ -34,7 +34,7 @@
                class="input-field"
                [ngClass]="
              {
-              'invalid': controlName?.control.errors || model?.control.errors,
+              'invalid': control.errors,
               'withValidators': hasValidator,
               'withoutValidators': !hasValidator
               }"

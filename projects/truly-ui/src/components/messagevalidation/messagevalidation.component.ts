@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, ElementRef } from '@angular/core';
 import { I18nService } from '../i18n/i18n.service';
 import * as stringFormat from 'string-format';
-import { FormControlName, NgModel } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 const format = stringFormat;
 
 @Component({
@@ -34,8 +34,8 @@ export class TlMessageValidationComponent {
 
   constructor( public element: ElementRef, private i18n: I18nService, private changes: ChangeDetectorRef ) { }
 
-  init( formControl: NgModel | FormControlName, width: string ) {
-    this.control = ( formControl instanceof FormControlName ) ? formControl.control : formControl;
+  init( formControl: AbstractControl, width: string ) {
+    this.control = formControl;
     this.width = width;
     this.changes.detectChanges();
   }

@@ -29,7 +29,6 @@
         (keydown.ArrowDown)="handleKeyArrowDown($event)"
         (keydown.escape)="handleKeyEscape($event)"
         class="ui-input"
-        [control]="control"
         [(ngModel)]="description"
         (keydown.enter)="handleKeyEnter($event)"
         (keydown.shift.tab)="isOpen = false"

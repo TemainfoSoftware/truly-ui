@@ -22,12 +22,10 @@
 import {
   Component, Input, Optional, Inject, OnChanges, ViewChildren,
   EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
-  AfterContentInit, TemplateRef,
+  AfterContentInit, TemplateRef, Self,
 } from '@angular/core';
-import { FormControlName } from '@angular/forms';
+import {FormControlName, NgControl} from '@angular/forms';
 
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { NgModel } from '@angular/forms';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -47,7 +45,7 @@ import { TlInput } from '../input/input';
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
   styleUrls: [ './autocomplete.scss' ],
-  providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
+  providers: [ SelectedItemService ],
 } )
 export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
 
@@ -63,16 +61,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input('control')
   set control(item) {
     this._control = item;
-  }
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
   }
 
   @Input() totalLength = 1000;
@@ -145,10 +133,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @ViewChildren( TlItemSelectedDirective  ) listItems: QueryList<TlItemSelectedDirective>;
 
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
-
   @ViewChild( TlInput, {static: true}  ) tlinput: TlInput;
 
   public keyManager: ActiveDescendantKeyManager<TlItemSelectedDirective>;
@@ -186,9 +170,22 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private _control;
 
   constructor( @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
-               private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService ) {
+               private change: ChangeDetectorRef, private i18n: I18nService,
+               private itemSelectedService: SelectedItemService,
+               @Optional() @Self() public ngControl: NgControl ) {
     super();
+    this.setControl();
     this.setOptions( autoCompleteConfig );
+  }
+
+  get control() {
+    return this.ngControl.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngAfterContentInit() {

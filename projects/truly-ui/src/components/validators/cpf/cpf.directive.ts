@@ -21,10 +21,9 @@
  */
 
 import {
-  ContentChild, Directive, forwardRef
+  ContentChild, Directive, forwardRef, Input
 } from '@angular/core';
-import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
-import { TlInput } from '../../input/input';
+import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { CPFValidator } from './cpf.validator';
 
 @Directive( {
@@ -39,12 +38,11 @@ import { CPFValidator } from './cpf.validator';
 } )
 export class CPFDirective implements Validator {
 
-  constructor( private input: TlInput ) {}
+  @Input() control: AbstractControl;
+
+  constructor() {}
 
     validate( c: FormControl ): ValidationErrors {
-      if ( this.input ) {
-        this.input.mask = '999.999.999-99';
-      }
-      return CPFValidator( )( c );
+      return CPFValidator( )( this.control || c );
     }
 }

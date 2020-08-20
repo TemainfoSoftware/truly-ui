@@ -21,10 +21,10 @@
  */
 import {
   Component, Input, Optional, Inject, OnChanges, ViewChildren,
-  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy,
   AfterContentInit, TemplateRef, Self,
 } from '@angular/core';
-import {FormControlName, NgControl} from '@angular/forms';
+import { NgControl } from '@angular/forms';
 
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
@@ -65,6 +65,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() totalLength = 1000;
 
+  @Input() filterOperator = '%';
+
   @Input() rowsPage = 100;
 
   @Input() lazyMode = false;
@@ -80,6 +82,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   @Input() keyValue = null;
 
   @Input() openFocus = true;
+
+  @Input() chainFilter = false;
 
   @Input() loading = false;
 
@@ -179,7 +183,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
   get control() {
-    return this.ngControl.control;
+    return this.ngControl?.control;
   }
 
   setControl() {
@@ -492,7 +496,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   private getFilters( term: string ) {
     const fields = {};
-    fields[ this.searchBy ] = { matchMode: 'contains', value: term };
+    fields[ this.searchBy ] = !this.chainFilter ? { matchMode: 'contains', value: term } :
+      term.split(this.filterOperator).map(( value ) => {
+      return { matchMode: 'contains', value: value };
+    });
     return { fields: fields, operator: 'or' };
   }
 

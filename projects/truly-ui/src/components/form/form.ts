@@ -182,6 +182,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
   listenFormChanges() {
     this.subscription.add( this.formInstance.valueChanges.subscribe(() => {
       this.changeForm.emit( this.formInstance );
+      this.change.detectChanges();
     }));
   }
 

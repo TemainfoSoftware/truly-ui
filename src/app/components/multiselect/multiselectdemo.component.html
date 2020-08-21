@@ -14,8 +14,6 @@
                     <div class="form-group">
                       <tl-multiselect
                         [data]="dataNoSourceBasic"
-                        (tagClick)="onClickTag($event)"
-                        (tagRemove)="onRemoveTag($event)"
                         [labelTag]="'firstName'"
                         [label]="'Complex Array'"
                         [keyValue]="'id'"
@@ -29,8 +27,6 @@
                     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
   [data]="dataNoSourceBasic"
-  (tagClick)="onClickTag($event)"
-  (tagRemove)="onRemoveTag($event)"
   [labelTag]="'firstName'"
   [label]="'Complex Array'"
   [keyValue]="'id'"
@@ -45,8 +41,6 @@
                     <div class="form-group">
                       <tl-multiselect
                         [data]="dataSourceStringArray"
-                        (tagClick)="onClickTag($event)"
-                        (tagRemove)="onRemoveTag($event)"
                         [label]="'Array String'"
                         [labelSize]="100"
                         formControlName="arrayString"
@@ -56,8 +50,6 @@
                     <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-multiselect
   [data]="dataSourceStringArray"
-  (tagClick)="onClickTag($event)"
-  (tagRemove)="onRemoveTag($event)"
   [label]="'Array String'"
   [labelSize]="100"
   formControlName="arrayString"

@@ -251,9 +251,9 @@ export { ViewType } from './components/schedule/types/view.type';
 export { WorkScaleType } from './components/schedule/types/work-scale.type';
 
 // StopWatch
-export { StopwatchModule } from './components/stopwatch/';
-export { TlStopwatch } from './components/stopwatch/stopwatch';
+export { StopwatchModule } from './components/stopwatch/index';
 export { StopwatchService } from './components/stopwatch/services/stopwatch-service';
+export { TlStopwatch } from './components/stopwatch/stopwatch';
 
 // Shortcut
 export { ShortcutModule } from './components/shortcut/index';

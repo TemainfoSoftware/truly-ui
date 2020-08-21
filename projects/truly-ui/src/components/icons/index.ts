@@ -18,7 +18,10 @@ import { TlIonIconComponent } from './parts/tl-ion-icon/tl-ion-icon.component';
     TlIonIconComponent
   ],
   exports: [
-    TlIcons
+    TlIcons,
+    TlDxIconComponent,
+    TlFaIconComponent,
+    TlIonIconComponent
   ]
 })
 export class IconsModule {}

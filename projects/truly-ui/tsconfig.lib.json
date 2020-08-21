@@ -2,8 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "target": "es2015",
-    "module": "es2015",
+    "target": "es2020",
+    "module": "es2020",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
@@ -22,6 +22,7 @@
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
+    "enableIvy": false,
     "genDir": "../../dist/components",
     "strictInjectionParameters": true,
     "enableResourceInlining": true

@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { TlIcons } from './icons';
 
-import { DxIconComponent } from './parts/dx-icon/dx-icon.component';
-import { FaIconComponent } from './parts/fa-icon/fa-icon.component';
-import { IonIconComponent } from './parts/ion-icon/ion-icon.component';
+import { TlDxIconComponent } from './parts/tl-dx-icon/tl-dx-icon.component';
+import { TlFaIconComponent } from './parts/tl-fa-icon/tl-fa-icon.component';
+import { TlIonIconComponent } from './parts/tl-ion-icon/tl-ion-icon.component';
 
 @NgModule({
   imports: [
@@ -13,9 +13,9 @@ import { IonIconComponent } from './parts/ion-icon/ion-icon.component';
   ],
   declarations: [
     TlIcons,
-    DxIconComponent,
-    FaIconComponent,
-    IonIconComponent
+    TlDxIconComponent,
+    TlFaIconComponent,
+    TlIonIconComponent
   ],
   exports: [
     TlIcons

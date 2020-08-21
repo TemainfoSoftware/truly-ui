@@ -28,8 +28,7 @@ import { BlockUIModule } from '../blockui/index';
     TlAdvancedRootMenu,
     TlAdvancedSubMenu,
     TlSimpleSubMenu
-  ],
-  entryComponents: [ TlSimpleSubMenu, TlAdvancedSubMenu, TlAdvancedRootMenu ]
+  ]
 } )
 export class MenuModule {
 }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { A11yModule } from '@angular/cdk/a11y';
 
 import { TlDatatable } from './datatable';
 import { TlDatatableColumn } from './parts/column/datatable-column';
 import { TlDatatableHeader } from './parts/header/datatable-header';
-import { TlDatatableNormalMode } from './modes/normal/datatable-normal-mode';
-import { TlDatatableScrollableMode } from './modes/scrollable/datatable-scrollable-mode';
-import { TlDatatablePaginatorMode } from './modes/paginator/datatable-paginator-mode';
+import { TlDatatableContent } from './parts/content/datatable-content';
 import { TlColgroupDirective } from './directives/colgroup.directive';
 import { TlResizerDirective } from './directives/resizer.directive';
 import { TlDatatabaleColumnFilter } from './parts/column-filter/datatable-column-filter';
@@ -17,6 +17,12 @@ import { InputModule } from '../input/index';
 import { BlockUIModule } from '../blockui/index';
 import { DropDownListModule } from '../dropdownlist/index';
 import { DropDownIconModule } from '../dropdownicon/index';
+import { LoaderModule } from '../loader/index';
+import { ContextMenuModule } from '../contextmenu/index';
+import { TlDatatableRow } from './parts/row/datatable-row';
+import { TlDatatableCell } from './parts/cell/datatable-cell';
+
+
 
 @NgModule( {
   imports: [
@@ -25,23 +31,27 @@ import { DropDownIconModule } from '../dropdownicon/index';
     BlockUIModule,
     IconsModule,
     InputModule,
+    LoaderModule,
+    ContextMenuModule,
     DropDownIconModule,
-    DropDownListModule
+    DropDownListModule,
+    ScrollingModule,
+    A11yModule
   ],
   declarations: [
     TlColgroupDirective,
     TlDatatable,
     TlDatatableColumn,
     TlDatatabaleColumnFilter,
+    TlDatatableCell,
+    TlDatatableRow,
     TlDatatableHeader,
-    TlDatatableNormalMode,
-    TlDatatablePaginatorMode,
-    TlDatatableScrollableMode,
+    TlDatatableContent,
     TlResizerDirective,
   ],
   exports: [
     TlDatatable,
-    TlDatatableColumn
+    TlDatatableColumn,
   ]
 } )
 export class DatatableModule {

@@ -27,12 +27,12 @@ import {
   EventEmitter, Inject,
   Input, LOCALE_ID,
   OnDestroy,
-  OnInit,
-  Output,
+  OnInit, Optional,
+  Output, Self,
   ViewChild
 } from '@angular/core';
 import {MakeProvider} from '../core/base/value-accessor-provider';
-import {FormControlName, NgModel} from '@angular/forms';
+import {FormControlName, NgControl, NgModel} from '@angular/forms';
 import {TlInput} from '../input/input';
 import {TlCalendar} from '../calendar/calendar';
 
@@ -51,8 +51,7 @@ export interface DateOject {
 @Component({
   selector: 'tl-datepicker',
   templateUrl: './datepicker.html',
-  styleUrls: ['./datepicker.scss'],
-  providers: [MakeProvider(TlDatePicker)],
+  styleUrls: ['./datepicker.scss']
 })
 
 export class TlDatePicker extends ValueAccessorBase<Date | string> implements OnInit, AfterContentInit, OnDestroy {
@@ -89,10 +88,6 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   @Output() completeMask: EventEmitter<any> = new EventEmitter<any>();
 
-  @ContentChild(NgModel, {static: true}) model: NgModel;
-
-  @ContentChild(FormControlName, {static: true}) controlName: FormControlName;
-
   @ViewChild(TlCalendar, {static: true}) calendar;
 
   @ViewChild(TlInput, {static: true}) tlInput: TlInput;
@@ -100,16 +95,6 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   @ViewChild('calendarContent', {static: true}) calendarContent;
 
   @ViewChild('arrow', {static: true}) arrow;
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
-  }
 
   public isOpen = false;
 
@@ -129,11 +114,21 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   private subscription = new Subscription();
 
-  private _control;
-
   constructor(private changes: ChangeDetectorRef,
-              @Inject(LOCALE_ID) public locale: string) {
+              @Inject(LOCALE_ID) public locale: string,
+              @Optional() @Self() public ngControl: NgControl) {
     super();
+    this.setControl();
+  }
+
+  get control() {
+    return this.ngControl.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngOnInit() {
@@ -147,9 +142,13 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
 
   private listenControlChanges() {
     if (this.control) {
-      this.subscription.add(this.control.control.valueChanges.subscribe((date: Date) => {
+      this.subscription.add(this.control.valueChanges.subscribe((date: Date) => {
         if (!this.isOpen && date) {
           this.decomposeDate(date);
+          return;
+        }
+        if ( !date ) {
+          this.description = null;
         }
       }));
     }

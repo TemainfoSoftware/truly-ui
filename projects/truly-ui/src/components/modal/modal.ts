@@ -79,11 +79,15 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
 
   @Input() backdrop = false;
 
+  @Input() translucent = false;
+
   @Input() closeShortcut = 'escape';
 
   @Input() restoreShortcut = '';
 
   @Input() maximizeShortcut = '';
+
+  @Input() showTitlebar = true;
 
   @Input() parentElement = null;
 
@@ -394,6 +398,9 @@ export class TlModal implements OnInit, AfterViewInit, ModalOptions, OnDestroy {
     if ( this.height && this.width ) {
       this.modal.nativeElement.style.height = this.height;
       this.modal.nativeElement.style.width = this.width;
+    } else if ( this.getBoundingParentElement() ) {
+      this.modal.nativeElement.style.height = this.getBoundingParentElement().height + 'px';
+      this.modal.nativeElement.style.width = this.getBoundingParentElement().width + 'px';
     } else {
       this.modal.nativeElement.style.height = '500px';
       this.modal.nativeElement.style.width = '500px';

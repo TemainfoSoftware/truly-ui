@@ -1,0 +1,47 @@
+.dragndrop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: #fafafa;
+  border: 1px dashed #d9d9d9;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  padding: 10px 0;
+  font-family: Segoe UI;
+  > .images-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 80px;
+    flex-wrap: wrap;
+    width: 100%;
+    > .image-item {
+      padding: 0 10px;
+    }
+  }
+  &:hover {
+    border-color: #66cc99;
+  }
+  .icon {
+    font-size: 28px;
+  }
+}
+
+.image-list {
+  display: flex;
+  flex-flow: column;
+  > .image-item {
+    margin-top: 10px;
+    display: flex;
+    > .image-description {
+      width: 100%;
+    }
+  }
+}

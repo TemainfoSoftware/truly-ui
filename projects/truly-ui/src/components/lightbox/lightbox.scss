@@ -1,0 +1,86 @@
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host {
+  width: 100%;
+  height: 100%;
+  @include flexCenter;
+  flex-flow: column;
+}
+
+.light-box-container {
+  position: relative;
+  background: #0000;
+  z-index: 1000;
+  @include flexCenter;
+  flex-flow: column;
+  width: 70vw;
+  height: 70vh;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+  > .image {
+    height: 100%;
+    user-select: none;
+  }
+  > .close-button {
+    position: fixed;
+    right: 20px;
+    font-size: 50px;
+    cursor: pointer;
+    color: #989898;
+    top: 20px;
+  }
+  &.zoomIn {
+    transform: scale(2);
+  }
+  &.zoomOut {
+    transform: scale(1);
+  }
+}
+.light-box-controls {
+  font-size: 3em;
+  z-index: 1000;
+  .arrow {
+    position: fixed;
+    cursor: pointer;
+    top: calc(50vh - 64px);
+    color: #989898;
+    &.left {
+      left: 7%;
+    }
+    &.right {
+      right: 7%;
+    }
+  }
+}
+.image-info {
+  margin: 20px 0;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+.footer-images {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  background: #000000b0;
+  width: 100%;
+  @include flexCenter;
+
+  .thumbnail {
+    width: 80px;
+    height: 80px;
+    margin: 0 5px;
+    border: 1px solid #5d5b5b;
+    &.selected {
+      border: 1px solid white !important;
+    }
+    &:hover {
+      cursor: pointer;
+      opacity: 0.8;
+    }
+  }
+}

@@ -38,7 +38,7 @@ import { TlMessageFilterPipe } from './pipes/message-filter.pipe';
   ]
 } )
 export class ChatListModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<ChatListModule> {
     return {
       ngModule: ChatListModule,
       providers: [

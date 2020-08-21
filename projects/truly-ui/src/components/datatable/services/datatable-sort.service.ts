@@ -47,7 +47,7 @@ export class TlDatatableSortService {
     return this.subject.asObservable();
   }
 
-  sortWithData(data, scrolling) {
+  sortWithData(data, scrolling = false) {
 
     if (! this.existsSort()) { return data; }
     if ( scrolling ) { return this.sortedData; }

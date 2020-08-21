@@ -19,6 +19,12 @@ export class DataTableDemoComponent {
 
   public dataTableEvents;
 
+  public contextMenu = [
+    { label: 'Remove Item', callback: (event) => console.log(`remove item`, event) },
+    { label: 'View Item', callback: (event) => console.log(`view item `, event) },
+    { label: 'Open Item', callback: (event) => console.log(`open item`, event) }
+  ];
+
   constructor( private dataDummy: DumpDataService) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataProperties;
@@ -36,5 +42,13 @@ export class DataTableDemoComponent {
 
   onRowSelect( row ) {
     console.log('Row Select: ', row);
+  }
+
+  onRowClick( row ) {
+    console.log('Row Click: ', row);
+  }
+
+  onRowDbClick( row ) {
+    console.log('Row DbClick: ', row);
   }
 }

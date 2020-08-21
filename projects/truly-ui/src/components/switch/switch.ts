@@ -27,7 +27,6 @@ import {
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { ElementBase } from '../input/core/element-base';
 import { NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
-import {FixedPositionDirective} from '../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-switch',
@@ -43,8 +42,6 @@ export class TlSwitch extends ElementBase<boolean> implements OnInit {
 
   @Input() labelSize = '100px';
 
-  @Input() checked = false;
-
   @Input() tabindex = '0';
 
   @Input() disabled = null;
@@ -56,6 +53,18 @@ export class TlSwitch extends ElementBase<boolean> implements OnInit {
   @Output() toggle: EventEmitter<any> = new EventEmitter();
 
   @Output() focus: EventEmitter<any> = new EventEmitter();
+
+  private _cheched = false;
+
+  @Input('checked')
+  set checked( value: boolean ) {
+    this._cheched = value;
+    this.value = value;
+  }
+
+  get checked() {
+    return this._cheched;
+  }
 
   constructor(
     @Optional() @Inject(NG_VALIDATORS) validators: Array<any>,

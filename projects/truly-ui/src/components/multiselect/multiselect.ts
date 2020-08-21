@@ -26,27 +26,23 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ContentChild, AfterViewInit, ChangeDetectorRef, OnDestroy,
+  ContentChild, AfterViewInit, ChangeDetectorRef, OnDestroy, SkipSelf, Host, Optional, AfterContentInit, Injector, Self,
 } from '@angular/core';
 import { KeyEvent } from '../core/enums/key-events';
 import { MakeProvider } from '../core/base/value-accessor-provider';
-import { FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import {AbstractControl, ControlContainer, NgControl, NgModel} from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { MultiSelectErrorMessages } from './enums/error-messages';
-import { scrollIntoView } from '../core/helper/scrollIntoView';
 
 @Component( {
   selector: 'tl-multiselect',
   templateUrl: './multiselect.html',
   styleUrls: [ './multiselect.scss' ],
-  animations: [ OverlayAnimation ],
-  providers: [
-    [ MakeProvider( TlMultiSelect ) ]
-  ]
+  animations: [ OverlayAnimation ]
 } )
 export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, AfterViewInit, OnDestroy {
 
@@ -94,6 +90,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   @Input() onlyKeyValue = false;
 
+  @Input() formControlName: string;
+
   @Input() disabled = false;
 
   @Output() getSelecteds: EventEmitter<any> = new EventEmitter();
@@ -103,10 +101,6 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   @Output() tagRemove: EventEmitter<any> = new EventEmitter();
 
   @ViewChild( 'input', {static: true} ) input;
-
-  @ContentChild( NgModel, {static: true} ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
 
   public typeOfData = 'complex';
 
@@ -134,10 +128,14 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
 
   private subscription: Subscription = new Subscription();
 
-  private control;
-
-  constructor( private change: ChangeDetectorRef ) {
+  constructor( private change: ChangeDetectorRef,
+               @Optional() @Self() public ngControl: NgControl ) {
     super();
+    this.setControl();
+  }
+
+  get control() {
+    return this.ngControl?.control;
   }
 
   ngOnInit() {
@@ -149,9 +147,14 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.handleTyping();
   }
 
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
   ngAfterViewInit() {
     this.validateHasModel();
-    this.setControl();
     this.setRequired();
     this.setDisabled();
     this.handleValidator();
@@ -165,8 +168,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private setDisabled() {
-    if ( this.controlName ) {
-      this.disabled = this.controlName.disabled;
+    if ( this.control ) {
+      this.disabled = this.control.disabled;
     }
   }
 
@@ -187,16 +190,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private setRequired() {
-    const currentControl = this.controlName ? this.controlName : this.model;
-    if ( currentControl && currentControl.control.errors ) {
-      if ( currentControl.control.errors[ 'required' ] ) {
+    if ( this.control && this.control.errors ) {
+      if ( this.control.errors[ 'required' ] ) {
         this.required = true;
       }
     }
-  }
-
-  private setControl() {
-    this.control = this.model ? this.model : this.controlName;
   }
 
   private validateHasModel() {
@@ -227,9 +225,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private handleValidator() {
-    const currentControl = this.controlName ? this.controlName : this.model;
-    if ( currentControl ) {
-      this.hasValidator = currentControl.control.validator;
+    if ( this.control ) {
+      this.hasValidator = this.control.validator;
       this.change.detectChanges();
     }
   }

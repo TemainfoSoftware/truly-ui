@@ -36,5 +36,8 @@ export const Editor = {
   listOrdered: 'List Ordered',
   linkText: 'Link text',
   imageText: 'Image text',
-  quoteText: 'Quote text'
+  quoteText: 'Quote text',
+  clearText: 'Clear Content',
+  fieldText: 'Add TextField',
+  labelAddField: 'Add Field'
 };

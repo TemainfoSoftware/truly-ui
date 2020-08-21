@@ -20,13 +20,14 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
 import { TlDatatableFilterService } from '../../services/datatable-filter.service';
 import { TlDatatableColumn } from '../column/datatable-column';
 import { TlDatatableSortService } from '../../services/datatable-sort.service';
+import { Subscription } from 'rxjs';
 
 @Component( {
     selector: 'tl-datatable-header',
@@ -34,11 +35,13 @@ import { TlDatatableSortService } from '../../services/datatable-sort.service';
     styleUrls: [ './datatable-header.scss', '../../datatable.scss' ],
     providers: [ DatatableHelpersService ]
 } )
-export class TlDatatableHeader implements AfterViewInit {
+export class TlDatatableHeader implements AfterViewInit, OnDestroy {
 
     @ViewChild(TlDatatabaleColumnFilter, {static: false} ) columnsFilter;
 
     @ViewChild('datatableHeader', {static: true} ) datatableHeader: ElementRef;
+
+    private subscription = new Subscription();
 
     private filderOrder = 1;
 
@@ -51,14 +54,17 @@ export class TlDatatableHeader implements AfterViewInit {
 
     ngAfterViewInit() {
         if (this.columnsFilter !== undefined) {
-          this.columnsFilter.filterEvent.subscribe( ( value ) => {
-            this.filterService.setFilter( value );
-          } );
+          this.subscription.add(
+            this.columnsFilter.filterEvent.subscribe( ( value ) => {
+              this.filterService.setFilter( value );
+            })
+          );
         }
 
-        this.dt.getScrollingHorizontal().subscribe((leftValue) => {
-          this.datatableHeader.nativeElement.firstElementChild.scrollLeft = leftValue;
-        });
+        this.subscription.add(this.dt.getScrollingHorizontal().subscribe((leftValue) => {
+            this.datatableHeader.nativeElement.firstElementChild.scrollLeft = leftValue;
+          })
+        );
     }
 
     onClick(column: TlDatatableColumn) {
@@ -80,6 +86,10 @@ export class TlDatatableHeader implements AfterViewInit {
         order = this.filderOrder;
       }
       return order;
+    }
+
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
     }
 
 }

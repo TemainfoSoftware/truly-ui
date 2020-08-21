@@ -20,7 +20,6 @@
  SOFTWARE.
  */
  export interface AlertOptions {
-     title?: string;
      textClose?: string;
      draggable?: boolean;
  }

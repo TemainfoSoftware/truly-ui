@@ -1,0 +1,15 @@
+.ui-datatable-content{
+  overflow: hidden;
+}
+
+.ui-box-notfound-records{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+}
+
+.ui-datatable-content-wrap{
+  overflow-y : scroll !important;
+  overflow-x : auto !important;
+}

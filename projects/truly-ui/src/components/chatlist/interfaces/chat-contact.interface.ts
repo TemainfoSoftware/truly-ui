@@ -30,4 +30,5 @@
    status: Status | string;
    gravatar?: string;
    image?: string;
+   lastActivity?: Date;
  }

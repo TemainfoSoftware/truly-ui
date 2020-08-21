@@ -38,7 +38,7 @@ export class ScheduleDemoOverviewComponent {
 
   public workScale: WorkScaleType | WorkScaleType[] = [
     new WorkScaleType( '08:00', '12:00', 30 ),
-    new WorkScaleType( '13:00', '18:00', 30 )
+    new WorkScaleType( '13:00', '18:00', 60 )
   ];
 
   public dataTableProperties;
@@ -74,70 +74,70 @@ export class ScheduleDemoOverviewComponent {
   //     allday: false,
   //     date: { start: new Date(new Date().setHours(8, 0)).getTime() , end: new Date( new Date().setHours(8, 30) ).getTime() }
   //   },
-  //  {
+  //   {
   //   value: '2',
   //   title: 'William Aguera - 2',
   //   detail: 'Consulta | Particular',
   //   status: 'attended',
   //   allday: false,
-  //   date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 0 )).getTime() }
+  //   date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
   // },
-    {
-      value: '3',
-      title: 'William Aguera - 3',
-      detail: 'Consulta | Particular',
-      allday: false,
-      status: 'attended',
-      type: 'CONSULTA',
-      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-    },
-    {
-      value: '32',
-      title: 'William Aguera - 32',
-      detail: 'Consulta | Particular',
-      allday: false,
-      status: 'attended',
-      type: 'CONSULTA',
-      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-    },
-    {
-      value: '132',
-      title: 'Marcio Chagas de Brito',
-      detail: 'Consulta | Unimed | (44) 98266416',
-      allday: false,
-      status: 'attended',
-      type: 'PREAGENDAMENTO',
-      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-    },
-    {
-      value: '31',
-      title: 'William Aguera - 32',
-      detail: 'Consulta | Particular',
-      allday: false,
-      status: 'attended',
-      type: 'CONSULTA',
-      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 15 )).getTime() }
-    },
-    {
-      value: '41',
-      title: 'Reunião na Unimed',
-      detail: '',
-      allday: false,
-      status: '',
-      type: 'EVENTO',
-      blocked: true,
-      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-    },
-    {
-      value: '42',
-      title: 'Reunião no Congresso Universitario',
-      detail: '',
-      allday: false,
-      status: '',
-      type: 'EVENTO',
-      blocked: true,
-      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-    },
+  //   {
+  //     value: '3',
+  //     title: 'William Aguera - 3',
+  //     detail: 'Consulta | Particular',
+  //     allday: false,
+  //     status: 'attended',
+  //     type: 'CONSULTA',
+  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+  //   },
+  //   {
+  //     value: '32',
+  //     title: 'William Aguera - 32',
+  //     detail: 'Consulta | Particular',
+  //     allday: false,
+  //     status: 'attended',
+  //     type: 'CONSULTA',
+  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+  //   },
+  //   {
+  //     value: '132',
+  //     title: 'Marcio Chagas de Brito',
+  //     detail: 'Consulta | Unimed | (44) 98266416',
+  //     allday: false,
+  //     status: 'attended',
+  //     type: 'PREAGENDAMENTO',
+  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+  //   },
+  //   {
+  //     value: '31',
+  //     title: 'William Aguera - 32',
+  //     detail: 'Consulta | Particular',
+  //     allday: false,
+  //     status: 'attended',
+  //     type: 'CONSULTA',
+  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 15 )).getTime() }
+  //   },
+  //   {
+  //     value: '41',
+  //     title: 'Reunião na Unimed',
+  //     detail: '',
+  //     allday: false,
+  //     status: '',
+  //     type: 'EVENTO',
+  //     blocked: true,
+  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+  //   },
+  //   {
+  //     value: '42',
+  //     title: 'Reunião no Congresso Universitario',
+  //     detail: '',
+  //     allday: false,
+  //     status: '',
+  //     type: 'EVENTO',
+  //     blocked: true,
+  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+  //   },
   // {
   //   value: '4',
   //   title: 'Jerson Algo - 4',
@@ -282,14 +282,26 @@ export class ScheduleDemoOverviewComponent {
   //     status: 'notmet',
   //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30)).getTime() }
   //   },
-  //   {
-  //     value: '22',
-  //     title: 'Jaisson Buccio - 22',
-  //     detail: 'Consulta | Copel',
-  //     allday: false,
-  //     status: 'notmet',
-  //     date: { start: new Date(new Date().setHours(14, 30)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
-  //   }
+    {
+      value: '22',
+      title: 'Reunião no Congresso Universitario',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(19, 0)).getTime() , end: new Date(new Date().setHours(21, 0 )).getTime() }
+    },
+    {
+      value: '23',
+      title: 'Reunião no Congresso Universitario',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(6, 0)).getTime() , end: new Date(new Date().setHours(7, 0 )).getTime() }
+    }
   ];
 
   constructor(
@@ -334,7 +346,7 @@ export class ScheduleDemoOverviewComponent {
     return new Promise((resolve) => {
       resolve( [
         new WorkScaleType( '08:00', '12:00', 30 ),
-        new WorkScaleType( '13:00', '18:00', 30 )
+        new WorkScaleType( '13:00', '18:00', 60 )
       ] );
     });
   }
@@ -352,10 +364,12 @@ export class ScheduleDemoOverviewComponent {
       title: 'William Aguera - ' + id,
       detail: 'Consulta | Particular',
       status: 'missed',
+      note: 'Hi are you? My Name is Truly-UI this is note in schedule component.',
       allday: false,
+      tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {
-        start: new Date(new Date().setHours(14, 30)).getTime() ,
-        end: new Date( new Date().setHours(15, 0) ).getTime()
+        start: new Date(new Date().setHours(18, 30, 0)).getTime() ,
+        end: new Date( new Date().setHours(19, 0, 0) ).getTime()
       }
     }];
 

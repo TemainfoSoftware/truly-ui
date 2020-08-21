@@ -20,29 +20,28 @@
  SOFTWARE.
  */
 
-import { ContentChild, Directive, forwardRef } from '@angular/core';
-import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
-import { TlInput } from '../../input/input';
-import { CNPJValidator } from './cnpj.validator';
+import {Directive, forwardRef, Input} from '@angular/core';
+import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {CNPJValidator} from './cnpj.validator';
 
-@Directive( {
-    selector: '[cnpj][ngModel],[cnpj][formControl],[cnpj][formControlName]',
-    providers: [
-      {
-        multi: true,
-        provide: NG_VALIDATORS,
-        useExisting: forwardRef( () => CNPJDirective),
-      }
-    ]
-} )
+@Directive({
+  selector: '[cnpj][ngModel],[cnpj][formControl],[cnpj][formControlName]',
+  providers: [
+    {
+      multi: true,
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef( () => CNPJDirective ),
+    }
+  ]
+})
 export class CNPJDirective implements Validator {
 
-    @ContentChild(TlInput, {static: true}) input;
+  @Input() control: AbstractControl;
 
-    validate( c: FormControl ): ValidationErrors {
-      if ( this.input ) {
-        this.input.mask = '99.999.999/9999-99';
-      }
-      return CNPJValidator()( c );
-    }
+  constructor() {
+  }
+
+  validate(c: FormControl): ValidationErrors {
+    return CNPJValidator()(this.control || c );
+  }
 }

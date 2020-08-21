@@ -31,12 +31,6 @@ import { IconsModule } from '../icons/index';
         TlDialogError,
         TlDialogConfirmation
     ],
-    entryComponents: [
-        TlDialogInfo,
-        TlDialogAlert,
-        TlDialogError,
-        TlDialogConfirmation
-    ],
     providers: [
         DialogService,
     ]

@@ -9,16 +9,20 @@
              'withBorder': withBorder,
              'withoutBorder' : !withBorder,
              'ng-touched': touched,
-             'ng-valid': model?.valid ||  controlName?.valid,
-             'ng-invalid': model?.invalid || controlName?.invalid,
-             'ng-dirty': model?.dirty || controlName?.dirty,
+             'ng-valid': hiddenModel?.valid,
+             'ng-invalid': hiddenModel?.invalid,
+             'ng-dirty': hiddenModel?.dirty,
              'flatBorders': flatBorders
            }"
            [attr.disabled]="disabled ? true : null"
            [attr.readonly]="readonly ? true : null"
-           (blur)="focusOut()"
            [attr.value]="mockValue">
-    <input date [formatDate]="formatDate"
-           [isoDate]="isoDate" [(ngModel)]="value" notform class="ui-input" type="text">
+    <input [formatDate]="formatDate"
+           [isoDate]="isoDate"
+           [(ngModel)]="value"
+           date
+           notform
+           class="ui-input"
+           type="text">
   </div>
 </div>

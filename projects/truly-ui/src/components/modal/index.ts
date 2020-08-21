@@ -49,14 +49,10 @@ import { SidebarService } from './services/sidebar.service';
       TlModal,
       ModalResultDirective,
       LimitStringPipe
-    ],
-    entryComponents: [
-      TlModal,
-      TlBackdrop
     ]
 } )
 export class ModalModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<ModalModule> {
     return {
       ngModule: ModalModule,
       providers: [

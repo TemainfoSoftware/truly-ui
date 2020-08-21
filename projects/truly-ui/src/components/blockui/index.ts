@@ -17,8 +17,5 @@ import { IconsModule } from '../icons/index';
   exports: [
     TlBlockUI
   ],
-  entryComponents: [
-    TlBlockUIComponent
-  ]
 })
 export class BlockUIModule {}

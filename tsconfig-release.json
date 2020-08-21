@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.base.json",
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/components",
@@ -11,7 +11,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
-    "module": "es2015",
+    "module": "esnext",
     "typeRoots": [
       "node_modules/@types"
     ],

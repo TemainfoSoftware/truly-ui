@@ -54,7 +54,6 @@ let componentFormIndex;
   selector: 'tl-form',
   templateUrl: '../form/form.html',
   styleUrls: [ '../form/form.scss' ],
-  changeDetection: ChangeDetectionStrategy.OnPush
 } )
 export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
@@ -191,12 +190,12 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     if ( this.formGroup ) {
       if ( this.modalInstance.modalConfiguration &&
         this.modalInstance.modalConfiguration.executeAction !== ActionsModal.INSERT &&
-        this.modalInstance.modalConfiguration.dataForm ) {
+        this.modalInstance.modalConfiguration.dataForm && this.mode === 'modal') {
         this.patchDataForm();
       }
       if ( this.modalInstance.modalConfiguration &&
         this.modalInstance.modalConfiguration.executeAction === ActionsModal.INSERT &&
-        this.modalInstance.modalConfiguration.initialDataForm ) {
+        this.modalInstance.modalConfiguration.initialDataForm && this.mode === 'modal') {
         this.patchInitialDataForm();
       }
     }
@@ -255,7 +254,8 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
     const listFormComponents = this.content.nativeElement.querySelectorAll( '*' );
     for ( let childFormComponents = 0; childFormComponents < listFormComponents.length; childFormComponents++ ) {
       if ( (listFormComponents[ childFormComponents ].tagName === 'INPUT'
-        || listFormComponents[ childFormComponents ].tagName === 'TEXTAREA') &&
+        || listFormComponents[ childFormComponents ].tagName === 'TEXTAREA'
+        || listFormComponents[childFormComponents].classList.contains('ui-editor-content')) &&
         !this.taggedNotForm( listFormComponents[ childFormComponents ] ) ) {
         this.focusElements.push( listFormComponents[ childFormComponents ] );
       }

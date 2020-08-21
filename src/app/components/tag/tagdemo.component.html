@@ -1,0 +1,95 @@
+<div class="router-outlet">
+  <app-showcase-header name="Tag" module="TagModule">
+   Tag's are stylized labels to improve the design concept and give the user the perception of care of project. It can be used on others components as well to bring it more usability.
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
+          <app-card>
+              <div class="col-md-6">
+                <h6>Basic Usage</h6>
+                <tl-tag [color]="'basic'"></tl-tag>
+                <tl-tag [color]="'primary'"></tl-tag>
+                <tl-tag [color]="'warning'"></tl-tag>
+                <tl-tag [color]="'information'"></tl-tag>
+                <tl-tag [color]="'success'"></tl-tag>
+                <tl-tag [color]="'danger'"></tl-tag>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'basic'"></tl-tag>
+<tl-tag [color]="'primary'"></tl-tag>
+<tl-tag [color]="'warning'"></tl-tag>
+<tl-tag [color]="'information'"></tl-tag>
+<tl-tag [color]="'success'"></tl-tag>
+<tl-tag [color]="'danger'"></tl-tag>
+              </textarea>
+              </div>
+              <div class="col-md-6">
+                <h6>With Close Property</h6>
+                <tl-tag [color]="'basic'" [closeButton]="true"></tl-tag>
+                <tl-tag [color]="'primary'" [closeButton]="true"></tl-tag>
+                <tl-tag [color]="'warning'" [closeButton]="true"></tl-tag>
+                <tl-tag [color]="'information'" [closeButton]="true"></tl-tag>
+                <tl-tag [color]="'success'" [closeButton]="true"></tl-tag>
+                <tl-tag [color]="'danger'" [closeButton]="true"></tl-tag>
+                <br>
+                <div class="spacer"></div>
+                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'basic'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'primary'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'warning'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'information'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'success'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'danger'" [closeButton]="true"></tl-tag>
+              </textarea>
+              </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h6>Custom Color</h6>
+              <tl-tag [color]="'#9a5ac2'" [title]="'#9a5ac2'"></tl-tag>
+              <tl-tag [color]="'#2db7f5'" [title]="'#2db7f5'"></tl-tag>
+              <tl-tag [color]="'#87d068'" [title]="'#87d068'"></tl-tag>
+              <tl-tag [color]="'#108ee9'" [title]="'#108ee9'"></tl-tag>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'#9a5ac2'" [title]="'#9a5ac2'"></tl-tag>
+<tl-tag [color]="'#2db7f5'" [title]="'#2db7f5'"></tl-tag>
+<tl-tag [color]="'#87d068'" [title]="'#87d068'"></tl-tag>
+<tl-tag [color]="'#dc1b1b'" [title]="'#dc1b1b'"></tl-tag>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>Custom Measures</h6>
+              <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'"></tl-tag>
+              <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'"></tl-tag>
+              <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [closeButton]="true"></tl-tag>
+              <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [closeButton]="true">></tl-tag>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'"></tl-tag>
+<tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'"></tl-tag>
+<tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [closeButton]="true"></tl-tag>
+<tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [closeButton]="true">></tl-tag>
+              </textarea>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+    <app-showcase-card [title]="'Events'" [icon]="'ion ion-ios-radio'">
+      <app-card>
+        <app-showcase-table-events [data]="dataEvents"></app-showcase-table-events>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

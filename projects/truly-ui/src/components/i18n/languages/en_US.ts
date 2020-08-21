@@ -35,6 +35,7 @@ import { AutoComplete } from './autocomplete/en_US';
 import { TimeAvailablePicker } from './time-available-picker/en_US';
 import { ChatList } from './chatlist/en_US';
 import { Modal } from './modal/en_US';
+import {Upload} from './upload/en_US';
 
 export const en_US = {
   locale: 'en-US',
@@ -48,6 +49,7 @@ export const en_US = {
   Form,
   Modal,
   Listbox,
+  Upload,
   Navigator,
   Validators,
   OverlayList,

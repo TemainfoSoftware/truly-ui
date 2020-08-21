@@ -20,22 +20,18 @@
  SOFTWARE.
  */
 import {
-  AfterViewInit,
   Component,
   Input,
   Output,
   Inject,
   Optional,
-  ContentChild,
   ViewChild,
-  ElementRef, OnChanges, EventEmitter, AfterContentInit, OnInit, ChangeDetectorRef, SimpleChanges
+  ElementRef, OnChanges, EventEmitter, ChangeDetectorRef, SimpleChanges, Self, OnInit,
 } from '@angular/core';
 
 import * as objectPath from 'object-path';
 
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { ElementBase } from '../input/core/element-base';
-import { FormControl, FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel, } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { KeyEvent } from '../core/enums/key-events';
 import { DROPDOWN_CONFIG, DropdownConfig } from './interfaces/dropdown.config';
@@ -47,12 +43,9 @@ import { ValueAccessorBase } from '../input/core/value-accessor';
   selector: 'tl-dropdown-list',
   templateUrl: './dropdownlist.html',
   styleUrls: [ './dropdownlist.scss' ],
-  animations: [ OverlayAnimation ],
-  providers: [
-    [ MakeProvider( TlDropDownList ) ]
-  ]
+  animations: [ OverlayAnimation ]
 } )
-export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges, AfterContentInit {
+export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, OnChanges {
 
   @Input( 'data' )
   set data( data: any[] ) {
@@ -64,21 +57,6 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   get data() {
     return this._data;
-  }
-
-  @Input('control')
-  set control(item) {
-    this._control = item;
-  }
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
   }
 
   @Input( 'keyText' ) keyText = null;
@@ -117,10 +95,6 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   @Output( 'selectItem' ) selectItem: EventEmitter<any> = new EventEmitter();
 
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
-
   @ViewChild( 'input', {static: true}  ) input: ElementRef;
 
   public typeOfData = 'complex';
@@ -139,16 +113,26 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnChanges,
 
   public isLoading = true;
 
-  private _control;
-
-  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig, private changes: ChangeDetectorRef ) {
+  constructor( @Optional() @Inject( DROPDOWN_CONFIG ) dropdownConfig: DropdownConfig,
+    private changes: ChangeDetectorRef, @Optional() @Self() public ngControl: NgControl ) {
     super();
+    this.setControl();
     this.setOptions( dropdownConfig );
   }
 
-  ngAfterContentInit() {
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  ngOnInit() {
     this.listenModelChange();
     this.getModelValue();
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   onSearch( searchTextValue ) {

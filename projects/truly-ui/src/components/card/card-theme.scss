@@ -4,14 +4,14 @@
 
   $basic: map-deep-get($theme, 'basic');
 
-  /deep/ tl-card-header {
+  ::ng-deep tl-card-header {
     .ui-card-header {
       background: #fff;
       border-bottom: 1px solid map-deep-get($basic, "default", "border");
     }
   }
 
-  /deep/ tl-card-body {
+  ::ng-deep tl-card-body {
     .ui-card-body {
       background: #fff;
       border-bottom: 1px solid map-deep-get($basic, "default", "border");
@@ -20,7 +20,7 @@
     }
   }
 
-  /deep/ tl-card-footer {
+  ::ng-deep tl-card-footer {
     .ui-card-footer {
       background: map-deep-get($basic, "default", "background");
       border: 1px solid map-deep-get($basic, "default", "border");

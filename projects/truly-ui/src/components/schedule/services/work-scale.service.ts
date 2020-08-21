@@ -64,7 +64,7 @@ export class WorkScaleService {
   }
 
 
-  private transformHourToMileseconds( fullHour: string ) {
+  transformHourToMileseconds( fullHour: string ) {
     const hourSplited = fullHour.split(':');
 
     const hours = Number(hourSplited[0]);
@@ -74,6 +74,15 @@ export class WorkScaleService {
     const date = this.currentDate.getDate();
 
     return new Date(year, month, date, hours, minutes).getTime();
+  }
+
+  transformMilesecondsToHour( fullHour: number ) {
+    const fullHourMS = new Date(fullHour);
+
+    const hours = String(fullHourMS.getHours()).padStart(2, '0');
+    const minutes = String(fullHourMS.getMinutes()).padStart(2, '0');
+
+    return `${hours}:${minutes}`;
   }
 
 

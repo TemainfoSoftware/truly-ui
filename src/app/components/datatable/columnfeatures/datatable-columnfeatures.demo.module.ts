@@ -12,23 +12,25 @@ import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-t
 import { ShowcaseCardModule } from '../../../shared/components/showcase-card/showcase-card.module';
 import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
+import { ButtonModule } from '../../../../../projects/truly-ui/src/components/button';
 
 @NgModule({
   declarations: [
     DatatableColumnFeaturesDemoComponent
   ],
-  imports: [
-    CommonModule,
-    DatatableColumnFeaturesDemoRoutingModule,
-    DatatableModule,
-    ShowcaseTableEventsModule,
-    ShowcaseCardModule,
-    ShowcaseTablePropertiesModule,
-    FormsModule,
-    HighlightJsModule,
-    InputModule,
-    ShowcaseHeaderModule
-  ],
+    imports: [
+        CommonModule,
+        DatatableColumnFeaturesDemoRoutingModule,
+        DatatableModule,
+        ShowcaseTableEventsModule,
+        ShowcaseCardModule,
+        ShowcaseTablePropertiesModule,
+        FormsModule,
+        HighlightJsModule,
+        InputModule,
+        ShowcaseHeaderModule,
+        ButtonModule
+    ],
   exports: [
     DatatableColumnFeaturesDemoComponent
   ]

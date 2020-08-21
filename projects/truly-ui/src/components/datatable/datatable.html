@@ -1,11 +1,17 @@
-<div class="tl-datatable-box" #datatableBox *ngIf="data"
+<div class="tl-datatable-box" #datatableBox
      [ngClass]="{'-borderleft': true}"
      [ngStyle]="{width: width}">
-
-    <tl-datatable-normal-mode *ngIf="mode === 'normal'"></tl-datatable-normal-mode>
-
-    <tl-datatable-scrollable-mode *ngIf="mode === 'scrollable'" ></tl-datatable-scrollable-mode>
-
-    <tl-datatable-paginator-mode *ngIf="mode === 'paginator'" ></tl-datatable-paginator-mode>
+    <tl-datatable-header></tl-datatable-header>
+    <tl-datatable-content
+      [dataSource]="dataSource"
+      [data]="data"
+      [rowHeight]="rowHeight"
+      [heightViewPort]="heightViewPort"
+      [columns]="columns"
+      [contextMenuItems]="contextMenuItems"
+      (rowSelect)="onRowSelect( $event.row, $event.index )"
+      (rowDbClick)="onRowDblclick( $event.row, $event.index )"
+      (rowClick)="onRowClick( $event.row, $event.index )">
+    </tl-datatable-content>
 </div>
 

@@ -41,8 +41,9 @@ export class GenerateEventsService {
       if ( scheduleSlats.length > 0 && workScaleInMileseconds.length > 0 ) {
         this.workScaleInMileseconds = workScaleInMileseconds;
         this.scheduleSlats = scheduleSlats;
-
-        this.heightSchedule = this.scheduleSlats.first.nativeElement.offsetHeight + this.scheduleSlats.last.nativeElement.offsetHeight;
+        this.scheduleSlats.toArray().forEach( (item) => {
+          this.heightSchedule = this.heightSchedule + item.nativeElement.offsetHeight;
+        });
         this.widthSchedule = this.scheduleSlats.first.nativeElement.offsetWidth - WIDTH_SCROLL;
       }
     }
@@ -57,7 +58,7 @@ export class GenerateEventsService {
     }
   }
 
-  private convertMillisecondsToPixel(date = new Date().getTime()) {
+  convertMillisecondsToPixel(date = new Date().getTime()) {
     let heightBody;
     let startDayMilliseconds;
     let endDayMilliseconds;
@@ -80,7 +81,7 @@ export class GenerateEventsService {
 
     startDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].start / 100000 );
     endDayMilliseconds = Math.floor(this.workScaleInMileseconds[position].end / 100000 );
-    heightBody = this.scheduleSlats.find( (item, idx) => idx === position).nativeElement.offsetHeight;
+    heightBody = elvis(this.scheduleSlats.find( (item, idx) => idx === position), 'nativeElement.offsetHeight') || 0;
     date = Math.floor(date / 100000 );
     currentDate = date - startDayMilliseconds;
     converted = ( heightBody * currentDate ) / ( endDayMilliseconds - startDayMilliseconds);

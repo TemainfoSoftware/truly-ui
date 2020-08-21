@@ -21,13 +21,11 @@
  */
 import {
   Component, Input, Optional, Inject, OnChanges, ViewChildren,
-  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy, ContentChild,
-  AfterContentInit,
+  EventEmitter, Output, ChangeDetectorRef, QueryList, AfterViewInit, ViewChild, ElementRef, OnDestroy,
+  AfterContentInit, TemplateRef, Self,
 } from '@angular/core';
-import { FormControlName } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { NgModel } from '@angular/forms';
 import { ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import { ActiveDescendantKeyManager } from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -47,7 +45,7 @@ import { TlInput } from '../input/input';
   selector: 'tl-autocomplete',
   templateUrl: './autocomplete.html',
   styleUrls: [ './autocomplete.scss' ],
-  providers: [ MakeProvider( TlAutoComplete ), SelectedItemService ],
+  providers: [ SelectedItemService ],
 } )
 export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges, OnDestroy, AfterViewInit, AfterContentInit {
 
@@ -65,23 +63,17 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this._control = item;
   }
 
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
-  }
-
   @Input() totalLength = 1000;
+
+  @Input() filterOperator = '%';
 
   @Input() rowsPage = 100;
 
   @Input() lazyMode = false;
 
   @Input() rowHeight = 40;
+
+  @Input() template: TemplateRef<any>;
 
   @Input() debounceTime = 200;
 
@@ -91,9 +83,13 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() openFocus = true;
 
+  @Input() chainFilter = false;
+
   @Input() loading = false;
 
   @Input() clearButton = true;
+
+  @Input() clearOnSelect = false;
 
   @Input() disabled: boolean = null;
 
@@ -141,10 +137,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @ViewChildren( TlItemSelectedDirective  ) listItems: QueryList<TlItemSelectedDirective>;
 
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
-
   @ViewChild( TlInput, {static: true}  ) tlinput: TlInput;
 
   public keyManager: ActiveDescendantKeyManager<TlItemSelectedDirective>;
@@ -154,8 +146,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   public isOpen = false;
 
   public focused = false;
-
-  public closeHover = false;
 
   public selected;
 
@@ -184,9 +174,22 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private _control;
 
   constructor( @Optional() @Inject( AUTOCOMPLETE_CONFIG ) autoCompleteConfig: AutoCompleteConfig,
-               private change: ChangeDetectorRef, private i18n: I18nService, private itemSelectedService: SelectedItemService ) {
+               private change: ChangeDetectorRef, private i18n: I18nService,
+               private itemSelectedService: SelectedItemService,
+               @Optional() @Self() public ngControl: NgControl ) {
     super();
+    this.setControl();
     this.setOptions( autoCompleteConfig );
+  }
+
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngAfterContentInit() {
@@ -256,12 +259,11 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setFiltering( true );
   }
 
-  onClickClose() {
+  close() {
     if ( !this.control.disabled ) {
       this.value = '';
       this.setDescriptionValue( '' );
       this.selected = null;
-      this.setIsOpen( true );
     }
   }
 
@@ -385,7 +387,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     this.setIsOpen( false );
   }
 
-  handleKeyEnter() {
+  handleKeyEnter($event) {
     if ( this.keyManager.activeItem && this.isOpen ) {
       if ( this.keyManager.activeItem.itemSelected ) {
         this.selectItem.emit( this.keyManager.activeItem.itemSelected );
@@ -393,14 +395,16 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
         this.setDescriptionValue( objectPath.get( this.keyManager.activeItem.itemSelected, this.keyText ) );
         this.handleKeyModelValue( this.keyManager.activeItem.itemSelected );
       }
+      this.handleClose($event);
     }
-    this.setIsOpen( false );
   }
 
   handleFocus() {
     this.focused = true;
     if ( this.openFocus && !this.keyManager.activeItem && !this.isDisabled && !this.disabled ) {
-      this.setIsOpen( true );
+      if ( this.openFocus ) {
+        this.setIsOpen( true );
+      }
     }
   }
 
@@ -421,11 +425,22 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   onSelectItem( value: any, item: TlItemSelectedDirective ) {
     this.setDescriptionValue( objectPath.get( value, this.keyText ) );
     this.handleKeyModelValue( value );
-    this.tlinput.setFocus();
-    this.setIsOpen( false );
     this.setSelected( item );
-    this.change.detectChanges();
     this.selectItem.emit( value );
+    this.handleClose();
+    this.change.detectChanges();
+  }
+
+  handleClose($event?) {
+    if ( this.clearOnSelect ) {
+      this.setDescriptionValue( '' );
+      this.tlinput.setFocus();
+      this.selected = null;
+      if ( $event ) {
+        $event.stopPropagation();
+      }
+    }
+    this.setIsOpen( false );
   }
 
   private setUpData( value? ) {
@@ -481,7 +496,10 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   private getFilters( term: string ) {
     const fields = {};
-    fields[ this.searchBy ] = { matchMode: 'contains', value: term };
+    fields[ this.searchBy ] = !this.chainFilter ? { matchMode: 'contains', value: term } :
+      term.split(this.filterOperator).map(( value ) => {
+      return { matchMode: 'contains', value: value };
+    });
     return { fields: fields, operator: 'or' };
   }
 
@@ -526,7 +544,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
         this.dataSource.setArray( totalLength[ 'currentValue' ] );
       }
     }
-    if ( data && !data[ 'firstChange' ] && this.lazyMode ) {
+    if ( data && this.lazyMode ) {
       this.setUpData( data[ 'currentValue' ] );
       return;
     }

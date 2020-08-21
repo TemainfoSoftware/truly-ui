@@ -23,12 +23,11 @@ import {
   AfterContentInit,
   AfterViewInit,
   ComponentRef,
-  ContentChild,
   Directive,
-  ElementRef, OnDestroy,
-  Renderer2
+  ElementRef, OnDestroy, Optional,
+  Renderer2, Self
 } from '@angular/core';
-import {FormControlName, NgModel} from '@angular/forms';
+import {NgControl} from '@angular/forms';
 import {Overlay, OverlayPositionBuilder, OverlayRef} from '@angular/cdk/overlay';
 import {ComponentPortal} from '@angular/cdk/portal';
 import {TlMessageValidationComponent} from '../messagevalidation.component';
@@ -39,10 +38,6 @@ import {Subscription, throwError} from 'rxjs';
 })
 export class TlMessageValidationDirective implements AfterContentInit, AfterViewInit, OnDestroy {
 
-  @ContentChild(NgModel, {static: true}) ngModel: NgModel;
-
-  @ContentChild(FormControlName, {static: true}) ngControl: FormControlName;
-
   private overlayRef: OverlayRef;
 
   private validationsRef: ComponentRef<TlMessageValidationComponent>;
@@ -50,10 +45,11 @@ export class TlMessageValidationDirective implements AfterContentInit, AfterView
   private subscription = new Subscription();
 
   get control() {
-    return this.ngModel ? this.ngModel : this.ngControl;
+    return this.ngControl?.control;
   }
 
-  constructor(private overlayPositionBuilder: OverlayPositionBuilder,
+  constructor(@Optional() @Self() public ngControl: NgControl,
+              private overlayPositionBuilder: OverlayPositionBuilder,
               private elementRef: ElementRef,
               private renderer: Renderer2,
               private overlay: Overlay) {

@@ -10,4 +10,4 @@ export interface InputConfig {
   color?: string;
 }
 
-export let INPUT_CONFIG = new InjectionToken<InputConfig>('input.config');
+export let INPUT_CONFIG = new InjectionToken<InputConfig>('input.preview.js');

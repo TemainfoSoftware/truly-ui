@@ -26,6 +26,7 @@
                           [height]="'23px'"
                           [ngModel]="filters.value[column.field]"
                           (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
+                          (clear)="onClear($event)"
                           [placeholder]="filterPlaceholder"
                           [type]="column?.type" >
                 </tl-input>

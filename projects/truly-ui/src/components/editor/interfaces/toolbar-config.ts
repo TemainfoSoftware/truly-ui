@@ -47,5 +47,7 @@ import { ToolbarConfigModel } from '../model/toolbar-config.model';
     link:      { show: boolean, tooltipText: string }
     imageLink: { show: boolean, tooltipText: string }
     quote:     { show: boolean, tooltipText: string }
+    clear:     { show: boolean, tooltipText: string },
+    field:     { show: boolean, tooltipText: string },
   };
 }

@@ -1,10 +1,9 @@
-<div class="split-wrapper" [ngClass]="color">
+<div class="split-wrapper" [ngClass]="color" (click)="onButtonClick($event)">
   <div class="split-content" #split>
     <tl-button cdkOverlayOrigin #trigger="cdkOverlayOrigin"
                [color]="color"
                [text]="text"
                [disabled]="disabled"
-               (click)="onButtonClick($event)"
                [width]="width"
                [height]="height">
     </tl-button>
@@ -25,7 +24,8 @@
                    [cdkConnectedOverlayOpen]="isOpen">
         <ul @overlay
             [style.minWidth]="split.offsetWidth + 'px'"
-            [class.border-top]="positionOverlay === 'top'"
+            [class.margin-top]="positionOverlay === 'bottom'"
+            [class.margin-bottom]="positionOverlay === 'top'"
             class="actions-menu">
             <ng-container *ngFor="let item of listItems">
               <ng-container *ngTemplateOutlet="item"></ng-container>

@@ -39,10 +39,6 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
     ModalDemoComponent,
     NewModalComponent
   ],
-
-  entryComponents: [
-    NewModalComponent
-  ]
 })
 export class ModalDemoModule {
 

@@ -89,7 +89,7 @@ export class TlSimpleSubMenu implements OnChanges, OnDestroy {
   callbackListElement( $event, item ) {
     $event.stopPropagation();
     if ( item[ this.link ] ) {
-      return this.router.navigate( [ item[ this.link ] ] );
+      return this.router.navigate( [ item[ this.link ] ], { queryParams: item['queryParams'] } );
     }
     if ( item[ 'callBack' ] ) {
       this.callBack = item[ 'callBack' ];

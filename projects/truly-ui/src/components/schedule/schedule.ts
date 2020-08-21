@@ -29,7 +29,7 @@ import {
   EventEmitter,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  TemplateRef
+  TemplateRef, ViewChild
 } from '@angular/core';
 import { ScheduleDataSource } from './types/datasource.type';
 import { StatusType } from './types/status.type';
@@ -41,6 +41,7 @@ import { EventService } from './services/event.service';
 import { ScheduleI18n } from './i18n/schedule-i18n';
 import { HolidaysType } from './types/holidays.type';
 import { HolidayService } from './services/holiday.service';
+import { GenerateEventsService } from './services/generate-events.service';
 
 @Component( {
   selector: 'tl-schedule',
@@ -107,6 +108,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() releaseSchedule = new EventEmitter();
 
+  @ViewChild('scheduleviews', { static: true }) scheduleviews;
+
   public slatNumberRowsAsArray: Array<Number>;
 
   public existsScale = false;
@@ -124,6 +127,7 @@ export class TlSchedule implements OnInit, OnChanges {
     private changeDetection: ChangeDetectorRef,
     private eventService: EventService,
     private holidayService: HolidayService,
+    private generateEventsService: GenerateEventsService
   ) {}
 
   ngOnInit() {
@@ -135,6 +139,9 @@ export class TlSchedule implements OnInit, OnChanges {
     this.existsScale = this.workScaleService.exitsWorkScale( this.workScale );
     if ( changes['holidays'] ) {
       this.handleHoliday( changes['holidays'].currentValue );
+    }
+    if (this.existsScale ) {
+      this.handleScrollView();
     }
     this.changeDetection.detectChanges();
   }
@@ -155,6 +162,24 @@ export class TlSchedule implements OnInit, OnChanges {
 
   onClickReleaseSchedule( holiday: HolidaysType ) {
     this.releaseSchedule.emit( holiday );
+  }
+
+  private handleScrollView( date = this.currentDate) {
+    if ( !this.scheduleviews ) {
+      return;
+    }
+    setTimeout(() => {
+      this.scheduleviews.nativeElement.scrollTop = (
+        this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0
+      );
+    }, 100);
+  }
+
+  private isSameDay( date ) {
+    const nowDate = new Date();
+    return date.getDate() === nowDate.getDate() &&
+           date.getDay() === nowDate.getDay() &&
+           date.getFullYear() === nowDate.getFullYear();
   }
 
   private handleHoliday( holidays = this.holidays ) {

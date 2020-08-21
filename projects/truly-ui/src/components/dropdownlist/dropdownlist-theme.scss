@@ -15,6 +15,7 @@
     .ui-dropdown {
       background: map-deep-get($basic, "default", "background");
       border: 1px solid map-deep-get($basic, "default", "border");
+      color: rgba(map-deep-get($basic, "default", "foreground"), 0.7);
 
       &:hover {
         background-color: map-deep-get($basic, "default", "background");

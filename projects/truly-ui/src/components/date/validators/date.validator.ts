@@ -23,8 +23,6 @@ import { AbstractControl, ValidatorFn } from '@angular/forms';
 import { LOCALE_I18N } from '../../i18n/i18n.service';
 
 import { ReverseFormatDate } from '../../core/helper/reverseformatdate';
-import { TlLeftPadPipe } from '../../internals/pipes/leftpad.pipe';
-
 let dateExpressFormat;
 
 export function DateValidator( formatDate, isoDate ): ValidatorFn {
@@ -50,12 +48,31 @@ export function DateValidator( formatDate, isoDate ): ValidatorFn {
       return { date: LOCALE_I18N.Validators.invalidDatePattern +  ' [ ' + dateExpressFormat.toUpperCase() + ' ]' };
     }
 
+    if ( (stringUnmasked( c ).length < dateExpressFormat.length) && isoDate) {
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + '[isoDate]' };
+    }
+
+    if ( !isIsoDate( c.value ) && isoDate ) {
+      return { date: LOCALE_I18N.Validators.invalidDatePattern + '[isoDate]' };
+    }
+
     return null;
   };
 }
 
 function stringUnmasked( c ) {
+  if ( isIsoDate( c.value )) {
+    return new Date( c.value ).toLocaleDateString();
+  }
   return String( c.value ).replace( /(\|-|_|\(|\)|:|\+)/gi, '' );
+}
+
+function isIsoDate( str ) {
+  if ( !/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/.test( str ) ) {
+    return false;
+  }
+  const d = new Date( str );
+  return d.toISOString() === str;
 }
 
 

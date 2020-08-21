@@ -71,7 +71,7 @@ export class TlDatatableFilterService {
     }
 
 
-    filterWithData(data, scrolling) {
+    filterWithData(data, scrolling = false) {
         if (! this.existsFilter()) { return data; }
         if ( scrolling ) { return this.filtredData; }
 

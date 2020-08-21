@@ -16,15 +16,19 @@
               </p>
               <tl-datatable
                 [data]="dataInMemory"
+                [recordsCount]="dataInMemoryrecordsCount"
                 [mode]="'scrollable'"
                 [rowModel]="'inmemory'"
-                [height]="297"
+                [height]="354"
+                (sortData)="onSortData($event)"
+                (filterData)="onFilterData($event)"
                 [rowsClient]="12"
+                (rowSelect)="onRowSelect($event)"
                 [allowFilterColumn]="true"
               >
                 <tl-datatable-column [field]="'id'" [showFilterOptions]="false" [width]="'70px'"></tl-datatable-column>
                 <tl-datatable-column [field]="'firstName'" [width]="'100px'" ></tl-datatable-column>
-                <tl-datatable-column [field]="'timeline.ts'" [type]="'date'" [format]="'dd/MM/yyyy'" [width]="'120px'"></tl-datatable-column>
+                <tl-datatable-column [field]="'schedule'" [type]="'date'" [format]="'dd/MM/yyyy'" [width]="'120px'"></tl-datatable-column>
                 <tl-datatable-column [field]="'city'" [width]="'300px'" ></tl-datatable-column>
                 <tl-datatable-column [field]="'title'" [type]="'text'" [width]="'300px'"></tl-datatable-column>
 
@@ -67,8 +71,10 @@ export class DatatableColumnFeaturesDemoComponent {
                 [rowModel]="'infinite'"
                 [height]="297"
                 [rowsClient]="12"
-                [rowsPage]="100"
+                [rowsPage]="200"
                 [recordsCount]="recordsCount"
+                (sortData)="onSortData($event)"
+                (filterData)="onFilterData($event)"
                 (loadData)="onLoadData($event)"
                 (rowSelect)="onRowSelect($event)"
                 [allowFilterColumn]="true"

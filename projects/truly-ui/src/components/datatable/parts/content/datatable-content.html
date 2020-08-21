@@ -1,0 +1,42 @@
+<div class="ui-datatable-content" (keydown)="onKeydown($event)" (keyup)="onKeyup()">
+
+  <cdk-virtual-scroll-viewport
+    class="ui-datatable-content-wrap"
+    (mousedown)="mouseDown($event)"
+    (mouseup)="mouseUp($event)"
+    [ngStyle]="{'height': heightViewPort+'px' }"
+    [minBufferPx]="100"
+    [maxBufferPx]="500"
+    [itemSize]="rowHeight">
+
+    <table style="width: 100%;" class="ui-datatable-table" [class.hidden]="isEmpty()" [colgroup]="columns">
+      <tbody class="ui-datatable-content-body" >
+        <ng-container *cdkVirtualFor="let row of dataSource; let index = index;">
+          <tl-datatable-row *ngIf="row;else loadingRowTemplate" class="ui-row"
+                            [ngStyle]="{'height': rowHeight+'px' }"
+                            [row]="row"
+                            #rowItem="rowItem"
+                            [index]="index"
+                            (click)="onRowClick(rowItem, row, index)"
+                            (contextmenu)="contextmenu($event, rowItem, row, index)"
+                            (dblclick)="rowDbClick.emit({ row:row, index: index })"
+          >
+            <tl-datatable-cell class="ui-cel"
+                               *ngFor="let collumn of columns" [collumn]="collumn"
+                               [content]="row"></tl-datatable-cell>
+          </tl-datatable-row>
+          <ng-template #loadingRowTemplate>
+            <tl-datatable-row [ngStyle]="{'height': rowHeight+'px' }" class="ui-row">
+              <td class="ui-cel" colspan="5" style="text-align: left;">Loading...</td>
+            </tl-datatable-row>
+          </ng-template>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <div [ngStyle]="{'height': heightViewPort+'px' }" class="ui-box-notfound-records" [class.hidden]="!isEmpty()">
+      <tl-icon [lib]="'fa'" [style]="'fas'" [size]="'25px'">filter</tl-icon>
+      {{emptyText()}}
+    </div>
+  </cdk-virtual-scroll-viewport>
+</div>

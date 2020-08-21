@@ -10,11 +10,11 @@
     > .dropdown-list-select {
       border: 1px solid map-deep-get($basic, "default", "border");
       background-color: map-deep-get($basic, "default", "background");
-      color: map-deep-get($basic, "default", "foreground");
+      color: rgba(map-deep-get($basic, "default", "foreground"), 0.7);
       .selected {
         background-color: map-deep-get($primary, "default", "background");
         color: map-deep-get($primary, "default", "foreground");
-        /deep/ span {
+        ::ng-deep span {
           background: transparent !important;
         }
       }

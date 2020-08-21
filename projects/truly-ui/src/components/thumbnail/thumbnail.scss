@@ -1,0 +1,121 @@
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.thumbnail-container {
+  display: flex;
+
+  > .thumbnail {
+    @include flexCenter;
+    flex-flow: column;
+    position: relative;
+    width: 100px;
+    height: 80px;
+    background-color: #fafafa;
+    border: 1px dashed #d9d9d9;
+    transition: border-color .3s ease;
+    cursor: pointer;
+    margin: 0 5px;
+    padding: 2px;
+    box-sizing: border-box;
+
+    > .icon {
+      color: #e6e6e6;
+      cursor: pointer;
+      font-size: 22px;
+    }
+
+    > .thumbnail-image-wrapper {
+      height: 100%;
+      width: 100%;
+      border-radius: 5px;
+      overflow: hidden;
+
+      &.circle-shape {
+        &:before {
+          border-radius: 50%;
+        }
+      }
+
+      &:hover .thumbnail-controls {
+        opacity: 1;
+      }
+
+      &:before {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background-color: #00000080;
+        opacity: 0;
+        transition: all .3s;
+        content: " ";
+        top: 0;
+        left: 0;
+      }
+
+      > .thumbnail-image {
+        position: static;
+        display: block;
+        width: 100%;
+        height: 100%;
+        -o-object-fit: cover;
+        object-fit: cover;
+
+        &.circle-shape {
+          border-radius: 50%;
+        }
+      }
+
+      > .thumbnail-controls {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        height: 100%;
+        color: #fff;
+        font-size: 22px;
+        z-index: 1000;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+        @include flexCenter;
+
+        .icon {
+          cursor: pointer;
+
+          &:last-child {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+
+    &:hover .thumbnail-image-wrapper:before {
+      opacity: 1;
+    }
+
+    &.borderLess {
+      border: 0;
+    }
+
+    &.circle-shape {
+      border-radius: 50%;
+    }
+
+    &.marginLess {
+      margin-left: 0px !important;
+    }
+
+    &:first-child {
+      margin-left: 8px;
+    }
+
+    &:hover {
+      border-color: #66cc99;
+    }
+  }
+}
+

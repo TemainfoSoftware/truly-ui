@@ -1,12 +1,13 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ToolbarConfig} from '../../interfaces/toolbar-config';
+import {FieldContent} from '../../interfaces/field-content';
 
 @Component({
   selector: 'tl-editor-header',
   templateUrl: './editor-header.html',
   styleUrls: ['./editor-header.scss']
 })
-export class TlEditorHeader {
+export class TlEditorHeader implements OnInit {
 
   @Input() toolbarConfig: ToolbarConfig;
 
@@ -15,6 +16,8 @@ export class TlEditorHeader {
   @Input() fontSizeCollection = [];
 
   @Input() fontCollection = [];
+
+  @Input() fields: FieldContent[] = [];
 
   @Input() color = 'basic';
 
@@ -52,5 +55,31 @@ export class TlEditorHeader {
 
   @Output() clickQuote = new EventEmitter();
 
+  @Output() clickClear = new EventEmitter();
+
+  @Output() clickField = new EventEmitter();
+
+  @Input('labelAddField')
+  set labelAddField( value: string ) {
+    this._labelAddField = value;
+  }
+
+  get labelAddField() {
+    return this._labelAddField;
+  }
+
+  private _labelAddField;
+
+  public defaultField;
+
   constructor() {}
+
+  ngOnInit() {
+    this.defaultField = this.labelAddField;
+  }
+
+  onChangeField($event) {
+    this.clickField.emit($event);
+    setTimeout(() => this.defaultField = this.labelAddField);
+  }
 }

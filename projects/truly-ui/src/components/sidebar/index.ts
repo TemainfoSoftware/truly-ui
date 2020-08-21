@@ -44,8 +44,7 @@ import { BackdropModule } from '../core/components/backdrop/index';
     TlSidebar,
     TlSidebarContainer,
     TlSidebarContent
-  ],
-  entryComponents: [ TlBackdrop ]
+  ]
 } )
 export class SidebarModule {
 }

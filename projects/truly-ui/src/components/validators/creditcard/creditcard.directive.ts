@@ -41,9 +41,7 @@ const creditCard = 0;
 } )
 export class CreditCardDirective implements Validator {
 
-  @ContentChild( TlInput, {static: true} ) input;
-
-  constructor() {}
+  constructor( private input: TlInput ) {}
 
   validate( c: FormControl ): ValidationErrors {
     if ( this.input ) {

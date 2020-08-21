@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { HomeComponent } from './home/home.component';
-import { GettingStartedComponent } from './getting-started/getting-started.component';
+import {HomeComponent} from './home/home.component';
+import {GettingStartedComponent} from './getting-started/getting-started.component';
 
 
 @NgModule({
@@ -20,284 +20,305 @@ import { GettingStartedComponent } from './getting-started/getting-started.compo
       },
       {
         path: 'i18n',
-        loadChildren: './internationalization/internationalization.module#InternationalizationModule'
+        loadChildren: () => import('./internationalization/internationalization.module').then(m => m.InternationalizationModule)
       },
       {
         path: 'theming',
-        loadChildren: './theming/theming.module#ThemingModule'
+        loadChildren: () => import('./theming/theming.module').then(m => m.ThemingModule)
       },
       // Components
       {
         path: 'accordion',
-        loadChildren: './components/accordion/accordiondemo.module#AccordionDemoModule'
+        loadChildren: () => import('./components/accordion/accordiondemo.module').then(m => m.AccordionDemoModule)
       },
       {
         path: 'autocomplete',
-        loadChildren: './components/autocomplete/autocompletedemo.module#AutoCompleteDemoModule'
+        loadChildren: () => import('./components/autocomplete/autocompletedemo.module').then(m => m.AutoCompleteDemoModule)
+      },
+      {
+        path: 'tag',
+        loadChildren: () => import('./components/tag/tagdemo.module').then(m => m.TagDemoModule)
       },
       {
         path: 'avatar',
-        loadChildren: './components/avatar/avatardemo.module#AvatarDemoModule'
+        loadChildren: () => import('./components/avatar/avatardemo.module').then(m => m.AvatarDemoModule)
       },
       {
         path: 'badge',
-        loadChildren: './components/badge/badgedemo.module#BadgeDemoModule'
+        loadChildren: () => import('./components/badge/badgedemo.module').then(m => m.BadgeDemoModule)
       },
       {
         path: 'card',
-        loadChildren: './components/card/carddemo.module#CardDemoModule'
+        loadChildren: () => import('./components/card/carddemo.module').then(m => m.CardDemoModule)
       },
       {
         path: 'button',
-        loadChildren: './components/button/buttondemo.module#ButtonDemoModule'
+        loadChildren: () => import('./components/button/buttondemo.module').then(m => m.ButtonDemoModule)
       },
       {
         path: 'buttongroup',
-        loadChildren: './components/buttongroup/buttongroupdemo.module#ButtonGroupDemoModule'
+        loadChildren: () => import('./components/buttongroup/buttongroupdemo.module').then(m => m.ButtonGroupDemoModule)
       },
       {
         path: 'blockui',
-        loadChildren: './components/blockui/blockuidemo.module#BlockUIDemoModule'
+        loadChildren: () => import('./components/blockui/blockuidemo.module').then(m => m.BlockUIDemoModule)
       },
       {
         path: 'calendar',
-        loadChildren: './components/calendar/calendardemo.module#CalendarDemoModule'
+        loadChildren: () => import('./components/calendar/calendardemo.module').then(m => m.CalendarDemoModule)
       },
       {
         path: 'colorpicker',
-        loadChildren: './components/colorpicker/colorpickerdemo.module#ColorPickerDemoModule'
+        loadChildren: () => import('./components/colorpicker/colorpickerdemo.module').then(m => m.ColorPickerDemoModule)
       },
       {
         path: 'chatlist',
-        loadChildren: './components/chatlist/chatlistdemo.module#ChatListDemoModule'
+        loadChildren: () => import('./components/chatlist/chatlistdemo.module').then(m => m.ChatListDemoModule)
       },
       {
         path: 'checkbox',
-        loadChildren: './components/checkbox/checkboxdemo.module#CheckBoxDemoModule'
+        loadChildren: () => import('./components/checkbox/checkboxdemo.module').then(m => m.CheckBoxDemoModule)
       },
       {
         path: 'contextmenu',
-        loadChildren: './components/contextmenu/context-menudemo.module#ContextMenuDemoModule'
+        loadChildren: () => import('./components/contextmenu/context-menudemo.module').then(m => m.ContextMenuDemoModule)
       },
       {
         path: 'step',
-        loadChildren: './components/step/stepdemo.module#StepDemoModule'
+        loadChildren: () => import('./components/step/stepdemo.module').then(m => m.StepDemoModule)
+      },
+      {
+        path: 'upload',
+        loadChildren: () => import('./components/upload/uploaddemo.module').then(m => m.UploadDemoModule)
       },
       {
         path: 'datatable',
-        loadChildren: './components/datatable/overview/datatabledemo-overview.module#DatatableDemoOverviewModule'
+        loadChildren: () => import('./components/datatable/overview/datatabledemo-overview.module').then(m => m.DatatableDemoOverviewModule)
       },
       {
         path: 'datatable/columnfeatures',
-        loadChildren: './components/datatable/columnfeatures/datatable-columnfeatures.demo.module#DatatableColumnFeaturesDemoModule'
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./components/datatable/columnfeatures/datatable-columnfeatures.demo.module').then(m => m.DatatableColumnFeaturesDemoModule)
       },
       {
         path: 'datatable/filtering',
-        loadChildren: './components/datatable/filtering/datatable-filtering.demo.module#DatatableFilteringDemoModule'
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./components/datatable/filtering/datatable-filtering.demo.module').then(m => m.DatatableFilteringDemoModule)
       },
       {
         path: 'datatable/rowmodels',
-        loadChildren: './components/datatable/rowmodels/datatable-rowmodels.demo.module#DatatableRowModelsDemoModule'
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./components/datatable/rowmodels/datatable-rowmodels.demo.module').then(m => m.DatatableRowModelsDemoModule)
       },
       {
         path: 'datatable/tablemodes',
-        loadChildren: './components/datatable/tablemodes/datatable-tablemodes.demo.module#DatatableTableModesDemoModule'
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./components/datatable/tablemodes/datatable-tablemodes.demo.module').then(m => m.DatatableTableModesDemoModule)
       },
       {
         path: 'dialog',
-        loadChildren: './components/dialog/dialogdemo.module#DialogDemoModule'
+        loadChildren: () => import('./components/dialog/dialogdemo.module').then(m => m.DialogDemoModule)
       },
       {
         path: 'date',
-        loadChildren: './components/date/datedemo.module#DateDemoModule'
+        loadChildren: () => import('./components/date/datedemo.module').then(m => m.DateDemoModule)
       },
       {
         path: 'dropdownlist',
-        loadChildren: './components/dropdownlist/dropdownlistdemo.module#DropDownListDemoModule'
+        loadChildren: () => import('./components/dropdownlist/dropdownlistdemo.module').then(m => m.DropDownListDemoModule)
+      },
+      {
+        path: 'lightbox',
+        loadChildren: () => import('./components/lightbox/lightboxdemo.module').then(m => m.LightboxDemoModule)
       },
       {
         path: 'dropdownicon',
-        loadChildren: './components/dropdownicon/dropdownicondemo.module#DropDownIconDemoModule'
+        loadChildren: () => import('./components/dropdownicon/dropdownicondemo.module').then(m => m.DropDownIconDemoModule)
       },
       {
         path: 'datepicker',
-        loadChildren: './components/datepicker/datepickerdemo.module#DatePickerDemoModule'
+        loadChildren: () => import('./components/datepicker/datepickerdemo.module').then(m => m.DatePickerDemoModule)
       },
       {
         path: 'editor',
-        loadChildren: './components/editor/editordemo.module#EditorDemoModule'
+        loadChildren: () => import('./components/editor/editordemo.module').then(m => m.EditorDemoModule)
       },
       {
-        path: 'loader.ts',
-        loadChildren: './components/form/formdemo.module#FormDemoModule'
+        path: 'form',
+        loadChildren: () => import('./components/form/formdemo.module').then(m => m.FormDemoModule)
       },
       {
         path: 'inlineform',
-        loadChildren: './components/form/inline/form-inlinedemo.module#FormInlineDemoModule'
+        loadChildren: () => import('./components/form/inline/form-inlinedemo.module').then(m => m.FormInlineDemoModule)
       },
       {
         path: 'modalform',
-        loadChildren: './components/form/modal/form-modaldemo.module#FormModalDemoModule'
+        loadChildren: () => import('./components/form/modal/form-modaldemo.module').then(m => m.FormModalDemoModule)
       },
       {
         path: 'smartform',
-        loadChildren: './components/form/smart/form-smartdemo.module#FormSmartDemoModule'
+        loadChildren: () => import('./components/form/smart/form-smartdemo.module').then(m => m.FormSmartDemoModule)
       },
       {
         path: 'input',
-        loadChildren: './components/input/inputdemo.module#InputDemoModule'
+        loadChildren: () => import('./components/input/inputdemo.module').then(m => m.InputDemoModule)
       },
       {
         path: 'inputvalidators',
-        loadChildren: './components/inputvalidators/inputvalidatorsdemo.module#InputValidatorsDemoModule'
+        loadChildren: () => import('./components/inputvalidators/inputvalidatorsdemo.module').then(m => m.InputValidatorsDemoModule)
       },
       {
         path: 'inputmask',
-        loadChildren: './components/inputmask/inputmaskdemo.module#InputMaskDemoModule'
+        loadChildren: () => import('./components/inputmask/inputmaskdemo.module').then(m => m.InputMaskDemoModule)
       },
       {
         path: 'inputcurrency',
-        loadChildren: './components/inputcurrency/inputcurrencydemo.module#InputCurrencyDemoModule'
+        loadChildren: () => import('./components/inputcurrency/inputcurrencydemo.module').then(m => m.InputCurrencyDemoModule)
       },
       {
         path: 'icons',
-        loadChildren: './components/icons/overview/iconsdemo.module#IconsDemoModule'
+        loadChildren: () => import('./components/icons/overview/iconsdemo.module').then(m => m.IconsDemoModule)
       },
       {
         path: 'icons/dxicons',
-        loadChildren: './components/icons/dxicons/iconsdemo.module#IconsDemoModule'
+        loadChildren: () => import('./components/icons/dxicons/iconsdemo.module').then(m => m.IconsDemoModule)
       },
       {
         path: 'icons/font-awesome',
-        loadChildren: './components/icons/font-awesome/iconsdemo.module#IconsDemoModule'
+        loadChildren: () => import('./components/icons/font-awesome/iconsdemo.module').then(m => m.IconsDemoModule)
       },
       {
         path: 'icons/ionicons',
-        loadChildren: './components/icons/ionicons/iconsdemo.module#IconsDemoModule'
+        loadChildren: () => import('./components/icons/ionicons/iconsdemo.module').then(m => m.IconsDemoModule)
       },
       {
         path: 'loader',
-        loadChildren: './components/loader/loaderdemo.module#LoaderDemoModule'
+        loadChildren: () => import('./components/loader/loaderdemo.module').then(m => m.LoaderDemoModule)
       },
       {
         path: 'listbox',
-        loadChildren: './components/listbox/listboxdemo.module#ListBoxDemoModule'
+        loadChildren: () => import('./components/listbox/listboxdemo.module').then(m => m.ListBoxDemoModule)
       },
       {
         path: 'modal',
-        loadChildren: './components/modal/modaldemo.module#ModalDemoModule'
+        loadChildren: () => import('./components/modal/modaldemo.module').then(m => m.ModalDemoModule)
       },
       {
         path: 'multiselect',
-        loadChildren: './components/multiselect/multiselectdemo.module#MultiSelectDemoModule'
+        loadChildren: () => import('./components/multiselect/multiselectdemo.module').then(m => m.MultiSelectDemoModule)
       },
       {
         path: 'menu',
-        loadChildren: './components/menu/menudemo.module#MenuDemoModule'
+        loadChildren: () => import('./components/menu/menudemo.module').then(m => m.MenuDemoModule)
       },
       {
         path: 'multiview',
-        loadChildren: './components/multiview/multiviewdemo.module#MultiViewDemoModule'
+        loadChildren: () => import('./components/multiview/multiviewdemo.module').then(m => m.MultiViewDemoModule)
       },
       {
         path: 'overlaypanel',
-        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
+        loadChildren: () => import('./components/overlaypanel/overlay-paneldemo.module').then(m => m.OverlayPanelDemoModule)
       },
       {
         path: 'navigator',
-        loadChildren: './components/navigator/navigatordemo.module#NavigatorDemoModule'
+        loadChildren: () => import('./components/navigator/navigatordemo.module').then(m => m.NavigatorDemoModule)
+      },
+      {
+        path: 'thumbnail',
+        loadChildren: () => import('./components/thumbnail/thumbnaildemo.module').then(m => m.ThumbnailDemoModule)
       },
       {
         path: 'panelgroup',
-        loadChildren: './components/panel/paneldemo.module#PanelDemoModule'
+        loadChildren: () => import('./components/panel/paneldemo.module').then(m => m.PanelDemoModule)
       },
       {
         path: 'permissions',
-        loadChildren: './components/permissions/permissionsdemo.module#PermissionsDemoModule'
+        loadChildren: () => import('./components/permissions/permissionsdemo.module').then(m => m.PermissionsDemoModule)
       },
       {
         path: 'progressbar',
-        loadChildren: './components/progressbar/progressbardemo.module#ProgressBarDemoModule'
+        loadChildren: () => import('./components/progressbar/progressbardemo.module').then(m => m.ProgressBarDemoModule)
       },
       {
         path: 'popupmenu',
-        loadChildren: './components/popupmenu/popupmenudemo.module#PopupMenuDemoModule'
+        loadChildren: () => import('./components/popupmenu/popupmenudemo.module').then(m => m.PopupMenuDemoModule)
       },
       {
         path: 'radiobutton',
-        loadChildren: './components/radiobutton/radiobuttondemo.module#RadioButtonDemoModule'
+        loadChildren: () => import('./components/radiobutton/radiobuttondemo.module').then(m => m.RadioButtonDemoModule)
       },
       {
         path: 'shortcut',
-        loadChildren: './components/shortcut/shortcutdemo.module#ShortcutDemoModule'
+        loadChildren: () => import('./components/shortcut/shortcutdemo.module').then(m => m.ShortcutDemoModule)
       },
       {
         path: 'schedule',
-        loadChildren: './components/schedule/overview/scheduledemo-overview.module#ScheduledemoOverviewModule'
+        loadChildren: () => import('./components/schedule/overview/scheduledemo-overview.module').then(m => m.ScheduledemoOverviewModule)
       },
       {
         path: 'sidebar',
-        loadChildren: './components/sidebar/sidebardemo.module#SidebarDemoModule'
+        loadChildren: () => import('./components/sidebar/sidebardemo.module').then(m => m.SidebarDemoModule)
       },
       {
         path: 'splitbutton',
-        loadChildren: './components/splitbutton/splitbuttondemo.module#SplitButtonDemoModule'
+        loadChildren: () => import('./components/splitbutton/splitbuttondemo.module').then(m => m.SplitButtonDemoModule)
       },
       {
         path: 'stopwatch',
-        loadChildren: './components/stopwatch/stopwatchdemo.module#StopwatchDemoModule'
+        loadChildren: () => import('./components/stopwatch/stopwatchdemo.module').then(m => m.StopwatchDemoModule)
       },
       {
         path: 'switch',
-        loadChildren: './components/switch/switchdemo.module#SwitchDemoModule'
+        loadChildren: () => import('./components/switch/switchdemo.module').then(m => m.SwitchDemoModule)
       },
       {
         path: 'textarea',
-        loadChildren: './components/textarea/textareademo.module#TextareaDemoModule'
+        loadChildren: () => import('./components/textarea/textareademo.module').then(m => m.TextareaDemoModule)
       },
       {
         path: 'clockpicker',
-        loadChildren: './components/clockpicker/clockpickerdemo.module#ClockPickerDemoModule'
+        loadChildren: () => import('./components/clockpicker/clockpickerdemo.module').then(m => m.ClockPickerDemoModule)
       },
       {
         path: 'timeline',
-        loadChildren: './components/timeline/overview/timelinedemo.module#TimelineDemoModule'
+        loadChildren: () => import('./components/timeline/overview/timelinedemo.module').then(m => m.TimelineDemoModule)
       },
       {
         path: 'timepicker',
-        loadChildren: './components/timepicker/timepickerdemo.module#TimepickerDemoModule'
+        loadChildren: () => import('./components/timepicker/timepickerdemo.module').then(m => m.TimepickerDemoModule)
       },
       {
         path: 'timeavailable',
-        loadChildren: './components/time-available-picker/time-available-pickerdemo.module#TimeAvailablePickerDemoModule'
+        // tslint:disable-next-line:max-line-length
+        loadChildren: () => import('./components/time-available-picker/time-available-pickerdemo.module').then(m => m.TimeAvailablePickerDemoModule)
       },
       {
         path: 'timeline/infinitescroll',
-        loadChildren: './components/timeline/infinitescroll/timelinedemo.module#TimelineDemoModule'
+        loadChildren: () => import('./components/timeline/infinitescroll/timelinedemo.module').then(m => m.TimelineDemoModule)
       },
       {
         path: 'timeline/dynamictemplate',
-        loadChildren: './components/timeline/templatedynamic/timelinedemo.module#TimelineDemoModule'
+        loadChildren: () => import('./components/timeline/templatedynamic/timelinedemo.module').then(m => m.TimelineDemoModule)
       },
       {
         path: 'tabcontrol',
-        loadChildren: './components/tabcontrol/tabcontroldemo.module#TabControlDemoModule'
+        loadChildren: () => import('./components/tabcontrol/tabcontroldemo.module').then(m => m.TabControlDemoModule)
       },
       {
         path: 'toaster',
-        loadChildren: './components/toaster/toasterdemo.module#ToasterDemoModule'
+        loadChildren: () => import('./components/toaster/toasterdemo.module').then(m => m.ToasterDemoModule)
       },
       {
         path: 'toolbar',
-        loadChildren: './components/toolbar/toolbardemo.module#ToolbarDemoModule'
+        loadChildren: () => import('./components/toolbar/toolbardemo.module').then(m => m.ToolbarDemoModule)
       },
       {
         path: 'tooltip',
-        loadChildren: './components/tooltip/tooltipdemo.module#TooltipDemoModule'
+        loadChildren: () => import('./components/tooltip/tooltipdemo.module').then(m => m.TooltipDemoModule)
       },
       {
         path: 'overlaypanel',
-        loadChildren: './components/overlaypanel/overlay-paneldemo.module#OverlayPanelDemoModule'
+        loadChildren: () => import('./components/overlaypanel/overlay-paneldemo.module').then(m => m.OverlayPanelDemoModule)
       },
     ])
   ],

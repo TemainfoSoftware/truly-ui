@@ -12,4 +12,4 @@ export interface CurrencyConfig {
   nullable: boolean;
 }
 
-export let CURRENCY_MASK_CONFIG = new InjectionToken<CurrencyConfig>('currency.mask.config');
+export let CURRENCY_MASK_CONFIG = new InjectionToken<CurrencyConfig>('currency.mask.preview.js');

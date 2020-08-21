@@ -27,13 +27,11 @@ import {
   Output,
   Optional,
   Inject,
-  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnDestroy,
+  EventEmitter, Renderer2, ElementRef, OnInit, ContentChild, forwardRef, ChangeDetectorRef, OnDestroy, Self, Injector, AfterContentInit,
 } from '@angular/core';
 import {InputMask} from './core/input-mask';
 import {
-  FormControl,
-  FormControlName, NG_VALUE_ACCESSOR, NgControl,
-  NgModel
+  AbstractControl, NgControl,
 } from '@angular/forms';
 import {CdkOverlayOrigin} from '@angular/cdk/overlay';
 import {ValueAccessorBase} from './core/value-accessor';
@@ -67,12 +65,7 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'tl-input',
   templateUrl: './input.html',
-  styleUrls: ['./input.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TlInput),
-    multi: true,
-  }],
+  styleUrls: ['./input.scss']
 })
 export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDestroy, AfterViewInit {
 
@@ -118,21 +111,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   @Input() height = '23px';
 
-  @Input('control')
-  set control(item) {
-    this._control = item;
-  }
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.controlName || this.model) {
-      return this.controlName ? this.controlName : this.model;
-    }
-    return this._control;
-  }
-
   @Input() withBorder = true;
 
   @Input() flatBorder = false;
@@ -142,10 +120,6 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
   @ViewChild('inputBox', {static: true} ) inputBox;
 
   @ViewChild(CdkOverlayOrigin, {static: true} ) cdkOverlayOrigin: CdkOverlayOrigin;
-
-  @ContentChild(NgModel, {static: true} ) model: NgModel;
-
-  @ContentChild(FormControlName, {static: true} ) controlName: FormControlName;
 
   @Output() clear: EventEmitter<any> = new EventEmitter();
 
@@ -171,13 +145,23 @@ export class TlInput extends ValueAccessorBase<string> implements OnInit, OnDest
 
   private subscription = new Subscription();
 
-  private _control;
-
   constructor(@Optional() @Inject(INPUT_CONFIG) private inputConfig: InputConfig,
+              @Optional() @Self() public ngControl: NgControl,
               private tlInput: ElementRef, private renderer: Renderer2,
               private change: ChangeDetectorRef) {
     super();
+    this.setControl();
     this.setOptions(this.inputConfig);
+  }
+
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngOnInit() {

@@ -73,7 +73,6 @@ import { DateModule } from '../../../../../projects/truly-ui/src/components/date
   ],
   providers: [
     DumpDataService,
-  ],
-  entryComponents: [ SmartFormModalComponent ]
+  ]
 })
 export class FormSmartDemoModule {}

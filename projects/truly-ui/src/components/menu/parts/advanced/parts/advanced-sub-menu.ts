@@ -165,7 +165,7 @@ export class TlAdvancedSubMenu implements AfterViewInit {
     $event.stopPropagation();
     if ( item[ this.link ] ) {
       this.menuService.closeMenu();
-      return this.router.navigate( [ item[ this.link ] ] );
+      return this.router.navigate( [ item[ this.link ] ], { queryParams: item['queryParams'] } );
     }
     this.handleCallbackItem( item, $event );
   }

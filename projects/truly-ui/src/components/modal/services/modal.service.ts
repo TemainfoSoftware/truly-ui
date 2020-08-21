@@ -235,7 +235,7 @@ export class ModalService implements OnDestroy {
       if (this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation) {
         if (this.referenceSmartForm) {
           this.removeOfList(this.referenceSmartForm.id);
-          this.view.remove(this.view.indexOf(this.referenceSmartForm.modal));
+          this.view.remove(this.view.indexOf(this.referenceSmartForm.modal.hostView));
         }
       }
     }
@@ -282,7 +282,7 @@ export class ModalService implements OnDestroy {
   }
 
   private removeOfView(modal) {
-    this.view.remove(this.view.indexOf(modal));
+    this.view.remove(this.view.indexOf(modal.hostView));
     this.view.element.nativeElement.removeChild(modal.location.nativeElement);
   }
 
@@ -504,7 +504,7 @@ export class ModalService implements OnDestroy {
     if (component.smartForm['executeAction'] === ActionsModal.DELETE) {
       this.referenceSmartForm = component;
       this.createModalDialog(TlDialogConfirmation, this.referenceSmartForm.smartForm['factory'],
-        { title: this.referenceSmartForm.smartForm['deleteConfirmationMessage']}).then((value: any) => {
+        { title: this.referenceSmartForm.smartForm['deleteTitleConfirmation'] }).then((value: any) => {
         if (value.mdResult === ModalResult.MRYES) {
           this.handleSmartFormCallback(this.referenceSmartForm,
             {formResult: this.referenceSmartForm.smartForm['dataForm']});

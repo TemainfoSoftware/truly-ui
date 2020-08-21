@@ -48,7 +48,9 @@ export class ToolbarConfigModel {
   public others = {
     link: { show: true, tooltipText: this.i18n.getLocale().Editor.linkText },
     imageLink: { show: true, tooltipText: this.i18n.getLocale().Editor.imageText },
-    quote: { show: true, tooltipText: this.i18n.getLocale().Editor.quoteText }
+    quote: { show: true, tooltipText: this.i18n.getLocale().Editor.quoteText },
+    clear: { show: true, tooltipText: this.i18n.getLocale().Editor.clearText },
+    field: { show: true, tooltipText: this.i18n.getLocale().Editor.fieldText }
   };
 
 }

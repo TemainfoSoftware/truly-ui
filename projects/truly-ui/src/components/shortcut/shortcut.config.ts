@@ -4,4 +4,4 @@ export interface ShortcutConfig {
   disableClass: string;
 }
 
-export let SHORTCUT_CONFIG = new InjectionToken<ShortcutConfig>('shortcut.config');
+export let SHORTCUT_CONFIG = new InjectionToken<ShortcutConfig>('shortcut.preview.js');

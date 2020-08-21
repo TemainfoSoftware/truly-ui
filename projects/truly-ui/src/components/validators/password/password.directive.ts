@@ -23,9 +23,9 @@
 import {
   AfterViewInit,
   Input,
-  ContentChild, Directive, forwardRef} from '@angular/core';
-import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
-import { TlInput } from '../../input/input';
+  Directive, forwardRef, ElementRef
+} from '@angular/core';
+import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { PasswordValidator } from './password.validator';
 import { PasswordRule } from './passwordrule.interface';
 
@@ -41,16 +41,22 @@ import { PasswordRule } from './passwordrule.interface';
 } )
 export class PasswordDirective implements Validator, AfterViewInit {
 
-    @Input('passwordRule') passwordRule: PasswordRule =
-      { digits: false, uppercase: false, specials: false, lowercase: false };
+  @Input() control: AbstractControl;
 
-    @ContentChild(TlInput, {static: true}) tlinput;
+  @Input('passwordRule') passwordRule: PasswordRule =
+    { digits: false, uppercase: false, specials: false, lowercase: false };
 
-    ngAfterViewInit() {
-      this.tlinput.input.nativeElement.setAttribute('type', 'password');
-    }
+  private elementInput: HTMLElement;
 
-    validate( c: FormControl ): ValidationErrors {
-      return PasswordValidator( this.passwordRule )( c );
-    }
+  constructor(private element: ElementRef) {
+  }
+
+  ngAfterViewInit() {
+    this.elementInput = this.element.nativeElement.getElementsByTagName('input')[0];
+    this.elementInput.setAttribute('type', 'password');
+  }
+
+  validate( c: FormControl ): ValidationErrors {
+    return PasswordValidator( this.passwordRule )( c );
+  }
 }

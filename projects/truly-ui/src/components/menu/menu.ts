@@ -106,7 +106,6 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
     this.listenRouteChange();
   }
 
-
   listenRouteChange() {
     this.subscription.add(this.router.events.subscribe(() => {
       this.elements.forEach((value, index, array) => {
@@ -183,7 +182,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   createElementList( item ) {
     this.listElement = new ElementRef( this.renderer.createElement( 'li' ) );
     this.renderer.addClass( this.listElement.nativeElement, 'ui-menulist-item' );
-    if (this.isRouterActive(item)) {
+    if (this.isRouterActive(item) && !item['alwaysActive']) {
       this.renderer.addClass( this.listElement.nativeElement, 'router-active');
     }
     this.listenClickElementList( item );
@@ -204,7 +203,7 @@ export class TlMenu implements AfterContentInit, OnChanges, OnDestroy {
   listenClickElementList( item ) {
     this.subscription.add(this.renderer.listen( this.listElement.nativeElement, 'click', ( MouseEvent ) => {
       if ( item[ this.link ] ) {
-        this.router.navigate( [ item[ this.link ] ] );
+        this.router.navigate( [ item[ this.link ] ], { queryParams: item['queryParams'] } );
         this.subMenuService.closeMenu();
         return;
       }

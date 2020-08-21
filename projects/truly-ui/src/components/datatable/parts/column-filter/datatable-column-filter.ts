@@ -21,12 +21,13 @@
 */
 
 import {
-    Component, EventEmitter, Input, OnInit, Output
+  Component, EventEmitter, Input, OnDestroy, OnInit, Output
 } from '@angular/core';
 import { debounceTime } from 'rxjs/internal/operators';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
+import { TlDatatableColumn } from '../column/datatable-column';
 
 
 @Component({
@@ -34,9 +35,9 @@ import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.meta
     templateUrl: './datatable-column-filter.html',
     styleUrls: ['./datatable-column-filter.scss']
 })
-export class TlDatatabaleColumnFilter implements OnInit {
+export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
 
-    @Input('tlColumnFilter') tlColumnFilter;
+    @Input('tlColumnFilter') tlColumnFilter: TlDatatableColumn[];
 
     @Output() filterEvent: EventEmitter<any> = new EventEmitter();
 
@@ -52,33 +53,71 @@ export class TlDatatabaleColumnFilter implements OnInit {
 
     private subject =  new Subject();
 
+    private subscription =  new Subscription();
+
     constructor( private i18n: I18nService ) {}
 
     ngOnInit() {
-        this.subject.pipe( debounceTime(600) ).subscribe((event) => {
+        this.subscription.add(
+          this.subject.pipe( debounceTime(600) ).subscribe((event) => {
             if (event !== undefined) {
                 const filterEventObject = this.makeFilterEvent();
                 this.filterEvent.emit( filterEventObject ) ;
             }
-        });
+          })
+        );
     }
 
     onChangeFilter(event) {
-        this.subject.next(event);
+      this.subject.next(event);
+    }
+
+    onClear(event) {
+      this.subject.next(event);
     }
 
     makeFilterEvent(): FilterEventMetadata {
         const filter: FilterEventMetadata = { filters: {} };
 
-        this.tlColumnFilter.forEach((value) => {
-            if (this.filters.value[value.field]) {
-                filter.filters[value.field] = {
-                    value: this.filters.value[value.field],
-                    matchMode: this.filters.matchMode[value.field] ? this.filters.matchMode[value.field] : 'startsWith'
+        this.tlColumnFilter.forEach((column) => {
+            if (this.filters.value[column.field]) {
+                filter.filters[column.field] = {
+                    value: this.getValueByType(column),
+                    matchMode: this.filters.matchMode[column.field] ? this.filters.matchMode[column.field] : this.getDefaultMath( column )
                 };
             }
         });
 
         return Object.keys(filter.filters).length ? filter : { filters: {} };
+    }
+
+    getDefaultMath( column: TlDatatableColumn ): any {
+      switch ( column.type ) {
+        case 'text' :
+          return 'contains';
+        case 'number' :
+          return 'equals';
+        case 'date' :
+          return 'equals';
+        default :
+          return  'contains';
+      }
+    }
+
+    getValueByType( column: TlDatatableColumn ): any {
+      switch ( column.type ) {
+        case 'text' :
+          return this.filters.value[column.field];
+        case 'number' :
+          return parseInt(this.filters.value[column.field], 10);
+        case 'date' :
+          return this.filters.value[column.field];
+        default :
+          return  this.filters.value[column.field];
+      }
+    }
+
+    ngOnDestroy(): void {
+      this.subscription.unsubscribe();
     }
 }

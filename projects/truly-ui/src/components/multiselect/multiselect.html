@@ -10,15 +10,18 @@
       {
       'ng-touched': touched,
       'ng-disabled': disabled,
-      'invalid': controlName?.control.errors || model?.control.errors,
+      'invalid': control.errors,
       'withValidators': hasValidator,
       'inputFormOpenFilter': isOpen && filteredItems.length !== 0
       }">
       <div class="group-tags">
         <tl-tag *ngFor="let tag of tags; let i = index"
                 [title]="isSimpleData() ? tag : tag[labelTag]"
+                [closeButton]="true"
+                [color]="'primary'"
+                [height]="'18px'"
                 (close)="removeTag(i, tag)"
-                (click)="selectTagClick(i, tag)">
+                (click)="$event.stopPropagation(); selectTagClick(i, tag)">
         </tl-tag>
 
         <input autocomplete="off"
@@ -31,7 +34,7 @@
                class="input-field"
                [ngClass]="
              {
-              'invalid': controlName?.control.errors || model?.control.errors,
+              'invalid': control.errors,
               'withValidators': hasValidator,
               'withoutValidators': !hasValidator
               }"

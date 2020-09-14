@@ -35,6 +35,10 @@ export interface ModalFormConfig {
   recordNotFoundMessage?: string;
   parentElement?: ElementRef;
   titleByAction?: boolean;
+  recordConfig?: {
+    keyFromDataForm?: string;
+    showOnDelete?: boolean;
+  };
   actions?: {
     insertCall?: Function;
     updateCall?: Function;

@@ -184,7 +184,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private handleOpenOnFocus() {
-    if ( this.openFocus ) {
+    if ( this.openFocus && this.filteredItems.length > 0 ) {
       this.isOpen = true;
     }
   }
@@ -335,7 +335,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   handleClickWrapper() {
-    if (!this.disabled) {
+    if (!this.disabled && this.filteredItems.length > 0) {
       this.isOpen = !this.isOpen;
     }
     this.setInputFocus();

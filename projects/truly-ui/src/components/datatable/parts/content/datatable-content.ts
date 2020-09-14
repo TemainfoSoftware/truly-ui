@@ -23,15 +23,15 @@
 
 import {
   AfterViewInit,
-  ChangeDetectionStrategy,
-  Component, EventEmitter, Input, OnChanges,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy,
   OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
 import { TlDatatableCell } from '../cell/datatable-cell';
-import { Observable } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
-import { FocusKeyManager } from '@angular/cdk/a11y';
+import {ActiveDescendantKeyManager, FocusKeyManager} from '@angular/cdk/a11y';
 import { CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 import { TlDatatableColumn } from '../column/datatable-column';
@@ -39,6 +39,8 @@ import { I18nService } from '../../../i18n/i18n.service';
 import { DatatableDataSource } from '../../services/datatable-datasource.service';
 import { ContextMenuService } from '../../../contextmenu/services/contextmenu.service';
 import { ContextMenuInterface } from '../../../contextmenu/interfaces/context-menu.interface';
+import {scrollIntoView} from '../../../core/helper/scrollIntoView';
+import {TlDatatableFilterService} from '../../services/datatable-filter.service';
 
 @Component( {
   selector: 'tl-datatable-content',
@@ -47,7 +49,7 @@ import { ContextMenuInterface } from '../../../contextmenu/interfaces/context-me
   providers: [ContextMenuService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 } )
-export class TlDatatableContent implements AfterViewInit {
+export class TlDatatableContent implements AfterViewInit, OnDestroy {
 
   @Input('dataSource') dataSource: Array<any> | Observable<Array<any>> | DataSource<any>;
 
@@ -71,17 +73,29 @@ export class TlDatatableContent implements AfterViewInit {
 
   @ViewChildren(TlDatatableRow) items: QueryList<TlDatatableRow>;
 
-  private keyManager: FocusKeyManager<TlDatatableRow>;
+  @ViewChild('datableContent') datableContent: ElementRef;
 
-  constructor(private i18n: I18nService, private contextMenuService: ContextMenuService) {}
+  private keyManager: ActiveDescendantKeyManager<TlDatatableRow>;
+
+  private subscription = new Subscription();
+
+  constructor(private i18n: I18nService,
+              private datatableFilterService: TlDatatableFilterService,
+              private changes: ChangeDetectorRef,
+              private contextMenuService: ContextMenuService) {}
 
   ngAfterViewInit() {
-    this.keyManager = new FocusKeyManager(this.items).withTypeAhead();
+    this.keyManager = new ActiveDescendantKeyManager(this.items).withTypeAhead();
+    this.subscription.add( this.datatableFilterService.keydownFilter.subscribe(( event ) => {
+      this.onKeydown(event);
+      this.changes.detectChanges();
+    }));
   }
 
   onRowClick( rowItem: TlDatatableRow, row, index ) {
     this.rowClick.emit({ row: row, index: index });
     this.keyManager.setActiveItem(rowItem);
+    this.setContentFocus();
   }
 
   contextmenu($event, rowItem: TlDatatableRow, row, index ) {
@@ -89,6 +103,10 @@ export class TlDatatableContent implements AfterViewInit {
       this.contextMenuService.create($event, rowItem.element, this.contextMenuItems, { row: row, index: index });
       return false;
     }
+  }
+
+  setContentFocus() {
+    this.datableContent.nativeElement.focus();
   }
 
   isEmpty() {
@@ -102,13 +120,13 @@ export class TlDatatableContent implements AfterViewInit {
     return this.i18n.getLocale().Datatable.notFoundText;
   }
 
-  mouseDown($event) {
+  mouseDown( $event ) {
     if ( this.dataSource instanceof DatatableDataSource) {
       ( this.dataSource as DatatableDataSource ).setNavigating( true );
     }
   }
 
-  mouseUp($event) {
+  mouseUp( $event ) {
     if ( this.dataSource instanceof DatatableDataSource) {
       ( this.dataSource as DatatableDataSource ).setNavigating( false );
     }
@@ -116,14 +134,20 @@ export class TlDatatableContent implements AfterViewInit {
 
   onKeydown(event) {
     this.keyManager.onKeydown(event);
+    scrollIntoView( this.keyManager.activeItem.element.nativeElement );
   }
 
   onKeyup() {
     this.rowSelect.emit( this.keyManager.activeItem );
   }
 
-  setFirstItem() {
-    this.keyManager.setFirstItemActive();
+  setSelectedItem() {
+    this.setContentFocus();
+    this.keyManager.setActiveItem( this.keyManager.activeItemIndex );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

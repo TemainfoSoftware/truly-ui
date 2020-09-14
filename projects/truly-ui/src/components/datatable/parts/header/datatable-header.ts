@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import { AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import {AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef, OnDestroy, Output, EventEmitter} from '@angular/core';
 import { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
@@ -40,6 +40,8 @@ export class TlDatatableHeader implements AfterViewInit, OnDestroy {
     @ViewChild(TlDatatabaleColumnFilter, {static: false} ) columnsFilter;
 
     @ViewChild('datatableHeader', {static: true} ) datatableHeader: ElementRef;
+
+    @Output() keydownFilter: EventEmitter<any> = new EventEmitter<any>();
 
     private subscription = new Subscription();
 

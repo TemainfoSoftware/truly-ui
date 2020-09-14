@@ -30,7 +30,7 @@ import {
   ViewContainerRef, HostBinding, HostListener, ElementRef
 } from '@angular/core';
 import { FilterOptionsService } from '../../services/datatable-filter-options.service';
-import { FocusableOption } from '@angular/cdk/a11y';
+import {FocusableOption, Highlightable} from '@angular/cdk/a11y';
 
 @Component( {
   selector: 'tl-datatable-row',
@@ -50,7 +50,9 @@ import { FocusableOption } from '@angular/cdk/a11y';
   `],
   exportAs: 'rowItem'
 } )
-export class TlDatatableRow implements OnInit, FocusableOption {
+export class TlDatatableRow implements OnInit, Highlightable {
+
+  public selected = false;
 
   @Input() content;
 
@@ -58,14 +60,20 @@ export class TlDatatableRow implements OnInit, FocusableOption {
 
   @Input('index') index;
 
-  @HostBinding('attr.tabindex') tabIndex = -1;
+  @HostBinding( 'class.selected') get isSelected() {
+    return this.selected;
+  }
 
   constructor(public element: ElementRef) {}
 
   ngOnInit() {}
 
-  focus() {
-    this.element.nativeElement.focus();
+  setActiveStyles(): void {
+    this.selected = true;
+  }
+
+  setInactiveStyles(): void {
+    this.selected = false;
   }
 
 }

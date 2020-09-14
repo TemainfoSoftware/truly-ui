@@ -24,6 +24,7 @@
                 <tl-input *ngIf="column?.showFilter"
                           [clearButton]="true"
                           [height]="'23px'"
+                          (keydown)="onKeyDown($event)"
                           [ngModel]="filters.value[column.field]"
                           (ngModelChange)="onChangeFilter(filters.value[column.field] = $event)"
                           (clear)="onClear($event)"

@@ -41,6 +41,8 @@ export class TlDatatableFilterService {
 
     private filterArray = [];
 
+    public keydownFilter: Subject<any> = new Subject();
+
     constructor( private filterConstraints: TlDatatableFilterConstraints ) {}
 
     onInicializeFilterService( datatable ) {
@@ -69,7 +71,6 @@ export class TlDatatableFilterService {
     getFilter() {
         return this.existsFilter() ? this.filter.filters : {};
     }
-
 
     filterWithData(data, scrolling = false) {
         if (! this.existsFilter()) { return data; }

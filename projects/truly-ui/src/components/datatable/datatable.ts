@@ -179,7 +179,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
   }
 
   setFocus() {
-    this.datatableContent.setFirstItem();
+    this.datatableContent.setSelectedItem();
   }
 
   getScrollingHorizontal(): Observable<any> {

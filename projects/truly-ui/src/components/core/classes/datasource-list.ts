@@ -53,7 +53,7 @@ export class DataSourceList extends DataSource<string | undefined> {
     this.resetData();
   }
 
-  connect( collectionViewer: CollectionViewer ): Observable<(string | undefined)[]> {
+  connect( collectionViewer?: CollectionViewer ): Observable<(string | undefined)[]> {
     this.subscription.add( collectionViewer.viewChange.subscribe( range => {
       const startPage = this.getPageForIndex( range.start );
       const endPage = this.getPageForIndex( range.end - 1 );
@@ -65,6 +65,10 @@ export class DataSourceList extends DataSource<string | undefined> {
   }
 
   disconnect(): void {
+    // this.subscription.unsubscribe();
+  }
+
+  unsubscribe() {
     this.subscription.unsubscribe();
   }
 

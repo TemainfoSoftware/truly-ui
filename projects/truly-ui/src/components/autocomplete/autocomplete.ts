@@ -111,6 +111,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   @Input() height = '23px';
 
+  @Input() containerHeight = '200px';
+
   @Input() searchBy = '';
 
   @Input() label = '';
@@ -157,6 +159,8 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   public nothingFound = false;
 
+  public tempContainerHeight;
+
   public messageLoading = this.i18n.getLocale().AutoComplete.messageLoading;
 
   public nothingFoundMessage = this.i18n.getLocale().AutoComplete.nothingFoundMessage;
@@ -201,6 +205,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager( this.listItems );
+    this.tempContainerHeight = this.containerHeight;
     this.validateKeyValue();
   }
 
@@ -455,8 +460,25 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
       this.handleModelCached();
     }
     this.dataSource.setData( value );
+    this.loading = false;
+    // this.setContainerHeight( value );
     this.setNotFound( value.length === 0 );
     this.setFirstItemActive();
+  }
+
+  setContainerHeight( data ) {
+    if ( this.filtering ) {
+      const currentHeight = parseInt(this.containerHeight, 10);
+      const maxContent = Math.round(currentHeight / this.rowHeight);
+      if ( data.length === 0 ) {
+        this.tempContainerHeight = this.rowHeight + 'px';
+      } else if ( data.length <= maxContent ) {
+        this.tempContainerHeight = (data.length * this.rowHeight) + 'px';
+      } else {
+        this.tempContainerHeight = this.containerHeight;
+      }
+      this.change.detectChanges();
+    }
   }
 
   private setFirstItemActive() {
@@ -470,6 +492,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   private listenLoadData() {
     this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
       this.lazyLoad.emit( { skip: data.skip, limit: data.limit, ...this.getFilters( this.description ) } );
+      this.loading = true;
     } ) );
   }
 
@@ -520,9 +543,6 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
     if ( $event ) {
       this.dataSource.setArray( $event.length );
       this.setUpData( $event );
-      setTimeout( () => {
-        this.keyManager.setActiveItem( 0 );
-      }, 100 );
       return;
     }
     this.dataSource.setData( [] );
@@ -557,6 +577,9 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    if ( this.dataSource ) {
+      this.dataSource.unsubscribe();
+    }
   }
 
 }

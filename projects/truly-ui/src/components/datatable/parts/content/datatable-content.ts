@@ -86,6 +86,7 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.keyManager = new ActiveDescendantKeyManager(this.items).withTypeAhead();
+    this.setFirstItemSelected();
     this.subscription.add( this.datatableFilterService.keydownFilter.subscribe(( event ) => {
       this.onKeydown(event);
       this.changes.detectChanges();
@@ -139,6 +140,14 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
 
   onKeyup() {
     this.rowSelect.emit( this.keyManager.activeItem );
+  }
+
+  setFirstItemSelected() {
+    setTimeout(() => {
+      this.setContentFocus();
+      this.keyManager.setActiveItem(0);
+      this.changes.detectChanges();
+    }, 100);
   }
 
   setSelectedItem() {

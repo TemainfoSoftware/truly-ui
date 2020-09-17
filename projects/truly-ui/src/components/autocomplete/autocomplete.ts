@@ -266,7 +266,7 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
 
   close() {
     if ( !this.control.disabled ) {
-      this.value = '';
+      this.value = null;
       this.setDescriptionValue( '' );
       this.selected = null;
     }

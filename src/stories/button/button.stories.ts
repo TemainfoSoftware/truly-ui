@@ -2,7 +2,7 @@
  *
  *     MIT License
  *
- *     Copyright (c) 2019 Temainfo Sistemas
+ *     Copyright (c) 2020 Temainfo Sistemas
  *
  *     Permission is hereby granted, free of charge, to any person obtaining a copy
  *     of this software and associated documentation files (the "Software"), to deal
@@ -205,11 +205,11 @@ Story.add('With Template', () => ({
     template: `
       <ng-template #icon>
         <div style="padding: 0 10px">
-          <span style="padding-right: 10px">With Template</span> 
+          <span style="padding-right: 10px">With Template</span>
           <tl-icon  [lib]="'fa'" [style]="'fas'">home</tl-icon>
         </div>
       </ng-template>
-      
+
       <div style="display: flex; width: 300px; justify-content: space-between;">
         <tl-button width="'40px'" [template]="icon" [color]="'basic'"></tl-button>
       </div>`,

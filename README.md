@@ -67,9 +67,9 @@ TrulyUI is an Angular Framework especially developed for Desktop Applications ba
 
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
-* [NodeJS &gt;= 10.0.0](https://nodejs.org)
-* [Angular Cli &gt;= 8.0.0](https://cli.angular.io/)
-* [Angular &gt;= 8.0.0](https://angular.io/)
+* [NodeJS &gt;= 11.2.0](https://nodejs.org)
+* [Angular Cli &gt;= 10.0.0](https://cli.angular.io/)
+* [Angular &gt;= 10.0.0](https://angular.io/)
 
 ## Installation
 
@@ -230,10 +230,10 @@ Once your library is imported, you can use its components, directives and pipes 
 | Feature | Status | Docs | Issue |
 | :--- | :--- | :--- | :--- |
 | datetimepicker | non-planned |  |  |
-| clockpicker | In-progress, planned S1 2019 |  |  |
+| clockpicker | In-progress, planned S1 2021 |  |  |
 | monthyearpicker | non-planned |  |  |
-| paginator | In-progress, planned S1 2019 |  |  |
-| schedule | In-progress, planned S1 2019 |  |  |
+| paginator | In-progress, planned S1 2021 |  |  |
+| schedule | In-progress, planned S1 2021 |  |  |
 | widget | non-planned |  |  |
 
 ## Feedback
@@ -248,7 +248,7 @@ angular ui components angular 2 components, angular 4 components, angular electr
 
 The MIT License \(MIT\)
 
-Copyright \(c\) 2019 [Temainfo Software](mailto:suporte@temainfo.com.br)
+Copyright \(c\) 2020 [Temainfo Software](mailto:suporte@temainfo.com.br)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files \(the "Software"\), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

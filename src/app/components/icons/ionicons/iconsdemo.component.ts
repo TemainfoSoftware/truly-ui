@@ -1,7 +1,7 @@
 /*
   MIT License
 
-  Copyright (c) 2019 Temainfo Software
+  Copyright (c) 2020 Temainfo Software
 
   Permissis hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentatfiles (the "Software"), to deal

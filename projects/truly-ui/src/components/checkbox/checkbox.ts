@@ -20,27 +20,31 @@
  SOFTWARE.
  */
 import {
-  Component, Input, ViewChild, Output, EventEmitter, ContentChild, OnInit, AfterViewInit, AfterContentInit,
-  SimpleChanges, OnChanges
+  Component, Input, ViewChild, Output, EventEmitter, OnInit,
+  SimpleChanges, OnChanges, Optional, Self
 } from '@angular/core';
 
-import { MakeProvider } from '../core/base/value-accessor-provider';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 
 @Component( {
   selector: 'tl-checkbox',
   templateUrl: './checkbox.html',
-  styleUrls: [ './checkbox.scss' ],
-  providers: [
-    [ MakeProvider( TlCheckBox ) ]
-  ]
+  styleUrls: [ './checkbox.scss' ]
 } )
 export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit, OnChanges {
 
-  @Input() label = '';
+  @Input('checked')
+  set checked( value: boolean ) {
+    this._checked = value;
+    this.value = value;
+  }
 
-  @Input() checked = false;
+  get checked() {
+    return this._checked;
+  }
+
+  @Input() label = '';
 
   @Input() tabindex = '0';
 
@@ -50,24 +54,34 @@ export class TlCheckBox extends ValueAccessorBase<boolean> implements OnInit, On
 
   @Input() indeterminate = false;
 
+  @Input() labelWidth = 'auto';
+
   @ViewChild( 'checkbox', {static: true}  ) checkbox;
-
-  @ContentChild( NgModel, {static: true}  ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true}  ) controlName: FormControlName;
 
   @Output() checkBox: EventEmitter<any> = new EventEmitter();
 
   @Output() focusBox: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  private _checked = false;
+
+  constructor(@Optional() @Self() public ngControl: NgControl) {
     super();
+    this.setControl();
   }
 
   ngOnInit() {
-    this.value = this.checked;
     if ( !this.label ) {
       throw new EvalError( 'The [label] property is required!' );
+    }
+  }
+
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
     }
   }
 

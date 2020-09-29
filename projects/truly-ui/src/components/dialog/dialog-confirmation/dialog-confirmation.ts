@@ -68,7 +68,7 @@ export class TlDialogConfirmation implements OnInit {
   }
 
   onkeyup( $event: KeyboardEvent ) {
-    switch ( $event.keyCode ) {
+    switch ( $event.code ) {
       case KeyEvent.ARROWLEFT:
         this.setPreviousButton();
         break;

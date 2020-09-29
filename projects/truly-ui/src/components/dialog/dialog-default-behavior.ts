@@ -27,7 +27,7 @@ export class DialogDefaultBehavior {
     constructor() {}
 
     onKeyDown( $event: KeyboardEvent ) {
-        switch ( $event.keyCode ) {
+        switch ( $event.code ) {
             case KeyEvent.TAB:
                 $event.preventDefault();
                 $event.stopPropagation();

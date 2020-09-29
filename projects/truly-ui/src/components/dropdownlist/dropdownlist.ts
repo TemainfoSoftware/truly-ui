@@ -177,6 +177,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
     return this.input.nativeElement;
   }
 
+
   onFindByLetter( value: string ) {
     this.handleSelectInLetter( value );
   }

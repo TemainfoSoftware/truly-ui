@@ -135,7 +135,9 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
 
   onKeydown(event) {
     this.keyManager.onKeydown(event);
-    scrollIntoView( this.keyManager.activeItem.element.nativeElement );
+    if (this.keyManager.activeItem) {
+      scrollIntoView( this.keyManager.activeItem.element.nativeElement );
+    }
   }
 
   onKeyup() {

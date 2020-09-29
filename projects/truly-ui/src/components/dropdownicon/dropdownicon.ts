@@ -21,7 +21,7 @@
  */
 import {
   Component, Input, Inject,
-  Optional, OnInit, AfterViewInit, ViewChild
+  Optional, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef
 } from '@angular/core';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { ElementBase } from '../input/core/element-base';
@@ -74,7 +74,7 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
   public isOpen: boolean;
 
   constructor( @Optional() @Inject( NG_VALIDATORS ) validators: Array<any>, @Optional() @Inject( NG_ASYNC_VALIDATORS )
-    asyncValidators: Array<any> ) {
+    asyncValidators: Array<any>, private change: ChangeDetectorRef ) {
     super( validators, asyncValidators );
   }
 
@@ -88,6 +88,11 @@ export class TlDropdownIcon extends ElementBase<string> implements OnInit, After
     if (!this.keyIcon) {
       throw new Error('The property [keyIcon] must be declared');
     }
+  }
+
+  onBackdropClick() {
+    this.isOpen = false;
+    this.change.detectChanges();
   }
 
   onSelectOption( $event ) {

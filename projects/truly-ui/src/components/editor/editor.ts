@@ -21,27 +21,22 @@
  */
 import {
   AfterContentInit,
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  ContentChild,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
-  OnChanges,
+  OnChanges, Optional,
   Output,
-  Renderer2,
+  Renderer2, Self,
   SimpleChanges, TemplateRef,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 
 import {trigger, transition, style, animate} from '@angular/animations';
 import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
-import {ControlValueAccessor, FormControlName, NG_VALUE_ACCESSOR, NgModel} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {EditorService} from './services/editor.service';
@@ -51,11 +46,6 @@ import {FieldContent} from './interfaces/field-content';
   selector: 'tl-editor',
   templateUrl: './editor.html',
   styleUrls: ['./editor.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TlEditor),
-    multi: true
-  }],
   animations: [
     trigger(
       'enterAnimation', [
@@ -91,10 +81,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   @Input() label = '';
 
-  @ContentChild(NgModel, {static: true}) ngModel: NgModel;
-
-  @ContentChild(FormControlName, {static: true}) formControlName: FormControlName;
-
   @ViewChild('contentEditor', {static: true}) contentEditor: ElementRef;
 
   @ViewChild('linkBox', {static: true}) linkBox;
@@ -104,21 +90,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   @ViewChild('fieldTemplate', {static: true}) fieldTemplate: TemplateRef<any>;
 
   @Output() saveContent = new EventEmitter();
-
-  @Input('formControl')
-  set control(item) {
-    this._control = item;
-  }
-
-  get control() {
-    if (this._control) {
-      return this._control;
-    }
-    if (this.formControlName || this.ngModel) {
-      return this.formControlName.control ? this.formControlName.control : this.ngModel;
-    }
-    return this._control;
-  }
 
   public fontCollection = [];
 
@@ -169,8 +140,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   private interval;
 
-  private _control;
-
   private listenerRegistered = false;
 
   private subscription = new Subscription();
@@ -184,7 +153,9 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   constructor(private i18n: I18nService,
               private renderer: Renderer2,
               private editorService: EditorService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer,
+              @Optional() @Self() public ngControl: NgControl) {
+    this.setControl();
     this.fontCollection = [
       {description: 'Arial', value: 'Arial'},
       {description: 'Verdana', value: 'Verdana'},
@@ -205,6 +176,16 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     ];
   }
 
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
   ngAfterContentInit() {
     this.setContentFocus();
     this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
@@ -215,10 +196,8 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     if ( this.control ) {
       this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
         if (!this.listenerRegistered) {
-          setTimeout(() => {
-            this.handleFieldsPropagation();
-            this.listenerRegistered = true;
-          }, 500);
+          this.handleFieldsPropagation();
+          this.listenerRegistered = true;
         }
       }));
     }
@@ -340,6 +319,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   onMouseUp() {
     this.toggleLink = false;
+    this.touch();
     this.setAnchorNode();
     if (this.cursorHighlight) {
       document.execCommand('hiliteColor', false, '#f0ef99');
@@ -515,7 +495,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     return !!this.cursorSelection.baseNode.parentNode.closest(element);
   }
 
-
   private preventPropagation(fieldText) {
     this.listenerRegistered = true;
     fieldText.addEventListener('input', (e) => {
@@ -600,9 +579,13 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     this.onTouched = fn;
   }
 
-  change() {
-    this.onChange(this.contentEditor.nativeElement.innerHTML);
+  touch() {
     this.onTouched(this.contentEditor.nativeElement.innerHTML);
+  }
+
+  change() {
+    this.setCursorSelection();
+    this.onChange(this.contentEditor.nativeElement.innerHTML);
   }
 
   ngOnChanges(data: SimpleChanges) {

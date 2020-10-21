@@ -138,18 +138,18 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       const scales = workScale.filter( work => work.expansed === undefined);
       for (let i = 0; i <= events.length - 1; i++) {
 
-        for (let index = 0; index <= workScale.length - 1; index++) {
+        workScale.forEach( (value, workScaleIndex, array) => {
           const eventStartDate = new Date(new Date(events[i].date.start).setSeconds(0)).getTime();
           const eventEndDate = new Date(new Date(events[i].date.end).setSeconds(0)).getTime();
-          const workStartDate = this.workScaleService.transformHourToMileseconds(scales[index].start);
-          const workEndDate = this.workScaleService.transformHourToMileseconds(scales[index].end);
+          const workStartDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].start, new Date(eventStartDate));
+          const workEndDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].end, new Date(eventEndDate));
 
-          if (eventEndDate >= workEndDate && eventStartDate > workEndDate) {
-            if (workScale.length - 1 === index) {
+          if (eventEndDate >= workEndDate && eventStartDate >= workEndDate) {
+            if (workScale.length - 1 === workScaleIndex) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(workEndDate),
                 end: this.workScaleService.transformMilesecondsToHour(eventEndDate),
-                interval: (scales[index].interval),
+                interval: (scales[workScaleIndex].interval),
                 expansed: true,
               });
 
@@ -157,16 +157,16 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
 
           if (eventEndDate <= workStartDate && eventStartDate <= workStartDate) {
-            if (index === 0) {
+            if (workScaleIndex === 0) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(eventStartDate),
                 end: this.workScaleService.transformMilesecondsToHour(workStartDate),
-                interval: (scales[index].interval),
+                interval: (scales[workScaleIndex].interval),
                 expansed: true,
               });
             }
           }
-        }
+        });
       }
 
       this.workScaleService.reload( this.filterScaleStartRepeated( this.sortScaleByStart( scales) ));

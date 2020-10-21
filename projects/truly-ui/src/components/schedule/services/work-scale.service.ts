@@ -64,14 +64,14 @@ export class WorkScaleService {
   }
 
 
-  transformHourToMileseconds( fullHour: string ) {
+  transformHourToMileseconds( fullHour: string, currentDate = this.currentDate ) {
     const hourSplited = fullHour.split(':');
 
     const hours = Number(hourSplited[0]);
     const minutes = Number(hourSplited[1]);
-    const year = this.currentDate.getFullYear();
-    const month = this.currentDate.getMonth();
-    const date = this.currentDate.getDate();
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    const date = currentDate.getDate();
 
     return new Date(year, month, date, hours, minutes).getTime();
   }

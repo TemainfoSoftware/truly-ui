@@ -144,7 +144,11 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           const workStartDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].start, new Date(eventStartDate));
           const workEndDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].end, new Date(eventEndDate));
 
-          if (eventEndDate >= workEndDate && eventStartDate >= workEndDate) {
+          // Handle Overflow in BEFORE workScale
+          if (
+              ( eventEndDate >= workEndDate && eventStartDate >= workEndDate ) ||
+              ( eventEndDate >= workEndDate && eventStartDate <= workEndDate )
+            ) {
             if (workScale.length - 1 === workScaleIndex) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(workEndDate),
@@ -156,7 +160,11 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             }
           }
 
-          if (eventEndDate <= workStartDate && eventStartDate <= workStartDate) {
+          // Handle Overflow in AFTER workScale
+          if (
+              ( eventEndDate <= workStartDate && eventStartDate <= workStartDate ) ||
+              ( eventEndDate <= workStartDate && eventStartDate >= workStartDate )
+            ) {
             if (workScaleIndex === 0) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(eventStartDate),
@@ -168,7 +176,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
         });
       }
-
       this.workScaleService.reload( this.filterScaleStartRepeated( this.sortScaleByStart( scales) ));
     }
   }

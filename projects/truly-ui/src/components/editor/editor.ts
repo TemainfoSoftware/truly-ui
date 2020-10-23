@@ -555,6 +555,19 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
     }
   }
 
+  private recoverCursorPosition() {
+    setTimeout(() => {
+      const sel = document.getSelection();
+      const range = new Range();
+      if (this.selection.baseNode) {
+        range.selectNodeContents(this.contentEditor.nativeElement);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    });
+  }
+
   private resetCursor() {
     this.wrapper.nativeElement.style.cursor = 'auto';
   }
@@ -569,6 +582,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   writeValue(value: any): void {
     this.content = this.sanitizer.bypassSecurityTrustHtml(value);
+    this.recoverCursorPosition();
   }
 
   registerOnChange(fn: any): void {

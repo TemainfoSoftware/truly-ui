@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
@@ -39,18 +39,19 @@ import { ShowcaseHeaderModule } from '../../shared/components/showcase-header/sh
   declarations: [
     EditorDemoComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    HighlightJsModule,
-    EditorModule,
-    EditorDemoRoutingModule,
-    ShowcaseTablePropertiesModule,
-    ShowcaseCardModule,
-    ShowcaseTableEventsModule,
-    ShowcaseReturnedValueModule,
-    ShowcaseHeaderModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        HighlightJsModule,
+        EditorModule,
+        EditorDemoRoutingModule,
+        ShowcaseTablePropertiesModule,
+        ShowcaseCardModule,
+        ShowcaseTableEventsModule,
+        ShowcaseReturnedValueModule,
+        ShowcaseHeaderModule,
+        ReactiveFormsModule
+    ],
   exports: [
     EditorDemoComponent,
   ],

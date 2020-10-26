@@ -31,5 +31,5 @@ export enum KeyEvent {
     TAB = 'Tab',
     SPACE = 'Space',
     DELETE = 'Delete',
-    BACKSPACE = 'BackSpace',
+    BACKSPACE = 'Backspace',
 }

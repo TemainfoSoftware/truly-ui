@@ -180,7 +180,7 @@ export class TlColorPicker extends ValueAccessorBase<string> implements OnInit, 
   }
 
   keyDown($event) {
-    switch ($event.keyCode) {
+    switch ($event.code) {
       case KeyEvent.TAB:
         this.isOpen = !this.isOpen;
         break;

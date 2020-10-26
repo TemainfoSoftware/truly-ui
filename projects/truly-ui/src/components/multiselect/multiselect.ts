@@ -323,8 +323,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
       [KeyEvent.ARROWLEFT]: () => this.handleArrowLeft( $event ),
       [KeyEvent.ARROWRIGHT]: () => this.handleArrowRight( $event )
     };
-    if ( keyEvent[ $event.keyCode ] ) {
-      keyEvent[ $event.keyCode ]();
+    if ( keyEvent[ $event.code ] ) {
+      keyEvent[ $event.code ]();
     }
   }
 

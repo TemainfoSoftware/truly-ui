@@ -161,8 +161,8 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
       [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
       [KeyEvent.ESCAPE]: () => this.handleEscape( $event )
     };
-    if ( keyEvent[ $event.keyCode ] ) {
-      keyEvent[ $event.keyCode ]();
+    if ( keyEvent[ $event.code ] ) {
+      keyEvent[ $event.code ]();
     }
   }
 

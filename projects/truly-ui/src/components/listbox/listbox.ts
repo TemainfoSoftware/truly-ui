@@ -145,8 +145,8 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
         [KeyEvent.ARROWUP]: () => this.handleKeyArrowUp($event),
         [KeyEvent.ENTER]: () => this.onKeyEnter()
       };
-      if (event[$event.keyCode]) {
-        event[$event.keyCode]();
+      if (event[$event.code]) {
+        event[$event.code]();
       }
     }));
   }

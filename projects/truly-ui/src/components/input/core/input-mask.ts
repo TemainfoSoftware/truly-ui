@@ -103,7 +103,7 @@ export class InputMask {
 
   onKeyDownInputListener() {
     this.renderer.listen( this.input.nativeElement, 'keydown', $event => {
-      switch ( $event.keyCode ) {
+      switch ( $event.code ) {
         case KeyEvent.BACKSPACE:
           this.handleBackspace( $event );
           break;

@@ -393,6 +393,11 @@ export class InputMask {
   }
 
   private replaceUnderscoreForChar( valueArray, charInputted, cursorEnd ) {
+
+    if (valueArray.length === 0) {
+      valueArray = [...this.maskGuideExpression];
+    }
+
     if ( this.maskSpecialCharacters.indexOf( this.maskExpression[ cursorEnd ] ) >= 0 ) {
       cursorEnd++;
     }

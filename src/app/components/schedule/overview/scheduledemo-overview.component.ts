@@ -290,18 +290,18 @@ export class ScheduleDemoOverviewComponent {
       status: '',
       type: 'EVENTO',
       blocked: true,
-      date: { start: new Date(new Date().setHours(19, 0)).getTime() , end: new Date(new Date().setHours(21, 0 )).getTime() }
+      date: { start: new Date(new Date().setHours(17, 0)).getTime() , end: new Date(new Date().setHours(18, 0 )).getTime() }
     },
-    {
-      value: '23',
-      title: 'Reunião no Congresso Universitario',
-      detail: '',
-      allday: false,
-      status: '',
-      type: 'EVENTO',
-      blocked: true,
-      date: { start: new Date(new Date().setHours(6, 0)).getTime() , end: new Date(new Date().setHours(7, 0 )).getTime() }
-    }
+    // {
+    //   value: '23',
+    //   title: 'Reunião no Congresso Universitario',
+    //   detail: '',
+    //   allday: false,
+    //   status: '',
+    //   type: 'EVENTO',
+    //   blocked: true,
+    //   date: { start: new Date(new Date().setHours(6, 0)).getTime() , end: new Date(new Date().setHours(7, 0 )).getTime() }
+    // }
   ];
 
   constructor(
@@ -368,8 +368,8 @@ export class ScheduleDemoOverviewComponent {
       allday: false,
       tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {
-        start: new Date(new Date().setHours(18, 30, 0)).getTime() ,
-        end: new Date( new Date().setHours(19, 0, 0) ).getTime()
+        start: new Date(new Date().setHours(17, 30, 0)).getTime() ,
+        end: new Date( new Date().setHours(18, 30, 0) ).getTime()
       }
     }];
 

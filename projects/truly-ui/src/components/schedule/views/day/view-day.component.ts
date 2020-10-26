@@ -181,10 +181,13 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   }
 
   private filterScaleStartRepeated( scales: WorkScaleType[]   ) {
-    return scales
-      .filter( (scale, index) => {
-      return scales[index + 1] ? scale.start !==  scales[index + 1].start : true;
-    });
+    const filterOnlyExpansed = (scale) => scale.expansed;
+    const removeScalesWithTimesRepeated = (scale, index) =>  scales[index] ? scale.start !== scale.end : true;
+    const removeRepetedNextTimes = (scale, index) => scales[index + 1] ? scale.start !== scales[index + 1].start : true;
+
+    const expansedScales = scales.filter( filterOnlyExpansed ).filter( removeScalesWithTimesRepeated ).filter( removeRepetedNextTimes );
+    const notExpansedScales = scales.filter( (scale) => !scale.expansed );
+    return this.sortScaleByStart(notExpansedScales.concat(expansedScales));
   }
 
   private sortScaleByStart( scales: WorkScaleType[]   ) {

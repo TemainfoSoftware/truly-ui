@@ -312,8 +312,22 @@ export class IconsDemoComponent {
     }
     setTimeout(() => {
       this.inputCopy.nativeElement.select();
-      document.execCommand('copy');
-      this.showCopyMessage(icon);
+      if (typeof(navigator.clipboard) === 'undefined') {
+        const textArea = document.createElement('textarea');
+        textArea.value = this.outputIcon;
+        textArea.style.position = 'fixed';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        this.showCopyMessage(icon);
+        return;
+      }
+      navigator.clipboard.writeText(this.outputIcon).then(() => {
+        this.showCopyMessage(icon);
+      });
     });
   }
 

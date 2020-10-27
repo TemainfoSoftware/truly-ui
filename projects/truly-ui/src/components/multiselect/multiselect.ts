@@ -161,6 +161,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.listenControlChanges();
   }
 
+  onBackdropClick() {
+    this.isOpen = false;
+    this.change.detectChanges();
+  }
+
   private listenControlChanges() {
     this.subscription.add(this.control.valueChanges.subscribe(() => {
       this.validateHasModel();

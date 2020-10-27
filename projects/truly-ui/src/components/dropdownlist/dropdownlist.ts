@@ -210,6 +210,11 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
     }
   }
 
+  onBackdropClick() {
+    this.isOpen = false;
+    this.changes.detectChanges();
+  }
+
   private initializeComponent() {
     this.setUpComponent();
     this.validateData();

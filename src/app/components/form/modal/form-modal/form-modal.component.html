@@ -17,6 +17,19 @@
   <tl-panelgroup [labelGroup]="'Access Informations'">
     <div class="form-group">
       <div class="form-group">
+        <tl-multiselect
+          [data]="roles"
+          [labelTag]="'description'"
+          [label]="'Roles'"
+          [keyValue]="'id'"
+          [onlyKeyValue]="true"
+          [labelSize]="100"
+          formControlName="role"
+          [sortAlphabetically]="true"
+          [query]="'description'">
+        </tl-multiselect>
+      </div>
+      <div class="form-group">
         <tl-input formControlName="user" showValidations [labelSize]="'100px'" [label]="'User'"></tl-input>
       </div>
       <div class="form-group">

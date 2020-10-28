@@ -185,8 +185,15 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     const notExpansedScales = orderedScales.filter( (scale) => !scale.expansed );
     const beforeHourScale = this.reduceBeforeScale( orderedScales );
     const afterHourScale = this.reduceAfterScale( orderedScales );
-    return this.sortScaleByStart(notExpansedScales.concat(afterHourScale).concat(beforeHourScale));
+    return this.sortScaleByStart(
+      this.removeSameStartAndEndSacalesTime(
+        notExpansedScales.concat(afterHourScale).concat(beforeHourScale)
+      )
+    );
+  }
 
+  private removeSameStartAndEndSacalesTime(scales: WorkScaleType[]) {
+    return scales.filter( (value => value.start !== value.end ));
   }
 
   private reduceBeforeScale(  scales: WorkScaleType[] ) {

@@ -1,5 +1,7 @@
 <div class="drag-wrapper">
-  <div *ngIf="type === 'dragndrop'" class="dragndrop" [style.height]="height" (click)="open($event)" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+  <div *ngIf="type === 'dragndrop'" class="dragndrop"
+       [style.height]="hasRisize() ? 'calc('+height+' - '+imageList.length * 90 +'px)': height" (click)="open($event)"
+       (drop)="onDrop($event)" (dragover)="onDragOver($event)">
     <ng-container *ngIf="imageList.length === 0 || showAsList; else imagesContainerTemplate">
       <span><tl-icon class="icon" [lib]="'fa'" [style]="'fas'">inbox</tl-icon></span>
       <p style="white-space: pre-line">{{ boxDescription }}</p>
@@ -24,6 +26,7 @@
     </ng-container>
   </div>
 </div>
+
 
 <div *ngIf="type === 'box'" (click)="open($event)">
   <ng-container *ngTemplateOutlet="uploadboxTemplate"></ng-container>

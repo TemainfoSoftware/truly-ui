@@ -9,8 +9,73 @@
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
             <div class="col-md-12">
-              <h5>Basic</h5>
+              <h5>Box Type</h5>
               <tl-upload
+                [type]="'box'"
+                (uploadChange)="onChangeUpload($event)"
+                (deleteChange)="onChangeDelete($event)"
+                (updateChange)="onChangeUpdate($event)">
+              </tl-upload>
+              <br>
+              <div class="spacer"></div>
+              <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-upload></tl-upload>
+              </textarea>-->
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Dragndrop Type</h5>
+              <tl-upload
+                (uploadChange)="onChangeUpload($event)"
+                (deleteChange)="onChangeDelete($event)"
+                (updateChange)="onChangeUpdate($event)">
+              </tl-upload>
+              <br>
+              <div class="spacer"></div>
+              <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-upload></tl-upload>
+              </textarea>-->
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Inline View</h5>
+              <tl-upload
+                [showAsList]="false"
+                (uploadChange)="onChangeUpload($event)"
+                (deleteChange)="onChangeDelete($event)"
+                (updateChange)="onChangeUpdate($event)">
+              </tl-upload>
+              <br>
+              <div class="spacer"></div>
+              <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-upload></tl-upload>
+              </textarea>-->
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>List View</h5>
+              <tl-upload
+                [showAsList]="true"
+                (uploadChange)="onChangeUpload($event)"
+                (deleteChange)="onChangeDelete($event)"
+                (updateChange)="onChangeUpdate($event)">
+              </tl-upload>
+              <br>
+              <div class="spacer"></div>
+              <!--<textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-upload></tl-upload>
+              </textarea>-->
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h5>Resize dragndrop on upload</h5>
+              <tl-upload
+                [height]="'300px'"
+                [resizeDragndrop]="true"
                 (uploadChange)="onChangeUpload($event)"
                 (deleteChange)="onChangeDelete($event)"
                 (updateChange)="onChangeUpdate($event)">

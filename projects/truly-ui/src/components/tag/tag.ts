@@ -35,7 +35,9 @@ export class TlTag implements OnInit {
 
   @Input() height = 'auto';
 
-  @Input() closeButton = false;
+  @Input() icon = null;
+
+  @Input() mode: 'default' | 'closeable' | 'clickable' = 'default';
 
   @Input()
   set color( value: string ) {

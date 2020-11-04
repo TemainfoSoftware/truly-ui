@@ -49,10 +49,10 @@ export const dataProperties = [
     options: 'px | % | em'
   },
   {
-    name: 'closeButton',
-    type: 'boolean',
-    default: 'false',
-    description: 'Defines if the close button will be visible or not',
-    options: 'true | false'
+    name: 'mode',
+    type: 'string',
+    default: 'default',
+    description: 'Defines the mode of tag',
+    options: 'closeable | default | clickable'
   },
 ];

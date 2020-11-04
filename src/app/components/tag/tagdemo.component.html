@@ -26,25 +26,65 @@
 <tl-tag [color]="'danger'"></tl-tag>
               </textarea>
               </div>
-              <div class="col-md-6">
-                <h6>With Close Property</h6>
-                <tl-tag [color]="'basic'" [closeButton]="true"></tl-tag>
-                <tl-tag [color]="'primary'" [closeButton]="true"></tl-tag>
-                <tl-tag [color]="'warning'" [closeButton]="true"></tl-tag>
-                <tl-tag [color]="'information'" [closeButton]="true"></tl-tag>
-                <tl-tag [color]="'success'" [closeButton]="true"></tl-tag>
-                <tl-tag [color]="'danger'" [closeButton]="true"></tl-tag>
-                <br>
-                <div class="spacer"></div>
-                <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-tag [color]="'basic'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'primary'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'warning'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'information'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'success'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'danger'" [closeButton]="true"></tl-tag>
+            <div class="col-md-6">
+              <h6>Icon</h6>
+              <tl-tag [color]="'basic'" [icon]="'fas fa-tag'"></tl-tag>
+              <tl-tag [color]="'primary'" [icon]="'fas fa-tag'" ></tl-tag>
+              <tl-tag [color]="'warning'" [icon]="'fas fa-tag'"></tl-tag>
+              <tl-tag [color]="'information'" [icon]="'fas fa-tag'"></tl-tag>
+              <tl-tag [color]="'success'" [icon]="'fas fa-tag'"></tl-tag>
+              <tl-tag [color]="'danger'" [icon]="'fas fa-tag'"></tl-tag>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'basic'" [icon]="'fas fa-tag'"></tl-tag>
+<tl-tag [color]="'primary'" [icon]="'fas fa-tag'" ></tl-tag>
+<tl-tag [color]="'warning'" [icon]="'fas fa-tag'"></tl-tag>
+<tl-tag [color]="'information'" [icon]="'fas fa-tag'"></tl-tag>
+<tl-tag [color]="'success'" [icon]="'fas fa-tag'"></tl-tag>
+<tl-tag [color]="'danger'" [icon]="'fas fa-tag'"></tl-tag>
               </textarea>
-              </div>
+            </div>
+          </app-card>
+          <app-card>
+            <div class="col-md-6">
+              <h6>With Close Mode</h6>
+              <tl-tag [color]="'basic'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'primary'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'warning'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'information'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'success'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'danger'" [mode]="'closeable'"></tl-tag>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'basic'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'primary'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'warning'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'information'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'success'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'danger'" [mode]="'closeable'"></tl-tag>
+              </textarea>
+            </div>
+            <div class="col-md-6">
+              <h6>With Clickable Mode</h6>
+              <tl-tag [color]="'basic'" [mode]="'clickable'"></tl-tag>
+              <tl-tag [color]="'primary'" [mode]="'clickable'"></tl-tag>
+              <tl-tag [color]="'warning'" [mode]="'clickable'"></tl-tag>
+              <tl-tag [color]="'information'" [mode]="'clickable'"></tl-tag>
+              <tl-tag [color]="'success'" [mode]="'clickable'"></tl-tag>
+              <tl-tag [color]="'danger'" [mode]="'clickable'"></tl-tag>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-tag [color]="'basic'" [mode]="'clickable'"></tl-tag>
+<tl-tag [color]="'primary'" [mode]="'clickable'"></tl-tag>
+<tl-tag [color]="'warning'" [mode]="'clickable'"></tl-tag>
+<tl-tag [color]="'information'" [mode]="'clickable'"></tl-tag>
+<tl-tag [color]="'success'" [mode]="'clickable'"></tl-tag>
+<tl-tag [color]="'danger'" [mode]="'clickable'"></tl-tag>
+              </textarea>
+            </div>
           </app-card>
           <app-card>
             <div class="col-md-6">
@@ -66,15 +106,15 @@
               <h6>Custom Measures</h6>
               <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'"></tl-tag>
               <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'"></tl-tag>
-              <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [closeButton]="true"></tl-tag>
-              <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [closeButton]="true">></tl-tag>
+              <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [mode]="'closeable'"></tl-tag>
+              <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [mode]="'closeable'">></tl-tag>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'"></tl-tag>
 <tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'"></tl-tag>
-<tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [closeButton]="true"></tl-tag>
-<tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [closeButton]="true">></tl-tag>
+<tl-tag [color]="'#e53935'" [title]="'Height - 30px'" [height]="'30px'" [mode]="'closeable'"></tl-tag>
+<tl-tag [color]="'#5a79e5'" [title]="'Width - 120px'"  [width]="'120px'" [mode]="'closeable'">></tl-tag>
               </textarea>
             </div>
           </app-card>

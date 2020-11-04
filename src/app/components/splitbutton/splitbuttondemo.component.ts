@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 
 import * as json from './splitbuttondemo-dataproperties.json';
+import {of} from 'rxjs';
+import {delay} from 'rxjs/operators';
 
 @Component( {
   selector: 'app-split-button',
@@ -23,5 +25,13 @@ export class SplitButtonDemoComponent {
 
   onButtonClick( event ) {
     console.log( event );
+  }
+
+
+  getAsyncIf() {
+    return of(true).pipe(
+      delay(6000)
+    );
+
   }
 }

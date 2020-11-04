@@ -1,11 +1,12 @@
-<div [class]="'tl-tag ' + color">
+<div [class]="'tl-tag ' + color" [ngClass]="{clickable: mode === 'clickable'}">
   <div class="tag"
        [class.customColor]="customColor"
        [style.background]="color || customColor"
        [style.height]="height"
        [style.width]="width"
        [style.line-height]="height">
+    <tl-icon *ngIf="icon" [size]="'0.8em'" >{{ icon }}</tl-icon>
     <span class="description">{{ title }}</span>
-    <tl-icon *ngIf="closeButton" class="icon" [lib]="'fa'" [style]="'fas'" [size]="'0.9em'" (click)="onClose()">times-circle</tl-icon>
+    <tl-icon *ngIf="mode === 'closeable'" class="icon" [lib]="'fa'" [style]="'fas'" [size]="'0.9em'" (click)="onClose()">times-circle</tl-icon>
   </div>
 </div>

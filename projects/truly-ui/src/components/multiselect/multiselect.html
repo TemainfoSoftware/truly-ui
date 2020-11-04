@@ -17,7 +17,7 @@
       <div class="group-tags">
         <tl-tag *ngFor="let tag of tags; let i = index"
                 [title]="isSimpleData() ? tag : tag[labelTag]"
-                [closeButton]="true"
+                [mode]="'closeable'"
                 [color]="'primary'"
                 [height]="'18px'"
                 (close)="removeTag(i, tag)"

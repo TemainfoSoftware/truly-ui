@@ -9,7 +9,7 @@
               <div class="col-md-6">
                 <h6>Basic</h6>
                 <tl-split-button [text]="'Button'" (click)="onButtonClick($event)">
-                  <tl-split-button-action [label]="'Action 1'"></tl-split-button-action>
+                  <tl-split-button-action *ngIf="getAsyncIf() | async" [label]="'Action 1' + (getAsyncIf() | async)"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 2'"></tl-split-button-action>
                   <tl-split-button-action [label]="'Action 3'"></tl-split-button-action>
                 </tl-split-button>

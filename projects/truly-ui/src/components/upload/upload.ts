@@ -127,6 +127,7 @@ export class TlUpload implements OnInit {
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
       this.readFile(fileList[i], i).then((value: ImageUploadInterface) => {
+        value = Object.assign({title: '', description: ''}, value);
         value.index = this.imageList.length;
         this.imageList = [ ...this.imageList, value ];
         if ( fileList.length <= this.imageList.length ) {

@@ -37,13 +37,15 @@ export class CharcaseDirective {
     }
 
     getValue( value) {
-        if ( this.charcase === 'UPPERCASE' ) {
+        if ( this.charcase === 'UPPERCASE' || 'uppercase' ) {
             return value.toUpperCase();
         }
 
 
-        if ( this.charcase === 'LOWERCASE' ) {
+        if ( this.charcase === 'LOWERCASE' || 'lowercase'  ) {
             return value.toLowerCase();
         }
+
+        return value;
     }
 }

@@ -43,5 +43,9 @@ export class TagDemoComponent {
   onClose($event) {
     console.log('close', $event);
   }
+
+  onTagValue($event) {
+    console.log('value', $event);
+  }
 }
 

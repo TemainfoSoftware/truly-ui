@@ -1,12 +1,25 @@
-<div [class]="'tl-tag ' + color" [ngClass]="{clickable: mode === 'clickable'}">
+<div [class]="'tl-tag ' + color" [ngClass]="{clickable: mode === 'clickable' || 'editable'}">
   <div class="tag"
+       *ngIf="!editing"
+       (click)="onClickTag()"
        [class.customColor]="customColor"
        [style.background]="color || customColor"
        [style.height]="height"
        [style.width]="width"
        [style.line-height]="height">
     <tl-icon *ngIf="icon" [size]="'0.8em'" >{{ icon }}</tl-icon>
-    <span class="description">{{ title }}</span>
+    <span class="description" [style.textTransform]="charcase">{{ title }}</span>
     <tl-icon *ngIf="mode === 'closeable'" class="icon" [lib]="'fa'" [style]="'fas'" [size]="'0.9em'" (click)="onClose()">times-circle</tl-icon>
+  </div>
+  <div *ngIf="editing && mode === 'editable'" class="tl-tag-input-wrapper">
+    <tl-input #input
+              [(ngModel)]="editableValue"
+              [height]="height"
+              [style.width]="width"
+              [clearButton]="true"
+              [iconAfter]="'dx-icon dx-icon-check'"
+              (keydown)="onInputValue($event)"
+              (clear)="onClearValue()"
+              (clickAddon)="onConfirmTextInputed()"></tl-input>
   </div>
 </div>

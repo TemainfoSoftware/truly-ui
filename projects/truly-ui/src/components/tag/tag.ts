@@ -20,7 +20,9 @@
     SOFTWARE.
 */
 
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Input, Component, OnInit, Output, EventEmitter, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {KeyEvent} from '../core/enums/key-events';
+import {TlInput} from '../input/input';
 
 @Component({
   selector: 'tl-tag',
@@ -37,7 +39,9 @@ export class TlTag implements OnInit {
 
   @Input() icon = null;
 
-  @Input() mode: 'default' | 'closeable' | 'clickable' = 'default';
+  @Input() mode: 'default' | 'closeable' | 'clickable' | 'editable' = 'default';
+
+  @Input() charcase: 'unset' | 'lowercase' | 'capitalize' | 'uppercase' | 'revert' = 'unset';
 
   @Input()
   set color( value: string ) {
@@ -63,16 +67,57 @@ export class TlTag implements OnInit {
 
   @Output() close: EventEmitter<any> = new EventEmitter();
 
+  @Output() tagValue: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild( 'input'  ) tlinput: TlInput;
+
   private _color = 'basic';
+
+  public editing = false;
 
   public customColor = '';
 
-  constructor() {}
+  public editableValue = '';
+
+  constructor( private change: ChangeDetectorRef ) {}
 
   ngOnInit() {}
 
   onClose() {
     this.close.emit();
+  }
+
+  onClickTag() {
+    if (this.mode === 'editable') {
+      this.editing = true;
+      setTimeout(() => {
+        this.tlinput.setFocus();
+      });
+    }
+  }
+
+  onConfirmTextInputed() {
+    this.emitEditablevalue();
+  }
+
+  onClearValue() {
+    this.emitEditablevalue();
+  }
+
+  onInputValue( value: KeyboardEvent ) {
+    if (value.key === KeyEvent.ENTER) {
+      this.emitEditablevalue();
+    }
+  }
+
+  private emitEditablevalue() {
+    if (this.mode === 'editable') {
+      this.editing = false;
+      if ( this.editableValue.trim() ) {
+        this.tagValue.emit( this.editableValue );
+      }
+      this.editableValue = '';
+    }
   }
 
 }

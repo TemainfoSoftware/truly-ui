@@ -53,6 +53,13 @@ export const dataProperties = [
     type: 'string',
     default: 'default',
     description: 'Defines the mode of tag',
-    options: 'closeable | default | clickable'
+    options: 'closeable | default | clickable | editable'
+  },
+  {
+    name: 'charcase',
+    type: 'string',
+    default: 'unset',
+    description: 'Defines the Charcase of tag',
+    options: 'unset | lowercase | capitalize | uppercase | revert'
   },
 ];

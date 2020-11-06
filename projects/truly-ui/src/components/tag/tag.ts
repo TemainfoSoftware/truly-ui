@@ -121,9 +121,12 @@ export class TlTag implements OnInit {
     if (this.mode === 'editable') {
       if ( this.editableValue.trim() ) {
         this.tagValue.emit( this.editableValue );
+        this.resetInput();
+        this.hideInput();
+      } else {
+        this.resetInput();
+        this.hideInput( true );
       }
-      this.resetInput();
-      this.hideInput();
     }
   }
 

@@ -43,6 +43,8 @@ export class TlTag implements OnInit {
 
   @Input() charcase: 'unset' | 'lowercase' | 'capitalize' | 'uppercase' | 'revert' = 'unset';
 
+  @Input() closeOnValueEmited = true;
+
   @Input()
   set color( value: string ) {
     const colors = {
@@ -79,7 +81,7 @@ export class TlTag implements OnInit {
 
   public editableValue = '';
 
-  constructor( private change: ChangeDetectorRef ) {}
+  constructor() {}
 
   ngOnInit() {}
 
@@ -101,22 +103,37 @@ export class TlTag implements OnInit {
   }
 
   onClearValue() {
-    this.emitEditablevalue();
+    this.resetInput();
+    this.hideInput( true );
   }
 
   onInputValue( value: KeyboardEvent ) {
     if (value.key === KeyEvent.ENTER) {
-      this.emitEditablevalue();
+     return this.emitEditablevalue();
+    }
+    if (value.key === KeyEvent.ESCAPE) {
+      this.resetInput();
+      this.hideInput(true);
     }
   }
 
   private emitEditablevalue() {
     if (this.mode === 'editable') {
-      this.editing = false;
       if ( this.editableValue.trim() ) {
         this.tagValue.emit( this.editableValue );
       }
-      this.editableValue = '';
+      this.resetInput();
+      this.hideInput();
+    }
+  }
+
+  private resetInput() {
+    this.editableValue = '';
+  }
+
+  private hideInput( close = false) {
+    if (this.closeOnValueEmited || close) {
+      this.editing = false;
     }
   }
 

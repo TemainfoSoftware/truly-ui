@@ -99,18 +99,18 @@
                       [charcase]="'lowercase'"></tl-tag>
               <tl-tag [color]="'danger'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'"
                       [charcase]="'lowercase'"></tl-tag>
-              <tl-tag [title]="'Add tag'" (tagValue)="onTagValue($event)" [height]="'25px'" [color]="'primary'"
+              <tl-tag [title]="'Add tag'" [closeOnValueEmited]="false" (tagValue)="onTagValue($event)" [height]="'25px'" [color]="'primary'"
                       [charcase]="'lowercase'" [icon]="'fas fa-plus'" [mode]="'editable'"></tl-tag>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
-<tl-tag [color]="'basic'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charclass]="'lowercase'"></tl-tag>
-<tl-tag [color]="'primary'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charclass]="'lowercase'"></tl-tag>
-<tl-tag [color]="'warning'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charclass]="'lowercase'"></tl-tag>
-<tl-tag [color]="'information'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charclass]="'lowercase'"></tl-tag>
-<tl-tag [color]="'danger'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charclass]="'lowercase'"></tl-tag>
+<tl-tag [color]="'basic'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charcase]="'lowercase'"></tl-tag>
+<tl-tag [color]="'primary'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charcase]="'lowercase'"></tl-tag>
+<tl-tag [color]="'warning'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charcase]="'lowercase'"></tl-tag>
+<tl-tag [color]="'information'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charcase]="'lowercase'"></tl-tag>
+<tl-tag [color]="'danger'" [height]="'25px'" [icon]="'fas fa-tag'" [mode]="'closeable'" [charcase]="'lowercase'"></tl-tag>
 
-<tl-tag [title]="'Add tag'" (tagValue)="onTagValue($event)" [height]="'25px'" [color]="'primary'" [icon]="'fas fa-plus'" [mode]="'editable'"></tl-tag>
+<tl-tag [title]="'Add tag'" [closeOnValueEmited]="false" (tagValue)="onTagValue($event)" [height]="'25px'" [color]="'primary'" [icon]="'fas fa-plus'" [mode]="'editable'"></tl-tag>
               </textarea>
             </div>
             <div class="col-md-6">

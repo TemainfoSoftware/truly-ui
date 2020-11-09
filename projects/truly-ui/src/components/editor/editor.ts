@@ -197,7 +197,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
       this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
         if (!this.listenerRegistered) {
           this.handleFieldsPropagation();
-          this.listenerRegistered = true;
         }
       }));
     }

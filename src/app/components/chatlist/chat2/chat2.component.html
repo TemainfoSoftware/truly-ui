@@ -1,8 +1,12 @@
+<div>
+  Aim {{user.name}}
+</div>
 <tl-chatlist (sendMessage)="send.emit($event)"
              (readMessage)="onReadMessage($event)"
-             [lastActivityCheck]="480"
+             [lastActivityCheck]="20000"
              (selectContact)="onSelectContact($event)"
              [contacts]="contacts"
              [id]="'CHAT-ONE'"
              [user]="user">
 </tl-chatlist>
+

@@ -21,7 +21,7 @@
  */
 import {
   Component, ElementRef, EventEmitter, Input, Renderer2, ViewChild, Output,
-  OnDestroy, OnInit, ChangeDetectorRef
+  OnDestroy, OnInit, ChangeDetectorRef, OnChanges, SimpleChanges
 } from '@angular/core';
 import {ChatStatus} from './interfaces/chat-status.interface';
 import {ChatContact} from './interfaces/chat-contact.interface';
@@ -38,7 +38,7 @@ let uniqueIdentifier = 0;
   templateUrl: './chatlist.html',
   styleUrls: ['./chatlist.scss'],
 })
-export class TlChatList implements OnInit, OnDestroy {
+export class TlChatList implements OnInit, OnChanges, OnDestroy {
 
   @Input() maxHeight = '450px';
 
@@ -63,22 +63,9 @@ export class TlChatList implements OnInit, OnDestroy {
   @Input() user: ChatContact;
 
   @Input('contacts')
-  set contacts(data: ChatContact[]) {
-    if (data && data.length > 0 && this.user) {
-      if (!this.user.id) {
-        throw Error('User id not found');
-      }
-      this._dataSource = data
-        .filter((item) => item.id !== this.user.id)
-        .map((contact) => {
-        return {
-          ...contact,
-          status: this.getStatus(contact)
-        };
-      });
-    }
+  set contacts( data: ChatContact[] ) {
+    this._dataSource = data;
   }
-
   get contacts(): ChatContact[] {
     return this._dataSource;
   }
@@ -133,6 +120,25 @@ export class TlChatList implements OnInit, OnDestroy {
     this.listenChangeStatus();
     this.listenChangeMessages();
     this.messages = this.chatService.getAllMessages( this.id );
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes['contacts'].currentValue &&
+      changes['contacts'].currentValue.length > 0 &&
+      changes['user'].currentValue) {
+      if (!changes['user'].currentValue.id) {
+        throw Error('User id not found');
+      }
+      this._dataSource = changes['contacts'].currentValue
+        .filter((item) => item.id !== changes['user'].currentValue.id)
+        .map((contact) => {
+          return {
+            ...contact,
+            status: this.getStatus(contact)
+          };
+        });
+    }
   }
 
   listenChangeStatus() {

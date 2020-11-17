@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { TlChatList } from '../../../../../projects/truly-ui/src/components/chatlist/chatlist';
+import {ChatContact} from '../../../../../projects/truly-ui/src/components/chatlist/interfaces/chat-contact.interface';
 
 @Component({
   selector: 'app-chat2',
@@ -10,7 +11,7 @@ export class Chat2Component implements OnInit {
 
   @Input() contacts = [];
 
-  @Input() user = {};
+  @Input() user: ChatContact;
 
   @Output() send: EventEmitter<any> = new EventEmitter();
 

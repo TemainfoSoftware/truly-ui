@@ -1,0 +1,68 @@
+<div class="router-outlet">
+  <app-showcase-header name="Skeleton" module="SkeletonModule">
+    The Truly-UI Skeleton provide a placeholder while you wait for content to load, or to visualise content that doesn't exist yet.
+  </app-showcase-header>
+  <div class="showcase">
+    <div class="row">
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Variant'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-3">
+              <h6>Text</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'text'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Circle</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'circle'" [width]="'50px'" [height]="'50px'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Rect</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'rect'" ></tl-skeleton>
+              </div>
+              <br>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+      <div class="col-md-12">
+        <app-showcase-card [title]="'Animation'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-3">
+              <h6>None</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'rect'" [animation]="'none'" [width]="'300px'" [height]="'100px'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Pulse</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'rect'" [animation]="'pulse'" [width]="'300px'" [height]="'100px'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Wave</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'rect'" [animation]="'wave'" [width]="'300px'" [height]="'100px'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+          </app-card>
+        </app-showcase-card>
+      </div>
+    </div>
+    <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">
+      <app-card>
+        <app-showcase-table-properties [data]="dataTableProperties"></app-showcase-table-properties>
+      </app-card>
+    </app-showcase-card>
+  </div>
+</div>

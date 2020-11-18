@@ -239,6 +239,10 @@ export { TlSidebarContainer } from './components/sidebar/sidebar-container';
 export { TlSidebar } from './components/sidebar/parts/sidebar/sidebar';
 export { TlSidebarContent } from './components/sidebar/parts/sidebar-content/sidebar-content';
 
+// Loader
+export { SkeletonModule } from './components/skeleton/index';
+export { TlSkeleton } from './components/skeleton/skeleton';
+
 // Schedule
 export { ScheduleModule } from './components/schedule/index';
 export { TlSchedule } from './components/schedule/schedule';

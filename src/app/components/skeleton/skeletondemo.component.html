@@ -57,6 +57,50 @@
             </div>
           </app-card>
         </app-showcase-card>
+        <app-showcase-card [title]="'Examples'" [icon]="'fas fa-desktop'">
+          <app-card>
+            <div class="col-md-3">
+              <h6>Text With Rect</h6>
+              <div class="loader-box">
+                <tl-skeleton [variant]="'rect'" [animation]="'pulse'" [width]="'300px'" [height]="'200px'"></tl-skeleton>
+                <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'300px'"></tl-skeleton>
+                <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'200px'"></tl-skeleton>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Avatar With Text</h6>
+              <div class="loader-box" style="display: flex; flex-flow: row">
+                <tl-skeleton [variant]="'circle'" [animation]="'pulse'" [width]="'70px'" [height]="'70px'"></tl-skeleton>
+                <div style="display: flex; flex-flow: column; margin-left: 10px; align-self: center;">
+                  <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'300px'"></tl-skeleton>
+                  <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'200px'"></tl-skeleton>
+                </div>
+              </div>
+              <br>
+            </div>
+            <div class="col-md-3">
+              <h6>Card</h6>
+              <div class="loader-box" >
+                <div style="display: flex; flex-flow: row; margin-bottom: 10px">
+                  <tl-skeleton [variant]="'circle'" [animation]="'pulse'" [width]="'70px'" [height]="'70px'"></tl-skeleton>
+                  <div style="display: flex; flex-flow: column; margin-left: 10px; align-self: center;">
+                    <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'220px'"></tl-skeleton>
+                    <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'180px'"></tl-skeleton>
+                  </div>
+                </div>
+                <div>
+                  <tl-skeleton [variant]="'rect'" [animation]="'pulse'" [width]="'300px'" [height]="'200px'"></tl-skeleton>
+                </div>
+                <div>
+                  <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'300px'"></tl-skeleton>
+                  <tl-skeleton [variant]="'text'" [animation]="'pulse'" [width]="'250px'"></tl-skeleton>
+                </div>
+              </div>
+              <br>
+            </div>
+          </app-card>
+        </app-showcase-card>
       </div>
     </div>
     <app-showcase-card [title]="'Properties'" [icon]="'fas fa-clipboard-list'">

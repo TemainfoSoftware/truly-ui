@@ -139,8 +139,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       for (let i = 0; i <= events.length - 1; i++) {
 
         workScale.forEach( (value, workScaleIndex, array) => {
-          const eventStartDate = new Date(new Date(events[i].date.start).setSeconds(0)).getTime();
-          const eventEndDate = new Date(new Date(events[i].date.end).setSeconds(0)).getTime();
+          const eventStartDate = new Date(events[i].date.start).setSeconds(0, 0);
+          const eventEndDate = new Date(events[i].date.end).setSeconds(0, 0);
           const workStartDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].start, new Date(eventStartDate));
           const workEndDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].end, new Date(eventEndDate));
 
@@ -221,7 +221,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         return {...current, end: current.end };
       }
       return previous;
-    }, { end: '00:00', start: '00:00', interval: 0, expansed: null });
+    }, { end: '23:59', start: '23:59', interval: 0, expansed: null });
   }
 
   private reduceAfterScale(  scales: WorkScaleType[] ) {

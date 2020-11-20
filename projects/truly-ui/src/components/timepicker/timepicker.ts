@@ -287,23 +287,20 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
       return;
     }
     const split = this.cleanValue( stringTime ).split( ':' );
-    const hour = this.leftPad.transform(split[0], 2);
-    const min = this.leftPad.transform(split[1], 2);
-
-    if ( min.length >= 2 ) {
+    const hour = split[0];
+    const min = split[1];
+    if ( min.length >= 2 && hour.length >= 2  ) {
       this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( hour ), 2 ) : hour;
       if ( this.listHour ) {
         this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
-        this.setValue();
       }
-    }
-    if ( hour.length >= 2 ) {
       this.minute = min;
       if ( this.listMinutes ) {
         this.setScrollColumn( this.listMinutes.nativeElement, TIME.MINUTE );
-        this.setValue();
       }
+      this.setValue();
     }
+
   }
 
   private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {

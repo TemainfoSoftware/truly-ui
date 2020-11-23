@@ -195,11 +195,11 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   }
 
   private removeSameStartAndEndSacalesTime(scales: WorkScaleType[]) {
-    return scales.filter( (value => value.start !== value.end ));
+    return this.sortScaleByStart(scales).filter( (value => value.start !== value.end ));
   }
 
   private removeNextSameStartAndEndSacalesTime(scales: WorkScaleType[]) {
-    return scales.filter( (value, index, array ) => {
+    return this.sortScaleByStart(scales).filter( (value, index, array ) => {
       if ( array[index - 1] ) {
        return value.start !== array[index - 1].start && value.end !== array[index - 1].end;
       }

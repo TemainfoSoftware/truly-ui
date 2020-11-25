@@ -33,8 +33,6 @@ import {
   ChangeDetectorRef, OnChanges, SimpleChanges,
 } from '@angular/core';
 import {TlTimelineItem} from './parts/timeline-item/timeline-item';
-import {DataSourceList} from '../core/classes/datasource-list';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'tl-timeline',
@@ -51,8 +49,6 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Input() keyTitle = 'title';
 
-  @Input() totalLength = 0;
-
   @Input() keyText = 'text';
 
   @Input() keyDate = 'date';
@@ -62,6 +58,10 @@ export class TlTimeline implements OnInit, OnChanges {
   @Input() mode = 'basic';
 
   @Input() color = 'primary';
+
+  @Input() enableUnequalChildrenSizes = true;
+
+  @Input() bufferAmount = 5;
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
@@ -86,6 +86,7 @@ export class TlTimeline implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.loadingMoreData = false;
     if ( this.data.length > 0 ) {
       this.buffer = this.buffer.concat(this.data);
       this.nothingFound = false;

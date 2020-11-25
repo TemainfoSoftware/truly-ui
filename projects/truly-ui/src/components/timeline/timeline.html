@@ -1,18 +1,16 @@
 <div [tlBlockui]="loadingMoreData" [class]="'tl-timeline ' + color">
-  <virtual-scroller #scroll [items]="buffer" (vsEnd)="fetchMore($event)" class="tl-timeline-scroll" [style.height]="height">
-    <div class="ui-timeline-content">
-      <tl-timeline-item #line
-                        *ngFor="let item of scroll.viewPortItems; let i = index; let even = even"
-                        [data]="data"
-                        [attr.data-index]="skip + i"
-                        [date]="item[keyDate]"
-                        [template]="(customTemplate) ? customTemplate : basicTemplate"
-                        (initialize)="onInit(line, item, i)"
-                        [align]="align"
-                        [side]="even"
-                        [ngClass]="(align === 'right') ? 'ltr' : null">
-      </tl-timeline-item>
-    </div>
+  <virtual-scroller #scroll [items]="buffer" [enableUnequalChildrenSizes]="enableUnequalChildrenSizes" [bufferAmount]="bufferAmount" [checkResizeInterval]="300" (vsEnd)="fetchMore($event)" class="tl-timeline-scroll" [style.height]="height">
+    <tl-timeline-item #line
+                      *ngFor="let item of scroll.viewPortItems; let i = index; let even = even"
+                      [data]="data"
+                      [attr.data-index]="skip + i"
+                      [date]="item[keyDate]"
+                      [template]="(customTemplate) ? customTemplate : basicTemplate"
+                      (initialize)="onInit(line, item, i)"
+                      [align]="align"
+                      [side]="even"
+                      [ngClass]="(align === 'right') ? 'ltr' : null">
+    </tl-timeline-item>
   </virtual-scroller>
   <ng-template let-item="item" let-index="index" #basicTemplate>
     <div class="content-head-default">

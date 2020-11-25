@@ -102,8 +102,7 @@ export class DataSourceList extends DataSource<string | undefined> {
 
   public setData(data: Array<any>) {
     this.cachedData = data;
-    this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize,
-        ...data);
+    this.arrayTotal.splice(this.currentPage * this.pageSize, this.pageSize, ...data);
     this.dataStream.next( this.arrayTotal );
     if ( data.length === this.pageSize) {
       if ( !this.fetchedPages.has(0) ) {

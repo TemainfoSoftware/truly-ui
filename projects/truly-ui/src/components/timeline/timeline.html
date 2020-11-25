@@ -1,8 +1,8 @@
 <div [tlBlockui]="loadingMoreData" [class]="'tl-timeline ' + color">
-  <cdk-virtual-scroll-viewport [itemSize]="50" class="tl-timeline-scroll" [style.height]="height">
+  <virtual-scroller #scroll [items]="buffer" (vsEnd)="fetchMore($event)" class="tl-timeline-scroll" [style.height]="height">
     <div class="ui-timeline-content">
       <tl-timeline-item #line
-                        *cdkVirtualFor="let item of dataSource; let i = index; let even = even"
+                        *ngFor="let item of scroll.viewPortItems; let i = index; let even = even"
                         [data]="data"
                         [attr.data-index]="skip + i"
                         [date]="item[keyDate]"
@@ -13,7 +13,7 @@
                         [ngClass]="(align === 'right') ? 'ltr' : null">
       </tl-timeline-item>
     </div>
-  </cdk-virtual-scroll-viewport>
+  </virtual-scroller>
   <ng-template let-item="item" let-index="index" #basicTemplate>
     <div class="content-head-default">
       <span class="content-title">{{ item[keyTitle] }}</span>

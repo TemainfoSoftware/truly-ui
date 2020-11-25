@@ -813,10 +813,7 @@ export class TimelineDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
 
-    this.dataLazy = {
-      'data' : this.getDataFromService(0, this.take),
-      'total' : this.dataAdvanced.length
-    };
+    this.dataLazy = this.getDataFromService(0, this.take);
   }
 
   getDataFromService(skip, take) {
@@ -826,10 +823,7 @@ export class TimelineDemoComponent {
   onLazyLoad(event) {
     clearTimeout( this.timeout );
     this.timeout = setTimeout( () => {
-      this.dataLazy = {
-        'data': this.getDataFromService( event.skip, event.take ),
-        'total': this.dataAdvanced.length
-      };
+      this.dataLazy = this.getDataFromService( event.skip, event.take );
     }, 1000 );
   }
 

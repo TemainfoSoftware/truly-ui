@@ -63,6 +63,7 @@
     "intl": "^1.2.5",
     "jquery": "^3.3.1",
     "ngx-highlight-js": "^2.1.1",
+    "ngx-virtual-scroller": "^4.0.3",
     "object-path": "^0.11.4",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.6.2",

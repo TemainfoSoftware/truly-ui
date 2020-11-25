@@ -28,13 +28,6 @@ export const dataProperties = [
     options: '[.. , ..]'
   },
   {
-    name: 'data',
-    type: 'object',
-    default: 'null',
-    description: 'An object with the data and total number of records.',
-    options: '{ data:[ .. , ..], total: 1000 }'
-  },
-  {
     name: 'align',
     type: 'string',
     default: 'left',

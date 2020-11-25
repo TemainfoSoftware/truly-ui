@@ -29,6 +29,7 @@
   }
 ,
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "ngx-virtual-scroller": "^4.0.3"
   }
 }

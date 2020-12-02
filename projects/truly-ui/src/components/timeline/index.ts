@@ -7,13 +7,15 @@ import { TlTimelineItem } from './parts/timeline-item/timeline-item';
 
 import { BlockUIModule } from '../blockui/index';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import {VirtualScrollerModule} from 'ngx-virtual-scroller';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     BlockUIModule,
-    ScrollingModule
+    ScrollingModule,
+    VirtualScrollerModule
   ],
   declarations: [
     TlTimeline,

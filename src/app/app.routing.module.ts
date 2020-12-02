@@ -196,6 +196,10 @@ import {GettingStartedComponent} from './getting-started/getting-started.compone
         loadChildren: () => import('./components/loader/loaderdemo.module').then(m => m.LoaderDemoModule)
       },
       {
+        path: 'skeleton',
+        loadChildren: () => import('./components/skeleton/skeletondemo.module').then(m => m.SkeletondemoModule)
+      },
+      {
         path: 'listbox',
         loadChildren: () => import('./components/listbox/listboxdemo.module').then(m => m.ListBoxDemoModule)
       },

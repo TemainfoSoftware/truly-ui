@@ -1,7 +1,7 @@
 /*
   MIT License
 
-  Copyright (c) 2019 Temainfo Software
+  Copyright (c) 2020 Temainfo Software
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,6 @@ export const dataProperties = [
     default: 'null',
     description: 'An array of objects to display.',
     options: '[.. , ..]'
-  },
-  {
-    name: 'data',
-    type: 'object',
-    default: 'null',
-    description: 'An object with the data and total number of records.',
-    options: '{ data:[ .. , ..], total: 1000 }'
   },
   {
     name: 'align',

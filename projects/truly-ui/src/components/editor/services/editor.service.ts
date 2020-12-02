@@ -62,6 +62,7 @@ export class EditorService {
   compile(html: string, tagsContent: TagContent[], fieldsContent: FieldContent[]) {
     const htmlParsed = new DOMParser().parseFromString(html, 'text/html').body;
     return new Promise((resolve) => {
+
       const tags = htmlParsed.querySelectorAll('.ui-hashtag');
       for (let i = 0; i < tags.length; i++) {
         const tagSelected = tagsContent.find(item => item.tag === this.getAttributeValue(tags[i].attributes, 'id'));
@@ -72,6 +73,7 @@ export class EditorService {
           tags[i].remove();
         }
       }
+
       const fields = htmlParsed.querySelectorAll('.ui-field');
       for (let i = 0; i < fields.length; i++) {
         const fieldSelected = fieldsContent.find(item => item.field === this.getAttributeValue(fields[i].attributes, 'id'));
@@ -81,6 +83,7 @@ export class EditorService {
         fields[i].insertAdjacentElement('afterend', <Element>element);
         fields[i].remove();
       }
+
       resolve(this.domSanitizer.bypassSecurityTrustHtml(htmlParsed.innerHTML));
     });
   }

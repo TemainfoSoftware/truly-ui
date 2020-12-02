@@ -15,7 +15,6 @@
   </div>
 
   <!-- SCHEDULE BODY -->
-
   <div  class="ui-schedule-body"
         [tlBlockui]="(currentHoliday?.id && !allowScheduleInHolidays && !currentHoliday?.attend) && existsScale"
         [blockuiConfig]="{ message: currentHoliday?.description, icon: 'fas fa-umbrella-beach', color: '#ccc' }"

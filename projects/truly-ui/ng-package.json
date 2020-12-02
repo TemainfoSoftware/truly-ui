@@ -4,5 +4,11 @@
   "deleteDestPath": false,
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "ngx-virtual-scroller",
+    "object-path",
+    "ts-md5",
+    "string-format"
+  ]
 }

@@ -1,5 +1,8 @@
 .tl-tag {
   display: inline-block;
+  &.clickable{
+    cursor: pointer;
+  }
 }
 
 .tag {
@@ -28,4 +31,8 @@
   &.customColor {
     color: white;
   }
+}
+
+.tl-tag-input-wrapper{
+  display: inline-table;
 }

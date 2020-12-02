@@ -138,46 +138,107 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
       const scales = workScale.filter( work => work.expansed === undefined);
       for (let i = 0; i <= events.length - 1; i++) {
 
-        for (let index = 0; index <= workScale.length - 1; index++) {
-          const eventStartDate = new Date(new Date(events[i].date.start).setSeconds(0)).getTime();
-          const eventEndDate = new Date(new Date(events[i].date.end).setSeconds(0)).getTime();
-          const workStartDate = this.workScaleService.transformHourToMileseconds(scales[index].start);
-          const workEndDate = this.workScaleService.transformHourToMileseconds(scales[index].end);
+        workScale.forEach( (value, workScaleIndex, array) => {
+          const eventStartDate = new Date(events[i].date.start).setSeconds(0, 0);
+          const eventEndDate = new Date(events[i].date.end).setSeconds(0, 0);
+          const workStartDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].start, new Date(eventStartDate));
+          const workEndDate = this.workScaleService.transformHourToMileseconds(scales[workScaleIndex].end, new Date(eventEndDate));
 
-          if (eventEndDate >= workEndDate && eventStartDate > workEndDate) {
-            if (workScale.length - 1 === index) {
+          // Handle Overflow in BEFORE workScale
+          if (
+              ( eventEndDate >= workEndDate && eventStartDate >= workEndDate ) ||
+              ( eventEndDate >= workEndDate && eventStartDate <= workEndDate )
+            ) {
+            if (workScale.length - 1 === workScaleIndex) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(workEndDate),
                 end: this.workScaleService.transformMilesecondsToHour(eventEndDate),
-                interval: (scales[index].interval),
+                interval: (scales[workScaleIndex].interval),
                 expansed: true,
               });
 
             }
           }
 
-          if (eventEndDate <= workStartDate && eventStartDate <= workStartDate) {
-            if (index === 0) {
+          // Handle Overflow in AFTER workScale
+          if (
+              ( eventEndDate <= workStartDate && eventStartDate <= workStartDate ) ||
+              ( eventEndDate <= workStartDate && eventStartDate >= workStartDate )
+            ) {
+            if (workScaleIndex === 0) {
               scales.push({
                 start: this.workScaleService.transformMilesecondsToHour(eventStartDate),
                 end: this.workScaleService.transformMilesecondsToHour(workStartDate),
-                interval: (scales[index].interval),
+                interval: (scales[workScaleIndex].interval),
                 expansed: true,
               });
             }
           }
-        }
+        });
       }
-
-      this.workScaleService.reload( this.filterScaleStartRepeated( this.sortScaleByStart( scales) ));
+      this.workScaleService.reload( this.reduceScales( scales ) );
     }
   }
 
-  private filterScaleStartRepeated( scales: WorkScaleType[]   ) {
-    return scales
-      .filter( (scale, index) => {
-      return scales[index + 1] ? scale.start !==  scales[index + 1].start : true;
+  private reduceScales( scales: WorkScaleType[] ) {
+    const orderedScales = this.sortScaleByStart(scales);
+    const notExpansedScales = orderedScales.filter( (scale) => !scale.expansed );
+    const beforeHourScale = this.reduceBeforeScale( orderedScales );
+    const afterHourScale = this.reduceAfterScale( orderedScales );
+    return this.sortScaleByStart(
+      this.removeNextSameStartAndEndSacalesTime(
+        this.removeSameStartAndEndSacalesTime(
+          notExpansedScales.concat(afterHourScale).concat(beforeHourScale)
+        )
+      )
+    );
+  }
+
+  private removeSameStartAndEndSacalesTime(scales: WorkScaleType[]) {
+    return this.sortScaleByStart(scales).filter( (value => value.start !== value.end ));
+  }
+
+  private removeNextSameStartAndEndSacalesTime(scales: WorkScaleType[]) {
+    return this.sortScaleByStart(scales).filter( (value, index, array ) => {
+      if ( array[index - 1] ) {
+       return value.start !== array[index - 1].start && value.end !== array[index - 1].end;
+      }
+      return true;
     });
+  }
+
+  private reduceBeforeScale(  scales: WorkScaleType[] ) {
+    return scales.reduce( (previous, current) => {
+      const cStart = this.workScaleService.transformHourToMileseconds(current.start);
+      const pStart = this.workScaleService.transformHourToMileseconds(previous.start);
+      if (cStart < pStart) {
+        return {...current, start: current.start };
+      }
+
+      const cEnd = this.workScaleService.transformHourToMileseconds(current.end);
+      const pEnd = this.workScaleService.transformHourToMileseconds(previous.end);
+      if (cEnd < pEnd) {
+        return {...current, end: current.end };
+      }
+      return previous;
+    }, { end: '23:59', start: '23:59', interval: 0, expansed: null });
+  }
+
+  private reduceAfterScale(  scales: WorkScaleType[] ) {
+    return scales.reduce( (previous, current) => {
+      const cStart = this.workScaleService.transformHourToMileseconds(current.start);
+      const pStart = this.workScaleService.transformHourToMileseconds(previous.start);
+      if (cStart > pStart) {
+        return {...current, start: current.start };
+      }
+
+      const cEnd = this.workScaleService.transformHourToMileseconds(current.end);
+      const pEnd = this.workScaleService.transformHourToMileseconds(previous.end);
+      if (cEnd > pEnd) {
+        return {...current, end: current.end };
+      }
+      return previous;
+    }, { end: '01:00', start: '01:00', interval: 0, expansed: null });
   }
 
   private sortScaleByStart( scales: WorkScaleType[]   ) {

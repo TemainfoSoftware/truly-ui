@@ -16,7 +16,7 @@
         <tl-icon [lib]="'fa'" [style]="'fas'">chevron-down</tl-icon>
       </div>
       <ng-template cdkConnectedOverlay
-                   (backdropClick)="isOpen = false"
+                   (backdropClick)="onBackdropClick()"
                    (positionChange)="onPositionChange($event)"
                    [cdkConnectedOverlayHasBackdrop]="true"
                    [cdkConnectedOverlayOrigin]="trigger"

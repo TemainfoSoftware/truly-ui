@@ -99,19 +99,19 @@ export class TlTabControl implements AfterContentInit, AfterViewInit {
     }
 
     handleKeyDownLastElementTab( $event, index ) {
-      if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.keyCode ) >= 0 && (!$event.shiftKey) ) {
+      if ( [ KeyEvent.TAB, KeyEvent.ENTER, KeyEvent.ARROWDOWN ].indexOf( $event.code ) >= 0 && (!$event.shiftKey) ) {
         this.nextTabAndElement( index );
       }
-      if ( ($event.keyCode === KeyEvent.TAB) && ($event.ctrlKey) ) {
+      if ( ($event.code === KeyEvent.TAB) && ($event.ctrlKey) ) {
         this.nextTabAndElement( index );
       }
     }
 
     handleKeyDownFirstElementTab( $event, index ) {
-      if ( [ KeyEvent.ARROWUP ].indexOf( $event.keyCode ) >= 0 ) {
+      if ( [ KeyEvent.ARROWUP ].indexOf( $event.code ) >= 0 ) {
         this.previousTabAndElement( index );
       }
-      if ( ($event.keyCode === KeyEvent.TAB) && ($event.shiftKey) ) {
+      if ( ($event.code === KeyEvent.TAB) && ($event.shiftKey) ) {
         this.previousTabAndElement( index );
       }
     }

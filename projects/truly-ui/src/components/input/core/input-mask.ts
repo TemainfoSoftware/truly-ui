@@ -103,7 +103,7 @@ export class InputMask {
 
   onKeyDownInputListener() {
     this.renderer.listen( this.input.nativeElement, 'keydown', $event => {
-      switch ( $event.keyCode ) {
+      switch ( $event.code ) {
         case KeyEvent.BACKSPACE:
           this.handleBackspace( $event );
           break;
@@ -393,6 +393,11 @@ export class InputMask {
   }
 
   private replaceUnderscoreForChar( valueArray, charInputted, cursorEnd ) {
+
+    if (valueArray.length === 0) {
+      valueArray = [...this.maskGuideExpression];
+    }
+
     if ( this.maskSpecialCharacters.indexOf( this.maskExpression[ cursorEnd ] ) >= 0 ) {
       cursorEnd++;
     }

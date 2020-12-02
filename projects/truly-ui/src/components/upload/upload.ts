@@ -41,6 +41,8 @@ export class TlUpload implements OnInit {
 
   @Input() height = '100%';
 
+  @Input() resizeDragndrop = false;
+
   @Input('imageList')
   set imageList( value: ImageUploadInterface[] ) {
     this._imageList = value.sort((a, b) => a.index - b.index );
@@ -125,6 +127,7 @@ export class TlUpload implements OnInit {
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
       this.readFile(fileList[i], i).then((value: ImageUploadInterface) => {
+        value = Object.assign({title: '', description: ''}, value);
         value.index = this.imageList.length;
         this.imageList = [ ...this.imageList, value ];
         if ( fileList.length <= this.imageList.length ) {
@@ -163,6 +166,10 @@ export class TlUpload implements OnInit {
       this.imageList.forEach((item, idx) => item.index = idx);
       this.deleteChange.emit(this.imageList);
     }
+  }
+
+  hasRisize() {
+    return (this.resizeDragndrop && this.type === 'dragndrop' && this.imageList.length > 0);
   }
 
   onChange($event) {

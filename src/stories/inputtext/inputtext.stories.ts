@@ -2,7 +2,7 @@
  *
  *     MIT License
  *
- *     Copyright (c) 2019 Temainfo Sistemas
+ *     Copyright (c) 2020 Temainfo Sistemas
  *
  *     Permission is hereby granted, free of charge, to any person obtaining a copy
  *     of this software and associated documentation files (the "Software"), to deal
@@ -43,7 +43,7 @@ const Story = storiesOf('Data Entry|Input Text', module)
 
 Story.add('Overview', () => {
   const label = text('Label', 'Price');
-  
+
   const textBefore = text('Text Before', '$');
   const textAfter = text('Text After', 'Dollars');
 

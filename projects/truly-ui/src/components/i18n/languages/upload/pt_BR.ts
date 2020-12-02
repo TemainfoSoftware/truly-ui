@@ -21,7 +21,7 @@
 */
 
 export const Upload = {
-  boxDescription: 'Clique or arraste um arquivo para está area.\nSuporta um único arquivo ou varios para upload.',
+  boxDescription: 'Clique ou arraste um arquivo para está area.\nSuporta um único arquivo ou varios para upload.',
   placeholder: 'Descrição da Imagem',
   upload: 'Envio'
 };

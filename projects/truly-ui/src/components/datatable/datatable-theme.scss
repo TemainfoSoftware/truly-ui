@@ -78,11 +78,12 @@
       color: map-deep-get($primary, "default", "foreground") !important;
     }
 
-    > .ui-row:focus{
-      background: map-deep-get($primary, "default", "background") !important;
-      color: map-deep-get($primary, "default", "foreground") !important;
+    > .ui-row {
+      &.selected {
+        background: map-deep-get($primary, "default", "background") !important;
+        color: map-deep-get($primary, "default", "foreground") !important;
+      }
     }
-
     > .ui-row:hover:not(.ui-selected-row){
       background: map-deep-get($basic, "lighter", "background");
     }

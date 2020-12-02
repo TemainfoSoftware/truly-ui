@@ -20,19 +20,16 @@
     SOFTWARE.
 */
 export enum KeyEvent {
-    ARROWUP = 38,
-    ARROWDOWN = 40,
-    ARROWLEFT = 37,
-    ARROWRIGHT = 39,
-    PAGEUP = 33,
-    PAGEDOWN = 34,
-    END = 35,
-    HOME = 36,
-    ENTER = 13,
-    ESCAPE = 27,
-    TAB = 9,
-    SPACE = 32,
-    DELETE = 46,
-    BACKSPACE = 8,
-    SHIFT = 16
+    ARROWUP = 'ArrowUp',
+    ARROWDOWN = 'ArrowDown',
+    ARROWLEFT = 'ArrowLeft',
+    ARROWRIGHT = 'ArrowRight',
+    END = 'End',
+    HOME = 'Home',
+    ENTER = 'Enter',
+    ESCAPE = 'Escape',
+    TAB = 'Tab',
+    SPACE = 'Space',
+    DELETE = 'Delete',
+    BACKSPACE = 'Backspace',
 }

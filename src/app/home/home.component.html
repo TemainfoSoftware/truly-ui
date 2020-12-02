@@ -29,20 +29,22 @@
 
       <div class="banner-footer d-none d-lg-block">
         <div class="col-md-6">
-          <div class="col-md-5" style="padding-top: 15px;">
-            <tl-button href="/gettingstarted" (click)="onClickGetStarted()" [height]="'40px'"
-                       [width]="'180px'" [text]="'GET STARTED'" [color]="'primary'"></tl-button>
-          </div>
-          <div class="col-md-7 d-lg-block">
-            <div class="info-version">
-              <p><a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a>
-                /
-                {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
-                <a class="tl-scheme-primary -paint-link"
-                   href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
-                  Licensed</a> /
-                <a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">Release
-                  Notes</a></p>
+          <div class="row">
+            <div class="col-md-5" style="padding-top: 15px;">
+              <tl-button href="/gettingstarted" (click)="onClickGetStarted()" [height]="'40px'"
+                         [width]="'180px'" [text]="'GET STARTED'" [color]="'primary'"></tl-button>
+            </div>
+            <div class="col-md-7 d-lg-block">
+              <div class="info-version">
+                <p><a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">{{lastRelease?.name}}</a>
+                  /
+                  {{lastRelease?.published_at | date:'yyyy-MM-dd'}} /
+                  <a class="tl-scheme-primary -paint-link"
+                     href="https://github.com/TemainfoSistemas/truly-ui/blob/master/LICENSE.md" target="_blank">MIT
+                    Licensed</a> /
+                  <a class="tl-scheme-primary -paint-link" href="{{lastRelease?.html_url}}" target="_blank">Release
+                    Notes</a></p>
+              </div>
             </div>
           </div>
         </div>

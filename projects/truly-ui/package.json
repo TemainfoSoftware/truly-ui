@@ -30,5 +30,13 @@
 ,
   "dependencies": {
     "tslib": "^2.0.0"
+  },
+
+  "peerDependencies": {
+    "ngx-virtual-scroller": "^4.0.3",
+    "object-path": "^0.11.4",
+    "ts-md5": "^1.2.4",
+    "string-format": "^2.0.0"
   }
+
 }

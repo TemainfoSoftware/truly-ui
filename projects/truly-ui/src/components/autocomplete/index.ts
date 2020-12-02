@@ -37,6 +37,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { LoaderModule } from '../loader/index';
 import { MiscModule } from '../misc/index';
 import {TlAutocompleteTemplate} from './components/autocomplete-template';
+import {SelectedValidatorDirective} from './selected-validator';
 
 @NgModule( {
   imports: [
@@ -58,10 +59,12 @@ import {TlAutocompleteTemplate} from './components/autocomplete-template';
   declarations: [
     TlAutoComplete,
     TlAutocompleteTemplate,
+    SelectedValidatorDirective
   ],
   exports: [
     TlAutoComplete,
-    TlAutocompleteTemplate
+    TlAutocompleteTemplate,
+    SelectedValidatorDirective
   ],
 } )
 export class AutoCompleteModule {

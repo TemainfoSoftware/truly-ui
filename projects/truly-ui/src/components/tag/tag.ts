@@ -20,7 +20,9 @@
     SOFTWARE.
 */
 
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Input, Component, OnInit, Output, EventEmitter, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {KeyEvent} from '../core/enums/key-events';
+import {TlInput} from '../input/input';
 
 @Component({
   selector: 'tl-tag',
@@ -35,7 +37,13 @@ export class TlTag implements OnInit {
 
   @Input() height = 'auto';
 
-  @Input() closeButton = false;
+  @Input() icon = null;
+
+  @Input() mode: 'default' | 'closeable' | 'clickable' | 'editable' = 'default';
+
+  @Input() charcase: 'unset' | 'lowercase' | 'capitalize' | 'uppercase' | 'revert' = 'unset';
+
+  @Input() closeOnValueEmited = true;
 
   @Input()
   set color( value: string ) {
@@ -61,9 +69,17 @@ export class TlTag implements OnInit {
 
   @Output() close: EventEmitter<any> = new EventEmitter();
 
+  @Output() tagValue: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild( 'input'  ) tlinput: TlInput;
+
   private _color = 'basic';
 
+  public editing = false;
+
   public customColor = '';
+
+  public editableValue = '';
 
   constructor() {}
 
@@ -71,6 +87,57 @@ export class TlTag implements OnInit {
 
   onClose() {
     this.close.emit();
+  }
+
+  onClickTag() {
+    if (this.mode === 'editable') {
+      this.editing = true;
+      setTimeout(() => {
+        this.tlinput.setFocus();
+      });
+    }
+  }
+
+  onConfirmTextInputed() {
+    this.emitEditablevalue();
+  }
+
+  onClearValue() {
+    this.resetInput();
+    this.hideInput( true );
+  }
+
+  onInputValue( value: KeyboardEvent ) {
+    if (value.key === KeyEvent.ENTER) {
+     return this.emitEditablevalue();
+    }
+    if (value.key === KeyEvent.ESCAPE) {
+      this.resetInput();
+      this.hideInput(true);
+    }
+  }
+
+  private emitEditablevalue() {
+    if (this.mode === 'editable') {
+      if ( this.editableValue.trim() ) {
+        this.tagValue.emit( this.editableValue );
+        this.resetInput();
+        this.hideInput();
+      } else {
+        this.resetInput();
+        this.hideInput( true );
+      }
+    }
+  }
+
+  private resetInput() {
+    this.editableValue = '';
+  }
+
+  private hideInput( close = false) {
+    if (this.closeOnValueEmited || close) {
+      this.editing = false;
+    }
   }
 
 }

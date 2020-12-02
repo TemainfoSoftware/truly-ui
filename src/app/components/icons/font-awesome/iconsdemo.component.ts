@@ -1,7 +1,7 @@
 /*
   MIT License
 
-  Copyright (c) 2019 Temainfo Software
+  Copyright (c) 2020 Temainfo Software
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -312,8 +312,22 @@ export class IconsDemoComponent {
     }
     setTimeout(() => {
       this.inputCopy.nativeElement.select();
-      document.execCommand('copy');
-      this.showCopyMessage(icon);
+      if (typeof(navigator.clipboard) === 'undefined') {
+        const textArea = document.createElement('textarea');
+        textArea.value = this.outputIcon;
+        textArea.style.position = 'fixed';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        this.showCopyMessage(icon);
+        return;
+      }
+      navigator.clipboard.writeText(this.outputIcon).then(() => {
+        this.showCopyMessage(icon);
+      });
     });
   }
 

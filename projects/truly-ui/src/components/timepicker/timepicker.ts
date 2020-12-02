@@ -24,24 +24,21 @@ import {
   Input,
   AfterContentInit,
   Component,
-  forwardRef,
   ElementRef,
-  ContentChild,
   ViewChild,
   OnDestroy,
   Output,
   EventEmitter,
   AfterViewInit,
   SimpleChanges,
-  OnChanges,
+  OnChanges, Optional, Self,
 } from '@angular/core';
 import { TlLeftPadPipe } from '../internals/pipes/leftpad.pipe';
 import { OverlayAnimation } from '../core/directives/overlay-animation';
 import { Subscription } from 'rxjs';
 import { I18nService } from '../i18n/i18n.service';
 import { ValueAccessorBase } from '../input/core/value-accessor';
-import { FormControlName, NG_VALUE_ACCESSOR, NgModel } from '@angular/forms';
-import {FixedPositionDirective} from '../misc/fixed-position.directive';
+import { NgControl } from '@angular/forms';
 
 export interface IncrementalSteps {
   hour: number;
@@ -57,14 +54,9 @@ export enum TIME {
   selector: 'tl-timepicker',
   templateUrl: './timepicker.html',
   styleUrls: [ './timepicker.scss' ],
-  providers: [ {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef( () => TlTimepicker ),
-    multi: true,
-  } ],
   animations: [ OverlayAnimation ]
 } )
-export class TlTimepicker extends ValueAccessorBase<Date | string> implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
+export class TlTimepicker extends ValueAccessorBase<Date | string> implements AfterContentInit, OnChanges, OnDestroy {
 
   @Input() format: '12' | '24' = '24';
 
@@ -105,10 +97,6 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
   @ViewChild( 'listMinutes', {static: false} ) listMinutes: ElementRef;
 
   @ViewChild( 'listAmPm', {static: false} ) listAmPm: ElementRef;
-
-  @ContentChild( NgModel, {static: true} ) ngModel: NgModel;
-
-  @ContentChild( FormControlName, {static: true} ) control: NgModel;
 
   @Output() now: EventEmitter<any> = new EventEmitter();
 
@@ -154,8 +142,19 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
 
   private listeners: Subscription = new Subscription();
 
-  constructor( private i18n: I18nService ) {
+  constructor( @Optional() @Self() public ngControl: NgControl,
+               private i18n: I18nService ) {
     super();
+    this.setControl();
+  }
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
   ngAfterContentInit() {
@@ -164,15 +163,12 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
       this.value = new Date();
     }
     this.setModelValue( new Date(this.value) );
-  }
-
-  ngAfterViewInit() {
     this.listenControlChanges();
   }
 
   listenControlChanges() {
-    if (this.getControl()) {
-      this.getControl().control.valueChanges.subscribe(( date: Date) => {
+    if (this.control) {
+      this.control.valueChanges.subscribe(( date: Date) => {
         if (!this.loaded) {
           this.minute = this.leftPad.transform(new Date(date).getMinutes(), 2);
           this.hour = this.leftPad.transform(new Date(date).getHours(), 2);
@@ -249,10 +245,6 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
     this.emitClickNow();
   }
 
-  private getControl() {
-    return this.control ? this.control : this.ngModel;
-  }
-
   private setValue() {
     const dateSt = new Date(this.value);
     const year = dateSt.getFullYear();
@@ -295,23 +287,20 @@ export class TlTimepicker extends ValueAccessorBase<Date | string> implements Af
       return;
     }
     const split = this.cleanValue( stringTime ).split( ':' );
-    const hour = this.leftPad.transform(split[0], 2);
-    const min = this.leftPad.transform(split[1], 2);
-
-    if ( min.length >= 2 ) {
+    const hour = split[0];
+    const min = split[1];
+    if ( min.length >= 2 && hour.length >= 2  ) {
       this.hour = this.isFormat12() ? this.leftPad.transform( this.convertToAmPm( hour ), 2 ) : hour;
       if ( this.listHour ) {
         this.setScrollColumn( this.listHour.nativeElement, TIME.HOUR );
-        this.setValue();
       }
-    }
-    if ( hour.length >= 2 ) {
       this.minute = min;
       if ( this.listMinutes ) {
         this.setScrollColumn( this.listMinutes.nativeElement, TIME.MINUTE );
-        this.setValue();
       }
+      this.setValue();
     }
+
   }
 
   private setScrollColumn( elementScroll: HTMLElement, type: TIME ) {

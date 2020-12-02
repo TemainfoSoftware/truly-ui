@@ -30,36 +30,24 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  ChangeDetectorRef,
+  ChangeDetectorRef, OnChanges, SimpleChanges,
 } from '@angular/core';
 import {TlTimelineItem} from './parts/timeline-item/timeline-item';
-import {DataSourceList} from '../core/classes/datasource-list';
-import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'tl-timeline',
   templateUrl: './timeline.html',
   styleUrls: ['./timeline.scss'],
 })
-export class TlTimeline implements OnInit {
+export class TlTimeline implements OnInit, OnChanges {
 
-  @Input('data')
-  set data(value) {
-    this._data = value;
-    this.setUpData(value);
-  }
-
-  get data() {
-    return this._data;
-  }
+  @Input('data') data = [];
 
   @Input() align = 'left';
 
   @Input() height = '400px';
 
   @Input() keyTitle = 'title';
-
-  @Input() totalLength = 0;
 
   @Input() keyText = 'text';
 
@@ -69,11 +57,11 @@ export class TlTimeline implements OnInit {
 
   @Input() mode = 'basic';
 
-  @Input() lazyMode = false;
-
-  @Input() loading = false;
-
   @Input() color = 'primary';
+
+  @Input() enableUnequalChildrenSizes = true;
+
+  @Input() bufferAmount = 5;
 
   @Output() lazyLoad: EventEmitter<any> = new EventEmitter();
 
@@ -81,54 +69,48 @@ export class TlTimeline implements OnInit {
 
   @ContentChild(TemplateRef, {static: true}) customTemplate: TemplateRef<any>;
 
-  public dataSource: DataSourceList;
+  public buffer = [];
 
   public skip = 0;
-
-  public take = 20;
 
   public loadingMoreData = false;
 
   public nothingFound = false;
 
-  private _data = [];
-
-  private subscription = new Subscription();
-
   constructor(public change: ChangeDetectorRef) {}
 
   ngOnInit() {}
 
-  setUpData( value? ) {
-    if ( !this.dataSource ) {
-      this.dataSource = new DataSourceList( {
-        dataSource: value,
-        pageSize: this.rowsPage,
-        totalLength: this.totalLength,
-        lazyMode: this.lazyMode
-      } );
-      this.listenLoadData();
-    }
-    this.loading = false;
-    this.dataSource.setData( value );
-    this.setNotFound( value.length === 0 );
-  }
-
-  private listenLoadData() {
-    if ( !this.dataSource ) {
-      return;
-    }
-    this.subscription.add( this.dataSource.loadMoreData.subscribe( ( data: any ) => {
-      this.lazyLoad.emit( { skip: data.skip, limit: data.limit } );
-    } ) );
-  }
-
-  private setNotFound( value: boolean ) {
-    this.nothingFound = value;
-  }
-
   onInit(lineItem: TlTimelineItem, item, index) {
     lineItem.setTemplateView(item, index);
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadingMoreData = false;
+    if ( this.data.length > 0 ) {
+      this.buffer = this.buffer.concat(this.data);
+      this.nothingFound = false;
+      return this.loadingMoreData = false;
+    }
+
+    if ( this.data.length === 0 && this.buffer.length > 0 ) {
+      this.nothingFound = false;
+      return this.loadingMoreData = false;
+    }
+
+    if ( this.data.length === 0 && this.buffer.length === 0 ) {
+      return this.nothingFound = true;
+    }
+  }
+
+  fetchMore(event) {
+    if (!this.loadingMoreData && this.mode === 'infinite')  {
+      if (event.endIndex !== this.buffer.length - 1 ) { return; }
+      this.loadingMoreData = true;
+      this.skip = this.buffer.length;
+      this.lazyLoad.emit( { skip: this.skip, limit: this.rowsPage } );
+    }
+  }
+
 
 }

@@ -21,15 +21,16 @@
  */
 import {
   Component, ContentChild, ContentChildren, QueryList, Input, ViewChild, AfterViewInit, Output,
-  EventEmitter, OnChanges,
+  EventEmitter, OnChanges, Optional, Self, AfterContentInit, OnDestroy,
 } from '@angular/core';
 
 import { TlRadioButton } from './radiobutton';
 import { MakeProvider } from '../core/base/value-accessor-provider';
 import { KeyEvent } from '../core/enums/key-events';
-import { FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgModel } from '@angular/forms';
+import {FormControlName, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NgControl, NgModel} from '@angular/forms';
 import { ValueAccessorBase } from '../input/core/value-accessor';
 import {FixedPositionDirective} from '../misc/fixed-position.directive';
+import {Subscription} from 'rxjs';
 
 const Orientation = {
   VERTICAL: 'vertical',
@@ -39,18 +40,9 @@ const Orientation = {
 @Component( {
   selector: 'tl-radio-group',
   templateUrl: './radiogroup.html',
-  styleUrls: [ './radiobutton.scss' ],
-  providers: [
-    [ MakeProvider( TlRadioGroup ) ]
-  ]
+  styleUrls: [ './radiobutton.scss' ]
 } )
-export class TlRadioGroup extends ValueAccessorBase<string> implements AfterViewInit {
-
-  public itemSelected;
-
-  public name;
-
-  public tabindex;
+export class TlRadioGroup extends ValueAccessorBase<string> implements AfterContentInit, OnDestroy {
 
   @Input() labelGroup = '';
 
@@ -60,34 +52,47 @@ export class TlRadioGroup extends ValueAccessorBase<string> implements AfterView
 
   @ViewChild( 'radiobutton', {static: true} ) radiobutton;
 
-  @ContentChild( NgModel, {static: true} ) model: NgModel;
-
-  @ContentChild( FormControlName, {static: true} ) controlName: FormControlName;
-
   @ContentChildren( TlRadioButton ) listRadioButton: QueryList<TlRadioButton>;
 
   @Output() private onCheckRadio: EventEmitter<any> = new EventEmitter();
 
   @Output() private onFocusRadio: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  public itemSelected;
+
+  public name;
+
+  public tabindex;
+
+  private subscription = new Subscription();
+
+  constructor(@Optional() @Self() public ngControl: NgControl) {
     super();
+    this.setControl();
   }
 
-  ngAfterViewInit() {
-    setTimeout( () => {
-      this.handleInitialValue();
-      this.validateProperty();
-      this.validateCheckedRadios();
-    }, 1 );
+  get control() {
+    return this.ngControl?.control;
+  }
+
+  setControl() {
+    if ( this.ngControl ) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
+
+  ngAfterContentInit() {
+    this.handleInitialValue();
+    this.validateProperty();
+    this.validateCheckedRadios();
     this.listenModelChange();
   }
 
   listenModelChange() {
-    if ( this.model ) {
-      this.model.valueChanges.subscribe((value) => {
+    if ( this.control ) {
+      this.subscription.add(this.control.valueChanges.subscribe((value) => {
         this.handleModelValue();
-      });
+      }));
     }
   }
 
@@ -121,7 +126,7 @@ export class TlRadioGroup extends ValueAccessorBase<string> implements AfterView
   }
 
   handleKeyDown( $event: KeyboardEvent ) {
-    switch ( $event.keyCode ) {
+    switch ( $event.code ) {
       case KeyEvent.ARROWDOWN:
         $event.preventDefault();
         break;
@@ -166,6 +171,10 @@ export class TlRadioGroup extends ValueAccessorBase<string> implements AfterView
 
   focusRadio( item ) {
     this.onFocusRadio.emit( item );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 

@@ -96,4 +96,9 @@ export class TlSplitButton implements AfterContentInit {
     this.stopEvent($event);
   }
 
+  onBackdropClick() {
+    this.isOpen = false;
+    this.change.detectChanges();
+  }
+
 }

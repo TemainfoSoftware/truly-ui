@@ -64,11 +64,11 @@ export class ScrollManager implements OnInit, AfterViewInit {
   }
 
   isArrowUp( $event ) {
-    return $event.keyCode === KeyEvent.ARROWUP;
+    return $event.code === KeyEvent.ARROWUP;
   }
 
   isArrowDown( $event ) {
-    return $event.keyCode === KeyEvent.ARROWDOWN;
+    return $event.code === KeyEvent.ARROWDOWN;
   }
 
   onArrowUp() {

@@ -161,8 +161,8 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
       [KeyEvent.ARROWUP]: () => this.stopEvent( $event ),
       [KeyEvent.ESCAPE]: () => this.handleEscape( $event )
     };
-    if ( keyEvent[ $event.keyCode ] ) {
-      keyEvent[ $event.keyCode ]();
+    if ( keyEvent[ $event.code ] ) {
+      keyEvent[ $event.code ]();
     }
   }
 
@@ -176,6 +176,7 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
   getNativeInput() {
     return this.input.nativeElement;
   }
+
 
   onFindByLetter( value: string ) {
     this.handleSelectInLetter( value );
@@ -207,6 +208,11 @@ export class TlDropDownList extends ValueAccessorBase<any> implements OnInit, On
       this.isOpen = true;
       this.setUpComponent();
     }
+  }
+
+  onBackdropClick() {
+    this.isOpen = false;
+    this.changes.detectChanges();
   }
 
   private initializeComponent() {

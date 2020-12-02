@@ -42,6 +42,7 @@ import {ModalFormConfig} from '../interfaces/modal-smart-form-config';
 import {ModalInstance} from '../interfaces/modal-instance';
 import {TlDialogInfo} from '../../dialog/dialog-info/dialog-info';
 import {I18nService} from '../../i18n/i18n.service';
+import * as objectPath from 'object-path';
 
 let lastZIndex = 500;
 
@@ -512,7 +513,7 @@ export class ModalService implements OnDestroy {
           this.handleRelativeDataSource(component);
         }
       });
-      this.componentInjected.instance.message = this.referenceSmartForm.smartForm['deleteConfirmationMessage'];
+      this.componentInjected.instance.message = `${this.referenceSmartForm.smartForm['deleteConfirmationMessage']} ${this.getInfoRecord()}`;
       return true;
     }
     return false;
@@ -520,6 +521,22 @@ export class ModalService implements OnDestroy {
 
   private isDeleteAction(component) {
     return component.executeAction === ActionsModal.DELETE;
+  }
+
+  private getDataForm() {
+    return this.referenceSmartForm.smartForm.dataForm;
+  }
+
+  private getRecordConfig() {
+    return this.referenceSmartForm.smartForm['recordConfig'];
+  }
+
+  getInfoRecord() {
+    const recordConfig = this.getRecordConfig();
+    if ( recordConfig.showOnDelete && recordConfig.keyFromDataForm ) {
+      return `<br><b>${  objectPath.get( this.getDataForm(), recordConfig.keyFromDataForm ) }</b>`;
+    }
+    return '';
   }
 
   private handleSmartFormCallback(component: ModalInstance, result) {

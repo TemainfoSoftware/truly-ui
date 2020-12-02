@@ -1,4 +1,4 @@
-<div class="ui-datatable-content" (keydown)="onKeydown($event)" (keyup)="onKeyup()">
+<div class="ui-datatable-content" (keydown)="onKeydown($event)" (keyup)="onKeyup()" tabindex="-1" #datableContent>
 
   <cdk-virtual-scroll-viewport
     class="ui-datatable-content-wrap"
@@ -19,8 +19,7 @@
                             [index]="index"
                             (click)="onRowClick(rowItem, row, index)"
                             (contextmenu)="contextmenu($event, rowItem, row, index)"
-                            (dblclick)="rowDbClick.emit({ row:row, index: index })"
-          >
+                            (dblclick)="rowDbClick.emit({ row:row, index: index })">
             <tl-datatable-cell class="ui-cel"
                                *ngFor="let collumn of columns" [collumn]="collumn"
                                [content]="row"></tl-datatable-cell>

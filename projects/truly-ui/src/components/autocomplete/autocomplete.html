@@ -28,6 +28,8 @@
         (keydown.ArrowUp)="handleKeyArrowUp($event)"
         (keydown.ArrowDown)="handleKeyArrowDown($event)"
         (keydown.escape)="handleKeyEscape($event)"
+        selectedItem
+        [selected]="value"
         class="ui-input"
         [(ngModel)]="description"
         (keydown.enter)="handleKeyEnter($event)"
@@ -52,7 +54,8 @@
                    [cdkConnectedOverlayOrigin]="trigger"
                    [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
                    [cdkConnectedOverlayOpen]="isOpen">
-        <cdk-virtual-scroll-viewport class="ui-scroll-view"
+        <cdk-virtual-scroll-viewport [class]="'ui-scroll-view ' + color"
+                                     [style.height]="tempContainerHeight"
                                      [itemSize]="rowHeight"
                                      [style.width]="wrapper.offsetWidth - 2 + 'px'"
                                      (scrolledIndexChange)="onScrollIndexChange($event)"

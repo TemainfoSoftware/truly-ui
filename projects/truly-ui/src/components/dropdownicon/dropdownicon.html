@@ -12,7 +12,7 @@
   </button>
   <input class="ui-hidden-input" [(ngModel)]="value">
   <ng-template cdkConnectedOverlay
-               (backdropClick)="isOpen = false"
+               (backdropClick)="onBackdropClick()"
                [cdkConnectedOverlayHasBackdrop]="true"
                [cdkConnectedOverlayOrigin]="trigger"
                [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"

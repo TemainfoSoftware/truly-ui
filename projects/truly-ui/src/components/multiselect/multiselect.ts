@@ -161,6 +161,11 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
     this.listenControlChanges();
   }
 
+  onBackdropClick() {
+    this.isOpen = false;
+    this.change.detectChanges();
+  }
+
   private listenControlChanges() {
     this.subscription.add(this.control.valueChanges.subscribe(() => {
       this.validateHasModel();
@@ -184,7 +189,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   private handleOpenOnFocus() {
-    if ( this.openFocus ) {
+    if ( this.openFocus && this.filteredItems.length > 0 ) {
       this.isOpen = true;
     }
   }
@@ -323,8 +328,8 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
       [KeyEvent.ARROWLEFT]: () => this.handleArrowLeft( $event ),
       [KeyEvent.ARROWRIGHT]: () => this.handleArrowRight( $event )
     };
-    if ( keyEvent[ $event.keyCode ] ) {
-      keyEvent[ $event.keyCode ]();
+    if ( keyEvent[ $event.code ] ) {
+      keyEvent[ $event.code ]();
     }
   }
 
@@ -335,7 +340,7 @@ export class TlMultiSelect extends ValueAccessorBase<any> implements OnInit, Aft
   }
 
   handleClickWrapper() {
-    if (!this.disabled) {
+    if (!this.disabled && this.filteredItems.length > 0) {
       this.isOpen = !this.isOpen;
     }
     this.setInputFocus();

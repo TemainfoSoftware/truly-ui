@@ -1,7 +1,7 @@
 /*
  MIT License
 
- Copyright (c) 2019 Temainfo Software
+ Copyright (c) 2020 Temainfo Software
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -290,7 +290,7 @@ export class ScheduleDemoOverviewComponent {
       status: '',
       type: 'EVENTO',
       blocked: true,
-      date: { start: new Date(new Date().setHours(19, 0)).getTime() , end: new Date(new Date().setHours(21, 0 )).getTime() }
+      date: { start: new Date(new Date().setHours(17, 0)).getTime() , end: new Date(new Date().setHours(18, 0 )).getTime() }
     },
     {
       value: '23',
@@ -300,7 +300,7 @@ export class ScheduleDemoOverviewComponent {
       status: '',
       type: 'EVENTO',
       blocked: true,
-      date: { start: new Date(new Date().setHours(6, 0)).getTime() , end: new Date(new Date().setHours(7, 0 )).getTime() }
+      date: { start: new Date(new Date().setHours(16, 30)).getTime() , end: new Date(new Date().setHours(18, 30 )).getTime() }
     }
   ];
 
@@ -345,7 +345,7 @@ export class ScheduleDemoOverviewComponent {
   getWorkScale() {
     return new Promise((resolve) => {
       resolve( [
-        new WorkScaleType( '08:00', '12:00', 30 ),
+        new WorkScaleType( '09:00', '12:00', 30 ),
         new WorkScaleType( '13:00', '18:00', 60 )
       ] );
     });
@@ -368,8 +368,8 @@ export class ScheduleDemoOverviewComponent {
       allday: false,
       tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {
-        start: new Date(new Date().setHours(18, 30, 0)).getTime() ,
-        end: new Date( new Date().setHours(19, 0, 0) ).getTime()
+        start: new Date(new Date().setHours(8, 20, 0)).getTime() ,
+        end: new Date( new Date().setHours(9, 0, 0) ).getTime()
       }
     }];
 

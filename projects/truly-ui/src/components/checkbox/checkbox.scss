@@ -85,9 +85,9 @@
   }
 }
 
-.-label {
+.checkbox-label {
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";
-  font-size: 1em !important;
+  font-size: 12px;
   font-weight: normal !important;
   position: relative;
   left: 5px;
@@ -95,6 +95,6 @@
   user-select: none;
 }
 
-.-label:hover {
+.checkbox-label:hover {
   cursor: pointer;
 }

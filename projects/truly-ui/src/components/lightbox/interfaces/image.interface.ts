@@ -1,6 +1,7 @@
 export interface ImageLightboxInterface {
-  image: string;
+  file: string;
   index: number;
   title?: string;
   description?: string;
+  type?: string;
 }

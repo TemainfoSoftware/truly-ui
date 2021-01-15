@@ -2,8 +2,11 @@
      (click)="stopEvent($event)"
      [ngClass]="zoomIn ? 'zoomIn': 'zoomOut'">
   <img class="image"
+       *ngIf="file.type === 'png' || file.type === 'jpeg' || file.type === 'bmp' || file.type === 'jpg'"
        [ngStyle]="{ 'transform': transform, 'cursor': zoomIn ? 'zoom-out' : 'zoom-in' }"
-       [src]="imageSelected?.image" (click)="zoomInOut()" (mousemove)="mouseMove($event)">
+       [src]="bypassFile(file?.file)" (click)="zoomInOut()" (mousemove)="mouseMove($event)">
+  <object *ngIf="file.type === 'pdf'" class="thumbnail-image"  width="100%" height="800px" type="application/pdf"
+          [data]=bypassFile(file?.file)> </object>
   <div class="close-button" (click)="close.emit()">
     <tl-icon [lib]="'ion'" [style]="'ios'">close-circle</tl-icon>
   </div>
@@ -11,18 +14,27 @@
 
 
 <div class="image-info">
-  <h3 *ngIf="imageSelected?.title">{{ imageSelected?.title }}</h3>
-  <p>{{ imageSelected?.description}}</p>
+  <h3 *ngIf="file?.title">{{ file?.title }}</h3>
+  <p>{{ file?.description}}</p>
 </div>
 <div class="light-box-controls">
-  <tl-icon class="arrow left" *ngIf="images.length > 1 && hasImagesOnRight()" (click)="previous($event)" [lib]="'ion'"
+  <tl-icon class="arrow left" *ngIf="files.length > 1 && hasImagesOnRight()" (click)="previous($event)" [lib]="'ion'"
            [style]="'ios'">arrow-dropleft-circle
   </tl-icon>
-  <tl-icon class="arrow right" *ngIf="images.length > 1 && hasImagesOnLeft()" (click)="next($event)" [lib]="'ion'"
+  <tl-icon class="arrow right" *ngIf="files.length > 1 && hasImagesOnLeft()" (click)="next($event)" [lib]="'ion'"
            [style]="'ios'">arrow-dropright-circle
   </tl-icon>
 </div>
 <div class="footer-images" (click)="stopEvent($event)">
-  <img *ngFor="let item of images" class="thumbnail" [class.selected]="item?.index === imageSelected?.index"
-       (click)="selectImage($event, item)" [src]="item?.image">
+  <ng-container *ngFor="let item of files">
+    <ng-container *ngIf="item.type === 'png' || item.type === 'jpeg' || item.type === 'bmp' || item.type === 'jpg'">
+      <img class="thumbnail" [class.selected]="item?.index === file?.index"
+           (click)="selectImage($event, item)" [src]="item?.file">
+    </ng-container>
+    <ng-container *ngIf="item.type === 'pdf'" >
+      <div class="thumbnail" [class.selected]="item?.index === file?.index" (click)="selectImage($event, item)">
+        <tl-icon  style="margin-right: 5px" [lib]="'fa'" [style]="'fas'" [color]="'#ec7e7e'" [size]="'40px'">file-pdf</tl-icon>
+      </div>
+    </ng-container>
+  </ng-container>
 </div>

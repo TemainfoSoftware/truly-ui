@@ -20,6 +20,6 @@ export class ThumbnailService {
       result = mime[1];
     }
 
-    return result;
+    return result || 'image';
   }
 }

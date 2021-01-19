@@ -17,8 +17,8 @@
       <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
     </ng-container>
     <ng-template #imageTemplate>
-      <div *ngIf="item.type === 'image/png' || item.type === 'image/jpeg' || item.type === 'image/bmp' || item.type === 'image/jpg' ||
-                   mimeType === 'image/png' ||  mimeType === 'image/jpeg' ||  mimeType === 'image/bmp' ||  mimeType === 'image/jpg'"
+      <div *ngIf="item.type === 'image/png' || item.type === 'image/jpeg' || item.type === 'image/bmp' || item.type === 'image/jpg' || item.type === 'image' ||
+                   mimeType === 'image/png' ||  mimeType === 'image/jpeg' ||  mimeType === 'image/bmp' ||  mimeType === 'image/jpg' ||  mimeType === 'image'"
            class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
         <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item.file || image">
         <div class="thumbnail-controls" *ngIf="!overlayTemplate">

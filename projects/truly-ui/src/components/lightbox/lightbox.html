@@ -2,7 +2,7 @@
      (click)="stopEvent($event)"
      [ngClass]="zoomIn ? 'zoomIn': 'zoomOut'">
   <img class="image"
-       *ngIf="file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/bmp' || file.type === 'image/jpg'"
+       *ngIf="file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/bmp' || file.type === 'image/jpg' || file.type === 'image'"
        [ngStyle]="{ 'transform': transform, 'cursor': zoomIn ? 'zoom-out' : 'zoom-in' }"
        [src]="bypassFile(file?.file)" (click)="zoomInOut()" (mousemove)="mouseMove($event)">
   <object *ngIf="file.type === 'application/pdf'" class="thumbnail-image"  width="100%" height="800px" type="application/pdf"
@@ -27,7 +27,7 @@
 </div>
 <div class="footer-images" (click)="stopEvent($event)">
   <ng-container *ngFor="let item of files">
-    <ng-container *ngIf="item.type === 'image/png' || item.type === 'image/jpeg' || item.type === 'image/bmp' || item.type === 'image/jpg'">
+    <ng-container *ngIf="item.type === 'image/png' || item.type === 'image/jpeg' || item.type === 'image/bmp' || item.type === 'image/jpg' || item.type === 'image'">
       <img class="thumbnail" [class.selected]="item?.index === file?.index"
            (click)="selectImage($event, item)" [src]="item?.file">
     </ng-container>

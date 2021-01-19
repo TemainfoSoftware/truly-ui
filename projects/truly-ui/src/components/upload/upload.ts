@@ -203,6 +203,6 @@ export class TlUpload implements OnInit {
       result = mime[1];
     }
 
-    return result;
+    return result || 'image';
   }
 }

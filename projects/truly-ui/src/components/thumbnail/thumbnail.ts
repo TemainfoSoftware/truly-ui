@@ -20,15 +20,16 @@
     SOFTWARE.
 */
 
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import { LightboxService } from '../lightbox/services/lightbox.service';
+import {ThumbnailService} from './thumbnail.service';
 
 @Component({
   selector: 'tl-thumbnail',
   templateUrl: './thumbnail.html',
   styleUrls: ['./thumbnail.scss'],
 })
-export class TlThumbnail implements OnInit {
+export class TlThumbnail implements OnInit, OnChanges {
 
   @Input() image;
 
@@ -48,9 +49,20 @@ export class TlThumbnail implements OnInit {
 
   @Output() clickThumbnail = new EventEmitter();
 
-  constructor(private lightboxService: LightboxService) {}
+  constructor(private lightboxService: LightboxService, private thumbnailService: ThumbnailService) {}
 
   ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['data'] && changes['data'].currentValue) {
+      if ((changes['data'].currentValue as Array<{ index?: number; description?: string, file: string, type: string }>).length > 0) {
+        this.data = (changes['data'].currentValue as Array<any>).map( (file) => {
+          file.type = !file.type ? this.thumbnailService.getMimeType(file.file) : file.type;
+          return file;
+        });
+      }
+    }
+  }
 
   get isCircle() {
     return this.shape === 'circle';

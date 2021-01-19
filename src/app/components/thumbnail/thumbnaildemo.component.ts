@@ -40,13 +40,13 @@ export class ThumbnailDemoComponent {
       index: 0,
       description: 'Image 1',
       file: 'https://static.matomo.org/wp-content/uploads/2019/02/healthcare-analytics-image.png',
-      type: 'png'
+      type: 'image/jpeg'
     },
     {
       index: 1,
       description: 'PDF 1',
       file: 'https://cdn.medicsolution.app/prontuario/anexos/6100c7aa-50ce-48ea-a9c1-c8ffda438713',
-      type: 'pdf'
+      type: 'application/pdf'
     }
   ];
 

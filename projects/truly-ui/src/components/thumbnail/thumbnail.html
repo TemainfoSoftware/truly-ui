@@ -17,7 +17,8 @@
       <ng-container *ngTemplateOutlet="emptyTemplate"></ng-container>
     </ng-container>
     <ng-template #imageTemplate>
-      <div *ngIf="item.type === 'png' || item.type === 'jpeg' || item.type === 'bmp' || item.type === 'jpg'"
+      <div *ngIf="item.type === 'image/png' || item.type === 'image/jpeg' || item.type === 'image/bmp' || item.type === 'image/jpg' ||
+                   mimeType === 'image/png' ||  mimeType === 'image/jpeg' ||  mimeType === 'image/bmp' ||  mimeType === 'image/jpg'"
            class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
         <img class="thumbnail-image" [class.circle-shape]="isCircle" alt="image" [src]="item.file || image">
         <div class="thumbnail-controls" *ngIf="!overlayTemplate">
@@ -28,7 +29,7 @@
         </div>
       </div>
 
-      <div *ngIf="item.type === 'pdf'" class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
+      <div *ngIf="item.type === 'application/pdf' || mimeType === 'application/pdf'" class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
         <tl-icon style="margin-right: 5px" [lib]="'fa'" [style]="'fas'" [color]="'#ec7e7e'" [size]="'40px'">file-pdf</tl-icon>
         <div class="thumbnail-controls" *ngIf="!overlayTemplate">
           <tl-icon style="margin-right: 5px" (click)="onViewImage( image )" [lib]="'dx'">find</tl-icon>

@@ -32,6 +32,8 @@ export class TlThumbnail implements OnInit {
 
   @Input() image;
 
+  @Input() mimeType;
+
   @Input() data: { index?: number; description?: string, file: string, type: string }[] = [];
 
   @Input() bordered = true;

@@ -37,7 +37,8 @@
   <tl-thumbnail
     [shape]="'square'"
     [bordered]="!item"
-    [image]="item?.image || imageSrc"
+    [image]="item?.file || imageSrc"
+    [mimeType]="item?.type || imageSrcMimeType"
     [emptyTemplate]="emptyTemplate"
     [overlayTemplate]="controlsTemplate">
     <ng-template #emptyTemplate>

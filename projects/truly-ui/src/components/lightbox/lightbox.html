@@ -5,8 +5,8 @@
        *ngIf="file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/bmp' || file.type === 'image/jpg' || file.type === 'image'"
        [ngStyle]="{ 'transform': transform, 'cursor': zoomIn ? 'zoom-out' : 'zoom-in' }"
        [src]="bypassFile(file?.file)" (click)="zoomInOut()" (mousemove)="mouseMove($event)">
-  <object *ngIf="file.type === 'application/pdf'" class="thumbnail-image"  width="100%" height="800px" type="application/pdf"
-          [data]=bypassFile(file?.file)> </object>
+  <iframe *ngIf="file.type === 'application/pdf'" class="thumbnail-image" style="border: none;"  width="100%" height="800px"
+          [src]=bypassFile(file?.file)> </iframe>
   <div class="close-button" (click)="close.emit()">
     <tl-icon [lib]="'ion'" [style]="'ios'">close-circle</tl-icon>
   </div>

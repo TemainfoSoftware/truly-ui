@@ -45,7 +45,7 @@ export class ThumbnailDemoComponent {
     {
       index: 1,
       description: 'PDF 1',
-      file: 'https://cdn.medicsolution.app/prontuario/anexos/6100c7aa-50ce-48ea-a9c1-c8ffda438713',
+      file: 'https://cdn.medicsolution.app/prontuario/anexos/09794f95-4baf-4726-ab7b-dd62369d1cf6',
       type: 'application/pdf'
     }
   ];

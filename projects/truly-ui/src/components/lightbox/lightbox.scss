@@ -75,6 +75,9 @@
     height: 80px;
     margin: 0 5px;
     border: 1px solid #5d5b5b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &.selected {
       border: 1px solid white !important;
     }

@@ -22,6 +22,7 @@
 
 import {ChangeDetectorRef, Component, EventEmitter, HostListener, OnInit} from '@angular/core';
 import {ImageLightboxInterface} from './interfaces/image.interface';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'tl-lightbox',
@@ -32,9 +33,9 @@ export class TlLightbox implements OnInit {
 
   public isOpen = true;
 
-  public images: ImageLightboxInterface[] = [];
+  public files: ImageLightboxInterface[] = [];
 
-  public imageSelected: ImageLightboxInterface;
+  public file: ImageLightboxInterface;
 
   public close = new EventEmitter();
 
@@ -47,13 +48,13 @@ export class TlLightbox implements OnInit {
     this.close.emit();
   }
 
-  constructor( private changes: ChangeDetectorRef ) {}
+  constructor( private changes: ChangeDetectorRef, private sanitizer: DomSanitizer ) {}
 
   ngOnInit() {}
 
   init( images: ImageLightboxInterface[], current ) {
-    this.images = images;
-    this.imageSelected = !current ? images[0] : current;
+    this.files = images;
+    this.file = !current ? images[0] : current;
     this.changes.detectChanges();
   }
 
@@ -69,14 +70,14 @@ export class TlLightbox implements OnInit {
   previous($event) {
     this.stopEvent($event);
     if ( this.hasImagesOnRight() ) {
-      this.imageSelected = this.images.find( ( item ) => ((this.imageSelected.index - 1) === item.index));
+      this.file = this.files.find( ( item ) => ((this.file.index - 1) === item.index));
     }
   }
 
   next( $event ) {
     this.stopEvent($event);
     if ( this.hasImagesOnLeft() ) {
-      this.imageSelected = this.images.find( ( item ) => ((this.imageSelected.index + 1) === item.index));
+      this.file = this.files.find( ( item ) => ((this.file.index + 1) === item.index));
     }
   }
 
@@ -88,20 +89,23 @@ export class TlLightbox implements OnInit {
   }
 
   hasImagesOnLeft() {
-    return this.imageSelected.index < this.images.length - 1;
+    return this.file.index < this.files.length - 1;
   }
 
   hasImagesOnRight() {
-    return this.imageSelected.index > 0;
+    return this.file.index > 0;
   }
 
   selectImage( $event, item ) {
     this.stopEvent($event);
-    this.imageSelected = item;
+    this.file = item;
   }
 
   stopEvent( $event ) {
     $event.stopPropagation();
   }
 
+  bypassFile( file ) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl( file );
+  }
 }

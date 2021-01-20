@@ -1,5 +1,5 @@
 export interface ImageUploadInterface {
-  image: string | ArrayBuffer;
+  file: string | ArrayBuffer;
   index: number;
   title?: string;
   description?: string;

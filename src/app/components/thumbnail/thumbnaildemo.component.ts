@@ -35,11 +35,20 @@ export class ThumbnailDemoComponent {
 
   public dataEvents;
 
-  public images = [{
-    index: 0,
-    description: 'test',
-    image: 'https://static.matomo.org/wp-content/uploads/2019/02/healthcare-analytics-image.png'
-  }];
+  public files = [
+    {
+      index: 0,
+      description: 'Image 1',
+      file: 'https://static.matomo.org/wp-content/uploads/2019/02/healthcare-analytics-image.png',
+      type: 'image/jpeg'
+    },
+    {
+      index: 1,
+      description: 'PDF 1',
+      file: 'https://cdn.medicsolution.app/prontuario/anexos/09794f95-4baf-4726-ab7b-dd62369d1cf6',
+      type: 'application/pdf'
+    }
+  ];
 
   constructor() {
     this.dataTableProperties = json.dataProperties;

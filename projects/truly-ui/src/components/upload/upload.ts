@@ -54,6 +54,8 @@ export class TlUpload implements OnInit {
 
   @Input() imageSrc;
 
+  @Input() imageSrcMimeType;
+
   @Input() isLoading = false;
 
   @Input() debounce = 380;
@@ -103,8 +105,10 @@ export class TlUpload implements OnInit {
   }
 
   open($event) {
-    this.type !== 'dragndrop' ? this.inputSingle.nativeElement.click() : this.inputMultiple.nativeElement.click();
-    $event.stopPropagation();
+    if (this.inputSingle || this.inputMultiple) {
+      this.type !== 'dragndrop' ? this.inputSingle.nativeElement.click() : this.inputMultiple.nativeElement.click();
+      $event.stopPropagation();
+    }
   }
 
   onDragOver(ev) {
@@ -127,7 +131,7 @@ export class TlUpload implements OnInit {
   readFiles(fileList) {
     for (let i = 0; i < fileList.length; i++) {
       this.readFile(fileList[i], i).then((value: ImageUploadInterface) => {
-        value = Object.assign({title: '', description: ''}, value);
+        value = Object.assign({title: '', description: '', type: this.getBase64MimeType(value.file)}, value);
         value.index = this.imageList.length;
         this.imageList = [ ...this.imageList, value ];
         if ( fileList.length <= this.imageList.length ) {
@@ -142,27 +146,27 @@ export class TlUpload implements OnInit {
     return new Promise(resolve => {
       reader.readAsDataURL(file);
       reader.onloadend = ( event ) => {
-        resolve({index: index, image: (<FileReader>event.target).result});
+        resolve({index: index, file: (<FileReader>event.target).result});
       };
     });
   }
 
-  viewImage($event, image) {
+  viewImage($event, file) {
     $event.stopPropagation();
     if (this.type === 'box') {
       return this.view.emit(this.imageSrc);
     }
-    this.lightboxService.create(this.imageList, image);
+    this.lightboxService.create(this.imageList, file);
   }
 
-  remove(image, imgSrc, event) {
+  remove(file, imgSrc, event) {
     event.stopPropagation();
     if (imgSrc) {
       this.imageSrc = null;
       this.deleteChange.emit(this.imageSrc);
     }
-    if (image) {
-      this.imageList = this.imageList.filter((item, idx) => image.index !== idx);
+    if (file) {
+      this.imageList = this.imageList.filter((item, idx) => file.index !== idx);
       this.imageList.forEach((item, idx) => item.index = idx);
       this.deleteChange.emit(this.imageList);
     }
@@ -186,4 +190,19 @@ export class TlUpload implements OnInit {
     }
   }
 
+  private getBase64MimeType(encoded) {
+    let result = null;
+
+    if (typeof encoded !== 'string') {
+      return result;
+    }
+
+    const mime = encoded.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+
+    if (mime && mime.length) {
+      result = mime[1];
+    }
+
+    return result || 'image';
+  }
 }

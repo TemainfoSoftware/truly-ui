@@ -64,6 +64,8 @@ export class TlUpload implements OnInit {
 
   @Input() viewControl = true;
 
+  @Input() acceptFiles = 'image/*,application/pdf';
+
   @ViewChild('inputMultiple', {static: false}) inputMultiple;
 
   @ViewChild('inputSingle', {static: false}) inputSingle;

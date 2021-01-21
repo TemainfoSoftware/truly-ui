@@ -5,7 +5,7 @@
     <ng-container *ngIf="imageList.length === 0 || showAsList; else imagesContainerTemplate">
       <span><tl-icon class="icon" [lib]="'fa'" [style]="'fas'">inbox</tl-icon></span>
       <p style="white-space: pre-line">{{ boxDescription }}</p>
-      <input #inputMultiple type="file" style="display: none;" (change)="onChange($event)" multiple>
+      <input #inputMultiple type="file" style="display: none;" (change)="onChange($event)" multiple [accept]="acceptFiles">
     </ng-container>
 
     <ng-template #imagesContainerTemplate>
@@ -33,7 +33,7 @@
 </div>
 
 <ng-template #uploadboxTemplate let-item>
-  <input #inputSingle type="file" style="display: none;" (change)="onChange($event)">
+  <input #inputSingle type="file" style="display: none;" (change)="onChange($event)" [accept]="acceptFiles">
   <tl-thumbnail
     [shape]="'square'"
     [bordered]="!item"

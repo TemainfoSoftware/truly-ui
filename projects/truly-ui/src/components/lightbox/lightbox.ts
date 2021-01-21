@@ -20,7 +20,7 @@
     SOFTWARE.
 */
 
-import {ChangeDetectorRef, Component, EventEmitter, HostListener, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, OnInit} from '@angular/core';
 import {ImageLightboxInterface} from './interfaces/image.interface';
 import {DomSanitizer} from '@angular/platform-browser';
 
@@ -28,6 +28,7 @@ import {DomSanitizer} from '@angular/platform-browser';
   selector: 'tl-lightbox',
   templateUrl: './lightbox.html',
   styleUrls: ['./lightbox.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TlLightbox implements OnInit {
 

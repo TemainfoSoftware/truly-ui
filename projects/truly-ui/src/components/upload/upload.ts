@@ -180,16 +180,31 @@ export class TlUpload implements OnInit {
 
   onChange($event) {
     if ($event.target.files.length > 0) {
+      const filesAccepet = this.filterFilesAccpet($event.target.files);
       if (this.type === 'dragndrop') {
-        return this.readFiles($event.target.files);
+        return this.readFiles(filesAccepet);
       }
       const reader = new FileReader();
-      reader.readAsDataURL($event.target.files[0]);
+      reader.readAsDataURL(filesAccepet[0]);
       reader.onload = (event) => {
         this.imageSrc = (<FileReader>event.target).result;
         this.uploadChange.emit(this.imageSrc);
       };
     }
+  }
+
+  private filterFilesAccpet( files ) {
+    const acceptFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      const regexExpresison = this.acceptFiles
+        .replace(  /\*/g, '.\*' )
+        .replace( /\,/g, '|' ) ;
+      const isAccept = new RegExp( regexExpresison ).test( files[ i ].type );
+      if ( isAccept ) {
+        acceptFiles.push(files[i]);
+      }
+    }
+    return acceptFiles;
   }
 
   private getBase64MimeType(encoded) {

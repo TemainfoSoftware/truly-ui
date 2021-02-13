@@ -54,5 +54,9 @@ export class ThumbnailDemoComponent {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvts.dataEvents;
   }
+
+  deleteThumb(thumb) {
+    console.log('DELETING...', thumb);
+  }
 }
 

@@ -22,7 +22,9 @@
 
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import { LightboxService } from '../lightbox/services/lightbox.service';
-import {ThumbnailService} from './thumbnail.service';
+import { ThumbnailService } from './thumbnail.service';
+import { DialogService } from '../dialog/dialog.service';
+import { ModalOptions } from '../modal/interfaces/modal-options';
 
 @Component({
   selector: 'tl-thumbnail',
@@ -43,13 +45,27 @@ export class TlThumbnail implements OnInit, OnChanges {
 
   @Input() size: { width: string, height: string } = { width: '80px', height: '80px' };
 
+  @Input() showDeleteButton = false;
+
+  @Input() confirmationDeleteMessage = 'Do you want to delete the Thumbnail?';
+
+  @Input() showConfirmationOnDelete = false;
+
+  @Input() modalDeleteOptions: ModalOptions;
+
   @Input() overlayTemplate: TemplateRef<any>;
 
   @Input() emptyTemplate: TemplateRef<any>;
 
   @Output() clickThumbnail = new EventEmitter();
 
-  constructor(private lightboxService: LightboxService, private thumbnailService: ThumbnailService) {}
+  @Output() clickDeleteThumbail = new EventEmitter();
+
+  constructor(
+    private lightboxService: LightboxService,
+    private thumbnailService: ThumbnailService,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit() {}
 
@@ -70,6 +86,15 @@ export class TlThumbnail implements OnInit, OnChanges {
 
   onViewImage( image ) {
     this.lightboxService.create( this.data, image);
+  }
+
+  onDeleteThumb(image) {
+    if (this.showConfirmationOnDelete) {
+      return this.dialogService.confirmation( this.confirmationDeleteMessage, ({
+        isYes: () => this.clickDeleteThumbail.emit(image),
+      }), {}, this.modalDeleteOptions);
+    }
+    this.clickDeleteThumbail.emit(image);
   }
 
 }

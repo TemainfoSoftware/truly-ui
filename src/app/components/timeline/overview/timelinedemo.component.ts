@@ -832,5 +832,15 @@ export class TimelineDemoComponent {
     this.dataTableProperties = json.dataProperties;
   }
 
+
+  changItem() {
+    this.dataBasic = this.dataBasic.map( (data, index) => {
+      if (data.title === 'Dr. Gregory House 1') {
+        data.text = data.text + index;
+      }
+      return data;
+    });
+  }
+
 }
 

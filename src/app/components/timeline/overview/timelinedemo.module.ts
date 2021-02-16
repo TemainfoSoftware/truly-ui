@@ -11,6 +11,7 @@ import { ShowcaseCardModule } from '../../../shared/components/showcase-card/sho
 import { ShowcaseTablePropertiesModule } from '../../../shared/components/showcase-table-properties/showcase-table-properties.module';
 import { ShowcaseTableEventsModule } from '../../../shared/components/showcase-table-events/showcase-table-events.module';
 import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header/showcase-header.module';
+import { ButtonModule } from '../../../../../projects/truly-ui/src/components/button';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ShowcaseHeaderModule } from '../../../shared/components/showcase-header
     ShowcaseCardModule,
     ShowcaseTablePropertiesModule,
     ShowcaseTableEventsModule,
-    ShowcaseHeaderModule
+    ShowcaseHeaderModule,
+    ButtonModule
   ],
   exports: [
     TimelineDemoComponent

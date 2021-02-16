@@ -78,7 +78,7 @@ export class TimelineDemoComponent {
   public dataAdvanced = [
     {
       title: 'Dr. Gregory House 1',
-      date: 1537477718000,
+      date: 1537477712000,
       text: 'Mauris vulputate dolor vel finibus sagittis.',
       duration: 15,
       category: [
@@ -815,6 +815,7 @@ export class TimelineDemoComponent {
 
     this.dataLazy = this.getDataFromService(0, this.take);
   }
+
 
   getDataFromService(skip, take) {
     return this.dataAdvanced.slice(skip, take);

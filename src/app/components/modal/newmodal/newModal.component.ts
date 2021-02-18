@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import { Modal } from '../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
 
 @Modal({
@@ -17,4 +17,6 @@ import { Modal } from '../../../../../projects/truly-ui/src/components/modal/int
   templateUrl: './newModal.html',
   styleUrls: [ './newModal.component.scss' ]
 } )
-export class NewModalComponent {}
+export class NewModalComponent {
+  @Input() myTitle;
+}

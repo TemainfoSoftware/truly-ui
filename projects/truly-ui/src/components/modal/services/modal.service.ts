@@ -94,10 +94,10 @@ export class ModalService implements OnDestroy {
   }
 
   createModal(component: Type<any>, factoryOrConfig: ComponentFactoryResolver,
-              identifier: string = '', parentElement: ElementRef = null, mdOptions?: ModalOptions) {
+              identifier: string = '', properties?: {}, parentElement: ElementRef = null, mdOptions?: ModalOptions) {
     this.view = this.containerModal.view;
     return new Promise((resolve) => {
-      this.setComponentModal(component, factoryOrConfig, identifier, parentElement, mdOptions);
+      this.setComponentModal(component, factoryOrConfig, identifier, parentElement, mdOptions, properties);
       this.handleCallbackModal(resolve);
     });
   }
@@ -157,6 +157,12 @@ export class ModalService implements OnDestroy {
     this.modalOptions = Object.assign(this.modalOptions[0], mdOptions);
   }
 
+  private setModalProperties(properties) {
+    Object.keys(properties).forEach( (value, index) => {
+      (this.componentInjected.instance)[value] = properties[value];
+    });
+  }
+
   private setComponentWrapperProperties(config, identifier, parentElement) {
     (<TlModal>this.component.instance).setOptions(this.modalOptions);
     (<TlModal>this.component.instance).setIdentifier(this.isConfigSmartForm(config) ? config['identifier'] : identifier);
@@ -193,7 +199,7 @@ export class ModalService implements OnDestroy {
 
   private setComponentModal(component: Type<any>,
                             config: SmartFormConfiguration | ComponentFactoryResolver,
-                            identifier?, parentElement?, mdOptions?: ModalOptions) {
+                            identifier?, parentElement?, mdOptions?: ModalOptions, properties?) {
 
     const factory = this.isConfigSmartForm(config) ? config['factory'] : config;
     if (this.isSmartFormUpdateDeleteAction(config) && !this.validateDataFormUpdate(config)) {
@@ -209,6 +215,7 @@ export class ModalService implements OnDestroy {
     this.setInitialZIndex();
     this.setInjectedComponent(factory, component);
     this.setModalOptions(mdOptions);
+    this.setModalProperties(properties);
     this.handleBackDrop(factory);
     this.setComponentWrapperProperties(config, identifier, parentElement);
     this.setInstanceComponent(config);

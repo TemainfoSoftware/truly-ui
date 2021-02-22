@@ -33,7 +33,10 @@ export class ModalDemoComponent {
   }
 
   modal1() {
-    this.modalService.createModal( NewModalComponent, this.compiler )
+    this.modalService.createModal( NewModalComponent, this.compiler, 'MODAL-TESTE', {
+      myTitle: 'My Modal Text Title',
+      notPropertie: ''
+    } )
       .then( ( modalResult ) => {
         console.log( modalResult );
       });

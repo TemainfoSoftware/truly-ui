@@ -22,6 +22,7 @@
  export interface ConfirmationOptions {
      textOk?: string;
      textCancel?: string;
+     message?: string;
      defaultOK?: boolean;
      draggable?: boolean;
  }

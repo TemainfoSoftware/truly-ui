@@ -10,7 +10,7 @@
           <app-card>
             <div class="col-md-12">
               <h5>Basic Image</h5>
-              <tl-thumbnail [data]="files"></tl-thumbnail>
+              <tl-thumbnail [data]="files" [showDeleteButton]="true" (clickDeleteThumbail)="deleteThumb($event)" [showConfirmationOnDelete]="true"></tl-thumbnail>
               <br>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">

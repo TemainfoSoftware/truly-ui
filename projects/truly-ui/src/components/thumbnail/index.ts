@@ -5,13 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { TlThumbnail } from './thumbnail';
 import { IconsModule } from '../icons/index';
 import { LightboxModule } from '../lightbox/index';
+import {DialogModule} from '../dialog/index';
 
 @NgModule({
   imports: [
     CommonModule,
     IconsModule,
     FormsModule,
-    LightboxModule
+    LightboxModule,
+    DialogModule
   ],
   declarations: [
     TlThumbnail

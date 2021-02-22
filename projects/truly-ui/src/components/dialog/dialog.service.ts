@@ -78,9 +78,13 @@ export class DialogService {
   confirmation( message: string, callbackConfirmation: ConfirmCallback, options: ConfirmationOptions = {}, mdOptions?: ModalOptions ) {
     this.modalService.createModalDialog( TlDialogConfirmation, this.factoryResolver, mdOptions ).then((value: any) => {
       if ( value.mdResult === ModalResult.MRYES ) {
-        callbackConfirmation.isYes(ModalResult.MRYES);
+        if (callbackConfirmation.isYes) {
+          callbackConfirmation.isYes(ModalResult.MRYES);
+        }
       } else if (value.mdResult === ModalResult.MRNO) {
-        callbackConfirmation.isNo(ModalResult.MRNO);
+        if (callbackConfirmation.isNo) {
+          callbackConfirmation.isNo(ModalResult.MRNO);
+        }
       }
     });
     const optionsObj = Object.assign( options, { message: message } );

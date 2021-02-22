@@ -43,6 +43,8 @@ export class TlTimeline implements OnInit, OnChanges {
 
   @Input('data') data = [];
 
+  @Input() clearOnUpdateData = false;
+
   @Input() align = 'left';
 
   @Input() height = '400px';
@@ -88,7 +90,11 @@ export class TlTimeline implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     this.loadingMoreData = false;
     if ( this.data.length > 0 ) {
-      this.buffer = this.buffer.concat(this.data);
+      if ( this.clearOnUpdateData ) {
+        this.buffer = this.data;
+      } else {
+        this.buffer = this.buffer.concat(this.data);
+      }
       this.nothingFound = false;
       return this.loadingMoreData = false;
     }

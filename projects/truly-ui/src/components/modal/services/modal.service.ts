@@ -158,9 +158,11 @@ export class ModalService implements OnDestroy {
   }
 
   private setModalProperties(properties) {
-    Object.keys(properties).forEach( (value, index) => {
-      (this.componentInjected.instance)[value] = properties[value];
-    });
+    if (properties) {
+      Object.keys(properties).forEach( (value, index) => {
+        (this.componentInjected.instance)[value] = properties[value];
+      });
+    }
   }
 
   private setComponentWrapperProperties(config, identifier, parentElement) {

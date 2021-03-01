@@ -85,6 +85,7 @@ export class TlSchedule implements OnInit, OnChanges {
     } else {
       this._events = [...events].sort(( a, b ) => a.date.start - b.date.start  );
       this._events = JSON.parse( JSON.stringify(this._events) );
+      this.setScrollTopOnChange();
     }
   }
 
@@ -117,6 +118,8 @@ export class TlSchedule implements OnInit, OnChanges {
   public currentHoliday: HolidaysType;
 
   private _events: ScheduleDataSource[];
+
+  private scrollTopOfscrollView: number;
 
   get events(): ScheduleDataSource[] {
     return this._events;
@@ -164,13 +167,18 @@ export class TlSchedule implements OnInit, OnChanges {
     this.releaseSchedule.emit( holiday );
   }
 
+  private setScrollTopOnChange() {
+    this.scrollTopOfscrollView = this.scheduleviews.nativeElement ? this.scheduleviews.nativeElement.scrollTop : 0;
+  }
+
   private handleScrollView( date = this.currentDate) {
     if ( !this.scheduleviews ) {
       return;
     }
+    this.setScrollTopOnChange();
     setTimeout(() => {
       this.scheduleviews.nativeElement.scrollTop = (
-        this.isSameDay( date ) ?  this.generateEventsService.convertMillisecondsToPixel() : 0
+        this.isSameDay( date ) ? this.generateEventsService.convertMillisecondsToPixel() : this.scrollTopOfscrollView
       );
     }, 100);
   }

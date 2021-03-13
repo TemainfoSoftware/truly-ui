@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  AfterContentInit,
+  AfterContentInit, ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -36,7 +36,7 @@ import {trigger, transition, style, animate} from '@angular/animations';
 import {ToolbarConfigModel} from './model/toolbar-config.model';
 import {ToolbarConfig} from './interfaces/toolbar-config';
 import {I18nService} from '../i18n/i18n.service';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl} from '@angular/forms';
+import {ControlValueAccessor, NgControl} from '@angular/forms';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Subscription} from 'rxjs';
 import {EditorService} from './services/editor.service';
@@ -154,6 +154,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
               private renderer: Renderer2,
               private editorService: EditorService,
               private sanitizer: DomSanitizer,
+              private cd: ChangeDetectorRef,
               @Optional() @Self() public ngControl: NgControl) {
     this.setControl();
     this.fontCollection = [
@@ -195,18 +196,18 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   listenChangeControl() {
     if ( this.control ) {
       this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
-        if (!this.listenerRegistered) {
-          this.handleFieldsPropagation();
-        }
+
       }));
     }
   }
 
   handleFieldsPropagation() {
-    const fields = this.contentEditor.nativeElement.querySelectorAll('.ui-field');
-    for (const item of fields) {
-      this.preventPropagation(item);
-    }
+    setTimeout(() => {
+      const fields = this.contentEditor.nativeElement.querySelectorAll('.ui-field');
+      for (const item of fields) {
+        this.preventPropagation(item);
+      }
+    }, 100);
   }
 
   alignContent(align) {
@@ -581,7 +582,10 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   writeValue(value: any): void {
     this.content = this.sanitizer.bypassSecurityTrustHtml(value);
+    this.handleFieldsPropagation();
     this.recoverCursorPosition();
+    this.cd.detectChanges();
+
   }
 
   registerOnChange(fn: any): void {

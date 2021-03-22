@@ -27,7 +27,7 @@ import { DumpDataService } from '../../shared/services/dumpdata';
 import { TlAutoComplete } from '../../../../projects/truly-ui/src/components/autocomplete/autocomplete';
 import { HttpClient } from '@angular/common/http';
 import { PersonService } from './http.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component( {
   selector: 'app-autocomplete',
@@ -59,7 +59,8 @@ export class AutoCompleteDemoComponent implements OnInit {
 
   public formGroup = new FormGroup({
     client: new FormControl(''),
-    clientLazy: new FormControl('')
+    clientLazy: new FormControl(''),
+    requiredField: new FormControl('', [Validators.required])
   });
 
   constructor( public dataDumpService: DumpDataService ) {

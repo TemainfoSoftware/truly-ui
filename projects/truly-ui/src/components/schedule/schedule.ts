@@ -95,6 +95,8 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Output() rowDbClick = new EventEmitter();
 
+  @Output() rowClick = new EventEmitter();
+
   @Output() eventDbClick = new EventEmitter();
 
   @Output() eventClick = new EventEmitter();

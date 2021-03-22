@@ -75,6 +75,39 @@
                 allowed to used here on highlight code.</p>
             </div>
           </app-card>
+          <app-card>
+            <div class="col-md-12">
+              <h6>Required</h6>
+              <form [formGroup]="formGroup">
+                <tl-autocomplete [data]="lazy"
+                                 [rowHeight]="40"
+                                 [rowsPage]="50"
+                                 [totalLength]="100"
+                                 [keyText]="'firstName'"
+                                 [keyValue]="'id'"
+                                 [searchBy]="'firstName'"
+                                 formControlName="requiredField">
+                </tl-autocomplete>
+              </form>
+              <app-showcase-returned-value [value]="formGroup.get('clientLazy').value"></app-showcase-returned-value>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{}" [lang]="'html'">
+              <tl-autocomplete [data]="lazy"
+                               [required]="true"
+                               [rowHeight]="40"
+                               [rowsPage]="50"
+                               [totalLength]="100"
+                               [keyText]="'firstName'"
+                               [keyValue]="'id'"
+                               [searchBy]="'firstName'"
+                               formControlName="requiredField">
+                </tl-autocomplete>
+</textarea>
+              <p><code>Atention:</code> The example above needs to be interpolated <code>{{example}}</code> for example.
+                Not
+                allowed to used here on highlight code.</p>
+            </div>
+          </app-card>
         </app-showcase-card>
       </div>
     </div>

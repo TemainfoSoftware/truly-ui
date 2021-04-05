@@ -195,8 +195,32 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
         });
       }
-      this.workScaleService.reload( this.reduceScales( scales ) );
+      this.workScaleService.reload( this.addMiddleScales(events, this.reduceScales( scales) ) );
     }
+  }
+
+  private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
+    const scales = workScale.filter( work => work);
+    for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
+      for (let e = 0; e < events.length - 1; e++ ) {
+        const eventStartDate = new Date(events[e].date.start).setSeconds(0, 0);
+        const eventEndDate = new Date(events[e].date.end).setSeconds(0, 0);
+        const workStartDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex].end, new Date(eventStartDate));
+        const workEndDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex + 1].start, new Date(eventEndDate));
+
+        // Horario dentro do intervalo
+        if ( eventStartDate >= workStartDate && eventEndDate <= workEndDate ) {
+          scales.push({
+            start: this.workScaleService.transformMilesecondsToHour(workStartDate),
+            end: this.workScaleService.transformMilesecondsToHour(workEndDate),
+            interval: (scales[workScaleIndex].interval),
+            expansed: true,
+          }); break;
+        }
+
+      }
+    }
+    return this.reduceScales( scales);
   }
 
   private reduceScales( scales: WorkScaleType[] ) {

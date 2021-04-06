@@ -24,6 +24,7 @@ import {
   OnChanges
 } from '@angular/core';
 import { I18nService } from '../i18n/i18n.service';
+import {CalendarHoliday} from '../calendar/interfaces/calendar-holiday.interface';
 
 export interface FilterTime {
   range: DateRange;
@@ -55,6 +56,8 @@ export class TlTimeAvailablePicker implements AfterViewInit, OnChanges {
   @Input() dateValue: Date = new Date();
 
   @Input() value: Array<DateRange> = [];
+
+  @Input() holidays: Array<CalendarHoliday> = [];
 
   @Output() changeSelect: EventEmitter<any> = new EventEmitter();
 

@@ -1,9 +1,11 @@
 <div [class]="'ui-time-available-picker ' + color" [style.width]="width">
   <div class="ui-time-header">
-    <div class="ui-date-selected">
-      <span class="ui-day">{{ dateValue | date:'dd' }}</span>
-      <span class="ui-day-week">{{ dateValue | date:'EEEE' }}</span>
-    </div>
+    <ng-container *ngIf="dateValue | holiday:holidays as dayArray">
+      <div class="ui-date-selected" [class.holiday]="dayArray?.length > 0" [tooltip]="{text: dayArray[0]?.description, placement: 'top-center'}">
+        <span class="ui-day">{{ dateValue | date:'dd' }}</span>
+        <span class="ui-day-week">{{ dateValue | date:'EEEE' }}</span>
+      </div>
+    </ng-container>
     <div class="ui-time-selected">
       <span *ngIf="selectedTime.length > 1">{{ selectedTime[0]?.range.start | date: 'HH:mm' }} - {{ selectedTime[1]?.range.end | date: 'HH:mm' }}</span>
       <span *ngIf="selectedTime.length === 1">{{ selectedTime[0]?.range.start | date: 'HH:mm' }} - {{ selectedTime[0]?.range.end | date: 'HH:mm' }}</span>

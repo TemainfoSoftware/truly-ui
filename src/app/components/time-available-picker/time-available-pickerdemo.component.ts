@@ -37,6 +37,14 @@ export class TimeAvailablePickerDemoComponent {
 
   public loading = true;
 
+  public holidaysArray = [
+    {
+      date: new Date(),
+      description: 'Some Holiday Today',
+      tooltip: true
+    }
+  ];
+
   public data = [
     {
       start: new Date( 1999, 1, 1, 8, 0 ),

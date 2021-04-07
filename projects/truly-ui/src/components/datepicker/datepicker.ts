@@ -31,8 +31,7 @@ import {
   Output, Self,
   ViewChild
 } from '@angular/core';
-import {MakeProvider} from '../core/base/value-accessor-provider';
-import {FormControlName, NgControl, NgModel} from '@angular/forms';
+import {NgControl} from '@angular/forms';
 import {TlInput} from '../input/input';
 import {TlCalendar} from '../calendar/calendar';
 
@@ -41,6 +40,7 @@ import {ConnectedOverlayPositionChange} from '@angular/cdk/overlay';
 import {KeyEvent} from '../core/enums/key-events';
 import {ValueAccessorBase} from '../input/core/value-accessor';
 import {Subscription} from 'rxjs';
+import {CalendarHoliday} from '../calendar/interfaces/calendar-holiday.interface';
 
 export interface DateOject {
   day: number;
@@ -83,6 +83,8 @@ export class TlDatePicker extends ValueAccessorBase<Date | string> implements On
   @Input() autoClose = false;
 
   @Input() openOnFocus = true;
+
+  @Input() holidays: Array<CalendarHoliday> = [];
 
   @Output() selectDay: EventEmitter<any> = new EventEmitter<any>();
 

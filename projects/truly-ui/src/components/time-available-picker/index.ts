@@ -7,6 +7,8 @@ import { ButtonModule } from '../button/index';
 import { MiscModule } from '../misc/index';
 import { IconsModule } from '../icons/index';
 import { LoaderModule } from '../loader/index';
+import { CalendarModule } from '../calendar/index';
+import { TooltipModule } from '../tooltip/index';
 
 @NgModule({
   imports: [
@@ -15,7 +17,9 @@ import { LoaderModule } from '../loader/index';
     ButtonModule,
     MiscModule,
     IconsModule,
-    LoaderModule
+    LoaderModule,
+    CalendarModule,
+    TooltipModule
   ],
   declarations: [
     TlTimeAvailablePicker

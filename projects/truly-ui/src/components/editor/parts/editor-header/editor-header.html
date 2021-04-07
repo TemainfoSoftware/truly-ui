@@ -1,95 +1,95 @@
 <div class="ui-editor-header">
   <ul class="ui-tools-list">
-     <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.family?.tooltipText, placement: 'top-center'}"
-         *ngIf="toolbarConfig.font?.family?.show">
+     <li class="dropdown" [tooltip]="{text: toolbarConfig?.font?.family?.tooltipText, placement: 'top-center'}"
+         *ngIf="toolbarConfig?.font?.family?.show">
        <select class="select" [(ngModel)]="fontSelected" (ngModelChange)="changeFont.emit($event)">
          <option *ngFor="let item of fontCollection" [ngValue]="item.value">{{ item?.description }}</option>
        </select>
      </li>
-        <li class="dropdown" [tooltip]="{text: toolbarConfig.font?.size?.tooltipText, placement: 'top-center'}"
-            *ngIf="toolbarConfig.font.size?.show">
+        <li class="dropdown" [tooltip]="{text: toolbarConfig?.font?.size?.tooltipText, placement: 'top-center'}"
+            *ngIf="toolbarConfig?.font.size?.show">
           <select class="select" [(ngModel)]="fontSizeSelected" (ngModelChange)="changeFontSize.emit($event)">
             <option *ngFor="let item of fontSizeCollection" [ngValue]="item.value">{{ item?.description }}</option>
           </select>
         </li>
-    <li [tooltip]="{text: toolbarConfig.font?.bold?.tooltipText, placement: 'top-center'}"
-        *ngIf="toolbarConfig.font.bold?.show">
+    <li [tooltip]="{text: toolbarConfig?.font?.bold?.tooltipText, placement: 'top-center'}"
+        *ngIf="toolbarConfig?.font.bold?.show">
       <button class="ui-command fa fa-bold" [ngClass]="{'ui-active-tool': activeTools.bold}"
               (click)="clickBold.emit()"></button>
     </li>
-    <li [tooltip]="{text: toolbarConfig.font.italic?.tooltipText, placement: 'top-center'}"
-        *ngIf="toolbarConfig.font.italic?.show">
+    <li [tooltip]="{text: toolbarConfig?.font.italic?.tooltipText, placement: 'top-center'}"
+        *ngIf="toolbarConfig?.font.italic?.show">
       <button class="ui-command fa fa-italic" [ngClass]="{'ui-active-tool': activeTools.italic}"
               (click)="clickItalic.emit()"></button>
     </li>
-    <li [tooltip]="{text: toolbarConfig.font.underline?.tooltipText, placement: 'top-center'}"
-        *ngIf="toolbarConfig.font.underline?.show">
+    <li [tooltip]="{text: toolbarConfig?.font.underline?.tooltipText, placement: 'top-center'}"
+        *ngIf="toolbarConfig?.font.underline?.show">
       <button class="ui-command fa fa-underline" [ngClass]="{'ui-active-tool': activeTools.underline}"
               (click)="clickUnderline.emit()"></button>
     </li>
     <li [style.border-bottom]="'2px solid ' + colorSelected" #button
-        [tooltip]="{text: toolbarConfig.font.color?.tooltipText, placement: 'top-center'}"
-        *ngIf="toolbarConfig.font.color?.show">
+        [tooltip]="{text: toolbarConfig?.font.color?.tooltipText, placement: 'top-center'}"
+        *ngIf="toolbarConfig?.font.color?.show">
       <button class="ui-command fa fa-font"></button>
       <tl-colorpicker [mode]="'fromOrigin'" [elementOrigin]="button" [recentColors]="true"
                       [(ngModel)]="colorSelected" [returnFormatColor]="true"
                       (selectColor)="changeColor.emit($event)"></tl-colorpicker>
     </li>
-    <li *ngIf="toolbarConfig.font.highlight?.show"
-        [tooltip]="{text: toolbarConfig.font.highlight?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.font.highlight?.show"
+        [tooltip]="{text: toolbarConfig?.font.highlight?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fas fas fa-pen-alt" [ngClass]="{'ui-active-tool': cursorHighlight}"
               (click)="clickHighlight.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.alignment?.left?.show"
-        [tooltip]="{text: toolbarConfig.alignment?.left?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.alignment?.left?.show"
+        [tooltip]="{text: toolbarConfig?.alignment?.left?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-align-left" [ngClass]="{'ui-active-tool': activeTools.alignLeft}"
               (click)="clickAlignContent.emit('justifyLeft')"></button>
     </li>
-    <li *ngIf="toolbarConfig.alignment?.center?.show"
-        [tooltip]="{text: toolbarConfig.alignment?.center?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.alignment?.center?.show"
+        [tooltip]="{text: toolbarConfig?.alignment?.center?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-align-center" [ngClass]="{'ui-active-tool': activeTools.alignCenter}"
               (click)="clickAlignContent.emit('justifyCenter')"></button>
     </li>
-    <li *ngIf="toolbarConfig.alignment?.right?.show"
-        [tooltip]="{text: toolbarConfig.alignment?.right?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.alignment?.right?.show"
+        [tooltip]="{text: toolbarConfig?.alignment?.right?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-align-right" [ngClass]="{'ui-active-tool': activeTools.alignRight}"
               (click)="clickAlignContent.emit('justifyRight')"></button>
     </li>
-    <li *ngIf="toolbarConfig.alignment?.justify?.show"
-        [tooltip]="{text: toolbarConfig.alignment?.justify?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.alignment?.justify?.show"
+        [tooltip]="{text: toolbarConfig?.alignment?.justify?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-align-justify" [ngClass]="{'ui-active-tool': activeTools.alignJustify}"
               (click)="clickAlignContent.emit('justifyFull')"></button>
     </li>
-    <li *ngIf="toolbarConfig.lists?.ordered?.show"
-        [tooltip]="{text: toolbarConfig.lists?.ordered?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.lists?.ordered?.show"
+        [tooltip]="{text: toolbarConfig?.lists?.ordered?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-list-ul" [ngClass]="{'ui-active-tool': activeTools.listUnordered}"
               (click)="clickUnorderedList.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.lists?.unordered?.show"
-        [tooltip]="{text: toolbarConfig.lists?.unordered?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.lists?.unordered?.show"
+        [tooltip]="{text: toolbarConfig?.lists?.unordered?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-list-ol" [ngClass]="{'ui-active-tool': activeTools.listOrdered}"
               (click)="clickOrderedList.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.others?.link?.show"
-        [tooltip]="{text: toolbarConfig.others?.link?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.others?.link?.show"
+        [tooltip]="{text: toolbarConfig?.others?.link?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fa fa-link" (click)="clickLink.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.others?.imageLink?.show"
-        [tooltip]="{text: toolbarConfig.others?.imageLink?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.others?.imageLink?.show"
+        [tooltip]="{text: toolbarConfig?.others?.imageLink?.tooltipText, placement: 'top-center'}">
       <button class="ui-command far fa-image" (click)="clickImage.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.others?.quote?.show"
-        [tooltip]="{text: toolbarConfig.others?.quote?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.others?.quote?.show"
+        [tooltip]="{text: toolbarConfig?.others?.quote?.tooltipText, placement: 'top-center'}">
       <button class="ui-command fas fa-quote-right" [ngClass]="{'ui-active-tool': activeTools.blockQuote}"
               (click)="clickQuote.emit()"></button>
     </li>
-    <li *ngIf="toolbarConfig.others?.clear?.show"
-        [tooltip]="{text: toolbarConfig.others?.clear?.tooltipText, placement: 'top-center'}">
+    <li *ngIf="toolbarConfig?.others?.clear?.show"
+        [tooltip]="{text: toolbarConfig?.others?.clear?.tooltipText, placement: 'top-center'}">
       <button class="ui-command far fa-trash-alt"
               (click)="clickClear.emit()"></button>
     </li>
     <li class="dropdown">
-      <select class="select" *ngIf="toolbarConfig?.others?.field" [tooltip]="{text: toolbarConfig.others?.field?.tooltipText, placement: 'top-center'}"
+      <select class="select" *ngIf="toolbarConfig?.others?.field" [tooltip]="{text: toolbarConfig?.others?.field?.tooltipText, placement: 'top-center'}"
               [(ngModel)]="defaultField" (ngModelChange)="onChangeField($event)">
         <option default>{{ labelAddField }}</option>
         <option *ngFor="let item of fields" [ngValue]="item.field">{{ item?.field }}</option>

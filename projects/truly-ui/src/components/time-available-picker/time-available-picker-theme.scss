@@ -3,6 +3,8 @@
 @mixin _tl-time-available-picker-theme-schema( $theme, $action ) {
 
   $primary: map-deep-get($theme, 'primary');
+  $danger: map-deep-get($theme, 'danger');
+
 
   border: 1px solid map-deep-get($theme, $action, "default", "border");
   .ui-empty-data {
@@ -13,6 +15,9 @@
     background: map-deep-get($theme, $action, "default", "background");
     > .ui-date-selected {
       color: map-deep-get($primary, "default", "background");
+    }
+    > .ui-date-selected.holiday{
+      color: map-deep-get($danger, "default", "background");
     }
     > .ui-time-selected {
       span {

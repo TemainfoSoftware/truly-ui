@@ -28,6 +28,18 @@
               </textarea>
             </div>
           </app-card>
+
+          <app-card>
+            <div class="col-md-12">
+              <h6>With Holiday</h6>
+              <tl-time-available-picker (changeSelect)="onChangeSelect($event)"   [holidays]="holidaysArray" [availableTimes]="data"></tl-time-available-picker>
+              <br>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-time-available-picker [availableTimes]="data" [holidays]="holidaysArray"></tl-time-available-picker>
+              </textarea>
+            </div>
+          </app-card>
         </app-showcase-card>
       </div>
     </div>

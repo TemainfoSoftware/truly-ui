@@ -1,7 +1,7 @@
 <div class="ui-arrow-up" @overlay *ngIf="overlayPosition === 'bottom'"></div>
 <div class="ui-wrapper-calendar-content" @overlay>
   <div class="ui-calendar-content">
-    <tl-calendar [date]="date" (selectDay)="selectDay($event)" (today)="selectDay($event)"></tl-calendar>
+    <tl-calendar [date]="date" [holidays]="holidays" (selectDay)="selectDay($event)" (today)="selectDay($event)"></tl-calendar>
   </div>
   <div class="ui-arrow-down" @overlay *ngIf="overlayPosition === 'top'"></div>
 </div>

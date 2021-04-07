@@ -1,4 +1,4 @@
-import {ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef} from '@angular/core';
 import {TooltipOptions} from './tooltipOptions';
 import {TlToolTipContainer} from './parts/tooltip-container';
 

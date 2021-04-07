@@ -43,6 +43,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
   @Output() onRowDbClick = new EventEmitter();
 
+  @Output() onRowClick = new EventEmitter();
+
   @Output() onEventDbClick = new EventEmitter();
 
   @Output() onEventClick = new EventEmitter();
@@ -58,6 +60,8 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   public timesCollection: Array<Array<Date>>;
 
   public currentTime = new Date();
+
+  public indexRowSelected = null;
 
   public eventsWithPositions: {
     positions: {id: string, top: number, left: number, height: number, width: number},
@@ -75,12 +79,14 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     this.subscriptions.add(this.workScaleService.updateScale.subscribe(( timesCollection) => {
       this.timesCollection = timesCollection;
       this.changeDetectionRef.detectChanges();
+      this.indexRowSelected = null;
     }));
 
     this.subscriptions.add(this.eventService.updateEvents.subscribe(( event ) => {
       this.generateEventsPositions( event );
       this.inicializeNowIndicator( );
       this.changeDetectionRef.detectChanges();
+      this.indexRowSelected = null;
     }));
   }
 
@@ -93,29 +99,42 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
     if ( changes['currentDate'] !== undefined ) {
       this.workScaleService.currentDate = changes[ 'currentDate' ].currentValue;
+      this.indexRowSelected = null;
       this.eventService.getEventsOfDay();
     }
 
     if ( changes['workScale'] !== undefined ) {
+      this.indexRowSelected = null;
       this.workScaleService.reload( changes[ 'workScale' ].currentValue );
     }
 
-
     if ( changes['events'] !== undefined  ) {
-        this.createWorkScaleByEvents(changes[ 'events' ].currentValue, this.workScale as WorkScaleType[] );
-        this.eventService.loadEvents( changes[ 'events' ].currentValue );
-        this.eventService.getEventsOfDay();
+      this.createWorkScaleByEvents(changes[ 'events' ].currentValue, this.workScale as WorkScaleType[] );
+      this.indexRowSelected = null;
+      this.eventService.loadEvents( changes[ 'events' ].currentValue );
+      this.eventService.getEventsOfDay();
     }
-
     this.changeDetectionRef.detectChanges();
   }
 
-  rowDbClick( time, index, periodIndex) {
+  rowDbClick( time, index, periodIndex ) {
     const workScaleInterval = this.workScaleService.workScale[periodIndex].interval;
     const minutesToStart = index > 0 ? ( workScaleInterval / this.slotSettings.slotCount ) * ( index ) : 0;
     const minutesToEnd = ( workScaleInterval / this.slotSettings.slotCount ) * ( index + 1 );
 
     this.onRowDbClick.emit({
+      start: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToStart ),
+      end: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToEnd ),
+    });
+  }
+
+
+  rowClick( time, index, periodIndex, scheduleRow) {
+    const workScaleInterval = this.workScaleService.workScale[periodIndex].interval;
+    const minutesToStart = index > 0 ? ( workScaleInterval / this.slotSettings.slotCount ) * ( index ) : 0;
+    const minutesToEnd = ( workScaleInterval / this.slotSettings.slotCount ) * ( index + 1 );
+    this.indexRowSelected = scheduleRow.getAttribute('data-row-index');
+    this.onRowClick.emit({
       start: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToStart ),
       end: new Date(time).setMinutes( new Date(time).getMinutes( ) + minutesToEnd ),
     });
@@ -176,8 +195,32 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
         });
       }
-      this.workScaleService.reload( this.reduceScales( scales ) );
+      this.workScaleService.reload( this.addMiddleScales(events, this.reduceScales( scales) ) );
     }
+  }
+
+  private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
+    const scales = workScale.filter( work => work);
+    for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
+      for (let e = 0; e < events.length - 1; e++ ) {
+        const eventStartDate = new Date(events[e].date.start).setSeconds(0, 0);
+        const eventEndDate = new Date(events[e].date.end).setSeconds(0, 0);
+        const workStartDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex].end, new Date(eventStartDate));
+        const workEndDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex + 1].start, new Date(eventEndDate));
+
+        // Horario dentro do intervalo
+        if ( eventStartDate >= workStartDate && eventEndDate <= workEndDate ) {
+          scales.push({
+            start: this.workScaleService.transformMilesecondsToHour(workStartDate),
+            end: this.workScaleService.transformMilesecondsToHour(workEndDate),
+            interval: (scales[workScaleIndex].interval),
+            expansed: true,
+          }); break;
+        }
+
+      }
+    }
+    return this.reduceScales( scales);
   }
 
   private reduceScales( scales: WorkScaleType[] ) {

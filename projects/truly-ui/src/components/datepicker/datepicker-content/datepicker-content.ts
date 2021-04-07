@@ -24,6 +24,7 @@ import {
 } from '@angular/core';
 import { TlInput } from '../../input/input';
 import { OverlayAnimation } from '../../core/directives/overlay-animation';
+import { CalendarHoliday } from '../../calendar/interfaces/calendar-holiday.interface';
 
 @Component( {
   selector: 'tl-datepicker-content',
@@ -46,6 +47,8 @@ export class TlDatePickerContent  {
   @Input('input') input: TlInput;
 
   @Input('overlayPosition') overlayPosition: string;
+
+  @Input() holidays: Array<CalendarHoliday> = [];
 
   @Output() selectDayContent: EventEmitter<any> = new EventEmitter<any>();
 

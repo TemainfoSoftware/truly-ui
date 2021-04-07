@@ -19,10 +19,13 @@
   <!-- CREATE WIDGET CONTENT-->
   <div #scheduleSlats class="ui-schedule-widget-content">
     <div *ngFor="let time of times; let last = last; let first = first;" class="ui-schedule-widget-rows">
-      <div class="ui-schedule-row" *ngFor="let slot of slatNumberRowsAsArray; let index = index"
-           [ngStyle]="{height: slotSettings.slotHight + 'px'}"
+      <div #scheduleRow class="ui-schedule-row" [attr.data-row-index]="time.getTime() * (index+1)" *ngFor="let slot of slatNumberRowsAsArray; let index = index"
+           (click)="rowClick( time, index, timesIndex, scheduleRow )"
+           (dblclick)="rowDbClick( time, index, timesIndex )"
+           [ngStyle]="{ height: slotSettings.slotHight + 'px' }"
            [ngClass]="{ last: last, first: first, lastTurn: lastTurn, firstTurn: firstTurn }"
-           (dblclick)="rowDbClick( time, index, timesIndex )"></div>
+           [class.selected]="scheduleRow?.getAttribute('data-row-index') === indexRowSelected">
+      </div>
     </div>
   </div>
 

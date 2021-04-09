@@ -368,7 +368,7 @@ export class ScheduleDemoOverviewComponent {
       allday: false,
       tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {
-        start: new Date(new Date().setHours(12, 10, 0)).getTime() ,
+        start: new Date(new Date().setHours(11, 10, 0)).getTime() ,
         end: new Date( new Date().setHours(13, 0, 0) ).getTime()
       }
     }];

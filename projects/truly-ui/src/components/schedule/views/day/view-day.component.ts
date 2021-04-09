@@ -200,6 +200,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   }
 
   private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
+    let existsEventInMiddleScale = false;
     const scales = workScale.filter( work => work);
     for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
       for (let e = 0; e < events.length - 1; e++ ) {
@@ -208,19 +209,29 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         const workStartDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex].end, new Date(eventStartDate));
         const workEndDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex + 1].start, new Date(eventEndDate));
 
-        // Horario dentro do intervalo
-        if ( eventStartDate >= workStartDate && eventEndDate <= workEndDate ) {
-          scales.push({
-            start: this.workScaleService.transformMilesecondsToHour(workStartDate),
-            end: this.workScaleService.transformMilesecondsToHour(workEndDate),
-            interval: (scales[workScaleIndex].interval),
-            expansed: true,
-          }); break;
+        // Horario de inicio dentro do intervalo
+        if ( eventStartDate >= workStartDate && eventStartDate <= workEndDate ) {
+          (existsEventInMiddleScale = true); break;
+        }
+
+        // Horario de fim dentro do intervalo
+        if ( eventEndDate >= workStartDate && eventEndDate <= workEndDate ) {
+          (existsEventInMiddleScale = true); break;
         }
 
       }
     }
-    return this.reduceScales( scales);
+
+    if ( existsEventInMiddleScale ) {
+      scales.push({
+        start: workScale[0].end,
+        end: workScale[1].start,
+        interval: workScale[0].interval,
+        expansed: true,
+      });
+    }
+
+    return this.sortScaleByStart( scales);
   }
 
   private reduceScales( scales: WorkScaleType[] ) {

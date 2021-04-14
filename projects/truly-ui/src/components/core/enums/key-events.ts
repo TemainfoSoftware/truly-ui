@@ -27,6 +27,7 @@ export enum KeyEvent {
     END = 'End',
     HOME = 'Home',
     ENTER = 'Enter',
+    NUMPADENTER = 'NumpadEnter',
     ESCAPE = 'Escape',
     TAB = 'Tab',
     SPACE = 'Space',

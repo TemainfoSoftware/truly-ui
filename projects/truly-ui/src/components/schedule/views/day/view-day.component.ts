@@ -202,8 +202,9 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
     let existsEventInMiddleScale = false;
     const scales = workScale.filter( work => work);
+
     for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
-      for (let e = 0; e < events.length - 1; e++ ) {
+      for (let e = 0; e <= events.length - 1; e++ ) {
         const eventStartDate = new Date(events[e].date.start).setSeconds(0, 0);
         const eventEndDate = new Date(events[e].date.end).setSeconds(0, 0);
         const workStartDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex].end, new Date(eventStartDate));
@@ -230,7 +231,6 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
         expansed: true,
       });
     }
-
     return this.sortScaleByStart( scales);
   }
 

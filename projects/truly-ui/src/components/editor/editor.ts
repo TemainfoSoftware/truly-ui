@@ -190,15 +190,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   ngAfterContentInit() {
     this.setContentFocus();
     this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
-    this.listenChangeControl();
-  }
-
-  listenChangeControl() {
-    if ( this.control ) {
-      this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
-
-      }));
-    }
   }
 
   handleFieldsPropagation() {
@@ -565,7 +556,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
         sel.removeAllRanges();
         sel.addRange(range);
       }
-    });
+    }, 150);
   }
 
   private resetCursor() {

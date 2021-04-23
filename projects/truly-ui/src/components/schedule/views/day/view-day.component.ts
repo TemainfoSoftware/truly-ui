@@ -195,14 +195,13 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
         });
       }
+
       this.workScaleService.reload( this.addMiddleScales(events, this.reduceScales( scales) ) );
     }
   }
 
   private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
-    let existsEventInMiddleScale = false;
     const scales = workScale.filter( work => work);
-
     for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
       for (let e = 0; e <= events.length - 1; e++ ) {
         const eventStartDate = new Date(events[e].date.start).setSeconds(0, 0);
@@ -212,37 +211,41 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         // Horario de inicio dentro do intervalo
         if ( eventStartDate >= workStartDate && eventStartDate <= workEndDate ) {
-          (existsEventInMiddleScale = true); break;
+          scales.push({
+            start: workScale[workScaleIndex].end,
+            end: workScale[workScaleIndex + 1].start,
+            interval: workScale[workScaleIndex].interval,
+            expansed: true,
+            middle: true,
+          });  break;
         }
 
         // Horario de fim dentro do intervalo
         if ( eventEndDate >= workStartDate && eventEndDate <= workEndDate ) {
-          (existsEventInMiddleScale = true); break;
+          scales.push({
+            start: workScale[workScaleIndex].end,
+            end: workScale[workScaleIndex + 1].start,
+            interval: workScale[workScaleIndex].interval,
+            expansed: true,
+            middle: true,
+          });  break;
         }
 
       }
     }
-
-    if ( existsEventInMiddleScale ) {
-      scales.push({
-        start: workScale[0].end,
-        end: workScale[1].start,
-        interval: workScale[0].interval,
-        expansed: true,
-      });
-    }
-    return this.sortScaleByStart( scales);
+    return this.reduceScales(scales);
   }
 
   private reduceScales( scales: WorkScaleType[] ) {
     const orderedScales = this.sortScaleByStart(scales);
     const notExpansedScales = orderedScales.filter( (scale) => !scale.expansed );
+    const middleHourScale = orderedScales.filter( (scale) => scale.middle );
     const beforeHourScale = this.reduceBeforeScale( orderedScales );
     const afterHourScale = this.reduceAfterScale( orderedScales );
     return this.sortScaleByStart(
       this.removeNextSameStartAndEndSacalesTime(
         this.removeSameStartAndEndSacalesTime(
-          notExpansedScales.concat(afterHourScale).concat(beforeHourScale)
+          notExpansedScales.concat(afterHourScale).concat(middleHourScale).concat(beforeHourScale)
         )
       )
     );

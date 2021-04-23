@@ -26,5 +26,6 @@ export class WorkScaleType {
     public end: string,
     public interval: number,
     public expansed?: boolean,
+    public middle?: boolean,
   ) {}
 }

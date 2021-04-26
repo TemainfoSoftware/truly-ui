@@ -556,7 +556,7 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
         sel.removeAllRanges();
         sel.addRange(range);
       }
-    }, 150);
+    }, 230);
   }
 
   private resetCursor() {

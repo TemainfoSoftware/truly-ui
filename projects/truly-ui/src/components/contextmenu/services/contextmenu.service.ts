@@ -28,13 +28,19 @@ export class ContextMenuService {
         {
           originX: 'end',
           originY: 'bottom',
-          overlayX: 'end',
+          overlayX: 'start',
           overlayY: 'top',
+        },
+        {
+          originX: 'end',
+          originY: 'top',
+          overlayX: 'start',
+          overlayY: 'bottom',
         }
       ]);
     this.overlayRef = this.overlay.create({
       positionStrategy,
-      scrollStrategy: this.overlay.scrollStrategies.close(),
+      scrollStrategy: this.overlay.scrollStrategies.close()
     });
     const menuPortal = new ComponentPortal( TlContextMenuComponent );
     this.menuRef = this.overlayRef.attach( menuPortal );

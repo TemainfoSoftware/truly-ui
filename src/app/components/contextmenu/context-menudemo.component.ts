@@ -26,6 +26,16 @@ export class ContextMenuDemoComponent {
     this.contextMenuService.create($event, element, [
       { label: 'Remove Item', callback: (event) => console.log(`remove item ${event}`) },
       { label: 'View Item', callback: (event) => console.log(`view item ${event}`) },
+      { label: 'Sub Menu Context', children: [
+          { label: 'Sub Item 1', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 2', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 3', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 4', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 5', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 6', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 7', callback: (event) => console.log(`view item ${event}`) },
+          { label: 'Sub Item 8', callback: (event) => console.log(`view item ${event}`) }
+      ]},
       { label: 'Open Item', callback: (event) => console.log(`open item ${event}`) }
     ], context);
   }

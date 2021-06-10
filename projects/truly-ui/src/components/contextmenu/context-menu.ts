@@ -22,6 +22,7 @@
 
 import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ContextMenuInterface} from './interfaces/context-menu.interface';
+import {ConnectedPosition} from '@angular/cdk/overlay/position/flexible-connected-position-strategy';
 
 @Component({
   selector: 'tl-context-menu',
@@ -35,6 +36,23 @@ export class TlContextMenuComponent implements OnInit {
   private currentContext;
 
   @Output() select: EventEmitter<any> = new EventEmitter();
+
+  isOpen = false;
+
+  positions: ConnectedPosition[] = [
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top',
+    },
+    {
+      originX: 'end',
+      originY: 'bottom',
+      overlayX: 'start',
+      overlayY: 'bottom',
+    }
+  ];
 
   constructor(private changes: ChangeDetectorRef) {}
 
@@ -50,6 +68,12 @@ export class TlContextMenuComponent implements OnInit {
     if (callback) {
       this.select.emit();
       return this.currentContext ? callback(this.currentContext) : callback();
+    }
+  }
+
+  onItemMouseOver( item ) {
+    if ( item?.children?.length > 0 ) {
+      this.isOpen = !this.isOpen;
     }
   }
 

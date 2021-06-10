@@ -9,7 +9,7 @@
   </ul>
 </div>
 
-<ng-template #templateUL let-children>
+<ng-template #templateUL let-children >
   <ul class="ui-menu-context">
     <ng-template ngFor let-item [ngForOf]="children">
       <ng-template
@@ -21,9 +21,10 @@
 </ng-template>
 
 <ng-template #templateList let-item>
-  <li class="ui-item-context" (click)="onClickItem(item?.callback)"
+  <li class="ui-item-context" (click)="onClickItem(item?.callback);" (mouseenter)="onItemMouseOver(item)"
       [class.hasChildren]="item?.children"
-      [class.no-icon]="!item?.icon || item?.template">
+      [class.no-icon]="!item?.icon || item?.template"
+      cdkOverlayOrigin #trigger="cdkOverlayOrigin">
 
     <ng-container *ngIf="item?.template; else listDefault">
       <ng-container *ngTemplateOutlet="item?.template"></ng-container>
@@ -35,9 +36,15 @@
       <tl-icon class="ui-item-arrow" *ngIf="item?.children" [lib]="'ion'" [style]="'ios'" [size]="'15px'">arrow-forward</tl-icon>
     </ng-template>
 
-    <ng-container *ngIf="item?.children">
-      <ng-container *ngTemplateOutlet="templateUL; context: { $implicit: item?.children }"></ng-container>
-    </ng-container>
+    <ng-template cdkConnectedOverlay
+                   [cdkConnectedOverlayOrigin]="trigger"
+                   [cdkConnectedOverlayPositions]="positions"
+                   [cdkConnectedOverlayOpen]="isOpen">
+      <ng-container *ngIf="item?.children" >
+        <ng-container *ngTemplateOutlet="templateUL; context: { $implicit: item?.children }"></ng-container>
+      </ng-container>
+    </ng-template>
+
 
   </li>
 </ng-template>

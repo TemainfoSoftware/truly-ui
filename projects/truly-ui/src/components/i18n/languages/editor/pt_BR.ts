@@ -38,6 +38,7 @@ export const Editor = {
   imageText: 'Adicionar imagem',
   quoteText: 'Adicionar citação',
   clearText: 'Limpar Conteudo',
+  saveText: 'Salvar Conteudo',
   fieldText: 'Adicionar campo de texto',
   labelAddField: 'Adicionar campo',
 };

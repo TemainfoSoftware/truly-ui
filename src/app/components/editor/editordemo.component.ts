@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import * as json from './editordemo-dataproperties.json';
 import * as jsonEvents from './editordemo-dataevents.json';
 import {FormControl, FormGroup} from '@angular/forms';
+import {TlEditor} from '../../../../projects/truly-ui/src/components/editor/editor';
 
 @Component({
   selector: 'app-editordemo',
@@ -10,9 +11,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 })
 export class EditorDemoComponent implements OnInit {
 
+
+  @ViewChild(TlEditor, {static: true}) editor: TlEditor;
+
   public dataTableProperties;
 
   public dataEvents;
+
+  public disabled = false;
 
   public config = {
 
@@ -39,7 +45,6 @@ export class EditorDemoComponent implements OnInit {
   constructor( private cd: ChangeDetectorRef ) {
     this.dataTableProperties = json.dataProperties;
     this.dataEvents = jsonEvents.dataProperties;
-    this.form.get('editor').valueChanges.subscribe(console.log);
     setTimeout(() => {
       this.form.get('editor').patchValue( this.textTemplate,
         { onlySelf: true, emitEvent: false });
@@ -47,6 +52,18 @@ export class EditorDemoComponent implements OnInit {
     }, 4000);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+
+  saveContent( $event ) {
+    console.log($event);
+    this.disabled = true;
+    setTimeout(() => {
+      this.disabled = false;
+      this.cd.detectChanges();
+      this.editor.setContentFocus();
+    }, 6000);
+  }
 
 }

@@ -81,6 +81,10 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   @Input() label = '';
 
+  @Input() editable = true;
+
+  @Input() disabled = false;
+
   @ViewChild('contentEditor', {static: true}) contentEditor: ElementRef;
 
   @ViewChild('linkBox', {static: true}) linkBox;
@@ -118,8 +122,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   public selectedContent = false;
 
   public cursorSelection;
-
-  public contentEditable = true;
 
   public activeTools = {
     bold: false,
@@ -556,19 +558,29 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
         sel.removeAllRanges();
         sel.addRange(range);
       }
-    }, 230);
+    }, 1);
   }
 
   private resetCursor() {
     this.wrapper.nativeElement.style.cursor = 'auto';
   }
 
-  private setContentFocus() {
+  setContentFocus() {
     this.contentEditor.nativeElement.focus();
+    if (this.contentEditor.nativeElement) {
+      const p = this.contentEditor.nativeElement;
+      const s = window.getSelection();
+      const r = document.createRange();
+      r.setStart(p, p.childElementCount);
+      r.setEnd(p, p.childElementCount);
+      s.removeAllRanges();
+      s.addRange(r);
+    }
   }
 
   clearContent() {
     this.writeValue('');
+    this.save();
   }
 
   writeValue(value: any): void {

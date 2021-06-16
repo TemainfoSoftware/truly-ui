@@ -88,6 +88,11 @@
       <button class="ui-command far fa-trash-alt"
               (click)="clickClear.emit()"></button>
     </li>
+    <li *ngIf="toolbarConfig?.others?.save?.show"
+        [tooltip]="{text: toolbarConfig?.others?.save?.tooltipText, placement: 'top-center'}">
+      <button class="ui-command far fa-save"
+              (click)="clickSave.emit()"></button>
+    </li>
     <li class="dropdown">
       <select class="select" *ngIf="toolbarConfig?.others?.field" [tooltip]="{text: toolbarConfig?.others?.field?.tooltipText, placement: 'top-center'}"
               [(ngModel)]="defaultField" (ngModelChange)="onChangeField($event)">

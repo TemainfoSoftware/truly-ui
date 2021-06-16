@@ -50,6 +50,7 @@ export class ToolbarConfigModel {
     imageLink: { show: true, tooltipText: this.i18n.getLocale().Editor.imageText },
     quote: { show: true, tooltipText: this.i18n.getLocale().Editor.quoteText },
     clear: { show: true, tooltipText: this.i18n.getLocale().Editor.clearText },
+    save: { show: true, tooltipText: this.i18n.getLocale().Editor.saveText },
     field: { show: true, tooltipText: this.i18n.getLocale().Editor.fieldText }
   };
 

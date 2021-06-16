@@ -72,4 +72,8 @@
   outline: none;
   word-break: break-word;
   cursor: text;
+  &.disabled{
+    pointer-events: none;
+    opacity: 0.5;
+  }
 }

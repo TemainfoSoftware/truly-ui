@@ -567,15 +567,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   setContentFocus() {
     this.contentEditor.nativeElement.focus();
-    if (this.contentEditor.nativeElement) {
-      const p = this.contentEditor.nativeElement;
-      const s = window.getSelection();
-      const r = document.createRange();
-      r.setStart(p, p.childElementCount);
-      r.setEnd(p, p.childElementCount);
-      s.removeAllRanges();
-      s.addRange(r);
-    }
   }
 
   clearContent() {

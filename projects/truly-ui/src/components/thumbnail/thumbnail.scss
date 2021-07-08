@@ -86,6 +86,32 @@
         cursor: pointer;
         @include flexCenter;
 
+        >.view-button{
+          margin-top: 10px;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          justify-content: center;
+          >tl-icon{
+            margin-bottom: 10px;
+          }
+        }
+
+        >.trash-button{
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: #ec7e7e;
+          >tl-icon{
+            font-size: 10px;
+          }
+        }
+
         .icon {
           cursor: pointer;
 
@@ -121,4 +147,3 @@
     }
   }
 }
-

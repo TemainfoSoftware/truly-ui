@@ -26,7 +26,7 @@
             <tl-icon [lib]="'dx'">find</tl-icon>
           </div>
           <div class="trash-button" (click)="onDeleteThumb(item)">
-            <tl-icon *ngIf="showDeleteButton"  [lib]="'dx'">close</tl-icon>
+            <tl-icon *ngIf="showDeleteButton"  [lib]="'dx'">trash</tl-icon>
           </div>
         </div>
         <div class="thumbnail-controls" *ngIf="overlayTemplate">
@@ -37,8 +37,12 @@
       <div *ngIf="item.type === 'application/pdf' || mimeType === 'application/pdf'" class="thumbnail-image-wrapper" [class.circle-shape]="isCircle">
         <tl-icon style="margin-right: 5px" [lib]="'fa'" [style]="'fas'" [color]="'#ec7e7e'" [size]="'40px'">file-pdf</tl-icon>
         <div class="thumbnail-controls" *ngIf="!overlayTemplate">
-          <tl-icon style="margin-right: 5px" (click)="onViewImage( image )" [lib]="'dx'">find</tl-icon>
-          <tl-icon *ngIf="showDeleteButton" style="cursor: pointer" (click)="onDeleteThumb(item)" [lib]="'dx'">trash</tl-icon>
+          <div class="view-button" [style.width]="size.width" [style.height]="size.height" (click)="onViewImage( image )">
+            <tl-icon [lib]="'dx'">find</tl-icon>
+          </div>
+          <div class="trash-button" (click)="onDeleteThumb(item)">
+            <tl-icon *ngIf="showDeleteButton"  [lib]="'dx'">trash</tl-icon>
+          </div>
         </div>
         <div class="thumbnail-controls" *ngIf="overlayTemplate">
           <ng-container *ngTemplateOutlet="overlayTemplate; context: { $implicit: item || image }"></ng-container>

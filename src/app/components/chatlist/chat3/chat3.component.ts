@@ -28,7 +28,7 @@ export class Chat3Component {
   }
 
   onUnreadMessages($event) {
-    console.log($event);
+    console.log('CHAT3', $event);
   }
 
   onSelectContact($event) {

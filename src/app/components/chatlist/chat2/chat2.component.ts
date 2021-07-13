@@ -31,7 +31,7 @@ export class Chat2Component implements OnInit {
   }
 
   onUnreadMessages($event) {
-    console.log($event);
+    console.log('CHAT2', $event);
   }
 
   onSelectContact($event) {

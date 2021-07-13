@@ -50,6 +50,9 @@ export class ChatService {
     if (messages.length > 0) {
       this.chatObject[chatId].messages = messages;
       this.allMessages.next(this.chatObject[chatId].messages);
+      this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, messages[0].to));
+    } else {
+      this.unreadMessages.next([]);
     }
   }
 

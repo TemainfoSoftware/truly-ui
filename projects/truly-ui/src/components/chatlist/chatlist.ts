@@ -72,6 +72,8 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
 
   @Output() readMessage: EventEmitter<ChatMessage[]> = new EventEmitter();
 
+  @Output() unreadMessages: EventEmitter<ChatMessage[]> = new EventEmitter();
+
   @Output() sendMessage: EventEmitter<ChatMessage> = new EventEmitter();
 
   @Output() changeStatus: EventEmitter<any> = new EventEmitter();
@@ -119,11 +121,14 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.listenChangeStatus();
     this.listenChangeMessages();
+    this.listenUnreadMessages();
     this.messages = this.chatService.getAllMessages( this.id );
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (
+      changes['contacts'] &&
+      changes['user'] &&
       changes['contacts'].currentValue &&
       changes['contacts'].currentValue.length > 0 &&
       changes['user'].currentValue) {
@@ -153,6 +158,12 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
     this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
       this.messages = messages;
       this.change.detectChanges();
+    }));
+  }
+
+  listenUnreadMessages() {
+    this.subscription.add(this.chatService.unreadMessages.subscribe((messages: ChatMessage[]) => {
+      this.unreadMessages.emit( messages );
     }));
   }
 

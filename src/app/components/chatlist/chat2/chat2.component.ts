@@ -30,6 +30,10 @@ export class Chat2Component implements OnInit {
     this.readMessage.emit($event);
   }
 
+  onUnreadMessages($event) {
+    console.log($event);
+  }
+
   onSelectContact($event) {
     this.selectContact.emit($event);
   }

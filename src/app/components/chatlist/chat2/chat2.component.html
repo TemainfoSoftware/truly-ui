@@ -3,6 +3,7 @@
 </div>
 <tl-chatlist (sendMessage)="send.emit($event)"
              (readMessage)="onReadMessage($event)"
+             (unreadMessages)="onUnreadMessages($event)"
              [lastActivityCheck]="20000"
              (selectContact)="onSelectContact($event)"
              [contacts]="contacts"

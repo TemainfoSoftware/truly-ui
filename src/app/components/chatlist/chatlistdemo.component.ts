@@ -100,8 +100,8 @@ export class ChatListDemoComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.chatService.loadMessages(this.msm, 'CHAT-ONE');
-      this.chatService.loadMessages(this.msm, 'CHAT-TWO');
+      this.chatService.loadMessages(this.msm, 'CHAT-ONE', this.userONE);
+      this.chatService.loadMessages(this.msm, 'CHAT-TWO', this.userTWO);
     }, 2000);
   }
 

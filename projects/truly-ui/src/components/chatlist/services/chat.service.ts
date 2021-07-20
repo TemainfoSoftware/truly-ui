@@ -43,14 +43,14 @@ export class ChatService {
   constructor() {
   }
 
-  loadMessages(messages: ChatMessage[], chatId: string) {
+  loadMessages(messages: ChatMessage[], chatId: string, user: ChatContact) {
     if (!this.existChat(chatId)) {
       this.chatObject[chatId] = {messages: []};
     }
     if (messages.length > 0) {
       this.chatObject[chatId].messages = messages;
       this.allMessages.next(this.chatObject[chatId].messages);
-      this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, messages[0].from));
+      this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, user));
     } else {
       this.unreadMessages.next([]);
     }

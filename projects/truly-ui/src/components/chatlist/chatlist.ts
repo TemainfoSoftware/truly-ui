@@ -64,7 +64,7 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
 
   @Input('contacts')
   set contacts( data: ChatContact[] ) {
-    this._dataSource = this.setDataSource( data );
+    this.setDataSource( data );
   }
   get contacts(): ChatContact[] {
     return this._dataSource;
@@ -136,14 +136,13 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
       if (!user.id) {
         throw Error('User id not found');
       }
-      this._dataSource = contacts
-        .filter((item) => item.id !== user.id)
-        .map((contact) => {
+      this._dataSource = contacts.filter((item) => item.id !== user.id).map((contact) => {
           return {
             ...contact,
             status: this.getStatus(contact)
           };
-        });
+      });
+      this.change.detectChanges();
     }
   }
 

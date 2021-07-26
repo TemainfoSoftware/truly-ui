@@ -83,8 +83,15 @@ export class InputMask {
     this.onKeyPressInputListener();
     this.onMouseUpInputListener();
     this.onKeyDownInputListener();
+    this.onPastListener();
   }
 
+  onPastListener() {
+    this.renderer.listen( this.input.nativeElement, 'paste', ($event: ClipboardEvent) => {
+      const clipboardData = $event.clipboardData || window['clipboardData'];
+      this.applyMask( clipboardData.getData('text') );
+    } );
+  }
 
   onKeyPressInputListener() {
     this.renderer.listen( this.input.nativeElement, 'keypress', $event => {
@@ -223,10 +230,9 @@ export class InputMask {
     this.onComplete();
   }
 
-  private handleKeypress( event ) {
+  private handleKeypress( event: KeyboardEvent ) {
     const charInputted = event.key;
     let inputArray = this.value.split( '' );
-
     if ( event.key === 'Enter' ) {
       return;
     }

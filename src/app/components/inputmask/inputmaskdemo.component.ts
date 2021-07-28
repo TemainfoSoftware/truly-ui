@@ -13,6 +13,8 @@ export class InputMaskDemoComponent {
 
   public basic;
 
+  public phone;
+
   public literal;
 
   public textNumber;

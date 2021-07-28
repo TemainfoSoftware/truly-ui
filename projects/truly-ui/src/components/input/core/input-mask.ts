@@ -89,7 +89,8 @@ export class InputMask {
   onPastListener() {
     this.renderer.listen( this.input.nativeElement, 'paste', ($event: ClipboardEvent) => {
       const clipboardData = $event.clipboardData || window['clipboardData'];
-      this.applyMask( clipboardData.getData('text') );
+      const value = clipboardData.getData('text').replace(/ /g, '');
+      this.applyMask( value, false );
     } );
   }
 
@@ -317,7 +318,7 @@ export class InputMask {
     }
   }
 
-  private applyMask( charInputted? ) {
+  private applyMask( charInputted?, utilizeOriginal = true ) {
     let cursor = 0;
     let result = '';
 
@@ -325,7 +326,7 @@ export class InputMask {
       this.value += charInputted;
     }
 
-    const inputArray: string[] = this.value.split( '' );
+    const inputArray: string[] = utilizeOriginal ? this.value.split( '' ) : charInputted.split( '' );
 
     for ( let i = 0, inputSymbol = inputArray[ 0 ]; i < inputArray.length; i++ , inputSymbol = inputArray[ i ] ) {
       if ( result.length === this.maskExpression.length ) {
@@ -343,6 +344,7 @@ export class InputMask {
         i--;
       }
     }
+    console.log(result);
     this.value = result;
     this.updateModel();
     this.onComplete();

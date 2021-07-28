@@ -7,13 +7,23 @@
       <div class="col-md-12">
         <app-showcase-card [title]="'Showcase'" [icon]="'fas fa-desktop'">
           <app-card>
-            <div class="col-md-12">
+            <div class="col-md-6">
               <span>Basic</span>
               <tl-input [mask]="{mask: '00/00/0000'}" [(ngModel)]="basic"></tl-input>
               <app-showcase-returned-value [value]="basic"></app-showcase-returned-value>
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input [mask]="{mask: '00/00/0000'}" [(ngModel)]="basic"></tl-input>
+</textarea>
+            </div>
+
+            <div class="col-md-6">
+              <span>Number Telephone</span>
+              <tl-input [mask]="{mask: '(99) 99999-9999'}" [(ngModel)]="phone"></tl-input>
+              <app-showcase-returned-value [value]="basic"></app-showcase-returned-value>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input [mask]="{mask: '(99) 99999-9999'}" [(ngModel)]="phone"></tl-input>
 </textarea>
             </div>
           </app-card>

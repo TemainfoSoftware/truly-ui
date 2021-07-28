@@ -344,7 +344,6 @@ export class InputMask {
         i--;
       }
     }
-    console.log(result);
     this.value = result;
     this.updateModel();
     this.onComplete();

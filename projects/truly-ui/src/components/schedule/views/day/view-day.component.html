@@ -70,7 +70,7 @@
             </div>
           </div>
           <div class="ui-event-hour">
-            {{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}<br>
+            <span>{{event?.data?.date?.start | date: 'HH:mm'}} - {{event?.data?.date?.end | date: 'HH:mm'}}</span>
             <span class="ui-event-typeconfig-description">{{typesConfig[event?.data?.type]?.description}}</span>
           </div>
         </ng-container>

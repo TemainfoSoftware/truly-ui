@@ -89,7 +89,10 @@ export class InputMask {
   onPastListener() {
     this.renderer.listen( this.input.nativeElement, 'paste', ($event: ClipboardEvent) => {
       const clipboardData = $event.clipboardData || window['clipboardData'];
-      const value = clipboardData.getData('text').replace(/ /g, '');
+      const value = clipboardData
+        .getData('text')
+        .replace(/ /g, '')
+        .replace(/[^\w\s]/gi, '');
       this.applyMask( value, false );
     } );
   }

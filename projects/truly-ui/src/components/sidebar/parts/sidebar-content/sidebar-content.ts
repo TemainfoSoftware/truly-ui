@@ -46,7 +46,7 @@ export class TlSidebarContent implements OnInit {
 
   public start = { width: 0, mode: '', docked: false, opened: false, dockWidth: 0, dock: false };
 
-  public end = { width: 0, mode: '', opened: false, dockWidth: 0 };
+  public end = { width: 0, mode: '', opened: false };
 
   constructor( private element: ElementRef,
                private change: ChangeDetectorRef ) {
@@ -77,7 +77,8 @@ export class TlSidebarContent implements OnInit {
   }
 
   setMovementInitialDock() {
-    this.innerWidth = (this.element.nativeElement.offsetWidth - this.end.dockWidth - this.start.dockWidth + 'px');
+    const endWidth = this.end.opened && this.end.mode === 'slide' ? this.end.width : 0;
+    this.innerWidth = (this.element.nativeElement.offsetWidth - endWidth  - this.start.dockWidth + 'px');
     this.setTransformDock();
     this.change.detectChanges();
   }

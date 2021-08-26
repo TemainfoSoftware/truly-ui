@@ -8,6 +8,8 @@ export class InputMask {
 
   private maskGuides = true;
 
+  private addNinthDigit = false;
+
   private valueUppercase;
 
   private literalChar;
@@ -59,6 +61,9 @@ export class InputMask {
     if ( value[ 'guides' ] === false ) {
       this.maskGuides = value[ 'guides' ];
     }
+    if ( value[ 'addNinthDigit' ] ) {
+      this.addNinthDigit = value[ 'addNinthDigit' ];
+    }
     this.literalChar = value[ 'withLiteralChar' ];
     this.valueUppercase = value[ 'uppercase' ];
     this.maskExpression = value[ 'mask' ];
@@ -89,12 +94,22 @@ export class InputMask {
   onPastListener() {
     this.renderer.listen( this.input.nativeElement, 'paste', ($event: ClipboardEvent) => {
       const clipboardData = $event.clipboardData || window['clipboardData'];
-      const value = clipboardData
+      let value = clipboardData
         .getData('text')
         .replace(/ /g, '')
         .replace(/[^\w\s]/gi, '');
+      value = this.handleAddNinthDigit(value);
       this.applyMask( value, false );
     } );
+  }
+
+  handleAddNinthDigit( value ) {
+    if ( this.addNinthDigit ) {
+      if (value.length <= 10 ) {
+        value = value.slice(0, 2) + '9' + value.slice(2);
+      }
+    }
+    return value;
   }
 
   onKeyPressInputListener() {

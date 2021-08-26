@@ -28,7 +28,7 @@
             </div>
           </app-card>
           <app-card>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <span>Text + Number</span>
               <tl-input
                 [mask]="{mask: 'AAA-0000', uppercase: true}"
@@ -41,7 +41,7 @@
 <tl-input [mask]="{mask: 'AAA-0000', uppercase: true}" [(ngModel)]="textNumber" [iconBefore]="'fas fa-print'"></tl-input>
 </textarea>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <span>Without Guides</span>
               <tl-input
                 [mask]="{mask: 'AAA-0000', guides: false}"
@@ -52,6 +52,19 @@
               <div class="spacer"></div>
 <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
 <tl-input [mask]="{mask: 'AAA-0000', guides: false}" [(ngModel)]="sGuides" [iconAfter]="'fas fa-print'"></tl-input>
+</textarea>
+            </div>
+            <div class="col-md-4">
+              <span>Add Ninth Digit</span>
+              <tl-input
+                [mask]="{mask: '(99) 9 9999-9999', addNinthDigit: true}"
+                [(ngModel)]="basic"
+                [iconAfter]="'fas fa-print'">
+              </tl-input>
+              <app-showcase-returned-value [value]="sGuides"></app-showcase-returned-value>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+<tl-input [mask]="{mask: 'AAA-0000', addNinthDigit: true}" [(ngModel)]="basic" [iconAfter]="'fas fa-print'"></tl-input>
 </textarea>
             </div>
           </app-card>

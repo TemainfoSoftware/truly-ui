@@ -326,9 +326,17 @@ export class ModalService implements OnDestroy {
 
   private setZIndex(componentRef: ComponentRef<TlModal>) {
     const element = componentRef.instance.getElementModal();
+    const zIndex = this.getZIndexModals();
+    const maxIndex = [];
+    for (let index = 0; index < zIndex.length; index++) {
+      const item = parseInt(zIndex[index], 10);
+      maxIndex.push(item);
+    }
     lastZIndex = this.getHighestZIndexModals(this.getZIndexModals());
-    element.nativeElement.style.zIndex = lastZIndex + 10;
-    this.updateZIndexBackdrop(lastZIndex + 5, this.hasBackdrop(componentRef));
+    if (element.nativeElement.style.zIndex < Math.max(...maxIndex)) {
+      element.nativeElement.style.zIndex = lastZIndex + 10;
+      this.updateZIndexBackdrop(lastZIndex + 5, this.hasBackdrop(componentRef));
+    }
   }
 
   private updateZIndexBackdrop(index: number, hasBackdrop: boolean) {

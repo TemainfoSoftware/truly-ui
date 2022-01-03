@@ -190,12 +190,16 @@
 }
 
 .ui-event-hour{
-  font-size: 0.85em;
   color: #454e58;
-  justify-content: flex-end;
-  margin-right: 10px;
-  align-items: center;
   display: flex;
+  font-size: 0.88em;
+  justify-content: center;
+  margin-right: 10px;
   width: 35%;
-  text-align: center;
+  flex-flow: column;
+  align-items: flex-end;
+  >.ui-event-typeconfig-description{
+    font-size: 0.88em;
+    font-weight: bold;
+  }
 }

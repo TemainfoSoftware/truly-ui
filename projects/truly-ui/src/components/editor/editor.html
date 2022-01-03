@@ -26,10 +26,12 @@
                       (clickImage)="toggleImageBox()"
                       (clickField)="addField($event)"
                       (clickQuote)="setQuote()"
+                      (clickSave)="save()"
                       (clickClear)="clearContent()">
     </tl-editor-header>
     <div #contentEditor
          class="ui-editor-content"
+         [class.disabled]="disabled"
          [style.height]="height"
          (input)="change()"
          (focusout)="setAnchorNode()"
@@ -38,9 +40,8 @@
          (keydown.enter)="$event.stopPropagation()"
          (keydown.ArrowUp)="$event.stopPropagation()"
          (keydown.ArrowDown)="$event.stopPropagation()"
-         (keydown)="onKeyDownSave($event)"
          (mouseup)="onMouseUp()"
-         [attr.contenteditable]="contentEditable"
+         [attr.contenteditable]="editable || !disabled"
          [innerHTML]="content">
     </div>
     <div class="ui-saved-content-message" [@enterAnimation]="saved" *ngIf="saved">

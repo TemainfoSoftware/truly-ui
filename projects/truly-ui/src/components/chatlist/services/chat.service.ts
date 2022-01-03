@@ -38,16 +38,21 @@ export class ChatService {
 
   public newMessages = new Subject();
 
+  public unreadMessages = new Subject();
+
   constructor() {
   }
 
-  loadMessages(messages: ChatMessage[], chatId: string) {
+  loadMessages(messages: ChatMessage[], chatId: string, user: ChatContact) {
     if (!this.existChat(chatId)) {
       this.chatObject[chatId] = {messages: []};
     }
     if (messages.length > 0) {
       this.chatObject[chatId].messages = messages;
       this.allMessages.next(this.chatObject[chatId].messages);
+      this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, user));
+    } else {
+      this.unreadMessages.next([]);
     }
   }
 
@@ -58,6 +63,7 @@ export class ChatService {
       if (message.from.id !== user.id) {
         this.appendAndRead.next(message);
         this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+        this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, user));
       }
     }
   }
@@ -73,6 +79,7 @@ export class ChatService {
       setTimeout(() => {
         this.allMessages.next(this.chatObject[chatId].messages);
         this.newMessages.next(this.hasMessages(this.chatObject[chatId].messages, user));
+        this.unreadMessages.next(this.getUnreadMessages(this.chatObject[chatId].messages, user));
       }, 500);
     }
   }
@@ -97,6 +104,17 @@ export class ChatService {
     delete this.chatObject[chatId];
   }
 
+  getUnreadMessages(messages, user: ChatContact) {
+    if (messages.length > 0) {
+      return messages.filter((message: ChatMessage) => {
+        if (message.from && message.to) {
+          return (!message.viewed) && (message.to.id === user.id);
+        }
+      });
+    }
+    return [];
+  }
+
   private isMessagesToUser(messages: ChatMessage[], user: ChatContact) {
     return messages.filter((message) => message.to.id === user.id).length > 0;
   }
@@ -112,6 +130,7 @@ export class ChatService {
       }
     }).length > 0;
   }
+
 
   private getFirstChat() {
     const first = Object.keys(this.chatObject)[0];

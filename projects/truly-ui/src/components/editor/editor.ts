@@ -81,6 +81,10 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
 
   @Input() label = '';
 
+  @Input() editable = true;
+
+  @Input() disabled = false;
+
   @ViewChild('contentEditor', {static: true}) contentEditor: ElementRef;
 
   @ViewChild('linkBox', {static: true}) linkBox;
@@ -118,8 +122,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   public selectedContent = false;
 
   public cursorSelection;
-
-  public contentEditable = true;
 
   public activeTools = {
     bold: false,
@@ -190,15 +192,6 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
   ngAfterContentInit() {
     this.setContentFocus();
     this.toolbarConfig = Object.assign(new ToolbarConfigModel(this.i18n), this.toolbarConfig);
-    this.listenChangeControl();
-  }
-
-  listenChangeControl() {
-    if ( this.control ) {
-      this.subscription.add(this.control.valueChanges.subscribe(( values ) => {
-
-      }));
-    }
   }
 
   handleFieldsPropagation() {
@@ -565,19 +558,20 @@ export class TlEditor implements ControlValueAccessor, AfterContentInit, OnChang
         sel.removeAllRanges();
         sel.addRange(range);
       }
-    });
+    }, 1);
   }
 
   private resetCursor() {
     this.wrapper.nativeElement.style.cursor = 'auto';
   }
 
-  private setContentFocus() {
+  setContentFocus() {
     this.contentEditor.nativeElement.focus();
   }
 
   clearContent() {
     this.writeValue('');
+    this.save();
   }
 
   writeValue(value: any): void {

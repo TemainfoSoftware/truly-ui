@@ -144,6 +144,7 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.setContentFocus();
       this.keyManager.setActiveItem(0);
+      this.rowSelect.emit( this.keyManager.activeItem );
       this.changes.detectChanges();
     }, 100);
   }
@@ -152,6 +153,7 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
     setTimeout(() => {
       this.setContentFocus();
       this.keyManager.setActiveItem( this.keyManager.activeItemIndex );
+      this.rowSelect.emit( this.keyManager.activeItem );
       this.changes.detectChanges();
     }, 100);
   }

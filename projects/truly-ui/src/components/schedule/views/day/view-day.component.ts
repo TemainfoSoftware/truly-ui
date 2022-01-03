@@ -195,6 +195,7 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
           }
         });
       }
+
       this.workScaleService.reload( this.addMiddleScales(events, this.reduceScales( scales) ) );
     }
   }
@@ -202,36 +203,49 @@ export class ViewDayComponent implements OnInit, AfterViewInit, OnChanges, OnDes
   private addMiddleScales(events: ScheduleDataSource[], workScale: WorkScaleType[]) {
     const scales = workScale.filter( work => work);
     for (let workScaleIndex = 0; workScaleIndex < workScale.length - 1; workScaleIndex++ ) {
-      for (let e = 0; e < events.length - 1; e++ ) {
+      for (let e = 0; e <= events.length - 1; e++ ) {
         const eventStartDate = new Date(events[e].date.start).setSeconds(0, 0);
         const eventEndDate = new Date(events[e].date.end).setSeconds(0, 0);
         const workStartDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex].end, new Date(eventStartDate));
         const workEndDate = this.workScaleService.transformHourToMileseconds(workScale[workScaleIndex + 1].start, new Date(eventEndDate));
 
-        // Horario dentro do intervalo
-        if ( eventStartDate >= workStartDate && eventEndDate <= workEndDate ) {
+        // Horario de inicio dentro do intervalo
+        if ( eventStartDate >= workStartDate && eventStartDate <= workEndDate ) {
           scales.push({
-            start: this.workScaleService.transformMilesecondsToHour(workStartDate),
-            end: this.workScaleService.transformMilesecondsToHour(workEndDate),
-            interval: (scales[workScaleIndex].interval),
+            start: workScale[workScaleIndex].end,
+            end: workScale[workScaleIndex + 1].start,
+            interval: workScale[workScaleIndex].interval,
             expansed: true,
-          }); break;
+            middle: true,
+          });  break;
+        }
+
+        // Horario de fim dentro do intervalo
+        if ( eventEndDate >= workStartDate && eventEndDate <= workEndDate ) {
+          scales.push({
+            start: workScale[workScaleIndex].end,
+            end: workScale[workScaleIndex + 1].start,
+            interval: workScale[workScaleIndex].interval,
+            expansed: true,
+            middle: true,
+          });  break;
         }
 
       }
     }
-    return this.reduceScales( scales);
+    return this.reduceScales(scales);
   }
 
   private reduceScales( scales: WorkScaleType[] ) {
     const orderedScales = this.sortScaleByStart(scales);
     const notExpansedScales = orderedScales.filter( (scale) => !scale.expansed );
+    const middleHourScale = orderedScales.filter( (scale) => scale.middle );
     const beforeHourScale = this.reduceBeforeScale( orderedScales );
     const afterHourScale = this.reduceAfterScale( orderedScales );
     return this.sortScaleByStart(
       this.removeNextSameStartAndEndSacalesTime(
         this.removeSameStartAndEndSacalesTime(
-          notExpansedScales.concat(afterHourScale).concat(beforeHourScale)
+          notExpansedScales.concat(afterHourScale).concat(middleHourScale).concat(beforeHourScale)
         )
       )
     );

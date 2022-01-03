@@ -38,6 +38,7 @@ export interface EditorI18nInterface {
   imageText: string;
   quoteText: string;
   clearText: string;
+  saveText: string;
   fieldText: string;
   labelAddField: string;
 }

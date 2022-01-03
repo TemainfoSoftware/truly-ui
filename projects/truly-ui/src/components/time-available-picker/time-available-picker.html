@@ -4,6 +4,7 @@
       <div class="ui-date-selected" [class.holiday]="dayArray?.length > 0" [tooltip]="{text: dayArray[0]?.description, placement: 'top-center'}">
         <span class="ui-day">{{ dateValue | date:'dd' }}</span>
         <span class="ui-day-week">{{ dateValue | date:'EEEE' }}</span>
+        <span class="ui-day-holiday" *ngIf="dayArray?.length > 0">{{ dayArray[0]?.description }}</span>
       </div>
     </ng-container>
     <div class="ui-time-selected">

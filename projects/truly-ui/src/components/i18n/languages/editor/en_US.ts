@@ -38,6 +38,7 @@ export const Editor = {
   imageText: 'Image text',
   quoteText: 'Quote text',
   clearText: 'Clear Content',
+  saveText: 'Save Content',
   fieldText: 'Add TextField',
   labelAddField: 'Add Field'
 };

@@ -264,7 +264,7 @@ export class ScheduleDemoOverviewComponent {
   //   detail: 'Consulta | Copel',
   //   allday: false,
   //   status: 'notmet',
-  //   date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0)).getTime() }
+  //   date: { start: new Date(new Date().setHours(12, 30)).getTime() , end: new Date(new Date().setHours(13, 0)).getTime() }
   // },
   //   {
   //     value: '20',
@@ -272,7 +272,7 @@ export class ScheduleDemoOverviewComponent {
   //     detail: 'Consulta | Copel',
   //     allday: false,
   //     status: 'attended',
-  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30 )).getTime() }
+  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(10, 30 )).getTime() }
   //   },
   //   {
   //     value: '21',
@@ -280,18 +280,18 @@ export class ScheduleDemoOverviewComponent {
   //     detail: 'Consulta | Copel',
   //     allday: false,
   //     status: 'notmet',
-  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(14, 30)).getTime() }
+  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
   //   },
-    {
-      value: '22',
-      title: 'Reunião no Congresso Universitario',
-      detail: '',
-      allday: false,
-      status: '',
-      type: 'EVENTO',
-      blocked: true,
-      date: { start: new Date(new Date().setHours(17, 0)).getTime() , end: new Date(new Date().setHours(18, 0 )).getTime() }
-    },
+  //   {
+  //     value: '22',
+  //     title: 'Reunião no Congresso Universitario',
+  //     detail: '',
+  //     allday: false,
+  //     status: '',
+  //     type: 'EVENTO',
+  //     blocked: true,
+  //     date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
+  //   },
     {
       value: '23',
       title: 'Reunião no Congresso Universitario',
@@ -300,7 +300,7 @@ export class ScheduleDemoOverviewComponent {
       status: '',
       type: 'EVENTO',
       blocked: true,
-      date: { start: new Date(new Date().setHours(16, 30)).getTime() , end: new Date(new Date().setHours(18, 30 )).getTime() }
+      date: { start: new Date(new Date().setHours(15, 0)).getTime() , end: new Date(new Date().setHours(16, 0 )).getTime() }
     }
   ];
 
@@ -345,9 +345,9 @@ export class ScheduleDemoOverviewComponent {
   getWorkScale() {
     return new Promise((resolve) => {
       resolve( [
-        new WorkScaleType( '09:00', '12:00', 30 ),
-        new WorkScaleType( '13:00', '18:00', 60 )
-      ] );
+       new WorkScaleType( '08:00', '13:30', 30 ),
+        new WorkScaleType( '13:30', '18:00', 60 )
+      ]);
     });
   }
 
@@ -368,8 +368,8 @@ export class ScheduleDemoOverviewComponent {
       allday: false,
       tags: [{color : '#FF385C', title : 'Missed'}, {color : '#1d8bff', title : 'Not Met'}, {color : '#90ED5D', title : 'Attended Now'}],
       date: {
-        start: new Date(new Date().setHours(12, 10, 0)).getTime() ,
-        end: new Date( new Date().setHours(13, 0, 0) ).getTime()
+        start: new Date(new Date().setHours(8, 0, 0)).getTime() ,
+        end: new Date( new Date().setHours(9, 0, 0) ).getTime()
       }
     }];
 

@@ -64,13 +64,15 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
 
   @Input('contacts')
   set contacts( data: ChatContact[] ) {
-    this._dataSource = data;
+    this.setDataSource( data );
   }
   get contacts(): ChatContact[] {
     return this._dataSource;
   }
 
   @Output() readMessage: EventEmitter<ChatMessage[]> = new EventEmitter();
+
+  @Output() unreadMessages: EventEmitter<ChatMessage[]> = new EventEmitter();
 
   @Output() sendMessage: EventEmitter<ChatMessage> = new EventEmitter();
 
@@ -119,25 +121,28 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
   ngOnInit() {
     this.listenChangeStatus();
     this.listenChangeMessages();
+    this.listenUnreadMessages();
     this.messages = this.chatService.getAllMessages( this.id );
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes['contacts'].currentValue &&
-      changes['contacts'].currentValue.length > 0 &&
-      changes['user'].currentValue) {
-      if (!changes['user'].currentValue.id) {
+    if ( changes['contacts'] && changes['contacts'].currentValue && changes['contacts'].currentValue.length > 0) {
+      this.setDataSource( changes['contacts'].currentValue );
+    }
+  }
+
+  setDataSource(contacts: ChatContact[], user: ChatContact = this.user) {
+    if ( contacts && user && contacts.length > 0 ) {
+      if (!user.id) {
         throw Error('User id not found');
       }
-      this._dataSource = changes['contacts'].currentValue
-        .filter((item) => item.id !== changes['user'].currentValue.id)
-        .map((contact) => {
+      this._dataSource = contacts.filter((item) => item.id !== user.id).map((contact) => {
           return {
             ...contact,
             status: this.getStatus(contact)
           };
-        });
+      });
+      this.change.detectChanges();
     }
   }
 
@@ -153,6 +158,12 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
     this.subscription.add(this.chatService.allMessages.subscribe((messages: ChatMessage[]) => {
       this.messages = messages;
       this.change.detectChanges();
+    }));
+  }
+
+  listenUnreadMessages() {
+    this.subscription.add(this.chatService.unreadMessages.subscribe((messages: ChatMessage[]) => {
+      this.unreadMessages.emit( messages );
     }));
   }
 
@@ -232,8 +243,8 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
     }
 
     if ( this.lastActivityCheck > 0 ) {
-      const diffMinutes = this.getDiffMinutes(contact.lastActivity);
-      return diffMinutes >= this.lastActivityCheck ? Status.OFFLINE : Status.ONLINE;
+      const diffMinutes = this.getDiffMinutes(contact.lastActivity) * 60;
+      return diffMinutes >= this.lastActivityCheck ? Status.OFFLINE : contact.status;
     }
   }
 
@@ -241,7 +252,6 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
     const currentTime = new Date().getTime();
     const lastActivityTime = new Date(lastActivity).getTime();
     const diff = ((currentTime - lastActivityTime) / 1000 ) / 60;
-
     return Math.abs(Math.round(diff));
   }
 

@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { HighlightJsModule } from 'ngx-highlight-js';
-
 import { UploadDemoRoutingModule } from './uploaddemo-routing.module';
 import { UploadDemoComponent } from './uploaddemo.component';
 import { UploadModule } from '../../../../projects/truly-ui/src/components/upload';

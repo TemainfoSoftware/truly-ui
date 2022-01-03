@@ -15,6 +15,7 @@
   flex-flow: column;
   padding: 10px 0;
   font-family: Segoe UI;
+  box-sizing: border-box;
   > .images-container {
     position: relative;
     display: flex;
@@ -38,6 +39,7 @@
 .image-list {
   display: flex;
   flex-flow: column;
+  overflow: auto;
   > .image-item {
     margin-top: 10px;
     display: flex;

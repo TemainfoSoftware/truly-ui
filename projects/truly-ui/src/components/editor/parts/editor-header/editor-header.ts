@@ -57,6 +57,8 @@ export class TlEditorHeader implements OnInit {
 
   @Output() clickClear = new EventEmitter();
 
+  @Output() clickSave = new EventEmitter();
+
   @Output() clickField = new EventEmitter();
 
   @Input('labelAddField')

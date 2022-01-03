@@ -22,16 +22,25 @@
       flex-direction: column;
       align-items: center;
       line-height: 20px;
-      height: 35px;
+      justify-content: center;
       width: 90px;
       > .ui-day {
         font-size: 2em;
         font-weight: bold;
+        line-height: 20px;
       }
       > .ui-day-week {
         font-size: 0.9em;
         font-variant: all-petite-caps;
         font-weight: bold;
+        line-height: 10px;
+
+      }
+      >.ui-day-holiday{
+        font-size: 0.8em;
+        font-variant: all-petite-caps;
+        font-weight: bold;
+        line-height: 10px;
       }
     }
     > .ui-time-selected {

@@ -391,6 +391,12 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
         }
         this.forwardTabbing('enter');
         break;
+      case KeyEvent.NUMPADENTER:
+        if ( !this.isTextArea() ) {
+          $event.preventDefault();
+        }
+        this.forwardTabbing('enter');
+        break;
     }
   }
 

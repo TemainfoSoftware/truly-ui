@@ -10,7 +10,7 @@
           <app-card>
             <div class="col-md-12">
               <form [formGroup]="form">
-                <tl-editor formControlName="editor"></tl-editor>
+                <tl-editor #editor formControlName="editor" [disabled]="disabled" (saveContent)="saveContent($event)"></tl-editor>
               </form>
               <div class="spacer"></div>
             </div>

@@ -9,7 +9,10 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "downlevelIteration": true,
-    "target": "ES2022",
+    "target": "es2020",
+    "types": [
+      "@babel/generator"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ],
@@ -24,7 +27,6 @@
       "truly-ui/*": [
         "dist/truly-ui/*"
       ]
-    },
-    "useDefineForClassFields": false
+    }
   }
 }

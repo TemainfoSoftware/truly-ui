@@ -20,10 +20,10 @@
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    "compilationMode": "partial",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
-    "enableIvy": false,
     "genDir": "../../dist/components",
     "strictInjectionParameters": true,
     "enableResourceInlining": true

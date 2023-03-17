@@ -23,7 +23,7 @@
 import {
   ContentChild, Directive, forwardRef, Input
 } from '@angular/core';
-import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {AbstractControl, UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { CPFValidator } from './cpf.validator';
 
 @Directive( {
@@ -42,7 +42,7 @@ export class CPFDirective implements Validator {
 
   constructor() {}
 
-    validate( c: FormControl ): ValidationErrors {
+    validate( c: UntypedFormControl ): ValidationErrors {
       return CPFValidator( )( this.control || c );
     }
 }

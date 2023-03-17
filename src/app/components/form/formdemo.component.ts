@@ -4,7 +4,7 @@ import * as json from './form-dataproperties.json';
 import * as jsonEvents from './form-dataevent.json';
 
 import { slideToLeft } from '../../shared/animations/router.animations';
-import { FormGroup, FormControl} from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl} from '@angular/forms';
 import { PasswordValidator } from '../../../../projects/truly-ui/src/components/validators/password/password.validator';
 
 @Component( {
@@ -15,10 +15,10 @@ import { PasswordValidator } from '../../../../projects/truly-ui/src/components/
 } )
 export class FormDemoComponent {
 
-  public form = new FormGroup({
-    user: new FormControl(''),
-    password: new FormControl('', PasswordValidator({ digits: true, specials: false, uppercase: false})),
-    remember: new FormControl(false)
+  public form = new UntypedFormGroup({
+    user: new UntypedFormControl(''),
+    password: new UntypedFormControl('', PasswordValidator({ digits: true, specials: false, uppercase: false})),
+    remember: new UntypedFormControl(false)
   });
 
   public formprop;

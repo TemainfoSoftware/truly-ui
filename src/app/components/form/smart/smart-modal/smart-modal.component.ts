@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { DumpDataService } from '../../../../shared/services/dumpdata';
 
 @Modal({
@@ -23,9 +23,9 @@ import { DumpDataService } from '../../../../shared/services/dumpdata';
 export class SmartFormModalComponent {
 
 
-  public form = new FormGroup({
-    id: new FormControl(''),
-    cliente: new FormControl('',  Validators.required),
+  public form = new UntypedFormGroup({
+    id: new UntypedFormControl(''),
+    cliente: new UntypedFormControl('',  Validators.required),
   });
 
   public dataBasic = [];

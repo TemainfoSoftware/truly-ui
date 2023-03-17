@@ -148,7 +148,6 @@
       }
     }
   },
-  "defaultProject": "truly-ui-project",
   "cli": {
     "analytics": false
   }

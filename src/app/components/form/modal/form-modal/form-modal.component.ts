@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Modal } from '../../../../../../projects/truly-ui/src/components/modal/interfaces/modal-options';
-import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 
 @Modal({
   title: 'Form Modal Example',
@@ -27,14 +27,14 @@ export class FormModalComponent {
       { id: 3, description: 'Doctor'},
   ];
 
-  public form = new FormGroup({
-    name: new FormControl('',  Validators.required),
-    nickname: new FormControl('',  Validators.required),
-    email: new FormControl('', [Validators.email, Validators.required]),
-    description: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    user: new FormControl('', Validators.required),
-    role: new FormControl('', Validators.required),
-    password: new FormControl('', [
+  public form = new UntypedFormGroup({
+    name: new UntypedFormControl('',  Validators.required),
+    nickname: new UntypedFormControl('',  Validators.required),
+    email: new UntypedFormControl('', [Validators.email, Validators.required]),
+    description: new UntypedFormControl('', [Validators.required, Validators.minLength(8)]),
+    user: new UntypedFormControl('', Validators.required),
+    role: new UntypedFormControl('', Validators.required),
+    password: new UntypedFormControl('', [
       Validators.required,
       Validators.minLength(8)
     ])

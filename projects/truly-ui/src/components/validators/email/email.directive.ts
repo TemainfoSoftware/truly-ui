@@ -23,7 +23,7 @@
 import {
   Directive, forwardRef, Input,
 } from '@angular/core';
-import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {AbstractControl, UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { EmailValidator } from './email.validator';
 
 @Directive( {
@@ -42,7 +42,7 @@ export class EmailDirective implements Validator {
 
   constructor() {}
 
-  validate( c: FormControl ): ValidationErrors {
+  validate( c: UntypedFormControl ): ValidationErrors {
     return EmailValidator()( this.control || c );
   }
 }

@@ -324,7 +324,7 @@ import {GettingStartedComponent} from './getting-started/getting-started.compone
         path: 'overlaypanel',
         loadChildren: () => import('./components/overlaypanel/overlay-paneldemo.module').then(m => m.OverlayPanelDemoModule)
     },
-], { relativeLinkResolution: 'legacy' })
+], {})
   ],
   exports: [RouterModule]
 })

@@ -48,7 +48,7 @@
   "dependencies": {
     "@angular-eslint/eslint-plugin": "^15.2.1",
     "@angular/animations": "^14.3.0",
-    "@angular/cdk": "^11.2.13",
+    "@angular/cdk": "^12.2.13",
     "@angular/common": "^14.3.0",
     "@angular/compiler": "^14.3.0",
     "@angular/core": "^14.3.0",

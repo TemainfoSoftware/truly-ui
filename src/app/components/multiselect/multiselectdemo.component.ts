@@ -3,7 +3,7 @@ import {Component, OnInit, ViewContainerRef} from '@angular/core';
 import * as jsonProp from './multiselectdemo-dataproperties.json';
 import * as jsonEvt from './multiselectdemo-events.json';
 import { DumpDataService } from '../../shared/services/dumpdata';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component( {
   selector: 'app-multiselect-demo',
@@ -25,9 +25,9 @@ export class MultiSelectDemoComponent implements OnInit {
 
   public events;
 
-  public form = new FormGroup({
-    complex: new FormControl('', Validators.required),
-    arrayString: new FormControl('', Validators.required)
+  public form = new UntypedFormGroup({
+    complex: new UntypedFormControl('', Validators.required),
+    arrayString: new UntypedFormControl('', Validators.required)
   });
 
   constructor(public view: ViewContainerRef ) {

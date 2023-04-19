@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { CPFValidator } from '../../../../projects/truly-ui/src/components/validators/cpf/cpf.validator';
 import * as json from './inputvalidatorsdemo-dataproperties.json';
 import { slideToLeft } from '../../shared/animations/router.animations';
@@ -38,9 +38,9 @@ export class InputValidatorsDemoComponent implements OnInit {
 
   public password;
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
-  constructor( private formBuilder: FormBuilder ) {
+  constructor( private formBuilder: UntypedFormBuilder ) {
     this.dataTableProperties = json.dataProperties;
     this.dataTableEvents = jsonEvents.dataEvents;
   }

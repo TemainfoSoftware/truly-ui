@@ -1,14 +1,13 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
-    "target": "es2020",
+    "declarationMap": true,
     "module": "es2020",
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,
     "inlineSources": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "downlevelIteration": true,
@@ -20,10 +19,10 @@
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    "compilationMode": "partial",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
     "fullTemplateTypeCheck": true,
-    "enableIvy": false,
     "genDir": "../../dist/components",
     "strictInjectionParameters": true,
     "enableResourceInlining": true

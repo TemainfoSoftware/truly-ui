@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {UntypedFormGroup} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {StepService} from '../../services/step.service';
 import {Subscription} from 'rxjs';
 
@@ -12,7 +12,7 @@ let index = 0;
 })
 export class TlStepForm implements OnInit, OnDestroy {
 
-  @Input() form: UntypedFormGroup;
+  @Input() form: FormGroup;
 
   @Input() validateForm = true;
 

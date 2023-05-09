@@ -240,16 +240,16 @@ export class TlAutoComplete extends ValueAccessorBase<any> implements OnChanges,
   }
 
 
-  private scrollToIndex(): Promise<void> {
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        if (this.cdkVirtualScroll) {
-          this.cdkVirtualScroll.scrollToIndex(this.lastItemScrolled);
+  private scrollToIndex() {
+    return new Promise( ( resolve ) => {
+      setTimeout( () => {
+        if ( this.cdkVirtualScroll ) {
+          this.cdkVirtualScroll.scrollToIndex( this.lastItemScrolled );
           this.change.markForCheck();
         }
         resolve();
-      }, 200);
-    });
+      }, 200 );
+    } );
   }
 
 

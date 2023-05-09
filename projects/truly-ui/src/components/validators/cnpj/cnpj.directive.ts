@@ -21,7 +21,7 @@
  */
 
 import {Directive, forwardRef, Input} from '@angular/core';
-import {AbstractControl, UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import {CNPJValidator} from './cnpj.validator';
 
 @Directive({
@@ -41,7 +41,7 @@ export class CNPJDirective implements Validator {
   constructor() {
   }
 
-  validate(c: UntypedFormControl): ValidationErrors {
+  validate(c: FormControl): ValidationErrors {
     return CNPJValidator()(this.control || c );
   }
 }

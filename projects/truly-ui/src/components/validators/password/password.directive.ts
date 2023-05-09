@@ -25,7 +25,7 @@ import {
   Input,
   Directive, forwardRef, ElementRef
 } from '@angular/core';
-import {AbstractControl, UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {AbstractControl, FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import { PasswordValidator } from './password.validator';
 import { PasswordRule } from './passwordrule.interface';
 
@@ -56,7 +56,7 @@ export class PasswordDirective implements Validator, AfterViewInit {
     this.elementInput.setAttribute('type', 'password');
   }
 
-  validate( c: UntypedFormControl ): ValidationErrors {
+  validate( c: FormControl ): ValidationErrors {
     return PasswordValidator( this.passwordRule )( c );
   }
 }

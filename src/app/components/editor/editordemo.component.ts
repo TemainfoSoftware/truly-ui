@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import * as json from './editordemo-dataproperties.json';
 import * as jsonEvents from './editordemo-dataevents.json';
-import {UntypedFormControl, UntypedFormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {TlEditor} from '../../../../projects/truly-ui/src/components/editor/editor';
 
 @Component({
@@ -28,8 +28,8 @@ export class EditorDemoComponent implements OnInit {
 
   };
 
-  public form: UntypedFormGroup = new UntypedFormGroup({
-    editor: new UntypedFormControl('TESTE')
+  public form: FormGroup = new FormGroup({
+    editor: new FormControl('TESTE')
   });
 
   public textTemplate = '<div>Declaro para fins de ausência escolar, a pedido, do responsável legal, que o sr.(a)\n' +

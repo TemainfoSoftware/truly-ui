@@ -41,7 +41,7 @@ import {
 import {KeyEvent} from '../core/enums/key-events';
 import {I18nService} from '../i18n/i18n.service';
 import {TlInput} from '../input/input';
-import {UntypedFormGroup, NgForm, NgModel} from '@angular/forms';
+import {FormGroup, NgForm, NgModel} from '@angular/forms';
 import {TlButton} from '../button/button';
 import {FormSubmitDirective} from './form-submit.directive';
 import {ModalService} from '../modal/services/modal.service';
@@ -92,15 +92,15 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   @Input() padding = '10px';
 
-  @Output() formLoaded: EventEmitter<UntypedFormGroup> = new EventEmitter();
+  @Output() formLoaded: EventEmitter<FormGroup> = new EventEmitter();
 
   @Output() submitForm: EventEmitter<NgForm> = new EventEmitter();
 
   @Output() actionForm: EventEmitter<ActionsModal> = new EventEmitter();
 
-  @Output() changeForm: EventEmitter<UntypedFormGroup> = new EventEmitter();
+  @Output() changeForm: EventEmitter<FormGroup> = new EventEmitter();
 
-  @Input( 'formGroup' ) formGroup: UntypedFormGroup;
+  @Input( 'formGroup' ) formGroup: FormGroup;
 
   @ViewChild( NgForm, {static: true}  ) public form: NgForm;
 
@@ -215,7 +215,7 @@ export class TlForm implements OnInit, AfterViewInit, AfterContentInit, OnDestro
 
   markAllAsTouched( controls ) {
     Object.keys( controls ).forEach(key => {
-      if ( controls[key] instanceof UntypedFormGroup ) {
+      if ( controls[key] instanceof FormGroup ) {
          this.markAllAsTouched( controls[key].controls );
       } else {
         controls[key].markAsTouched();

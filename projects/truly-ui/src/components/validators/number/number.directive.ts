@@ -21,7 +21,7 @@
  */
 
 import {Directive, forwardRef, HostListener} from '@angular/core';
-import {UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
+import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from '@angular/forms';
 import {NumberValidator} from './number.validator';
 
 @Directive({
@@ -52,7 +52,7 @@ export class NumberDirective implements Validator {
     return ($event.keyCode === 45) && ($event.target.selectionStart === 0);
   }
 
-  validate(c: UntypedFormControl): ValidationErrors {
+  validate(c: FormControl): ValidationErrors {
     if (c.value > 0) {
       return NumberValidator()(c);
     }

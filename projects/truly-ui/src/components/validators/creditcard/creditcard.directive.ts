@@ -23,7 +23,7 @@
 import {
   ContentChild, Directive, forwardRef,
 } from '@angular/core';
-import { UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
+import { FormControl, NG_VALIDATORS, ValidationErrors, Validator } from '@angular/forms';
 import { TlInput } from '../../input/input';
 import { CreditCardValidator } from './creditcard.validator';
 
@@ -43,7 +43,7 @@ export class CreditCardDirective implements Validator {
 
   constructor( private input: TlInput ) {}
 
-  validate( c: UntypedFormControl ): ValidationErrors {
+  validate( c: FormControl ): ValidationErrors {
     if ( this.input ) {
       this.input.mask = '9999.9999.9999.9999';
     }

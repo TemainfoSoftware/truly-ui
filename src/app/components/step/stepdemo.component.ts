@@ -24,7 +24,7 @@ import { Component } from '@angular/core';
 import * as json from './stepdemo-dataproperties.json';
 import * as jsonStepForm from './stepdemo-dataproperties2.json';
 import * as jsonEvts from './stepdemo.dataevents.json';
-import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component( {
 selector : 'app-step',
@@ -41,20 +41,20 @@ export class StepDemoComponent {
 
   public dataEvents;
 
-  public formOne = new UntypedFormGroup({
-    user: new UntypedFormControl('', Validators.required),
-    password: new UntypedFormControl('', Validators.required)
+  public formOne = new FormGroup({
+    user: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   });
 
-  public formTwo = new UntypedFormGroup({
-    address: new UntypedFormControl('', Validators.required),
-    city: new UntypedFormControl('', Validators.required)
+  public formTwo = new FormGroup({
+    address: new FormControl('', Validators.required),
+    city: new FormControl('', Validators.required)
   });
 
-  public formTree = new UntypedFormGroup({
-    card: new UntypedFormControl(''),
-    value: new UntypedFormControl('$ 100'),
-    remember: new UntypedFormControl(false)
+  public formTree = new FormGroup({
+    card: new FormControl(''),
+    value: new FormControl('$ 100'),
+    remember: new FormControl(false)
   });
 
 

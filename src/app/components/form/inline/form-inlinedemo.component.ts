@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class User {
   name: string;
@@ -26,11 +26,11 @@ export class FormInlinedemoComponent implements OnInit {
     active: true
   };
 
-  public form = new UntypedFormGroup({
-    name: new UntypedFormControl('', Validators.required),
-    lastName: new UntypedFormControl('', Validators.required),
-    birthday: new UntypedFormControl(''),
-    active: new UntypedFormControl(false)
+  public form = new FormGroup({
+    name: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    birthday: new FormControl(''),
+    active: new FormControl(false)
   });
 
   public user = new User();

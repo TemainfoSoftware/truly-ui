@@ -486,9 +486,9 @@ export class ModalService implements OnDestroy {
     return this.componentList.filter((item) => item.id === id)[0];
   }
 
-  execCallBack(result: any, id: string): Promise<void> {
+  execCallBack(result: any, id: string): Promise<any> {
     const componentModal = this.getComponentById(id);
-    return new Promise<void>((resolve) => {
+    return new Promise((resolve) => {
       if (this.isResultUndefined(result.mdResult)) {
         return;
       }

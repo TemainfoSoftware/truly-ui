@@ -22,9 +22,7 @@
 
 import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ContextMenuInterface} from './interfaces/context-menu.interface';
-// import {ConnectedPosition} from '@angular/cdk/overlay/position/flexible-connected-position-strategy';
-import {OverlayModule} from '@angular/cdk/overlay';
-
+import {ConnectedPosition} from '@angular/cdk/overlay/position/flexible-connected-position-strategy';
 
 @Component({
   selector: 'tl-context-menu',
@@ -41,7 +39,7 @@ export class TlContextMenuComponent implements OnInit {
 
   isOpen = false;
 
-  positions: OverlayModule[] = [
+  positions: ConnectedPosition[] = [
     {
       originX: 'end',
       originY: 'top',

@@ -31,7 +31,7 @@ export const dataProperties = [
   {
     name: 'views',
     type: 'Array<string>',
-    default: '[\'day\', \'dayList\']',
+    default: '[\'day\', \'dayList\' \'weekList\']',
     description: 'Defines which views will be used in Schedule.',
     options: 'day | week | month | workWeek | dayList | weekList'
   },

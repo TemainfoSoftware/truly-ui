@@ -29,7 +29,7 @@ export const dataProperties = [
   },
   {
     name: 'mask.mask',
-    type: 'string',
+    type: 'Object | string ',
     default: 'null',
     description: 'The expression itself',
     options: '00/00/0000 | AAA-0000 | (099)-999999999'

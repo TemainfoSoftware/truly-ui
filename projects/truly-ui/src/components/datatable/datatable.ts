@@ -31,7 +31,6 @@ import {
   Output,
   QueryList,
   Renderer2,
-  SimpleChange,
   SimpleChanges,
   ViewChild
 } from '@angular/core';

@@ -7,6 +7,7 @@ export { TlAccordionItem } from './components/accordion/parts/accordion-item/acc
 export { AutoCompleteModule } from './components/autocomplete/index';
 export { TlAutoComplete } from './components/autocomplete/autocomplete';
 export { TlAutocompleteTemplate } from './components/autocomplete/components/autocomplete-template';
+export { SelectedValidatorDirective } from './components/autocomplete/selected-validator';
 
 // Avatar
 export { AvatarModule } from './components/avatar/index';
@@ -139,6 +140,9 @@ export { FormSubmitDirective } from './components/form/form-submit.directive';
 // Icons
 export { IconsModule } from './components/icons/index';
 export { TlIcons } from './components/icons/icons';
+export { TlDxIconComponent } from './components/icons/parts/tl-dx-icon/tl-dx-icon.component';
+export { TlIonIconComponent } from './components/icons/parts/tl-ion-icon/tl-ion-icon.component';
+export { TlFaIconComponent } from './components/icons/parts/tl-fa-icon/tl-fa-icon.component';
 
 // Input
 export { InputModule } from './components/input/index';

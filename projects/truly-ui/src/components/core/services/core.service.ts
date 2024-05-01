@@ -43,13 +43,13 @@ export class CoreService {
                  @Inject(APPLICATION_CONFIGURATION) private config: LazyApplicationLoaderConfig
     ) {}
 
-    initializeApp(): Promise<any> {
-      return new Promise(( resolve ) => {
-          const componentFactory = this.compiler.resolveComponentFactory( TlCore );
-          this.componentRef = componentFactory.create(this.injector);
-          this.setTheme(this.config.theme);
-          this.setLocale(this.config.language);
-          resolve();
+    initializeApp(): Promise<void> {
+      return new Promise((resolve) => {
+        const componentFactory = this.compiler.resolveComponentFactory(TlCore);
+        this.componentRef = componentFactory.create(this.injector);
+        this.setTheme(this.config.theme);
+        this.setLocale(this.config.language);
+        resolve();
       });
     }
 

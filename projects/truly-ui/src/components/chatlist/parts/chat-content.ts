@@ -31,7 +31,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
 } from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
+import {UntypedFormControl, Validators} from '@angular/forms';
 import {ChatContact} from '../interfaces/chat-contact.interface';
 import {Subscription} from 'rxjs';
 import {ChatStatus} from '../interfaces/chat-status.interface';
@@ -77,7 +77,7 @@ export class TlChatContent implements AfterViewInit, OnInit, OnDestroy {
 
   private opened = false;
 
-  public control = new FormControl(null, Validators.required);
+  public control = new UntypedFormControl(null, Validators.required);
 
   public datePipe = new DatePipe(this.i18nService.getLocale().locale);
 

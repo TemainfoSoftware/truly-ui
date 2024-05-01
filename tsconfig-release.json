@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "./tsconfig.json",
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/components",
@@ -8,7 +8,6 @@
     "sourceMap": true,
     "declaration": true,
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "target": "es5",

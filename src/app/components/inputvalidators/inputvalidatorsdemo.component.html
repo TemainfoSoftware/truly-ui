@@ -10,7 +10,7 @@
             <div class="col-md-6">
               <span>CPF</span>
               <form [formGroup]="form">
-                <tl-input name="cpf" [mask]="'999.999.999-99'" showValidations cpf [formControlName]="'cpf'"></tl-input>
+                <tl-input name="cpf" [mask]="{mask: '000.000.000-00', guides: false}" showValidations cpf [formControlName]="'cpf'"></tl-input>
               </form>
               <app-showcase-returned-value [value]="form.value | json"></app-showcase-returned-value>
               <div class="spacer"></div>

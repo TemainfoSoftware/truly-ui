@@ -41,7 +41,7 @@ import {CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {ListBase} from './classes/list-base';
 import {KeyEvent} from '../core/enums/key-events';
 import {Subscription} from 'rxjs';
-import {FormControl} from '@angular/forms';
+import {UntypedFormControl} from '@angular/forms';
 import {DataSourceList} from '../core/classes/datasource-list';
 import {TlInput} from '../input/input';
 import {I18nService} from '../i18n/i18n.service';
@@ -89,7 +89,7 @@ export class TlListBox extends ListBase implements AfterViewInit, OnDestroy, OnC
 
   @Input() loading = true;
 
-  @Input() searchControl: FormControl;
+  @Input() searchControl: UntypedFormControl;
 
   @Input() height = '200px';
 

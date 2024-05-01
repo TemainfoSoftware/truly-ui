@@ -1,7 +1,12 @@
 <div class="tl-datatable-box" #datatableBox
      [ngClass]="{'-borderleft': true}"
      [ngStyle]="{width: width}">
-    <tl-datatable-header></tl-datatable-header>
+    <tl-datatable-header [dt]="this"
+                         (filterEvent)="onChangeFilter($event)"
+                         (sortEvent)="onChangeSort($event)"
+                         (keydownFilterEvent)="onKeydownFilter($event)"
+    >
+    </tl-datatable-header>
     <tl-datatable-content
       [dataSource]="dataSource"
       [data]="data"

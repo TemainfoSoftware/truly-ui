@@ -24,15 +24,13 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy,
-  OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewChildren
+  Component, ElementRef, EventEmitter, Input, OnDestroy, Output, QueryList, ViewChild, ViewChildren
 } from '@angular/core';
 import { TlDatatableRow } from '../row/datatable-row';
-import { TlDatatableCell } from '../cell/datatable-cell';
 import {Observable, Subscription} from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
-import {ActiveDescendantKeyManager, FocusKeyManager} from '@angular/cdk/a11y';
-import { CdkVirtualScrollViewport, ScrollDispatcher } from '@angular/cdk/scrolling';
+import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 import { TlDatatableColumn } from '../column/datatable-column';
 import { I18nService } from '../../../i18n/i18n.service';
@@ -40,7 +38,6 @@ import { DatatableDataSource } from '../../services/datatable-datasource.service
 import { ContextMenuService } from '../../../contextmenu/services/contextmenu.service';
 import { ContextMenuInterface } from '../../../contextmenu/interfaces/context-menu.interface';
 import {scrollIntoView} from '../../../core/helper/scrollIntoView';
-import {TlDatatableFilterService} from '../../services/datatable-filter.service';
 
 @Component( {
   selector: 'tl-datatable-content',
@@ -80,7 +77,6 @@ export class TlDatatableContent implements AfterViewInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private i18n: I18nService,
-              private datatableFilterService: TlDatatableFilterService,
               private changes: ChangeDetectorRef,
               private contextMenuService: ContextMenuService) {}
 

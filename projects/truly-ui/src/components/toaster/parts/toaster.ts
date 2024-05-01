@@ -2,9 +2,6 @@ import {
   Input, Component, OnInit, OnChanges, OnDestroy, Output, EventEmitter, ElementRef, ViewChild,
   Renderer2
 } from '@angular/core';
-import { ToasterService } from '../services/toaster.service';
-import { trigger, transition, style, animate } from '@angular/animations';
-import {FixedPositionDirective} from '../../misc/fixed-position.directive';
 
 @Component( {
   selector: 'tl-toaster',
@@ -39,13 +36,15 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
 
   @Output() afterClose = new EventEmitter();
 
+  @Output() closeEvent = new EventEmitter();
+
   @ViewChild('container', {static: true}) container: ElementRef;
 
   public interval;
 
   public timeout;
 
-  constructor( private toasterService: ToasterService, private renderer: Renderer2 ) {}
+  constructor(  private renderer: Renderer2 ) {}
 
   ngOnInit() {
     this.interval = setInterval( () => {
@@ -55,7 +54,7 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
 
   animationDone(event: AnimationEvent) {
     if (event.animationName === 'toasterOut') {
-      this.toasterService.close( this.toasterID );
+      this.closeEvent.emit(this.toasterID)
     }
   }
 

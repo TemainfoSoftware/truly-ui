@@ -22,9 +22,9 @@
 
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { TlDatatableFilterService } from './datatable-filter.service';
-import { TlDatatableSortService } from './datatable-sort.service';
-import { TlDatatable } from '../datatable';
+import type { TlDatatableFilterService } from './datatable-filter.service';
+import type { TlDatatableSortService } from './datatable-sort.service';
+import type { TlDatatable } from '../datatable';
 import { SimpleChanges } from '@angular/core';
 
 export class DatatableDataSource extends DataSource<object | undefined> {

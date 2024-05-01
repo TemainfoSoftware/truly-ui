@@ -21,7 +21,7 @@
 */
 
 import { AfterContentInit, Directive, ElementRef, Input, OnDestroy, Renderer2 } from '@angular/core';
-import { TlDatatable } from '../datatable';
+import type { TlDatatable } from '../datatable';
 
 @Directive({
     selector: '[resizer][datatable]'

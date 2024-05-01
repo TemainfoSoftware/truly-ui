@@ -30,7 +30,6 @@ import {
   OnChanges,
   Output,
   QueryList,
-  Renderer2,
   SimpleChanges,
   ViewChild
 } from '@angular/core';
@@ -141,8 +140,7 @@ export class TlDatatable implements AfterContentInit, OnChanges {
     return this._loading;
   }
 
-  constructor( private render: Renderer2,
-               public columnService: TlDatatableColumnService,
+  constructor( public columnService: TlDatatableColumnService,
                public filterService: TlDatatableFilterService,
                public sortService: TlDatatableSortService
   ) {}
@@ -171,6 +169,18 @@ export class TlDatatable implements AfterContentInit, OnChanges {
 
   onRowSelect( row, index ) {
     this.rowSelect.emit( this.getObjectRow( row, index ) );
+  }
+
+  onChangeFilter( value ) {
+    this.filterService.setFilter( value );
+  }
+
+  onChangeSort( sort ) {
+    this.sortService.setSort( sort);
+  }
+
+  onKeydownFilter( event ) {
+    this.filterService.keydownFilter.next(event);
   }
 
   onRowDblclick( row, index ) {

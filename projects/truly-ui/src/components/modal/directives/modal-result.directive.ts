@@ -20,7 +20,7 @@
  SOFTWARE.
  */
 import {
-  Input, OnInit, Directive, HostListener, ContentChild,
+  Input, OnInit, Directive, HostListener,
 } from '@angular/core';
 import {ModalResult} from '../../core/enums/modal-result';
 import {ModalService} from '../services/modal.service';

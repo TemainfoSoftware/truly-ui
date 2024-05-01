@@ -20,13 +20,11 @@
     SOFTWARE.
 */
 
-import {AfterViewInit, Component, forwardRef, Inject, ViewChild, ElementRef, OnDestroy, Output, EventEmitter} from '@angular/core';
-import { TlDatatable } from '../../datatable';
+import { AfterViewInit, Component, ViewChild, ElementRef, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
+import type { TlDatatable } from '../../datatable';
 import { DatatableHelpersService } from '../../services/datatable-helpers.service';
 import { TlDatatabaleColumnFilter } from '../column-filter/datatable-column-filter';
-import { TlDatatableFilterService } from '../../services/datatable-filter.service';
 import { TlDatatableColumn } from '../column/datatable-column';
-import { TlDatatableSortService } from '../../services/datatable-sort.service';
 import { Subscription } from 'rxjs';
 
 @Component( {
@@ -37,11 +35,19 @@ import { Subscription } from 'rxjs';
 } )
 export class TlDatatableHeader implements AfterViewInit, OnDestroy {
 
+    @Input() dt: TlDatatable;
+
     @ViewChild(TlDatatabaleColumnFilter, {static: false} ) columnsFilter;
 
     @ViewChild('datatableHeader', {static: true} ) datatableHeader: ElementRef;
 
     @Output() keydownFilter: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output() filterEvent: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output() sortEvent: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output() keydownFilterEvent: EventEmitter<any> = new EventEmitter<any>();
 
     private subscription = new Subscription();
 
@@ -49,16 +55,14 @@ export class TlDatatableHeader implements AfterViewInit, OnDestroy {
 
     private sortField;
 
-    constructor( @Inject( forwardRef( () => TlDatatable ) ) public dt: TlDatatable,
-                 public helperService: DatatableHelpersService,
-                 public filterService: TlDatatableFilterService,
-                 private sortService: TlDatatableSortService ) {}
+
+    constructor( public helperService: DatatableHelpersService ) {}
 
     ngAfterViewInit() {
         if (this.columnsFilter !== undefined) {
           this.subscription.add(
             this.columnsFilter.filterEvent.subscribe( ( value ) => {
-              this.filterService.setFilter( value );
+              this.filterEvent.emit(value);
             })
           );
         }
@@ -79,7 +83,7 @@ export class TlDatatableHeader implements AfterViewInit, OnDestroy {
         this.filderOrder = 1;
       }
 
-      this.sortService.setSort( {sorts: {column: column.field, sortBy: this.filderOrder}} );
+      this.sortEvent.emit({sorts: {column: column.field, sortBy: this.filderOrder}} )
     }
 
     getSortOrder(column) {

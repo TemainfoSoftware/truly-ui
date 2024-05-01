@@ -24,7 +24,9 @@
                     </th>
                 </tr>
                 <tr *ngIf="dt.allowFilterColumn" class="ui-row ui-row-filter"
-                    [tlColumnFilter]="dt.columns"></tr>
+                    [tlColumnFilter]="dt.columns"
+                    (keydownFilterEvent)="keydownFilterEvent.emit($event)">
+                ></tr>
             </thead>
         </table>
     </div>

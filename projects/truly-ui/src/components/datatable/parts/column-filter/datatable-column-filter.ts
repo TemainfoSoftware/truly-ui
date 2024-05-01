@@ -28,7 +28,6 @@ import { Subject, Subscription } from 'rxjs';
 import { I18nService } from '../../../i18n/i18n.service';
 import { FilterEventMetadata, FilterMetadata } from '../../metadatas/filter.metadata';
 import { TlDatatableColumn } from '../column/datatable-column';
-import {TlDatatableFilterService} from '../../services/datatable-filter.service';
 
 
 @Component({
@@ -41,6 +40,8 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
     @Input('tlColumnFilter') tlColumnFilter: TlDatatableColumn[];
 
     @Output() filterEvent: EventEmitter<any> = new EventEmitter();
+
+    @Output() keydownFilterEvent: EventEmitter<any> = new EventEmitter();
 
     public filters: FilterMetadata = { matchMode: {}, value: {} };
 
@@ -56,7 +57,7 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
 
     private subscription =  new Subscription();
 
-    constructor( private i18n: I18nService, private datatableFilterService: TlDatatableFilterService ) {}
+    constructor( private i18n: I18nService) {}
 
     ngOnInit() {
         this.subscription.add(
@@ -70,7 +71,7 @@ export class TlDatatabaleColumnFilter implements OnInit, OnDestroy {
     }
 
     onKeyDown( $event ) {
-      this.datatableFilterService.keydownFilter.next($event);
+      this.keydownFilterEvent.emit($event);
     }
 
     onChangeFilter(event) {

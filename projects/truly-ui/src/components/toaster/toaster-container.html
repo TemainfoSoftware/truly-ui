@@ -12,7 +12,9 @@
                     [progress]="item.progress"
                     [icon]="item.icon"
                     [message]="item.message"
-                    [height]="item.height">
+                    [height]="item.height"
+                    (closeEvent)="toasterService.close($event)"
+        >
         </tl-toaster>
       </div>
     </ng-container>

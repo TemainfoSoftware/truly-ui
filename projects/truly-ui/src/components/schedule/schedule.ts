@@ -53,7 +53,7 @@ export class TlSchedule implements OnInit, OnChanges {
 
   @Input() defaultView: ViewType = 'day';
 
-  @Input() views: Array<ViewType> = [ 'day', 'dayList' ];
+  @Input() views: Array<ViewType> = [ 'day', 'dayList', 'weekList' ];
 
   @Input() statusConfig: StatusType;
 

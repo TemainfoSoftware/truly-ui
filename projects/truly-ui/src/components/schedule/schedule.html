@@ -51,6 +51,36 @@
         (onEventMouseout)="eventMouseout.emit($event)"
       ></tl-view-day>
 
+      <tl-week
+      *ngSwitchCase="'weekList'"
+      [showNowIndicator]="showNowIndicator"
+      [statusConfig]="statusConfig"
+      [typesConfig]="typesConfig"
+      [events]="events"
+      [slotSettings]="slotSettings"
+      [slatNumberRowsAsArray]="slatNumberRowsAsArray"
+      (onEventContextmenu)="eventContextmenu.emit($event)"
+      (onRowClick)="rowClick.emit($event)"
+      (onRowDbClick)="rowDbClick.emit($event)"
+      (onEventClick)="eventClick.emit($event)"
+      (onEventDbClick)="eventDbClick.emit($event)"
+      (onEventMouseover)="eventMouseover.emit($event)"
+      (onEventMouseout)="eventMouseout.emit($event)"
+      ></tl-week>
+
+      <tl-day-list
+      *ngSwitchCase="'dayList'"
+      [statusConfig]="statusConfig"
+      [events]="events"
+      (onEventContextmenu)="eventContextmenu.emit($event)"
+      (onRowClick)="rowClick.emit($event)"
+      (onRowDbClick)="rowDbClick.emit($event)"
+      (onEventClick)="eventClick.emit($event)"
+      (onEventDbClick)="eventDbClick.emit($event)"
+      (onEventMouseover)="eventMouseover.emit($event)"
+      (onEventMouseout)="eventMouseout.emit($event)"
+      ></tl-day-list>
+
       <!--<tl-day-list-->
       <!--*ngSwitchCase="'dayList'"-->
       <!--[events]="eventsOfDay"-->

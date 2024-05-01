@@ -5,6 +5,7 @@ import { HeadingComponent } from './parts/heading/heading.component';
 import { TlSchedule } from './schedule';
 import { DayListComponent } from './views/day-list/day-list.component';
 import { ViewDayComponent } from './views/day/view-day.component';
+import { WeekComponent } from './views/week/week.component';
 
 import { MiscModule } from '../misc/index';
 import { NavigatorModule } from '../navigator/index';
@@ -39,6 +40,7 @@ import { HolidayService } from './services/holiday.service';
     declarations: [
       TlSchedule,
       ViewDayComponent,
+      WeekComponent,
       DayListComponent,
       HeadingComponent
     ],

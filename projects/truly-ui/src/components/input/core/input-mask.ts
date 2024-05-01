@@ -1,4 +1,4 @@
-import { Renderer2 } from '@angular/core';
+import { Renderer2, Input } from '@angular/core';
 import { KeyEvent } from '../../core/enums/key-events';
 import { Subject } from 'rxjs';
 
@@ -6,7 +6,8 @@ export class InputMask {
 
   private tlInput;
 
-  private maskGuides = true;
+  // Desativa a mascara dos Input preenchendo com Underline ( _ )
+  private maskGuides = false;
 
   private addNinthDigit = false;
 

@@ -227,14 +227,14 @@ Once your library is imported, you can use its components, directives and pipes 
 
 ### In progress, planned, and non-planned features
 
-| Feature | Status | Docs | Issue |
-| :--- | :--- | :--- | :--- |
-| datetimepicker | non-planned |  |  |
-| clockpicker | In-progress, planned S1 2021 |  |  |
-| monthyearpicker | non-planned |  |  |
-| paginator | In-progress, planned S1 2021 |  |  |
-| schedule | In-progress, planned S1 2021 |  |  |
-| widget | non-planned |  |  |
+| Feature | Status                       | Docs | Issue |
+| :--- |:-----------------------------| :--- | :--- |
+| datetimepicker | non-planned                  |  |  |
+| clockpicker | In-progress, planned S2 2024 |  |  |
+| monthyearpicker | non-planned                  |  |  |
+| paginator | In-progress, planned S2 2024 |  |  |
+| schedule | In-progress, planned S2 2024 |  |  |
+| widget | non-planned                  |  |  |
 
 ## Feedback
 
@@ -248,7 +248,7 @@ angular ui components angular 2 components, angular 4 components, angular electr
 
 The MIT License \(MIT\)
 
-Copyright \(c\) 2020 [Temainfo Software](mailto:suporte@temainfo.com.br)
+Copyright \(c\) 2024 [Temainfo Software](mailto:suporte@temainfo.com.br)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files \(the "Software"\), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

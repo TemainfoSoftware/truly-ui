@@ -23,7 +23,7 @@ import { Component } from '@angular/core';
 
 import * as json from './datedemo-dataproperties.json';
 import * as jsonEvts from './datedemo.dataevents.json';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component( {
 selector : 'app-date',
@@ -36,8 +36,8 @@ export class DateDemoComponent {
 
   public dataEvents;
 
-  public formGroup = new FormGroup({
-    dateString: new FormControl('22/05/1994')
+  public formGroup = new UntypedFormGroup({
+    dateString: new UntypedFormControl('22/05/1994')
   });
 
   constructor() {

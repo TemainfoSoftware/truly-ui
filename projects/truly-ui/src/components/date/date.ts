@@ -197,7 +197,7 @@ export class TlDate extends ValueAccessorBase<string> implements OnDestroy, Afte
 
     for ( let i = 0; i < formatArray.length; i++ ) {
       if ( formatArray[ i ] !== formatTmp[ 0 ] ) {
-        formatArray[ i ] = '9';
+        formatArray[ i ] = '0';
       }
     }
     this.mask = formatArray.toString().replace( /,/gi, '' );

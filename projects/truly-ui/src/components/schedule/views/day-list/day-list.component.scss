@@ -2,7 +2,29 @@
   background-color: #f5f5f5;
 }
 
-.ui-schedule-daylist-events{}
+.ui-schedule-daylist-events{
+  position: relative;
+}
+
+.ui-schedule-time-row {
+  box-sizing: border-box;
+  border-bottom: 1px solid #D6D6D6;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  &:last-child{
+    border-bottom: none;
+  }
+  >.ui-schedule-time-description{
+    display: block;
+    align-items: baseline;
+    & .ui-hour-detail{
+      font-weight: bold;
+      font-size: 1.6em;
+      line-height: 1.5;
+    }
+  }
+}
 
 .ui-schedule-event-box{
   font-family: "Segoe UI", Lato, 'sans-serif', "Arial";

@@ -13,7 +13,12 @@
          (mouseover)="onEventMouseout.emit(event)"
          (mouseout)="onEventMouseout.emit(event)"
     >
-      <div class="ui-event-hour">{{event.date.start | date: 'HH:mm'}} - {{event.date.end | date: 'HH:mm'}}</div>
+    <div class="ui-schedule-time-row">
+      <div class="ui-schedule-time-description">
+        <span class="ui-hour-detail">{{getDayOfWeek(event.date.start)}}</span><br>
+      </div>
+    </div>
+      <div class="ui-event-hour">{{event.date.start | date: 'HH:mm'}} - {{event.date.end | date: 'HH:mm'}} - {{event.date.start | date: 'dd/MM'}}</div>
       <div class="ui-schedule-description">
         <div class="ui-event-title">{{event.title}}</div>
         <div class="ui-event-detail">{{event.detail}}</div>

@@ -94,6 +94,7 @@ export class NavigatorManagerService {
       case 'year': { return this.getYearDescription().toString(); }
       case 'rangeyear': { return this.getRangeYear().toString(); }
       case 'day': { return this.getDayDescription().toString(); }
+      case 'rangeweek': { return this.getRangeWeekDescription().toString(); }
     }
   }
 
@@ -104,6 +105,7 @@ export class NavigatorManagerService {
       case 'year': { this.yearTypePrevious(); break; }
       case 'rangeyear': { this.rangeYearTypePrevious(); break; }
       case 'day': { this.dayTypePrevious(); break; }
+      case 'rangeweek': { this.rangeWeekTypePrevious(); break; }
     }
   }
 
@@ -113,6 +115,7 @@ export class NavigatorManagerService {
       case 'year': { this.yearTypeNext(); break; }
       case 'rangeyear': { this.rangeYearTypeNext(); break; }
       case 'day': { this.dayTypeNext(); break; }
+      case 'rangeweek': { this.rangeWeekTypeNext(); break; }
     }
   }
 
@@ -125,11 +128,33 @@ export class NavigatorManagerService {
     return this.startYear + ' - ' + this.endYear;
   }
 
+
   private getDayDescription() {
     const dayOfMonth = new Date(this.currentYear, this.currentMonth, this.currentDay).getDate();
     const weekDay = this.daysDescription[ new Date(this.currentYear, this.currentMonth, this.currentDay).getDay() ];
     return dayOfMonth + ' ' + weekDay;
   }
+
+  private getRangeWeekDescription(): string {
+    const startDate = this.getAtualDateFromParameters();
+    const endDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+
+    // Ajustar a data de início para a segunda-feira
+    const diff = startDate.getDay() - 1; // Calcule a diferença em dias de domingo para segunda-feira
+    startDate.setDate(startDate.getDate() - diff);
+
+    // Ajustar a data de término para o domingo
+    const diffEnd = 0 - endDate.getDay(); // Calcule a diferença em dias de segunda a domingo
+    endDate.setDate(endDate.getDate() + diffEnd);
+
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    const startMonth = this.monthsDescription[startDate.getMonth()];
+    const startYear = startDate.getFullYear();
+
+    return `${startDay} - ${endDay} ${startMonth} ${startYear}`;
+  }
+
 
   private getMonthDescription() {
     return this.monthsDescription[this.currentMonth];
@@ -185,4 +210,29 @@ export class NavigatorManagerService {
   private getAtualDateFromParameters() {
     return new Date(this.currentYear, this.currentMonth, this.currentDay);
   }
+
+  private rangeWeekTypePrevious() {
+    const date = this.getAtualDateFromParameters();
+    const currentDayOfWeek = date.getDay();
+    const startOfWeek = new Date(date.getTime() - currentDayOfWeek * 24 * 60 * 60 * 1000);
+    const endOfWeek = new Date(startOfWeek.getTime() - 6 * 24 * 60 * 60 * 1000);
+      // Verificar se o início da semana é segunda
+  if (currentDayOfWeek === 0) {
+    startOfWeek.setDate(startOfWeek.getDate() - 1); // Ajustar de segunda a domingo
+  }
+    if (endOfWeek >= this.date) {
+      this.setDate(startOfWeek);
+    } else {
+      this.setDate(endOfWeek);
+    }
+  }
+
+  private rangeWeekTypeNext() {
+    const date = this.getAtualDateFromParameters();
+    const currentDayOfWeek = date.getDay();
+    const startOfWeek = new Date(date.getTime() + (8 - currentDayOfWeek) * 24 * 60 * 60 * 1000);
+    const endOfWeek = new Date(startOfWeek.getTime() + 6 * 24 * 60 * 60 * 1000);
+    this.setDate(startOfWeek);
+  }
+
 }

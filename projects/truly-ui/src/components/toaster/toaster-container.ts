@@ -21,7 +21,6 @@
  */
 import { Component, Input } from '@angular/core';
 import { ToasterService } from './services/toaster.service';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component( {
   selector: 'tl-toaster-container',

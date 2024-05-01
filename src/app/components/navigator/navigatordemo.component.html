@@ -41,12 +41,20 @@
                <tl-navigator [type]="'day'"></tl-navigator>
               </textarea>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
               <h6>Without Border</h6>
               <tl-navigator [withBorder]="false"  (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)" ></tl-navigator>
               <div class="spacer"></div>
               <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
                <tl-navigator [withBorder]="false"></tl-navigator>
+              </textarea>
+            </div>
+            <div class="col-md-4">
+              <h6>With RangeWeek Type</h6>
+              <tl-navigator [type]="'rangeweek'" (clickPrevious)="onClickPrevious($event)" (clickNext)="onClickNext($event)"></tl-navigator>
+              <div class="spacer"></div>
+              <textarea highlight-js [options]="{'tabReplace': ''}" [lang]="'html'">
+                <tl-navigator [type]="'rangeweek'" ></tl-navigator>
               </textarea>
             </div>
           </app-card>

@@ -66,232 +66,232 @@ export class ScheduleDemoOverviewComponent {
 
  // public data = [];
   public data = [
-  //   {
-  //     value: '1',
-  //     title: 'William Aguera - 1',
-  //     detail: 'Consulta | Particular',
-  //     status: 'missed',
-  //     allday: false,
-  //     date: { start: new Date(new Date().setHours(8, 0)).getTime() , end: new Date( new Date().setHours(8, 30) ).getTime() }
-  //   },
-  //   {
-  //   value: '2',
-  //   title: 'William Aguera - 2',
-  //   detail: 'Consulta | Particular',
-  //   status: 'attended',
-  //   allday: false,
-  //   date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
-  // },
-  //   {
-  //     value: '3',
-  //     title: 'William Aguera - 3',
-  //     detail: 'Consulta | Particular',
-  //     allday: false,
-  //     status: 'attended',
-  //     type: 'CONSULTA',
-  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-  //   },
-  //   {
-  //     value: '32',
-  //     title: 'William Aguera - 32',
-  //     detail: 'Consulta | Particular',
-  //     allday: false,
-  //     status: 'attended',
-  //     type: 'CONSULTA',
-  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-  //   },
-  //   {
-  //     value: '132',
-  //     title: 'Marcio Chagas de Brito',
-  //     detail: 'Consulta | Unimed | (44) 98266416',
-  //     allday: false,
-  //     status: 'attended',
-  //     type: 'PREAGENDAMENTO',
-  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-  //   },
-  //   {
-  //     value: '31',
-  //     title: 'William Aguera - 32',
-  //     detail: 'Consulta | Particular',
-  //     allday: false,
-  //     status: 'attended',
-  //     type: 'CONSULTA',
-  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 15 )).getTime() }
-  //   },
-  //   {
-  //     value: '41',
-  //     title: 'Reunião na Unimed',
-  //     detail: '',
-  //     allday: false,
-  //     status: '',
-  //     type: 'EVENTO',
-  //     blocked: true,
-  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-  //   },
-  //   {
-  //     value: '42',
-  //     title: 'Reunião no Congresso Universitario',
-  //     detail: '',
-  //     allday: false,
-  //     status: '',
-  //     type: 'EVENTO',
-  //     blocked: true,
-  //     date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
-  //   },
-  // {
-  //   value: '4',
-  //   title: 'Jerson Algo - 4',
-  //   detail: 'Consulta | Unimed',
-  //   allday: false,
-  //   status: 'missed',
-  //   date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
-  // },
-  // {
-  //   value: '5',
-  //   title: 'Jerson Algo - 5',
-  //   detail: 'Consulta | Unimed',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 0 )).getTime() }
-  // },
-  // {
-  //   value: '6',
-  //   title: 'Maicon Aguera - 6',
-  //   detail: 'Consulta | Unimed',
-  //   allday: false,
-  //   status: 'missed',
-  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
-  // },
-  //   {
-  //     value: '7',
-  //     title: 'Adilson Nascimento - 7',
-  //     detail: 'Consulta | UNIPREV',
-  //     allday: false,
-  //     status: 'notmet',
-  //     date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  //   },
-  // {
-  //   value: '8',
-  //   title: 'Adilson Nascimento - 8',
-  //   detail: 'Consulta | UNIPREV',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  // },
-  // {
-  //   value: '9',
-  //   title: 'Adilson Nascimento - 9',
-  //   detail: 'Consulta | UNIPREV',
-  //   allday: false,
-  //   status: 'notmet',
-  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  // },
-  // {
-  //   value: '10',
-  //   title: 'Edevaldo Nascimento - 10',
-  //   detail: 'Consulta | UNIPREV',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
-  // },
-  // {
-  //   value: '11',
-  //   title: 'Adilson Nascimento - 11',
-  //   detail: 'Consulta | UNIPREV',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
-  // },
-  // {
-  //   value: '12',
-  //   title: 'Jaisson Buccio - 12',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
-  // },
-  // {
-  //   value: '13',
-  //   title: 'Jaisson Buccio - 13',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'notmet',
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
-  // },
-  // {
-  //   value: '14',
-  //   title: 'Jaisson Buccio - 14',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'notmet',
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '15',
-  //   title: 'Jaisson Buccio - 15',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'notmet',
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '16',
-  //   title: 'Jaisson Buccio - 16',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '17',
-  //   title: 'Jaisson Buccio - 17',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
-  // },
-  // {
-  //   value: '18',
-  //   title: 'Jaisson Buccio - 18',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'attended',
-  //   date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0 )).getTime() }
-  // },
-  // {
-  //   value: '19',
-  //   title: 'Jaisson Buccio - 19',
-  //   detail: 'Consulta | Copel',
-  //   allday: false,
-  //   status: 'notmet',
-  //   date: { start: new Date(new Date().setHours(12, 30)).getTime() , end: new Date(new Date().setHours(13, 0)).getTime() }
-  // },
-  //   {
-  //     value: '20',
-  //     title: 'Jaisson Buccio - 20',
-  //     detail: 'Consulta | Copel',
-  //     allday: false,
-  //     status: 'attended',
-  //     date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(10, 30 )).getTime() }
-  //   },
-  //   {
-  //     value: '21',
-  //     title: 'Jaisson Buccio - 21',
-  //     detail: 'Consulta | Copel',
-  //     allday: false,
-  //     status: 'notmet',
-  //     date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
-  //   },
-  //   {
-  //     value: '22',
-  //     title: 'Reunião no Congresso Universitario',
-  //     detail: '',
-  //     allday: false,
-  //     status: '',
-  //     type: 'EVENTO',
-  //     blocked: true,
-  //     date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
-  //   },
+    {
+      value: '1',
+      title: 'William Aguera - 1',
+      detail: 'Consulta | Particular',
+      status: 'missed',
+      allday: false,
+      date: { start: new Date(new Date().setHours(-95, 0)).getTime() , end: new Date( new Date().setHours(-95, 30) ).getTime() }
+    },
+    {
+    value: '2',
+    title: 'William Aguera - 2',
+    detail: 'Consulta | Particular',
+    status: 'attended',
+    allday: false,
+    date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
+  },
+    {
+      value: '3',
+      title: 'William Aguera - 3',
+      detail: 'Consulta | Particular',
+      allday: false,
+      status: 'attended',
+      type: 'CONSULTA',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+    },
+    {
+      value: '32',
+      title: 'William Aguera - 32',
+      detail: 'Consulta | Particular',
+      allday: false,
+      status: 'attended',
+      type: 'CONSULTA',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+    },
+    {
+      value: '132',
+      title: 'Marcio Chagas de Brito',
+      detail: 'Consulta | Unimed | (44) 98266416',
+      allday: false,
+      status: 'attended',
+      type: 'PREAGENDAMENTO',
+      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+    },
+    {
+      value: '31',
+      title: 'William Aguera - 32',
+      detail: 'Consulta | Particular',
+      allday: false,
+      status: 'attended',
+      type: 'CONSULTA',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(9, 15 )).getTime() }
+    },
+    {
+      value: '41',
+      title: 'Reunião na Unimed',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(9, 30)).getTime() , end: new Date(new Date().setHours(10, 15 )).getTime() }
+    },
+    {
+      value: '42',
+      title: 'Reunião no Congresso Universitario',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(55, 30)).getTime() , end: new Date(new Date().setHours(56, 15 )).getTime() }
+    },
+  {
+    value: '4',
+    title: 'Jerson Algo - 4',
+    detail: 'Consulta | Unimed',
+    allday: false,
+    status: 'missed',
+    date: { start: new Date(new Date().setHours(8, 30)).getTime() , end: new Date(new Date().setHours(9, 30 )).getTime() }
+  },
+  {
+    value: '5',
+    title: 'Jerson Algo - 5',
+    detail: 'Consulta | Unimed',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date(new Date().setHours(84, 30)).getTime() , end: new Date(new Date().setHours(85, 0 )).getTime() }
+  },
+  {
+    value: '6',
+    title: 'Maicon Aguera - 6',
+    detail: 'Consulta | Unimed',
+    allday: false,
+    status: 'missed',
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+  },
+    {
+      value: '7',
+      title: 'Adilson Nascimento - 7',
+      detail: 'Consulta | UNIPREV',
+      allday: false,
+      status: 'notmet',
+      date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+    },
+  {
+    value: '8',
+    title: 'Adilson Nascimento - 8',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  },
+  {
+    value: '9',
+    title: 'Adilson Nascimento - 9',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    status: 'notmet',
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  },
+  {
+    value: '10',
+    title: 'Edevaldo Nascimento - 10',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() - 1800000 , end: new Date().getTime() }
+  },
+  {
+    value: '11',
+    title: 'Adilson Nascimento - 11',
+    detail: 'Consulta | UNIPREV',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000}
+  },
+  {
+    value: '12',
+    title: 'Jaisson Buccio - 12',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() , end: new Date().getTime() + 1800000 }
+  },
+  {
+    value: '13',
+    title: 'Jaisson Buccio - 13',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'notmet',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 5400000 }
+  },
+  {
+    value: '14',
+    title: 'Jaisson Buccio - 14',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'notmet',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '15',
+    title: 'Jaisson Buccio - 15',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'notmet',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '16',
+    title: 'Jaisson Buccio - 16',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '17',
+    title: 'Jaisson Buccio - 17',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date().getTime() + 1800000 , end: new Date().getTime() + 3600000 }
+  },
+  {
+    value: '18',
+    title: 'Jaisson Buccio - 18',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'attended',
+    date: { start: new Date(new Date().setHours(13, 30)).getTime() , end: new Date(new Date().setHours(14, 0 )).getTime() }
+  },
+  {
+    value: '19',
+    title: 'Jaisson Buccio - 19',
+    detail: 'Consulta | Copel',
+    allday: false,
+    status: 'notmet',
+    date: { start: new Date(new Date().setHours(12, 30)).getTime() , end: new Date(new Date().setHours(13, 0)).getTime() }
+  },
+    {
+      value: '20',
+      title: 'Jaisson Buccio - 20',
+      detail: 'Consulta | Copel',
+      allday: false,
+      status: 'attended',
+      date: { start: new Date(new Date().setHours(9, 0)).getTime() , end: new Date(new Date().setHours(10, 30 )).getTime() }
+    },
+    {
+      value: '21',
+      title: 'Jaisson Buccio - 21',
+      detail: 'Consulta | Copel',
+      allday: false,
+      status: 'notmet',
+      date: { start: new Date(new Date().setHours(14, 0)).getTime() , end: new Date(new Date().setHours(15, 0)).getTime() }
+    },
+    {
+      value: '22',
+      title: 'Reunião no Congresso Universitario',
+      detail: '',
+      allday: false,
+      status: '',
+      type: 'EVENTO',
+      blocked: true,
+      date: { start: new Date(new Date().setHours(7, 0)).getTime() , end: new Date(new Date().setHours(8, 0 )).getTime() }
+    },
     {
       value: '23',
       title: 'Reunião no Congresso Universitario',

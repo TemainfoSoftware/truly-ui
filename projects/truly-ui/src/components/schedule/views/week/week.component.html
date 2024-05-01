@@ -1,0 +1,92 @@
+<div class="ui-schedule-slats"
+     *ngFor="let times of timesCollection; let timesIndex = index; let lastTurn = last; let firstTurn = first;">
+
+  <!-- CREATE TIMES BOXES-->
+  <div class="ui-schedule-times">
+    <div class="ui-schedule-time-row"
+         *ngFor="let time of times"
+         [ngClass]="{ firstTurn: firstTurn }"
+         [ngStyle]="{
+          height: (slotSettings.slotCount * slotSettings.slotHight) + 'px',
+          'align-items': slotSettings.slotCount > 1 ? 'flex-start' : 'center'
+         }">
+         <div class="ui-schedule-time-description">
+           <span class="ui-hour-detail">{{time | date: 'dd/MM'}}</span><br>
+           <span>{{time | date: 'HH:mm'}}</span>
+         </div>
+    </div>
+  </div>
+
+  <!-- CREATE WIDGET CONTENT-->
+  <div #scheduleSlats class="ui-schedule-widget-content">
+    <div *ngFor="let time of times; let last = last; let first = first;" class="ui-schedule-widget-rows">
+      <div #scheduleRow class="ui-schedule-row" [attr.data-row-index]="time.getTime() * (index+1)" *ngFor="let slot of slatNumberRowsAsArray; let index = index"
+           (click)="rowClick( time, index, timesIndex, scheduleRow )"
+           (dblclick)="rowDbClick( time, index, timesIndex )"
+           [ngStyle]="{ height: slotSettings.slotHight + 'px' }"
+           [ngClass]="{ last: last, first: first, lastTurn: lastTurn, firstTurn: firstTurn }"
+           [class.selected]="scheduleRow?.getAttribute('data-row-index') === indexRowSelected">
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="ui-schedule-skeleton" >
+  <div class="ui-schedule-grid-events">
+    <div class="ui-schedule-list-events">
+
+      <!-- CREATE EVENTS BOXES-->
+      <div class="ui-schedule-event-box" [style.borderLeftWidth]="event?.data?.blocked ? 0 : '5px'"
+           #elementBox
+           *ngFor="let event of eventsWithPositions; let index = index"
+           [ngStyle]="{
+              top: event?.positions.top + 'px',
+              left: event?.positions.left + 'px',
+              height: event?.positions.height + 'px',
+              width: event?.positions.width + 'px'
+           }"
+           [style.borderLeftColor]="statusConfig ? statusConfig[event?.data?.status]?.color : '#FFFFFF'"
+           [tooltip]="{text: statusConfig ? statusConfig[event?.data?.status]?.description : '' , placement: 'top-center'}"
+           (contextmenu)="onEventContextmenu.emit( { event: $event, data: event?.data, element: elementBox } ); false"
+           (click)="onEventClick.emit( event?.data )"
+           (dblclick)="onEventDbClick.emit( event?.data )"
+           (mouseover)="onEventMouseout.emit( event?.data )"
+           (mouseout)="onEventMouseout.emit( event?.data )"
+      >
+        <ng-container *ngIf="!event?.data?.blocked">
+          <div class="ui-schedule-event-content">
+            <div class="ui-event-data">
+              <div class="ui-event-title">
+                <span class="title">{{event?.data?.title}}</span>
+                <div class="tags" *ngIf="event?.data?.tags?.length > 0 ">
+                  <div class="tag-item" *ngFor="let tag of event?.data?.tags;" [style.backgroundColor]="tag.color" >
+                    {{tag.title}}
+                  </div>
+                </div>
+              </div>
+              <div class="ui-event-detail">{{event?.data?.detail}}</div>
+            </div>
+            <div class="ui-event-note">
+              {{event?.data?.note}}
+            </div>
+          </div>
+          <div class="ui-event-hour">
+            <span>{{event?.data?.date?.start | date: 'dd/yy'}} - {{event?.data?.date?.end | date: 'dd/yy'}}</span>
+            <span class="ui-event-typeconfig-description">{{typesConfig[event?.data?.type]?.description}}</span>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="event?.data?.blocked">
+          <div class="ui-schedule-event-blocked">
+            <div class="ui-event-title">{{event?.data?.title}}</div>
+            <div class="ui-event-hour">
+              <tl-icon [lib]="'fa'" [style]="'far'">clock</tl-icon>
+              {{event?.data?.date?.start | date: 'dd/yy'}} - {{event?.data?.date?.end | date: 'dd/yy'}}<br>
+            </div>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,9 +22,9 @@
 
 import { Injectable, OnDestroy, Renderer2 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ModalService } from '../modal/services/modal.service';
 import { TlButton } from '../button/button';
 import { ShortcutConfig } from './shortcut.config';
+import { CurrentModalService } from '../modal/services/current-modal.service';
 
 export interface ElementShortcut {
   id: string;
@@ -57,7 +57,7 @@ export class ShortcutService implements OnDestroy {
 
   private modalContextArray = [];
 
-  constructor( private modalService: ModalService ) {
+  constructor(  private currentModalService: CurrentModalService) {
     this.listenHeadingModal();
   }
 
@@ -71,8 +71,10 @@ export class ShortcutService implements OnDestroy {
   }
 
   listenHeadingModal() {
-    this.subscription.add( this.modalService.frontModal.subscribe( ( component: any ) => {
-      this.activeModal = component.activeModal;
+    this.subscription.add( this.currentModalService.currentFrontModal$.subscribe( ( component: any ) => {
+      if(component?.activeModal) {
+        this.activeModal = component.activeModal;
+      }
     } ) );
   }
 

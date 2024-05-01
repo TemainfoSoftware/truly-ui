@@ -43,6 +43,7 @@ import {ModalInstance} from '../interfaces/modal-instance';
 import {TlDialogInfo} from '../../dialog/dialog-info/dialog-info';
 import {I18nService} from '../../i18n/i18n.service';
 import * as objectPath from 'object-path';
+import { CurrentModalService } from './current-modal.service';
 
 let lastZIndex = 500;
 
@@ -54,8 +55,6 @@ export class ModalService implements OnDestroy {
   public componentList: ModalInstance[] = [];
 
   public changeModal = new Subject();
-
-  public frontModal = new Subject();
 
   public activeModal: ComponentRef<any>;
 
@@ -82,7 +81,9 @@ export class ModalService implements OnDestroy {
   private referenceSmartForm;
 
   constructor(private i18nService: I18nService,
-              private containerModal: ContainerModalService) {
+              private containerModal: ContainerModalService,
+              private currentModalService: CurrentModalService
+  ) {
   }
 
   createModalDialog(component: Type<any>, factoryResolver, mdOptions?: ModalOptions) {
@@ -370,7 +371,7 @@ export class ModalService implements OnDestroy {
   setActiveModal(componentRef: ComponentRef<any>) {
     this.setZIndex(componentRef);
     this.activeModal = componentRef;
-    this.frontModal.next({activeModal: this.activeModal});
+    this.currentModalService.setCurrentModal({activeModal: this.activeModal})
   }
 
   getCurrentModalOptions(compRef: ComponentRef<any>) {

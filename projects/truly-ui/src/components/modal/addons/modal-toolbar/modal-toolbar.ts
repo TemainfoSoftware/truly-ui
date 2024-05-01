@@ -23,6 +23,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ModalService} from '../../services/modal.service';
 import {Subscription} from 'rxjs';
+import { CurrentModalService } from '../../services/current-modal.service';
 
 @Component( {
   selector: 'tl-modal-toolbar',
@@ -52,7 +53,7 @@ export class TlModalToolbar implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor( public modalService: ModalService, private changes: ChangeDetectorRef ) {}
+  constructor( public modalService: ModalService, private changes: ChangeDetectorRef, private currentModalService: CurrentModalService ) {}
 
   ngOnInit() {
     this.subscribeFrontModal();
@@ -60,9 +61,11 @@ export class TlModalToolbar implements OnInit, OnDestroy {
   }
 
   subscribeFrontModal() {
-    this.subscription.add( this.modalService.frontModal.subscribe( ( value: any ) => {
-      this.activeModal = value.activeModal;
-      this.changes.detectChanges();
+    this.subscription.add( this.currentModalService.currentFrontModal$.subscribe( ( value: any ) => {
+      if(value?.activeModal) {
+        this.activeModal = value.activeModal;
+        this.changes.detectChanges();
+      }
     } ) );
   }
 

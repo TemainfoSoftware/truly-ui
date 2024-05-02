@@ -37,10 +37,8 @@ import {TlModal} from '../modal';
 import {TlBackdrop} from '../../core/components/backdrop/backdrop';
 import {ActionsModal} from '../../core/enums/actions-modal';
 import {ModalResult} from '../../core/enums/modal-result';
-import {TlDialogConfirmation} from '../../dialog/dialog-confirmation/dialog-confirmation';
 import {ModalFormConfig} from '../interfaces/modal-smart-form-config';
 import {ModalInstance} from '../interfaces/modal-instance';
-import {TlDialogInfo} from '../../dialog/dialog-info/dialog-info';
 import {I18nService} from '../../i18n/i18n.service';
 import * as objectPath from 'object-path';
 import { CurrentModalService } from './current-modal.service';
@@ -205,7 +203,7 @@ export class ModalService implements OnDestroy {
                             identifier?, parentElement?, mdOptions?: ModalOptions, properties?) {
 
     const factory = this.isConfigSmartForm(config) ? config['factory'] : config;
-    if (this.isSmartFormUpdateDeleteAction(config) && !this.validateDataFormUpdate(config)) {
+    if (this.isSmartFormUpdateDeleteAction(config) && !this.validateDataFormUpdate(config as SmartFormConfiguration)) {
       return;
     }
 
@@ -240,10 +238,10 @@ export class ModalService implements OnDestroy {
   private handleDeleteSmartForm(config: SmartFormConfiguration | ComponentFactoryResolver) {
     if (this.isConfigSmartForm(config)) {
       if (this.isDeleteAction(config)) {
-        this.confirmDelete(this.instanceComponent);
+        this.confirmDelete(this.instanceComponent, config as SmartFormConfiguration);
       }
     } else {
-      if (this.instanceComponent.componentInjected.instance instanceof TlDialogConfirmation) {
+      if (this.instanceComponent.componentInjected.instance.constructor.name === 'TlDialogConfirmation') {
         if (this.referenceSmartForm) {
           this.removeOfList(this.referenceSmartForm.id);
           this.view.remove(this.view.indexOf(this.referenceSmartForm.modal.hostView));
@@ -256,10 +254,10 @@ export class ModalService implements OnDestroy {
     return component.executeAction === ActionsModal.UPDATE;
   }
 
-  private validateDataFormUpdate(component) {
-    if (!component['dataForm']) {
-      this.createModalDialog(TlDialogInfo, component['factory'], { title: component['recordNotFoundMessage']});
-      this.componentInjected.instance.message = component['recordNotFoundMessage'];
+  private validateDataFormUpdate(config: SmartFormConfiguration) {
+    if (!config['dataForm']) {
+      this.createModalDialog(window['TlDialogInfo'], config['factory'], { title: config['recordNotFoundMessage']});
+      this.componentInjected.instance.message = config['recordNotFoundMessage'];
       return false;
     }
     return true;
@@ -519,10 +517,10 @@ export class ModalService implements OnDestroy {
     }
   }
 
-  private confirmDelete(component: ModalInstance) {
+  private confirmDelete(component: ModalInstance, config: SmartFormConfiguration) {
     if (component.smartForm['executeAction'] === ActionsModal.DELETE) {
       this.referenceSmartForm = component;
-      this.createModalDialog(TlDialogConfirmation, this.referenceSmartForm.smartForm['factory'],
+      this.createModalDialog(window['TlDialogConfirmation'], this.referenceSmartForm.smartForm['factory'],
         { title: this.referenceSmartForm.smartForm['deleteTitleConfirmation'] }).then((value: any) => {
         if (value.mdResult === ModalResult.MRYES) {
           this.handleSmartFormCallback(this.referenceSmartForm,

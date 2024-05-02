@@ -34,6 +34,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:library": "ng build truly-ui --configuration production",
+    "build:library:manual": "ng build truly-ui --configuration production && yarn copy:assets && yarn copy:marckdowns",
     "build:showcase": "ng build --configuration production --aot",
     "ci": "npm run lint && npm run test && npm run build:library && npm run build:showcase && npm run copy:marckdowns && npm run copy:assets",
     "copy:assets": "node ./tools/scripts/copy-assets.js",

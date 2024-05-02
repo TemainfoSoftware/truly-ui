@@ -15,7 +15,10 @@
     "lib": [
       "dom",
       "es2018"
-    ]
+    ],
+    "paths": {
+      "tslib" : ["../../../../node_modules/tslib/tslib.d.ts"]
+    }
   },
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,

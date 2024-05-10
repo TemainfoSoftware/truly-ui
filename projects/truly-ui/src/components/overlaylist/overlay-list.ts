@@ -29,7 +29,7 @@ import { TlInput } from '../input/input';
 import { I18nService } from '../i18n/i18n.service';
 import { ListItemInterface } from '../dropdownlist/interfaces/list-item';
 import { scrollIntoView } from '../core/helper/scrollIntoView';
-import * as path from 'object-path';
+import * as objectPath from 'object-path';
 import { Subscription } from 'rxjs';
 
 
@@ -113,8 +113,6 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
 
   public unGrouped = [];
 
-  public objectPath = path;
-
   public searchText = '';
 
   private _datasource = [];
@@ -131,6 +129,7 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
                private i18n: I18nService ) {}
 
   ngOnInit() {
+    console.log(objectPath)
   }
 
   ngAfterViewInit() {
@@ -150,14 +149,14 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
       return;
     }
     this.dataSource.forEach( ( value ) => {
-      if (!this.objectPath.get(value, this.groupBy)) {
-        this.unGrouped = this.getItemsGroup(this.objectPath.get(value, this.groupBy));
+      if (!objectPath.get(value, this.groupBy)) {
+        this.unGrouped = this.getItemsGroup(objectPath.get(value, this.groupBy));
         return;
       }
-      if ( !this.existGroup( this.objectPath.get(value, this.groupBy) ) ) {
+      if ( !this.existGroup( objectPath.get(value, this.groupBy) ) ) {
         this.groups.push( {
-          description: this.objectPath.get(value, this.groupBy),
-          items: this.getItemsGroup( this.objectPath.get(value, this.groupBy) )
+          description: objectPath.get(value, this.groupBy),
+          items: this.getItemsGroup( objectPath.get(value, this.groupBy) )
         } );
       }
     } );
@@ -173,11 +172,12 @@ export class TlOverlayList implements OnInit, AfterViewInit, OnChanges, OnDestro
   }
 
   getTextContent( item ) {
-    return this.typeOfData === 'simple' ? item : this.objectPath.get(item, this.keyText);
+    return this.typeOfData === 'simple' ? item : objectPath.get(item, this.keyText);
   }
 
   getItemsGroup( group ) {
-    const filter = this.dataSource.filter( ( item ) => this.objectPath.get(item, this.groupBy) === group);
+    console.log(objectPath)
+    const filter = this.dataSource.filter( ( item ) => objectPath.get(item, this.groupBy) === group);
     this.numberItems += filter.length;
     return filter;
   }

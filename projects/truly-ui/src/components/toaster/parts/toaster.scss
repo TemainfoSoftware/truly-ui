@@ -8,6 +8,10 @@
   box-sizing: border-box;
   animation: toasterIn 0.3s;
 
+  &.ui-toaster-out {
+    animation: toasterOut 0.3s;
+  }
+
   &:hover {
     cursor: pointer;
   }

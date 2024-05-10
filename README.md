@@ -67,9 +67,9 @@ TrulyUI is an Angular Framework especially developed for Desktop Applications ba
 
 We assume that you have already installed the following packages at least and are already running an AngularIO project.
 
-* [NodeJS &gt;= 11.2.0](https://nodejs.org)
-* [Angular Cli &gt;= 10.0.0](https://cli.angular.io/)
-* [Angular &gt;= 10.0.0](https://angular.io/)
+* [NodeJS &gt;= 18.2.0](https://nodejs.org)
+* [Angular Cli &gt;= 15.0.0](https://cli.angular.io/)
+* [Angular &gt;= 15.0.0](https://angular.io/)
 
 ## Installation
 

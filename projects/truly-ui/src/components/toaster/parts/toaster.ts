@@ -53,7 +53,7 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
   }
 
   animationDone(event: AnimationEvent) {
-    if (event.animationName === 'toasterOut') {
+    if (event.animationName.includes('toasterOut')) {
       this.closeEvent.emit(this.toasterID)
     }
   }
@@ -73,7 +73,7 @@ export class TlToaster implements OnInit, OnChanges, OnDestroy {
   }
 
   close() {
-    this.renderer.setStyle(this.container.nativeElement, 'animation', 'toasterOut 0.3s');
+    this.renderer.addClass(this.container.nativeElement, 'ui-toaster-out');
   }
 
   ngOnChanges(changes) {

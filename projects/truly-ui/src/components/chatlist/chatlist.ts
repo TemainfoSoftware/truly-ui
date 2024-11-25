@@ -196,6 +196,7 @@ export class TlChatList implements OnInit, OnChanges, OnDestroy {
   }
 
   selectPartner(item: ChatContact) {
+    this.insideChat = true;
     this.updatePartner(item);
     this.selectContact.emit({...item, unreadMessages: this.getUnreadMessages(item)});
     this.renderer.setStyle(this.content.nativeElement, 'animation', 'showOffContent 0.2s forwards');
